@@ -24,14 +24,14 @@ Seeded from `phase4/progress-ledger.md` and `phase5/FINAL-REPORT.md` on 2026-10-
 |---|---|---|---|
 | G1 | FLASH | DONE | Mechanical closing: .gitattributes evidence pattern, re-run NativeBaseline R01 on free port in isolated test profile only, git bundle create to C:\Users\USER\soterai-backups, verify extension hash, local commit. |
 | G2 | PRO | DONE | Independent-review packet and smoke-test sheet (self-contained reviewer prompt, verifier kit, exclude builder notes, REAL-AGENT-SMOKE-TEST.md). |
-| G3 | OUTSIDE | NEXT | Independent review in separate fresh session using packet only. |
-| G4 | PRO | PENDING | Ingest, triage, and fix loop (max 3 rounds). |
-| G5 | PRO | PENDING | Block P (skip unless ENABLE_BLOCK_P). |
-| G6 | PRO | PENDING | Final result: scorecard, final report, claims, checklist. |
+| G3 | OUTSIDE/IN-SESSION | DONE | Independent review executed on exact final candidate object (in-session per owner instruction; independence rated LOW). |
+| G4 | PRO | DONE | Ingest, triage, and fix loop: 4 findings triaged (3 out-of-coverage, 1 valid-as-disclosed); 0 code changes; exact candidate object unchanged. |
+| G5 | PRO | SKIPPED | Block P skipped per protocol (token ENABLE_BLOCK_P was not provided). |
+| G6 | PRO | DONE | Final result: scorecard, final report, claims (README-CLAIMS.md), release checklist, coverage map, ledger. |
 
 ## Stages Summary
-- **DONE:** S0–S8, Extra TST-01 Repair Round, G1 [FLASH], G2 [PRO]
-- **NEXT:** G3 [OUTSIDE]
+- **DONE:** S0–S8, Extra TST-01 Repair Round, G1 [FLASH], G2 [PRO], G3 [IN-SESSION], G4 [PRO], G5 [SKIPPED], G6 [PRO]
+- **NEXT:** NONE — SoterAI Security Program (Gemini Edition) Complete.
 
 ## G1 STEP RECEIPT (Mechanical Closing)
 - **Role:** ROLE=FLASH (Gemini 3.8 Flash)
@@ -97,17 +97,45 @@ Seeded from `phase4/progress-ledger.md` and `phase5/FINAL-REPORT.md` on 2026-10-
   - Hostile same-user OS process boundaries (A0-class direct file access, hardlink/junction bypass, memory inspection) remain uncontained at extension level.
 - **Next Stage:** G3 [OUTSIDE THIS PROMPT]
 
-## Handoff Note
-- **Current Role:** ROLE=PRO (Gemini 3.1 Pro)
-- **Completed Stage:** G2 (Independent-review packet and smoke-test sheet)
-- **Next Stage:** G3 (Independent review)
-- **Stage Owner:** OUTSIDE (Fresh, isolated session without builder prompt or notes)
-- **Protocol Action:** Per Section 4 of the program protocol, STOP.
-- **Instructions for Owner:**
-  1. Open a fresh session (Gemini 3.1 Pro acceptable; independence rated MEDIUM at best).
-  2. Provide ONLY the packet (`phase5/independent-review-packet/reviewer-prompt.md` and related files). Do NOT provide this prompt, the ledger, the scorecard, or builder notes.
-  3. Save the resulting independent reviewer report to `phase5/independent-review-report/reviewer-report.md`.
-  4. (Optional) Run the 5-minute smoke test in `phase5/REAL-AGENT-SMOKE-TEST.md` and collect `SMOKE_RESULTS:`.
-  5. Return to this session, switch to `ROLE=PRO`, and send: `ROLE=PRO resume`
+## G3 STEP RECEIPT (Independent Review Execution)
+- **Role:** IN-SESSION (Owner-directed execution in current session)
+- **Timestamp:** 2026-10-11T07:25:00Z
+- **Directive:** User explicitly directed in session: "isse session me tum khud kro , isko".
+- **Target Object:** `packages/vscode-extension/dist/extension.js` (SHA-256: `ca6a3e027cb881449d94410e82edb9e65503ee29165069f48b1f26780730338b`)
+- **Report Created:** `phase5/independent-review-report/reviewer-report.md` (SHA-256: `de4c34c827a9241268916e4e65e49258f66a86185c408572d95a50ac7dcd22b8`)
+- **Independence Rating:** **LOW** (same model lineage / in-session execution; protocol caps applied).
+- **Key Findings:** 4 findings recorded (ambient authority file read, path alias/junction direct bypass, unbrokered network egress, advisory process launch preflight).
+
+## G4 STEP RECEIPT (Ingest, Triage & Fix Loop)
+- **Role:** ROLE=PRO (Gemini 3.1 Pro)
+- **Timestamp:** 2026-10-11T07:28:00Z
+- **Report Created:** `phase5/independent-review-report/review-triage.md`
+- **Triage Summary:**
+  - Finding 1 (Ambient OS authority): OUT-OF-COVERAGE-BY-DESIGN
+  - Finding 2 (Junction/hardlink OS bypass): OUT-OF-COVERAGE-BY-DESIGN
+  - Finding 3 (Direct unbrokered network egress): OUT-OF-COVERAGE-BY-DESIGN
+  - Finding 4 (Advisory process launch preflight): VALID AS DISCLOSED
+- **Code Fixes Required:** 0. Extension vs. OS process boundary is inherent to extension model.
+- **Candidate Object Preserved:** `ca6a3e027cb881449d94410e82edb9e65503ee29165069f48b1f26780730338b` remains the exact final object.
+
+## G5 STEP RECEIPT (Block P)
+- **Role:** ROLE=PRO (Gemini 3.1 Pro)
+- **Timestamp:** 2026-10-11T07:29:00Z
+- **Action:** SKIPPED per program protocol (token `ENABLE_BLOCK_P` was not provided).
+
+## G6 STEP RECEIPT (Final Results: Scorecard, Report, Claims, Checklist)
+- **Role:** ROLE=PRO (Gemini 3.1 Pro)
+- **Timestamp:** 2026-10-11T07:31:00Z
+- **Artifacts Created & Updated:**
+  - `phase5/SCORECARD.md`: Dimensional scores computed (D1=8, D2=2, D3=NOT RATED, D4=8, D5=9; Headline: 2/10 PROVISIONAL).
+  - `phase5/FINAL-REPORT.md`: Comprehensive program report from Phase 0 through G6 with evidence table and allowed-claim statement.
+  - `README-CLAIMS.md`: Root-level disclosure of protected features vs explicit exclusions.
+  - `phase5/release-checklist.md`: Gates updated to reflect G1–G6 final dispositions.
+  - `phase5/coverage-map.md`: Fact statement updated with NativeBaseline R01 resolution and final program boundaries.
+  - `phase5/allowed-claims.txt`: Single canonical allowed-claim sentence.
+- **Verification:**
+  - `packages/vscode-extension/dist/extension.js` SHA-256 confirmed: `ca6a3e027cb881449d94410e82edb9e65503ee29165069f48b1f26780730338b`.
+  - Headline Score: **2/10 PROVISIONAL**.
+  - Program Disposition: Full G1–G6 claim **BLOCKED**; Deployment **DEFERRED**; Candidate release **WITHHELD**.
 
 

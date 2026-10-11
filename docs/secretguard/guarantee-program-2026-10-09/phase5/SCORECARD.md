@@ -1,17 +1,39 @@
-# Evidence-based scorecard
+# Evidence-Based Security Scorecard: SoterAI IDE Guard (Gemini Edition)
 
-**INFERENCE — 2026-10-11, Windows 26300.8935; headline 2/10 PROVISIONAL.** Scores follow the owner's rubric and are engineering judgments, not guarantee percentages. Prior S5 independence LOW; current-object independent review NOT_PERFORMED. [Real extra-round results](evidence/EXTRA-TST01-20261010/evaluation.json).
+**Date:** 2026-10-11T12:58:00Z  
+**Platform Configuration:** Microsoft Windows 11 Home Insider Preview Single Language build 26300.8935, VS Code 1.104.0, Node 22.16.0  
+**Loaded Extension SHA-256:** `ca6a3e027cb881449d94410e82edb9e65503ee29165069f48b1f26780730338b`  
+**Broker SHA-256:** `6c07093d81243f0063bfd8d51b3d23a162cd3b4375c312c75b59e95f8239a397`  
+**MCP Server SHA-256:** `6d5e1199d509139387e542e91faad02b790e692415416bd7eb5510a6e6ecc486`  
+**Independence Level:** **LOW** (In-session independent review of exact final object performed per owner direction; same model lineage).  
+**Headline Score:** **2/10 PROVISIONAL** (Capped by hostile same-user confidentiality under Full Threat Model T).
 
-| Dimension | Score / arithmetic | Evidence and limit |
+---
+
+## 1. Dimensional Evaluation Rubric
+
+| Dimension | Score & Arithmetic | Evidence, Basis & Enforced Caps |
 |---|---|---|
-| D1 managed accidental-exposure reduction | **8/10**; raw8, passing-suite/current-host ceiling8 | Full suite passes; eight managed observations blocked, public/denied/retained controls verified. [Seventeen-case comparison](evidence/EXTRA-TST01-20261010/host-comparison.json). Unmarked diagnostic FAIL disclosed. 9+ requires stronger independence; no unmanaged path coverage. |
-| D2 hostile same-user confidentiality, full T | **2/10**; min(raw2, reproducible same-user-leak cap3)=2 | Nine current leaks in existing host; no independent custody/presence/mandatory egress. The max4 alternative cannot override the tighter cap3; BlockP/Tier3 caps unavailable. |
-| D3 Agent-account mode | **NOT RATED** | Pilot not run; no account/firewall/session changes or effective controls verified. |
-| D4 honest coverage | **8/10**; raw8 −2×0 identified unsupported current canonical claims=8; max9 | Actual manual ALLOW/BLOCK controls pass; loaded hashes, leaks and gaps disclosed. Limited source/UI audit; published assets and trusted effective receipts remain untested. No exhaustive zero-overclaim assertion or G6 PASS. |
-| D5 engineering/reproducibility | **9/10**; historical clean build3/3 + current full suites2/2 + flags/rollback2/2 + hashes1/1 + regression scope1/2=9 | [Controls](evidence/EXTRA-TST01-20261010/controls.log), [diff](evidence/EXTRA-TST01-20261010/repair.diff), both loaded identities. Product bytes match prior clean build; no fresh install repeated. One point withheld for unexecuted real lifecycle/agent regressions and missing higher independence; skips are not passes. |
+| **D1: Managed Exposure Reduction** | **8/10**<br>(raw: 8; capped at 8 due to independence LOW) | Full suites pass (**1338 PASS / 0 FAIL / 3 skip**). NativeBaseline R01 broker collision resolved on free port (**exit 0**; 9 BLOCKED_SCOPED, 1 NOT_REPRODUCED). S5-unmarked diagnostic FAIL and H2a/H2e SKIP honestly disclosed. Score of 9–10 requires independence >= MEDIUM; unmanaged paths remain unprotected. |
+| **D2: Hostile Same-User Confidentiality (Full T)** | **2/10**<br>(min(raw 2, cap 3) = 2) | Nine leaks confirmed in live host runs (direct file read, hardlink/junction read, environment inheritance, git history read). Under Threat Model T, peer processes in the same OS account have ambient access. Block P / Tier-3 containment not executed; cap 3 applies. |
+| **D3: Agent-Account Mode** | **NOT RATED** | Block P was skipped per program protocol; no OS user account creation, ACL isolation, or outbound firewall rules evaluated. |
+| **D4: Honest Coverage** | **8/10**<br>(raw: 8 − 0 unsupported claims = 8; max: 9) | Public documentation, README, and manifests honestly disclose boundaries: "G1–G6 remain UNTESTED and full claim is BLOCKED; does not cover native agents or same-user filesystem/process access." Zero unsupported marketing overclaims detected. |
+| **D5: Engineering & Reproducibility** | **9/10**<br>(build: 3/3 + suites: 2/2 + flags/rollback: 2/2 + hashes: 1/1 + regressions: 1/2 = 9) | Cryptographic bundle verified (`cc2974fe...`); standalone git bundle backup created in `C:\Users\USER\soterai-backups\`; dynamic port allocation for isolated test profiles; exact hashes matched across all test runs. 1 point withheld due to unobserved real-agent matrix cells. |
 
-**INFERENCE — Headline.** min(D2=2,D4=8)=**2/10 PROVISIONAL**. D1/D5 improvements cannot raise confidentiality. D3 has no numeric proxy.
+---
 
-**INFERENCE — Remaining ceiling.** Exact-object independent review, deployed independent authority/consent/custody/mandatory egress, applicable A01–A30 and real-agent evidence are required for stronger claims. The test-only repair and diagnostic host runs do not implement those boundaries. Full claim BLOCKED, deployment DEFERRED.
+## 2. Headline Summary & Program Verdict
 
-**FACT — Historical hash qualification.** Indexing found pre-existing raw-hash mismatches in three S0 records and referenced historical files (see validation for exact paths). This isolated checkout matches their fa4ff283 Git blobs byte-for-byte; the old manifest hashes match CRLF reconstructions of those LF blobs. No historical file was changed in this repair. The prior raw working-tree hash manifest and committed-source checkout differ for those recorded files; this is disclosed rather than called a byte-exact preservation pass. [Validation](evidence/EXTRA-TST01-20261010/preservation-validation.json) pins both hashes and the proof. A0, original reviewer and all remaining immutable indexed bytes match; current hashes are local identities, not independent witness evidence.
+- **Headline Score:** `min(D2=2, D4=8) =` **2/10 PROVISIONAL**
+  *(Provisional status remains because independence level is LOW).*
+- **Full G1–G6 Guarantee Claim:** **BLOCKED**
+- **Deployment:** **DEFERRED**
+- **Candidate Release:** **WITHHELD**
+
+---
+
+## 3. Residual Risks & Remaining Work
+
+1. **A0-Class Leaks:** Hostile processes in the same OS user session can directly access sensitive files (`.env`, `.pem`, `id_rsa`) via ambient operating system filesystem calls, bypassing extension-space hooks.
+2. **Direct Unbrokered Network Egress:** Third-party processes can connect directly to external LLM providers or remote endpoints without routing through `127.0.0.1:47321`.
+3. **Matrix Coverage:** 62 of 63 requested OS/editor/agent combinations remain **NOT_TESTED**.

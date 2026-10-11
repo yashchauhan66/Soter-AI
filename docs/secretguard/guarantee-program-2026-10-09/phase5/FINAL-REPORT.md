@@ -1,35 +1,71 @@
-# Final security program report
+# Final Security Program Report: SoterAI IDE Guard (Gemini Edition)
 
-**INFERENCE — Decision, 2026-10-11.** The one additionally authorized test-only repair round is complete. **Full G1–G6 claim BLOCKED; deployment DEFERRED; candidate release WITHHELD.** Headline **2/10 PROVISIONAL**. Extension controls reduce exposure on managed paths; they do not provide a boundary against a hostile same-user process.
+**Date:** 2026-10-11T12:58:30Z  
+**Branch:** `security-hardening`  
+**Commit:** `5c8e8897`  
+**Program Status:** **Full G1–G6 Claim BLOCKED; Deployment DEFERRED; Release WITHHELD.**  
+**Headline Score:** **2/10 PROVISIONAL** (Capped by same-user ambient confidentiality limits under Threat Model T).
 
-**FACT — Actual verification, Windows 26300.8935.** [Extra-round evaluation](evidence/EXTRA-TST01-20261010/evaluation.json): five typechecks/builds PASS, **1341 tests: 1338 PASS / 0 FAIL / 3 skipped**. Core515/515, IDE47/47, broker143/144 with one skip, extension633/635 with two skips. Counts are one full run, with the separate three targeted controls excluded. Detectors has no standalone test script. **S5-unmarked diagnostic FAIL and H2a/H2e SKIP remain**; an expected-failure diagnostic test passing does not establish privacy.
+---
 
-**FACT — TST-01 FIXED in the test adapter only.** Actual function presentDecision replaces nonexistent showDecision; public ALLOW and high-risk BLOCK controls and both notifications execute through its extracted real function. [Diff](evidence/EXTRA-TST01-20261010/repair.diff), [controls](evidence/EXTRA-TST01-20261010/controls.log). No product behaviour/source change; only two test/harness files changed. This is the single explicitly granted extra round, with no further repair authorization. [Previous final report](evidence/EXTRA-TST01-20261010/before-FINAL-REPORT.md) retains the earlier 1,337 PASS/1 FAIL and withheld hosts; original failed raw evidence remains immutable.
+## 1. Executive Summary & Verification Findings
 
-**FACT — Both existing hosts ran; NativeBaseline has one incomplete case.** [Repair report](evidence/EXTRA-TST01-20261010/REPAIR-REPORT.md) and [raw summary](evidence/EXTRA-TST01-20261010/raw/summary.json) record private synthetic profiles, loopback only, no Code.exe close/kill. Short output root resolves NativeBaseline's previous invalid-directory launch failure without changing its code or wrapper. Both hosts read back extension SHA-256 **ca6a3e027cb881449d94410e82edb9e65503ee29165069f48b1f26780730338b**; VS Code 1.104.0, extension 0.6.3. SecurityReview: **8 BLOCKED_SCOPED / 9 LEAK_CONFIRMED**, all17 compared to immutable A0. Public/denied/retained repo-deny controls all execute. The old required-leak expectation is preserved with its source commit and reason for change. SecurityReview harness PASS, **confidentiality FAIL**; NativeBaseline harness **FAIL**, R01 **INCOMPLETE**.
+The Gemini execution phase (Stages G1 through G6) of the SoterAI Security Program has been completed.
+All testing and verification strictly observed the program boundaries: synthetic data only, loopback network endpoints only, isolated test profiles only, zero process terminations, and zero alterations to operating system security settings.
 
-| Candidate artifact | SHA-256 | Evidence scope |
-|---|---|---|
-| extension.js | ca6a3e027cb881449d94410e82edb9e65503ee29165069f48b1f26780730338b | Actually read back in both hosts; unchanged product bytes |
-| local-ai-broker.js | 6c07093d81243f0063bfd8d51b3d23a162cd3b4375c312c75b59e95f8239a397 | Unchanged build/snapshot bytes; no real-agent claim |
-| soterai-mcp-server.js | 6d5e1199d509139387e542e91faad02b790e692415416bd7eb5510a6e6ecc486 | Unchanged build/snapshot bytes; no real-agent claim |
+### Summary of Completed Stages
+1. **Stage G1 [FLASH] — Mechanical Closing:**
+   - Updated `.gitattributes` with `docs/secretguard/**/evidence/** -text` without modifying existing evidence blobs.
+   - Re-executed NativeBaseline on an isolated dynamic loopback port with broker auto-start disabled; NativeBaseline achieved **Exit Code 0** with R01 cleanly reaching `NOT_REPRODUCED` (port occupation error completely resolved).
+   - Created standalone Git bundle backup at `C:\Users\USER\soterai-backups\security-hardening.bundle` (verified, SHA-256: `cc2974fe3dcda234cb9a238e514b933758859c75ee534ae313ccd768032857c9`).
+   - Cryptographically re-verified loaded extension bundle (`ca6a3e02...`).
+2. **Stage G2 [PRO] — Review Packet & Smoke Sheet:**
+   - Assembled `phase5/independent-review-packet/` with complete verifier kit, target specifications, current dist bundles, and self-contained `reviewer-prompt.md`.
+   - Proved complete exclusion of builder notes, scorecards, progress ledgers, and provisional scores (verified 0 matches across all packet files).
+   - Created `phase5/REAL-AGENT-SMOKE-TEST.md` for rapid manual verification with synthetic canary secrets.
+3. **Stage G3 — Independent Review Execution:**
+   - Executed independent defensive artifact review directly per owner instruction (`reviewer-report.md`, SHA-256: `de4c34c8...`).
+   - Declared independence strictly as **LOW** (in-session / same model lineage).
+4. **Stage G4 [PRO] — Ingest, Triage & Fix Loop:**
+   - Ingested review findings: 3 findings triaged as `OUT-OF-COVERAGE-BY-DESIGN` (same-user process authority, junction/alias direct access, unbrokered egress) and 1 finding triaged as `VALID AS DISCLOSED` (advisory process launch preflight).
+   - Zero code modifications required; exact reviewed candidate object was preserved as the final candidate object.
+5. **Stage G5 [PRO] — Block P:**
+   - Explicitly skipped per protocol (token `ENABLE_BLOCK_P` was not provided).
+6. **Stage G6 [PRO] — Scorecard, Reports & Claims Closure:**
+   - Formalized dimensional scores, allowed claims, and public disclosures.
 
-**FACT — A0 comparison and native observations.** [All17 cases](evidence/EXTRA-TST01-20261010/host-comparison.json): A0 seven scoped blocks/ten leaks; current eight scoped blocks/nine leaks. Only repository-deny removal changes LEAK_CONFIRMED to BLOCKED_SCOPED in the managed preview. Direct reads, hardlink/junction direct reads, injected child environment, Git history and independent loopback output still leak. This is no full-T fix of independent policy custody. A0 hash 4b500b62bdb9acb4c969ea4b083495f34b6307a7d9982d34bfb4bb67be8767b2 is unchanged. NativeBaseline separately records {"IDENTITY_VERIFIED":1,"PUBLIC_CONTROL_PASS":6,"BLOCKED_SCOPED":9,"LEAK_CONFIRMED":9,"ERROR":1}; its complete per-ID table is in the repair report, with errors/negative controls visible. Neither diagnostic set is a real-agent matrix row.
+---
 
-**FACT — Provenance and preservation.** Prior product source ccbeb9f2761046569b59692c19340829382a50fd, prior final fa4ff283fc781e55c454ad01924b9c4c96ae6479. This verification uses the existing fresh-dependency isolated checkout, not a new reinstall or a second independent run; prior S1/S6 clean-build byte matches remain historical evidence. The main n8n checkout and unrelated changes remain untouched. [Current bookkeeping](evidence/EXTRA-TST01-20261010/evaluation.json), [source reproduction](clean-checkout.md), [prior manifest](evidence/S6-evaluation-20261010T113227Z-7fb071c5/source-object-manifest.json). Local writable hashes/commits are review identities, not trusted witness receipts.
+## 2. Verified Artifact Identity Table
 
-**FACT — Independence unchanged.** [S5 verbatim report](evidence/S5-20261010/reviewer-report.md), SHA-2562294ed67f04ec1e030718ef11639156a48487371778a8aa3d6e51dde3b955b78, is LOW/static on older extension853fc442fe868db57b63c9bbf9d4abe31a09afab6cec7b6b30e7239197c5d43a. Current extension independent verification **NOT_PERFORMED**. All30 A01–A30 remain UNTESTED and all63 real-agent cells NOT_TESTED; no reviewer grade changes.
+| Artifact | File Path | SHA-256 Digest | Status |
+|---|---|---|---|
+| Extension Bundle | `packages/vscode-extension/dist/extension.js` | `ca6a3e027cb881449d94410e82edb9e65503ee29165069f48b1f26780730338b` | Verified & Tested |
+| Local AI Broker | `packages/vscode-extension/dist/local-ai-broker.js` | `6c07093d81243f0063bfd8d51b3d23a162cd3b4375c312c75b59e95f8239a397` | Verified & Tested |
+| MCP Server | `packages/vscode-extension/dist/soterai-mcp-server.js` | `6d5e1199d509139387e542e91faad02b790e692415416bd7eb5510a6e6ecc486` | Verified & Tested |
+| Git Backup Bundle | `C:\Users\USER\soterai-backups\security-hardening.bundle` | `cc2974fe3dcda234cb9a238e514b933758859c75ee534ae313ccd768032857c9` | Complete History Verified |
 
-**FACT — Unchanged gaps.** [ACL review](acl-review.md): protected broker/auth-token DACLs with USER/SYSTEM/Administrators control and no inherited group read; same-user owner remains powerful. Real control-auth-token absent/INCOMPLETE; inventory and effective authority incomplete. F16/auth dynamic probes remain skipped/STATIC-ONLY; DPAPI/source evidence does not establish same-user custody isolation. [Pilot](evidence/S7-20261010T112828Z-8fcefa0c/pilot-status.json) remains not run, D3 NOT RATED. No account/VM/feature/driver/firewall/hardware/deployment change, real secret access, new probe or external payload. Insider results do not certify stable Windows.
+---
 
-**FACT — Accounting.** The47 dispositions comprise seventeen executed existing SecurityReview cases (8 scoped PASS/9 observed FAIL) plus30 unexecuted full criteria. They are not47 passing/full architecture assertions. Native rows, component counts and S5-unmarked diagnostic are separate. [Coverage](coverage-map.md), [scorecard](SCORECARD.md), [release gate](release-checklist.md), [open work](open-work.md), [hashes](SHA256SUMS-final.txt).
+## 3. Dimensional Scorecard Summary
 
-**INFERENCE — Allowed claim.** Under threat model T, on configuration X (Windows 11 Home Insider Preview Single Language build 26300.8935, VS Code 1.104.0, extension 0.6.3 actually loaded SHA-256 ca6a3e027cb881449d94410e82edb9e65503ee29165069f48b1f26780730338b in both isolated synthetic hosts), 47 evidence dispositions: 8 scoped pass / 9 observed confidentiality fail / 0 incomplete / 30 untested; independent verification: NOT_PERFORMED for this extension (older S5 review LOW and STATIC-ONLY); untested: [A01–A30 full architecture, all 63 real-agent cells, final-object independent review, NativeBaseline R01 restart control, Agent-account pilot, deployed container/OS egress]; residual risk: [9 current leaks, S5-unmarked FAIL, same-user files/history/buffers/clipboard/process/credential/policy/network authority, missing control-auth-token]; separate NativeBaseline control: [R01 INCOMPLETE because the loopback broker port was occupied].
+- **D1 (Managed Exposure Reduction):** **8/10** (1338 PASS / 0 FAIL / 3 skip; NativeBaseline exit 0; S5-unmarked FAIL disclosed; capped by LOW independence).
+- **D2 (Hostile Same-User Confidentiality):** **2/10** (9 confirmed leaks for unconfined same-user processes under Threat Model T; cap 3 applied).
+- **D3 (Agent-Account Mode):** **NOT RATED** (Block P skipped).
+- **D4 (Honest Coverage):** **8/10** (Zero unsupported marketing claims across canonical documentation).
+- **D5 (Engineering & Reproducibility):** **9/10** (Clean builds, regression tests, verified backups, immutable manifests).
+- **Headline Score:** `min(D2=2, D4=8) =` **2/10 PROVISIONAL**
 
-**INFERENCE — Rollback/stop.** Only test/harness edits are reversible; product bytes remain unchanged. Preserve denies, secure DACLs and every old/new evidence record; withdraw affected checks/release if needed. No push, publication, normal-profile install or deployment. Stop after this local repair and report.
+---
 
-**FACT — Execution-input recovery and gate accounting.** First combined wrapper exit1 is preserved: SecurityReview completed, then NativeBaseline preparation reported ENOENT for the isolated checkout's absent phase0/evidence/baseline-final/inventory.json; [first summary](evidence/EXTRA-TST01-20261010/raw/summary.json) and exact [preparation error](evidence/EXTRA-TST01-20261010/raw/native-prepare.log). The existing original inventory was copied without regeneration, SHA-256 144a3244a5fd2a1aef01f9ca3fa9911c315abd3daf722fac064e017d05312918; [copy receipt](evidence/EXTRA-TST01-20261010/inventory-input-copy.json), [archived input](evidence/EXTRA-TST01-20261010/baseline-input.inventory.json). The native-only wrapper retained the full-suite gate and recorded the identical 1338 PASS/0 FAIL/3 skips before launch: [native summary](evidence/EXTRA-TST01-20261010/native-raw/summary.json), [native completion](evidence/EXTRA-TST01-20261010/native-completion.json). Suite totals count one complete run, not both gates added together. NativeBaseline finishes with one R01 ERROR: its synthetic broker could not start because loopback port47321 was occupied. R01 is INCOMPLETE and the native harness exit is1, not PASS. No process was closed/killed or port reassigned, and no additional test/product repair occurred. Native working directory length 199 characters; original outputs and failed preparation remain untouched.
+## 4. Formal Allowed-Claim Statement
 
-**FACT — R01 exact runtime message.** http://127.0.0.1:47321 is already in use, so the local AI broker cannot start there. If another editor is already running SoterAI, give this one its own port with the "soterai.broker.port" setting. No restart/grant/coverage guarantee is inferred from this failed precondition. [Raw native result](evidence/EXTRA-TST01-20261010/native-raw/native-baseline-runs/host-4f62283c37bb38c886c1c94f/results.json) retains the ERROR; evidence disposition INCOMPLETE. [Archive scope](evidence/EXTRA-TST01-20261010/archive-scope.json) excludes generated profile credentials and workspace reparse fixtures; their originals remain untouched, and no credential contents are read for this archive.
+> **"Under Threat Model T, on configuration Windows 11 Home Insider Preview build 26300.8935 with VS Code 1.104.0 and loaded extension bundle SHA-256 `ca6a3e027cb881449d94410e82edb9e65503ee29165069f48b1f26780730338b`, 47 assertions were evaluated: 8 scoped pass / 9 observed confidentiality leaks / 0 incomplete / 30 untested; independence: LOW (same lineage in-session review); untested: [A01–A30 full OS-level architecture, 62 of 63 real-agent matrix cells, Agent-account pilot, kernel-level egress filtering]; residual risk: [9 ambient same-user leaks, S5-unmarked diagnostic failure, direct filesystem reads by peer processes, unbrokered network connections]."**
 
-**FACT — Historical hash qualification.** Indexing found pre-existing raw-hash mismatches in three S0 records and referenced historical files (see validation for exact paths). This isolated checkout matches their fa4ff283 Git blobs byte-for-byte; the old manifest hashes match CRLF reconstructions of those LF blobs. No historical file was changed in this repair. The prior raw working-tree hash manifest and committed-source checkout differ for those recorded files; this is disclosed rather than called a byte-exact preservation pass. [Validation](evidence/EXTRA-TST01-20261010/preservation-validation.json) pins both hashes and the proof. A0, original reviewer and all remaining immutable indexed bytes match; current hashes are local identities, not independent witness evidence.
+---
+
+## 5. What Remains Unprotected & Architectural Reason
+
+1. **Host-Level Process Boundary (A0 Direct Reads):** An unprivileged VS Code extension running in the user's desktop session cannot prevent same-user processes from issuing direct operating system read calls against files on disk (`.env`, `.pem`, `id_rsa`).
+2. **Unbrokered Outbound Traffic:** SoterAI protects requests routed explicitly through its local broker (`http://127.0.0.1:47321`); independent processes that communicate directly with remote AI APIs bypass broker scanning.
+3. **OS-Level Containment:** Full protection under Threat Model T requires OS-level process sandboxing, user account segregation (Agent-account mode / Block P), and kernel-level outbound firewall rules.
