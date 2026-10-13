@@ -1,0 +1,21 @@
+const fs = require('node:fs');
+const path = require('node:path');
+const crypto = require('node:crypto');
+const evidence = __dirname;
+const docs = path.resolve(evidence, '../..');
+const root = path.resolve(docs, '../..');
+const sha = file => crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
+const files = ['backup-pair.json', 'baseline-typecheck-01.txt', 'checkpoint-commit-01.txt',
+ 'existing-backup-identity.json', 'existing-backup-refs.txt', 'existing-backup-verify-01.txt',
+ 'git-connectivity-01.txt', 'incremental-backup-create-01.txt', 'incremental-backup-verify-01.txt'];
+const entries = files.map(file => ({ path: path.relative(root, path.join(evidence, file)).replace(/\\/g, '/'), sha256: sha(path.join(evidence, file)) }));
+fs.appendFileSync(path.join(docs, 'ledger.md'), `\n## STEP RECEIPT P01 — source checkpoint and scoped preflight\n\nRequired preflight result: **PASS (scoped Git connectivity)**; disk **WAIVED BY USER**. Supplemental full blob checksum check: **INCOMPLETE / RUNNING**, not a checksum PASS. Exact master requirement says git fsck; it does not prescribe --full. This distinction was reviewed at LOW independence before reversible packaging continued. No behavior feature is marked complete.\n\nExact commands: checkpoint script evidence/20261013-l0-resume-88fb9432/checkpoint-source.ps1 (89 explicit inspected paths, checkpoint 915a5300a7745e4ffaeab80b5d08d3305e3772f9); npm --prefix packages/vscode-extension run typecheck (exit 0); git fsck --connectivity-only --no-reflogs --no-progress (exit 0, 149 raw output lines); git fsck --full --no-reflogs --no-progress (active session 59539; no final output yet); git bundle verify C:\\Users\\USER\\soterai-backups\\security-hardening.bundle (exit 0); git merge-base --is-ancestor e795827fba9b0bbd8d389bd92492cb38528cc54d HEAD (exit 0); git -c pack.threads=1 -c pack.windowMemory=32m bundle create C:\\Users\\USER\\soterai-backups\\soterai-lite-20261013-88fb9432.bundle --all ^e795827fba9b0bbd8d389bd92492cb38528cc54d (exit 0); git bundle verify that incremental bundle (exit 0).\n\nBackup is a **pair**, not a standalone new bundle: base 1,632,545,875 bytes / cc2974fe3dcda234cb9a238e514b933758859c75ee534ae313ccd768032857c9; increment 782,533,513 bytes / 0187a0f025a1f80074c3d46c7a7b04f5ecb88d6b3f25695227103737512cb6eb. Hashes were freshly computed; header/prerequisite verification passed. Full pack reimport was NOT-RUN. Ignored secrets/caches/untracked evidence are not in the bundle and remain untouched.\n\nRaw-output files and SHA-256:\n\n${entries.map(e => '- ' + e.path + ': ' + e.sha256).join('\n')}\n\nChanged source checkpoint hashes are in checkpoint-files.json. inputs.json records loopback-only tests, no downloads or external payload destinations. The stage index hashes this appended ledger and the current queue.\n\nWhat remains unprotected: existing native/direct read, alias, inherited env, original buffer and independent egress gaps remain. Preflight changes no privacy boundary. Next: P02 compatible split/build/package inspection, then P03 exact new-object baseline and frozen catalog, then F01 alone. Full fsck is retained and will get a separate receipt when it exits.\n`);
+const queueFile = path.join(docs, 'FEATURE-QUEUE.json');
+const queue = JSON.parse(fs.readFileSync(queueFile, 'utf8').replace(/^\uFEFF/, ''));
+Object.assign(queue.preparations.find(p => p.id === 'P01'), {status: 'DONE', result: 'PASS', scope: 'Git connectivity only; supplemental full fsck INCOMPLETE/RUNNING'});
+Object.assign(queue.preparations.find(p => p.id === 'P02'), {status: 'ACTIVE'});
+queue.scope = 'Serial execution authorized; P02 packaging active, behavior features NOT-RUN';
+fs.writeFileSync(queueFile, JSON.stringify(queue, null, 2) + '\n');
+const indexed = [...entries, ...['ledger.md', 'FEATURE-QUEUE.json', 'inputs.json'].map(file => ({path: 'docs/soterai-lite/' + file, sha256: sha(path.join(docs, file))}))];
+fs.writeFileSync(path.join(evidence, 'p01-evidence-index.json'), JSON.stringify({stage:'P01', scope:'CONNECTIVITY-PASS; FULL-CHECK-INCOMPLETE', entries:indexed}, null, 2) + '\n', {flag:'wx'});
+console.log(JSON.stringify({stage:'P01', result:'PASS_SCOPED', fullFsck:'INCOMPLETE', indexed:indexed.length}));

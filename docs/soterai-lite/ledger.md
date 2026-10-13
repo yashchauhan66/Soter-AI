@@ -5,11 +5,11 @@ Read this file FIRST after any context compaction or on resumption. Do not overw
 ## Current state
 
 - **L0 ACTIVE: the user explicitly waived the 20 GB threshold on 13 October 2026; continue P01-P03, then serial features.** Historical disk measurements remain FAIL and are preserved; the threshold no longer blocks this authorized run.
-- L1-L7: **NOT-RUN**. Do not describe this stop as reaching L6.
+- L1-L7: **NOT-RUN**. Do not describe preflight as reaching L6.
 - No extension behavior, workspace protection, vendor configuration, or normal VS Code profile has changed.
 - New Lite VSIX: **NOT-BUILT**. Coverage, requirement ratings, hostile sub-score, old score, and prior reported results: **UNVERIFIED / NOT-RUN**, as applicable.
-- Baseline HEAD: `8ef3aeb54f4019f4ee815a844443995176a656f0`; starting branch: `security-hardening`. Existing user modifications remain uncommitted.
-- Only small stop evidence is being committed on the pre-authorized `soterai-lite` branch. Branch/commit outcome is recorded separately; a planned command is not a completed claim.
+- Baseline HEAD: `8ef3aeb54f4019f4ee815a844443995176a656f0`; starting branch: `security-hardening`. Inspected prior source modifications were checkpointed at `915a5300a7745e4ffaeab80b5d08d3305e3772f9`; unknown scratch/raw artifacts remain untouched.
+- P01 required scoped checks passed, with the supplemental full blob checksum check still running. P02 reversible packaging is active; no behavior card has started.
 
 ## STEP RECEIPT L0.1 — preflight stop
 
@@ -146,3 +146,29 @@ The plan commit `aeb30c3844631a5afc9d15218ee8513b8e5e584f` was verified with 8 i
 Read ledger FIRST, then plan. Start P01 source checkpoint/fsck/backup/inputs, P02 split, P03 frozen catalog/baseline; only then F01. No production feature is concurrently implemented. Test design and adversarial review are delegated at LOW independence. Retain the existing separate local broker/control token and advisory MCP functionality in Lite; names alone do not make them Full code.
 
 New evidence directory: `evidence/20261013-l0-resume-88fb9432/`. Commands, outputs, changed-file hashes and stage receipts will be appended there in immutable per-attempt files. Existing reports/indexes remain historical snapshots.
+
+## STEP RECEIPT P01 — source checkpoint and scoped preflight
+
+Required preflight result: **PASS (scoped Git connectivity)**; disk **WAIVED BY USER**. Supplemental full blob checksum check: **INCOMPLETE / RUNNING**, not a checksum PASS. Exact master requirement says git fsck; it does not prescribe --full. This distinction was reviewed at LOW independence before reversible packaging continued. No behavior feature is marked complete.
+
+Exact commands: checkpoint script evidence/20261013-l0-resume-88fb9432/checkpoint-source.ps1 (89 explicit inspected paths, checkpoint 915a5300a7745e4ffaeab80b5d08d3305e3772f9); npm --prefix packages/vscode-extension run typecheck (exit 0); git fsck --connectivity-only --no-reflogs --no-progress (exit 0, 149 raw output lines); git fsck --full --no-reflogs --no-progress (active session 59539; no final output yet); git bundle verify C:\Users\USER\soterai-backups\security-hardening.bundle (exit 0); git merge-base --is-ancestor e795827fba9b0bbd8d389bd92492cb38528cc54d HEAD (exit 0); git -c pack.threads=1 -c pack.windowMemory=32m bundle create C:\Users\USER\soterai-backups\soterai-lite-20261013-88fb9432.bundle --all ^e795827fba9b0bbd8d389bd92492cb38528cc54d (exit 0); git bundle verify that incremental bundle (exit 0).
+
+Backup is a **pair**, not a standalone new bundle: base 1,632,545,875 bytes / cc2974fe3dcda234cb9a238e514b933758859c75ee534ae313ccd768032857c9; increment 782,533,513 bytes / 0187a0f025a1f80074c3d46c7a7b04f5ecb88d6b3f25695227103737512cb6eb. Hashes were freshly computed; header/prerequisite verification passed. Full pack reimport was NOT-RUN. Ignored secrets/caches/untracked evidence are not in the bundle and remain untouched.
+
+Raw-output files and SHA-256:
+
+- docs/soterai-lite/evidence/20261013-l0-resume-88fb9432/backup-pair.json: 4e3a3e78fb28c93fe4be4fe3fe7d701548389b5d46b8677c2959eb72a0875ff0
+- docs/soterai-lite/evidence/20261013-l0-resume-88fb9432/baseline-typecheck-01.txt: 421d4ac64e6579bddc28b2758b2ebbaea0bd98aa267aa7e896f2404ae7c7f70b
+- docs/soterai-lite/evidence/20261013-l0-resume-88fb9432/checkpoint-commit-01.txt: c81e299321b057ff6af10854b0f0ce38e0080ca7027e42689c985fd3b7ebaf5d
+- docs/soterai-lite/evidence/20261013-l0-resume-88fb9432/existing-backup-identity.json: 9f09ff238d66223fa54b18ccc15743cfd1233678c262aec63573911c70c10174
+- docs/soterai-lite/evidence/20261013-l0-resume-88fb9432/existing-backup-refs.txt: d88c4ef22ffbb1cfbb3cc06febfb4be3a2b1ee10f818e19b11ef81aa16156f9b
+- docs/soterai-lite/evidence/20261013-l0-resume-88fb9432/existing-backup-verify-01.txt: 2a655d3d5e81c5aeaa412a85a3a4f6a333f602f425f6f64c93dc06d32bc89e54
+- docs/soterai-lite/evidence/20261013-l0-resume-88fb9432/git-connectivity-01.txt: 2b7b4c543b5b133cc2617e5d316b2a3d48f7019b8c086ac51559e2bac237b720
+- docs/soterai-lite/evidence/20261013-l0-resume-88fb9432/incremental-backup-create-01.txt: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- docs/soterai-lite/evidence/20261013-l0-resume-88fb9432/incremental-backup-verify-01.txt: bfb49e7b69fa74a8d34d3f86878e6fde75d7086802376288393e8438ba0c916a
+
+Changed source checkpoint hashes are in checkpoint-files.json. inputs.json records loopback-only tests, no downloads or external payload destinations. The stage index hashes this appended ledger and the current queue.
+
+What remains unprotected: existing native/direct read, alias, inherited env, original buffer and independent egress gaps remain. Preflight changes no privacy boundary. Next: P02 compatible split/build/package inspection, then P03 exact new-object baseline and frozen catalog, then F01 alone. Full fsck is retained and will get a separate receipt when it exits.
+
+P01 receipt-write attempt 01 was INCOMPLETE: Node JSON.parse rejected the PowerShell UTF-8 BOM in FEATURE-QUEUE.json. The ledger append had completed; queue/index had not. finish-p01.cjs strips the BOM and finishes only pending bookkeeping, without duplicating the receipt or rerunning checks. Early P02 build attempt 01 was INCOMPLETE with exact error `Error: spawn EPERM`; no raw log was written because the wrapper stopped on native stderr. The corrected wrapper captures native stderr; authorized escalated retry 02 passed and retained a separate immutable build directory. Two non-product inspection/edit failures are retained: path read `packages/vscode-extension/src/project-privacy/pathContainment.ts` did not exist (actual security/pathContainment.ts was read); PowerShell stripped node -e quote characters (SyntaxError); a partial-line patch failed to match record-p01.cjs and changed no file. These are not product PASS results.
