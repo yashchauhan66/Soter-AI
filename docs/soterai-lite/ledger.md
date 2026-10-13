@@ -220,3 +220,9 @@ Affected functional10PASS/0FAIL; existing SecurityReview17cases8BLOCKED_SCOPED/9
 Files changed and SHA-256 are in f01-evidence-index-01.json, with explicit raw/source allowlist. Older artifact/test attempts remain. Both verified backup pair files now D:/SoterAI-backups; only explicitly authorized verified C: duplicates were removed,20GB remainsWAIVED. Supplemental full fsck still RUNNING/INCOMPLETE; connectivity PASS remains scoped.
 
 What remains unprotected: all nine unmanaged baseline leaks, native same-user original reads/buffers/aliases/env/history/independent uploads, untested actual-tool routes and human acceptance. Next: commit and verify F01 bytes; only then activate F02 versioned policy/defaults test-first.
+
+## STEP RECEIPT F01-COMMIT / F02-ACTIVATE
+
+F01 scoped commit **6c90381bb03ddd9fd8361eb98d63e62bdb4ed419** verified PASS:110indexed byte hashes,111exact committed paths,0mismatches/0unexpected. End-of-step VSIX hash freshly rechecked67476e3e1aa4e18b2266a5a206dbd2c3be9961c25611e5f8416de7c61c7f99d8. Exact commit command in commit-f01.ps1, raw f01-commit-01.txt; verification command node verify-and-advance.cjs, raw f01-committed-byte-verification-01.json. F01 is DONE for its scoped contract; whole catalog/product rating remainsPENDING.
+
+Queue transition activates only F02 versioned policy/defaults, machine flag soterai.lite.versionedPolicy, after verified F01 barrier. No F02 production code existed before this transition. F02 must finish tests/exact artifact/host/rollback/scoped commit before F03. Supplemental full fsck remainsRUNNING/INCOMPLETE; residual unmanaged exposures unchanged.

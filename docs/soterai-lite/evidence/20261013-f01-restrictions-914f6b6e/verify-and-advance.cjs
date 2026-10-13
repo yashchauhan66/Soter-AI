@@ -1,0 +1,26 @@
+const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto'),cp=require('node:child_process'),assert=require('node:assert/strict');
+const repo=path.resolve(__dirname,'../../../..');
+const sha=bytes=>crypto.createHash('sha256').update(bytes).digest('hex');
+const read=name=>JSON.parse(fs.readFileSync(path.join(repo,name),'utf8').replace(/^\uFEFF/,''));
+const revision='6c90381bb03ddd9fd8361eb98d63e62bdb4ed419';
+const index=JSON.parse(fs.readFileSync(path.join(__dirname,'f01-evidence-index-01.json'),'utf8'));
+const mismatches=[];
+for(const entry of index.entries){const bytes=cp.execFileSync('git',['show',revision+':'+entry.path],{cwd:repo,maxBuffer:10*1024*1024});if(sha(bytes)!==entry.sha256)mismatches.push(entry.path);}
+const allowlist=fs.readFileSync(path.join(__dirname,'f01-commit-allowlist-01.txt'),'utf8').trim().split('\n').sort();
+const committed=cp.execFileSync('git',['diff-tree','--no-commit-id','--name-only','-r',revision],{cwd:repo,encoding:'utf8'}).trim().split('\n').sort();
+assert.deepEqual(mismatches,[]);assert.deepEqual(committed,allowlist);
+assert.equal(sha(fs.readFileSync(path.join(repo,'packages/soterai-lite/soterai-lite-0.7.0-f01-20261013-attempt02.vsix'))),'67476e3e1aa4e18b2266a5a206dbd2c3be9961c25611e5f8416de7c61c7f99d8');
+fs.writeFileSync(path.join(__dirname,'f01-committed-byte-verification-01.json'),JSON.stringify({status:'PASS',revision,entries:index.entries.length,committedPaths:committed.length,mismatches,unexpectedPaths:0,artifactRecheck:'PASS'},null,2)+'\n',{flag:'wx'});
+const queue=read('docs/soterai-lite/FEATURE-QUEUE.json');
+assert.equal(queue.activeFeature,'F01');
+Object.assign(queue.features.find(item=>item.id==='F01'),{status:'DONE',result:'PASS',sourceEvidenceCommit:revision,acceptanceEvidence:'docs/soterai-lite/evidence/20261013-f01-restrictions-914f6b6e/f01-acceptance-01.json',commitByteVerification:'docs/soterai-lite/evidence/20261013-f01-restrictions-914f6b6e/f01-committed-byte-verification-01.json'});
+Object.assign(queue.features.find(item=>item.id==='F02'),{status:'ACTIVE',result:'NOT-RUN',flag:'soterai.lite.versionedPolicy'});
+queue.activeFeature='F02';queue.scope='F01 DONE with verified scoped commit; F02 alone active, test-first design/implementation.';
+fs.writeFileSync(path.join(repo,'docs/soterai-lite/FEATURE-QUEUE.json'),JSON.stringify(queue,null,2)+'\n');
+fs.appendFileSync(path.join(repo,'docs/soterai-lite/ledger.md'),'\n## STEP RECEIPT F01-COMMIT / F02-ACTIVATE\n\nF01 scoped commit **6c90381bb03ddd9fd8361eb98d63e62bdb4ed419** verified PASS:110indexed byte hashes,111exact committed paths,0mismatches/0unexpected. End-of-step VSIX hash freshly rechecked67476e3e1aa4e18b2266a5a206dbd2c3be9961c25611e5f8416de7c61c7f99d8. Exact commit command in commit-f01.ps1, raw f01-commit-01.txt; verification command node verify-and-advance.cjs, raw f01-committed-byte-verification-01.json. F01 is DONE for its scoped contract; whole catalog/product rating remainsPENDING.\n\nQueue transition activates only F02 versioned policy/defaults, machine flag soterai.lite.versionedPolicy, after verified F01 barrier. No F02 production code existed before this transition. F02 must finish tests/exact artifact/host/rollback/scoped commit before F03. Supplemental full fsck remainsRUNNING/INCOMPLETE; residual unmanaged exposures unchanged.\n','utf8');
+const paths=['docs/soterai-lite/FEATURE-QUEUE.json','docs/soterai-lite/ledger.md',...['verify-and-advance.cjs','commit-f01.ps1','f01-commit-01.txt','f01-commit-allowlist-01.txt','f01-committed-byte-verification-01.json'].map(name=>path.relative(repo,path.join(__dirname,name)).replaceAll('\\','/'))];
+const entries=paths.map(name=>({path:name,sha256:sha(fs.readFileSync(path.join(repo,name)))}));
+fs.writeFileSync(path.join(__dirname,'f01-transition-index-01.json'),JSON.stringify({status:'PASS',entries},null,2)+'\n',{flag:'wx'});
+paths.push(path.relative(repo,path.join(__dirname,'f01-transition-index-01.json')).replaceAll('\\','/'));
+fs.writeFileSync(path.join(__dirname,'f01-transition-allowlist-01.txt'),paths.join('\n')+'\n',{flag:'wx'});
+console.log(JSON.stringify({status:'PASS',revision,indexedBytes:index.entries.length,committedPaths:committed.length,next:'F02 only'}));

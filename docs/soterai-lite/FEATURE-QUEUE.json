@@ -9,9 +9,9 @@
   "planVersion": 1,
   "clientDate": "2026-10-13",
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
-  "scope": "F01 only: implementation and focused regressions complete; exact new VSIX/full suite/host acceptance in progress",
+  "scope": "F01 DONE with verified scoped commit; F02 alone active, test-first design/implementation.",
   "implementationConcurrency": 1,
-  "activeFeature": "F01",
+  "activeFeature": "F02",
   "prerequisiteBlock": {
     "id": "P00",
     "result": "FAIL",
@@ -64,23 +64,27 @@
     {
       "id": "F01",
       "title": "Reliable saved restrictions.",
-      "status": "VERIFYING",
-      "result": "INCOMPLETE",
+      "status": "DONE",
+      "result": "PASS",
       "requires": [
         "P03"
       ],
       "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
-      "flag": "soterai.lite.restrictionSave"
+      "flag": "soterai.lite.restrictionSave",
+      "sourceEvidenceCommit": "6c90381bb03ddd9fd8361eb98d63e62bdb4ed419",
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261013-f01-restrictions-914f6b6e/f01-acceptance-01.json",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261013-f01-restrictions-914f6b6e/f01-committed-byte-verification-01.json"
     },
     {
       "id": "F02",
       "title": "Versioned policy and defaults.",
-      "status": "PLANNED",
+      "status": "ACTIVE",
       "result": "NOT-RUN",
       "requires": [
         "F01"
       ],
-      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "flag": "soterai.lite.versionedPolicy"
     },
     {
       "id": "F03",
