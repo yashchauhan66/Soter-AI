@@ -1,0 +1,32 @@
+Initial command:
+Get-PSDrive -Name C | Select-Object Name,@{Name='FreeBytes';Expression={$_.Free}},@{Name='FreeGiB';Expression={[math]::Round($_.Free / 1GB,3)}}
+Observed output (the blank FreeBytes value is unavailable data, not zero free space):
+Name FreeBytes FreeGiB
+---- --------- -------
+C                    0
+
+Narrower command:
+$taskDrive = [System.IO.DriveInfo]::new('C:\')
+[pscustomobject]@{Name=$taskDrive.Name;IsReady=$taskDrive.IsReady;AvailableFreeSpace=$taskDrive.AvailableFreeSpace;TotalFreeSpace=$taskDrive.TotalFreeSpace;TotalSize=$taskDrive.TotalSize;FreeGiB=[math]::Round($taskDrive.AvailableFreeSpace / 1GB,6)} | ConvertTo-Json
+Raw output:
+{
+    "Name":  "C:\\",
+    "IsReady":  true,
+    "AvailableFreeSpace":  3091800064,
+    "TotalFreeSpace":  3091800064,
+    "TotalSize":  261308280832,
+    "FreeGiB":  2.879463
+}
+
+Independent corroboration command:
+Get-CimInstance Win32_LogicalDisk -Filter "DeviceID='C:'" | Select-Object DeviceID,FreeSpace,Size | ConvertTo-Json
+Exact returned error message:
+Get-CimInstance : Access denied
+At line:2 char:1
++ Get-CimInstance Win32_LogicalDisk -Filter "DeviceID='C:'" | Select-Ob ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : PermissionDenied: (:) [Get-CimInstance], CimException
+    + FullyQualifiedErrorId : HRESULT 0x80041003,Microsoft.Management.Infrastructure.CimCmdlets.GetCimInstanceCommand
+
+Corroboration status: INCOMPLETE. No retry needed to decide the disk gate: DriveInfo provides a measured, unequivocal failure.
+No real secret file contents were inspected.
