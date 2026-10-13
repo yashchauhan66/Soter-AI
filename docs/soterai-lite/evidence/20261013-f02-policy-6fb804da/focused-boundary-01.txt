@@ -1,0 +1,58 @@
+﻿TAP version 13
+# Subtest: F02-B01 new credential defaults withhold private bytes and preserve public near-match
+ok 1 - F02-B01 new credential defaults withhold private bytes and preserve public near-match
+  ---
+  duration_ms: 81.5124
+  type: 'test'
+  ...
+# Subtest: F02-B02 team denies and sensitivity survive deletion without removing ordinary manual rules
+ok 2 - F02-B02 team denies and sensitivity survive deletion without removing ordinary manual rules
+  ---
+  duration_ms: 63.7099
+  type: 'test'
+  ...
+# Subtest: F02-B03 unknown team schema fails closed for public content too
+ok 3 - F02-B03 unknown team schema fails closed for public content too
+  ---
+  duration_ms: 18.6381
+  type: 'test'
+  ...
+# Subtest: F02-B04 failed default enrollment prevents managed release and leaves no partial record
+ok 4 - F02-B04 failed default enrollment prevents managed release and leaves no partial record
+  ---
+  duration_ms: 11.7106
+  type: 'test'
+  ...
+# Subtest: F02-B05 v2 envelope stays enforced with flag off while public control remains available
+ok 5 - F02-B05 v2 envelope stays enforced with flag off while public control remains available
+  ---
+  duration_ms: 13.6964
+  type: 'test'
+  ...
+# Subtest: F02-B06 manual updates preserve accepted versioned policy sensitivity
+ok 6 - F02-B06 manual updates preserve accepted versioned policy sensitivity
+  ---
+  duration_ms: 25.4805
+  type: 'test'
+  ...
+# Subtest: F02-B07 legacy project sensitive classification is retained on deletion and flag withdrawal
+ok 7 - F02-B07 legacy project sensitive classification is retained on deletion and flag withdrawal
+  ---
+  duration_ms: 36.8926
+  type: 'test'
+  ...
+# Subtest: F02-B08 no-op reload retains exact revision and performs no redundant writes
+ok 8 - F02-B08 no-op reload retains exact revision and performs no redundant writes
+  ---
+  duration_ms: 18.025
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1201.7811

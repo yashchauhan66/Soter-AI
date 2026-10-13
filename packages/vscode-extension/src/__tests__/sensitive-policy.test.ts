@@ -21,6 +21,9 @@ const rootKey = () => stub.state.folders[0].uri.toString();
 beforeEach(async () => {
     root = await mkdtemp(join(tmpdir(), "soterai-sensitive-policy-"));
     stub.resetState(root);
+    // Preserve these legacy one-write/fault contracts; F02 tests separately
+    // cover atomic upgraded storage with automatic defaults enabled.
+    stub.state.config.set("soterai.lite.versionedPolicy", false);
     context = stub.makeExtensionContext(root);
     initializeBoundaryState(context.workspaceState as never);
     Object.assign(stub.workspace, { registerTextDocumentContentProvider: () => new stub.Disposable() });

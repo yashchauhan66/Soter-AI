@@ -1,0 +1,117 @@
+{
+  "status": "PASS",
+  "scope": "Comparison only; nine unmanaged leaks remain.",
+  "baseline": {
+    "path": "docs/soterai-lite/evidence/20261013-l0-resume-88fb9432/p03-security/host-20261013T073045Z-3f95ffdd8e194667b6dba9be6f7c7335/live-host.json",
+    "sha256": "c655580e4daa39f9976d59146f8fc76d95d687bef828e60aa9d277843bab4682"
+  },
+  "current": {
+    "path": "docs/soterai-lite/evidence/20261013-f02-policy-6fb804da/security/host-20261013T152702Z-661e56ae34d940d7b6928b8a6c2f8658/live-host.json",
+    "sha256": "6a5f9d717073df2023f81747d7d31800ead1d51723ad9af5beeb0f728a87de24"
+  },
+  "rows": [
+    {
+      "scenario": ".env redacted preview",
+      "baseline": "BLOCKED_SCOPED",
+      "current": "BLOCKED_SCOPED",
+      "unchanged": true
+    },
+    {
+      "scenario": ".env direct filesystem read",
+      "baseline": "LEAK_CONFIRMED",
+      "current": "LEAK_CONFIRMED",
+      "unchanged": true
+    },
+    {
+      "scenario": "nested/private.txt redacted preview",
+      "baseline": "BLOCKED_SCOPED",
+      "current": "BLOCKED_SCOPED",
+      "unchanged": true
+    },
+    {
+      "scenario": "nested/private.txt direct filesystem read",
+      "baseline": "LEAK_CONFIRMED",
+      "current": "LEAK_CONFIRMED",
+      "unchanged": true
+    },
+    {
+      "scenario": "private.pem redacted preview",
+      "baseline": "BLOCKED_SCOPED",
+      "current": "BLOCKED_SCOPED",
+      "unchanged": true
+    },
+    {
+      "scenario": "private.pem direct filesystem read",
+      "baseline": "LEAK_CONFIRMED",
+      "current": "LEAK_CONFIRMED",
+      "unchanged": true
+    },
+    {
+      "scenario": "selected.txt redacted preview",
+      "baseline": "BLOCKED_SCOPED",
+      "current": "BLOCKED_SCOPED",
+      "unchanged": true
+    },
+    {
+      "scenario": "selected.txt direct filesystem read",
+      "baseline": "LEAK_CONFIRMED",
+      "current": "LEAK_CONFIRMED",
+      "unchanged": true
+    },
+    {
+      "scenario": "hardlink direct read",
+      "baseline": "LEAK_CONFIRMED",
+      "current": "LEAK_CONFIRMED",
+      "unchanged": true
+    },
+    {
+      "scenario": "hardlink redacted preview",
+      "baseline": "BLOCKED_SCOPED",
+      "current": "BLOCKED_SCOPED",
+      "unchanged": true
+    },
+    {
+      "scenario": "junction direct read",
+      "baseline": "LEAK_CONFIRMED",
+      "current": "LEAK_CONFIRMED",
+      "unchanged": true
+    },
+    {
+      "scenario": "junction redacted preview",
+      "baseline": "BLOCKED_SCOPED",
+      "current": "BLOCKED_SCOPED",
+      "unchanged": true
+    },
+    {
+      "scenario": "repository deny rule",
+      "baseline": "BLOCKED_SCOPED",
+      "current": "BLOCKED_SCOPED",
+      "unchanged": true
+    },
+    {
+      "scenario": "agent edits repository deny policy",
+      "baseline": "BLOCKED_SCOPED",
+      "current": "BLOCKED_SCOPED",
+      "unchanged": true
+    },
+    {
+      "scenario": "runtime environment and command output",
+      "baseline": "LEAK_CONFIRMED",
+      "current": "LEAK_CONFIRMED",
+      "unchanged": true
+    },
+    {
+      "scenario": "Git object after working-tree replacement",
+      "baseline": "LEAK_CONFIRMED",
+      "current": "LEAK_CONFIRMED",
+      "unchanged": true
+    },
+    {
+      "scenario": "encoded chunked exfiltration",
+      "baseline": "LEAK_CONFIRMED",
+      "current": "LEAK_CONFIRMED",
+      "unchanged": true
+    }
+  ],
+  "changes": 0
+}

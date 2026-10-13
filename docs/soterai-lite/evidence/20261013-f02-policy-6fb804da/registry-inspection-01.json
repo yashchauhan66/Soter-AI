@@ -1,0 +1,56 @@
+{
+  "status": "PASS",
+  "credentialPatterns": 279,
+  "distinctPatterns": 279,
+  "families": [
+    "legacyCredential",
+    "environment",
+    "keys",
+    "packageRegistry",
+    "aws",
+    "azure",
+    "googleCloud",
+    "containers",
+    "infrastructure",
+    "databases",
+    "frameworks",
+    "agentsAndCi",
+    "secretBundles"
+  ],
+  "presets": [
+    {
+      "id": "node",
+      "patterns": 5
+    },
+    {
+      "id": "python",
+      "patterns": 5
+    },
+    {
+      "id": "dotnet",
+      "patterns": 4
+    },
+    {
+      "id": "java",
+      "patterns": 6
+    },
+    {
+      "id": "php",
+      "patterns": 4
+    },
+    {
+      "id": "ruby",
+      "patterns": 4
+    },
+    {
+      "id": "infrastructure",
+      "patterns": 8
+    },
+    {
+      "id": "ci",
+      "patterns": 8
+    }
+  ],
+  "defaultMetadataBytes": 8100,
+  "scope": "Managed BoundarySnapshot defaults only; unchanged legacy scanner registry, no real file scan."
+}

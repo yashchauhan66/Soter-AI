@@ -1,5 +1,8 @@
 # Changelog
 
+- Add 279 distinct managed credential-path defaults, eight stack presets, reviewed additive policy import/export and retained team policy sensitivity.
+- Store stronger policy atomically with manual restrictions in a versioned envelope; retain accepted protection after source deletion or feature withdrawal and fail closed on unsupported schema/downgrade.
+
 ## 0.7.0 — local Lite candidate
 
 - Separate Lite packaging, host-free shared core and dependency-only Full scaffold.

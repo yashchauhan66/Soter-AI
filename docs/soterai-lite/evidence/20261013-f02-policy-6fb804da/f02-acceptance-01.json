@@ -1,0 +1,120 @@
+{
+  "status": "PASS",
+  "feature": "F02",
+  "completion": "Local checks passed; scoped commit and committed-byte verification remain the serial barrier.",
+  "observedAt": "2026-10-13T15:36:23.870Z",
+  "flag": {
+    "name": "soterai.lite.versionedPolicy",
+    "scope": "machine",
+    "withdrawal": "No new enrollment/import/export/presets; accepted denies/sensitivity retained.",
+    "mutation": "AVAILABILITY_ONLY; no STRONG catalog promotion"
+  },
+  "registry": {
+    "status": "PASS",
+    "credentialPatterns": 279,
+    "distinctPatterns": 279,
+    "families": [
+      "legacyCredential",
+      "environment",
+      "keys",
+      "packageRegistry",
+      "aws",
+      "azure",
+      "googleCloud",
+      "containers",
+      "infrastructure",
+      "databases",
+      "frameworks",
+      "agentsAndCi",
+      "secretBundles"
+    ],
+    "presets": [
+      {
+        "id": "node",
+        "patterns": 5
+      },
+      {
+        "id": "python",
+        "patterns": 5
+      },
+      {
+        "id": "dotnet",
+        "patterns": 4
+      },
+      {
+        "id": "java",
+        "patterns": 6
+      },
+      {
+        "id": "php",
+        "patterns": 4
+      },
+      {
+        "id": "ruby",
+        "patterns": 4
+      },
+      {
+        "id": "infrastructure",
+        "patterns": 8
+      },
+      {
+        "id": "ci",
+        "patterns": 8
+      }
+    ],
+    "defaultMetadataBytes": 8100,
+    "scope": "Managed BoundarySnapshot defaults only; unchanged legacy scanner registry, no real file scan."
+  },
+  "artifact": {
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-f02-20261013-attempt04.vsix",
+    "sha256": "6dab4f06f3763a74dc56c0422f12250815b942b2ecf954be07b9812ec96c7a3d",
+    "bytes": 1336486,
+    "runtimeSha256": "80d27306133342c028225a49a0faee41f3423473f6efafaeb6577cb6687cf8d4",
+    "manifestSha256": "2acabc81736bf767f4fbb710d4982ddb65a3e0952a1ce32abeea353f9515208d"
+  },
+  "checks": {
+    "focused": {
+      "tests": 38,
+      "pass": 38,
+      "fail": 0
+    },
+    "full": {
+      "tests": 854,
+      "suites": 106,
+      "pass": 851,
+      "fail": 0,
+      "cancelled": 0,
+      "skip": 3
+    },
+    "nativeF02Distinct": 7,
+    "retainedF01Distinct": 5,
+    "functional": {
+      "path": "docs/soterai-lite/evidence/20261013-f02-policy-6fb804da/functional/privacy-20261013T152645Z-9d28b131/functional-results.json",
+      "pass": 10,
+      "fail": 0
+    },
+    "security": {
+      "path": "docs/soterai-lite/evidence/20261013-f02-policy-6fb804da/security/host-20261013T152702Z-661e56ae34d940d7b6928b8a6c2f8658/live-host.json",
+      "checks": 17,
+      "blockedScoped": 8,
+      "leakConfirmed": 9,
+      "comparisonChanges": 0
+    }
+  },
+  "budgets": {
+    "effectiveManualImportedRules": 256,
+    "sensitiveGlobs": 512,
+    "policyBytes": 131072
+  },
+  "downgrade": "Tested previous schema-aware parser rejects same-key v2 envelope; other historical readers/platforms not certified.",
+  "sourceReview": "LOW; no remaining narrow F02 blocker, source-review-01.md.",
+  "catalog": {
+    "path": "docs/soterai-lite/LITE-CATALOG.json",
+    "sha256": "1ce46192e9f315b5f2142c9f61542f1d513143dc2e19d4def6d95cea38c73ed4",
+    "status": "44 frozen checks UNVERIFIED"
+  },
+  "rating": "PENDING",
+  "cleanProfileInstall": "NOT-RUN/F32",
+  "retainedFailures": "Test-first baselines; fixture plumbing; stale guard-core exports; previous artifact identities; unsupported EvidenceRoot launcher rejected before execution, retry OutputRoot passed. No earlier pass reassigned to final object.",
+  "residual": "Native same-user original/buffer/alias/environment/history reads and independent uploads remain unmanaged; expanded registry drives managed boundary, original legacy scanner registry unchanged."
+}

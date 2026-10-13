@@ -5,6 +5,9 @@ import { DEFAULT_PROJECT_POLICY, classifyPath, parseProjectPolicy, isSensitiveFi
 import { readBoundaryFile } from "./readFile";
 import { matchesGlob, matchesRule, parseAiIgnore, parseManualRules, mergeManualRules, validateGlob, redactRegions, relativePath, documentDigest, OMITTED, type ManualRules } from "./policy";
 import { SENSITIVE_MARKS_KEY, parseSensitiveMarks } from "../project-privacy/SensitiveRestrictions";
+import { defaultVersionedPolicy, mergeVersionedPolicies, parseStoredPolicy, parseVersionedPolicy, parseVersionedPolicyText,
+    STORED_POLICY_SCHEMA_VERSION, MAX_POLICY_BYTES, versionedPolicyBlocks, versionedPolicySensitive, type VersionedPolicy } from "./VersionedPolicy";
+import { assertRestrictionWorkspace, withPendingRestriction } from "./RestrictionOperation";
 
 export const RULES_KEY = "soterai.aiForbidden.v1";
 const boundaryRulesChanged = new vscode.EventEmitter<string>();
@@ -20,7 +23,7 @@ function readStoredRules(target: vscode.Memento | undefined, root: string): Manu
     const all = target?.get<Record<string, unknown>>(RULES_KEY, {});
     if (all !== undefined && (!all || typeof all !== "object" || Array.isArray(all))) throw new Error("Invalid AI policy storage.");
     const legacy = parseSensitiveMarks(target ? target.get(SENSITIVE_MARKS_KEY, {}) : {}, root);
-    return mergeManualRules(parseManualRules(all?.[root]), {
+    return mergeManualRules(parseStoredPolicy(all?.[root]).manual, {
         paths: legacy.map(pattern => ({ kind: "file", pattern, sensitive: true })), regions: [],
     });
 }
@@ -32,19 +35,68 @@ function writeRules(root: string, update: (rules: ManualRules) => ManualRules): 
         const all = target.get<Record<string, unknown>>(RULES_KEY, {});
         if (!all || typeof all !== "object" || Array.isArray(all)) throw new Error("Invalid AI policy storage.");
         const validated = parseManualRules(update(readStoredRules(target, root)));
-        await target.update(RULES_KEY, { ...all, [root]: validated });
-        if (JSON.stringify(all[root]) !== JSON.stringify(validated)) boundaryRulesChanged.fire(root);
+        const policy = parseStoredPolicy(all[root]).policy;
+        const encoded = policy ? { schemaVersion: STORED_POLICY_SCHEMA_VERSION, manual: validated, policy } : validated;
+        parseStoredPolicy(encoded);
+        await target.update(RULES_KEY, { ...all, [root]: encoded });
+        if (JSON.stringify(all[root]) !== JSON.stringify(encoded)) boundaryRulesChanged.fire(root);
     });
     stateWrites.set(target, write.catch(() => undefined));
     return write;
 }
 const policyEnabled = () => vscode.workspace.getConfiguration("soterai").get<boolean>("hardening.addOnlyPolicy", true);
+const manualMatches = (rel: string, rule: import("./policy").PathRule) =>
+    matchesRule(rel.normalize("NFC"), { ...rule, pattern: rule.pattern.normalize("NFC") });
 export function updateRules(root: string, update: (rules: ManualRules) => ManualRules): Promise<void> {
     if (!policyEnabled()) return Promise.reject(new Error("AI policy updates disabled; context sharing unavailable."));
     return writeRules(root, current => mergeManualRules(current, parseManualRules(update(structuredClone(current)))));
 }
 export function saveRules(root: string, rules: ManualRules): Promise<void> {
     return updateRules(root, () => rules);
+}
+
+export function versionedPolicyEnabled(): boolean {
+    try {
+        const config = vscode.workspace.getConfiguration("soterai");
+        const inspected = config.inspect<boolean>("lite.versionedPolicy");
+        return (inspected ? inspected.globalValue ?? inspected.defaultValue ?? true : config.get("lite.versionedPolicy", true)) === true;
+    } catch { return false; }
+}
+export function storedVersionedPolicy(root: string): VersionedPolicy | undefined {
+    if (!state) throw new Error("AI policy storage is unavailable.");
+    const all = state.get<Record<string, unknown>>(RULES_KEY, {});
+    if (!all || typeof all !== "object" || Array.isArray(all)) throw new Error("Invalid AI policy storage.");
+    return parseStoredPolicy(all[root]).policy;
+}
+/** One atomic union in the existing queue. Older readers reject the v2 envelope. */
+export async function updateVersionedPolicy(root: string, added: VersionedPolicy): Promise<void> {
+    const validated = parseVersionedPolicy(added);
+    if (!vscode.workspace.isTrusted || !versionedPolicyEnabled() || !policyEnabled()) throw new Error("Versioned policy setup unavailable.");
+    const target = state;
+    if (!target) throw new Error("AI policy storage is unavailable.");
+    await withPendingRestriction(root, async () => {
+        const write = (stateWrites.get(target) ?? Promise.resolve()).then(async () => {
+            if (!vscode.workspace.isTrusted || !versionedPolicyEnabled() || !policyEnabled()) throw new Error("Versioned policy setup unavailable.");
+            assertRestrictionWorkspace(root);
+            const all = target.get<Record<string, unknown>>(RULES_KEY, {});
+            if (!all || typeof all !== "object" || Array.isArray(all)) throw new Error("Invalid AI policy storage.");
+            const previous = parseStoredPolicy(all[root]);
+            const policy = previous.policy ? mergeVersionedPolicies(previous.policy, validated) : validated;
+            const encoded = { schemaVersion: STORED_POLICY_SCHEMA_VERSION, manual: readStoredRules(target, root), policy };
+            parseStoredPolicy(encoded);
+            if (JSON.stringify(all[root]) === JSON.stringify(encoded)) return;
+            await target.update(RULES_KEY, { ...all, [root]: encoded });
+            boundaryRulesChanged.fire(root);
+        });
+        stateWrites.set(target, write.catch(() => undefined));
+        await write;
+        assertRestrictionWorkspace(root);
+    });
+}
+/** Portable metadata includes every effective accepted manual and imported deny. */
+export function exportRootPolicy(root: string): VersionedPolicy {
+    const policy = storedVersionedPolicy(root) ?? parseVersionedPolicy({ schemaVersion: 1, presets: [], rules: { paths: [], regions: [] }, sensitiveGlobs: [] });
+    return mergeVersionedPolicies(policy, { schemaVersion: 1, presets: [], rules: storedRules(root), sensitiveGlobs: [] });
 }
 
 /** UI review only. No rule/approval argument and no exported programmatic removal primitive. */
@@ -71,16 +123,16 @@ export async function reviewRuleRelaxation(): Promise<void> {
     });
 }
 
-interface RootPolicy { folder: vscode.WorkspaceFolder; globs: string[]; manual: ManualRules; invalid: boolean; project: ProjectPolicy }
+interface RootPolicy { folder: vscode.WorkspaceFolder; globs: string[]; manual: ManualRules; invalid: boolean; project: ProjectPolicy; versioned?: VersionedPolicy }
 
-async function optionalPolicyFile(folder: vscode.WorkspaceFolder, rel: string): Promise<string | undefined> {
+async function optionalPolicyFile(folder: vscode.WorkspaceFolder, rel: string, limit = 64 * 1024): Promise<string | undefined> {
     const target = path.join(folder.uri.fsPath, rel);
     try { await lstat(target); }
     catch (error) {
         if ((error as NodeJS.ErrnoException).code === "ENOENT") return undefined;
         throw error;
     }
-    return readBoundaryFile(folder.uri.fsPath, target);
+    return readBoundaryFile(folder.uri.fsPath, target, limit);
 }
 
 /** Immutable policy per collection. Invalid/unreadable existing policy denies that root. */
@@ -102,7 +154,7 @@ export class BoundarySnapshot {
             try {
                 root.manual = storedRules(folder.uri.toString());
                 // Retain the legacy record, but commit its stronger treatment before any managed release.
-                const persisted = parseManualRules(state?.get<Record<string, unknown>>(RULES_KEY, {})?.[folder.uri.toString()]);
+                const persisted = parseStoredPolicy(state?.get<Record<string, unknown>>(RULES_KEY, {})?.[folder.uri.toString()]).manual;
                 if (JSON.stringify(persisted) !== JSON.stringify(root.manual)) {
                     await updateRules(folder.uri.toString(), rules => rules);
                     root.manual = storedRules(folder.uri.toString());
@@ -110,6 +162,7 @@ export class BoundarySnapshot {
                 const ignore = await optionalPolicyFile(folder, ".aiignore");
                 const acceptedGlobs = ignore === undefined ? [] : parseAiIgnore(ignore);
                 const project = await optionalPolicyFile(folder, ".soterai/policy.json");
+                let retainedSensitivity: string[] = [];
                 if (project !== undefined) {
                     const parsed: unknown = JSON.parse(project);
                     if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) throw new Error("Invalid project policy.");
@@ -122,6 +175,7 @@ export class BoundarySnapshot {
                     if (sensitive !== undefined && (!Array.isArray(sensitive)
                         || sensitive.length > 256 || sensitive.some(p => typeof p !== "string" || !p.trim() || p.length > 256))) throw new Error("Invalid sensitive paths.");
                     root.project = parseProjectPolicy(parsed);
+                    retainedSensitivity = [...root.project.protectedFiles, ...root.project.sensitivePaths].map(validateGlob);
                     acceptedGlobs.push(...root.project.protectedFiles.map(validateGlob));
                     if (root.project.aiContext.sensitivePathAction === "block") acceptedGlobs.push(...root.project.sensitivePaths.map(validateGlob));
                     if (root.project.aiContext.defaultAction === "block") acceptedGlobs.push("**");
@@ -131,6 +185,21 @@ export class BoundarySnapshot {
                         paths: [...rules.paths, ...acceptedGlobs.map(pattern => ({ kind: "glob" as const, pattern }))],
                     }));
                     root.manual = storedRules(folder.uri.toString());
+                }
+                root.versioned = storedVersionedPolicy(folder.uri.toString());
+                const teamText = await optionalPolicyFile(folder, ".soterai/team-policy.json", MAX_POLICY_BYTES);
+                const team = teamText === undefined ? undefined : parseVersionedPolicyText(teamText);
+                if (versionedPolicyEnabled()) {
+                    let added = defaultVersionedPolicy();
+                    if (retainedSensitivity.length) added = mergeVersionedPolicies(added, { schemaVersion: 1, presets: [], rules: { paths: [], regions: [] }, sensitiveGlobs: retainedSensitivity });
+                    if (team) added = mergeVersionedPolicies(added, team);
+                    const merged = root.versioned ? mergeVersionedPolicies(root.versioned, added) : added;
+                    if (JSON.stringify(merged) !== JSON.stringify(root.versioned)) await updateVersionedPolicy(folder.uri.toString(), added);
+                    root.versioned = storedVersionedPolicy(folder.uri.toString());
+                    root.manual = storedRules(folder.uri.toString());
+                } else if (team && (!root.versioned || JSON.stringify(mergeVersionedPolicies(root.versioned, team)) !== JSON.stringify(root.versioned))) {
+                    // New team requirements cannot be silently ignored while setup is withdrawn.
+                    root.invalid = true;
                 }
             } catch { root.invalid = true; }
             return root;
@@ -153,7 +222,8 @@ export class BoundarySnapshot {
         if (legacyProtected?.(vscode.workspace.asRelativePath(uri))) return true;
         const classification = classifyPath(entry.rel, entry.root.project);
         return entry.root.globs.some(glob => matchesGlob(entry.rel, glob))
-            || entry.root.manual.paths.some(rule => matchesRule(entry.rel, rule))
+            || !!entry.root.versioned && versionedPolicyBlocks(entry.rel, entry.root.versioned)
+            || entry.root.manual.paths.some(rule => manualMatches(entry.rel, rule))
             || classification.level === "protected" || classification.action === "block";
     }
 
@@ -166,14 +236,16 @@ export class BoundarySnapshot {
     isSensitive(uri: vscode.Uri): boolean {
         const entry = this.locate(uri);
         return !entry || entry.root.invalid || isSensitiveFilePath(entry.rel)
-            || entry.root.manual.paths.some(rule => rule.sensitive === true && matchesRule(entry.rel, rule))
+            || !!entry.root.versioned && versionedPolicySensitive(entry.rel, entry.root.versioned)
+            || entry.root.manual.paths.some(rule => rule.sensitive === true && manualMatches(entry.rel, rule))
             || [...entry.root.project.protectedFiles, ...entry.root.project.sensitivePaths]
                 .some(pattern => matchesGlob(entry.rel, validateGlob(pattern)));
     }
 
     hasRegions(uri: vscode.Uri): boolean {
         const entry = this.locate(uri);
-        return !!entry && entry.root.manual.regions.some(r => relativePath(r.path) === entry.rel);
+        return !!entry && [...entry.root.manual.regions, ...entry.root.versioned?.rules.regions ?? []]
+            .some(r => relativePath(r.path.normalize("NFC")) === entry.rel.normalize("NFC"));
     }
 
     /** Approval cannot override an invalid/disabled policy. Used by the explicit safe reader only. */
@@ -181,26 +253,30 @@ export class BoundarySnapshot {
         const entry = this.locate(uri);
         if (!entry || entry.root.invalid) return undefined;
         return documentDigest(JSON.stringify([entry.root.folder.uri.toString(), entry.root.globs,
-            entry.root.manual, entry.root.project, legacyProtected?.(vscode.workspace.asRelativePath(uri)) === true]));
+            entry.root.manual, entry.root.project, entry.root.versioned, legacyProtected?.(vscode.workspace.asRelativePath(uri)) === true]));
     }
 
     /** A one-time approved view still enforces protected regions; existing default reads remain denied. */
+    private regions(root: RootPolicy) {
+        return [...root.manual.regions, ...(root.versioned?.rules.regions ?? [])]
+            .map(region => ({ ...region, path: region.path.normalize("NFC") }));
+    }
     approvedRegionView(uri: vscode.Uri, text: string): string {
         const entry = this.locate(uri);
         if (!entry || entry.root.invalid) return OMITTED;
-        return redactRegions(entry.rel, text, entry.root.manual.regions);
+        return redactRegions(entry.rel.normalize("NFC"), text, this.regions(entry.root));
     }
 
     sanitize(uri: vscode.Uri, text: string): string {
         const entry = this.locate(uri);
         if (!entry || this.blocks(uri)) return OMITTED;
-        return redactRegions(entry.rel, text, entry.root.manual.regions);
+        return this.approvedRegionView(uri, text);
     }
 
     selection(uri: vscode.Uri, text: string, start: number, end: number): string {
         const entry = this.locate(uri);
         if (!entry || this.blocks(uri)) return OMITTED;
-        return redactRegions(entry.rel, text, entry.root.manual.regions, start, end);
+        return redactRegions(entry.rel.normalize("NFC"), text, this.regions(entry.root), start, end);
     }
 
     async read(uri: vscode.Uri): Promise<string> {

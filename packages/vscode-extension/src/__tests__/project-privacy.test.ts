@@ -29,6 +29,8 @@ beforeEach(async () => {
     stub.resetState(root);
     context = stub.makeExtensionContext(root);
     initializeBoundaryState(context.workspaceState as never);
+    // Finish automatic default enrollment before this suite drives render events.
+    await BoundarySnapshot.load();
     Object.assign(stub.workspace, { registerTextDocumentContentProvider: () => new stub.Disposable() });
 });
 afterEach(async () => {

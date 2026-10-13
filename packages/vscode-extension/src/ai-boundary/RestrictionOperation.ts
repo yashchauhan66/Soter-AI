@@ -45,12 +45,17 @@ export function manualRestrictionPending(root: string, uri?: vscode.Uri): boolea
         const folder = vscode.workspace.workspaceFolders?.find(item => item.uri.toString() === root);
         if (!folder) return true;
         const relative = relativePath(path.relative(folder.uri.fsPath, uri.fsPath));
-        return [...operations].some(item => !item.scope || matchesRule(relative, item.scope));
+        return [...operations].some(item => !item.scope || matchesRule(relative.normalize("NFC"), { ...item.scope, pattern: item.scope.pattern.normalize("NFC") }));
     } catch { return true; }
 }
 
 export async function withManualRestriction<T>(root: string, operation: () => Promise<T>, scope?: PathRule): Promise<T> {
     requireRestrictionSave();
+    return withPendingRestriction(root, operation, scope);
+}
+
+/** Shared pending lifecycle; each operation must validate its own setup flag. */
+export async function withPendingRestriction<T>(root: string, operation: () => Promise<T>, scope?: PathRule): Promise<T> {
     assertRestrictionWorkspace(root);
     const operations = pending.get(root) ?? new Set<PendingRestriction>();
     const record = { scope };

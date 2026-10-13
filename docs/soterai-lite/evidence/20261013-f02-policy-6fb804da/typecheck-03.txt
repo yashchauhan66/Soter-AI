@@ -1,0 +1,20 @@
+﻿
+> soterai-ide-guard@0.7.0 typecheck
+> tsc --noEmit -p tsconfig.json
+
+../vscode-extension/src/__tests__/lite-versioned-policy.test.ts(9,50): error TS7006: Parameter 'row' implicitly has an 'any' type.
+../vscode-extension/src/__tests__/lite-versioned-policy.test.ts(10,50): error TS7006: Parameter 'row' implicitly has an 'any' type.
+../vscode-extension/src/__tests__/lite-versioned-policy.test.ts(11,47): error TS7006: Parameter 'row' implicitly has an 'any' type.
+../vscode-extension/src/__tests__/lite-versioned-policy.test.ts(30,82): error TS7006: Parameter 'row' implicitly has an 'any' type.
+../vscode-extension/src/ai-boundary/VersionedPolicy.ts(11,10): error TS2305: Module '"@soterai/guard-core"' has no exported member 'LITE_CREDENTIAL_PATTERNS'.
+../vscode-extension/src/ai-boundary/VersionedPolicy.ts(11,59): error TS2305: Module '"@soterai/guard-core"' has no exported member 'LITE_STACK_PRESETS'.
+../vscode-extension/src/ai-boundary/VersionedPolicy.ts(12,10): error TS2305: Module '"@soterai/guard-core"' has no exported member 'LITE_CREDENTIAL_PATTERNS'.
+../vscode-extension/src/ai-boundary/VersionedPolicy.ts(12,59): error TS2305: Module '"@soterai/guard-core"' has no exported member 'LITE_STACK_PRESETS'.
+../vscode-extension/src/ai-boundary/VersionedPolicy.ts(42,84): error TS7006: Parameter 'preset' implicitly has an 'any' type.
+../vscode-extension/src/ai-boundary/VersionedPolicy.ts(46,105): error TS7006: Parameter 'preset' implicitly has an 'any' type.
+../vscode-extension/src/ai-boundary/VersionedPolicy.ts(46,152): error TS7006: Parameter 'preset' implicitly has an 'any' type.
+../vscode-extension/src/ai-boundary/VersionedPolicy.ts(76,53): error TS7006: Parameter 'row' implicitly has an 'any' type.
+../vscode-extension/src/ai-boundary/VersionedPolicy.ts(76,98): error TS7006: Parameter 'preset' implicitly has an 'any' type.
+../vscode-extension/src/ai-boundary/VersionedPolicy.ts(76,145): error TS7006: Parameter 'preset' implicitly has an 'any' type.
+../vscode-extension/src/ai-boundary/VersionedPolicyCommands.ts(81,78): error TS7006: Parameter 'preset' implicitly has an 'any' type.
+../vscode-extension/src/ai-boundary/VersionedPolicyCommands.ts(85,56): error TS2339: Property 'id' does not exist on type 'string'.

@@ -1,0 +1,17 @@
+# F02 selected design, before implementation
+
+F01 completed and its 110 indexed hashes/111 committed paths verified at 6c90381bb03ddd9fd8361eb98d63e62bdb4ed419; serial activation 6ec5f6592826d6a62fcac28c1e1f1f7109b868c9. Production WIP remains one. No F03 production work is permitted.
+
+Machine flag `soterai.lite.versionedPolicy` controls new default enrollment, imports and presets. Accepted policy continues enforcing after withdrawal. All tests use synthetic temporary roots and existing isolated developer hosts; no real credentials, login, download, publishing or normal-profile installation.
+
+Host-free VersionedPolicy.ts strictly validates schemaVersion1, exact keys, UTF-8 budgets, deny-only paths/regions, explicit sensitive globs and known presets. A curated 200+ unique credential path registry is separate from the 256 manual-rule limit. Optional stack presets add config-family sensitivity. New policy matching normalizes Unicode NFC/case/separators conservatively; legacy ABI is retained.
+
+Atomic storage uses the EXISTING RULES_KEY per-root incompatible envelope `{schemaVersion:2,manual,policy}`. Older parseManualRules rejects the missing paths/regions, so older managed readers fail closed rather than ignoring new metadata. Current readers strictly validate future/corrupt envelopes even with the flag off. Existing stateWrites queue serializes every rule/policy change; same-root imports/defaults/team policy union accepted denies/sensitivity and never replace them. Generic manual-rule relaxation cannot remove imported team rules.
+
+Before any managed release, enabled default enrollment and `.soterai/team-policy.json` acceptance must persist successfully. Deletion/empty team import/flag-off cannot remove accepted treatment. Access revision includes effective policy and sensitivity; successful policy-only changes emit metadata events, no-op enrollment does not. UI changes bracket pending reads/revoke views and bind the original root before queued persistence and before acknowledgement.
+
+Import/export/preset commands accept no supplied policy/approval arguments. Fresh native pickers and review metadata are required. Import reads a bounded canonical policy file inside the selected root; it cannot read arbitrary local files. Export writes a fresh workspace JSON path exclusively (never overwrites), contains rule metadata only, and unions manual+imported+default sensitivity so its round-trip retains every accepted deny. Export never opens a secret source file. Sensitive rule relaxation/drift is F03, still planned.
+
+Same-lineage adversarial review: LOW. Major design corrections before implementation: avoid consuming the manual limit with defaults; use richer sensitive-glob policy; avoid the separate-new-key downgrade hole; include manual restrictions in export; include policy-only changes in approval revision/revocation. Each correction will get synthetic regression evidence.
+
+Preparation inspection errors (not product tests/safety refusals): missing guessed paths `sensitive-policy-invariants.test.ts`, `generate-readiness-doc.mjs`, and `commit-stage.ps1`; rg then found actual sensitive-policy.test.ts/generate-readiness.mjs. F01 sandbox child verification failed `Error: spawnSync git EPERM`; authorized escalated read-only verification passed separately. Supplemental full fsck session59539 remains RUNNING/INCOMPLETE; do not terminate/restart it. Both backup files are verified on D:,20GB minimum remains user-waived.

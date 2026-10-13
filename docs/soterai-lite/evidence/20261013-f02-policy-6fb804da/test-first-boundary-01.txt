@@ -1,0 +1,178 @@
+﻿TAP version 13
+# Subtest: F02-B01 new credential defaults withhold private bytes and preserve public near-match
+not ok 1 - F02-B01 new credential defaults withhold private bytes and preserve public near-match
+  ---
+  duration_ms: 86.9631
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-versioned-policy-boundary.test.ts:2:2842'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'SYNTHETIC_F02_PRIVATE_NOTE_NOT_A_RECOGNIZED_TOKEN'
+    - '[AI-forbidden content omitted by SoterAI]'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '[AI-forbidden content omitted by SoterAI]'
+  actual: 'SYNTHETIC_F02_PRIVATE_NOTE_NOT_A_RECOGNIZED_TOKEN'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-versioned-policy-boundary.test.ts:35:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F02-B02 team denies and sensitivity survive deletion without removing ordinary manual rules
+not ok 2 - F02-B02 team denies and sensitivity survive deletion without removing ordinary manual rules
+  ---
+  duration_ms: 19.3368
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-versioned-policy-boundary.test.ts:2:3602'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-versioned-policy-boundary.test.ts:43:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F02-B03 unknown team schema fails closed for public content too
+not ok 3 - F02-B03 unknown team schema fails closed for public content too
+  ---
+  duration_ms: 16.8249
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-versioned-policy-boundary.test.ts:2:4610'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-versioned-policy-boundary.test.ts:52:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F02-B04 failed default enrollment prevents managed release and leaves no partial record
+not ok 4 - F02-B04 failed default enrollment prevents managed release and leaves no partial record
+  ---
+  duration_ms: 17.0263
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-versioned-policy-boundary.test.ts:2:5049'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-versioned-policy-boundary.test.ts:58:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F02-B05 v2 envelope stays enforced with flag off while public control remains available
+not ok 5 - F02-B05 v2 envelope stays enforced with flag off while public control remains available
+  ---
+  duration_ms: 13.6171
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-versioned-policy-boundary.test.ts:2:5640'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + '[AI-forbidden content omitted by SoterAI]'
+    - 'Useful public control.'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'Useful public control.'
+  actual: '[AI-forbidden content omitted by SoterAI]'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-versioned-policy-boundary.test.ts:67:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F02-B06 manual updates preserve accepted versioned policy sensitivity
+not ok 6 - F02-B06 manual updates preserve accepted versioned policy sensitivity
+  ---
+  duration_ms: 10.4671
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-versioned-policy-boundary.test.ts:2:6398'
+  failureType: 'testCodeFailure'
+  error: 'Invalid stored AI rules.'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    parseManualRules (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\ai-boundary\policy.ts:88:75)
+    readStoredRules (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\ai-boundary\BoundarySnapshot.ts:23:29)
+    <anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\ai-boundary\BoundarySnapshot.ts:34:51)
+  ...
+# Subtest: F02-B07 legacy project sensitive classification is retained on deletion and flag withdrawal
+not ok 7 - F02-B07 legacy project sensitive classification is retained on deletion and flag withdrawal
+  ---
+  duration_ms: 28.0444
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-versioned-policy-boundary.test.ts:2:7107'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-versioned-policy-boundary.test.ts:82:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F02-B08 no-op reload retains exact revision and performs no redundant writes
+not ok 8 - F02-B08 no-op reload retains exact revision and performs no redundant writes
+  ---
+  duration_ms: 243.9912
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-versioned-policy-boundary.test.ts:2:7904'
+  failureType: 'testCodeFailure'
+  error: 'false == true'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-versioned-policy-boundary.test.ts:89:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 0
+# fail 8
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2011.3952

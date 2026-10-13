@@ -1,0 +1,28 @@
+﻿TAP version 13
+# Subtest: F02-C10 accepted imports refresh previously open managed previews
+not ok 1 - F02-C10 accepted imports refresh previously open managed previews
+  ---
+  duration_ms: 129.6976
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-versioned-policy-commands.test.ts:2:12307'
+  failureType: 'testCodeFailure'
+  error: 'Existing managed preview must be invalidated after policy-only changes.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-versioned-policy-commands.test.ts:124:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1359.9171

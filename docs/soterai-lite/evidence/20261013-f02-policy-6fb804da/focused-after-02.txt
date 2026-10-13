@@ -1,0 +1,130 @@
+﻿TAP version 13
+# Subtest: F02-B01 new credential defaults withhold private bytes and preserve public near-match
+ok 1 - F02-B01 new credential defaults withhold private bytes and preserve public near-match
+  ---
+  duration_ms: 118.2731
+  type: 'test'
+  ...
+# Subtest: F02-B02 team denies and sensitivity survive deletion without removing ordinary manual rules
+ok 2 - F02-B02 team denies and sensitivity survive deletion without removing ordinary manual rules
+  ---
+  duration_ms: 79.6224
+  type: 'test'
+  ...
+# Subtest: F02-B03 unknown team schema fails closed for public content too
+ok 3 - F02-B03 unknown team schema fails closed for public content too
+  ---
+  duration_ms: 20.4537
+  type: 'test'
+  ...
+# Subtest: F02-B04 failed default enrollment prevents managed release and leaves no partial record
+ok 4 - F02-B04 failed default enrollment prevents managed release and leaves no partial record
+  ---
+  duration_ms: 19.1902
+  type: 'test'
+  ...
+# Subtest: F02-B05 v2 envelope stays enforced with flag off while public control remains available
+ok 5 - F02-B05 v2 envelope stays enforced with flag off while public control remains available
+  ---
+  duration_ms: 23.7358
+  type: 'test'
+  ...
+# Subtest: F02-B06 manual updates preserve accepted versioned policy sensitivity
+ok 6 - F02-B06 manual updates preserve accepted versioned policy sensitivity
+  ---
+  duration_ms: 40.8518
+  type: 'test'
+  ...
+# Subtest: F02-B07 legacy project sensitive classification is retained on deletion and flag withdrawal
+ok 7 - F02-B07 legacy project sensitive classification is retained on deletion and flag withdrawal
+  ---
+  duration_ms: 45.5612
+  type: 'test'
+  ...
+# Subtest: F02-B08 no-op reload retains exact revision and performs no redundant writes
+ok 8 - F02-B08 no-op reload retains exact revision and performs no redundant writes
+  ---
+  duration_ms: 28.7186
+  type: 'test'
+  ...
+# Subtest: F02-B09 existing NFD protected regions retain privacy with versioned setup withdrawn
+ok 9 - F02-B09 existing NFD protected regions retain privacy with versioned setup withdrawn
+  ---
+  duration_ms: 25.5466
+  type: 'test'
+  ...
+# Subtest: F02-B10 preset-only team policy expands and retains its declared sensitivity
+ok 10 - F02-B10 preset-only team policy expands and retains its declared sensitivity
+  ---
+  duration_ms: 44.1578
+  type: 'test'
+  ...
+# Subtest: F02-P01 curated credential registry has 200+ distinct valid patterns and real matching samples
+ok 11 - F02-P01 curated credential registry has 200+ distinct valid patterns and real matching samples
+  ---
+  duration_ms: 33.0533
+  type: 'test'
+  ...
+# Subtest: F02-P02 independent credential/public corpus distinguishes exact names and paths
+ok 12 - F02-P02 independent credential/public corpus distinguishes exact names and paths
+  ---
+  duration_ms: 133.7824
+  type: 'test'
+  ...
+# Subtest: F02-P03 stack presets add config sensitivity without discarding accepted patterns
+ok 13 - F02-P03 stack presets add config sensitivity without discarding accepted patterns
+  ---
+  duration_ms: 19.0067
+  type: 'test'
+  ...
+# Subtest: F02-P04 schema rejects missing future unknown non-object and weakening fields
+ok 14 - F02-P04 schema rejects missing future unknown non-object and weakening fields
+  ---
+  duration_ms: 1.0216
+  type: 'test'
+  ...
+# Subtest: F02-P05 bytes counts syntax and duplicate JSON keys are bounded/rejected
+ok 15 - F02-P05 bytes counts syntax and duplicate JSON keys are bounded/rejected
+  ---
+  duration_ms: 2.2092
+  type: 'test'
+  ...
+# Subtest: F02-P06 additive import retains strongest file sensitivity and protected regions
+ok 16 - F02-P06 additive import retains strongest file sensitivity and protected regions
+  ---
+  duration_ms: 5.3349
+  type: 'test'
+  ...
+# Subtest: F02-P07 NFC case and separators are conservative without allowing traversal
+ok 17 - F02-P07 NFC case and separators are conservative without allowing traversal
+  ---
+  duration_ms: 1.096
+  type: 'test'
+  ...
+# Subtest: F02-P08 portable export round-trips exact restrictions with no source-content channel
+ok 18 - F02-P08 portable export round-trips exact restrictions with no source-content channel
+  ---
+  duration_ms: 10.615
+  type: 'test'
+  ...
+# Subtest: F02-P09 same-key envelope preserves metadata and causes old readers to fail closed
+ok 19 - F02-P09 same-key envelope preserves metadata and causes old readers to fail closed
+  ---
+  duration_ms: 6.9207
+  type: 'test'
+  ...
+# Subtest: F02-P10 deterministic parser fuzz keeps malformed paths/version types unavailable
+ok 20 - F02-P10 deterministic parser fuzz keeps malformed paths/version types unavailable
+  ---
+  duration_ms: 9.0932
+  type: 'test'
+  ...
+1..20
+# tests 20
+# suites 0
+# pass 20
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1850.9893

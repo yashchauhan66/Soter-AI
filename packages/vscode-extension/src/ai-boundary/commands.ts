@@ -3,9 +3,10 @@ import * as path from "node:path";
 import { randomUUID } from "node:crypto";
 import { redactAIContext as redactForSharing } from "@soterai/guard-core";
 import { assertWorkspaceFileUri } from "../security/WorkspacePathGuard";
-import { BoundarySnapshot, initializeBoundaryState, storedRules, updateRules, reviewRuleRelaxation } from "./BoundarySnapshot";
+import { BoundarySnapshot, initializeBoundaryState, onDidChangeBoundaryRules, storedRules, updateRules, reviewRuleRelaxation } from "./BoundarySnapshot";
 import { documentDigest, relativePath, validateGlob, OMITTED } from "./policy";
 import { restrictionSaveEnabled, requireRestrictionSave, assertRestrictionWorkspace, RestrictionUnavailable, withManualRestriction, type RestrictionResult } from "./RestrictionOperation";
+import { registerVersionedPolicyCommands } from "./VersionedPolicyCommands";
 
 /** A read-only alternative URI, never an interceptor for file: or other extensions. */
 export class RedactedDocumentProvider implements vscode.TextDocumentContentProvider, vscode.Disposable {
@@ -46,8 +47,10 @@ export class RedactedDocumentProvider implements vscode.TextDocumentContentProvi
 
 export function registerAIBoundaryCommands(context: vscode.ExtensionContext): void {
     initializeBoundaryState(context.workspaceState);
+    registerVersionedPolicyCommands(context);
     const provider = new RedactedDocumentProvider();
     context.subscriptions.push(provider, vscode.workspace.registerTextDocumentContentProvider("soterai-redacted", provider));
+    context.subscriptions.push(onDidChangeBoundaryRules(() => provider.refresh()));
     const watcher = vscode.workspace.createFileSystemWatcher("**/{.aiignore,policy.json}");
     context.subscriptions.push(watcher, watcher.onDidChange(() => provider.refresh()), watcher.onDidCreate(() => provider.refresh()),
         watcher.onDidDelete(() => provider.refresh()), vscode.workspace.onDidChangeTextDocument(() => provider.refresh()),

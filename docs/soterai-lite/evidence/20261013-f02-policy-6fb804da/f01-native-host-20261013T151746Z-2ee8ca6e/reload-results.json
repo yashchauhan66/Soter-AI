@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-10-13T15:18:31.806Z",
+  "phase": "reload",
+  "syntheticOnly": true,
+  "workspace": "c:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261013-f02-policy-6fb804da\\f01-native-host-20261013T151746Z-2ee8ca6e\\workspace",
+  "declaredProfilePath": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261013-f02-policy-6fb804da\\f01-native-host-20261013T151746Z-2ee8ca6e\\profile",
+  "hostVersion": "1.141.0",
+  "appName": "Visual Studio Code",
+  "extensionPath": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261013-f02-policy-6fb804da\\f01-native-host-20261013T151746Z-2ee8ca6e\\extension",
+  "extensionVersion": "0.7.0",
+  "extensionActive": true,
+  "extensionBundleSha256": "5867719be28c173ff1fb91a12fe5ccc3b3fdf44e9b42e58c946d8c89dadb53f5",
+  "currentInstalledBundleSha256": "5867719be28c173ff1fb91a12fe5ccc3b3fdf44e9b42e58c946d8c89dadb53f5",
+  "hostProbeSha256": "794d68693ecb51770b9432a91853bb726c90eeca24e63558d4f5d6a93f63a032",
+  "observations": [
+    {
+      "id": "F01-H01",
+      "status": "NOT_RUN",
+      "scope": "Save phase: direct and chosen file saves, sensitive save, withheld previews and public control."
+    },
+    {
+      "id": "F01-H02",
+      "status": "NOT_RUN",
+      "scope": "Save phase: missing synthetic file reports FAILED without a saved notification."
+    },
+    {
+      "id": "F01-H03",
+      "status": "NOT_RUN",
+      "scope": "Save phase: real folder, scripted glob and real selected-region saves report SAVED."
+    },
+    {
+      "id": "F01-H04",
+      "status": "PASS",
+      "scope": "Reload phase: same declared profile/workspace/bundle retains actual restrictions and public control."
+    },
+    {
+      "id": "F01-H05",
+      "status": "PASS",
+      "scope": "Flag-off withdraws new operations, retains prior denies/masking; explicit picker cancellation reports CANCELLED."
+    }
+  ],
+  "commandStatuses": [
+    {
+      "command": "soterai.blockFromAI",
+      "observedStatus": "UNAVAILABLE"
+    },
+    {
+      "command": "soterai.restrictProjectFile",
+      "observedStatus": "UNAVAILABLE"
+    },
+    {
+      "command": "soterai.restrictSensitiveFile",
+      "observedStatus": "UNAVAILABLE"
+    },
+    {
+      "command": "soterai.blockGlobFromAI",
+      "observedStatus": "UNAVAILABLE"
+    },
+    {
+      "command": "soterai.blockSelectionFromAI",
+      "observedStatus": "UNAVAILABLE"
+    },
+    {
+      "command": "soterai.restrictProjectFile",
+      "observedStatus": "CANCELLED"
+    }
+  ],
+  "passed": 2,
+  "failed": 0,
+  "identityScope": "Installed bundle sampled before/after actual activation; no independent authenticated in-memory hash.",
+  "profileScope": "Launcher-declared isolated profile; compared across launches, launcher must verify actual --user-data-dir.",
+  "interactionScope": "Actual registered installed-extension commands and document providers; scripted UI decisions, independent human presence untested.",
+  "externalAgents": "NOT_TESTED",
+  "ordinaryTerminal": "NOT_TESTED",
+  "fullClaim": "BLOCKED"
+}

@@ -74,6 +74,7 @@
         "soterai.hardening.capabilityReleaseGuard",
         "soterai.projectPrivacy.enabled",
         "soterai.lite.restrictionSave",
+        "soterai.lite.versionedPolicy",
         "soterai.projectPrivacy.atomicSensitivePolicy",
         "soterai.projectPrivacy.safeViewComposition",
         "soterai.projectPrivacy.safePublication",
@@ -184,6 +185,21 @@
       {
         "command": "soterai.manageAIRules",
         "title": "Manage Manual AI Rules",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.importLitePolicy",
+        "title": "Import Protection Policy",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.exportLitePolicy",
+        "title": "Export Protection Policy",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.applyLitePolicyPreset",
+        "title": "Add Stack Protection Preset",
         "category": "SoterAI"
       },
       {
@@ -1187,6 +1203,12 @@
           "scope": "machine",
           "markdownDescription": "Enable new manual file, folder, pattern and selected-text restriction saves with explicit completion results. Disabling withdraws new saves while preserving accepted restrictions and existing masked readers."
         },
+        "soterai.lite.versionedPolicy": {
+          "type": "boolean",
+          "default": true,
+          "scope": "machine",
+          "description": "Enable new credential defaults, additive policy imports and stack presets. Turning this off retains accepted denies and sensitivity. Tested older schema-aware readers reject the stronger storage format and make managed reads unavailable."
+        },
         "soterai.projectPrivacy.professionalUi": {
           "type": "boolean",
           "default": true,
@@ -1584,6 +1606,21 @@
       ],
       "soterai.explorerContext": [
         {
+          "command": "soterai.applyLitePolicyPreset",
+          "group": "3_policy@1",
+          "when": "explorerResourceIsFolder && resourceScheme == file"
+        },
+        {
+          "command": "soterai.importLitePolicy",
+          "group": "3_policy@2",
+          "when": "explorerResourceIsFolder && resourceScheme == file"
+        },
+        {
+          "command": "soterai.exportLitePolicy",
+          "group": "3_policy@3",
+          "when": "explorerResourceIsFolder && resourceScheme == file"
+        },
+        {
           "command": "soterai.restrictSensitiveFile",
           "group": "2_protect@4",
           "when": "!explorerResourceIsFolder && resourceScheme == file"
@@ -1644,6 +1681,18 @@
         }
       ],
       "commandPalette": [
+        {
+          "command": "soterai.importLitePolicy",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.exportLitePolicy",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.applyLitePolicyPreset",
+          "when": "soterai.advancedCommands"
+        },
         {
           "command": "soterai.restrictProjectFile",
           "when": "soterai.advancedCommands"

@@ -5,7 +5,7 @@ import { mkdtemp, writeFile, rm } from "node:fs/promises";
 import { basename, dirname, join, resolve } from "node:path";
 import { tmpdir } from "node:os";
 import * as stub from "./phase2/vscode-stub";
-import { initializeBoundaryState, onDidChangeBoundaryRules, saveRules, storedRules } from "../ai-boundary/BoundarySnapshot";
+import { BoundarySnapshot, initializeBoundaryState, onDidChangeBoundaryRules, saveRules, storedRules } from "../ai-boundary/BoundarySnapshot";
 import { openProjectPrivacyPanel, projectPrivacyHtml, type ProjectPrivacyFacts } from "../project-privacy/panel";
 import { evaluatePrivacyVerification, type PrivacyVerificationEvidence } from "../project-privacy/VerificationEvidence";
 
@@ -16,6 +16,8 @@ let listener: (value: unknown) => Promise<void>;
 beforeEach(async () => {
     root = await mkdtemp(join(tmpdir(), "soterai-professional-ui-")); stub.resetState(root);
     context = stub.makeExtensionContext(root); initializeBoundaryState(context.workspaceState as never);
+    // Complete automatic F02 enrollment before this suite's render event tests.
+    await BoundarySnapshot.load();
     html = "";
     mock.method(stub.window, "createWebviewPanel", () => {
         let disposed = () => {};

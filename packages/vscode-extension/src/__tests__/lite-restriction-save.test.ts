@@ -76,6 +76,9 @@ function rejectPolicySave() {
 beforeEach(async () => {
     root = await mkdtemp(join(tmpdir(), "soterai-f01-"));
     stub.resetState(root);
+    // F01 fault/queue tests isolate manual saves. F02 default enrollment has
+    // its own combined-feature controls and exact-package host acceptance.
+    stub.state.config.set("soterai.lite.versionedPolicy", false);
     context = stub.makeExtensionContext(root);
     initializeBoundaryState(context.workspaceState as never);
     await write("private.txt", fakePrivate);

@@ -34,3 +34,5 @@ export * from "./GovernancePolicy";
 export * from "./ProcessSandboxPolicy";
 export * from "./ExtensionIsolationPolicy";
 export * from "./sensitiveFiles";
+
+export * from "./LitePolicyCatalog";

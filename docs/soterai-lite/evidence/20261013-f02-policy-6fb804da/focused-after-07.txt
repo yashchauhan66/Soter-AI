@@ -1,0 +1,214 @@
+﻿TAP version 13
+# Subtest: F02-B01 new credential defaults withhold private bytes and preserve public near-match
+ok 1 - F02-B01 new credential defaults withhold private bytes and preserve public near-match
+  ---
+  duration_ms: 156.7636
+  type: 'test'
+  ...
+# Subtest: F02-B02 team denies and sensitivity survive deletion without removing ordinary manual rules
+ok 2 - F02-B02 team denies and sensitivity survive deletion without removing ordinary manual rules
+  ---
+  duration_ms: 135.6421
+  type: 'test'
+  ...
+# Subtest: F02-B03 unknown team schema fails closed for public content too
+ok 3 - F02-B03 unknown team schema fails closed for public content too
+  ---
+  duration_ms: 33.4557
+  type: 'test'
+  ...
+# Subtest: F02-B04 failed default enrollment prevents managed release and leaves no partial record
+ok 4 - F02-B04 failed default enrollment prevents managed release and leaves no partial record
+  ---
+  duration_ms: 22.1958
+  type: 'test'
+  ...
+# Subtest: F02-B05 v2 envelope stays enforced with flag off while public control remains available
+ok 5 - F02-B05 v2 envelope stays enforced with flag off while public control remains available
+  ---
+  duration_ms: 24.0724
+  type: 'test'
+  ...
+# Subtest: F02-B06 manual updates preserve accepted versioned policy sensitivity
+ok 6 - F02-B06 manual updates preserve accepted versioned policy sensitivity
+  ---
+  duration_ms: 49.7753
+  type: 'test'
+  ...
+# Subtest: F02-B07 legacy project sensitive classification is retained on deletion and flag withdrawal
+ok 7 - F02-B07 legacy project sensitive classification is retained on deletion and flag withdrawal
+  ---
+  duration_ms: 81.1763
+  type: 'test'
+  ...
+# Subtest: F02-B08 no-op reload retains exact revision and performs no redundant writes
+ok 8 - F02-B08 no-op reload retains exact revision and performs no redundant writes
+  ---
+  duration_ms: 37.5314
+  type: 'test'
+  ...
+# Subtest: F02-B09 existing NFD protected regions retain privacy with versioned setup withdrawn
+ok 9 - F02-B09 existing NFD protected regions retain privacy with versioned setup withdrawn
+  ---
+  duration_ms: 42.6876
+  type: 'test'
+  ...
+# Subtest: F02-B10 preset-only team policy expands and retains its declared sensitivity
+ok 10 - F02-B10 preset-only team policy expands and retains its declared sensitivity
+  ---
+  duration_ms: 55.7316
+  type: 'test'
+  ...
+# Subtest: F02-B11 combined envelope budget failure preserves prior readable policy on import
+ok 11 - F02-B11 combined envelope budget failure preserves prior readable policy on import
+  ---
+  duration_ms: 184.1332
+  type: 'test'
+  ...
+# Subtest: F02-B12 post-migration manual addition validates the whole envelope before saving
+ok 12 - F02-B12 post-migration manual addition validates the whole envelope before saving
+  ---
+  duration_ms: 109.3162
+  type: 'test'
+  ...
+# Subtest: F02-B13 migrating NFD file sensitivity and folder denies preserves their exact targets
+ok 13 - F02-B13 migrating NFD file sensitivity and folder denies preserves their exact targets
+  ---
+  duration_ms: 64.1022
+  type: 'test'
+  ...
+# Subtest: F02-B14 new NFD manual saves under the v2 envelope still deny and classify their files
+ok 14 - F02-B14 new NFD manual saves under the v2 envelope still deny and classify their files
+  ---
+  duration_ms: 39.3607
+  type: 'test'
+  ...
+# Subtest: F02-C01 UI import adds denied paths and sensitivity with useful public control
+ok 15 - F02-C01 UI import adds denied paths and sensitivity with useful public control
+  ---
+  duration_ms: 261.7897
+  type: 'test'
+  ...
+# Subtest: F02-C02 cancelled choice/review and supplied arguments never bypass owner UI
+ok 16 - F02-C02 cancelled choice/review and supplied arguments never bypass owner UI
+  ---
+  duration_ms: 121.5799
+  type: 'test'
+  ...
+# Subtest: F02-C03 malformed/future import and persistence failure report no saved confirmation
+ok 17 - F02-C03 malformed/future import and persistence failure report no saved confirmation
+  ---
+  duration_ms: 126.0929
+  type: 'test'
+  ...
+# Subtest: F02-C04 reviewed file change and root drift fail without importing different policy
+ok 18 - F02-C04 reviewed file change and root drift fail without importing different policy
+  ---
+  duration_ms: 112.8023
+  type: 'test'
+  ...
+# Subtest: F02-C05 export round-trip contains legacy sensitive files and regions plus accepted imported rules
+ok 19 - F02-C05 export round-trip contains legacy sensitive files and regions plus accepted imported rules
+  ---
+  duration_ms: 211.7269
+  type: 'test'
+  ...
+# Subtest: F02-C06 export refuses existing and outside-root destinations without changing files
+ok 20 - F02-C06 export refuses existing and outside-root destinations without changing files
+  ---
+  duration_ms: 77.2221
+  type: 'test'
+  ...
+# Subtest: F02-C07 stack selection expands sensitive patterns and flag withdrawal preserves them
+ok 21 - F02-C07 stack selection expands sensitive patterns and flag withdrawal preserves them
+  ---
+  duration_ms: 86.036
+  type: 'test'
+  ...
+# Subtest: F02-C08 policy-only sensitivity change expires an in-flight safe-read approval
+ok 22 - F02-C08 policy-only sensitivity change expires an in-flight safe-read approval
+  ---
+  duration_ms: 88.5076
+  type: 'test'
+  ...
+# Subtest: F02-C09 protection changed during metadata review invalidates the import without removing the stronger deny
+ok 23 - F02-C09 protection changed during metadata review invalidates the import without removing the stronger deny
+  ---
+  duration_ms: 97.266
+  type: 'test'
+  ...
+# Subtest: F02-P01 curated credential registry has 200+ distinct valid patterns and real matching samples
+ok 24 - F02-P01 curated credential registry has 200+ distinct valid patterns and real matching samples
+  ---
+  duration_ms: 48.4441
+  type: 'test'
+  ...
+# Subtest: F02-P02 independent credential/public corpus distinguishes exact names and paths
+ok 25 - F02-P02 independent credential/public corpus distinguishes exact names and paths
+  ---
+  duration_ms: 158.482
+  type: 'test'
+  ...
+# Subtest: F02-P03 stack presets add config sensitivity without discarding accepted patterns
+ok 26 - F02-P03 stack presets add config sensitivity without discarding accepted patterns
+  ---
+  duration_ms: 24.2253
+  type: 'test'
+  ...
+# Subtest: F02-P04 schema rejects missing future unknown non-object and weakening fields
+ok 27 - F02-P04 schema rejects missing future unknown non-object and weakening fields
+  ---
+  duration_ms: 1.5831
+  type: 'test'
+  ...
+# Subtest: F02-P05 bytes counts syntax and duplicate JSON keys are bounded/rejected
+ok 28 - F02-P05 bytes counts syntax and duplicate JSON keys are bounded/rejected
+  ---
+  duration_ms: 3.5262
+  type: 'test'
+  ...
+# Subtest: F02-P06 additive import retains strongest file sensitivity and protected regions
+ok 29 - F02-P06 additive import retains strongest file sensitivity and protected regions
+  ---
+  duration_ms: 8.3422
+  type: 'test'
+  ...
+# Subtest: F02-P07 NFC case and separators are conservative without allowing traversal
+ok 30 - F02-P07 NFC case and separators are conservative without allowing traversal
+  ---
+  duration_ms: 2.1154
+  type: 'test'
+  ...
+# Subtest: F02-P08 portable export round-trips exact restrictions with no source-content channel
+ok 31 - F02-P08 portable export round-trips exact restrictions with no source-content channel
+  ---
+  duration_ms: 21.5708
+  type: 'test'
+  ...
+# Subtest: F02-P09 same-key envelope preserves metadata and causes old readers to fail closed
+ok 32 - F02-P09 same-key envelope preserves metadata and causes old readers to fail closed
+  ---
+  duration_ms: 10.0963
+  type: 'test'
+  ...
+# Subtest: F02-P10 deterministic parser fuzz keeps malformed paths/version types unavailable
+ok 33 - F02-P10 deterministic parser fuzz keeps malformed paths/version types unavailable
+  ---
+  duration_ms: 18.6273
+  type: 'test'
+  ...
+# Subtest: F02-P11 compact export near the byte ceiling stays importable
+ok 34 - F02-P11 compact export near the byte ceiling stays importable
+  ---
+  duration_ms: 28.72
+  type: 'test'
+  ...
+1..34
+# tests 34
+# suites 0
+# pass 34
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2887.8758
