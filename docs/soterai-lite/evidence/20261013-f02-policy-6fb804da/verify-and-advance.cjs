@@ -1,0 +1,23 @@
+const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto'),cp=require('node:child_process'),assert=require('node:assert/strict');
+const repo=path.resolve(__dirname,'../../../..'),base=path.relative(repo,__dirname).replaceAll('\\','/');
+const sha=bytes=>crypto.createHash('sha256').update(bytes).digest('hex');
+const revision='b1ffbcce27b8bafda7a9358d81b78e4aaff6416e';
+const index=JSON.parse(fs.readFileSync(path.join(__dirname,'f02-evidence-index-01.json'),'utf8'));
+const mismatches=[];for(const entry of index.entries){const bytes=cp.execFileSync('git',['show',revision+':'+entry.path],{cwd:repo,maxBuffer:10*1024*1024});if(sha(bytes)!==entry.sha256)mismatches.push(entry.path);}
+const expected=fs.readFileSync(path.join(__dirname,'f02-commit-allowlist-01.txt'),'utf8').trim().split('\n').sort();
+const actual=cp.execFileSync('git',['diff-tree','--no-commit-id','--name-only','-r',revision],{cwd:repo,encoding:'utf8'}).trim().split('\n').sort();
+assert.deepEqual(mismatches,[]);assert.deepEqual(actual,expected);
+assert.equal(sha(fs.readFileSync(path.join(repo,'packages/soterai-lite/soterai-lite-0.7.0-f02-20261013-attempt04.vsix'))),'6dab4f06f3763a74dc56c0422f12250815b942b2ecf954be07b9812ec96c7a3d');
+fs.writeFileSync(path.join(__dirname,'f02-committed-byte-verification-01.json'),JSON.stringify({status:'PASS',revision,indexedEntries:index.entries.length,committedPaths:actual.length,mismatches,unexpectedPaths:0,artifactRecheck:'PASS'},null,2)+'\n',{flag:'wx'});
+const queuePath=path.join(repo,'docs/soterai-lite/FEATURE-QUEUE.json'),queue=JSON.parse(fs.readFileSync(queuePath,'utf8'));assert.equal(queue.activeFeature,'F02');
+Object.assign(queue.features.find(feature=>feature.id==='F02'),{status:'DONE',result:'PASS',sourceEvidenceCommit:revision,acceptanceEvidence:base+'/f02-acceptance-01.json',commitByteVerification:base+'/f02-committed-byte-verification-01.json'});
+Object.assign(queue.features.find(feature=>feature.id==='F03'),{status:'ACTIVE',result:'NOT-RUN'});
+queue.activeFeature='F03';queue.scope='F01/F02 DONE with exact artifact tests and verified scoped commits; F03 alone active, test-first design.';
+fs.writeFileSync(queuePath,JSON.stringify(queue,null,2)+'\n');
+fs.appendFileSync(path.join(repo,'docs/soterai-lite/ledger.md'),'\n## STEP RECEIPT F02-COMMIT / F03-ACTIVATE\n\nF02 scoped commit **b1ffbcce27b8bafda7a9358d81b78e4aaff6416e** byte-verificationPASS:203indexedhashes/204exactpaths/0mismatch/0unexpected. End-of-step finalVSIX freshly rechecked6dab4f06f3763a74dc56c0422f12250815b942b2ecf954be07b9812ec96c7a3d. ExactGitmutation in commit-f02.ps1, rawf02-commit-01.txt; verification command node verify-and-advance.cjs, rawf02-committed-byte-verification-01.json. F02 is DONE for its scoped local contract; fullcatalog/product ratings/human gates remainPENDING.\n\nOnly after this verified barrier, activate F03 policy drift and deliberate relaxation. F03 starts test-first; no F03 production code existed before transition. Original20GBminimum waived, bothverifiedbackupsD:, supplemental fullfsck59539stillRUNNING/INCOMPLETE. Residual nineunmanagedbaselineleaks and actualtool/human/platformcoverage unchanged.\n','utf8');
+const paths=['docs/soterai-lite/FEATURE-QUEUE.json','docs/soterai-lite/ledger.md',...['verify-and-advance.cjs','commit-f02.ps1','f02-commit-01.txt','f02-commit-allowlist-01.txt','f02-committed-byte-verification-01.json'].map(name=>base+'/'+name)];
+const entries=paths.map(name=>({path:name,sha256:sha(fs.readFileSync(path.join(repo,name)))}));
+fs.writeFileSync(path.join(__dirname,'f02-transition-index-01.json'),JSON.stringify({status:'PASS',entries},null,2)+'\n',{flag:'wx'});
+paths.push(base+'/f02-transition-index-01.json');
+fs.writeFileSync(path.join(__dirname,'f02-transition-allowlist-01.txt'),paths.join('\n')+'\n',{flag:'wx'});
+console.log(JSON.stringify({status:'PASS',revision,indexedEntries:index.entries.length,committedPaths:actual.length,next:'F03 only'}));

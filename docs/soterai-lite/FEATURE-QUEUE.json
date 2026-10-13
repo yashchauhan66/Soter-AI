@@ -9,9 +9,9 @@
   "planVersion": 1,
   "clientDate": "2026-10-13",
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
-  "scope": "F02 alone VERIFYING:37focusedPASS; final matching artifact/host/full-suite acceptance pending; F03 not started.",
+  "scope": "F01/F02 DONE with exact artifact tests and verified scoped commits; F03 alone active, test-first design.",
   "implementationConcurrency": 1,
-  "activeFeature": "F02",
+  "activeFeature": "F03",
   "prerequisiteBlock": {
     "id": "P00",
     "result": "FAIL",
@@ -78,18 +78,21 @@
     {
       "id": "F02",
       "title": "Versioned policy and defaults.",
-      "status": "VERIFYING",
-      "result": "INCOMPLETE",
+      "status": "DONE",
+      "result": "PASS",
       "requires": [
         "F01"
       ],
       "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
-      "flag": "soterai.lite.versionedPolicy"
+      "flag": "soterai.lite.versionedPolicy",
+      "sourceEvidenceCommit": "b1ffbcce27b8bafda7a9358d81b78e4aaff6416e",
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261013-f02-policy-6fb804da/f02-acceptance-01.json",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261013-f02-policy-6fb804da/f02-committed-byte-verification-01.json"
     },
     {
       "id": "F03",
       "title": "Policy drift and deliberate relaxation.",
-      "status": "PLANNED",
+      "status": "ACTIVE",
       "result": "NOT-RUN",
       "requires": [
         "F02"

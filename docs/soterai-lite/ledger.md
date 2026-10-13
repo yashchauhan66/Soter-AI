@@ -248,3 +248,9 @@ Final VSIXpackages/soterai-lite/soterai-lite-0.7.0-f02-20261013-attempt04.vsix S
 Affected functional10PASS; existing SecurityReview17cases8BLOCKED_SCOPED/9LEAK_CONFIRMED,17comparisonrows0changes, raw security-comparison-01.json. Flagoff mutation AVAILABILITY_ONLY; catalog44checks stillUNVERIFIED, ratingPENDING, independenceLOW. Changed source/raw hashes in f02-evidence-index-01.json. Every earlier failure/skip/profile/artifact remains. Supplemental full fsck59539stillRUNNING/INCOMPLETE, connectivityPASSscopeunchanged;20GBuserwaiverremains, bothbackupsD:.
 
 What remains unprotected: nine unmanaged native/direct/alias/env/history/independent-egress baseline leaks, actual-tool routes, platform/human acceptance. Next: commit and verify F02 byte allowlist; only then activate F03 policy drift/deliberate relaxation.
+
+## STEP RECEIPT F02-COMMIT / F03-ACTIVATE
+
+F02 scoped commit **b1ffbcce27b8bafda7a9358d81b78e4aaff6416e** byte-verificationPASS:203indexedhashes/204exactpaths/0mismatch/0unexpected. End-of-step finalVSIX freshly rechecked6dab4f06f3763a74dc56c0422f12250815b942b2ecf954be07b9812ec96c7a3d. ExactGitmutation in commit-f02.ps1, rawf02-commit-01.txt; verification command node verify-and-advance.cjs, rawf02-committed-byte-verification-01.json. F02 is DONE for its scoped local contract; fullcatalog/product ratings/human gates remainPENDING.
+
+Only after this verified barrier, activate F03 policy drift and deliberate relaxation. F03 starts test-first; no F03 production code existed before transition. Original20GBminimum waived, bothverifiedbackupsD:, supplemental fullfsck59539stillRUNNING/INCOMPLETE. Residual nineunmanagedbaselineleaks and actualtool/human/platformcoverage unchanged.
