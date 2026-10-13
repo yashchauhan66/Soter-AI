@@ -5,6 +5,7 @@ import { redactAIContext as redactForSharing } from "@soterai/guard-core";
 import { assertWorkspaceFileUri } from "../security/WorkspacePathGuard";
 import { BoundarySnapshot, initializeBoundaryState, storedRules, updateRules, reviewRuleRelaxation } from "./BoundarySnapshot";
 import { documentDigest, relativePath, validateGlob, OMITTED } from "./policy";
+import { restrictionSaveEnabled, requireRestrictionSave, assertRestrictionWorkspace, RestrictionUnavailable, withManualRestriction, type RestrictionResult } from "./RestrictionOperation";
 
 /** A read-only alternative URI, never an interceptor for file: or other extensions. */
 export class RedactedDocumentProvider implements vscode.TextDocumentContentProvider, vscode.Disposable {
@@ -52,10 +53,15 @@ export function registerAIBoundaryCommands(context: vscode.ExtensionContext): vo
         watcher.onDidDelete(() => provider.refresh()), vscode.workspace.onDidChangeTextDocument(() => provider.refresh()),
         vscode.workspace.onDidChangeWorkspaceFolders(() => provider.refresh()));
 
-    const reg = (id: string, action: (uri?: vscode.Uri) => Promise<void>) => {
+    const reg = (id: string, action: (uri?: vscode.Uri) => Promise<void | RestrictionResult>, restriction = false) => {
         context.subscriptions.push(vscode.commands.registerCommand(id, async (uri?: vscode.Uri) => {
-            try { await action(uri); }
-            catch { void vscode.window.showErrorMessage("SoterAI could not apply the AI rule. Check the workspace path, policy syntax and storage availability."); }
+            if (restriction && !restrictionSaveEnabled()) return { status: "UNAVAILABLE" };
+            try { return await action(uri); }
+            catch (error) {
+                if (error instanceof RestrictionUnavailable) return { status: "UNAVAILABLE" };
+                void vscode.window.showErrorMessage("SoterAI could not apply the AI rule. Check the workspace path, policy syntax and storage availability.");
+                return { status: "FAILED" };
+            }
         }));
     };
     const target = (uri?: vscode.Uri) => {
@@ -71,35 +77,48 @@ export function registerAIBoundaryCommands(context: vscode.ExtensionContext): vo
 
     reg("soterai.blockFromAI", async uri => {
         const item = target(uri);
-        await assertWorkspaceFileUri(item.uri);
-        const stat = await vscode.workspace.fs.stat(item.uri);
-        const kind = stat.type === vscode.FileType.Directory ? "folder" as const : "file" as const;
-        await updateRules(item.root, rules => {
-            if (!rules.paths.some(rule => rule.kind === kind && rule.pattern === item.rel)) rules.paths.push({ kind, pattern: item.rel });
-            return rules;
-        });
-        updated();
-    });
+        return withManualRestriction(item.root, async () => {
+            await assertWorkspaceFileUri(item.uri);
+            const stat = await vscode.workspace.fs.stat(item.uri);
+            const kind = stat.type === vscode.FileType.Directory ? "folder" as const : "file" as const;
+            await updateRules(item.root, rules => {
+                requireRestrictionSave();
+                assertRestrictionWorkspace(item.root, item.uri);
+                if (!rules.paths.some(rule => rule.kind === kind && rule.pattern === item.rel)) rules.paths.push({ kind, pattern: item.rel });
+                return rules;
+            });
+            assertRestrictionWorkspace(item.root, item.uri);
+            updated();
+            return { status: "SAVED" as const };
+        }, { kind: "folder", pattern: item.rel });
+    }, true);
     reg("soterai.blockGlobFromAI", async uri => {
         const item = uri || vscode.window.activeTextEditor ? target(uri) : undefined;
         const folder = item?.folder ?? (await vscode.window.showWorkspaceFolderPick());
-        if (!folder) return;
+        if (!folder) return { status: "CANCELLED" };
         const pattern = await vscode.window.showInputBox({ title: "Block a pattern from SoterAI context", prompt: "Deny glob, e.g. reports/** or *.pem. .aiignore supports the same syntax.", validateInput: value => {
             try { validateGlob(value); return undefined; } catch { return "Use *, ** or ?. Negation and regex are unsupported."; }
         } });
-        if (!pattern) return;
+        if (!pattern) return { status: "CANCELLED" };
         const root = folder.uri.toString();
         const validated = validateGlob(pattern);
-        await updateRules(root, rules => {
-            if (!rules.paths.some(rule => rule.kind === "glob" && rule.pattern === validated)) rules.paths.push({ kind: "glob", pattern: validated });
-            return rules;
-        });
-        updated();
-    });
+        return withManualRestriction(root, async () => {
+            await updateRules(root, rules => {
+                requireRestrictionSave();
+                assertRestrictionWorkspace(root, folder.uri);
+                if (!rules.paths.some(rule => rule.kind === "glob" && rule.pattern === validated)) rules.paths.push({ kind: "glob", pattern: validated });
+                return rules;
+            });
+            assertRestrictionWorkspace(root, folder.uri);
+            updated();
+            return { status: "SAVED" as const };
+        }, { kind: "glob", pattern: validated });
+    }, true);
     reg("soterai.blockSelectionFromAI", async () => {
         const editor = vscode.window.activeTextEditor;
-        if (!editor || editor.selection.isEmpty) return;
+        if (!editor || editor.selection.isEmpty) return { status: "CANCELLED" };
         const item = target(editor.document.uri);
+        return withManualRestriction(item.root, async () => {
         await assertWorkspaceFileUri(item.uri);
         const text = editor.document.getText();
         if (Buffer.byteLength(text, "utf8") > 64 * 1024) throw new Error("File too large; block the file instead.");
@@ -109,17 +128,22 @@ export function registerAIBoundaryCommands(context: vscode.ExtensionContext): vo
         };
         let hasStaleRegions = false;
         await updateRules(item.root, rules => {
+            requireRestrictionSave();
+            assertRestrictionWorkspace(item.root, item.uri);
             // Marking new text must never silently remove earlier protection.
             // Stale rules keep the whole file withheld until explicitly reviewed.
             hasStaleRegions = rules.regions.some(r => relativePath(r.path) === relativePath(item.rel) && r.digest !== region.digest);
             rules.regions.push(region);
             return rules;
         });
+        assertRestrictionWorkspace(item.root, item.uri);
         if (hasStaleRegions) {
             provider.refresh();
             void vscode.window.showWarningMessage("Earlier protected text changed. SoterAI will withhold this whole file until you review its rules in Manage Manual AI Rules.");
         } else updated();
-    });
+        return { status: "SAVED" as const };
+        }, { kind: "file", pattern: item.rel });
+    }, true);
     reg("soterai.manageAIRules", async () => {
         await reviewRuleRelaxation();
         provider.refresh();

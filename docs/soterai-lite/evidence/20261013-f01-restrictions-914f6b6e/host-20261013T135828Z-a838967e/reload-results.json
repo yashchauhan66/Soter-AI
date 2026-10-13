@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-10-13T13:59:07.204Z",
+  "phase": "reload",
+  "syntheticOnly": true,
+  "workspace": "c:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261013-f01-restrictions-914f6b6e\\host-20261013T135828Z-a838967e\\workspace",
+  "declaredProfilePath": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261013-f01-restrictions-914f6b6e\\host-20261013T135828Z-a838967e\\profile",
+  "hostVersion": "1.141.0",
+  "appName": "Visual Studio Code",
+  "extensionPath": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261013-f01-restrictions-914f6b6e\\host-20261013T135828Z-a838967e\\extension",
+  "extensionVersion": "0.7.0",
+  "extensionActive": true,
+  "extensionBundleSha256": "8f6fabef2c79239d09c8cf4795c5d435420305abb8c6355cdfd40071fc9ed38e",
+  "currentInstalledBundleSha256": "8f6fabef2c79239d09c8cf4795c5d435420305abb8c6355cdfd40071fc9ed38e",
+  "hostProbeSha256": "794d68693ecb51770b9432a91853bb726c90eeca24e63558d4f5d6a93f63a032",
+  "observations": [
+    {
+      "id": "F01-H01",
+      "status": "NOT_RUN",
+      "scope": "Save phase: direct and chosen file saves, sensitive save, withheld previews and public control."
+    },
+    {
+      "id": "F01-H02",
+      "status": "NOT_RUN",
+      "scope": "Save phase: missing synthetic file reports FAILED without a saved notification."
+    },
+    {
+      "id": "F01-H03",
+      "status": "NOT_RUN",
+      "scope": "Save phase: real folder, scripted glob and real selected-region saves report SAVED."
+    },
+    {
+      "id": "F01-H04",
+      "status": "FAIL",
+      "scope": "Reload phase: same declared profile/workspace/bundle retains actual restrictions and public control.",
+      "diagnostic": "AssertionError: The input did not match the regular expression /AI-forbidden content omitted/. Input:"
+    },
+    {
+      "id": "F01-H05",
+      "status": "FAIL",
+      "scope": "Flag-off withdraws new operations, retains prior denies/masking; explicit picker cancellation reports CANCELLED.",
+      "diagnostic": "AssertionError: The input did not match the regular expression /AI-forbidden content omitted/. Input:"
+    }
+  ],
+  "commandStatuses": [
+    {
+      "command": "soterai.blockFromAI",
+      "observedStatus": "UNAVAILABLE"
+    },
+    {
+      "command": "soterai.restrictProjectFile",
+      "observedStatus": "UNAVAILABLE"
+    },
+    {
+      "command": "soterai.restrictSensitiveFile",
+      "observedStatus": "UNAVAILABLE"
+    },
+    {
+      "command": "soterai.blockGlobFromAI",
+      "observedStatus": "UNAVAILABLE"
+    },
+    {
+      "command": "soterai.blockSelectionFromAI",
+      "observedStatus": "UNAVAILABLE"
+    }
+  ],
+  "passed": 0,
+  "failed": 2,
+  "identityScope": "Installed bundle sampled before/after actual activation; no independent authenticated in-memory hash.",
+  "profileScope": "Launcher-declared isolated profile; compared across launches, launcher must verify actual --user-data-dir.",
+  "interactionScope": "Actual registered installed-extension commands and document providers; scripted UI decisions, independent human presence untested.",
+  "externalAgents": "NOT_TESTED",
+  "ordinaryTerminal": "NOT_TESTED",
+  "fullClaim": "BLOCKED"
+}

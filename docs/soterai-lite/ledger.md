@@ -4,12 +4,12 @@ Read this file FIRST after any context compaction or on resumption. Do not overw
 
 ## Current state
 
-- **L0 ACTIVE: the user explicitly waived the 20 GB threshold on 13 October 2026; continue P01-P03, then serial features.** Historical disk measurements remain FAIL and are preserved; the threshold no longer blocks this authorized run.
-- L1-L7: **NOT-RUN**. Do not describe preflight as reaching L6.
+- **L0 scoped preflight/split/baseline/catalog freeze DONE.** The user waived the 20 GB threshold; a later actual disk-full failure was resolved by the separately authorized verified backup relocation. Supplemental full fsck remains running/INCOMPLETE.
+- L1: **ACTIVE, F01 test-first preparation**; L2-L7 **NOT-RUN**. Do not describe this as reaching L6.
 - No extension behavior, workspace protection, vendor configuration, or normal VS Code profile has changed.
-- New Lite VSIX: **NOT-BUILT**. Coverage, requirement ratings, hostile sub-score, old score, and prior reported results: **UNVERIFIED / NOT-RUN**, as applicable.
+- New Lite baseline VSIX: **BUILT / CONTENT-INSPECTED / HOST-BASELINE-TESTED**; SHA-256 `cf163471b7a022d5a9f922a3f1fcc6bfd3b56a08ab14f1aebfdfb345c337bae1`. Coverage and all final numerical ratings **PENDING / UNVERIFIED**; 44-check catalog frozen, not graded.
 - Baseline HEAD: `8ef3aeb54f4019f4ee815a844443995176a656f0`; starting branch: `security-hardening`. Inspected prior source modifications were checkpointed at `915a5300a7745e4ffaeab80b5d08d3305e3772f9`; unknown scratch/raw artifacts remain untouched.
-- P01 required scoped checks passed, with the supplemental full blob checksum check still running. P02 reversible packaging is active; no behavior card has started.
+- P00-P03 receipts and commits are complete. F01 is the sole active behavior card; production implementation waits for its failing regression baseline. No F02 work may start yet.
 
 ## STEP RECEIPT L0.1 — preflight stop
 
@@ -198,3 +198,25 @@ Freeze exact command: node docs/soterai-lite/evidence/20261013-l0-resume-88fb943
 Availability pinned: Cline4.1.23, Claude IDE2.1.296/CLI2.1.292, Codex IDEruntime0.162.0-alpha.17.2/CLI0.160.1,Gemini0.55.1 are unverified candidates, not supported PASS. Other installed native agents remain NOT COVERED. PowerShell7 absent; no authorized runtime download. Actual tool routes and hook error/timeout behavior require separate tests. Current host uses1.141, not cached1.104; prior receipts are not reassigned.
 
 Changed files/hashes and raw-only allowlist: p03-evidence-index.json. What remains unprotected: all9 unmanaged baseline leaks, independent native processes/routes, untested third-party adapters, true human presence/usability/accessibility/platforms. Final rating PENDING. Next: commit this freeze; only after commit start F01 reliable restriction persistence, test-first, machine-scope flag soterai.lite.restrictionSave. F02 cannot start until F01 full acceptance is complete. Full supplemental fsck remains RUNNING/INCOMPLETE; do not retry or terminate it.
+
+## STEP RECEIPT F01-RESUME — actual disk block resolved
+
+Earlier disk-full preparation/approval/ledger writes were INCOMPLETE; exact messages and unexecuted actions are in blocked-attempts-01.json. No approval bypass occurred. User explicitly instructed "tum khud move krr do". FreshC103,657,472bytes allowed authorized base-backup relocation02: verified D:/SoterAI-backups/security-hardening.bundle1,632,545,875bytes/SHA256cc2974fe3dcda234cb9a238e514b933758859c75ee534ae313ccd768032857c9 before removing only C: duplicate. Both backup pair files now live D:. Receipt base-backup-relocation-02.json records exact path/hash/time/freebytes. inputs.json records this existing authorization.20GB gate staysWAIVED.
+
+F01 test-first baseline16FAIL; production metadata/awaited saves/manual pending-read lifecycle implemented. First afterfix15PASS/1FAIL was a nested UI mock restoration fixture defect; explicit original-method restoration fixed it,16PASS. Added four meaningful concurrency/config/no-op policy regressions: one existing multi-root test exposed nondeterministic filesystem arrival order; controlling first update made its intended queue sequence deterministic. New workspace/root-drift review finding got test-first regression baseline20PASS/3FAIL; original root is now validated before queued persistence and before SAVED, preserving already committed stronger records on drift. Current focused23PASS/0FAIL; typecheck03PASS.
+
+Source-review independenceLOW; same-lineage host author hit capacity/usage limits (exact messages retained), its completed host source was read/typechecked by root. F01 remainsVERIFYING/INCOMPLETE until full suite,new matching VSIX,save/reload host,affected baseline harnesses,flags/safe rollback and scoped local commit finish. No F02 code has started; no interim numerical rating. Supplemental full fsck remainsactive; do notkill/rerun.
+
+## STEP RECEIPT F01 — reliable saved restrictions
+
+Result **PASS** for local F01 behavior/tests/artifact/affected hosts; serial barrier remains the scoped local commit plus byte verification. Restriction saves await persistent success; typed FAILED/CANCELLED/UNAVAILABLE never acknowledge SAVED. Machine-scope flag soterai.lite.restrictionSave withdraws new saves without weakening retained denies. Scoped overlapping pending saves temporarily withhold affected reads, preserve unrelated public reads, revoke approvals/views, and validate original workspace ownership before queued persistence and before saved acknowledgement. Already committed stronger records remain on post-write drift.
+
+Exact commands, argv, times, exits and log hashes: focused-after-06.txt.result.json (35PASS/0FAIL); full-tests-03.txt.result.json (816tests/106suites,813PASS/0FAIL/3SKIP); typecheck-04.txt.result.json; package-02.txt.result.json; native-host-launch-01.txt.result.json; functional-launch-01.txt.result.json; security-launch-01.txt.result.json, all in evidence/20261013-f01-restrictions-914f6b6e/. Earlier failures/skips and disk-full unexecuted actions remain immutable. Full-suite corrections retained the public-read control and restored the README original UTF-8 bytes; assertions were not removed.
+
+New exact VSIX packages/soterai-lite/soterai-lite-0.7.0-f01-20261013-attempt02.vsix,1324828bytes,SHA25667476e3e1aa4e18b2266a5a206dbd2c3be9961c25611e5f8416de7c61c7f99d8; runtime8f6fabef2c79239d09c8cf4795c5d435420305abb8c6355cdfd40071fc9ed38e. Archive14entries, no Full/test/evidence inputs. Native normal isolated developer window save/restart: five distinct H01-H05 PASS, same profile/workspace/runtime, actual persistent SQLite file metadata observed without reading database contents. Test-only bootstrap delegates unchanged packaged runtime; scripted UI is LOW independence. Raw installed-bundle label denotes loaded developer fixture bytes, not clean-profile installed VSIX/authenticated memory. Standard extensionTestsPath uses in-memory storage, verified in installed source and official VS Code source; earlier restart failures remain recorded and are not counted PASS. Clean-profile installation remains F32 NOT-RUN.
+
+Affected functional10PASS/0FAIL; existing SecurityReview17cases8BLOCKED_SCOPED/9LEAK_CONFIRMED, comparison17rows/0changes. security-comparison-01.json and native-host-aggregation-01.json retain exact identities. Flag-off evidence AVAILABILITY_ONLY, not prevention-sensitive mutation; frozen catalog44checks remain UNVERIFIED and no numerical rating is assigned. Same-lineage source adversarial review found no remaining F01 blocker; independenceLOW.
+
+Files changed and SHA-256 are in f01-evidence-index-01.json, with explicit raw/source allowlist. Older artifact/test attempts remain. Both verified backup pair files now D:/SoterAI-backups; only explicitly authorized verified C: duplicates were removed,20GB remainsWAIVED. Supplemental full fsck still RUNNING/INCOMPLETE; connectivity PASS remains scoped.
+
+What remains unprotected: all nine unmanaged baseline leaks, native same-user original reads/buffers/aliases/env/history/independent uploads, untested actual-tool routes and human acceptance. Next: commit and verify F01 bytes; only then activate F02 versioned policy/defaults test-first.

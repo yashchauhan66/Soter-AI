@@ -9,6 +9,8 @@ import { assertWorkspaceFileUri } from "../security/WorkspacePathGuard";
 import { ProjectFileAccess, type CapturedFile, type AccessReceipt, type AccessResult, type RequestSurface } from "./ProjectFileAccess";
 import { ProjectReadTerminal } from "./ReadTerminal";
 import { openProjectPrivacyPanel } from "./panel";
+import { restrictionSaveEnabled, requireRestrictionSave, assertRestrictionWorkspace, RestrictionUnavailable, restrictionResult,
+    withManualRestriction, manualRestrictionPending, onDidChangeManualRestriction } from "../ai-boundary/RestrictionOperation";
 
 const NEVER_RELEASE = /(?:^|\/)(?:\.git|\.soterai)(?:\/|$)|(?:^|\/)(?:\.aiignore|\.soterai-policy\.json)$/i;
 
@@ -57,6 +59,8 @@ export function registerProjectPrivacyCommands(context: vscode.ExtensionContext)
         await vscode.window.showWarningMessage(approvalMessage(receipt), { modal: true }, "Allow safe read once") === "Allow safe read once" });
     context.subscriptions.push(provider, access, vscode.workspace.registerTextDocumentContentProvider("soterai-approved", provider),
         onDidChangeBoundaryRules(() => { access.revoke(); provider.clear(); }),
+        onDidChangeManualRestriction(() => { access.revoke(); provider.clear(); }),
+        vscode.workspace.onDidChangeWorkspaceFolders(() => { access.revoke(); provider.clear(); }),
         vscode.workspace.onDidChangeConfiguration(event => {
             if (event.affectsConfiguration("soterai")) { access.revoke(); provider.clear(); }
         }));
@@ -66,6 +70,8 @@ export function registerProjectPrivacyCommands(context: vscode.ExtensionContext)
         if (pendingSensitiveWrites.has(fileKey(uri))) throw new Error("Sensitive policy update pending.");
         const folder = vscode.workspace.getWorkspaceFolder(uri);
         if (!folder || folder.uri.scheme !== "file") throw new Error("Project file required.");
+        const root = folder.uri.toString();
+        if (manualRestrictionPending(root, uri)) throw new Error("Manual restriction update pending.");
         const rel = path.relative(folder.uri.fsPath, uri.fsPath).replace(/\\/g, "/");
         if (NEVER_RELEASE.test(relativePath(rel))) throw new Error("Policy/history files cannot be released through this reader.");
         const canonical = await assertWorkspaceFileUri(uri);
@@ -78,6 +84,7 @@ export function registerProjectPrivacyCommands(context: vscode.ExtensionContext)
         const stat = await lstat(uri.fsPath);
         if (!stat.isFile() || stat.isSymbolicLink() || stat.nlink !== 1) throw new Error("Unsafe file.");
         if (pendingSensitiveWrites.has(fileKey(uri))) throw new Error("Sensitive policy update pending.");
+        if (manualRestrictionPending(root, uri)) throw new Error("Manual restriction update pending.");
         if ((await BoundarySnapshot.load()).accessRevision(uri) !== policyRevision) throw new Error("Policy changed during capture.");
         return { workspace: folder.uri.toString(), relativePath: rel, policyRevision,
             fileIdentity: JSON.stringify([stat.dev, stat.ino, stat.birthtimeMs, stat.size, stat.mtimeMs]),
@@ -102,12 +109,14 @@ export function registerProjectPrivacyCommands(context: vscode.ExtensionContext)
         context.subscriptions.push(vscode.commands.registerCommand(id, handler));
     };
     reg("soterai.openProjectPrivacy", () => { openProjectPrivacyPanel(context); return { status: "OPENED" }; });
-    reg("soterai.restrictProjectFile", async () => {
-        const uri = await chooseFile();
+    reg("soterai.restrictProjectFile", async (argument?: unknown) => {
+        if (!enabled() || !restrictionSaveEnabled()) return { status: "UNAVAILABLE" };
+        const uri = argument instanceof vscode.Uri ? argument : await chooseFile();
         if (!uri) return { status: enabled() ? "CANCELLED" : "UNAVAILABLE" };
-        await vscode.commands.executeCommand("soterai.blockFromAI", uri);
         access.revoke(); provider.clear();
-        return { status: "REQUEST_HANDLED" };
+        try { return restrictionResult(await vscode.commands.executeCommand("soterai.blockFromAI", uri)); }
+        catch { return { status: "FAILED" }; }
+        finally { access.revoke(); provider.clear(); }
     });
     reg("soterai.reviewSafeFileAccess", async (argument?: unknown) => {
         const uri = argument instanceof vscode.Uri ? argument : await chooseFile();
@@ -120,28 +129,40 @@ export function registerProjectPrivacyCommands(context: vscode.ExtensionContext)
     reg("soterai.readProjectFileSafely", (argument?: unknown) => request(argument instanceof vscode.Uri ? argument : undefined, "integration-command"));
     let markWrites = Promise.resolve();
     reg("soterai.restrictSensitiveFile", async (argument?: unknown) => {
-        if (!enabled()) { void vscode.window.showWarningMessage("Sensitive restriction setup is unavailable. Check project privacy settings and workspace trust."); return { status: "UNAVAILABLE" }; }
+        if (!enabled() || !restrictionSaveEnabled()) { void vscode.window.showWarningMessage("Sensitive restriction setup is unavailable. Check project privacy settings and workspace trust."); return { status: "UNAVAILABLE" }; }
         const uri = argument instanceof vscode.Uri ? argument : await chooseFile();
         if (!uri) return { status: "CANCELLED" };
         // A failed save must not leave an earlier review or virtual preview active.
         const key = fileKey(uri);
         pendingSensitiveWrites.set(key, (pendingSensitiveWrites.get(key) ?? 0) + 1);
         access.revoke(); provider.clear();
-        const write = markWrites.then(async () => {
-            if (!enabled()) throw new Error("Sensitive restriction setup is unavailable.");
+        const chosenFolder = vscode.workspace.getWorkspaceFolder(uri);
+        const root = chosenFolder?.uri.toString();
+        const write = root ? withManualRestriction(root, () => markWrites.then(async () => {
+            requireRestrictionSave();
+            assertRestrictionWorkspace(root, uri);
+            if (!enabled()) throw new RestrictionUnavailable();
             if (path.resolve(await assertWorkspaceFileUri(uri)).toLowerCase() !== fileKey(uri)) throw new Error("File aliases are unsupported.");
-            const folder = vscode.workspace.getWorkspaceFolder(uri)!;
+            const folder = chosenFolder!;
             const rel = relativePath(path.relative(folder.uri.fsPath, uri.fsPath));
             const stat = await lstat(uri.fsPath);
             if (!stat.isFile() || stat.isSymbolicLink() || stat.nlink !== 1) throw new Error("Regular file required.");
-            await updateRules(folder.uri.toString(), () => ({
-                paths: [{ kind: "file", pattern: rel, sensitive: true }], regions: [] }));
+            await updateRules(folder.uri.toString(), () => {
+                requireRestrictionSave();
+                assertRestrictionWorkspace(root, uri);
+                if (!enabled()) throw new RestrictionUnavailable();
+                return { paths: [{ kind: "file", pattern: rel, sensitive: true }], regions: [] };
+            });
+            assertRestrictionWorkspace(root, uri);
             access.revoke(); provider.clear();
             void vscode.window.showInformationMessage("Sensitive restriction saved for managed readers. Approved safe views stay masked. Other tools can still read originals.");
-        });
+        }), { kind: "file", pattern: path.relative(chosenFolder!.uri.fsPath, uri.fsPath).replace(/\\/g, "/") }) : Promise.reject(new Error("Project file required."));
         markWrites = write.catch(() => undefined);
         try { await write; return { status: "SAVED" }; }
-        catch { void vscode.window.showErrorMessage("Sensitive restriction could not be saved. Review workspace policy and storage availability."); return { status: "FAILED" }; }
+        catch (error) {
+            if (error instanceof RestrictionUnavailable) return { status: "UNAVAILABLE" };
+            void vscode.window.showErrorMessage("Sensitive restriction could not be saved. Review workspace policy and storage availability."); return { status: "FAILED" };
+        }
         finally {
             const remaining = (pendingSensitiveWrites.get(key) ?? 1) - 1;
             if (remaining) pendingSensitiveWrites.set(key, remaining);

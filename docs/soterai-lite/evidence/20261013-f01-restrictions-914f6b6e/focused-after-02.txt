@@ -1,0 +1,125 @@
+﻿TAP version 13
+# Subtest: F01-U01 ordinary restriction returns SAVED only for persisted deny
+ok 1 - F01-U01 ordinary restriction returns SAVED only for persisted deny
+  ---
+  duration_ms: 127.4688
+  type: 'test'
+  ...
+# Subtest: F01-U02 failed ordinary save cannot become REQUEST_HANDLED or success
+ok 2 - F01-U02 failed ordinary save cannot become REQUEST_HANDLED or success
+  ---
+  duration_ms: 63.898
+  type: 'test'
+  ...
+# Subtest: F01-U03 direct manual command reports storage failure to its caller
+ok 3 - F01-U03 direct manual command reports storage failure to its caller
+  ---
+  duration_ms: 40.4433
+  type: 'test'
+  ...
+# Subtest: F01-U04 failed addition preserves ordinary folder glob region and sensitive denies
+ok 4 - F01-U04 failed addition preserves ordinary folder glob region and sensitive denies
+  ---
+  duration_ms: 42.8651
+  type: 'test'
+  ...
+# Subtest: F01-U05 file folder glob and region paths share explicit awaited save outcomes
+ok 5 - F01-U05 file folder glob and region paths share explicit awaited save outcomes
+  ---
+  duration_ms: 68.7684
+  type: 'test'
+  ...
+# Subtest: F01-U06 picker glob folder and empty-selection cancellation make no writes
+not ok 6 - F01-U06 picker glob folder and empty-selection cancellation make no writes
+  ---
+  duration_ms: 41.1214
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts:2:10304'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'SAVED'
+    - 'CANCELLED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'CANCELLED'
+  actual: 'SAVED'
+  operator: 'strictEqual'
+  stack: |-
+    expectStatus (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-restriction-save.test.ts:39:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-restriction-save.test.ts:204:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F01-U07 invalid paths syntax and corrupt storage fail without successful mutation
+ok 7 - F01-U07 invalid paths syntax and corrupt storage fail without successful mutation
+  ---
+  duration_ms: 53.5106
+  type: 'test'
+  ...
+# Subtest: F01-U08 save result notification and change event wait for storage completion
+ok 8 - F01-U08 save result notification and change event wait for storage completion
+  ---
+  duration_ms: 23.9226
+  type: 'test'
+  ...
+# Subtest: F01-U09 manual save revokes pending reads before failure and holds new reads while pending
+ok 9 - F01-U09 manual save revokes pending reads before failure and holds new reads while pending
+  ---
+  duration_ms: 106.1701
+  type: 'test'
+  ...
+# Subtest: F01-U10 failed queued save does not poison later successful roots
+ok 10 - F01-U10 failed queued save does not poison later successful roots
+  ---
+  duration_ms: 52.8185
+  type: 'test'
+  ...
+# Subtest: F01-U11 repeated ordinary marking cannot duplicate or weaken sensitive deny
+ok 11 - F01-U11 repeated ordinary marking cannot duplicate or weaken sensitive deny
+  ---
+  duration_ms: 31.3742
+  type: 'test'
+  ...
+# Subtest: F01-U12 full policy upgrades strongest treatment but rejects overflowing new deny
+ok 12 - F01-U12 full policy upgrades strongest treatment but rejects overflowing new deny
+  ---
+  duration_ms: 76.698
+  type: 'test'
+  ...
+# Subtest: F01-U13 saved restrictions survive component reload and repository deny removal
+ok 13 - F01-U13 saved restrictions survive component reload and repository deny removal
+  ---
+  duration_ms: 86.2175
+  type: 'test'
+  ...
+# Subtest: F01-U14 flag off withdraws only new restrictions and retains masked existing reads
+ok 14 - F01-U14 flag off withdraws only new restrictions and retains masked existing reads
+  ---
+  duration_ms: 83.8612
+  type: 'test'
+  ...
+# Subtest: F01-U15 actual panel controller shows real saved failed and cancelled command outcomes
+ok 15 - F01-U15 actual panel controller shows real saved failed and cancelled command outcomes
+  ---
+  duration_ms: 48.523
+  type: 'test'
+  ...
+# Subtest: F01-U16 post-commit rejection is reported conservatively without undoing stronger deny
+ok 16 - F01-U16 post-commit rejection is reported conservatively without undoing stronger deny
+  ---
+  duration_ms: 24.1782
+  type: 'test'
+  ...
+1..16
+# tests 16
+# suites 0
+# pass 15
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3662.7452

@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-10-13T13:49:12.042Z",
+  "phase": "save",
+  "syntheticOnly": true,
+  "workspace": "c:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261013-f01-restrictions-914f6b6e\\host-20261013T134751Z-679e8e81\\workspace",
+  "declaredProfilePath": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261013-f01-restrictions-914f6b6e\\host-20261013T134751Z-679e8e81\\profile",
+  "hostVersion": "1.141.0",
+  "appName": "Visual Studio Code",
+  "extensionPath": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261013-f01-restrictions-914f6b6e\\vsix-extracted\\extension",
+  "extensionVersion": "0.7.0",
+  "extensionActive": true,
+  "extensionBundleSha256": "8f611a25e2a2c366fdc74ce2c8cbb1e0872730506627ab738f3966bff0473ac5",
+  "currentInstalledBundleSha256": "8f611a25e2a2c366fdc74ce2c8cbb1e0872730506627ab738f3966bff0473ac5",
+  "hostProbeSha256": "70daf19e7398ed0473edbc186e393e10370043923665f5565bed0d182e04368f",
+  "observations": [
+    {
+      "id": "F01-H01",
+      "status": "FAIL",
+      "scope": "Save phase: direct and chosen file saves, sensitive save, withheld previews and public control.",
+      "diagnostic": "AssertionError"
+    },
+    {
+      "id": "F01-H02",
+      "status": "PASS",
+      "scope": "Save phase: missing synthetic file reports FAILED without a saved notification."
+    },
+    {
+      "id": "F01-H03",
+      "status": "FAIL",
+      "scope": "Save phase: real folder, scripted glob and real selected-region saves report SAVED.",
+      "diagnostic": "AssertionError"
+    },
+    {
+      "id": "F01-H04",
+      "status": "NOT_RUN",
+      "scope": "Reload phase: same declared profile/workspace/bundle retains actual restrictions and public control."
+    },
+    {
+      "id": "F01-H05",
+      "status": "FAIL",
+      "scope": "Flag-off withdraws new operations, retains prior denies/masking; explicit picker cancellation reports CANCELLED.",
+      "diagnostic": "AssertionError"
+    }
+  ],
+  "commandStatuses": [
+    {
+      "command": "soterai.blockFromAI",
+      "observedStatus": "SAVED"
+    },
+    {
+      "command": "soterai.restrictProjectFile",
+      "observedStatus": "SAVED"
+    },
+    {
+      "command": "soterai.restrictSensitiveFile",
+      "observedStatus": "SAVED"
+    },
+    {
+      "command": "soterai.blockFromAI",
+      "observedStatus": "FAILED"
+    },
+    {
+      "command": "soterai.blockFromAI",
+      "observedStatus": "SAVED"
+    },
+    {
+      "command": "soterai.blockGlobFromAI",
+      "observedStatus": "CANCELLED"
+    }
+  ],
+  "passed": 1,
+  "failed": 3,
+  "identityScope": "Installed bundle sampled before/after actual activation; no independent authenticated in-memory hash.",
+  "profileScope": "Launcher-declared isolated profile; compared across launches, launcher must verify actual --user-data-dir.",
+  "interactionScope": "Actual registered installed-extension commands and document providers; scripted UI decisions, independent human presence untested.",
+  "externalAgents": "NOT_TESTED",
+  "ordinaryTerminal": "NOT_TESTED",
+  "fullClaim": "BLOCKED"
+}

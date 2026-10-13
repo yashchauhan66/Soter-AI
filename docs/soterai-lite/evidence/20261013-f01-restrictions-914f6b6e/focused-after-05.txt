@@ -1,0 +1,148 @@
+﻿TAP version 13
+# Subtest: F01-U01 ordinary restriction returns SAVED only for persisted deny
+ok 1 - F01-U01 ordinary restriction returns SAVED only for persisted deny
+  ---
+  duration_ms: 148.2304
+  type: 'test'
+  ...
+# Subtest: F01-U02 failed ordinary save cannot become REQUEST_HANDLED or success
+ok 2 - F01-U02 failed ordinary save cannot become REQUEST_HANDLED or success
+  ---
+  duration_ms: 96.4523
+  type: 'test'
+  ...
+# Subtest: F01-U03 direct manual command reports storage failure to its caller
+ok 3 - F01-U03 direct manual command reports storage failure to its caller
+  ---
+  duration_ms: 82.075
+  type: 'test'
+  ...
+# Subtest: F01-U04 failed addition preserves ordinary folder glob region and sensitive denies
+ok 4 - F01-U04 failed addition preserves ordinary folder glob region and sensitive denies
+  ---
+  duration_ms: 59.2245
+  type: 'test'
+  ...
+# Subtest: F01-U05 file folder glob and region paths share explicit awaited save outcomes
+ok 5 - F01-U05 file folder glob and region paths share explicit awaited save outcomes
+  ---
+  duration_ms: 245.1049
+  type: 'test'
+  ...
+# Subtest: F01-U06 picker glob folder and empty-selection cancellation make no writes
+ok 6 - F01-U06 picker glob folder and empty-selection cancellation make no writes
+  ---
+  duration_ms: 106.867
+  type: 'test'
+  ...
+# Subtest: F01-U07 invalid paths syntax and corrupt storage fail without successful mutation
+ok 7 - F01-U07 invalid paths syntax and corrupt storage fail without successful mutation
+  ---
+  duration_ms: 120.1425
+  type: 'test'
+  ...
+# Subtest: F01-U08 save result notification and change event wait for storage completion
+ok 8 - F01-U08 save result notification and change event wait for storage completion
+  ---
+  duration_ms: 83.6648
+  type: 'test'
+  ...
+# Subtest: F01-U09 manual save revokes pending reads before failure and holds new reads while pending
+ok 9 - F01-U09 manual save revokes pending reads before failure and holds new reads while pending
+  ---
+  duration_ms: 229.1252
+  type: 'test'
+  ...
+# Subtest: F01-U10 failed queued save does not poison later successful roots
+ok 10 - F01-U10 failed queued save does not poison later successful roots
+  ---
+  duration_ms: 64.932
+  type: 'test'
+  ...
+# Subtest: F01-U11 repeated ordinary marking cannot duplicate or weaken sensitive deny
+ok 11 - F01-U11 repeated ordinary marking cannot duplicate or weaken sensitive deny
+  ---
+  duration_ms: 48.1299
+  type: 'test'
+  ...
+# Subtest: F01-U12 full policy upgrades strongest treatment but rejects overflowing new deny
+ok 12 - F01-U12 full policy upgrades strongest treatment but rejects overflowing new deny
+  ---
+  duration_ms: 95.4867
+  type: 'test'
+  ...
+# Subtest: F01-U13 saved restrictions survive component reload and repository deny removal
+ok 13 - F01-U13 saved restrictions survive component reload and repository deny removal
+  ---
+  duration_ms: 164.2688
+  type: 'test'
+  ...
+# Subtest: F01-U14 flag off withdraws only new restrictions and retains masked existing reads
+ok 14 - F01-U14 flag off withdraws only new restrictions and retains masked existing reads
+  ---
+  duration_ms: 178.1623
+  type: 'test'
+  ...
+# Subtest: F01-U15 actual panel controller shows real saved failed and cancelled command outcomes
+ok 15 - F01-U15 actual panel controller shows real saved failed and cancelled command outcomes
+  ---
+  duration_ms: 54.1629
+  type: 'test'
+  ...
+# Subtest: F01-U16 post-commit rejection is reported conservatively without undoing stronger deny
+ok 16 - F01-U16 post-commit rejection is reported conservatively without undoing stronger deny
+  ---
+  duration_ms: 36.2966
+  type: 'test'
+  ...
+# Subtest: F01-U17 overlapping manual saves keep reads withheld until both finish
+ok 17 - F01-U17 overlapping manual saves keep reads withheld until both finish
+  ---
+  duration_ms: 85.0439
+  type: 'test'
+  ...
+# Subtest: F01-U18 flag disabled during a glob dialog withholds the new save
+ok 18 - F01-U18 flag disabled during a glob dialog withholds the new save
+  ---
+  duration_ms: 26.2501
+  type: 'test'
+  ...
+# Subtest: F01-U19 repository flag values cannot override the machine owner setting
+ok 19 - F01-U19 repository flag values cannot override the machine owner setting
+  ---
+  duration_ms: 28.8856
+  type: 'test'
+  ...
+# Subtest: F01-U20 repeated accepted policy enrollment does not expire public safe reads
+ok 20 - F01-U20 repeated accepted policy enrollment does not expire public safe reads
+  ---
+  duration_ms: 411.1156
+  type: 'test'
+  ...
+# Subtest: F01-U21 workspace replacement during queued file saves cannot report SAVED
+ok 21 - F01-U21 workspace replacement during queued file saves cannot report SAVED
+  ---
+  duration_ms: 73.1559
+  type: 'test'
+  ...
+# Subtest: F01-U22 root removed during a glob dialog makes no successful save
+ok 22 - F01-U22 root removed during a glob dialog makes no successful save
+  ---
+  duration_ms: 41.1677
+  type: 'test'
+  ...
+# Subtest: F01-U23 queued sensitive save stays bound to its chosen workspace
+ok 23 - F01-U23 queued sensitive save stays bound to its chosen workspace
+  ---
+  duration_ms: 27.4197
+  type: 'test'
+  ...
+1..23
+# tests 23
+# suites 0
+# pass 23
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4446.058

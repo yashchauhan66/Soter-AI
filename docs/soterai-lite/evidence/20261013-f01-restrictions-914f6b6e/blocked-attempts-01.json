@@ -1,0 +1,15 @@
+{
+  "result": "INCOMPLETE_RETAINED",
+  "preparation": "Error: ENOSPC: no space left on device, write",
+  "approvalMessage": "Automatic approval review failed: Fatal error: Failed to initialize session: thread-store internal error: There is not enough space on the disk. (os error 112)\nThe action was not executed because automatic approval review could not be completed. This is a review failure, not a determination that the action is unsafe. Do not bypass the approval check; resolve the error or ask the user for guidance.",
+  "actionsNotExecuted": [
+    "F01 focused-after-01 tests",
+    "base backup relocation attempt01"
+  ],
+  "receiptFailure": "Exception calling AppendAllText with 3 arguments: There is not enough space on the disk.",
+  "subagentFailures": [
+    "Agent errored: Selected model is at capacity. Please try a different model.",
+    "Agent errored: You’ve hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/settings/usage to purchase more credits or try again at 3:43 PM."
+  ],
+  "resolution": "User explicitly requested agent move; later freshC~103MB allowed review initialization. Base relocation02PASS exactSHA, C~1.9GBfree; new unique retries preserve prior failures."
+}

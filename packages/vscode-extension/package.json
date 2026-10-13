@@ -73,6 +73,7 @@
                 "soterai.hardening.secretInventory",
                 "soterai.hardening.capabilityReleaseGuard",
                 "soterai.projectPrivacy.enabled",
+                "soterai.lite.restrictionSave",
                 "soterai.projectPrivacy.atomicSensitivePolicy",
                 "soterai.projectPrivacy.safeViewComposition",
                 "soterai.projectPrivacy.safePublication",
@@ -1111,6 +1112,10 @@
         "configuration": {
             "title": "SoterAI IDE Guard Settings",
             "properties": {
+                "soterai.lite.restrictionSave": {
+                    "type": "boolean", "default": true, "scope": "machine",
+                    "markdownDescription": "Enable new manual file, folder, pattern and selected-text restriction saves with explicit completion results. Disabling withdraws new saves while preserving accepted restrictions and existing masked readers."
+                },
                 "soterai.projectPrivacy.professionalUi": {
                     "type": "boolean", "default": true, "scope": "machine",
                     "markdownDescription": "Show the project privacy dashboard, complete restriction inventory and scoped verification results. Turning this off hides the dashboard controls without removing saved restrictions or changing secret treatment."

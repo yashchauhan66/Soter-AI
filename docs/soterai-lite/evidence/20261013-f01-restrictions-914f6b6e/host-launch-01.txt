@@ -1,0 +1,15 @@
+﻿powershell.exe : Host phase failed: save
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Host phase failed: save:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-f01-restrictions-914f6b6e
+\run-f01-host.ps1:61 char:35
++ ... taskProcess.ExitCode -ne 0){throw ('Host phase failed: '+$taskPhase)}
++                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (Host phase failed: save:String) [], RuntimeException
+    + FullyQualifiedErrorId : Host phase failed: save
+ 

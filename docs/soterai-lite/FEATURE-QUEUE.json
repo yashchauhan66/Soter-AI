@@ -9,9 +9,9 @@
   "planVersion": 1,
   "clientDate": "2026-10-13",
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
-  "scope": "P00-P03 completed; frozen catalog commit required before F01 test authoring/production implementation",
+  "scope": "F01 only: implementation and focused regressions complete; exact new VSIX/full suite/host acceptance in progress",
   "implementationConcurrency": 1,
-  "activeFeature": null,
+  "activeFeature": "F01",
   "prerequisiteBlock": {
     "id": "P00",
     "result": "FAIL",
@@ -64,12 +64,13 @@
     {
       "id": "F01",
       "title": "Reliable saved restrictions.",
-      "status": "PLANNED",
-      "result": "NOT-RUN",
+      "status": "VERIFYING",
+      "result": "INCOMPLETE",
       "requires": [
         "P03"
       ],
-      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "flag": "soterai.lite.restrictionSave"
     },
     {
       "id": "F02",
