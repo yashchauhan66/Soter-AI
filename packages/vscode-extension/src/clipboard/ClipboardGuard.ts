@@ -89,16 +89,17 @@ async function safePaste(): Promise<void> {
         return;
     }
     const reasons = decision.findings.slice(0, 3).map((f) => f.title).join("; ") || "sensitive content";
+    const offeredOriginal = !vscode.workspace.getConfiguration("soterai").get("projectPrivacy.enabled", true);
     const pick = await vscode.window.showWarningMessage(
         `SoterAI: this paste contains ${reasons} (${decision.riskScore}/100). Paste a redacted version instead?`,
         { modal: true },
         "Paste Redacted",
-        "Paste Original",
+        ...(offeredOriginal ? ["Paste Original"] : []),
     );
     if (pick === "Paste Redacted") {
         const safe = redactForSharing(decision.redactedText ?? text);
         if (await insertSnapshot(safe)) vscode.window.showInformationMessage("Redacted snapshot pasted.");
-    } else if (pick === "Paste Original") {
+    } else if (pick === "Paste Original" && offeredOriginal && !vscode.workspace.getConfiguration("soterai").get("projectPrivacy.enabled", true)) {
         await insertSnapshot(text);
     }
     // No selection made => user cancelled; insert nothing.

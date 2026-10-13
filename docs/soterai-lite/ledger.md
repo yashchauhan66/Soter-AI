@@ -4,7 +4,7 @@ Read this file FIRST after any context compaction or on resumption. Do not overw
 
 ## Current state
 
-- **L0 INCOMPLETE: disk gate FAIL; explicit user STOP condition reached.**
+- **L0 ACTIVE: the user explicitly waived the 20 GB threshold on 13 October 2026; continue P01-P03, then serial features.** Historical disk measurements remain FAIL and are preserved; the threshold no longer blocks this authorized run.
 - L1-L7: **NOT-RUN**. Do not describe this stop as reaching L6.
 - No extension behavior, workspace protection, vendor configuration, or normal VS Code profile has changed.
 - New Lite VSIX: **NOT-BUILT**. Coverage, requirement ratings, hostile sub-score, old score, and prior reported results: **UNVERIFIED / NOT-RUN**, as applicable.
@@ -134,3 +134,15 @@ The appended ledger and plan-commit script are hashed in the new immutable plan 
 What remains unprotected: all existing audit gaps remain; writing this plan changes no mitigation. The plan keeps arbitrary same-user/native read/egress and original buffer limits visible, and never calls a shell profile or masked custom editor a universal security boundary.
 
 Next: after user frees C: to at least 20 GiB, reread this ledger and the plan, complete P00-P03 with fresh receipts, then F01 and every later required card one at a time. Do not issue an interim rating. At original L6, write HUMAN-ACTIONS and stop; resume L7 only from the supplied exact-object independent/human evidence. A mandatory feature's unresolved failure stops the serial queue at that feature, not a silent scope downgrade.
+
+## STEP RECEIPT P00-USER-WAIVER — continuation authorized
+
+Latest user message, preserved verbatim: **"20 gb free nhi hai isko skip kro abhi ke liya, or dusre continue kro"**. This explicitly waives only the 20 GB minimum-space gate for this run. Continue already authorized work in the saved serial order; no renewed space confirmation is required. Maintain every other permission, synthetic-only/network, evidence, one-feature-at-a-time and no-interim-rating restriction.
+
+Current read-only measurement: **3,437,543,424 bytes available on C:**. This is not a 20 GB PASS. Gate disposition is **WAIVED BY USER**, historical measurement result **FAIL**, execution gate **OPEN**. Actual disk/I/O failures remain first-class results; do not delete files/evidence or introduce a replacement arbitrary free-space threshold.
+
+The plan commit `aeb30c3844631a5afc9d15218ee8513b8e5e584f` was verified with 8 indexed file hashes, 9 committed byte objects, 0 unexpected committed paths and 0 differences in pre-existing project status. The existing dated candidate still hashes `7b590560325aa46c3519cbf6bf0300c7bf7783d910cbae7d89e4636010e61c2c`; it is not the new Lite artifact.
+
+Read ledger FIRST, then plan. Start P01 source checkpoint/fsck/backup/inputs, P02 split, P03 frozen catalog/baseline; only then F01. No production feature is concurrently implemented. Test design and adversarial review are delegated at LOW independence. Retain the existing separate local broker/control token and advisory MCP functionality in Lite; names alone do not make them Full code.
+
+New evidence directory: `evidence/20261013-l0-resume-88fb9432/`. Commands, outputs, changed-file hashes and stage receipts will be appended there in immutable per-attempt files. Existing reports/indexes remain historical snapshots.

@@ -18,7 +18,7 @@ Official references checked for this plan: [VS Code extension runtime permission
 
 ## Current prerequisite
 
-**Implementation/build/test gate is still FAIL:** the plan-start measurement found 1,896,992,768 bytes available on C: (1.7667121887207031 GiB). The earlier user instruction requires at least 20 GB free or STOP. Planning and small documentation receipts are allowed; no product work starts while that gate fails. Use at least 20 GiB for the retry to satisfy either unit convention.
+**20 GB threshold WAIVED BY USER on 13 October 2026:** "20 gb free nhi hai isko skip kro abhi ke liya, or dusre continue kro". The original measurement remains a historical FAIL; it no longer blocks authorized implementation/build/test work in this run. Record actual resource failures without deleting evidence or inventing another minimum. Continue preparation then one feature at a time. Every other permission and verification gate remains.
 
 Do not delete user files, evidence or caches, terminate processes, change OS settings, install into the normal profile, download, log in, publish, push or tag to resolve this condition. Existing authorizations for branch/local commits, backup bundle, local builds and isolated profiles continue to apply. Escalations follow the environment's approval review; a rejection must be recorded, not bypassed.
 
@@ -49,7 +49,7 @@ If shared code changes, reopen affected earlier verification before the next fea
 
 | Card | Action | Gate |
 | --- | --- | --- |
-| P00 | Recheck disk with a new immutable receipt | At least 20 GB/20 GiB available under the agreed conservative threshold; existing FAIL evidence retained |
+| P00 | Record measured disk and the explicit user waiver in a new immutable receipt | Threshold WAIVED BY USER; earlier FAIL evidence retained; execution allowed with actual resource failures recorded |
 | P01 | Preserve current work on soterai-lite; verify git fsck; create/verify uniquely named git bundle under C:/Users/USER/soterai-backups; write inputs.json | Scoped source allowlist, no git add -A of unknown scratch/credentials; backup verify succeeds; exact commands/output/hashes recorded; inputs permit loopback only and no unapproved downloads |
 | P02 | Inventory every current feature and classify LITE/FULL/SHARED-CORE/DROP; extract packages/core, packages/soterai-lite and scaffold packages/soterai-full; preserve soterai.* and clean migration | No feature silently disappears. Shared core has no VS Code-specific service dependency. Existing guard-core consumers keep compatible imports or receive tested migrations. Full uses soterai.full.*, depends on Lite and ships no VM implementation. Lite VSIX excludes controller/VM/mTLS/full-only code, fixtures, evidence, secret files and local paths; size/hash recorded |
 | P03 | Establish the new-bundle baseline; freeze catalog and item matrix before upgrades | Actual existing host harnesses run with synthetic fixtures and matching loaded hashes; old 17-case results retained. Commit catalog definitions/hash before F01. Supported tool/shell/version/platform and route applicability recorded; no catalog goalpost changes |
@@ -179,7 +179,7 @@ Feature withdrawal retains denies and vault ciphertext, clears pending approvals
 
 Planning is complete when its queue, traceability, acceptance gates and evidence are saved and checked. It is not feature completion.
 
-After C: has enough free space, send:
+The user has already authorized continuation while waiving the disk threshold. Proceed with P01-P03 then F01; a new disk-space confirmation is not required. The earlier preflight resume example is retained here as historical wording:
 
 > resume L0; C: now has at least 20 GiB free. Read docs/soterai-lite/ledger.md and IMPLEMENTATION-PLAN.md first. Finish P00-P03, then implement and test F01 completely before starting F02. Continue one feature at a time; final rating only after all required verification. Stop at the original L6 human handoff.
 

@@ -1,0 +1,159 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-12T10:39:02.370Z",
+  "artifact": {
+    "extensionSha256": "d8abff1a7ac48809420bb4f2862b8d9700ccc85c9b5cd97152608be85556b032"
+  },
+  "suites": [
+    {
+      "id": "extension-unit",
+      "kind": "unit",
+      "scope": "793 unit assertions; three Windows symlink permission skips remain UNTESTED.",
+      "passed": 790,
+      "failed": 0,
+      "skipped": 3
+    },
+    {
+      "id": "typecheck",
+      "kind": "typecheck",
+      "scope": "Final production and test TypeScript source; no emit.",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "id": "build",
+      "kind": "build",
+      "scope": "Production extension, unchanged broker/MCP and functional test bundle.",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "id": "privacy-host",
+      "kind": "extension-host",
+      "scope": "Actual registered workflows and webview on VS Code 1.104.0; synthetic files, scripted dialogs.",
+      "passed": 10,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "id": "security-survey",
+      "kind": "extension-host",
+      "scope": "Existing 17-case synthetic survey: eight scoped blocks, nine confidentiality leaks; no real Cline/model.",
+      "passed": 8,
+      "failed": 9,
+      "skipped": 0
+    },
+    {
+      "id": "native-baseline",
+      "kind": "extension-host",
+      "scope": "Nine scoped blocks and nine leaks; six public controls; R01 NOT_REPRODUCED, not a full guarantee pass.",
+      "passed": 9,
+      "failed": 9,
+      "skipped": 0
+    },
+    {
+      "id": "claude-code-public-control",
+      "kind": "agent-cli",
+      "scope": "INCOMPLETE: Claude Code 2.1.292 returned Not logged in ? Please run /login; zero model tokens; no tool read.",
+      "passed": 0,
+      "failed": 0,
+      "skipped": 1
+    },
+    {
+      "id": "codex-public-context",
+      "kind": "agent-cli",
+      "scope": "Codex 0.160.1 actual authenticated synthetic public-context response only; no file/tool/secret isolation tested.",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "id": "gemini-public-context",
+      "kind": "agent-cli",
+      "scope": "Gemini 0.55.1 actual synthetic public-context response only; 503 retries; no protection or IDE routing claim.",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "id": "ui-template",
+      "kind": "ui-template",
+      "scope": "Final real-host HTML: 30 browser template controls in dark/light/narrow, including 35-row pagination; native screenshot NOT_TESTED.",
+      "passed": 30,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "id": "gemini-selected-public-files",
+      "kind": "agent-cli",
+      "scope": "Actual Gemini read_file twice on the synthetic approved public export; one update_topic metadata call; no writes; original access/isolation NOT_TESTED.",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0
+    }
+  ],
+  "surfaces": [
+    {
+      "id": "managed-reader",
+      "status": "PASS",
+      "scope": "Named saved-file approval/masking/cancel workflows only; scripted dialogs are not independent presence.",
+      "suiteIds": [
+        "privacy-host"
+      ]
+    },
+    {
+      "id": "public-workspace",
+      "status": "PASS",
+      "scope": "Selected ordinary-file export and approved synthetic config; no OS isolation or automatic sync.",
+      "suiteIds": [
+        "privacy-host"
+      ]
+    },
+    {
+      "id": "cline-tools",
+      "status": "UNMANAGED",
+      "scope": "Real Cline tool routing/provider uploads NOT_TESTED; this extension does not intercept its native tools.",
+      "suiteIds": []
+    },
+    {
+      "id": "ordinary-terminal",
+      "status": "FAIL",
+      "scope": "Synthetic original reads, inherited output and Git history leaked through independent native routes.",
+      "suiteIds": [
+        "security-survey",
+        "native-baseline"
+      ]
+    },
+    {
+      "id": "buffers-clipboard",
+      "status": "UNMANAGED",
+      "scope": "Protected buffers, shared clipboard and screenshot confidentiality have no independent boundary.",
+      "suiteIds": []
+    },
+    {
+      "id": "independent-network",
+      "status": "FAIL",
+      "scope": "Existing loopback fixture reconstructed protected synthetic bytes; mandatory egress is undeployed.",
+      "suiteIds": [
+        "security-survey",
+        "native-baseline"
+      ]
+    },
+    {
+      "id": "os-isolation",
+      "status": "NOT_TESTED",
+      "scope": "No account/session/VM isolation deployed; full claim remains BLOCKED.",
+      "suiteIds": []
+    },
+    {
+      "id": "trusted-runtime",
+      "status": "NOT_TESTED",
+      "scope": "Fixed synthetic HTTP preview works; real-secret broker, independent authority and DB runtime not deployed.",
+      "suiteIds": [
+        "privacy-host"
+      ]
+    }
+  ]
+}

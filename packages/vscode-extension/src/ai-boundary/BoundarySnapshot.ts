@@ -1,29 +1,39 @@
 import * as vscode from "vscode";
 import * as path from "node:path";
 import { lstat } from "node:fs/promises";
-import { DEFAULT_PROJECT_POLICY, classifyPath, parseProjectPolicy, type ProjectPolicy } from "@soterai/guard-core";
+import { DEFAULT_PROJECT_POLICY, classifyPath, parseProjectPolicy, isSensitiveFilePath, type ProjectPolicy } from "@soterai/guard-core";
 import { readBoundaryFile } from "./readFile";
-import { matchesGlob, matchesRule, parseAiIgnore, parseManualRules, mergeManualRules, validateGlob, redactRegions, relativePath, OMITTED, type ManualRules } from "./policy";
+import { matchesGlob, matchesRule, parseAiIgnore, parseManualRules, mergeManualRules, validateGlob, redactRegions, relativePath, documentDigest, OMITTED, type ManualRules } from "./policy";
+import { SENSITIVE_MARKS_KEY, parseSensitiveMarks } from "../project-privacy/SensitiveRestrictions";
 
 export const RULES_KEY = "soterai.aiForbidden.v1";
+const boundaryRulesChanged = new vscode.EventEmitter<string>();
+/** Fires the workspace root only after a successful persistent rule change. No content is emitted. */
+export const onDidChangeBoundaryRules = boundaryRulesChanged.event;
 let state: vscode.Memento | undefined;
 const stateWrites = new WeakMap<vscode.Memento, Promise<unknown>>();
 let legacyProtected: ((relativePath: string) => boolean) | undefined;
 export function setBoundaryProtectedChecker(checker: (relativePath: string) => boolean): void { legacyProtected = checker; }
 export function initializeBoundaryState(value: vscode.Memento): void { state = value; }
-export function storedRules(root: string): ManualRules {
-    const all = state?.get<Record<string, unknown>>(RULES_KEY, {});
+function readStoredRules(target: vscode.Memento | undefined, root: string): ManualRules {
+    if (!target) throw new Error("AI policy storage is unavailable.");
+    const all = target?.get<Record<string, unknown>>(RULES_KEY, {});
     if (all !== undefined && (!all || typeof all !== "object" || Array.isArray(all))) throw new Error("Invalid AI policy storage.");
-    return parseManualRules(all?.[root]);
+    const legacy = parseSensitiveMarks(target ? target.get(SENSITIVE_MARKS_KEY, {}) : {}, root);
+    return mergeManualRules(parseManualRules(all?.[root]), {
+        paths: legacy.map(pattern => ({ kind: "file", pattern, sensitive: true })), regions: [],
+    });
 }
+export function storedRules(root: string): ManualRules { return readStoredRules(state, root); }
 function writeRules(root: string, update: (rules: ManualRules) => ManualRules): Promise<void> {
     const target = state;
     if (!target) return Promise.reject(new Error("AI policy storage is unavailable."));
     const write = (stateWrites.get(target) ?? Promise.resolve()).then(async () => {
         const all = target.get<Record<string, unknown>>(RULES_KEY, {});
         if (!all || typeof all !== "object" || Array.isArray(all)) throw new Error("Invalid AI policy storage.");
-        const validated = parseManualRules(update(parseManualRules(all[root])));
+        const validated = parseManualRules(update(readStoredRules(target, root)));
         await target.update(RULES_KEY, { ...all, [root]: validated });
+        if (JSON.stringify(all[root]) !== JSON.stringify(validated)) boundaryRulesChanged.fire(root);
     });
     stateWrites.set(target, write.catch(() => undefined));
     return write;
@@ -45,7 +55,7 @@ export async function reviewRuleRelaxation(): Promise<void> {
     const root = folder.uri.toString();
     const rules = storedRules(root);
     const choices = [
-        ...rules.paths.map(rule => ({ label: `${rule.kind}: ${rule.pattern}`, value: JSON.stringify(rule), region: false })),
+        ...rules.paths.filter(rule => rule.sensitive !== true).map(rule => ({ label: `${rule.kind}: ${rule.pattern}`, value: JSON.stringify(rule), region: false })),
         ...rules.regions.map(rule => ({ label: `Protected text: ${rule.path} (${rule.start}-${rule.end})`, value: JSON.stringify(rule), region: true })),
     ];
     const choice = await vscode.window.showQuickPick(choices, { title: "Review an accepted deny", placeHolder: "Remove the repository entry first; retained denies need this separate review." });
@@ -56,7 +66,7 @@ export async function reviewRuleRelaxation(): Promise<void> {
     if (approval !== "Relax this deny" || !policyEnabled()) return;
     await writeRules(root, current => {
         if (choice.region) current.regions = current.regions.filter(rule => JSON.stringify(rule) !== choice.value);
-        else current.paths = current.paths.filter(rule => JSON.stringify(rule) !== choice.value);
+        else current.paths = current.paths.filter(rule => rule.sensitive === true || JSON.stringify(rule) !== choice.value);
         return current;
     });
 }
@@ -77,6 +87,11 @@ async function optionalPolicyFile(folder: vscode.WorkspaceFolder, rel: string): 
 export class BoundarySnapshot {
     private constructor(private readonly roots: RootPolicy[]) {}
 
+    /** Exact-root validity for UI configuration reporting; this does not establish an OS boundary. */
+    availableForRoot(uri: vscode.Uri): boolean {
+        return uri.scheme === "file" && this.roots.some(root => root.folder.uri.toString() === uri.toString() && !root.invalid);
+    }
+
     static async load(): Promise<BoundarySnapshot> {
         const roots = await Promise.all((vscode.workspace.workspaceFolders ?? []).map(async folder => {
             const root: RootPolicy = {
@@ -86,6 +101,12 @@ export class BoundarySnapshot {
             };
             try {
                 root.manual = storedRules(folder.uri.toString());
+                // Retain the legacy record, but commit its stronger treatment before any managed release.
+                const persisted = parseManualRules(state?.get<Record<string, unknown>>(RULES_KEY, {})?.[folder.uri.toString()]);
+                if (JSON.stringify(persisted) !== JSON.stringify(root.manual)) {
+                    await updateRules(folder.uri.toString(), rules => rules);
+                    root.manual = storedRules(folder.uri.toString());
+                }
                 const ignore = await optionalPolicyFile(folder, ".aiignore");
                 const acceptedGlobs = ignore === undefined ? [] : parseAiIgnore(ignore);
                 const project = await optionalPolicyFile(folder, ".soterai/policy.json");
@@ -128,6 +149,7 @@ export class BoundarySnapshot {
     blocks(uri: vscode.Uri): boolean {
         const entry = this.locate(uri);
         if (!entry || entry.root.invalid) return true;
+        if (isSensitiveFilePath(entry.rel)) return true;
         if (legacyProtected?.(vscode.workspace.asRelativePath(uri))) return true;
         const classification = classifyPath(entry.rel, entry.root.project);
         return entry.root.globs.some(glob => matchesGlob(entry.rel, glob))
@@ -140,9 +162,33 @@ export class BoundarySnapshot {
         return classifyPath(entry?.rel ?? "", entry?.root.project ?? DEFAULT_PROJECT_POLICY);
     }
 
+    /** Sensitivity and deny share the same immutable policy and access revision. */
+    isSensitive(uri: vscode.Uri): boolean {
+        const entry = this.locate(uri);
+        return !entry || entry.root.invalid || isSensitiveFilePath(entry.rel)
+            || entry.root.manual.paths.some(rule => rule.sensitive === true && matchesRule(entry.rel, rule))
+            || [...entry.root.project.protectedFiles, ...entry.root.project.sensitivePaths]
+                .some(pattern => matchesGlob(entry.rel, validateGlob(pattern)));
+    }
+
     hasRegions(uri: vscode.Uri): boolean {
         const entry = this.locate(uri);
         return !!entry && entry.root.manual.regions.some(r => relativePath(r.path) === entry.rel);
+    }
+
+    /** Approval cannot override an invalid/disabled policy. Used by the explicit safe reader only. */
+    accessRevision(uri: vscode.Uri): string | undefined {
+        const entry = this.locate(uri);
+        if (!entry || entry.root.invalid) return undefined;
+        return documentDigest(JSON.stringify([entry.root.folder.uri.toString(), entry.root.globs,
+            entry.root.manual, entry.root.project, legacyProtected?.(vscode.workspace.asRelativePath(uri)) === true]));
+    }
+
+    /** A one-time approved view still enforces protected regions; existing default reads remain denied. */
+    approvedRegionView(uri: vscode.Uri, text: string): string {
+        const entry = this.locate(uri);
+        if (!entry || entry.root.invalid) return OMITTED;
+        return redactRegions(entry.rel, text, entry.root.manual.regions);
     }
 
     sanitize(uri: vscode.Uri, text: string): string {

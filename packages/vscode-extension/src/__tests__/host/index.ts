@@ -16,11 +16,13 @@ import { run as runRealUser } from "./realUser.host";
 import { run as runDiscoverability } from "./discoverability.host";
 import { run as runAgentTools } from "./agentTools.host";
 import { run as runCommandSweep } from "./commandSweep.host";
+import { run as runProjectPrivacy } from "./projectPrivacy.host";
 
 // @ts-ignore — process is available in the VS Code extension host (Node runtime)
 const sweepOnly = Boolean(process.env.SOTERAI_HOST_SWEEP);
 
 export async function run(): Promise<void> {
+    if (process.env.SOTERAI_HOST_PROJECT_PRIVACY === "1") { await runProjectPrivacy(); return; }
     if (sweepOnly) {
         console.log("\n=== SoterAI command sweep — every contributed command, executed once ===\n");
         await runCommandSweep();

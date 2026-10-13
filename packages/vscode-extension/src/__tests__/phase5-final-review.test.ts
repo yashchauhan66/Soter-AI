@@ -9,6 +9,7 @@ import test, { mock } from "node:test";
 import ts from "typescript";
 import * as stub from "./phase2/vscode-stub";
 import { confirmScopedChange } from "../security/ScopedConfirmation";
+import { SensitiveContextPolicyEngine } from "../secret-broker/SensitiveContextPolicy";
 
 function callback(file: string, name: string, bindings: Record<string, unknown>): (...args: any[]) => Promise<any> {
     const filename = join(__dirname, "..", file);
@@ -72,6 +73,31 @@ test("VD-02 actual manual checker gives bounded public and high-risk recommendat
         assert.match(messages[1], /does not intercept/);
         assert.doesNotMatch(messages.join("\n"), /blocked this send|is safe|Send Anyway/);
     } finally { restores.reverse().forEach(item => item.mock.restore()); }
+});
+
+test("project privacy withholds risky original overrides through the actual manual checker", async () => {
+    stub.resetState("C:/synthetic-review");
+    const dialog = mock.method(stub.window, "showWarningMessage", async () => "Keep Original");
+    try {
+        const presentDecision = callback("advanced/commands.ts", "presentDecision", { summarize: () => "Synthetic finding" });
+        assert.equal(await presentDecision({ decision: "REDACT", riskScore: 70 }, "selection"), false);
+        stub.state.config.set("soterai.projectPrivacy.enabled", false);
+        assert.equal(await presentDecision({ decision: "REDACT", riskScore: 70 }, "selection"), true,
+            "Rollback retains the legacy explicitly chosen override outside project privacy mode.");
+    } finally { dialog.mock.restore(); }
+});
+
+test("project privacy overrides raw-reveal settings through the real policy adapter", async () => {
+    stub.resetState("C:/synthetic-review");
+    stub.state.config.set("soterai.sensitiveContext.allowRawReveal", true);
+    // A class is both constructor and static adapter; the test lookup reads no actual project policy.
+    class TestPolicy extends SensitiveContextPolicyEngine {
+        static loadFromWorkspace() { return SensitiveContextPolicyEngine.parse({}); }
+    }
+    const actual = callback("secret-broker/commands.ts", "policyForCurrentWorkspace", { currentWorkspace: () => "", SensitiveContextPolicyEngine: TestPolicy });
+    assert.equal((await actual()).canReveal(), false);
+    stub.state.config.set("soterai.projectPrivacy.enabled", false);
+    assert.equal((await actual()).canReveal(), true);
 });
 
 test("VD-02 actual file-scan callback does not certify safety or third-party enforcement", async () => {

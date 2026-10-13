@@ -1,0 +1,12 @@
+{
+  "name": "@soterai/privacy-controller",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": "./src/index.mjs",
+  "description": "Owner-side signed policy and durable capability controller; deployment requires independently protected adapters",
+  "engines": { "node": ">=22" },
+  "dependencies": { "@soterai/guard-core": "file:../../packages/guard-core" },
+  "scripts": { "test": "node --test src/__tests__/*.test.mjs" },
+  "license": "BSL-1.1"
+}

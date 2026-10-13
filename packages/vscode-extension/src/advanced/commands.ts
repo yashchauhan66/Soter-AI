@@ -46,6 +46,8 @@ function summarize(result: EgressResult): string {
  */
 async function presentDecision(result: EgressResult, origin: string): Promise<boolean> {
     const detail = summarize(result);
+    const canKeepOriginal = () => !vscode.workspace.getConfiguration("soterai").get<boolean>("projectPrivacy.enabled", true);
+    const offeredOriginal = canKeepOriginal();
 
     if (result.decision === "ALLOW") {
         void vscode.window.showInformationMessage(`SoterAI found no recognized egress risk (${result.riskScore}/100). Review unmarked private text before sharing.`);
@@ -70,23 +72,23 @@ async function presentDecision(result: EgressResult, origin: string): Promise<bo
             `SoterAI: secrets detected in this ${origin} (${result.riskScore}/100). ${detail}`,
             { modal: true },
             "Copy Redacted Version",
-            "Keep Original",
+            ...(offeredOriginal ? ["Keep Original"] : []),
         );
         if (pick === "Copy Redacted Version" && result.redactedText) {
             await vscode.env.clipboard.writeText(result.redactedText);
             void vscode.window.showInformationMessage("Redacted version copied — paste this into the AI tool instead.");
             return false;
         }
-        return pick === "Keep Original";
+        return pick === "Keep Original" && offeredOriginal && canKeepOriginal();
     }
 
     // ASK
     const pick = await vscode.window.showWarningMessage(
         `SoterAI: this ${origin} looks like a prompt-injection attempt (${result.riskScore}/100). ${detail}`,
         { modal: true },
-        "Keep Original",
+        ...(offeredOriginal ? ["Keep Original"] : []),
     );
-    return pick === "Keep Original";
+    return pick === "Keep Original" && offeredOriginal && canKeepOriginal();
 }
 
 export function registerEgressFirewallCommands(context: vscode.ExtensionContext): void {

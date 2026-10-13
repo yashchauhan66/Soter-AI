@@ -107,6 +107,8 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
         "action:protectSelection",
         "action:redactedPreview",
         "action:manageRules",
+        "action:projectPrivacy",
+        "action:safeFileAccess",
     ]);
 
     private static readonly RESOURCE_LINKS: Record<string, { url: string; label: string }> = {
@@ -260,6 +262,12 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
                 }
                 case "action:manageRules":
                     await vscode.commands.executeCommand("soterai.manageAIRules");
+                    break;
+                case "action:projectPrivacy":
+                    await vscode.commands.executeCommand("soterai.openProjectPrivacy");
+                    break;
+                case "action:safeFileAccess":
+                    await vscode.commands.executeCommand("soterai.reviewSafeFileAccess");
                     break;
                 case "action:openWebsite":
                 case "action:openDocs":
@@ -567,6 +575,16 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
       <button class="btn-secondary" data-action="redactedPreview" data-focus="action:redactedPreview">Preview AI context</button>
       <button class="btn-secondary" data-action="manageRules" data-focus="action:manageRules">Manage rules</button>
     </div><span class="field-hint">Folders and patterns: Explorer menu or .aiignore.</span></div>
+  </section>
+
+  <section aria-labelledby="project-privacy-title">
+    <h2 class="section-label" id="project-privacy-title">Project privacy</h2>
+    <div class="protect-card"><p>Restrict files and review one-time safe reads. Environment values stay masked in the project reader.</p>
+      <div class="protect-grid">
+        <button class="btn-secondary" data-action="projectPrivacy" data-focus="action:projectPrivacy">Manage project privacy</button>
+        <button class="btn-secondary" data-action="safeFileAccess" data-focus="action:safeFileAccess">Review a safe file view</button>
+      </div><span class="field-hint">Other AI extensions and ordinary terminals remain outside this reader.</span>
+    </div>
   </section>
 
   <!-- ⑤ Quick actions -->

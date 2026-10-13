@@ -1,7 +1,7 @@
 import { createHash } from "node:crypto";
 
 /** Deny-only policy. No negation, regex execution, or repository-supplied allow rule. */
-export interface PathRule { kind: "file" | "folder" | "glob"; pattern: string }
+export interface PathRule { kind: "file" | "folder" | "glob"; pattern: string; sensitive?: true }
 export interface ProtectedRegion { path: string; digest: string; start: number; end: number }
 export interface ManualRules { paths: PathRule[]; regions: ProtectedRegion[] }
 export const OMITTED = "[AI-forbidden content omitted by SoterAI]";
@@ -88,6 +88,7 @@ export function parseManualRules(raw: unknown): ManualRules {
         || source.paths.length + source.regions.length > MAX_RULES) throw new Error("Invalid stored AI rules.");
     for (const rule of source.paths) {
         if (!rule || !["file", "folder", "glob"].includes(rule.kind) || typeof rule.pattern !== "string") throw new Error("Invalid AI path rule.");
+        if (rule.sensitive !== undefined && (rule.sensitive !== true || rule.kind !== "file")) throw new Error("Invalid sensitive AI path rule.");
         if (rule.kind === "glob") validateGlob(rule.pattern);
         else if (!(rule.kind === "folder" && rule.pattern === ".")) relativePath(rule.pattern);
     }
@@ -103,7 +104,15 @@ export function parseManualRules(raw: unknown): ManualRules {
 /** Union, never replacement: a public update API can only add accepted denies. */
 export function mergeManualRules(before: ManualRules, added: ManualRules): ManualRules {
     const unique = <T>(items: T[]) => [...new Map(items.map(item => [JSON.stringify(item), item])).values()];
-    return parseManualRules({ paths: unique([...before.paths, ...added.paths]), regions: unique([...before.regions, ...added.regions]) });
+    const paths = new Map<string, PathRule>();
+    for (const rule of [...parseManualRules(before).paths, ...parseManualRules(added).paths]) {
+        const pattern = rule.kind === "glob" ? validateGlob(rule.pattern).toLowerCase()
+            : rule.kind === "folder" && rule.pattern === "." ? "." : relativePath(rule.pattern);
+        const key = `${rule.kind}:${pattern}`;
+        const existing = paths.get(key);
+        paths.set(key, existing ? { ...existing, ...(rule.sensitive === true ? { sensitive: true as const } : {}) } : rule);
+    }
+    return parseManualRules({ paths: [...paths.values()], regions: unique([...before.regions, ...added.regions]) });
 }
 
 /** Offsets apply only to the exact document. Any edit blocks the whole file until stale rules are explicitly reviewed. */

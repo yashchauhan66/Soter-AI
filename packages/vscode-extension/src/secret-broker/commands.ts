@@ -82,6 +82,7 @@ export function registerSecretBrokerCommands(context: vscode.ExtensionContext, r
         }
 
         const detected = [...new Set(result.secrets.map((secret) => secret.finding.label || secret.finding.type))].join(", ");
+        const offeredReveal = policyForCurrentWorkspace().canReveal();
         const choice = await vscode.window.showWarningMessage(
             `Sensitive information detected: ${detected}. Choose how SoterAI should handle this context.`,
             { modal: true },
@@ -89,7 +90,7 @@ export function registerSecretBrokerCommands(context: vscode.ExtensionContext, r
             "Send redacted version",
             "Block",
             "Explain risk",
-            "Reveal once, dangerous",
+            ...(offeredReveal ? ["Reveal once, dangerous"] : []),
         );
 
         if (!choice || choice === "Block") {
@@ -102,7 +103,7 @@ export function registerSecretBrokerCommands(context: vscode.ExtensionContext, r
         }
         if (choice === "Reveal once, dangerous") {
             const policy = policyForCurrentWorkspace();
-            if (!policy.canReveal()) {
+            if (!offeredReveal || !policy.canReveal()) {
                 await audit("context_blocked", "block", result.text, "raw reveal disabled by policy");
                 vscode.window.showErrorMessage("Raw reveal is disabled by SoterAI policy or enterprise lock.");
                 return;
@@ -127,6 +128,10 @@ export function registerSecretBrokerCommands(context: vscode.ExtensionContext, r
             // Real behavior, not a simulation: the raw selection goes to the
             // clipboard for ONE deliberate paste. SoterAI does not send it
             // anywhere itself, and the clipboard is the only copy made.
+            if (!policyForCurrentWorkspace().canReveal()) {
+                vscode.window.showErrorMessage("Raw reveal was withdrawn. Project privacy keeps recognized secret values masked.");
+                return;
+            }
             await vscode.env.clipboard.writeText(text);
             vscode.window.showWarningMessage(
                 "Raw selection copied to clipboard. The clipboard and any paste destination may retain it until you clear them. Rotate the credential if it reaches an AI tool. A sanitized audit event was recorded.",
@@ -532,7 +537,8 @@ ${row("After revocation", afterRevoke.allowed, false)}
             sensitiveContext: {
                 ...policy.sensitiveContext,
                 defaultAction: config.get("sensitiveContext.defaultAction", policy.sensitiveContext.defaultAction),
-                allowRawReveal: config.get("sensitiveContext.allowRawReveal", policy.sensitiveContext.allowRawReveal),
+                allowRawReveal: !config.get("projectPrivacy.enabled", true)
+                    && config.get("sensitiveContext.allowRawReveal", policy.sensitiveContext.allowRawReveal),
                 requireApprovalForBroker: config.get("sensitiveContext.requireApproval", policy.sensitiveContext.requireApprovalForBroker),
                 maxSecretRefTtlMinutes: config.get("sensitiveContext.ttlMinutes", policy.sensitiveContext.maxSecretRefTtlMinutes),
                 auditRawPrompt: config.get("audit.storeRawPrompts", policy.sensitiveContext.auditRawPrompt),
