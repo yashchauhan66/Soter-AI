@@ -1,11 +1,13 @@
 param(
     [Parameter(Mandatory=$true)][string]$CodePath,
     [Parameter(Mandatory=$true)][string]$HostTestsPath,
-    [Parameter(Mandatory=$true)][string]$OutputRoot
+    [Parameter(Mandatory=$true)][string]$OutputRoot,
+    [string]$ExtensionRoot
 )
 $ErrorActionPreference = 'Stop'
 $repoRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../../..'))
-$extensionRoot = Join-Path $repoRoot 'packages/vscode-extension'
+$extensionRoot = if ($ExtensionRoot) { [IO.Path]::GetFullPath($ExtensionRoot) } else { Join-Path $repoRoot 'packages/vscode-extension' }
+if (-not $extensionRoot.StartsWith($repoRoot + [IO.Path]::DirectorySeparatorChar, [StringComparison]::OrdinalIgnoreCase)) { throw 'ExtensionRoot must stay inside the workspace.' }
 $OutputRoot = [IO.Path]::GetFullPath($OutputRoot)
 if (-not $OutputRoot.StartsWith($repoRoot + [IO.Path]::DirectorySeparatorChar, [StringComparison]::OrdinalIgnoreCase)) { throw 'Output must stay inside the workspace.' }
 foreach ($inputPath in @($CodePath,$HostTestsPath,(Join-Path $extensionRoot 'dist/extension.js'))) {

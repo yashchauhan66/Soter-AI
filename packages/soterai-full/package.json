@@ -1,0 +1,28 @@
+{
+  "name": "soterai-full",
+  "displayName": "SoterAI Full",
+  "version": "0.1.0",
+  "publisher": "soterai",
+  "private": true,
+  "preview": true,
+  "description": "Dependency-only Full isolation scaffold; no VM/controller implementation shipped.",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "extensionDependencies": [
+    "soterai.soterai-ide-guard"
+  ],
+  "contributes": {
+    "configuration": {
+      "title": "SoterAI Full",
+      "properties": {
+        "soterai.full.scaffoldOnly": {
+          "type": "boolean",
+          "default": true,
+          "description": "Full is a scaffold only. This setting enables no isolation or controller."
+        }
+      }
+    }
+  }
+}

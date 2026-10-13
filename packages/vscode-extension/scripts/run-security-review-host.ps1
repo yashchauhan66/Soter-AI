@@ -1,7 +1,9 @@
-param([Parameter(Mandatory=$true)][string]$CodePath, [string]$OutputRoot, [switch]$DisableUniqueEvidence)
+param([Parameter(Mandatory=$true)][string]$CodePath, [string]$OutputRoot, [switch]$DisableUniqueEvidence,
+    [string]$ExtensionRoot, [switch]$UsePrebuilt, [string]$HostTestsPath)
 $ErrorActionPreference = 'Stop'
 $repoRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../../..'))
-$extensionRoot = Join-Path $repoRoot 'packages/vscode-extension'
+$extensionRoot = if ($ExtensionRoot) { [IO.Path]::GetFullPath($ExtensionRoot) } else { Join-Path $repoRoot 'packages/vscode-extension' }
+if (-not $extensionRoot.StartsWith($repoRoot + [IO.Path]::DirectorySeparatorChar, [StringComparison]::OrdinalIgnoreCase)) { throw 'ExtensionRoot must stay inside the workspace.' }
 if ($DisableUniqueEvidence) { throw 'Unique evidence recording is disabled; host execution is unavailable.' }
 function Write-NewText([string]$file,[string]$value) {
     $stream=[IO.File]::Open($file,[IO.FileMode]::CreateNew,[IO.FileAccess]::Write,[IO.FileShare]::None)
@@ -19,11 +21,21 @@ $runId = 'host-' + [DateTime]::UtcNow.ToString('yyyyMMddTHHmmssZ') + '-' + [Guid
 $runRoot = Join-Path $OutputRoot $runId
 if (Test-Path -LiteralPath $runRoot) { throw 'Run output already exists; refusing overwrite.' }
 [void][IO.Directory]::CreateDirectory($runRoot)
-& npm.cmd --prefix $extensionRoot run build
-if ($LASTEXITCODE -ne 0) { throw 'Extension rebuild failed; no host execution.' }
+if (-not $UsePrebuilt) {
+    & npm.cmd --prefix $extensionRoot run build
+    if ($LASTEXITCODE -ne 0) { throw 'Extension rebuild failed; no host execution.' }
+}
+foreach ($name in @('extension.js','local-ai-broker.js','soterai-mcp-server.js')) {
+    if (-not (Test-Path -LiteralPath (Join-Path $extensionRoot ('dist/' + $name)) -PathType Leaf)) { throw 'Complete prebuilt extension required.' }
+}
 $bundle = Join-Path $runRoot 'security-review-host.js'
-& node.exe (Join-Path $repoRoot 'node_modules/esbuild/bin/esbuild') (Join-Path $extensionRoot 'src/__tests__/host/securityReview.host.ts') --bundle --platform=node --external:vscode "--outfile=$bundle"
-if ($LASTEXITCODE -ne 0) { throw 'Existing host harness build failed; no host execution.' }
+if ($HostTestsPath) {
+    if (-not $UsePrebuilt -or -not (Test-Path -LiteralPath $HostTestsPath -PathType Leaf)) { throw 'Verified prebuilt host input required.' }
+    Copy-Item -LiteralPath $HostTestsPath -Destination $bundle
+} else {
+    & node.exe (Join-Path $repoRoot 'node_modules/esbuild/bin/esbuild') (Join-Path $repoRoot 'packages/vscode-extension/src/__tests__/host/securityReview.host.ts') --bundle --platform=node --external:vscode "--outfile=$bundle"
+    if ($LASTEXITCODE -ne 0) { throw 'Existing host harness build failed; no host execution.' }
+}
 $launchRecord = @{ runId=$runId; status='PREPARED_NOT_RUN'; createdAt=[DateTime]::UtcNow.ToString('o'); extensionBundleSha256=(Get-FileHash -LiteralPath (Join-Path $extensionRoot 'dist/extension.js')).Hash.ToLowerInvariant(); hostProbeSha256=(Get-FileHash -LiteralPath $bundle).Hash.ToLowerInvariant(); codeSha256=(Get-FileHash -LiteralPath $CodePath).Hash.ToLowerInvariant(); extensionDevelopmentPath=$extensionRoot; limitation='Working-tree launch; hashes identify prepared bytes, not an immutable complete runtime.' }
 Write-NewText (Join-Path $runRoot 'launch.json') ($launchRecord | ConvertTo-Json)
 $labRoot = Join-Path ([IO.Path]::GetTempPath()) ('soterai-security-review-' + [Guid]::NewGuid().ToString('N'))

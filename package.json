@@ -14,7 +14,8 @@
   },
   "workspaces": [
     "apps/*",
-    "packages/*"
+    "packages/*",
+    "!packages/vscode-extension"
   ],
   "scripts": {
     "dev": "next dev --turbopack",
@@ -58,11 +59,11 @@
     "test:multimodal": "tsx --test tests/multimodal-scanner.test.ts",
     "package:extension": "npm --prefix apps/extension run package",
     "test:extension:runtime": "playwright test --config playwright.extension.config.ts",
-    "vscode:package": "npm --prefix packages/vscode-extension run vscode:package",
-    "vscode:publish": "npm --prefix packages/vscode-extension run vscode:publish",
-    "openvsx:package": "npm --prefix packages/vscode-extension run openvsx:package",
+    "vscode:package": "npm --prefix packages/soterai-lite run vscode:package",
+    "vscode:publish": "node scripts/soterai-lite-publish-owner.cjs",
+    "openvsx:package": "npm --prefix packages/soterai-lite run vscode:package",
     "openvsx:preflight": "node scripts/openvsx-publish-preflight.mjs",
-    "openvsx:publish": "npm --prefix packages/vscode-extension run openvsx:publish",
+    "openvsx:publish": "node scripts/soterai-lite-publish-owner.cjs",
     "test:vscode-family": "node scripts/test-vscode-family.mjs all",
     "test:vscode": "node scripts/test-vscode-family.mjs code",
     "test:cursor": "node scripts/test-vscode-family.mjs cursor",
