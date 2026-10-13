@@ -1,0 +1,607 @@
+{
+  "schemaVersion": 1,
+  "applicabilityLock": {"preparation":"P03 before frozen catalog and implementation","optionalAbsent":"Remain NOT_TESTED/NOT COVERED, never DONE; visibly retained inventory, not a supported execution card","requiredFailure":"Cannot be removed or made optional to advance; current card stays open","executionDependencies":"Record any availability-based change to the proposed linear queue before freeze; no unsupported card counted complete"},
+  "planVersion": 1,
+  "clientDate": "2026-10-13",
+  "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
+  "scope": "Planning only; no implementation started",
+  "implementationConcurrency": 1,
+  "activeFeature": null,
+  "prerequisiteBlock": {
+    "id": "P00",
+    "result": "FAIL",
+    "reason": "Earlier explicit 20 GB disk STOP gate remains failed; no code/build/test execution authorized while failed"
+  },
+  "finalRating": {
+    "status": "PENDING",
+    "allowed": false,
+    "requires": "All required feature, integration, artifact and human acceptance gates; no numerical interim rating"
+  },
+  "preparations": [
+    {
+      "id": "P00",
+      "status": "PLANNED",
+      "result": "FAIL",
+      "requires": []
+    },
+    {
+      "id": "P01",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "P00"
+      ]
+    },
+    {
+      "id": "P02",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "P01"
+      ]
+    },
+    {
+      "id": "P03",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "P02"
+      ]
+    }
+  ],
+  "features": [
+    {
+      "id": "F01",
+      "title": "Reliable saved restrictions.",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "P03"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+    },
+    {
+      "id": "F02",
+      "title": "Versioned policy and defaults.",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "F01"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+    },
+    {
+      "id": "F03",
+      "title": "Policy drift and deliberate relaxation.",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "F02"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+    },
+    {
+      "id": "F04",
+      "title": "Exact one-time safe-read consent.",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "F03"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+    },
+    {
+      "id": "F05",
+      "title": "Secure masked env editor.",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "F04"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+    },
+    {
+      "id": "F06",
+      "title": "Optional vault migration and recovery.",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "F05"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+    },
+    {
+      "id": "F07",
+      "title": "Shared registered-value matching.",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "F06"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+    },
+    {
+      "id": "F08",
+      "title": "Streaming output redactor.",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "F07"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+    },
+    {
+      "id": "F09",
+      "title": "Vault Run/Task/Debug integration.",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "F08"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+    },
+    {
+      "id": "F10",
+      "title": "Managed PowerShell 5.1 terminal.",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "F09"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+    },
+    {
+      "id": "F11",
+      "title": "Managed PowerShell 7 terminal.",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "F10"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+    },
+    {
+      "id": "F12",
+      "title": "Managed cmd profile.",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "F11"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+    },
+    {
+      "id": "F13",
+      "title": "Managed Git Bash profile.",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "F12"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+    },
+    {
+      "id": "F14",
+      "title": "Broker lifecycle and window ownership.",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "F13"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+    },
+    {
+      "id": "F15",
+      "title": "Gateway body-decoder coverage.",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "F14"
+      ],
+      "subcards": [
+        {
+          "id": "F15a",
+          "title": "JSON",
+          "status": "PLANNED",
+          "result": "NOT-RUN",
+          "requires": [
+            "parent prerequisites"
+          ]
+        },
+        {
+          "id": "F15b",
+          "title": "gzip",
+          "status": "PLANNED",
+          "result": "NOT-RUN",
+          "requires": [
+            "F15a"
+          ]
+        },
+        {
+          "id": "F15c",
+          "title": "Brotli",
+          "status": "PLANNED",
+          "result": "NOT-RUN",
+          "requires": [
+            "F15b"
+          ]
+        },
+        {
+          "id": "F15d",
+          "title": "deflate",
+          "status": "PLANNED",
+          "result": "NOT-RUN",
+          "requires": [
+            "F15c"
+          ]
+        },
+        {
+          "id": "F15e",
+          "title": "chunked framing",
+          "status": "PLANNED",
+          "result": "NOT-RUN",
+          "requires": [
+            "F15d"
+          ]
+        },
+        {
+          "id": "F15f",
+          "title": "NDJSON/SSE",
+          "status": "PLANNED",
+          "result": "NOT-RUN",
+          "requires": [
+            "F15e"
+          ]
+        },
+        {
+          "id": "F15g",
+          "title": "multipart",
+          "status": "PLANNED",
+          "result": "NOT-RUN",
+          "requires": [
+            "F15f"
+          ]
+        },
+        {
+          "id": "F15h",
+          "title": "base64 blobs",
+          "status": "PLANNED",
+          "result": "NOT-RUN",
+          "requires": [
+            "F15g"
+          ]
+        }
+      ],
+      "completionRule": "All required subcards pass individually before parent DONE",
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+    },
+    {
+      "id": "F16",
+      "title": "Gateway per-tool policy and self-test.",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "F15"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+    },
+    {
+      "id": "F17",
+      "title": "Approved safe-read MCP adapter.",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "F16"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+    },
+    {
+      "id": "F18",
+      "title": "Cline adapter, one pinned version.",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "F17"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+    },
+    {
+      "id": "F19",
+      "title": "Claude Code adapter, one pinned version.",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "F18"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+    },
+    {
+      "id": "F20",
+      "title": "Other discovered adapters, one at a time.",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "F19"
+      ],
+      "childCards": "One per additional supported tool/version; enumerate at P03 before frozen applicability",
+      "completionRule": "No supported additional adapter bypasses actual-tool acceptance",
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+    },
+    {
+      "id": "F21",
+      "title": "Secrets hygiene and exposure ledger.",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "F20"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+    },
+    {
+      "id": "F22",
+      "title": "Source/config scanner families.",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "F21"
+      ],
+      "subcards": [
+        {
+          "id": "F22a",
+          "title": "source",
+          "status": "PLANNED",
+          "result": "NOT-RUN",
+          "requires": [
+            "parent prerequisites"
+          ]
+        },
+        {
+          "id": "F22b",
+          "title": "Docker/Kubernetes",
+          "status": "PLANNED",
+          "result": "NOT-RUN",
+          "requires": [
+            "F22a"
+          ]
+        },
+        {
+          "id": "F22c",
+          "title": "Terraform/tfvars",
+          "status": "PLANNED",
+          "result": "NOT-RUN",
+          "requires": [
+            "F22b"
+          ]
+        },
+        {
+          "id": "F22d",
+          "title": "npm/pypi registry configs",
+          "status": "PLANNED",
+          "result": "NOT-RUN",
+          "requires": [
+            "F22c"
+          ]
+        },
+        {
+          "id": "F22e",
+          "title": "service-account JSON",
+          "status": "PLANNED",
+          "result": "NOT-RUN",
+          "requires": [
+            "F22d"
+          ]
+        },
+        {
+          "id": "F22f",
+          "title": "CI",
+          "status": "PLANNED",
+          "result": "NOT-RUN",
+          "requires": [
+            "F22e"
+          ]
+        },
+        {
+          "id": "F22g",
+          "title": "launch/tasks/settings",
+          "status": "PLANNED",
+          "result": "NOT-RUN",
+          "requires": [
+            "F22f"
+          ]
+        },
+        {
+          "id": "F22h",
+          "title": "MCP configs",
+          "status": "PLANNED",
+          "result": "NOT-RUN",
+          "requires": [
+            "F22g"
+          ]
+        }
+      ],
+      "completionRule": "All required subcards pass individually before parent DONE",
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+    },
+    {
+      "id": "F23",
+      "title": "Read-only Git history scanner.",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "F22"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+    },
+    {
+      "id": "F24",
+      "title": "Build/artifact/source-map scanning.",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "F23"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+    },
+    {
+      "id": "F25",
+      "title": "Logs/test/debug leak handling.",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "F24"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+    },
+    {
+      "id": "F26",
+      "title": "Optional Git/history hooks.",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "F25"
+      ],
+      "subcards": [
+        {
+          "id": "F26a",
+          "title": "pre-commit",
+          "status": "PLANNED",
+          "result": "NOT-RUN",
+          "requires": [
+            "parent prerequisites"
+          ]
+        },
+        {
+          "id": "F26b",
+          "title": "pre-push",
+          "status": "PLANNED",
+          "result": "NOT-RUN",
+          "requires": [
+            "F26a"
+          ]
+        },
+        {
+          "id": "F26c",
+          "title": "PSReadLine exclusion",
+          "status": "PLANNED",
+          "result": "NOT-RUN",
+          "requires": [
+            "F26b"
+          ]
+        }
+      ],
+      "completionRule": "All required subcards pass individually before parent DONE",
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+    },
+    {
+      "id": "F27",
+      "title": "Extension self-hygiene.",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "F26"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+    },
+    {
+      "id": "F28",
+      "title": "Path race, performance and degradation.",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "F27"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+    },
+    {
+      "id": "F29",
+      "title": "One Protection Center.",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "F28"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+    },
+    {
+      "id": "F30",
+      "title": "Verify my setup.",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "F29"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+    },
+    {
+      "id": "F31",
+      "title": "Marketplace-ready package preparation.",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "F30"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+    },
+    {
+      "id": "F32",
+      "title": "Install, upgrade and removal lifecycle.",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "F31"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+    }
+  ],
+  "finalGates": [
+    {
+      "id": "V01",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "F32"
+      ]
+    },
+    {
+      "id": "V02",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "V01"
+      ]
+    },
+    {
+      "id": "V03",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "V02"
+      ]
+    },
+    {
+      "id": "V04",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "V03"
+      ]
+    },
+    {
+      "id": "V05",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "V04"
+      ],
+      "action": "L6 HUMAN-ACTIONS and STOP; L7 resumes from supplied exact-object evidence"
+    }
+  ],
+  "runtimeFeatureFlags": "Proposed only in plan; no settings or runtime implementation changed",
+  "catalog": {
+    "status": "NOT-FROZEN",
+    "preparation": "P03",
+    "draftCheckCount": 44,
+    "minimumCategoryTotal": 42,
+    "definitions": "Never alter applicability to raise score"
+  }
+}

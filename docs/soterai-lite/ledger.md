@@ -95,3 +95,42 @@ Artifact gap: current extension SHA-256 is `d8abff1a7ac48809420bb4f2862b8d9700cc
 What remains unprotected: native AI/direct original-file reads, normal shells, original buffers, alias/copy/history paths, inherited environment/output and independent uploads. The managed approval-and-masking route is implemented; universal mediation is not. The report details source-only persistence-status and partial-value-preview findings that require flagged regression fixes later.
 
 Next: return the requested simple assessment; implementation remains stopped at L0 until the user supplies sufficient C: disk space. Resume by reading this ledger and retrying the disk gate with a new evidence directory. No required original build stage is marked finished by this review. Exact local review-commit commands and their result are recorded in `evidence/20261013-requirements-audit-a816bcf9/commit-review.ps1` and its new output. Commit only the review allowlist; preserve all pre-existing project changes and prior evidence.
+
+## STEP RECEIPT PLAN-01 — serial feature implementation plan
+
+Latest user direction: plan every remaining feature first; production work must implement and test **one feature completely before the next**, and final rating must wait until all required work is completed. This supersedes any execution suggestion to implement several upgrades together. Planning is complete; **implementation concurrency is 1**, active feature is null and numerical rating is **PENDING**.
+
+Saved `IMPLEMENTATION-PLAN.md` and `FEATURE-QUEUE.json`: 4 prerequisite cards, 32 behavior/release cards, 19 explicit subcards and 5 final verification/handoff gates. Original U1-U10/L2-L7 requirements are mapped. The proposed 44 checks exceed the original 42 category minima; the actual LITE-CATALOG remains NOT-FROZEN until P03 after L0 prerequisites. Do not treat planned cards or proposed flags as implemented controls.
+
+First product behavior card after P00-P03 is **F01 reliable restriction persistence/reporting**. Do not acknowledge saved protection if policy persistence failed. Each next card requires focused checks, affected real host/exact package identity, error/cancel/mutation/safe rollback evidence and a scoped local commit. Actual tool tests must execute the tool's declared route; required auth blocks that card for human action rather than moving it silently to L6. Optional unavailable shells/tools are recorded before frozen applicability, remain NOT_TESTED/NOT COVERED and are never counted DONE.
+
+Exact plan-integrity command:
+
+```powershell
+& '.\docs\soterai-lite\evidence\20261013-serial-plan-780b451e\check-plan.ps1'
+```
+
+Raw output: `evidence/20261013-serial-plan-780b451e/planning-integrity.json`; tool exit `0`. Result **PASS** for planning-document/queue integrity only; plan scope **STATIC-ONLY**. 32 feature rows/IDs match; all U1-U10/L2-L7 trace tokens present; matcher F07 precedes redactor F08, which precedes vault app runtime F09; 31 prior source/evidence SHA-256 entries unchanged. Fresh product implementation/tests **NOT-RUN**, new Lite VSIX **NOT-BUILT**, final rating **PENDING**, independence **LOW**.
+
+Plan-start C: free bytes: 1,896,992,768. Latest saved planning measurement: **1,800,519,680 available bytes**. Disk gate **FAIL**; original L0 remains **INCOMPLETE**. Planning does not waive the user's >=20 GB else STOP condition. No product build/test, real credential inspection, OS/profile change, download, push or publish occurred.
+
+Adversarial plan review is recorded in `plan-review.md`. Necessary corrections were incorporated: runtime after output redaction; actual adapter test/auth gate before DONE; terminal refusal scoped to the cooperative checked-command dispatcher; exact L6 report/resume identity payload; full publishing runbook contents; <120-second default onboarding; end-of-run artifact hash recheck. This is same-lineage planning review, not independent product verification.
+
+Retained failed draft edit: `plan-edit-attempt-01.json`, **INCOMPLETE**, exact message `apply_patch verification failed: Failed to find expected lines in C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\IMPLEMENTATION-PLAN.md: Feature task states: PLANNED, ACTIVE, VERIFYING, DONE.` The edit matched only a partial paragraph; no files changed. The retry matched the complete actual paragraph. No safety refusal occurred.
+
+Files changed and computed SHA-256:
+
+| File | SHA-256 |
+| --- | --- |
+| `IMPLEMENTATION-PLAN.md` | `5C81A3D9100672CA3DE89382C0696DBBE1A20B3B423EB53A33F7ADD3672CD7BE` |
+| `FEATURE-QUEUE.json` | `5189FDAD08F296617D18D2395C0A1585CFACB93EFAB38798C8A40E60D48ADF30` |
+| `evidence/20261013-serial-plan-780b451e/check-plan.ps1` | `FA0ADCC762FB65EEE87B50628C74864F95A7A4878B704596906A834C2E98D482` |
+| `evidence/20261013-serial-plan-780b451e/planning-integrity.json` | `2DAFF0D8A20431E07468D5F3A01AF42FC14719B9F59F061361A8E6A7E14E0727` |
+| `evidence/20261013-serial-plan-780b451e/plan-review.md` | `3F68D6FC758267FFCAFAEA41F4C98B10F6198575B9EEBE48F325C75C9569BE0F` |
+| `evidence/20261013-serial-plan-780b451e/plan-edit-attempt-01.json` | `546A96907F29DF1B8FB54D27AE78B0E169EB23D7D255DB26EE7DC4490CC379DE` |
+
+The appended ledger and plan-commit script are hashed in the new immutable plan evidence index; old evidence/indexes remain historical snapshots. Exact scoped Git mutation commands are in `evidence/20261013-serial-plan-780b451e/commit-plan.ps1`, with a unique post-commit output outside the commit.
+
+What remains unprotected: all existing audit gaps remain; writing this plan changes no mitigation. The plan keeps arbitrary same-user/native read/egress and original buffer limits visible, and never calls a shell profile or masked custom editor a universal security boundary.
+
+Next: after user frees C: to at least 20 GiB, reread this ledger and the plan, complete P00-P03 with fresh receipts, then F01 and every later required card one at a time. Do not issue an interim rating. At original L6, write HUMAN-ACTIONS and stop; resume L7 only from the supplied exact-object independent/human evidence. A mandatory feature's unresolved failure stops the serial queue at that feature, not a silent scope downgrade.
