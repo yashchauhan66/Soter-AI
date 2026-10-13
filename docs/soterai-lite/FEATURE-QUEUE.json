@@ -9,7 +9,7 @@
   "planVersion": 1,
   "clientDate": "2026-10-13",
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
-  "scope": "P02 complete; P03 exact-object host baseline/catalog freeze active; production behavior cards NOT-RUN",
+  "scope": "P00-P03 completed; frozen catalog commit required before F01 test authoring/production implementation",
   "implementationConcurrency": 1,
   "activeFeature": null,
   "prerequisiteBlock": {
@@ -52,11 +52,12 @@
     },
     {
       "id": "P03",
-      "status": "ACTIVE",
-      "result": "NOT-RUN",
+      "status": "DONE",
+      "result": "PASS",
       "requires": [
         "P02"
-      ]
+      ],
+      "catalogSha256": "1ce46192e9f315b5f2142c9f61542f1d513143dc2e19d4def6d95cea38c73ed4"
     }
   ],
   "features": [
@@ -608,10 +609,9 @@
   ],
   "runtimeFeatureFlags": "Proposed only in plan; no settings or runtime implementation changed",
   "catalog": {
-    "status": "NOT-FROZEN",
-    "preparation": "P03",
-    "draftCheckCount": 44,
-    "minimumCategoryTotal": 42,
-    "definitions": "Never alter applicability to raise score"
+    "path": "docs/soterai-lite/LITE-CATALOG.json",
+    "status": "FROZEN",
+    "sha256": "1ce46192e9f315b5f2142c9f61542f1d513143dc2e19d4def6d95cea38c73ed4",
+    "checks": 44
   }
 }

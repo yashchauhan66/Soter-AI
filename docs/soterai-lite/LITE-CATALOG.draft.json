@@ -1,0 +1,3063 @@
+{
+  "schemaVersion": 1,
+  "documentState": "DRAFT_NOT_FROZEN",
+  "generatedDate": "2026-10-13",
+  "purpose": "P03 acceptance-test specification only. No execution, support promotion, numerical score or product coverage claim is recorded.",
+  "checkCount": 44,
+  "categoryMinimumTotal": 42,
+  "categoryMinimums": {
+    "file-read": 8,
+    "terminal-environment": 8,
+    "network-egress": 8,
+    "git-history": 4,
+    "editor-clipboard-ui": 4,
+    "config-ci-build": 6,
+    "logs-test-debug": 2,
+    "extension-self-hygiene": 2
+  },
+  "categoryDraftCounts": {
+    "file-read": 8,
+    "terminal-environment": 8,
+    "network-egress": 8,
+    "git-history": 4,
+    "editor-clipboard-ui": 4,
+    "config-ci-build": 8,
+    "logs-test-debug": 2,
+    "extension-self-hygiene": 2
+  },
+  "threatModel": {
+    "supportedIntent": "Cooperative AI on explicitly verified managed/vendor-control routes; project-only scope.",
+    "excluded": "Arbitrary same-user native access, independent network clients, other original buffers, unknown transformations, past exposure and independent process-memory inspection.",
+    "noPerfectClaim": true
+  },
+  "tools": [
+    {
+      "id": "clineIde",
+      "name": "Cline",
+      "surface": "VS Code extension",
+      "pinnedVersion": "4.1.23",
+      "toolClass": "IDE_EXTENSION",
+      "inventoryProvenance": "Pinned installed versions supplied by root; no live route execution in this draft.",
+      "supportStatus": "UNVERIFIED",
+      "routingStatus": "UNVERIFIED",
+      "authenticationStatus": "UNVERIFIED"
+    },
+    {
+      "id": "claudeIde",
+      "name": "Claude Code",
+      "surface": "VS Code extension",
+      "pinnedVersion": "2.1.296",
+      "toolClass": "IDE_EXTENSION",
+      "inventoryProvenance": "Pinned installed versions supplied by root; no live route execution in this draft.",
+      "supportStatus": "UNVERIFIED",
+      "routingStatus": "UNVERIFIED",
+      "authenticationStatus": "UNVERIFIED"
+    },
+    {
+      "id": "claudeCli",
+      "name": "Claude Code",
+      "surface": "CLI",
+      "pinnedVersion": "2.1.292",
+      "toolClass": "CLI_AGENT",
+      "inventoryProvenance": "Pinned installed versions supplied by root; no live route execution in this draft.",
+      "supportStatus": "UNVERIFIED",
+      "routingStatus": "UNVERIFIED",
+      "authenticationStatus": "UNVERIFIED"
+    },
+    {
+      "id": "codexIde",
+      "name": "Codex",
+      "surface": "VS Code extension runtime",
+      "pinnedVersion": "0.162.0-alpha.17.2",
+      "toolClass": "IDE_EXTENSION",
+      "inventoryProvenance": "Pinned installed versions supplied by root; no live route execution in this draft.",
+      "supportStatus": "UNVERIFIED",
+      "routingStatus": "UNVERIFIED",
+      "authenticationStatus": "UNVERIFIED"
+    },
+    {
+      "id": "codexCli",
+      "name": "Codex",
+      "surface": "CLI",
+      "pinnedVersion": "0.160.1",
+      "toolClass": "CLI_AGENT",
+      "inventoryProvenance": "Pinned installed versions supplied by root; no live route execution in this draft.",
+      "supportStatus": "UNVERIFIED",
+      "routingStatus": "UNVERIFIED",
+      "authenticationStatus": "UNVERIFIED"
+    },
+    {
+      "id": "geminiCli",
+      "name": "Gemini",
+      "surface": "CLI",
+      "pinnedVersion": "0.55.1",
+      "toolClass": "CLI_AGENT",
+      "inventoryProvenance": "Pinned installed versions supplied by root; no live route execution in this draft.",
+      "supportStatus": "UNVERIFIED",
+      "routingStatus": "UNVERIFIED",
+      "authenticationStatus": "UNVERIFIED"
+    }
+  ],
+  "evidenceRules": {
+    "draftsAreNotPassingEvidence": true,
+    "allFixturesSynthetic": true,
+    "network": "Loopback-only synthetic provider; tool logins/real-provider smoke remain human gates.",
+    "component": "Stubs/mocks establish component behavior only.",
+    "host": "Actual installed VSIX hash, packaged runtime hash and loaded host runtime hash must match; synthetic scripted dialogs are not independent owner presence.",
+    "actualTool": "Exact pinned installed tool must exercise declared route. Authentication failure, unavailable hook, inventory or supplied-context reply is not a routed protection pass.",
+    "skips": "Record required skips as NOT_TESTED/UNVERIFIED. Do not infer PASS or silently convert an applicable route to N/A.",
+    "scopeChanges": "Freeze scenario IDs/assumptions before upgrades. Definition change needs logged reason/new hash/affected reruns; results remain separate by catalog hash.",
+    "priorEvidence": "Retain earlier 17-case failures and dated package identity. Older tests do not become evidence for new Lite bundle.",
+    "mutation": "Original STRONG gate requires test failure with contributing feature flag off. Safe withdrawal must remain. Record positive availability, negative confidentiality and feature dependency separately; AVAILABILITY_ONLY alone is not demonstrated prevention sensitivity.",
+    "conservativeGrade": "STRONG requires prevention-by-design plus passing automated positive/negative controls and honest mutation evidence. Insufficient design/prevention-sensitivity stays PARTIAL/UNVERIFIED; no forced 80-percent outcome.",
+    "applicability": "All six candidate columns are initially UNVERIFIED. Only verified supported tool/check pairs may be evaluated later; unknown/failed applicable rows may not be removed for score optimization.",
+    "noInterimRating": "Report check outcomes/progress only until required implementation/integration/human gates finish."
+  },
+  "checks": [
+    {
+      "id": "LS-01",
+      "category": "file-read",
+      "title": "Ordinary restriction persistence and truthful result",
+      "scenario": "Owner restricts a synthetic ordinary saved file; policy storage succeeds, rejects, delays, or loses a queued write.",
+      "assumedAIBehavior": "AI obtains saved-file context only through the declared reviewed reader or verified vendor deny route.",
+      "mitigation": "Persist deny before acknowledging SAVED; report FAILED/CANCELLED/UNAVAILABLE explicitly, retain previous records, serialize writes.",
+      "toolClasses": [
+        "IDE_EXTENSION",
+        "CLI_AGENT"
+      ],
+      "featureCards": [
+        "F01",
+        "F04",
+        "F17",
+        "F18",
+        "F19",
+        "F20"
+      ],
+      "automatedTestId": "F01-U01",
+      "linkedTestIds": [
+        "F01-U02",
+        "F01-U03",
+        "F01-U04",
+        "F01-U08",
+        "F01-U09",
+        "F01-U10",
+        "F01-U11",
+        "F01-U13",
+        "F01-U14",
+        "F01-U15",
+        "F01-U16",
+        "F01-H01",
+        "F01-H02",
+        "F01-H04",
+        "F01-H05"
+      ],
+      "controlExpectations": {
+        "positive": "Public file is useful; successful deny survives a second host launch; explicit SAVED reaches the dashboard.",
+        "negative": "Rejected/delayed/ambiguous writes never report saved; prior denies survive; unapproved restricted content is absent.",
+        "mutation": "Flag off withdraws new restriction operations; the success expectation fails without returning originals. Record AVAILABILITY_ONLY unless prevention sensitivity is separately evidenced."
+      },
+      "applicability": {
+        "clineIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "geminiCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        }
+      },
+      "status": "UNVERIFIED",
+      "evidenceRefs": [],
+      "mutationStatus": "UNVERIFIED",
+      "limitations": "This is a declared cooperative-route check. Independent same-user original reads, uploads and other unmanaged controls stay disclosed; no universal enforcement is inferred."
+    },
+    {
+      "id": "LS-02",
+      "category": "file-read",
+      "title": "Folder and glob restrictions",
+      "scenario": "Owner restricts a synthetic folder/glob; descendant and case-variant reads are attempted.",
+      "assumedAIBehavior": "AI honors the verified deny mechanism before enumerating/reading matching paths.",
+      "mitigation": "Canonical additive file/folder/glob rules, persistent results and vendor-route enforcement where actually supported.",
+      "toolClasses": [
+        "IDE_EXTENSION",
+        "CLI_AGENT"
+      ],
+      "featureCards": [
+        "F01",
+        "F02",
+        "F17",
+        "F18",
+        "F19",
+        "F20",
+        "F28"
+      ],
+      "automatedTestId": "F01-U05",
+      "linkedTestIds": [
+        "F01-U04",
+        "F01-U06",
+        "F01-U07",
+        "F01-U10",
+        "F01-U13",
+        "F01-H03"
+      ],
+      "controlExpectations": {
+        "positive": "Unmatched sibling and ordinary public path remain usable; successful folder/glob writes persist.",
+        "negative": "Matching descendants stay withheld; malformed pattern or failed write produces no protection-success claim.",
+        "mutation": "Disable the contributing feature to test dependency; deny records remain. Availability-only failure does not establish confidentiality mutation sensitivity."
+      },
+      "applicability": {
+        "clineIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "geminiCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        }
+      },
+      "status": "UNVERIFIED",
+      "evidenceRefs": [],
+      "mutationStatus": "UNVERIFIED",
+      "limitations": "This is a declared cooperative-route check. Independent same-user original reads, uploads and other unmanaged controls stay disclosed; no universal enforcement is inferred."
+    },
+    {
+      "id": "LS-03",
+      "category": "file-read",
+      "title": "Sensitive approval always masks",
+      "scenario": "Owner approves one view of .env variants or a marked-sensitive non-env file.",
+      "assumedAIBehavior": "AI requests the reviewed representation rather than the original sensitive path.",
+      "mitigation": "Atomic sensitive deny and schema view; every dotenv value is masked; unsupported sensitive content stays withheld.",
+      "toolClasses": [
+        "IDE_EXTENSION",
+        "CLI_AGENT"
+      ],
+      "featureCards": [
+        "F01",
+        "F04",
+        "F05",
+        "F06",
+        "F17",
+        "F18",
+        "F19",
+        "F20"
+      ],
+      "automatedTestId": "LS-03-ACCEPTANCE",
+      "linkedTestIds": [
+        "F01-U04",
+        "F01-U05",
+        "F01-U11",
+        "F01-U12",
+        "F01-U13",
+        "F01-U14",
+        "F01-H05"
+      ],
+      "controlExpectations": {
+        "positive": "Reviewed dotenv variable names are returned; a public file remains useful.",
+        "negative": "Synthetic URLs, credentials, comments, quoted multiline values and ambiguous schema content never appear after approval.",
+        "mutation": "Flag off withdraws safe release and retains sensitive records. No raw-reveal fallback; distinguish availability-only mutation."
+      },
+      "applicability": {
+        "clineIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "geminiCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        }
+      },
+      "status": "UNVERIFIED",
+      "evidenceRefs": [],
+      "mutationStatus": "UNVERIFIED",
+      "limitations": "This is a declared cooperative-route check. Independent same-user original reads, uploads and other unmanaged controls stay disclosed; no universal enforcement is inferred."
+    },
+    {
+      "id": "LS-04",
+      "category": "file-read",
+      "title": "One-time consent binding and failure",
+      "scenario": "A pending safe-read approval is cancelled, expires, replays, or experiences content/policy/workspace/recipient/destination drift.",
+      "assumedAIBehavior": "AI uses the native reviewed read operation and does not forge owner-presence metadata.",
+      "mitigation": "Single-use bounded consent tied to saved content and policy/operation/output; revoke pending releases on drift.",
+      "toolClasses": [
+        "IDE_EXTENSION",
+        "CLI_AGENT"
+      ],
+      "featureCards": [
+        "F01",
+        "F03",
+        "F04",
+        "F17"
+      ],
+      "automatedTestId": "LS-04-ACCEPTANCE",
+      "linkedTestIds": [
+        "F01-U06",
+        "F01-U08",
+        "F01-U09",
+        "F01-U14"
+      ],
+      "controlExpectations": {
+        "positive": "Unchanged approved public request releases exactly the previewed representation once.",
+        "negative": "Cancel/timeout/replay/change/outage releases no content; failed restriction writes do not preserve a pending review.",
+        "mutation": "Feature off revokes/withdraws requests; approved-output expectation fails while confidential data stays withheld."
+      },
+      "applicability": {
+        "clineIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "geminiCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        }
+      },
+      "status": "UNVERIFIED",
+      "evidenceRefs": [],
+      "mutationStatus": "UNVERIFIED",
+      "limitations": "This is a declared cooperative-route check. Independent same-user original reads, uploads and other unmanaged controls stay disclosed; no universal enforcement is inferred."
+    },
+    {
+      "id": "LS-05",
+      "category": "file-read",
+      "title": "Vendor search, context and attachments",
+      "scenario": "Pinned tool asks to search, attach or automatically collect a denied fixture.",
+      "assumedAIBehavior": "The pinned vendor version applies its documented permission/ignore/hook control on the specific tested route.",
+      "mitigation": "Verify each actual tool route; route supported reads through reviewed MCP; unverified or uncovered routes remain visible.",
+      "toolClasses": [
+        "IDE_EXTENSION",
+        "CLI_AGENT"
+      ],
+      "featureCards": [
+        "F02",
+        "F17",
+        "F18",
+        "F19",
+        "F20",
+        "F30"
+      ],
+      "automatedTestId": "LS-05-ACCEPTANCE",
+      "linkedTestIds": [],
+      "controlExpectations": {
+        "positive": "Actual pinned tool can search/attach a public fixture and issue a managed safe read.",
+        "negative": "Denied file content is absent from model-bound synthetic request bodies and tool results on the declared route.",
+        "mutation": "Disable the verified adapter in an isolated fixture; retain extension denies and label routing uncovered. Do not silently restore unsafe native behavior."
+      },
+      "applicability": {
+        "clineIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "geminiCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        }
+      },
+      "status": "UNVERIFIED",
+      "evidenceRefs": [],
+      "mutationStatus": "UNVERIFIED",
+      "limitations": "This is a declared cooperative-route check. Independent same-user original reads, uploads and other unmanaged controls stay disclosed; no universal enforcement is inferred."
+    },
+    {
+      "id": "LS-06",
+      "category": "file-read",
+      "title": "Protected regions and document drift",
+      "scenario": "Owner restricts selected synthetic text, then edits the file or saves concurrent regions.",
+      "assumedAIBehavior": "AI uses the region-aware safe context/reader rather than retrieving the unfiltered document.",
+      "mitigation": "Persist exact digest/offset records; stale regions withhold the complete file until explicit owner review.",
+      "toolClasses": [
+        "IDE_EXTENSION",
+        "CLI_AGENT"
+      ],
+      "featureCards": [
+        "F01",
+        "F04",
+        "F28"
+      ],
+      "automatedTestId": "LS-06-ACCEPTANCE",
+      "linkedTestIds": [
+        "F01-U04",
+        "F01-U05",
+        "F01-U08",
+        "F01-U13",
+        "F01-H03"
+      ],
+      "controlExpectations": {
+        "positive": "Adjacent public text remains useful for unchanged matching digest; region persistence survives reload.",
+        "negative": "Protected bytes are omitted; stale/invalid/out-of-range regions never fall back to the original text.",
+        "mutation": "Feature off withdraws region-safe operation while retaining records; record dependency separately from leak-oracle sensitivity."
+      },
+      "applicability": {
+        "clineIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "geminiCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        }
+      },
+      "status": "UNVERIFIED",
+      "evidenceRefs": [],
+      "mutationStatus": "UNVERIFIED",
+      "limitations": "This is a declared cooperative-route check. Independent same-user original reads, uploads and other unmanaged controls stay disclosed; no universal enforcement is inferred."
+    },
+    {
+      "id": "LS-07",
+      "category": "file-read",
+      "title": "Canonical paths, aliases and root changes",
+      "scenario": "Managed read targets traversal/case variants, a hardlink/junction/symlink or a swapped parent directory.",
+      "assumedAIBehavior": "AI invokes the guarded route with project-local canonical paths.",
+      "mitigation": "Revalidate root/target identity and containment, reject unsupported aliases, preserve root-specific denies.",
+      "toolClasses": [
+        "IDE_EXTENSION",
+        "CLI_AGENT"
+      ],
+      "featureCards": [
+        "F01",
+        "F02",
+        "F04",
+        "F17",
+        "F28"
+      ],
+      "automatedTestId": "LS-07-ACCEPTANCE",
+      "linkedTestIds": [
+        "F01-U07",
+        "F01-U10",
+        "F01-U13"
+      ],
+      "controlExpectations": {
+        "positive": "Normal project file remains readable; separate-root public fixture is unaffected by another root's deny.",
+        "negative": "Outside roots, unsafe aliases and detected swaps are withheld; privilege-dependent skips remain NOT_TESTED.",
+        "mutation": "Disabling path-safe operation withdraws releases. Separate test-only adversarial path fixtures prove the violation oracle; no unsafe rollback."
+      },
+      "applicability": {
+        "clineIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "geminiCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        }
+      },
+      "status": "UNVERIFIED",
+      "evidenceRefs": [],
+      "mutationStatus": "UNVERIFIED",
+      "limitations": "This is a declared cooperative-route check. Independent same-user original reads, uploads and other unmanaged controls stay disclosed; no universal enforcement is inferred."
+    },
+    {
+      "id": "LS-08",
+      "category": "file-read",
+      "title": "Reviewed public snapshot publication",
+      "scenario": "Owner selects public and sensitive synthetic inputs for an explicitly reviewed output folder.",
+      "assumedAIBehavior": "AI works only on the deliberately released snapshot; originals are not automatically mounted/synchronized.",
+      "mitigation": "Approved names-only schema, sanitized files/manifest, source/policy recheck, new-folder output and explicit synthetic configuration.",
+      "toolClasses": [
+        "IDE_EXTENSION",
+        "CLI_AGENT"
+      ],
+      "featureCards": [
+        "F04",
+        "F21",
+        "F24",
+        "F28",
+        "F29"
+      ],
+      "automatedTestId": "LS-08-ACCEPTANCE",
+      "linkedTestIds": [],
+      "controlExpectations": {
+        "positive": "Reviewed public source and useful fake development contract are exported; original fixtures remain intact.",
+        "negative": "Cancel/drift/unsupported sensitive input creates no unsafe output; canaries and original paths are absent from approved artifacts.",
+        "mutation": "Disable publication and withhold new export; retain existing original restrictions. Already published text cannot be recalled."
+      },
+      "applicability": {
+        "clineIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "geminiCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        }
+      },
+      "status": "UNVERIFIED",
+      "evidenceRefs": [],
+      "mutationStatus": "UNVERIFIED",
+      "limitations": "This is a declared cooperative-route check. Independent same-user original reads, uploads and other unmanaged controls stay disclosed; no universal enforcement is inferred."
+    },
+    {
+      "id": "LS-09",
+      "category": "terminal-environment",
+      "title": "Checked command reads and copies",
+      "scenario": "Declared managed grammar reads/copies a restricted fixture through PS5.1, PS7, cmd or Git Bash dispatcher.",
+      "assumedAIBehavior": "AI selects the cooperative checked-command dispatcher, not arbitrary interactive/native execution.",
+      "mitigation": "Parse supported forms; reviewed safe reader for denied paths; refuse unsupported checked forms; scrub emitted output.",
+      "toolClasses": [
+        "IDE_EXTENSION",
+        "CLI_AGENT"
+      ],
+      "featureCards": [
+        "F04",
+        "F08",
+        "F10",
+        "F11",
+        "F12",
+        "F13"
+      ],
+      "automatedTestId": "LS-09-ACCEPTANCE",
+      "linkedTestIds": [],
+      "controlExpectations": {
+        "positive": "Public commands produce useful output in each actually available pinned shell.",
+        "negative": "Recognized restricted reads/copies cannot return original content; cancel withholds; native bypasses are reported separately.",
+        "mutation": "Disable managed profile/dispatcher and withdraw its operation, not an unguarded replacement terminal; record availability-only dependency honestly."
+      },
+      "applicability": {
+        "clineIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "geminiCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        }
+      },
+      "status": "UNVERIFIED",
+      "evidenceRefs": [],
+      "mutationStatus": "UNVERIFIED",
+      "limitations": "This is a declared cooperative-route check. Independent same-user original reads, uploads and other unmanaged controls stay disclosed; no universal enforcement is inferred."
+    },
+    {
+      "id": "LS-10",
+      "category": "terminal-environment",
+      "title": "Managed environment dumps",
+      "scenario": "Checked env/printenv/set/PowerShell environment enumeration requests synthetic variables.",
+      "assumedAIBehavior": "AI uses the declared managed dump operation and reviewed representation.",
+      "mitigation": "Scrub inherited environment; preserve approved names with every sensitive value masked, even after owner consent.",
+      "toolClasses": [
+        "IDE_EXTENSION",
+        "CLI_AGENT"
+      ],
+      "featureCards": [
+        "F04",
+        "F08",
+        "F10",
+        "F11",
+        "F12",
+        "F13"
+      ],
+      "automatedTestId": "LS-10-ACCEPTANCE",
+      "linkedTestIds": [],
+      "controlExpectations": {
+        "positive": "Permitted schema names are useful and ordinary public command succeeds.",
+        "negative": "Original synthetic URL/value/encoding is absent from stdout/stderr and the consent preview; cancellation produces no value.",
+        "mutation": "Disable managed dump handling and withhold it; never restore raw environment enumeration as fallback."
+      },
+      "applicability": {
+        "clineIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "geminiCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        }
+      },
+      "status": "UNVERIFIED",
+      "evidenceRefs": [],
+      "mutationStatus": "UNVERIFIED",
+      "limitations": "This is a declared cooperative-route check. Independent same-user original reads, uploads and other unmanaged controls stay disclosed; no universal enforcement is inferred."
+    },
+    {
+      "id": "LS-11",
+      "category": "terminal-environment",
+      "title": "Scrubbed AI-child inheritance",
+      "scenario": "AI terminal/process starts while a synthetic parent environment contains registered private values.",
+      "assumedAIBehavior": "AI child is launched through the managed profile or adapter launcher.",
+      "mitigation": "Allowlisted/scrubbed child environment; no credential inheritance; no secret-bearing shell startup interpolation.",
+      "toolClasses": [
+        "IDE_EXTENSION",
+        "CLI_AGENT"
+      ],
+      "featureCards": [
+        "F09",
+        "F10",
+        "F11",
+        "F12",
+        "F13",
+        "F18",
+        "F19",
+        "F20"
+      ],
+      "automatedTestId": "LS-11-ACCEPTANCE",
+      "linkedTestIds": [],
+      "controlExpectations": {
+        "positive": "Public environment/control command remains functional.",
+        "negative": "AI child cannot observe synthetic parent credentials; owned failures and diagnostics disclose no values.",
+        "mutation": "Feature off withdraws managed launching rather than inheriting the original environment; retain explicit native-process limitation."
+      },
+      "applicability": {
+        "clineIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "geminiCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        }
+      },
+      "status": "UNVERIFIED",
+      "evidenceRefs": [],
+      "mutationStatus": "UNVERIFIED",
+      "limitations": "This is a declared cooperative-route check. Independent same-user original reads, uploads and other unmanaged controls stay disclosed; no universal enforcement is inferred."
+    },
+    {
+      "id": "LS-12",
+      "category": "terminal-environment",
+      "title": "Detectable interpreter and chained commands",
+      "scenario": "Declared grammar receives synthetic language one-liners, aliases, expansions and command chains that read a restricted path.",
+      "assumedAIBehavior": "AI uses the checked grammar; arbitrary obfuscated interpreters remain outside this contract.",
+      "mitigation": "Detect/refuse declared risky forms; bind path checks to the entire checked command; avoid claiming shell hook veto.",
+      "toolClasses": [
+        "IDE_EXTENSION",
+        "CLI_AGENT"
+      ],
+      "featureCards": [
+        "F10",
+        "F11",
+        "F12",
+        "F13"
+      ],
+      "automatedTestId": "LS-12-ACCEPTANCE",
+      "linkedTestIds": [],
+      "controlExpectations": {
+        "positive": "Declared benign coding command and harmless chain are executable.",
+        "negative": "Declared risky reads/expansions are refused or use masked consent; unknown forms are withheld in the checked dispatcher.",
+        "mutation": "Disable dispatcher and withdraw checked execution. Native interpreter bypass remains informational and is never regraded N/A to raise coverage."
+      },
+      "applicability": {
+        "clineIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "geminiCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        }
+      },
+      "status": "UNVERIFIED",
+      "evidenceRefs": [],
+      "mutationStatus": "UNVERIFIED",
+      "limitations": "This is a declared cooperative-route check. Independent same-user original reads, uploads and other unmanaged controls stay disclosed; no universal enforcement is inferred."
+    },
+    {
+      "id": "LS-13",
+      "category": "terminal-environment",
+      "title": "Raw output split and ANSI boundaries",
+      "scenario": "Synthetic registered value is emitted at every stdout/stderr byte/chunk split, with UTF-8 and ANSI interleaving.",
+      "assumedAIBehavior": "AI observes only the managed redacted output pipeline.",
+      "mitigation": "Bounded streaming matcher, overlap retention, ANSI-aware recognition, safe final flush and failure withdrawal.",
+      "toolClasses": [
+        "IDE_EXTENSION",
+        "CLI_AGENT"
+      ],
+      "featureCards": [
+        "F07",
+        "F08",
+        "F09",
+        "F10",
+        "F11",
+        "F12",
+        "F13",
+        "F25"
+      ],
+      "automatedTestId": "LS-13-ACCEPTANCE",
+      "linkedTestIds": [],
+      "controlExpectations": {
+        "positive": "Public UTF-8/ANSI output is intact within fixed budgets.",
+        "negative": "No raw canary survives any split/final flush/overflow/error; undecided tails never escape.",
+        "mutation": "Flag off withdraws managed sink instead of flushing raw tails; separately prove synthetic collector can detect an unmasked canary."
+      },
+      "applicability": {
+        "clineIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "geminiCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        }
+      },
+      "status": "UNVERIFIED",
+      "evidenceRefs": [],
+      "mutationStatus": "UNVERIFIED",
+      "limitations": "This is a declared cooperative-route check. Independent same-user original reads, uploads and other unmanaged controls stay disclosed; no universal enforcement is inferred."
+    },
+    {
+      "id": "LS-14",
+      "category": "terminal-environment",
+      "title": "Encoded output representations",
+      "scenario": "Synthetic registered value is emitted in raw/base64/base64url/URL/hex/JSON-escaped/quoted supported forms.",
+      "assumedAIBehavior": "AI receives output from the managed pipeline; arbitrary encryption/transformation is not promised.",
+      "mitigation": "Shared exact-value recognition plus bounded streaming redaction and harmless near-match controls.",
+      "toolClasses": [
+        "IDE_EXTENSION",
+        "CLI_AGENT"
+      ],
+      "featureCards": [
+        "F07",
+        "F08",
+        "F25"
+      ],
+      "automatedTestId": "LS-14-ACCEPTANCE",
+      "linkedTestIds": [],
+      "controlExpectations": {
+        "positive": "Each supported representation's public near-match remains useful.",
+        "negative": "Synthetic value/recognized representation is absent across splits and mixed streams; malformed output fails safely.",
+        "mutation": "Disable recognition/redaction and withdraw managed output; mutation receipt separates availability from prevention sensitivity."
+      },
+      "applicability": {
+        "clineIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "geminiCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        }
+      },
+      "status": "UNVERIFIED",
+      "evidenceRefs": [],
+      "mutationStatus": "UNVERIFIED",
+      "limitations": "This is a declared cooperative-route check. Independent same-user original reads, uploads and other unmanaged controls stay disclosed; no universal enforcement is inferred."
+    },
+    {
+      "id": "LS-15",
+      "category": "terminal-environment",
+      "title": "Vault injection into selected app only",
+      "scenario": "Reviewed app/task/debug child needs synthetic credential while a separate AI child runs.",
+      "assumedAIBehavior": "Owner launches a declared application, not arbitrary AI-supplied executable content.",
+      "mitigation": "OS-backed vault placeholders, reviewed allowlisted app descriptor, isolated injection and managed sink redaction.",
+      "toolClasses": [
+        "IDE_EXTENSION",
+        "CLI_AGENT"
+      ],
+      "featureCards": [
+        "F06",
+        "F07",
+        "F08",
+        "F09"
+      ],
+      "automatedTestId": "LS-15-ACCEPTANCE",
+      "linkedTestIds": [],
+      "controlExpectations": {
+        "positive": "Fake Node app can use fake DB credential; example schema and public development continue.",
+        "negative": "No real-value fixture file, shell interpolation, unrelated-child inheritance or managed debug output leakage.",
+        "mutation": "Disable vault runtime and withdraw launch; vault ciphertext/placeholders remain. Arbitrary app process inspection/upload is not confined by Lite."
+      },
+      "applicability": {
+        "clineIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "geminiCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        }
+      },
+      "status": "UNVERIFIED",
+      "evidenceRefs": [],
+      "mutationStatus": "UNVERIFIED",
+      "limitations": "This is a declared cooperative-route check. Independent same-user original reads, uploads and other unmanaged controls stay disclosed; no universal enforcement is inferred."
+    },
+    {
+      "id": "LS-16",
+      "category": "terminal-environment",
+      "title": "Profile lifecycle, coexistence and rollback",
+      "scenario": "Two isolated windows start, change or restore reviewed managed terminal profiles; shell/bridge disappears.",
+      "assumedAIBehavior": "AI uses the owned managed profile and stops when route health becomes unavailable.",
+      "mitigation": "Per-window ownership, reviewed diff/backup/undo, bounded failure handling and immediate truthful route status.",
+      "toolClasses": [
+        "IDE_EXTENSION",
+        "CLI_AGENT"
+      ],
+      "featureCards": [
+        "F10",
+        "F11",
+        "F12",
+        "F13",
+        "F14",
+        "F28",
+        "F32"
+      ],
+      "automatedTestId": "LS-16-ACCEPTANCE",
+      "linkedTestIds": [],
+      "controlExpectations": {
+        "positive": "Available shells and public commands coexist without modifying normal user profiles.",
+        "negative": "Wrong-window ownership, stale profile and backend failure withhold protected operations; no raw fallback.",
+        "mutation": "Disable owned integration and restore config only after explicit review, immediately mark route uncovered; do not claim uninstall auto-cleanup."
+      },
+      "applicability": {
+        "clineIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "geminiCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        }
+      },
+      "status": "UNVERIFIED",
+      "evidenceRefs": [],
+      "mutationStatus": "UNVERIFIED",
+      "limitations": "This is a declared cooperative-route check. Independent same-user original reads, uploads and other unmanaged controls stay disclosed; no universal enforcement is inferred."
+    },
+    {
+      "id": "LS-17",
+      "category": "network-egress",
+      "title": "JSON and split-message request inspection",
+      "scenario": "One provider-bound synthetic JSON request contains registered value split across messages/fields.",
+      "assumedAIBehavior": "Pinned tool uses the declared gateway endpoint for this request.",
+      "mitigation": "Inspect complete bounded request-local decoded content before forwarding; shared recognition and known-tool policy.",
+      "toolClasses": [
+        "IDE_EXTENSION",
+        "CLI_AGENT"
+      ],
+      "featureCards": [
+        "F07",
+        "F15",
+        "F16",
+        "F18",
+        "F19",
+        "F20"
+      ],
+      "automatedTestId": "LS-17-ACCEPTANCE",
+      "linkedTestIds": [],
+      "controlExpectations": {
+        "positive": "Public JSON request reaches loopback receiver correctly.",
+        "negative": "Raw/escaped or supported split-message canary never reaches receiver; no partial body is forwarded.",
+        "mutation": "Feature off withdraws routed sending rather than forwarding uninspected content; independent collector positive control proves oracle."
+      },
+      "applicability": {
+        "clineIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "geminiCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        }
+      },
+      "status": "UNVERIFIED",
+      "evidenceRefs": [],
+      "mutationStatus": "UNVERIFIED",
+      "limitations": "This is a declared cooperative-route check. Independent same-user original reads, uploads and other unmanaged controls stay disclosed; no universal enforcement is inferred."
+    },
+    {
+      "id": "LS-18",
+      "category": "network-egress",
+      "title": "gzip, br and deflate request bodies",
+      "scenario": "Provider request contains compressed public/secret fixture and malformed/nested/expanding variants.",
+      "assumedAIBehavior": "Pinned tool routes the compressed request through the gateway's declared decoder chain.",
+      "mitigation": "Bounded gzip/br/deflate decode, content-coding validation and inspect-before-forward.",
+      "toolClasses": [
+        "IDE_EXTENSION",
+        "CLI_AGENT"
+      ],
+      "featureCards": [
+        "F07",
+        "F15",
+        "F16"
+      ],
+      "automatedTestId": "LS-18-ACCEPTANCE",
+      "linkedTestIds": [],
+      "controlExpectations": {
+        "positive": "Each supported compressed public request reaches receiver with protocol-correct content.",
+        "negative": "Encoded canary, ambiguous coding, decompression bomb/truncation or unsupported nested encoding never forwards unchecked.",
+        "mutation": "Disable each decoder subflag; reject its body type while preserving other verified types, never pass-through."
+      },
+      "applicability": {
+        "clineIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "geminiCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        }
+      },
+      "status": "UNVERIFIED",
+      "evidenceRefs": [],
+      "mutationStatus": "UNVERIFIED",
+      "limitations": "This is a declared cooperative-route check. Independent same-user original reads, uploads and other unmanaged controls stay disclosed; no universal enforcement is inferred."
+    },
+    {
+      "id": "LS-19",
+      "category": "network-egress",
+      "title": "Chunked, NDJSON and SSE framing",
+      "scenario": "Canary spans HTTP chunks or declared NDJSON/SSE message boundaries.",
+      "assumedAIBehavior": "Pinned tool uses a supported gateway framing/direction contract recorded by the fixture.",
+      "mitigation": "Canonical bounded framing, request-local reassembly, final-frame checks and safe response sink where declared.",
+      "toolClasses": [
+        "IDE_EXTENSION",
+        "CLI_AGENT"
+      ],
+      "featureCards": [
+        "F07",
+        "F08",
+        "F15",
+        "F16"
+      ],
+      "automatedTestId": "LS-19-ACCEPTANCE",
+      "linkedTestIds": [],
+      "controlExpectations": {
+        "positive": "Public multi-frame stream completes correctly and within budget.",
+        "negative": "Split canary, malformed/ambiguous framing and unfinished tail produce no unsafe forwarded bytes.",
+        "mutation": "Disable framing handling and refuse that operation; no transparent raw-stream fallback."
+      },
+      "applicability": {
+        "clineIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "geminiCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        }
+      },
+      "status": "UNVERIFIED",
+      "evidenceRefs": [],
+      "mutationStatus": "UNVERIFIED",
+      "limitations": "This is a declared cooperative-route check. Independent same-user original reads, uploads and other unmanaged controls stay disclosed; no universal enforcement is inferred."
+    },
+    {
+      "id": "LS-20",
+      "category": "network-egress",
+      "title": "Multipart, binary and base64 blobs",
+      "scenario": "Synthetic request uploads multipart attachment or supported encoded blob; unknown binary format is also attempted.",
+      "assumedAIBehavior": "AI attaches content only through declared inspected provider routes.",
+      "mitigation": "Bounded part/encoding decoding, inspection of supported attachments and refusal of unknown payloads.",
+      "toolClasses": [
+        "IDE_EXTENSION",
+        "CLI_AGENT"
+      ],
+      "featureCards": [
+        "F07",
+        "F15",
+        "F16",
+        "F18",
+        "F19",
+        "F20"
+      ],
+      "automatedTestId": "LS-20-ACCEPTANCE",
+      "linkedTestIds": [],
+      "controlExpectations": {
+        "positive": "Public supported attachment arrives correctly at loopback receiver.",
+        "negative": "Fixture values in parts/filenames/metadata/base64 are withheld; unknown binary content is not assumed safe.",
+        "mutation": "Disable part/blob decoder and reject its format rather than bypass inspection."
+      },
+      "applicability": {
+        "clineIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "geminiCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        }
+      },
+      "status": "UNVERIFIED",
+      "evidenceRefs": [],
+      "mutationStatus": "UNVERIFIED",
+      "limitations": "This is a declared cooperative-route check. Independent same-user original reads, uploads and other unmanaged controls stay disclosed; no universal enforcement is inferred."
+    },
+    {
+      "id": "LS-21",
+      "category": "network-egress",
+      "title": "Encoding, pattern and entropy detectors",
+      "scenario": "Known synthetic provider patterns and registered representations appear with harmless high-entropy near-matches.",
+      "assumedAIBehavior": "AI routes bounded payloads through the configured scanner; unknown prose/ciphers remain unpromised.",
+      "mitigation": "Shared registered fingerprints, fixed provider patterns and calibrated entropy checks with documented thresholds.",
+      "toolClasses": [
+        "IDE_EXTENSION",
+        "CLI_AGENT"
+      ],
+      "featureCards": [
+        "F07",
+        "F16",
+        "F21"
+      ],
+      "automatedTestId": "LS-21-ACCEPTANCE",
+      "linkedTestIds": [],
+      "controlExpectations": {
+        "positive": "Harmless corpus and near-matches meet documented false-positive budget.",
+        "negative": "Declared synthetic representations/patterns are detected and prevented on the managed route.",
+        "mutation": "Disable contributing detector and withhold managed operation; only prevention-sensitive evidence supports a prevention-mutation claim."
+      },
+      "applicability": {
+        "clineIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "geminiCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        }
+      },
+      "status": "UNVERIFIED",
+      "evidenceRefs": [],
+      "mutationStatus": "UNVERIFIED",
+      "limitations": "This is a declared cooperative-route check. Independent same-user original reads, uploads and other unmanaged controls stay disclosed; no universal enforcement is inferred."
+    },
+    {
+      "id": "LS-22",
+      "category": "network-egress",
+      "title": "Fail-closed sending and resource limits",
+      "scenario": "Gateway loses policy/backend, times out, cancels or exceeds request/decode/latency budget.",
+      "assumedAIBehavior": "AI treats unavailable declared gateway as a failed operation without independent endpoint fallback.",
+      "mitigation": "Inspect-before-forward admission; bounded buffers/time; explicit per-tool fail-closed errors.",
+      "toolClasses": [
+        "IDE_EXTENSION",
+        "CLI_AGENT"
+      ],
+      "featureCards": [
+        "F14",
+        "F15",
+        "F16",
+        "F28"
+      ],
+      "automatedTestId": "LS-22-ACCEPTANCE",
+      "linkedTestIds": [],
+      "controlExpectations": {
+        "positive": "Public requests under fixed budgets succeed; cancellation remains responsive.",
+        "negative": "No secret byte or partial undecided body forwards on policy/broker/size/time failure.",
+        "mutation": "Disable gateway operation and withdraw sending; do not adopt a raw endpoint or another window's broker."
+      },
+      "applicability": {
+        "clineIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "geminiCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        }
+      },
+      "status": "UNVERIFIED",
+      "evidenceRefs": [],
+      "mutationStatus": "UNVERIFIED",
+      "limitations": "This is a declared cooperative-route check. Independent same-user original reads, uploads and other unmanaged controls stay disclosed; no universal enforcement is inferred."
+    },
+    {
+      "id": "LS-23",
+      "category": "network-egress",
+      "title": "Route identity, headers, URLs and window ownership",
+      "scenario": "Pinned tool/window sends to configured gateway with synthetic URL/header credentials and wrong session/token variants.",
+      "assumedAIBehavior": "Tool respects reviewed route configuration and tool/window binding; unrelated clients are outside Lite.",
+      "mitigation": "Atomic port ownership, separate control token, known recipient policy and header/URL/body hygiene where protocol permits.",
+      "toolClasses": [
+        "IDE_EXTENSION",
+        "CLI_AGENT"
+      ],
+      "featureCards": [
+        "F14",
+        "F16",
+        "F18",
+        "F19",
+        "F20",
+        "F32"
+      ],
+      "automatedTestId": "LS-23-ACCEPTANCE",
+      "linkedTestIds": [],
+      "controlExpectations": {
+        "positive": "Correct window's public request succeeds; reviewed nonsecret auth fixture is handled by declared protocol.",
+        "negative": "Wrong session/unknown policy/misbinding/stale route withheld; synthetic credential never enters audit or unintended receiver.",
+        "mutation": "Disable adapter/gateway and mark route uncovered; reviewed config restoration is not a protected fallback."
+      },
+      "applicability": {
+        "clineIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "geminiCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        }
+      },
+      "status": "UNVERIFIED",
+      "evidenceRefs": [],
+      "mutationStatus": "UNVERIFIED",
+      "limitations": "This is a declared cooperative-route check. Independent same-user original reads, uploads and other unmanaged controls stay disclosed; no universal enforcement is inferred."
+    },
+    {
+      "id": "LS-24",
+      "category": "network-egress",
+      "title": "Actual-tool routing and canary self-check",
+      "scenario": "Installed pinned tool runs public/secret fixtures through loopback provider; setup evidence becomes stale or mismatched.",
+      "assumedAIBehavior": "Tool really invokes the inspected route; inventory or supplied-context model responses alone do not establish this.",
+      "mitigation": "Per-version real-route acceptance, receiver oracle control, exact artifact/config identity and per-surface status.",
+      "toolClasses": [
+        "IDE_EXTENSION",
+        "CLI_AGENT"
+      ],
+      "featureCards": [
+        "F16",
+        "F17",
+        "F18",
+        "F19",
+        "F20",
+        "F30"
+      ],
+      "automatedTestId": "LS-24-ACCEPTANCE",
+      "linkedTestIds": [],
+      "controlExpectations": {
+        "positive": "Actual routed public tool request plus separate synthetic receiver oracle control succeed.",
+        "negative": "Secret absent from actual inspected request; stale/mock/missing/wrong-version evidence cannot produce protected badge.",
+        "mutation": "Disable route/self-check and withdraw green status; dependency failure is recorded separately. Unsupported tools never inflate headline."
+      },
+      "applicability": {
+        "clineIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "geminiCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        }
+      },
+      "status": "UNVERIFIED",
+      "evidenceRefs": [],
+      "mutationStatus": "UNVERIFIED",
+      "limitations": "This is a declared cooperative-route check. Independent same-user original reads, uploads and other unmanaged controls stay disclosed; no universal enforcement is inferred."
+    },
+    {
+      "id": "LS-25",
+      "category": "git-history",
+      "title": "Managed Git show/diff/log output",
+      "scenario": "Declared checked Git command would reveal synthetic protected working-tree/history content.",
+      "assumedAIBehavior": "AI runs Git through checked command route, not arbitrary native git access.",
+      "mitigation": "Review/refuse declared history reads and redact managed output; preserve existing original-history exposure disclosure.",
+      "toolClasses": [
+        "IDE_EXTENSION",
+        "CLI_AGENT"
+      ],
+      "featureCards": [
+        "F07",
+        "F08",
+        "F10",
+        "F11",
+        "F12",
+        "F13",
+        "F23"
+      ],
+      "automatedTestId": "LS-25-ACCEPTANCE",
+      "linkedTestIds": [],
+      "controlExpectations": {
+        "positive": "Public history/diff is useful through supported managed commands.",
+        "negative": "Declared secret-bearing history output never reaches managed AI view; original Git objects are not claimed erased.",
+        "mutation": "Disable managed Git handling and withdraw the checked operation; never rewrite or delete history as rollback."
+      },
+      "applicability": {
+        "clineIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "geminiCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        }
+      },
+      "status": "UNVERIFIED",
+      "evidenceRefs": [],
+      "mutationStatus": "UNVERIFIED",
+      "limitations": "This is a declared cooperative-route check. Independent same-user original reads, uploads and other unmanaged controls stay disclosed; no universal enforcement is inferred."
+    },
+    {
+      "id": "LS-26",
+      "category": "git-history",
+      "title": "Read-only historical secret findings",
+      "scenario": "Synthetic repository contains renamed/deleted prior credential fixtures.",
+      "assumedAIBehavior": "Owner reviews local findings; AI receives metadata/guidance rather than original history values.",
+      "mitigation": "Bounded read-only Git history scan, value-free findings and owner rotation/removal guidance.",
+      "toolClasses": [
+        "IDE_EXTENSION",
+        "CLI_AGENT"
+      ],
+      "featureCards": [
+        "F21",
+        "F23"
+      ],
+      "automatedTestId": "LS-26-ACCEPTANCE",
+      "linkedTestIds": [],
+      "controlExpectations": {
+        "positive": "Public commits and safe metadata are useful; synthetic old key is found.",
+        "negative": "No value in findings/logs; scanner does not rewrite history or claim past disclosure revoked.",
+        "mutation": "Disable scanner and withdraw findings operation; retain ledger/history and truthful limits."
+      },
+      "applicability": {
+        "clineIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "geminiCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        }
+      },
+      "status": "UNVERIFIED",
+      "evidenceRefs": [],
+      "mutationStatus": "UNVERIFIED",
+      "limitations": "This is a declared cooperative-route check. Independent same-user original reads, uploads and other unmanaged controls stay disclosed; no universal enforcement is inferred."
+    },
+    {
+      "id": "LS-27",
+      "category": "git-history",
+      "title": "Reviewed pre-commit and pre-push hooks",
+      "scenario": "Synthetic staged content or local push fixture contains declared secret; an existing hook also exists.",
+      "assumedAIBehavior": "Cooperative user/tool invokes installed reviewed hook path; --no-verify/native bypass is outside hook claim.",
+      "mitigation": "Opt-in coexistence-safe local hooks with diff/approval/backup/undo and bounded scanner invocation.",
+      "toolClasses": [
+        "IDE_EXTENSION",
+        "CLI_AGENT"
+      ],
+      "featureCards": [
+        "F21",
+        "F22",
+        "F26"
+      ],
+      "automatedTestId": "LS-27-ACCEPTANCE",
+      "linkedTestIds": [],
+      "controlExpectations": {
+        "positive": "Public commit and loopback/local-only push control proceed; existing hook survives review/undo.",
+        "negative": "Declared staged fixture secret blocks protected hook route without value printing; cancel applies no hook change.",
+        "mutation": "Disable/remove owned hook only with reviewed restoration; badge immediately loses hook coverage. Bypass remains disclosed."
+      },
+      "applicability": {
+        "clineIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "geminiCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        }
+      },
+      "status": "UNVERIFIED",
+      "evidenceRefs": [],
+      "mutationStatus": "UNVERIFIED",
+      "limitations": "This is a declared cooperative-route check. Independent same-user original reads, uploads and other unmanaged controls stay disclosed; no universal enforcement is inferred."
+    },
+    {
+      "id": "LS-28",
+      "category": "git-history",
+      "title": "Shell command-history exclusion",
+      "scenario": "Managed shell command involving synthetic credential would be retained in PSReadLine or supported history sink.",
+      "assumedAIBehavior": "Tool uses reviewed supported history setting/profile; unrelated existing history is outside this test.",
+      "mitigation": "Opt-in credential-command exclusion, metadata-only exposure guidance and exact diff/undo.",
+      "toolClasses": [
+        "IDE_EXTENSION",
+        "CLI_AGENT"
+      ],
+      "featureCards": [
+        "F10",
+        "F11",
+        "F13",
+        "F26"
+      ],
+      "automatedTestId": "LS-28-ACCEPTANCE",
+      "linkedTestIds": [],
+      "controlExpectations": {
+        "positive": "Public command history remains useful in the isolated synthetic profile.",
+        "negative": "Declared protected command/value absent from supported new history; no real existing history is read or rewritten.",
+        "mutation": "Disable managed history integration and withdraw its coverage badge; configuration restoration requires explicit review."
+      },
+      "applicability": {
+        "clineIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "geminiCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        }
+      },
+      "status": "UNVERIFIED",
+      "evidenceRefs": [],
+      "mutationStatus": "UNVERIFIED",
+      "limitations": "This is a declared cooperative-route check. Independent same-user original reads, uploads and other unmanaged controls stay disclosed; no universal enforcement is inferred."
+    },
+    {
+      "id": "LS-29",
+      "category": "editor-clipboard-ui",
+      "title": "Custom env document avoids shared plaintext buffer",
+      "scenario": "Synthetic env/sensitive fixture opens through the custom editor.",
+      "assumedAIBehavior": "IDE AI consumes shared TextDocuments but does not independently read originals outside documented controls.",
+      "mitigation": "CustomDocument provider, masked rendering, reviewed association and warning on plain-text opening.",
+      "toolClasses": [
+        "IDE_EXTENSION",
+        "CLI_AGENT"
+      ],
+      "featureCards": [
+        "F05",
+        "F18",
+        "F19",
+        "F20"
+      ],
+      "automatedTestId": "LS-29-ACCEPTANCE",
+      "linkedTestIds": [],
+      "controlExpectations": {
+        "positive": "Masked schema editor saves/reopens public structure correctly without plaintext TextDocument entry.",
+        "negative": "Custom route creates no original-value workspace.textDocuments entry, tool context or metadata; raw plain-text opening is explicitly warned/uncovered.",
+        "mutation": "Disable custom operation and withhold its view; do not silently reopen protected original as plain text."
+      },
+      "applicability": {
+        "clineIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "geminiCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        }
+      },
+      "status": "UNVERIFIED",
+      "evidenceRefs": [],
+      "mutationStatus": "UNVERIFIED",
+      "limitations": "This is a declared cooperative-route check. Independent same-user original reads, uploads and other unmanaged controls stay disclosed; no universal enforcement is inferred."
+    },
+    {
+      "id": "LS-30",
+      "category": "editor-clipboard-ui",
+      "title": "Owner reveal, recovery, save and undo",
+      "scenario": "Owner reveals one synthetic field locally, edits/saves/reopens/splits or recovers encrypted custom-document backup.",
+      "assumedAIBehavior": "AI uses managed view/context and does not capture owner-only rendered reveal or arbitrary memory.",
+      "mitigation": "Bounded per-field owner reveal, masked tool representation, safe lifecycle and encrypted recovery.",
+      "toolClasses": [
+        "IDE_EXTENSION",
+        "CLI_AGENT"
+      ],
+      "featureCards": [
+        "F05",
+        "F06",
+        "F27"
+      ],
+      "automatedTestId": "LS-30-ACCEPTANCE",
+      "linkedTestIds": [],
+      "controlExpectations": {
+        "positive": "Owner's local field operation and public schema save/undo work; recovery restores editable masked state.",
+        "negative": "Reveal value absent from shared buffers, AI-safe tools, diagnostics and plaintext backup files.",
+        "mutation": "Disable editor/vault operation and withdraw reveal/recovery route; preserve protected recovery material without plaintext restore."
+      },
+      "applicability": {
+        "clineIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "geminiCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        }
+      },
+      "status": "UNVERIFIED",
+      "evidenceRefs": [],
+      "mutationStatus": "UNVERIFIED",
+      "limitations": "This is a declared cooperative-route check. Independent same-user original reads, uploads and other unmanaged controls stay disclosed; no universal enforcement is inferred."
+    },
+    {
+      "id": "LS-31",
+      "category": "editor-clipboard-ui",
+      "title": "Safe sharing and clipboard-managed sinks",
+      "scenario": "Owner shares a selected synthetic protected region or pastes via SoterAI managed sharing commands.",
+      "assumedAIBehavior": "AI receives only declared safe-sharing output; arbitrary shared clipboard/native buffers are outside this boundary.",
+      "mitigation": "Region boundary before extraction, registered-value redaction and optional owned clipboard handling with visible limits.",
+      "toolClasses": [
+        "IDE_EXTENSION",
+        "CLI_AGENT"
+      ],
+      "featureCards": [
+        "F01",
+        "F04",
+        "F07",
+        "F08",
+        "F27"
+      ],
+      "automatedTestId": "LS-31-ACCEPTANCE",
+      "linkedTestIds": [
+        "F01-U05",
+        "F01-U13",
+        "F01-H03"
+      ],
+      "controlExpectations": {
+        "positive": "Public selection remains useful via explicit safe-sharing operation.",
+        "negative": "Protected region/value cannot survive managed output/clipboard path; cancel and malformed selection withhold.",
+        "mutation": "Disable managed sharing operation and withhold it; no legacy raw-paste fallback. Existing external clipboard exposure remains informational."
+      },
+      "applicability": {
+        "clineIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "geminiCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        }
+      },
+      "status": "UNVERIFIED",
+      "evidenceRefs": [],
+      "mutationStatus": "UNVERIFIED",
+      "limitations": "This is a declared cooperative-route check. Independent same-user original reads, uploads and other unmanaged controls stay disclosed; no universal enforcement is inferred."
+    },
+    {
+      "id": "LS-32",
+      "category": "editor-clipboard-ui",
+      "title": "Truthful accessible Protection Center and consent",
+      "scenario": "Owner restricts fixtures through UI, sees errors/cancellation, and inspects verification/accessibility states.",
+      "assumedAIBehavior": "User relies on measured statuses, not a setting-enabled badge or scripted human-presence claim.",
+      "mitigation": "One sidebar, exact metadata outcomes, native preview/review, keyboard/contrast/reduced-motion/axe, timed default onboarding and human acceptance.",
+      "toolClasses": [
+        "IDE_EXTENSION",
+        "CLI_AGENT"
+      ],
+      "featureCards": [
+        "F01",
+        "F03",
+        "F04",
+        "F29",
+        "F30",
+        "F32"
+      ],
+      "automatedTestId": "LS-32-ACCEPTANCE",
+      "linkedTestIds": [
+        "F01-U01",
+        "F01-U02",
+        "F01-U06",
+        "F01-U15",
+        "F01-H01",
+        "F01-H02",
+        "F01-H05"
+      ],
+      "controlExpectations": {
+        "positive": "Actual host actions, public outcome and under-120-second default onboarding work; required human accessibility/usability evidence is separate.",
+        "negative": "Failed writes, unknown status, stale/missing hashes, skipped tool checks and cancelled consent cannot show completed/protected; UI contains no values.",
+        "mutation": "Disable presentation/actions and retain backend denies; no green status or unsafe raw operation. Availability-only mutation remains conservatively graded."
+      },
+      "applicability": {
+        "clineIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "geminiCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        }
+      },
+      "status": "UNVERIFIED",
+      "evidenceRefs": [],
+      "mutationStatus": "UNVERIFIED",
+      "limitations": "This is a declared cooperative-route check. Independent same-user original reads, uploads and other unmanaged controls stay disclosed; no universal enforcement is inferred."
+    },
+    {
+      "id": "LS-33",
+      "category": "config-ci-build",
+      "title": "Hardcoded source credentials",
+      "scenario": "Synthetic source contains declared hardcoded credentials and public lookalikes.",
+      "assumedAIBehavior": "Owner reviews local scan suggestions; AI gets sanitized source/reviewed snapshot.",
+      "mitigation": "Bounded source scanner, metadata findings, reviewed move-to-env/vault and safe publication.",
+      "toolClasses": [
+        "IDE_EXTENSION",
+        "CLI_AGENT"
+      ],
+      "featureCards": [
+        "F21",
+        "F22",
+        "F24"
+      ],
+      "automatedTestId": "LS-33-ACCEPTANCE",
+      "linkedTestIds": [],
+      "controlExpectations": {
+        "positive": "Public source and near-matches remain useful; reviewed fixer round-trip preserves code intent.",
+        "negative": "Supported fake credential absent from findings/AI-safe export; no unreviewed edits or execution.",
+        "mutation": "Disable fixer/scanner operation and withdraw its release; retain originals and restrictions, without claiming arbitrary source prose protection."
+      },
+      "applicability": {
+        "clineIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "geminiCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        }
+      },
+      "status": "UNVERIFIED",
+      "evidenceRefs": [],
+      "mutationStatus": "UNVERIFIED",
+      "limitations": "This is a declared cooperative-route check. Independent same-user original reads, uploads and other unmanaged controls stay disclosed; no universal enforcement is inferred."
+    },
+    {
+      "id": "LS-34",
+      "category": "config-ci-build",
+      "title": "Docker and Kubernetes secret configs",
+      "scenario": "Synthetic compose/Kubernetes family includes nested credentials, comments and malformed variants.",
+      "assumedAIBehavior": "AI requests config only through declared reader/scanner or reviewed snapshot.",
+      "mitigation": "Family-specific bounded parser/detector, defaults and reviewed env/vault suggestions.",
+      "toolClasses": [
+        "IDE_EXTENSION",
+        "CLI_AGENT"
+      ],
+      "featureCards": [
+        "F02",
+        "F04",
+        "F21",
+        "F22"
+      ],
+      "automatedTestId": "LS-34-ACCEPTANCE",
+      "linkedTestIds": [],
+      "controlExpectations": {
+        "positive": "Public service configuration and harmless near-matches parse and remain useful.",
+        "negative": "Declared sensitive values masked/withheld; unknown/malformed format does not return original; no execution of fixture config.",
+        "mutation": "Disable family parser and withhold sensitive operation; no ambiguous raw-view fallback."
+      },
+      "applicability": {
+        "clineIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "geminiCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        }
+      },
+      "status": "UNVERIFIED",
+      "evidenceRefs": [],
+      "mutationStatus": "UNVERIFIED",
+      "limitations": "This is a declared cooperative-route check. Independent same-user original reads, uploads and other unmanaged controls stay disclosed; no universal enforcement is inferred."
+    },
+    {
+      "id": "LS-35",
+      "category": "config-ci-build",
+      "title": "Terraform and tfvars secrets",
+      "scenario": "Synthetic Terraform/tfvars contains declared credential fields and interpolated/multiline variants.",
+      "assumedAIBehavior": "AI uses the declared sensitive config view and reviewed tooling.",
+      "mitigation": "Bounded family parser/detector plus protect-by-default paths and reviewed fixes.",
+      "toolClasses": [
+        "IDE_EXTENSION",
+        "CLI_AGENT"
+      ],
+      "featureCards": [
+        "F02",
+        "F04",
+        "F21",
+        "F22"
+      ],
+      "automatedTestId": "LS-35-ACCEPTANCE",
+      "linkedTestIds": [],
+      "controlExpectations": {
+        "positive": "Public infrastructure schema remains useful through supported parser.",
+        "negative": "Synthetic values absent from approved result/metadata; malformed unsupported variants withheld; no terraform command execution.",
+        "mutation": "Disable family parser and withdraw supported sensitive view without removing denies."
+      },
+      "applicability": {
+        "clineIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "geminiCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        }
+      },
+      "status": "UNVERIFIED",
+      "evidenceRefs": [],
+      "mutationStatus": "UNVERIFIED",
+      "limitations": "This is a declared cooperative-route check. Independent same-user original reads, uploads and other unmanaged controls stay disclosed; no universal enforcement is inferred."
+    },
+    {
+      "id": "LS-36",
+      "category": "config-ci-build",
+      "title": "Registry credentials in .npmrc and .pypirc",
+      "scenario": "Synthetic package registry configurations include tokens/credentialed URLs and public settings.",
+      "assumedAIBehavior": "AI uses safe config reader or reviewed sanitized publication.",
+      "mitigation": "Known-path defaults, field-specific safe representation and local metadata-only hygiene suggestions.",
+      "toolClasses": [
+        "IDE_EXTENSION",
+        "CLI_AGENT"
+      ],
+      "featureCards": [
+        "F02",
+        "F04",
+        "F21",
+        "F22"
+      ],
+      "automatedTestId": "LS-36-ACCEPTANCE",
+      "linkedTestIds": [],
+      "controlExpectations": {
+        "positive": "Public registry setting/schema control remains useful.",
+        "negative": "Synthetic token/URL absent from view/findings/logs; parser failure withholds protected file.",
+        "mutation": "Disable safe family operation and retain credential-path deny; do not send registry network requests."
+      },
+      "applicability": {
+        "clineIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "geminiCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        }
+      },
+      "status": "UNVERIFIED",
+      "evidenceRefs": [],
+      "mutationStatus": "UNVERIFIED",
+      "limitations": "This is a declared cooperative-route check. Independent same-user original reads, uploads and other unmanaged controls stay disclosed; no universal enforcement is inferred."
+    },
+    {
+      "id": "LS-37",
+      "category": "config-ci-build",
+      "title": "Service-account JSON and key files",
+      "scenario": "Synthetic service-account/key configs contain multiline private material and public near-matches.",
+      "assumedAIBehavior": "AI requests approved names/schema, never original credential material through managed route.",
+      "mitigation": "Known credential patterns, atomic sensitive classification, bounded JSON/schema representation and vault suggestions.",
+      "toolClasses": [
+        "IDE_EXTENSION",
+        "CLI_AGENT"
+      ],
+      "featureCards": [
+        "F01",
+        "F02",
+        "F04",
+        "F06",
+        "F21",
+        "F22"
+      ],
+      "automatedTestId": "LS-37-ACCEPTANCE",
+      "linkedTestIds": [
+        "F01-U04",
+        "F01-U05",
+        "F01-U11",
+        "F01-U12",
+        "F01-U13"
+      ],
+      "controlExpectations": {
+        "positive": "Approved field/schema names and ordinary public JSON remain useful.",
+        "negative": "Synthetic private key, token, URL and unsupported sensitive content stay absent after approval.",
+        "mutation": "Disable schema handling and withhold operation; atomic stronger sensitivity remains."
+      },
+      "applicability": {
+        "clineIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "geminiCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        }
+      },
+      "status": "UNVERIFIED",
+      "evidenceRefs": [],
+      "mutationStatus": "UNVERIFIED",
+      "limitations": "This is a declared cooperative-route check. Independent same-user original reads, uploads and other unmanaged controls stay disclosed; no universal enforcement is inferred."
+    },
+    {
+      "id": "LS-38",
+      "category": "config-ci-build",
+      "title": "CI, launch/tasks/settings and MCP configs",
+      "scenario": "Synthetic editor/CI/tool configs contain secret arguments/env/URLs and attempted weakening settings.",
+      "assumedAIBehavior": "AI uses reviewed adapters and safe config handling; repository settings cannot relax machine safety policy.",
+      "mitigation": "Defaults/family scanners, restricted settings, reviewed adapter diff/backup/undo and drift checks.",
+      "toolClasses": [
+        "IDE_EXTENSION",
+        "CLI_AGENT"
+      ],
+      "featureCards": [
+        "F02",
+        "F03",
+        "F09",
+        "F17",
+        "F18",
+        "F19",
+        "F20",
+        "F22"
+      ],
+      "automatedTestId": "LS-38-ACCEPTANCE",
+      "linkedTestIds": [],
+      "controlExpectations": {
+        "positive": "Public task/config works and reviewed nonsecret adapter changes are usable.",
+        "negative": "Synthetic value absent from previews/backups/results; cancelled changes apply nothing; repo policy cannot weaken accepted denies.",
+        "mutation": "Disable relevant adapter/parser and withdraw route; config restoration explicitly downgrades protection status."
+      },
+      "applicability": {
+        "clineIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "geminiCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        }
+      },
+      "status": "UNVERIFIED",
+      "evidenceRefs": [],
+      "mutationStatus": "UNVERIFIED",
+      "limitations": "This is a declared cooperative-route check. Independent same-user original reads, uploads and other unmanaged controls stay disclosed; no universal enforcement is inferred."
+    },
+    {
+      "id": "LS-39",
+      "category": "config-ci-build",
+      "title": "Build artifacts, source maps and copies",
+      "scenario": "Synthetic generated artifacts/maps/cache/copies retain declared source secret.",
+      "assumedAIBehavior": "AI receives only declared inspected artifacts or reviewed public snapshot.",
+      "mitigation": "Bounded artifact discovery/scanning, containment and reviewed release filters/cleanup guidance.",
+      "toolClasses": [
+        "IDE_EXTENSION",
+        "CLI_AGENT"
+      ],
+      "featureCards": [
+        "F07",
+        "F21",
+        "F24",
+        "F28"
+      ],
+      "automatedTestId": "LS-39-ACCEPTANCE",
+      "linkedTestIds": [],
+      "controlExpectations": {
+        "positive": "Harmless generated assets and sanitized exports remain useful.",
+        "negative": "Declared canary absent from release/findings; alias/outside-root artifact withheld; finding copy does not revoke past disclosure.",
+        "mutation": "Disable artifact-safe release and withhold export; preserve original files/evidence, no automatic cleanup."
+      },
+      "applicability": {
+        "clineIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "geminiCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        }
+      },
+      "status": "UNVERIFIED",
+      "evidenceRefs": [],
+      "mutationStatus": "UNVERIFIED",
+      "limitations": "This is a declared cooperative-route check. Independent same-user original reads, uploads and other unmanaged controls stay disclosed; no universal enforcement is inferred."
+    },
+    {
+      "id": "LS-40",
+      "category": "config-ci-build",
+      "title": "Versioned defaults, team policy, drift and downgrade",
+      "scenario": "Synthetic policy imports/exports, 200+ presets, team denies, relaxations and upgrade/downgrade attempts.",
+      "assumedAIBehavior": "Cooperative AI cannot edit repository policy to remove accepted owner/team denies.",
+      "mitigation": "Additive versioned authority, known credential defaults, explicit owner relaxation/cooldown, drift alerts and safe migration.",
+      "toolClasses": [
+        "IDE_EXTENSION",
+        "CLI_AGENT"
+      ],
+      "featureCards": [
+        "F01",
+        "F02",
+        "F03",
+        "F28",
+        "F30",
+        "F32"
+      ],
+      "automatedTestId": "LS-40-ACCEPTANCE",
+      "linkedTestIds": [
+        "F01-U04",
+        "F01-U07",
+        "F01-U10",
+        "F01-U11",
+        "F01-U12",
+        "F01-U13",
+        "F01-U14"
+      ],
+      "controlExpectations": {
+        "positive": "Public paths, valid additive import/export and upgrade remain useful; actual pattern count meets stated target.",
+        "negative": "Corrupt/newer/weakening policy and failed writes retain stronger denies; cancel/expiry/replay cannot relax sensitive rules.",
+        "mutation": "Disable policy operation and withdraw sharing, retaining saved rules and version data; no safe downgrade by silently discarding stronger metadata."
+      },
+      "applicability": {
+        "clineIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "geminiCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        }
+      },
+      "status": "UNVERIFIED",
+      "evidenceRefs": [],
+      "mutationStatus": "UNVERIFIED",
+      "limitations": "This is a declared cooperative-route check. Independent same-user original reads, uploads and other unmanaged controls stay disclosed; no universal enforcement is inferred."
+    },
+    {
+      "id": "LS-41",
+      "category": "logs-test-debug",
+      "title": "Managed app/debug structured output",
+      "scenario": "Synthetic app/task/debug emits registered values in success/error/stack/structured stdout/stderr.",
+      "assumedAIBehavior": "AI observes only supported managed sinks and run descriptors.",
+      "mitigation": "Shared bounded redactor, safe debug/task integration, value-free finding/exposure metadata.",
+      "toolClasses": [
+        "IDE_EXTENSION",
+        "CLI_AGENT"
+      ],
+      "featureCards": [
+        "F07",
+        "F08",
+        "F09",
+        "F25",
+        "F27"
+      ],
+      "automatedTestId": "LS-41-ACCEPTANCE",
+      "linkedTestIds": [],
+      "controlExpectations": {
+        "positive": "Public debugging output remains useful within budgets.",
+        "negative": "Synthetic values/recognized encodings absent from managed output, exception summaries and retained findings.",
+        "mutation": "Disable managed sink and withhold affected operation; do not dump raw error/output as fallback."
+      },
+      "applicability": {
+        "clineIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "geminiCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        }
+      },
+      "status": "UNVERIFIED",
+      "evidenceRefs": [],
+      "mutationStatus": "UNVERIFIED",
+      "limitations": "This is a declared cooperative-route check. Independent same-user original reads, uploads and other unmanaged controls stay disclosed; no universal enforcement is inferred."
+    },
+    {
+      "id": "LS-42",
+      "category": "logs-test-debug",
+      "title": "Log/test-output scanning and exposure reporting",
+      "scenario": "Synthetic test failures, old fixture log files and scanner exceptions contain supported fake credentials.",
+      "assumedAIBehavior": "Owner reviews local metadata; AI receives managed redacted findings rather than original log contents.",
+      "mitigation": "Supported log/output scanner, sink sanitization and reviewed cleanup/rotation guidance.",
+      "toolClasses": [
+        "IDE_EXTENSION",
+        "CLI_AGENT"
+      ],
+      "featureCards": [
+        "F07",
+        "F08",
+        "F21",
+        "F25",
+        "F27"
+      ],
+      "automatedTestId": "LS-42-ACCEPTANCE",
+      "linkedTestIds": [],
+      "controlExpectations": {
+        "positive": "Public failure description and useful location metadata survive.",
+        "negative": "Synthetic values absent from notifications/results/retained report; unknown external logs remain explicit limits.",
+        "mutation": "Disable scanner and withdraw result operation; no automatic historical deletion or raw log reveal."
+      },
+      "applicability": {
+        "clineIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "geminiCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        }
+      },
+      "status": "UNVERIFIED",
+      "evidenceRefs": [],
+      "mutationStatus": "UNVERIFIED",
+      "limitations": "This is a declared cooperative-route check. Independent same-user original reads, uploads and other unmanaged controls stay disclosed; no universal enforcement is inferred."
+    },
+    {
+      "id": "LS-43",
+      "category": "extension-self-hygiene",
+      "title": "Extension/broker/MCP diagnostics and telemetry",
+      "scenario": "Synthetic values reach success/exception/restart/export/dispose paths across owned services.",
+      "assumedAIBehavior": "AI/owner receives only owned safe audit/diagnostic output; arbitrary native memory inspection is outside Lite.",
+      "mitigation": "Central sanitization, minimal value lifetime, metadata-only audit, telemetry opt-in/off by default.",
+      "toolClasses": [
+        "IDE_EXTENSION",
+        "CLI_AGENT"
+      ],
+      "featureCards": [
+        "F07",
+        "F08",
+        "F14",
+        "F16",
+        "F17",
+        "F27"
+      ],
+      "automatedTestId": "LS-43-ACCEPTANCE",
+      "linkedTestIds": [],
+      "controlExpectations": {
+        "positive": "Public diagnostic and audit metadata are useful; telemetry defaults off.",
+        "negative": "No synthetic value in owned logs/activity/crash metadata/exports/queues; transient processing memory is not misrepresented as secret-free.",
+        "mutation": "Disable affected owned sink and withhold emission; never bypass sanitization to preserve logging availability."
+      },
+      "applicability": {
+        "clineIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "geminiCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        }
+      },
+      "status": "UNVERIFIED",
+      "evidenceRefs": [],
+      "mutationStatus": "UNVERIFIED",
+      "limitations": "This is a declared cooperative-route check. Independent same-user original reads, uploads and other unmanaged controls stay disclosed; no universal enforcement is inferred."
+    },
+    {
+      "id": "LS-44",
+      "category": "extension-self-hygiene",
+      "title": "Package hygiene and evidence-bound lifecycle",
+      "scenario": "New VSIX is installed/upgraded/removed in clean profile; stale package or verification report is supplied.",
+      "assumedAIBehavior": "User/tool trusts only measured exact bundle/config evidence and owned lifecycle controls.",
+      "mitigation": "Inspect actual VSIX; exclude secrets/fixtures/evidence/full-only/local paths; runtime hashes, honest SBOM/platform/trust docs, reviewed restoration.",
+      "toolClasses": [
+        "IDE_EXTENSION",
+        "CLI_AGENT"
+      ],
+      "featureCards": [
+        "F14",
+        "F27",
+        "F30",
+        "F31",
+        "F32"
+      ],
+      "automatedTestId": "LS-44-ACCEPTANCE",
+      "linkedTestIds": [],
+      "controlExpectations": {
+        "positive": "Exact VSIX starts advertised local checks without extra installs/admin; upgrade retains policy; owned broker stops through reviewed cleanup.",
+        "negative": "Stale/missing/tampered identity cannot become green; package contains no prohibited entries; uninstall is not assumed to execute extension code.",
+        "mutation": "Disable lifecycle/self-check presentation and withdraw verified badge while keeping denies; never substitute old ordinary-name VSIX for tested artifact."
+      },
+      "applicability": {
+        "clineIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "claudeCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexIde": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "codexCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        },
+        "geminiCli": {
+          "status": "UNVERIFIED",
+          "reason": "Pinned inventory alone establishes neither applicability nor route support. Verify this exact version against the scenario's assumed cooperative behavior before support promotion.",
+          "evidenceRef": null
+        }
+      },
+      "status": "UNVERIFIED",
+      "evidenceRefs": [],
+      "mutationStatus": "UNVERIFIED",
+      "limitations": "This is a declared cooperative-route check. Independent same-user original reads, uploads and other unmanaged controls stay disclosed; no universal enforcement is inferred."
+    }
+  ],
+  "informationalOutOfScopeControls": [
+    {
+      "id": "HS-01",
+      "scenario": "Independent Node/native read of original .env or owner-restricted file",
+      "relatedCatalogIds": [
+        "LS-01",
+        "LS-02",
+        "LS-03",
+        "LS-05"
+      ],
+      "threatModel": "INFORMATIONAL_OUT_OF_LITE_SCOPE",
+      "status": "UNVERIFIED",
+      "scoringRule": "Separate informational observations, not extra catalog checks. Never reclassify a failed applicable cooperative-route row as N/A or promote support because this control is out of scope.",
+      "executionRule": "Synthetic fixtures and loopback receiver only; no real workspace secret/config/credential reads."
+    },
+    {
+      "id": "HS-02",
+      "scenario": "Independent native read of key/service-account original",
+      "relatedCatalogIds": [
+        "LS-03",
+        "LS-37"
+      ],
+      "threatModel": "INFORMATIONAL_OUT_OF_LITE_SCOPE",
+      "status": "UNVERIFIED",
+      "scoringRule": "Separate informational observations, not extra catalog checks. Never reclassify a failed applicable cooperative-route row as N/A or promote support because this control is out of scope.",
+      "executionRule": "Synthetic fixtures and loopback receiver only; no real workspace secret/config/credential reads."
+    },
+    {
+      "id": "HS-03",
+      "scenario": "Independent hardlink/junction/symlink alias read",
+      "relatedCatalogIds": [
+        "LS-07"
+      ],
+      "threatModel": "INFORMATIONAL_OUT_OF_LITE_SCOPE",
+      "status": "UNVERIFIED",
+      "scoringRule": "Separate informational observations, not extra catalog checks. Never reclassify a failed applicable cooperative-route row as N/A or promote support because this control is out of scope.",
+      "executionRule": "Synthetic fixtures and loopback receiver only; no real workspace secret/config/credential reads."
+    },
+    {
+      "id": "HS-04",
+      "scenario": "Arbitrary native interpreter or unrelated terminal read/dump",
+      "relatedCatalogIds": [
+        "LS-09",
+        "LS-10",
+        "LS-11",
+        "LS-12"
+      ],
+      "threatModel": "INFORMATIONAL_OUT_OF_LITE_SCOPE",
+      "status": "UNVERIFIED",
+      "scoringRule": "Separate informational observations, not extra catalog checks. Never reclassify a failed applicable cooperative-route row as N/A or promote support because this control is out of scope.",
+      "executionRule": "Synthetic fixtures and loopback receiver only; no real workspace secret/config/credential reads."
+    },
+    {
+      "id": "HS-05",
+      "scenario": "Independent same-user app/process environment inspection",
+      "relatedCatalogIds": [
+        "LS-11",
+        "LS-15"
+      ],
+      "threatModel": "INFORMATIONAL_OUT_OF_LITE_SCOPE",
+      "status": "UNVERIFIED",
+      "scoringRule": "Separate informational observations, not extra catalog checks. Never reclassify a failed applicable cooperative-route row as N/A or promote support because this control is out of scope.",
+      "executionRule": "Synthetic fixtures and loopback receiver only; no real workspace secret/config/credential reads."
+    },
+    {
+      "id": "HS-06",
+      "scenario": "Native Git object/history access outside managed dispatcher",
+      "relatedCatalogIds": [
+        "LS-25",
+        "LS-26"
+      ],
+      "threatModel": "INFORMATIONAL_OUT_OF_LITE_SCOPE",
+      "status": "UNVERIFIED",
+      "scoringRule": "Separate informational observations, not extra catalog checks. Never reclassify a failed applicable cooperative-route row as N/A or promote support because this control is out of scope.",
+      "executionRule": "Synthetic fixtures and loopback receiver only; no real workspace secret/config/credential reads."
+    },
+    {
+      "id": "HS-07",
+      "scenario": "Independent encoded/chunked upload to synthetic loopback receiver",
+      "relatedCatalogIds": [
+        "LS-17",
+        "LS-20",
+        "LS-22",
+        "LS-23",
+        "LS-24"
+      ],
+      "threatModel": "INFORMATIONAL_OUT_OF_LITE_SCOPE",
+      "status": "UNVERIFIED",
+      "scoringRule": "Separate informational observations, not extra catalog checks. Never reclassify a failed applicable cooperative-route row as N/A or promote support because this control is out of scope.",
+      "executionRule": "Synthetic fixtures and loopback receiver only; no real workspace secret/config/credential reads."
+    },
+    {
+      "id": "HS-08",
+      "scenario": "Other extension's original buffer/tab/shared clipboard access",
+      "relatedCatalogIds": [
+        "LS-29",
+        "LS-30",
+        "LS-31"
+      ],
+      "threatModel": "INFORMATIONAL_OUT_OF_LITE_SCOPE",
+      "status": "UNVERIFIED",
+      "scoringRule": "Separate informational observations, not extra catalog checks. Never reclassify a failed applicable cooperative-route row as N/A or promote support because this control is out of scope.",
+      "executionRule": "Synthetic fixtures and loopback receiver only; no real workspace secret/config/credential reads."
+    },
+    {
+      "id": "HS-09",
+      "scenario": "Same-user modification of editor storage/config/consent authority",
+      "relatedCatalogIds": [
+        "LS-01",
+        "LS-04",
+        "LS-38",
+        "LS-40"
+      ],
+      "threatModel": "INFORMATIONAL_OUT_OF_LITE_SCOPE",
+      "status": "UNVERIFIED",
+      "scoringRule": "Separate informational observations, not extra catalog checks. Never reclassify a failed applicable cooperative-route row as N/A or promote support because this control is out of scope.",
+      "executionRule": "Synthetic fixtures and loopback receiver only; no real workspace secret/config/credential reads."
+    },
+    {
+      "id": "HS-10",
+      "scenario": "Unknown confidential prose, arbitrary cipher, prior disclosure or native-memory inspection",
+      "relatedCatalogIds": [
+        "LS-08",
+        "LS-21",
+        "LS-39",
+        "LS-42",
+        "LS-43"
+      ],
+      "threatModel": "INFORMATIONAL_OUT_OF_LITE_SCOPE",
+      "status": "UNVERIFIED",
+      "scoringRule": "Separate informational observations, not extra catalog checks. Never reclassify a failed applicable cooperative-route row as N/A or promote support because this control is out of scope.",
+      "executionRule": "Synthetic fixtures and loopback receiver only; no real workspace secret/config/credential reads."
+    }
+  ],
+  "freezeRequirements": [
+    "Complete P02 exact-bundle baseline first.",
+    "Validate exactly 44 unique LS IDs and all category minima.",
+    "Resolve recorded route assumptions/applicability without promoting untested candidate versions.",
+    "Map original upgrades/work cards in ITEM-MATRIX.",
+    "Root commits final catalog and SHA before F01 production/test authoring."
+  ],
+  "status": "UNVERIFIED"
+}
+
