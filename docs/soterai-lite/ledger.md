@@ -65,3 +65,33 @@ Per-command `core.hooksPath` avoids invoking the existing external Qoder post-co
 Branch creation is now **PASS**: `git branch --show-current` returned `soterai-lite`. Branch command exit code was `0`; PowerShell represented Git's informational stderr as `NativeCommandError`, which does not indicate a failed switch. Raw output: `evidence/20261013-l0-disk-gate-51f892d0/branch-result.txt`, SHA-256 `E2FEEF21395C0A5B5651E6E5BEC4AEFCD9F84E23EF42FA083E58F125E0F8A2F9`.
 
 The initial `evidence-index.json` snapshot was verified: **11 entries checked, 0 hash mismatches**, before this append. Preserve that index as a historical snapshot; `evidence-index-20261013-l0-stop.json` records the final appended ledger and all pre-commit files. Actual staging uses `git -c core.autocrlf=false add -- docs/soterai-lite` to preserve evidence bytes. This per-command option leaves persistent Git configuration unchanged. The exact final mutation commands are in `evidence/20261013-l0-disk-gate-51f892d0/commit-evidence.ps1`; raw commit output and post-commit identity will be written to new files after the commit and are deliberately outside that commit.
+
+## STEP RECEIPT REVIEW-01 — requested requirements assessment
+
+The user explicitly requested checking which of their five demands are implemented and what remains. This authorizes a read-only source/evidence assessment while the earlier implementation disk gate remains failed; it does not waive that gate or start L1. The first evidence commit was verified as `3ce43885f0d1dc996e786817f1bf4b8404b278f6`: 14 SHA-256 entries and 15 committed byte objects matched; 0 unrelated committed files; 0 differences in existing project status. Its post-commit outputs remain outside that commit.
+
+Exact inspection command:
+
+```powershell
+& '.\docs\soterai-lite\evidence\20261013-requirements-audit-a816bcf9\audit-evidence.ps1'
+```
+
+The script records exact commands for metadata-only recounts, in-memory ZIP inspection without extraction, artifact/source hashing and the disk measurement. Raw output file: `evidence/20261013-requirements-audit-a816bcf9/audit-raw-metadata.json`. Tool exit: `0`. Last audit disk measurement: **1,913,761,792 available bytes**; gate **FAIL**. No real secret files, credentials or live AI sessions were used; no build, suite, install, upload or publication ran.
+
+Result labels: requirements **PARTIAL / INCOMPLETE**; source assessment **STATIC-ONLY**; retained evidence integrity/recount **PASS**; fresh product execution **NOT-RUN**; new Lite artifact **NOT-BUILT**; Lite Coverage Score **UNMEASURED**. Retained 2026-10-12 records: 793 tests/106 suites, 0 failing TAP records, 3 skips (790 passes); functional 10 PASS; SecurityReview 8 scoped blocks/9 leaks; 17 comparison rows/0 mismatches; all 16 candidate archive entries match inventory. Visual 30/0 is aggregate metadata, not a recount of individual assertions. Independence **LOW** (same-lineage adversarial reviewers only).
+
+Files changed and computed SHA-256:
+
+| File | SHA-256 |
+| --- | --- |
+| `REQUIREMENTS-AUDIT-20261013.md` | `1F41B8F934AC2ABD1B8E73946A537D9B924C15194DDBDDC02B846952DBFB6D1A` |
+| `evidence/20261013-requirements-audit-a816bcf9/audit-evidence.ps1` | `91CA655AB6075DD480D132E891B4B635639033ABC292A32DD06F48DEAD36CB4F` |
+| `evidence/20261013-requirements-audit-a816bcf9/audit-raw-metadata.json` | `E3D415970EDDF691B70EF79DC7D11FA45039160C875EA45BFD82FF3705E22E5C` |
+
+The appended ledger and review-commit script hashes are computed in the new immutable review evidence index. Existing indexes remain historical snapshots and are not overwritten.
+
+Artifact gap: current extension SHA-256 is `d8abff1a7ac48809420bb4f2862b8d9700ccc85c9b5cd97152608be85556b032`; tested dated candidate SHA-256 is `7b590560325aa46c3519cbf6bf0300c7bf7783d910cbae7d89e4636010e61c2c`. The normal local `soterai-ide-guard-0.6.3.vsix` has SHA-256 `dcbcd9738cb480616cf4d3aa66d1a1ac2287e1754aa7307dea7ac23fee7c3677` and an older extension/runtime/manifest, with no project-privacy verification JSON. Do not attribute current candidate tests to that artifact or a Marketplace download. Current source does create a broker control token; do not repeat an unqualified claim that it is absent.
+
+What remains unprotected: native AI/direct original-file reads, normal shells, original buffers, alias/copy/history paths, inherited environment/output and independent uploads. The managed approval-and-masking route is implemented; universal mediation is not. The report details source-only persistence-status and partial-value-preview findings that require flagged regression fixes later.
+
+Next: return the requested simple assessment; implementation remains stopped at L0 until the user supplies sufficient C: disk space. Resume by reading this ledger and retrying the disk gate with a new evidence directory. No required original build stage is marked finished by this review. Exact local review-commit commands and their result are recorded in `evidence/20261013-requirements-audit-a816bcf9/commit-review.ps1` and its new output. Commit only the review allowlist; preserve all pre-existing project changes and prior evidence.

@@ -1,0 +1,233 @@
+﻿{
+    "inspectedAtUtc":  "2026-10-13T05:27:51.4590132Z",
+    "scope":  "STATIC-ONLY source assessment and read-only recount/hash inspection of retained 2026-10-12 synthetic execution evidence; no product tests rerun",
+    "independence":  "LOW",
+    "availableDiskBytes":  1913761792,
+    "diskGatePass":  false,
+    "tap":  {
+                "testRecords":  793,
+                "suiteRecords":  106,
+                "failingTapRecords":  0,
+                "skippedTapRecords":  3
+            },
+    "functionalStatuses":  [
+                               {
+                                   "Name":  "PASS",
+                                   "Count":  10
+                               }
+                           ],
+    "securityStatuses":  [
+                             {
+                                 "Name":  "BLOCKED_SCOPED",
+                                 "Count":  8
+                             },
+                             {
+                                 "Name":  "LEAK_CONFIRMED",
+                                 "Count":  9
+                             }
+                         ],
+    "nativeStatuses":  [
+                           {
+                               "Name":  "IDENTITY_VERIFIED",
+                               "Count":  1
+                           },
+                           {
+                               "Name":  "PUBLIC_CONTROL_PASS",
+                               "Count":  6
+                           },
+                           {
+                               "Name":  "BLOCKED_SCOPED",
+                               "Count":  9
+                           },
+                           {
+                               "Name":  "LEAK_CONFIRMED",
+                               "Count":  9
+                           },
+                           {
+                               "Name":  "NOT_REPRODUCED",
+                               "Count":  1
+                           }
+                       ],
+    "comparisonRows":  17,
+    "comparisonMismatches":  0,
+    "visualAggregate":  {
+                            "passed":  30,
+                            "failed":  0,
+                            "individuallyRecounted":  false
+                        },
+    "testedCandidate":  {
+                            "path":  "docs/project-privacy/evidence/20261012-final-local/soterai-project-privacy-0.6.3-20261012.vsix",
+                            "sha256":  "7B590560325AA46C3519CBF6BF0300C7BF7783D910CBAE7D89E4636010E61C2C",
+                            "zipEntries":  16,
+                            "inventoryEntriesChecked":  16,
+                            "inventoryMismatches":  0
+                        },
+    "currentExtensionSha256":  "D8ABFF1A7AC48809420BB4F2862B8D9700CCC85C9B5CD97152608BE85556B032",
+    "normalLocalVsix":  {
+                            "path":  "packages/vscode-extension/soterai-ide-guard-0.6.3.vsix",
+                            "sha256":  "DCBCD9738CB480616CF4D3AA66D1A1AC2287E1754AA7307DEA7AC23FEE7C3677",
+                            "zipEntries":  21,
+                            "extensionSha256":  "7746177a904ec5579938aa9282486680febde0129334b8c47941588de6069c53",
+                            "hasProjectPrivacyVerification":  false
+                        },
+    "sourceAndEvidenceHashes":  [
+                                    {
+                                        "path":  "packages/vscode-extension/package.json",
+                                        "bytes":  96329,
+                                        "sha256":  "F8B913569B1AA0B61A7367138D94495B69560B255A1A8EBA1CF8163CC65EFA60"
+                                    },
+                                    {
+                                        "path":  "packages/vscode-extension/README.md",
+                                        "bytes":  26986,
+                                        "sha256":  "FF01A8ACE200BDEFA6504ED53AE55CC846226001CC862EA4A3F1AD683AF66550"
+                                    },
+                                    {
+                                        "path":  "packages/vscode-extension/src/extension.ts",
+                                        "bytes":  32212,
+                                        "sha256":  "ADF975909D86D57B0F78B58F1038C5C9C287E0E7A51C88A9F0E072558EEA1246"
+                                    },
+                                    {
+                                        "path":  "packages/vscode-extension/src/project-privacy/ProjectFileAccess.ts",
+                                        "bytes":  3694,
+                                        "sha256":  "C086376C0DF29091E9CAA939BC27AD8393713DCC93CA659C5922FB0E1DC2FD70"
+                                    },
+                                    {
+                                        "path":  "packages/vscode-extension/src/project-privacy/SafeFileView.ts",
+                                        "bytes":  3445,
+                                        "sha256":  "6B8E7723380A791F0450CB9627354A2E8BBDB96D900A05607E0D2BC57CB13F51"
+                                    },
+                                    {
+                                        "path":  "packages/vscode-extension/src/project-privacy/ReadTerminal.ts",
+                                        "bytes":  3476,
+                                        "sha256":  "ECE1E4EC5396190AF8ED6A89003BB26DDD6CAE928A9078F223BD6C02486DF413"
+                                    },
+                                    {
+                                        "path":  "packages/vscode-extension/src/project-privacy/commands.ts",
+                                        "bytes":  12279,
+                                        "sha256":  "6F76CD310E10167A5E410E12685DA51B076890735009FCECDD98F96FEB8A8B66"
+                                    },
+                                    {
+                                        "path":  "packages/vscode-extension/src/project-privacy/panel.ts",
+                                        "bytes":  27634,
+                                        "sha256":  "300D58B57364445909CB0D4CB5865E758995DE8206AB5DDDBCA53893CA8CB69A"
+                                    },
+                                    {
+                                        "path":  "packages/vscode-extension/src/ai-boundary/BoundarySnapshot.ts",
+                                        "bytes":  13834,
+                                        "sha256":  "4933300DA00E366787425D9C3B8622943474561D47654F3B97DA95628CE193D4"
+                                    },
+                                    {
+                                        "path":  "packages/vscode-extension/src/ai-boundary/commands.ts",
+                                        "bytes":  7581,
+                                        "sha256":  "6E919ACAA79D856B2D7E935C01D0DF1F44276E780E0681E4773885D57C3C42F2"
+                                    },
+                                    {
+                                        "path":  "packages/vscode-extension/src/ai-boundary/policy.ts",
+                                        "bytes":  7599,
+                                        "sha256":  "7CF26EE806520ECB6AD1A02CFE4059AF353BC048375A16DC4C2E4B56580ECB58"
+                                    },
+                                    {
+                                        "path":  "packages/vscode-extension/src/terminal/ShellExecutionWatcher.ts",
+                                        "bytes":  5606,
+                                        "sha256":  "D468F1DBFC23B4FF14B48875A527526AFABE190F5BBD928A43B736B247D63F3C"
+                                    },
+                                    {
+                                        "path":  "packages/vscode-extension/src/secret-shield/SecretFileInterceptor.ts",
+                                        "bytes":  4657,
+                                        "sha256":  "2579E347A3590CDC66CEF2270C3C235C0A46F6463488F83F10BE894D643A7A11"
+                                    },
+                                    {
+                                        "path":  "packages/vscode-extension/src/secret-shield/AutoVaultMigration.ts",
+                                        "bytes":  10987,
+                                        "sha256":  "E741095ACA9A29E41ACDD7E3B67A91B2D8C68B7309994A1697E9A61C703A1D99"
+                                    },
+                                    {
+                                        "path":  "packages/vscode-extension/src/firewall/VaultManager.ts",
+                                        "bytes":  16580,
+                                        "sha256":  "A50ED9E610AA5923EA3E7595DB7D390CF69365805AAEB80D39C9C3DFA6994C24"
+                                    },
+                                    {
+                                        "path":  "packages/vscode-extension/src/broker/BrokerManager.ts",
+                                        "bytes":  21106,
+                                        "sha256":  "9C51C2EE05BE39DA0E3AE3ECE99C5EAE2FDA10D5024CAE3E03809B0894F274A6"
+                                    },
+                                    {
+                                        "path":  "packages/vscode-extension/src/broker/autoStart.ts",
+                                        "bytes":  8279,
+                                        "sha256":  "2E4475AC4D68B09B89B667F864C6AE016769B7CFF2971E9982C1D4462FDCB724"
+                                    },
+                                    {
+                                        "path":  "packages/guard-core/src/ContextRedactor.ts",
+                                        "bytes":  2895,
+                                        "sha256":  "438D6AE62D12D1259DBE0C52E1EF9CDBD064A0C3C88454C03A059BA2401EF304"
+                                    },
+                                    {
+                                        "path":  "packages/guard-core/src/sensitiveFiles.ts",
+                                        "bytes":  8267,
+                                        "sha256":  "E58FE3900C94F65A8396223852CC88E232EDB846F774378F2EF0316CFDAC1A4F"
+                                    },
+                                    {
+                                        "path":  "docs/project-privacy/SCORECARD.md",
+                                        "bytes":  5099,
+                                        "sha256":  "0A2D14FB161FF2499A5F913BCC47DFB2D79D8925D9B45ED5CC31FA35257E07BD"
+                                    },
+                                    {
+                                        "path":  "docs/project-privacy/USER-GUIDE.md",
+                                        "bytes":  8830,
+                                        "sha256":  "0C344533C82427B4EA4179A37EA17350B327BC85134FD06B52FBC8DF64ED9777"
+                                    },
+                                    {
+                                        "path":  "docs/project-privacy/CLINE-ASSESSMENT.md",
+                                        "bytes":  5350,
+                                        "sha256":  "D9C757E41BD666567442995D60E371C67B264DFB0E473D0BE027AD24720D11FF"
+                                    },
+                                    {
+                                        "path":  "docs/project-privacy/FINAL-LOCAL-REPORT.md",
+                                        "bytes":  23147,
+                                        "sha256":  "2420204993FA2ABE2E2FF0A23D5FC4DD7CC8D405C50FD0895FA77C89DB046B84"
+                                    },
+                                    {
+                                        "path":  "docs/project-privacy/evidence/20261012-final-local/full-tests-agent-target.log",
+                                        "bytes":  383428,
+                                        "sha256":  "1B878E95B7B2C6A0B40F7E9AB2E1AA8FA4063D56D3B66BCA69C4AFE1B59C6FFF"
+                                    },
+                                    {
+                                        "path":  "docs/project-privacy/evidence/20261012-final-local/raw/functional/functional-results.json",
+                                        "bytes":  2168,
+                                        "sha256":  "B292D78F7DD3443DF92A45DCC42F9B793CA2B545339451A18E104691C101F413"
+                                    },
+                                    {
+                                        "path":  "docs/project-privacy/evidence/20261012-final-local/raw/security/live-host.json",
+                                        "bytes":  4878,
+                                        "sha256":  "DFCB768A21AED7F3B62E4F99417B82E3338E1337DBDC90B7FF130597DE0A98A8"
+                                    },
+                                    {
+                                        "path":  "docs/project-privacy/evidence/20261012-final-local/raw/native/results.json",
+                                        "bytes":  15286,
+                                        "sha256":  "C3BE5B400B3D29CA9DBFD13C2FD6F8D85075B961FF561D7CAB87B7FED351A59C"
+                                    },
+                                    {
+                                        "path":  "docs/project-privacy/evidence/20261012-final-local/host-comparison.json",
+                                        "bytes":  4077,
+                                        "sha256":  "B3E3E660ED0D6E26BD329AC3DA446B6E2ACD1A7FF465883012A3177ED1C29EDD"
+                                    },
+                                    {
+                                        "path":  "docs/project-privacy/evidence/20261012-final-local/vsix-integrity.json",
+                                        "bytes":  3214,
+                                        "sha256":  "B6A06F1D00874BBBF1179508EE76689E8B8469C546D0F47E9D0AA81A7D24D92D"
+                                    },
+                                    {
+                                        "path":  "docs/project-privacy/evidence/20261012-final-local/visual-results.json",
+                                        "bytes":  245,
+                                        "sha256":  "BFBDDBC6A44306BF2C96FEDCBBB961370685AF8745B97736A22BACDF6D09FAB0"
+                                    },
+                                    {
+                                        "path":  "docs/soterai-lite/REQUIREMENTS-AUDIT-20261013.md",
+                                        "bytes":  12785,
+                                        "sha256":  "1F41B8F934AC2ABD1B8E73946A537D9B924C15194DDBDDC02B846952DBFB6D1A"
+                                    }
+                                ],
+    "freshProductTests":  "NOT-RUN",
+    "newLiteBundle":  "NOT-BUILT",
+    "liteCoverageScore":  "UNMEASURED"
+}
