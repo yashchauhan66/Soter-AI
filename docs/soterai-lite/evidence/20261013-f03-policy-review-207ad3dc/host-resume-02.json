@@ -1,0 +1,25 @@
+{
+  "status": "VERIFYING_INCOMPLETE",
+  "observedAt": "2026-10-14T07:57:58.603Z",
+  "currentCodeVersion": "1.141.1",
+  "updateCompleted": true,
+  "historicalCurrentLaunch02": "Renderer OOM before behavioral results; zero-byte driver-error retained. Cause UNVERIFIED.",
+  "discardedExecCell7": "functions.wait returned exec cell 7 not found; no launch03 files existed at resumption. INCOMPLETE orchestration, not product failure.",
+  "nativeLaunch03": "D workspace ran all save cases: 1PASS/7FAIL; old diagnostic first-line only.",
+  "nativeLaunch04": {
+    "path": "D:\\SoterAI-Lite-test-profiles\\current-native-d-host-20261014T075325Z-4b1c5c14\\save-results.json",
+    "sha256": "f365ec7aadc5797076c408ffb800730ad4f07bd0304059c43e78d19a5ca1f1c1",
+    "passed": 1,
+    "failed": 7,
+    "cause": "Native fixture captured legacy pre-enrollment {manual:undefined,policy:undefined} then compared it with correctly enrolled stronger policy. Source fixture also added deny while asserting unchanged permanence."
+  },
+  "refresh": {
+    "before": "refresh-before-01.txt:4FAIL",
+    "after": "refresh-after-01.txt:4PASS",
+    "focused": "focused-after-05.txt:65PASS",
+    "rollback": "Repeated-read dedup never releases an invalid root; first invalid transition still clears owned approvals."
+  },
+  "delegatedHostDiagnosis": "Agent errored: You’ve hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/settings/usage to purchase more credits or try again at 12:57 PM.",
+  "fullSuite": "full-tests-06 pending at preparation; earlier 915 test pass belongs to source before RF fix.",
+  "next": "Matching typecheck/new VSIX attempt02/native/functional/security/scoped commit; no F04 production."
+}

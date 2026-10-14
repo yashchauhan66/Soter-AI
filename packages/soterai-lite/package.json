@@ -75,6 +75,7 @@
         "soterai.projectPrivacy.enabled",
         "soterai.lite.restrictionSave",
         "soterai.lite.versionedPolicy",
+        "soterai.lite.policyDrift",
         "soterai.projectPrivacy.atomicSensitivePolicy",
         "soterai.projectPrivacy.safeViewComposition",
         "soterai.projectPrivacy.safePublication",
@@ -184,7 +185,12 @@
       },
       {
         "command": "soterai.manageAIRules",
-        "title": "Manage Manual AI Rules",
+        "title": "Review a Manual Deny for This Editor Session",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.reviewSensitiveAIRules",
+        "title": "Review Sensitive Protection for This Editor Session",
         "category": "SoterAI"
       },
       {
@@ -1209,6 +1215,12 @@
           "scope": "machine",
           "description": "Enable new credential defaults, additive policy imports and stack presets. Turning this off retains accepted denies and sensitivity. Tested older schema-aware readers reject the stronger storage format and make managed reads unavailable."
         },
+        "soterai.lite.policyDrift": {
+          "type": "boolean",
+          "default": true,
+          "scope": "machine",
+          "description": "Enable startup and periodic protection drift checks and deliberate owner reviews for this editor session. Exact diff, typed confirmation, cooldown and persisted metadata audit are required. Disabling ends session grants and preserves permanent denies, sensitivity and region masking. Same-user confirmation is not agent-proof."
+        },
         "soterai.projectPrivacy.professionalUi": {
           "type": "boolean",
           "default": true,
@@ -1606,6 +1618,16 @@
       ],
       "soterai.explorerContext": [
         {
+          "command": "soterai.manageAIRules",
+          "group": "3_policy@4",
+          "when": "resourceScheme == file"
+        },
+        {
+          "command": "soterai.reviewSensitiveAIRules",
+          "group": "3_policy@5",
+          "when": "resourceScheme == file"
+        },
+        {
           "command": "soterai.applyLitePolicyPreset",
           "group": "3_policy@1",
           "when": "explorerResourceIsFolder && resourceScheme == file"
@@ -1681,6 +1703,10 @@
         }
       ],
       "commandPalette": [
+        {
+          "command": "soterai.reviewSensitiveAIRules",
+          "when": "soterai.advancedCommands"
+        },
         {
           "command": "soterai.importLitePolicy",
           "when": "soterai.advancedCommands"

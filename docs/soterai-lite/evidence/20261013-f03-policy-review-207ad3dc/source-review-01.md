@@ -1,0 +1,11 @@
+# F03 same-lineage source review (LOW independence)
+
+The test author reviewed only source. Re-blocking a retained deny could acknowledge SAVED without ending its grant; root captured failing S27, then added synchronous manual-intent revocation and root incarnation binding. Whole permanent policy stays stored, including legacy sensitivity and protected regions. Ordinary UI offers no sensitive path/region selectors; separate sensitive reviews retain masking and default context withholding. No public function removes stored protection or creates a grant without UI.
+
+Root identified a queued historical baseline check invalidating a review already bound to the current revision; failing S28 preceded correction. Each new snapshot validates active grants against current policy/config/source metadata; synchronous native events end stale grants immediately. Historical baseline comparison removes obsolete root grants and alerts without invalidating a newer matching owner review. Any change after review capture still fails exact revision/postwrite checks.
+
+Audit entries contain UUID/time/mode/digests/outcome only, strict64record/32KiB limits, complete128KiB envelope validation, no automatic truncation. Atomic v3 audit writes keep permanent rules/policy unchanged. Restart cannot recreate grants from audit; older schema-aware readers reject v3. Root storage/trust/flag/config/source drift, cancellation, expiry/backward clock, any consume replay and persistence failures remain closed. Ephemeral grants bind current Memento and workspace incarnation.
+
+Captured snapshots consult live grants; grant-enabled disk reads reload source policy before and after I/O. Native policy/config/workspace/vendor/manual-intent events invalidate managed approved views and previews. Periodic checks are metadata comparisons with owned disposed timers, not OS file interception. Source/read timing and same-user native processes remain outside a universal boundary.
+
+Scripted actual-host decisions are LOW independence and do not prove independent owner presence. Per-feature withdrawal evidence is AVAILABILITY_ONLY; no STRONG catalog item or numerical rating is promoted. Exact source/test/artifact/host identities will be pinned in the acceptance receipt. This review does not replace L6/L7 independent and human gates.

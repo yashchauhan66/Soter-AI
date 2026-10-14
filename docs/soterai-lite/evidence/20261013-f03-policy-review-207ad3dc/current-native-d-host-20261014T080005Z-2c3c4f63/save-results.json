@@ -1,0 +1,183 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-10-14T08:01:17.056Z",
+  "phase": "save",
+  "syntheticOnly": true,
+  "workspace": "d:\\SoterAI-Lite-test-profiles\\current-native-d-host-20261014T080005Z-2c3c4f63\\workspace",
+  "declaredProfilePath": "D:\\SoterAI-Lite-test-profiles\\current-native-d-host-20261014T080005Z-2c3c4f63\\profile",
+  "extensionMode": "Development",
+  "hostVersion": "1.141.1",
+  "extensionBundleSha256": "ae86de07757927b7456ce39b90ae3bda08332b3d1777953939af9b1dbabd0e00",
+  "currentDeveloperBundleSha256": "ae86de07757927b7456ce39b90ae3bda08332b3d1777953939af9b1dbabd0e00",
+  "hostProbeSha256": "36d4e4b7824fd88ba9b401558b8c96d58c08b598270c121ac502253c4f66ded3",
+  "observations": [
+    {
+      "id": "F03-H01",
+      "status": "PASS",
+      "scope": "Actual owner commands ignore supplied grants; picker cancel and wrong exact typing preserve denies/audit."
+    },
+    {
+      "id": "F03-H02",
+      "status": "PASS",
+      "scope": "Native metadata diff, exact typing and real cooldown produce an atomic v3 ordinary review audit."
+    },
+    {
+      "id": "F03-H03",
+      "status": "PASS",
+      "scope": "Only the reviewed ordinary selector opens; other deny, credential default and protected region remain; public control opens."
+    },
+    {
+      "id": "F03-H04",
+      "status": "PASS",
+      "scope": "Machine flag withdrawal ends current session access, refreshes an open view and cannot resurrect access on re-enable."
+    },
+    {
+      "id": "F03-H05",
+      "status": "PASS",
+      "scope": "Separate sensitive owner review retains stored sensitivity, default omission and exact value-masked env safe read."
+    },
+    {
+      "id": "F03-H06",
+      "status": "PASS",
+      "scope": "Rejected actual-context audit persistence yields FAILED and no grant, saved notification or policy change."
+    },
+    {
+      "id": "F03-H07",
+      "status": "PASS",
+      "scope": "Real source watcher/read drift restores a reviewed deny without copying source values into alerts or baseline."
+    },
+    {
+      "id": "F03-H08",
+      "status": "PASS",
+      "scope": "Save phase leaves one reviewed ordinary grant active while permanent v3 rules/audit remain persisted for restart."
+    }
+  ],
+  "commandStatuses": [
+    {
+      "command": "soterai.blockFromAI",
+      "observedStatus": "SAVED"
+    },
+    {
+      "command": "soterai.blockFromAI",
+      "observedStatus": "SAVED"
+    },
+    {
+      "command": "soterai.restrictSensitiveFile",
+      "observedStatus": "SAVED"
+    },
+    {
+      "command": "soterai.blockSelectionFromAI",
+      "observedStatus": "SAVED"
+    },
+    {
+      "command": "soterai.manageAIRules",
+      "observedStatus": "CANCELLED"
+    },
+    {
+      "command": "soterai.manageAIRules",
+      "observedStatus": "FAILED"
+    },
+    {
+      "command": "soterai.manageAIRules",
+      "observedStatus": "RELAXED_SESSION"
+    },
+    {
+      "command": "soterai.manageAIRules",
+      "observedStatus": "UNAVAILABLE"
+    },
+    {
+      "command": "soterai.reviewSensitiveAIRules",
+      "observedStatus": "UNAVAILABLE"
+    },
+    {
+      "command": "soterai.reviewSensitiveAIRules",
+      "observedStatus": "RELAXED_SESSION"
+    },
+    {
+      "command": "soterai.readProjectFileSafely",
+      "observedStatus": "ALLOWED_ONCE"
+    },
+    {
+      "command": "soterai.manageAIRules",
+      "observedStatus": "FAILED"
+    },
+    {
+      "command": "soterai.manageAIRules",
+      "observedStatus": "RELAXED_SESSION"
+    },
+    {
+      "command": "soterai.manageAIRules",
+      "observedStatus": "RELAXED_SESSION"
+    }
+  ],
+  "reviews": [
+    {
+      "command": "soterai.manageAIRules",
+      "selectedPattern": "ordinary.txt",
+      "observedStatus": "FAILED",
+      "elapsedMs": 367,
+      "inputCalls": 1,
+      "nativeDiff": true,
+      "diffDocumentCount": 2,
+      "finalActions": 0
+    },
+    {
+      "command": "soterai.manageAIRules",
+      "selectedPattern": "ordinary.txt",
+      "observedStatus": "RELAXED_SESSION",
+      "elapsedMs": 10198,
+      "inputCalls": 1,
+      "nativeDiff": true,
+      "diffDocumentCount": 2,
+      "finalActions": 1
+    },
+    {
+      "command": "soterai.reviewSensitiveAIRules",
+      "selectedPattern": ".env.owner",
+      "observedStatus": "RELAXED_SESSION",
+      "elapsedMs": 10127,
+      "inputCalls": 1,
+      "nativeDiff": true,
+      "diffDocumentCount": 2,
+      "finalActions": 1
+    },
+    {
+      "command": "soterai.manageAIRules",
+      "selectedPattern": "ordinary.txt",
+      "observedStatus": "FAILED",
+      "elapsedMs": 10063,
+      "inputCalls": 1,
+      "nativeDiff": true,
+      "diffDocumentCount": 2,
+      "finalActions": 1
+    },
+    {
+      "command": "soterai.manageAIRules",
+      "selectedPattern": "ordinary.txt",
+      "observedStatus": "RELAXED_SESSION",
+      "elapsedMs": 10294,
+      "inputCalls": 1,
+      "nativeDiff": true,
+      "diffDocumentCount": 2,
+      "finalActions": 1
+    },
+    {
+      "command": "soterai.manageAIRules",
+      "selectedPattern": "ordinary.txt",
+      "observedStatus": "RELAXED_SESSION",
+      "elapsedMs": 10802,
+      "inputCalls": 1,
+      "nativeDiff": true,
+      "diffDocumentCount": 2,
+      "finalActions": 1
+    }
+  ],
+  "auditRecordCount": 4,
+  "policyDriftFlagRetainedForRestart": true,
+  "passed": 8,
+  "failed": 0,
+  "identityScope": "Byte-identical packaged runtime in a normal isolated developer window with a test-only bootstrap and persistent Memento. SQLite metadata only; no clean-profile installed-VSIX or authenticated memory claim.",
+  "independence": "LOW",
+  "ownerPresence": "SCRIPTED_SAME_EXTENSION_API_INSTANCE",
+  "externalAgents": "NOT_TESTED"
+}

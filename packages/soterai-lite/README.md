@@ -6,6 +6,10 @@ Policy imports and `.soterai/team-policy.json` can only add denies and sensitive
 
 The machine setting `soterai.lite.versionedPolicy` withdraws new enrollment/import/preset operations while keeping accepted protection. Invalid, oversized or newer schemas withhold managed reads. The same-key v2 storage envelope is rejected by the tested previous schema-aware parser; downgrading those readers makes managed reads unavailable. Keep a current Lite version to read upgraded policy. Expanded defaults apply to the managed boundary; native AI reads and legacy scanner coverage are separate surfaces.
 
+Use the Explorer SoterAI menu to review a manual deny **for this editor session**. Review the exact metadata diff, type the displayed confirmation, wait the 10-second cooldown and confirm the final action. Permanent rules stay saved. Restart, re-blocking a file, workspace changes or protection drift ends the session permission. Imported/team/default protection cannot be removed here. Sensitive protection has a separate review: it retains sensitivity and every protected text region, so approved safe reads still return masked values. Same-user confirmation is not agent-proof.
+
+Startup and 60-second periodic checks compare policy/source fingerprints, selected safety settings and installed extension versions. Alerts contain metadata only. The machine flag `soterai.lite.policyDrift` withdraws monitoring and new owner reviews, revokes session permissions, and retains permanent protection. Review audit is bounded to 64 entries/32KiB and persisted atomically with unchanged policy in strict v3 storage; older schema-aware readers fail closed. A full audit refuses additional reviews rather than truncating history.
+
 Local managed secret scanning, file restrictions, approved masked reads, vault
 workflows and a bundled loopback AI broker. Existing settings use `soterai.*`.
 This local candidate preserves the extension identity and saved vault/policy.

@@ -1,0 +1,611 @@
+﻿TAP version 13
+# Subtest: F03-S01 legacy relax-modal acceptance cannot remove a permanent deny without typed owner review
+not ok 1 - F03-S01 legacy relax-modal acceptance cannot remove a permanent deny without typed owner review
+  ---
+  duration_ms: 122.7537
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-owner-policy-session.test.ts:4:1026'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + undefined
+    - {
+    -   status: 'CANCELLED'
+    - }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    status: 'CANCELLED'
+  operator: 'deepStrictEqual'
+  stack: |-
+    status (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-session.test.ts:38:62)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-session.test.ts:122:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F03-S02 completed review pauses only its selector and atomically audits without changing permanent policy
+not ok 2 - F03-S02 completed review pauses only its selector and atomically audits without changing permanent policy
+  ---
+  duration_ms: 41.8703
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-owner-policy-session.test.ts:4:1537'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + undefined
+    - {
+    -   status: 'RELAXED_SESSION'
+    - }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    status: 'RELAXED_SESSION'
+  operator: 'deepStrictEqual'
+  stack: |-
+    status (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-session.test.ts:38:62)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-session.test.ts:131:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F03-S03 owner review opens a real metadata diff without placing source contents in the diff
+not ok 3 - F03-S03 owner review opens a real metadata diff without placing source contents in the diff
+  ---
+  duration_ms: 32.1554
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-owner-policy-session.test.ts:4:2830'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + undefined
+    - {
+    -   status: 'RELAXED_SESSION'
+    - }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    status: 'RELAXED_SESSION'
+  operator: 'deepStrictEqual'
+  stack: |-
+    status (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-session.test.ts:38:62)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-session.test.ts:148:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F03-S04 a restart loses session permission even when its successful audit remains persisted
+not ok 4 - F03-S04 a restart loses session permission even when its successful audit remains persisted
+  ---
+  duration_ms: 40.164
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-owner-policy-session.test.ts:4:3864'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + undefined
+    - {
+    -   status: 'RELAXED_SESSION'
+    - }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    status: 'RELAXED_SESSION'
+  operator: 'deepStrictEqual'
+  stack: |-
+    status (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-session.test.ts:38:62)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-session.test.ts:166:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F03-S05 flag withdrawal invalidates captured snapshots and re-enabling cannot resurrect a grant
+not ok 5 - F03-S05 flag withdrawal invalidates captured snapshots and re-enabling cannot resurrect a grant
+  ---
+  duration_ms: 31.5075
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-owner-policy-session.test.ts:4:4472'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + undefined
+    - {
+    -   status: 'RELAXED_SESSION'
+    - }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    status: 'RELAXED_SESSION'
+  operator: 'deepStrictEqual'
+  stack: |-
+    status (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-session.test.ts:38:62)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-session.test.ts:174:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F03-S06 machine flag inspection overrides conflicting repository values
+not ok 6 - F03-S06 machine flag inspection overrides conflicting repository values
+  ---
+  duration_ms: 26.5942
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-owner-policy-session.test.ts:4:5110'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + undefined
+    - {
+    -   status: 'UNAVAILABLE'
+    - }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    status: 'UNAVAILABLE'
+  operator: 'deepStrictEqual'
+  stack: |-
+    status (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-session.test.ts:38:62)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-session.test.ts:186:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F03-S07 trust and safety-config withdrawal revoke session permission permanently
+not ok 7 - F03-S07 trust and safety-config withdrawal revoke session permission permanently
+  ---
+  duration_ms: 28.9862
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-owner-policy-session.test.ts:4:5687'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + undefined
+    - {
+    -   status: 'RELAXED_SESSION'
+    - }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    status: 'RELAXED_SESSION'
+  operator: 'deepStrictEqual'
+  stack: |-
+    status (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-session.test.ts:38:62)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-session.test.ts:193:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F03-S08 source drift after a grant is independently detected by a fresh managed read
+not ok 8 - F03-S08 source drift after a grant is independently detected by a fresh managed read
+  ---
+  duration_ms: 22.8957
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-owner-policy-session.test.ts:4:6414'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + undefined
+    - {
+    -   status: 'RELAXED_SESSION'
+    - }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    status: 'RELAXED_SESSION'
+  operator: 'deepStrictEqual'
+  stack: |-
+    status (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-session.test.ts:38:62)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-session.test.ts:204:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F03-S09 additive manual and imported policy revisions revoke a session grant
+not ok 9 - F03-S09 additive manual and imported policy revisions revoke a session grant
+  ---
+  duration_ms: 26.8688
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-owner-policy-session.test.ts:4:6838'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + undefined
+    - {
+    -   status: 'RELAXED_SESSION'
+    - }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    status: 'RELAXED_SESSION'
+  operator: 'deepStrictEqual'
+  stack: |-
+    status (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-session.test.ts:38:62)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-session.test.ts:211:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F03-S10 workspace disappearance revokes captured permission and returning root does not restore it
+not ok 10 - F03-S10 workspace disappearance revokes captured permission and returning root does not restore it
+  ---
+  duration_ms: 34.1612
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-owner-policy-session.test.ts:4:7561'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + undefined
+    - {
+    -   status: 'RELAXED_SESSION'
+    - }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    status: 'RELAXED_SESSION'
+  operator: 'deepStrictEqual'
+  stack: |-
+    status (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-session.test.ts:38:62)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-session.test.ts:220:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F03-S11 ordinary review offers neither sensitive file selectors nor removable protected regions
+not ok 11 - F03-S11 ordinary review offers neither sensitive file selectors nor removable protected regions
+  ---
+  duration_ms: 36.0917
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-owner-policy-session.test.ts:4:7998'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + undefined
+    - {
+    -   status: 'CANCELLED'
+    - }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    status: 'CANCELLED'
+  operator: 'deepStrictEqual'
+  stack: |-
+    status (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-session.test.ts:38:62)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-session.test.ts:231:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F03-S12 pausing an ordinary whole-file selector preserves every protected text region
+not ok 12 - F03-S12 pausing an ordinary whole-file selector preserves every protected text region
+  ---
+  duration_ms: 32.7474
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-owner-policy-session.test.ts:4:8799'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + undefined
+    - {
+    -   status: 'RELAXED_SESSION'
+    - }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    status: 'RELAXED_SESSION'
+  operator: 'deepStrictEqual'
+  stack: |-
+    status (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-session.test.ts:38:62)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-session.test.ts:242:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F03-S13 separate sensitive review retains sensitivity and permits only existing masked safe views
+not ok 13 - F03-S13 separate sensitive review retains sensitivity and permits only existing masked safe views
+  ---
+  duration_ms: 32.6969
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-owner-policy-session.test.ts:4:9952'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + undefined
+    - {
+    -   status: 'RELAXED_SESSION'
+    - }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    status: 'RELAXED_SESSION'
+  operator: 'deepStrictEqual'
+  stack: |-
+    status (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-session.test.ts:38:62)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-session.test.ts:254:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F03-S14 an ordinary session grant never relaxes credential defaults or an imported team deny
+not ok 14 - F03-S14 an ordinary session grant never relaxes credential defaults or an imported team deny
+  ---
+  duration_ms: 170.2253
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-owner-policy-session.test.ts:4:11242'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'ALLOWED_ONCE'
+    - 'ALLOWED'
+              ^
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'ALLOWED'
+  actual: 'ALLOWED_ONCE'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-session.test.ts:278:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F03-S15 each owner-UI cancellation stage leaves no grant and no audit record
+not ok 15 - F03-S15 each owner-UI cancellation stage leaves no grant and no audit record
+  ---
+  duration_ms: 28.1012
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-owner-policy-session.test.ts:4:12495'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + undefined
+    - {
+    -   status: 'CANCELLED'
+    - }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    status: 'CANCELLED'
+  operator: 'deepStrictEqual'
+  stack: |-
+    status (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-session.test.ts:38:62)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-session.test.ts:285:29)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F03-S16 incorrect typing, expired review and backward clock cannot create session permission
+not ok 16 - F03-S16 incorrect typing, expired review and backward clock cannot create session permission
+  ---
+  duration_ms: 24.3515
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-owner-policy-session.test.ts:4:13457'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + undefined
+    - {
+    -   status: 'FAILED'
+    - }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    status: 'FAILED'
+  operator: 'deepStrictEqual'
+  stack: |-
+    status (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-session.test.ts:38:62)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-session.test.ts:294:22)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F03-S17 cancel during the cooldown withdraws the review before its final session action
+not ok 17 - F03-S17 cancel during the cooldown withdraws the review before its final session action
+  ---
+  duration_ms: 27.2367
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-owner-policy-session.test.ts:4:13988'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + undefined
+    - {
+    -   status: 'CANCELLED'
+    - }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    status: 'CANCELLED'
+  operator: 'deepStrictEqual'
+  stack: |-
+    status (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-session.test.ts:38:62)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-session.test.ts:306:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F03-S18 source or policy drift during the owner modal invalidates its exact typed response
+not ok 18 - F03-S18 source or policy drift during the owner modal invalidates its exact typed response
+  ---
+  duration_ms: 31.0034
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-owner-policy-session.test.ts:4:14515'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + undefined
+    - {
+    -   status: 'FAILED'
+    - }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    status: 'FAILED'
+  operator: 'deepStrictEqual'
+  stack: |-
+    status (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-session.test.ts:38:62)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-session.test.ts:312:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F03-S19 audit persistence failure never acknowledges a grant or changes permanent policy
+not ok 19 - F03-S19 audit persistence failure never acknowledges a grant or changes permanent policy
+  ---
+  duration_ms: 27.5845
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-owner-policy-session.test.ts:4:15163'
+  failureType: 'testCodeFailure'
+  error: 'SYNTHETIC_F03_SENSITIVE_VALUE_NEVER_RELEASED'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Object.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-session.test.ts:321:71)
+    Object.apply (node:internal/test_runner/mock/mock:598:20)
+    <anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\ai-boundary\BoundarySnapshot.ts:93:22)
+  ...
+# Subtest: F03-S20 a successful audit write followed by root drift cannot issue a session grant
+not ok 20 - F03-S20 a successful audit write followed by root drift cannot issue a session grant
+  ---
+  duration_ms: 558.693
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-owner-policy-session.test.ts:4:15804'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      stub.capturedText()
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-session.test.ts:335:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F03-S21 a strict v3 envelope preserves review history across additive manual and policy writes
+not ok 21 - F03-S21 a strict v3 envelope preserves review history across additive manual and policy writes
+  ---
+  duration_ms: 30.0534
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-owner-policy-session.test.ts:4:16540'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + undefined
+    - {
+    -   status: 'RELAXED_SESSION'
+    - }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    status: 'RELAXED_SESSION'
+  operator: 'deepStrictEqual'
+  stack: |-
+    status (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-session.test.ts:38:62)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-session.test.ts:340:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F03-S22 command arguments cannot substitute for owner UI or submit a programmatic grant
+not ok 22 - F03-S22 command arguments cannot substitute for owner UI or submit a programmatic grant
+  ---
+  duration_ms: 23.5614
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-owner-policy-session.test.ts:4:17902'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + undefined
+    - {
+    -   status: 'CANCELLED'
+    - }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    status: 'CANCELLED'
+  operator: 'deepStrictEqual'
+  stack: |-
+    status (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-session.test.ts:38:62)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-session.test.ts:357:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F03-S23 a concurrent owner review is unavailable while the first dialog is still open
+not ok 23 - F03-S23 a concurrent owner review is unavailable while the first dialog is still open
+  ---
+  duration_ms: 29.554
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-owner-policy-session.test.ts:4:18423'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + undefined
+    - {
+    -   status: 'UNAVAILABLE'
+    - }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    status: 'UNAVAILABLE'
+  operator: 'deepStrictEqual'
+  stack: |-
+    status (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-session.test.ts:38:62)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-session.test.ts:367:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..23
+# tests 23
+# suites 0
+# pass 0
+# fail 23
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3032.5722

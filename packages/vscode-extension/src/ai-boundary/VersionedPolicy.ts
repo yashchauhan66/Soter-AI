@@ -1,4 +1,5 @@
 import { documentDigest, matchesGlob, matchesRule, mergeManualRules, parseManualRules, relativePath, validateGlob, type ManualRules, type PathRule } from "./policy";
+import { parseReviewAudit, type ReviewAudit } from "./OwnerReviewProtocol";
 
 export const POLICY_SCHEMA_VERSION = 1;
 export const STORED_POLICY_SCHEMA_VERSION = 2;
@@ -6,7 +7,11 @@ export const MAX_POLICY_BYTES = 128 * 1024;
 export const MAX_POLICY_RULES = 256;
 export const MAX_SENSITIVE_GLOBS = 512;
 export interface VersionedPolicy { schemaVersion: 1; presets: string[]; rules: ManualRules; sensitiveGlobs: string[] }
-export interface StoredPolicy { manual: ManualRules; policy?: VersionedPolicy }
+export interface StoredPolicy { manual: ManualRules; policy?: VersionedPolicy; reviewAudit?: ReviewAudit }
+export function encodeStoredPolicy(value: StoredPolicy): unknown {
+    return value.reviewAudit ? { schemaVersion: 3, manual: value.manual, ...(value.policy ? { policy: value.policy } : {}), reviewAudit: value.reviewAudit }
+        : value.policy ? { schemaVersion: STORED_POLICY_SCHEMA_VERSION, manual: value.manual, policy: value.policy } : value.manual;
+}
 
 export { LITE_CREDENTIAL_PATTERNS as CREDENTIAL_PATTERNS, LITE_STACK_PRESETS as STACK_PRESETS } from '@soterai/guard-core';
 import { LITE_CREDENTIAL_PATTERNS as CREDENTIAL_PATTERNS, LITE_STACK_PRESETS as STACK_PRESETS } from '@soterai/guard-core';
@@ -87,14 +92,17 @@ export function parseStoredPolicy(raw: unknown): StoredPolicy {
     if (raw === undefined) return { manual: { paths: [], regions: [] } };
     if (raw && typeof raw === "object" && "schemaVersion" in raw) {
         budget(raw);
-        const source = object(raw, ["schemaVersion", "manual", "policy"]);
-        if (source.schemaVersion !== STORED_POLICY_SCHEMA_VERSION) throw new Error("Unsupported stored policy schema.");
-        const manual = validatedRules(source.manual), policy = parseVersionedPolicy(source.policy);
+        const source = object(raw, ["schemaVersion", "manual", "policy", "reviewAudit"]);
+        if (source.schemaVersion !== STORED_POLICY_SCHEMA_VERSION && source.schemaVersion !== 3) throw new Error("Unsupported stored policy schema.");
+        if (source.schemaVersion === 2 && "reviewAudit" in source) throw new Error("Invalid stored policy schema.");
+        const reviewAudit = source.schemaVersion === 3 ? parseReviewAudit(source.reviewAudit) : undefined;
+        const manual = validatedRules(source.manual), policy = source.policy === undefined && source.schemaVersion === 3 ? undefined : parseVersionedPolicy(source.policy);
         // Every accepted envelope must fit the portable effective-rule budget.
         // Defaults use a separate sensitive-glob budget, not manual rule slots.
-        mergeManualRules(manual, policy.rules);
-        budget({ schemaVersion: STORED_POLICY_SCHEMA_VERSION, manual, policy });
-        return { manual, policy };
+        if (policy) mergeManualRules(manual, policy.rules);
+        const result = { manual, ...(policy ? { policy } : {}), ...(reviewAudit ? { reviewAudit } : {}) };
+        budget(encodeStoredPolicy(result));
+        return result;
     }
     return { manual: parseManualRules(raw) };
 }

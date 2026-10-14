@@ -1,0 +1,39 @@
+﻿TAP version 13
+# Subtest: F03-S28 a queued check of older drift metadata does not cancel a review of the already current revision
+not ok 1 - F03-S28 a queued check of older drift metadata does not cancel a review of the already current revision
+  ---
+  duration_ms: 228.1866
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-owner-policy-session.test.ts:4:22064'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+    +   status: 'FAILED'
+    -   status: 'RELAXED_SESSION'
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    status: 'RELAXED_SESSION'
+  actual:
+    status: 'FAILED'
+  operator: 'deepStrictEqual'
+  stack: |-
+    status (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-session.test.ts:39:62)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-session.test.ts:435:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1424.134

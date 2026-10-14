@@ -191,7 +191,9 @@ test("generic deny relaxation cannot select or clear a sensitive entry", async (
     });
     mock.method(stub.window, "showWarningMessage", async () => "Relax this deny");
     await stub.commands.executeCommand("soterai.manageAIRules", { remove: "private.txt", approved: true });
-    assert.deepEqual(storedRules(rootKey()).paths, [{ kind: "file", pattern: "private.txt", sensitive: true }]);
+    assert.deepEqual(storedRules(rootKey()).paths, [
+        { kind: "file", pattern: "private.txt", sensitive: true }, { kind: "file", pattern: "public.txt" },
+    ]); // The obsolete modal cannot remove either permanent deny.
 });
 
 test("dedicated rollback flag withdraws the reader while retaining denies and masking defaults", async () => {

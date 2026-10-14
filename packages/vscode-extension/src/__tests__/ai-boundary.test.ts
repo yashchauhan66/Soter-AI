@@ -297,7 +297,7 @@ test("public policy update and save APIs cannot clear a deny; flag off withdraws
     assert.equal(storedRules(key).paths.length, 1);
 });
 
-test("relaxation ignores command arguments and needs the labelled native modal", async () => {
+test("relaxation ignores command arguments and the obsolete modal cannot remove a permanent deny", async () => {
     const key = stub.state.folders[0].uri.toString();
     await saveRules(key, {paths:[{kind:"file",pattern:"memo.txt"}],regions:[]});
     registerAIBoundaryCommands(context as never);
@@ -308,9 +308,9 @@ test("relaxation ignores command arguments and needs the labelled native modal",
     try {
         await stub.commands.executeCommand("soterai.manageAIRules", { approved:true, remove:"memo.txt" });
         assert.equal(storedRules(key).paths.length,1);
-        assert.match(stub.capturedText(), /not agent-proof: an agent running as me could also change this/);
+        assert.match(stub.capturedText(), /not agent-proof/);
         methods.push(mock.method(stub.window,"showWarningMessage",async()=>"Relax this deny"));
         await stub.commands.executeCommand("soterai.manageAIRules");
-        assert.equal(storedRules(key).paths.length,0);
+        assert.equal(storedRules(key).paths.length,1);
     } finally { methods.forEach(m=>m.mock.restore()); }
 });

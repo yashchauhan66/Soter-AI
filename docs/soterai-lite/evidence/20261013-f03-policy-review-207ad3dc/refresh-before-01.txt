@@ -1,0 +1,148 @@
+﻿TAP version 13
+# Subtest: F03-RF01 repeated future-policy snapshot loads notify once and retain every permanent deny
+not ok 1 - F03-RF01 repeated future-policy snapshot loads notify once and retain every permanent deny
+  ---
+  duration_ms: 106.4342
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-owner-policy-refresh.test.ts:4:1937'
+  failureType: 'testCodeFailure'
+  error: |-
+    One invalid interval must produce one owned-view invalidation, even with no session grants.
+    + actual - expected
+    
+      [
+        'file:///D:/SoterAI-Lite-test-profiles/f03-unit-temp/soterai-f03-refresh-7P9IT2',
+    +   'file:///D:/SoterAI-Lite-test-profiles/f03-unit-temp/soterai-f03-refresh-7P9IT2',
+    +   'file:///D:/SoterAI-Lite-test-profiles/f03-unit-temp/soterai-f03-refresh-7P9IT2',
+    +   'file:///D:/SoterAI-Lite-test-profiles/f03-unit-temp/soterai-f03-refresh-7P9IT2',
+    +   'file:///D:/SoterAI-Lite-test-profiles/f03-unit-temp/soterai-f03-refresh-7P9IT2',
+    +   'file:///D:/SoterAI-Lite-test-profiles/f03-unit-temp/soterai-f03-refresh-7P9IT2'
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'file:///D:/SoterAI-Lite-test-profiles/f03-unit-temp/soterai-f03-refresh-7P9IT2'
+  actual:
+    0: 'file:///D:/SoterAI-Lite-test-profiles/f03-unit-temp/soterai-f03-refresh-7P9IT2'
+    1: 'file:///D:/SoterAI-Lite-test-profiles/f03-unit-temp/soterai-f03-refresh-7P9IT2'
+    2: 'file:///D:/SoterAI-Lite-test-profiles/f03-unit-temp/soterai-f03-refresh-7P9IT2'
+    3: 'file:///D:/SoterAI-Lite-test-profiles/f03-unit-temp/soterai-f03-refresh-7P9IT2'
+    4: 'file:///D:/SoterAI-Lite-test-profiles/f03-unit-temp/soterai-f03-refresh-7P9IT2'
+    5: 'file:///D:/SoterAI-Lite-test-profiles/f03-unit-temp/soterai-f03-refresh-7P9IT2'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-refresh.test.ts:102:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F03-RF02 owned preview rereads cannot create a refresh loop and each new invalid interval clears approved masked views
+not ok 2 - F03-RF02 owned preview rereads cannot create a refresh loop and each new invalid interval clears approved masked views
+  ---
+  duration_ms: 159.3811
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-owner-policy-refresh.test.ts:4:2632'
+  failureType: 'testCodeFailure'
+  error: |-
+    Invalid provider rereads must not trigger another onDidChange.
+    + actual - expected
+    
+      [
+        'soterai-redacted:///16db0e48-d78b-47d6-86e3-2891fe264bc1/preview.txt',
+    +   'soterai-redacted:///16db0e48-d78b-47d6-86e3-2891fe264bc1/preview.txt',
+    +   'soterai-redacted:///16db0e48-d78b-47d6-86e3-2891fe264bc1/preview.txt',
+    +   'soterai-redacted:///16db0e48-d78b-47d6-86e3-2891fe264bc1/preview.txt'
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'soterai-redacted:///16db0e48-d78b-47d6-86e3-2891fe264bc1/preview.txt'
+  actual:
+    0: 'soterai-redacted:///16db0e48-d78b-47d6-86e3-2891fe264bc1/preview.txt'
+    1: 'soterai-redacted:///16db0e48-d78b-47d6-86e3-2891fe264bc1/preview.txt'
+    2: 'soterai-redacted:///16db0e48-d78b-47d6-86e3-2891fe264bc1/preview.txt'
+    3: 'soterai-redacted:///16db0e48-d78b-47d6-86e3-2891fe264bc1/preview.txt'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-refresh.test.ts:124:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F03-RF03 concurrent invalid loads produce one transition and recovery rearms concurrent failures
+not ok 3 - F03-RF03 concurrent invalid loads produce one transition and recovery rearms concurrent failures
+  ---
+  duration_ms: 67.0189
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-owner-policy-refresh.test.ts:4:5351'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      [
+        'file:///D:/SoterAI-Lite-test-profiles/f03-unit-temp/soterai-f03-refresh-4wO3Gp',
+    +   'file:///D:/SoterAI-Lite-test-profiles/f03-unit-temp/soterai-f03-refresh-4wO3Gp',
+    +   'file:///D:/SoterAI-Lite-test-profiles/f03-unit-temp/soterai-f03-refresh-4wO3Gp',
+    +   'file:///D:/SoterAI-Lite-test-profiles/f03-unit-temp/soterai-f03-refresh-4wO3Gp',
+    +   'file:///D:/SoterAI-Lite-test-profiles/f03-unit-temp/soterai-f03-refresh-4wO3Gp',
+    +   'file:///D:/SoterAI-Lite-test-profiles/f03-unit-temp/soterai-f03-refresh-4wO3Gp',
+    +   'file:///D:/SoterAI-Lite-test-profiles/f03-unit-temp/soterai-f03-refresh-4wO3Gp',
+    +   'file:///D:/SoterAI-Lite-test-profiles/f03-unit-temp/soterai-f03-refresh-4wO3Gp'
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'file:///D:/SoterAI-Lite-test-profiles/f03-unit-temp/soterai-f03-refresh-4wO3Gp'
+  actual:
+    0: 'file:///D:/SoterAI-Lite-test-profiles/f03-unit-temp/soterai-f03-refresh-4wO3Gp'
+    1: 'file:///D:/SoterAI-Lite-test-profiles/f03-unit-temp/soterai-f03-refresh-4wO3Gp'
+    2: 'file:///D:/SoterAI-Lite-test-profiles/f03-unit-temp/soterai-f03-refresh-4wO3Gp'
+    3: 'file:///D:/SoterAI-Lite-test-profiles/f03-unit-temp/soterai-f03-refresh-4wO3Gp'
+    4: 'file:///D:/SoterAI-Lite-test-profiles/f03-unit-temp/soterai-f03-refresh-4wO3Gp'
+    5: 'file:///D:/SoterAI-Lite-test-profiles/f03-unit-temp/soterai-f03-refresh-4wO3Gp'
+    6: 'file:///D:/SoterAI-Lite-test-profiles/f03-unit-temp/soterai-f03-refresh-4wO3Gp'
+    7: 'file:///D:/SoterAI-Lite-test-profiles/f03-unit-temp/soterai-f03-refresh-4wO3Gp'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-refresh.test.ts:151:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F03-RF04 initially disabled policy needs one invalid transition even without a parsing exception
+not ok 4 - F03-RF04 initially disabled policy needs one invalid transition even without a parsing exception
+  ---
+  duration_ms: 55.1131
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-owner-policy-refresh.test.ts:4:6451'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + []
+    - [
+    -   'file:///D:/SoterAI-Lite-test-profiles/f03-unit-temp/soterai-f03-refresh-9hnY6P'
+    - ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'file:///D:/SoterAI-Lite-test-profiles/f03-unit-temp/soterai-f03-refresh-9hnY6P'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-owner-policy-refresh.test.ts:165:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 0
+# fail 4
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1849.59

@@ -1,0 +1,16 @@
+﻿git.exe : error: Out of memory, malloc failed (tried to allocate 2050730 bytes)
+At line:2 char:19
++ $taskFsckOutput = & git fsck --full --no-reflogs --no-progress 2>&1
++                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (error: Out of m... 2050730 bytes):String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+error: cannot unpack d122e0bbf13bacb958ce70131c7c6543b9e7b9a1 from 
+.git/objects/pack/pack-902a86ecc892fe08ad91b04b04e56849530a84a1.pack at offset 1405664
+error: Out of memory, malloc failed (tried to allocate 2985807 bytes)
+error: cannot unpack b1af41f689dbb47709e13f29e593b4479a6a7480 from 
+.git/objects/pack/pack-902a86ecc892fe08ad91b04b04e56849530a84a1.pack at offset 2039118
+error: Out of memory, malloc failed (tried to allocate 2080019 bytes)
+error: cannot unpack ea126cd96336a957de7a1c62d8cf3373aca8cb6f from 
+.git/objects/pack/pack-902a86ecc892fe08ad91b04b04e56849530a84a1.pack at offset 3013788
+fatal: Out of memory, malloc failed (tried to allocate 1563087 bytes)

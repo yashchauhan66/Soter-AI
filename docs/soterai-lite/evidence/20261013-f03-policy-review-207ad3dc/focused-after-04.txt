@@ -1,0 +1,376 @@
+﻿TAP version 13
+# Subtest: F03-S01 legacy relax-modal acceptance cannot remove a permanent deny without typed owner review
+ok 1 - F03-S01 legacy relax-modal acceptance cannot remove a permanent deny without typed owner review
+  ---
+  duration_ms: 116.7725
+  type: 'test'
+  ...
+# Subtest: F03-S02 completed review pauses only its selector and atomically audits without changing permanent policy
+ok 2 - F03-S02 completed review pauses only its selector and atomically audits without changing permanent policy
+  ---
+  duration_ms: 187.6043
+  type: 'test'
+  ...
+# Subtest: F03-S03 owner review opens a real metadata diff without placing source contents in the diff
+ok 3 - F03-S03 owner review opens a real metadata diff without placing source contents in the diff
+  ---
+  duration_ms: 66.9993
+  type: 'test'
+  ...
+# Subtest: F03-S04 a restart loses session permission even when its successful audit remains persisted
+ok 4 - F03-S04 a restart loses session permission even when its successful audit remains persisted
+  ---
+  duration_ms: 200.2262
+  type: 'test'
+  ...
+# Subtest: F03-S05 flag withdrawal invalidates captured snapshots and re-enabling cannot resurrect a grant
+ok 5 - F03-S05 flag withdrawal invalidates captured snapshots and re-enabling cannot resurrect a grant
+  ---
+  duration_ms: 186.33
+  type: 'test'
+  ...
+# Subtest: F03-S06 machine flag inspection overrides conflicting repository values
+ok 6 - F03-S06 machine flag inspection overrides conflicting repository values
+  ---
+  duration_ms: 225.9217
+  type: 'test'
+  ...
+# Subtest: F03-S07 trust and safety-config withdrawal revoke session permission permanently
+ok 7 - F03-S07 trust and safety-config withdrawal revoke session permission permanently
+  ---
+  duration_ms: 359.4377
+  type: 'test'
+  ...
+# Subtest: F03-S08 source drift after a grant is independently detected by a fresh managed read
+ok 8 - F03-S08 source drift after a grant is independently detected by a fresh managed read
+  ---
+  duration_ms: 187.6672
+  type: 'test'
+  ...
+# Subtest: F03-S09 additive manual and imported policy revisions revoke a session grant
+ok 9 - F03-S09 additive manual and imported policy revisions revoke a session grant
+  ---
+  duration_ms: 363.2337
+  type: 'test'
+  ...
+# Subtest: F03-S10 workspace disappearance revokes captured permission and returning root does not restore it
+ok 10 - F03-S10 workspace disappearance revokes captured permission and returning root does not restore it
+  ---
+  duration_ms: 163.3871
+  type: 'test'
+  ...
+# Subtest: F03-S11 ordinary review offers neither sensitive file selectors nor removable protected regions
+ok 11 - F03-S11 ordinary review offers neither sensitive file selectors nor removable protected regions
+  ---
+  duration_ms: 34.4224
+  type: 'test'
+  ...
+# Subtest: F03-S12 pausing an ordinary whole-file selector preserves every protected text region
+ok 12 - F03-S12 pausing an ordinary whole-file selector preserves every protected text region
+  ---
+  duration_ms: 135.4563
+  type: 'test'
+  ...
+# Subtest: F03-S13 separate sensitive review retains sensitivity and permits only existing masked safe views
+ok 13 - F03-S13 separate sensitive review retains sensitivity and permits only existing masked safe views
+  ---
+  duration_ms: 178.649
+  type: 'test'
+  ...
+# Subtest: F03-S14 an ordinary session grant never relaxes credential defaults or an imported team deny
+ok 14 - F03-S14 an ordinary session grant never relaxes credential defaults or an imported team deny
+  ---
+  duration_ms: 127.1706
+  type: 'test'
+  ...
+# Subtest: F03-S15 each owner-UI cancellation stage leaves no grant and no audit record
+ok 15 - F03-S15 each owner-UI cancellation stage leaves no grant and no audit record
+  ---
+  duration_ms: 107.4901
+  type: 'test'
+  ...
+# Subtest: F03-S16 incorrect typing, expired review and backward clock cannot create session permission
+ok 16 - F03-S16 incorrect typing, expired review and backward clock cannot create session permission
+  ---
+  duration_ms: 137.8937
+  type: 'test'
+  ...
+# Subtest: F03-S17 cancel during the cooldown withdraws the review before its final session action
+ok 17 - F03-S17 cancel during the cooldown withdraws the review before its final session action
+  ---
+  duration_ms: 53.6516
+  type: 'test'
+  ...
+# Subtest: F03-S18 source or policy drift during the owner modal invalidates its exact typed response
+ok 18 - F03-S18 source or policy drift during the owner modal invalidates its exact typed response
+  ---
+  duration_ms: 183.6248
+  type: 'test'
+  ...
+# Subtest: F03-S19 audit persistence failure never acknowledges a grant or changes permanent policy
+ok 19 - F03-S19 audit persistence failure never acknowledges a grant or changes permanent policy
+  ---
+  duration_ms: 97.9743
+  type: 'test'
+  ...
+# Subtest: F03-S20 a successful audit write followed by root drift cannot issue a session grant
+ok 20 - F03-S20 a successful audit write followed by root drift cannot issue a session grant
+  ---
+  duration_ms: 79.0525
+  type: 'test'
+  ...
+# Subtest: F03-S21 a strict v3 envelope preserves review history across additive manual and policy writes
+ok 21 - F03-S21 a strict v3 envelope preserves review history across additive manual and policy writes
+  ---
+  duration_ms: 81.9483
+  type: 'test'
+  ...
+# Subtest: F03-S22 command arguments cannot substitute for owner UI or submit a programmatic grant
+ok 22 - F03-S22 command arguments cannot substitute for owner UI or submit a programmatic grant
+  ---
+  duration_ms: 38.4788
+  type: 'test'
+  ...
+# Subtest: F03-S23 a concurrent owner review is unavailable while the first dialog is still open
+ok 23 - F03-S23 a concurrent owner review is unavailable while the first dialog is still open
+  ---
+  duration_ms: 160.6956
+  type: 'test'
+  ...
+# Subtest: F03-S24 unknown root or audit schemas and extra audit fields fail closed without discarding stored denies
+ok 24 - F03-S24 unknown root or audit schemas and extra audit fields fail closed without discarding stored denies
+  ---
+  duration_ms: 65.6885
+  type: 'test'
+  ...
+# Subtest: F03-S25 a full review audit refuses a new grant without truncating retained owner history
+ok 25 - F03-S25 a full review audit refuses a new grant without truncating retained owner history
+  ---
+  duration_ms: 135.1825
+  type: 'test'
+  ...
+# Subtest: F03-S26 sensitive protected-region review audits metadata while preserving the actual masking rule
+ok 26 - F03-S26 sensitive protected-region review audits metadata while preserving the actual masking rule
+  ---
+  duration_ms: 106.9693
+  type: 'test'
+  ...
+# Subtest: F03-S27 re-blocking an already stored deny immediately ends its reviewed session permission
+ok 27 - F03-S27 re-blocking an already stored deny immediately ends its reviewed session permission
+  ---
+  duration_ms: 174.4067
+  type: 'test'
+  ...
+# Subtest: F03-S28 a queued check of older drift metadata does not cancel a review of the already current revision
+ok 28 - F03-S28 a queued check of older drift metadata does not cancel a review of the already current revision
+  ---
+  duration_ms: 203.2965
+  type: 'test'
+  ...
+# Subtest: F03-S29 legacy Unicode and case aliases use the same selector identity after a v3 audit upgrade
+ok 29 - F03-S29 legacy Unicode and case aliases use the same selector identity after a v3 audit upgrade
+  ---
+  duration_ms: 42.435
+  type: 'test'
+  ...
+# Subtest: F03-P01 owner review binds the exact root, rule, revision and nonce to a bounded review window
+ok 30 - F03-P01 owner review binds the exact root, rule, revision and nonce to a bounded review window
+  ---
+  duration_ms: 2.6207
+  type: 'test'
+  ...
+# Subtest: F03-P02 the default review nonce creates a fresh challenge for each independent owner dialog
+ok 31 - F03-P02 the default review nonce creates a fresh challenge for each independent owner dialog
+  ---
+  duration_ms: 1.0879
+  type: 'test'
+  ...
+# Subtest: F03-P03 cooldown and expiry boundaries permit only the completed unexpired review interval
+ok 32 - F03-P03 cooldown and expiry boundaries permit only the completed unexpired review interval
+  ---
+  duration_ms: 0.4218
+  type: 'test'
+  ...
+# Subtest: F03-P04 cancellation and altered confirmation text never validate
+ok 33 - F03-P04 cancellation and altered confirmation text never validate
+  ---
+  duration_ms: 0.265
+  type: 'test'
+  ...
+# Subtest: F03-P05 workspace, rule and policy revision drift invalidate an otherwise exact owner response
+ok 34 - F03-P05 workspace, rule and policy revision drift invalidate an otherwise exact owner response
+  ---
+  duration_ms: 0.2992
+  type: 'test'
+  ...
+# Subtest: F03-P06 one accepted attempt cannot authorize a second session action
+ok 35 - F03-P06 one accepted attempt cannot authorize a second session action
+  ---
+  duration_ms: 0.2874
+  type: 'test'
+  ...
+# Subtest: F03-P07 cancellation, typo, early response, expiry and drift each burn their attempted review
+ok 36 - F03-P07 cancellation, typo, early response, expiry and drift each burn their attempted review
+  ---
+  duration_ms: 0.381
+  type: 'test'
+  ...
+# Subtest: F03-P08 metadata audit accepts ordinary and sensitive session reviews without a raw-release outcome
+ok 37 - F03-P08 metadata audit accepts ordinary and sensitive session reviews without a raw-release outcome
+  ---
+  duration_ms: 2.6468
+  type: 'test'
+  ...
+# Subtest: F03-P09 audit schema rejects corrupt, future, missing and extra top-level metadata
+ok 38 - F03-P09 audit schema rejects corrupt, future, missing and extra top-level metadata
+  ---
+  duration_ms: 1.8889
+  type: 'test'
+  ...
+# Subtest: F03-P10 each audit entry requires every field and rejects unrelated content channels
+ok 39 - F03-P10 each audit entry requires every field and rejects unrelated content channels
+  ---
+  duration_ms: 2.2662
+  type: 'test'
+  ...
+# Subtest: F03-P11 audit identifiers, times, modes and digests reject wrong types and malformed values
+ok 40 - F03-P11 audit identifiers, times, modes and digests reject wrong types and malformed values
+  ---
+  duration_ms: 2.9049
+  type: 'test'
+  ...
+# Subtest: F03-P12 a repeated review UUID cannot create duplicate or conflicting audit claims
+ok 41 - F03-P12 a repeated review UUID cannot create duplicate or conflicting audit claims
+  ---
+  duration_ms: 0.4288
+  type: 'test'
+  ...
+# Subtest: F03-P13 audit record and byte budgets reject over-limit retained metadata
+ok 42 - F03-P13 audit record and byte budgets reject over-limit retained metadata
+  ---
+  duration_ms: 1.8335
+  type: 'test'
+  ...
+# Subtest: F03-P14 parsed audit records are detached from caller mutations in both directions
+ok 43 - F03-P14 parsed audit records are detached from caller mutations in both directions
+  ---
+  duration_ms: 0.2863
+  type: 'test'
+  ...
+# Subtest: F03-P15 parsing valid frozen audit input does not mutate persisted metadata
+ok 44 - F03-P15 parsing valid frozen audit input does not mutate persisted metadata
+  ---
+  duration_ms: 0.3915
+  type: 'test'
+  ...
+# Subtest: F03-D01 the strict baseline parser accepts only versioned root digests
+ok 45 - F03-D01 the strict baseline parser accepts only versioned root digests
+  ---
+  duration_ms: 20.8842
+  type: 'test'
+  ...
+# Subtest: F03-D02 baseline digests reject source text, wrong lengths and non-hex values
+ok 46 - F03-D02 baseline digests reject source text, wrong lengths and non-hex values
+  ---
+  duration_ms: 9.2456
+  type: 'test'
+  ...
+# Subtest: F03-D03 the baseline has a 64-root limit
+ok 47 - F03-D03 the baseline has a 64-root limit
+  ---
+  duration_ms: 7.4668
+  type: 'test'
+  ...
+# Subtest: F03-D04 the baseline byte limit measures UTF-8 serialization
+ok 48 - F03-D04 the baseline byte limit measures UTF-8 serialization
+  ---
+  duration_ms: 6.9473
+  type: 'test'
+  ...
+# Subtest: F03-D05 comparison sorts each root category and keeps changed separate from additions and removals
+ok 49 - F03-D05 comparison sorts each root category and keeps changed separate from additions and removals
+  ---
+  duration_ms: 9.6651
+  type: 'test'
+  ...
+# Subtest: F03-D06 parsed baselines and comparisons do not mutate caller metadata
+ok 50 - F03-D06 parsed baselines and comparisons do not mutate caller metadata
+  ---
+  duration_ms: 11.7297
+  type: 'test'
+  ...
+# Subtest: F03-D07 first check saves one bounded baseline and an unchanged check performs no redundant write
+ok 51 - F03-D07 first check saves one bounded baseline and an unchanged check performs no redundant write
+  ---
+  duration_ms: 54.3801
+  type: 'test'
+  ...
+# Subtest: F03-D08 manual rule metadata causes drift while retained denies and public reads remain enforced
+ok 52 - F03-D08 manual rule metadata causes drift while retained denies and public reads remain enforced
+  ---
+  duration_ms: 108.9284
+  type: 'test'
+  ...
+# Subtest: F03-D09 a selected safety setting change causes drift and public provider values never enter alerts
+ok 53 - F03-D09 a selected safety setting change causes drift and public provider values never enter alerts
+  ---
+  duration_ms: 60.3674
+  type: 'test'
+  ...
+# Subtest: F03-D10 public extension version changes cause drift while extension ordering does not
+ok 54 - F03-D10 public extension version changes cause drift while extension ordering does not
+  ---
+  duration_ms: 112.4532
+  type: 'test'
+  ...
+# Subtest: F03-D11 changed policy source bytes cause drift without copying ignored text into metadata or alerts
+ok 55 - F03-D11 changed policy source bytes cause drift without copying ignored text into metadata or alerts
+  ---
+  duration_ms: 106.2315
+  type: 'test'
+  ...
+# Subtest: F03-D12 a failed initial baseline save reports failure and leaves permanent restrictions intact
+ok 56 - F03-D12 a failed initial baseline save reports failure and leaves permanent restrictions intact
+  ---
+  duration_ms: 44.2765
+  type: 'test'
+  ...
+# Subtest: F03-D13 failed drift persistence does not advance the baseline or acknowledge a saved change
+ok 57 - F03-D13 failed drift persistence does not advance the baseline or acknowledge a saved change
+  ---
+  duration_ms: 166.0948
+  type: 'test'
+  ...
+# Subtest: F03-D14 malformed persisted metadata fails closed without silently replacing the baseline
+ok 58 - F03-D14 malformed persisted metadata fails closed without silently replacing the baseline
+  ---
+  duration_ms: 45.6162
+  type: 'test'
+  ...
+# Subtest: F03-D15 machine flag withdrawal stops monitoring while preserving baseline and accepted denies
+ok 59 - F03-D15 machine flag withdrawal stops monitoring while preserving baseline and accepted denies
+  ---
+  duration_ms: 104.1661
+  type: 'test'
+  ...
+# Subtest: F03-D16 workspace flag values cannot enable monitoring against a withdrawn machine flag
+ok 60 - F03-D16 workspace flag values cannot enable monitoring against a withdrawn machine flag
+  ---
+  duration_ms: 18.1968
+  type: 'test'
+  ...
+# Subtest: F03-D17 untrusted or absent workspace cannot create a monitoring baseline
+ok 61 - F03-D17 untrusted or absent workspace cannot create a monitoring baseline
+  ---
+  duration_ms: 17.6633
+  type: 'test'
+  ...
+1..61
+# tests 61
+# suites 0
+# pass 61
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 7267.6804

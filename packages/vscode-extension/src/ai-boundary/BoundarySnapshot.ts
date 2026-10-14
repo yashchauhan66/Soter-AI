@@ -8,16 +8,72 @@ import { SENSITIVE_MARKS_KEY, parseSensitiveMarks } from "../project-privacy/Sen
 import { defaultVersionedPolicy, mergeVersionedPolicies, parseStoredPolicy, parseVersionedPolicy, parseVersionedPolicyText,
     STORED_POLICY_SCHEMA_VERSION, MAX_POLICY_BYTES, versionedPolicyBlocks, versionedPolicySensitive, type VersionedPolicy } from "./VersionedPolicy";
 import { assertRestrictionWorkspace, withPendingRestriction } from "./RestrictionOperation";
+import { encodeStoredPolicy } from "./VersionedPolicy";
+import { createOwnerReviewPlan, OwnerReviewAttempt, parseReviewAudit, validateOwnerReview } from "./OwnerReviewProtocol";
 
 export const RULES_KEY = "soterai.aiForbidden.v1";
 const boundaryRulesChanged = new vscode.EventEmitter<string>();
 /** Fires the workspace root only after a successful persistent rule change. No content is emitted. */
 export const onDidChangeBoundaryRules = boundaryRulesChanged.event;
 let state: vscode.Memento | undefined;
+let ownerEpoch = 0;
+const rootOwnerEpoch = new Map<string, number>();
+const ownerSessionChanged = new vscode.EventEmitter<string>();
+export const onDidChangeOwnerPolicySession = ownerSessionChanged.event;
+interface SessionGrant { binding: string; revision: string; rule: string }
+const sessionGrants = new Map<string, SessionGrant[]>();
+// A provider reread must not emit another refresh while the root stays invalid.
+// The first transition still revokes owned approvals even without session grants.
+const unavailableRoots = new Set<string>();
+export function revokeOwnerPolicySessions(root?: string): void {
+    if (root) { rootOwnerEpoch.set(root, (rootOwnerEpoch.get(root) ?? 0) + 1); sessionGrants.delete(root); ownerSessionChanged.fire(root); }
+    else { ownerEpoch++; rootOwnerEpoch.clear(); const roots = [...sessionGrants.keys()]; sessionGrants.clear(); roots.forEach(value => ownerSessionChanged.fire(value)); }
+}
+export function ownerPolicyReviewEnabled(): boolean {
+    try {
+        const config = vscode.workspace.getConfiguration("soterai"), inspected = config.inspect<boolean>("lite.policyDrift");
+        return vscode.workspace.isTrusted && policyEnabled()
+            && (inspected ? inspected.globalValue ?? inspected.defaultValue ?? true : config.get("lite.policyDrift", true)) === true;
+    } catch { return false; }
+}
+function publicSettings(): unknown {
+    const config = vscode.workspace.getConfiguration("soterai");
+    return [vscode.workspace.isTrusted, ["lite.policyDrift", "lite.versionedPolicy", "lite.restrictionSave", "hardening.addOnlyPolicy",
+        "projectPrivacy.enabled", "projectPrivacy.atomicSensitivePolicy", "projectPrivacy.safeViewComposition", "broker.autoStart",
+        "terminal.protectionMode"].map(key => {
+        const value = config.inspect(key);
+        // Hash only selected scalar safety settings. Never inspect provider/auth configurations.
+        const current = value ? value.globalValue ?? value.defaultValue : config.get(key);
+        return [key, typeof current === "boolean" || typeof current === "number" || typeof current === "string" ? current : null];
+    }), (vscode.extensions.all ?? []).map(extension => [extension.id, extension.packageJSON?.version ?? "unknown"])
+        .sort((a, b) => String(a[0]).localeCompare(String(b[0])))];
+}
+function ownerBinding(root: string): string {
+    assertRestrictionWorkspace(root);
+    return documentDigest(JSON.stringify([ownerEpoch, rootOwnerEpoch.get(root) ?? 0, root, exportRootPolicy(root), publicSettings()]));
+}
+async function policySources(folder: vscode.WorkspaceFolder): Promise<Array<string | undefined>> {
+    return Promise.all([optionalPolicyFile(folder, ".aiignore"), optionalPolicyFile(folder, ".soterai/policy.json"),
+        optionalPolicyFile(folder, ".soterai/team-policy.json", MAX_POLICY_BYTES)]);
+}
+export async function ownerPolicyRevision(root: string): Promise<string> {
+    const folder = vscode.workspace.workspaceFolders?.find(folder => folder.uri.toString() === root);
+    if (!folder || folder.uri.scheme !== "file" || !state) throw new Error("Policy revision unavailable.");
+    const before = ownerBinding(root), sources = await policySources(folder);
+    if (ownerBinding(root) !== before) throw new Error("Policy changed during revision check.");
+    return documentDigest(JSON.stringify([before, documentDigest(JSON.stringify(sources))]));
+}
+/** Persistent drift baseline excludes process incarnation so restart alone is not an alert. */
+export async function protectionDriftFingerprint(root: string): Promise<string> {
+    const folder = vscode.workspace.workspaceFolders?.find(folder => folder.uri.toString() === root);
+    if (!folder || folder.uri.scheme !== "file") throw new Error("Local policy required.");
+    return documentDigest(JSON.stringify([root, exportRootPolicy(root), publicSettings(),
+        documentDigest(JSON.stringify(await policySources(folder)))]));
+}
 const stateWrites = new WeakMap<vscode.Memento, Promise<unknown>>();
 let legacyProtected: ((relativePath: string) => boolean) | undefined;
 export function setBoundaryProtectedChecker(checker: (relativePath: string) => boolean): void { legacyProtected = checker; }
-export function initializeBoundaryState(value: vscode.Memento): void { state = value; }
+export function initializeBoundaryState(value: vscode.Memento): void { revokeOwnerPolicySessions(); unavailableRoots.clear(); state = value; }
 function readStoredRules(target: vscode.Memento | undefined, root: string): ManualRules {
     if (!target) throw new Error("AI policy storage is unavailable.");
     const all = target?.get<Record<string, unknown>>(RULES_KEY, {});
@@ -35,11 +91,11 @@ function writeRules(root: string, update: (rules: ManualRules) => ManualRules): 
         const all = target.get<Record<string, unknown>>(RULES_KEY, {});
         if (!all || typeof all !== "object" || Array.isArray(all)) throw new Error("Invalid AI policy storage.");
         const validated = parseManualRules(update(readStoredRules(target, root)));
-        const policy = parseStoredPolicy(all[root]).policy;
-        const encoded = policy ? { schemaVersion: STORED_POLICY_SCHEMA_VERSION, manual: validated, policy } : validated;
+        const previous = parseStoredPolicy(all[root]);
+        const encoded = encodeStoredPolicy({ ...previous, manual: validated });
         parseStoredPolicy(encoded);
         await target.update(RULES_KEY, { ...all, [root]: encoded });
-        if (JSON.stringify(all[root]) !== JSON.stringify(encoded)) boundaryRulesChanged.fire(root);
+        if (JSON.stringify(all[root]) !== JSON.stringify(encoded)) { revokeOwnerPolicySessions(root); boundaryRulesChanged.fire(root); }
     });
     stateWrites.set(target, write.catch(() => undefined));
     return write;
@@ -47,6 +103,9 @@ function writeRules(root: string, update: (rules: ManualRules) => ManualRules): 
 const policyEnabled = () => vscode.workspace.getConfiguration("soterai").get<boolean>("hardening.addOnlyPolicy", true);
 const manualMatches = (rel: string, rule: import("./policy").PathRule) =>
     matchesRule(rel.normalize("NFC"), { ...rule, pattern: rule.pattern.normalize("NFC") });
+const pathRuleIdentity = (rule: import("./policy").PathRule): string => JSON.stringify([rule.kind,
+    rule.kind === "glob" ? validateGlob(rule.pattern.normalize("NFC")).toLowerCase()
+        : rule.kind === "folder" && rule.pattern === "." ? "." : relativePath(rule.pattern.normalize("NFC")), rule.sensitive === true]);
 export function updateRules(root: string, update: (rules: ManualRules) => ManualRules): Promise<void> {
     if (!policyEnabled()) return Promise.reject(new Error("AI policy updates disabled; context sharing unavailable."));
     return writeRules(root, current => mergeManualRules(current, parseManualRules(update(structuredClone(current)))));
@@ -82,11 +141,11 @@ export async function updateVersionedPolicy(root: string, added: VersionedPolicy
             if (!all || typeof all !== "object" || Array.isArray(all)) throw new Error("Invalid AI policy storage.");
             const previous = parseStoredPolicy(all[root]);
             const policy = previous.policy ? mergeVersionedPolicies(previous.policy, validated) : validated;
-            const encoded = { schemaVersion: STORED_POLICY_SCHEMA_VERSION, manual: readStoredRules(target, root), policy };
+            const encoded = encodeStoredPolicy({ ...previous, manual: readStoredRules(target, root), policy });
             parseStoredPolicy(encoded);
             if (JSON.stringify(all[root]) === JSON.stringify(encoded)) return;
             await target.update(RULES_KEY, { ...all, [root]: encoded });
-            boundaryRulesChanged.fire(root);
+            revokeOwnerPolicySessions(root); boundaryRulesChanged.fire(root);
         });
         stateWrites.set(target, write.catch(() => undefined));
         await write;
@@ -99,31 +158,92 @@ export function exportRootPolicy(root: string): VersionedPolicy {
     return mergeVersionedPolicies(policy, { schemaVersion: 1, presets: [], rules: storedRules(root), sensitiveGlobs: [] });
 }
 
-/** UI review only. No rule/approval argument and no exported programmatic removal primitive. */
-export async function reviewRuleRelaxation(): Promise<void> {
-    if (!policyEnabled()) throw new Error("Policy review disabled.");
-    const folder = await vscode.window.showWorkspaceFolderPick();
-    if (!folder) return;
-    const root = folder.uri.toString();
-    const rules = storedRules(root);
-    const choices = [
-        ...rules.paths.filter(rule => rule.sensitive !== true).map(rule => ({ label: `${rule.kind}: ${rule.pattern}`, value: JSON.stringify(rule), region: false })),
-        ...rules.regions.map(rule => ({ label: `Protected text: ${rule.path} (${rule.start}-${rule.end})`, value: JSON.stringify(rule), region: true })),
-    ];
-    const choice = await vscode.window.showQuickPick(choices, { title: "Review an accepted deny", placeHolder: "Remove the repository entry first; retained denies need this separate review." });
-    if (!choice) return;
-    const approval = await vscode.window.showWarningMessage(
-        `Relax ${choice.label} in ${folder.name}?\nnot agent-proof: an agent running as me could also change this`,
-        { modal: true }, "Relax this deny");
-    if (approval !== "Relax this deny" || !policyEnabled()) return;
-    await writeRules(root, current => {
-        if (choice.region) current.regions = current.regions.filter(rule => JSON.stringify(rule) !== choice.value);
-        else current.paths = current.paths.filter(rule => rule.sensitive === true || JSON.stringify(rule) !== choice.value);
-        return current;
-    });
+type OwnerReviewResult = { status: "RELAXED_SESSION" | "CANCELLED" | "FAILED" | "UNAVAILABLE" };
+let reviewingOwnerPolicy = false;
+class OwnerReviewPreview implements vscode.TextDocumentContentProvider {
+    readonly values = new Map<string, string>();
+    provideTextDocumentContent(uri: vscode.Uri): string { return this.values.get(uri.toString()) ?? "Owner review expired."; }
+}
+/** Native owner UI only. Permanent rules and all sensitivity/region treatment remain stored. */
+export async function reviewRuleRelaxation(mode: "ordinary" | "sensitive" = "ordinary"): Promise<OwnerReviewResult> {
+    if (!ownerPolicyReviewEnabled() || reviewingOwnerPolicy || !["ordinary", "sensitive"].includes(mode)) return { status: "UNAVAILABLE" };
+    reviewingOwnerPolicy = true;
+    let registration: vscode.Disposable | undefined;
+    try {
+        const target = state;
+        const folder = await vscode.window.showWorkspaceFolderPick();
+        if (!folder) return { status: "CANCELLED" };
+        const root = folder.uri.toString(); assertRestrictionWorkspace(root);
+        const snapshot = await BoundarySnapshot.load();
+        if (!target || state !== target || !snapshot.availableForRoot(folder.uri) || !ownerPolicyReviewEnabled()) return { status: "UNAVAILABLE" };
+        const rules = storedRules(root), imported = storedVersionedPolicy(root);
+        const choices = rules.paths.filter(rule => (mode === "sensitive") === (rule.sensitive === true))
+            // Imported deny selectors cannot be removed by a local review.
+            .filter(rule => !imported?.rules.paths.some(other => pathRuleIdentity(other) === pathRuleIdentity(rule)))
+            .map(rule => ({ label: `${rule.kind}: ${rule.pattern}`, value: JSON.stringify(rule), region: false }));
+        if (mode === "sensitive") choices.push(...rules.regions.map(rule => ({ label: `Protected text: ${rule.path} (${rule.start}-${rule.end})`, value: JSON.stringify(rule), region: true })));
+        const choice = await vscode.window.showQuickPick(choices, { title: mode === "ordinary" ? "Review a manual deny for this editor session" : "Review sensitive protection for this editor session",
+            placeHolder: "Permanent protection returns on restart or drift. Imported/default denies and protected text remain enforced." });
+        if (!choice || !choices.includes(choice)) return { status: "CANCELLED" };
+        const revision = await ownerPolicyRevision(root), binding = ownerBinding(root);
+        const ruleDigest = documentDigest(choice.value), plan = createOwnerReviewPlan(root, ruleDigest, revision, Date.now());
+        const attempt = new OwnerReviewAttempt(plan), preview = new OwnerReviewPreview();
+        const left = vscode.Uri.parse(`soterai-owner-review:/${plan.nonce}/before.json`), right = vscode.Uri.parse(`soterai-owner-review:/${plan.nonce}/session.json`);
+        const permanent = exportRootPolicy(root);
+        preview.values.set(left.toString(), JSON.stringify({ permanent, session: { reviewedSelector: null } }, null, 2));
+        preview.values.set(right.toString(), JSON.stringify({ permanent, session: { reviewedSelector: JSON.parse(choice.value), lifetime: "this editor session",
+            sensitiveTreatment: "retained", protectedRegions: "retained", importedDenies: "retained" } }, null, 2));
+        registration = vscode.workspace.registerTextDocumentContentProvider("soterai-owner-review", preview);
+        await vscode.commands.executeCommand("vscode.diff", left, right, "SoterAI: review session relaxation");
+        const accepted = await vscode.window.showWarningMessage(`Review ${choice.label} in ${folder.name} for this editor session? Review the exact metadata diff. Permanent rules stay saved. Sensitive files still require a masked safe read; protected text and imported/default denies remain withheld. Restart or any protection drift restores the deny. This editor confirmation is not agent-proof.`,
+            { modal: true }, "Review session relaxation");
+        if (accepted !== "Review session relaxation") return { status: "CANCELLED" };
+        const typed = await vscode.window.showInputBox({ title: "Confirm this session review", prompt: `Type exactly: ${plan.challenge}`,
+            placeHolder: "Exact confirmation required; review has a 10-second cooldown and expires after 60 seconds.", ignoreFocusOut: true });
+        if (typed === undefined) return { status: "CANCELLED" };
+        if (typed !== plan.challenge || Date.now() < plan.createdAt || Date.now() >= plan.expiresAt) return { status: "FAILED" };
+        if (Date.now() < plan.cooldownUntil) {
+            const completed = await vscode.window.withProgress({ location: vscode.ProgressLocation.Notification, title: "Reviewing session protection", cancellable: true },
+                async (_progress, token) => {
+                    if (token.isCancellationRequested) return false;
+                    return new Promise<boolean>(resolve => {
+                        const timer = setTimeout(() => { cancel?.dispose(); resolve(!token.isCancellationRequested); }, Math.max(0, plan.cooldownUntil - Date.now()));
+                        const cancel = token.onCancellationRequested?.(() => { clearTimeout(timer); resolve(false); });
+                    });
+                });
+            if (!completed) return { status: "CANCELLED" };
+        }
+        const final = await vscode.window.showWarningMessage("Relax for this editor session? Original restrictions remain saved, sensitive data and protected text stay masked, and all grants end on restart or protection drift. This confirmation is not agent-proof.",
+            { modal: true }, "Relax for this editor session");
+        if (final !== "Relax for this editor session") return { status: "CANCELLED" };
+        const currentRevision = await ownerPolicyRevision(root);
+        if (state !== target || !ownerPolicyReviewEnabled() || ownerBinding(root) !== binding
+            || !attempt.consume(typed, Date.now(), root, ruleDigest, currentRevision)) return { status: "FAILED" };
+        const write = (stateWrites.get(target) ?? Promise.resolve()).then(async () => {
+            if (state !== target || !ownerPolicyReviewEnabled() || await ownerPolicyRevision(root) !== revision) throw new Error("Reviewed policy changed.");
+            const all = target.get<Record<string, unknown>>(RULES_KEY, {});
+            if (!all || typeof all !== "object" || Array.isArray(all)) throw new Error("Invalid policy storage.");
+            const previous = parseStoredPolicy(all[root]);
+            const audit = parseReviewAudit({ schemaVersion: 1, records: [...(previous.reviewAudit?.records ?? []),
+                { id: plan.nonce, at: Date.now(), mode, ruleDigest, revisionDigest: revision, outcome: "REVIEWED_SESSION" }] });
+            const encoded = encodeStoredPolicy({ ...previous, reviewAudit: audit }); parseStoredPolicy(encoded);
+            await target.update(RULES_KEY, { ...all, [root]: encoded });
+            if (state !== target || !ownerPolicyReviewEnabled() || ownerBinding(root) !== binding || await ownerPolicyRevision(root) !== revision
+                || !validateOwnerReview(plan, typed, Date.now(), root, ruleDigest, revision)) throw new Error("Reviewed policy changed after persistence.");
+            const grants = sessionGrants.get(root) ?? [];
+            grants.push({ binding, revision, rule: choice.region ? `region:${ruleDigest}` : pathRuleIdentity(JSON.parse(choice.value)) }); sessionGrants.set(root, grants);
+            ownerSessionChanged.fire(root);
+        });
+        stateWrites.set(target, write.catch(() => undefined)); await write;
+        void vscode.window.showInformationMessage("Session review saved. Permanent denies remain; sensitive contents and protected text stay masked. Restart or protection drift ends this session permission.");
+        return { status: "RELAXED_SESSION" };
+    } catch {
+        void vscode.window.showErrorMessage("SoterAI could not complete the session review. Existing restrictions remain. Check policy drift, review expiry and storage.");
+        return { status: ownerPolicyReviewEnabled() ? "FAILED" : "UNAVAILABLE" };
+    } finally { registration?.dispose(); reviewingOwnerPolicy = false; }
 }
 
-interface RootPolicy { folder: vscode.WorkspaceFolder; globs: string[]; manual: ManualRules; invalid: boolean; project: ProjectPolicy; versioned?: VersionedPolicy }
+interface RootPolicy { folder: vscode.WorkspaceFolder; globs: string[]; manual: ManualRules; invalid: boolean; project: ProjectPolicy; versioned?: VersionedPolicy; sourceDigest?: string }
 
 async function optionalPolicyFile(folder: vscode.WorkspaceFolder, rel: string, limit = 64 * 1024): Promise<string | undefined> {
     const target = path.join(folder.uri.fsPath, rel);
@@ -188,6 +308,7 @@ export class BoundarySnapshot {
                 }
                 root.versioned = storedVersionedPolicy(folder.uri.toString());
                 const teamText = await optionalPolicyFile(folder, ".soterai/team-policy.json", MAX_POLICY_BYTES);
+                root.sourceDigest = documentDigest(JSON.stringify([ignore, project, teamText]));
                 const team = teamText === undefined ? undefined : parseVersionedPolicyText(teamText);
                 if (versionedPolicyEnabled()) {
                     let added = defaultVersionedPolicy();
@@ -202,6 +323,19 @@ export class BoundarySnapshot {
                     root.invalid = true;
                 }
             } catch { root.invalid = true; }
+            const key = folder.uri.toString();
+            if (root.invalid) {
+                if (!unavailableRoots.has(key)) {
+                    unavailableRoots.add(key);
+                    revokeOwnerPolicySessions(key);
+                }
+            } else unavailableRoots.delete(key);
+            if (sessionGrants.has(folder.uri.toString())) {
+                try {
+                    const binding = ownerBinding(folder.uri.toString()), revision = documentDigest(JSON.stringify([binding, root.sourceDigest]));
+                    if (sessionGrants.get(folder.uri.toString())!.some(grant => grant.binding !== binding || grant.revision !== revision)) revokeOwnerPolicySessions(folder.uri.toString());
+                } catch { revokeOwnerPolicySessions(folder.uri.toString()); }
+            }
             return root;
         }));
         return new BoundarySnapshot(roots);
@@ -210,7 +344,7 @@ export class BoundarySnapshot {
     private locate(uri: vscode.Uri): { root: RootPolicy; rel: string } | undefined {
         const folder = vscode.workspace.getWorkspaceFolder(uri);
         const root = this.roots.find(entry => entry.folder.uri.toString() === folder?.uri.toString());
-        if (!root || uri.scheme !== "file") return undefined;
+        if (!root || uri.scheme !== "file") { if (sessionGrants.size) revokeOwnerPolicySessions(); return undefined; }
         try { return { root, rel: relativePath(path.relative(root.folder.uri.fsPath, uri.fsPath)) }; }
         catch { return undefined; }
     }
@@ -223,8 +357,19 @@ export class BoundarySnapshot {
         const classification = classifyPath(entry.rel, entry.root.project);
         return entry.root.globs.some(glob => matchesGlob(entry.rel, glob))
             || !!entry.root.versioned && versionedPolicyBlocks(entry.rel, entry.root.versioned)
-            || entry.root.manual.paths.some(rule => manualMatches(entry.rel, rule))
+            || entry.root.manual.paths.some(rule => manualMatches(entry.rel, rule) && !this.sessionPaused(entry.root, rule))
             || classification.level === "protected" || classification.action === "block";
+    }
+
+    private sessionPaused(root: RootPolicy, rule: import("./policy").PathRule): boolean {
+        // A sensitive owner review never makes a default context read raw.
+        if (rule.sensitive === true) return false;
+        const key = root.folder.uri.toString(), grants = sessionGrants.get(key);
+        if (!grants?.length) return false;
+        try {
+            if (!ownerPolicyReviewEnabled() || grants.some(grant => grant.binding !== ownerBinding(key))) { revokeOwnerPolicySessions(key); return false; }
+            return grants.some(grant => grant.rule === pathRuleIdentity(rule));
+        } catch { revokeOwnerPolicySessions(key); return false; }
     }
 
     classify(uri: vscode.Uri) {
@@ -253,7 +398,8 @@ export class BoundarySnapshot {
         const entry = this.locate(uri);
         if (!entry || entry.root.invalid) return undefined;
         return documentDigest(JSON.stringify([entry.root.folder.uri.toString(), entry.root.globs,
-            entry.root.manual, entry.root.project, entry.root.versioned, legacyProtected?.(vscode.workspace.asRelativePath(uri)) === true]));
+            entry.root.manual, entry.root.project, entry.root.versioned, sessionGrants.get(entry.root.folder.uri.toString()) ?? [],
+            legacyProtected?.(vscode.workspace.asRelativePath(uri)) === true]));
     }
 
     /** A one-time approved view still enforces protected regions; existing default reads remain denied. */
@@ -282,7 +428,12 @@ export class BoundarySnapshot {
     async read(uri: vscode.Uri): Promise<string> {
         const entry = this.locate(uri);
         if (!entry || this.blocks(uri)) return OMITTED;
-        return this.sanitize(uri, await readBoundaryFile(entry.root.folder.uri.fsPath, uri.fsPath));
+        if (!sessionGrants.has(entry.root.folder.uri.toString())) return this.sanitize(uri, await readBoundaryFile(entry.root.folder.uri.fsPath, uri.fsPath));
+        const current = await BoundarySnapshot.load();
+        if (current.blocks(uri)) return OMITTED;
+        const text = await readBoundaryFile(entry.root.folder.uri.fsPath, uri.fsPath);
+        const after = await BoundarySnapshot.load();
+        return after.sanitize(uri, text);
     }
 }
 

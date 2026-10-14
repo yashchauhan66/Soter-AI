@@ -1,0 +1,100 @@
+﻿TAP version 13
+# Subtest: F03-P01 owner review binds the exact root, rule, revision and nonce to a bounded review window
+ok 1 - F03-P01 owner review binds the exact root, rule, revision and nonce to a bounded review window
+  ---
+  duration_ms: 4.2341
+  type: 'test'
+  ...
+# Subtest: F03-P02 the default review nonce creates a fresh challenge for each independent owner dialog
+ok 2 - F03-P02 the default review nonce creates a fresh challenge for each independent owner dialog
+  ---
+  duration_ms: 1.4969
+  type: 'test'
+  ...
+# Subtest: F03-P03 cooldown and expiry boundaries permit only the completed unexpired review interval
+ok 3 - F03-P03 cooldown and expiry boundaries permit only the completed unexpired review interval
+  ---
+  duration_ms: 0.3392
+  type: 'test'
+  ...
+# Subtest: F03-P04 cancellation and altered confirmation text never validate
+ok 4 - F03-P04 cancellation and altered confirmation text never validate
+  ---
+  duration_ms: 0.254
+  type: 'test'
+  ...
+# Subtest: F03-P05 workspace, rule and policy revision drift invalidate an otherwise exact owner response
+ok 5 - F03-P05 workspace, rule and policy revision drift invalidate an otherwise exact owner response
+  ---
+  duration_ms: 0.3124
+  type: 'test'
+  ...
+# Subtest: F03-P06 one accepted attempt cannot authorize a second session action
+ok 6 - F03-P06 one accepted attempt cannot authorize a second session action
+  ---
+  duration_ms: 0.3217
+  type: 'test'
+  ...
+# Subtest: F03-P07 cancellation, typo, early response, expiry and drift each burn their attempted review
+ok 7 - F03-P07 cancellation, typo, early response, expiry and drift each burn their attempted review
+  ---
+  duration_ms: 0.6428
+  type: 'test'
+  ...
+# Subtest: F03-P08 metadata audit accepts ordinary and sensitive session reviews without a raw-release outcome
+ok 8 - F03-P08 metadata audit accepts ordinary and sensitive session reviews without a raw-release outcome
+  ---
+  duration_ms: 3.3307
+  type: 'test'
+  ...
+# Subtest: F03-P09 audit schema rejects corrupt, future, missing and extra top-level metadata
+ok 9 - F03-P09 audit schema rejects corrupt, future, missing and extra top-level metadata
+  ---
+  duration_ms: 1.03
+  type: 'test'
+  ...
+# Subtest: F03-P10 each audit entry requires every field and rejects unrelated content channels
+ok 10 - F03-P10 each audit entry requires every field and rejects unrelated content channels
+  ---
+  duration_ms: 1.2473
+  type: 'test'
+  ...
+# Subtest: F03-P11 audit identifiers, times, modes and digests reject wrong types and malformed values
+ok 11 - F03-P11 audit identifiers, times, modes and digests reject wrong types and malformed values
+  ---
+  duration_ms: 1.2122
+  type: 'test'
+  ...
+# Subtest: F03-P12 a repeated review UUID cannot create duplicate or conflicting audit claims
+ok 12 - F03-P12 a repeated review UUID cannot create duplicate or conflicting audit claims
+  ---
+  duration_ms: 0.3928
+  type: 'test'
+  ...
+# Subtest: F03-P13 audit record and byte budgets reject over-limit retained metadata
+ok 13 - F03-P13 audit record and byte budgets reject over-limit retained metadata
+  ---
+  duration_ms: 4.013
+  type: 'test'
+  ...
+# Subtest: F03-P14 parsed audit records are detached from caller mutations in both directions
+ok 14 - F03-P14 parsed audit records are detached from caller mutations in both directions
+  ---
+  duration_ms: 0.2537
+  type: 'test'
+  ...
+# Subtest: F03-P15 parsing valid frozen audit input does not mutate persisted metadata
+ok 15 - F03-P15 parsing valid frozen audit input does not mutate persisted metadata
+  ---
+  duration_ms: 0.3878
+  type: 'test'
+  ...
+1..15
+# tests 15
+# suites 0
+# pass 15
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 934.2507

@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-10-14T08:01:27.174Z",
+  "phase": "reload",
+  "syntheticOnly": true,
+  "workspace": "d:\\SoterAI-Lite-test-profiles\\current-native-d-host-20261014T080005Z-2c3c4f63\\workspace",
+  "declaredProfilePath": "D:\\SoterAI-Lite-test-profiles\\current-native-d-host-20261014T080005Z-2c3c4f63\\profile",
+  "extensionMode": "Development",
+  "hostVersion": "1.141.1",
+  "extensionBundleSha256": "ae86de07757927b7456ce39b90ae3bda08332b3d1777953939af9b1dbabd0e00",
+  "currentDeveloperBundleSha256": "ae86de07757927b7456ce39b90ae3bda08332b3d1777953939af9b1dbabd0e00",
+  "hostProbeSha256": "36d4e4b7824fd88ba9b401558b8c96d58c08b598270c121ac502253c4f66ded3",
+  "observations": [
+    {
+      "id": "F03-H09",
+      "status": "PASS",
+      "scope": "Native restart in the same profile/workspace/runtime keeps actual audit metadata and restores all permanent denies."
+    },
+    {
+      "id": "F03-H10",
+      "status": "PASS",
+      "scope": "After restart machine withdrawal blocks new reviews, retains v3 audit/permanent denies and retains env masking."
+    }
+  ],
+  "commandStatuses": [
+    {
+      "command": "soterai.readProjectFileSafely",
+      "observedStatus": "ALLOWED_ONCE"
+    },
+    {
+      "command": "soterai.manageAIRules",
+      "observedStatus": "UNAVAILABLE"
+    },
+    {
+      "command": "soterai.reviewSensitiveAIRules",
+      "observedStatus": "UNAVAILABLE"
+    },
+    {
+      "command": "soterai.readProjectFileSafely",
+      "observedStatus": "ALLOWED_ONCE"
+    }
+  ],
+  "reviews": [],
+  "auditRecordCount": 4,
+  "policyDriftFlagRetainedForRestart": false,
+  "passed": 2,
+  "failed": 0,
+  "identityScope": "Byte-identical packaged runtime in a normal isolated developer window with a test-only bootstrap and persistent Memento. SQLite metadata only; no clean-profile installed-VSIX or authenticated memory claim.",
+  "independence": "LOW",
+  "ownerPresence": "SCRIPTED_SAME_EXTENSION_API_INSTANCE",
+  "externalAgents": "NOT_TESTED"
+}

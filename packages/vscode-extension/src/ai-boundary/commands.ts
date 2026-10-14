@@ -3,10 +3,11 @@ import * as path from "node:path";
 import { randomUUID } from "node:crypto";
 import { redactAIContext as redactForSharing } from "@soterai/guard-core";
 import { assertWorkspaceFileUri } from "../security/WorkspacePathGuard";
-import { BoundarySnapshot, initializeBoundaryState, onDidChangeBoundaryRules, storedRules, updateRules, reviewRuleRelaxation } from "./BoundarySnapshot";
+import { BoundarySnapshot, initializeBoundaryState, onDidChangeBoundaryRules, onDidChangeOwnerPolicySession, storedRules, updateRules, reviewRuleRelaxation } from "./BoundarySnapshot";
 import { documentDigest, relativePath, validateGlob, OMITTED } from "./policy";
 import { restrictionSaveEnabled, requireRestrictionSave, assertRestrictionWorkspace, RestrictionUnavailable, withManualRestriction, type RestrictionResult } from "./RestrictionOperation";
 import { registerVersionedPolicyCommands } from "./VersionedPolicyCommands";
+import { registerPolicyDriftMonitor } from "./PolicyDrift";
 
 /** A read-only alternative URI, never an interceptor for file: or other extensions. */
 export class RedactedDocumentProvider implements vscode.TextDocumentContentProvider, vscode.Disposable {
@@ -47,16 +48,18 @@ export class RedactedDocumentProvider implements vscode.TextDocumentContentProvi
 
 export function registerAIBoundaryCommands(context: vscode.ExtensionContext): void {
     initializeBoundaryState(context.workspaceState);
+    registerPolicyDriftMonitor(context);
     registerVersionedPolicyCommands(context);
     const provider = new RedactedDocumentProvider();
     context.subscriptions.push(provider, vscode.workspace.registerTextDocumentContentProvider("soterai-redacted", provider));
     context.subscriptions.push(onDidChangeBoundaryRules(() => provider.refresh()));
-    const watcher = vscode.workspace.createFileSystemWatcher("**/{.aiignore,policy.json}");
+    context.subscriptions.push(onDidChangeOwnerPolicySession(() => provider.refresh()));
+    const watcher = vscode.workspace.createFileSystemWatcher("**/{.aiignore,policy.json,team-policy.json}");
     context.subscriptions.push(watcher, watcher.onDidChange(() => provider.refresh()), watcher.onDidCreate(() => provider.refresh()),
         watcher.onDidDelete(() => provider.refresh()), vscode.workspace.onDidChangeTextDocument(() => provider.refresh()),
         vscode.workspace.onDidChangeWorkspaceFolders(() => provider.refresh()));
 
-    const reg = (id: string, action: (uri?: vscode.Uri) => Promise<void | RestrictionResult>, restriction = false) => {
+    const reg = (id: string, action: (uri?: vscode.Uri) => Promise<void | RestrictionResult | { status: "RELAXED_SESSION" }>, restriction = false) => {
         context.subscriptions.push(vscode.commands.registerCommand(id, async (uri?: vscode.Uri) => {
             if (restriction && !restrictionSaveEnabled()) return { status: "UNAVAILABLE" };
             try { return await action(uri); }
@@ -148,9 +151,11 @@ export function registerAIBoundaryCommands(context: vscode.ExtensionContext): vo
         }, { kind: "file", pattern: item.rel });
     }, true);
     reg("soterai.manageAIRules", async () => {
-        await reviewRuleRelaxation();
+        const result = await reviewRuleRelaxation();
         provider.refresh();
+        return result;
     });
+    reg("soterai.reviewSensitiveAIRules", async () => { const result = await reviewRuleRelaxation("sensitive"); provider.refresh(); return result; });
     reg("soterai.openRedactedPreview", async uri => {
         const item = target(uri);
         const document = await vscode.workspace.openTextDocument(provider.createUri(item.uri));

@@ -1,0 +1,83 @@
+{
+  "status": "PASS",
+  "feature": "F03",
+  "completion": "Local acceptance passed; scoped local commit and committed byte verification remain the serial barrier.",
+  "observedAt": "2026-10-14T08:05:08.578Z",
+  "artifact": {
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-f03-20261014-attempt02.vsix",
+    "bytes": 1341224,
+    "sha256": "d93599efff22e48f4a431fd8a4fdb6ff78d6adbd4738b4e51c3b6f9d04521ba1",
+    "runtimeSha256": "ae86de07757927b7456ce39b90ae3bda08332b3d1777953939af9b1dbabd0e00",
+    "manifestSha256": "e2f433c103001dc74c071b6c84c1ed42c392d24aa6418d852f875afc911ac6a5"
+  },
+  "flag": {
+    "name": "soterai.lite.policyDrift",
+    "scope": "machine",
+    "mutation": "AVAILABILITY_ONLY; no STRONG catalog promotion",
+    "rollback": "No new session reviews; active grants revoked; permanent denies and sensitive masks retained."
+  },
+  "checks": {
+    "focused": {
+      "tests": 65,
+      "suites": 0,
+      "pass": 65,
+      "fail": 0,
+      "cancelled": 0,
+      "skip": 0
+    },
+    "full": {
+      "tests": 919,
+      "suites": 106,
+      "pass": 916,
+      "fail": 0,
+      "cancelled": 0,
+      "skip": 3
+    },
+    "nativeDistinct": 10,
+    "functional": {
+      "path": "docs/soterai-lite/evidence/20261013-f03-policy-review-207ad3dc/functional/privacy-20261014T080200Z-254bafc4/functional-results.json",
+      "pass": 10,
+      "fail": 0
+    },
+    "security": {
+      "path": "docs/soterai-lite/evidence/20261013-f03-policy-review-207ad3dc/security/host-20261014T080413Z-1d8ad1850b70491ea2091bcef428584c/live-host.json",
+      "count": 17,
+      "blockedScoped": 8,
+      "leakConfirmed": 9,
+      "comparisonChanges": 0
+    },
+    "downgrade": {
+      "status": "PASS",
+      "scope": "Exact previous F02 schema-aware reader accepts its v2 control and rejects stronger v3. No native/same-user/platform claim.",
+      "commit": "b1ffbcce27b8bafda7a9358d81b78e4aaff6416e",
+      "sourcePath": "packages/vscode-extension/src/ai-boundary/VersionedPolicy.ts",
+      "sourceSha256": "d4d795ddc7027c2a7e86a4898de033ca472e82c66effa21f4cadd02b125adb6f",
+      "matcherSha256": "7cf26ee806520ecb6ad1a02cfe4059af353bc048375a16dc4c2e4b56580ecb58",
+      "readerBundleSha256": "8e0fcc5193bdcc5a99d720367b3dbd5f7ab4e0d374ae10ef11ac7db9fa1615ce",
+      "v2Control": "ACCEPTED",
+      "v3Downgrade": "REJECTED",
+      "independence": "LOW"
+    }
+  },
+  "contract": {
+    "lifetime": "This editor session; restart/drift/flagoff restore deny",
+    "permanentRemoval": false,
+    "sensitiveRawAccess": false,
+    "protectedRegions": "Retained",
+    "cooldownMilliseconds": 10000,
+    "expiryMilliseconds": 60000,
+    "auditMaximumRecords": 64,
+    "auditMaximumBytes": 32768,
+    "envelopeMaximumBytes": 131072
+  },
+  "sourceReview": "LOW; source-review-01.md and source-review-02.md; no remaining narrow blocker.",
+  "catalog": {
+    "path": "docs/soterai-lite/LITE-CATALOG.json",
+    "sha256": "1ce46192e9f315b5f2142c9f61542f1d513143dc2e19d4def6d95cea38c73ed4",
+    "status": "44 frozen checks UNVERIFIED"
+  },
+  "rating": "PENDING",
+  "cleanProfileInstall": "NOT-RUN/F32",
+  "retainedFailures": "Test-first baselines and S27/S28/S29/RF01-RF04; resource-limited full suite/typecheck; updater-blocked current host; renderer OOM with cause unverified; native fixture enrollment/source-drift failures. Earlier passes belong to earlier objects.",
+  "residual": "Native same-user original/buffer/alias/environment/history reads and independent uploads remain unmanaged; actual tool, platform, human and independent gates pending."
+}

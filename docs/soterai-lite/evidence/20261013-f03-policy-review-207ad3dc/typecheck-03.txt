@@ -1,0 +1,41 @@
+﻿
+> soterai-ide-guard@0.7.0 typecheck
+> tsc --noEmit -p tsconfig.json
+
+npm.cmd : 
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+#
+# Fatal process out of memory: Zone
+#
+----- Native stack trace -----
+
+ 1: 00007FF74D9B711D node::SetCppgcReference+17725
+ 2: 00007FF74D89181F node::TriggerNodeReport+73231
+ 3: 00007FF74EB095C6 v8::base::FatalOOM+54
+ 4: 00007FF74E48D6E1 v8::Function::Experimental_IsNopFunction+2369
+ 5: 00007FF74DF5C79B v8::SnapshotCreator::GetIsolate+52395
+ 6: 00007FF74EB768C7 v8::internal::compiler::CompilationDependencies::~CompilationDependencies+70471
+ 7: 00007FF74EBAFFCA v8::internal::compiler::CompilationDependencies::~CompilationDependencies+305738
+ 8: 00007FF74EC547A7 v8::internal::compiler::CompilationDependencies::TransitionDependencyOffTheRecord+70151
+ 9: 00007FF74ECA2AC0 v8::internal::compiler::CompilationDependencies::TransitionDependencyOffTheRecord+390432
+10: 00007FF74EC9F758 v8::internal::compiler::CompilationDependencies::TransitionDependencyOffTheRecord+377272
+11: 00007FF74EC9D5A5 v8::internal::compiler::CompilationDependencies::TransitionDependencyOffTheRecord+368645
+12: 00007FF74EC9B72F v8::internal::compiler::CompilationDependencies::TransitionDependencyOffTheRecord+360847
+13: 00007FF74EC28A58 v8::internal::compiler::CompilationDependencies::~CompilationDependencies+799960
+14: 00007FF74EC1FA24 v8::internal::compiler::CompilationDependencies::~CompilationDependencies+763044
+15: 00007FF74EC20625 v8::internal::compiler::CompilationDependencies::~CompilationDependencies+766117
+16: 00007FF74E408314 v8::SharedValueConveyor::SharedValueConveyor+30596
+17: 00007FF74E3C1C22 v8::Proxy::GetHandler+41490
+18: 00007FF74E6924F5 v8::PropertyDescriptor::writable+1997013
+19: 00007FF74D894540 v8::CpuProfileNode::GetParent+784
+20: 00007FF74DA17463 uv_poll_stop+291
+21: 00007FF74F214C2E inflateValidate+159742
+22: 00007FFF5241CCB7 BaseThreadInitThunk+23
+23: 00007FFF5370AD6C RtlUserThreadStart+44

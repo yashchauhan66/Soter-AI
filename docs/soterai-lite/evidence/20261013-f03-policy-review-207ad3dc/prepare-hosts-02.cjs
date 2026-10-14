@@ -1,0 +1,13 @@
+const fs=require('node:fs'),path=require('node:path');
+const write=(name,content)=>fs.writeFileSync(path.join(__dirname,name),content,{flag:'wx'});
+const guard=(variable)=>`\nif(-not [IO.Path]::GetFullPath(${variable}).StartsWith('D:\\SoterAI-Lite-test-profiles\\',[StringComparison]::OrdinalIgnoreCase)){throw 'Unexpected isolated profile target.'}\nif(Test-Path -LiteralPath ${variable}){throw 'Existing isolated profile refused.'}\n`;
+let native=fs.readFileSync(path.join(__dirname,'run-f03-native-host-01.ps1'),'utf8');
+native=native.replace("$taskWorkspace=Join-Path $taskRun 'workspace'",guard('$taskProfile')+"$taskWorkspace=Join-Path $taskRun 'workspace'");
+write('run-f03-native-host-02.ps1',native);
+let functional=fs.readFileSync(path.join(__dirname,'run-functional-01.ps1'),'utf8');
+functional=functional.replace("$workspace = Join-Path $runRoot 'workspace'",guard('$profile')+"$workspace = Join-Path $runRoot 'workspace'");
+write('run-functional-02.ps1',functional);
+let security=fs.readFileSync(path.join(__dirname,'run-security-01.ps1'),'utf8');
+security=security.replace("$workspace = Join-Path $labRoot 'workspace'",guard('$labRoot')+"$workspace = Join-Path $labRoot 'workspace'");
+write('run-security-02.ps1',security);
+console.log(JSON.stringify({status:'PREPARED_NOT_RUN',isolation:'New unique D profiles; C source/raw evidence only. Existing scripts preserved.'}));

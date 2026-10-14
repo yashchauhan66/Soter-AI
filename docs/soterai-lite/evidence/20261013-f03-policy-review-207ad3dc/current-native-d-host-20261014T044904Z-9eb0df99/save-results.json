@@ -1,0 +1,186 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-10-14T04:50:15.696Z",
+  "phase": "save",
+  "syntheticOnly": true,
+  "workspace": "d:\\SoterAI-Lite-test-profiles\\current-native-d-host-20261014T044904Z-9eb0df99\\workspace",
+  "declaredProfilePath": "D:\\SoterAI-Lite-test-profiles\\current-native-d-host-20261014T044904Z-9eb0df99\\profile",
+  "extensionMode": "Development",
+  "hostVersion": "1.141.1",
+  "extensionBundleSha256": "4e46db9553437f6c4b3d939b13a00b0b8482835e2fa568cabdaae37c8cccdfb3",
+  "currentDeveloperBundleSha256": "4e46db9553437f6c4b3d939b13a00b0b8482835e2fa568cabdaae37c8cccdfb3",
+  "hostProbeSha256": "3f7d60c46ef83d6c85ff3e6564949b016d3d7c0dec919fed20c5324fef0639b8",
+  "observations": [
+    {
+      "id": "F03-H01",
+      "status": "FAIL",
+      "scope": "Actual owner commands ignore supplied grants; picker cancel and wrong exact typing preserve denies/audit.",
+      "diagnostic": "AssertionError: Expected values to be strictly deep-equal:"
+    },
+    {
+      "id": "F03-H02",
+      "status": "FAIL",
+      "scope": "Native metadata diff, exact typing and real cooldown produce an atomic v3 ordinary review audit.",
+      "diagnostic": "AssertionError: Expected values to be strictly deep-equal:"
+    },
+    {
+      "id": "F03-H03",
+      "status": "FAIL",
+      "scope": "Only the reviewed ordinary selector opens; other deny, credential default and protected region remain; public control opens.",
+      "diagnostic": "AssertionError: Expected values to be strictly deep-equal:"
+    },
+    {
+      "id": "F03-H04",
+      "status": "FAIL",
+      "scope": "Machine flag withdrawal ends current session access, refreshes an open view and cannot resurrect access on re-enable.",
+      "diagnostic": "AssertionError: Expected values to be strictly deep-equal:"
+    },
+    {
+      "id": "F03-H05",
+      "status": "FAIL",
+      "scope": "Separate sensitive owner review retains stored sensitivity, default omission and exact value-masked env safe read.",
+      "diagnostic": "AssertionError: Expected values to be strictly deep-equal:"
+    },
+    {
+      "id": "F03-H06",
+      "status": "PASS",
+      "scope": "Rejected actual-context audit persistence yields FAILED and no grant, saved notification or policy change."
+    },
+    {
+      "id": "F03-H07",
+      "status": "FAIL",
+      "scope": "Real source watcher/read drift restores a reviewed deny without copying source values into alerts or baseline.",
+      "diagnostic": "AssertionError: Expected values to be strictly deep-equal:"
+    },
+    {
+      "id": "F03-H08",
+      "status": "FAIL",
+      "scope": "Save phase leaves one reviewed ordinary grant active while permanent v3 rules/audit remain persisted for restart.",
+      "diagnostic": "AssertionError: Expected values to be strictly deep-equal:"
+    }
+  ],
+  "commandStatuses": [
+    {
+      "command": "soterai.blockFromAI",
+      "observedStatus": "SAVED"
+    },
+    {
+      "command": "soterai.blockFromAI",
+      "observedStatus": "SAVED"
+    },
+    {
+      "command": "soterai.restrictSensitiveFile",
+      "observedStatus": "SAVED"
+    },
+    {
+      "command": "soterai.blockSelectionFromAI",
+      "observedStatus": "SAVED"
+    },
+    {
+      "command": "soterai.manageAIRules",
+      "observedStatus": "CANCELLED"
+    },
+    {
+      "command": "soterai.manageAIRules",
+      "observedStatus": "FAILED"
+    },
+    {
+      "command": "soterai.manageAIRules",
+      "observedStatus": "RELAXED_SESSION"
+    },
+    {
+      "command": "soterai.manageAIRules",
+      "observedStatus": "UNAVAILABLE"
+    },
+    {
+      "command": "soterai.reviewSensitiveAIRules",
+      "observedStatus": "UNAVAILABLE"
+    },
+    {
+      "command": "soterai.reviewSensitiveAIRules",
+      "observedStatus": "RELAXED_SESSION"
+    },
+    {
+      "command": "soterai.manageAIRules",
+      "observedStatus": "FAILED"
+    },
+    {
+      "command": "soterai.manageAIRules",
+      "observedStatus": "RELAXED_SESSION"
+    },
+    {
+      "command": "soterai.manageAIRules",
+      "observedStatus": "RELAXED_SESSION"
+    }
+  ],
+  "reviews": [
+    {
+      "command": "soterai.manageAIRules",
+      "selectedPattern": "ordinary.txt",
+      "observedStatus": "FAILED",
+      "elapsedMs": 515,
+      "inputCalls": 1,
+      "nativeDiff": true,
+      "diffDocumentCount": 2,
+      "finalActions": 0
+    },
+    {
+      "command": "soterai.manageAIRules",
+      "selectedPattern": "ordinary.txt",
+      "observedStatus": "RELAXED_SESSION",
+      "elapsedMs": 10106,
+      "inputCalls": 1,
+      "nativeDiff": true,
+      "diffDocumentCount": 2,
+      "finalActions": 1
+    },
+    {
+      "command": "soterai.reviewSensitiveAIRules",
+      "selectedPattern": ".env.owner",
+      "observedStatus": "RELAXED_SESSION",
+      "elapsedMs": 10092,
+      "inputCalls": 1,
+      "nativeDiff": true,
+      "diffDocumentCount": 2,
+      "finalActions": 1
+    },
+    {
+      "command": "soterai.manageAIRules",
+      "selectedPattern": "ordinary.txt",
+      "observedStatus": "FAILED",
+      "elapsedMs": 10108,
+      "inputCalls": 1,
+      "nativeDiff": true,
+      "diffDocumentCount": 2,
+      "finalActions": 1
+    },
+    {
+      "command": "soterai.manageAIRules",
+      "selectedPattern": "ordinary.txt",
+      "observedStatus": "RELAXED_SESSION",
+      "elapsedMs": 10153,
+      "inputCalls": 1,
+      "nativeDiff": true,
+      "diffDocumentCount": 2,
+      "finalActions": 1
+    },
+    {
+      "command": "soterai.manageAIRules",
+      "selectedPattern": "ordinary.txt",
+      "observedStatus": "RELAXED_SESSION",
+      "elapsedMs": 11001,
+      "inputCalls": 1,
+      "nativeDiff": true,
+      "diffDocumentCount": 2,
+      "finalActions": 1
+    }
+  ],
+  "auditRecordCount": 4,
+  "policyDriftFlagRetainedForRestart": false,
+  "passed": 1,
+  "failed": 7,
+  "identityScope": "Byte-identical packaged runtime in a normal isolated developer window with a test-only bootstrap and persistent Memento. SQLite metadata only; no clean-profile installed-VSIX or authenticated memory claim.",
+  "independence": "LOW",
+  "ownerPresence": "SCRIPTED_SAME_EXTENSION_API_INSTANCE",
+  "externalAgents": "NOT_TESTED"
+}

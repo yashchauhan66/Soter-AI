@@ -2,7 +2,7 @@ import * as vscode from "vscode";
 import * as path from "node:path";
 import { lstat } from "node:fs/promises";
 import { randomUUID } from "node:crypto";
-import { BoundarySnapshot, updateRules, onDidChangeBoundaryRules } from "../ai-boundary/BoundarySnapshot";
+import { BoundarySnapshot, updateRules, onDidChangeBoundaryRules, onDidChangeOwnerPolicySession } from "../ai-boundary/BoundarySnapshot";
 import { readBoundaryFile } from "../ai-boundary/readFile";
 import { relativePath, OMITTED } from "../ai-boundary/policy";
 import { assertWorkspaceFileUri } from "../security/WorkspacePathGuard";
@@ -59,6 +59,7 @@ export function registerProjectPrivacyCommands(context: vscode.ExtensionContext)
         await vscode.window.showWarningMessage(approvalMessage(receipt), { modal: true }, "Allow safe read once") === "Allow safe read once" });
     context.subscriptions.push(provider, access, vscode.workspace.registerTextDocumentContentProvider("soterai-approved", provider),
         onDidChangeBoundaryRules(() => { access.revoke(); provider.clear(); }),
+        onDidChangeOwnerPolicySession(() => { access.revoke(); provider.clear(); }),
         onDidChangeManualRestriction(() => { access.revoke(); provider.clear(); }),
         vscode.workspace.onDidChangeWorkspaceFolders(() => { access.revoke(); provider.clear(); }),
         vscode.workspace.onDidChangeConfiguration(event => {
