@@ -107,33 +107,119 @@
                 "soterai.protection.enabled",
                 "soterai.autoVaultMigration.enabled",
                 "soterai.dependencyGuard.osvMode",
-                "soterai.secretInterceptor.enabled"
+                "soterai.secretInterceptor.enabled",
+                "soterai.lite.secureEditor"
             ]
         }
     },
     "contributes": {
         "commands": [
-            {"command": "soterai.openProjectPrivacy", "title": "Manage Project Privacy", "category": "SoterAI", "icon": "$(shield)"},
-            {"command": "soterai.restrictProjectFile", "title": "Choose a File to Restrict from Managed AI Context", "category": "SoterAI"},
-            {"command": "soterai.restrictSensitiveFile", "title": "Restrict File as Sensitive (Managed Views Stay Masked)", "category": "SoterAI"},
-            {"command": "soterai.reviewSafeFileAccess", "title": "Review One-Time Safe File Access", "category": "SoterAI"},
-            {"command": "soterai.readProjectFileSafely", "title": "Request an Approved Safe Project File Read", "category": "SoterAI"},
-            {"command": "soterai.openProjectReadTerminal", "title": "Open Project Read Terminal (Approval + Masking)", "category": "SoterAI"},
-            {"command": "soterai.revokeProjectReads", "title": "Revoke Pending Project Reads", "category": "SoterAI"},
-            {"command": "soterai.preparePublicWorkspace", "title": "Prepare an Approved Public Workspace", "category": "SoterAI"},
-            {"command": "soterai.previewDevelopmentContract", "title": "Preview a Synthetic Development Contract", "category": "SoterAI"},
-            {"command": "soterai.startSyntheticPreview", "title": "Start a Synthetic Development Preview", "category": "SoterAI"},
-            {"command": "soterai.stopSyntheticPreview", "title": "Stop the Synthetic Development Preview", "category": "SoterAI"},
-            {"command": "soterai.blockFromAI", "title": "Block File or Folder from AI", "category": "SoterAI"},
-            {"command": "soterai.blockGlobFromAI", "title": "Block Pattern from AI", "category": "SoterAI"},
-            {"command": "soterai.blockSelectionFromAI", "title": "Block Selected Text from AI", "category": "SoterAI"},
-            {"command": "soterai.manageAIRules", "title": "Review a Manual Deny for This Editor Session", "category": "SoterAI"},
-            {"command": "soterai.reviewSensitiveAIRules", "title": "Review Sensitive Protection for This Editor Session", "category": "SoterAI"},
-            {"command": "soterai.importLitePolicy", "title": "Import Protection Policy", "category": "SoterAI"},
-            {"command": "soterai.exportLitePolicy", "title": "Export Protection Policy", "category": "SoterAI"},
-            {"command": "soterai.applyLitePolicyPreset", "title": "Add Stack Protection Preset", "category": "SoterAI"},
-            {"command": "soterai.openRedactedPreview", "title": "Open Redacted AI Preview", "category": "SoterAI"},
-            {"command": "soterai.enableAutomaticIDEProtection", "title": "Enable Automatic IDE Protection", "category": "SoterAI"},
+            {
+                "command": "soterai.openProjectPrivacy",
+                "title": "Manage Project Privacy",
+                "category": "SoterAI",
+                "icon": "$(shield)"
+            },
+            {
+                "command": "soterai.restrictProjectFile",
+                "title": "Choose a File to Restrict from Managed AI Context",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.restrictSensitiveFile",
+                "title": "Restrict File as Sensitive (Managed Views Stay Masked)",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.reviewSafeFileAccess",
+                "title": "Review One-Time Safe File Access",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.readProjectFileSafely",
+                "title": "Request an Approved Safe Project File Read",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.openProjectReadTerminal",
+                "title": "Open Project Read Terminal (Approval + Masking)",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.revokeProjectReads",
+                "title": "Revoke Pending Project Reads",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.preparePublicWorkspace",
+                "title": "Prepare an Approved Public Workspace",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.previewDevelopmentContract",
+                "title": "Preview a Synthetic Development Contract",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.startSyntheticPreview",
+                "title": "Start a Synthetic Development Preview",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.stopSyntheticPreview",
+                "title": "Stop the Synthetic Development Preview",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.blockFromAI",
+                "title": "Block File or Folder from AI",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.blockGlobFromAI",
+                "title": "Block Pattern from AI",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.blockSelectionFromAI",
+                "title": "Block Selected Text from AI",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.manageAIRules",
+                "title": "Review a Manual Deny for This Editor Session",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.reviewSensitiveAIRules",
+                "title": "Review Sensitive Protection for This Editor Session",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.importLitePolicy",
+                "title": "Import Protection Policy",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.exportLitePolicy",
+                "title": "Export Protection Policy",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.applyLitePolicyPreset",
+                "title": "Add Stack Protection Preset",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.openRedactedPreview",
+                "title": "Open Redacted AI Preview",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.enableAutomaticIDEProtection",
+                "title": "Enable Automatic IDE Protection",
+                "category": "SoterAI"
+            },
             {
                 "command": "soterai.openControlPanel",
                 "title": "Open Control Panel",
@@ -952,6 +1038,21 @@
                 "command": "soterai.checkEgressPayload",
                 "title": "Check Egress Payload (API)",
                 "category": "SoterAI"
+            },
+            {
+                "command": "soterai.openSecureEditor",
+                "title": "Open Masked Owner Editor",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.configureSecureEditorAssociation",
+                "title": "Use Masked Editor for Project Environments",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.undoSecureEditorAssociation",
+                "title": "Restore Project Editor Associations",
+                "category": "SoterAI"
             }
         ],
         "viewsContainers": {
@@ -1120,7 +1221,9 @@
             "title": "SoterAI IDE Guard Settings",
             "properties": {
                 "soterai.lite.restrictionSave": {
-                    "type": "boolean", "default": true, "scope": "machine",
+                    "type": "boolean",
+                    "default": true,
+                    "scope": "machine",
                     "markdownDescription": "Enable new manual file, folder, pattern and selected-text restriction saves with explicit completion results. Disabling withdraws new saves while preserving accepted restrictions and existing masked readers."
                 },
                 "soterai.lite.versionedPolicy": {
@@ -1130,27 +1233,39 @@
                     "description": "Enable new credential defaults, additive policy imports and stack presets. Turning this off retains accepted denies and sensitivity. Tested older schema-aware readers reject the stronger storage format and make managed reads unavailable."
                 },
                 "soterai.lite.policyDrift": {
-                    "type": "boolean", "default": true, "scope": "machine",
+                    "type": "boolean",
+                    "default": true,
+                    "scope": "machine",
                     "description": "Enable startup and periodic protection drift checks and deliberate owner reviews for this editor session. Exact diff, typed confirmation, cooldown and persisted metadata audit are required. Disabling ends session grants and preserves permanent denies, sensitivity and region masking. Same-user confirmation is not agent-proof."
                 },
                 "soterai.lite.safeConsent": {
-                    "type": "boolean", "default": true, "scope": "machine",
+                    "type": "boolean",
+                    "default": true,
+                    "scope": "machine",
                     "description": "Require an exact native preview, fixed 60-second deadline and fresh file, policy and destination checks for every managed safe read. Disabling withholds reads and clears owned previews while preserving saved restrictions. Previously returned text cannot be recalled; requester identity is not OS-verified."
                 },
                 "soterai.projectPrivacy.professionalUi": {
-                    "type": "boolean", "default": true, "scope": "machine",
+                    "type": "boolean",
+                    "default": true,
+                    "scope": "machine",
                     "markdownDescription": "Show the project privacy dashboard, complete restriction inventory and scoped verification results. Turning this off hides the dashboard controls without removing saved restrictions or changing secret treatment."
                 },
                 "soterai.projectPrivacy.syntheticRuntime": {
-                    "type": "boolean", "default": false, "scope": "machine",
+                    "type": "boolean",
+                    "default": false,
+                    "scope": "machine",
                     "markdownDescription": "Enable the fixed loopback HTTP preview with generated fixtures. It never reads source files, credentials or request bodies, and does not run your application, create a real database or provide OS isolation."
                 },
                 "soterai.projectPrivacy.safeViewComposition": {
-                    "type": "boolean", "default": true, "scope": "machine",
+                    "type": "boolean",
+                    "default": true,
+                    "scope": "machine",
                     "markdownDescription": "Withhold environment schemas when protected-region replacement changes their source syntax. Turning this off withdraws managed safe reads; restrictions remain."
                 },
                 "soterai.projectPrivacy.safePublication": {
-                    "type": "boolean", "default": false, "scope": "machine",
+                    "type": "boolean",
+                    "default": false,
+                    "scope": "machine",
                     "markdownDescription": "Enable explicit, reviewed publication of selected safe files and synthetic development configuration into a new folder. This does not isolate Cline or deny direct access to originals; OS containment remains undeployed."
                 },
                 "soterai.projectPrivacy.atomicSensitivePolicy": {
@@ -1188,23 +1303,33 @@
                     "description": "Show Covers / Does not cover before one-click setup. Turning this off disables that setup flow rather than hiding its limitations."
                 },
                 "soterai.hardening.addOnlyPolicy": {
-                    "type": "boolean", "default": true, "scope": "machine",
+                    "type": "boolean",
+                    "default": true,
+                    "scope": "machine",
                     "description": "Retain accepted repository denies. Off withdraws context sharing and policy mutation; it does not restore replacement or removal APIs. Relaxation requires labelled native modal review, not agent-proof."
                 },
                 "soterai.hardening.scopedConfirmation": {
-                    "type": "boolean", "default": true, "scope": "machine",
+                    "type": "boolean",
+                    "default": true,
+                    "scope": "machine",
                     "description": "Require labelled native confirmation for broker approval and protection-disable commands. Off withdraws those changes; ordinary editor dialogs are not agent-proof."
                 },
                 "soterai.hardening.runtimeEvidence": {
-                    "type": "boolean", "default": true, "scope": "machine",
+                    "type": "boolean",
+                    "default": true,
+                    "scope": "machine",
                     "description": "Use healthy current broker status and validated policy bytes for operational display. Off removes those status claims. Configuration text never proves agent routing; independent verification remains UNTESTED."
                 },
                 "soterai.hardening.capabilityReleaseGuard": {
-                    "type": "boolean", "default": true, "scope": "machine",
+                    "type": "boolean",
+                    "default": true,
+                    "scope": "machine",
                     "description": "Recheck capability and reference authority before returning a completed response. Off withdraws capability issuance and use; it does not restore the earlier release path. Already sent requests cannot be recalled."
                 },
                 "soterai.hardening.secretInventory": {
-                    "type": "boolean", "default": true, "scope": "machine",
+                    "type": "boolean",
+                    "default": true,
+                    "scope": "machine",
                     "description": "Inventory persistent reference IDs for cleanup and purge on activation. Off withdraws reference creation and reads while cleanup remains available. Legacy unindexed values and same-user credential access remain outside coverage."
                 },
                 "soterai.cloud.baseUrl": {
@@ -1464,6 +1589,12 @@
                     "default": "ask",
                     "markdownDescription": "How Dependency Guard obtains CVE advisories. `ask` prompts before contacting [OSV](https://osv.dev) (`api.osv.dev`); `always` queries OSV online (package name + version only); `never` uses local heuristics only (typosquat, unpinned, remote URL, install scripts). **Advisory only** — cannot block installs outside SoterAI-reviewed commands. SoterAI is not a full SCA product; OSV is the advisory source when online.",
                     "scope": "machine"
+                },
+                "soterai.lite.secureEditor": {
+                    "type": "boolean",
+                    "default": true,
+                    "scope": "machine",
+                    "description": "Enable the masked local owner editor with per-field native reveal, private edits and encrypted recovery. Turning this off withholds editor operations and hides revealed values; original files remain available to direct filesystem tools."
                 }
             }
         },
@@ -1476,8 +1607,16 @@
                 }
             ],
             "soterai.editorContext": [
-                { "command": "soterai.blockSelectionFromAI", "group": "2_fix@0", "when": "editorHasSelection && resourceScheme == file" },
-                { "command": "soterai.openRedactedPreview", "group": "2_fix@3", "when": "resourceScheme == file" },
+                {
+                    "command": "soterai.blockSelectionFromAI",
+                    "group": "2_fix@0",
+                    "when": "editorHasSelection && resourceScheme == file"
+                },
+                {
+                    "command": "soterai.openRedactedPreview",
+                    "group": "2_fix@3",
+                    "when": "resourceScheme == file"
+                },
                 {
                     "command": "soterai.scanSelection",
                     "group": "1_check@1",
@@ -1507,16 +1646,56 @@
                 }
             ],
             "soterai.explorerContext": [
-                { "command": "soterai.manageAIRules", "group": "3_policy@4", "when": "resourceScheme == file" },
-                { "command": "soterai.reviewSensitiveAIRules", "group": "3_policy@5", "when": "resourceScheme == file" },
-                { "command": "soterai.applyLitePolicyPreset", "group": "3_policy@1", "when": "explorerResourceIsFolder && resourceScheme == file" },
-                { "command": "soterai.importLitePolicy", "group": "3_policy@2", "when": "explorerResourceIsFolder && resourceScheme == file" },
-                { "command": "soterai.exportLitePolicy", "group": "3_policy@3", "when": "explorerResourceIsFolder && resourceScheme == file" },
-                { "command": "soterai.restrictSensitiveFile", "group": "2_protect@4", "when": "!explorerResourceIsFolder && resourceScheme == file" },
-                { "command": "soterai.reviewSafeFileAccess", "group": "2_protect@5", "when": "!explorerResourceIsFolder && resourceScheme == file" },
-                { "command": "soterai.blockFromAI", "group": "2_protect@0", "when": "resourceScheme == file" },
-                { "command": "soterai.blockGlobFromAI", "group": "2_protect@2", "when": "resourceScheme == file" },
-                { "command": "soterai.openRedactedPreview", "group": "2_protect@3", "when": "!explorerResourceIsFolder && resourceScheme == file" },
+                {
+                    "command": "soterai.manageAIRules",
+                    "group": "3_policy@4",
+                    "when": "resourceScheme == file"
+                },
+                {
+                    "command": "soterai.reviewSensitiveAIRules",
+                    "group": "3_policy@5",
+                    "when": "resourceScheme == file"
+                },
+                {
+                    "command": "soterai.applyLitePolicyPreset",
+                    "group": "3_policy@1",
+                    "when": "explorerResourceIsFolder && resourceScheme == file"
+                },
+                {
+                    "command": "soterai.importLitePolicy",
+                    "group": "3_policy@2",
+                    "when": "explorerResourceIsFolder && resourceScheme == file"
+                },
+                {
+                    "command": "soterai.exportLitePolicy",
+                    "group": "3_policy@3",
+                    "when": "explorerResourceIsFolder && resourceScheme == file"
+                },
+                {
+                    "command": "soterai.restrictSensitiveFile",
+                    "group": "2_protect@4",
+                    "when": "!explorerResourceIsFolder && resourceScheme == file"
+                },
+                {
+                    "command": "soterai.reviewSafeFileAccess",
+                    "group": "2_protect@5",
+                    "when": "!explorerResourceIsFolder && resourceScheme == file"
+                },
+                {
+                    "command": "soterai.blockFromAI",
+                    "group": "2_protect@0",
+                    "when": "resourceScheme == file"
+                },
+                {
+                    "command": "soterai.blockGlobFromAI",
+                    "group": "2_protect@2",
+                    "when": "resourceScheme == file"
+                },
+                {
+                    "command": "soterai.openRedactedPreview",
+                    "group": "2_protect@3",
+                    "when": "!explorerResourceIsFolder && resourceScheme == file"
+                },
                 {
                     "command": "soterai.scanCurrentFile",
                     "group": "1_check@1",
@@ -1526,6 +1705,11 @@
                     "command": "soterai.addFileToProtected",
                     "group": "2_protect@1",
                     "when": "!explorerResourceIsFolder"
+                },
+                {
+                    "command": "soterai.openSecureEditor",
+                    "when": "resourceScheme == file",
+                    "group": "privacy@5"
                 }
             ],
             "scm/title": [
@@ -1553,20 +1737,65 @@
                 }
             ],
             "commandPalette": [
-                {"command": "soterai.reviewSensitiveAIRules", "when": "soterai.advancedCommands"},
-                {"command": "soterai.importLitePolicy", "when": "soterai.advancedCommands"},
-                {"command": "soterai.exportLitePolicy", "when": "soterai.advancedCommands"},
-                {"command": "soterai.applyLitePolicyPreset", "when": "soterai.advancedCommands"},
-                {"command": "soterai.restrictProjectFile", "when": "soterai.advancedCommands"},
-                {"command": "soterai.restrictSensitiveFile", "when": "soterai.advancedCommands"},
-                {"command": "soterai.reviewSafeFileAccess", "when": "soterai.advancedCommands"},
-                {"command": "soterai.readProjectFileSafely", "when": "false"},
-                {"command": "soterai.openProjectReadTerminal", "when": "soterai.advancedCommands"},
-                {"command": "soterai.revokeProjectReads", "when": "soterai.advancedCommands"},
-                {"command": "soterai.preparePublicWorkspace", "when": "soterai.advancedCommands"},
-                {"command": "soterai.previewDevelopmentContract", "when": "soterai.advancedCommands"},
-                {"command": "soterai.startSyntheticPreview", "when": "soterai.advancedCommands"},
-                {"command": "soterai.stopSyntheticPreview", "when": "soterai.advancedCommands"},
+                {"command": "soterai.openSecureEditor", "when": "soterai.advancedCommands"},
+                {"command": "soterai.configureSecureEditorAssociation", "when": "soterai.advancedCommands"},
+                {"command": "soterai.undoSecureEditorAssociation", "when": "soterai.advancedCommands"},
+                {
+                    "command": "soterai.reviewSensitiveAIRules",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.importLitePolicy",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.exportLitePolicy",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.applyLitePolicyPreset",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.restrictProjectFile",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.restrictSensitiveFile",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.reviewSafeFileAccess",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.readProjectFileSafely",
+                    "when": "false"
+                },
+                {
+                    "command": "soterai.openProjectReadTerminal",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.revokeProjectReads",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.preparePublicWorkspace",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.previewDevelopmentContract",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.startSyntheticPreview",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.stopSyntheticPreview",
+                    "when": "soterai.advancedCommands"
+                },
                 {
                     "command": "soterai.quickStart",
                     "when": "soterai.advancedCommands"
@@ -2221,6 +2450,21 @@
                         ]
                     }
                 ]
+            }
+        ],
+        "customEditors": [
+            {
+                "viewType": "soterai.secureEditor",
+                "displayName": "SoterAI Secure Environment Editor",
+                "selector": [
+                    {
+                        "filenamePattern": "**/.env"
+                    },
+                    {
+                        "filenamePattern": "**/.env.*"
+                    }
+                ],
+                "priority": "option"
             }
         ]
     },

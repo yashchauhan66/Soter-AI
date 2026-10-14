@@ -14,6 +14,10 @@ Every managed safe read shows the exact safe text in a native approval modal bef
 
 The machine setting `soterai.lite.safeConsent` withdraws managed reads and clears owned safe previews; restriction saves continue. Data already returned cannot be recalled. A stale native modal may remain visible after expiry or revocation, but its response grants nothing. Managed terminal text is sanitized before review; terminal framing is separate. These controls do not intercept original files or arbitrary shells.
 
+Right-click a sensitive project file and choose **SoterAI → Open Masked Owner Editor**. Environment fields start masked, including in split views. Revealing one value requires native confirmation and hides after 10 seconds or a protection/view change. Change values through an empty password input; normal editor Save and Undo/Redo operate on the private custom document. Original content is never opened as a TextDocument by this editor. A separate plaintext opening shows a warning; it is still accessible to other extensions and direct filesystem tools.
+
+Editing requires verified VS Code SecretStorage and encrypted recovery in this extension's workspace storage. Failed or conflicting saves retain the private draft; reopening offers a reviewed encrypted draft without automatically rewriting the original. Partial in-place writes can require this recovery and a separate confirmation to save it. There is no plaintext recovery fallback. Save As requires a new sensitive environment path in the same project. Native editor associations are optional: run **Use Masked Editor for Project Environments**, review the settings diff and approve. **Restore Project Editor Associations** preserves unrelated mappings and refuses changed owned mappings. The machine setting `soterai.lite.secureEditor` hides reveals and withholds editor operations while preserving saved restrictions.
+
 Local managed secret scanning, file restrictions, approved masked reads, vault
 workflows and a bundled loopback AI broker. Existing settings use `soterai.*`.
 This local candidate preserves the extension identity and saved vault/policy.

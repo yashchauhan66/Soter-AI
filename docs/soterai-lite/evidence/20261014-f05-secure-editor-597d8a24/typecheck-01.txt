@@ -1,0 +1,25 @@
+﻿packages/vscode-extension/src/__tests__/lite-secure-editor-commands.test.ts(33,6): error TS2456: Type alias 'View' circularly references itself.
+packages/vscode-extension/src/__tests__/lite-secure-editor-commands.test.ts(39,53): error TS2502: 'views' is referenced directly or indirectly in its own type annotation.
+packages/vscode-extension/src/__tests__/lite-secure-editor-commands.test.ts(53,10): error TS7023: 'makeView' implicitly has return type 'any' because it does not have a return type annotation and is referenced directly or indirectly in one of its return expressions.
+packages/vscode-extension/src/__tests__/lite-secure-editor-commands.test.ts(185,19): error TS7006: Parameter 'view' implicitly has an 'any' type.
+packages/vscode-extension/src/project-privacy/SecureEditor.ts(77,42): error TS18048: 'folder' is possibly 'undefined'.
+packages/vscode-extension/src/project-privacy/SecureEditor.ts(77,65): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+packages/vscode-extension/src/project-privacy/SecureEditor.ts(204,55): error TS18048: 'folder' is possibly 'undefined'.
+packages/vscode-extension/src/project-privacy/SecureEditor.ts(214,25): error TS18048: 'storage' is possibly 'undefined'.
+packages/vscode-extension/src/project-privacy/SecureEditor.ts(215,34): error TS18048: 'storage' is possibly 'undefined'.
+packages/vscode-extension/src/project-privacy/SecureEditor.ts(216,36): error TS18048: 'storage' is possibly 'undefined'.
+packages/vscode-extension/src/project-privacy/SecureEditor.ts(227,42): error TS18048: 'storage' is possibly 'undefined'.
+packages/vscode-extension/src/project-privacy/SecureEditor.ts(242,34): error TS18048: 'storage' is possibly 'undefined'.
+packages/vscode-extension/src/project-privacy/SecureEditor.ts(244,90): error TS18048: 'record' is possibly 'undefined'.
+packages/vscode-extension/src/project-privacy/SecureEditor.ts(245,56): error TS18048: 'record' is possibly 'undefined'.
+packages/vscode-extension/src/project-privacy/SecureEditor.ts(246,103): error TS2769: No overload matches this call.
+  Overload 1 of 4, '(arrayBuffer: WithImplicitCoercion<ArrayBufferLike>, byteOffset?: number | undefined, length?: number | undefined): Buffer<ArrayBufferLike>', gave the following error.
+    Argument of type 'string | undefined' is not assignable to parameter of type 'WithImplicitCoercion<ArrayBufferLike>'.
+      Type 'undefined' is not assignable to type 'WithImplicitCoercion<ArrayBufferLike>'.
+  Overload 2 of 4, '(str: WithImplicitCoercion<string> | { [Symbol.toPrimitive](hint: "string"): string; }, encoding?: BufferEncoding | undefined): Buffer<...>', gave the following error.
+    Argument of type 'string | undefined' is not assignable to parameter of type 'WithImplicitCoercion<string> | { [Symbol.toPrimitive](hint: "string"): string; }'.
+      Type 'undefined' is not assignable to type 'WithImplicitCoercion<string> | { [Symbol.toPrimitive](hint: "string"): string; }'.
+packages/vscode-extension/src/project-privacy/SecureEditor.ts(247,148): error TS18048: 'record' is possibly 'undefined'.
+packages/vscode-extension/src/project-privacy/SecureEditor.ts(289,55): error TS18048: 'old' is possibly 'undefined'.
+packages/vscode-extension/src/project-privacy/SecureEditor.ts(289,128): error TS18048: 'old' is possibly 'undefined'.

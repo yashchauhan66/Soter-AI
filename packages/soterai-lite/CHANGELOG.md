@@ -1,5 +1,9 @@
 # Changelog
 
+- Add the optional masked CustomDocument editor with native per-field reveal, private replacement input, Undo/Redo and guarded durable saves. Opening through it creates no original plaintext TextDocument.
+- Keep draft recovery encrypted with verified generation-specific SecretStorage keys, reviewed recovery discovery, bounded reads and source-bound restore; withhold edits if encrypted recovery is unavailable.
+- Add project-only editor association diff and undo, plaintext-open warnings, split/source/config reveal revocation and the machine setting `soterai.lite.secureEditor`.
+
 - Preview exact safe output in the native read approval modal, bind its destination and fresh content/policy, and withhold oversize previews.
 - Bound initial policy enrollment, capture and confirmation to one 60-second request deadline. Revocation expires pending requests immediately; late responses cannot grant or interfere with newer reads. Flag withdrawal preserves restriction saves and saved denies.
 

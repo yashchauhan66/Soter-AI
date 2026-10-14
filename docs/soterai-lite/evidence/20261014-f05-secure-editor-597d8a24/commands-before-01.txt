@@ -1,0 +1,421 @@
+﻿TAP version 13
+# (node:22000) ExperimentalWarning: The MockTimers API is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: F05-C01 actual native registration and open command select the optional masked editor and ignore supplied grants
+not ok 1 - F05-C01 actual native registration and open command select the optional masked editor and ignore supplied grants
+  ---
+  duration_ms: 52.7249
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-secure-editor-commands.test.ts:10:11378'
+  failureType: 'testCodeFailure'
+  error: |-
+    Secure custom-editor registration must exist.
+    + actual - expected
+    
+    + undefined
+    - 'soterai.secureEditor'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'soterai.secureEditor'
+  operator: 'strictEqual'
+  stack: |-
+    instance (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-secure-editor-commands.test.ts:49:43)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-secure-editor-commands.test.ts:194:5)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F05-C02 custom open starts masked, excludes multiline value data, and a plaintext warning never reads getText
+not ok 2 - F05-C02 custom open starts masked, excludes multiline value data, and a plaintext warning never reads getText
+  ---
+  duration_ms: 24.0705
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-secure-editor-commands.test.ts:10:12167'
+  failureType: 'testCodeFailure'
+  error: |-
+    Secure custom-editor registration must exist.
+    + actual - expected
+    
+    + undefined
+    - 'soterai.secureEditor'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'soterai.secureEditor'
+  operator: 'strictEqual'
+  stack: |-
+    instance (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-secure-editor-commands.test.ts:49:43)
+    open (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-secure-editor-commands.test.ts:92:20)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-secure-editor-commands.test.ts:201:28)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F05-C03 machine withdrawal, trust loss and unsupported public/outside resources refuse custom opens
+not ok 3 - F05-C03 machine withdrawal, trust loss and unsupported public/outside resources refuse custom opens
+  ---
+  duration_ms: 26.4736
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-secure-editor-commands.test.ts:10:13022'
+  failureType: 'testCodeFailure'
+  error: |-
+    Secure custom-editor registration must exist.
+    + actual - expected
+    
+    + undefined
+    - 'soterai.secureEditor'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'soterai.secureEditor'
+  operator: 'strictEqual'
+  stack: |-
+    instance (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-secure-editor-commands.test.ts:49:43)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-secure-editor-commands.test.ts:210:20)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F05-C04 per-field reveal requires current opaque binding and a native owner confirmation
+not ok 4 - F05-C04 per-field reveal requires current opaque binding and a native owner confirmation
+  ---
+  duration_ms: 22.3271
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-secure-editor-commands.test.ts:10:14231'
+  failureType: 'testCodeFailure'
+  error: |-
+    Secure custom-editor registration must exist.
+    + actual - expected
+    
+    + undefined
+    - 'soterai.secureEditor'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'soterai.secureEditor'
+  operator: 'strictEqual'
+  stack: |-
+    instance (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-secure-editor-commands.test.ts:49:43)
+    open (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-secure-editor-commands.test.ts:92:20)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-secure-editor-commands.test.ts:225:28)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F05-C05 an approved one-field reveal reaches only its view, stays masked in safe reads, and expires at ten seconds
+not ok 5 - F05-C05 an approved one-field reveal reaches only its view, stays masked in safe reads, and expires at ten seconds
+  ---
+  duration_ms: 24.6332
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-secure-editor-commands.test.ts:10:14965'
+  failureType: 'testCodeFailure'
+  error: |-
+    Secure custom-editor registration must exist.
+    + actual - expected
+    
+    + undefined
+    - 'soterai.secureEditor'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'soterai.secureEditor'
+  operator: 'strictEqual'
+  stack: |-
+    instance (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-secure-editor-commands.test.ts:49:43)
+    open (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-secure-editor-commands.test.ts:92:20)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-secure-editor-commands.test.ts:234:38)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F05-C06 hide, split visibility and disposed/replayed sessions cannot retain or reacquire a reveal
+not ok 6 - F05-C06 hide, split visibility and disposed/replayed sessions cannot retain or reacquire a reveal
+  ---
+  duration_ms: 21.4612
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-secure-editor-commands.test.ts:10:16006'
+  failureType: 'testCodeFailure'
+  error: |-
+    Secure custom-editor registration must exist.
+    + actual - expected
+    
+    + undefined
+    - 'soterai.secureEditor'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'soterai.secureEditor'
+  operator: 'strictEqual'
+  stack: |-
+    instance (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-secure-editor-commands.test.ts:49:43)
+    open (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-secure-editor-commands.test.ts:92:20)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-secure-editor-commands.test.ts:246:28)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F05-C07 edits use an empty native password input, reject payload values and retain masking until save
+not ok 7 - F05-C07 edits use an empty native password input, reject payload values and retain masking until save
+  ---
+  duration_ms: 22.3987
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-secure-editor-commands.test.ts:10:16856'
+  failureType: 'testCodeFailure'
+  error: |-
+    Secure custom-editor registration must exist.
+    + actual - expected
+    
+    + undefined
+    - 'soterai.secureEditor'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'soterai.secureEditor'
+  operator: 'strictEqual'
+  stack: |-
+    instance (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-secure-editor-commands.test.ts:49:43)
+    open (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-secure-editor-commands.test.ts:92:20)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-secure-editor-commands.test.ts:256:38)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F05-C08 actual edit event undo/redo and save preserve unrelated source bytes and reopen masked
+not ok 8 - F05-C08 actual edit event undo/redo and save preserve unrelated source bytes and reopen masked
+  ---
+  duration_ms: 22.2124
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-secure-editor-commands.test.ts:10:17809'
+  failureType: 'testCodeFailure'
+  error: |-
+    Secure custom-editor registration must exist.
+    + actual - expected
+    
+    + undefined
+    - 'soterai.secureEditor'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'soterai.secureEditor'
+  operator: 'strictEqual'
+  stack: |-
+    instance (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-secure-editor-commands.test.ts:49:43)
+    open (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-secure-editor-commands.test.ts:92:20)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-secure-editor-commands.test.ts:266:38)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F05-C09 cancelled edit/save and a dirty external conflict preserve the draft and do not overwrite the source
+not ok 9 - F05-C09 cancelled edit/save and a dirty external conflict preserve the draft and do not overwrite the source
+  ---
+  duration_ms: 25.5427
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-secure-editor-commands.test.ts:14:564'
+  failureType: 'testCodeFailure'
+  error: |-
+    Secure custom-editor registration must exist.
+    + actual - expected
+    
+    + undefined
+    - 'soterai.secureEditor'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'soterai.secureEditor'
+  operator: 'strictEqual'
+  stack: |-
+    instance (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-secure-editor-commands.test.ts:49:43)
+    open (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-secure-editor-commands.test.ts:92:20)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-secure-editor-commands.test.ts:277:38)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F05-C10 unavailable verified SecretStorage disables edits and backup without a plaintext fallback
+not ok 10 - F05-C10 unavailable verified SecretStorage disables edits and backup without a plaintext fallback
+  ---
+  duration_ms: 24.167
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-secure-editor-commands.test.ts:14:1806'
+  failureType: 'testCodeFailure'
+  error: |-
+    Secure custom-editor registration must exist.
+    + actual - expected
+    
+    + undefined
+    - 'soterai.secureEditor'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'soterai.secureEditor'
+  operator: 'strictEqual'
+  stack: |-
+    instance (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-secure-editor-commands.test.ts:49:43)
+    open (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-secure-editor-commands.test.ts:92:20)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-secure-editor-commands.test.ts:290:38)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F05-C11 encrypted backup restores a private dirty draft and rejects an issued ciphertext after tampering
+not ok 11 - F05-C11 encrypted backup restores a private dirty draft and rejects an issued ciphertext after tampering
+  ---
+  duration_ms: 22.5841
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-secure-editor-commands.test.ts:14:2419'
+  failureType: 'testCodeFailure'
+  error: |-
+    Secure custom-editor registration must exist.
+    + actual - expected
+    
+    + undefined
+    - 'soterai.secureEditor'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'soterai.secureEditor'
+  operator: 'strictEqual'
+  stack: |-
+    instance (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-secure-editor-commands.test.ts:49:43)
+    open (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-secure-editor-commands.test.ts:92:20)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-secure-editor-commands.test.ts:296:38)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F05-C12 unrecognized and cross-source backup identifiers release nothing and create no plaintext document
+not ok 12 - F05-C12 unrecognized and cross-source backup identifiers release nothing and create no plaintext document
+  ---
+  duration_ms: 22.2995
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-secure-editor-commands.test.ts:14:4350'
+  failureType: 'testCodeFailure'
+  error: |-
+    Secure custom-editor registration must exist.
+    + actual - expected
+    
+    + undefined
+    - 'soterai.secureEditor'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'soterai.secureEditor'
+  operator: 'strictEqual'
+  stack: |-
+    instance (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-secure-editor-commands.test.ts:49:43)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-secure-editor-commands.test.ts:311:20)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F05-C13 Save As requires reviewed exclusive creation of a new sensitive path in the same project
+not ok 13 - F05-C13 Save As requires reviewed exclusive creation of a new sensitive path in the same project
+  ---
+  duration_ms: 19.6886
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-secure-editor-commands.test.ts:14:5150'
+  failureType: 'testCodeFailure'
+  error: |-
+    Secure custom-editor registration must exist.
+    + actual - expected
+    
+    + undefined
+    - 'soterai.secureEditor'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'soterai.secureEditor'
+  operator: 'strictEqual'
+  stack: |-
+    instance (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-secure-editor-commands.test.ts:49:43)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-secure-editor-commands.test.ts:319:20)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F05-C14 association setup reviews native metadata diff and undo preserves unrelated workspace mappings
+not ok 14 - F05-C14 association setup reviews native metadata diff and undo preserves unrelated workspace mappings
+  ---
+  duration_ms: 25.7672
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-secure-editor-commands.test.ts:14:6213'
+  failureType: 'testCodeFailure'
+  error: |-
+    Secure custom-editor registration must exist.
+    + actual - expected
+    
+    + undefined
+    - 'soterai.secureEditor'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'soterai.secureEditor'
+  operator: 'strictEqual'
+  stack: |-
+    instance (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-secure-editor-commands.test.ts:49:43)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-secure-editor-commands.test.ts:329:5)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F05-C15 association cancellation, persistence failure and undo conflict never claim or replace unrelated mappings
+not ok 15 - F05-C15 association cancellation, persistence failure and undo conflict never claim or replace unrelated mappings
+  ---
+  duration_ms: 22.8522
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-secure-editor-commands.test.ts:14:7446'
+  failureType: 'testCodeFailure'
+  error: |-
+    Secure custom-editor registration must exist.
+    + actual - expected
+    
+    + undefined
+    - 'soterai.secureEditor'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'soterai.secureEditor'
+  operator: 'strictEqual'
+  stack: |-
+    instance (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-secure-editor-commands.test.ts:49:43)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-secure-editor-commands.test.ts:341:5)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F05-C16 encrypted recovery opens despite invalid partial original bytes; reviewed recovery save excludes concurrent edits
+not ok 16 - F05-C16 encrypted recovery opens despite invalid partial original bytes; reviewed recovery save excludes concurrent edits
+  ---
+  duration_ms: 23.0879
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-secure-editor-commands.test.ts:14:8660'
+  failureType: 'testCodeFailure'
+  error: |-
+    Secure custom-editor registration must exist.
+    + actual - expected
+    
+    + undefined
+    - 'soterai.secureEditor'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'soterai.secureEditor'
+  operator: 'strictEqual'
+  stack: |-
+    instance (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-secure-editor-commands.test.ts:49:43)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-secure-editor-commands.test.ts:352:20)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..16
+# tests 16
+# suites 0
+# pass 0
+# fail 16
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1201.8134

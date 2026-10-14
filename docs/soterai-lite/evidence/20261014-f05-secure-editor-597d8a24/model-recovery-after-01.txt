@@ -1,0 +1,268 @@
+﻿TAP version 13
+# Subtest: F05-M01 metadata is deeply frozen and reveals only revision and opaque field descriptors
+ok 1 - F05-M01 metadata is deeply frozen and reveals only revision and opaque field descriptors
+  ---
+  duration_ms: 5.5034
+  type: 'test'
+  ...
+# Subtest: F05-M02 supported assignment spacing, exports, inline comments and empty values are parsed privately
+ok 2 - F05-M02 supported assignment spacing, exports, inline comments and empty values are parsed privately
+  ---
+  duration_ms: 0.8309
+  type: 'test'
+  ...
+# Subtest: F05-M03 LF editing preserves every unrelated byte and line ending
+ok 3 - F05-M03 LF editing preserves every unrelated byte and line ending
+  ---
+  duration_ms: 0.5292
+  type: 'test'
+  ...
+# Subtest: F05-M03 CRLF editing preserves every unrelated byte and line ending
+ok 4 - F05-M03 CRLF editing preserves every unrelated byte and line ending
+  ---
+  duration_ms: 0.2132
+  type: 'test'
+  ...
+# Subtest: F05-M03 BOM editing preserves every unrelated byte and line ending
+ok 5 - F05-M03 BOM editing preserves every unrelated byte and line ending
+  ---
+  duration_ms: 0.3288
+  type: 'test'
+  ...
+# Subtest: F05-M04 duplicate names have distinct field ids and editing one preserves the other
+ok 6 - F05-M04 duplicate names have distinct field ids and editing one preserves the other
+  ---
+  duration_ms: 0.221
+  type: 'test'
+  ...
+# Subtest: F05-M05 '-quoted multiline values never create assignment-looking fields
+ok 7 - F05-M05 '-quoted multiline values never create assignment-looking fields
+  ---
+  duration_ms: 0.3235
+  type: 'test'
+  ...
+# Subtest: F05-M05 "-quoted multiline values never create assignment-looking fields
+ok 8 - F05-M05 "-quoted multiline values never create assignment-looking fields
+  ---
+  duration_ms: 0.1394
+  type: 'test'
+  ...
+# Subtest: F05-M05 `-quoted multiline values never create assignment-looking fields
+ok 9 - F05-M05 `-quoted multiline values never create assignment-looking fields
+  ---
+  duration_ms: 0.2848
+  type: 'test'
+  ...
+# Subtest: F05-M06 owner edits with spaces and punctuation round-trip through a fresh private parser
+ok 10 - F05-M06 owner edits with spaces and punctuation round-trip through a fresh private parser
+  ---
+  duration_ms: 0.5329
+  type: 'test'
+  ...
+# Subtest: F05-M07 quotes and backslashes in an owner value are encoded without changing its private value
+ok 11 - F05-M07 quotes and backslashes in an owner value are encoded without changing its private value
+  ---
+  duration_ms: 0.1897
+  type: 'test'
+  ...
+# Subtest: F05-M08 a new multiline owner value remains one field and preserves adjoining lines
+ok 12 - F05-M08 a new multiline owner value remains one field and preserves adjoining lines
+  ---
+  duration_ms: 0.2933
+  type: 'test'
+  ...
+# Subtest: F05-M09 setting an empty value is useful and does not remove its field
+ok 13 - F05-M09 setting an empty value is useful and does not remove its field
+  ---
+  duration_ms: 0.1641
+  type: 'test'
+  ...
+# Subtest: F05-M10 non-environment sensitive text is one masked metadata field with a private owner value
+ok 14 - F05-M10 non-environment sensitive text is one masked metadata field with a private owner value
+  ---
+  duration_ms: 0.1859
+  type: 'test'
+  ...
+# Subtest: F05-M11 unsupported line becomes a masked noneditable contents field and retains source bytes
+ok 15 - F05-M11 unsupported line becomes a masked noneditable contents field and retains source bytes
+  ---
+  duration_ms: 0.3693
+  type: 'test'
+  ...
+# Subtest: F05-M11 unclosed quote becomes a masked noneditable contents field and retains source bytes
+ok 16 - F05-M11 unclosed quote becomes a masked noneditable contents field and retains source bytes
+  ---
+  duration_ms: 0.1726
+  type: 'test'
+  ...
+# Subtest: F05-M11 quoted trailing syntax becomes a masked noneditable contents field and retains source bytes
+ok 17 - F05-M11 quoted trailing syntax becomes a masked noneditable contents field and retains source bytes
+  ---
+  duration_ms: 0.1145
+  type: 'test'
+  ...
+# Subtest: F05-M12 empty and comment-only environment files have no invented value fields
+ok 18 - F05-M12 empty and comment-only environment files have no invented value fields
+  ---
+  duration_ms: 0.1548
+  type: 'test'
+  ...
+# Subtest: F05-M13 constructor rejects NUL and terminal control characters in either document mode
+ok 19 - F05-M13 constructor rejects NUL and terminal control characters in either document mode
+  ---
+  duration_ms: 0.2645
+  type: 'test'
+  ...
+# Subtest: F05-M14 the 64 KiB UTF-8 input limit accepts its exact boundary and rejects byte overflow
+ok 20 - F05-M14 the 64 KiB UTF-8 input limit accepts its exact boundary and rejects byte overflow
+  ---
+  duration_ms: 0.2961
+  type: 'test'
+  ...
+# Subtest: F05-M15 exactly 256 environment fields are supported and a 257th fails closed
+ok 21 - F05-M15 exactly 256 environment fields are supported and a 257th fails closed
+  ---
+  duration_ms: 0.6832
+  type: 'test'
+  ...
+# Subtest: F05-M16 unknown field ids reveal nothing and failed edits preserve revision and draft
+ok 22 - F05-M16 unknown field ids reveal nothing and failed edits preserve revision and draft
+  ---
+  duration_ms: 0.2082
+  type: 'test'
+  ...
+# Subtest: F05-M17 owner value byte overflow cannot mutate a valid draft
+ok 23 - F05-M17 owner value byte overflow cannot mutate a valid draft
+  ---
+  duration_ms: 0.1629
+  type: 'test'
+  ...
+# Subtest: F05-M18 invalid owner value control characters leave the original revision and text intact
+ok 24 - F05-M18 invalid owner value control characters leave the original revision and text intact
+  ---
+  duration_ms: 0.4107
+  type: 'test'
+  ...
+# Subtest: F05-M19 restore privately supports undo and redo while advancing revision
+ok 25 - F05-M19 restore privately supports undo and redo while advancing revision
+  ---
+  duration_ms: 0.2106
+  type: 'test'
+  ...
+# Subtest: F05-M20 invalid restore operations retain the whole previous draft and revision
+ok 26 - F05-M20 invalid restore operations retain the whole previous draft and revision
+  ---
+  duration_ms: 0.5677
+  type: 'test'
+  ...
+# Subtest: F05-M21 owner strings are stored literally without shell interpolation
+ok 27 - F05-M21 owner strings are stored literally without shell interpolation
+  ---
+  duration_ms: 0.1985
+  type: 'test'
+  ...
+# Subtest: F05-R01 encrypted recovery round-trips its strict private payload without serialized plaintext or key
+ok 28 - F05-R01 encrypted recovery round-trips its strict private payload without serialized plaintext or key
+  ---
+  duration_ms: 10.9107
+  type: 'test'
+  ...
+# Subtest: F05-R02 repeated payloads use fresh 12-byte nonces and 16-byte authenticated tags
+ok 29 - F05-R02 repeated payloads use fresh 12-byte nonces and 16-byte authenticated tags
+  ---
+  duration_ms: 1.408
+  type: 'test'
+  ...
+# Subtest: F05-R03 encryption rejects malformed or unknown payload fields instead of retaining unsupported state
+ok 30 - F05-R03 encryption rejects malformed or unknown payload fields instead of retaining unsupported state
+  ---
+  duration_ms: 0.5276
+  type: 'test'
+  ...
+# Subtest: F05-R04 encryption and decryption require exactly 32 key bytes
+ok 31 - F05-R04 encryption and decryption require exactly 32 key bytes
+  ---
+  duration_ms: 0.781
+  type: 'test'
+  ...
+# Subtest: F05-R05 a different valid-length key cannot recover the draft
+ok 32 - F05-R05 a different valid-length key cannot recover the draft
+  ---
+  duration_ms: 1.3426
+  type: 'test'
+  ...
+# Subtest: F05-R06 ciphertext tampering fails authenticated recovery
+ok 33 - F05-R06 ciphertext tampering fails authenticated recovery
+  ---
+  duration_ms: 0.8102
+  type: 'test'
+  ...
+# Subtest: F05-R06 tag tampering fails authenticated recovery
+ok 34 - F05-R06 tag tampering fails authenticated recovery
+  ---
+  duration_ms: 0.4208
+  type: 'test'
+  ...
+# Subtest: F05-R06 nonce tampering fails authenticated recovery
+ok 35 - F05-R06 nonce tampering fails authenticated recovery
+  ---
+  duration_ms: 0.3073
+  type: 'test'
+  ...
+# Subtest: F05-R07 source and root header changes fail even when supplied binding matches the altered header
+ok 36 - F05-R07 source and root header changes fail even when supplied binding matches the altered header
+  ---
+  duration_ms: 0.8353
+  type: 'test'
+  ...
+# Subtest: F05-R08 a valid envelope cannot be opened under another source or project root
+ok 37 - F05-R08 a valid envelope cannot be opened under another source or project root
+  ---
+  duration_ms: 1.5524
+  type: 'test'
+  ...
+# Subtest: F05-R09 malformed JSON, arrays and duplicated header keys fail closed
+ok 38 - F05-R09 malformed JSON, arrays and duplicated header keys fail closed
+  ---
+  duration_ms: 0.6218
+  type: 'test'
+  ...
+# Subtest: F05-R10 nonce, tag and ciphertext use strict canonical base64 and exact nonce/tag sizes
+ok 39 - F05-R10 nonce, tag and ciphertext use strict canonical base64 and exact nonce/tag sizes
+  ---
+  duration_ms: 1.1237
+  type: 'test'
+  ...
+# Subtest: F05-R11 unknown, missing or incorrectly typed envelope fields cannot be recovered
+ok 40 - F05-R11 unknown, missing or incorrectly typed envelope fields cannot be recovered
+  ---
+  duration_ms: 0.8767
+  type: 'test'
+  ...
+# Subtest: F05-R12 recovery rejects an envelope exceeding 512 KiB before accepting any draft
+ok 41 - F05-R12 recovery rejects an envelope exceeding 512 KiB before accepting any draft
+  ---
+  duration_ms: 2.6508
+  type: 'test'
+  ...
+# Subtest: F05-R13 saved and draft text have independent 64 KiB UTF-8 bounds
+ok 42 - F05-R13 saved and draft text have independent 64 KiB UTF-8 bounds
+  ---
+  duration_ms: 8.0665
+  type: 'test'
+  ...
+# Subtest: F05-R14 encrypting and decrypting do not mutate caller payload or key buffers
+ok 43 - F05-R14 encrypting and decrypting do not mutate caller payload or key buffers
+  ---
+  duration_ms: 0.5439
+  type: 'test'
+  ...
+1..43
+# tests 43
+# suites 0
+# pass 43
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 994.1093

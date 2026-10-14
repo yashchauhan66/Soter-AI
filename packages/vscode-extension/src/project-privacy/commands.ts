@@ -9,6 +9,7 @@ import { assertWorkspaceFileUri } from "../security/WorkspacePathGuard";
 import { ProjectFileAccess, type CapturedFile, type AccessReceipt, type AccessResult, type RequestSurface } from "./ProjectFileAccess";
 import { ProjectReadTerminal } from "./ReadTerminal";
 import { openProjectPrivacyPanel } from "./panel";
+import { registerSecureEditor } from "./SecureEditor";
 import { restrictionSaveEnabled, requireRestrictionSave, assertRestrictionWorkspace, RestrictionUnavailable, restrictionResult,
     withManualRestriction, manualRestrictionPending, manualRestrictionIntentPending, onDidChangeManualRestriction } from "../ai-boundary/RestrictionOperation";
 
@@ -54,6 +55,7 @@ export function approvalMessage(receipt: AccessReceipt): string {
 }
 
 export function registerProjectPrivacyCommands(context: vscode.ExtensionContext): void {
+    registerSecureEditor(context);
     const pendingSensitiveWrites = new Map<string, number>();
     const fileKey = (uri: vscode.Uri) => path.resolve(uri.fsPath).toLowerCase();
     const enabled = () => vscode.workspace.isTrusted

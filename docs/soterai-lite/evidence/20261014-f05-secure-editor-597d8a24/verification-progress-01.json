@@ -1,0 +1,226 @@
+{
+  "schemaVersion": 1,
+  "status": "VERIFYING_INCOMPLETE",
+  "feature": "F05",
+  "sourceSha256": "a6cac9474df7470483852689ed72832cbb64f26999243b4d9de766c0c23a3c68",
+  "focused": {
+    "tests": 75,
+    "pass": 75,
+    "fail": 0
+  },
+  "full": {
+    "tests": 1055,
+    "suites": 106,
+    "pass": 1052,
+    "fail": 0,
+    "skip": 3
+  },
+  "historicalFull02": {
+    "tests": 1055,
+    "pass": 1051,
+    "fail": 1,
+    "skip": 3,
+    "cause": "Generated readiness document stale; regenerated before full03"
+  },
+  "vsix": {
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-f05-20261014-attempt01.vsix",
+    "bytes": 1351730,
+    "sha256": "6153bf6c2627473cfc413c1524654390acdb1ef54a8a3be6ccf799ff08aa6b28",
+    "runtimeSha256": "d5131b2d73645b60b4b3c9c7eac155696a2aa6a29853ca20e0faca31d1f0ded2",
+    "entries": 14
+  },
+  "nativeAttempt01": {
+    "passed": 6,
+    "failed": 1,
+    "sourceDocuments": 0,
+    "observations": [
+      {
+        "id": "F05-H01",
+        "scope": "Byte-identical packaged runtime registers the native CustomDocument provider with multiple-view support in the isolated developer profile.",
+        "status": "PASS"
+      },
+      {
+        "id": "F05-H02",
+        "scope": "Actual open command produces TabInputCustom and masked native HTML without opening any original TextDocument.",
+        "status": "PASS"
+      },
+      {
+        "id": "F05-H03",
+        "scope": "Scripted native confirmation gates one-field payload; real ten-second hiding and all-value safe-reader masking hold.",
+        "status": "PASS"
+      },
+      {
+        "id": "F05-H04",
+        "scope": "Native split creates two custom tabs sharing one CustomDocument, and only the initiating real panel receives a revealed value.",
+        "status": "PASS"
+      },
+      {
+        "id": "F05-H05",
+        "scope": "Private password edit emits a real custom edit event; native Undo/Redo/Save preserve unrelated bytes and clean the saved custom tab.",
+        "status": "PASS"
+      },
+      {
+        "id": "F05-H06",
+        "scope": "Native close/reopen retains the saved private value while default panels and original TextDocument count remain masked/zero.",
+        "status": "PASS"
+      },
+      {
+        "id": "F05-H07",
+        "scope": "Actual workbench backup for the final dirty revision produces issued authenticated ciphertext, with native SecretStorage calls and hot-exit enabled.",
+        "status": "FAIL",
+        "diagnostic": "AssertionError"
+      }
+    ]
+  },
+  "failedExternalCopies": [
+    {
+      "source": "D:\\SoterAI-Lite-test-profiles\\f05-native-host-20261014T132715Z-1e37b2d1\\save-results.json",
+      "target": "docs/soterai-lite/evidence/20261014-f05-secure-editor-597d8a24/f05-native-host-20261014T132715Z-1e37b2d1/save-results.json",
+      "sha256": "64d0124af7da2ed2512cc6df14a179a7d70815e52b1ca768b1baee63112d2aaa",
+      "bytes": 4100
+    },
+    {
+      "source": "D:\\SoterAI-Lite-test-profiles\\f05-native-host-20261014T132715Z-1e37b2d1\\save-results.json.driver-error.json",
+      "target": "docs/soterai-lite/evidence/20261014-f05-secure-editor-597d8a24/f05-native-host-20261014T132715Z-1e37b2d1/save-results.json.driver-error.json",
+      "sha256": "c9e5115a8a76093baff62ed54f3133ffc2ddb7ec23c35b6f834de603689966d1",
+      "bytes": 52
+    }
+  ],
+  "checks": [
+    {
+      "name": "typecheck-06",
+      "output": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261014-f05-secure-editor-597d8a24\\typecheck-06.txt",
+      "observedAt": "2026-10-14T13:18:11.8667197Z",
+      "exitCode": 0,
+      "arguments": [
+        "node_modules/typescript/bin/tsc",
+        "-p",
+        "packages/vscode-extension/tsconfig.json",
+        "--noEmit"
+      ],
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+      "file": "node"
+    },
+    {
+      "name": "focused-after-03",
+      "output": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261014-f05-secure-editor-597d8a24\\focused-after-03.txt",
+      "observedAt": "2026-10-14T13:18:20.3445098Z",
+      "exitCode": 0,
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/lite-secure-editor-model.test.ts",
+        "packages/vscode-extension/src/__tests__/lite-secure-editor-recovery.test.ts",
+        "packages/vscode-extension/src/__tests__/lite-secure-editor-commands.test.ts"
+      ],
+      "sha256": "9A2E80E9D5B6D9118D5DEDABFE358C3808D6BD2F0C53A5CFE727EFF5DCFE7833",
+      "file": "node"
+    },
+    {
+      "name": "full-tests-02",
+      "output": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261014-f05-secure-editor-597d8a24\\full-tests-02.txt",
+      "observedAt": "2026-10-14T13:19:34.0554250Z",
+      "exitCode": 1,
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "../vscode-extension/src/__tests__/**/*.test.ts"
+      ],
+      "sha256": "BA0915CEA2DF17B79919976813959951A0C33543EA654D2E3A6AA347EA2F53AE",
+      "file": "node"
+    },
+    {
+      "name": "generate-readiness-02",
+      "output": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261014-f05-secure-editor-597d8a24\\generate-readiness-02.txt",
+      "observedAt": "2026-10-14T13:22:56.1249386Z",
+      "exitCode": 0,
+      "arguments": [
+        "packages/vscode-extension/scripts/generate-readiness.mjs"
+      ],
+      "sha256": "B6D9F2D83B0CDF237D087269167E179C1057AF8DDE4312E59B137F0DF729E65F",
+      "file": "node"
+    },
+    {
+      "name": "full-tests-03",
+      "output": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261014-f05-secure-editor-597d8a24\\full-tests-03.txt",
+      "observedAt": "2026-10-14T13:24:26.0411368Z",
+      "exitCode": 0,
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "../vscode-extension/src/__tests__/**/*.test.ts"
+      ],
+      "sha256": "6EF7EA271D5775B0D0575C74570D87DCC4A19039481C8A0AFD9DC0F9A508D3C3",
+      "file": "node"
+    },
+    {
+      "name": "package-01",
+      "output": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261014-f05-secure-editor-597d8a24\\package-01.txt",
+      "observedAt": "2026-10-14T13:24:39.8649223Z",
+      "exitCode": 0,
+      "arguments": [
+        "packages/soterai-lite/scripts/package.cjs",
+        "soterai-lite-0.7.0-f05-20261014-attempt01.vsix"
+      ],
+      "sha256": "0A93668776EE3A44048D9AF2C9420D859C201F55EE4CA134EABD4C40AD9B46AC",
+      "file": "node"
+    },
+    {
+      "name": "vsix-inspection-01",
+      "output": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261014-f05-secure-editor-597d8a24\\vsix-inspection-01.txt",
+      "observedAt": "2026-10-14T13:24:41.8745413Z",
+      "exitCode": 0,
+      "arguments": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "docs/soterai-lite/evidence/20261014-f05-secure-editor-597d8a24/inspect-vsix-01.ps1"
+      ],
+      "sha256": "7CFA83995D4BC3EADFF908A9ABC37841A760D6B415C03418BFAF43B71D9D036D",
+      "file": "powershell"
+    },
+    {
+      "name": "host-build-01",
+      "output": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261014-f05-secure-editor-597d8a24\\host-build-01.txt",
+      "observedAt": "2026-10-14T13:24:42.2352271Z",
+      "exitCode": 0,
+      "arguments": [
+        "docs/soterai-lite/evidence/20261014-f05-secure-editor-597d8a24/build-host-01.cjs"
+      ],
+      "sha256": "45B307E4BA603B5E8E1B687DF71EC145007A72649A856B349C7C02CB7440E507",
+      "file": "node"
+    },
+    {
+      "name": "native-host-launch-01",
+      "output": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261014-f05-secure-editor-597d8a24\\native-host-launch-01.txt",
+      "observedAt": "2026-10-14T13:27:47.4333092Z",
+      "exitCode": 1,
+      "arguments": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "docs/soterai-lite/evidence/20261014-f05-secure-editor-597d8a24/run-native-02.ps1",
+        "-CodePath",
+        "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe",
+        "-HostTestsPath",
+        "docs/soterai-lite/evidence/20261014-f05-secure-editor-597d8a24/prebuilt-host-01/lite-secure-editor-host.js",
+        "-ExtensionRoot",
+        "docs/soterai-lite/evidence/20261014-f05-secure-editor-597d8a24/vsix-extracted-01/extension"
+      ],
+      "sha256": "A4940712D8A306FDC5F5DF1DDCF968FAAF390B4D364B6B4CE218711B094D2EE8",
+      "file": "powershell"
+    }
+  ],
+  "independence": "LOW",
+  "rating": "PENDING",
+  "catalog": "44_UNVERIFIED",
+  "next": "Correct and verify native backup observation lineage; native reload/affected hosts/scoped commit remain"
+}

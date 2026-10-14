@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-10-14T13:33:42.390Z",
+  "phase": "save",
+  "syntheticOnly": true,
+  "workspace": "d:\\SoterAI-Lite-test-profiles\\f05-native-host-20261014T133305Z-f002be87\\workspace",
+  "declaredProfilePath": "D:\\SoterAI-Lite-test-profiles\\f05-native-host-20261014T133305Z-f002be87\\profile",
+  "hostVersion": "1.141.1",
+  "extensionBundleSha256": "d5131b2d73645b60b4b3c9c7eac155696a2aa6a29853ca20e0faca31d1f0ded2",
+  "currentDeveloperBundleSha256": "d5131b2d73645b60b4b3c9c7eac155696a2aa6a29853ca20e0faca31d1f0ded2",
+  "hostProbeSha256": "f7d5773d8f701c7d4d7ae0beba2362f06eb27ff3b34496f6222a7ff098fd61a4",
+  "observations": [
+    {
+      "id": "F05-H01",
+      "scope": "Byte-identical packaged runtime registers the native CustomDocument provider with multiple-view support in the isolated developer profile.",
+      "status": "PASS"
+    },
+    {
+      "id": "F05-H02",
+      "scope": "Actual open command produces TabInputCustom and masked native HTML without opening any original TextDocument.",
+      "status": "PASS"
+    },
+    {
+      "id": "F05-H03",
+      "scope": "Scripted native confirmation gates one-field payload; real ten-second hiding and all-value safe-reader masking hold.",
+      "status": "FAIL",
+      "diagnostic": "AssertionError"
+    },
+    {
+      "id": "F05-H04",
+      "scope": "Native split creates two custom tabs sharing one CustomDocument, and only the initiating real panel receives a revealed value.",
+      "status": "FAIL",
+      "diagnostic": "AssertionError"
+    },
+    {
+      "id": "F05-H05",
+      "scope": "Private password edit emits a real custom edit event; native Undo/Redo/Save preserve unrelated bytes and clean the saved custom tab.",
+      "status": "PASS"
+    },
+    {
+      "id": "F05-H06",
+      "scope": "Native close/reopen retains the saved private value while default panels and original TextDocument count remain masked/zero.",
+      "status": "FAIL",
+      "diagnostic": "AssertionError"
+    },
+    {
+      "id": "F05-H07",
+      "scope": "Actual workbench backup for the final dirty revision produces issued authenticated ciphertext, with native SecretStorage calls and hot-exit enabled.",
+      "status": "FAIL",
+      "diagnostic": "AssertionError"
+    }
+  ],
+  "evidence": {
+    "sourceInitialDigest": "ed88b40d2af9f531f57929b7cdd99ea0a803b36fcdc6769c250c165c54022e58",
+    "nativeCustomProviderRegistered": true,
+    "defaultHtmlDigest": "5901f51f47059eb99d380790ce66bf1834794ddc652869e2ba65b1c6b357f3f6",
+    "originalTextDocumentsZero": true,
+    "nativeUndoRedoSaveObserved": true,
+    "savedSourceDigest": "aa4b9df08dd2093cc87b888333bcbab34083374bebf144a3bd78a91a1ed1b860",
+    "finalDirtyNativeBackupMatch": {
+      "revision": 1,
+      "observedBackupRows": 1,
+      "currentDocumentRows": 1,
+      "currentRevisionRows": 1,
+      "completedMatchingRows": 1
+    }
+  },
+  "sourceDocumentCalls": 0,
+  "sourceDocumentEvents": 0,
+  "nativeOpenCalls": 2,
+  "nativeResolvedPanels": 3,
+  "nativeEditEvents": 2,
+  "nativeSaveCalls": 1,
+  "nativeSaveFailures": 0,
+  "nativeBackupCalls": 1,
+  "nativeBackupFailures": 0,
+  "nativeSecretStorageStores": 6,
+  "nativeSecretStorageGets": 10,
+  "scriptedNativeModalCalls": 2,
+  "scriptedPasswordInputCalls": 2,
+  "passed": 3,
+  "failed": 4,
+  "notRun": 0,
+  "actualNativeHotExitPending": false,
+  "identityScope": "Byte-identical packaged runtime, actual persistent developer context, native CustomDocument/WebviewPanel/TabInputCustom/workbench operations. Not clean-profile install proof.",
+  "interactionScope": "Actual registered native-panel listener and native modal/password API arguments with scripted same-instance owner decisions; no browser DOM automation or human owner-presence proof.",
+  "recoveryScope": "Save phase observes actual workbench backup; reload independently requires workbench-supplied issued backupId. Final closing backup may be generated after the save-phase probe. No manual-provider backup/restoration fallback is counted as native recovery.",
+  "custodyScope": "Synthetic isolated native SecretStorage store/get use; not independent OS custody certification.",
+  "independence": "LOW",
+  "ownerPresence": "SCRIPTED_SAME_EXTENSION_API_INSTANCE",
+  "externalAgents": "NOT_TESTED"
+}

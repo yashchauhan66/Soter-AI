@@ -107,7 +107,8 @@
         "soterai.protection.enabled",
         "soterai.autoVaultMigration.enabled",
         "soterai.dependencyGuard.osvMode",
-        "soterai.secretInterceptor.enabled"
+        "soterai.secretInterceptor.enabled",
+        "soterai.lite.secureEditor"
       ]
     }
   },
@@ -1037,6 +1038,21 @@
         "command": "soterai.checkEgressPayload",
         "title": "Check Egress Payload (API)",
         "category": "SoterAI"
+      },
+      {
+        "command": "soterai.openSecureEditor",
+        "title": "Open Masked Owner Editor",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.configureSecureEditorAssociation",
+        "title": "Use Masked Editor for Project Environments",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.undoSecureEditorAssociation",
+        "title": "Restore Project Editor Associations",
+        "category": "SoterAI"
       }
     ],
     "viewsContainers": {
@@ -1573,6 +1589,12 @@
           "default": "ask",
           "markdownDescription": "How Dependency Guard obtains CVE advisories. `ask` prompts before contacting [OSV](https://osv.dev) (`api.osv.dev`); `always` queries OSV online (package name + version only); `never` uses local heuristics only (typosquat, unpinned, remote URL, install scripts). **Advisory only** — cannot block installs outside SoterAI-reviewed commands. SoterAI is not a full SCA product; OSV is the advisory source when online.",
           "scope": "machine"
+        },
+        "soterai.lite.secureEditor": {
+          "type": "boolean",
+          "default": true,
+          "scope": "machine",
+          "description": "Enable the masked local owner editor with per-field native reveal, private edits and encrypted recovery. Turning this off withholds editor operations and hides revealed values; original files remain available to direct filesystem tools."
         }
       }
     },
@@ -1683,6 +1705,11 @@
           "command": "soterai.addFileToProtected",
           "group": "2_protect@1",
           "when": "!explorerResourceIsFolder"
+        },
+        {
+          "command": "soterai.openSecureEditor",
+          "when": "resourceScheme == file",
+          "group": "privacy@5"
         }
       ],
       "scm/title": [
@@ -1710,6 +1737,18 @@
         }
       ],
       "commandPalette": [
+        {
+          "command": "soterai.openSecureEditor",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.configureSecureEditorAssociation",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.undoSecureEditorAssociation",
+          "when": "soterai.advancedCommands"
+        },
         {
           "command": "soterai.reviewSensitiveAIRules",
           "when": "soterai.advancedCommands"
@@ -2420,6 +2459,21 @@
             ]
           }
         ]
+      }
+    ],
+    "customEditors": [
+      {
+        "viewType": "soterai.secureEditor",
+        "displayName": "SoterAI Secure Environment Editor",
+        "selector": [
+          {
+            "filenamePattern": "**/.env"
+          },
+          {
+            "filenamePattern": "**/.env.*"
+          }
+        ],
+        "priority": "option"
       }
     ]
   },

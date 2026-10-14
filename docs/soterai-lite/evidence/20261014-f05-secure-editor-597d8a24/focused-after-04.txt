@@ -1,0 +1,468 @@
+﻿TAP version 13
+# (node:6668) ExperimentalWarning: The MockTimers API is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: F05-C01 actual native registration and open command select the optional masked editor and ignore supplied grants
+ok 1 - F05-C01 actual native registration and open command select the optional masked editor and ignore supplied grants
+  ---
+  duration_ms: 189.8383
+  type: 'test'
+  ...
+# Subtest: F05-C02 custom open starts masked, excludes multiline value data, and a plaintext warning never reads getText
+ok 2 - F05-C02 custom open starts masked, excludes multiline value data, and a plaintext warning never reads getText
+  ---
+  duration_ms: 361.4395
+  type: 'test'
+  ...
+# Subtest: F05-C03 machine withdrawal, trust loss and unsupported public/outside resources refuse custom opens
+ok 3 - F05-C03 machine withdrawal, trust loss and unsupported public/outside resources refuse custom opens
+  ---
+  duration_ms: 193.2451
+  type: 'test'
+  ...
+# Subtest: F05-C04 per-field reveal requires current opaque binding and a native owner confirmation
+ok 4 - F05-C04 per-field reveal requires current opaque binding and a native owner confirmation
+  ---
+  duration_ms: 128.0917
+  type: 'test'
+  ...
+# Subtest: F05-C05 an approved one-field reveal reaches only its view, stays masked in safe reads, and expires at ten seconds
+ok 5 - F05-C05 an approved one-field reveal reaches only its view, stays masked in safe reads, and expires at ten seconds
+  ---
+  duration_ms: 476.6242
+  type: 'test'
+  ...
+# Subtest: F05-C06 hide, split visibility and disposed/replayed sessions cannot retain or reacquire a reveal
+ok 6 - F05-C06 hide, split visibility and disposed/replayed sessions cannot retain or reacquire a reveal
+  ---
+  duration_ms: 335.6699
+  type: 'test'
+  ...
+# Subtest: F05-C07 edits use an empty native password input, reject payload values and retain masking until save
+ok 7 - F05-C07 edits use an empty native password input, reject payload values and retain masking until save
+  ---
+  duration_ms: 153.0487
+  type: 'test'
+  ...
+# Subtest: F05-C08 actual edit event undo/redo and save preserve unrelated source bytes and reopen masked
+ok 8 - F05-C08 actual edit event undo/redo and save preserve unrelated source bytes and reopen masked
+  ---
+  duration_ms: 571.0965
+  type: 'test'
+  ...
+# Subtest: F05-C09 cancelled edit/save and a dirty external conflict preserve the draft and do not overwrite the source
+ok 9 - F05-C09 cancelled edit/save and a dirty external conflict preserve the draft and do not overwrite the source
+  ---
+  duration_ms: 336.115
+  type: 'test'
+  ...
+# Subtest: F05-C10 unavailable verified SecretStorage disables edits and backup without a plaintext fallback
+ok 10 - F05-C10 unavailable verified SecretStorage disables edits and backup without a plaintext fallback
+  ---
+  duration_ms: 165.4732
+  type: 'test'
+  ...
+# Subtest: F05-C11 encrypted backup restores a private dirty draft and rejects an issued ciphertext after tampering
+ok 11 - F05-C11 encrypted backup restores a private dirty draft and rejects an issued ciphertext after tampering
+  ---
+  duration_ms: 363.3742
+  type: 'test'
+  ...
+# Subtest: F05-C12 unrecognized and cross-source backup identifiers release nothing and create no plaintext document
+ok 12 - F05-C12 unrecognized and cross-source backup identifiers release nothing and create no plaintext document
+  ---
+  duration_ms: 227.6283
+  type: 'test'
+  ...
+# Subtest: F05-C13 Save As requires reviewed exclusive creation of a new sensitive path in the same project
+ok 13 - F05-C13 Save As requires reviewed exclusive creation of a new sensitive path in the same project
+  ---
+  duration_ms: 364.7356
+  type: 'test'
+  ...
+# Subtest: F05-C14 association setup reviews native metadata diff and undo preserves unrelated workspace mappings
+ok 14 - F05-C14 association setup reviews native metadata diff and undo preserves unrelated workspace mappings
+  ---
+  duration_ms: 38.5784
+  type: 'test'
+  ...
+# Subtest: F05-C15 association cancellation, persistence failure and undo conflict never claim or replace unrelated mappings
+ok 15 - F05-C15 association cancellation, persistence failure and undo conflict never claim or replace unrelated mappings
+  ---
+  duration_ms: 55.4028
+  type: 'test'
+  ...
+# Subtest: F05-C16 encrypted recovery opens despite invalid partial original bytes; reviewed recovery save excludes concurrent edits
+ok 16 - F05-C16 encrypted recovery opens despite invalid partial original bytes; reviewed recovery save excludes concurrent edits
+  ---
+  duration_ms: 293.0807
+  type: 'test'
+  ...
+# Subtest: F05-C17 a flag off/on transition burns a reveal confirmation that was already pending
+ok 17 - F05-C17 a flag off/on transition burns a reveal confirmation that was already pending
+  ---
+  duration_ms: 88.4294
+  type: 'test'
+  ...
+# Subtest: F05-C18 a flag off/on transition burns a password edit input that was already pending
+ok 18 - F05-C18 a flag off/on transition burns a password edit input that was already pending
+  ---
+  duration_ms: 166.1658
+  type: 'test'
+  ...
+# Subtest: F05-C19 an owner-value delivery is bound to the initiating view's current session, revision and field
+ok 19 - F05-C19 an owner-value delivery is bound to the initiating view's current session, revision and field
+  ---
+  duration_ms: 92.6838
+  type: 'test'
+  ...
+# Subtest: F05-C20 the actual masked-page script ignores delayed owner values from stale sessions and revisions
+ok 20 - F05-C20 the actual masked-page script ignores delayed owner values from stale sessions and revisions
+  ---
+  duration_ms: 54.6053
+  type: 'test'
+  ...
+# Subtest: F05-C21 association updates require observed persistence and a no-op undo retains its restoration receipt
+ok 21 - F05-C21 association updates require observed persistence and a no-op undo retains its restoration receipt
+  ---
+  duration_ms: 45.8276
+  type: 'test'
+  ...
+# Subtest: F05-C22 a source change during native Save As confirmation cannot export the private draft
+ok 22 - F05-C22 a source change during native Save As confirmation cannot export the private draft
+  ---
+  duration_ms: 202.0918
+  type: 'test'
+  ...
+# Subtest: F05-C23 the actual source watcher immediately clears a revealed owner value when the original changes
+ok 23 - F05-C23 the actual source watcher immediately clears a revealed owner value when the original changes
+  ---
+  duration_ms: 87.4204
+  type: 'test'
+  ...
+# Subtest: F05-C24 reopening a partial original discovers issued implicit edit recovery only after native metadata consent
+ok 24 - F05-C24 reopening a partial original discovers issued implicit edit recovery only after native metadata consent
+  ---
+  duration_ms: 480.6174
+  type: 'test'
+  ...
+# Subtest: F05-C25 an association write applied before throwing preserves the receipt needed for owner undo
+ok 25 - F05-C25 an association write applied before throwing preserves the receipt needed for owner undo
+  ---
+  duration_ms: 41.0132
+  type: 'test'
+  ...
+# Subtest: F05-C26 resolving a new split view immediately masks an already revealed sibling
+ok 26 - F05-C26 resolving a new split view immediately masks an already revealed sibling
+  ---
+  duration_ms: 106.4507
+  type: 'test'
+  ...
+# Subtest: F05-C27 a held recovered save cannot run undo or redo against its captured revision
+ok 27 - F05-C27 a held recovered save cannot run undo or redo against its captured revision
+  ---
+  duration_ms: 465.857
+  type: 'test'
+  ...
+# Subtest: F05-C28 a source change while encrypted key storage is held cannot publish or apply the candidate edit
+ok 28 - F05-C28 a source change while encrypted key storage is held cannot publish or apply the candidate edit
+  ---
+  duration_ms: 126.0081
+  type: 'test'
+  ...
+# Subtest: F05-C29 a revoked candidate cannot displace the previous successful draft in implicit recovery
+ok 29 - F05-C29 a revoked candidate cannot displace the previous successful draft in implicit recovery
+  ---
+  duration_ms: 223.3232
+  type: 'test'
+  ...
+# Subtest: F05-C30 cancellation during final destination validation prevents Save As creation
+ok 30 - F05-C30 cancellation during final destination validation prevents Save As creation
+  ---
+  duration_ms: 175.0124
+  type: 'test'
+  ...
+# Subtest: F05-C33 unrelated public-file watcher activity leaves a valid owner reveal active until hide
+ok 31 - F05-C33 unrelated public-file watcher activity leaves a valid owner reveal active until hide
+  ---
+  duration_ms: 88.3811
+  type: 'test'
+  ...
+# Subtest: F05-C31 actual drift monitor generic pending revocation does not cancel this editor's own guarded save
+ok 32 - F05-C31 actual drift monitor generic pending revocation does not cancel this editor's own guarded save
+  ---
+  duration_ms: 182.3287
+  type: 'test'
+  ...
+# Subtest: F05-C32 explicit manual restriction intent still burns a held recovery-save approval with the actual drift monitor
+ok 33 - F05-C32 explicit manual restriction intent still burns a held recovery-save approval with the actual drift monitor
+  ---
+  duration_ms: 209.8085
+  type: 'test'
+  ...
+# Subtest: F05-M01 metadata is deeply frozen and reveals only revision and opaque field descriptors
+ok 34 - F05-M01 metadata is deeply frozen and reveals only revision and opaque field descriptors
+  ---
+  duration_ms: 3.0131
+  type: 'test'
+  ...
+# Subtest: F05-M02 supported assignment spacing, exports, inline comments and empty values are parsed privately
+ok 35 - F05-M02 supported assignment spacing, exports, inline comments and empty values are parsed privately
+  ---
+  duration_ms: 0.8417
+  type: 'test'
+  ...
+# Subtest: F05-M03 LF editing preserves every unrelated byte and line ending
+ok 36 - F05-M03 LF editing preserves every unrelated byte and line ending
+  ---
+  duration_ms: 1.3815
+  type: 'test'
+  ...
+# Subtest: F05-M03 CRLF editing preserves every unrelated byte and line ending
+ok 37 - F05-M03 CRLF editing preserves every unrelated byte and line ending
+  ---
+  duration_ms: 0.2523
+  type: 'test'
+  ...
+# Subtest: F05-M03 BOM editing preserves every unrelated byte and line ending
+ok 38 - F05-M03 BOM editing preserves every unrelated byte and line ending
+  ---
+  duration_ms: 0.4709
+  type: 'test'
+  ...
+# Subtest: F05-M04 duplicate names have distinct field ids and editing one preserves the other
+ok 39 - F05-M04 duplicate names have distinct field ids and editing one preserves the other
+  ---
+  duration_ms: 0.274
+  type: 'test'
+  ...
+# Subtest: F05-M05 '-quoted multiline values never create assignment-looking fields
+ok 40 - F05-M05 '-quoted multiline values never create assignment-looking fields
+  ---
+  duration_ms: 0.3388
+  type: 'test'
+  ...
+# Subtest: F05-M05 "-quoted multiline values never create assignment-looking fields
+ok 41 - F05-M05 "-quoted multiline values never create assignment-looking fields
+  ---
+  duration_ms: 0.1513
+  type: 'test'
+  ...
+# Subtest: F05-M05 `-quoted multiline values never create assignment-looking fields
+ok 42 - F05-M05 `-quoted multiline values never create assignment-looking fields
+  ---
+  duration_ms: 0.3224
+  type: 'test'
+  ...
+# Subtest: F05-M06 owner edits with spaces and punctuation round-trip through a fresh private parser
+ok 43 - F05-M06 owner edits with spaces and punctuation round-trip through a fresh private parser
+  ---
+  duration_ms: 0.5383
+  type: 'test'
+  ...
+# Subtest: F05-M07 quotes and backslashes in an owner value are encoded without changing its private value
+ok 44 - F05-M07 quotes and backslashes in an owner value are encoded without changing its private value
+  ---
+  duration_ms: 0.2173
+  type: 'test'
+  ...
+# Subtest: F05-M08 a new multiline owner value remains one field and preserves adjoining lines
+ok 45 - F05-M08 a new multiline owner value remains one field and preserves adjoining lines
+  ---
+  duration_ms: 0.3872
+  type: 'test'
+  ...
+# Subtest: F05-M09 setting an empty value is useful and does not remove its field
+ok 46 - F05-M09 setting an empty value is useful and does not remove its field
+  ---
+  duration_ms: 0.3778
+  type: 'test'
+  ...
+# Subtest: F05-M10 non-environment sensitive text is one masked metadata field with a private owner value
+ok 47 - F05-M10 non-environment sensitive text is one masked metadata field with a private owner value
+  ---
+  duration_ms: 0.4043
+  type: 'test'
+  ...
+# Subtest: F05-M11 unsupported line becomes a masked noneditable contents field and retains source bytes
+ok 48 - F05-M11 unsupported line becomes a masked noneditable contents field and retains source bytes
+  ---
+  duration_ms: 0.66
+  type: 'test'
+  ...
+# Subtest: F05-M11 unclosed quote becomes a masked noneditable contents field and retains source bytes
+ok 49 - F05-M11 unclosed quote becomes a masked noneditable contents field and retains source bytes
+  ---
+  duration_ms: 0.2483
+  type: 'test'
+  ...
+# Subtest: F05-M11 quoted trailing syntax becomes a masked noneditable contents field and retains source bytes
+ok 50 - F05-M11 quoted trailing syntax becomes a masked noneditable contents field and retains source bytes
+  ---
+  duration_ms: 0.1374
+  type: 'test'
+  ...
+# Subtest: F05-M12 empty and comment-only environment files have no invented value fields
+ok 51 - F05-M12 empty and comment-only environment files have no invented value fields
+  ---
+  duration_ms: 0.1755
+  type: 'test'
+  ...
+# Subtest: F05-M13 constructor rejects NUL and terminal control characters in either document mode
+ok 52 - F05-M13 constructor rejects NUL and terminal control characters in either document mode
+  ---
+  duration_ms: 0.2861
+  type: 'test'
+  ...
+# Subtest: F05-M14 the 64 KiB UTF-8 input limit accepts its exact boundary and rejects byte overflow
+ok 53 - F05-M14 the 64 KiB UTF-8 input limit accepts its exact boundary and rejects byte overflow
+  ---
+  duration_ms: 0.2738
+  type: 'test'
+  ...
+# Subtest: F05-M15 exactly 256 environment fields are supported and a 257th fails closed
+ok 54 - F05-M15 exactly 256 environment fields are supported and a 257th fails closed
+  ---
+  duration_ms: 0.7388
+  type: 'test'
+  ...
+# Subtest: F05-M16 unknown field ids reveal nothing and failed edits preserve revision and draft
+ok 55 - F05-M16 unknown field ids reveal nothing and failed edits preserve revision and draft
+  ---
+  duration_ms: 0.1951
+  type: 'test'
+  ...
+# Subtest: F05-M17 owner value byte overflow cannot mutate a valid draft
+ok 56 - F05-M17 owner value byte overflow cannot mutate a valid draft
+  ---
+  duration_ms: 0.2054
+  type: 'test'
+  ...
+# Subtest: F05-M18 invalid owner value control characters leave the original revision and text intact
+ok 57 - F05-M18 invalid owner value control characters leave the original revision and text intact
+  ---
+  duration_ms: 0.429
+  type: 'test'
+  ...
+# Subtest: F05-M19 restore privately supports undo and redo while advancing revision
+ok 58 - F05-M19 restore privately supports undo and redo while advancing revision
+  ---
+  duration_ms: 0.2178
+  type: 'test'
+  ...
+# Subtest: F05-M20 invalid restore operations retain the whole previous draft and revision
+ok 59 - F05-M20 invalid restore operations retain the whole previous draft and revision
+  ---
+  duration_ms: 0.56
+  type: 'test'
+  ...
+# Subtest: F05-M21 owner strings are stored literally without shell interpolation
+ok 60 - F05-M21 owner strings are stored literally without shell interpolation
+  ---
+  duration_ms: 0.1641
+  type: 'test'
+  ...
+# Subtest: F05-R01 encrypted recovery round-trips its strict private payload without serialized plaintext or key
+ok 61 - F05-R01 encrypted recovery round-trips its strict private payload without serialized plaintext or key
+  ---
+  duration_ms: 5.4468
+  type: 'test'
+  ...
+# Subtest: F05-R02 repeated payloads use fresh 12-byte nonces and 16-byte authenticated tags
+ok 62 - F05-R02 repeated payloads use fresh 12-byte nonces and 16-byte authenticated tags
+  ---
+  duration_ms: 1.6019
+  type: 'test'
+  ...
+# Subtest: F05-R03 encryption rejects malformed or unknown payload fields instead of retaining unsupported state
+ok 63 - F05-R03 encryption rejects malformed or unknown payload fields instead of retaining unsupported state
+  ---
+  duration_ms: 0.6708
+  type: 'test'
+  ...
+# Subtest: F05-R04 encryption and decryption require exactly 32 key bytes
+ok 64 - F05-R04 encryption and decryption require exactly 32 key bytes
+  ---
+  duration_ms: 1.1128
+  type: 'test'
+  ...
+# Subtest: F05-R05 a different valid-length key cannot recover the draft
+ok 65 - F05-R05 a different valid-length key cannot recover the draft
+  ---
+  duration_ms: 0.6276
+  type: 'test'
+  ...
+# Subtest: F05-R06 ciphertext tampering fails authenticated recovery
+ok 66 - F05-R06 ciphertext tampering fails authenticated recovery
+  ---
+  duration_ms: 0.579
+  type: 'test'
+  ...
+# Subtest: F05-R06 tag tampering fails authenticated recovery
+ok 67 - F05-R06 tag tampering fails authenticated recovery
+  ---
+  duration_ms: 0.5569
+  type: 'test'
+  ...
+# Subtest: F05-R06 nonce tampering fails authenticated recovery
+ok 68 - F05-R06 nonce tampering fails authenticated recovery
+  ---
+  duration_ms: 0.4175
+  type: 'test'
+  ...
+# Subtest: F05-R07 source and root header changes fail even when supplied binding matches the altered header
+ok 69 - F05-R07 source and root header changes fail even when supplied binding matches the altered header
+  ---
+  duration_ms: 0.9055
+  type: 'test'
+  ...
+# Subtest: F05-R08 a valid envelope cannot be opened under another source or project root
+ok 70 - F05-R08 a valid envelope cannot be opened under another source or project root
+  ---
+  duration_ms: 0.8265
+  type: 'test'
+  ...
+# Subtest: F05-R09 malformed JSON, arrays and duplicated header keys fail closed
+ok 71 - F05-R09 malformed JSON, arrays and duplicated header keys fail closed
+  ---
+  duration_ms: 0.5399
+  type: 'test'
+  ...
+# Subtest: F05-R10 nonce, tag and ciphertext use strict canonical base64 and exact nonce/tag sizes
+ok 72 - F05-R10 nonce, tag and ciphertext use strict canonical base64 and exact nonce/tag sizes
+  ---
+  duration_ms: 1.3631
+  type: 'test'
+  ...
+# Subtest: F05-R11 unknown, missing or incorrectly typed envelope fields cannot be recovered
+ok 73 - F05-R11 unknown, missing or incorrectly typed envelope fields cannot be recovered
+  ---
+  duration_ms: 1.0601
+  type: 'test'
+  ...
+# Subtest: F05-R12 recovery rejects an envelope exceeding 512 KiB before accepting any draft
+ok 74 - F05-R12 recovery rejects an envelope exceeding 512 KiB before accepting any draft
+  ---
+  duration_ms: 3.3094
+  type: 'test'
+  ...
+# Subtest: F05-R13 saved and draft text have independent 64 KiB UTF-8 bounds
+ok 75 - F05-R13 saved and draft text have independent 64 KiB UTF-8 bounds
+  ---
+  duration_ms: 9.9634
+  type: 'test'
+  ...
+# Subtest: F05-R14 encrypting and decrypting do not mutate caller payload or key buffers
+ok 76 - F05-R14 encrypting and decrypting do not mutate caller payload or key buffers
+  ---
+  duration_ms: 0.6004
+  type: 'test'
+  ...
+1..76
+# tests 76
+# suites 0
+# pass 76
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 9080.9259
