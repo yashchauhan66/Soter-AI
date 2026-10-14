@@ -5,11 +5,11 @@ Read this file FIRST after any context compaction or on resumption. Do not overw
 ## Current state
 
 - **L0 scoped preflight/split/baseline/catalog freeze DONE.** The user waived the 20 GB threshold. Both verified backup bundles and the authorized old synthetic profiles are retained on D:. Supplemental full fsck ended in resource-limited FAIL; full object integrity remains UNVERIFIED.
-- L1: **ACTIVE, F01/F02 DONE; F03 VERIFYING/INCOMPLETE**; F04-F32 and L2-L7 **NOT-RUN**. Do not describe this as reaching L6. Read the latest receipts below before work.
+- L1: **ACTIVE, F01/F02/F03 DONE; F04 ACTIVE/test-first**; F05-F32 and L2-L7 **NOT-RUN**. Do not describe this as reaching L6. Read the latest receipts below before work.
 - Source changes and isolated synthetic-profile tests are authorized; the normal VS Code profile has not been changed.
 - New Lite baseline VSIX: **BUILT / CONTENT-INSPECTED / HOST-BASELINE-TESTED**; SHA-256 `cf163471b7a022d5a9f922a3f1fcc6bfd3b56a08ab14f1aebfdfb345c337bae1`. Coverage and all final numerical ratings **PENDING / UNVERIFIED**; 44-check catalog frozen, not graded.
 - Baseline HEAD: `8ef3aeb54f4019f4ee815a844443995176a656f0`; starting branch: `security-hardening`. Inspected prior source modifications were checkpointed at `915a5300a7745e4ffaeab80b5d08d3305e3772f9`; unknown scratch/raw artifacts remain untouched.
-- P00-P03 and F01/F02 scoped commits are complete. F03 is the sole active behavior card; native acceptance and its scoped commit remain pending. No F04 production may start yet.
+- P00-P03 and F01/F02/F03 scoped commits are complete. F04 is the sole active behavior card; production waits for its failing regression baseline. No F05 production may start yet.
 
 ## STEP RECEIPT L0.1 — preflight stop
 
@@ -298,3 +298,11 @@ Exact command/argv/exit/logSHA records: focused-after-05.txt.result.json65PASS; 
 CurrentCode1.141.1 native10distinctH01-H10 PASS on same profile/workspace/runtime, save-phase grant remained live until owned window close and deny restored on actual restart; SQLite file metadata only. Native test-only bootstrap delegates byte-identical packaged runtime, scripted UI LOW independence, not clean-profile installed VSIX or independent presence proof. Functional10PASS; existing17-case SecurityReview8BLOCKED_SCOPED/9LEAK_CONFIRMED;17comparisonrows0changes. Previous exact F02 schema-aware reader v2controlACCEPTED/v3REJECTED. Source review LOW no remaining narrow blocker. Flag withdrawal AVAILABILITY_ONLY;44frozenchecksUNVERIFIED, ratingPENDING.
 
 Hashes/explicit source/raw allowlist in f03-evidence-index-01.json; external D result hashes/byte-identical C copies in external-phase-evidence-01.json. Existing profiles/artifacts/logs retained. Earlier renderer OOM cause UNVERIFIED; full fsck resource-limited FAIL and full integrityUNVERIFIED, scoped connectivityPASS unchanged. User20GBwaiver remains; bothverifiedbackupsD:. What remains unprotected: nine unmanaged leaks, actual-agent routes, human/independent/platform gates. Next: scoped F03 commit and byte verification; only then activate F04 exact one-time safe-read consent.
+
+## STEP RECEIPT F03-COMMIT / F04-ACTIVATE
+
+F03 local scoped commit **3754191788eee4d042f39258ca08e3bbcfaae0ba** verified PASS:215 indexed byte hashes/216 exact committed paths/0mismatch/0unexpected. End-of-step VSIX hash freshly recomputedd93599efff22e48f4a431fd8a4fdb6ff78d6adbd4738b4e51c3b6f9d04521ba1. Exact commit in commit-f03.ps1; raw f03-commit-01.txt; verification command node verify-and-advance.cjs and raw f03-committed-byte-verification-01.json. All65focused/919fulltests916PASS0FAIL3SKIP/native10/currentCode1.141.1/functional10/17-case unchanged results apply to this exact source/object. F03 DONE for its scoped contract; whole product/catalog/rating/human gates remainPENDING.
+
+Default git diff --check treated preserved CRLF carriage returns as whitespace and produced truncated output; narrower one-off core.whitespace=cr-at-eol check emitted no whitespace violations. No line-ending rewrite or persistent Git configuration change. Earlier vanished unified process session and lostexec cell are orchestration INCOMPLETE only; saved native result receipts establish actual outcomes.
+
+Only after verified F03 barrier activate F04 exact one-time safe-read consent, machine flag soterai.lite.safeConsent. No F04 production existed before transition. Nine unmanaged leaks, actual-agent/platform/human gaps remain; supplemental full fsck resource-limited FAIL/full integrityUNVERIFIED, connectivity-only PASS scoped,20GBthreshold userWAIVED.

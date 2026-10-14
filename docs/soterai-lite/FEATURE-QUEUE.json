@@ -9,9 +9,9 @@
   "planVersion": 1,
   "clientDate": "2026-10-13",
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
-  "scope": "F01/F02 DONE; F03 scoped acceptance PASS with65focused/919fulltests916PASS0FAIL3SKIP/currentCode1.141.1 native10PASS/functional10/17-case unchanged. F03 commit and byte verification pending; no F04 production.",
+  "scope": "F01/F02/F03 DONE with exact artifact, host checks and verified scoped commits; F04 alone active, test-first exact one-time safe-read consent.",
   "implementationConcurrency": 1,
-  "activeFeature": "F03",
+  "activeFeature": "F04",
   "prerequisiteBlock": {
     "id": "P00",
     "result": "FAIL",
@@ -92,17 +92,20 @@
     {
       "id": "F03",
       "title": "Policy drift and deliberate relaxation.",
-      "status": "VERIFYING",
-      "result": "INCOMPLETE",
+      "status": "DONE",
+      "result": "PASS",
       "requires": [
         "F02"
       ],
-      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "sourceEvidenceCommit": "3754191788eee4d042f39258ca08e3bbcfaae0ba",
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261013-f03-policy-review-207ad3dc/f03-acceptance-01.json",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261013-f03-policy-review-207ad3dc/f03-committed-byte-verification-01.json"
     },
     {
       "id": "F04",
       "title": "Exact one-time safe-read consent.",
-      "status": "PLANNED",
+      "status": "ACTIVE",
       "result": "NOT-RUN",
       "requires": [
         "F03"
