@@ -5,11 +5,11 @@ Read this file FIRST after any context compaction or on resumption. Do not overw
 ## Current state
 
 - **L0 scoped preflight/split/baseline/catalog freeze DONE.** The user waived the 20 GB threshold. Both verified backup bundles and the authorized old synthetic profiles are retained on D:. Supplemental full fsck ended in resource-limited FAIL; full object integrity remains UNVERIFIED.
-- L1: **ACTIVE, F01/F02/F03 DONE; F04 ACTIVE/test-first**; F05-F32 and L2-L7 **NOT-RUN**. Do not describe this as reaching L6. Read the latest receipts below before work.
+- L1: **ACTIVE, F01-F04 DONE; F05 ACTIVE/test-first**; F06-F32 and L2-L7 **NOT-RUN**. Do not describe this as reaching L6. Read the latest receipts below before work.
 - Source changes and isolated synthetic-profile tests are authorized; the normal VS Code profile has not been changed.
 - New Lite baseline VSIX: **BUILT / CONTENT-INSPECTED / HOST-BASELINE-TESTED**; SHA-256 `cf163471b7a022d5a9f922a3f1fcc6bfd3b56a08ab14f1aebfdfb345c337bae1`. Coverage and all final numerical ratings **PENDING / UNVERIFIED**; 44-check catalog frozen, not graded.
 - Baseline HEAD: `8ef3aeb54f4019f4ee815a844443995176a656f0`; starting branch: `security-hardening`. Inspected prior source modifications were checkpointed at `915a5300a7745e4ffaeab80b5d08d3305e3772f9`; unknown scratch/raw artifacts remain untouched.
-- P00-P03 and F01/F02/F03 scoped commits are complete. F04 is the sole active behavior card; production waits for its failing regression baseline. No F05 production may start yet.
+- P00-P03 and F01-F04 scoped commits are complete. F05 is the sole active behavior card; production waits for its failing regression baseline. No F06 production may start yet.
 
 ## STEP RECEIPT L0.1 — preflight stop
 
@@ -330,3 +330,9 @@ Exactargv/exit/rawSHA: focused-after03(113PASS:61F04+52retainedF01/F03), full-te
 ExactVSIX packages/soterai-lite/soterai-lite-0.7.0-f04-20261014-attempt01.vsix 1342595bytesSHA256c4528a63bb5e1af056cc65b117a8e69d2d0d2cb6a805f1067f816c03f63b603d, runtimeSHA256116d5ecc4abd4d8099cade1e2363fef1ae21dfc372bf1a286e29baad46aec21f;14entries3runtimes0forbiddeninputs andeverycurrentruntimeinputhashmatch. ActualCode1.141.1 native10distinctH01-H10 PASS/save-restartsameprofile/runtime, actualunanswereddeadline60013.8797ms>=60000, exactmodalAPIarguments/digests, revokedlateanswerisolation, openviewflagrefresh, restrictionflagoffsave, persistentpolicy/auditmetadata+flagretain. SQLite statonly; testbootstrapdelegatespackagedruntime, LOWscriptedidentity, renderedmodalusability/humanpresence NOT_TESTED and clean-profileinstallF32NOT-RUN. Functional10PASS; existing17-caseSecurityReview8BLOCKED_SCOPED/9LEAK_CONFIRMED,17rows0changes.
 
 Hashes/source/rawallowlist in f04-evidence-index01; catalog44UNVERIFIED/mutationAVAILABILITY_ONLY/ratingPENDING. Nineunmanagedleaks/actualtool/platform/independent-human gates remain. Allprofiles/artifacts/rawreports retained;20GBthreshold userWAIVED. Next scopedF04commit+byteverification, onlythenF05 maskedCustomEditor.
+
+## STEP RECEIPT F04-COMMIT / F05-ACTIVATE
+
+F04 scopedcommit **bc697b9070edee7adc1f578fc30f949bd8fad5a4** byteverificationPASS:90 indexedhashes/91 exactcommittedpaths/0mismatch/0unexpected. End-of-step VSIX freshlyrecheckedc4528a63bb5e1af056cc65b117a8e69d2d0d2cb6a805f1067f816c03f63b603d. Exactcommand commit-f04.ps1/rawf04-commit01.txt; verification node verify-and-advance.cjs/rawf04-committed-byte-verification01.json. F04 DONE scopedcontract:61F04+52retainedfocusedPASS,980fulltests977PASS0FAIL3SKIP,native10sameCode1.141.1/runtime/profile, real60sdeadline60013.8797ms, functional10/17-caseunchanged. ScriptednativeAPIarguments LOWindependence; renderedmodalusability/actualtools/platform/human andwholecatalog/rating remainPENDING.
+
+OnlyafterverifiedF04barrier activateF05 securemaskedCustomDocument editor, flag soterai.lite.secureEnvEditor. No F05 production existed beforetransition. No arbitraryshell/nativeprivacyclaim; nineunmanagedleaks remain;20GBuserWAIVERunchanged.

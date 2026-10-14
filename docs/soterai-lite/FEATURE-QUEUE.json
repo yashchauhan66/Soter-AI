@@ -9,9 +9,9 @@
   "planVersion": 1,
   "clientDate": "2026-10-13",
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
-  "scope": "F01/F02/F03 DONE; F04 scoped acceptance PASS:113focused/980full977PASS0FAIL3SKIP/native10real60s/currentCode1.141.1/functional10/17-caseunchanged. F04 commit/byte verification pending; no F05 production.",
+  "scope": "F01-F04 DONE with exact artifact, host checks and verified scoped commits; F05 alone active, test-first secure masked custom editor.",
   "implementationConcurrency": 1,
-  "activeFeature": "F04",
+  "activeFeature": "F05",
   "prerequisiteBlock": {
     "id": "P00",
     "result": "FAIL",
@@ -105,17 +105,20 @@
     {
       "id": "F04",
       "title": "Exact one-time safe-read consent.",
-      "status": "VERIFYING",
-      "result": "INCOMPLETE",
+      "status": "DONE",
+      "result": "PASS",
       "requires": [
         "F03"
       ],
-      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "sourceEvidenceCommit": "bc697b9070edee7adc1f578fc30f949bd8fad5a4",
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261014-f04-safe-consent-47193acb/f04-acceptance-01.json",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261014-f04-safe-consent-47193acb/f04-committed-byte-verification-01.json"
     },
     {
       "id": "F05",
       "title": "Secure masked env editor.",
-      "status": "PLANNED",
+      "status": "ACTIVE",
       "result": "NOT-RUN",
       "requires": [
         "F04"
