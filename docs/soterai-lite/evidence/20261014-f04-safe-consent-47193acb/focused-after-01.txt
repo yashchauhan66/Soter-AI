@@ -1,0 +1,391 @@
+﻿TAP version 13
+# Subtest: F04-C01 native consent previews exactly the masked dotenv output without opening a document before approval
+ok 1 - F04-C01 native consent previews exactly the masked dotenv output without opening a document before approval
+  ---
+  duration_ms: 161.0294
+  type: 'test'
+  ...
+# Subtest: F04-C02 public and ordinary restricted files release precisely the modal detail while persistent deny remains
+ok 2 - F04-C02 public and ordinary restricted files release precisely the modal detail while persistent deny remains
+  ---
+  duration_ms: 182.3266
+  type: 'test'
+  ...
+# Subtest: F04-C03 denying the native modal exposes no preview document and no released result text
+ok 3 - F04-C03 denying the native modal exposes no preview document and no released result text
+  ---
+  duration_ms: 50.7905
+  type: 'test'
+  ...
+# Subtest: F04-C04 arbitrary command arguments cannot authorize or replace the route, recipient, preview or expiry
+ok 4 - F04-C04 arbitrary command arguments cannot authorize or replace the route, recipient, preview or expiry
+  ---
+  duration_ms: 104.6715
+  type: 'test'
+  ...
+# Subtest: F04-C05 a machine flag withdrawal withholds integration, preview and managed terminal reads and retains denies
+ok 5 - F04-C05 a machine flag withdrawal withholds integration, preview and managed terminal reads and retains denies
+  ---
+  duration_ms: 27.4423
+  type: 'test'
+  ...
+# Subtest: F04-C06 withdrawing the flag invalidates already opened safe provider views and notifies their refresh
+ok 6 - F04-C06 withdrawing the flag invalidates already opened safe provider views and notifies their refresh
+  ---
+  duration_ms: 65.449
+  type: 'test'
+  ...
+# Subtest: F04-C07 workspace overrides cannot enable a globally disabled flag or disable the machine default
+ok 7 - F04-C07 workspace overrides cannot enable a globally disabled flag or disable the machine default
+  ---
+  duration_ms: 65.8777
+  type: 'test'
+  ...
+# Subtest: F04-C08 disabling safe consent leaves ordinary and sensitive restriction saves usable
+ok 8 - F04-C08 disabling safe consent leaves ordinary and sensitive restriction saves usable
+  ---
+  duration_ms: 44.404
+  type: 'test'
+  ...
+# Subtest: F04-C09 recognized and manually marked sensitive files show summary-only detail and release that same summary
+ok 9 - F04-C09 recognized and manually marked sensitive files show summary-only detail and release that same summary
+  ---
+  duration_ms: 114.4338
+  type: 'test'
+  ...
+# Subtest: F04-C10 protected regions never appear in native detail and protected dotenv syntax withholds the whole schema
+ok 10 - F04-C10 protected regions never appear in native detail and protected dotenv syntax withholds the whole schema
+  ---
+  duration_ms: 118.3423
+  type: 'test'
+  ...
+# Subtest: F04-C11 binary, oversized input and safe output above 16 KiB are withheld before consent; the exact limit remains useful
+ok 11 - F04-C11 binary, oversized input and safe output above 16 KiB are withheld before consent; the exact limit remains useful
+  ---
+  duration_ms: 196.019
+  type: 'test'
+  ...
+# Subtest: F04-C12 a cold first request enrolls additive project protection inside its own preparation and still reaches exact consent
+not ok 12 - F04-C12 a cold first request enrolls additive project protection inside its own preparation and still reaches exact consent
+  ---
+  duration_ms: 22.2623
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-safe-consent-commands.test.ts:12:2117'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'EXPIRED'
+    - 'ALLOWED_ONCE'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'ALLOWED_ONCE'
+  actual: 'EXPIRED'
+  operator: 'strictEqual'
+  stack: |-
+    assertExactModal (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-safe-consent-commands.test.ts:45:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-safe-consent-commands.test.ts:256:44)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# (node:14024) ExperimentalWarning: The MockTimers API is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: F04 receipt previews exactly the released public text on safe-preview
+ok 13 - F04 receipt previews exactly the released public text on safe-preview
+  ---
+  duration_ms: 12.9553
+  type: 'test'
+  ...
+# Subtest: F04 receipt previews exactly the released public text on managed-read-terminal
+ok 14 - F04 receipt previews exactly the released public text on managed-read-terminal
+  ---
+  duration_ms: 1.0684
+  type: 'test'
+  ...
+# Subtest: F04 receipt previews exactly the released public text on integration-command
+ok 15 - F04 receipt previews exactly the released public text on integration-command
+  ---
+  duration_ms: 0.7369
+  type: 'test'
+  ...
+# Subtest: F04 the fallback recipient is a fixed nonempty internal label
+ok 16 - F04 the fallback recipient is a fixed nonempty internal label
+  ---
+  duration_ms: 1.7673
+  type: 'test'
+  ...
+# Subtest: F04 confirmation cannot mutate the immutable reviewed output or recipient
+ok 17 - F04 confirmation cannot mutate the immutable reviewed output or recipient
+  ---
+  duration_ms: 1.1201
+  type: 'test'
+  ...
+# Subtest: F04 dotenv receipt and result mask every value including public-looking values and multiline data
+ok 18 - F04 dotenv receipt and result mask every value including public-looking values and multiline data
+  ---
+  duration_ms: 2.6776
+  type: 'test'
+  ...
+# Subtest: F04 protected multiline dotenv never previews apparent names inside masked value data
+ok 19 - F04 protected multiline dotenv never previews apparent names inside masked value data
+  ---
+  duration_ms: 0.7865
+  type: 'test'
+  ...
+# Subtest: F04 an ordinary protected region keeps useful adjacent public text in exact preview
+ok 20 - F04 an ordinary protected region keeps useful adjacent public text in exact preview
+  ---
+  duration_ms: 0.7023
+  type: 'test'
+  ...
+# Subtest: F04 marked sensitive files show only the same summary that is released
+ok 21 - F04 marked sensitive files show only the same summary that is released
+  ---
+  duration_ms: 0.6104
+  type: 'test'
+  ...
+# Subtest: F04 recognized sensitive files show only the same summary that is released
+ok 22 - F04 recognized sensitive files show only the same summary that is released
+  ---
+  duration_ms: 0.5296
+  type: 'test'
+  ...
+# Subtest: F04 managed terminal reviews its control-character-stripped payload before consent
+ok 23 - F04 managed terminal reviews its control-character-stripped payload before consent
+  ---
+  duration_ms: 0.7516
+  type: 'test'
+  ...
+# Subtest: F04 undeclared runtime surface "invented-surface" is unavailable before capture or UI
+ok 24 - F04 undeclared runtime surface "invented-surface" is unavailable before capture or UI
+  ---
+  duration_ms: 0.3178
+  type: 'test'
+  ...
+# Subtest: F04 undeclared runtime surface "" is unavailable before capture or UI
+ok 25 - F04 undeclared runtime surface "" is unavailable before capture or UI
+  ---
+  duration_ms: 0.1922
+  type: 'test'
+  ...
+# Subtest: F04 undeclared runtime surface null is unavailable before capture or UI
+ok 26 - F04 undeclared runtime surface null is unavailable before capture or UI
+  ---
+  duration_ms: 0.1743
+  type: 'test'
+  ...
+# Subtest: F04 undeclared runtime surface undefined is unavailable before capture or UI
+ok 27 - F04 undeclared runtime surface undefined is unavailable before capture or UI
+  ---
+  duration_ms: 0.1621
+  type: 'test'
+  ...
+# Subtest: F04 undeclared runtime surface {"approved":true} is unavailable before capture or UI
+ok 28 - F04 undeclared runtime surface {"approved":true} is unavailable before capture or UI
+  ---
+  duration_ms: 0.2847
+  type: 'test'
+  ...
+# Subtest: F04 only boolean true authorizes a request
+ok 29 - F04 only boolean true authorizes a request
+  ---
+  duration_ms: 1.6218
+  type: 'test'
+  ...
+# Subtest: F04 changed recipient during first-capture releases no text
+ok 30 - F04 changed recipient during first-capture releases no text
+  ---
+  duration_ms: 0.3959
+  type: 'test'
+  ...
+# Subtest: F04 changed recipient during confirmation releases no text
+ok 31 - F04 changed recipient during confirmation releases no text
+  ---
+  duration_ms: 1.2219
+  type: 'test'
+  ...
+# Subtest: F04 changed recipient during fresh-capture releases no text
+ok 32 - F04 changed recipient during fresh-capture releases no text
+  ---
+  duration_ms: 0.5733
+  type: 'test'
+  ...
+# Subtest: F04 recapture rejects changed workspace while preserving the original safe preview
+ok 33 - F04 recapture rejects changed workspace while preserving the original safe preview
+  ---
+  duration_ms: 0.7462
+  type: 'test'
+  ...
+# Subtest: F04 recapture rejects changed relativePath while preserving the original safe preview
+ok 34 - F04 recapture rejects changed relativePath while preserving the original safe preview
+  ---
+  duration_ms: 0.388
+  type: 'test'
+  ...
+# Subtest: F04 recapture rejects changed policyRevision while preserving the original safe preview
+ok 35 - F04 recapture rejects changed policyRevision while preserving the original safe preview
+  ---
+  duration_ms: 0.3698
+  type: 'test'
+  ...
+# Subtest: F04 recapture rejects changed fileIdentity while preserving the original safe preview
+ok 36 - F04 recapture rejects changed fileIdentity while preserving the original safe preview
+  ---
+  duration_ms: 0.3605
+  type: 'test'
+  ...
+# Subtest: F04 recapture rejects changed content while preserving the original safe preview
+ok 37 - F04 recapture rejects changed content while preserving the original safe preview
+  ---
+  duration_ms: 0.3819
+  type: 'test'
+  ...
+# Subtest: F04 recapture rejects changed regionView while preserving the original safe preview
+ok 38 - F04 recapture rejects changed regionView while preserving the original safe preview
+  ---
+  duration_ms: 0.3242
+  type: 'test'
+  ...
+# Subtest: F04 recapture rejects changed sensitive while preserving the original safe preview
+ok 39 - F04 recapture rejects changed sensitive while preserving the original safe preview
+  ---
+  duration_ms: 0.3309
+  type: 'test'
+  ...
+# Subtest: F04 exactly 16 KiB of UTF-8 safe output remains useful and can be reviewed
+ok 40 - F04 exactly 16 KiB of UTF-8 safe output remains useful and can be reviewed
+  ---
+  duration_ms: 1.7427
+  type: 'test'
+  ...
+# Subtest: F04 ordinary output over 16 KiB is unavailable before confirmation
+ok 41 - F04 ordinary output over 16 KiB is unavailable before confirmation
+  ---
+  duration_ms: 1.5101
+  type: 'test'
+  ...
+# Subtest: F04 environment output over 16 KiB is unavailable before confirmation
+ok 42 - F04 environment output over 16 KiB is unavailable before confirmation
+  ---
+  duration_ms: 0.8724
+  type: 'test'
+  ...
+# Subtest: F04 oversized-original is rejected even if the alternate captured view is small and safe
+ok 43 - F04 oversized-original is rejected even if the alternate captured view is small and safe
+  ---
+  duration_ms: 0.4344
+  type: 'test'
+  ...
+# Subtest: F04 binary-original is rejected even if the alternate captured view is small and safe
+ok 44 - F04 binary-original is rejected even if the alternate captured view is small and safe
+  ---
+  duration_ms: 0.2356
+  type: 'test'
+  ...
+# Subtest: F04 oversized-region is rejected even if the alternate captured view is small and safe
+ok 45 - F04 oversized-region is rejected even if the alternate captured view is small and safe
+  ---
+  duration_ms: 0.2482
+  type: 'test'
+  ...
+# Subtest: F04 binary-region is rejected even if the alternate captured view is small and safe
+ok 46 - F04 binary-region is rejected even if the alternate captured view is small and safe
+  ---
+  duration_ms: 0.4128
+  type: 'test'
+  ...
+# Subtest: F04 unsupported dotenv syntax gives an exact withheld summary and never original text
+ok 47 - F04 unsupported dotenv syntax gives an exact withheld summary and never original text
+  ---
+  duration_ms: 0.5227
+  type: 'test'
+  ...
+# Subtest: F04 the 60-second deadline resolves an unanswered capture without waiting for it
+ok 48 - F04 the 60-second deadline resolves an unanswered capture without waiting for it
+  ---
+  duration_ms: 35.7204
+  type: 'test'
+  ...
+# Subtest: F04 the 60-second deadline resolves an unanswered confirmation without waiting for it
+ok 49 - F04 the 60-second deadline resolves an unanswered confirmation without waiting for it
+  ---
+  duration_ms: 4.3027
+  type: 'test'
+  ...
+# Subtest: F04 the owned deadline expires even when the injected elapsed clock does not advance
+ok 50 - F04 the owned deadline expires even when the injected elapsed clock does not advance
+  ---
+  duration_ms: 6.3073
+  type: 'test'
+  ...
+# Subtest: F04 revoke immediately expires a request waiting on capture
+ok 51 - F04 revoke immediately expires a request waiting on capture
+  ---
+  duration_ms: 1.615
+  type: 'test'
+  ...
+# Subtest: F04 revoke immediately expires a request waiting on confirmation
+ok 52 - F04 revoke immediately expires a request waiting on confirmation
+  ---
+  duration_ms: 1.0328
+  type: 'test'
+  ...
+# Subtest: F04 dispose immediately expires a request waiting on capture
+ok 53 - F04 dispose immediately expires a request waiting on capture
+  ---
+  duration_ms: 0.9213
+  type: 'test'
+  ...
+# Subtest: F04 dispose immediately expires a request waiting on confirmation
+ok 54 - F04 dispose immediately expires a request waiting on confirmation
+  ---
+  duration_ms: 1.0257
+  type: 'test'
+  ...
+# Subtest: F04 a late revoked approval cannot clear a newer request's busy state or grant it
+ok 55 - F04 a late revoked approval cannot clear a newer request's busy state or grant it
+  ---
+  duration_ms: 2.0363
+  type: 'test'
+  ...
+# Subtest: F04 late expired capture cannot open UI or hold a newer request busy
+ok 56 - F04 late expired capture cannot open UI or hold a newer request busy
+  ---
+  duration_ms: 2.7557
+  type: 'test'
+  ...
+# Subtest: F04 finishing an old request clears its timer instead of expiring a newer request
+ok 57 - F04 finishing an old request clears its timer instead of expiring a newer request
+  ---
+  duration_ms: 1.4259
+  type: 'test'
+  ...
+# Subtest: F04 preparation completes inside the request before content capture or approval
+ok 58 - F04 preparation completes inside the request before content capture or approval
+  ---
+  duration_ms: 1.4355
+  type: 'test'
+  ...
+# Subtest: F04 a hung preparation expires at the owned deadline and never captures content later
+ok 59 - F04 a hung preparation expires at the owned deadline and never captures content later
+  ---
+  duration_ms: 0.9213
+  type: 'test'
+  ...
+# Subtest: F04 late revoked preparation cannot clear the newer request's preparation ownership
+ok 60 - F04 late revoked preparation cannot clear the newer request's preparation ownership
+  ---
+  duration_ms: 1.3757
+  type: 'test'
+  ...
+1..60
+# tests 60
+# suites 0
+# pass 59
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2826.0128

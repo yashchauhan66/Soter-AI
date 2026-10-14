@@ -10,6 +10,10 @@ Use the Explorer SoterAI menu to review a manual deny **for this editor session*
 
 Startup and 60-second periodic checks compare policy/source fingerprints, selected safety settings and installed extension versions. Alerts contain metadata only. The machine flag `soterai.lite.policyDrift` withdraws monitoring and new owner reviews, revokes session permissions, and retains permanent protection. Review audit is bounded to 64 entries/32KiB and persisted atomically with unchanged policy in strict v3 storage; older schema-aware readers fail closed. A full audit refuses additional reviews rather than truncating history.
 
+Every managed safe read shows the exact safe text in a native approval modal before returning it. Env files show variable names with every value masked; sensitive files show only a masked summary. Saved restrictions remain. Reviews bind the saved file, policy, output and internal destination, with a fixed 60-second deadline that includes initial policy enrollment. Cancel, expiry, revocation or any changed binding returns no text. Safe modal output is limited to 16 KiB; larger output is withheld. This preview creates no plaintext TextDocument before approval. Requester identity is not OS-verified.
+
+The machine setting `soterai.lite.safeConsent` withdraws managed reads and clears owned safe previews; restriction saves continue. Data already returned cannot be recalled. A stale native modal may remain visible after expiry or revocation, but its response grants nothing. Managed terminal text is sanitized before review; terminal framing is separate. These controls do not intercept original files or arbitrary shells.
+
 Local managed secret scanning, file restrictions, approved masked reads, vault
 workflows and a bundled loopback AI broker. Existing settings use `soterai.*`.
 This local candidate preserves the extension identity and saved vault/policy.

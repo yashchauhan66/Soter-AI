@@ -1,0 +1,11 @@
+const fs = require('node:fs'), path = require('node:path');
+const previous = path.resolve(__dirname, '../20261013-f03-policy-review-207ad3dc');
+const write = (name, text) => fs.writeFileSync(path.join(__dirname, name), text, { flag: 'wx' });
+let native = fs.readFileSync(path.join(previous, 'run-f03-current-d-host-05.ps1'), 'utf8');
+native = native.replaceAll('SOTERAI_LITE_F03_', 'SOTERAI_LITE_F04_').replaceAll('.synthetic-lite-f03-host', '.synthetic-lite-f04-host').replaceAll('current-native-d-host-', 'f04-native-host-').replaceAll('Elapsed.TotalSeconds -lt 120', 'Elapsed.TotalSeconds -lt 180');
+write('run-native-01.ps1', native);
+for (const family of ['functional', 'security']) write('run-' + family + '-01.ps1', fs.readFileSync(path.join(previous, 'run-' + family + '-03.ps1'), 'utf8'));
+let inspection = fs.readFileSync(path.join(previous, 'inspect-vsix-02.ps1'), 'utf8');
+inspection = inspection.replaceAll('f03-20261014-attempt02.vsix', 'f04-20261014-attempt01.vsix').replaceAll('vsix-extracted-02', 'vsix-extracted-01').replaceAll('vsix-inspection-02.json', 'vsix-inspection-01.json');
+write('inspect-vsix-01.ps1', inspection);
+console.log(JSON.stringify({ status: 'PREPARED_NOT_RUN', scope: 'Fresh isolated D synthetic profiles/workspaces; exact packaged source; no normal profile or process killing. F04 real deadline test has 180s phase budget.' }));

@@ -1,0 +1,76 @@
+{
+  "status": "PASS",
+  "feature": "F04",
+  "completion": "Local acceptance passed; scoped commit and committed-byte verification remain the serial barrier.",
+  "observedAt": "2026-10-14T08:41:01.807Z",
+  "artifact": {
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-f04-20261014-attempt01.vsix",
+    "bytes": 1342595,
+    "sha256": "c4528a63bb5e1af056cc65b117a8e69d2d0d2cb6a805f1067f816c03f63b603d",
+    "runtimeSha256": "116d5ecc4abd4d8099cade1e2363fef1ae21dfc372bf1a286e29baad46aec21f",
+    "manifestSha256": "28fb177f95bb8dae516c43f8739ec5e2527d8e32d211489305dfcfd1f4962707"
+  },
+  "flag": {
+    "name": "soterai.lite.safeConsent",
+    "scope": "machine",
+    "withdrawal": "Withholds managed reads and clears owned safe views; saved restriction commands and denies remain.",
+    "mutation": "AVAILABILITY_ONLY; no STRONG catalog promotion"
+  },
+  "checks": {
+    "focused": {
+      "tests": 113,
+      "pass": 113,
+      "fail": 0,
+      "cancelled": 0,
+      "skip": 0
+    },
+    "f04Distinct": 61,
+    "retainedF01F03": 52,
+    "full": {
+      "tests": 980,
+      "pass": 977,
+      "fail": 0,
+      "cancelled": 0,
+      "skip": 3
+    },
+    "nativeDistinct": 10,
+    "realDeadlineMilliseconds": 60013.8797,
+    "functional": {
+      "path": "docs/soterai-lite/evidence/20261014-f04-safe-consent-47193acb/functional/privacy-20261014T083113Z-4b18ee2c/functional-results.json",
+      "pass": 10,
+      "fail": 0
+    },
+    "security": {
+      "path": "docs/soterai-lite/evidence/20261014-f04-safe-consent-47193acb/security/host-20261014T083238Z-cc18da8b9c0d4f1ca3711ecf946f08fd/live-host.json",
+      "scenarios": 17,
+      "blockedScoped": 8,
+      "leakConfirmed": 9,
+      "comparisonChanges": 0
+    }
+  },
+  "contract": {
+    "nativeExactSafeTextDetail": true,
+    "preapprovalTextDocument": false,
+    "frozenReceipt": true,
+    "freshContentPolicyWorkspaceIdentityRecipientOutputBinding": true,
+    "prepareInsideDeadline": true,
+    "lifetimeMilliseconds": 60000,
+    "inputMaximumBytes": 65536,
+    "outputMaximumBytes": 16384,
+    "sensitiveRawAccess": false,
+    "terminalSanitizationBeforeReview": true,
+    "previouslyReturnedDataRecallable": false,
+    "staleNativeModalDismissal": "May remain visible; late response grants nothing."
+  },
+  "sourceReview": "LOW; source-review-01.md; no remaining narrow blocker.",
+  "independence": "LOW",
+  "renderedModalUsability": "NOT_TESTED; API argument exactness only",
+  "cleanProfileInstall": "NOT-RUN/F32",
+  "catalog": {
+    "path": "docs/soterai-lite/LITE-CATALOG.json",
+    "sha256": "1ce46192e9f315b5f2142c9f61542f1d513143dc2e19d4def6d95cea38c73ed4",
+    "status": "44 checks UNVERIFIED"
+  },
+  "rating": "PENDING",
+  "residual": "Nine unmanaged baseline leaks, actual-agent routes, independent/human/platform acceptance remain."
+}

@@ -76,6 +76,7 @@
                 "soterai.lite.restrictionSave",
                 "soterai.lite.versionedPolicy",
                 "soterai.lite.policyDrift",
+                "soterai.lite.safeConsent",
                 "soterai.projectPrivacy.atomicSensitivePolicy",
                 "soterai.projectPrivacy.safeViewComposition",
                 "soterai.projectPrivacy.safePublication",
@@ -1131,6 +1132,10 @@
                 "soterai.lite.policyDrift": {
                     "type": "boolean", "default": true, "scope": "machine",
                     "description": "Enable startup and periodic protection drift checks and deliberate owner reviews for this editor session. Exact diff, typed confirmation, cooldown and persisted metadata audit are required. Disabling ends session grants and preserves permanent denies, sensitivity and region masking. Same-user confirmation is not agent-proof."
+                },
+                "soterai.lite.safeConsent": {
+                    "type": "boolean", "default": true, "scope": "machine",
+                    "description": "Require an exact native preview, fixed 60-second deadline and fresh file, policy and destination checks for every managed safe read. Disabling withholds reads and clears owned previews while preserving saved restrictions. Previously returned text cannot be recalled; requester identity is not OS-verified."
                 },
                 "soterai.projectPrivacy.professionalUi": {
                     "type": "boolean", "default": true, "scope": "machine",

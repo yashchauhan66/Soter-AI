@@ -50,9 +50,9 @@ what an agent does on its own.
 
 | Measure | Count |
 | --- | --- |
-| Settings declared | 47 |
-| `machine`-scoped (a repo cannot set them) | 42 |
-| Restricted in untrusted workspaces | 42 |
+| Settings declared | 48 |
+| `machine`-scoped (a repo cannot set them) | 43 |
+| Restricted in untrusted workspaces | 43 |
 | Pinnable by an administrator (`policy`) | 8 |
 
 ## Detection engine

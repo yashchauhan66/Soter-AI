@@ -1,5 +1,8 @@
 # Changelog
 
+- Preview exact safe output in the native read approval modal, bind its destination and fresh content/policy, and withhold oversize previews.
+- Bound initial policy enrollment, capture and confirmation to one 60-second request deadline. Revocation expires pending requests immediately; late responses cannot grant or interfere with newer reads. Flag withdrawal preserves restriction saves and saved denies.
+
 - Add native owner review for this editor session with exact metadata diff, typed confirmation, 10-second cooldown and bounded atomic v3 audit; permanent rules and sensitive masking remain.
 - Revoke reviewed permissions on restart, flag withdrawal, re-blocking and protection drift. Check source/policy fingerprints, selected safety settings and installed extension versions at startup and every 60 seconds.
 

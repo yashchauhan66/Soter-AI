@@ -34,9 +34,12 @@ export function assertRestrictionWorkspace(root: string, uri?: vscode.Uri): void
 
 interface PendingRestriction { scope?: PathRule }
 const pending = new Map<string, Set<PendingRestriction>>();
+const manualIntents = new Map<string, number>();
 const activity = new vscode.EventEmitter<string>();
-/** Metadata only; bracket manual intent, not repeated snapshot policy enrollment. */
+/** Metadata only; bracket pending writes, including initial additive enrollment. */
 export const onDidChangeManualRestriction = activity.event;
+/** Distinguish explicit restriction saves from a reader's initial policy enrollment. */
+export function manualRestrictionIntentPending(root: string): boolean { return (manualIntents.get(root) ?? 0) > 0; }
 export function manualRestrictionPending(root: string, uri?: vscode.Uri): boolean {
     const operations = pending.get(root);
     if (!operations?.size) return false;
@@ -51,7 +54,13 @@ export function manualRestrictionPending(root: string, uri?: vscode.Uri): boolea
 
 export async function withManualRestriction<T>(root: string, operation: () => Promise<T>, scope?: PathRule): Promise<T> {
     requireRestrictionSave();
-    return withPendingRestriction(root, operation, scope);
+    assertRestrictionWorkspace(root);
+    manualIntents.set(root, (manualIntents.get(root) ?? 0) + 1);
+    try { return await withPendingRestriction(root, operation, scope); }
+    finally {
+        const remaining = (manualIntents.get(root) ?? 1) - 1;
+        if (remaining) manualIntents.set(root, remaining); else manualIntents.delete(root);
+    }
 }
 
 /** Shared pending lifecycle; each operation must validate its own setup flag. */

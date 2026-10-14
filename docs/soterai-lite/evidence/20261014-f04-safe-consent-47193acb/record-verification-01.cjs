@@ -1,0 +1,22 @@
+const fs = require('node:fs'), path = require('node:path'), crypto = require('node:crypto'), assert = require('node:assert/strict');
+const repo = path.resolve(__dirname, '../../../..'), base = path.relative(repo, __dirname).replaceAll('\\', '/');
+const read = file => JSON.parse(fs.readFileSync(path.resolve(repo, file), 'utf8').replace(/^\uFEFF/, ''));
+const sha = file => crypto.createHash('sha256').update(fs.readFileSync(path.resolve(repo, file))).digest('hex');
+const counts = file => { const text = fs.readFileSync(path.join(__dirname, file), 'utf8'); const n = key => Number(text.match(new RegExp('^# ' + key + ' (\\d+)$', 'm'))?.[1]); return { tests: n('tests'), pass: n('pass'), fail: n('fail'), cancelled: n('cancelled'), skip: n('skipped') }; };
+const focused = counts('focused-after-03.txt'), full = counts('full-tests-01.txt');
+assert.deepEqual(focused, { tests: 113, pass: 113, fail: 0, cancelled: 0, skip: 0 });
+assert.deepEqual(full, { tests: 980, pass: 977, fail: 0, cancelled: 0, skip: 3 });
+for (const name of ['focused-after-03.txt', 'full-tests-01.txt', 'typecheck-01.txt', 'package-01.txt', 'vsix-inspection-01.txt']) { const receipt = read(base + '/' + name + '.result.json'); assert.equal(receipt.exitCode, 0); assert.equal(sha(base + '/' + name), receipt.sha256.toLowerCase()); }
+const inspection = read(base + '/vsix-inspection-01.json');
+assert.equal(inspection.entryCount, 14); assert.equal(inspection.runtimeCount, 3); assert.equal(inspection.forbiddenRuntimeInputs, 0);
+const artifact = 'packages/soterai-lite/soterai-lite-0.7.0-f04-20261014-attempt01.vsix';
+assert.equal(sha(artifact), inspection.sha256);
+const runtime = inspection.entries.find(row => row.path === 'extension/dist/extension.js').sha256;
+const result = { status: 'VERIFYING_INCOMPLETE', focused, f04Distinct: 61, retainedF01F03: 52, full, artifact: { path: artifact, bytes: fs.statSync(path.resolve(repo, artifact)).size, sha256: sha(artifact), runtimeSha256: runtime }, native: 'NOT-RUN; test author writing real60s expiry/save-restart driver', affectedHosts: 'Functional running; security pending', typecheck: '01PASS; final native test source needs typecheck when frozen', next: 'Native/affected hosts/scoped commit; no F05 production.' };
+fs.writeFileSync(path.join(__dirname, 'verification-progress-01.json'), JSON.stringify(result, null, 2) + '\n', { flag: 'wx' });
+const queuePath = path.join(repo, 'docs/soterai-lite/FEATURE-QUEUE.json'), queue = read('docs/soterai-lite/FEATURE-QUEUE.json');
+assert.equal(queue.activeFeature, 'F04'); Object.assign(queue.features.find(row => row.id === 'F04'), { status: 'VERIFYING', result: 'INCOMPLETE' });
+queue.scope = 'F01/F02/F03 DONE; F04 alone VERIFYING:61F04+52retained focusedPASS,980fulltests977PASS0FAIL3SKIP, inspected matchingVSIX; native/affectedhost acceptance and commit pending. No F05 production.';
+fs.writeFileSync(queuePath, JSON.stringify(queue, null, 2) + '\n');
+fs.appendFileSync(path.join(repo, 'docs/soterai-lite/ledger.md'), '\n## STEP RECEIPT F04-VERIFYING — matching artifact\n\nF04 VERIFYING/INCOMPLETE, no F05 production. Finalfocused-after03:113PASS0FAIL (61F04 including C13 actualmanual-intent cancellation,52retainedF01/F03). Full-tests01:980tests/106suites977PASS0FAIL0cancel3SKIP. Typecheck01PASS; final newnative driver must typecheck when frozen. Package01/inspection01PASS14entries3runtimes0forbiddeninputs. ExactVSIX ' + artifact + ' ' + result.artifact.bytes + 'bytesSHA256' + result.artifact.sha256 + ', runtimeSHA256' + runtime + '. Source production has not changed after these checks. Rawargv/exits/hashes in matching *.result.json; artifact/progress identity in verification-progress-01.json.\n\nCurrent-code affectedfunctional running; security pending. Native driver being authored under sameactualcontext/test-onlybootstrap for exactmodal detail/APIarguments, one actual60s unansweredmodal, revoke/lateanswer/busy/flag/saveddeny/restart and maskedread controls. Native tests NOT-RUN; scriptednativeAPIarguments are LOWindependence and do not prove renderedmodal usability/humanpresence. Next finalnative typecheck/build/launch + affectedhosts/scopedcommit/byteverification. Nineunmanagedleaks/catalog44UNVERIFIED/ratingPENDING/platform-human-toolgaps unchanged.\n');
+console.log(JSON.stringify(result));

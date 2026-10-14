@@ -1,0 +1,7 @@
+{
+  "status": "INCOMPLETE_PREFLIGHT",
+  "message": "Transition staged paths differ.",
+  "cause": "The tracked-only git diff HEAD comparison omitted five new untracked receipt files; staging itself used the exact allowlist and included seven intended changed paths.",
+  "mutation": "Seven intended paths staged; no commit executed, no unrelated path staged.",
+  "retry": "commit-transition-02.ps1 verifies the exact seven already-staged paths and excludes the unchanged commit-f03.ps1 before committing. No unstaging/reset or weaker scope check."
+}

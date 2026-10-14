@@ -1,0 +1,10 @@
+const fs = require('node:fs');
+const canonical = JSON.parse(fs.readFileSync('packages/vscode-extension/package.json', 'utf8'));
+const filename = 'packages/soterai-lite/package.json';
+const lite = JSON.parse(fs.readFileSync(filename, 'utf8'));
+for (const key of ['contributes', 'activationEvents', 'capabilities']) lite[key] = canonical[key];
+fs.writeFileSync(filename, JSON.stringify(lite, null, 2) + '\n');
+const count = Object.values(canonical.contributes.configuration.properties).filter(value => value.scope === 'machine').length;
+const readme = 'packages/vscode-extension/README.md';
+fs.writeFileSync(readme, fs.readFileSync(readme, 'utf8').replace(/The \d+ safety-relevant settings are `machine`-scoped/, `The ${count} safety-relevant settings are \`machine\`-scoped`));
+console.log(JSON.stringify({ status: 'PASS_METADATA_SYNC', machineSettings: count }));

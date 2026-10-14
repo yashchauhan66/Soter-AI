@@ -10,9 +10,16 @@ import { ProjectFileAccess, type CapturedFile, type AccessReceipt, type AccessRe
 import { ProjectReadTerminal } from "./ReadTerminal";
 import { openProjectPrivacyPanel } from "./panel";
 import { restrictionSaveEnabled, requireRestrictionSave, assertRestrictionWorkspace, RestrictionUnavailable, restrictionResult,
-    withManualRestriction, manualRestrictionPending, onDidChangeManualRestriction } from "../ai-boundary/RestrictionOperation";
+    withManualRestriction, manualRestrictionPending, manualRestrictionIntentPending, onDidChangeManualRestriction } from "../ai-boundary/RestrictionOperation";
 
 const NEVER_RELEASE = /(?:^|\/)(?:\.git|\.soterai)(?:\/|$)|(?:^|\/)(?:\.aiignore|\.soterai-policy\.json)$/i;
+
+export function safeConsentEnabled(): boolean {
+    try {
+        const config = vscode.workspace.getConfiguration("soterai"), inspected = config.inspect<boolean>("lite.safeConsent");
+        return (inspected ? inspected.globalValue ?? inspected.defaultValue ?? true : config.get("lite.safeConsent", true)) === true;
+    } catch { return false; }
+}
 
 class ApprovedViewProvider implements vscode.TextDocumentContentProvider, vscode.Disposable {
     private readonly views = new Map<string, string>();
@@ -42,7 +49,7 @@ export function approvalMessage(receipt: AccessReceipt): string {
         : receipt.kind === "sensitive-summary" ? "Only a masked summary will be released. Sensitive file contents stay withheld."
         : "One saved-file view will be released with recognized secrets and protected regions removed. Unrecognized private text can remain.";
     return `Allow one safe read of ${JSON.stringify(receipt.relativePath)} in ${JSON.stringify(receipt.workspace)}?\n\n`
-        + treatment + `\n\nRoute: ${receipt.surface}. Review expires after 60 seconds and is bound to this saved file and policy revision. `
+        + treatment + `\n\nRoute: ${receipt.surface}. Destination: ${receipt.recipient}. The detail below is the exact safe text to be returned. Review expires after 60 seconds and is bound to this saved file, output, destination and policy revision. `
         + "The persistent restriction remains. This editor confirmation is not agent-proof; requester identity is not OS-verified. Other tools' direct reads are outside this reader.";
 }
 
@@ -54,13 +61,15 @@ export function registerProjectPrivacyCommands(context: vscode.ExtensionContext)
         && vscode.workspace.getConfiguration("soterai").get<boolean>("projectPrivacy.atomicSensitivePolicy", true)
         && vscode.workspace.getConfiguration("soterai").get<boolean>("projectPrivacy.safeViewComposition", true)
         && vscode.workspace.getConfiguration("soterai").get<boolean>("hardening.addOnlyPolicy", true);
-    const provider = new ApprovedViewProvider(enabled);
-    const access = new ProjectFileAccess<vscode.Uri>({ enabled, now: () => performance.now(), capture, confirm: async receipt =>
-        await vscode.window.showWarningMessage(approvalMessage(receipt), { modal: true }, "Allow safe read once") === "Allow safe read once" });
+    const readsEnabled = () => enabled() && safeConsentEnabled();
+    const provider = new ApprovedViewProvider(readsEnabled);
+    const access = new ProjectFileAccess<vscode.Uri>({ enabled: readsEnabled, now: () => performance.now(), capture,
+        prepare: async () => { await BoundarySnapshot.load(); }, confirm: async receipt =>
+        await vscode.window.showWarningMessage(approvalMessage(receipt), { modal: true, detail: receipt.safeText }, "Allow safe read once") === "Allow safe read once" });
     context.subscriptions.push(provider, access, vscode.workspace.registerTextDocumentContentProvider("soterai-approved", provider),
-        onDidChangeBoundaryRules(() => { access.revoke(); provider.clear(); }),
-        onDidChangeOwnerPolicySession(() => { access.revoke(); provider.clear(); }),
-        onDidChangeManualRestriction(() => { access.revoke(); provider.clear(); }),
+        onDidChangeBoundaryRules(() => { if (!access.isPreparing()) access.revoke(); provider.clear(); }),
+        onDidChangeOwnerPolicySession(() => { if (!access.isPreparing()) access.revoke(); provider.clear(); }),
+        onDidChangeManualRestriction(root => { if (!access.isPreparing() || manualRestrictionIntentPending(root)) access.revoke(); provider.clear(); }),
         vscode.workspace.onDidChangeWorkspaceFolders(() => { access.revoke(); provider.clear(); }),
         vscode.workspace.onDidChangeConfiguration(event => {
             if (event.affectsConfiguration("soterai")) { access.revoke(); provider.clear(); }
@@ -102,8 +111,6 @@ export function registerProjectPrivacyCommands(context: vscode.ExtensionContext)
     }
     async function request(uri: vscode.Uri | undefined, surface: RequestSurface): Promise<AccessResult> {
         if (!uri) return { status: "DENIED" };
-        // Complete accepted-policy migration before starting this request's revocation epoch.
-        try { await BoundarySnapshot.load(); } catch { return { status: "UNAVAILABLE" }; }
         return access.request(uri, surface);
     }
     const reg = (id: string, handler: (...args: unknown[]) => unknown) => {
@@ -177,7 +184,7 @@ export function registerProjectPrivacyCommands(context: vscode.ExtensionContext)
         return { status: "REVOKED" };
     });
     reg("soterai.openProjectReadTerminal", async () => {
-        if (!enabled()) { void vscode.window.showWarningMessage("Project read terminal unavailable. Check project privacy settings and workspace trust."); return { status: "UNAVAILABLE" }; }
+        if (!readsEnabled()) { void vscode.window.showWarningMessage("Project read terminal unavailable. Check project privacy settings and workspace trust."); return { status: "UNAVAILABLE" }; }
         const folders = vscode.workspace.workspaceFolders;
         const folder = folders?.length === 1 ? folders[0] : await vscode.window.showWorkspaceFolderPick();
         if (!folder || folder.uri.scheme !== "file") return { status: "CANCELLED" };

@@ -1,0 +1,684 @@
+﻿TAP version 13
+# Subtest: F03-S01 legacy relax-modal acceptance cannot remove a permanent deny without typed owner review
+ok 1 - F03-S01 legacy relax-modal acceptance cannot remove a permanent deny without typed owner review
+  ---
+  duration_ms: 104.9364
+  type: 'test'
+  ...
+# Subtest: F03-S02 completed review pauses only its selector and atomically audits without changing permanent policy
+ok 2 - F03-S02 completed review pauses only its selector and atomically audits without changing permanent policy
+  ---
+  duration_ms: 185.0683
+  type: 'test'
+  ...
+# Subtest: F03-S03 owner review opens a real metadata diff without placing source contents in the diff
+ok 3 - F03-S03 owner review opens a real metadata diff without placing source contents in the diff
+  ---
+  duration_ms: 79.6239
+  type: 'test'
+  ...
+# Subtest: F03-S04 a restart loses session permission even when its successful audit remains persisted
+ok 4 - F03-S04 a restart loses session permission even when its successful audit remains persisted
+  ---
+  duration_ms: 200.2386
+  type: 'test'
+  ...
+# Subtest: F03-S05 flag withdrawal invalidates captured snapshots and re-enabling cannot resurrect a grant
+ok 5 - F03-S05 flag withdrawal invalidates captured snapshots and re-enabling cannot resurrect a grant
+  ---
+  duration_ms: 162.0966
+  type: 'test'
+  ...
+# Subtest: F03-S06 machine flag inspection overrides conflicting repository values
+ok 6 - F03-S06 machine flag inspection overrides conflicting repository values
+  ---
+  duration_ms: 154.5535
+  type: 'test'
+  ...
+# Subtest: F03-S07 trust and safety-config withdrawal revoke session permission permanently
+ok 7 - F03-S07 trust and safety-config withdrawal revoke session permission permanently
+  ---
+  duration_ms: 337.408
+  type: 'test'
+  ...
+# Subtest: F03-S08 source drift after a grant is independently detected by a fresh managed read
+ok 8 - F03-S08 source drift after a grant is independently detected by a fresh managed read
+  ---
+  duration_ms: 165.65
+  type: 'test'
+  ...
+# Subtest: F03-S09 additive manual and imported policy revisions revoke a session grant
+ok 9 - F03-S09 additive manual and imported policy revisions revoke a session grant
+  ---
+  duration_ms: 311.0357
+  type: 'test'
+  ...
+# Subtest: F03-S10 workspace disappearance revokes captured permission and returning root does not restore it
+ok 10 - F03-S10 workspace disappearance revokes captured permission and returning root does not restore it
+  ---
+  duration_ms: 148.1496
+  type: 'test'
+  ...
+# Subtest: F03-S11 ordinary review offers neither sensitive file selectors nor removable protected regions
+ok 11 - F03-S11 ordinary review offers neither sensitive file selectors nor removable protected regions
+  ---
+  duration_ms: 31.4632
+  type: 'test'
+  ...
+# Subtest: F03-S12 pausing an ordinary whole-file selector preserves every protected text region
+ok 12 - F03-S12 pausing an ordinary whole-file selector preserves every protected text region
+  ---
+  duration_ms: 126.6059
+  type: 'test'
+  ...
+# Subtest: F03-S13 separate sensitive review retains sensitivity and permits only existing masked safe views
+ok 13 - F03-S13 separate sensitive review retains sensitivity and permits only existing masked safe views
+  ---
+  duration_ms: 159.2934
+  type: 'test'
+  ...
+# Subtest: F03-S14 an ordinary session grant never relaxes credential defaults or an imported team deny
+ok 14 - F03-S14 an ordinary session grant never relaxes credential defaults or an imported team deny
+  ---
+  duration_ms: 98.9979
+  type: 'test'
+  ...
+# Subtest: F03-S15 each owner-UI cancellation stage leaves no grant and no audit record
+ok 15 - F03-S15 each owner-UI cancellation stage leaves no grant and no audit record
+  ---
+  duration_ms: 107.5042
+  type: 'test'
+  ...
+# Subtest: F03-S16 incorrect typing, expired review and backward clock cannot create session permission
+ok 16 - F03-S16 incorrect typing, expired review and backward clock cannot create session permission
+  ---
+  duration_ms: 130.0557
+  type: 'test'
+  ...
+# Subtest: F03-S17 cancel during the cooldown withdraws the review before its final session action
+ok 17 - F03-S17 cancel during the cooldown withdraws the review before its final session action
+  ---
+  duration_ms: 53.5732
+  type: 'test'
+  ...
+# Subtest: F03-S18 source or policy drift during the owner modal invalidates its exact typed response
+ok 18 - F03-S18 source or policy drift during the owner modal invalidates its exact typed response
+  ---
+  duration_ms: 134.009
+  type: 'test'
+  ...
+# Subtest: F03-S19 audit persistence failure never acknowledges a grant or changes permanent policy
+ok 19 - F03-S19 audit persistence failure never acknowledges a grant or changes permanent policy
+  ---
+  duration_ms: 65.1673
+  type: 'test'
+  ...
+# Subtest: F03-S20 a successful audit write followed by root drift cannot issue a session grant
+ok 20 - F03-S20 a successful audit write followed by root drift cannot issue a session grant
+  ---
+  duration_ms: 68.8703
+  type: 'test'
+  ...
+# Subtest: F03-S21 a strict v3 envelope preserves review history across additive manual and policy writes
+ok 21 - F03-S21 a strict v3 envelope preserves review history across additive manual and policy writes
+  ---
+  duration_ms: 69.897
+  type: 'test'
+  ...
+# Subtest: F03-S22 command arguments cannot substitute for owner UI or submit a programmatic grant
+ok 22 - F03-S22 command arguments cannot substitute for owner UI or submit a programmatic grant
+  ---
+  duration_ms: 31.6102
+  type: 'test'
+  ...
+# Subtest: F03-S23 a concurrent owner review is unavailable while the first dialog is still open
+ok 23 - F03-S23 a concurrent owner review is unavailable while the first dialog is still open
+  ---
+  duration_ms: 135.9218
+  type: 'test'
+  ...
+# Subtest: F03-S24 unknown root or audit schemas and extra audit fields fail closed without discarding stored denies
+ok 24 - F03-S24 unknown root or audit schemas and extra audit fields fail closed without discarding stored denies
+  ---
+  duration_ms: 59.7965
+  type: 'test'
+  ...
+# Subtest: F03-S25 a full review audit refuses a new grant without truncating retained owner history
+ok 25 - F03-S25 a full review audit refuses a new grant without truncating retained owner history
+  ---
+  duration_ms: 137.9711
+  type: 'test'
+  ...
+# Subtest: F03-S26 sensitive protected-region review audits metadata while preserving the actual masking rule
+ok 26 - F03-S26 sensitive protected-region review audits metadata while preserving the actual masking rule
+  ---
+  duration_ms: 121.1673
+  type: 'test'
+  ...
+# Subtest: F03-S27 re-blocking an already stored deny immediately ends its reviewed session permission
+ok 27 - F03-S27 re-blocking an already stored deny immediately ends its reviewed session permission
+  ---
+  duration_ms: 164.0689
+  type: 'test'
+  ...
+# Subtest: F03-S28 a queued check of older drift metadata does not cancel a review of the already current revision
+ok 28 - F03-S28 a queued check of older drift metadata does not cancel a review of the already current revision
+  ---
+  duration_ms: 163.325
+  type: 'test'
+  ...
+# Subtest: F03-S29 legacy Unicode and case aliases use the same selector identity after a v3 audit upgrade
+ok 29 - F03-S29 legacy Unicode and case aliases use the same selector identity after a v3 audit upgrade
+  ---
+  duration_ms: 36.2714
+  type: 'test'
+  ...
+# Subtest: F01-U01 ordinary restriction returns SAVED only for persisted deny
+ok 30 - F01-U01 ordinary restriction returns SAVED only for persisted deny
+  ---
+  duration_ms: 46.7411
+  type: 'test'
+  ...
+# Subtest: F01-U02 failed ordinary save cannot become REQUEST_HANDLED or success
+ok 31 - F01-U02 failed ordinary save cannot become REQUEST_HANDLED or success
+  ---
+  duration_ms: 13.8175
+  type: 'test'
+  ...
+# Subtest: F01-U03 direct manual command reports storage failure to its caller
+ok 32 - F01-U03 direct manual command reports storage failure to its caller
+  ---
+  duration_ms: 14.6638
+  type: 'test'
+  ...
+# Subtest: F01-U04 failed addition preserves ordinary folder glob region and sensitive denies
+ok 33 - F01-U04 failed addition preserves ordinary folder glob region and sensitive denies
+  ---
+  duration_ms: 18.9436
+  type: 'test'
+  ...
+# Subtest: F01-U05 file folder glob and region paths share explicit awaited save outcomes
+ok 34 - F01-U05 file folder glob and region paths share explicit awaited save outcomes
+  ---
+  duration_ms: 37.3327
+  type: 'test'
+  ...
+# Subtest: F01-U06 picker glob folder and empty-selection cancellation make no writes
+ok 35 - F01-U06 picker glob folder and empty-selection cancellation make no writes
+  ---
+  duration_ms: 12.6533
+  type: 'test'
+  ...
+# Subtest: F01-U07 invalid paths syntax and corrupt storage fail without successful mutation
+ok 36 - F01-U07 invalid paths syntax and corrupt storage fail without successful mutation
+  ---
+  duration_ms: 19.2725
+  type: 'test'
+  ...
+# Subtest: F01-U08 save result notification and change event wait for storage completion
+ok 37 - F01-U08 save result notification and change event wait for storage completion
+  ---
+  duration_ms: 13.2368
+  type: 'test'
+  ...
+# Subtest: F01-U09 manual save revokes pending reads before failure and holds new reads while pending
+ok 38 - F01-U09 manual save revokes pending reads before failure and holds new reads while pending
+  ---
+  duration_ms: 56.8475
+  type: 'test'
+  ...
+# Subtest: F01-U10 failed queued save does not poison later successful roots
+ok 39 - F01-U10 failed queued save does not poison later successful roots
+  ---
+  duration_ms: 32.1608
+  type: 'test'
+  ...
+# Subtest: F01-U11 repeated ordinary marking cannot duplicate or weaken sensitive deny
+ok 40 - F01-U11 repeated ordinary marking cannot duplicate or weaken sensitive deny
+  ---
+  duration_ms: 15.6496
+  type: 'test'
+  ...
+# Subtest: F01-U12 full policy upgrades strongest treatment but rejects overflowing new deny
+ok 41 - F01-U12 full policy upgrades strongest treatment but rejects overflowing new deny
+  ---
+  duration_ms: 32.411
+  type: 'test'
+  ...
+# Subtest: F01-U13 saved restrictions survive component reload and repository deny removal
+ok 42 - F01-U13 saved restrictions survive component reload and repository deny removal
+  ---
+  duration_ms: 49.5607
+  type: 'test'
+  ...
+# Subtest: F01-U14 flag off withdraws only new restrictions and retains masked existing reads
+ok 43 - F01-U14 flag off withdraws only new restrictions and retains masked existing reads
+  ---
+  duration_ms: 40.7852
+  type: 'test'
+  ...
+# Subtest: F01-U15 actual panel controller shows real saved failed and cancelled command outcomes
+ok 44 - F01-U15 actual panel controller shows real saved failed and cancelled command outcomes
+  ---
+  duration_ms: 20.5171
+  type: 'test'
+  ...
+# Subtest: F01-U16 post-commit rejection is reported conservatively without undoing stronger deny
+ok 45 - F01-U16 post-commit rejection is reported conservatively without undoing stronger deny
+  ---
+  duration_ms: 14.7885
+  type: 'test'
+  ...
+# Subtest: F01-U17 overlapping manual saves keep reads withheld until both finish
+ok 46 - F01-U17 overlapping manual saves keep reads withheld until both finish
+  ---
+  duration_ms: 48.7709
+  type: 'test'
+  ...
+# Subtest: F01-U18 flag disabled during a glob dialog withholds the new save
+ok 47 - F01-U18 flag disabled during a glob dialog withholds the new save
+  ---
+  duration_ms: 10.3917
+  type: 'test'
+  ...
+# Subtest: F01-U19 repository flag values cannot override the machine owner setting
+ok 48 - F01-U19 repository flag values cannot override the machine owner setting
+  ---
+  duration_ms: 12.0841
+  type: 'test'
+  ...
+# Subtest: F01-U20 repeated accepted policy enrollment does not expire public safe reads
+ok 49 - F01-U20 repeated accepted policy enrollment does not expire public safe reads
+  ---
+  duration_ms: 78.0458
+  type: 'test'
+  ...
+# Subtest: F01-U21 workspace replacement during queued file saves cannot report SAVED
+ok 50 - F01-U21 workspace replacement during queued file saves cannot report SAVED
+  ---
+  duration_ms: 13.7912
+  type: 'test'
+  ...
+# Subtest: F01-U22 root removed during a glob dialog makes no successful save
+ok 51 - F01-U22 root removed during a glob dialog makes no successful save
+  ---
+  duration_ms: 10.1015
+  type: 'test'
+  ...
+# Subtest: F01-U23 queued sensitive save stays bound to its chosen workspace
+ok 52 - F01-U23 queued sensitive save stays bound to its chosen workspace
+  ---
+  duration_ms: 16.1037
+  type: 'test'
+  ...
+# Subtest: F04-C01 native consent previews exactly the masked dotenv output without opening a document before approval
+ok 53 - F04-C01 native consent previews exactly the masked dotenv output without opening a document before approval
+  ---
+  duration_ms: 107.9692
+  type: 'test'
+  ...
+# Subtest: F04-C02 public and ordinary restricted files release precisely the modal detail while persistent deny remains
+ok 54 - F04-C02 public and ordinary restricted files release precisely the modal detail while persistent deny remains
+  ---
+  duration_ms: 166.5642
+  type: 'test'
+  ...
+# Subtest: F04-C03 denying the native modal exposes no preview document and no released result text
+ok 55 - F04-C03 denying the native modal exposes no preview document and no released result text
+  ---
+  duration_ms: 49.77
+  type: 'test'
+  ...
+# Subtest: F04-C04 arbitrary command arguments cannot authorize or replace the route, recipient, preview or expiry
+ok 56 - F04-C04 arbitrary command arguments cannot authorize or replace the route, recipient, preview or expiry
+  ---
+  duration_ms: 109.3841
+  type: 'test'
+  ...
+# Subtest: F04-C05 a machine flag withdrawal withholds integration, preview and managed terminal reads and retains denies
+ok 57 - F04-C05 a machine flag withdrawal withholds integration, preview and managed terminal reads and retains denies
+  ---
+  duration_ms: 28.0056
+  type: 'test'
+  ...
+# Subtest: F04-C06 withdrawing the flag invalidates already opened safe provider views and notifies their refresh
+ok 58 - F04-C06 withdrawing the flag invalidates already opened safe provider views and notifies their refresh
+  ---
+  duration_ms: 69.9642
+  type: 'test'
+  ...
+# Subtest: F04-C07 workspace overrides cannot enable a globally disabled flag or disable the machine default
+ok 59 - F04-C07 workspace overrides cannot enable a globally disabled flag or disable the machine default
+  ---
+  duration_ms: 111.3404
+  type: 'test'
+  ...
+# Subtest: F04-C08 disabling safe consent leaves ordinary and sensitive restriction saves usable
+ok 60 - F04-C08 disabling safe consent leaves ordinary and sensitive restriction saves usable
+  ---
+  duration_ms: 67.9563
+  type: 'test'
+  ...
+# Subtest: F04-C09 recognized and manually marked sensitive files show summary-only detail and release that same summary
+ok 61 - F04-C09 recognized and manually marked sensitive files show summary-only detail and release that same summary
+  ---
+  duration_ms: 117.0191
+  type: 'test'
+  ...
+# Subtest: F04-C10 protected regions never appear in native detail and protected dotenv syntax withholds the whole schema
+ok 62 - F04-C10 protected regions never appear in native detail and protected dotenv syntax withholds the whole schema
+  ---
+  duration_ms: 126.4911
+  type: 'test'
+  ...
+# Subtest: F04-C11 binary, oversized input and safe output above 16 KiB are withheld before consent; the exact limit remains useful
+ok 63 - F04-C11 binary, oversized input and safe output above 16 KiB are withheld before consent; the exact limit remains useful
+  ---
+  duration_ms: 198.6213
+  type: 'test'
+  ...
+# Subtest: F04-C12 a cold first request enrolls additive project protection inside its own preparation and still reaches exact consent
+ok 64 - F04-C12 a cold first request enrolls additive project protection inside its own preparation and still reaches exact consent
+  ---
+  duration_ms: 106.9577
+  type: 'test'
+  ...
+# (node:14032) ExperimentalWarning: The MockTimers API is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: F04 receipt previews exactly the released public text on safe-preview
+ok 65 - F04 receipt previews exactly the released public text on safe-preview
+  ---
+  duration_ms: 17.4305
+  type: 'test'
+  ...
+# Subtest: F04 receipt previews exactly the released public text on managed-read-terminal
+ok 66 - F04 receipt previews exactly the released public text on managed-read-terminal
+  ---
+  duration_ms: 1.1971
+  type: 'test'
+  ...
+# Subtest: F04 receipt previews exactly the released public text on integration-command
+ok 67 - F04 receipt previews exactly the released public text on integration-command
+  ---
+  duration_ms: 1.0218
+  type: 'test'
+  ...
+# Subtest: F04 the fallback recipient is a fixed nonempty internal label
+ok 68 - F04 the fallback recipient is a fixed nonempty internal label
+  ---
+  duration_ms: 2.4294
+  type: 'test'
+  ...
+# Subtest: F04 confirmation cannot mutate the immutable reviewed output or recipient
+ok 69 - F04 confirmation cannot mutate the immutable reviewed output or recipient
+  ---
+  duration_ms: 1.5339
+  type: 'test'
+  ...
+# Subtest: F04 dotenv receipt and result mask every value including public-looking values and multiline data
+ok 70 - F04 dotenv receipt and result mask every value including public-looking values and multiline data
+  ---
+  duration_ms: 3.1478
+  type: 'test'
+  ...
+# Subtest: F04 protected multiline dotenv never previews apparent names inside masked value data
+ok 71 - F04 protected multiline dotenv never previews apparent names inside masked value data
+  ---
+  duration_ms: 1.0362
+  type: 'test'
+  ...
+# Subtest: F04 an ordinary protected region keeps useful adjacent public text in exact preview
+ok 72 - F04 an ordinary protected region keeps useful adjacent public text in exact preview
+  ---
+  duration_ms: 0.9591
+  type: 'test'
+  ...
+# Subtest: F04 marked sensitive files show only the same summary that is released
+ok 73 - F04 marked sensitive files show only the same summary that is released
+  ---
+  duration_ms: 1.0981
+  type: 'test'
+  ...
+# Subtest: F04 recognized sensitive files show only the same summary that is released
+ok 74 - F04 recognized sensitive files show only the same summary that is released
+  ---
+  duration_ms: 0.838
+  type: 'test'
+  ...
+# Subtest: F04 managed terminal reviews its control-character-stripped payload before consent
+ok 75 - F04 managed terminal reviews its control-character-stripped payload before consent
+  ---
+  duration_ms: 1.0946
+  type: 'test'
+  ...
+# Subtest: F04 undeclared runtime surface "invented-surface" is unavailable before capture or UI
+ok 76 - F04 undeclared runtime surface "invented-surface" is unavailable before capture or UI
+  ---
+  duration_ms: 0.4505
+  type: 'test'
+  ...
+# Subtest: F04 undeclared runtime surface "" is unavailable before capture or UI
+ok 77 - F04 undeclared runtime surface "" is unavailable before capture or UI
+  ---
+  duration_ms: 0.2892
+  type: 'test'
+  ...
+# Subtest: F04 undeclared runtime surface null is unavailable before capture or UI
+ok 78 - F04 undeclared runtime surface null is unavailable before capture or UI
+  ---
+  duration_ms: 0.2719
+  type: 'test'
+  ...
+# Subtest: F04 undeclared runtime surface undefined is unavailable before capture or UI
+ok 79 - F04 undeclared runtime surface undefined is unavailable before capture or UI
+  ---
+  duration_ms: 0.2476
+  type: 'test'
+  ...
+# Subtest: F04 undeclared runtime surface {"approved":true} is unavailable before capture or UI
+ok 80 - F04 undeclared runtime surface {"approved":true} is unavailable before capture or UI
+  ---
+  duration_ms: 0.38
+  type: 'test'
+  ...
+# Subtest: F04 only boolean true authorizes a request
+ok 81 - F04 only boolean true authorizes a request
+  ---
+  duration_ms: 4.0536
+  type: 'test'
+  ...
+# Subtest: F04 changed recipient during first-capture releases no text
+ok 82 - F04 changed recipient during first-capture releases no text
+  ---
+  duration_ms: 0.5831
+  type: 'test'
+  ...
+# Subtest: F04 changed recipient during confirmation releases no text
+ok 83 - F04 changed recipient during confirmation releases no text
+  ---
+  duration_ms: 0.4749
+  type: 'test'
+  ...
+# Subtest: F04 changed recipient during fresh-capture releases no text
+ok 84 - F04 changed recipient during fresh-capture releases no text
+  ---
+  duration_ms: 0.3976
+  type: 'test'
+  ...
+# Subtest: F04 recapture rejects changed workspace while preserving the original safe preview
+ok 85 - F04 recapture rejects changed workspace while preserving the original safe preview
+  ---
+  duration_ms: 1.679
+  type: 'test'
+  ...
+# Subtest: F04 recapture rejects changed relativePath while preserving the original safe preview
+ok 86 - F04 recapture rejects changed relativePath while preserving the original safe preview
+  ---
+  duration_ms: 0.6247
+  type: 'test'
+  ...
+# Subtest: F04 recapture rejects changed policyRevision while preserving the original safe preview
+ok 87 - F04 recapture rejects changed policyRevision while preserving the original safe preview
+  ---
+  duration_ms: 0.4545
+  type: 'test'
+  ...
+# Subtest: F04 recapture rejects changed fileIdentity while preserving the original safe preview
+ok 88 - F04 recapture rejects changed fileIdentity while preserving the original safe preview
+  ---
+  duration_ms: 0.3783
+  type: 'test'
+  ...
+# Subtest: F04 recapture rejects changed content while preserving the original safe preview
+ok 89 - F04 recapture rejects changed content while preserving the original safe preview
+  ---
+  duration_ms: 0.382
+  type: 'test'
+  ...
+# Subtest: F04 recapture rejects changed regionView while preserving the original safe preview
+ok 90 - F04 recapture rejects changed regionView while preserving the original safe preview
+  ---
+  duration_ms: 0.4118
+  type: 'test'
+  ...
+# Subtest: F04 recapture rejects changed sensitive while preserving the original safe preview
+ok 91 - F04 recapture rejects changed sensitive while preserving the original safe preview
+  ---
+  duration_ms: 0.36
+  type: 'test'
+  ...
+# Subtest: F04 exactly 16 KiB of UTF-8 safe output remains useful and can be reviewed
+ok 92 - F04 exactly 16 KiB of UTF-8 safe output remains useful and can be reviewed
+  ---
+  duration_ms: 2.0954
+  type: 'test'
+  ...
+# Subtest: F04 ordinary output over 16 KiB is unavailable before confirmation
+ok 93 - F04 ordinary output over 16 KiB is unavailable before confirmation
+  ---
+  duration_ms: 1.5347
+  type: 'test'
+  ...
+# Subtest: F04 environment output over 16 KiB is unavailable before confirmation
+ok 94 - F04 environment output over 16 KiB is unavailable before confirmation
+  ---
+  duration_ms: 0.8679
+  type: 'test'
+  ...
+# Subtest: F04 oversized-original is rejected even if the alternate captured view is small and safe
+ok 95 - F04 oversized-original is rejected even if the alternate captured view is small and safe
+  ---
+  duration_ms: 0.4089
+  type: 'test'
+  ...
+# Subtest: F04 binary-original is rejected even if the alternate captured view is small and safe
+ok 96 - F04 binary-original is rejected even if the alternate captured view is small and safe
+  ---
+  duration_ms: 0.2177
+  type: 'test'
+  ...
+# Subtest: F04 oversized-region is rejected even if the alternate captured view is small and safe
+ok 97 - F04 oversized-region is rejected even if the alternate captured view is small and safe
+  ---
+  duration_ms: 0.2199
+  type: 'test'
+  ...
+# Subtest: F04 binary-region is rejected even if the alternate captured view is small and safe
+ok 98 - F04 binary-region is rejected even if the alternate captured view is small and safe
+  ---
+  duration_ms: 0.3753
+  type: 'test'
+  ...
+# Subtest: F04 unsupported dotenv syntax gives an exact withheld summary and never original text
+ok 99 - F04 unsupported dotenv syntax gives an exact withheld summary and never original text
+  ---
+  duration_ms: 0.5143
+  type: 'test'
+  ...
+# Subtest: F04 the 60-second deadline resolves an unanswered capture without waiting for it
+ok 100 - F04 the 60-second deadline resolves an unanswered capture without waiting for it
+  ---
+  duration_ms: 40.7364
+  type: 'test'
+  ...
+# Subtest: F04 the 60-second deadline resolves an unanswered confirmation without waiting for it
+ok 101 - F04 the 60-second deadline resolves an unanswered confirmation without waiting for it
+  ---
+  duration_ms: 2.5933
+  type: 'test'
+  ...
+# Subtest: F04 the owned deadline expires even when the injected elapsed clock does not advance
+ok 102 - F04 the owned deadline expires even when the injected elapsed clock does not advance
+  ---
+  duration_ms: 2.4813
+  type: 'test'
+  ...
+# Subtest: F04 revoke immediately expires a request waiting on capture
+ok 103 - F04 revoke immediately expires a request waiting on capture
+  ---
+  duration_ms: 6.0921
+  type: 'test'
+  ...
+# Subtest: F04 revoke immediately expires a request waiting on confirmation
+ok 104 - F04 revoke immediately expires a request waiting on confirmation
+  ---
+  duration_ms: 1.3383
+  type: 'test'
+  ...
+# Subtest: F04 dispose immediately expires a request waiting on capture
+ok 105 - F04 dispose immediately expires a request waiting on capture
+  ---
+  duration_ms: 0.8735
+  type: 'test'
+  ...
+# Subtest: F04 dispose immediately expires a request waiting on confirmation
+ok 106 - F04 dispose immediately expires a request waiting on confirmation
+  ---
+  duration_ms: 2.4631
+  type: 'test'
+  ...
+# Subtest: F04 a late revoked approval cannot clear a newer request's busy state or grant it
+ok 107 - F04 a late revoked approval cannot clear a newer request's busy state or grant it
+  ---
+  duration_ms: 2.4014
+  type: 'test'
+  ...
+# Subtest: F04 late expired capture cannot open UI or hold a newer request busy
+ok 108 - F04 late expired capture cannot open UI or hold a newer request busy
+  ---
+  duration_ms: 1.8931
+  type: 'test'
+  ...
+# Subtest: F04 finishing an old request clears its timer instead of expiring a newer request
+ok 109 - F04 finishing an old request clears its timer instead of expiring a newer request
+  ---
+  duration_ms: 1.5356
+  type: 'test'
+  ...
+# Subtest: F04 preparation completes inside the request before content capture or approval
+ok 110 - F04 preparation completes inside the request before content capture or approval
+  ---
+  duration_ms: 1.4392
+  type: 'test'
+  ...
+# Subtest: F04 a hung preparation expires at the owned deadline and never captures content later
+ok 111 - F04 a hung preparation expires at the owned deadline and never captures content later
+  ---
+  duration_ms: 1.0735
+  type: 'test'
+  ...
+# Subtest: F04 late revoked preparation cannot clear the newer request's preparation ownership
+ok 112 - F04 late revoked preparation cannot clear the newer request's preparation ownership
+  ---
+  duration_ms: 1.5128
+  type: 'test'
+  ...
+1..112
+# tests 112
+# suites 0
+# pass 112
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 8838.5248

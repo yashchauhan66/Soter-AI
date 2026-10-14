@@ -1,0 +1,308 @@
+import "./phase2/register.mjs";
+import assert from "node:assert/strict";
+import { afterEach, beforeEach, mock, test } from "node:test";
+import { mkdtemp, mkdir, rm, writeFile } from "node:fs/promises";
+import { basename, dirname, join, resolve } from "node:path";
+import { tmpdir } from "node:os";
+import * as stub from "./phase2/vscode-stub";
+import { BoundarySnapshot, initializeBoundaryState, storedRules, updateRules } from "../ai-boundary/BoundarySnapshot";
+import { registerAIBoundaryCommands } from "../ai-boundary/commands";
+import { documentDigest, OMITTED } from "../ai-boundary/policy";
+import { registerProjectPrivacyCommands } from "../project-privacy/commands";
+
+// This suite drives the command handlers' actual vscode API instance. Every
+// file and value is synthetic; all provider/document/modal sinks are local.
+const FLAG = "soterai.lite.safeConsent";
+const PRIVATE = "SYNTHETIC_F04_PRIVATE_COMMENT_NEVER_RELEASED";
+const URL = "postgresql://synthetic:fake-only@f04.invalid/private-db";
+const KEY = "sk-proj-" + "SYNTHETIC_F04_FAKE_CREDENTIAL".repeat(3);
+const SPOOF = "SYNTHETIC_F04_CALLER_SELECTED_RECIPIENT";
+type Result = { status: string; kind?: string; text?: string };
+type Modal = { message: string; options: { modal?: boolean; detail?: string }; actions: unknown[] };
+type Provider = { provideTextDocumentContent(uri: stub.Uri): string | Promise<string>; onDidChange?: (listener: (uri: stub.Uri) => void) => { dispose(): void } };
+let root: string, context: ReturnType<typeof stub.makeExtensionContext>;
+let modals: Modal[], opened: Array<{ uri: stub.Uri; text: string }>, shown: string[], providers: Map<string, Provider>;
+let decision: (modal: Modal) => Promise<string | undefined>;
+let configurationChanged: ((event: { affectsConfiguration(section: string): boolean }) => void) | undefined;
+let providerChanges: string[];
+const windowOriginals = Object.getOwnPropertyDescriptors(stub.window);
+const workspaceOriginals = Object.getOwnPropertyDescriptors(stub.workspace);
+const uri = (relative: string) => stub.Uri.file(join(root, relative));
+const key = () => stub.state.folders[0].uri.toString();
+async function write(relative: string, text: string): Promise<void> {
+    await mkdir(dirname(join(root, relative)), { recursive: true });
+    await writeFile(join(root, relative), text);
+}
+async function enroll(): Promise<void> { await BoundarySnapshot.load(); stub.resetSinks(); }
+async function read(relative: string, ...extra: unknown[]): Promise<Result> {
+    return await stub.commands.executeCommand("soterai.readProjectFileSafely", uri(relative), ...extra) as Result;
+}
+async function deny(relative: string, sensitive = false): Promise<void> {
+    await updateRules(key(), rules => ({ ...rules, paths: [...rules.paths,
+        { kind: "file", pattern: relative, ...(sensitive ? { sensitive: true as const } : {}) }] }));
+}
+function assertExactModal(result: Result, index = modals.length - 1): void {
+    assert.equal(result.status, "ALLOWED_ONCE");
+    assert.equal(modals[index].options.modal, true);
+    assert.equal(typeof modals[index].options.detail, "string", "Native MessageOptions.detail must show the exact safe output.");
+    assert.equal(modals[index].options.detail, result.text);
+    assert.ok(modals[index].actions.includes("Allow safe read once"));
+}
+function withdraw(): void {
+    stub.state.config.set(FLAG, false);
+    stub.state.configInspect.set(FLAG, { defaultValue: true, globalValue: false });
+    configurationChanged?.({ affectsConfiguration: section => section === "soterai" || section === FLAG });
+}
+
+beforeEach(async () => {
+    root = await mkdtemp(join(tmpdir(), "soterai-f04-consent-commands-"));
+    stub.resetState(root); context = stub.makeExtensionContext(root);
+    initializeBoundaryState(context.workspaceState as never);
+    modals = []; opened = []; shown = []; providers = new Map(); providerChanges = [];
+    configurationChanged = undefined;
+    decision = async () => "Allow safe read once";
+    Object.assign(stub.window, {
+        showWarningMessage: async (message: string, ...args: unknown[]) => {
+            const modal: Modal = { message, options: args[0] as Modal["options"], actions: args.slice(1) };
+            if (modal.options?.modal === true) {
+                modals.push(modal); stub.recordSink("native-consent", "modal", JSON.stringify(modal));
+                return decision(modal);
+            }
+            stub.recordSink("notification", "warn", message); return undefined;
+        },
+        showOpenDialog: async () => undefined,
+        showTextDocument: async (document: ReturnType<typeof stub.makeDocument>) => {
+            shown.push(document.getText()); stub.recordSink("shown-document", "safe-view", document.getText());
+            return { document };
+        },
+    });
+    Object.assign(stub.workspace, {
+        registerTextDocumentContentProvider: (scheme: string, provider: Provider) => {
+            providers.set(scheme, provider);
+            const change = provider.onDidChange?.(changed => providerChanges.push(changed.toString()));
+            return new stub.Disposable(() => { change?.dispose(); providers.delete(scheme); });
+        },
+        openTextDocument: async (argument: stub.Uri | { content?: string }) => {
+            assert.ok(argument instanceof stub.Uri, "Safe views use an owned provider, never an untitled original-content document.");
+            const provider = providers.get(argument.scheme); assert.ok(provider);
+            const text = await provider.provideTextDocumentContent(argument);
+            opened.push({ uri: argument, text }); stub.recordSink("opened-document", "safe-view", text);
+            return stub.makeDocument(argument, text);
+        },
+        onDidChangeConfiguration: (listener: typeof configurationChanged) => {
+            configurationChanged = listener;
+            return new stub.Disposable(() => { configurationChanged = undefined; });
+        },
+    });
+    // Complete default policy enrollment before registration or any observed sink.
+    await BoundarySnapshot.load();
+    registerProjectPrivacyCommands(context as never);
+    stub.resetSinks();
+});
+
+afterEach(async () => {
+    context.subscriptions.forEach(item => item.dispose()); mock.restoreAll();
+    for (const name of Object.keys(stub.window)) if (!(name in windowOriginals)) delete (stub.window as unknown as Record<string, unknown>)[name];
+    for (const name of Object.keys(stub.workspace)) if (!(name in workspaceOriginals)) delete (stub.workspace as unknown as Record<string, unknown>)[name];
+    Object.defineProperties(stub.window, windowOriginals); Object.defineProperties(stub.workspace, workspaceOriginals);
+    const target = resolve(root);
+    assert.equal(dirname(target), resolve(tmpdir())); assert.ok(basename(target).startsWith("soterai-f04-consent-commands-"));
+    await rm(target, { recursive: true, force: true });
+});
+
+test("F04-C01 native consent previews exactly the masked dotenv output without opening a document before approval", async () => {
+    await write(".env", `# ${PRIVATE}\nDATABASE_URL=${URL}\nAPI_KEY=${KEY}\nPORT=8080\nMULTI="first\n${PRIVATE}=inside-value\nlast"\nEMPTY=`);
+    await enroll();
+    let finish!: (value: string | undefined) => void;
+    decision = () => new Promise(done => { finish = done; });
+    const pending = stub.commands.executeCommand("soterai.reviewSafeFileAccess", uri(".env")) as Promise<Result>;
+    const arrivalDeadline = performance.now() + 2_000;
+    while (!finish && performance.now() < arrivalDeadline) {
+        await new Promise<void>(done => setTimeout(done, 10));
+    }
+    assert.ok(finish, "The native modal must be reached before the read is released.");
+    assert.equal(opened.length, 0); assert.equal(shown.length, 0);
+    assert.equal(modals[0].options.detail, "DATABASE_URL=[MASKED]\nAPI_KEY=[MASKED]\nPORT=[MASKED]\nMULTI=[MASKED]\nEMPTY=[MASKED]");
+    assert.ok(!JSON.stringify(modals).includes(PRIVATE)); assert.ok(!JSON.stringify(modals).includes(URL)); assert.ok(!JSON.stringify(modals).includes(KEY));
+    finish("Allow safe read once"); const result = await pending;
+    assertExactModal(result); assert.equal(opened.length, 1); assert.equal(shown[0], result.text); assert.equal(opened[0].text, result.text);
+    assert.equal((await BoundarySnapshot.load()).blocks(uri(".env") as never), true);
+    assert.ok(!stub.capturedText().includes(PRIVATE)); assert.ok(!stub.capturedText().includes(URL)); assert.ok(!stub.capturedText().includes(KEY));
+});
+
+test("F04-C02 public and ordinary restricted files release precisely the modal detail while persistent deny remains", async () => {
+    await write("public.txt", "Useful public documentation.");
+    await write("ordinary.txt", `Operational note. API_KEY=${KEY}`); await deny("ordinary.txt"); await enroll();
+    const before = structuredClone(storedRules(key()));
+    const ordinary = await read("ordinary.txt"); assertExactModal(ordinary); assert.match(ordinary.text!, /Operational note/);
+    assert.ok(!ordinary.text!.includes(KEY));
+    const control = await read("public.txt"); assertExactModal(control); assert.equal(control.text, "Useful public documentation.");
+    assert.equal(modals.length, 2); assert.equal(opened.length, 0);
+    assert.deepEqual(storedRules(key()), before); assert.equal((await BoundarySnapshot.load()).blocks(uri("ordinary.txt") as never), true);
+});
+
+test("F04-C03 denying the native modal exposes no preview document and no released result text", async () => {
+    await write("public.txt", "Only the owner reviewed this control."); await enroll();
+    decision = async () => undefined;
+    const result = await stub.commands.executeCommand("soterai.reviewSafeFileAccess", uri("public.txt")) as Result;
+    assert.deepEqual(result, { status: "DENIED" }); assert.equal(modals.length, 1);
+    assert.equal(modals[0].options.detail, "Only the owner reviewed this control.");
+    assert.equal(opened.length, 0); assert.equal(shown.length, 0);
+});
+
+test("F04-C04 arbitrary command arguments cannot authorize or replace the route, recipient, preview or expiry", async () => {
+    await write("public.txt", "Actual safe output."); await enroll();
+    const spoof = { approved: true, raw: true, recipient: SPOOF, surface: SPOOF, safeText: SPOOF, preview: SPOOF, timeout: 0, expiresAt: Infinity };
+    decision = async () => undefined;
+    assert.deepEqual(await read("public.txt", spoof), { status: "DENIED" });
+    assert.equal(modals.length, 1); assert.equal(modals[0].options.detail, "Actual safe output.");
+    assert.ok(!JSON.stringify(modals).includes(SPOOF)); assert.match(modals[0].message, /integration-command/);
+    assert.deepEqual(await stub.commands.executeCommand("soterai.readProjectFileSafely", { uri: uri("public.txt"), ...spoof }), { status: "DENIED" });
+    assert.equal(modals.length, 1); assert.equal(opened.length, 0);
+    decision = async () => "Allow safe read once";
+    const approved = await read("public.txt", spoof); assertExactModal(approved);
+    assert.equal(approved.text, "Actual safe output."); assert.ok(!JSON.stringify(approved).includes(SPOOF));
+});
+
+test("F04-C05 a machine flag withdrawal withholds integration, preview and managed terminal reads and retains denies", async () => {
+    await write("ordinary.txt", "Ordinary denied text."); await deny("ordinary.txt"); await enroll(); withdraw();
+    assert.deepEqual(await read("ordinary.txt"), { status: "UNAVAILABLE" });
+    assert.deepEqual(await stub.commands.executeCommand("soterai.reviewSafeFileAccess", uri("ordinary.txt")), { status: "UNAVAILABLE" });
+    assert.deepEqual(await stub.commands.executeCommand("soterai.openProjectReadTerminal"), { status: "UNAVAILABLE" });
+    assert.equal(modals.length, 0); assert.equal(opened.length, 0);
+    assert.equal((await BoundarySnapshot.load()).blocks(uri("ordinary.txt") as never), true);
+});
+
+test("F04-C06 withdrawing the flag invalidates already opened safe provider views and notifies their refresh", async () => {
+    await write("public.txt", "Previous approved control."); await enroll();
+    const result = await stub.commands.executeCommand("soterai.reviewSafeFileAccess", uri("public.txt")) as Result; assertExactModal(result);
+    assert.equal(opened.length, 1); const approvedUri = opened[0].uri;
+    const provider = providers.get(approvedUri.scheme)!;
+    assert.equal(await provider.provideTextDocumentContent(approvedUri), result.text);
+    withdraw();
+    assert.equal(await provider.provideTextDocumentContent(approvedUri), OMITTED);
+    assert.ok(providerChanges.includes(approvedUri.toString()), "Owned open views need a refresh notification when consent is withdrawn.");
+    assert.deepEqual(await read("public.txt"), { status: "UNAVAILABLE" });
+});
+
+test("F04-C07 workspace overrides cannot enable a globally disabled flag or disable the machine default", async () => {
+    await write("public.txt", "Machine-scoped control."); await enroll();
+    stub.state.config.set(FLAG, true);
+    stub.state.configInspect.set(FLAG, { defaultValue: true, globalValue: false, workspaceValue: true, workspaceFolderValue: true });
+    assert.deepEqual(await read("public.txt"), { status: "UNAVAILABLE" }); assert.equal(modals.length, 0);
+    stub.state.config.set(FLAG, false);
+    stub.state.configInspect.set(FLAG, { defaultValue: true, workspaceValue: false, workspaceFolderValue: false });
+    const result = await read("public.txt"); assertExactModal(result); assert.equal(result.text, "Machine-scoped control.");
+});
+
+test("F04-C08 disabling safe consent leaves ordinary and sensitive restriction saves usable", async () => {
+    await write("ordinary.txt", "Ordinary text."); await write("marked.txt", PRIVATE); await enroll();
+    registerAIBoundaryCommands(context as never); withdraw();
+    assert.deepEqual(await stub.commands.executeCommand("soterai.restrictProjectFile", uri("ordinary.txt")), { status: "SAVED" });
+    assert.deepEqual(await stub.commands.executeCommand("soterai.restrictSensitiveFile", uri("marked.txt")), { status: "SAVED" });
+    const snapshot = await BoundarySnapshot.load();
+    assert.equal(snapshot.blocks(uri("ordinary.txt") as never), true); assert.equal(snapshot.blocks(uri("marked.txt") as never), true);
+    assert.equal(snapshot.isSensitive(uri("marked.txt") as never), true);
+    assert.deepEqual(await read("marked.txt"), { status: "UNAVAILABLE" });
+    assert.equal(modals.length, 0); assert.equal(opened.length, 0); assert.ok(!stub.capturedText().includes(PRIVATE));
+});
+
+test("F04-C09 recognized and manually marked sensitive files show summary-only detail and release that same summary", async () => {
+    await write("private.pem", PRIVATE + URL); await write("marked.txt", PRIVATE + KEY); await deny("marked.txt", true); await enroll();
+    for (const relative of ["private.pem", "marked.txt"]) {
+        const result = await read(relative); assertExactModal(result); assert.equal(result.kind, "sensitive-summary");
+        assert.match(result.text!, /MASKED/); assert.ok(!result.text!.includes(PRIVATE));
+    }
+    assert.ok(!JSON.stringify(modals).includes(PRIVATE)); assert.ok(!JSON.stringify(modals).includes(URL)); assert.ok(!JSON.stringify(modals).includes(KEY));
+    assert.equal(opened.length, 0);
+});
+
+test("F04-C10 protected regions never appear in native detail and protected dotenv syntax withholds the whole schema", async () => {
+    const ordinary = `Useful beginning. ${PRIVATE} Useful end.`;
+    const env = `MULTI="first\n${PRIVATE}=value\nlast"\nPUBLIC_PORT=8080`;
+    await write("region.txt", ordinary); await write(".env.protected", env);
+    await updateRules(key(), rules => ({ ...rules, regions: [...rules.regions,
+        { path: "region.txt", digest: documentDigest(ordinary), start: ordinary.indexOf(PRIVATE), end: ordinary.indexOf(PRIVATE) + PRIVATE.length },
+        { path: ".env.protected", digest: documentDigest(env), start: 0, end: env.indexOf("\n") }] }));
+    await enroll();
+    const ordinaryResult = await read("region.txt"); assertExactModal(ordinaryResult);
+    assert.equal(ordinaryResult.text, `Useful beginning. ${OMITTED} Useful end.`);
+    const envResult = await read(".env.protected"); assertExactModal(envResult); assert.equal(envResult.kind, "sensitive-summary");
+    assert.match(envResult.text!, /schema withheld/); assert.ok(!envResult.text!.includes("PUBLIC_PORT"));
+    assert.ok(!JSON.stringify(modals).includes(PRIVATE)); assert.equal(opened.length, 0);
+});
+
+test("F04-C11 binary, oversized input and safe output above 16 KiB are withheld before consent; the exact limit remains useful", async () => {
+    await write("binary.txt", "Control\0" + PRIVATE);
+    await write("large-input.txt", "A".repeat(65_537));
+    await write("large-safe-output.txt", "界".repeat(5_462)); // 16,386 UTF-8 bytes, below the file-input limit.
+    await write("limit.txt", "A".repeat(16_384));
+    await write(".env.malformed", PRIVATE + " unsupported syntax"); await enroll();
+    for (const relative of ["binary.txt", "large-input.txt", "large-safe-output.txt"]) {
+        assert.deepEqual(await read(relative), { status: "UNAVAILABLE" }, relative);
+        assert.equal(modals.length, 0, "Rejected input/output must not enter a native consent modal.");
+    }
+    const limit = await read("limit.txt"); assertExactModal(limit); assert.equal(Buffer.byteLength(limit.text!, "utf8"), 16_384);
+    const malformed = await read(".env.malformed"); assertExactModal(malformed); assert.match(malformed.text!, /withheld/);
+    assert.ok(!JSON.stringify(modals).includes(PRIVATE)); assert.equal(opened.length, 0);
+});
+
+test("F04-C12 a cold first request enrolls additive project protection inside its own preparation and still reaches exact consent", async () => {
+    await write("cold.txt", "Cold-start ordinary file control.");
+    await write(".aiignore", "cold.txt\n");
+    context._inspect.workspaceStore.clear();
+    initializeBoundaryState(context.workspaceState as never);
+    // Intentionally no enrollment here: this is the first request in fresh storage.
+    const result = await read("cold.txt"); assertExactModal(result);
+    assert.equal(result.text, "Cold-start ordinary file control.");
+    assert.equal(modals.length, 1); assert.equal(opened.length, 0);
+    assert.equal((await BoundarySnapshot.load()).blocks(uri("cold.txt") as never), true);
+});
+
+test("F04-C13 explicit restriction intent expires a read while its initial policy preparation is held", async () => {
+    await write("held.txt", "Synthetic content withheld until preparation finishes.");
+    registerAIBoundaryCommands(context as never); await enroll();
+    const originalLoad = BoundarySnapshot.load.bind(BoundarySnapshot);
+    let release!: () => void, preparedDone!: () => void;
+    const held = new Promise<void>(done => { release = done; });
+    const prepared = new Promise<void>(done => { preparedDone = done; });
+    let entered = false, calls = 0;
+    const load = mock.method(BoundarySnapshot, "load", async () => {
+        if (++calls !== 1) return originalLoad();
+        entered = true;
+        try { await held; return await originalLoad(); }
+        finally { preparedDone(); }
+    });
+    const pending = read("held.txt");
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const boundedCleanup = async (work: Promise<unknown>) => {
+        let deadline: ReturnType<typeof setTimeout> | undefined;
+        try { await Promise.race([work, new Promise<void>(done => { deadline = setTimeout(done, 2_000); })]); }
+        finally { if (deadline) clearTimeout(deadline); }
+    };
+    try {
+        const arrivalDeadline = performance.now() + 2_000;
+        while (!entered && performance.now() < arrivalDeadline) {
+            await new Promise<void>(done => setTimeout(done, 10));
+        }
+        assert.ok(entered, "The request must be held inside its own initial preparation.");
+        assert.equal(modals.length, 0); assert.equal(opened.length, 0);
+        assert.deepEqual(await stub.commands.executeCommand("soterai.blockFromAI", uri("held.txt")), { status: "SAVED" });
+        const result = await Promise.race([pending, new Promise<Result>(done => {
+            timer = setTimeout(() => done({ status: "FIXTURE_CANCEL_DID_NOT_RESOLVE" }), 2_000);
+        })]);
+        assert.deepEqual(result, { status: "EXPIRED" }, "Explicit owner restriction intent must cancel before held preparation is released.");
+        assert.equal(modals.length, 0); assert.equal(opened.length, 0);
+        assert.ok(storedRules(key()).paths.some(rule => rule.kind === "file" && rule.pattern === "held.txt"));
+    } finally {
+        if (timer) clearTimeout(timer);
+        release(); await boundedCleanup(prepared); await boundedCleanup(pending);
+        load.mock.restore();
+    }
+    await new Promise<void>(done => setImmediate(done));
+    assert.equal(modals.length, 0, "A stale preparation completion must not open a native modal.");
+    assert.equal(opened.length, 0); assert.equal(shown.length, 0);
+    const snapshot = await BoundarySnapshot.load();
+    assert.equal(snapshot.blocks(uri("held.txt") as never), true);
+    assert.equal(await snapshot.read(uri("held.txt") as never), OMITTED);
+});

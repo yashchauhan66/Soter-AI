@@ -1,0 +1,13 @@
+const fs = require('node:fs'), crypto = require('node:crypto'), cp = require('node:child_process'), path = require('node:path'), assert = require('node:assert/strict');
+const repo = path.resolve(__dirname, '../../../..'), revision = '60482bf42c94ce2b9adea76fd54586d8b7446043';
+const index = JSON.parse(fs.readFileSync(path.join(__dirname, 'f03-transition-index-01.json'), 'utf8'));
+const hash = bytes => crypto.createHash('sha256').update(bytes).digest('hex');
+const git = (...args) => cp.execFileSync('git', args, { cwd: repo, maxBuffer: 12 * 1024 * 1024 });
+const mismatches = index.entries.filter(entry => hash(git('show', revision + ':' + entry.path)) !== entry.sha256).map(entry => entry.path);
+assert.deepEqual(mismatches, []);
+const actual = git('diff-tree', '--no-commit-id', '--name-only', '-r', revision).toString().trim().split('\n').sort();
+const expected = fs.readFileSync(path.join(__dirname, 'f03-transition-allowlist-01.txt'), 'utf8').trim().split('\n').filter(name => !name.endsWith('/commit-f03.ps1')).sort();
+assert.deepEqual(actual, expected);
+const result = { status: 'PASS', revision, indexedHashes: index.entries.length, changedPaths: actual.length, mismatches, unexpectedPaths: 0 };
+fs.writeFileSync(path.join(__dirname, 'f03-transition-byte-verification-01.json'), JSON.stringify(result, null, 2) + '\n', { flag: 'wx' });
+console.log(JSON.stringify(result));

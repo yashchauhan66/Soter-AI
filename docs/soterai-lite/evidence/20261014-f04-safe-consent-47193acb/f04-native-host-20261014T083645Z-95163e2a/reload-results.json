@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-10-14T08:38:09.316Z",
+  "phase": "reload",
+  "syntheticOnly": true,
+  "workspace": "d:\\SoterAI-Lite-test-profiles\\f04-native-host-20261014T083645Z-95163e2a\\workspace",
+  "declaredProfilePath": "D:\\SoterAI-Lite-test-profiles\\f04-native-host-20261014T083645Z-95163e2a\\profile",
+  "extensionMode": "Development",
+  "hostVersion": "1.141.1",
+  "extensionBundleSha256": "116d5ecc4abd4d8099cade1e2363fef1ae21dfc372bf1a286e29baad46aec21f",
+  "currentDeveloperBundleSha256": "116d5ecc4abd4d8099cade1e2363fef1ae21dfc372bf1a286e29baad46aec21f",
+  "hostProbeSha256": "2f7f64ca26f24ffbdf61db9f47f36136683c80d55af5f219cbf2ac22465b8b2f",
+  "observations": [
+    {
+      "id": "F04-H09",
+      "scope": "Same native profile/workspace/runtime retains policy metadata and a withdrawn machine flag; saved denies still withhold.",
+      "status": "PASS"
+    },
+    {
+      "id": "F04-H10",
+      "scope": "After reload, re-enabling consent still requires exact masked approval and never removes the permanent ordinary deny.",
+      "status": "PASS"
+    }
+  ],
+  "commandStatuses": [
+    {
+      "command": "soterai.readProjectFileSafely",
+      "status": "UNAVAILABLE"
+    },
+    {
+      "command": "soterai.readProjectFileSafely",
+      "status": "ALLOWED_ONCE"
+    },
+    {
+      "command": "soterai.readProjectFileSafely",
+      "status": "ALLOWED_ONCE"
+    },
+    {
+      "command": "soterai.readProjectFileSafely",
+      "status": "UNAVAILABLE"
+    }
+  ],
+  "modalMetadata": [
+    {
+      "surface": "integration-command",
+      "modal": true,
+      "previewBytes": 74,
+      "previewDigest": "825996b597a77b00250d643955d41a67c8a13a411c0a8b2389c4bcf0675fec1e",
+      "outputMatched": true
+    },
+    {
+      "surface": "integration-command",
+      "modal": true,
+      "previewBytes": 50,
+      "previewDigest": "7f70e679ac3848f28e07cb5e02c550ed96b23ed199541e0cb420974f60e551e1",
+      "outputMatched": true
+    }
+  ],
+  "documentCalls": 5,
+  "ownedDocumentEvents": 0,
+  "safeConsentFlagRetainedForRestart": false,
+  "passed": 2,
+  "failed": 0,
+  "notRun": 0,
+  "identityScope": "Byte-identical packaged runtime in an isolated persistent developer window with a test-only bootstrap and actual Memento. SQLite stat only; no clean-profile installed-VSIX or authenticated memory claim.",
+  "consentScope": "Exact native modal API arguments and returned safe-output digest; no rendered modal usability or human owner-presence proof.",
+  "independence": "LOW",
+  "ownerPresence": "SCRIPTED_SAME_EXTENSION_API_INSTANCE",
+  "externalAgents": "NOT_TESTED"
+}
