@@ -5,11 +5,11 @@ Read this file FIRST after any context compaction or on resumption. Do not overw
 ## Current state
 
 - **L0 scoped preflight/split/baseline/catalog freeze DONE.** The user waived the 20 GB threshold. Both verified backup bundles and the authorized old synthetic profiles are retained on D:. Supplemental full fsck ended in resource-limited FAIL; full object integrity remains UNVERIFIED.
-- L1: **ACTIVE, F01-F04 DONE; F05 ACTIVE/test-first**; F06-F32 and L2-L7 **NOT-RUN**. Do not describe this as reaching L6. Read the latest receipts below before work.
+- L1: **ACTIVE, F01-F05 DONE; F06 ACTIVE/test-first**; F07-F32 and L2-L7 **NOT-RUN**. Do not describe this as reaching L6. Read the latest receipts below before work.
 - Source changes and isolated synthetic-profile tests are authorized; the normal VS Code profile has not been changed.
 - New Lite baseline VSIX: **BUILT / CONTENT-INSPECTED / HOST-BASELINE-TESTED**; SHA-256 `cf163471b7a022d5a9f922a3f1fcc6bfd3b56a08ab14f1aebfdfb345c337bae1`. Coverage and all final numerical ratings **PENDING / UNVERIFIED**; 44-check catalog frozen, not graded.
 - Baseline HEAD: `8ef3aeb54f4019f4ee815a844443995176a656f0`; starting branch: `security-hardening`. Inspected prior source modifications were checkpointed at `915a5300a7745e4ffaeab80b5d08d3305e3772f9`; unknown scratch/raw artifacts remain untouched.
-- P00-P03 and F01-F04 scoped commits are complete. F05 is the sole active behavior card; production waits for its failing regression baseline. No F06 production may start yet.
+- P00-P03 and F01-F05 scoped commits are complete. F06 is the sole active behavior card; production waits for its failing regression baseline. No F07 production may start yet.
 
 ## STEP RECEIPT L0.1 — preflight stop
 
@@ -372,3 +372,9 @@ FinalVSIX packages/soterai-lite/soterai-lite-0.7.0-f05-20261014-attempt02.vsix13
 Historicalnative attempts01-04 retained: fixture source+revision collision corrected with document identity; attempt02 correct current-document backup stillfailed stale files configuration snapshot, verified actual profile setting was already correct and fresh API configuration now used. Source watcher unrelated invalidation fixed via C33. Attempt03 save6PASS/H03FAIL during changing startup binding, actualbackupH07PASS; attempt04 save7PASS/reload2PASS1FAIL early reveal with unchanged binding/no modal during concurrent native startup work. Test-only bounded stable-visible-binding/native-backup-settling preconditions, event counters and value-free diagnostic stages precede attempt05; no reveal retry, mock focus, suppressed event or weakened assertion. Actualbackup/recovery requirement unchanged, no manual fallback assigned native PASS. All owned windows close via command, no normal profile/process changed/killed.
 
 Acceptance/index in f05-acceptance01/f05-evidence-index01; metadata-only external failed/pass copies retained with matching SHA. Machineflag soterai.lite.secureEditor withdrawalAVAILABILITY_ONLY,44frozenchecksUNVERIFIED/ratingPENDING; raw/direct/alias/env/history/independent traffic and actual-agent/platform/human gaps remain. Fullfsck resource-limitedFAIL/full integrityUNVERIFIED unchanged;20GBuserwaiver/backupsD/no extra cleanup unchanged. Next scopedF05commit+byteverification, onlythenF06 optionalvaultmigration.
+
+## STEP RECEIPT F05-COMMIT / F06-ACTIVATE
+
+F05 scopedcommit **fd73041ad2d773a9c259c69e20e48245e51487ea** byteverificationPASS:197indexedhashes/198exactcommittedpaths/0mismatch/0unexpected; finalVSIXfreshlyrecheckede1ca24eacd495e2f393f7cd9d014f96692ac8ae83f17b5a753ae0857299427b7. ExactGitcommandcommit-f05.ps1/rawf05-commit01.txt; verifynodeverify-and-advance.cjs/rawf05-committed-byte-verification01.json. F05 DONE scopedcontract:76focusedPASS,1056full1053PASS0FAIL3SKIP,10distinctnativeactualcustomtabs/save/split/workbenchhot-exitbackupIdrestore/safe-reader mask, currentCode1.141.1; functional10PASS/security17unchanged8BLOCKED_SCOPED9LEAK_CONFIRMED. ScriptednativeAPIidentityLOW, nohuman/OS-custody/clean-profileinstall/universalprivacyclaim.
+
+OnlyafterverifiedF05barrieractivateF06optionalvaultmigrationandencryptedrecovery, machinesoterai.lite.vaultMode. NoF06productionbeforetransition. Wholeproduct/catalog/rating/human/actual-tool/platformgatesPENDING;20GBuserwaiverunchanged.

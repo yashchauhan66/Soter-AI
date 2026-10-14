@@ -9,9 +9,9 @@
   "planVersion": 1,
   "clientDate": "2026-10-13",
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
-  "scope": "F01-F04 DONE with exact artifact, host checks and verified scoped commits; F05 alone active, test-first secure masked custom editor.",
+  "scope": "F01-F05 DONE with exact artifact, host checks and verified scoped commits; F06 alone active, test-first optional vault migration and recovery.",
   "implementationConcurrency": 1,
-  "activeFeature": "F05",
+  "activeFeature": "F06",
   "prerequisiteBlock": {
     "id": "P00",
     "result": "FAIL",
@@ -118,17 +118,20 @@
     {
       "id": "F05",
       "title": "Secure masked env editor.",
-      "status": "ACTIVE",
-      "result": "INCOMPLETE",
+      "status": "DONE",
+      "result": "PASS",
       "requires": [
         "F04"
       ],
-      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "sourceEvidenceCommit": "fd73041ad2d773a9c259c69e20e48245e51487ea",
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261014-f05-secure-editor-597d8a24/f05-acceptance-01.json",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261014-f05-secure-editor-597d8a24/f05-committed-byte-verification-01.json"
     },
     {
       "id": "F06",
       "title": "Optional vault migration and recovery.",
-      "status": "PLANNED",
+      "status": "ACTIVE",
       "result": "NOT-RUN",
       "requires": [
         "F05"
