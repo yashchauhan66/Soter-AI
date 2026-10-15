@@ -9,9 +9,9 @@
   "planVersion": 1,
   "clientDate": "2026-10-13",
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
-  "scope": "F01-F05 DONE with exact artifact, host checks and verified scoped commits; F06 alone active, test-first optional vault migration and recovery.",
+  "scope": "F01-F06 DONE with exact artifacts, current native/affected hosts and byte-verified scoped commits; F07 alone active, test-first registered-value matching.",
   "implementationConcurrency": 1,
-  "activeFeature": "F06",
+  "activeFeature": "F07",
   "prerequisiteBlock": {
     "id": "P00",
     "result": "FAIL",
@@ -131,18 +131,21 @@
     {
       "id": "F06",
       "title": "Optional vault migration and recovery.",
-      "status": "VERIFYING",
-      "result": "INCOMPLETE",
+      "status": "DONE",
+      "result": "PASS",
       "flag": "soterai.lite.vaultMode",
       "requires": [
         "F05"
       ],
-      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "sourceEvidenceCommit": "9ef608baec316f8bf80f2ff853db57df203e99c9",
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261014-f06-vault-9c361a42/f06-acceptance-01.json",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261014-f06-vault-9c361a42/f06-committed-byte-verification-01.json"
     },
     {
       "id": "F07",
       "title": "Shared registered-value matching.",
-      "status": "PLANNED",
+      "status": "ACTIVE",
       "result": "NOT-RUN",
       "requires": [
         "F06"
