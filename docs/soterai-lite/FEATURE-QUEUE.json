@@ -9,9 +9,9 @@
   "planVersion": 1,
   "clientDate": "2026-10-13",
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
-  "scope": "F01-F07 DONE with exact artifacts, current scoped native/affected hosts and byte-verified commits; F08 alone active, test-first streaming output redactor.",
+  "scope": "F01-F08 DONE with exact scoped artifacts, current native/affected hosts and byte-verified commits; F09 alone active, test-first task boundary integration.",
   "implementationConcurrency": 1,
-  "activeFeature": "F08",
+  "activeFeature": "F09",
   "prerequisiteBlock": {
     "id": "P00",
     "result": "FAIL",
@@ -158,17 +158,20 @@
     {
       "id": "F08",
       "title": "Streaming output redactor.",
-      "status": "ACTIVE",
-      "result": "NOT-RUN",
+      "status": "DONE",
+      "result": "PASS",
       "requires": [
         "F07"
       ],
-      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "sourceEvidenceCommit": "8241568cbe311ebd69f81fa13357d9ca0258016f",
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261015-f08-output-b7429e10/f08-acceptance-01.json",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261015-f08-output-b7429e10/f08-committed-byte-verification-01.json"
     },
     {
       "id": "F09",
       "title": "Vault Run/Task/Debug integration.",
-      "status": "PLANNED",
+      "status": "ACTIVE",
       "result": "NOT-RUN",
       "requires": [
         "F08"

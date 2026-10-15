@@ -5,11 +5,11 @@ Read this file FIRST after any context compaction or on resumption. Do not overw
 ## Current state
 
 - **L0 scoped preflight/split/baseline/catalog freeze DONE.** The user waived the 20 GB threshold. Both verified backup bundles and the authorized old synthetic profiles are retained on D:. Supplemental full fsck ended in resource-limited FAIL; full object integrity remains UNVERIFIED.
-- L1: **ACTIVE, F01-F07 DONE; F08 ACTIVE/test-first**; F09-F32 and L2-L7 **NOT-RUN**. Do not describe this as reaching L6. Read the latest receipts below before work.
+- L1: **ACTIVE, F01-F08 DONE; F09 ACTIVE/test-first**; F10-F32 and L2-L7 **NOT-RUN**. Do not describe this as reaching L6. Read the latest receipts below before work.
 - Source changes and isolated synthetic-profile tests are authorized; the normal VS Code profile has not been changed.
 - New Lite baseline VSIX: **BUILT / CONTENT-INSPECTED / HOST-BASELINE-TESTED**; SHA-256 `cf163471b7a022d5a9f922a3f1fcc6bfd3b56a08ab14f1aebfdfb345c337bae1`. Coverage and all final numerical ratings **PENDING / UNVERIFIED**; 44-check catalog frozen, not graded.
 - Baseline HEAD: `8ef3aeb54f4019f4ee815a844443995176a656f0`; starting branch: `security-hardening`. Inspected prior source modifications were checkpointed at `915a5300a7745e4ffaeab80b5d08d3305e3772f9`; unknown scratch/raw artifacts remain untouched.
-- P00-P03 and F01-F07 scoped commits are complete. F08 is the sole active behavior card; production waits for its frozen design and failing regression baseline. No F09 production may start yet.
+- P00-P03 and F01-F08 scoped commits are complete. F09 is the sole active behavior card; production waits for its frozen design and failing regression baseline. No F10 production may start yet.
 
 ## STEP RECEIPT L0.1 — preflight stop
 
@@ -456,3 +456,9 @@ Exact argv/exits/output hashes in immutable receipts; current source hashes in i
 Scoped acceptance PASS; commit/byte verification remains the serial barrier. Focused177PASS (94F08+83F07); full1314tests/1310PASS/0FAIL/0cancel/4SKIP; typecheck01PASS. Finalattempt01 VSIX 1367655bytes SHA65f24834ceca33a32eff9e40df5fa4bcc790f839288e32c01f24c84c279e63a4, runtime0027f196b58f2fe08526d53a6133ed5e9207d2c1eac512d20155401ef4b9d694;14entries/3runtimes/no forbidden inputs, all current input hashes rechecked. Native13PASS/output PASS-WITHHELD-PASS uses actual packaged singleton self-test; LOW production oracles, no independent sink/human/shell proof. Functional10PASS/security17unchanged8BLOCKED_SCOPED9LEAK_CONFIRMED.
 
 Completed finite output is normalized losslessly, terminal rewriting/invalid final UTF8/overflow/withdrawal withhold atomically, recognized registered/provider/entropy matches mask whole nonempty channels. ANSI/OSC, channel isolation and explicit arrival/group views are bounded. This is completion-buffered processing; shell/task/native terminal/gateway integration remains later work. Earlier failures and raw profiles retained; catalog44UNVERIFIED, ratingPENDING, actual-tool/platform/human gates unchanged. No F09 production before verified F08 barrier.
+
+## STEP RECEIPT F08-COMMIT / F09-ACTIVATE
+
+F08 scopedcommit **8241568cbe311ebd69f81fa13357d9ca0258016f** byteverificationPASS:120indexedhashes/118exactchangedpaths/0mismatch/0unexpected; currentattempt01 VSIX freshly rechecked65f24834ceca33a32eff9e40df5fa4bcc790f839288e32c01f24c84c279e63a4/1367655bytes/runtime0027f196b58f2fe08526d53a6133ed5e9207d2c1eac512d20155401ef4b9d694. Focused177PASS (94F08+83F07), full1314tests1310PASS0FAIL4SKIP, typecheck01PASS; packagednative13PASS production self-test LOW; functional10PASS/security17unchanged8BLOCKED_SCOPED9LEAK_CONFIRMED. Completion-buffered finite output only, no live passthrough/native shell/gateway or external-sink proof. All original failures/profiles/artifacts retained. Withdrawal AVAILABILITY_ONLY/catalog44UNVERIFIED/ratingPENDING; platform/external-tool/independent-human gates remain.
+
+Only after this verified F08 source barrier activate F09. No task/shell/gateway card was implemented under F08. Existing F05/F06 native results remain attributed to their historical artifact. Both D backups, user20GBwaiver and unrelated changes remain unchanged.
