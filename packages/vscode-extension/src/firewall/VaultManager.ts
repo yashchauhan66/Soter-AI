@@ -9,6 +9,11 @@ import { withPendingRestriction, restrictionSaveEnabled } from "../ai-boundary/R
 import { MASKED } from "../project-privacy/SafeFileView";
 import { createVaultMigrationPlan } from "./VaultMigrationPlan";
 import { VaultStorage, VAULT_LIMIT, readVaultFile, samePath, vaultJson, vaultObject, vaultUnavailable, missing } from "./VaultStorage";
+import { parseVaultAppDescriptor, vaultEnvironmentNameAllowed, type VaultAppDescriptor } from "../../../core/src/VaultAppDescriptor";
+import { RegisteredSecretMatcher } from "../../../core/src/RegisteredSecretMatcher";
+import { SecureEditorModel } from "../project-privacy/SecureEditorModel";
+import { runtimeBinding, runtimeStoreUnchanged, runtimePolicyBinding } from "../vault-runtime/RuntimeBinding";
+import { onDidChangeBoundaryRules, onDidChangeOwnerPolicySession, exportRootPolicy } from "../ai-boundary/BoundarySnapshot";
 
 const KEY_ID = "soterai.vaultKey", PENDING = "vault-pending.json", VAULT = "soterai-vault.enc";
 const UUID = /^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/i;
@@ -26,6 +31,15 @@ export function vaultModeEnabled(): boolean {
     try {
         const config = vscode.workspace.getConfiguration("soterai"), inspected = config.inspect<boolean>("lite.vaultMode");
         return vscode.workspace.isTrusted && (inspected ? inspected.globalValue ?? inspected.defaultValue ?? true : config.get("lite.vaultMode", true)) === true;
+    } catch { return false; }
+}
+export function vaultRuntimeEnabled(): boolean {
+    try {
+        const config = vscode.workspace.getConfiguration("soterai");
+        return vaultModeEnabled() && !vscode.env.remoteName && ["lite.vaultRuntime", "lite.secretMatching", "lite.outputRedactor"].every(name => {
+            const inspected = config.inspect<boolean>(name);
+            return (inspected ? inspected.globalValue ?? inspected.defaultValue ?? true : config.get(name, true)) === true;
+        });
     } catch { return false; }
 }
 function keyValid(key: unknown): key is string {
@@ -52,12 +66,15 @@ export class VaultManager {
     private static mutationQueue: Promise<void> = Promise.resolve();
     private readonly storage: VaultStorage;
     private epoch = 0;
+    private runtimeEpoch = 0;
     constructor(private readonly context: vscode.ExtensionContext) {
         // Desktop VS Code exposes profile global storage as vscode-userdata;
         // its native storage implementation maps that trusted URI to file.
         this.storage = new VaultStorage(context.globalStorageUri.with({ scheme: "file" }).fsPath);
         context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(event => { if (event.affectsConfiguration("soterai")) this.epoch++; }));
         context.subscriptions.push(vscode.workspace.onDidChangeWorkspaceFolders(() => { this.epoch++; }));
+        context.subscriptions.push(onDidChangeBoundaryRules(() => { this.runtimeEpoch++; }), onDidChangeOwnerPolicySession(() => { this.runtimeEpoch++; }));
+        context.subscriptions.push(context.secrets.onDidChange(event => { if (event.key === KEY_ID) this.runtimeEpoch++; }));
     }
     private alive(epoch?: number): void {
         const storage = this.context.globalStorageUri;
@@ -182,6 +199,73 @@ export class VaultManager {
         return { exists: vault.text !== null, location: path.join(this.storage.directory, VAULT), entryCount: entries.length, entries };
     }
     async knownPlaceholders(): Promise<string[]> { return [...new Set((await this.vault()).data.entries.map(entry => entry.placeholder))]; }
+    /** Metadata only. Never enumerate unbound legacy or ambiguous env records. */
+    async runtimeSelections(uri: vscode.Uri): Promise<readonly Readonly<{ name: string; placeholder: string }>[]> {
+        try {
+            if (!vaultRuntimeEnabled() || !/^\.env(?:\..*)?$/i.test(path.basename(uri.fsPath))) return vaultUnavailable();
+            const basis = await this.capture(uri); await this.noPending(); const key = await this.key(false), vault = await this.vault(key);
+            await this.fresh(uri, basis); await this.noPending(); if (await this.key(false) !== key || !vaultRuntimeEnabled()) return vaultUnavailable();
+            const selected = this.runtimeRecords(basis, vault.data);
+            return Object.freeze(selected.map(({ key: name, placeholder }) => Object.freeze({ name, placeholder })));
+        } catch { return vaultUnavailable(); }
+    }
+    private runtimeRecords(basis: Basis, vault: VaultFile): StoredEntry[] {
+        const model = new SecureEditorModel(basis.text, true), fields = model.metadata().fields, names = new Set<string>(), entries: StoredEntry[] = [];
+        for (const field of fields) {
+            if (!field.editable || names.has(field.name.toUpperCase())) return vaultUnavailable(); names.add(field.name.toUpperCase());
+            const placeholder = model.readOwnerValue(field.id);
+            if (!/^\[SOTERAI_PROTECTED_[A-F0-9]{32}_(?:0|[1-9]\d{0,2})\]$/.test(placeholder)) continue;
+            if (!vaultEnvironmentNameAllowed(field.name)) continue;
+            const matches = vault.entries.filter(entry => entry.source === basis.source && entry.root === basis.root
+                && entry.key === field.name && entry.placeholder === placeholder && typeof entry.replacementText === "string");
+            if (matches.length !== 1) return vaultUnavailable(); entries.push(matches[0]);
+        }
+        return entries;
+    }
+    /** Internal trusted callback only. Registered commands never return values.
+     * No key creation, original-file fallback, mutation or asynchronous work in
+     * the callback is required to begin the owned job. */
+    async withRuntimeValues<T>(input: VaultAppDescriptor, use: (values: Readonly<Record<string, string>>, guard: () => boolean) => T,
+        enabled: () => boolean): Promise<T> {
+        try {
+            const descriptor = parseVaultAppDescriptor(input); if (!descriptor || !vaultRuntimeEnabled() || enabled() !== true
+                || !/^\.env(?:\..*)?$/i.test(path.basename(descriptor.source))) return vaultUnavailable();
+            const uri = vscode.Uri.file(descriptor.source), basis = await this.capture(uri), runtimeEpoch = this.runtimeEpoch;
+            if (!samePath(vscode.Uri.parse(basis.root).fsPath, descriptor.root)) return vaultUnavailable();
+            const binding = runtimeBinding(descriptor), bindingText = JSON.stringify(binding);
+            const policyBinding = runtimePolicyBinding(descriptor.root), savedPolicy = JSON.stringify(exportRootPolicy(basis.root));
+            if (binding.source !== basis.text || binding.identity !== basis.identity) return vaultUnavailable();
+            await this.noPending(); const cipher = await this.storage.read(VAULT); if (!cipher) return vaultUnavailable();
+            const guard = (): boolean => {
+                try {
+                    this.alive(basis.epoch);
+                    return runtimeEpoch === this.runtimeEpoch && vaultRuntimeEnabled() && enabled() === true
+                        && vscode.workspace.getWorkspaceFolder(uri)?.uri.toString() === basis.root
+                        && runtimeStoreUnchanged(this.storage.directory, cipher)
+                        && runtimePolicyBinding(descriptor.root) === policyBinding && JSON.stringify(exportRootPolicy(basis.root)) === savedPolicy
+                        && JSON.stringify(runtimeBinding(descriptor)) === bindingText;
+                } catch { return false; }
+            };
+            if (!guard()) return vaultUnavailable();
+            const detail = JSON.stringify({ program: descriptor.program, cwd: descriptor.cwd, arguments: descriptor.args,
+                selectedNames: descriptor.selections.map(s => s.name), output: "Completed output is bounded and filtered; overflow is withheld",
+                warning: "Selected app code and its dependencies can inspect, write, print or upload injected values. This is cooperative local tooling, not app confinement." }, null, 2);
+            if (await vscode.window.showWarningMessage("Run this app with the selected vault variables?", { modal: true, detail }, "Run selected app") !== "Run selected app" || !guard()) return vaultUnavailable();
+            await this.fresh(uri, basis); await this.noPending(); if (!guard()) return vaultUnavailable();
+            const key = await this.key(false); if (!guard()) return vaultUnavailable();
+            const current = await this.vault(key); if (current.text !== cipher || !guard()) return vaultUnavailable();
+            const records = this.runtimeRecords(basis, current.data), values: Record<string, string> = {};
+            for (const selection of descriptor.selections) {
+                const matches = records.filter(entry => entry.key === selection.name && entry.placeholder === selection.placeholder);
+                if (matches.length !== 1) return vaultUnavailable();
+                Object.defineProperty(values, selection.name, { value: matches[0].rawValue, enumerable: true });
+            }
+            if (new RegisteredSecretMatcher(Object.values(values)).inspectRequest([]).status !== "CLEAN") return vaultUnavailable();
+            await this.fresh(uri, basis); await this.noPending(); if (!guard()) return vaultUnavailable();
+            if (await this.storage.read(VAULT) !== cipher || !guard() || await this.key(false) !== key || !guard()) return vaultUnavailable();
+            return use(Object.freeze(values), guard);
+        } catch { return vaultUnavailable(); }
+    }
     async migrate(uri: vscode.Uri): Promise<number> {
         return this.mutation(async () => {
             let basis = await this.capture(uri); await this.noPending();

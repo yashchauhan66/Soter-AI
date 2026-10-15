@@ -16,9 +16,9 @@
 
 | Measure | Count |
 | --- | --- |
-| Commands declared and registered | 188 |
+| Commands declared and registered | 192 |
 | Visible in the palette by default | 17 |
-| Behind `soterai.showAllCommands` | 143 |
+| Behind `soterai.showAllCommands` | 147 |
 | Hidden from the palette (aliases, reports, internal) | 28 |
 
 Hidden commands remain **registered**: a keybinding, task or another
@@ -34,7 +34,7 @@ guess which one acts.
 | Keybindings | 2 |
 | View welcome messages | 4 |
 | Walkthrough steps | 3 |
-| Activation | workspaceContains:.soterai-policy.json, onWalkthrough:soterai.gettingStarted, onStartupFinished |
+| Activation | workspaceContains:.soterai-policy.json, onWalkthrough:soterai.gettingStarted, onStartupFinished, onTaskType:soterai-vault, onDebug:soterai-vault |
 
 ## Agent-facing surfaces
 
@@ -50,9 +50,9 @@ what an agent does on its own.
 
 | Measure | Count |
 | --- | --- |
-| Settings declared | 52 |
-| `machine`-scoped (a repo cannot set them) | 47 |
-| Restricted in untrusted workspaces | 47 |
+| Settings declared | 53 |
+| `machine`-scoped (a repo cannot set them) | 48 |
+| Restricted in untrusted workspaces | 48 |
 | Pinnable by an administrator (`policy`) | 8 |
 
 ## Detection engine

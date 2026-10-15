@@ -1,0 +1,10 @@
+const h=require('./f09-evidence-lib.cjs');
+const{path,assert,read,own,hash,check}=h;
+const run='affected-20261015T125430Z-ef6e0a01fc2d4cca8724d2f1d04c4d66';
+const summary=read(own(run+'/affected-summary-01.json')),comparison=read(own(run+'/security-comparison-01.json'));
+assert.equal(summary.status,'PASS_SCOPED');assert.equal(summary.functionalPassed,10);assert.equal(summary.securityCompared,17);assert.equal(summary.changed,0);
+assert.equal(summary.extensionBundleSha256,'81ceabd72fff5bb673fdd579c4e15e7bc8c46e791e864ae03c08782bfeb7236e');assert.equal(comparison.changed,0);
+const checks=['functional-launch-01.txt','security-launch-01.txt'].map(name=>check({role:name,log:run+'/'+name}));
+const functional=read(summary.functionalResult),security=read(summary.securityResult);
+assert.equal(functional.passed,10);assert.equal(functional.failed,0);assert.equal(security.results.length,17);
+console.log(JSON.stringify({status:'PASS_RETAINED_AFFECTED_EVIDENCE',execution:'Existing actual native runs only; this command is read-only verification',summary:path.basename(run)+'/affected-summary-01.json',summarySha256:hash(own(run+'/affected-summary-01.json')),checks}));

@@ -57,7 +57,9 @@
   "activationEvents": [
     "workspaceContains:.soterai-policy.json",
     "onWalkthrough:soterai.gettingStarted",
-    "onStartupFinished"
+    "onStartupFinished",
+    "onTaskType:soterai-vault",
+    "onDebug:soterai-vault"
   ],
   "main": "./dist/extension.js",
   "capabilities": {
@@ -111,11 +113,45 @@
         "soterai.lite.secureEditor",
         "soterai.lite.vaultMode",
         "soterai.lite.secretMatching",
-        "soterai.lite.outputRedactor"
+        "soterai.lite.outputRedactor",
+        "soterai.lite.vaultRuntime"
       ]
     }
   },
   "contributes": {
+    "taskDefinitions": [
+      {
+        "type": "soterai-vault",
+        "required": [
+          "descriptorId"
+        ],
+        "properties": {
+          "descriptorId": {
+            "type": "string",
+            "description": "Saved vault app ID. Configure Vault App first; no environment values belong in task definitions."
+          }
+        }
+      }
+    ],
+    "debuggers": [
+      {
+        "type": "soterai-vault",
+        "label": "SoterAI Vault App (lifecycle only)",
+        "configurationAttributes": {
+          "launch": {
+            "required": [
+              "descriptorId"
+            ],
+            "properties": {
+              "descriptorId": {
+                "type": "string",
+                "description": "Saved vault app ID. Lifecycle and filtered output only; source debugging is unavailable."
+              }
+            }
+          }
+        }
+      }
+    ],
     "commands": [
       {
         "command": "soterai.openProjectPrivacy",
@@ -454,6 +490,26 @@
       {
         "command": "soterai.migrateSecretsToVault",
         "title": "Migrate Secrets to Protected Vault",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.configureVaultApp",
+        "title": "Configure Vault App",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.runVaultApp",
+        "title": "Run Vault App with Filtered Output",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.stopVaultApp",
+        "title": "Request Vault App Stop",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.vaultAppStatus",
+        "title": "Inspect Vault App Status",
         "category": "SoterAI"
       },
       {
@@ -1622,6 +1678,12 @@
           "default": true,
           "scope": "machine",
           "description": "Enable completed-output filtering for supported managed results, including UTF-8 chunks and supported terminal controls. Output stays private until final flush within 128 KiB. Turning this off withholds these results and preserves saved protection."
+        },
+        "soterai.lite.vaultRuntime": {
+          "type": "boolean",
+          "default": true,
+          "scope": "machine",
+          "description": "Enable owner-approved finite Node vault apps with a fresh child environment and completed filtered output. App code can inspect or upload its selected values. Stop is cooperative; no source debugger or process confinement. Turning this off stops owned apps cooperatively and preserves ciphertext and restrictions."
         }
       }
     },
@@ -2032,6 +2094,22 @@
         },
         {
           "command": "soterai.migrateSecretsToVault",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.configureVaultApp",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.runVaultApp",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.stopVaultApp",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.vaultAppStatus",
           "when": "soterai.advancedCommands"
         },
         {

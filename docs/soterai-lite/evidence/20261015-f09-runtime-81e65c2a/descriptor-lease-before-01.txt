@@ -1,0 +1,393 @@
+﻿TAP version 13
+# node:internal/modules/cjs/loader:1401
+#   const err = new Error(message);
+#               ^
+# Error: Cannot find module '../../../core/src/VaultAppDescriptor'
+# Require stack:
+# - C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\vaultAppDescriptor.test.ts
+#     at node:internal/modules/cjs/loader:1401:15
+#     at T._resolveFilename (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:14889)
+#     at nextResolveSimple (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\tsx\\dist\\register-BOkp8V6j.cjs:10:1017)
+#     at C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\tsx\\dist\\register-BOkp8V6j.cjs:9:4388
+#     at C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\tsx\\dist\\register-BOkp8V6j.cjs:9:3818
+#     at resolveTsPaths (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\tsx\\dist\\register-BOkp8V6j.cjs:10:770)
+#     at Function._resolveFilename (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\tsx\\dist\\register-BOkp8V6j.cjs:10:1155)
+#     at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+#     at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+#     at Function._load (node:internal/modules/cjs/loader:1211:37) {
+#   code: 'MODULE_NOT_FOUND',
+#   requireStack: [
+#     'C:\\\\Users\\\\USER\\\\OneDrive\\\\Desktop\\\\Ai-Agent-Security-Guard\\\\packages\\\\vscode-extension\\\\src\\\\__tests__\\\\vaultAppDescriptor.test.ts'
+#   ]
+# }
+# Node.js v22.16.0
+# Subtest: packages\\vscode-extension\\src\\__tests__\\vaultAppDescriptor.test.ts
+not ok 1 - packages\\vscode-extension\\src\\__tests__\\vaultAppDescriptor.test.ts
+  ---
+  duration_ms: 750.2473
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\vaultAppDescriptor.test.ts:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: F09-L01 metadata exposes current names/placeholders and no raw values or value hashes
+not ok 2 - F09-L01 metadata exposes current names/placeholders and no raw values or value hashes
+  ---
+  duration_ms: 580.0659
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\vaultRuntimeLease.test.ts:4:1379'
+  failureType: 'testCodeFailure'
+  error: |-
+    runtime selection metadata must be implemented
+    + actual - expected
+    
+    + 'undefined'
+    - 'function'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'function'
+  actual: 'undefined'
+  operator: 'strictEqual'
+  stack: |-
+    runtime (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\vaultRuntimeLease.test.ts:29:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\vaultRuntimeLease.test.ts:62:30)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F09-L02 approved private lease supplies logical unquoted value once, without changing source or parent environment
+not ok 3 - F09-L02 approved private lease supplies logical unquoted value once, without changing source or parent environment
+  ---
+  duration_ms: 451.1547
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\vaultRuntimeLease.test.ts:4:2066'
+  failureType: 'testCodeFailure'
+  error: |-
+    runtime selection metadata must be implemented
+    + actual - expected
+    
+    + 'undefined'
+    - 'function'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'function'
+  actual: 'undefined'
+  operator: 'strictEqual'
+  stack: |-
+    runtime (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\vaultRuntimeLease.test.ts:29:12)
+    descriptor (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\vaultRuntimeLease.test.ts:34:30)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\vaultRuntimeLease.test.ts:68:21)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F09-L03 cancelled native review invokes no trusted callback
+not ok 4 - F09-L03 cancelled native review invokes no trusted callback
+  ---
+  duration_ms: 420.4334
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\vaultRuntimeLease.test.ts:4:3034'
+  failureType: 'testCodeFailure'
+  error: |-
+    runtime selection metadata must be implemented
+    + actual - expected
+    
+    + 'undefined'
+    - 'function'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'function'
+  actual: 'undefined'
+  operator: 'strictEqual'
+  stack: |-
+    runtime (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\vaultRuntimeLease.test.ts:29:12)
+    descriptor (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\vaultRuntimeLease.test.ts:34:30)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\vaultRuntimeLease.test.ts:77:21)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F09-L04 config withdrawal while review is held prevents release
+not ok 5 - F09-L04 config withdrawal while review is held prevents release
+  ---
+  duration_ms: 401.0168
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\vaultRuntimeLease.test.ts:4:3302'
+  failureType: 'testCodeFailure'
+  error: |-
+    runtime selection metadata must be implemented
+    + actual - expected
+    
+    + 'undefined'
+    - 'function'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'function'
+  actual: 'undefined'
+  operator: 'strictEqual'
+  stack: |-
+    runtime (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\vaultRuntimeLease.test.ts:29:12)
+    descriptor (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\vaultRuntimeLease.test.ts:34:30)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\vaultRuntimeLease.test.ts:81:21)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F09-L05 cancellation and untrusted workspace withhold before decryption callback
+not ok 6 - F09-L05 cancellation and untrusted workspace withhold before decryption callback
+  ---
+  duration_ms: 384.0709
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\vaultRuntimeLease.test.ts:4:3655'
+  failureType: 'testCodeFailure'
+  error: |-
+    runtime selection metadata must be implemented
+    + actual - expected
+    
+    + 'undefined'
+    - 'function'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'function'
+  actual: 'undefined'
+  operator: 'strictEqual'
+  stack: |-
+    runtime (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\vaultRuntimeLease.test.ts:29:12)
+    descriptor (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\vaultRuntimeLease.test.ts:34:30)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\vaultRuntimeLease.test.ts:85:21)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F09-L06 source drift during review cannot inject an old selection
+not ok 7 - F09-L06 source drift during review cannot inject an old selection
+  ---
+  duration_ms: 388.3299
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\vaultRuntimeLease.test.ts:4:4034'
+  failureType: 'testCodeFailure'
+  error: |-
+    runtime selection metadata must be implemented
+    + actual - expected
+    
+    + 'undefined'
+    - 'function'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'function'
+  actual: 'undefined'
+  operator: 'strictEqual'
+  stack: |-
+    runtime (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\vaultRuntimeLease.test.ts:29:12)
+    descriptor (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\vaultRuntimeLease.test.ts:34:30)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\vaultRuntimeLease.test.ts:90:21)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F09-L07 app change during review withholds until a new allowlist review
+not ok 8 - F09-L07 app change during review withholds until a new allowlist review
+  ---
+  duration_ms: 390.5287
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\vaultRuntimeLease.test.ts:4:4410'
+  failureType: 'testCodeFailure'
+  error: |-
+    runtime selection metadata must be implemented
+    + actual - expected
+    
+    + 'undefined'
+    - 'function'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'function'
+  actual: 'undefined'
+  operator: 'strictEqual'
+  stack: |-
+    runtime (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\vaultRuntimeLease.test.ts:29:12)
+    descriptor (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\vaultRuntimeLease.test.ts:34:30)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\vaultRuntimeLease.test.ts:94:21)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F09-L08 unavailable/replaced existing key never regenerates a key or releases a value
+not ok 9 - F09-L08 unavailable/replaced existing key never regenerates a key or releases a value
+  ---
+  duration_ms: 460.8456
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\vaultRuntimeLease.test.ts:4:4813'
+  failureType: 'testCodeFailure'
+  error: |-
+    runtime selection metadata must be implemented
+    + actual - expected
+    
+    + 'undefined'
+    - 'function'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'function'
+  actual: 'undefined'
+  operator: 'strictEqual'
+  stack: |-
+    runtime (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\vaultRuntimeLease.test.ts:29:12)
+    descriptor (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\vaultRuntimeLease.test.ts:34:30)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\vaultRuntimeLease.test.ts:98:21)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F09-L09 source changed during held SecretStorage read cannot release stale values
+not ok 10 - F09-L09 source changed during held SecretStorage read cannot release stale values
+  ---
+  duration_ms: 441.1449
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\vaultRuntimeLease.test.ts:4:5213'
+  failureType: 'testCodeFailure'
+  error: |-
+    runtime selection metadata must be implemented
+    + actual - expected
+    
+    + 'undefined'
+    - 'function'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'function'
+  actual: 'undefined'
+  operator: 'strictEqual'
+  stack: |-
+    runtime (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\vaultRuntimeLease.test.ts:29:12)
+    descriptor (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\vaultRuntimeLease.test.ts:34:30)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\vaultRuntimeLease.test.ts:102:21)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F09-L10 unknown placeholder/name, duplicate or extra descriptor input rejects without callback
+not ok 11 - F09-L10 unknown placeholder/name, duplicate or extra descriptor input rejects without callback
+  ---
+  duration_ms: 485.9557
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\vaultRuntimeLease.test.ts:4:5818'
+  failureType: 'testCodeFailure'
+  error: |-
+    runtime selection metadata must be implemented
+    + actual - expected
+    
+    + 'undefined'
+    - 'function'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'function'
+  actual: 'undefined'
+  operator: 'strictEqual'
+  stack: |-
+    runtime (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\vaultRuntimeLease.test.ts:29:12)
+    descriptor (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\vaultRuntimeLease.test.ts:34:30)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\vaultRuntimeLease.test.ts:107:21)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F09-L11 pending migration blocks metadata and launch while ciphertext stays retained
+not ok 12 - F09-L11 pending migration blocks metadata and launch while ciphertext stays retained
+  ---
+  duration_ms: 412.3612
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\vaultRuntimeLease.test.ts:4:6290'
+  failureType: 'testCodeFailure'
+  error: |-
+    runtime selection metadata must be implemented
+    + actual - expected
+    
+    + 'undefined'
+    - 'function'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'function'
+  actual: 'undefined'
+  operator: 'strictEqual'
+  stack: |-
+    runtime (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\vaultRuntimeLease.test.ts:29:12)
+    descriptor (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\vaultRuntimeLease.test.ts:34:30)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\vaultRuntimeLease.test.ts:114:21)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F09-L12 retained guard observes selected source/app/config withdrawal after release
+not ok 13 - F09-L12 retained guard observes selected source/app/config withdrawal after release
+  ---
+  duration_ms: 439.8209
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\vaultRuntimeLease.test.ts:4:6723'
+  failureType: 'testCodeFailure'
+  error: |-
+    runtime selection metadata must be implemented
+    + actual - expected
+    
+    + 'undefined'
+    - 'function'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'function'
+  actual: 'undefined'
+  operator: 'strictEqual'
+  stack: |-
+    runtime (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\vaultRuntimeLease.test.ts:29:12)
+    descriptor (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\vaultRuntimeLease.test.ts:34:30)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\vaultRuntimeLease.test.ts:118:21)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F09-L13 duplicate current environment names are withheld rather than selecting the first
+not ok 14 - F09-L13 duplicate current environment names are withheld rather than selecting the first
+  ---
+  duration_ms: 395.1023
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\vaultRuntimeLease.test.ts:4:7149'
+  failureType: 'testCodeFailure'
+  error: |-
+    runtime selection metadata must be implemented
+    + actual - expected
+    
+    + 'undefined'
+    - 'function'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'function'
+  actual: 'undefined'
+  operator: 'strictEqual'
+  stack: |-
+    runtime (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\vaultRuntimeLease.test.ts:29:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\vaultRuntimeLease.test.ts:123:5)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 0
+# fail 14
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 7192.4604

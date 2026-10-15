@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "feature": "F09",
+  "parentCommit": "583e4f79e8bbfd2c18a4bbe64c9fbd08d091f2cc",
+  "artifact": {
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-f09-20261015-attempt01.vsix",
+    "sha256": "04157b046e5c01e111e5ef5830a4998c06085a85c14566af9bce5c9704c20bba"
+  },
+  "inspection": {
+    "path": "vsix-inspection-01.json",
+    "sha256": "f1dbfc9deb7e83b76c16f3dbd991b5a2f3c9e365b41f8afb08302f91b18d201a"
+  },
+  "checks": [
+    {
+      "role": "typecheck",
+      "log": "typecheck-04.txt"
+    },
+    {
+      "role": "focused",
+      "log": "focused-after-05.txt",
+      "kind": "tap",
+      "expected": {
+        "tests": 150,
+        "pass": 150,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "role": "full",
+      "log": "full-tests-02.txt",
+      "kind": "tap",
+      "expected": {
+        "tests": 1464,
+        "pass": 1460,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 4
+      }
+    },
+    {
+      "role": "metadata",
+      "log": "metadata-sync-02.txt"
+    },
+    {
+      "role": "readiness",
+      "log": "generate-readiness-02.txt"
+    },
+    {
+      "role": "package",
+      "log": "package-01.txt"
+    },
+    {
+      "role": "inspection",
+      "log": "vsix-inspection-01.txt"
+    },
+    {
+      "role": "hostBuild",
+      "log": "host-build-01.txt"
+    },
+    {
+      "role": "native",
+      "log": "native-host-launch-01.txt"
+    },
+    {
+      "role": "affected",
+      "log": "affected-verification-01.txt"
+    }
+  ],
+  "native": {
+    "result": {
+      "path": "f09-native-host-20261015T125328Z-98fcf3b8/runtime-results.json",
+      "sha256": "348c4939bfa03ac1cab58d6d3310842070133ad60af33ab145743e2b0ca84aa8"
+    },
+    "probe": {
+      "path": "prebuilt-host-01/lite-vault-runtime-host.js",
+      "sha256": "79eadfbe075cfee1f4e2afd46ef9b60fdbb9c59c68b5ade4e2558fb8d46ac661"
+    }
+  },
+  "affected": {
+    "summary": {
+      "path": "affected-20261015T125430Z-ef6e0a01fc2d4cca8724d2f1d04c4d66/affected-summary-01.json",
+      "sha256": "8c92ff0d0a5c1c919bed37b111c5b34085bd79bbcc5e5a8fceb2f2fb58f8ad5e"
+    },
+    "comparison": {
+      "path": "affected-20261015T125430Z-ef6e0a01fc2d4cca8724d2f1d04c4d66/security-comparison-01.json",
+      "sha256": "63083deffab4e7331121ed849cbd8f46fdaacebb08861b9cb99b53173ba6c6cb"
+    },
+    "functional": {
+      "path": "affected-20261015T125430Z-ef6e0a01fc2d4cca8724d2f1d04c4d66/functional/privacy-20261015T125433Z-ad9ee9a5/functional-results.json",
+      "sha256": "9461c1564ff5a3471a3cf3f0173579d40fd70a799c0f5b94fcf1096f2b991a81"
+    },
+    "security": {
+      "path": "affected-20261015T125430Z-ef6e0a01fc2d4cca8724d2f1d04c4d66/security/host-20261015T125448Z-b67a381661d34fb99e1a9b0d73606828/live-host.json",
+      "sha256": "f8154d35a02156d7dcf48c5854f44418de43b7bbe8aaf5014676147eb9f56e97"
+    }
+  },
+  "reviews": [
+    {
+      "path": "source-review-evidence-adversarial-03.md",
+      "sha256": "5213857ecbd917c87a5f4bf911bd0b548220e99dab07776106574f97b39c0310"
+    },
+    {
+      "path": "final-source-disposition-01.md",
+      "sha256": "f05f0076e1773f930d8609fc771ad64c073ebc9ddbce195ad97d33d0ed4424a0"
+    }
+  ],
+  "reviewDisposition": "NO_OPEN_SCOPED_BLOCKERS",
+  "sourcePaths": [
+    "docs/soterai-lite/FEATURE-QUEUE.json",
+    "docs/soterai-lite/ledger.md",
+    "docs/vscode-extension-readiness.md",
+    "packages/core/src/index.ts",
+    "packages/core/src/VaultAppDescriptor.ts",
+    "packages/soterai-lite/README.md",
+    "packages/soterai-lite/package.json",
+    "packages/vscode-extension/README.md",
+    "packages/vscode-extension/package.json",
+    "packages/vscode-extension/src/extension.ts",
+    "packages/vscode-extension/src/firewall/commands.ts",
+    "packages/vscode-extension/src/firewall/VaultManager.ts",
+    "packages/vscode-extension/src/ai-boundary/BoundarySnapshot.ts",
+    "packages/vscode-extension/src/vault-runtime/VaultAppJob.ts",
+    "packages/vscode-extension/src/vault-runtime/RuntimeBinding.ts",
+    "packages/vscode-extension/src/vault-runtime/VaultRuntime.ts",
+    "packages/vscode-extension/src/vault-runtime/VaultSurfaces.ts",
+    "packages/vscode-extension/src/vault-runtime/commands.ts",
+    "packages/vscode-extension/src/__tests__/vaultAppDescriptor.test.ts",
+    "packages/vscode-extension/src/__tests__/vaultAppJob.test.ts",
+    "packages/vscode-extension/src/__tests__/vaultAppJob.review.test.ts",
+    "packages/vscode-extension/src/__tests__/vaultAppJob.short.test.ts",
+    "packages/vscode-extension/src/__tests__/vaultRuntimeLease.test.ts",
+    "packages/vscode-extension/src/__tests__/vaultRuntimeCoordinator.test.ts",
+    "packages/vscode-extension/src/__tests__/vaultRuntimeSurfaces.test.ts",
+    "packages/vscode-extension/src/__tests__/vaultRuntimeSurfaces.review.test.ts",
+    "packages/vscode-extension/src/__tests__/vaultRuntimeOwnership.review.test.ts",
+    "packages/vscode-extension/src/__tests__/vaultRuntimePolicy.review.test.ts",
+    "packages/vscode-extension/src/__tests__/host/liteVaultRuntime.host.ts",
+    "docs/soterai-lite/evidence/20261015-f08-output-b7429e10/acceptance-preflight-01.txt",
+    "docs/soterai-lite/evidence/20261015-f08-output-b7429e10/acceptance-preflight-01.txt.result.json",
+    "docs/soterai-lite/evidence/20261015-f08-output-b7429e10/f08-byte-verification-launch-01.txt",
+    "docs/soterai-lite/evidence/20261015-f08-output-b7429e10/f08-byte-verification-launch-01.txt.result.json",
+    "docs/soterai-lite/evidence/20261015-f08-output-b7429e10/f08-transition-allowlist-01.txt",
+    "docs/soterai-lite/evidence/20261015-f08-output-b7429e10/f08-transition-commit-01.txt",
+    "docs/soterai-lite/evidence/20261015-f08-output-b7429e10/f08-transition-byte-verification-01.json",
+    "docs/soterai-lite/evidence/20261015-f08-output-b7429e10/f08-transition-verification-launch-01.txt",
+    "docs/soterai-lite/evidence/20261015-f08-output-b7429e10/f08-transition-verification-launch-01.txt.result.json"
+  ]
+}

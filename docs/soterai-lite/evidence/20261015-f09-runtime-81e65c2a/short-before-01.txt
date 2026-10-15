@@ -1,0 +1,90 @@
+﻿TAP version 13
+# Subtest: F09-JS01 embedded raw and supported encodings of a selected short value never leave either channel
+not ok 1 - F09-JS01 embedded raw and supported encodings of a selected short value never leave either channel
+  ---
+  duration_ms: 102.9685
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\vaultAppJob.short.test.ts:2:3214'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'public-prefix(qZ4)public-suffix'
+    - '[REDACTED_SECRET_OUTPUT]'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '[REDACTED_SECRET_OUTPUT]'
+  actual: 'public-prefix(qZ4)public-suffix'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\vaultAppJob.short.test.ts:46:23)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F09-JS02 an unmatched public response with a short registration is conservatively masked as a whole
+not ok 2 - F09-JS02 an unmatched public response with a short registration is conservatively masked as a whole
+  ---
+  duration_ms: 7.7016
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\vaultAppJob.short.test.ts:2:4135'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'ordinary public text\n'
+    - '[REDACTED_SECRET_OUTPUT]'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '[REDACTED_SECRET_OUTPUT]'
+  actual: |-
+    ordinary public text
+    
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\vaultAppJob.short.test.ts:54:19)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F09-JS03 a short value contained in the fixed replacement marker withholds instead of releasing that value
+not ok 3 - F09-JS03 a short value contained in the fixed replacement marker withholds instead of releasing that value
+  ---
+  duration_ms: 5.2861
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\vaultAppJob.short.test.ts:2:4755'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'COMPLETE'
+    - 'WITHHELD'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'WITHHELD'
+  actual: 'COMPLETE'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\vaultAppJob.short.test.ts:59:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F09-JS04 an eight-scalar selected value retains the paired ordinary-public-output behavior
+ok 4 - F09-JS04 an eight-scalar selected value retains the paired ordinary-public-output behavior
+  ---
+  duration_ms: 7.1728
+  type: 'test'
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 1
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 645.1035

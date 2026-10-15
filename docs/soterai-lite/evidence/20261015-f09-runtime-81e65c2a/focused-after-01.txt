@@ -1,0 +1,466 @@
+﻿TAP version 13
+# Subtest: F09-D01 exported runtime limits remain exact and frozen
+ok 1 - F09-D01 exported runtime limits remain exact and frozen
+  ---
+  duration_ms: 2.2349
+  type: 'test'
+  ...
+# Subtest: F09-D02 a valid descriptor preserves only the exact public own-data shape and freezes every collection
+ok 2 - F09-D02 a valid descriptor preserves only the exact public own-data shape and freezes every collection
+  ---
+  duration_ms: 2.0828
+  type: 'test'
+  ...
+# Subtest: F09-D03 supported JavaScript entry extensions and Unicode paths remain useful literal metadata
+ok 3 - F09-D03 supported JavaScript entry extensions and Unicode paths remain useful literal metadata
+  ---
+  duration_ms: 2.453
+  type: 'test'
+  ...
+# Subtest: F09-D04 unknown or missing descriptor fields and unsupported schemas reject without returning partial metadata
+ok 4 - F09-D04 unknown or missing descriptor fields and unsupported schemas reject without returning partial metadata
+  ---
+  duration_ms: 1.7467
+  type: 'test'
+  ...
+# Subtest: F09-D05 non-record values and custom prototypes are not descriptors
+ok 5 - F09-D05 non-record values and custom prototypes are not descriptors
+  ---
+  duration_ms: 0.2656
+  type: 'test'
+  ...
+# Subtest: F09-D06 top-level accessors, symbol fields and non-enumerable extras reject without invoking getters
+ok 6 - F09-D06 top-level accessors, symbol fields and non-enumerable extras reject without invoking getters
+  ---
+  duration_ms: 0.2521
+  type: 'test'
+  ...
+# Subtest: F09-D07 selection records have exact own-data shape and never invoke accessor values
+ok 7 - F09-D07 selection records have exact own-data shape and never invoke accessor values
+  ---
+  duration_ms: 0.9963
+  type: 'test'
+  ...
+# Subtest: F09-D08 collection shape rejects holes, extra fields and accessor elements
+ok 8 - F09-D08 collection shape rejects holes, extra fields and accessor elements
+  ---
+  duration_ms: 0.661
+  type: 'test'
+  ...
+# Subtest: F09-D09 UUIDv4 and lowercase public-program digest validation have paired controls
+ok 9 - F09-D09 UUIDv4 and lowercase public-program digest validation have paired controls
+  ---
+  duration_ms: 1.1202
+  type: 'test'
+  ...
+# Subtest: F09-D10 every launch path is absolute, local, normalized and free of control characters
+ok 10 - F09-D10 every launch path is absolute, local, normalized and free of control characters
+  ---
+  duration_ms: 2.2225
+  type: 'test'
+  ...
+# Subtest: F09-D11 program, source and cwd reject sibling-prefix and traversal escapes outside the selected root
+ok 11 - F09-D11 program, source and cwd reject sibling-prefix and traversal escapes outside the selected root
+  ---
+  duration_ms: 0.8553
+  type: 'test'
+  ...
+# Subtest: F09-D12 path UTF-16 length is inclusive without consulting the filesystem
+ok 12 - F09-D12 path UTF-16 length is inclusive without consulting the filesystem
+  ---
+  duration_ms: 0.5264
+  type: 'test'
+  ...
+# Subtest: F09-D13 only supported app entry extensions are accepted
+ok 13 - F09-D13 only supported app entry extensions are accepted
+  ---
+  duration_ms: 0.6594
+  type: 'test'
+  ...
+# Subtest: F09-D14 literal arguments preserve spaces, quotes, shell punctuation and empty arguments without substitution
+ok 14 - F09-D14 literal arguments preserve spaces, quotes, shell punctuation and empty arguments without substitution
+  ---
+  duration_ms: 0.3359
+  type: 'test'
+  ...
+# Subtest: F09-D15 interpolation, NUL and control arguments reject the complete descriptor
+ok 15 - F09-D15 interpolation, NUL and control arguments reject the complete descriptor
+  ---
+  duration_ms: 1.5563
+  type: 'test'
+  ...
+# Subtest: F09-D16 argument count and per-argument UTF-8 bytes have inclusive limits
+ok 16 - F09-D16 argument count and per-argument UTF-8 bytes have inclusive limits
+  ---
+  duration_ms: 0.895
+  type: 'test'
+  ...
+# Subtest: F09-D17 aggregate argument bytes are inclusive independently of individual and count limits
+ok 17 - F09-D17 aggregate argument bytes are inclusive independently of individual and count limits
+  ---
+  duration_ms: 0.618
+  type: 'test'
+  ...
+# Subtest: F09-D18 public environment names use the exact identifier grammar and 128-character limit
+ok 18 - F09-D18 public environment names use the exact identifier grammar and 128-character limit
+  ---
+  duration_ms: 2.0569
+  type: 'test'
+  ...
+# Subtest: F09-D19 parent paths environment names reject case-insensitively
+ok 19 - F09-D19 parent paths environment names reject case-insensitively
+  ---
+  duration_ms: 4.3917
+  type: 'test'
+  ...
+# Subtest: F09-D19 Node and Electron environment names reject case-insensitively
+ok 20 - F09-D19 Node and Electron environment names reject case-insensitively
+  ---
+  duration_ms: 1.83
+  type: 'test'
+  ...
+# Subtest: F09-D19 native loaders environment names reject case-insensitively
+ok 21 - F09-D19 native loaders environment names reject case-insensitively
+  ---
+  duration_ms: 2.4618
+  type: 'test'
+  ...
+# Subtest: F09-D19 shells environment names reject case-insensitively
+ok 22 - F09-D19 shells environment names reject case-insensitively
+  ---
+  duration_ms: 1.2479
+  type: 'test'
+  ...
+# Subtest: F09-D19 language loaders environment names reject case-insensitively
+ok 23 - F09-D19 language loaders environment names reject case-insensitively
+  ---
+  duration_ms: 2.0697
+  type: 'test'
+  ...
+# Subtest: F09-D19 proxies and SoterAI controls environment names reject case-insensitively
+ok 24 - F09-D19 proxies and SoterAI controls environment names reject case-insensitively
+  ---
+  duration_ms: 1.9094
+  type: 'test'
+  ...
+# Subtest: F09-D20 selections must be nonempty and fit the exact inclusive selection count
+ok 25 - F09-D20 selections must be nonempty and fit the exact inclusive selection count
+  ---
+  duration_ms: 1.3825
+  type: 'test'
+  ...
+# Subtest: F09-D21 selections reject duplicate names in any case and duplicate placeholders
+ok 26 - F09-D21 selections reject duplicate names in any case and duplicate placeholders
+  ---
+  duration_ms: 0.8581
+  type: 'test'
+  ...
+# Subtest: F09-D22 exact F06 uppercase placeholders accept ordinal zero and 255
+ok 27 - F09-D22 exact F06 uppercase placeholders accept ordinal zero and 255
+  ---
+  duration_ms: 0.8853
+  type: 'test'
+  ...
+# Subtest: F09-D23 legacy, altered, noncanonical and out-of-range placeholders cannot select runtime values
+ok 28 - F09-D23 legacy, altered, noncanonical and out-of-range placeholders cannot select runtime values
+  ---
+  duration_ms: 2.656
+  type: 'test'
+  ...
+# Subtest: F09-D24 descriptor JSON UTF-8 size is inclusive while all individual limits remain valid
+ok 29 - F09-D24 descriptor JSON UTF-8 size is inclusive while all individual limits remain valid
+  ---
+  duration_ms: 4.5687
+  type: 'test'
+  ...
+# Subtest: F09-D25 hostile toJSON functions do not run or replace unreviewed input
+ok 30 - F09-D25 hostile toJSON functions do not run or replace unreviewed input
+  ---
+  duration_ms: 0.2372
+  type: 'test'
+  ...
+# Subtest: F09-J01 launch has a fresh minimal environment, exact injection, no credential argv and no parent mutation
+ok 31 - F09-J01 launch has a fresh minimal environment, exact injection, no credential argv and no parent mutation
+  ---
+  duration_ms: 163.3761
+  type: 'test'
+  ...
+# Subtest: F09-J02 Electron runtime gets only the launcher-owned run-as-Node flag and sibling launches stay separate
+ok 32 - F09-J02 Electron runtime gets only the launcher-owned run-as-Node flag and sibling launches stay separate
+  ---
+  duration_ms: 6.3344
+  type: 'test'
+  ...
+# Subtest: F09-J03 unsafe inherited locale/temp values are omitted while validated public OS metadata survives
+ok 33 - F09-J03 unsafe inherited locale/temp values are omitted while validated public OS metadata survives
+  ---
+  duration_ms: 2.7813
+  type: 'test'
+  ...
+# Subtest: F09-J04-missing invalid exact-value registration withholds the whole launch before spawning
+ok 34 - F09-J04-missing invalid exact-value registration withholds the whole launch before spawning
+  ---
+  duration_ms: 2.4752
+  type: 'test'
+  ...
+# Subtest: F09-J04-extra invalid exact-value registration withholds the whole launch before spawning
+ok 35 - F09-J04-extra invalid exact-value registration withholds the whole launch before spawning
+  ---
+  duration_ms: 1.8759
+  type: 'test'
+  ...
+# Subtest: F09-J04-case-collision invalid exact-value registration withholds the whole launch before spawning
+ok 36 - F09-J04-case-collision invalid exact-value registration withholds the whole launch before spawning
+  ---
+  duration_ms: 7.1447
+  type: 'test'
+  ...
+# Subtest: F09-J04-reserved invalid exact-value registration withholds the whole launch before spawning
+ok 37 - F09-J04-reserved invalid exact-value registration withholds the whole launch before spawning
+  ---
+  duration_ms: 2.0063
+  type: 'test'
+  ...
+# Subtest: F09-J04-non-string invalid exact-value registration withholds the whole launch before spawning
+ok 38 - F09-J04-non-string invalid exact-value registration withholds the whole launch before spawning
+  ---
+  duration_ms: 1.8135
+  type: 'test'
+  ...
+# Subtest: F09-J04-nul invalid exact-value registration withholds the whole launch before spawning
+ok 39 - F09-J04-nul invalid exact-value registration withholds the whole launch before spawning
+  ---
+  duration_ms: 1.8212
+  type: 'test'
+  ...
+# Subtest: F09-J04-empty invalid exact-value registration withholds the whole launch before spawning
+ok 40 - F09-J04-empty invalid exact-value registration withholds the whole launch before spawning
+  ---
+  duration_ms: 2.4937
+  type: 'test'
+  ...
+# Subtest: F09-J04-oversize invalid exact-value registration withholds the whole launch before spawning
+ok 41 - F09-J04-oversize invalid exact-value registration withholds the whole launch before spawning
+  ---
+  duration_ms: 1.8922
+  type: 'test'
+  ...
+# Subtest: F09-J05 excessive aggregate registration bytes block all selected values instead of partial injection
+ok 42 - F09-J05 excessive aggregate registration bytes block all selected values instead of partial injection
+  ---
+  duration_ms: 8.6009
+  type: 'test'
+  ...
+# Subtest: F09-J06 disabled or throwing availability guards and pre-start cancellation never spawn
+ok 43 - F09-J06 disabled or throwing availability guards and pre-start cancellation never spawn
+  ---
+  duration_ms: 7.0412
+  type: 'test'
+  ...
+# Subtest: F09-J07 start is single-use and snapshots do not disclose original values or buffered bytes
+ok 44 - F09-J07 start is single-use and snapshots do not disclose original values or buffered bytes
+  ---
+  duration_ms: 13.5631
+  type: 'test'
+  ...
+# Subtest: F09-J08 exit and drained EOFs alone cannot release output before actual child close
+ok 45 - F09-J08 exit and drained EOFs alone cannot release output before actual child close
+  ---
+  duration_ms: 2.6095
+  type: 'test'
+  ...
+# Subtest: F09-J09 chunked ANSI and encoded secret output is masked after finite close including nonzero exit
+ok 46 - F09-J09 chunked ANSI and encoded secret output is masked after finite close including nonzero exit
+  ---
+  duration_ms: 8.8961
+  type: 'test'
+  ...
+# Subtest: F09-J10 public Unicode stdout and stderr survive byte boundaries and natural nonzero exit
+ok 47 - F09-J10 public Unicode stdout and stderr survive byte boundaries and natural nonzero exit
+  ---
+  duration_ms: 4.1844
+  type: 'test'
+  ...
+# Subtest: F09-J11 malformed final UTF8 permanently withholds a previously buffered public prefix
+ok 48 - F09-J11 malformed final UTF8 permanently withholds a previously buffered public prefix
+  ---
+  duration_ms: 2.0192
+  type: 'test'
+  ...
+# Subtest: F09-J12 output-byte overflow requests cooperative stop and drains both discarded channels
+ok 49 - F09-J12 output-byte overflow requests cooperative stop and drains both discarded channels
+  ---
+  duration_ms: 2.8251
+  type: 'test'
+  ...
+# Subtest: F09-J13 chunk-count overflow withholds even when byte budget is small
+ok 50 - F09-J13 chunk-count overflow withholds even when byte budget is small
+  ---
+  duration_ms: 40.0916
+  type: 'test'
+  ...
+# Subtest: F09-J14 cancellation after spawn requests STOP but never claims exit or releases pending output
+ok 51 - F09-J14 cancellation after spawn requests STOP but never claims exit or releases pending output
+  ---
+  duration_ms: 3.4141
+  type: 'test'
+  ...
+# Subtest: F09-J15 STOP acknowledgement without close remains STOP_UNCONFIRMED until actual natural exit
+ok 52 - F09-J15 STOP acknowledgement without close remains STOP_UNCONFIRMED until actual natural exit
+  ---
+  duration_ms: 4.9527
+  type: 'test'
+  ...
+# Subtest: F09-J16 runtime timeout permanently withholds and uses cooperative stop, never forced termination
+ok 53 - F09-J16 runtime timeout permanently withholds and uses cooperative stop, never forced termination
+  ---
+  duration_ms: 3.5612
+  type: 'test'
+  ...
+# Subtest: F09-J17 guard withdrawal is sticky even after reenable and never releases earlier buffered output
+ok 54 - F09-J17 guard withdrawal is sticky even after reenable and never releases earlier buffered output
+  ---
+  duration_ms: 4.4684
+  type: 'test'
+  ...
+# Subtest: F09-J18 spawn throws/errors are safe BLOCKED completions and include no input-bearing exception
+ok 55 - F09-J18 spawn throws/errors are safe BLOCKED completions and include no input-bearing exception
+  ---
+  duration_ms: 6.091
+  type: 'test'
+  ...
+# Subtest: F09-J19 dispose requests stop of only the owned child, retains ownership and waits for close
+ok 56 - F09-J19 dispose requests stop of only the owned child, retains ownership and waits for close
+  ---
+  duration_ms: 2.5828
+  type: 'test'
+  ...
+# Subtest: F09-J20 real finite Node app receives only selected env while raw stdout and parent env remain private
+ok 57 - F09-J20 real finite Node app receives only selected env while raw stdout and parent env remain private
+  ---
+  duration_ms: 114.8285
+  type: 'test'
+  ...
+# Subtest: F09-J21 a fresh real sibling app receives none of an earlier job's selected DB value
+ok 58 - F09-J21 a fresh real sibling app receives none of an earlier job's selected DB value
+  ---
+  duration_ms: 99.2091
+  type: 'test'
+  ...
+# Subtest: F09-J22 real app ignoring STOP remains visibly unconfirmed and then self-exits without external termination
+ok 59 - F09-J22 real app ignoring STOP remains visibly unconfirmed and then self-exits without external termination
+  ---
+  duration_ms: 1711.7889
+  type: 'test'
+  ...
+# Subtest: F09-J23 stream errors or premature close without EOF permanently withhold and drain the remaining channel
+ok 60 - F09-J23 stream errors or premature close without EOF permanently withhold and drain the remaining channel
+  ---
+  duration_ms: 3.7039
+  type: 'test'
+  ...
+# Subtest: F09-J24 no selected value reaches a non-READY runtime and duplicate READY cannot release twice
+ok 61 - F09-J24 no selected value reaches a non-READY runtime and duplicate READY cannot release twice
+  ---
+  duration_ms: 2.1091
+  type: 'test'
+  ...
+# Subtest: F09-J25 withdrawal or cancellation before READY cannot release values even after later reenable
+ok 62 - F09-J25 withdrawal or cancellation before READY cannot release values even after later reenable
+  ---
+  duration_ms: 4.6607
+  type: 'test'
+  ...
+# Subtest: F09-J26 a child close before either stream EOF cannot turn a later public suffix into complete output
+ok 63 - F09-J26 a child close before either stream EOF cannot turn a later public suffix into complete output
+  ---
+  duration_ms: 4.3426
+  type: 'test'
+  ...
+# Subtest: F09-L01 metadata exposes current names/placeholders and no raw values or value hashes
+ok 64 - F09-L01 metadata exposes current names/placeholders and no raw values or value hashes
+  ---
+  duration_ms: 527.3425
+  type: 'test'
+  ...
+# Subtest: F09-L02 approved private lease supplies logical unquoted value once, without changing source or parent environment
+ok 65 - F09-L02 approved private lease supplies logical unquoted value once, without changing source or parent environment
+  ---
+  duration_ms: 546.6942
+  type: 'test'
+  ...
+# Subtest: F09-L03 cancelled native review invokes no trusted callback
+ok 66 - F09-L03 cancelled native review invokes no trusted callback
+  ---
+  duration_ms: 480.4647
+  type: 'test'
+  ...
+# Subtest: F09-L04 config withdrawal while review is held prevents release
+ok 67 - F09-L04 config withdrawal while review is held prevents release
+  ---
+  duration_ms: 483.7595
+  type: 'test'
+  ...
+# Subtest: F09-L05 cancellation and untrusted workspace withhold before decryption callback
+ok 68 - F09-L05 cancellation and untrusted workspace withhold before decryption callback
+  ---
+  duration_ms: 432.0232
+  type: 'test'
+  ...
+# Subtest: F09-L06 source drift during review cannot inject an old selection
+ok 69 - F09-L06 source drift during review cannot inject an old selection
+  ---
+  duration_ms: 548.2585
+  type: 'test'
+  ...
+# Subtest: F09-L07 app change during review withholds until a new allowlist review
+ok 70 - F09-L07 app change during review withholds until a new allowlist review
+  ---
+  duration_ms: 521.3441
+  type: 'test'
+  ...
+# Subtest: F09-L08 unavailable/replaced existing key never regenerates a key or releases a value
+ok 71 - F09-L08 unavailable/replaced existing key never regenerates a key or releases a value
+  ---
+  duration_ms: 640.0817
+  type: 'test'
+  ...
+# Subtest: F09-L09 source changed during held SecretStorage read cannot release stale values
+ok 72 - F09-L09 source changed during held SecretStorage read cannot release stale values
+  ---
+  duration_ms: 539.1055
+  type: 'test'
+  ...
+# Subtest: F09-L10 unknown placeholder/name, duplicate or extra descriptor input rejects without callback
+ok 73 - F09-L10 unknown placeholder/name, duplicate or extra descriptor input rejects without callback
+  ---
+  duration_ms: 513.6815
+  type: 'test'
+  ...
+# Subtest: F09-L11 pending migration blocks metadata and launch while ciphertext stays retained
+ok 74 - F09-L11 pending migration blocks metadata and launch while ciphertext stays retained
+  ---
+  duration_ms: 535.028
+  type: 'test'
+  ...
+# Subtest: F09-L12 retained guard observes selected source/app/config withdrawal after release
+ok 75 - F09-L12 retained guard observes selected source/app/config withdrawal after release
+  ---
+  duration_ms: 598.9671
+  type: 'test'
+  ...
+# Subtest: F09-L13 duplicate current environment names are withheld rather than selecting the first
+ok 76 - F09-L13 duplicate current environment names are withheld rather than selecting the first
+  ---
+  duration_ms: 464.2875
+  type: 'test'
+  ...
+1..76
+# tests 76
+# suites 0
+# pass 76
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 10644.1428

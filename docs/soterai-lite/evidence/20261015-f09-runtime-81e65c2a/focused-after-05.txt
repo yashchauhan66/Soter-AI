@@ -1,0 +1,910 @@
+﻿TAP version 13
+# Subtest: F09-D01 exported runtime limits remain exact and frozen
+ok 1 - F09-D01 exported runtime limits remain exact and frozen
+  ---
+  duration_ms: 4.6033
+  type: 'test'
+  ...
+# Subtest: F09-D02 a valid descriptor preserves only the exact public own-data shape and freezes every collection
+ok 2 - F09-D02 a valid descriptor preserves only the exact public own-data shape and freezes every collection
+  ---
+  duration_ms: 3.9181
+  type: 'test'
+  ...
+# Subtest: F09-D03 supported JavaScript entry extensions and Unicode paths remain useful literal metadata
+ok 3 - F09-D03 supported JavaScript entry extensions and Unicode paths remain useful literal metadata
+  ---
+  duration_ms: 2.7068
+  type: 'test'
+  ...
+# Subtest: F09-D04 unknown or missing descriptor fields and unsupported schemas reject without returning partial metadata
+ok 4 - F09-D04 unknown or missing descriptor fields and unsupported schemas reject without returning partial metadata
+  ---
+  duration_ms: 1.4116
+  type: 'test'
+  ...
+# Subtest: F09-D05 non-record values and custom prototypes are not descriptors
+ok 5 - F09-D05 non-record values and custom prototypes are not descriptors
+  ---
+  duration_ms: 0.4242
+  type: 'test'
+  ...
+# Subtest: F09-D06 top-level accessors, symbol fields and non-enumerable extras reject without invoking getters
+ok 6 - F09-D06 top-level accessors, symbol fields and non-enumerable extras reject without invoking getters
+  ---
+  duration_ms: 0.3782
+  type: 'test'
+  ...
+# Subtest: F09-D07 selection records have exact own-data shape and never invoke accessor values
+ok 7 - F09-D07 selection records have exact own-data shape and never invoke accessor values
+  ---
+  duration_ms: 1.2017
+  type: 'test'
+  ...
+# Subtest: F09-D08 collection shape rejects holes, extra fields and accessor elements
+ok 8 - F09-D08 collection shape rejects holes, extra fields and accessor elements
+  ---
+  duration_ms: 0.8341
+  type: 'test'
+  ...
+# Subtest: F09-D09 UUIDv4 and lowercase public-program digest validation have paired controls
+ok 9 - F09-D09 UUIDv4 and lowercase public-program digest validation have paired controls
+  ---
+  duration_ms: 1.0093
+  type: 'test'
+  ...
+# Subtest: F09-D10 every launch path is absolute, local, normalized and free of control characters
+ok 10 - F09-D10 every launch path is absolute, local, normalized and free of control characters
+  ---
+  duration_ms: 2.1379
+  type: 'test'
+  ...
+# Subtest: F09-D11 program, source and cwd reject sibling-prefix and traversal escapes outside the selected root
+ok 11 - F09-D11 program, source and cwd reject sibling-prefix and traversal escapes outside the selected root
+  ---
+  duration_ms: 1.0119
+  type: 'test'
+  ...
+# Subtest: F09-D12 path UTF-16 length is inclusive without consulting the filesystem
+ok 12 - F09-D12 path UTF-16 length is inclusive without consulting the filesystem
+  ---
+  duration_ms: 0.6302
+  type: 'test'
+  ...
+# Subtest: F09-D13 only supported app entry extensions are accepted
+ok 13 - F09-D13 only supported app entry extensions are accepted
+  ---
+  duration_ms: 1.9037
+  type: 'test'
+  ...
+# Subtest: F09-D14 literal arguments preserve spaces, quotes, shell punctuation and empty arguments without substitution
+ok 14 - F09-D14 literal arguments preserve spaces, quotes, shell punctuation and empty arguments without substitution
+  ---
+  duration_ms: 0.4383
+  type: 'test'
+  ...
+# Subtest: F09-D15 interpolation, NUL and control arguments reject the complete descriptor
+ok 15 - F09-D15 interpolation, NUL and control arguments reject the complete descriptor
+  ---
+  duration_ms: 2.4477
+  type: 'test'
+  ...
+# Subtest: F09-D16 argument count and per-argument UTF-8 bytes have inclusive limits
+ok 16 - F09-D16 argument count and per-argument UTF-8 bytes have inclusive limits
+  ---
+  duration_ms: 1.6604
+  type: 'test'
+  ...
+# Subtest: F09-D17 aggregate argument bytes are inclusive independently of individual and count limits
+ok 17 - F09-D17 aggregate argument bytes are inclusive independently of individual and count limits
+  ---
+  duration_ms: 1.119
+  type: 'test'
+  ...
+# Subtest: F09-D18 public environment names use the exact identifier grammar and 128-character limit
+ok 18 - F09-D18 public environment names use the exact identifier grammar and 128-character limit
+  ---
+  duration_ms: 4.0468
+  type: 'test'
+  ...
+# Subtest: F09-D19 parent paths environment names reject case-insensitively
+ok 19 - F09-D19 parent paths environment names reject case-insensitively
+  ---
+  duration_ms: 9.1345
+  type: 'test'
+  ...
+# Subtest: F09-D19 Node and Electron environment names reject case-insensitively
+ok 20 - F09-D19 Node and Electron environment names reject case-insensitively
+  ---
+  duration_ms: 2.5397
+  type: 'test'
+  ...
+# Subtest: F09-D19 native loaders environment names reject case-insensitively
+ok 21 - F09-D19 native loaders environment names reject case-insensitively
+  ---
+  duration_ms: 3.1798
+  type: 'test'
+  ...
+# Subtest: F09-D19 shells environment names reject case-insensitively
+ok 22 - F09-D19 shells environment names reject case-insensitively
+  ---
+  duration_ms: 1.8658
+  type: 'test'
+  ...
+# Subtest: F09-D19 language loaders environment names reject case-insensitively
+ok 23 - F09-D19 language loaders environment names reject case-insensitively
+  ---
+  duration_ms: 4.1095
+  type: 'test'
+  ...
+# Subtest: F09-D19 proxies and SoterAI controls environment names reject case-insensitively
+ok 24 - F09-D19 proxies and SoterAI controls environment names reject case-insensitively
+  ---
+  duration_ms: 2.5645
+  type: 'test'
+  ...
+# Subtest: F09-D20 selections must be nonempty and fit the exact inclusive selection count
+ok 25 - F09-D20 selections must be nonempty and fit the exact inclusive selection count
+  ---
+  duration_ms: 3.5092
+  type: 'test'
+  ...
+# Subtest: F09-D21 selections reject duplicate names in any case and duplicate placeholders
+ok 26 - F09-D21 selections reject duplicate names in any case and duplicate placeholders
+  ---
+  duration_ms: 1.9376
+  type: 'test'
+  ...
+# Subtest: F09-D22 exact F06 uppercase placeholders accept ordinal zero and 255
+ok 27 - F09-D22 exact F06 uppercase placeholders accept ordinal zero and 255
+  ---
+  duration_ms: 1.7338
+  type: 'test'
+  ...
+# Subtest: F09-D23 legacy, altered, noncanonical and out-of-range placeholders cannot select runtime values
+ok 28 - F09-D23 legacy, altered, noncanonical and out-of-range placeholders cannot select runtime values
+  ---
+  duration_ms: 2.653
+  type: 'test'
+  ...
+# Subtest: F09-D24 descriptor JSON UTF-8 size is inclusive while all individual limits remain valid
+ok 29 - F09-D24 descriptor JSON UTF-8 size is inclusive while all individual limits remain valid
+  ---
+  duration_ms: 5.095
+  type: 'test'
+  ...
+# Subtest: F09-D25 hostile toJSON functions do not run or replace unreviewed input
+ok 30 - F09-D25 hostile toJSON functions do not run or replace unreviewed input
+  ---
+  duration_ms: 0.3383
+  type: 'test'
+  ...
+# Subtest: F09-JR01 an invalid raw descriptor id never becomes the safe snapshot or completion id
+ok 31 - F09-JR01 an invalid raw descriptor id never becomes the safe snapshot or completion id
+  ---
+  duration_ms: 50.1384
+  type: 'test'
+  ...
+# Subtest: F09-JR02-stdout a malformed child still drains its available pipe and proves actual close before completing
+ok 32 - F09-JR02-stdout a malformed child still drains its available pipe and proves actual close before completing
+  ---
+  duration_ms: 11.7034
+  type: 'test'
+  ...
+# Subtest: F09-JR02-stderr a malformed child still drains its available pipe and proves actual close before completing
+ok 33 - F09-JR02-stderr a malformed child still drains its available pipe and proves actual close before completing
+  ---
+  duration_ms: 4.7709
+  type: 'test'
+  ...
+# Subtest: F09-JS01 embedded raw and supported encodings of a selected short value never leave either channel
+ok 34 - F09-JS01 embedded raw and supported encodings of a selected short value never leave either channel
+  ---
+  duration_ms: 121.4148
+  type: 'test'
+  ...
+# Subtest: F09-JS02 an unmatched public response with a short registration is conservatively masked as a whole
+ok 35 - F09-JS02 an unmatched public response with a short registration is conservatively masked as a whole
+  ---
+  duration_ms: 9.0996
+  type: 'test'
+  ...
+# Subtest: F09-JS03 a short value contained in the fixed replacement marker withholds instead of releasing that value
+ok 36 - F09-JS03 a short value contained in the fixed replacement marker withholds instead of releasing that value
+  ---
+  duration_ms: 5.9674
+  type: 'test'
+  ...
+# Subtest: F09-JS04 an eight-scalar selected value retains the paired ordinary-public-output behavior
+ok 37 - F09-JS04 an eight-scalar selected value retains the paired ordinary-public-output behavior
+  ---
+  duration_ms: 9.8703
+  type: 'test'
+  ...
+# Subtest: F09-J01 launch has a fresh minimal environment, exact injection, no credential argv and no parent mutation
+ok 38 - F09-J01 launch has a fresh minimal environment, exact injection, no credential argv and no parent mutation
+  ---
+  duration_ms: 66.8589
+  type: 'test'
+  ...
+# Subtest: F09-J02 Electron runtime gets only the launcher-owned run-as-Node flag and sibling launches stay separate
+ok 39 - F09-J02 Electron runtime gets only the launcher-owned run-as-Node flag and sibling launches stay separate
+  ---
+  duration_ms: 6.9037
+  type: 'test'
+  ...
+# Subtest: F09-J03 unsafe inherited locale/temp values are omitted while validated public OS metadata survives
+ok 40 - F09-J03 unsafe inherited locale/temp values are omitted while validated public OS metadata survives
+  ---
+  duration_ms: 3.1815
+  type: 'test'
+  ...
+# Subtest: F09-J04-missing invalid exact-value registration withholds the whole launch before spawning
+ok 41 - F09-J04-missing invalid exact-value registration withholds the whole launch before spawning
+  ---
+  duration_ms: 2.1678
+  type: 'test'
+  ...
+# Subtest: F09-J04-extra invalid exact-value registration withholds the whole launch before spawning
+ok 42 - F09-J04-extra invalid exact-value registration withholds the whole launch before spawning
+  ---
+  duration_ms: 1.6468
+  type: 'test'
+  ...
+# Subtest: F09-J04-case-collision invalid exact-value registration withholds the whole launch before spawning
+ok 43 - F09-J04-case-collision invalid exact-value registration withholds the whole launch before spawning
+  ---
+  duration_ms: 1.488
+  type: 'test'
+  ...
+# Subtest: F09-J04-reserved invalid exact-value registration withholds the whole launch before spawning
+ok 44 - F09-J04-reserved invalid exact-value registration withholds the whole launch before spawning
+  ---
+  duration_ms: 1.9336
+  type: 'test'
+  ...
+# Subtest: F09-J04-non-string invalid exact-value registration withholds the whole launch before spawning
+ok 45 - F09-J04-non-string invalid exact-value registration withholds the whole launch before spawning
+  ---
+  duration_ms: 2.2815
+  type: 'test'
+  ...
+# Subtest: F09-J04-nul invalid exact-value registration withholds the whole launch before spawning
+ok 46 - F09-J04-nul invalid exact-value registration withholds the whole launch before spawning
+  ---
+  duration_ms: 1.9524
+  type: 'test'
+  ...
+# Subtest: F09-J04-empty invalid exact-value registration withholds the whole launch before spawning
+ok 47 - F09-J04-empty invalid exact-value registration withholds the whole launch before spawning
+  ---
+  duration_ms: 2.5824
+  type: 'test'
+  ...
+# Subtest: F09-J04-oversize invalid exact-value registration withholds the whole launch before spawning
+ok 48 - F09-J04-oversize invalid exact-value registration withholds the whole launch before spawning
+  ---
+  duration_ms: 1.9051
+  type: 'test'
+  ...
+# Subtest: F09-J05 excessive aggregate registration bytes block all selected values instead of partial injection
+ok 49 - F09-J05 excessive aggregate registration bytes block all selected values instead of partial injection
+  ---
+  duration_ms: 9.406
+  type: 'test'
+  ...
+# Subtest: F09-J06 disabled or throwing availability guards and pre-start cancellation never spawn
+ok 50 - F09-J06 disabled or throwing availability guards and pre-start cancellation never spawn
+  ---
+  duration_ms: 9.8347
+  type: 'test'
+  ...
+# Subtest: F09-J07 start is single-use and snapshots do not disclose original values or buffered bytes
+ok 51 - F09-J07 start is single-use and snapshots do not disclose original values or buffered bytes
+  ---
+  duration_ms: 4.8504
+  type: 'test'
+  ...
+# Subtest: F09-J08 exit and drained EOFs alone cannot release output before actual child close
+ok 52 - F09-J08 exit and drained EOFs alone cannot release output before actual child close
+  ---
+  duration_ms: 2.7644
+  type: 'test'
+  ...
+# Subtest: F09-J09 chunked ANSI and encoded secret output is masked after finite close including nonzero exit
+ok 53 - F09-J09 chunked ANSI and encoded secret output is masked after finite close including nonzero exit
+  ---
+  duration_ms: 11.0381
+  type: 'test'
+  ...
+# Subtest: F09-J10 public Unicode stdout and stderr survive byte boundaries and natural nonzero exit
+ok 54 - F09-J10 public Unicode stdout and stderr survive byte boundaries and natural nonzero exit
+  ---
+  duration_ms: 5.1006
+  type: 'test'
+  ...
+# Subtest: F09-J11 malformed final UTF8 permanently withholds a previously buffered public prefix
+ok 55 - F09-J11 malformed final UTF8 permanently withholds a previously buffered public prefix
+  ---
+  duration_ms: 2.4679
+  type: 'test'
+  ...
+# Subtest: F09-J12 output-byte overflow requests cooperative stop and drains both discarded channels
+ok 56 - F09-J12 output-byte overflow requests cooperative stop and drains both discarded channels
+  ---
+  duration_ms: 3.4352
+  type: 'test'
+  ...
+# Subtest: F09-J13 chunk-count overflow withholds even when byte budget is small
+ok 57 - F09-J13 chunk-count overflow withholds even when byte budget is small
+  ---
+  duration_ms: 64.6058
+  type: 'test'
+  ...
+# Subtest: F09-J14 cancellation after spawn requests STOP but never claims exit or releases pending output
+ok 58 - F09-J14 cancellation after spawn requests STOP but never claims exit or releases pending output
+  ---
+  duration_ms: 5.0884
+  type: 'test'
+  ...
+# Subtest: F09-J15 STOP acknowledgement without close remains STOP_UNCONFIRMED until actual natural exit
+ok 59 - F09-J15 STOP acknowledgement without close remains STOP_UNCONFIRMED until actual natural exit
+  ---
+  duration_ms: 4.2629
+  type: 'test'
+  ...
+# Subtest: F09-J16 runtime timeout permanently withholds and uses cooperative stop, never forced termination
+ok 60 - F09-J16 runtime timeout permanently withholds and uses cooperative stop, never forced termination
+  ---
+  duration_ms: 4.4254
+  type: 'test'
+  ...
+# Subtest: F09-J17 guard withdrawal is sticky even after reenable and never releases earlier buffered output
+ok 61 - F09-J17 guard withdrawal is sticky even after reenable and never releases earlier buffered output
+  ---
+  duration_ms: 5.375
+  type: 'test'
+  ...
+# Subtest: F09-J18 spawn throws/errors are safe BLOCKED completions and include no input-bearing exception
+ok 62 - F09-J18 spawn throws/errors are safe BLOCKED completions and include no input-bearing exception
+  ---
+  duration_ms: 10.6017
+  type: 'test'
+  ...
+# Subtest: F09-J19 dispose requests stop of only the owned child, retains ownership and waits for close
+ok 63 - F09-J19 dispose requests stop of only the owned child, retains ownership and waits for close
+  ---
+  duration_ms: 2.8594
+  type: 'test'
+  ...
+# Subtest: F09-J20 real finite Node app receives only selected env while raw stdout and parent env remain private
+ok 64 - F09-J20 real finite Node app receives only selected env while raw stdout and parent env remain private
+  ---
+  duration_ms: 127.7893
+  type: 'test'
+  ...
+# Subtest: F09-J21 a fresh real sibling app receives none of an earlier job's selected DB value
+ok 65 - F09-J21 a fresh real sibling app receives none of an earlier job's selected DB value
+  ---
+  duration_ms: 128.5736
+  type: 'test'
+  ...
+# Subtest: F09-J22 real app ignoring STOP remains visibly unconfirmed and then self-exits without external termination
+ok 66 - F09-J22 real app ignoring STOP remains visibly unconfirmed and then self-exits without external termination
+  ---
+  duration_ms: 1707.6127
+  type: 'test'
+  ...
+# Subtest: F09-J23 stream errors or premature close without EOF permanently withhold and drain the remaining channel
+ok 67 - F09-J23 stream errors or premature close without EOF permanently withhold and drain the remaining channel
+  ---
+  duration_ms: 4.9571
+  type: 'test'
+  ...
+# Subtest: F09-J24 no selected value reaches a non-READY runtime and duplicate READY cannot release twice
+ok 68 - F09-J24 no selected value reaches a non-READY runtime and duplicate READY cannot release twice
+  ---
+  duration_ms: 2.2749
+  type: 'test'
+  ...
+# Subtest: F09-J25 withdrawal or cancellation before READY cannot release values even after later reenable
+ok 69 - F09-J25 withdrawal or cancellation before READY cannot release values even after later reenable
+  ---
+  duration_ms: 3.8186
+  type: 'test'
+  ...
+# Subtest: F09-J26 a child close before either stream EOF cannot turn a later public suffix into complete output
+ok 70 - F09-J26 a child close before either stream EOF cannot turn a later public suffix into complete output
+  ---
+  duration_ms: 1.8604
+  type: 'test'
+  ...
+# Subtest: F09-C01 save persists only strict public metadata and leaves placeholder source/app bytes unchanged
+ok 71 - F09-C01 save persists only strict public metadata and leaves placeholder source/app bytes unchanged
+  ---
+  duration_ms: 350.3993
+  type: 'test'
+  ...
+# Subtest: F09-C02 invalid or falsely digested metadata is never acknowledged or persisted
+ok 72 - F09-C02 invalid or falsely digested metadata is never acknowledged or persisted
+  ---
+  duration_ms: 13.0536
+  type: 'test'
+  ...
+# Subtest: F09-C03 sixteen saved descriptors fit; a seventeenth cannot discard accepted allowlist entries
+ok 73 - F09-C03 sixteen saved descriptors fit; a seventeenth cannot discard accepted allowlist entries
+  ---
+  duration_ms: 84.837
+  type: 'test'
+  ...
+# Subtest: F09-C04 a persistence failure cannot acknowledge an unsaved descriptor or leak an exception
+ok 74 - F09-C04 a persistence failure cannot acknowledge an unsaved descriptor or leak an exception
+  ---
+  duration_ms: 10.9376
+  type: 'test'
+  ...
+# Subtest: F09-C05 each descriptor read reparses persisted data rather than trusting an earlier cached object
+ok 75 - F09-C05 each descriptor read reparses persisted data rather than trusting an earlier cached object
+  ---
+  duration_ms: 10.5715
+  type: 'test'
+  ...
+# Subtest: F09-C06 changing the allowed app blocks run until its new public digest is explicitly saved
+ok 76 - F09-C06 changing the allowed app blocks run until its new public digest is explicitly saved
+  ---
+  duration_ms: 193.2391
+  type: 'test'
+  ...
+# Subtest: F09-C07 unknown descriptor IDs, lost trust and withdrawn runtime settings never reach the private lease
+ok 77 - F09-C07 unknown descriptor IDs, lost trust and withdrawn runtime settings never reach the private lease
+  ---
+  duration_ms: 10.2743
+  type: 'test'
+  ...
+# Subtest: F09-C08 configuration withdrawal revokes held approval before any child job is released
+ok 78 - F09-C08 configuration withdrawal revokes held approval before any child job is released
+  ---
+  duration_ms: 12.0955
+  type: 'test'
+  ...
+# Subtest: F09-C08 workspace withdrawal revokes held approval before any child job is released
+ok 79 - F09-C08 workspace withdrawal revokes held approval before any child job is released
+  ---
+  duration_ms: 12.4318
+  type: 'test'
+  ...
+# Subtest: F09-C08 dispose withdrawal revokes held approval before any child job is released
+ok 80 - F09-C08 dispose withdrawal revokes held approval before any child job is released
+  ---
+  duration_ms: 14.2475
+  type: 'test'
+  ...
+# Subtest: F09-C09 the four-job admission limit includes pending approvals rather than queuing unlimited private requests
+ok 81 - F09-C09 the four-job admission limit includes pending approvals rather than queuing unlimited private requests
+  ---
+  duration_ms: 22.9418
+  type: 'test'
+  ...
+# Subtest: F09-C10 four owned active children fit and stop cooperatively; a fifth cannot start
+ok 82 - F09-C10 four owned active children fit and stop cooperatively; a fifth cannot start
+  ---
+  duration_ms: 238.0126
+  type: 'test'
+  ...
+# Subtest: F09-C11 real app values pass only through the private lease and completed F08 output
+ok 83 - F09-C11 real app values pass only through the private lease and completed F08 output
+  ---
+  duration_ms: 138.3376
+  type: 'test'
+  ...
+# Subtest: F09-C12 guard withdrawal after launch stops the owned app and withholds all pending output
+ok 84 - F09-C12 guard withdrawal after launch stops the owned app and withholds all pending output
+  ---
+  duration_ms: 98.7594
+  type: 'test'
+  ...
+# Subtest: F09-C13 feature withdrawal requests cooperative stop and prevents later launches
+ok 85 - F09-C13 feature withdrawal requests cooperative stop and prevents later launches
+  ---
+  duration_ms: 105.2817
+  type: 'test'
+  ...
+# Subtest: F09-C14 rejected private approval produces no job, retained raw state or swallowed admission slot
+ok 86 - F09-C14 rejected private approval produces no job, retained raw state or swallowed admission slot
+  ---
+  duration_ms: 185.7032
+  type: 'test'
+  ...
+# Subtest: F09-C15 restarting reports prior ownership as UNVERIFIED without adopting or stopping the live child
+ok 87 - F09-C15 restarting reports prior ownership as UNVERIFIED without adopting or stopping the live child
+  ---
+  duration_ms: 111.6823
+  type: 'test'
+  ...
+# Subtest: F09-C16 stop of an unrelated identifier cannot affect the owned live job
+ok 88 - F09-C16 stop of an unrelated identifier cannot affect the owned live job
+  ---
+  duration_ms: 118.904
+  type: 'test'
+  ...
+# Subtest: F09-L01 metadata exposes current names/placeholders and no raw values or value hashes
+ok 89 - F09-L01 metadata exposes current names/placeholders and no raw values or value hashes
+  ---
+  duration_ms: 631.237
+  type: 'test'
+  ...
+# Subtest: F09-L02 approved private lease supplies logical unquoted value once, without changing source or parent environment
+ok 90 - F09-L02 approved private lease supplies logical unquoted value once, without changing source or parent environment
+  ---
+  duration_ms: 689.973
+  type: 'test'
+  ...
+# Subtest: F09-L03 cancelled native review invokes no trusted callback
+ok 91 - F09-L03 cancelled native review invokes no trusted callback
+  ---
+  duration_ms: 552.8733
+  type: 'test'
+  ...
+# Subtest: F09-L04 config withdrawal while review is held prevents release
+ok 92 - F09-L04 config withdrawal while review is held prevents release
+  ---
+  duration_ms: 555.4235
+  type: 'test'
+  ...
+# Subtest: F09-L05 cancellation and untrusted workspace withhold before decryption callback
+ok 93 - F09-L05 cancellation and untrusted workspace withhold before decryption callback
+  ---
+  duration_ms: 437.6059
+  type: 'test'
+  ...
+# Subtest: F09-L06 source drift during review cannot inject an old selection
+ok 94 - F09-L06 source drift during review cannot inject an old selection
+  ---
+  duration_ms: 483.1588
+  type: 'test'
+  ...
+# Subtest: F09-L07 app change during review withholds until a new allowlist review
+ok 95 - F09-L07 app change during review withholds until a new allowlist review
+  ---
+  duration_ms: 499.7403
+  type: 'test'
+  ...
+# Subtest: F09-L08 unavailable/replaced existing key never regenerates a key or releases a value
+ok 96 - F09-L08 unavailable/replaced existing key never regenerates a key or releases a value
+  ---
+  duration_ms: 716.7205
+  type: 'test'
+  ...
+# Subtest: F09-L09 source changed during held SecretStorage read cannot release stale values
+ok 97 - F09-L09 source changed during held SecretStorage read cannot release stale values
+  ---
+  duration_ms: 589.1829
+  type: 'test'
+  ...
+# Subtest: F09-L10 unknown placeholder/name, duplicate or extra descriptor input rejects without callback
+ok 98 - F09-L10 unknown placeholder/name, duplicate or extra descriptor input rejects without callback
+  ---
+  duration_ms: 547.8716
+  type: 'test'
+  ...
+# Subtest: F09-L11 pending migration blocks metadata and launch while ciphertext stays retained
+ok 99 - F09-L11 pending migration blocks metadata and launch while ciphertext stays retained
+  ---
+  duration_ms: 500.752
+  type: 'test'
+  ...
+# Subtest: F09-L12 retained guard observes selected source/app/config withdrawal after release
+ok 100 - F09-L12 retained guard observes selected source/app/config withdrawal after release
+  ---
+  duration_ms: 612.7901
+  type: 'test'
+  ...
+# Subtest: F09-L13 duplicate current environment names are withheld rather than selecting the first
+ok 101 - F09-L13 duplicate current environment names are withheld rather than selecting the first
+  ---
+  duration_ms: 462.5953
+  type: 'test'
+  ...
+# Subtest: F09-L14 normal app output files do not revoke stable directory ownership
+ok 102 - F09-L14 normal app output files do not revoke stable directory ownership
+  ---
+  duration_ms: 557.2758
+  type: 'test'
+  ...
+# Subtest: F09-L15-pending late storage drift during the last key read withholds release
+ok 103 - F09-L15-pending late storage drift during the last key read withholds release
+  ---
+  duration_ms: 549.7826
+  type: 'test'
+  ...
+# Subtest: F09-L15-ciphertext late storage drift during the last key read withholds release
+ok 104 - F09-L15-ciphertext late storage drift during the last key read withholds release
+  ---
+  duration_ms: 552.2681
+  type: 'test'
+  ...
+# Subtest: F09-O01 non-array null ownership cannot become permission to launch
+ok 105 - F09-O01 non-array null ownership cannot become permission to launch
+  ---
+  duration_ms: 24.2461
+  type: 'test'
+  ...
+# Subtest: F09-O01 non-array object ownership cannot become permission to launch
+ok 106 - F09-O01 non-array object ownership cannot become permission to launch
+  ---
+  duration_ms: 7.6345
+  type: 'test'
+  ...
+# Subtest: F09-O01 non-array string ownership cannot become permission to launch
+ok 107 - F09-O01 non-array string ownership cannot become permission to launch
+  ---
+  duration_ms: 6.6945
+  type: 'test'
+  ...
+# Subtest: F09-O01 non-array number ownership cannot become permission to launch
+ok 108 - F09-O01 non-array number ownership cannot become permission to launch
+  ---
+  duration_ms: 7.5919
+  type: 'test'
+  ...
+# Subtest: F09-O02 more than 64 outstanding records withholds instead of discarding all prior ownership
+ok 109 - F09-O02 more than 64 outstanding records withholds instead of discarding all prior ownership
+  ---
+  duration_ms: 7.029
+  type: 'test'
+  ...
+# Subtest: F09-O03 null record fails ownership recovery atomically
+ok 110 - F09-O03 null record fails ownership recovery atomically
+  ---
+  duration_ms: 6.8717
+  type: 'test'
+  ...
+# Subtest: F09-O03 array record fails ownership recovery atomically
+ok 111 - F09-O03 array record fails ownership recovery atomically
+  ---
+  duration_ms: 6.171
+  type: 'test'
+  ...
+# Subtest: F09-O03 unknown property fails ownership recovery atomically
+ok 112 - F09-O03 unknown property fails ownership recovery atomically
+  ---
+  duration_ms: 7.0072
+  type: 'test'
+  ...
+# Subtest: F09-O03 invalid UUID fails ownership recovery atomically
+ok 113 - F09-O03 invalid UUID fails ownership recovery atomically
+  ---
+  duration_ms: 6.7538
+  type: 'test'
+  ...
+# Subtest: F09-O03 missing state fails ownership recovery atomically
+ok 114 - F09-O03 missing state fails ownership recovery atomically
+  ---
+  duration_ms: 6.9556
+  type: 'test'
+  ...
+# Subtest: F09-O03 unknown state fails ownership recovery atomically
+ok 115 - F09-O03 unknown state fails ownership recovery atomically
+  ---
+  duration_ms: 5.764
+  type: 'test'
+  ...
+# Subtest: F09-O03 zero PID fails ownership recovery atomically
+ok 116 - F09-O03 zero PID fails ownership recovery atomically
+  ---
+  duration_ms: 6.2296
+  type: 'test'
+  ...
+# Subtest: F09-O03 fractional PID fails ownership recovery atomically
+ok 117 - F09-O03 fractional PID fails ownership recovery atomically
+  ---
+  duration_ms: 5.6818
+  type: 'test'
+  ...
+# Subtest: F09-O03 string PID fails ownership recovery atomically
+ok 118 - F09-O03 string PID fails ownership recovery atomically
+  ---
+  duration_ms: 8.7011
+  type: 'test'
+  ...
+# Subtest: F09-O03 malformed exit metadata fails ownership recovery atomically
+ok 119 - F09-O03 malformed exit metadata fails ownership recovery atomically
+  ---
+  duration_ms: 7.7746
+  type: 'test'
+  ...
+# Subtest: F09-O04 duplicate job IDs cannot silently collapse two prior ownership records
+ok 120 - F09-O04 duplicate job IDs cannot silently collapse two prior ownership records
+  ---
+  duration_ms: 6.9962
+  type: 'test'
+  ...
+# Subtest: F09-O05 one malformed row cannot be silently omitted from otherwise valid recovery metadata
+ok 121 - F09-O05 one malformed row cannot be silently omitted from otherwise valid recovery metadata
+  ---
+  duration_ms: 6.7595
+  type: 'test'
+  ...
+# Subtest: F09-O06 a throwing ownership Memento read blocks before lease and never overwrites retained bytes
+ok 122 - F09-O06 a throwing ownership Memento read blocks before lease and never overwrites retained bytes
+  ---
+  duration_ms: 7.1045
+  type: 'test'
+  ...
+# Subtest: F09-O07 strictly valid outstanding rows recover only as UNVERIFIED public metadata
+ok 123 - F09-O07 strictly valid outstanding rows recover only as UNVERIFIED public metadata
+  ---
+  duration_ms: 12.301
+  type: 'test'
+  ...
+# Subtest: F09-O08 exactly 64 valid outstanding rows remain visible and block a 65th reservation
+ok 124 - F09-O08 exactly 64 valid outstanding rows remain visible and block a 65th reservation
+  ---
+  duration_ms: 7.984
+  type: 'test'
+  ...
+# Subtest: F09-O09 a valid empty ownership list permits private approval without manufacturing adopted jobs
+ok 125 - F09-O09 a valid empty ownership list permits private approval without manufacturing adopted jobs
+  ---
+  duration_ms: 8.878
+  type: 'test'
+  ...
+# Subtest: F09-P01 unchanged enrolled public policies retain the approved private guard
+ok 126 - F09-P01 unchanged enrolled public policies retain the approved private guard
+  ---
+  duration_ms: 1430.2789
+  type: 'test'
+  ...
+# Subtest: F09-P02-aiignore changed public policy revokes a prepared lease without owner-review grants
+ok 127 - F09-P02-aiignore changed public policy revokes a prepared lease without owner-review grants
+  ---
+  duration_ms: 1363.3953
+  type: 'test'
+  ...
+# Subtest: F09-P03-aiignore policy drift during the last existing-key read prevents the private callback
+ok 128 - F09-P03-aiignore policy drift during the last existing-key read prevents the private callback
+  ---
+  duration_ms: 1259.7485
+  type: 'test'
+  ...
+# Subtest: F09-P02-project changed public policy revokes a prepared lease without owner-review grants
+ok 129 - F09-P02-project changed public policy revokes a prepared lease without owner-review grants
+  ---
+  duration_ms: 1230.1105
+  type: 'test'
+  ...
+# Subtest: F09-P03-project policy drift during the last existing-key read prevents the private callback
+ok 130 - F09-P03-project policy drift during the last existing-key read prevents the private callback
+  ---
+  duration_ms: 1299.779
+  type: 'test'
+  ...
+# Subtest: F09-P02-team changed public policy revokes a prepared lease without owner-review grants
+ok 131 - F09-P02-team changed public policy revokes a prepared lease without owner-review grants
+  ---
+  duration_ms: 1203.5753
+  type: 'test'
+  ...
+# Subtest: F09-P03-team policy drift during the last existing-key read prevents the private callback
+ok 132 - F09-P03-team policy drift during the last existing-key read prevents the private callback
+  ---
+  duration_ms: 1206.6663
+  type: 'test'
+  ...
+# Subtest: F09-SR-before-launch-terminate acknowledges then finishes a debug session that never started a child
+ok 133 - F09-SR-before-launch-terminate acknowledges then finishes a debug session that never started a child
+  ---
+  duration_ms: 8.1373
+  type: 'test'
+  ...
+# Subtest: F09-SR-before-launch-disconnect acknowledges then finishes a debug session that never started a child
+ok 134 - F09-SR-before-launch-disconnect acknowledges then finishes a debug session that never started a child
+  ---
+  duration_ms: 1.7016
+  type: 'test'
+  ...
+# Subtest: F09-SR-after-launch-before-configuration-terminate acknowledges then finishes a debug session that never started a child
+ok 135 - F09-SR-after-launch-before-configuration-terminate acknowledges then finishes a debug session that never started a child
+  ---
+  duration_ms: 1.3179
+  type: 'test'
+  ...
+# Subtest: F09-SR-after-launch-before-configuration-disconnect acknowledges then finishes a debug session that never started a child
+ok 136 - F09-SR-after-launch-before-configuration-disconnect acknowledges then finishes a debug session that never started a child
+  ---
+  duration_ms: 1.345
+  type: 'test'
+  ...
+# Subtest: F09-S01 task open is single-use and releases only completed sanitized output
+ok 137 - F09-S01 task open is single-use and releases only completed sanitized output
+  ---
+  duration_ms: 24.3831
+  type: 'test'
+  ...
+# Subtest: F09-S02 task close aborts held approval and no-job cancellation closes once after approval settles
+ok 138 - F09-S02 task close aborts held approval and no-job cancellation closes once after approval settles
+  ---
+  duration_ms: 1.8909
+  type: 'test'
+  ...
+# Subtest: F09-S03 task close requests cooperative stop and waits for real completion before nonzero close
+ok 139 - F09-S03 task close requests cooperative stop and waits for real completion before nonzero close
+  ---
+  duration_ms: 1.8535
+  type: 'test'
+  ...
+# Subtest: F09-S04 task preserves finalized public Unicode and both output channels with a nonzero result
+ok 140 - F09-S04 task preserves finalized public Unicode and both output channels with a nonzero result
+  ---
+  duration_ms: 2.8078
+  type: 'test'
+  ...
+# Subtest: F09-S05 withheld completion supplies no stdout or stderr fallback to a task
+ok 141 - F09-S05 withheld completion supplies no stdout or stderr fallback to a task
+  ---
+  duration_ms: 1.977
+  type: 'test'
+  ...
+# Subtest: F09-S06 unconfirmed cooperative task stop emits a constant waiting notice without false close
+ok 142 - F09-S06 unconfirmed cooperative task stop emits a constant waiting notice without false close
+  ---
+  duration_ms: 1156.5139
+  type: 'test'
+  ...
+# Subtest: F09-S07 debug initialize declares only lifecycle capabilities and emits initialized
+ok 143 - F09-S07 debug initialize declares only lifecycle capabilities and emits initialized
+  ---
+  duration_ms: 2.5069
+  type: 'test'
+  ...
+# Subtest: F09-S08 debug launch and configurationDone start once in either order and hold output until completion
+ok 144 - F09-S08 debug launch and configurationDone start once in either order and hold output until completion
+  ---
+  duration_ms: 2.1406
+  type: 'test'
+  ...
+# Subtest: F09-S09 debug launch rejects execution overrides, unknown keys and a different descriptor
+ok 145 - F09-S09 debug launch rejects execution overrides, unknown keys and a different descriptor
+  ---
+  duration_ms: 5.3258
+  type: 'test'
+  ...
+# Subtest: F09-S10 unsupported source debugging, evaluation, memory and mutation requests fail safely
+ok 146 - F09-S10 unsupported source debugging, evaluation, memory and mutation requests fail safely
+  ---
+  duration_ms: 3.1946
+  type: 'test'
+  ...
+# Subtest: F09-S11 debug terminate acknowledgement cannot imply exited before actual job completion
+ok 147 - F09-S11 debug terminate acknowledgement cannot imply exited before actual job completion
+  ---
+  duration_ms: 2.1636
+  type: 'test'
+  ...
+# Subtest: F09-S12 debug disconnect acknowledges cooperative stop and retains ownership until completion
+ok 148 - F09-S12 debug disconnect acknowledges cooperative stop and retains ownership until completion
+  ---
+  duration_ms: 1.8022
+  type: 'test'
+  ...
+# Subtest: F09-S13 debug disposal aborts held approval and stops a late owned job without publishing output
+ok 149 - F09-S13 debug disposal aborts held approval and stops a late owned job without publishing output
+  ---
+  duration_ms: 1.9821
+  type: 'test'
+  ...
+# Subtest: F09-S14 failed no-child launches complete task/debug lifecycles with constant safe errors
+ok 150 - F09-S14 failed no-child launches complete task/debug lifecycles with constant safe errors
+  ---
+  duration_ms: 3.6849
+  type: 'test'
+  ...
+1..150
+# tests 150
+# suites 0
+# pass 150
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 28153.732

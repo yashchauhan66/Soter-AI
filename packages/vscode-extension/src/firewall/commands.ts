@@ -7,6 +7,7 @@ import { registerContextCommands } from "./context-commands";
 import { registerLedgerCommands } from "./ledger-commands";
 import { registerOutputCommands } from "./output-commands";
 import { registerCanaryCommands } from "./canary-commands";
+import { registerVaultRuntimeCommands } from "../vault-runtime/commands";
 
 // Re-export readContextApproval so extension.ts can still import from this module.
 export { readContextApproval } from "./shared";
@@ -34,4 +35,5 @@ export function registerFirewallCommands(context: vscode.ExtensionContext, refre
     registerLedgerCommands(deps);
     registerOutputCommands(deps);
     registerCanaryCommands(deps);
+    registerVaultRuntimeCommands(deps);
 }

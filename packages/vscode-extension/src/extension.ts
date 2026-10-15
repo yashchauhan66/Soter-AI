@@ -553,6 +553,8 @@ async function updateStatusBar(): Promise<void> {
 }
 
 export async function deactivate(): Promise<void> {
+    try { await (await import("./vault-runtime/commands")).stopVaultRuntime(); }
+    catch { console.error("SoterAI owned app shutdown metadata is unavailable; process exit remains unverified."); }
     secretBrokerRuntime.enforcedApi.revokeAll();
     try { await secretBrokerRuntime.refs.clear(); }
     catch { console.error("SoterAI reference cleanup INCOMPLETE; persisted retention may remain."); }

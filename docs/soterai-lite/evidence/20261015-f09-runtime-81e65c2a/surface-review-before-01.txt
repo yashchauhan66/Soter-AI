@@ -1,0 +1,98 @@
+﻿TAP version 13
+# Subtest: F09-SR-before-launch-terminate acknowledges then finishes a debug session that never started a child
+not ok 1 - F09-SR-before-launch-terminate acknowledges then finishes a debug session that never started a child
+  ---
+  duration_ms: 8.5684
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\vaultRuntimeSurfaces.review.test.ts:2:1331'
+  failureType: 'testCodeFailure'
+  error: |-
+    No-child cancellation must emit exactly one exited event.
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\vaultRuntimeSurfaces.review.test.ts:38:24)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F09-SR-before-launch-disconnect acknowledges then finishes a debug session that never started a child
+not ok 2 - F09-SR-before-launch-disconnect acknowledges then finishes a debug session that never started a child
+  ---
+  duration_ms: 3.2558
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\vaultRuntimeSurfaces.review.test.ts:2:1331'
+  failureType: 'testCodeFailure'
+  error: |-
+    No-child cancellation must emit exactly one exited event.
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\vaultRuntimeSurfaces.review.test.ts:38:24)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F09-SR-after-launch-before-configuration-terminate acknowledges then finishes a debug session that never started a child
+not ok 3 - F09-SR-after-launch-before-configuration-terminate acknowledges then finishes a debug session that never started a child
+  ---
+  duration_ms: 3.4251
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\vaultRuntimeSurfaces.review.test.ts:2:1331'
+  failureType: 'testCodeFailure'
+  error: |-
+    No-child cancellation must emit exactly one exited event.
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\vaultRuntimeSurfaces.review.test.ts:38:24)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F09-SR-after-launch-before-configuration-disconnect acknowledges then finishes a debug session that never started a child
+not ok 4 - F09-SR-after-launch-before-configuration-disconnect acknowledges then finishes a debug session that never started a child
+  ---
+  duration_ms: 2.5191
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\vaultRuntimeSurfaces.review.test.ts:2:1331'
+  failureType: 'testCodeFailure'
+  error: |-
+    No-child cancellation must emit exactly one exited event.
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\vaultRuntimeSurfaces.review.test.ts:38:24)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 0
+# fail 4
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 543.1718
