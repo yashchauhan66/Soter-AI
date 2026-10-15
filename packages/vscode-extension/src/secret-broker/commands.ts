@@ -4,7 +4,8 @@ import { hashContent, redactAIContext } from "@soterai/guard-core";
 import { applySelectionBoundary } from "../ai-boundary/BoundarySnapshot";
 import { EnforcedApiCapabilityBroker } from "./EnforcedApiCapability";
 import { buildSafeLLMContext } from "./LLMContext";
-import { secretBrokerRuntime, setCapabilityReleaseGuard, setSecretMatchingGuard, setSecretValueStore } from "./runtime";
+import { secretBrokerRuntime, setCapabilityReleaseGuard, setOutputRedactorGuard, setSecretMatchingGuard, setSecretValueStore } from "./runtime";
+import { runOutputSelfTest, type OutputSelfTestReport } from "./OutputSelfTest";
 import { SecretStorageValueStore } from "./SecretStorageValueStore";
 import { SensitiveContextPolicyEngine, type SensitiveContextPolicy } from "./SensitiveContextPolicy";
 import { SensitiveContextRedactor } from "./SensitiveContextRedactor";
@@ -36,6 +37,10 @@ export function registerSecretBrokerCommands(context: vscode.ExtensionContext, r
     setSecretMatchingGuard(() => {
         const config = vscode.workspace.getConfiguration("soterai"), inspected = config.inspect<boolean>("lite.secretMatching");
         return vscode.workspace.isTrusted && (inspected ? inspected.globalValue ?? inspected.defaultValue ?? true : config.get("lite.secretMatching", true)) === true;
+    });
+    setOutputRedactorGuard(() => {
+        const config = vscode.workspace.getConfiguration("soterai"), inspected = config.inspect<boolean>("lite.outputRedactor");
+        return vscode.workspace.isTrusted && (inspected ? inspected.globalValue ?? inspected.defaultValue ?? true : config.get("lite.outputRedactor", true)) === true;
     });
     void setSecretValueStore(new SecretStorageValueStore(context.secrets, context.globalState), inventoryEnabled).catch(() => {
         void vscode.window.showWarningMessage("Secret reference recovery is incomplete. Reference operations are unavailable; no persistent values were read during recovery.");
@@ -429,7 +434,7 @@ export function registerSecretBrokerCommands(context: vscode.ExtensionContext, r
         finally { if (ref) await refs.revoke(ref); }
     }
 
-    async function testProtection(): Promise<{ pass: boolean; matching: { status: "PASS" | "FAIL" | "WITHHELD"; cases: Array<{ id: string; pass: boolean }> } }> {
+    async function testProtection(): Promise<{ pass: boolean; matching: { status: "PASS" | "FAIL" | "WITHHELD"; cases: Array<{ id: string; pass: boolean }> }; output: OutputSelfTestReport }> {
         const canary = `sk-live-soter-canary-${randomBytes(12).toString("hex")}`;
         const workspace = currentWorkspace();
         const { refs, enforcedApi } = secretBrokerRuntime;
@@ -475,12 +480,13 @@ export function registerSecretBrokerCommands(context: vscode.ExtensionContext, r
         const canaryOnlyInHeader = sentAuthHeader.includes(canary) && !results.includes(canary) && !grant.handle.includes(canary);
 
         const matching = await testMatching();
+        const output = runOutputSelfTest(secretBrokerRuntime.outputFilter);
         const pass =
             ok.allowed &&
             !wrongHost.allowed &&
             !replay.allowed &&
             !afterRevoke.allowed &&
-            canaryOnlyInHeader && matching.status === "PASS";
+            canaryOnlyInHeader && matching.status === "PASS" && output.status === "PASS";
 
         await audit(pass ? "broker_request_scanned" : "broker_request_blocked", pass ? "redact" : "block", "", `test protection ${pass ? "passed" : "failed"}`);
 
@@ -501,10 +507,11 @@ ${row("Replay past use limit", replay.allowed, false)}
 ${row("After revocation", afterRevoke.allowed, false)}
 </table>
 <p class="stat-row">Canary appeared in the simulated transport's Authorization header and was absent from the checked handle, results and this view: <strong>${canaryOnlyInHeader ? "confirmed" : "NOT confirmed"}</strong>.</p>
-<p>Managed response matching: <strong>${matching.status}</strong>; ${matching.cases.filter(item => item.pass).length}/${matching.cases.length} synthetic checks passed. This covers the named in-process response path; streaming terminals and external gateway routes have separate checks.</p>`,
+<p>Managed response matching: <strong>${matching.status}</strong>; ${matching.cases.filter(item => item.pass).length}/${matching.cases.length} synthetic checks passed.</p>
+<p>Completed output filtering: <strong>${output.status}</strong>; ${output.cases.filter(item => item.pass).length}/${output.cases.length} synthetic checks passed. Byte chunks stay private until final flush, within a 128 KiB combined limit. Actual shell and external gateway routes have separate adapters and checks.</p>`,
         );
         refreshViews();
-        return { pass, matching };
+        return { pass, matching, output };
     }
 
     /**

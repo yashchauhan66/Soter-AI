@@ -72,6 +72,16 @@ export class RegisteredSecretMatcher {
         } catch { this.#invalid = true; this.#values = []; this.#needles = []; }
     }
 
+    /** Replacement markers must not literally contain even a short registered
+     * value. Input matching retains its separate conservative short-value rule. */
+    isSafeReplacement(text: string): boolean {
+        try {
+            if (this.#invalid || typeof text !== "string" || text.length > SECRET_MATCH_LIMITS.maxInputBytes || !validUnicode(text)) return false;
+            if (this.#values.some(value => text.includes(value.text))) return false;
+            return this.inspectRequest([text]).status === "CLEAN";
+        } catch { return false; }
+    }
+
     inspectRequest(parts: readonly string[]): MatchDecision {
         if (this.#invalid) return decision("WITHHELD", [], "registration_unavailable");
         try {

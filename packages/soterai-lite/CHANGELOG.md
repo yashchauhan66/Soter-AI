@@ -1,5 +1,8 @@
 # Changelog
 
+- Add completion-buffered UTF-8 stdout/stderr filtering with separate decoder/control states, supported ANSI/OSC removal, cross-chunk recognition, bounded final flush and safe withdrawal through `soterai.lite.outputRedactor`.
+- Extend synthetic Test Protection with ten output-pipeline checks. No live interactive terminal or independent-upload guarantee is implied.
+
 - Add bounded shared registered-value recognition for raw and supported encoded forms, exact Unicode/case matching and request-local concatenation. Incomplete matching withholds managed broker responses without exposing values in match metadata.
 - Extend the existing synthetic Test Protection command with public/encoded/split/budget checks. The machine setting `soterai.lite.secretMatching` withdraws these managed responses while retaining saved file protection.
 

@@ -1,0 +1,12 @@
+const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto'),cp=require('node:child_process'),assert=require('node:assert/strict');
+const repo=path.resolve(__dirname,'../../../..'),base=path.relative(repo,__dirname).replaceAll('\\','/'),sha=bytes=>crypto.createHash('sha256').update(bytes).digest('hex'),git=(...args)=>cp.execFileSync('git',['-c','core.autocrlf=false',...args],{cwd:repo,maxBuffer:16*1024*1024});
+const revision=git('rev-parse','HEAD').toString().trim(),source=JSON.parse(fs.readFileSync(path.join(__dirname,'f08-committed-byte-verification-01.json'),'utf8')).revision;
+assert.equal(git('rev-parse','HEAD^').toString().trim(),source);
+const committedIndex=git('show',revision+':'+base+'/f08-transition-index-01.json');assert.equal(sha(fs.readFileSync(path.join(__dirname,'f08-transition-index-01.json'))),sha(committedIndex));
+const index=JSON.parse(committedIndex.toString('utf8'));assert.equal(index.entries.length,7);
+const mismatches=index.entries.filter(entry=>sha(git('show',revision+':'+entry.path))!==entry.sha256).map(entry=>entry.path);
+const expected=fs.readFileSync(path.join(__dirname,'f08-transition-allowlist-01.txt'),'utf8').trim().split('\n').sort(),actual=git('diff-tree','--no-commit-id','--name-only','-r',revision).toString().trim().split('\n').sort();
+assert.equal(expected.length,6);assert.deepEqual(mismatches,[]);assert.deepEqual(actual,expected);assert.equal(git('diff','--cached','--name-only').toString().trim(),'');
+const acceptance=JSON.parse(git('show',source+':'+base+'/f08-acceptance-01.json').toString('utf8'));assert.equal(sha(fs.readFileSync(path.join(repo,acceptance.artifact.path))),acceptance.artifact.sha256);
+fs.writeFileSync(path.join(__dirname,'f08-transition-byte-verification-01.json'),JSON.stringify({status:'PASS',revision,indexedEntries:index.entries.length,committedPaths:actual.length,mismatches,unexpectedPaths:0,artifactRecheck:'PASS'},null,2)+'\n',{flag:'wx'});
+console.log(JSON.stringify({status:'PASS',revision,indexedEntries:index.entries.length,committedPaths:actual.length}));

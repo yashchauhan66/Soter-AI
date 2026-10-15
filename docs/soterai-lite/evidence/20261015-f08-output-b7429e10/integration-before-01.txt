@@ -1,0 +1,508 @@
+﻿TAP version 13
+# Subtest: F08-I01 the existing string filter removes SGR obfuscation before whole-response secret matching
+not ok 1 - F08-I01 the existing string filter removes SGR obfuscation before whole-response secret matching
+  ---
+  duration_ms: 43.4817
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\streamingOutputIntegration.test.ts:2:2758'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+        allowed: true,
+    +   text: 'synthetic f08 priv\x1B[31mate café 雪 🧭 value\x1B[0m'
+    -   reason: 'secret_like_output_redacted',
+    -   text: '[REDACTED_SECRET_OUTPUT]'
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    allowed: true
+    text: '[REDACTED_SECRET_OUTPUT]'
+    reason: 'secret_like_output_redacted'
+  actual:
+    allowed: true
+    text: 'synthetic f08 priv\x1B[31mate café 雪 🧭 value\x1B[0m'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\streamingOutputIntegration.test.ts:37:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: F08-I02 completed public stdout/stderr preserve Unicode, BOM and normalized line endings while removing SGR and OSC
+not ok 2 - F08-I02 completed public stdout/stderr preserve Unicode, BOM and normalized line endings while removing SGR and OSC
+  ---
+  duration_ms: 1.3843
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\streamingOutputIntegration.test.ts:2:3197'
+  failureType: 'testCodeFailure'
+  error: |-
+    The existing OutputFilter must expose the completion-buffered pipeline.
+    + actual - expected
+    
+    + 'undefined'
+    - 'function'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'function'
+  actual: 'undefined'
+  operator: 'strictEqual'
+  stack: |-
+    chunks (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\streamingOutputIntegration.test.ts:22:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\streamingOutputIntegration.test.ts:44:20)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F08-I03 all raw and encoded byte split positions remain private until a sanitized completed result
+not ok 3 - F08-I03 all raw and encoded byte split positions remain private until a sanitized completed result
+  ---
+  duration_ms: 0.5008
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\streamingOutputIntegration.test.ts:2:4098'
+  failureType: 'testCodeFailure'
+  error: |-
+    The existing OutputFilter must expose the completion-buffered pipeline.
+    + actual - expected
+    
+    + 'undefined'
+    - 'function'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'function'
+  actual: 'undefined'
+  operator: 'strictEqual'
+  stack: |-
+    chunks (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\streamingOutputIntegration.test.ts:22:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\streamingOutputIntegration.test.ts:54:73)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F08-I04 a match across explicit stdout/stderr grouping masks both channels and preserves a nonzero exit code
+not ok 4 - F08-I04 a match across explicit stdout/stderr grouping masks both channels and preserves a nonzero exit code
+  ---
+  duration_ms: 0.4035
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\streamingOutputIntegration.test.ts:2:4596'
+  failureType: 'testCodeFailure'
+  error: |-
+    The existing OutputFilter must expose the completion-buffered pipeline.
+    + actual - expected
+    
+    + 'undefined'
+    - 'function'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'function'
+  actual: 'undefined'
+  operator: 'strictEqual'
+  stack: |-
+    chunks (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\streamingOutputIntegration.test.ts:22:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\streamingOutputIntegration.test.ts:61:59)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F08-I05 decoder-emission arrival order is inspected without inventing an arbitrary channel permutation
+not ok 5 - F08-I05 decoder-emission arrival order is inspected without inventing an arbitrary channel permutation
+  ---
+  duration_ms: 0.5625
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\streamingOutputIntegration.test.ts:2:4986'
+  failureType: 'testCodeFailure'
+  error: |-
+    The existing OutputFilter must expose the completion-buffered pipeline.
+    + actual - expected
+    
+    + 'undefined'
+    - 'function'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'function'
+  actual: 'undefined'
+  operator: 'strictEqual'
+  stack: |-
+    chunks (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\streamingOutputIntegration.test.ts:22:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\streamingOutputIntegration.test.ts:67:15)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F08-I06 string filtering retains request-local F07 JSON semantic-leaf matching after normalization
+not ok 6 - F08-I06 string filtering retains request-local F07 JSON semantic-leaf matching after normalization
+  ---
+  duration_ms: 6.8675
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\streamingOutputIntegration.test.ts:2:5618'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+        allowed: true,
+    +   text: '\x1B[34m{"first":"synthetic%20f08%20private%20caf%C3%A","second":"9%20%E9%9B%AA%20%F0%9F%A7%AD%20value"}\x1B[0m'
+    -   reason: 'secret_like_output_redacted',
+    -   text: '[REDACTED_SECRET_OUTPUT]'
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    allowed: true
+    text: '[REDACTED_SECRET_OUTPUT]'
+    reason: 'secret_like_output_redacted'
+  actual:
+    allowed: true
+    text: '\x1B[34m{"first":"synthetic%20f08%20private%20caf%C3%A","second":"9%20%E9%9B%AA%20%F0%9F%A7%AD%20value"}\x1B[0m'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\streamingOutputIntegration.test.ts:75:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F08-I07 legacy sensitive-request checks still apply to normalized public-channel output
+not ok 7 - F08-I07 legacy sensitive-request checks still apply to normalized public-channel output
+  ---
+  duration_ms: 0.9608
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\streamingOutputIntegration.test.ts:2:6305'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\streamingOutputIntegration.test.ts:82:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F08-I08-output-off both real filter entry points withhold without a raw fallback
+not ok 8 - F08-I08-output-off both real filter entry points withhold without a raw fallback
+  ---
+  duration_ms: 0.4468
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\streamingOutputIntegration.test.ts:2:6825'
+  failureType: 'testCodeFailure'
+  error: |-
+    The existing OutputFilter must expose the completion-buffered pipeline.
+    + actual - expected
+    
+    + 'undefined'
+    - 'function'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'function'
+  actual: 'undefined'
+  operator: 'strictEqual'
+  stack: |-
+    chunks (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\streamingOutputIntegration.test.ts:22:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\streamingOutputIntegration.test.ts:91:23)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F08-I08-output-throws both real filter entry points withhold without a raw fallback
+not ok 9 - F08-I08-output-throws both real filter entry points withhold without a raw fallback
+  ---
+  duration_ms: 0.7825
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\streamingOutputIntegration.test.ts:2:6825'
+  failureType: 'testCodeFailure'
+  error: |-
+    The existing OutputFilter must expose the completion-buffered pipeline.
+    + actual - expected
+    
+    + 'undefined'
+    - 'function'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'function'
+  actual: 'undefined'
+  operator: 'strictEqual'
+  stack: |-
+    chunks (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\streamingOutputIntegration.test.ts:22:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\streamingOutputIntegration.test.ts:91:23)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F08-I08-matching-off both real filter entry points withhold without a raw fallback
+not ok 10 - F08-I08-matching-off both real filter entry points withhold without a raw fallback
+  ---
+  duration_ms: 0.7729
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\streamingOutputIntegration.test.ts:2:6825'
+  failureType: 'testCodeFailure'
+  error: |-
+    The existing OutputFilter must expose the completion-buffered pipeline.
+    + actual - expected
+    
+    + 'undefined'
+    - 'function'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'function'
+  actual: 'undefined'
+  operator: 'strictEqual'
+  stack: |-
+    chunks (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\streamingOutputIntegration.test.ts:22:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\streamingOutputIntegration.test.ts:91:23)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F08-I08-matching-throws both real filter entry points withhold without a raw fallback
+not ok 11 - F08-I08-matching-throws both real filter entry points withhold without a raw fallback
+  ---
+  duration_ms: 0.3754
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\streamingOutputIntegration.test.ts:2:6825'
+  failureType: 'testCodeFailure'
+  error: |-
+    The existing OutputFilter must expose the completion-buffered pipeline.
+    + actual - expected
+    
+    + 'undefined'
+    - 'function'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'function'
+  actual: 'undefined'
+  operator: 'strictEqual'
+  stack: |-
+    chunks (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\streamingOutputIntegration.test.ts:22:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\streamingOutputIntegration.test.ts:91:23)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F08-I09 withdrawal during chunk collection withholds that operation and a fresh operation can resume
+not ok 12 - F08-I09 withdrawal during chunk collection withholds that operation and a fresh operation can resume
+  ---
+  duration_ms: 0.4243
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\streamingOutputIntegration.test.ts:2:7623'
+  failureType: 'testCodeFailure'
+  error: |-
+    The existing OutputFilter must expose the completion-buffered pipeline.
+    + actual - expected
+    
+    + 'undefined'
+    - 'function'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'function'
+  actual: 'undefined'
+  operator: 'strictEqual'
+  stack: |-
+    chunks (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\streamingOutputIntegration.test.ts:22:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\streamingOutputIntegration.test.ts:102:20)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F08-I10 malformed UTF-8 or terminal rewriting withholds the entire result instead of a public prefix
+not ok 13 - F08-I10 malformed UTF-8 or terminal rewriting withholds the entire result instead of a public prefix
+  ---
+  duration_ms: 0.35
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\streamingOutputIntegration.test.ts:2:8427'
+  failureType: 'testCodeFailure'
+  error: |-
+    The existing OutputFilter must expose the completion-buffered pipeline.
+    + actual - expected
+    
+    + 'undefined'
+    - 'function'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'function'
+  actual: 'undefined'
+  operator: 'strictEqual'
+  stack: |-
+    chunks (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\streamingOutputIntegration.test.ts:22:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\streamingOutputIntegration.test.ts:112:18)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F08-I11 inclusive byte/chunk limits retain long public output while overflow withholds atomically
+not ok 14 - F08-I11 inclusive byte/chunk limits retain long public output while overflow withholds atomically
+  ---
+  duration_ms: 0.5595
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\streamingOutputIntegration.test.ts:2:8994'
+  failureType: 'testCodeFailure'
+  error: |-
+    The existing OutputFilter must expose the completion-buffered pipeline.
+    + actual - expected
+    
+    + 'undefined'
+    - 'function'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'function'
+  actual: 'undefined'
+  operator: 'strictEqual'
+  stack: |-
+    chunks (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\streamingOutputIntegration.test.ts:22:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\streamingOutputIntegration.test.ts:120:22)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F08-I12 string input is validated losslessly rather than repaired from invalid JavaScript surrogates
+ok 15 - F08-I12 string input is validated losslessly rather than repaired from invalid JavaScript surrogates
+  ---
+  duration_ms: 2.0427
+  type: 'test'
+  ...
+# Subtest: F08-I13-withdrawn an actual mediated transport completion is audited sent but releases no response
+not ok 16 - F08-I13-withdrawn an actual mediated transport completion is audited sent but releases no response
+  ---
+  duration_ms: 8.1832
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\streamingOutputIntegration.test.ts:2:11298'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\streamingOutputIntegration.test.ts:148:39)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F08-I13-invalid-control an actual mediated transport completion is audited sent but releases no response
+not ok 17 - F08-I13-invalid-control an actual mediated transport completion is audited sent but releases no response
+  ---
+  duration_ms: 1.4356
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\streamingOutputIntegration.test.ts:2:11298'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\streamingOutputIntegration.test.ts:148:39)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F08-I14 mediated ANSI-obfuscated reflection is wholly redacted through the actual response filter
+not ok 18 - F08-I14 mediated ANSI-obfuscated reflection is wholly redacted through the actual response filter
+  ---
+  duration_ms: 1.7886
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\streamingOutputIntegration.test.ts:2:12141'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+    +   body: 'synthetic f08 priv\x1B[31mate café 雪 🧭 value\x1B[0m',
+    -   body: '[REDACTED_SECRET_OUTPUT]',
+        status: 202
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    status: 202
+    body: '[REDACTED_SECRET_OUTPUT]'
+  actual:
+    status: 202
+    body: 'synthetic f08 priv\x1B[31mate café 雪 🧭 value\x1B[0m'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\streamingOutputIntegration.test.ts:156:71)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..18
+# tests 18
+# suites 0
+# pass 1
+# fail 17
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 865.4618

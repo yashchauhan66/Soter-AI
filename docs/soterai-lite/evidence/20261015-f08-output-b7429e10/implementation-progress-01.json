@@ -1,0 +1,168 @@
+{
+  "status": "INCOMPLETE",
+  "feature": "F08",
+  "observedAt": "2026-10-15T07:56:51.731Z",
+  "files": [
+    {
+      "path": "packages/core/src/StreamingOutputRedactor.ts",
+      "sha256": "428903846312dc93d3f30b0c3f976678d7a59b6f2458f1ecb5deffa9daf69dc8"
+    },
+    {
+      "path": "packages/core/src/RegisteredSecretMatcher.ts",
+      "sha256": "b271fe9262f775fdc5802c5d0059018e524ee946a3d333d2ab6c36130aa92b36"
+    },
+    {
+      "path": "packages/core/src/index.ts",
+      "sha256": "a0d3c4b74d9bbf02e75ede94c084d3f7867fc3e79ab9df6f40bbdab3fe8cf2b0"
+    },
+    {
+      "path": "packages/vscode-extension/src/secret-broker/OutputFilter.ts",
+      "sha256": "f3dd1f90a0878614dd0c2a61fbf1653712c49dc9cf8055e59436c716de9404bf"
+    },
+    {
+      "path": "packages/vscode-extension/src/secret-broker/OutputSelfTest.ts",
+      "sha256": "d9927b247e174d486fe37b7dc50fd7807d99088490fbde446dac2227dd4e1edb"
+    },
+    {
+      "path": "packages/vscode-extension/src/secret-broker/runtime.ts",
+      "sha256": "b7bf74a43c117e4c30ecc8de8e2f68e56ac7816a2d63eca09876187ceda1a74d"
+    },
+    {
+      "path": "packages/vscode-extension/src/secret-broker/commands.ts",
+      "sha256": "e695e31ece7d5d3eee65776f88950b8b2dc11651cb1833a4bd02586bcec2d34f"
+    },
+    {
+      "path": "packages/vscode-extension/src/ai-boundary/BoundarySnapshot.ts",
+      "sha256": "cbb643e2cc1c67ba3c1ab42d39c7105bb9adec5e6f12ab310e8c6b7916045276"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/streamingOutputRedactor.test.ts",
+      "sha256": "697cba0b742268055e4b656d9467ff7db445c9ca6ac240e34dd28a512bfbfa59"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/streamingOutputRedactor.review.test.ts",
+      "sha256": "09c45b53361cfc5b9d96f856e7208b67b27eea854ec051e35aba4ca8c567d548"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/streamingOutputIntegration.test.ts",
+      "sha256": "155ad55762aab7e713ed451370789a7712165bba02f06368343c850845322514"
+    }
+  ],
+  "raw": [
+    {
+      "name": "integration-before-01",
+      "receipt": {
+        "output": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261015-f08-output-b7429e10\\integration-before-01.txt",
+        "observedAt": "2026-10-15T07:34:16.9984949Z",
+        "exitCode": 1,
+        "arguments": [
+          "--import",
+          "tsx",
+          "--test",
+          "--test-concurrency=1",
+          "packages/vscode-extension/src/__tests__/streamingOutputIntegration.test.ts"
+        ],
+        "sha256": "699C3F9A0D24DBAF47614DC66DC4DE4DB9D5459FFE7170C4240204A88BFA6773",
+        "file": "node"
+      }
+    },
+    {
+      "name": "core-before-01",
+      "receipt": {
+        "output": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261015-f08-output-b7429e10\\core-before-01.txt",
+        "observedAt": "2026-10-15T07:35:02.4856308Z",
+        "exitCode": 1,
+        "arguments": [
+          "--import",
+          "tsx",
+          "--test",
+          "--test-concurrency=1",
+          "packages/vscode-extension/src/__tests__/streamingOutputRedactor.test.ts"
+        ],
+        "sha256": "C9114449E729B4153E1A2CDB67B4425245B9C4AA48E3C010E64319A658DBE1CB",
+        "file": "node"
+      }
+    },
+    {
+      "name": "collision-before-01",
+      "receipt": {
+        "output": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261015-f08-output-b7429e10\\collision-before-01.txt",
+        "observedAt": "2026-10-15T07:37:09.5585293Z",
+        "exitCode": 1,
+        "arguments": [
+          "--import",
+          "tsx",
+          "--test",
+          "--test-concurrency=1",
+          "packages/vscode-extension/src/__tests__/streamingOutputRedactor.review.test.ts"
+        ],
+        "sha256": "D865D96C740DE3E459F24B1596B8985603F9A4068B934F186AFC7F6EC9B4BE1E",
+        "file": "node"
+      }
+    },
+    {
+      "name": "focused-after-01",
+      "receipt": {
+        "output": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261015-f08-output-b7429e10\\focused-after-01.txt",
+        "observedAt": "2026-10-15T07:40:38.0097156Z",
+        "exitCode": 0,
+        "arguments": [
+          "--import",
+          "tsx",
+          "--test",
+          "--test-concurrency=1",
+          "packages/vscode-extension/src/__tests__/streamingOutputRedactor.test.ts",
+          "packages/vscode-extension/src/__tests__/streamingOutputRedactor.review.test.ts",
+          "packages/vscode-extension/src/__tests__/streamingOutputIntegration.test.ts",
+          "packages/vscode-extension/src/__tests__/registeredSecretMatcher.test.ts",
+          "packages/vscode-extension/src/__tests__/registeredSecretMatcher.review.test.ts",
+          "packages/vscode-extension/src/__tests__/secretMatchingIntegration.test.ts"
+        ],
+        "sha256": "E49B7C4B11D4FF74D7A3A4A2A9F49810598C59B643726D7BB6426758BFCC3F88",
+        "file": "node"
+      }
+    },
+    {
+      "name": "review-before-01",
+      "receipt": {
+        "output": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261015-f08-output-b7429e10\\review-before-01.txt",
+        "observedAt": "2026-10-15T07:53:36.6081294Z",
+        "exitCode": 1,
+        "arguments": [
+          "--import",
+          "tsx",
+          "--test",
+          "--test-concurrency=1",
+          "packages/vscode-extension/src/__tests__/streamingOutputRedactor.review.test.ts"
+        ],
+        "sha256": "08D392B5EAD864AF5753CB1D922AACEA8D86E59CD0C9728B8887B2A411DF92FF",
+        "file": "node"
+      }
+    },
+    {
+      "name": "focused-after-02",
+      "receipt": {
+        "output": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261015-f08-output-b7429e10\\focused-after-02.txt",
+        "observedAt": "2026-10-15T07:55:01.8897790Z",
+        "exitCode": 0,
+        "arguments": [
+          "--import",
+          "tsx",
+          "--test",
+          "--test-concurrency=1",
+          "packages/vscode-extension/src/__tests__/streamingOutputRedactor.test.ts",
+          "packages/vscode-extension/src/__tests__/streamingOutputRedactor.review.test.ts",
+          "packages/vscode-extension/src/__tests__/streamingOutputIntegration.test.ts",
+          "packages/vscode-extension/src/__tests__/registeredSecretMatcher.test.ts",
+          "packages/vscode-extension/src/__tests__/registeredSecretMatcher.review.test.ts",
+          "packages/vscode-extension/src/__tests__/secretMatchingIntegration.test.ts"
+        ],
+        "sha256": "4E7ADE7200F9832BAA79BF7BECB9A616BD6C5DB9A5D7CA9CBD07A3B7E12BA4B2",
+        "file": "node"
+      }
+    }
+  ],
+  "native": "NOT_RUN",
+  "rating": "PENDING",
+  "independence": "LOW"
+}

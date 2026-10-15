@@ -110,7 +110,8 @@
         "soterai.secretInterceptor.enabled",
         "soterai.lite.secureEditor",
         "soterai.lite.vaultMode",
-        "soterai.lite.secretMatching"
+        "soterai.lite.secretMatching",
+        "soterai.lite.outputRedactor"
       ]
     }
   },
@@ -1615,6 +1616,12 @@
           "default": true,
           "scope": "machine",
           "description": "Enable bounded registered-value and supported encoding recognition for managed broker results. Turning this off withholds these results; saved file restrictions and masking remain active."
+        },
+        "soterai.lite.outputRedactor": {
+          "type": "boolean",
+          "default": true,
+          "scope": "machine",
+          "description": "Enable completed-output filtering for supported managed results, including UTF-8 chunks and supported terminal controls. Output stays private until final flush within 128 KiB. Turning this off withholds these results and preserves saved protection."
         }
       }
     },

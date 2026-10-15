@@ -58,8 +58,10 @@ const refs = new SecretReferenceManager(valueStore, { enabled: () => valueStore.
 const policy = new SensitiveContextPolicyEngine(DEFAULT_SENSITIVE_CONTEXT_POLICY);
 
 let matchingGuard: () => boolean = () => false;
-const outputFilter = new OutputFilter(undefined, { matchingEnabled: () => matchingGuard() });
+let outputRedactorGuard: () => boolean = () => false;
+const outputFilter = new OutputFilter(undefined, { matchingEnabled: () => matchingGuard(), outputRedactorEnabled: () => outputRedactorGuard() });
 export function setSecretMatchingGuard(enabled: () => boolean): void { matchingGuard = enabled; }
+export function setOutputRedactorGuard(enabled: () => boolean): void { outputRedactorGuard = enabled; }
 let releaseGuard: () => boolean = () => true;
 export function setCapabilityReleaseGuard(enabled: () => boolean): void { releaseGuard = enabled; }
 

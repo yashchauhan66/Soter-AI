@@ -1,0 +1,202 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-10-15T08:11:00.421Z",
+  "phase": "single",
+  "syntheticOnly": true,
+  "workspace": "d:\\SoterAI-Lite-test-profiles\\f08-native-host-20261015T081046Z-bcc8cf01\\workspace",
+  "declaredProfilePath": "D:\\SoterAI-Lite-test-profiles\\f08-native-host-20261015T081046Z-bcc8cf01\\profile",
+  "hostVersion": "1.141.2",
+  "extensionMode": "Development",
+  "extensionBundleSha256": "0027f196b58f2fe08526d53a6133ed5e9207d2c1eac512d20155401ef4b9d694",
+  "currentDeveloperBundleSha256": "0027f196b58f2fe08526d53a6133ed5e9207d2c1eac512d20155401ef4b9d694",
+  "hostProbeSha256": "25f981d467639de9e910e9765e71ca9e13f630cd9062cfd08c96d8ad4d1e9f9d",
+  "observations": [
+    {
+      "id": "F08-H00",
+      "scope": "Actual packaged runtime activates and registers the production test command.",
+      "status": "PASS"
+    },
+    {
+      "id": "F08-S01",
+      "scope": "Public stdout and stderr remain usable after completed stream filtering.",
+      "status": "PASS"
+    },
+    {
+      "id": "F08-S02",
+      "scope": "A raw registered value split over chunks is redacted.",
+      "status": "PASS"
+    },
+    {
+      "id": "F08-S03",
+      "scope": "A registered encoded value split over chunks is redacted.",
+      "status": "PASS"
+    },
+    {
+      "id": "F08-S04",
+      "scope": "UTF-8 scalar bytes split across chunks remain recognized.",
+      "status": "PASS"
+    },
+    {
+      "id": "F08-S05",
+      "scope": "ANSI SGR insertion and split sequences are removed before matching.",
+      "status": "PASS"
+    },
+    {
+      "id": "F08-S06",
+      "scope": "OSC payloads never reach the released plain-text output.",
+      "status": "PASS"
+    },
+    {
+      "id": "F08-S07",
+      "scope": "Nonzero process exit retains sanitized public output and status.",
+      "status": "PASS"
+    },
+    {
+      "id": "F08-S08",
+      "scope": "Incomplete final UTF-8 withholds all output; incomplete controls have separate unit coverage.",
+      "status": "PASS"
+    },
+    {
+      "id": "F08-S09",
+      "scope": "Oversized combined output is withheld without a raw fallback.",
+      "status": "PASS"
+    },
+    {
+      "id": "F08-S10",
+      "scope": "Fresh sequential operations retain separate private states; interleaved instances have separate unit coverage.",
+      "status": "PASS"
+    },
+    {
+      "id": "F08-H11",
+      "scope": "Machine flag withdrawal makes the production seam WITHHELD with pass=false and safe metadata only.",
+      "status": "PASS"
+    },
+    {
+      "id": "F08-H12",
+      "scope": "Re-enabling the machine flag restores all ten real singleton cases in a fresh invocation.",
+      "status": "PASS"
+    }
+  ],
+  "reports": [
+    {
+      "phase": "enabled",
+      "result": {
+        "pass": true,
+        "output": {
+          "status": "PASS",
+          "cases": [
+            {
+              "id": "S01",
+              "pass": true
+            },
+            {
+              "id": "S02",
+              "pass": true
+            },
+            {
+              "id": "S03",
+              "pass": true
+            },
+            {
+              "id": "S04",
+              "pass": true
+            },
+            {
+              "id": "S05",
+              "pass": true
+            },
+            {
+              "id": "S06",
+              "pass": true
+            },
+            {
+              "id": "S07",
+              "pass": true
+            },
+            {
+              "id": "S08",
+              "pass": true
+            },
+            {
+              "id": "S09",
+              "pass": true
+            },
+            {
+              "id": "S10",
+              "pass": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "phase": "withdrawn",
+      "result": {
+        "pass": false,
+        "output": {
+          "status": "WITHHELD",
+          "cases": []
+        }
+      }
+    },
+    {
+      "phase": "reenabled",
+      "result": {
+        "pass": true,
+        "output": {
+          "status": "PASS",
+          "cases": [
+            {
+              "id": "S01",
+              "pass": true
+            },
+            {
+              "id": "S02",
+              "pass": true
+            },
+            {
+              "id": "S03",
+              "pass": true
+            },
+            {
+              "id": "S04",
+              "pass": true
+            },
+            {
+              "id": "S05",
+              "pass": true
+            },
+            {
+              "id": "S06",
+              "pass": true
+            },
+            {
+              "id": "S07",
+              "pass": true
+            },
+            {
+              "id": "S08",
+              "pass": true
+            },
+            {
+              "id": "S09",
+              "pass": true
+            },
+            {
+              "id": "S10",
+              "pass": true
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "passed": 13,
+  "failed": 0,
+  "notRun": 0,
+  "identityScope": "Byte-identical packaged runtime invoked through the actual registered command in a normal isolated developer window; no clean-profile installed-VSIX claim.",
+  "interactionScope": "Production synthetic in-process transports and value-free returned case metadata; no network, external agent, streaming or gateway-routing proof.",
+  "commandScope": "Ten matching cases plus registration and flag withdrawal/re-enable checks; all case oracles originate from the production synthetic self-test.",
+  "independence": "LOW",
+  "ownerPresence": "SYNTHETIC_SELF_TEST_NO_OWNER_APPROVAL_ASSERTION"
+}
