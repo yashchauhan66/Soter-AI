@@ -1,0 +1,32 @@
+﻿TAP version 13
+# Subtest: F06-V28 native local vscode-userdata global storage maps to its canonical physical path without changing namespace
+not ok 1 - F06-V28 native local vscode-userdata global storage maps to its canonical physical path without changing namespace
+  ---
+  duration_ms: 58.8388
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-vault-manager.test.ts:16:6642'
+  failureType: 'testCodeFailure'
+  error: 'Protected vault operation withheld. Encrypted recovery is retained; no plaintext rollback was performed.'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    vaultUnavailable (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\firewall\VaultStorage.ts:10:54)
+    VaultManager.mutation (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\firewall\VaultManager.ts:302:53)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:398:15)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F06-V29 unknown global-storage providers cannot write a vault or change source bytes
+ok 2 - F06-V29 unknown global-storage providers cannot write a vault or change source bytes
+  ---
+  duration_ms: 47.3126
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 1
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1755.1884

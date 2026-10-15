@@ -30,7 +30,8 @@ function fields(text: string, environment: boolean): Field[] {
             if (close >= text.length) return contents(false);
             end = close + 1;
             const next = text.indexOf("\n", end), suffixEnd = next < 0 ? text.length : next;
-            if (!/^[ \t\r]*(?:#.*)?$/.test(text.slice(end, suffixEnd))) return contents(false);
+            const suffixBodyEnd = text[suffixEnd - 1] === "\r" ? suffixEnd - 1 : suffixEnd;
+            if (!/^[ \t\r]*(?:#.*)?$/.test(text.slice(end, suffixBodyEnd))) return contents(false);
             cursor = next < 0 ? text.length : next + 1;
         } else {
             const comment = text.indexOf("#", start);

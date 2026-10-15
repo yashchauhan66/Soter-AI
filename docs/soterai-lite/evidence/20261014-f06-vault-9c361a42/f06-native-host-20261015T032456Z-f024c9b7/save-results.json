@@ -1,0 +1,168 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-10-15T03:25:13.372Z",
+  "phase": "save",
+  "syntheticOnly": true,
+  "workspace": "d:\\SoterAI-Lite-test-profiles\\f06-native-host-20261015T032456Z-f024c9b7\\workspace",
+  "declaredProfilePath": "D:\\SoterAI-Lite-test-profiles\\f06-native-host-20261015T032456Z-f024c9b7\\profile",
+  "hostVersion": "1.141.2",
+  "extensionMode": "Development",
+  "extensionBundleSha256": "24322ad068f2547b28a2a7e40f23f5217787ca6b38c7d42b136ffec1e0a7d5ea",
+  "currentDeveloperBundleSha256": "24322ad068f2547b28a2a7e40f23f5217787ca6b38c7d42b136ffec1e0a7d5ea",
+  "hostProbeSha256": "2b98b5e9943812e100d1dbcd160dffa8a015cbce06405e1397f3bc071062dcd4",
+  "observations": [
+    {
+      "id": "F06-H01",
+      "scope": "Native manager-owned cancellation creates no vault data, key or changed source file.",
+      "status": "PASS"
+    },
+    {
+      "id": "F06-H02",
+      "scope": "Actual registered migration replaces quoted database, API and multiline values on disk after native metadata review.",
+      "status": "PASS"
+    },
+    {
+      "id": "F06-H03",
+      "scope": "Safe example has blank unique names; actual native encrypted vault and issued generation remain outside the project.",
+      "status": "PASS"
+    },
+    {
+      "id": "F06-H04",
+      "scope": "Managed safe-reader output remains names-only and masked after optional migration.",
+      "status": "PASS"
+    },
+    {
+      "id": "F06-H05",
+      "scope": "Raw-restore cancellation retains source placeholders and ciphertext with no disclosure.",
+      "status": "PASS"
+    },
+    {
+      "id": "F06-H06",
+      "scope": "A real native source-write fault leaves an issued encrypted pending checkpoint and original source intact for native restart.",
+      "status": "PASS"
+    }
+  ],
+  "evidence": {
+    "nativeGuardMetadata": {
+      "trusted": true,
+      "flagGet": true,
+      "flagDefault": true,
+      "flagGlobal": true,
+      "globalStorageScheme": "vscode-userdata",
+      "storageAuthorityPresent": false,
+      "storageQueryPresent": false,
+      "storageFragmentPresent": false
+    },
+    "cancelledWithoutWrites": true,
+    "migratedSourceDigest": "cdb20f09f2afe0c0df4c958512f05162d2360d13ad11ec0705dc5bdd5aeecc66",
+    "actualVerifiedSecretStorageUse": true,
+    "exampleDigest": "9b345e741d2689fe1246b26610e83060dc2e8b01cd311d22eb22fe8581f78eca",
+    "encryptedVaultAndGenerationDigests": {
+      "soterai-vault.enc": "8504f42ead46a5bffecdf9bbbb2d738a599a73cab0f8789aeb742b9759f23945",
+      "vault-generation-9f6ebe5b-634e-4f25-a249-823407cafc03.enc": "f2a49bebe33fa227c7d0122dab94bada6e64ddd488b56d58c0edc154fb42a148",
+      "vault-source-fee59942159c1ce6d37da8489ac4a3e0.json": "839edc9186b0b70b3c252707783e00101cdc4c8762196bb6d02844f943719e24"
+    },
+    "maskedManagedReaderAfterMigration": true,
+    "genuinePendingCheckpointRetained": true,
+    "actualReadOnlySourceFailure": true,
+    "pendingGenerationId": "36820f9c-57aa-4ed7-98e7-4291a265b3bd",
+    "pendingCiphertextDigest": "ac3c760e760d13f87fa4d9b75fa8bc57e1e0cb7d9cadc004d363d49f7792158e"
+  },
+  "commandStatuses": [
+    {
+      "command": "soterai.migrateSecretsToVault",
+      "reportedStatus": "VOID",
+      "completed": true
+    },
+    {
+      "command": "soterai.migrateSecretsToVault",
+      "reportedStatus": "VOID",
+      "completed": true
+    },
+    {
+      "command": "soterai.readProjectFileSafely",
+      "reportedStatus": "ALLOWED_ONCE",
+      "completed": true
+    },
+    {
+      "command": "soterai.restoreSecretPlaceholders",
+      "reportedStatus": "VOID",
+      "completed": true
+    },
+    {
+      "command": "soterai.restoreFileFromBackup",
+      "reportedStatus": "VOID",
+      "completed": true
+    },
+    {
+      "command": "soterai.migrateSecretsToVault",
+      "reportedStatus": "VOID",
+      "completed": true
+    }
+  ],
+  "sourceDocumentCalls": 0,
+  "sourceDocumentEvents": 0,
+  "nativeSecretStorageStores": 1,
+  "nativeSecretStorageGets": 21,
+  "restoredCanonicalKeyObserved": true,
+  "nativeFaultKind": "Owned synthetic Windows read-only source file",
+  "scriptedNativeReviews": [
+    {
+      "action": "Migrate securely",
+      "modal": true,
+      "detailBytes": 486,
+      "detailSafe": true
+    },
+    {
+      "action": "Migrate securely",
+      "modal": true,
+      "detailBytes": 486,
+      "detailSafe": true
+    },
+    {
+      "action": "Allow safe read once",
+      "modal": true,
+      "detailBytes": 53,
+      "detailSafe": true
+    },
+    {
+      "action": "Restore raw values",
+      "modal": true,
+      "detailBytes": 40,
+      "detailSafe": true
+    },
+    {
+      "action": "Restore raw values",
+      "modal": true,
+      "detailBytes": 40,
+      "detailSafe": true
+    },
+    {
+      "action": "Migrate securely",
+      "modal": true,
+      "detailBytes": 487,
+      "detailSafe": true
+    }
+  ],
+  "safeMessageCounts": [
+    {
+      "surface": "showInformationMessage",
+      "safe": true
+    },
+    {
+      "surface": "showErrorMessage",
+      "safe": true
+    }
+  ],
+  "passed": 6,
+  "failed": 0,
+  "notRun": 0,
+  "genuinePendingCheckpointRetainedForRestart": true,
+  "identityScope": "Byte-identical packaged runtime and actual registered commands in an isolated persistent native developer context; not clean-profile installed-VSIX proof.",
+  "recoveryScope": "Actual native workspace source-write failure followed by native process restart and registered completion of the issued encrypted checkpoint; no reconstructed backup or plaintext fallback.",
+  "custodyScope": "Real isolated SecretStorage store/get/readback API observations only; no independent OS custody certification.",
+  "interactionScope": "Native modal API arguments with scripted same-instance decisions; no rendered modal usability or independent human-presence proof.",
+  "independence": "LOW",
+  "ownerPresence": "SCRIPTED_SAME_EXTENSION_API_INSTANCE",
+  "externalAgents": "NOT_TESTED"
+}

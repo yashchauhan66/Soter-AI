@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-10-15T03:11:46.694Z",
+  "phase": "save",
+  "syntheticOnly": true,
+  "workspace": "d:\\SoterAI-Lite-test-profiles\\f06-native-host-20261015T031127Z-9b6464c2\\workspace",
+  "declaredProfilePath": "D:\\SoterAI-Lite-test-profiles\\f06-native-host-20261015T031127Z-9b6464c2\\profile",
+  "hostVersion": "1.141.2",
+  "extensionMode": "Development",
+  "extensionBundleSha256": "50555368f9bd2378954b0a82fef4359218abdfa6d140f3520471a3de678bfd7b",
+  "currentDeveloperBundleSha256": "50555368f9bd2378954b0a82fef4359218abdfa6d140f3520471a3de678bfd7b",
+  "hostProbeSha256": "4362949294434a9bf2dbb45ea85e5968fe37c676940f3c49b87c584bf27612df",
+  "observations": [
+    {
+      "id": "F06-H01",
+      "scope": "Native manager-owned cancellation creates no vault data, key or changed source file.",
+      "status": "FAIL",
+      "diagnostic": "AssertionError at F06-H01"
+    },
+    {
+      "id": "F06-H02",
+      "scope": "Actual registered migration replaces quoted database, API and multiline values on disk after native metadata review.",
+      "status": "FAIL",
+      "diagnostic": "AssertionError at F06-H02"
+    },
+    {
+      "id": "F06-H03",
+      "scope": "Safe example has blank unique names; actual native encrypted vault and issued generation remain outside the project.",
+      "status": "FAIL",
+      "diagnostic": "Error at F06-H03"
+    },
+    {
+      "id": "F06-H04",
+      "scope": "Managed safe-reader output remains names-only and masked after optional migration.",
+      "status": "PASS"
+    },
+    {
+      "id": "F06-H05",
+      "scope": "Raw-restore cancellation retains source placeholders and ciphertext with no disclosure.",
+      "status": "FAIL",
+      "diagnostic": "AssertionError at F06-H05"
+    },
+    {
+      "id": "F06-H06",
+      "scope": "A real native source-write fault leaves an issued encrypted pending checkpoint and original source intact for native restart.",
+      "status": "FAIL",
+      "diagnostic": "Error at F06-H06"
+    }
+  ],
+  "evidence": {
+    "maskedManagedReaderAfterMigration": true
+  },
+  "commandStatuses": [
+    {
+      "command": "soterai.migrateSecretsToVault",
+      "reportedStatus": "VOID",
+      "completed": true
+    },
+    {
+      "command": "soterai.migrateSecretsToVault",
+      "reportedStatus": "VOID",
+      "completed": true
+    },
+    {
+      "command": "soterai.readProjectFileSafely",
+      "reportedStatus": "ALLOWED_ONCE",
+      "completed": true
+    },
+    {
+      "command": "soterai.restoreSecretPlaceholders",
+      "reportedStatus": "VOID",
+      "completed": true
+    },
+    {
+      "command": "soterai.restoreFileFromBackup",
+      "reportedStatus": "VOID",
+      "completed": true
+    },
+    {
+      "command": "soterai.migrateSecretsToVault",
+      "reportedStatus": "VOID",
+      "completed": true
+    }
+  ],
+  "sourceDocumentCalls": 0,
+  "sourceDocumentEvents": 0,
+  "nativeSecretStorageStores": 0,
+  "nativeSecretStorageGets": 0,
+  "restoredCanonicalKeyObserved": false,
+  "nativeFaultKind": "Owned synthetic Windows read-only source file",
+  "scriptedNativeReviews": [
+    {
+      "action": "Allow safe read once",
+      "modal": true,
+      "detailBytes": 53,
+      "detailSafe": true
+    }
+  ],
+  "safeMessageCounts": [
+    {
+      "surface": "showErrorMessage",
+      "safe": true
+    },
+    {
+      "surface": "showErrorMessage",
+      "safe": true
+    },
+    {
+      "surface": "showErrorMessage",
+      "safe": true
+    },
+    {
+      "surface": "showErrorMessage",
+      "safe": true
+    }
+  ],
+  "passed": 1,
+  "failed": 5,
+  "notRun": 0,
+  "genuinePendingCheckpointRetainedForRestart": false,
+  "identityScope": "Byte-identical packaged runtime and actual registered commands in an isolated persistent native developer context; not clean-profile installed-VSIX proof.",
+  "recoveryScope": "Actual native workspace source-write failure followed by native process restart and registered completion of the issued encrypted checkpoint; no reconstructed backup or plaintext fallback.",
+  "custodyScope": "Real isolated SecretStorage store/get/readback API observations only; no independent OS custody certification.",
+  "interactionScope": "Native modal API arguments with scripted same-instance decisions; no rendered modal usability or independent human-presence proof.",
+  "independence": "LOW",
+  "ownerPresence": "SCRIPTED_SAME_EXTENSION_API_INSTANCE",
+  "externalAgents": "NOT_TESTED"
+}

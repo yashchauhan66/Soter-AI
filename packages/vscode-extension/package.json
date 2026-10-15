@@ -108,7 +108,8 @@
                 "soterai.autoVaultMigration.enabled",
                 "soterai.dependencyGuard.osvMode",
                 "soterai.secretInterceptor.enabled",
-                "soterai.lite.secureEditor"
+                "soterai.lite.secureEditor",
+                "soterai.lite.vaultMode"
             ]
         }
     },
@@ -1053,6 +1054,12 @@
                 "command": "soterai.undoSecureEditorAssociation",
                 "title": "Restore Project Editor Associations",
                 "category": "SoterAI"
+            },
+            {
+                "command": "soterai.recoverVaultMigration",
+                "title": "Complete Safe Vault Recovery",
+                "category": "SoterAI",
+                "icon": "$(history)"
             }
         ],
         "viewsContainers": {
@@ -1595,6 +1602,12 @@
                     "default": true,
                     "scope": "machine",
                     "description": "Enable the masked local owner editor with per-field native reveal, private edits and encrypted recovery. Turning this off withholds editor operations and hides revealed values; original files remain available to direct filesystem tools."
+                },
+                "soterai.lite.vaultMode": {
+                    "type": "boolean",
+                    "default": true,
+                    "scope": "machine",
+                    "description": "Enable optional owner-reviewed encrypted vault migration and safe recovery. Turning this off preserves saved denies and ciphertext, never restores raw values."
                 }
             }
         },
@@ -1643,6 +1656,16 @@
                     "submenu": "soterai.explorerContext",
                     "group": "7_modification@100",
                     "when": "resourceScheme == file"
+                },
+                {
+                    "command": "soterai.migrateSecretsToVault",
+                    "when": "resourceScheme == file && !explorerResourceIsFolder && isWorkspaceTrusted",
+                    "group": "soterai@6"
+                },
+                {
+                    "command": "soterai.recoverVaultMigration",
+                    "when": "resourceScheme == file && !explorerResourceIsFolder && isWorkspaceTrusted",
+                    "group": "soterai@7"
                 }
             ],
             "soterai.explorerContext": [
@@ -1737,9 +1760,18 @@
                 }
             ],
             "commandPalette": [
-                {"command": "soterai.openSecureEditor", "when": "soterai.advancedCommands"},
-                {"command": "soterai.configureSecureEditorAssociation", "when": "soterai.advancedCommands"},
-                {"command": "soterai.undoSecureEditorAssociation", "when": "soterai.advancedCommands"},
+                {
+                    "command": "soterai.openSecureEditor",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.configureSecureEditorAssociation",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.undoSecureEditorAssociation",
+                    "when": "soterai.advancedCommands"
+                },
                 {
                     "command": "soterai.reviewSensitiveAIRules",
                     "when": "soterai.advancedCommands"
@@ -2407,6 +2439,10 @@
                 {
                     "command": "soterai.scanGitDiff",
                     "when": "false"
+                },
+                {
+                    "command": "soterai.recoverVaultMigration",
+                    "when": "soterai.advancedCommands"
                 }
             ]
         },

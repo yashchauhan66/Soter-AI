@@ -118,29 +118,30 @@ describe("Workspace filesystem containment", () => {
         assert.match(filesystemPathPolicySrc, /isSymbolicLink\(\)/);
         assert.match(filesystemPathPolicySrc, /junction or filesystem alias/);
         assert.match(workspacePathGuardSrc, /verifyExistingPath/);
-        assert.match(vaultManagerSrc, /assertWorkspaceFileUri\(fileUri\)/);
-        assert.match(vaultManagerSrc, /assertWorkspaceOutputUri\(exampleUri\)/);
+        assert.match(vaultManagerSrc, /assertWorkspaceFileUri\(uri\)/);
+        assert.match(vaultManagerSrc, /assertWorkspaceOutputUri\((?:example|target)\)/);
     });
 });
 
 describe("Vault safety — dry-run preview + backup + confirm", () => {
     it("migration backup is encrypted and OUTSIDE the workspace (no plaintext .bak)", () => {
-        assert.match(vaultManagerSrc, /writeEncryptedBackup/, "vault migration must back up via writeEncryptedBackup");
-        assert.match(vaultManagerSrc, /globalStorageUri,\s*"backups"/, "backups must live in extension global storage");
+        assert.match(vaultManagerSrc, /encryptVault\(JSON\.stringify\(checkpoint\), key\)/, "vault migration must encrypt its issued original checkpoint");
+        assert.match(vaultManagerSrc, /new VaultStorage\(context\.globalStorageUri\.with\(\{ scheme: "file" \}\)\.fsPath\)/, "encrypted generations must live in canonical local extension global storage");
+        assert.match(vaultManagerSrc, /storage\.write\("vault-generation-"/, "immutable encrypted generation must precede workspace replacement");
         assert.doesNotMatch(vaultManagerSrc, /\$\{fileUri\.path\}\.bak/,
             "vault must never write a plaintext .bak into the workspace — it would leak raw secrets to anything reading workspace files");
     });
     it("migration requires an explicit modal confirmation after previewing", () => {
-        assert.match(firewallCommandsSrc, /modal:\s*true/, "vault migration must confirm via a modal dialog");
-        assert.match(firewallCommandsSrc, /"Migrate & Backup"/, "confirm action label present");
-        assert.match(firewallCommandsSrc, /preview\.candidates/, "migration must preview candidates first");
+        // Review belongs in the manager so watcher/auto-migration calls cannot bypass it.
+        assert.match(vaultManagerSrc, /modal:\s*true, detail/, "vault migration must confirm via metadata modal");
+        assert.match(vaultManagerSrc, /"Migrate securely"/, "reviewed mutation action present");
+        assert.match(vaultManagerSrc, /keys:\s*plan\.candidates\.map/, "exact private plan must supply public candidate names");
     });
     it("vault status/preview surface metadata only — rawValue stays inside the encrypted store", () => {
-        // status() strips rawValue, returning metadata only.
-        assert.match(vaultManagerSrc, /map\(\(\{\s*rawValue,\s*\.\.\.meta\s*\}\)\s*=>\s*meta\)/,
-            "status() must strip rawValue from displayed entries");
-        // preview surfaces a masked preview, never the raw value.
-        assert.match(vaultManagerSrc, /redactValuePreview/);
+        const status = vaultManagerSrc.slice(vaultManagerSrc.indexOf("async status()"), vaultManagerSrc.indexOf("async knownPlaceholders()"));
+        assert.match(status, /key:\s*entry\.key/); assert.doesNotMatch(status, /rawValue|replacementText|entry\.hash|entry\.id|\.\.\.entry/,
+            "status returns an explicit safe field allowlist, excluding plaintext and value fingerprints");
+        assert.match(vaultManagerSrc, /redactedPreview:\s*MASKED/);
     });
 });
 

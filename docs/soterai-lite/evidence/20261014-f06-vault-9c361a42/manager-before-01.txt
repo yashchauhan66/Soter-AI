@@ -1,0 +1,383 @@
+﻿TAP version 13
+# Subtest: F06-V01 preview uses a constant mask with no value fragments, lengths or hashes
+not ok 1 - F06-V01 preview uses a constant mask with no value fragments, lengths or hashes
+  ---
+  duration_ms: 54.0484
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-vault-manager.test.ts:13:6332'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'po••••••••••••db'
+    - '[MASKED]'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '[MASKED]'
+  actual: 'po••••••••••••db'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:118:16)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F06-V02 reviewed migration handles duplicate/multiline fields, writes blank examples and keeps recovery encrypted outside the project
+not ok 2 - F06-V02 reviewed migration handles duplicate/multiline fields, writes blank examples and keeps recovery encrypted outside the project
+  ---
+  duration_ms: 206.1717
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-vault-manager.test.ts:13:6928'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(basename(target).startsWith("soterai-f06-vault-manager-"))
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:126:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F06-V03 declining manager-owned native migration writes nothing
+not ok 3 - F06-V03 declining manager-owned native migration writes nothing
+  ---
+  duration_ms: 38.405
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-vault-manager.test.ts:13:8226'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    2 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 2
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:136:72)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F06-V04 SecretStorage store failure or failed readback never removes original values
+not ok 4 - F06-V04 SecretStorage store failure or failed readback never removes original values
+  ---
+  duration_ms: 44.1541
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-vault-manager.test.ts:13:8757'
+  failureType: 'testCodeFailure'
+  error: 'Unavailable mutation must throw or return an explicit no-change result.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    withheld (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:50:12)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:153:13)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F06-V05 source drift while native migration review is held cannot overwrite the newer file
+not ok 5 - F06-V05 source drift while native migration review is held cannot overwrite the newer file
+  ---
+  duration_ms: 2027.247
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-vault-manager.test.ts:13:9883'
+  failureType: 'testCodeFailure'
+  error: 'Manager must obtain native approval before migration.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:59:12)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:165:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F06-V06 source drift while verified key storage is held cannot remove newer source data
+not ok 6 - F06-V06 source drift while verified key storage is held cannot remove newer source data
+  ---
+  duration_ms: 52.4807
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-vault-manager.test.ts:13:10665'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    1 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 1
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:179:80)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F06-V07 machine withdrawal, untrusted or nonlocal resources withhold all mutation entry points
+not ok 7 - F06-V07 machine withdrawal, untrusted or nonlocal resources withhold all mutation entry points
+  ---
+  duration_ms: 27.8415
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-vault-manager.test.ts:13:11643'
+  failureType: 'testCodeFailure'
+  error: 'Unavailable mutation must throw or return an explicit no-change result.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    withheld (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:50:12)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:186:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F06-V08 flag withdrawal while native confirmation is pending leaves source and vault untouched
+not ok 8 - F06-V08 flag withdrawal while native confirmation is pending leaves source and vault untouched
+  ---
+  duration_ms: 2015.4584
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-vault-manager.test.ts:13:12736'
+  failureType: 'testCodeFailure'
+  error: 'Native review must precede migration writes.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:59:12)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:198:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F06-V09 dirty and stale existing source buffers are rejected before writes and no original TextDocument is created
+not ok 9 - F06-V09 dirty and stale existing source buffers are rejected before writes and no original TextDocument is created
+  ---
+  duration_ms: 19.9175
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-vault-manager.test.ts:13:13546'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + {
+    +   '\\backups\\45bbbb2feed967c07f72506516c27725.enc': 'cba50cba367bbd969124a251a7f4c77443d720d9f57fd06ae0a0284e13225a87'
+    + }
+    - {}
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    \backups\45bbbb2feed967c07f72506516c27725.enc: 'cba50cba367bbd969124a251a7f4c77443d720d9f57fd06ae0a0284e13225a87'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:209:78)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F06-V10 an existing corrupt encrypted vault is preserved and never reinterpreted as empty
+ok 10 - F06-V10 an existing corrupt encrypted vault is preserved and never reinterpreted as empty
+  ---
+  duration_ms: 21.4423
+  type: 'test'
+  ...
+# Subtest: F06-V11 an existing encrypted vault whose key disappeared cannot be replaced by a newly created vault
+ok 11 - F06-V11 an existing encrypted vault whose key disappeared cannot be replaced by a newly created vault
+  ---
+  duration_ms: 38.8099
+  type: 'test'
+  ...
+# Subtest: F06-V12 conflicting example files are not overwritten and migration removes no original values
+not ok 12 - F06-V12 conflicting example files are not overwritten and migration removes no original values
+  ---
+  duration_ms: 26.941
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-vault-manager.test.ts:13:15716'
+  failureType: 'testCodeFailure'
+  error: 'Unavailable mutation must throw or return an explicit no-change result.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    withheld (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:50:12)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:231:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F06-V13 explicit example generation contains blank unique names only and refuses a conflicting existing example
+not ok 13 - F06-V13 explicit example generation contains blank unique names only and refuses a conflicting existing example
+  ---
+  duration_ms: 17.5383
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-vault-manager.test.ts:13:16161'
+  failureType: 'testCodeFailure'
+  error: 'Raw synthetic values must not appear in this safe sink.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    noValues (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:33:99)
+    assertBlankExample (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:72:5)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:235:88)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F06-V14 failed source write preserves encrypted recovery; a new manager completes the masked outcome idempotently
+not ok 14 - F06-V14 failed source write preserves encrypted recovery; a new manager completes the masked outcome idempotently
+  ---
+  duration_ms: 28.9986
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-vault-manager.test.ts:13:16866'
+  failureType: 'testCodeFailure'
+  error: |-
+    VaultManager must expose safe checkpoint completion.
+    + actual - expected
+    
+    + 'undefined'
+    - 'function'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'function'
+  actual: 'undefined'
+  operator: 'strictEqual'
+  stack: |-
+    recover (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:54:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:244:24)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F06-V15 tampered issued checkpoint recovery is withheld without silently restoring or rewriting originals
+ok 15 - F06-V15 tampered issued checkpoint recovery is withheld without silently restoring or rewriting originals
+  ---
+  duration_ms: 32.363
+  type: 'test'
+  ...
+# Subtest: F06-V16 raw restoration requires its own disclosure approval and retained placeholders remain until accepted
+not ok 16 - F06-V16 raw restoration requires its own disclosure approval and retained placeholders remain until accepted
+  ---
+  duration_ms: 37.5948
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-vault-manager.test.ts:13:19188'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    2 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 2
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:262:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F06-V17 equal relative paths in different projects cannot restore another root's vault entries or swapped backup
+not ok 17 - F06-V17 equal relative paths in different projects cannot restore another root's vault entries or swapped backup
+  ---
+  duration_ms: 52.4578
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-vault-manager.test.ts:13:20219'
+  failureType: 'testCodeFailure'
+  error: 'Unavailable mutation must throw or return an explicit no-change result.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    withheld (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:50:12)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:272:85)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F06-V18 static mutation serialization preserves both files' distinct encrypted entries
+not ok 18 - F06-V18 static mutation serialization preserves both files' distinct encrypted entries
+  ---
+  duration_ms: 2026.3876
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-vault-manager.test.ts:13:21656'
+  failureType: 'testCodeFailure'
+  error: 'The first manager mutation must hold its own native review.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:59:12)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:289:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F06-V19 compatible encrypted legacy entries survive a new migration while legacy relative restoration stays withheld
+not ok 19 - F06-V19 compatible encrypted legacy entries survive a new migration while legacy relative restoration stays withheld
+  ---
+  duration_ms: 64.6557
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-vault-manager.test.ts:15:1197'
+  failureType: 'testCodeFailure'
+  error: 'Unavailable mutation must throw or return an explicit no-change result.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    withheld (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:50:12)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:305:52)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F06-V20 a pending whole-vault checkpoint withholds another file until safe recovery completes
+not ok 20 - F06-V20 a pending whole-vault checkpoint withholds another file until safe recovery completes
+  ---
+  duration_ms: 84.3407
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-vault-manager.test.ts:15:2385'
+  failureType: 'testCodeFailure'
+  error: 'Unavailable mutation must throw or return an explicit no-change result.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    withheld (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:50:12)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:313:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..20
+# tests 20
+# suites 0
+# pass 3
+# fail 17
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 7815.3036

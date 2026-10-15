@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-10-15T03:26:10.763Z",
+  "phase": "reload",
+  "syntheticOnly": true,
+  "workspace": "d:\\SoterAI-Lite-test-profiles\\f05-native-host-20261015T032527Z-63687a23\\workspace",
+  "declaredProfilePath": "D:\\SoterAI-Lite-test-profiles\\f05-native-host-20261015T032527Z-63687a23\\profile",
+  "hostVersion": "1.141.2",
+  "extensionBundleSha256": "24322ad068f2547b28a2a7e40f23f5217787ca6b38c7d42b136ffec1e0a7d5ea",
+  "currentDeveloperBundleSha256": "24322ad068f2547b28a2a7e40f23f5217787ca6b38c7d42b136ffec1e0a7d5ea",
+  "hostProbeSha256": "cce828cb11c296786db7bde5c6440eb687eeb0bfdbfc2f073a3dde6bf60d7715",
+  "observations": [
+    {
+      "id": "F05-H08",
+      "scope": "Actual workbench supplies an issued backupId after native hot-exit/restart; restored custom tab starts masked with no original TextDocument.",
+      "status": "PASS"
+    },
+    {
+      "id": "F05-H09",
+      "scope": "Native Save writes the privately recovered dirty draft and ordinary safe-reader output remains entirely value-masked.",
+      "status": "PASS"
+    },
+    {
+      "id": "F05-H10",
+      "scope": "Machine withdrawal clears reveals and blocks edit/open/save; saved protection persists and cleanup uses a re-enabled actual native save.",
+      "status": "PASS"
+    }
+  ],
+  "evidence": {
+    "recoveredRevealSettling": {
+      "pendingBackupCountStart": 0,
+      "pendingBackupCountEnd": 0
+    },
+    "workbenchSuppliedNativeRecoveryId": true,
+    "restoredCiphertextDigest": "35c08f51f44aa538775cafee640f8a538fa9fdd3aa044d79d302d98e4e0d01c5",
+    "recoveredDraftOwnerValueMatched": true,
+    "recoveredSavedDigest": "848fc1ba32fab96108ee0ed766ceac18b4ad2b4c2a6dfa286c569d89189e3669",
+    "machineWithdrawalWithheldNativeSave": true,
+    "safeReaderRetainedAllValueMasking": true
+  },
+  "sourceDocumentCalls": 0,
+  "sourceDocumentEvents": 0,
+  "nativeWindowFocusEvents": 0,
+  "lastNativeWindowFocused": true,
+  "nativeSourceFileEvents": 4,
+  "nativeOpenCalls": 1,
+  "nativeResolvedPanels": 1,
+  "nativeEditEvents": 1,
+  "nativeSaveCalls": 3,
+  "nativeSaveFailures": 1,
+  "nativeBackupCalls": 2,
+  "nativeBackupFailures": 1,
+  "nativeSecretStorageStores": 4,
+  "nativeSecretStorageGets": 9,
+  "scriptedNativeModalCalls": 4,
+  "scriptedPasswordInputCalls": 1,
+  "restoredIdObservedBeforeClose": true,
+  "passed": 3,
+  "failed": 0,
+  "notRun": 0,
+  "actualNativeHotExitPending": false,
+  "identityScope": "Byte-identical packaged runtime, actual persistent developer context, native CustomDocument/WebviewPanel/TabInputCustom/workbench operations. Not clean-profile install proof.",
+  "interactionScope": "Actual registered native-panel listener and native modal/password API arguments with scripted same-instance owner decisions; no browser DOM automation or human owner-presence proof.",
+  "recoveryScope": "Save phase observes actual workbench backup; reload independently requires workbench-supplied issued backupId. Final closing backup may be generated after the save-phase probe. No manual-provider backup/restoration fallback is counted as native recovery.",
+  "custodyScope": "Synthetic isolated native SecretStorage store/get use; not independent OS custody certification.",
+  "independence": "LOW",
+  "ownerPresence": "SCRIPTED_SAME_EXTENSION_API_INSTANCE",
+  "externalAgents": "NOT_TESTED"
+}

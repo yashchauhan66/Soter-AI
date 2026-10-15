@@ -207,10 +207,9 @@ export class AutoVaultMigration implements vscode.Disposable {
         }
         try {
             return await this.vault.migrate(uri);
-        } catch (err) {
+        } catch {
             vscode.window.showErrorMessage(
-                `[SoterAI] Failed to migrate ${vscode.workspace.asRelativePath(uri)}: ` +
-                    `${err instanceof Error ? err.message : String(err)}`,
+                "[SoterAI] Vault migration withheld. Original values are never restored automatically; use Complete Safe Vault Recovery if a migration was interrupted.",
             );
             return 0;
         }

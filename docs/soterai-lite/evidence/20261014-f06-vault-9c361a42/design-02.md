@@ -1,0 +1,7 @@
+# F06 implementation clarification before production
+
+The private plan candidates additionally retain `replacementText`, the exact original source representation including quotes. `rawValue` is the logical field value for encryption/classification. Explicit restore substitutes the exact representation, avoiding dotenv corruption from decoded newline escapes. Each field span is derived by independently replacing that field with its unique placeholder in a fresh SecureEditorModel and checking the unchanged prefix/suffix, with no new public value-bearing metadata method.
+
+Use one extension-global pending-generation pointer. While it exists, all unrelated mutations are withheld until that generation is safely completed. This prevents whole-vault-image recovery from discarding a later migration from another project. Per-source completed pointers and immutable encrypted generations retain backup discovery. A stale lock is recoverable only when process liveness reports ESRCH; unknown errors/EPERM/live ownership remain withheld. Do not terminate processes.
+
+Secret-bearing files gain an additive permanent sensitive deny after migration approval and before destructive writes, through existing atomic policy updates. Cancellation before approval has no filesystem/policy writes. Pending guards withhold managed reads during writes; saved denies remain on failures and flag withdrawal. All source/vault/key binding checks remain fresh across storage awaits.

@@ -1,0 +1,646 @@
+﻿TAP version 13
+# Subtest: F05-M01 metadata is deeply frozen and reveals only revision and opaque field descriptors
+ok 1 - F05-M01 metadata is deeply frozen and reveals only revision and opaque field descriptors
+  ---
+  duration_ms: 4.7133
+  type: 'test'
+  ...
+# Subtest: F05-M02 supported assignment spacing, exports, inline comments and empty values are parsed privately
+ok 2 - F05-M02 supported assignment spacing, exports, inline comments and empty values are parsed privately
+  ---
+  duration_ms: 1.4741
+  type: 'test'
+  ...
+# Subtest: F05-M03 LF editing preserves every unrelated byte and line ending
+ok 3 - F05-M03 LF editing preserves every unrelated byte and line ending
+  ---
+  duration_ms: 0.8003
+  type: 'test'
+  ...
+# Subtest: F05-M03 CRLF editing preserves every unrelated byte and line ending
+ok 4 - F05-M03 CRLF editing preserves every unrelated byte and line ending
+  ---
+  duration_ms: 0.317
+  type: 'test'
+  ...
+# Subtest: F05-M03 BOM editing preserves every unrelated byte and line ending
+ok 5 - F05-M03 BOM editing preserves every unrelated byte and line ending
+  ---
+  duration_ms: 0.5328
+  type: 'test'
+  ...
+# Subtest: F05-M04 duplicate names have distinct field ids and editing one preserves the other
+ok 6 - F05-M04 duplicate names have distinct field ids and editing one preserves the other
+  ---
+  duration_ms: 0.3477
+  type: 'test'
+  ...
+# Subtest: F05-M05 '-quoted multiline values never create assignment-looking fields
+ok 7 - F05-M05 '-quoted multiline values never create assignment-looking fields
+  ---
+  duration_ms: 0.4993
+  type: 'test'
+  ...
+# Subtest: F05-M05 "-quoted multiline values never create assignment-looking fields
+ok 8 - F05-M05 "-quoted multiline values never create assignment-looking fields
+  ---
+  duration_ms: 0.2644
+  type: 'test'
+  ...
+# Subtest: F05-M05 `-quoted multiline values never create assignment-looking fields
+ok 9 - F05-M05 `-quoted multiline values never create assignment-looking fields
+  ---
+  duration_ms: 0.9751
+  type: 'test'
+  ...
+# Subtest: F05-M06 owner edits with spaces and punctuation round-trip through a fresh private parser
+ok 10 - F05-M06 owner edits with spaces and punctuation round-trip through a fresh private parser
+  ---
+  duration_ms: 1.4495
+  type: 'test'
+  ...
+# Subtest: F05-M07 quotes and backslashes in an owner value are encoded without changing its private value
+ok 11 - F05-M07 quotes and backslashes in an owner value are encoded without changing its private value
+  ---
+  duration_ms: 0.685
+  type: 'test'
+  ...
+# Subtest: F05-M08 a new multiline owner value remains one field and preserves adjoining lines
+ok 12 - F05-M08 a new multiline owner value remains one field and preserves adjoining lines
+  ---
+  duration_ms: 0.6053
+  type: 'test'
+  ...
+# Subtest: F05-M09 setting an empty value is useful and does not remove its field
+ok 13 - F05-M09 setting an empty value is useful and does not remove its field
+  ---
+  duration_ms: 0.2994
+  type: 'test'
+  ...
+# Subtest: F05-M10 non-environment sensitive text is one masked metadata field with a private owner value
+ok 14 - F05-M10 non-environment sensitive text is one masked metadata field with a private owner value
+  ---
+  duration_ms: 0.3766
+  type: 'test'
+  ...
+# Subtest: F05-M11 unsupported line becomes a masked noneditable contents field and retains source bytes
+ok 15 - F05-M11 unsupported line becomes a masked noneditable contents field and retains source bytes
+  ---
+  duration_ms: 0.662
+  type: 'test'
+  ...
+# Subtest: F05-M11 unclosed quote becomes a masked noneditable contents field and retains source bytes
+ok 16 - F05-M11 unclosed quote becomes a masked noneditable contents field and retains source bytes
+  ---
+  duration_ms: 0.4007
+  type: 'test'
+  ...
+# Subtest: F05-M11 quoted trailing syntax becomes a masked noneditable contents field and retains source bytes
+ok 17 - F05-M11 quoted trailing syntax becomes a masked noneditable contents field and retains source bytes
+  ---
+  duration_ms: 0.2248
+  type: 'test'
+  ...
+# Subtest: F05-M12 empty and comment-only environment files have no invented value fields
+ok 18 - F05-M12 empty and comment-only environment files have no invented value fields
+  ---
+  duration_ms: 0.2937
+  type: 'test'
+  ...
+# Subtest: F05-M13 constructor rejects NUL and terminal control characters in either document mode
+ok 19 - F05-M13 constructor rejects NUL and terminal control characters in either document mode
+  ---
+  duration_ms: 0.4089
+  type: 'test'
+  ...
+# Subtest: F05-M14 the 64 KiB UTF-8 input limit accepts its exact boundary and rejects byte overflow
+ok 20 - F05-M14 the 64 KiB UTF-8 input limit accepts its exact boundary and rejects byte overflow
+  ---
+  duration_ms: 0.4866
+  type: 'test'
+  ...
+# Subtest: F05-M15 exactly 256 environment fields are supported and a 257th fails closed
+ok 21 - F05-M15 exactly 256 environment fields are supported and a 257th fails closed
+  ---
+  duration_ms: 3.6585
+  type: 'test'
+  ...
+# Subtest: F05-M16 unknown field ids reveal nothing and failed edits preserve revision and draft
+ok 22 - F05-M16 unknown field ids reveal nothing and failed edits preserve revision and draft
+  ---
+  duration_ms: 0.6367
+  type: 'test'
+  ...
+# Subtest: F05-M17 owner value byte overflow cannot mutate a valid draft
+ok 23 - F05-M17 owner value byte overflow cannot mutate a valid draft
+  ---
+  duration_ms: 0.545
+  type: 'test'
+  ...
+# Subtest: F05-M18 invalid owner value control characters leave the original revision and text intact
+ok 24 - F05-M18 invalid owner value control characters leave the original revision and text intact
+  ---
+  duration_ms: 1.2996
+  type: 'test'
+  ...
+# Subtest: F05-M19 restore privately supports undo and redo while advancing revision
+ok 25 - F05-M19 restore privately supports undo and redo while advancing revision
+  ---
+  duration_ms: 0.6553
+  type: 'test'
+  ...
+# Subtest: F05-M20 invalid restore operations retain the whole previous draft and revision
+ok 26 - F05-M20 invalid restore operations retain the whole previous draft and revision
+  ---
+  duration_ms: 1.0111
+  type: 'test'
+  ...
+# Subtest: F05-M21 owner strings are stored literally without shell interpolation
+ok 27 - F05-M21 owner strings are stored literally without shell interpolation
+  ---
+  duration_ms: 0.97
+  type: 'test'
+  ...
+# Subtest: F06-V01 preview uses a constant mask with no value fragments, lengths or hashes
+ok 28 - F06-V01 preview uses a constant mask with no value fragments, lengths or hashes
+  ---
+  duration_ms: 399.0202
+  type: 'test'
+  ...
+# Subtest: F06-V02 reviewed migration handles duplicate/multiline fields, writes blank examples and keeps recovery encrypted outside the project
+ok 29 - F06-V02 reviewed migration handles duplicate/multiline fields, writes blank examples and keeps recovery encrypted outside the project
+  ---
+  duration_ms: 1067.8614
+  type: 'test'
+  ...
+# Subtest: F06-V03 declining manager-owned native migration writes nothing
+ok 30 - F06-V03 declining manager-owned native migration writes nothing
+  ---
+  duration_ms: 50.3816
+  type: 'test'
+  ...
+# Subtest: F06-V04 SecretStorage store failure or failed readback never removes original values
+ok 31 - F06-V04 SecretStorage store failure or failed readback never removes original values
+  ---
+  duration_ms: 246.4138
+  type: 'test'
+  ...
+# Subtest: F06-V05 source drift while native migration review is held cannot overwrite the newer file
+ok 32 - F06-V05 source drift while native migration review is held cannot overwrite the newer file
+  ---
+  duration_ms: 75.4305
+  type: 'test'
+  ...
+# Subtest: F06-V06 source drift while verified key storage is held cannot remove newer source data
+ok 33 - F06-V06 source drift while verified key storage is held cannot remove newer source data
+  ---
+  duration_ms: 135.3692
+  type: 'test'
+  ...
+# Subtest: F06-V07 machine withdrawal, untrusted or nonlocal resources withhold all mutation entry points
+ok 34 - F06-V07 machine withdrawal, untrusted or nonlocal resources withhold all mutation entry points
+  ---
+  duration_ms: 14.0911
+  type: 'test'
+  ...
+# Subtest: F06-V08 flag withdrawal while native confirmation is pending leaves source and vault untouched
+ok 35 - F06-V08 flag withdrawal while native confirmation is pending leaves source and vault untouched
+  ---
+  duration_ms: 51.558
+  type: 'test'
+  ...
+# Subtest: F06-V09 dirty and stale existing source buffers are rejected before writes and no original TextDocument is created
+ok 36 - F06-V09 dirty and stale existing source buffers are rejected before writes and no original TextDocument is created
+  ---
+  duration_ms: 54.0655
+  type: 'test'
+  ...
+# Subtest: F06-V10 an existing corrupt encrypted vault is preserved and never reinterpreted as empty
+ok 37 - F06-V10 an existing corrupt encrypted vault is preserved and never reinterpreted as empty
+  ---
+  duration_ms: 124.7735
+  type: 'test'
+  ...
+# Subtest: F06-V11 an existing encrypted vault whose key disappeared cannot be replaced by a newly created vault
+ok 38 - F06-V11 an existing encrypted vault whose key disappeared cannot be replaced by a newly created vault
+  ---
+  duration_ms: 743.0973
+  type: 'test'
+  ...
+# Subtest: F06-V12 conflicting example files are not overwritten and migration removes no original values
+ok 39 - F06-V12 conflicting example files are not overwritten and migration removes no original values
+  ---
+  duration_ms: 49.4714
+  type: 'test'
+  ...
+# Subtest: F06-V13 explicit example generation contains blank unique names only and refuses a conflicting existing example
+ok 40 - F06-V13 explicit example generation contains blank unique names only and refuses a conflicting existing example
+  ---
+  duration_ms: 194.9029
+  type: 'test'
+  ...
+# Subtest: F06-V14 failed source write preserves encrypted recovery; a new manager completes the masked outcome idempotently
+ok 41 - F06-V14 failed source write preserves encrypted recovery; a new manager completes the masked outcome idempotently
+  ---
+  duration_ms: 874.9797
+  type: 'test'
+  ...
+# Subtest: F06-V15 tampered issued checkpoint recovery is withheld without silently restoring or rewriting originals
+ok 42 - F06-V15 tampered issued checkpoint recovery is withheld without silently restoring or rewriting originals
+  ---
+  duration_ms: 620.0799
+  type: 'test'
+  ...
+# Subtest: F06-V16 raw restoration requires its own disclosure approval and retained placeholders remain until accepted
+ok 43 - F06-V16 raw restoration requires its own disclosure approval and retained placeholders remain until accepted
+  ---
+  duration_ms: 1116.3818
+  type: 'test'
+  ...
+# Subtest: F06-V17 equal relative paths in different projects cannot restore another root's vault entries or swapped backup
+ok 44 - F06-V17 equal relative paths in different projects cannot restore another root's vault entries or swapped backup
+  ---
+  duration_ms: 643.022
+  type: 'test'
+  ...
+# Subtest: F06-V18 static mutation serialization preserves both files' distinct encrypted entries
+ok 45 - F06-V18 static mutation serialization preserves both files' distinct encrypted entries
+  ---
+  duration_ms: 1257.9911
+  type: 'test'
+  ...
+# Subtest: F06-V19 compatible encrypted legacy entries survive a new migration while legacy relative restoration stays withheld
+ok 46 - F06-V19 compatible encrypted legacy entries survive a new migration while legacy relative restoration stays withheld
+  ---
+  duration_ms: 623.5242
+  type: 'test'
+  ...
+# Subtest: F06-V20 a pending whole-vault checkpoint withholds another file until safe recovery completes
+ok 47 - F06-V20 a pending whole-vault checkpoint withholds another file until safe recovery completes
+  ---
+  duration_ms: 1143.2322
+  type: 'test'
+  ...
+# Subtest: F06-V21 explicit restore preserves exact quoted escapes, multiline and duplicate source bytes
+ok 48 - F06-V21 explicit restore preserves exact quoted escapes, multiline and duplicate source bytes
+  ---
+  duration_ms: 601.5737
+  type: 'test'
+  ...
+# Subtest: F06-V22 damaged partial bytes withhold safe completion but authenticated separately approved original recovery remains reachable
+ok 49 - F06-V22 damaged partial bytes withhold safe completion but authenticated separately approved original recovery remains reachable
+  ---
+  duration_ms: 554.0823
+  type: 'test'
+  ...
+# Subtest: F06-V23 status metadata withholds hash-bearing legacy identifiers and direct value fingerprints
+ok 50 - F06-V23 status metadata withholds hash-bearing legacy identifiers and direct value fingerprints
+  ---
+  duration_ms: 457.8587
+  type: 'test'
+  ...
+# Subtest: F06-V24 existing pristine owner TextDocument saves placeholders without creating a new original document
+ok 51 - F06-V24 existing pristine owner TextDocument saves placeholders without creating a new original document
+  ---
+  duration_ms: 460.9162
+  type: 'test'
+  ...
+# Subtest: F06-V25 policy drift inside an approved raw write prevents a stale success acknowledgement
+ok 52 - F06-V25 policy drift inside an approved raw write prevents a stale success acknowledgement
+  ---
+  duration_ms: 700.744
+  type: 'test'
+  ...
+# Subtest: F06-V26 missing or replaced key during backup disclosure withholds originals before disk mutation
+ok 53 - F06-V26 missing or replaced key during backup disclosure withholds originals before disk mutation
+  ---
+  duration_ms: 656.7611
+  type: 'test'
+  ...
+# Subtest: F06-V27 key loss immediately after encrypted vault commit preserves originals and checkpoint for later reviewed recovery
+ok 54 - F06-V27 key loss immediately after encrypted vault commit preserves originals and checkpoint for later reviewed recovery
+  ---
+  duration_ms: 630.3456
+  type: 'test'
+  ...
+# Subtest: F06-P01 secret-ish environment keys migrate short private values with generation and field-position placeholders
+ok 55 - F06-P01 secret-ish environment keys migrate short private values with generation and field-position placeholders
+  ---
+  duration_ms: 14.7141
+  type: 'test'
+  ...
+# Subtest: F06-P02 useful ordinary environment values and empty secret values remain unchanged
+ok 56 - F06-P02 useful ordinary environment values and empty secret values remain unchanged
+  ---
+  duration_ms: 1.0249
+  type: 'test'
+  ...
+# Subtest: F06-P03 formatting, BOM, CRLF, export spacing and unrelated comments survive selected value replacement
+ok 57 - F06-P03 formatting, BOM, CRLF, export spacing and unrelated comments survive selected value replacement
+  ---
+  duration_ms: 0.9823
+  type: 'test'
+  ...
+# Subtest: F06-P04 '-quoted multiline private values migrate atomically without inventing assignment fields
+ok 58 - F06-P04 '-quoted multiline private values migrate atomically without inventing assignment fields
+  ---
+  duration_ms: 0.7326
+  type: 'test'
+  ...
+# Subtest: F06-P04 "-quoted multiline private values migrate atomically without inventing assignment fields
+ok 59 - F06-P04 "-quoted multiline private values migrate atomically without inventing assignment fields
+  ---
+  duration_ms: 0.509
+  type: 'test'
+  ...
+# Subtest: F06-P04 `-quoted multiline private values migrate atomically without inventing assignment fields
+ok 60 - F06-P04 `-quoted multiline private values migrate atomically without inventing assignment fields
+  ---
+  duration_ms: 0.3316
+  type: 'test'
+  ...
+# Subtest: F06-P05 duplicate assignment names preserve each distinct private value and field-position placeholder
+ok 61 - F06-P05 duplicate assignment names preserve each distinct private value and field-position placeholder
+  ---
+  duration_ms: 0.7563
+  type: 'test'
+  ...
+# Subtest: F06-P06 double-quoted newline escapes yield logical private candidate values and no serialized value remnants
+ok 62 - F06-P06 double-quoted newline escapes yield logical private candidate values and no serialized value remnants
+  ---
+  duration_ms: 0.3483
+  type: 'test'
+  ...
+# Subtest: F06-P07 identical private values in different generations produce independent placeholders
+ok 63 - F06-P07 identical private values in different generations produce independent placeholders
+  ---
+  duration_ms: 0.5552
+  type: 'test'
+  ...
+# Subtest: F06-P08 exact legacy and generation placeholders are skipped while later field ordinals remain stable
+ok 64 - F06-P08 exact legacy and generation placeholders are skipped while later field ordinals remain stable
+  ---
+  duration_ms: 0.6407
+  type: 'test'
+  ...
+# Subtest: F06-P09 an accidental or malformed placeholder prefix is migrated rather than mistaken for protection (SOTERAI_PROTECTED_TOKEN)
+ok 65 - F06-P09 an accidental or malformed placeholder prefix is migrated rather than mistaken for protection (SOTERAI_PROTECTED_TOKEN)
+  ---
+  duration_ms: 0.3146
+  type: 'test'
+  ...
+# Subtest: F06-P09 an accidental or malformed placeholder prefix is migrated rather than mistaken for protection (before_SOTERAI_PROTECTED_TOKEN_after)
+ok 66 - F06-P09 an accidental or malformed placeholder prefix is migrated rather than mistaken for protection (before_SOTERAI_PROTECTED_TOKEN_after)
+  ---
+  duration_ms: 0.1556
+  type: 'test'
+  ...
+# Subtest: F06-P09 an accidental or malformed placeholder prefix is migrated rather than mistaken for protection ([SOTERAI_PROTECTED_TOKEN]suffix)
+ok 67 - F06-P09 an accidental or malformed placeholder prefix is migrated rather than mistaken for protection ([SOTERAI_PROTECTED_TOKEN]suffix)
+  ---
+  duration_ms: 0.1421
+  type: 'test'
+  ...
+# Subtest: F06-P09 an accidental or malformed placeholder prefix is migrated rather than mistaken for protection ([SOTERAI_PROTECTED_token])
+ok 68 - F06-P09 an accidental or malformed placeholder prefix is migrated rather than mistaken for protection ([SOTERAI_PROTECTED_token])
+  ---
+  duration_ms: 0.1393
+  type: 'test'
+  ...
+# Subtest: F06-P10 comments containing a migrated candidate value fail closed instead of retaining or rewriting it
+ok 69 - F06-P10 comments containing a migrated candidate value fail closed instead of retaining or rewriting it
+  ---
+  duration_ms: 0.6585
+  type: 'test'
+  ...
+# Subtest: F06-P11 examples include unique empty names only and never comments, multiline suffixes or public values
+ok 70 - F06-P11 examples include unique empty names only and never comments, multiline suffixes or public values
+  ---
+  duration_ms: 0.3646
+  type: 'test'
+  ...
+# Subtest: F06-P12 a repeated plan of already protected environment text is idempotent
+ok 71 - F06-P12 a repeated plan of already protected environment text is idempotent
+  ---
+  duration_ms: 0.3465
+  type: 'test'
+  ...
+# Subtest: F06-P13 non-environment standalone detector offsets preserve Unicode and unrelated JSON text
+ok 72 - F06-P13 non-environment standalone detector offsets preserve Unicode and unrelated JSON text
+  ---
+  duration_ms: 7.0056
+  type: 'test'
+  ...
+# Subtest: F06-P14 multiple standalone credentials use distinct ordered offsets and replace independently
+ok 73 - F06-P14 multiple standalone credentials use distinct ordered offsets and replace independently
+  ---
+  duration_ms: 0.5375
+  type: 'test'
+  ...
+# Subtest: F06-P15 unsupported environment syntax is unavailable rather than partially migrated or copied into examples
+ok 74 - F06-P15 unsupported environment syntax is unavailable rather than partially migrated or copied into examples
+  ---
+  duration_ms: 0.3184
+  type: 'test'
+  ...
+# Subtest: F06-P16 binary, control and oversized UTF-8 input are rejected in both document modes
+ok 75 - F06-P16 binary, control and oversized UTF-8 input are rejected in both document modes
+  ---
+  duration_ms: 0.4237
+  type: 'test'
+  ...
+# Subtest: F06-P17 the environment field budget fails closed above 256 even when values look harmless
+ok 76 - F06-P17 the environment field budget fails closed above 256 even when values look harmless
+  ---
+  duration_ms: 0.5219
+  type: 'test'
+  ...
+# Subtest: F06-P18 placeholder expansion cannot create a masked document above the supported byte budget
+ok 77 - F06-P18 placeholder expansion cannot create a masked document above the supported byte budget
+  ---
+  duration_ms: 0.4943
+  type: 'test'
+  ...
+# Subtest: F06-P19 only an actual UUID generation and boolean environment mode are accepted
+ok 78 - F06-P19 only an actual UUID generation and boolean environment mode are accepted
+  ---
+  duration_ms: 0.3332
+  type: 'test'
+  ...
+# Subtest: F06-P20 case-normalized generation metadata produces the same deterministic private plan
+ok 79 - F06-P20 case-normalized generation metadata produces the same deterministic private plan
+  ---
+  duration_ms: 0.2859
+  type: 'test'
+  ...
+# Subtest: F06-P21 empty supported input produces an empty useful plan in both modes
+ok 80 - F06-P21 empty supported input produces an empty useful plan in both modes
+  ---
+  duration_ms: 0.2288
+  type: 'test'
+  ...
+# Subtest: F06-S01 exclusive ciphertext creation verifies exact durable bytes and refuses overwriting evidence
+ok 81 - F06-S01 exclusive ciphertext creation verifies exact durable bytes and refuses overwriting evidence
+  ---
+  duration_ms: 89.7648
+  type: 'test'
+  ...
+# Subtest: F06-S02 ciphertext replacement preserves other owned files and leaves no completed temporary write
+ok 82 - F06-S02 ciphertext replacement preserves other owned files and leaves no completed temporary write
+  ---
+  duration_ms: 93.6485
+  type: 'test'
+  ...
+# Subtest: F06-S03 missing owned encrypted files read as absent without creating storage or unrelated files
+ok 83 - F06-S03 missing owned encrypted files read as absent without creating storage or unrelated files
+  ---
+  duration_ms: 10.9716
+  type: 'test'
+  ...
+# Subtest: F06-S04 write and read budgets accept exact bounded bytes and reject overflow without replacing the file
+ok 84 - F06-S04 write and read budgets accept exact bounded bytes and reject overflow without replacing the file
+  ---
+  duration_ms: 73.3964
+  type: 'test'
+  ...
+# Subtest: F06-S05 removal requires exact issued ciphertext bytes and preserves a changed file
+ok 85 - F06-S05 removal requires exact issued ciphertext bytes and preserves a changed file
+  ---
+  duration_ms: 53.356
+  type: 'test'
+  ...
+# Subtest: F06-S06 a successful owned mutation runs under an exclusive live lock and releases only that lock
+ok 86 - F06-S06 a successful owned mutation runs under an exclusive live lock and releases only that lock
+  ---
+  duration_ms: 68.9988
+  type: 'test'
+  ...
+# Subtest: F06-S07 operation failure releases its own lock and never rolls encrypted content back to plaintext
+ok 87 - F06-S07 operation failure releases its own lock and never rolls encrypted content back to plaintext
+  ---
+  duration_ms: 60.8125
+  type: 'test'
+  ...
+# Subtest: F06-S08 a live process-owned lock is withheld without executing or replacing its bytes
+ok 88 - F06-S08 a live process-owned lock is withheld without executing or replacing its bytes
+  ---
+  duration_ms: 44.7274
+  type: 'test'
+  ...
+# Subtest: F06-S09 simultaneous same-process mutation cannot bypass the exclusive storage lock
+ok 89 - F06-S09 simultaneous same-process mutation cannot bypass the exclusive storage lock
+  ---
+  duration_ms: 61.9477
+  type: 'test'
+  ...
+# Subtest: F06-S10 malformed JSON keeps uncertain lock ownership withheld and unchanged
+ok 90 - F06-S10 malformed JSON keeps uncertain lock ownership withheld and unchanged
+  ---
+  duration_ms: 34.6706
+  type: 'test'
+  ...
+# Subtest: F06-S10 unknown owner fields keeps uncertain lock ownership withheld and unchanged
+ok 91 - F06-S10 unknown owner fields keeps uncertain lock ownership withheld and unchanged
+  ---
+  duration_ms: 32.6534
+  type: 'test'
+  ...
+# Subtest: F06-S10 unsupported owner schema keeps uncertain lock ownership withheld and unchanged
+ok 92 - F06-S10 unsupported owner schema keeps uncertain lock ownership withheld and unchanged
+  ---
+  duration_ms: 30.4777
+  type: 'test'
+  ...
+# Subtest: F06-S10 invalid owner identity keeps uncertain lock ownership withheld and unchanged
+ok 93 - F06-S10 invalid owner identity keeps uncertain lock ownership withheld and unchanged
+  ---
+  duration_ms: 30.4827
+  type: 'test'
+  ...
+# Subtest: F06-S10 invalid nonce keeps uncertain lock ownership withheld and unchanged
+ok 94 - F06-S10 invalid nonce keeps uncertain lock ownership withheld and unchanged
+  ---
+  duration_ms: 30.6747
+  type: 'test'
+  ...
+# Subtest: F06-S11 strict JSON rejects duplicate decoded keys including escaped and nested names
+ok 95 - F06-S11 strict JSON rejects duplicate decoded keys including escaped and nested names
+  ---
+  duration_ms: 8.1996
+  type: 'test'
+  ...
+# Subtest: F06-S12 strict record objects reject unknown or missing keys and unsupported prototypes
+ok 96 - F06-S12 strict record objects reject unknown or missing keys and unsupported prototypes
+  ---
+  duration_ms: 6.9347
+  type: 'test'
+  ...
+# Subtest: F06-S13 workspace-contained storage is rejected before creating a storage tree or writing ciphertext
+ok 97 - F06-S13 workspace-contained storage is rejected before creating a storage tree or writing ciphertext
+  ---
+  duration_ms: 9.254
+  type: 'test'
+  ...
+# Subtest: F06-S14 relative directories and traversal/invalid names never write outside owned storage
+ok 98 - F06-S14 relative directories and traversal/invalid names never write outside owned storage
+  ---
+  duration_ms: 38.3695
+  type: 'test'
+  ...
+# Subtest: F06-S15 a storage-directory junction or symlink is withheld without writing its canonical target
+ok 99 - F06-S15 a storage-directory junction or symlink is withheld without writing its canonical target
+  ---
+  duration_ms: 11.5891
+  type: 'test'
+  ...
+# Subtest: F06-S16 a storage ancestor alias is rejected before creating a child through that alias
+ok 100 - F06-S16 a storage ancestor alias is rejected before creating a child through that alias
+  ---
+  duration_ms: 10.2059
+  type: 'test'
+  ...
+# Subtest: F06-S17 a canonical workspace alias cannot make storage appear outside the active project
+ok 101 - F06-S17 a canonical workspace alias cannot make storage appear outside the active project
+  ---
+  duration_ms: 10.5836
+  type: 'test'
+  ...
+# Subtest: F06-S18 multiply linked encrypted files cannot be read, replaced or removed through storage
+ok 102 - F06-S18 multiply linked encrypted files cannot be read, replaced or removed through storage
+  ---
+  duration_ms: 63.5869
+  type: 'test'
+  ...
+# Subtest: F06-S19 bounded source reads preserve BOM/UTF-8 text and reject byte overflow
+ok 103 - F06-S19 bounded source reads preserve BOM/UTF-8 text and reject byte overflow
+  ---
+  duration_ms: 14.4236
+  type: 'test'
+  ...
+# Subtest: F06-S20 malformed UTF-8 and binary/control source bytes are withheld without rewriting originals
+ok 104 - F06-S20 malformed UTF-8 and binary/control source bytes are withheld without rewriting originals
+  ---
+  duration_ms: 20.6484
+  type: 'test'
+  ...
+# Subtest: F06-S21 multiple source hardlinks cannot become an approved source read
+ok 105 - F06-S21 multiple source hardlinks cannot become an approved source read
+  ---
+  duration_ms: 10.2563
+  type: 'test'
+  ...
+# Subtest: F06-S22 source file symlinks are rejected before their private target can be read
+ok 106 - F06-S22 source file symlinks are rejected before their private target can be read # SKIP This filesystem/process does not permit the required synthetic link.
+  ---
+  duration_ms: 4.1649
+  type: 'test'
+  ...
+1..106
+# tests 106
+# suites 0
+# pass 105
+# fail 0
+# cancelled 0
+# skipped 1
+# todo 0
+# duration_ms 18095.7222

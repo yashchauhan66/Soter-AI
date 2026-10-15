@@ -1,0 +1,11 @@
+const fs=require('node:fs'),path=require('node:path');
+const build=fs.readFileSync(path.join(__dirname,'build-host-01.cjs'),'utf8').replace('prebuilt-host-01','prebuilt-host-03');
+fs.writeFileSync(path.join(__dirname,'build-host-03.cjs'),build,{flag:'wx'});
+let script=fs.readFileSync(path.join(__dirname,'run-native-diagnostic-03.ps1'),'utf8');
+script=script.slice(script.indexOf("$ErrorActionPreference='Stop'"));
+script=script.replace(/& \$taskRunner -FilePath node -ArgumentList @\('docs\/soterai-lite\/evidence\/20261014-f06-vault-9c361a42\/prepare-diagnostic-03.cjs'\)[^\r\n]*\r?\n/,'');
+script=script.replace(/build-host-02/g,'build-host-03').replace(/host-build-02/g,'host-build-03').replace(/prebuilt-host-02/g,'prebuilt-host-03').replace(/native-host-launch-03/g,'native-host-launch-04');
+const typecheck="& $taskRunner -FilePath node -ArgumentList @('node_modules/typescript/bin/tsc','-p','packages/vscode-extension/tsconfig.json','--noEmit') -OutputFile (Join-Path $PSScriptRoot 'typecheck-05.txt') -WorkingDirectory $taskRepo\nif($LASTEXITCODE -ne 0){throw 'Typecheck failed.'}\n";
+script=script.replace('& $taskRunner -FilePath node -ArgumentList',typecheck+'& $taskRunner -FilePath node -ArgumentList');
+fs.writeFileSync(path.join(__dirname,'run-native-04.ps1'),script,{flag:'wx'});
+console.log('Prepared natural read-only native failure fixture; packaged production runtime unchanged.');

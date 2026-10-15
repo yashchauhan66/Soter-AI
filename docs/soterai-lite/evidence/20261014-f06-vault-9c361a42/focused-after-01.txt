@@ -1,0 +1,458 @@
+﻿TAP version 13
+# Subtest: F06-V01 preview uses a constant mask with no value fragments, lengths or hashes
+ok 1 - F06-V01 preview uses a constant mask with no value fragments, lengths or hashes
+  ---
+  duration_ms: 90.3219
+  type: 'test'
+  ...
+# Subtest: F06-V02 reviewed migration handles duplicate/multiline fields, writes blank examples and keeps recovery encrypted outside the project
+not ok 2 - F06-V02 reviewed migration handles duplicate/multiline fields, writes blank examples and keeps recovery encrypted outside the project
+  ---
+  duration_ms: 89.0708
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-vault-manager.test.ts:13:7004'
+  failureType: 'testCodeFailure'
+  error: 'Protected vault operation withheld. Encrypted recovery is retained; no plaintext rollback was performed.'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    vaultUnavailable (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\firewall\VaultStorage.ts:10:54)
+    VaultManager.mutation (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\firewall\VaultManager.ts:267:53)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:129:91)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F06-V03 declining manager-owned native migration writes nothing
+not ok 3 - F06-V03 declining manager-owned native migration writes nothing
+  ---
+  duration_ms: 72.2128
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-vault-manager.test.ts:13:8302'
+  failureType: 'testCodeFailure'
+  error: 'Protected vault operation withheld. Encrypted recovery is retained; no plaintext rollback was performed.'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    vaultUnavailable (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\firewall\VaultStorage.ts:10:54)
+    VaultManager.mutation (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\firewall\VaultManager.ts:267:53)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:141:78)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F06-V04 SecretStorage store failure or failed readback never removes original values
+not ok 4 - F06-V04 SecretStorage store failure or failed readback never removes original values
+  ---
+  duration_ms: 77.7724
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-vault-manager.test.ts:13:8833'
+  failureType: 'testCodeFailure'
+  error: 'The stored key must be read back and verified.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:160:46)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F06-V05 source drift while native migration review is held cannot overwrite the newer file
+not ok 5 - F06-V05 source drift while native migration review is held cannot overwrite the newer file
+  ---
+  duration_ms: 2024.3005
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-vault-manager.test.ts:13:9959'
+  failureType: 'testCodeFailure'
+  error: 'Manager must obtain native approval before migration.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:64:12)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:170:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F06-V06 source drift while verified key storage is held cannot remove newer source data
+not ok 6 - F06-V06 source drift while verified key storage is held cannot remove newer source data
+  ---
+  duration_ms: 2028.3549
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-vault-manager.test.ts:13:10741'
+  failureType: 'testCodeFailure'
+  error: 'Key storage must be held before destructive migration.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:64:12)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:182:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F06-V07 machine withdrawal, untrusted or nonlocal resources withhold all mutation entry points
+ok 7 - F06-V07 machine withdrawal, untrusted or nonlocal resources withhold all mutation entry points
+  ---
+  duration_ms: 18.4515
+  type: 'test'
+  ...
+# Subtest: F06-V08 flag withdrawal while native confirmation is pending leaves source and vault untouched
+not ok 8 - F06-V08 flag withdrawal while native confirmation is pending leaves source and vault untouched
+  ---
+  duration_ms: 2021.0358
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-vault-manager.test.ts:13:12853'
+  failureType: 'testCodeFailure'
+  error: 'Native review must precede migration writes.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:64:12)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:204:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F06-V09 dirty and stale existing source buffers are rejected before writes and no original TextDocument is created
+ok 9 - F06-V09 dirty and stale existing source buffers are rejected before writes and no original TextDocument is created
+  ---
+  duration_ms: 58.3886
+  type: 'test'
+  ...
+# Subtest: F06-V10 an existing corrupt encrypted vault is preserved and never reinterpreted as empty
+ok 10 - F06-V10 an existing corrupt encrypted vault is preserved and never reinterpreted as empty
+  ---
+  duration_ms: 41.6091
+  type: 'test'
+  ...
+# Subtest: F06-V11 an existing encrypted vault whose key disappeared cannot be replaced by a newly created vault
+not ok 11 - F06-V11 an existing encrypted vault whose key disappeared cannot be replaced by a newly created vault
+  ---
+  duration_ms: 34.5391
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-vault-manager.test.ts:13:14970'
+  failureType: 'testCodeFailure'
+  error: 'Protected vault operation withheld. Encrypted recovery is retained; no plaintext rollback was performed.'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    vaultUnavailable (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\firewall\VaultStorage.ts:10:54)
+    VaultManager.mutation (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\firewall\VaultManager.ts:267:53)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:228:15)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F06-V12 conflicting example files are not overwritten and migration removes no original values
+ok 12 - F06-V12 conflicting example files are not overwritten and migration removes no original values
+  ---
+  duration_ms: 47.0653
+  type: 'test'
+  ...
+# Subtest: F06-V13 explicit example generation contains blank unique names only and refuses a conflicting existing example
+not ok 13 - F06-V13 explicit example generation contains blank unique names only and refuses a conflicting existing example
+  ---
+  duration_ms: 42.9513
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-vault-manager.test.ts:13:16278'
+  failureType: 'testCodeFailure'
+  error: 'Protected vault operation withheld. Encrypted recovery is retained; no plaintext rollback was performed.'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    vaultUnavailable (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\firewall\VaultStorage.ts:10:54)
+    VaultManager.mutation (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\firewall\VaultManager.ts:267:53)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:241:50)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F06-V14 failed source write preserves encrypted recovery; a new manager completes the masked outcome idempotently
+not ok 14 - F06-V14 failed source write preserves encrypted recovery; a new manager completes the masked outcome idempotently
+  ---
+  duration_ms: 110.8439
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-vault-manager.test.ts:13:16983'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      sha(await readFile(file))
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    assertEncryptedStorage (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:72:49)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:248:92)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F06-V15 tampered issued checkpoint recovery is withheld without silently restoring or rewriting originals
+not ok 15 - F06-V15 tampered issued checkpoint recovery is withheld without silently restoring or rewriting originals
+  ---
+  duration_ms: 43.5954
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-vault-manager.test.ts:13:18333'
+  failureType: 'testCodeFailure'
+  error: 'A durable encrypted generation must survive the failed source write.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:261:90)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F06-V16 raw restoration requires its own disclosure approval and retained placeholders remain until accepted
+not ok 16 - F06-V16 raw restoration requires its own disclosure approval and retained placeholders remain until accepted
+  ---
+  duration_ms: 39.6001
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-vault-manager.test.ts:13:19305'
+  failureType: 'testCodeFailure'
+  error: 'Protected vault operation withheld. Encrypted recovery is retained; no plaintext rollback was performed.'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    vaultUnavailable (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\firewall\VaultStorage.ts:10:54)
+    VaultManager.mutation (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\firewall\VaultManager.ts:267:53)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:267:15)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F06-V17 equal relative paths in different projects cannot restore another root's vault entries or swapped backup
+not ok 17 - F06-V17 equal relative paths in different projects cannot restore another root's vault entries or swapped backup
+  ---
+  duration_ms: 39.0117
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-vault-manager.test.ts:13:20336'
+  failureType: 'testCodeFailure'
+  error: 'Protected vault operation withheld. Encrypted recovery is retained; no plaintext rollback was performed.'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    vaultUnavailable (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\firewall\VaultStorage.ts:10:54)
+    VaultManager.mutation (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\firewall\VaultManager.ts:267:53)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:276:15)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F06-V18 static mutation serialization preserves both files' distinct encrypted entries
+not ok 18 - F06-V18 static mutation serialization preserves both files' distinct encrypted entries
+  ---
+  duration_ms: 2018.8589
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-vault-manager.test.ts:13:21773'
+  failureType: 'testCodeFailure'
+  error: 'The first manager mutation must hold its own native review.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:64:12)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:295:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F06-V19 compatible encrypted legacy entries survive a new migration while legacy relative restoration stays withheld
+not ok 19 - F06-V19 compatible encrypted legacy entries survive a new migration while legacy relative restoration stays withheld
+  ---
+  duration_ms: 52.2341
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-vault-manager.test.ts:15:1197'
+  failureType: 'testCodeFailure'
+  error: 'Protected vault operation withheld. Encrypted recovery is retained; no plaintext rollback was performed.'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    vaultUnavailable (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\firewall\VaultStorage.ts:10:54)
+    VaultManager.mutation (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\firewall\VaultManager.ts:267:53)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:309:19)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F06-V20 a pending whole-vault checkpoint withholds another file until safe recovery completes
+not ok 20 - F06-V20 a pending whole-vault checkpoint withholds another file until safe recovery completes
+  ---
+  duration_ms: 128.8968
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-vault-manager.test.ts:15:2385'
+  failureType: 'testCodeFailure'
+  error: 'Protected vault operation withheld. Encrypted recovery is retained; no plaintext rollback was performed.'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    vaultUnavailable (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\firewall\VaultStorage.ts:10:54)
+    VaultManager.mutation (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\firewall\VaultManager.ts:267:53)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:321:64)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F06-P01 secret-ish environment keys migrate short private values with generation and field-position placeholders
+ok 21 - F06-P01 secret-ish environment keys migrate short private values with generation and field-position placeholders
+  ---
+  duration_ms: 14.8553
+  type: 'test'
+  ...
+# Subtest: F06-P02 useful ordinary environment values and empty secret values remain unchanged
+ok 22 - F06-P02 useful ordinary environment values and empty secret values remain unchanged
+  ---
+  duration_ms: 0.8226
+  type: 'test'
+  ...
+# Subtest: F06-P03 formatting, BOM, CRLF, export spacing and unrelated comments survive selected value replacement
+ok 23 - F06-P03 formatting, BOM, CRLF, export spacing and unrelated comments survive selected value replacement
+  ---
+  duration_ms: 0.8386
+  type: 'test'
+  ...
+# Subtest: F06-P04 '-quoted multiline private values migrate atomically without inventing assignment fields
+ok 24 - F06-P04 '-quoted multiline private values migrate atomically without inventing assignment fields
+  ---
+  duration_ms: 0.6837
+  type: 'test'
+  ...
+# Subtest: F06-P04 "-quoted multiline private values migrate atomically without inventing assignment fields
+ok 25 - F06-P04 "-quoted multiline private values migrate atomically without inventing assignment fields
+  ---
+  duration_ms: 0.4428
+  type: 'test'
+  ...
+# Subtest: F06-P04 `-quoted multiline private values migrate atomically without inventing assignment fields
+ok 26 - F06-P04 `-quoted multiline private values migrate atomically without inventing assignment fields
+  ---
+  duration_ms: 0.2866
+  type: 'test'
+  ...
+# Subtest: F06-P05 duplicate assignment names preserve each distinct private value and field-position placeholder
+ok 27 - F06-P05 duplicate assignment names preserve each distinct private value and field-position placeholder
+  ---
+  duration_ms: 0.6063
+  type: 'test'
+  ...
+# Subtest: F06-P06 double-quoted newline escapes yield logical private candidate values and no serialized value remnants
+ok 28 - F06-P06 double-quoted newline escapes yield logical private candidate values and no serialized value remnants
+  ---
+  duration_ms: 0.337
+  type: 'test'
+  ...
+# Subtest: F06-P07 identical private values in different generations produce independent placeholders
+ok 29 - F06-P07 identical private values in different generations produce independent placeholders
+  ---
+  duration_ms: 0.4768
+  type: 'test'
+  ...
+# Subtest: F06-P08 exact legacy and generation placeholders are skipped while later field ordinals remain stable
+ok 30 - F06-P08 exact legacy and generation placeholders are skipped while later field ordinals remain stable
+  ---
+  duration_ms: 0.6264
+  type: 'test'
+  ...
+# Subtest: F06-P09 an accidental or malformed placeholder prefix is migrated rather than mistaken for protection (SOTERAI_PROTECTED_TOKEN)
+ok 31 - F06-P09 an accidental or malformed placeholder prefix is migrated rather than mistaken for protection (SOTERAI_PROTECTED_TOKEN)
+  ---
+  duration_ms: 0.2549
+  type: 'test'
+  ...
+# Subtest: F06-P09 an accidental or malformed placeholder prefix is migrated rather than mistaken for protection (before_SOTERAI_PROTECTED_TOKEN_after)
+ok 32 - F06-P09 an accidental or malformed placeholder prefix is migrated rather than mistaken for protection (before_SOTERAI_PROTECTED_TOKEN_after)
+  ---
+  duration_ms: 0.1464
+  type: 'test'
+  ...
+# Subtest: F06-P09 an accidental or malformed placeholder prefix is migrated rather than mistaken for protection ([SOTERAI_PROTECTED_TOKEN]suffix)
+ok 33 - F06-P09 an accidental or malformed placeholder prefix is migrated rather than mistaken for protection ([SOTERAI_PROTECTED_TOKEN]suffix)
+  ---
+  duration_ms: 0.167
+  type: 'test'
+  ...
+# Subtest: F06-P09 an accidental or malformed placeholder prefix is migrated rather than mistaken for protection ([SOTERAI_PROTECTED_token])
+ok 34 - F06-P09 an accidental or malformed placeholder prefix is migrated rather than mistaken for protection ([SOTERAI_PROTECTED_token])
+  ---
+  duration_ms: 0.1654
+  type: 'test'
+  ...
+# Subtest: F06-P10 comments containing a migrated candidate value fail closed instead of retaining or rewriting it
+ok 35 - F06-P10 comments containing a migrated candidate value fail closed instead of retaining or rewriting it
+  ---
+  duration_ms: 0.842
+  type: 'test'
+  ...
+# Subtest: F06-P11 examples include unique empty names only and never comments, multiline suffixes or public values
+ok 36 - F06-P11 examples include unique empty names only and never comments, multiline suffixes or public values
+  ---
+  duration_ms: 1.2132
+  type: 'test'
+  ...
+# Subtest: F06-P12 a repeated plan of already protected environment text is idempotent
+ok 37 - F06-P12 a repeated plan of already protected environment text is idempotent
+  ---
+  duration_ms: 0.5899
+  type: 'test'
+  ...
+# Subtest: F06-P13 non-environment standalone detector offsets preserve Unicode and unrelated JSON text
+ok 38 - F06-P13 non-environment standalone detector offsets preserve Unicode and unrelated JSON text
+  ---
+  duration_ms: 5.6279
+  type: 'test'
+  ...
+# Subtest: F06-P14 multiple standalone credentials use distinct ordered offsets and replace independently
+ok 39 - F06-P14 multiple standalone credentials use distinct ordered offsets and replace independently
+  ---
+  duration_ms: 0.5312
+  type: 'test'
+  ...
+# Subtest: F06-P15 unsupported environment syntax is unavailable rather than partially migrated or copied into examples
+ok 40 - F06-P15 unsupported environment syntax is unavailable rather than partially migrated or copied into examples
+  ---
+  duration_ms: 0.3168
+  type: 'test'
+  ...
+# Subtest: F06-P16 binary, control and oversized UTF-8 input are rejected in both document modes
+ok 41 - F06-P16 binary, control and oversized UTF-8 input are rejected in both document modes
+  ---
+  duration_ms: 1.8839
+  type: 'test'
+  ...
+# Subtest: F06-P17 the environment field budget fails closed above 256 even when values look harmless
+ok 42 - F06-P17 the environment field budget fails closed above 256 even when values look harmless
+  ---
+  duration_ms: 0.5542
+  type: 'test'
+  ...
+# Subtest: F06-P18 placeholder expansion cannot create a masked document above the supported byte budget
+ok 43 - F06-P18 placeholder expansion cannot create a masked document above the supported byte budget
+  ---
+  duration_ms: 0.5063
+  type: 'test'
+  ...
+# Subtest: F06-P19 only an actual UUID generation and boolean environment mode are accepted
+ok 44 - F06-P19 only an actual UUID generation and boolean environment mode are accepted
+  ---
+  duration_ms: 0.3302
+  type: 'test'
+  ...
+# Subtest: F06-P20 case-normalized generation metadata produces the same deterministic private plan
+ok 45 - F06-P20 case-normalized generation metadata produces the same deterministic private plan
+  ---
+  duration_ms: 0.2697
+  type: 'test'
+  ...
+# Subtest: F06-P21 empty supported input produces an empty useful plan in both modes
+ok 46 - F06-P21 empty supported input produces an empty useful plan in both modes
+  ---
+  duration_ms: 0.2365
+  type: 'test'
+  ...
+1..46
+# tests 46
+# suites 0
+# pass 31
+# fail 15
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 10764.1029

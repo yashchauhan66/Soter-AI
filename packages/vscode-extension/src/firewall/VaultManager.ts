@@ -1,374 +1,311 @@
 import * as vscode from "vscode";
-import { createHash, randomUUID } from "crypto";
-import {
-    extractVaultCandidates,
-    applyPlaceholders,
-    restorePlaceholders,
-    buildVaultMetadata,
-    generateEnvExample,
-    generateVaultKey,
-    encryptVault,
-    decryptVault,
-    type VaultCandidate,
-    type VaultEntryMetadata,
-} from "@soterai/guard-core";
+import * as path from "node:path";
+import { open } from "node:fs/promises";
+import { createHash, randomUUID } from "node:crypto";
+import { buildVaultMetadata, generateVaultKey, encryptVault, decryptVault, type VaultEntryMetadata } from "@soterai/guard-core";
 import { assertWorkspaceFileUri, assertWorkspaceOutputUri } from "../security/WorkspacePathGuard";
+import { BoundarySnapshot, updateRules } from "../ai-boundary/BoundarySnapshot";
+import { withPendingRestriction, restrictionSaveEnabled } from "../ai-boundary/RestrictionOperation";
+import { MASKED } from "../project-privacy/SafeFileView";
+import { createVaultMigrationPlan } from "./VaultMigrationPlan";
+import { VaultStorage, VAULT_LIMIT, readVaultFile, samePath, vaultJson, vaultObject, vaultUnavailable, missing } from "./VaultStorage";
 
-/**
- * VaultManager — the extension-side orchestration of the Protected Secret Vault.
- *
- * Honest design:
- *  - The encrypted vault file lives in the extension's GLOBAL storage
- *    (`context.globalStorageUri`), OUTSIDE the workspace, so other extensions
- *    walking the workspace never see it.
- *  - The AES-256 key lives in VS Code SecretStorage, separate from the file.
- *  - Migration removes raw secrets from workspace files, replacing them with
- *    `[SOTERAI_PROTECTED_*]` placeholders, after writing an ENCRYPTED backup
- *    into extension global storage (never a plaintext file in the workspace —
- *    a workspace `.bak` would hand the raw secrets straight to any AI tool or
- *    extension that reads workspace files).
- *  - Raw secret values are never written to logs, telemetry, the ledger, or the
- *    webview — only hash-bearing metadata is ever surfaced.
- *
- * This prevents ACCIDENTAL exposure of secrets to AI tools that read migrated
- * files. It does not stop an extension from reading a file you have not migrated
- * — see docs/ide-guard-limitations.md.
- */
+const KEY_ID = "soterai.vaultKey", PENDING = "vault-pending.json", VAULT = "soterai-vault.enc";
+const UUID = /^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/i;
+const digest = (text: string) => createHash("sha256").update(text).digest("hex");
+interface StoredEntry extends VaultEntryMetadata { rawValue: string; source?: string; root?: string; replacementText?: string }
+interface VaultFile { version: 1 | 2; entries: StoredEntry[] }
+interface Basis { source: string; root: string; text: string; identity: string; policy: string; epoch: number; ownerDamagedRecovery: boolean }
+interface Issued { schemaVersion: 1; id: string; source: string; root: string; digest: string }
+interface Checkpoint { schemaVersion: 1; id: string; source: string; root: string; original: string; masked: string; example: string;
+    identity: string; vaultBefore: string | null; vaultAfter: string; count: number }
+export interface VaultStatus { exists: boolean; location: string; entryCount: number; entries: Array<Omit<VaultEntryMetadata, "hash" | "id">> }
+export interface MigrationPreview { file: string; candidates: Array<{ key: string; type: string; placeholder: string; redactedPreview: string }> }
 
-const KEY_SECRET_ID = "soterai.vaultKey";
-
-interface StoredVaultEntry extends VaultEntryMetadata {
-    /** Raw value, only present inside the decrypted-in-memory vault. */
-    rawValue: string;
+export function vaultModeEnabled(): boolean {
+    try {
+        const config = vscode.workspace.getConfiguration("soterai"), inspected = config.inspect<boolean>("lite.vaultMode");
+        return vscode.workspace.isTrusted && (inspected ? inspected.globalValue ?? inspected.defaultValue ?? true : config.get("lite.vaultMode", true)) === true;
+    } catch { return false; }
+}
+function keyValid(key: unknown): key is string {
+    return typeof key === "string" && /^[A-Za-z0-9+/]{43}=$/.test(key) && Buffer.from(key, "base64").length === 32 && Buffer.from(key, "base64").toString("base64") === key;
+}
+function parseVault(text: string): VaultFile {
+    const value = vaultObject(vaultJson(text), ["version", "entries"]);
+    if (![1, 2].includes(value.version as number) || !Array.isArray(value.entries) || value.entries.length > 4096) return vaultUnavailable();
+    const entries = value.entries.map(entry => {
+        const data = vaultObject(entry, ["id", "key", "type", "originalFile", "placeholder", "createdAt", "hash", "rawValue", "source", "root", "replacementText"],
+            ["id", "key", "type", "originalFile", "placeholder", "createdAt", "hash", "rawValue"]);
+        for (const field of Object.keys(data)) if (typeof data[field] !== "string" || Buffer.byteLength(data[field] as string, "utf8") > 65536) return vaultUnavailable();
+        if (!/^[a-f0-9]{64}$/i.test(data.hash as string) || !/^\[SOTERAI_PROTECTED_[A-Z0-9_]+\]$/.test(data.placeholder as string)
+            || !data.id || !data.key || !data.type || !data.originalFile || !Number.isFinite(Date.parse(data.createdAt as string))) return vaultUnavailable();
+        if (data.source !== undefined && (typeof data.root !== "string" || typeof data.replacementText !== "string")) return vaultUnavailable();
+        return data as unknown as StoredEntry;
+    });
+    return { version: value.version as 1 | 2, entries };
 }
 
-interface VaultFile {
-    version: number;
-    entries: StoredVaultEntry[];
-}
-
-export interface VaultStatus {
-    exists: boolean;
-    location: string;
-    entryCount: number;
-    /** Metadata only — never raw values. */
-    entries: VaultEntryMetadata[];
-}
-
-export interface MigrationPreview {
-    file: string;
-    candidates: Array<{ key: string; type: string; placeholder: string; redactedPreview: string }>;
-}
-
+/** Optional owner-reviewed migration. SecretStorage API availability is not OS
+ * custody certification or isolation from other same-user software. */
 export class VaultManager {
-    /** Serialize vault mutations so concurrent watcher/command runs cannot lose entries. */
     private static mutationQueue: Promise<void> = Promise.resolve();
-
-    constructor(private readonly context: vscode.ExtensionContext) {}
-
-    private vaultUri(): vscode.Uri {
-        return vscode.Uri.joinPath(this.context.globalStorageUri, "soterai-vault.enc");
+    private readonly storage: VaultStorage;
+    private epoch = 0;
+    constructor(private readonly context: vscode.ExtensionContext) {
+        // Desktop VS Code exposes profile global storage as vscode-userdata;
+        // its native storage implementation maps that trusted URI to file.
+        this.storage = new VaultStorage(context.globalStorageUri.with({ scheme: "file" }).fsPath);
+        context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(event => { if (event.affectsConfiguration("soterai")) this.epoch++; }));
+        context.subscriptions.push(vscode.workspace.onDidChangeWorkspaceFolders(() => { this.epoch++; }));
     }
-
-    private async getOrCreateKey(): Promise<string> {
-        let key = await this.context.secrets.get(KEY_SECRET_ID);
-        if (!key) {
-            key = generateVaultKey();
-            await this.context.secrets.store(KEY_SECRET_ID, key);
+    private alive(epoch?: number): void {
+        const storage = this.context.globalStorageUri;
+        if (!vaultModeEnabled() || !["file", "vscode-userdata"].includes(storage.scheme) || storage.scheme === "vscode-userdata" && !!vscode.env.remoteName || storage.authority
+            || this.context.globalStorageUri.query || this.context.globalStorageUri.fragment || epoch !== undefined && epoch !== this.epoch) return vaultUnavailable();
+    }
+    private async capture(uri: vscode.Uri, ownerDamagedRecovery = false): Promise<Basis> {
+        this.alive();
+        if (!(uri instanceof vscode.Uri) || uri.scheme !== "file" || uri.authority || uri.query || uri.fragment) return vaultUnavailable();
+        const folder = vscode.workspace.getWorkspaceFolder(uri); if (!folder || folder.uri.scheme !== "file") return vaultUnavailable();
+        const root = folder.uri.toString(), epoch = this.epoch;
+        if (!samePath(await assertWorkspaceFileUri(uri), uri.fsPath)) return vaultUnavailable();
+        const policy = (await BoundarySnapshot.load()).accessRevision(uri); if (!policy) return vaultUnavailable();
+        const result = await readVaultFile(uri.fsPath, 65536, ownerDamagedRecovery);
+        if (!samePath(await assertWorkspaceFileUri(uri), uri.fsPath) || (await BoundarySnapshot.load()).accessRevision(uri) !== policy
+            || vscode.workspace.getWorkspaceFolder(uri)?.uri.toString() !== root) return vaultUnavailable();
+        this.alive(epoch);
+        if (ownerDamagedRecovery) {
+            // Refuse existing source editors during damaged-byte disclosure;
+            // never introduce a raw TextDocument to recover an original.
+            if (vscode.workspace.textDocuments.some(document => document.uri.toString() === uri.toString())) return vaultUnavailable();
+        } else this.assertDocumentReady(uri, result.text);
+        return { source: uri.toString(), root, ...result, policy, epoch, ownerDamagedRecovery };
+    }
+    private async fresh(uri: vscode.Uri, basis: Basis, expected = basis.text): Promise<Basis> {
+        this.alive(basis.epoch); const current = await this.capture(uri, basis.ownerDamagedRecovery);
+        if (current.source !== basis.source || current.root !== basis.root || current.policy !== basis.policy || current.text !== expected
+            || expected === basis.text && current.identity !== basis.identity) return vaultUnavailable();
+        return current;
+    }
+    private async key(create: boolean): Promise<string> {
+        let key = await this.context.secrets.get(KEY_ID);
+        if (!key && create) {
+            if (await this.storage.read(VAULT) !== undefined || await this.storage.read(PENDING, 16384) !== undefined || await this.storage.hasGenerations()) return vaultUnavailable();
+            key = generateVaultKey(); await this.context.secrets.store(KEY_ID, key);
         }
+        if (!keyValid(key) || await this.context.secrets.get(KEY_ID) !== key) return vaultUnavailable();
         return key;
     }
-
-    private async readVault(): Promise<VaultFile> {
-        try {
-            await vscode.workspace.fs.stat(this.vaultUri());
-        } catch (error) {
-            if (isFileNotFound(error)) return { version: 1, entries: [] };
-            throw new Error("Protected vault storage is not accessible; no workspace file was changed.");
-        }
-
-        try {
-            const bytes = await vscode.workspace.fs.readFile(this.vaultUri());
-            const key = await this.context.secrets.get(KEY_SECRET_ID);
-            if (!key) {
-                throw new Error("vault key is unavailable");
-            }
-            const json = await decryptVault(new TextDecoder().decode(bytes), key);
-            const parsed = JSON.parse(json) as VaultFile;
-            if (!parsed || !Array.isArray(parsed.entries)) throw new Error("vault format is invalid");
-            if (parsed.entries.some((entry) =>
-                !entry ||
-                typeof entry.rawValue !== "string" ||
-                typeof entry.placeholder !== "string" ||
-                typeof entry.originalFile !== "string"
-            )) {
-                throw new Error("vault entries are invalid");
-            }
-            return { version: parsed.version ?? 1, entries: parsed.entries };
-        } catch {
-            // Never reinterpret a corrupt/undecryptable existing vault as empty.
-            // Doing so would overwrite the only encrypted copy during migration.
-            throw new Error(
-                "Protected vault could not be decrypted or validated. Migration stopped without changing the workspace file.",
-            );
-        }
+    private async vault(key?: string): Promise<{ text: string | null; data: VaultFile }> {
+        const text = await this.storage.read(VAULT); if (text === undefined) return { text: null, data: { version: 2, entries: [] } };
+        return { text, data: parseVault(await decryptVault(text, key ?? await this.key(false))) };
     }
-
-    private async writeVault(vault: VaultFile): Promise<void> {
-        await vscode.workspace.fs.createDirectory(this.context.globalStorageUri);
-        const key = await this.getOrCreateKey();
-        const payload = await encryptVault(JSON.stringify(vault), key);
-        const tempUri = vscode.Uri.joinPath(
-            this.context.globalStorageUri,
-            `soterai-vault.${randomUUID()}.tmp`,
-        );
-        try {
-            await vscode.workspace.fs.writeFile(tempUri, new TextEncoder().encode(payload));
-            await vscode.workspace.fs.rename(tempUri, this.vaultUri(), { overwrite: true });
-        } catch (error) {
-            try { await vscode.workspace.fs.delete(tempUri); } catch { /* best-effort temp cleanup */ }
-            throw error;
-        }
+    private pointer(uri: vscode.Uri): string { return "vault-source-" + digest(uri.toString()).slice(0, 32) + ".json"; }
+    private issued(text: string): Issued {
+        const data = vaultObject(vaultJson(text), ["schemaVersion", "id", "source", "root", "digest"]);
+        if (data.schemaVersion !== 1 || typeof data.id !== "string" || !UUID.test(data.id) || typeof data.source !== "string"
+            || typeof data.root !== "string" || typeof data.digest !== "string" || !/^[a-f0-9]{64}$/.test(data.digest)) return vaultUnavailable();
+        return data as unknown as Issued;
     }
-
-    /** Vault status for display — metadata only, never raw values. */
+    private async checkpoint(uri: vscode.Uri, root: string, pointer: string): Promise<Checkpoint> {
+        const record = this.issued(pointer); if (record.source !== uri.toString() || record.root !== root) return vaultUnavailable();
+        const cipher = await this.storage.read("vault-generation-" + record.id + ".enc");
+        if (!cipher || digest(cipher) !== record.digest) return vaultUnavailable();
+        const value = vaultObject(vaultJson(await decryptVault(cipher, await this.key(false))),
+            ["schemaVersion", "id", "source", "root", "original", "masked", "example", "identity", "vaultBefore", "vaultAfter", "count"]);
+        if (value.schemaVersion !== 1 || value.id !== record.id || value.source !== record.source || value.root !== record.root
+            || !Number.isSafeInteger(value.count) || (value.count as number) < 1 || (value.count as number) > 256
+            || value.vaultBefore !== null && typeof value.vaultBefore !== "string" || typeof value.vaultAfter !== "string") return vaultUnavailable();
+        for (const field of ["original", "masked", "example", "identity"]) if (typeof value[field] !== "string" || Buffer.byteLength(value[field] as string, "utf8") > 65536) return vaultUnavailable();
+        if ((value.example as string).split("\n").some(line => line && !/^[A-Za-z_][A-Za-z0-9_]{0,127}=$/.test(line))) return vaultUnavailable();
+        parseVault(await decryptVault(value.vaultAfter as string, await this.key(false)));
+        return value as unknown as Checkpoint;
+    }
+    private async noPending(): Promise<void> { if (await this.storage.read(PENDING, 16384) !== undefined) return vaultUnavailable(); }
+    private async protect(uri: vscode.Uri, basis: Basis): Promise<Basis> {
+        if (!restrictionSaveEnabled()) return vaultUnavailable();
+        const folder = vscode.workspace.getWorkspaceFolder(uri); if (!folder || folder.uri.toString() !== basis.root) return vaultUnavailable();
+        const pattern = path.relative(folder.uri.fsPath, uri.fsPath).replace(/\\/g, "/").normalize("NFC");
+        await updateRules(basis.root, rules => ({ ...rules, paths: [...rules.paths, { kind: "file", pattern, sensitive: true }] }));
+        const current = await this.capture(uri); this.alive(basis.epoch);
+        if (current.source !== basis.source || current.root !== basis.root || current.text !== basis.text || current.identity !== basis.identity) return vaultUnavailable();
+        return current;
+    }
+    private exampleUri(uri: vscode.Uri): vscode.Uri { return vscode.Uri.joinPath(uri, "..", ".env.example"); }
+    private async checkExample(uri: vscode.Uri, expected: string): Promise<void> {
+        if (!expected) return;
+        const example = this.exampleUri(uri); if (example.toString() === uri.toString()) return vaultUnavailable();
+        await assertWorkspaceOutputUri(example);
+        try { if ((await readVaultFile(example.fsPath)).text !== expected) return vaultUnavailable(); }
+        catch (error) { if (!missing(error)) throw error; }
+    }
+    private async writeExample(uri: vscode.Uri, text: string, key: string): Promise<void> {
+        if (!text) return; await this.checkExample(uri, text); const target = this.exampleUri(uri);
+        try { const existing = await readVaultFile(target.fsPath); if (existing.text === text) return; return vaultUnavailable(); }
+        catch (error) { if (!missing(error)) throw error; }
+        await assertWorkspaceOutputUri(target); if (await this.key(false) !== key) return vaultUnavailable(); this.alive();
+        const handle = await open(target.fsPath, "wx", 0o600);
+        try { await handle.writeFile(text, "utf8"); await handle.sync(); } finally { await handle.close(); }
+        if ((await readVaultFile(target.fsPath)).text !== text) return vaultUnavailable();
+    }
+    private async writeSource(uri: vscode.Uri, basis: Basis, next: string, key: string): Promise<void> {
+        await this.fresh(uri, basis);
+        if (await this.key(false) !== key) return vaultUnavailable(); this.alive(basis.epoch);
+        // Never create an original TextDocument. Existing pristine buffers must
+        // refresh from disk; dirty/stale buffers are withheld before every write.
+        const document = vscode.workspace.textDocuments.find(document => document.uri.toString() === uri.toString());
+        if (document) {
+            const edit = new vscode.WorkspaceEdit(), version = document.version;
+            edit.replace(uri, new vscode.Range(document.positionAt(0), document.positionAt(basis.text.length)), next);
+            if (!await vscode.workspace.applyEdit(edit) || document.getText() !== next || document.version !== version + 1) return vaultUnavailable();
+            this.alive(basis.epoch);
+            const disk = await readVaultFile(uri.fsPath);
+            if (disk.identity !== basis.identity || disk.text !== basis.text || vscode.workspace.getWorkspaceFolder(uri)?.uri.toString() !== basis.root
+                || (await BoundarySnapshot.load()).accessRevision(uri) !== basis.policy) return vaultUnavailable();
+            if (await this.key(false) !== key) return vaultUnavailable();
+            this.alive(basis.epoch); if (document.getText() !== next || !await document.save()) return vaultUnavailable();
+        } else await vscode.workspace.fs.writeFile(uri, Buffer.from(next, "utf8"));
+        const handle = await open(uri.fsPath, "r+"); try { await handle.sync(); } finally { await handle.close(); }
+        this.alive(basis.epoch);
+        if (!samePath(await assertWorkspaceFileUri(uri), uri.fsPath) || (await readVaultFile(uri.fsPath)).text !== next
+            || vscode.workspace.getWorkspaceFolder(uri)?.uri.toString() !== basis.root || (await BoundarySnapshot.load()).accessRevision(uri) !== basis.policy) return vaultUnavailable();
+    }
+    async preview(uri: vscode.Uri): Promise<MigrationPreview> {
+        const basis = await this.capture(uri), plan = createVaultMigrationPlan(basis.text, /^\.env(?:\..*)?$/i.test(path.basename(uri.fsPath)), randomUUID());
+        return { file: vscode.workspace.asRelativePath(uri), candidates: plan.candidates.map(({ key, type, placeholder }) => ({ key, type, placeholder, redactedPreview: MASKED })) };
+    }
     async status(): Promise<VaultStatus> {
-        const vault = await this.readVault();
-        let exists = false;
+        const vault = await this.vault(), roots = new Set((vscode.workspace.workspaceFolders ?? []).map(folder => folder.uri.toString()));
+        const entries = vault.data.entries.filter(entry => !entry.root || roots.has(entry.root)).map(entry => ({ key: entry.key, type: entry.type,
+            originalFile: entry.originalFile, placeholder: entry.placeholder, createdAt: entry.createdAt }));
+        return { exists: vault.text !== null, location: path.join(this.storage.directory, VAULT), entryCount: entries.length, entries };
+    }
+    async knownPlaceholders(): Promise<string[]> { return [...new Set((await this.vault()).data.entries.map(entry => entry.placeholder))]; }
+    async migrate(uri: vscode.Uri): Promise<number> {
+        return this.mutation(async () => {
+            let basis = await this.capture(uri); await this.noPending();
+            const id = randomUUID(), plan = createVaultMigrationPlan(basis.text, /^\.env(?:\..*)?$/i.test(path.basename(uri.fsPath)), id);
+            if (!plan.candidates.length) return 0; await this.checkExample(uri, plan.exampleText);
+            const detail = JSON.stringify({ file: vscode.workspace.asRelativePath(uri), count: plan.candidates.length, values: MASKED,
+                keys: plan.candidates.map(candidate => candidate.key), protection: "Add a permanent sensitive deny", example: "Unique names and empty values only",
+                recovery: "Encrypted outside this project", appBehavior: "Applications reading this file receive placeholders; review application secret setup before migrating",
+                limitations: "Other copies, history and same-user access remain outside migration" }, null, 2);
+            if (await vscode.window.showWarningMessage("Move these values into the encrypted vault and replace them with placeholders?", { modal: true, detail }, "Migrate securely") !== "Migrate securely") return 0;
+            await this.fresh(uri, basis); await this.checkExample(uri, plan.exampleText);
+            return this.storage.lock(async () => {
+                await this.noPending(); const key = await this.key(true); await this.fresh(uri, basis);
+                const prior = await this.vault(key); await this.fresh(uri, basis);
+                const entries = [...prior.data.entries];
+                for (const candidate of plan.candidates) entries.push({ ...await buildVaultMetadata(candidate, vscode.workspace.asRelativePath(uri)),
+                    rawValue: candidate.rawValue, replacementText: candidate.replacementText, source: basis.source, root: basis.root });
+                if (entries.length > 4096) return vaultUnavailable();
+                const vaultAfter = await encryptVault(JSON.stringify({ version: 2, entries }), key); if (Buffer.byteLength(vaultAfter) > VAULT_LIMIT / 2) return vaultUnavailable();
+                await this.fresh(uri, basis); await this.checkExample(uri, plan.exampleText); basis = await this.protect(uri, basis);
+                return withPendingRestriction(basis.root, async () => {
+                    const checkpoint: Checkpoint = { schemaVersion: 1, id, source: basis.source, root: basis.root, original: basis.text, masked: plan.maskedText,
+                        example: plan.exampleText, identity: basis.identity, vaultBefore: prior.text, vaultAfter, count: plan.candidates.length };
+                    const encrypted = await encryptVault(JSON.stringify(checkpoint), key);
+                    await this.fresh(uri, basis); if (await this.context.secrets.get(KEY_ID) !== key) return vaultUnavailable();
+                    await this.storage.write("vault-generation-" + id + ".enc", encrypted, true);
+                    const record: Issued = { schemaVersion: 1, id, source: basis.source, root: basis.root, digest: digest(encrypted) }, pointer = JSON.stringify(record);
+                    await this.fresh(uri, basis); await this.storage.write(PENDING, pointer, true);
+                    await this.complete(uri, basis, checkpoint, pointer, key); return plan.candidates.length;
+                });
+            });
+        });
+    }
+    private async complete(uri: vscode.Uri, basis: Basis, checkpoint: Checkpoint, pointer: string, key: string): Promise<void> {
+        await this.checkExample(uri, checkpoint.example); const current = await this.capture(uri); this.alive(basis.epoch);
+        if (current.source !== checkpoint.source || current.root !== checkpoint.root || current.policy !== basis.policy
+            || ![checkpoint.original, checkpoint.masked].includes(current.text)
+            || current.text === checkpoint.original && current.identity !== checkpoint.identity) return vaultUnavailable();
+        const vault = await this.storage.read(VAULT) ?? null;
+        if (vault !== checkpoint.vaultBefore && vault !== checkpoint.vaultAfter || await this.context.secrets.get(KEY_ID) !== key) return vaultUnavailable();
+        await this.fresh(uri, current);
+        if (vault !== checkpoint.vaultAfter) { await this.storage.write(VAULT, checkpoint.vaultAfter); await this.fresh(uri, current); }
+        if (current.text !== checkpoint.masked) await this.writeSource(uri, current, checkpoint.masked, key);
+        this.alive(basis.epoch);
+        const masked = await this.capture(uri); if (masked.text !== checkpoint.masked || masked.root !== basis.root || masked.policy !== basis.policy) return vaultUnavailable();
+        await this.writeExample(uri, checkpoint.example, key); await this.fresh(uri, masked);
+        if (await this.storage.read(VAULT) !== checkpoint.vaultAfter || await this.context.secrets.get(KEY_ID) !== key) return vaultUnavailable();
+        await this.storage.write(this.pointer(uri), pointer); await this.fresh(uri, masked); await this.storage.remove(PENDING, pointer);
+    }
+    async recoverMigration(uri: vscode.Uri): Promise<boolean> {
+        return this.mutation(async () => {
+            let basis = await this.capture(uri); const pointer = await this.storage.read(PENDING, 16384); if (!pointer) return false;
+            const checkpoint = await this.checkpoint(uri, basis.root, pointer);
+            if (![checkpoint.original, checkpoint.masked].includes(basis.text)) return vaultUnavailable();
+            if (await vscode.window.showWarningMessage("Complete this interrupted migration with masked placeholders and a safe example? Original values stay encrypted.",
+                { modal: true, detail: JSON.stringify({ file: vscode.workspace.asRelativePath(uri), count: checkpoint.count, values: MASKED }) }, "Complete safe recovery") !== "Complete safe recovery") return false;
+            await this.fresh(uri, basis);
+            return this.storage.lock(async () => {
+                if (await this.storage.read(PENDING, 16384) !== pointer) return vaultUnavailable();
+                const key = await this.key(false); await this.fresh(uri, basis); basis = await this.protect(uri, basis);
+                await withPendingRestriction(basis.root, () => this.complete(uri, basis, checkpoint, pointer, key)); return true;
+            });
+        });
+    }
+    async restore(uri: vscode.Uri): Promise<number> {
+        return this.mutation(async () => {
+            const basis = await this.capture(uri); await this.noPending(); const vault = await this.vault();
+            const entries = vault.data.entries.filter(entry => entry.source === basis.source && entry.root === basis.root && basis.text.includes(entry.placeholder));
+            if (!entries.length) return 0; if (!await this.disclosure(uri)) return 0; await this.fresh(uri, basis);
+            return this.storage.lock(async () => {
+                await this.noPending(); await this.fresh(uri, basis); const key = await this.key(false);
+                if ((await this.vault(key)).text !== vault.text) return vaultUnavailable();
+                let next = basis.text; for (const entry of entries) next = next.split(entry.placeholder).join(entry.replacementText!);
+                if (Buffer.byteLength(next, "utf8") > 65536) return vaultUnavailable();
+                await withPendingRestriction(basis.root, () => this.writeSource(uri, basis, next, key)); return entries.length;
+            });
+        });
+    }
+    async restoreFromBackup(uri: vscode.Uri): Promise<boolean> {
         try {
-            await vscode.workspace.fs.stat(this.vaultUri());
-            exists = true;
-        } catch {
-            /* no vault yet */
-        }
-        const entries: VaultEntryMetadata[] = vault.entries.map(({ rawValue, ...meta }) => meta);
-        return {
-            exists,
-            location: this.vaultUri().fsPath,
-            entryCount: entries.length,
-            entries,
-        };
+            return await this.mutation(async () => {
+                const basis = await this.capture(uri, true), pending = await this.storage.read(PENDING, 16384);
+                const pointer = pending ?? await this.storage.read(this.pointer(uri), 16384); if (!pointer) return false;
+                const checkpoint = await this.checkpoint(uri, basis.root, pointer);
+                if (!await this.disclosure(uri)) return false; await this.fresh(uri, basis);
+                return this.storage.lock(async () => {
+                    const key = await this.key(false); await this.checkpoint(uri, basis.root, pointer);
+                    if (pending) {
+                        if (await this.storage.read(PENDING, 16384) !== pointer) return vaultUnavailable();
+                        const vault = await this.storage.read(VAULT) ?? null;
+                        if (vault !== checkpoint.vaultBefore && vault !== checkpoint.vaultAfter) return vaultUnavailable();
+                    } else { await this.noPending(); if (await this.storage.read(this.pointer(uri), 16384) !== pointer) return vaultUnavailable(); }
+                    await withPendingRestriction(basis.root, () => this.writeSource(uri, basis, checkpoint.original, key));
+                    if (pending) {
+                        const vault = await this.storage.read(VAULT) ?? null;
+                        if (vault !== checkpoint.vaultBefore && vault !== checkpoint.vaultAfter) return vaultUnavailable();
+                        await this.key(false); await this.storage.write(this.pointer(uri), pointer); await this.storage.remove(PENDING, pointer);
+                    }
+                    return true;
+                });
+            });
+        } catch { return false; }
     }
-
-    /** Preview which secrets WOULD migrate from a file (no changes made). */
-    async preview(fileUri: vscode.Uri): Promise<MigrationPreview> {
-        await assertWorkspaceFileUri(fileUri);
-        const text = new TextDecoder().decode(await vscode.workspace.fs.readFile(fileUri));
-        const candidates = extractVaultCandidates(text);
-        const rel = vscode.workspace.asRelativePath(fileUri);
-        return {
-            file: rel,
-            candidates: candidates.map((c) => ({
-                key: c.key,
-                type: c.type,
-                placeholder: c.placeholder,
-                redactedPreview: redactValuePreview(c),
-            })),
-        };
+    private async disclosure(uri: vscode.Uri): Promise<boolean> {
+        return await vscode.window.showWarningMessage("Restore raw values into this project file? AI tools and other same-user software may read them. Saved restrictions remain; this disclosure cannot recall other copies.",
+            { modal: true, detail: JSON.stringify({ file: vscode.workspace.asRelativePath(uri), values: MASKED }) }, "Restore raw values") === "Restore raw values";
     }
-
-    /**
-     * Migrate secrets from a file into the vault:
-     *  1. write an encrypted backup into extension global storage (OUTSIDE the
-     *     workspace — a plaintext workspace `.bak` would leak every raw secret
-     *     to anything that reads workspace files)
-     *  2. replace raw values with placeholders in the workspace file
-     *  3. store encrypted entries in the vault (metadata + raw value)
-     * Returns the number of secrets migrated.
-     */
-    async migrate(fileUri: vscode.Uri): Promise<number> {
-        return this.runMutation(() => this.migrateLocked(fileUri));
+    async writeEnvExample(uri: vscode.Uri): Promise<vscode.Uri> {
+        return this.mutation(async () => {
+            const basis = await this.capture(uri); await this.noPending(); const plan = createVaultMigrationPlan(basis.text, true, randomUUID());
+            await this.checkExample(uri, plan.exampleText); await this.fresh(uri, basis);
+            return this.storage.lock(async () => {
+                await this.noPending(); const key = await this.key(true); await this.fresh(uri, basis);
+                await this.writeExample(uri, plan.exampleText, key); await this.fresh(uri, basis); return this.exampleUri(uri);
+            });
+        });
     }
-
-    private async migrateLocked(fileUri: vscode.Uri): Promise<number> {
-        await assertWorkspaceFileUri(fileUri);
-        const text = new TextDecoder().decode(await vscode.workspace.fs.readFile(fileUri));
-        const candidates = extractVaultCandidates(text);
-        if (candidates.length === 0) return 0;
-
-        const rel = vscode.workspace.asRelativePath(fileUri);
-
-        // Fail before touching the workspace when an existing vault is corrupt,
-        // missing its key, or unreadable. A corrupt vault must never look empty.
-        const vault = await this.readVault();
-        for (const c of candidates) {
-            const meta = await buildVaultMetadata(c, rel);
-            vault.entries = vault.entries.filter(
-                (e) => !(e.placeholder === meta.placeholder && e.originalFile === rel),
-            );
-            vault.entries.push({ ...meta, rawValue: c.rawValue });
-        }
-
-        // 1. Encrypted backup before any destructive change.
-        await this.writeEncryptedBackup(fileUri, text);
-
-        // Abort on file/editor drift instead of overwriting newer user changes.
-        this.assertDocumentReady(fileUri, text);
-        await assertWorkspaceFileUri(fileUri);
-        const latest = new TextDecoder().decode(await vscode.workspace.fs.readFile(fileUri));
-        if (latest !== text) throw new Error("File changed during migration; retry after edits finish.");
-
-        // 2. Commit encrypted entries before removing plaintext. If this write
-        // fails, the workspace file is still byte-for-byte untouched.
-        await this.writeVault(vault);
-
-        // 3. Replace raw values with placeholders in the workspace file/editor.
-        const masked = applyPlaceholders(text, candidates);
-        await assertWorkspaceFileUri(fileUri);
-        await this.writeDocumentOrFile(fileUri, text, masked);
-
-        const written = new TextDecoder().decode(await vscode.workspace.fs.readFile(fileUri));
-        for (const c of candidates) {
-            if (written.includes(c.rawValue) || !written.includes(c.placeholder)) {
-                throw new Error(
-                    "Migration verification failed. The encrypted backup is intact; use Restore File From Backup if needed.",
-                );
-            }
-        }
-        return candidates.length;
-    }
-
-    /**
-     * Restore placeholders in a file back to their raw values using the vault.
-     * Returns the number of placeholders restored.
-     */
-    async restore(fileUri: vscode.Uri): Promise<number> {
-        return this.runMutation(() => this.restoreLocked(fileUri));
-    }
-
-    private async restoreLocked(fileUri: vscode.Uri): Promise<number> {
-        await assertWorkspaceFileUri(fileUri);
-        const text = new TextDecoder().decode(await vscode.workspace.fs.readFile(fileUri));
-        const vault = await this.readVault();
-        const rel = vscode.workspace.asRelativePath(fileUri);
-
-        const map: Record<string, string> = {};
-        for (const e of vault.entries) {
-            if (e.originalFile === rel && text.includes(e.placeholder)) {
-                map[e.placeholder] = e.rawValue;
-            }
-        }
-        const count = Object.keys(map).length;
-        if (count === 0) return 0;
-
-        // Backup the placeholder version (encrypted, outside the workspace)
-        // before restoring raw secrets back in.
-        await this.writeEncryptedBackup(fileUri, text);
-
-        const restored = restorePlaceholders(text, map);
-        this.assertDocumentReady(fileUri, text);
-        await assertWorkspaceFileUri(fileUri);
-        await this.writeDocumentOrFile(fileUri, text, restored);
-        return count;
-    }
-
-    /** Produce a safe `.env.example` sibling from a file. Never writes secrets. */
-    async writeEnvExample(fileUri: vscode.Uri): Promise<vscode.Uri> {
-        await assertWorkspaceFileUri(fileUri);
-        const text = new TextDecoder().decode(await vscode.workspace.fs.readFile(fileUri));
-        const example = generateEnvExample(text);
-        const dir = vscode.Uri.joinPath(fileUri, "..");
-        const exampleUri = vscode.Uri.joinPath(dir, ".env.example");
-        await assertWorkspaceOutputUri(exampleUri);
-        await vscode.workspace.fs.writeFile(exampleUri, new TextEncoder().encode(example));
-        return exampleUri;
-    }
-
-    /** All known placeholders (for output-scan reversal detection). */
-    async knownPlaceholders(): Promise<string[]> {
-        const vault = await this.readVault();
-        return [...new Set(vault.entries.map((e) => e.placeholder))];
-    }
-
-    // ── Encrypted out-of-workspace backups ────────────────────────────────────
-    // Backups use the same AES key as the vault and live in globalStorage under
-    // `backups/`. Filenames are hash-derived so they leak neither the workspace
-    // path nor the file name to other processes browsing globalStorage.
-
-    private backupDir(): vscode.Uri {
-        return vscode.Uri.joinPath(this.context.globalStorageUri, "backups");
-    }
-
-    private backupUri(fileUri: vscode.Uri): vscode.Uri {
-        const id = createHash("sha256").update(fileUri.toString()).digest("hex").slice(0, 32);
-        return vscode.Uri.joinPath(this.backupDir(), `${id}.enc`);
-    }
-
-    /** Write an encrypted pre-change backup of a file OUTSIDE the workspace. */
-    private async writeEncryptedBackup(fileUri: vscode.Uri, content: string): Promise<void> {
-        await vscode.workspace.fs.createDirectory(this.backupDir());
-        const key = await this.getOrCreateKey();
-        const payload = await encryptVault(
-            JSON.stringify({ file: fileUri.toString(), savedAt: new Date().toISOString(), content }),
-            key,
-        );
-        await vscode.workspace.fs.writeFile(this.backupUri(fileUri), new TextEncoder().encode(payload));
-    }
-
-    /** Restore a file from its encrypted backup. Returns false if none exists. */
-    async restoreFromBackup(fileUri: vscode.Uri): Promise<boolean> {
-        try {
-            await assertWorkspaceFileUri(fileUri);
-            const bytes = await vscode.workspace.fs.readFile(this.backupUri(fileUri));
-            const key = await this.getOrCreateKey();
-            const json = await decryptVault(new TextDecoder().decode(bytes), key);
-            const parsed = JSON.parse(json) as { content?: string };
-            if (typeof parsed.content !== "string") return false;
-            const current = new TextDecoder().decode(await vscode.workspace.fs.readFile(fileUri));
-            this.assertDocumentReady(fileUri, current);
-            await assertWorkspaceFileUri(fileUri);
-            await this.writeDocumentOrFile(fileUri, current, parsed.content);
-            return true;
-        } catch {
-            return false;
-        }
-    }
-
-    private async runMutation<T>(operation: () => Promise<T>): Promise<T> {
-        const result = VaultManager.mutationQueue.then(operation, operation);
+    private async mutation<T>(operation: () => Promise<T>): Promise<T> {
+        const result = VaultManager.mutationQueue.then(async () => { this.alive(); return operation(); });
         VaultManager.mutationQueue = result.then(() => undefined, () => undefined);
-        return result;
+        try { return await result; } catch { return vaultUnavailable(); }
     }
-
-    private openDocument(fileUri: vscode.Uri): vscode.TextDocument | undefined {
-        const key = fileUri.toString();
-        return vscode.workspace.textDocuments.find((document) => document.uri.toString() === key);
+    private assertDocumentReady(uri: vscode.Uri, text: string): void {
+        const document = vscode.workspace.textDocuments.find(document => document.uri.toString() === uri.toString());
+        if (document && (document.isDirty || document.getText() !== text)) return vaultUnavailable();
     }
-
-    private assertDocumentReady(fileUri: vscode.Uri, diskText: string): void {
-        const document = this.openDocument(fileUri);
-        if (!document) return;
-        if (document.isDirty) {
-            throw new Error("Save or discard the file's pending edits before vault migration.");
-        }
-        if (document.getText() !== diskText) {
-            throw new Error("The open editor is out of sync with disk; reload it and retry.");
-        }
-    }
-
-    private async writeDocumentOrFile(fileUri: vscode.Uri, original: string, next: string): Promise<void> {
-        await assertWorkspaceFileUri(fileUri);
-        const document = this.openDocument(fileUri);
-        if (!document) {
-            await vscode.workspace.fs.writeFile(fileUri, new TextEncoder().encode(next));
-            return;
-        }
-        this.assertDocumentReady(fileUri, original);
-        const edit = new vscode.WorkspaceEdit();
-        edit.replace(fileUri, new vscode.Range(document.positionAt(0), document.positionAt(original.length)), next);
-        if (!await vscode.workspace.applyEdit(edit)) throw new Error("VS Code refused the protected file edit.");
-        if (!await document.save()) throw new Error("VS Code could not save the protected file edit.");
-    }
-}
-
-function isFileNotFound(error: unknown): boolean {
-    const code = (error as { code?: unknown } | undefined)?.code;
-    return code === "FileNotFound" || code === "ENOENT";
-}
-
-/** A masked, secret-free preview of a candidate value for display. */
-function redactValuePreview(c: VaultCandidate): string {
-    const v = c.rawValue;
-    if (v.length <= 6) return "••••";
-    return `${v.slice(0, 2)}${"•".repeat(Math.min(v.length - 4, 12))}${v.slice(-2)}`;
 }

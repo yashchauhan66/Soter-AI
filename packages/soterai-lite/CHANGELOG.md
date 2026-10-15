@@ -21,3 +21,9 @@
 - Previous package verification is not evidence for this new runtime.
 - Confirm persisted manual restrictions before reporting success; revoke pending
   reviews, keep public controls usable and refuse changed-workspace saves.
+## Optional vault migration and recovery (unreleased)
+
+- Optional native-reviewed vault migration now uses constant masked previews, verified SecretStorage, unique placeholders, safe blank environment examples and additive sensitive restrictions.
+- Encrypted issued checkpoints support reviewed safe completion after restart. Separately approved original restoration can recover damaged source bytes without automatic plaintext rollback. Existing conflicting examples, missing keys, aliases and unrelated pending migrations are withheld.
+- `soterai.lite.vaultMode` withdraws vault operations while retaining ciphertext and saved protection. Same-user software, history and other copies remain outside this migration.
+

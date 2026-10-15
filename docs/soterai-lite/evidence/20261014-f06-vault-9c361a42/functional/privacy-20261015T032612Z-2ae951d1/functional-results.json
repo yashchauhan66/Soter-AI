@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-10-15T03:26:30.122Z",
+  "hostVersion": "1.141.2",
+  "extensionVersion": "0.7.0",
+  "extensionBundleSha256": "24322ad068f2547b28a2a7e40f23f5217787ca6b38c7d42b136ffec1e0a7d5ea",
+  "extensionActive": true,
+  "syntheticOnly": true,
+  "modalDriver": "scripted responses to real registered command calls; independent presence not tested",
+  "actualWebviewCreated": true,
+  "modalCount": 6,
+  "observations": [
+    {
+      "id": "H01",
+      "status": "PASS",
+      "scope": "Actual activation and registered privacy/publication commands"
+    },
+    {
+      "id": "H02",
+      "status": "PASS",
+      "scope": "Public saved file through the actual registered reader"
+    },
+    {
+      "id": "H03",
+      "status": "PASS",
+      "scope": "Names-only dotenv response through actual reader; scripted native review"
+    },
+    {
+      "id": "H04",
+      "status": "PASS",
+      "scope": "Cancellation releases no response content"
+    },
+    {
+      "id": "H05",
+      "status": "PASS",
+      "scope": "Actual sensitive persistence and always-masked approved view"
+    },
+    {
+      "id": "H06",
+      "status": "PASS",
+      "scope": "Actual rollback flag withholds reader and retains parent masking flag"
+    },
+    {
+      "id": "H07",
+      "status": "PASS",
+      "scope": "Actual dashboard webview creation, scoped coverage and metadata-only HTML"
+    },
+    {
+      "id": "H08",
+      "status": "PASS",
+      "scope": "Actual optional loopback synthetic runtime; start, canned response and stop"
+    },
+    {
+      "id": "H09",
+      "status": "PASS",
+      "scope": "Actual selected public export, approved names and synthetic config"
+    },
+    {
+      "id": "H10",
+      "status": "PASS",
+      "scope": "Cancelled actual export leaves no new output directory"
+    }
+  ],
+  "runtimeConfiguration": {
+    "projectPrivacy.enabled": true,
+    "projectPrivacy.atomicSensitivePolicy": true,
+    "projectPrivacy.safeViewComposition": true,
+    "hardening.addOnlyPolicy": true
+  },
+  "workspaceTrusted": true,
+  "passed": 10,
+  "failed": 0,
+  "clineLive": "NOT_TESTED",
+  "osIsolation": "NOT_TESTED",
+  "fullClaim": "BLOCKED"
+}

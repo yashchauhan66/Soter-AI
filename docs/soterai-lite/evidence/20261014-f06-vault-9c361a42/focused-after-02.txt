@@ -1,0 +1,312 @@
+﻿TAP version 13
+# Subtest: F06-V01 preview uses a constant mask with no value fragments, lengths or hashes
+ok 1 - F06-V01 preview uses a constant mask with no value fragments, lengths or hashes
+  ---
+  duration_ms: 76.8113
+  type: 'test'
+  ...
+# Subtest: F06-V02 reviewed migration handles duplicate/multiline fields, writes blank examples and keeps recovery encrypted outside the project
+not ok 2 - F06-V02 reviewed migration handles duplicate/multiline fields, writes blank examples and keeps recovery encrypted outside the project
+  ---
+  duration_ms: 649.2016
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-vault-manager.test.ts:13:7004'
+  failureType: 'testCodeFailure'
+  error: 'Raw synthetic values must not appear in this safe sink.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    noValues (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:35:99)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:137:41)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F06-V03 declining manager-owned native migration writes nothing
+ok 3 - F06-V03 declining manager-owned native migration writes nothing
+  ---
+  duration_ms: 40.726
+  type: 'test'
+  ...
+# Subtest: F06-V04 SecretStorage store failure or failed readback never removes original values
+ok 4 - F06-V04 SecretStorage store failure or failed readback never removes original values
+  ---
+  duration_ms: 194.6856
+  type: 'test'
+  ...
+# Subtest: F06-V05 source drift while native migration review is held cannot overwrite the newer file
+ok 5 - F06-V05 source drift while native migration review is held cannot overwrite the newer file
+  ---
+  duration_ms: 77.7722
+  type: 'test'
+  ...
+# Subtest: F06-V06 source drift while verified key storage is held cannot remove newer source data
+ok 6 - F06-V06 source drift while verified key storage is held cannot remove newer source data
+  ---
+  duration_ms: 142.2568
+  type: 'test'
+  ...
+# Subtest: F06-V07 machine withdrawal, untrusted or nonlocal resources withhold all mutation entry points
+ok 7 - F06-V07 machine withdrawal, untrusted or nonlocal resources withhold all mutation entry points
+  ---
+  duration_ms: 22.0091
+  type: 'test'
+  ...
+# Subtest: F06-V08 flag withdrawal while native confirmation is pending leaves source and vault untouched
+ok 8 - F06-V08 flag withdrawal while native confirmation is pending leaves source and vault untouched
+  ---
+  duration_ms: 71.9346
+  type: 'test'
+  ...
+# Subtest: F06-V09 dirty and stale existing source buffers are rejected before writes and no original TextDocument is created
+ok 9 - F06-V09 dirty and stale existing source buffers are rejected before writes and no original TextDocument is created
+  ---
+  duration_ms: 68.7788
+  type: 'test'
+  ...
+# Subtest: F06-V10 an existing corrupt encrypted vault is preserved and never reinterpreted as empty
+ok 10 - F06-V10 an existing corrupt encrypted vault is preserved and never reinterpreted as empty
+  ---
+  duration_ms: 172.8265
+  type: 'test'
+  ...
+# Subtest: F06-V11 an existing encrypted vault whose key disappeared cannot be replaced by a newly created vault
+ok 11 - F06-V11 an existing encrypted vault whose key disappeared cannot be replaced by a newly created vault
+  ---
+  duration_ms: 841.53
+  type: 'test'
+  ...
+# Subtest: F06-V12 conflicting example files are not overwritten and migration removes no original values
+ok 12 - F06-V12 conflicting example files are not overwritten and migration removes no original values
+  ---
+  duration_ms: 58.5314
+  type: 'test'
+  ...
+# Subtest: F06-V13 explicit example generation contains blank unique names only and refuses a conflicting existing example
+ok 13 - F06-V13 explicit example generation contains blank unique names only and refuses a conflicting existing example
+  ---
+  duration_ms: 162.4272
+  type: 'test'
+  ...
+# Subtest: F06-V14 failed source write preserves encrypted recovery; a new manager completes the masked outcome idempotently
+ok 14 - F06-V14 failed source write preserves encrypted recovery; a new manager completes the masked outcome idempotently
+  ---
+  duration_ms: 760.1337
+  type: 'test'
+  ...
+# Subtest: F06-V15 tampered issued checkpoint recovery is withheld without silently restoring or rewriting originals
+ok 15 - F06-V15 tampered issued checkpoint recovery is withheld without silently restoring or rewriting originals
+  ---
+  duration_ms: 401.4653
+  type: 'test'
+  ...
+# Subtest: F06-V16 raw restoration requires its own disclosure approval and retained placeholders remain until accepted
+not ok 16 - F06-V16 raw restoration requires its own disclosure approval and retained placeholders remain until accepted
+  ---
+  duration_ms: 938.0312
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-vault-manager.test.ts:13:19305'
+  failureType: 'testCodeFailure'
+  error: 'Raw synthetic values must not appear in this safe sink.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    noValues (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:35:99)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\lite-vault-manager.test.ts:272:73)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F06-V17 equal relative paths in different projects cannot restore another root's vault entries or swapped backup
+ok 17 - F06-V17 equal relative paths in different projects cannot restore another root's vault entries or swapped backup
+  ---
+  duration_ms: 753.8903
+  type: 'test'
+  ...
+# Subtest: F06-V18 static mutation serialization preserves both files' distinct encrypted entries
+ok 18 - F06-V18 static mutation serialization preserves both files' distinct encrypted entries
+  ---
+  duration_ms: 1108.2296
+  type: 'test'
+  ...
+# Subtest: F06-V19 compatible encrypted legacy entries survive a new migration while legacy relative restoration stays withheld
+ok 19 - F06-V19 compatible encrypted legacy entries survive a new migration while legacy relative restoration stays withheld
+  ---
+  duration_ms: 570.2913
+  type: 'test'
+  ...
+# Subtest: F06-V20 a pending whole-vault checkpoint withholds another file until safe recovery completes
+ok 20 - F06-V20 a pending whole-vault checkpoint withholds another file until safe recovery completes
+  ---
+  duration_ms: 1192.2815
+  type: 'test'
+  ...
+# Subtest: F06-P01 secret-ish environment keys migrate short private values with generation and field-position placeholders
+ok 21 - F06-P01 secret-ish environment keys migrate short private values with generation and field-position placeholders
+  ---
+  duration_ms: 14.6067
+  type: 'test'
+  ...
+# Subtest: F06-P02 useful ordinary environment values and empty secret values remain unchanged
+ok 22 - F06-P02 useful ordinary environment values and empty secret values remain unchanged
+  ---
+  duration_ms: 0.898
+  type: 'test'
+  ...
+# Subtest: F06-P03 formatting, BOM, CRLF, export spacing and unrelated comments survive selected value replacement
+ok 23 - F06-P03 formatting, BOM, CRLF, export spacing and unrelated comments survive selected value replacement
+  ---
+  duration_ms: 0.9771
+  type: 'test'
+  ...
+# Subtest: F06-P04 '-quoted multiline private values migrate atomically without inventing assignment fields
+ok 24 - F06-P04 '-quoted multiline private values migrate atomically without inventing assignment fields
+  ---
+  duration_ms: 0.7496
+  type: 'test'
+  ...
+# Subtest: F06-P04 "-quoted multiline private values migrate atomically without inventing assignment fields
+ok 25 - F06-P04 "-quoted multiline private values migrate atomically without inventing assignment fields
+  ---
+  duration_ms: 0.5115
+  type: 'test'
+  ...
+# Subtest: F06-P04 `-quoted multiline private values migrate atomically without inventing assignment fields
+ok 26 - F06-P04 `-quoted multiline private values migrate atomically without inventing assignment fields
+  ---
+  duration_ms: 0.3594
+  type: 'test'
+  ...
+# Subtest: F06-P05 duplicate assignment names preserve each distinct private value and field-position placeholder
+ok 27 - F06-P05 duplicate assignment names preserve each distinct private value and field-position placeholder
+  ---
+  duration_ms: 0.7246
+  type: 'test'
+  ...
+# Subtest: F06-P06 double-quoted newline escapes yield logical private candidate values and no serialized value remnants
+ok 28 - F06-P06 double-quoted newline escapes yield logical private candidate values and no serialized value remnants
+  ---
+  duration_ms: 0.339
+  type: 'test'
+  ...
+# Subtest: F06-P07 identical private values in different generations produce independent placeholders
+ok 29 - F06-P07 identical private values in different generations produce independent placeholders
+  ---
+  duration_ms: 0.56
+  type: 'test'
+  ...
+# Subtest: F06-P08 exact legacy and generation placeholders are skipped while later field ordinals remain stable
+ok 30 - F06-P08 exact legacy and generation placeholders are skipped while later field ordinals remain stable
+  ---
+  duration_ms: 0.6866
+  type: 'test'
+  ...
+# Subtest: F06-P09 an accidental or malformed placeholder prefix is migrated rather than mistaken for protection (SOTERAI_PROTECTED_TOKEN)
+ok 31 - F06-P09 an accidental or malformed placeholder prefix is migrated rather than mistaken for protection (SOTERAI_PROTECTED_TOKEN)
+  ---
+  duration_ms: 0.2958
+  type: 'test'
+  ...
+# Subtest: F06-P09 an accidental or malformed placeholder prefix is migrated rather than mistaken for protection (before_SOTERAI_PROTECTED_TOKEN_after)
+ok 32 - F06-P09 an accidental or malformed placeholder prefix is migrated rather than mistaken for protection (before_SOTERAI_PROTECTED_TOKEN_after)
+  ---
+  duration_ms: 0.1625
+  type: 'test'
+  ...
+# Subtest: F06-P09 an accidental or malformed placeholder prefix is migrated rather than mistaken for protection ([SOTERAI_PROTECTED_TOKEN]suffix)
+ok 33 - F06-P09 an accidental or malformed placeholder prefix is migrated rather than mistaken for protection ([SOTERAI_PROTECTED_TOKEN]suffix)
+  ---
+  duration_ms: 0.1504
+  type: 'test'
+  ...
+# Subtest: F06-P09 an accidental or malformed placeholder prefix is migrated rather than mistaken for protection ([SOTERAI_PROTECTED_token])
+ok 34 - F06-P09 an accidental or malformed placeholder prefix is migrated rather than mistaken for protection ([SOTERAI_PROTECTED_token])
+  ---
+  duration_ms: 0.162
+  type: 'test'
+  ...
+# Subtest: F06-P10 comments containing a migrated candidate value fail closed instead of retaining or rewriting it
+ok 35 - F06-P10 comments containing a migrated candidate value fail closed instead of retaining or rewriting it
+  ---
+  duration_ms: 1.2093
+  type: 'test'
+  ...
+# Subtest: F06-P11 examples include unique empty names only and never comments, multiline suffixes or public values
+ok 36 - F06-P11 examples include unique empty names only and never comments, multiline suffixes or public values
+  ---
+  duration_ms: 0.9822
+  type: 'test'
+  ...
+# Subtest: F06-P12 a repeated plan of already protected environment text is idempotent
+ok 37 - F06-P12 a repeated plan of already protected environment text is idempotent
+  ---
+  duration_ms: 0.4702
+  type: 'test'
+  ...
+# Subtest: F06-P13 non-environment standalone detector offsets preserve Unicode and unrelated JSON text
+ok 38 - F06-P13 non-environment standalone detector offsets preserve Unicode and unrelated JSON text
+  ---
+  duration_ms: 5.1251
+  type: 'test'
+  ...
+# Subtest: F06-P14 multiple standalone credentials use distinct ordered offsets and replace independently
+ok 39 - F06-P14 multiple standalone credentials use distinct ordered offsets and replace independently
+  ---
+  duration_ms: 0.4423
+  type: 'test'
+  ...
+# Subtest: F06-P15 unsupported environment syntax is unavailable rather than partially migrated or copied into examples
+ok 40 - F06-P15 unsupported environment syntax is unavailable rather than partially migrated or copied into examples
+  ---
+  duration_ms: 0.3019
+  type: 'test'
+  ...
+# Subtest: F06-P16 binary, control and oversized UTF-8 input are rejected in both document modes
+ok 41 - F06-P16 binary, control and oversized UTF-8 input are rejected in both document modes
+  ---
+  duration_ms: 0.3558
+  type: 'test'
+  ...
+# Subtest: F06-P17 the environment field budget fails closed above 256 even when values look harmless
+ok 42 - F06-P17 the environment field budget fails closed above 256 even when values look harmless
+  ---
+  duration_ms: 0.495
+  type: 'test'
+  ...
+# Subtest: F06-P18 placeholder expansion cannot create a masked document above the supported byte budget
+ok 43 - F06-P18 placeholder expansion cannot create a masked document above the supported byte budget
+  ---
+  duration_ms: 0.4735
+  type: 'test'
+  ...
+# Subtest: F06-P19 only an actual UUID generation and boolean environment mode are accepted
+ok 44 - F06-P19 only an actual UUID generation and boolean environment mode are accepted
+  ---
+  duration_ms: 0.3222
+  type: 'test'
+  ...
+# Subtest: F06-P20 case-normalized generation metadata produces the same deterministic private plan
+ok 45 - F06-P20 case-normalized generation metadata produces the same deterministic private plan
+  ---
+  duration_ms: 0.2604
+  type: 'test'
+  ...
+# Subtest: F06-P21 empty supported input produces an empty useful plan in both modes
+ok 46 - F06-P21 empty supported input produces an empty useful plan in both modes
+  ---
+  duration_ms: 0.1861
+  type: 'test'
+  ...
+1..46
+# tests 46
+# suites 0
+# pass 44
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 10091.5433
