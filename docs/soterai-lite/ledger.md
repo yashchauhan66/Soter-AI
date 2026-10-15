@@ -5,11 +5,11 @@ Read this file FIRST after any context compaction or on resumption. Do not overw
 ## Current state
 
 - **L0 scoped preflight/split/baseline/catalog freeze DONE.** The user waived the 20 GB threshold. Both verified backup bundles and the authorized old synthetic profiles are retained on D:. Supplemental full fsck ended in resource-limited FAIL; full object integrity remains UNVERIFIED.
-- L1: **ACTIVE, F01-F08 DONE; F09 ACTIVE/test-first**; F10-F32 and L2-L7 **NOT-RUN**. Do not describe this as reaching L6. Read the latest receipts below before work.
+- L1: **ACTIVE, F01-F09 DONE; F10 ACTIVE/test-first**; F11-F32 and L2-L7 **NOT-RUN**. Do not describe this as reaching L6. Read the latest receipts below before work.
 - Source changes and isolated synthetic-profile tests are authorized; the normal VS Code profile has not been changed.
 - New Lite baseline VSIX: **BUILT / CONTENT-INSPECTED / HOST-BASELINE-TESTED**; SHA-256 `cf163471b7a022d5a9f922a3f1fcc6bfd3b56a08ab14f1aebfdfb345c337bae1`. Coverage and all final numerical ratings **PENDING / UNVERIFIED**; 44-check catalog frozen, not graded.
 - Baseline HEAD: `8ef3aeb54f4019f4ee815a844443995176a656f0`; starting branch: `security-hardening`. Inspected prior source modifications were checkpointed at `915a5300a7745e4ffaeab80b5d08d3305e3772f9`; unknown scratch/raw artifacts remain untouched.
-- P00-P03 and F01-F08 scoped commits are complete. F09 is the sole active behavior card; production waits for its frozen design and failing regression baseline. No F10 production may start yet.
+- P00-P03 and F01-F09 scoped commits are complete. F10 is the sole active behavior card; production waits for its frozen design and failing regression baseline. No F11 production may start yet.
 
 ## STEP RECEIPT L0.1 — preflight stop
 
@@ -476,3 +476,7 @@ Finalfocusedafter04 all150PASS; matchingtypecheck03PASS. Full01 currently runnin
 ## STEP RECEIPT F09 - scoped vault app/task/debug acceptance
 
 Scoped local acceptance PASS; source commit/byte verification remain the serial barrier. Focused 150 tests/150 PASS/0 SKIP; full 1464 tests/1460 PASS/4 SKIP; zero failures/cancellations. Exact attempt01 VSIX 04157b046e5c01e111e5ef5830a4998c06085a85c14566af9bce5c9704c20bba (1377965 bytes), runtime 81ceabd72fff5bb673fdd579c4e15e7bc8c46e791e864ae03c08782bfeb7236e. Native12PASS, functional10PASS, security17 unchanged (8 BLOCKED_SCOPED/9 LEAK_CONFIRMED). Scripted/native/mocked evidence LOW. Owned finite Node application, real task and lifecycle-only debug session; selected app can transmit its values and no source-level debugger/confinement is claimed. All prior failures/evidence retained. Catalog44UNVERIFIED/ratingPENDING; no F10 production before the verified serial barrier.
+
+## STEP RECEIPT F09-COMMIT / F10-ACTIVATE
+
+F09 source commit 7bfdc91279ab9f59811ba6918e388846c5ea2411 verified: 193 indexed byte hashes, 193 exact changed paths, zero mismatches/unexpected paths; exact artifact freshly rechecked 04157b046e5c01e111e5ef5830a4998c06085a85c14566af9bce5c9704c20bba. Native12PASS/functional10PASS/security17 unchanged are the retained scoped LOW facts, not independent certification. Selected app code can inspect/transmit values; no source debugger, OS confinement or arbitrary shell/gateway claim. Catalog44UNVERIFIED/ratingPENDING. F10 alone is now active after this source barrier; preserve the separate transition byte-verification gate before further production.

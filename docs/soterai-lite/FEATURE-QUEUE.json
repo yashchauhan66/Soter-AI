@@ -9,9 +9,9 @@
   "planVersion": 1,
   "clientDate": "2026-10-13",
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
-  "scope": "F01-F08 DONE with exact scoped artifacts, current native/affected hosts and byte-verified commits; F09 alone active, test-first task boundary integration.",
+  "scope": "F01-F09 DONE with exact scoped artifacts, current native/affected hosts and byte-verified source commits; F10 alone active, test-first managed PowerShell 5.1 integration.",
   "implementationConcurrency": 1,
-  "activeFeature": "F09",
+  "activeFeature": "F10",
   "prerequisiteBlock": {
     "id": "P00",
     "result": "FAIL",
@@ -171,17 +171,20 @@
     {
       "id": "F09",
       "title": "Vault Run/Task/Debug integration.",
-      "status": "ACTIVE",
-      "result": "NOT-RUN",
+      "status": "DONE",
+      "result": "PASS",
       "requires": [
         "F08"
       ],
-      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "sourceEvidenceCommit": "7bfdc91279ab9f59811ba6918e388846c5ea2411",
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261015-f09-runtime-81e65c2a/f09-acceptance-01.json",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261015-f09-runtime-81e65c2a/f09-committed-byte-verification-01.json"
     },
     {
       "id": "F10",
       "title": "Managed PowerShell 5.1 terminal.",
-      "status": "PLANNED",
+      "status": "ACTIVE",
       "result": "NOT-RUN",
       "requires": [
         "F09"
