@@ -57,7 +57,9 @@ const valueStore = new DelegatingValueStore();
 const refs = new SecretReferenceManager(valueStore, { enabled: () => valueStore.isEnabled() });
 const policy = new SensitiveContextPolicyEngine(DEFAULT_SENSITIVE_CONTEXT_POLICY);
 
-const outputFilter = new OutputFilter();
+let matchingGuard: () => boolean = () => false;
+const outputFilter = new OutputFilter(undefined, { matchingEnabled: () => matchingGuard() });
+export function setSecretMatchingGuard(enabled: () => boolean): void { matchingGuard = enabled; }
 let releaseGuard: () => boolean = () => true;
 export function setCapabilityReleaseGuard(enabled: () => boolean): void { releaseGuard = enabled; }
 

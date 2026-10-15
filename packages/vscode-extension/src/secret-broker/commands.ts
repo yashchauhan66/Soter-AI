@@ -4,7 +4,7 @@ import { hashContent, redactAIContext } from "@soterai/guard-core";
 import { applySelectionBoundary } from "../ai-boundary/BoundarySnapshot";
 import { EnforcedApiCapabilityBroker } from "./EnforcedApiCapability";
 import { buildSafeLLMContext } from "./LLMContext";
-import { secretBrokerRuntime, setCapabilityReleaseGuard, setSecretValueStore } from "./runtime";
+import { secretBrokerRuntime, setCapabilityReleaseGuard, setSecretMatchingGuard, setSecretValueStore } from "./runtime";
 import { SecretStorageValueStore } from "./SecretStorageValueStore";
 import { SensitiveContextPolicyEngine, type SensitiveContextPolicy } from "./SensitiveContextPolicy";
 import { SensitiveContextRedactor } from "./SensitiveContextRedactor";
@@ -33,6 +33,10 @@ export function registerSecretBrokerCommands(context: vscode.ExtensionContext, r
     // Unindexed legacy entries cannot be enumerated and remain a documented gap.
     const inventoryEnabled = () => vscode.workspace.getConfiguration("soterai").get<boolean>("hardening.secretInventory", true);
     setCapabilityReleaseGuard(() => vscode.workspace.getConfiguration("soterai").get<boolean>("hardening.capabilityReleaseGuard", true));
+    setSecretMatchingGuard(() => {
+        const config = vscode.workspace.getConfiguration("soterai"), inspected = config.inspect<boolean>("lite.secretMatching");
+        return vscode.workspace.isTrusted && (inspected ? inspected.globalValue ?? inspected.defaultValue ?? true : config.get("lite.secretMatching", true)) === true;
+    });
     void setSecretValueStore(new SecretStorageValueStore(context.secrets, context.globalState), inventoryEnabled).catch(() => {
         void vscode.window.showWarningMessage("Secret reference recovery is incomplete. Reference operations are unavailable; no persistent values were read during recovery.");
     });
@@ -379,7 +383,53 @@ export function registerSecretBrokerCommands(context: vscode.ExtensionContext, r
      * host/method/path and fails closed on wrong host, replay, and revocation —
      * without any live network call or user secret.
      */
-    async function testProtection(): Promise<void> {
+    async function testMatching(): Promise<{ status: "PASS" | "FAIL" | "WITHHELD"; cases: Array<{ id: string; pass: boolean }> }> {
+        const { refs, enforcedApi, outputFilter } = secretBrokerRuntime;
+        const value = `F07 synthetic private value / + ? caf\u00e9 \u96ea \u{1f9ed} ${randomBytes(8).toString("hex")}`;
+        const publicBody = "A useful public response about trees and rain.", workspace = currentWorkspace();
+        if (!outputFilter.filter(publicBody, [value]).allowed) return { status: "WITHHELD", cases: [] };
+        const cases: Array<{ id: string; pass: boolean }> = [];
+        let ref: string | undefined;
+        try {
+            const meta = await refs.create({ workspace, ttlMs: 60_000, finding: { type: "api_key", value, start: 0, end: value.length,
+                label: "SYNTHETIC_MATCHING_CHECK", source: "test-protection", sensitivity: "critical", allowedOperations: ["call_api_with_secret"] } });
+            ref = meta.ref;
+            const body = JSON.stringify(value).slice(1, -1).replace("F", "\\u0046");
+            const encoded = encodeURIComponent(value), split = Math.floor(encoded.length / 2);
+            const responses = [publicBody, value, Buffer.from(value).toString("base64"), Buffer.from(value).toString("base64url"),
+                Buffer.from(value).toString("hex"), encoded, `"${body}"`, JSON.stringify({ first: encoded.slice(0, split), second: encoded.slice(split) })];
+            for (let index = 0; index < responses.length; index++) {
+                const grant = enforcedApi.grant({ secretRef: ref, workspace, scope: { host: "f07.invalid", method: "POST", pathPrefix: "/check" },
+                    ttlMs: 60_000, maxUses: 1, operation: "call_api_with_secret" });
+                let sent = 0, headerBound = false;
+                try {
+                    const result = await enforcedApi.call({ handle: grant.handle, workspace, method: "POST", url: "https://f07.invalid/check" }, async request => {
+                        sent++; headerBound = request.headers.authorization === `Bearer ${value}`;
+                        return { status: 200, body: responses[index] };
+                    });
+                    const expected = index === 0 ? publicBody : "[REDACTED_SECRET_OUTPUT]";
+                    cases.push({ id: `M${String(index + 1).padStart(2, "0")}`, pass: sent === 1 && headerBound && result.allowed
+                        && result.response?.body === expected && result.audit.verdict === "sent" && !JSON.stringify(result).includes(value) });
+                } finally { enforcedApi.revoke(grant.handle); }
+            }
+            const short = outputFilter.filter("A cat walks in the garden.", ["cat"]);
+            cases.push({ id: "M09", pass: short.allowed && short.text === "A cat walks in the garden." });
+            const grant = enforcedApi.grant({ secretRef: ref, workspace, scope: { host: "f07.invalid", method: "POST", pathPrefix: "/check" },
+                ttlMs: 60_000, maxUses: 1, operation: "call_api_with_secret" });
+            try {
+                let sent = 0;
+                const result = await enforcedApi.call({ handle: grant.handle, workspace, method: "POST", url: "https://f07.invalid/check" }, async () => {
+                    sent++; return { status: 200, body: JSON.stringify(Array.from({ length: 33 }, () => "public note")) };
+                });
+                cases.push({ id: "M10", pass: sent === 1 && !result.allowed && !Object.hasOwn(result, "response") && result.audit.verdict === "sent"
+                    && !JSON.stringify(result).includes(value) });
+            } finally { enforcedApi.revoke(grant.handle); }
+            return { status: cases.length === 10 && cases.every(item => item.pass) ? "PASS" : "FAIL", cases };
+        } catch { return { status: "FAIL", cases }; }
+        finally { if (ref) await refs.revoke(ref); }
+    }
+
+    async function testProtection(): Promise<{ pass: boolean; matching: { status: "PASS" | "FAIL" | "WITHHELD"; cases: Array<{ id: string; pass: boolean }> } }> {
         const canary = `sk-live-soter-canary-${randomBytes(12).toString("hex")}`;
         const workspace = currentWorkspace();
         const { refs, enforcedApi } = secretBrokerRuntime;
@@ -424,12 +474,13 @@ export function registerSecretBrokerCommands(context: vscode.ExtensionContext, r
         const results = JSON.stringify({ ok: { ...ok, response: undefined }, wrongHost, replay, afterRevoke });
         const canaryOnlyInHeader = sentAuthHeader.includes(canary) && !results.includes(canary) && !grant.handle.includes(canary);
 
+        const matching = await testMatching();
         const pass =
             ok.allowed &&
             !wrongHost.allowed &&
             !replay.allowed &&
             !afterRevoke.allowed &&
-            canaryOnlyInHeader;
+            canaryOnlyInHeader && matching.status === "PASS";
 
         await audit(pass ? "broker_request_scanned" : "broker_request_blocked", pass ? "redact" : "block", "", `test protection ${pass ? "passed" : "failed"}`);
 
@@ -449,9 +500,11 @@ ${row("Wrong host (evil.example.net)", wrongHost.allowed, false)}
 ${row("Replay past use limit", replay.allowed, false)}
 ${row("After revocation", afterRevoke.allowed, false)}
 </table>
-<p class="stat-row">Canary appeared in the simulated transport's Authorization header and was absent from the checked handle, results and this view: <strong>${canaryOnlyInHeader ? "confirmed" : "NOT confirmed"}</strong>.</p>`,
+<p class="stat-row">Canary appeared in the simulated transport's Authorization header and was absent from the checked handle, results and this view: <strong>${canaryOnlyInHeader ? "confirmed" : "NOT confirmed"}</strong>.</p>
+<p>Managed response matching: <strong>${matching.status}</strong>; ${matching.cases.filter(item => item.pass).length}/${matching.cases.length} synthetic checks passed. This covers the named in-process response path; streaming terminals and external gateway routes have separate checks.</p>`,
         );
         refreshViews();
+        return { pass, matching };
     }
 
     /**

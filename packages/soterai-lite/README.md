@@ -26,6 +26,8 @@ Local managed secret scanning, file restrictions, approved masked reads, vault
 workflows and a bundled loopback AI broker. Existing settings use `soterai.*`.
 This local candidate preserves the extension identity and saved vault/policy.
 
+Managed capability responses recognize registered values in raw, base64/base64url, hex, URL and JSON forms, including ordered string values split inside one response. Matching preserves exact case and Unicode. Short values match complete parts; matching never joins separate requests or decodes arbitrary nested encodings. Provider rules and credential-context entropy add recognition for unregistered values. Input, registry, decoded-view, match and work limits withhold incomplete responses. The machine setting `soterai.lite.secretMatching` withdraws these managed responses while saved restrictions and masking remain active. **Test Protection** runs synthetic in-process checks without a network call; its result does not certify external AI routes. Streaming terminal and gateway coverage require their separate adapters.
+
 Manual restrictions report saved, failed, cancelled or unavailable explicitly.
 Pending saves withhold affected managed reads while unrelated public files stay
 usable. Changing the chosen workspace during a save prevents a success claim.

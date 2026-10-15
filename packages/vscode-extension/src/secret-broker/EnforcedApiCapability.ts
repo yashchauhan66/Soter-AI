@@ -251,6 +251,10 @@ export class EnforcedApiCapabilityBroker {
         }
         // Scan the response so a service cannot echo the secret back into AI context.
         const filtered = this.outputFilter.filter(response.body, [record.value]);
+        if (!filtered.allowed) {
+            const reason = "response withheld by local output protection";
+            return { allowed: false, reason, audit: audit("sent", grant.scope.host, reason, true) };
+        }
         const scrubbed = filtered.reason === "secret_like_output_redacted";
         return {
             allowed: true,

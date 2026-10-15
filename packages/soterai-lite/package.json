@@ -109,7 +109,8 @@
         "soterai.dependencyGuard.osvMode",
         "soterai.secretInterceptor.enabled",
         "soterai.lite.secureEditor",
-        "soterai.lite.vaultMode"
+        "soterai.lite.vaultMode",
+        "soterai.lite.secretMatching"
       ]
     }
   },
@@ -1608,6 +1609,12 @@
           "default": true,
           "scope": "machine",
           "description": "Enable optional owner-reviewed encrypted vault migration and safe recovery. Turning this off preserves saved denies and ciphertext, never restores raw values."
+        },
+        "soterai.lite.secretMatching": {
+          "type": "boolean",
+          "default": true,
+          "scope": "machine",
+          "description": "Enable bounded registered-value and supported encoding recognition for managed broker results. Turning this off withholds these results; saved file restrictions and masking remain active."
         }
       }
     },

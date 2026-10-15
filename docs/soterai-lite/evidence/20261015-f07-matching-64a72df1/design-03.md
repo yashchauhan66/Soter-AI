@@ -1,0 +1,3 @@
+# F07 bounded-input clarification 03
+
+The 64 KiB registration budget counts every supplied nonempty registration's UTF-8 bytes, including duplicate entries. Only the distinct-registration count and retained representation storage deduplicate. This bounds the constructor's work even if a caller supplies many duplicates; 129 copies of the existing short synthetic fixture stay within the byte budget. Check UTF-16 length before Unicode/UTF-8 traversal so an individually oversized string is rejected without scanning all its characters. No budget or semantic matching threshold changes. This clarification follows read-only bounded-work review, before the new duplicate-overflow regression executes.

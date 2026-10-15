@@ -1,0 +1,211 @@
+{
+  "status": "INCOMPLETE",
+  "feature": "F07",
+  "observedAt": "2026-10-15T07:06:56.307Z",
+  "files": [
+    {
+      "path": "packages/core/src/RegisteredSecretMatcher.ts",
+      "sha256": "a4fafa75b3c9b30700221cd73f1df6c610eff142c8d6f39690db880d443f33c4"
+    },
+    {
+      "path": "packages/core/src/index.ts",
+      "sha256": "c019ed5f568b7cce9a7f5f23731e3e9394c41470f5a56087dba941efba780f6b"
+    },
+    {
+      "path": "packages/vscode-extension/src/secret-broker/OutputFilter.ts",
+      "sha256": "3c3df1fc16c15e5c11a7d6902ceb613412c8acdfc50ddefc0c7bbf784e4d8d46"
+    },
+    {
+      "path": "packages/vscode-extension/src/secret-broker/EnforcedApiCapability.ts",
+      "sha256": "a0aff78c704769f71d1ff32c6a052ca95e218c32ddf62b6ef6ec89f746bd177b"
+    },
+    {
+      "path": "packages/vscode-extension/src/secret-broker/runtime.ts",
+      "sha256": "a8405761e94852ccc8b84ae7c9e2ebe535b7fe0eb698f98cdcc1023f21ceab7c"
+    },
+    {
+      "path": "packages/vscode-extension/src/secret-broker/commands.ts",
+      "sha256": "2f792b609e40263d62a5a0d2aca54caae9c1b8e9639e138dd37c9a929afaa13e"
+    },
+    {
+      "path": "packages/vscode-extension/src/ai-boundary/BoundarySnapshot.ts",
+      "sha256": "771e5d627f9264d1ef0852db189621e61245a1d7675c9e6a8d19b3a929708bfa"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/registeredSecretMatcher.test.ts",
+      "sha256": "19ef45adf29fa8ef44801c91e2ab180889695d62a8190710cf049c22bb36aa8b"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/registeredSecretMatcher.review.test.ts",
+      "sha256": "04268fa8a3b4e1d01a17630b78fe7d237d3428093bad0ad37213ba0725ea3adf"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/secretMatchingIntegration.test.ts",
+      "sha256": "79578644b42318ac1ee721cad13f4f024e02f3af608679b2d434aa2db147c2e5"
+    }
+  ],
+  "raw": [
+    {
+      "name": "integration-before-01",
+      "receipt": {
+        "output": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261015-f07-matching-64a72df1\\integration-before-01.txt",
+        "observedAt": "2026-10-15T03:43:08.5842543Z",
+        "exitCode": 1,
+        "arguments": [
+          "--import",
+          "tsx",
+          "--test",
+          "--test-concurrency=1",
+          "packages/vscode-extension/src/__tests__/secretMatchingIntegration.test.ts"
+        ],
+        "sha256": "7E3E3180C559A07C06BC9970E2208AC383529E52ED3B39C01EED860CE8DF15F1",
+        "file": "node"
+      }
+    },
+    {
+      "name": "core-before-01",
+      "receipt": {
+        "output": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261015-f07-matching-64a72df1\\core-before-01.txt",
+        "observedAt": "2026-10-15T03:45:07.6860436Z",
+        "exitCode": 1,
+        "arguments": [
+          "--import",
+          "tsx",
+          "--test",
+          "--test-concurrency=1",
+          "packages/vscode-extension/src/__tests__/registeredSecretMatcher.test.ts"
+        ],
+        "sha256": "48C904DAE0BF16005FEC2599DDE68306C2253207B8AAAB9D761FA0F4CE8E1367",
+        "file": "node"
+      }
+    },
+    {
+      "name": "focused-after-01",
+      "receipt": {
+        "output": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261015-f07-matching-64a72df1\\focused-after-01.txt",
+        "observedAt": "2026-10-15T03:46:57.8739159Z",
+        "exitCode": 1,
+        "arguments": [
+          "--import",
+          "tsx",
+          "--test",
+          "--test-concurrency=1",
+          "packages/vscode-extension/src/__tests__/registeredSecretMatcher.test.ts",
+          "packages/vscode-extension/src/__tests__/secretMatchingIntegration.test.ts"
+        ],
+        "sha256": "0E4A58CBC205A3C464A749AF2EE778AEE4C397707332AC60CC98778F71F281D4",
+        "file": "node"
+      }
+    },
+    {
+      "name": "focused-after-02",
+      "receipt": {
+        "output": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261015-f07-matching-64a72df1\\focused-after-02.txt",
+        "observedAt": "2026-10-15T03:49:11.9781945Z",
+        "exitCode": 0,
+        "arguments": [
+          "--import",
+          "tsx",
+          "--test",
+          "--test-concurrency=1",
+          "packages/vscode-extension/src/__tests__/registeredSecretMatcher.test.ts",
+          "packages/vscode-extension/src/__tests__/secretMatchingIntegration.test.ts"
+        ],
+        "sha256": "DB290931D2CA5F4103EF46D49A930476128340AE7A3B8C3F3AA56ED9E4124EE9",
+        "file": "node"
+      }
+    },
+    {
+      "name": "full-tests-01",
+      "receipt": {
+        "output": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261015-f07-matching-64a72df1\\full-tests-01.txt",
+        "observedAt": "2026-10-15T03:50:58.6365256Z",
+        "exitCode": 0,
+        "arguments": [
+          "--import",
+          "tsx",
+          "--test",
+          "--test-concurrency=1",
+          "../vscode-extension/src/__tests__/**/*.test.ts"
+        ],
+        "sha256": "4F4A91B3CDDA2029EB49C78D797AEB1580BDD379799D8C1D73D88222262DDF89",
+        "file": "node"
+      }
+    },
+    {
+      "name": "review-before-01",
+      "receipt": {
+        "output": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261015-f07-matching-64a72df1\\review-before-01.txt",
+        "observedAt": "2026-10-15T03:52:26.8301447Z",
+        "exitCode": 1,
+        "arguments": [
+          "--import",
+          "tsx",
+          "--test",
+          "--test-concurrency=1",
+          "packages/vscode-extension/src/__tests__/registeredSecretMatcher.test.ts",
+          "packages/vscode-extension/src/__tests__/registeredSecretMatcher.review.test.ts",
+          "packages/vscode-extension/src/__tests__/secretMatchingIntegration.test.ts"
+        ],
+        "sha256": "43A95C28175716C2C2692FB82C2C8E6E84708053D34FFC2488A1CC95BED5B34D",
+        "file": "node"
+      }
+    },
+    {
+      "name": "focused-after-03",
+      "receipt": {
+        "output": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261015-f07-matching-64a72df1\\focused-after-03.txt",
+        "observedAt": "2026-10-15T03:53:35.3784382Z",
+        "exitCode": 0,
+        "arguments": [
+          "--import",
+          "tsx",
+          "--test",
+          "--test-concurrency=1",
+          "packages/vscode-extension/src/__tests__/registeredSecretMatcher.test.ts",
+          "packages/vscode-extension/src/__tests__/registeredSecretMatcher.review.test.ts",
+          "packages/vscode-extension/src/__tests__/secretMatchingIntegration.test.ts"
+        ],
+        "sha256": "275B05B6F9070EE01329DE719CFC90BAD0D4EE3E2ED47D5C79A3B69C62CC0139",
+        "file": "node"
+      }
+    },
+    {
+      "name": "short-part-before-01",
+      "receipt": {
+        "output": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261015-f07-matching-64a72df1\\short-part-before-01.txt",
+        "observedAt": "2026-10-15T03:54:18.9635159Z",
+        "exitCode": 1,
+        "arguments": [
+          "--import",
+          "tsx",
+          "--test",
+          "--test-concurrency=1",
+          "packages/vscode-extension/src/__tests__/registeredSecretMatcher.review.test.ts"
+        ],
+        "sha256": "B05484D3E40D958B2F4869A64302561766EA74AC663F3E6F7E2E5FFA207A4726",
+        "file": "node"
+      }
+    },
+    {
+      "name": "short-part-before-02",
+      "receipt": {
+        "output": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261015-f07-matching-64a72df1\\short-part-before-02.txt",
+        "observedAt": "2026-10-15T07:03:30.8673239Z",
+        "exitCode": 1,
+        "arguments": [
+          "--import",
+          "tsx",
+          "--test",
+          "--test-concurrency=1",
+          "packages/vscode-extension/src/__tests__/registeredSecretMatcher.review.test.ts"
+        ],
+        "sha256": "E780DD5C459C5D8DDE15FC1A8F7FD1BF93E4D4ED5955D6697D74A02A7AA9D1C4",
+        "file": "node"
+      }
+    }
+  ],
+  "independence": "LOW",
+  "native": "NOT_RUN",
+  "rating": "PENDING"
+}

@@ -1,0 +1,508 @@
+﻿TAP version 13
+# Subtest: F07-R01 registered hex inside a public URL path retains source coordinates
+ok 1 - F07-R01 registered hex inside a public URL path retains source coordinates
+  ---
+  duration_ms: 19.0495
+  type: 'test'
+  ...
+# Subtest: F07-R02 mixed-case hex in a URL query remains recognized
+ok 2 - F07-R02 mixed-case hex in a URL query remains recognized
+  ---
+  duration_ms: 2.6697
+  type: 'test'
+  ...
+# Subtest: F07-R03 hex in a URL path split across explicit request parts maps every original part
+ok 3 - F07-R03 hex in a URL path split across explicit request parts maps every original part
+  ---
+  duration_ms: 1.8763
+  type: 'test'
+  ...
+# Subtest: F07-R04 base64 value in a URL path is recognized without network parsing
+ok 4 - F07-R04 base64 value in a URL path is recognized without network parsing
+  ---
+  duration_ms: 1.7008
+  type: 'test'
+  ...
+# Subtest: F07-R05 base64 query value remains a strict canonical positive control
+ok 5 - F07-R05 base64 query value remains a strict canonical positive control
+  ---
+  duration_ms: 5.6607
+  type: 'test'
+  ...
+# Subtest: F07-R04 base64url value in a URL path is recognized without network parsing
+ok 6 - F07-R04 base64url value in a URL path is recognized without network parsing
+  ---
+  duration_ms: 0.6375
+  type: 'test'
+  ...
+# Subtest: F07-R05 base64url query value remains a strict canonical positive control
+ok 7 - F07-R05 base64url query value remains a strict canonical positive control
+  ---
+  duration_ms: 1.1398
+  type: 'test'
+  ...
+# Subtest: F07-R06 hex embedded inside a JSON URL string remains one-layer recognition
+ok 8 - F07-R06 hex embedded inside a JSON URL string remains one-layer recognition
+  ---
+  duration_ms: 1.311
+  type: 'test'
+  ...
+# Subtest: F07-R07 partial JSON Unicode escaping is recognized at original string coordinates
+ok 9 - F07-R07 partial JSON Unicode escaping is recognized at original string coordinates
+  ---
+  duration_ms: 1.5246
+  type: 'test'
+  ...
+# Subtest: F07-R08 JSON decoding never recursively interprets a decoded literal escape
+ok 10 - F07-R08 JSON decoding never recursively interprets a decoded literal escape
+  ---
+  duration_ms: 2.0008
+  type: 'test'
+  ...
+# Subtest: F07-R09 malformed UTF-8 hex cannot invent a registered replacement character
+ok 11 - F07-R09 malformed UTF-8 hex cannot invent a registered replacement character
+  ---
+  duration_ms: 1.0278
+  type: 'test'
+  ...
+# Subtest: F07-R09 malformed UTF-8 base64 cannot invent a registered replacement character
+ok 12 - F07-R09 malformed UTF-8 base64 cannot invent a registered replacement character
+  ---
+  duration_ms: 0.7393
+  type: 'test'
+  ...
+# Subtest: F07-R09 malformed UTF-8 base64url cannot invent a registered replacement character
+ok 13 - F07-R09 malformed UTF-8 base64url cannot invent a registered replacement character
+  ---
+  duration_ms: 0.4832
+  type: 'test'
+  ...
+# Subtest: F07-R10 extra base64 padding is not repaired into a canonical registered value
+ok 14 - F07-R10 extra base64 padding is not repaired into a canonical registered value
+  ---
+  duration_ms: 0.3306
+  type: 'test'
+  ...
+# Subtest: F07-R11 duplicate registration input at the frozen total-byte bound remains usable
+ok 15 - F07-R11 duplicate registration input at the frozen total-byte bound remains usable
+  ---
+  duration_ms: 24.939
+  type: 'test'
+  ...
+# Subtest: F07-R12 duplicate registration input above the total-byte bound withholds rather than looping unbounded
+ok 16 - F07-R12 duplicate registration input above the total-byte bound withholds rather than looping unbounded
+  ---
+  duration_ms: 20.5799
+  type: 'test'
+  ...
+# Subtest: F07-R13 a short encoded value occupying one explicit part stays recognizable beside unrelated alphabetic parts
+ok 17 - F07-R13 a short encoded value occupying one explicit part stays recognizable beside unrelated alphabetic parts
+  ---
+  duration_ms: 2.0485
+  type: 'test'
+  ...
+# Subtest: F07-M01 public exports retain the frozen inclusive budgets and entropy-policy descriptor
+ok 18 - F07-M01 public exports retain the frozen inclusive budgets and entropy-policy descriptor
+  ---
+  duration_ms: 7.3582
+  type: 'test'
+  ...
+# Subtest: F07-M02 raw exact registrations match useful surrounding text and return source-safe coordinates
+ok 19 - F07-M02 raw exact registrations match useful surrounding text and return source-safe coordinates
+  ---
+  duration_ms: 29.0436
+  type: 'test'
+  ...
+# Subtest: F07-M03 base64 padded has a paired registered-secret and public-control outcome
+ok 20 - F07-M03 base64 padded has a paired registered-secret and public-control outcome
+  ---
+  duration_ms: 7.7669
+  type: 'test'
+  ...
+# Subtest: F07-M03 base64 unpadded has a paired registered-secret and public-control outcome
+ok 21 - F07-M03 base64 unpadded has a paired registered-secret and public-control outcome
+  ---
+  duration_ms: 2.0557
+  type: 'test'
+  ...
+# Subtest: F07-M03 base64url padded has a paired registered-secret and public-control outcome
+ok 22 - F07-M03 base64url padded has a paired registered-secret and public-control outcome
+  ---
+  duration_ms: 1.8345
+  type: 'test'
+  ...
+# Subtest: F07-M03 base64url unpadded has a paired registered-secret and public-control outcome
+ok 23 - F07-M03 base64url unpadded has a paired registered-secret and public-control outcome
+  ---
+  duration_ms: 1.7177
+  type: 'test'
+  ...
+# Subtest: F07-M03 lowercase hex has a paired registered-secret and public-control outcome
+ok 24 - F07-M03 lowercase hex has a paired registered-secret and public-control outcome
+  ---
+  duration_ms: 1.6176
+  type: 'test'
+  ...
+# Subtest: F07-M03 uppercase hex has a paired registered-secret and public-control outcome
+ok 25 - F07-M03 uppercase hex has a paired registered-secret and public-control outcome
+  ---
+  duration_ms: 1.1729
+  type: 'test'
+  ...
+# Subtest: F07-M03 mixed-case hex has a paired registered-secret and public-control outcome
+ok 26 - F07-M03 mixed-case hex has a paired registered-secret and public-control outcome
+  ---
+  duration_ms: 1.7917
+  type: 'test'
+  ...
+# Subtest: F07-M04 canonical URL escaping matches without case-folding raw registered bytes
+ok 27 - F07-M04 canonical URL escaping matches without case-folding raw registered bytes
+  ---
+  duration_ms: 5.6234
+  type: 'test'
+  ...
+# Subtest: F07-M04 full uppercase URL escaping matches without case-folding raw registered bytes
+ok 28 - F07-M04 full uppercase URL escaping matches without case-folding raw registered bytes
+  ---
+  duration_ms: 7.5771
+  type: 'test'
+  ...
+# Subtest: F07-M04 full lowercase URL escaping matches without case-folding raw registered bytes
+ok 29 - F07-M04 full lowercase URL escaping matches without case-folding raw registered bytes
+  ---
+  duration_ms: 4.8166
+  type: 'test'
+  ...
+# Subtest: F07-M04 partial URL escaping matches without case-folding raw registered bytes
+ok 30 - F07-M04 partial URL escaping matches without case-folding raw registered bytes
+  ---
+  duration_ms: 2.9055
+  type: 'test'
+  ...
+# Subtest: F07-M05 URL plus is literal plus and is never repaired into a space
+ok 31 - F07-M05 URL plus is literal plus and is never repaired into a space
+  ---
+  duration_ms: 1.8645
+  type: 'test'
+  ...
+# Subtest: F07-M06 valid JSON quoted preserves exact semantic registered bytes
+ok 32 - F07-M06 valid JSON quoted preserves exact semantic registered bytes
+  ---
+  duration_ms: 1.7361
+  type: 'test'
+  ...
+# Subtest: F07-M06 valid JSON string-body preserves exact semantic registered bytes
+ok 33 - F07-M06 valid JSON string-body preserves exact semantic registered bytes
+  ---
+  duration_ms: 3.0668
+  type: 'test'
+  ...
+# Subtest: F07-M06 valid JSON partial Unicode preserves exact semantic registered bytes
+ok 34 - F07-M06 valid JSON partial Unicode preserves exact semantic registered bytes
+  ---
+  duration_ms: 1.4673
+  type: 'test'
+  ...
+# Subtest: F07-M06 valid JSON surrogate pair preserves exact semantic registered bytes
+ok 35 - F07-M06 valid JSON surrogate pair preserves exact semantic registered bytes
+  ---
+  duration_ms: 1.3991
+  type: 'test'
+  ...
+# Subtest: F07-M07 an unrelated malformed escape cannot suppress a later raw or canonical registered form
+ok 36 - F07-M07 an unrelated malformed escape cannot suppress a later raw or canonical registered form
+  ---
+  duration_ms: 2.0323
+  type: 'test'
+  ...
+# Subtest: F07-M08 invalid UTF-8 encoded bytes never become replacement-character registered matches
+ok 37 - F07-M08 invalid UTF-8 encoded bytes never become replacement-character registered matches
+  ---
+  duration_ms: 2.6543
+  type: 'test'
+  ...
+# Subtest: F07-M09 neither case folding, Unicode normalization nor whitespace removal invents a registered match
+ok 38 - F07-M09 neither case folding, Unicode normalization nor whitespace removal invents a registered match
+  ---
+  duration_ms: 5.0154
+  type: 'test'
+  ...
+# Subtest: F07-M10 short registration of 1 Unicode scalars matches explicit whole groups only
+ok 39 - F07-M10 short registration of 1 Unicode scalars matches explicit whole groups only
+  ---
+  duration_ms: 1.633
+  type: 'test'
+  ...
+# Subtest: F07-M10 short registration of 7 Unicode scalars matches explicit whole groups only
+ok 40 - F07-M10 short registration of 7 Unicode scalars matches explicit whole groups only
+  ---
+  duration_ms: 1.2865
+  type: 'test'
+  ...
+# Subtest: F07-M10 short registration of 7 Unicode scalars matches explicit whole groups only
+ok 41 - F07-M10 short registration of 7 Unicode scalars matches explicit whole groups only
+  ---
+  duration_ms: 1.2692
+  type: 'test'
+  ...
+# Subtest: F07-M11 eight Unicode scalars can match a substring even when their UTF-16 width is sixteen
+ok 42 - F07-M11 eight Unicode scalars can match a substring even when their UTF-16 width is sixteen
+  ---
+  duration_ms: 0.7349
+  type: 'test'
+  ...
+# Subtest: F07-M12 all representative raw/encoded/escaped split positions are local to the explicit request
+ok 43 - F07-M12 all representative raw/encoded/escaped split positions are local to the explicit request
+  ---
+  duration_ms: 284.6718
+  type: 'test'
+  ...
+# Subtest: F07-M13 a Unicode scalar may straddle explicit parts without making the joined input invalid
+ok 44 - F07-M13 a Unicode scalar may straddle explicit parts without making the joined input invalid
+  ---
+  duration_ms: 0.4819
+  type: 'test'
+  ...
+# Subtest: F07-M14 separate calls never accumulate, reorder or remove separators from requests
+ok 45 - F07-M14 separate calls never accumulate, reorder or remove separators from requests
+  ---
+  duration_ms: 1.2546
+  type: 'test'
+  ...
+# Subtest: F07-M15 duplicate registrations retain their first opaque ID and overlapping registrations each match
+ok 46 - F07-M15 duplicate registrations retain their first opaque ID and overlapping registrations each match
+  ---
+  duration_ms: 0.7785
+  type: 'test'
+  ...
+# Subtest: F07-M16 explicit placeholder and low-entropy registrations override heuristic allowlists
+ok 47 - F07-M16 explicit placeholder and low-entropy registrations override heuristic allowlists
+  ---
+  duration_ms: 0.7202
+  type: 'test'
+  ...
+# Subtest: F07-M17 invalid construction or request input is typed WITHHELD without partial matches or secret-bearing errors
+ok 48 - F07-M17 invalid construction or request input is typed WITHHELD without partial matches or secret-bearing errors
+  ---
+  duration_ms: 0.9663
+  type: 'test'
+  ...
+# Subtest: F07-M18 unique registration count is inclusive and duplicates do not spend unique-registration budget
+ok 49 - F07-M18 unique registration count is inclusive and duplicates do not spend unique-registration budget
+  ---
+  duration_ms: 10.2457
+  type: 'test'
+  ...
+# Subtest: F07-M19 each registered value's UTF-8 byte bound is inclusive
+ok 50 - F07-M19 each registered value's UTF-8 byte bound is inclusive
+  ---
+  duration_ms: 1.5165
+  type: 'test'
+  ...
+# Subtest: F07-M20 registered total bytes are inclusive and overflow cannot leave an earlier usable registration
+ok 51 - F07-M20 registered total bytes are inclusive and overflow cannot leave an earlier usable registration
+  ---
+  duration_ms: 18.2125
+  type: 'test'
+  ...
+# Subtest: F07-M21 explicit-part and joined-input limits are inclusive and withhold all partial matches on overflow
+ok 52 - F07-M21 explicit-part and joined-input limits are inclusive and withhold all partial matches on overflow
+  ---
+  duration_ms: 47.3735
+  type: 'test'
+  ...
+# Subtest: F07-M22 every raw occurrence fits the returned-match limit exactly; the next occurrence withholds all matches
+ok 53 - F07-M22 every raw occurrence fits the returned-match limit exactly; the next occurrence withholds all matches
+  ---
+  duration_ms: 43.6286
+  type: 'test'
+  ...
+# Subtest: F07-M23 charged search-work exhaustion returns WITHHELD rather than an early partial match
+ok 54 - F07-M23 charged search-work exhaustion returns WITHHELD rather than an early partial match
+  ---
+  duration_ms: 22.2456
+  type: 'test'
+  ...
+# Subtest: F07-M24 provider recognition is distinct from registered values and preserves safe source coordinates
+ok 55 - F07-M24 provider recognition is distinct from registered values and preserves safe source coordinates
+  ---
+  duration_ms: 5.7543
+  type: 'test'
+  ...
+# Subtest: F07-M25 assignment entropy requires the frozen length and character-class gates
+ok 56 - F07-M25 assignment entropy requires the frozen length and character-class gates
+  ---
+  duration_ms: 18.0466
+  type: 'test'
+  ...
+# Subtest: F07-M26 one decoding layer does not recognize a nested encoding of an unformatted registered value
+ok 57 - F07-M26 one decoding layer does not recognize a nested encoding of an unformatted registered value
+  ---
+  duration_ms: 2.5
+  type: 'test'
+  ...
+# Subtest: F07-M27 deterministic positive/negative fuzz preserves exact value identity and source spans
+ok 58 - F07-M27 deterministic positive/negative fuzz preserves exact value identity and source spans
+  ---
+  duration_ms: 38.4888
+  type: 'test'
+  ...
+# Subtest: F07-M28 derived-variant exhaustion is independent of registration count, value bytes and registered total
+ok 59 - F07-M28 derived-variant exhaustion is independent of registration count, value bytes and registered total
+  ---
+  duration_ms: 22.6983
+  type: 'test'
+  ...
+# Subtest: F07-M29 decoded-candidate count is inclusive and overflow discards earlier registered matches
+ok 60 - F07-M29 decoded-candidate count is inclusive and overflow discards earlier registered matches
+  ---
+  duration_ms: 5.1872
+  type: 'test'
+  ...
+# Subtest: F07-M30 overlapping original-source decoded views spend the decoded-byte budget without an input overflow
+ok 61 - F07-M30 overlapping original-source decoded views spend the decoded-byte budget without an input overflow
+  ---
+  duration_ms: 1435.5237
+  type: 'test'
+  ...
+# Subtest: F07-M31 serializing a valid or invalid registry exposes neither values nor their derived spellings
+ok 62 - F07-M31 serializing a valid or invalid registry exposes neither values nor their derived spellings
+  ---
+  duration_ms: 0.4899
+  type: 'test'
+  ...
+# Subtest: F07-M32 nonzero unused base64 pad bits are rejected in padded and unpadded spellings
+ok 63 - F07-M32 nonzero unused base64 pad bits are rejected in padded and unpadded spellings
+  ---
+  duration_ms: 1.599
+  type: 'test'
+  ...
+# Subtest: F07-M33 padding inserted inside encoded secret bytes or given the wrong count is not repaired
+ok 64 - F07-M33 padding inserted inside encoded secret bytes or given the wrong count is not repaired
+  ---
+  duration_ms: 5.1012
+  type: 'test'
+  ...
+# Subtest: F07-M34 canonical provider detection also applies to one-layer encoded original-source views
+ok 65 - F07-M34 canonical provider detection also applies to one-layer encoded original-source views
+  ---
+  duration_ms: 2.9976
+  type: 'test'
+  ...
+# Subtest: F07-M35 entropy recognition uses decoded semantic credential keys while public keys remain negative
+ok 66 - F07-M35 entropy recognition uses decoded semantic credential keys while public keys remain negative
+  ---
+  duration_ms: 2.7926
+  type: 'test'
+  ...
+# Subtest: F07-I01 matching flag withdrawal withholds every input with constant safe text
+ok 67 - F07-I01 matching flag withdrawal withholds every input with constant safe text
+  ---
+  duration_ms: 2.4874
+  type: 'test'
+  ...
+# Subtest: F07-I02 a throwing matching flag cannot expose the response or callback error value
+ok 68 - F07-I02 a throwing matching flag cannot expose the response or callback error value
+  ---
+  duration_ms: 0.4073
+  type: 'test'
+  ...
+# Subtest: F07-I03 invalid registrations cause typed withholding without partial matches or thrown values
+ok 69 - F07-I03 invalid registrations cause typed withholding without partial matches or thrown values
+  ---
+  duration_ms: 1.8548
+  type: 'test'
+  ...
+# Subtest: F07-I04 registration count and byte limits are enforced before a benign response is released
+ok 70 - F07-I04 registration count and byte limits are enforced before a benign response is released
+  ---
+  duration_ms: 17.8587
+  type: 'test'
+  ...
+# Subtest: F07-I05 JSON part, depth and node budget exhaustion withholds the complete response
+ok 71 - F07-I05 JSON part, depth and node budget exhaustion withholds the complete response
+  ---
+  duration_ms: 13.7656
+  type: 'test'
+  ...
+# Subtest: F07-I06 exact raw and canonical one-layer encodings redact the whole response
+ok 72 - F07-I06 exact raw and canonical one-layer encodings redact the whole response
+  ---
+  duration_ms: 9.7585
+  type: 'test'
+  ...
+# Subtest: F07-I07 mixed hex and partial URL/JSON spelling still redact the entire response
+ok 73 - F07-I07 mixed hex and partial URL/JSON spelling still redact the entire response
+  ---
+  duration_ms: 3.7301
+  type: 'test'
+  ...
+# Subtest: F07-I08 ordered JSON string leaves match split raw and partial URL copies without joining across calls
+ok 74 - F07-I08 ordered JSON string leaves match split raw and partial URL copies without joining across calls
+  ---
+  duration_ms: 12.6382
+  type: 'test'
+  ...
+# Subtest: F07-I09 short registrations match whole explicit leaves or groups while ordinary prose stays useful
+ok 75 - F07-I09 short registrations match whole explicit leaves or groups while ordinary prose stays useful
+  ---
+  duration_ms: 2.0535
+  type: 'test'
+  ...
+# Subtest: F07-I10 exact case and Unicode are retained without normalizing unrelated public text
+ok 76 - F07-I10 exact case and Unicode are retained without normalizing unrelated public text
+  ---
+  duration_ms: 1.9664
+  type: 'test'
+  ...
+# Subtest: F07-I11 malformed unrelated escapes cannot suppress raw registered matching
+ok 77 - F07-I11 malformed unrelated escapes cannot suppress raw registered matching
+  ---
+  duration_ms: 1.1471
+  type: 'test'
+  ...
+# Subtest: F07-I12-flag-off capability withholding returns no body and honestly audits the transport as sent
+ok 78 - F07-I12-flag-off capability withholding returns no body and honestly audits the transport as sent
+  ---
+  duration_ms: 14.428
+  type: 'test'
+  ...
+# Subtest: F07-I12-flag-throws capability withholding returns no body and honestly audits the transport as sent
+ok 79 - F07-I12-flag-throws capability withholding returns no body and honestly audits the transport as sent
+  ---
+  duration_ms: 0.8908
+  type: 'test'
+  ...
+# Subtest: F07-I12-json-budget capability withholding returns no body and honestly audits the transport as sent
+ok 80 - F07-I12-json-budget capability withholding returns no body and honestly audits the transport as sent
+  ---
+  duration_ms: 0.6118
+  type: 'test'
+  ...
+# Subtest: F07-I12-legacy-unsafe-request capability withholding returns no body and honestly audits the transport as sent
+ok 81 - F07-I12-legacy-unsafe-request capability withholding returns no body and honestly audits the transport as sent
+  ---
+  duration_ms: 0.9501
+  type: 'test'
+  ...
+# Subtest: F07-I13 mediated split/encoded reflection is wholly redacted after exactly one approved transport
+ok 82 - F07-I13 mediated split/encoded reflection is wholly redacted after exactly one approved transport
+  ---
+  duration_ms: 3.4623
+  type: 'test'
+  ...
+# Subtest: F07-I14 a clean mediated response preserves the public body and honest sent audit
+ok 83 - F07-I14 a clean mediated response preserves the public body and honest sent audit
+  ---
+  duration_ms: 1.6098
+  type: 'test'
+  ...
+1..83
+# tests 83
+# suites 0
+# pass 83
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4305.5276

@@ -1,0 +1,391 @@
+﻿TAP version 13
+# Subtest: F07-I01 matching flag withdrawal withholds every input with constant safe text
+not ok 1 - F07-I01 matching flag withdrawal withholds every input with constant safe text
+  ---
+  duration_ms: 8.5916
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\secretMatchingIntegration.test.ts:2:2692'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    withheld (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\secretMatchingIntegration.test.ts:18:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\secretMatchingIntegration.test.ts:34:5)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: F07-I02 a throwing matching flag cannot expose the response or callback error value
+not ok 2 - F07-I02 a throwing matching flag cannot expose the response or callback error value
+  ---
+  duration_ms: 1.9745
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\secretMatchingIntegration.test.ts:2:3243'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    withheld (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\secretMatchingIntegration.test.ts:18:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\secretMatchingIntegration.test.ts:41:5)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F07-I03 invalid registrations cause typed withholding without partial matches or thrown values
+not ok 3 - F07-I03 invalid registrations cause typed withholding without partial matches or thrown values
+  ---
+  duration_ms: 1.6456
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\secretMatchingIntegration.test.ts:2:3716'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    withheld (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\secretMatchingIntegration.test.ts:18:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\secretMatchingIntegration.test.ts:47:55)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F07-I04 registration count and byte limits are enforced before a benign response is released
+not ok 4 - F07-I04 registration count and byte limits are enforced before a benign response is released
+  ---
+  duration_ms: 5.0273
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\secretMatchingIntegration.test.ts:2:4071'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    withheld (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\secretMatchingIntegration.test.ts:18:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\secretMatchingIntegration.test.ts:55:168)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F07-I05 JSON part, depth and node budget exhaustion withholds the complete response
+not ok 5 - F07-I05 JSON part, depth and node budget exhaustion withholds the complete response
+  ---
+  duration_ms: 2.5454
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\secretMatchingIntegration.test.ts:2:4596'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    withheld (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\secretMatchingIntegration.test.ts:18:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\secretMatchingIntegration.test.ts:61:57)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F07-I06 exact raw and canonical one-layer encodings redact the whole response
+ok 6 - F07-I06 exact raw and canonical one-layer encodings redact the whole response
+  ---
+  duration_ms: 2.0317
+  type: 'test'
+  ...
+# Subtest: F07-I07 mixed hex and partial URL/JSON spelling still redact the entire response
+not ok 7 - F07-I07 mixed hex and partial URL/JSON spelling still redact the entire response
+  ---
+  duration_ms: 1.6686
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\secretMatchingIntegration.test.ts:2:5724'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+        allowed: true,
+        reason: 'secret_like_output_redacted',
+    +   text: '[REDACTED_API_KEY]'
+    -   text: '[REDACTED_SECRET_OUTPUT]'
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    allowed: true
+    text: '[REDACTED_SECRET_OUTPUT]'
+    reason: 'secret_like_output_redacted'
+  actual:
+    allowed: true
+    text: '[REDACTED_API_KEY]'
+    reason: 'secret_like_output_redacted'
+  operator: 'deepStrictEqual'
+  stack: |-
+    redacted (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\secretMatchingIntegration.test.ts:15:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\secretMatchingIntegration.test.ts:78:92)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F07-I08 ordered JSON string leaves match split raw and partial URL copies without joining across calls
+not ok 8 - F07-I08 ordered JSON string leaves match split raw and partial URL copies without joining across calls
+  ---
+  duration_ms: 1.4691
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\secretMatchingIntegration.test.ts:2:6112'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+        allowed: true,
+    +   text: '{"first":"%","second":"73yn%74he%74ic%20f0%37%20c%61f%C3%a9%20%e9%9B%aa%20%f0%9F%a7%AD%20p%68ra%73e%20%2f%20+%20%3f%20%70ri%76at%65%20v%61lu%65"}'
+    -   reason: 'secret_like_output_redacted',
+    -   text: '[REDACTED_SECRET_OUTPUT]'
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    allowed: true
+    text: '[REDACTED_SECRET_OUTPUT]'
+    reason: 'secret_like_output_redacted'
+  actual:
+    allowed: true
+    text: '{"first":"%","second":"73yn%74he%74ic%20f0%37%20c%61f%C3%a9%20%e9%9B%aa%20%f0%9F%a7%AD%20p%68ra%73e%20%2f%20+%20%3f%20%70ri%76at%65%20v%61lu%65"}'
+  operator: 'deepStrictEqual'
+  stack: |-
+    redacted (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\secretMatchingIntegration.test.ts:15:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\secretMatchingIntegration.test.ts:86:43)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F07-I09 short registrations match whole explicit leaves or groups while ordinary prose stays useful
+not ok 9 - F07-I09 short registrations match whole explicit leaves or groups while ordinary prose stays useful
+  ---
+  duration_ms: 1.2051
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\secretMatchingIntegration.test.ts:2:6865'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + '[REDACTED_SECRET_OUTPUT]'
+    - 'the cathedral has a small garden'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'the cathedral has a small garden'
+  actual: '[REDACTED_SECRET_OUTPUT]'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\secretMatchingIntegration.test.ts:94:100)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F07-I10 exact case and Unicode are retained without normalizing unrelated public text
+ok 10 - F07-I10 exact case and Unicode are retained without normalizing unrelated public text
+  ---
+  duration_ms: 0.8798
+  type: 'test'
+  ...
+# Subtest: F07-I11 malformed unrelated escapes cannot suppress raw registered matching
+ok 11 - F07-I11 malformed unrelated escapes cannot suppress raw registered matching
+  ---
+  duration_ms: 0.3748
+  type: 'test'
+  ...
+# Subtest: F07-I12-flag-off capability withholding returns no body and honestly audits the transport as sent
+not ok 12 - F07-I12-flag-off capability withholding returns no body and honestly audits the transport as sent
+  ---
+  duration_ms: 5.4448
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\secretMatchingIntegration.test.ts:2:9161'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\secretMatchingIntegration.test.ts:130:39)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F07-I12-flag-throws capability withholding returns no body and honestly audits the transport as sent
+not ok 13 - F07-I12-flag-throws capability withholding returns no body and honestly audits the transport as sent
+  ---
+  duration_ms: 1.4765
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\secretMatchingIntegration.test.ts:2:9161'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\secretMatchingIntegration.test.ts:130:39)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F07-I12-json-budget capability withholding returns no body and honestly audits the transport as sent
+not ok 14 - F07-I12-json-budget capability withholding returns no body and honestly audits the transport as sent
+  ---
+  duration_ms: 1.0545
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\secretMatchingIntegration.test.ts:2:9161'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\secretMatchingIntegration.test.ts:130:39)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F07-I12-legacy-unsafe-request capability withholding returns no body and honestly audits the transport as sent
+not ok 15 - F07-I12-legacy-unsafe-request capability withholding returns no body and honestly audits the transport as sent
+  ---
+  duration_ms: 0.7664
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\secretMatchingIntegration.test.ts:2:9161'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\secretMatchingIntegration.test.ts:130:39)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F07-I13 mediated split/encoded reflection is wholly redacted after exactly one approved transport
+not ok 16 - F07-I13 mediated split/encoded reflection is wholly redacted after exactly one approved transport
+  ---
+  duration_ms: 1.5984
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\secretMatchingIntegration.test.ts:2:10397'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+    +   body: '{"first":"%73yn%74he%74ic%20f0%37%20c%61f%C3%a9%20%e9%9B%aa%20%f0%9F%a","second":"7%AD%20p%68ra%73e%20%2f%20+%20%3f%20%70ri%76at%65%20v%61lu%65"}',
+    -   body: '[REDACTED_SECRET_OUTPUT]',
+        status: 201
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    status: 201
+    body: '[REDACTED_SECRET_OUTPUT]'
+  actual:
+    status: 201
+    body: '{"first":"%73yn%74he%74ic%20f0%37%20c%61f%C3%a9%20%e9%9B%aa%20%f0%9F%a","second":"7%AD%20p%68ra%73e%20%2f%20+%20%3f%20%70ri%76at%65%20v%61lu%65"}'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\secretMatchingIntegration.test.ts:139:71)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F07-I14 a clean mediated response preserves the public body and honest sent audit
+ok 17 - F07-I14 a clean mediated response preserves the public body and honest sent audit
+  ---
+  duration_ms: 0.9143
+  type: 'test'
+  ...
+1..17
+# tests 17
+# suites 0
+# pass 4
+# fail 13
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 692.2442

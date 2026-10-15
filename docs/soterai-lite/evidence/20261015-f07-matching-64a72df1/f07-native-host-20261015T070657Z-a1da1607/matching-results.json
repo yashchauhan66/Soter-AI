@@ -1,0 +1,202 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-10-15T07:07:11.499Z",
+  "phase": "single",
+  "syntheticOnly": true,
+  "workspace": "d:\\SoterAI-Lite-test-profiles\\f07-native-host-20261015T070657Z-a1da1607\\workspace",
+  "declaredProfilePath": "D:\\SoterAI-Lite-test-profiles\\f07-native-host-20261015T070657Z-a1da1607\\profile",
+  "hostVersion": "1.141.2",
+  "extensionMode": "Development",
+  "extensionBundleSha256": "d56ddba579499995ef4884888d8c4dacbcb54aff6764fce6974f767e1dffb1db",
+  "currentDeveloperBundleSha256": "d56ddba579499995ef4884888d8c4dacbcb54aff6764fce6974f767e1dffb1db",
+  "hostProbeSha256": "2e00e3ae224c16e23f7c7097235eab60fa4ff43073f24c17d79b58ce620a4888",
+  "observations": [
+    {
+      "id": "F07-H00",
+      "scope": "Actual packaged runtime activates and registers the production test command.",
+      "status": "PASS"
+    },
+    {
+      "id": "F07-M01",
+      "scope": "Public response remains usable through the real singleton capability/output filter.",
+      "status": "PASS"
+    },
+    {
+      "id": "F07-M02",
+      "scope": "Registered raw value is withheld from the returned response.",
+      "status": "PASS"
+    },
+    {
+      "id": "F07-M03",
+      "scope": "Registered standard base64 reflection is redacted.",
+      "status": "PASS"
+    },
+    {
+      "id": "F07-M04",
+      "scope": "Registered base64url reflection is redacted.",
+      "status": "PASS"
+    },
+    {
+      "id": "F07-M05",
+      "scope": "Registered hex reflection is redacted.",
+      "status": "PASS"
+    },
+    {
+      "id": "F07-M06",
+      "scope": "Registered URL representation is redacted.",
+      "status": "PASS"
+    },
+    {
+      "id": "F07-M07",
+      "scope": "Registered JSON representation is redacted.",
+      "status": "PASS"
+    },
+    {
+      "id": "F07-M08",
+      "scope": "Request-local split JSON leaves are recognized.",
+      "status": "PASS"
+    },
+    {
+      "id": "F07-M09",
+      "scope": "Short registered value embedded in ordinary prose follows the frozen negative control.",
+      "status": "PASS"
+    },
+    {
+      "id": "F07-M10",
+      "scope": "Budget withdrawal provides no response body after the synthetic transport ran.",
+      "status": "PASS"
+    },
+    {
+      "id": "F07-H11",
+      "scope": "Machine flag withdrawal makes the production seam WITHHELD with pass=false and safe metadata only.",
+      "status": "PASS"
+    },
+    {
+      "id": "F07-H12",
+      "scope": "Re-enabling the machine flag restores all ten real singleton cases in a fresh invocation.",
+      "status": "PASS"
+    }
+  ],
+  "reports": [
+    {
+      "phase": "enabled",
+      "result": {
+        "pass": true,
+        "matching": {
+          "status": "PASS",
+          "cases": [
+            {
+              "id": "M01",
+              "pass": true
+            },
+            {
+              "id": "M02",
+              "pass": true
+            },
+            {
+              "id": "M03",
+              "pass": true
+            },
+            {
+              "id": "M04",
+              "pass": true
+            },
+            {
+              "id": "M05",
+              "pass": true
+            },
+            {
+              "id": "M06",
+              "pass": true
+            },
+            {
+              "id": "M07",
+              "pass": true
+            },
+            {
+              "id": "M08",
+              "pass": true
+            },
+            {
+              "id": "M09",
+              "pass": true
+            },
+            {
+              "id": "M10",
+              "pass": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "phase": "withdrawn",
+      "result": {
+        "pass": false,
+        "matching": {
+          "status": "WITHHELD",
+          "cases": []
+        }
+      }
+    },
+    {
+      "phase": "reenabled",
+      "result": {
+        "pass": true,
+        "matching": {
+          "status": "PASS",
+          "cases": [
+            {
+              "id": "M01",
+              "pass": true
+            },
+            {
+              "id": "M02",
+              "pass": true
+            },
+            {
+              "id": "M03",
+              "pass": true
+            },
+            {
+              "id": "M04",
+              "pass": true
+            },
+            {
+              "id": "M05",
+              "pass": true
+            },
+            {
+              "id": "M06",
+              "pass": true
+            },
+            {
+              "id": "M07",
+              "pass": true
+            },
+            {
+              "id": "M08",
+              "pass": true
+            },
+            {
+              "id": "M09",
+              "pass": true
+            },
+            {
+              "id": "M10",
+              "pass": true
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "passed": 13,
+  "failed": 0,
+  "notRun": 0,
+  "identityScope": "Byte-identical packaged runtime invoked through the actual registered command in a normal isolated developer window; no clean-profile installed-VSIX claim.",
+  "interactionScope": "Production synthetic in-process transports and value-free returned case metadata; no network, external agent, streaming or gateway-routing proof.",
+  "commandScope": "Ten matching cases plus registration and flag withdrawal/re-enable checks; all case oracles originate from the production synthetic self-test.",
+  "independence": "LOW",
+  "ownerPresence": "SYNTHETIC_SELF_TEST_NO_OWNER_APPROVAL_ASSERTION"
+}

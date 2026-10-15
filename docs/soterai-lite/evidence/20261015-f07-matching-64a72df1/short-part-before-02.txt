@@ -1,0 +1,132 @@
+﻿TAP version 13
+# Subtest: F07-R01 registered hex inside a public URL path retains source coordinates
+ok 1 - F07-R01 registered hex inside a public URL path retains source coordinates
+  ---
+  duration_ms: 12.2884
+  type: 'test'
+  ...
+# Subtest: F07-R02 mixed-case hex in a URL query remains recognized
+ok 2 - F07-R02 mixed-case hex in a URL query remains recognized
+  ---
+  duration_ms: 1.3768
+  type: 'test'
+  ...
+# Subtest: F07-R03 hex in a URL path split across explicit request parts maps every original part
+ok 3 - F07-R03 hex in a URL path split across explicit request parts maps every original part
+  ---
+  duration_ms: 0.7917
+  type: 'test'
+  ...
+# Subtest: F07-R04 base64 value in a URL path is recognized without network parsing
+ok 4 - F07-R04 base64 value in a URL path is recognized without network parsing
+  ---
+  duration_ms: 1.0337
+  type: 'test'
+  ...
+# Subtest: F07-R05 base64 query value remains a strict canonical positive control
+ok 5 - F07-R05 base64 query value remains a strict canonical positive control
+  ---
+  duration_ms: 3.1808
+  type: 'test'
+  ...
+# Subtest: F07-R04 base64url value in a URL path is recognized without network parsing
+ok 6 - F07-R04 base64url value in a URL path is recognized without network parsing
+  ---
+  duration_ms: 0.4729
+  type: 'test'
+  ...
+# Subtest: F07-R05 base64url query value remains a strict canonical positive control
+ok 7 - F07-R05 base64url query value remains a strict canonical positive control
+  ---
+  duration_ms: 1.3461
+  type: 'test'
+  ...
+# Subtest: F07-R06 hex embedded inside a JSON URL string remains one-layer recognition
+ok 8 - F07-R06 hex embedded inside a JSON URL string remains one-layer recognition
+  ---
+  duration_ms: 0.6833
+  type: 'test'
+  ...
+# Subtest: F07-R07 partial JSON Unicode escaping is recognized at original string coordinates
+ok 9 - F07-R07 partial JSON Unicode escaping is recognized at original string coordinates
+  ---
+  duration_ms: 1.2119
+  type: 'test'
+  ...
+# Subtest: F07-R08 JSON decoding never recursively interprets a decoded literal escape
+ok 10 - F07-R08 JSON decoding never recursively interprets a decoded literal escape
+  ---
+  duration_ms: 3.1274
+  type: 'test'
+  ...
+# Subtest: F07-R09 malformed UTF-8 hex cannot invent a registered replacement character
+ok 11 - F07-R09 malformed UTF-8 hex cannot invent a registered replacement character
+  ---
+  duration_ms: 0.5017
+  type: 'test'
+  ...
+# Subtest: F07-R09 malformed UTF-8 base64 cannot invent a registered replacement character
+ok 12 - F07-R09 malformed UTF-8 base64 cannot invent a registered replacement character
+  ---
+  duration_ms: 0.3692
+  type: 'test'
+  ...
+# Subtest: F07-R09 malformed UTF-8 base64url cannot invent a registered replacement character
+ok 13 - F07-R09 malformed UTF-8 base64url cannot invent a registered replacement character
+  ---
+  duration_ms: 0.3059
+  type: 'test'
+  ...
+# Subtest: F07-R10 extra base64 padding is not repaired into a canonical registered value
+ok 14 - F07-R10 extra base64 padding is not repaired into a canonical registered value
+  ---
+  duration_ms: 0.2387
+  type: 'test'
+  ...
+# Subtest: F07-R11 duplicate registration input at the frozen total-byte bound remains usable
+ok 15 - F07-R11 duplicate registration input at the frozen total-byte bound remains usable
+  ---
+  duration_ms: 19.2214
+  type: 'test'
+  ...
+# Subtest: F07-R12 duplicate registration input above the total-byte bound withholds rather than looping unbounded
+ok 16 - F07-R12 duplicate registration input above the total-byte bound withholds rather than looping unbounded
+  ---
+  duration_ms: 21.0536
+  type: 'test'
+  ...
+# Subtest: F07-R13 a short encoded value occupying one explicit part stays recognizable beside unrelated alphabetic parts
+not ok 17 - F07-R13 a short encoded value occupying one explicit part stays recognizable beside unrelated alphabetic parts
+  ---
+  duration_ms: 4.6246
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\registeredSecretMatcher.review.test.ts:2:6311'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    'CLEAN' !== 'MATCHED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'MATCHED'
+  actual: 'CLEAN'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\registeredSecretMatcher.review.test.ts:98:16)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..17
+# tests 17
+# suites 0
+# pass 16
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1245.3697

@@ -1,5 +1,8 @@
 # Changelog
 
+- Add bounded shared registered-value recognition for raw and supported encoded forms, exact Unicode/case matching and request-local concatenation. Incomplete matching withholds managed broker responses without exposing values in match metadata.
+- Extend the existing synthetic Test Protection command with public/encoded/split/budget checks. The machine setting `soterai.lite.secretMatching` withdraws these managed responses while retaining saved file protection.
+
 - Add the optional masked CustomDocument editor with native per-field reveal, private replacement input, Undo/Redo and guarded durable saves. Opening through it creates no original plaintext TextDocument.
 - Keep draft recovery encrypted with verified generation-specific SecretStorage keys, reviewed recovery discovery, bounded reads and source-bound restore; withhold edits if encrypted recovery is unavailable.
 - Add project-only editor association diff and undo, plaintext-open warnings, split/source/config reveal revocation and the machine setting `soterai.lite.secureEditor`.
