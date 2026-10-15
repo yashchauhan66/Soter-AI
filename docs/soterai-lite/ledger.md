@@ -5,11 +5,11 @@ Read this file FIRST after any context compaction or on resumption. Do not overw
 ## Current state
 
 - **L0 scoped preflight/split/baseline/catalog freeze DONE.** The user waived the 20 GB threshold. Both verified backup bundles and the authorized old synthetic profiles are retained on D:. Supplemental full fsck ended in resource-limited FAIL; full object integrity remains UNVERIFIED.
-- L1: **ACTIVE, F01-F06 DONE; F07 ACTIVE/test-first**; F08-F32 and L2-L7 **NOT-RUN**. Do not describe this as reaching L6. Read the latest receipts below before work.
+- L1: **ACTIVE, F01-F07 DONE; F08 ACTIVE/test-first**; F09-F32 and L2-L7 **NOT-RUN**. Do not describe this as reaching L6. Read the latest receipts below before work.
 - Source changes and isolated synthetic-profile tests are authorized; the normal VS Code profile has not been changed.
 - New Lite baseline VSIX: **BUILT / CONTENT-INSPECTED / HOST-BASELINE-TESTED**; SHA-256 `cf163471b7a022d5a9f922a3f1fcc6bfd3b56a08ab14f1aebfdfb345c337bae1`. Coverage and all final numerical ratings **PENDING / UNVERIFIED**; 44-check catalog frozen, not graded.
 - Baseline HEAD: `8ef3aeb54f4019f4ee815a844443995176a656f0`; starting branch: `security-hardening`. Inspected prior source modifications were checkpointed at `915a5300a7745e4ffaeab80b5d08d3305e3772f9`; unknown scratch/raw artifacts remain untouched.
-- P00-P03 and F01-F06 scoped commits are complete. F07 is the sole active behavior card; production waits for its frozen design and failing regression baseline. No F08 production may start yet.
+- P00-P03 and F01-F07 scoped commits are complete. F08 is the sole active behavior card; production waits for its frozen design and failing regression baseline. No F09 production may start yet.
 
 ## STEP RECEIPT L0.1 — preflight stop
 
@@ -434,3 +434,9 @@ Scoped local acceptance PASS; local commit/byte verification remains serial barr
 ActualCode1.141.2 isolated native13observationsPASS on the exact runtime: production TestProtection public/raw/base64/base64url/hex/URL/JSON/split/short/budget ten-case metadata, registered command, flag withdrawal and fresh re-enable. These are synthetic in-process production self-test oracles, LOW; no independent transport sink, external agent, streaming/gateway or human assertion. Functional10PASS/security17unchanged8BLOCKED_SCOPED9LEAK_CONFIRMED/0changed. No F05/F06 product source changed; their earlier native results remain bound to F06 artifact, retained full unit controls and affected functional checks apply here.
 
 Private registry, strict canonical UTF8/encoding, exact case/Unicode, original UTF16 part spans, provider and credential-context entropy, bounded input/expansion/views/matches/work and constant withheld outcomes complete for scoped F07. Duplicate input bytes charged before dedupe; HTTP path framing and explicit short encoded part fixes covered by retained failing regressions. No plaintext/value hashes in matcher reports. Feature withdrawal AVAILABILITY_ONLY, catalog44UNVERIFIED/ratingPENDING/nine unmanaged leaks/actual-tool/platform/independent-human gaps remain. Agent service failure retained verbatim; LOW partial review not promoted. Both D backups/user20GBwaiver/unrelated work unchanged. Next scoped commit/byte verification; no F08 production.
+
+## STEP RECEIPT F07-COMMIT / F08-ACTIVATE
+
+F07 scopedcommit **5740f70c2c656ec25f346c1297504c7a4155af7a** byteverificationPASS:146indexedhashes/146exactchangedpaths/0mismatch/0unexpected. FinalVSIX freshly rechecked9e561eada19bc7c21dfcc2e6da8185d948af46fc63ece35665ed58692aacf558;1364935bytes/runtime d56ddba579499995ef4884888d8c4dacbcb54aff6764fce6974f767e1dffb1db. Exactcommand commit-f07.ps1/raw f07-commit01; verify node verify-and-advance.cjs/raw committed-byte-verification01. F07 DONE scoped contract:83focusedPASS/full1220tests1216PASS0FAIL4SKIP/currentCode1.141.2 native13PASS/functional10PASS/security17unchanged8BLOCKED_SCOPED9LEAK_CONFIRMED. Native oracles production synthetic self-test LOW, no independent external sink/gateway/streaming/human claim. Feature withdrawal AVAILABILITY_ONLY/catalog44UNVERIFIED/ratingPENDING.
+
+Only after verified F07 barrier activateF08 bounded streaming output redactor; no F08 production before this transition. Existing F05/F06 native results remain bound to historicalF06artifact, their full unit controls and affected functional checks retained inF07suite. All prior failures/artifacts/profiles and exact agent-service failure retained. Both D backups/user20GBwaiver/unrelated work unchanged; actual-tool/platform/independent-human gates remain.
