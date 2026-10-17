@@ -10,6 +10,7 @@ import { ProjectFileAccess, type CapturedFile, type AccessReceipt, type AccessRe
 import { ProjectReadTerminal } from "./ReadTerminal";
 import { openProjectPrivacyPanel } from "./panel";
 import { registerSecureEditor } from "./SecureEditor";
+import type { ManagedReaderBridge } from "../terminal/CheckedPowerShellSession";
 import { restrictionSaveEnabled, requireRestrictionSave, assertRestrictionWorkspace, RestrictionUnavailable, restrictionResult,
     withManualRestriction, manualRestrictionPending, manualRestrictionIntentPending, onDidChangeManualRestriction } from "../ai-boundary/RestrictionOperation";
 
@@ -54,7 +55,7 @@ export function approvalMessage(receipt: AccessReceipt): string {
         + "The persistent restriction remains. This editor confirmation is not agent-proof; requester identity is not OS-verified. Other tools' direct reads are outside this reader.";
 }
 
-export function registerProjectPrivacyCommands(context: vscode.ExtensionContext): void {
+export function registerProjectPrivacyCommands(context: vscode.ExtensionContext): ManagedReaderBridge {
     registerSecureEditor(context);
     const pendingSensitiveWrites = new Map<string, number>();
     const fileKey = (uri: vscode.Uri) => path.resolve(uri.fsPath).toLowerCase();
@@ -200,4 +201,6 @@ export function registerProjectPrivacyCommands(context: vscode.ExtensionContext)
         context.subscriptions.push(terminal); terminal.show();
         return { status: "OPENED" };
     });
+    return Object.freeze({ read: (uri: vscode.Uri) => request(uri, "managed-read-terminal"),
+        revoke: () => { access.revoke(); provider.clear(); }, isEnabled: readsEnabled });
 }

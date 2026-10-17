@@ -1,0 +1,11 @@
+# F10 native version-call diagnosis — static and isolated evidence
+
+Same-lineage LOW delegate review; no production edit or diagnostic execution by this delegate. Root executed the retained diagnostic scripts.
+
+`git-script-diagnostic-02.json` shows the exact fixed PowerShell worker's native version call yielded no captured lines and no LASTEXITCODE. `git-script-diagnostic-03.json` isolates the same outcome with no shadow functions at all, with/without the Get-Item shadow, before/after all shadow declarations, and after stdin EOF/JSON reading. Each native-call form reports success=true/errorDelta=0 but an empty version array and null exit status. The proposed shadow-function explanation is unsupported by these controls.
+
+In that same diagnostic03 receipt, direct Node spawning and explicit .NET ProcessStartInfo with UseShellExecute=false both return the reviewed Git version and exit0. This isolates the fault to the PowerShell native invocation/classification route rather than missing Git, unsupported version, stdin consumption or the configured guard functions.
+
+The remaining leading hypothesis is absent PATHEXT. The [official Microsoft PowerShell 5.1 environment documentation](https://github.com/MicrosoftDocs/PowerShell-Docs/blob/main/reference/5.1/Microsoft.PowerShell.Core/About/about_Environment_Variables.md) describes different console handling for extensions outside PATHEXT. A minimal fresh environment without that variable can therefore divert the literal .exe invocation through Windows document handling, consistent with unobserved output/exit. This is an inference until the paired diagnostic04 run establishes it.
+
+`diagnose-git-script-04.cjs` repeats diagnostic03 with exactly one environment change: constant PATHEXT='.EXE'. It does not inherit ambient PATH or PATHEXT, alter file associations, invoke arbitrary helpers, use a shell launcher, kill processes, or modify production. Its unique result destination is `git-script-diagnostic-04.json`. If the control confirms normal capture/exit, a separately frozen constant-environment regression and the existing actual Git positive controls must precede acceptance. The .NET alternative is diagnostic evidence only; it is not silently substituted into production.

@@ -87,6 +87,11 @@ export class VaultStorage {
         const entries = await readdir(this.directory); if (entries.length > 8192) return vaultUnavailable();
         return entries.some(name => /^vault-generation-[a-f0-9-]{36}\.enc$/i.test(name));
     }
+    async hasRecoveryRecords(): Promise<boolean> {
+        try { await this.safeDirectory(false); } catch (error) { if (missing(error)) return false; throw error; }
+        const entries = await readdir(this.directory); if (entries.length > 8192) return vaultUnavailable();
+        return entries.some(name => /^vault-|^write-.*\.enc$/i.test(name));
+    }
     async write(name: string, text: string, exclusive = false): Promise<void> {
         if (Buffer.byteLength(text, "utf8") > VAULT_LIMIT) return vaultUnavailable();
         await this.safeDirectory(true); const target = this.name(name); await verifyOutputPath(this.directory, target);

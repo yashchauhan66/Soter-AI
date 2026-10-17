@@ -16,9 +16,9 @@
 
 | Measure | Count |
 | --- | --- |
-| Commands declared and registered | 192 |
+| Commands declared and registered | 197 |
 | Visible in the palette by default | 17 |
-| Behind `soterai.showAllCommands` | 147 |
+| Behind `soterai.showAllCommands` | 152 |
 | Hidden from the palette (aliases, reports, internal) | 28 |
 
 Hidden commands remain **registered**: a keybinding, task or another
@@ -50,9 +50,9 @@ what an agent does on its own.
 
 | Measure | Count |
 | --- | --- |
-| Settings declared | 53 |
-| `machine`-scoped (a repo cannot set them) | 48 |
-| Restricted in untrusted workspaces | 48 |
+| Settings declared | 54 |
+| `machine`-scoped (a repo cannot set them) | 49 |
+| Restricted in untrusted workspaces | 49 |
 | Pinnable by an administrator (`policy`) | 8 |
 
 ## Detection engine

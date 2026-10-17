@@ -1,0 +1,161 @@
+{
+  "schemaVersion": 1,
+  "feature": "F10",
+  "parentCommit": "24da9ce9907cd6082b7ce3a3e79136cd4c551508",
+  "artifact": {
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-f10-20261017-attempt03.vsix",
+    "sha256": "2b5ae9571707ceb268eea44dad4f40c741560d44eaab5edbe2d7b06b4fc7102b"
+  },
+  "inspection": {
+    "path": "vsix-inspection-04.json",
+    "sha256": "c3f359dba330fc4dd423b4dae4d4091c9013474d54740362b00e4bedc4b656e5"
+  },
+  "checks": [
+    {
+      "role": "focused",
+      "log": "final-focused-06.txt",
+      "kind": "tap",
+      "expected": {
+        "tests": 418,
+        "suites": 22,
+        "pass": 418,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    {
+      "role": "typecheck",
+      "log": "typecheck-10.txt"
+    },
+    {
+      "role": "full",
+      "log": "full-tests-05.txt",
+      "kind": "tap",
+      "expected": {
+        "tests": 1806,
+        "suites": 106,
+        "pass": 1802,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 4,
+        "todo": 0
+      }
+    },
+    {
+      "role": "readiness",
+      "log": "readiness-01.txt"
+    },
+    {
+      "role": "package",
+      "log": "package-04.txt"
+    },
+    {
+      "role": "hostBuild",
+      "log": "host-build-02.txt"
+    },
+    {
+      "role": "native",
+      "log": "native-launch-04.txt"
+    },
+    {
+      "role": "affected",
+      "log": "affected-launch-05.txt"
+    }
+  ],
+  "focusedPartition": {
+    "f10": 342,
+    "extensionParity": 76
+  },
+  "native": {
+    "summary": {
+      "path": "f10-native-host-20261017T024022Z-b39a2ca8/summary.json",
+      "sha256": "5859f85a094605a41d935e0301f318ce03a2198fa2aa1d923cb6d595786f9241"
+    },
+    "freeze": {
+      "path": "f10-native-host-20261017T024022Z-b39a2ca8/freeze.json",
+      "sha256": "d4a8cf057b2dab2915aca86874231c24faa5b96a9920f5e971997779185444f3"
+    },
+    "primary": {
+      "path": "f10-native-host-20261017T024022Z-b39a2ca8/primary-results.json",
+      "sha256": "c91fcb38ff913f41578828340995feed05782f1ecca2535bfa4e4c56c8592be8"
+    },
+    "restart": {
+      "path": "f10-native-host-20261017T024022Z-b39a2ca8/restart-results.json",
+      "sha256": "0f7109e102939e02e2832b2de4fdbce2e6cf6c170f40736e24a8e86fea5fae47"
+    },
+    "probe": {
+      "path": "prebuilt-native-host-02/lite-powershell51-host.js",
+      "sha256": "4ace212abaa62e358203f62a959751484f70f2ff596c3fd7601a3d3f35054a78"
+    }
+  },
+  "affected": {
+    "summary": {
+      "path": "affected-20261017T024207Z-e5c898b54a2b410aa186ff2b984c3a0e/affected-summary-01.json",
+      "sha256": "2ad8e5289d4a21a7f58106d5fecd81afd1f959ef06a4606f9479107dc012e664"
+    },
+    "comparison": {
+      "path": "affected-20261017T024207Z-e5c898b54a2b410aa186ff2b984c3a0e/security-comparison-01.json",
+      "sha256": "f7a688ee8b9977154dc68b6abb1626fefb1788d6bfd87927b135562b95c292f2"
+    },
+    "functional": {
+      "path": "affected-20261017T024207Z-e5c898b54a2b410aa186ff2b984c3a0e/functional/privacy-20261017T024211Z-beb64cd0/functional-results.json",
+      "sha256": "133e6db5896b50e27569acf0bce58a42dcbdb2ff6d19b3bd0e1727d5d341f453"
+    },
+    "security": {
+      "path": "affected-20261017T024207Z-e5c898b54a2b410aa186ff2b984c3a0e/security/host-20261017T024230Z-0a58dfaca39443cf8907499a2d75d70b/live-host.json",
+      "sha256": "31443d13bfdd4bac3fecfb78d4ba522e060eb8b29947e96b00d81fc7d4070516"
+    }
+  },
+  "reviews": [
+    {
+      "path": "source-review-git-final-02-receipts.md",
+      "sha256": "82b46db07e7fa294ec386ff40250f5707666caae4753280d6ef87573e2de6497"
+    },
+    {
+      "path": "source-review-publication-final-01.md",
+      "sha256": "cb9c5a5efeeb0f9251771188f49f74c80883efa870b15b13fe2c227b7e24f07b"
+    },
+    {
+      "path": "native-fixture-correction-04.md",
+      "sha256": "45b1fcff6097a2407b3b78eefda48219c3b3c44f85d4ea5450be2246310e68ec"
+    },
+    {
+      "path": "command-controller-review-02.json",
+      "sha256": "7003f99b2ef67e1e7cf4ca4ceb5f7fe31717c71346233d6dedbe9696ebeddc06"
+    },
+    {
+      "path": "source-review-root-listing-01.md",
+      "sha256": "70b4763cc0d6e6e9acf51c1aff4d073bb8ab65ac49eb347f8ccbed5022c18632"
+    },
+    {
+      "path": "source-review-root-listing-02.md",
+      "sha256": "441dec13245e6bac6c9b27947ea6e293409fd3888f7a291373bdd46f5ccab64a"
+    },
+    {
+      "path": "root-listing-fixture-correction-01.md",
+      "sha256": "1f8ec54014e3610baaf36e51171c1851b26477ef8f01fd284374a464d240c467"
+    },
+    {
+      "path": "transition-tooling-review-02.md",
+      "sha256": "76c11de2634c653825fa26c3c6506141fa0f24082283fa8f92d7dca4219a30f7"
+    },
+    {
+      "path": "root-final-disposition-01.md",
+      "sha256": "e8a831e84b2ef5cd8d6a8b313016507ba08c08013d6ca61076a99da69f245ba3"
+    }
+  ],
+  "reviewDisposition": "NO_OPEN_SCOPED_BLOCKERS",
+  "priorEvidence": [
+    "docs/soterai-lite/evidence/20261015-f09-runtime-81e65c2a/acceptance-preflight-01.txt",
+    "docs/soterai-lite/evidence/20261015-f09-runtime-81e65c2a/acceptance-preflight-01.txt.result.json",
+    "docs/soterai-lite/evidence/20261015-f09-runtime-81e65c2a/f09-byte-verification-launch-01.txt",
+    "docs/soterai-lite/evidence/20261015-f09-runtime-81e65c2a/f09-byte-verification-launch-01.txt.result.json",
+    "docs/soterai-lite/evidence/20261015-f09-runtime-81e65c2a/f09-transition-allowlist-01.txt",
+    "docs/soterai-lite/evidence/20261015-f09-runtime-81e65c2a/f09-transition-byte-verification-01.json",
+    "docs/soterai-lite/evidence/20261015-f09-runtime-81e65c2a/f09-transition-commit-01.txt",
+    "docs/soterai-lite/evidence/20261015-f09-runtime-81e65c2a/f09-transition-verification-launch-01.txt",
+    "docs/soterai-lite/evidence/20261015-f09-runtime-81e65c2a/f09-transition-verification-launch-01.txt.result.json"
+  ]
+}

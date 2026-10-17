@@ -1,0 +1,116 @@
+﻿TAP version 13
+# Subtest: F10-GOI01 nonempty object-info commit-graph metadata refuses without reading its body
+not ok 1 - F10-GOI01 nonempty object-info commit-graph metadata refuses without reading its body
+  ---
+  duration_ms: 49.4379
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedGitMetadataObjectInfo.test.ts:2:2169'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + {
+    +   available: [Function: available],
+    +   environment: {
+    +     GIT_ATTR_NOSYSTEM: '1',
+    +     GIT_CONFIG_GLOBAL: 'D:\\SoterAI-Lite-test-profiles\\f03-unit-temp\\soter-f10-git-job-uGsnMc\\empty.gitconfig',
+    +     GIT_CONFIG_NOSYSTEM: '1',
+    +     GIT_CONFIG_SYSTEM: 'D:\\SoterAI-Lite-test-profiles\\f03-unit-temp\\soter-f10-git-job-uGsnMc\\empty.gitconfig',
+    +     GIT_NO_LAZY_FETCH: '1',
+    +     GIT_NO_REPLACE_OBJECTS: '1',
+    +     GIT_OPTIONAL_LOCKS: '0',
+    +     GIT_PROTOCOL_FROM_USER: '0',
+    +     GIT_TERMINAL_PROMPT: '0',
+    +     HOME: 'D:\\SoterAI-Lite-test-profiles\\f03-unit-temp\\soter-f10-git-job-uGsnMc',
+    +     SystemRoot: 'C:\\WINDOWS',
+    +     TEMP: 'D:\\SoterAI-Lite-test-profiles\\f03-unit-temp\\soter-f10-git-job-uGsnMc',
+    +     TMP: 'D:\\SoterAI-Lite-test-profiles\\f03-unit-temp\\soter-f10-git-job-uGsnMc',
+    +     USERPROFILE: 'D:\\SoterAI-Lite-test-profiles\\f03-unit-temp\\soter-f10-git-job-uGsnMc',
+    +     WINDIR: 'C:\\WINDOWS',
+    +     XDG_CONFIG_HOME: 'D:\\SoterAI-Lite-test-profiles\\f03-unit-temp\\soter-f10-git-job-uGsnMc'
+    +   },
+    +   executable: 'C:\\Program Files\\Git\\cmd\\git.exe',
+    +   job: 'D:\\SoterAI-Lite-test-profiles\\f03-unit-temp\\soter-f10-git-job-uGsnMc'
+    + }
+    - undefined
+    
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: F10-GOI02 aliased object-info child namespace refuses without traversing target
+not ok 2 - F10-GOI02 aliased object-info child namespace refuses without traversing target
+  ---
+  duration_ms: 26.9058
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedGitMetadataObjectInfo.test.ts:2:2543'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + {
+    +   available: [Function: available],
+    +   environment: {
+    +     GIT_ATTR_NOSYSTEM: '1',
+    +     GIT_CONFIG_GLOBAL: 'D:\\SoterAI-Lite-test-profiles\\f03-unit-temp\\soter-f10-git-job-wgf4HC\\empty.gitconfig',
+    +     GIT_CONFIG_NOSYSTEM: '1',
+    +     GIT_CONFIG_SYSTEM: 'D:\\SoterAI-Lite-test-profiles\\f03-unit-temp\\soter-f10-git-job-wgf4HC\\empty.gitconfig',
+    +     GIT_NO_LAZY_FETCH: '1',
+    +     GIT_NO_REPLACE_OBJECTS: '1',
+    +     GIT_OPTIONAL_LOCKS: '0',
+    +     GIT_PROTOCOL_FROM_USER: '0',
+    +     GIT_TERMINAL_PROMPT: '0',
+    +     HOME: 'D:\\SoterAI-Lite-test-profiles\\f03-unit-temp\\soter-f10-git-job-wgf4HC',
+    +     SystemRoot: 'C:\\WINDOWS',
+    +     TEMP: 'D:\\SoterAI-Lite-test-profiles\\f03-unit-temp\\soter-f10-git-job-wgf4HC',
+    +     TMP: 'D:\\SoterAI-Lite-test-profiles\\f03-unit-temp\\soter-f10-git-job-wgf4HC',
+    +     USERPROFILE: 'D:\\SoterAI-Lite-test-profiles\\f03-unit-temp\\soter-f10-git-job-wgf4HC',
+    +     WINDIR: 'C:\\WINDOWS',
+    +     XDG_CONFIG_HOME: 'D:\\SoterAI-Lite-test-profiles\\f03-unit-temp\\soter-f10-git-job-wgf4HC'
+    +   },
+    +   executable: 'C:\\Program Files\\Git\\cmd\\git.exe',
+    +   job: 'D:\\SoterAI-Lite-test-profiles\\f03-unit-temp\\soter-f10-git-job-wgf4HC'
+    + }
+    - undefined
+    
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: F10-GOI03 later object-info child creation revokes a captured descriptor
+ok 3 - F10-GOI03 later object-info child creation revokes a captured descriptor
+  ---
+  duration_ms: 38.8243
+  type: 'test'
+  ...
+# Subtest: F10-GOI04 empty canonical object-info remains admitted as the paired control
+ok 4 - F10-GOI04 empty canonical object-info remains admitted as the paired control
+  ---
+  duration_ms: 32.6801
+  type: 'test'
+  ...
+# Subtest: F10-GOI05 hardlinked loose-object metadata refuses before Git execution
+ok 5 - F10-GOI05 hardlinked loose-object metadata refuses before Git execution
+  ---
+  duration_ms: 13.4096
+  type: 'test'
+  ...
+# Subtest: F10-GOI06 ordinary single-link loose-object metadata remains admitted
+ok 6 - F10-GOI06 ordinary single-link loose-object metadata remains admitted
+  ---
+  duration_ms: 33.0101
+  type: 'test'
+  ...
+# Subtest: F10-GOI07 later extra hardlink revokes a captured loose-object descriptor
+ok 7 - F10-GOI07 later extra hardlink revokes a captured loose-object descriptor
+  ---
+  duration_ms: 39.9312
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 5
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 758.3519

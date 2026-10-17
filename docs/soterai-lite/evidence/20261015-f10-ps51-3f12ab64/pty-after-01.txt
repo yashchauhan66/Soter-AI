@@ -1,0 +1,142 @@
+﻿TAP version 13
+# Subtest: F10-T01 exported local help explains declared checks and bypass limits without invoking the session
+ok 1 - F10-T01 exported local help explains declared checks and bypass limits without invoking the session
+  ---
+  duration_ms: 111.5748
+  type: 'test'
+  ...
+# Subtest: F10-T02 input stays hidden before submission and only the completed sanitized result is emitted
+ok 2 - F10-T02 input stays hidden before submission and only the completed sanitized result is emitted
+  ---
+  duration_ms: 6.6449
+  type: 'test'
+  ...
+# Subtest: F10-T03 a CRLF pair submits a whole line once whether delivered together or in split callbacks
+ok 3 - F10-T03 a CRLF pair submits a whole line once whether delivered together or in split callbacks
+  ---
+  duration_ms: 4.2591
+  type: 'test'
+  ...
+# Subtest: F10-T04-BS backspace removes exactly one Unicode scalar without exposing surrogate fragments
+ok 4 - F10-T04-BS backspace removes exactly one Unicode scalar without exposing surrogate fragments
+  ---
+  duration_ms: 1.9668
+  type: 'test'
+  ...
+# Subtest: F10-T04-DEL backspace removes exactly one Unicode scalar without exposing surrogate fragments
+ok 5 - F10-T04-DEL backspace removes exactly one Unicode scalar without exposing surrogate fragments
+  ---
+  duration_ms: 2.1395
+  type: 'test'
+  ...
+# Subtest: F10-T05 the inclusive 4096-byte input limit is measured in UTF8 rather than UTF16 units
+ok 6 - F10-T05 the inclusive 4096-byte input limit is measured in UTF8 rather than UTF16 units
+  ---
+  duration_ms: 4.4763
+  type: 'test'
+  ...
+# Subtest: F10-T06 a UTF8 overflow invalidates the whole line through enter and the next line starts cleanly
+ok 7 - F10-T06 a UTF8 overflow invalidates the whole line through enter and the next line starts cleanly
+  ---
+  duration_ms: 3.539
+  type: 'test'
+  ...
+# Subtest: F10-T07-00 unsupported controls invalidate the whole current line instead of dropping a dangerous fragment
+ok 8 - F10-T07-00 unsupported controls invalidate the whole current line instead of dropping a dangerous fragment
+  ---
+  duration_ms: 2.0741
+  type: 'test'
+  ...
+# Subtest: F10-T07-01 unsupported controls invalidate the whole current line instead of dropping a dangerous fragment
+ok 9 - F10-T07-01 unsupported controls invalidate the whole current line instead of dropping a dangerous fragment
+  ---
+  duration_ms: 1.9627
+  type: 'test'
+  ...
+# Subtest: F10-T07-1a unsupported controls invalidate the whole current line instead of dropping a dangerous fragment
+ok 10 - F10-T07-1a unsupported controls invalidate the whole current line instead of dropping a dangerous fragment
+  ---
+  duration_ms: 1.9458
+  type: 'test'
+  ...
+# Subtest: F10-T07-09 unsupported controls invalidate the whole current line instead of dropping a dangerous fragment
+ok 11 - F10-T07-09 unsupported controls invalidate the whole current line instead of dropping a dangerous fragment
+  ---
+  duration_ms: 2.2019
+  type: 'test'
+  ...
+# Subtest: F10-T07-1b5b41 unsupported controls invalidate the whole current line instead of dropping a dangerous fragment
+ok 12 - F10-T07-1b5b41 unsupported controls invalidate the whole current line instead of dropping a dangerous fragment
+  ---
+  duration_ms: 1.5003
+  type: 'test'
+  ...
+# Subtest: F10-T08 malformed UTF16 input is rejected as a whole rather than lossy UTF8 replacement
+ok 13 - F10-T08 malformed UTF16 input is rejected as a whole rather than lossy UTF8 replacement
+  ---
+  duration_ms: 1.3852
+  type: 'test'
+  ...
+# Subtest: F10-T09 local clear/help operate without session execution or raw command history
+ok 14 - F10-T09 local clear/help operate without session execution or raw command history
+  ---
+  duration_ms: 2.1741
+  type: 'test'
+  ...
+# Subtest: F10-T10 Ctrl+C clears partial hidden input and revokes the session without executing its remainder
+ok 15 - F10-T10 Ctrl+C clears partial hidden input and revokes the session without executing its remainder
+  ---
+  duration_ms: 1.7469
+  type: 'test'
+  ...
+# Subtest: F10-T11 one held command blocks programmatic and typed submissions without queuing them
+ok 16 - F10-T11 one held command blocks programmatic and typed submissions without queuing them
+  ---
+  duration_ms: 2.0452
+  type: 'test'
+  ...
+# Subtest: F10-T12 Ctrl+C requests cancellation while BUSY and retains the pending operation until actual completion
+ok 17 - F10-T12 Ctrl+C requests cancellation while BUSY and retains the pending operation until actual completion
+  ---
+  duration_ms: 1.7686
+  type: 'test'
+  ...
+# Subtest: F10-T13 completed normalized stdout/stderr use CRLF and retain nonzero status without raw input echo
+ok 18 - F10-T13 completed normalized stdout/stderr use CRLF and retain nonzero status without raw input echo
+  ---
+  duration_ms: 2.2828
+  type: 'test'
+  ...
+# Subtest: F10-T14 WITHHELD results and thrown input-bearing errors emit only fixed explanations
+ok 19 - F10-T14 WITHHELD results and thrown input-bearing errors emit only fixed explanations
+  ---
+  duration_ms: 4.048
+  type: 'test'
+  ...
+# Subtest: F10-T15 close disposes the owned session but onDidClose waits for a held command's actual completion
+ok 20 - F10-T15 close disposes the owned session but onDidClose waits for a held command's actual completion
+  ---
+  duration_ms: 2.6598
+  type: 'test'
+  ...
+# Subtest: F10-T16 an unresolved close remains visibly STOP_UNCONFIRMED rather than claiming a child exit
+ok 21 - F10-T16 an unresolved close remains visibly STOP_UNCONFIRMED rather than claiming a child exit
+  ---
+  duration_ms: 1140.1999
+  type: 'test'
+  ...
+# Subtest: F10-T17 close without owned work emits one close and never invokes a session command
+ok 22 - F10-T17 close without owned work emits one close and never invokes a session command
+  ---
+  duration_ms: 1.2259
+  type: 'test'
+  ...
+1..22
+# tests 22
+# suites 0
+# pass 22
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1649.4952

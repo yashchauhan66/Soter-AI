@@ -1,0 +1,7 @@
+# F10 resumed registration fixture corrections
+
+Commands fixture was frozen before production, but commands-before02 is only a sandbox subprocess EPERM file failure: its42 declared tests were NOT_EXECUTED. Root mistakenly started commands.ts before confirming an executed missing-module baseline. No preimplementation42FAIL is claimed and production was not rolled back to fabricate one. The executed postimplementation wiring-after01 has42 setup failures from a missing registerTextDocumentContentProvider stub; it also caught one ownership snapshot timing failure. All original outputs remain.
+
+Root added the missing native content-provider stub and explicit vscode.Uri annotations after typecheck02/03 reported fixture implicit-any errors. Wiring-after02 executed95 tests:94PASS1FAIL. C06's second submission raced the still-owned denied read: entering reader.read does not mean the PTY finished. Corrected fixture awaits the fixed withheld-output event and one completion turn before deliberately submitting a second command. It retains the denial/zero-filter/second approved masking assertions; no production scheduling semantics were changed to satisfy it.
+
+Checkpoint reconciliation records only the intentional missing-bridge helper correction as the initial source mismatch. Earlier source/artifact/catalog/master/HEAD identities match. resume-reconcile-launch01 is sandboxEPERM; launch02 ran and returned1 for that documented fixture mismatch, with all five identity checks true. No product acceptance follows from reconciliation.

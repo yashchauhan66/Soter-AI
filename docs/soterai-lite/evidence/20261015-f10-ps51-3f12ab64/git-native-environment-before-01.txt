@@ -1,0 +1,33 @@
+﻿TAP version 13
+# Subtest: F10-GNE01 absent or hostile ambient extension lists become only fixed EXE classification
+not ok 1 - F10-GNE01 absent or hostile ambient extension lists become only fixed EXE classification
+  ---
+  duration_ms: 56.0754
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedGitMetadataNativeEnvironment.test.ts:2:1001'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - '.EXE'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '.EXE'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedGitMetadataNativeEnvironment.test.ts:20:30)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 585.7386

@@ -1,0 +1,167 @@
+{
+  "schemaVersion": 1,
+  "fixture": "packages/vscode-extension/src/__tests__/checkedPowerShellCommands.test.ts",
+  "bytes": 27358,
+  "sha256": "bf15c2c5be29f577ea30540902c65987cb2c963a9922d08ee0b38b3d08e9743d",
+  "parseDiagnostics": 0,
+  "declarations": 30,
+  "expandedTests": 42,
+  "inventory": [
+    {
+      "line": 156,
+      "titleExpression": "\"F10-C01 registration contributes one native provider and exactly the five declared routes\"",
+      "expandedTests": 1
+    },
+    {
+      "line": 162,
+      "titleExpression": "\"F10-C02 contributed native profile supplies an owned pty without shellPath, args or inherited env\"",
+      "expandedTests": 1
+    },
+    {
+      "line": 169,
+      "titleExpression": "\"F10-C03 open command creates an ExtensionTerminalOptions tab and leaves project profile unchanged\"",
+      "expandedTests": 1
+    },
+    {
+      "line": 175,
+      "titleExpression": "\"F10-C04 run gets command text only from masked native input and ignores command-like caller arguments\"",
+      "expandedTests": 1
+    },
+    {
+      "line": 183,
+      "titleExpression": "\"F10-C05 cancelled native command input never becomes caller-provided command execution\"",
+      "expandedTests": 1
+    },
+    {
+      "line": 188,
+      "titleExpression": "\"F10-C06 run and pty share the exact bridge, preserving denial and reviewed masking\"",
+      "expandedTests": 1
+    },
+    {
+      "line": 196,
+      "titleExpression": "\"F10-C07 an absent internal reader withholds instead of falling back to a public command\"",
+      "expandedTests": 1
+    },
+    {
+      "line": 201,
+      "titleExpression": "\"F10-C08 disabled bridge prevents profile creation and native command input\"",
+      "expandedTests": 1
+    },
+    {
+      "line": 206,
+      "titleExpression": "\"F10-C09 untrusted workspace cannot open or configure the checked terminal\"",
+      "expandedTests": 1
+    },
+    {
+      "line": 211,
+      "titleExpression": "\"F10-C10 a remote extension host never creates a local PowerShell terminal\"",
+      "expandedTests": 1
+    },
+    {
+      "line": 217,
+      "titleExpression": "`F10-C11 ${name} withdrawal cancels live sessions and preserves saved profile metadata`",
+      "expandedTests": 4
+    },
+    {
+      "line": 225,
+      "titleExpression": "\"F10-C12 workspace removal cancels its live session and blocks a new tab\"",
+      "expandedTests": 1
+    },
+    {
+      "line": 230,
+      "titleExpression": "\"F10-C13 flag withdrawal during a native pending read cannot release late approved output\"",
+      "expandedTests": 1
+    },
+    {
+      "line": 238,
+      "titleExpression": "\"F10-C14 configure and restore delegate only validated current root URIs to the owned profile manager\"",
+      "expandedTests": 1
+    },
+    {
+      "line": 243,
+      "titleExpression": "\"F10-C15 native folder selection resolves a root without accepting a caller command as a URI\"",
+      "expandedTests": 1
+    },
+    {
+      "line": 248,
+      "titleExpression": "\"F10-C16 invalid/outside/remote root arguments never become profile settings changes\"",
+      "expandedTests": 1
+    },
+    {
+      "line": 255,
+      "titleExpression": "\"F10-C17 cancelled native folder choice does not mutate a profile\"",
+      "expandedTests": 1
+    },
+    {
+      "line": 260,
+      "titleExpression": "\"F10-C18 status route returns metadata without native input, commands, values or raw input history\"",
+      "expandedTests": 1
+    },
+    {
+      "line": 265,
+      "titleExpression": "\"F10-C19 controller disposal unregisters its contributed commands and profile\"",
+      "expandedTests": 1
+    },
+    {
+      "line": 270,
+      "titleExpression": "\"F10-C20 module stop and controller shutdown revoke owned idle sessions without signaling a PID\"",
+      "expandedTests": 1
+    },
+    {
+      "line": 276,
+      "titleExpression": "`F10-C21 non-array ${label} ownership blocks launch without overwriting retained metadata`",
+      "expandedTests": 4
+    },
+    {
+      "line": 279,
+      "titleExpression": "\"F10-C22 more than 64 recovered workers withholds instead of discarding prior ownership\"",
+      "expandedTests": 1
+    },
+    {
+      "line": 286,
+      "titleExpression": "`F10-C23 ${label} ownership fails atomically and blocks before reader/filter admission`",
+      "expandedTests": 7
+    },
+    {
+      "line": 289,
+      "titleExpression": "\"F10-C24 duplicate ownership identifiers do not silently collapse distinct prior records\"",
+      "expandedTests": 1
+    },
+    {
+      "line": 293,
+      "titleExpression": "\"F10-C25 one malformed row cannot be dropped from otherwise valid recovered workers\"",
+      "expandedTests": 1
+    },
+    {
+      "line": 297,
+      "titleExpression": "\"F10-C26 a throwing ownership read preserves the saved bytes and withholds launches\"",
+      "expandedTests": 1
+    },
+    {
+      "line": 301,
+      "titleExpression": "\"F10-C27 recovered native worker rows are always UNVERIFIED and never adopted or signaled\"",
+      "expandedTests": 1
+    },
+    {
+      "line": 311,
+      "titleExpression": "\"F10-C28 exactly 64 valid recovered rows stay visible without adopting their PIDs\"",
+      "expandedTests": 1
+    },
+    {
+      "line": 317,
+      "titleExpression": "\"F10-C29 unrelated global metadata is preserved through registration, use and shutdown\"",
+      "expandedTests": 1
+    },
+    {
+      "line": 323,
+      "titleExpression": "\"F10-C30 a non-Windows host keeps registration inert and cannot launch local PowerShell\"",
+      "expandedTests": 1
+    }
+  ],
+  "correction": "Unexecuted C07 helper default parameter replaced with rest tuple, distinguishing omitted bridge from explicit undefined. No assertion removed; explicit absent bridge now reaches production unchanged.",
+  "baselineTarget": "packages/vscode-extension/src/terminal/commands.ts",
+  "targetExistsAtFreeze": false,
+  "scope": "Static fixture freeze; compiler and runtime result not inferred. Retained synthetic directories; no production edits, shell launches or profile changes.",
+  "command": "node docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/freeze-command-fixtures-02.cjs",
+  "observedAt": "2026-10-16T13:23:52.489Z"
+}

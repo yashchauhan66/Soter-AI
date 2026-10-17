@@ -114,11 +114,15 @@
                 "soterai.lite.vaultMode",
                 "soterai.lite.secretMatching",
                 "soterai.lite.outputRedactor",
-                "soterai.lite.vaultRuntime"
+                "soterai.lite.vaultRuntime",
+                "soterai.lite.ps51Terminal"
             ]
         }
     },
     "contributes": {
+        "terminal": {
+            "profiles": [{ "id": "soterai.ps51.checked", "title": "SoterAI PowerShell 5.1 (checked commands)" }]
+        },
         "taskDefinitions": [
             {
                 "type": "soterai-vault",
@@ -502,6 +506,11 @@
                 "title": "Inspect Vault App Status",
                 "category": "SoterAI"
             },
+            { "command": "soterai.configureCheckedPowerShell", "title": "Configure Checked PowerShell 5.1 Profile", "category": "SoterAI" },
+            { "command": "soterai.openCheckedPowerShell", "title": "Open Checked PowerShell 5.1", "category": "SoterAI" },
+            { "command": "soterai.runCheckedPowerShell", "title": "Run Checked PowerShell 5.1 Command", "category": "SoterAI" },
+            { "command": "soterai.restoreCheckedPowerShell", "title": "Restore Previous Project Terminal Profile", "category": "SoterAI" },
+            { "command": "soterai.checkedPowerShellStatus", "title": "Inspect Checked PowerShell 5.1 Status", "category": "SoterAI" },
             {
                 "command": "soterai.migrateCurrentFileToVault",
                 "title": "Migrate Current File Secrets to Vault",
@@ -1669,6 +1678,12 @@
                     "scope": "machine",
                     "description": "Enable completed-output filtering for supported managed results, including UTF-8 chunks and supported terminal controls. Output stays private until final flush within 128 KiB. Turning this off withholds these results and preserves saved protection."
                 },
+                "soterai.lite.ps51Terminal": {
+                    "type": "boolean",
+                    "default": true,
+                    "scope": "machine",
+                    "description": "Enable the optional finite PowerShell 5.1 checked-command terminal. Managed checks cover declared commands only; arbitrary native reads and independent uploads remain outside this route. Turning this off withdraws owned commands while retaining protection and the profile restore receipt."
+                },
                 "soterai.lite.vaultRuntime": {
                     "type": "boolean",
                     "default": true,
@@ -2090,6 +2105,11 @@
                 { "command": "soterai.runVaultApp", "when": "soterai.advancedCommands" },
                 { "command": "soterai.stopVaultApp", "when": "soterai.advancedCommands" },
                 { "command": "soterai.vaultAppStatus", "when": "soterai.advancedCommands" },
+                { "command": "soterai.configureCheckedPowerShell", "when": "soterai.advancedCommands" },
+                { "command": "soterai.openCheckedPowerShell", "when": "soterai.advancedCommands" },
+                { "command": "soterai.runCheckedPowerShell", "when": "soterai.advancedCommands" },
+                { "command": "soterai.restoreCheckedPowerShell", "when": "soterai.advancedCommands" },
+                { "command": "soterai.checkedPowerShellStatus", "when": "soterai.advancedCommands" },
                 {
                     "command": "soterai.migrateCurrentFileToVault",
                     "when": "soterai.advancedCommands"

@@ -1,0 +1,3 @@
+# Profile fixture retention correction
+
+The authored profile test's original afterEach removed its own marked temporary fixture directory. filter-profile-before-01 executed with that cleanup; its 21 missing-module failures and all raw output remain retained, but those temporary profile input directories were removed by that initial fixture. No normal profile or project source was touched. Before profile production implementation, removed that cleanup; all subsequent unique synthetic profile fixture directories remain retained. This correction does not change any feature assertion and is not a product PASS.

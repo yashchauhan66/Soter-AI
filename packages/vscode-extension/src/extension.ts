@@ -195,11 +195,11 @@ export function activate(context: vscode.ExtensionContext): void {
     };
 
     registerAIBoundaryCommands(context);
-    registerProjectPrivacyCommands(context);
+    const managedReader = registerProjectPrivacyCommands(context);
     registerPublicWorkspaceCommands(context);
     registerSyntheticPreviewCommands(context);
     registerCommands(context, refreshViews);
-    registerFirewallCommands(context, refreshViews);
+    registerFirewallCommands(context, refreshViews, managedReader);
     registerScannerCommands(context, async () => (await protectionState?.refresh())?.descriptor);
     registerBrokerCommands(context, brokerManager, refreshViews);
     registerSentinelCommands(context, sentinel);
@@ -553,6 +553,8 @@ async function updateStatusBar(): Promise<void> {
 }
 
 export async function deactivate(): Promise<void> {
+    try { await (await import("./terminal/commands")).stopCheckedPowerShell(); }
+    catch { console.error("SoterAI checked terminal shutdown metadata is unavailable; process exit remains unverified."); }
     try { await (await import("./vault-runtime/commands")).stopVaultRuntime(); }
     catch { console.error("SoterAI owned app shutdown metadata is unavailable; process exit remains unverified."); }
     secretBrokerRuntime.enforcedApi.revokeAll();

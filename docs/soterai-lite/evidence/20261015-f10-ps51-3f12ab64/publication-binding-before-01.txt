@@ -1,0 +1,40 @@
+﻿TAP version 13
+# Subtest: F10-PR01 stable private binding publishes completed public output after single-use filter disposal
+ok 1 - F10-PR01 stable private binding publishes completed public output after single-use filter disposal
+  ---
+  duration_ms: 90.6674
+  type: 'test'
+  ...
+# Subtest: F10-PR02 revoked private binding after filter finish but before worker completion withholds publication
+not ok 2 - F10-PR02 revoked private binding after filter finish but before worker completion withholds publication
+  ---
+  duration_ms: 57.5041
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellPublicationReview.test.ts:2:5615'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'COMPLETE'
+    - 'WITHHELD'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'WITHHELD'
+  actual: 'COMPLETE'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellPublicationReview.test.ts:91:38)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 1
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 990.3076

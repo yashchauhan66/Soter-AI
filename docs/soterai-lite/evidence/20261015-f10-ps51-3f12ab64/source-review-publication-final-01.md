@@ -1,0 +1,23 @@
+# F10 completed-output publication binding review
+
+Reviewer `/root/git_design`, same-lineage independence LOW, 17 October 2026. Completed STATIC-ONLY review plus read-only inspection/hash verification of existing root-run receipts. No production/test edit, child/test execution or escalation was performed; this unique note is the sole write in this review pass.
+
+Result: **no open scoped source blocker identified in the completed-output binding correction**. The root-discovered issue was an authorization/binding race, not a confirmed secret leak: a filter could finish valid public output, then its independent private binding could be revoked before the session published the worker's completion. The unchanged two-regression fixture exercises that boundary without emitting a secret.
+
+Current `ManagedOutputFilter.canRelease()` is a separate completed-only boolean check over the same captured private `#enabled` guard. It returns false before successful completion, rechecks the retained authorization after completion/disposal, and makes an observed false/throw sticky by withdrawing `#completed`. Single-use sink `available()` remains false after finish; matcher/redactor references are cleared by the existing close path, and the new method exposes no value/output/config/cipher/key. It does not construct a fresh registry snapshot or reopen a completed sink.
+
+The session now requires `Filter.canRelease()` and invokes it after awaiting worker completion, after the lifecycle observer callback and current root/policy/session guard, immediately before returning the managed result. The captured factory predicate still binds its original vault/config/runtime epoch, canonical root, policy, cipher or consistent empty-store identity and the session guard. No await follows this final private check; ordinary synchronous disposal of the already-closed sink does not weaken that check. Missing legacy adapter methods throw into the existing constant WITHHELD catch; there is no optional-method or provider-only production fallback. Direct READ/COPY retains its earlier no-await finish/publication path.
+
+Observed baseline `publication-binding-before-01.txt`: two tests, one PASS/one FAIL, zero cancellations/skips. Fresh raw SHA256 `724238de532493df9e2fa8ea94ff1de25a0ca521e8a51bb9e0d5548cfa21900e`. Retained after01's two legacy adapter failures are described in `publication-fix-notes-01.md`; they are not erased or recounted as passes. The three explicit test-only adapters acquired their existing independent guard under the new required method, with assertions and the two real-filter regression fixtures unchanged.
+
+Observed `publication-binding-after-02.txt`: **129 tests, 129 PASS, zero FAIL/cancel/SKIP**, runner exit0 at `2026-10-17T02:20:55.9235559Z`. Fresh raw SHA256 `bdd8ed0c189b4b64f6f5fbf0be6945a360556648003dd0779e0a8caaadcb8865` matches its immutable result receipt. Its exact argv includes publication, session, ownership, filter, commands and controller review fixtures. Both the stable completion control and the revoke-after-finish control pass. This is the current focused correction receipt, not an invented aggregate with historical 411-test results.
+
+| Reviewed source / unchanged frozen fixture | SHA256 |
+| --- | --- |
+| `packages/vscode-extension/src/terminal/ManagedOutputFilter.ts` | `07cf169207c8f2e39b6c125e4dea75b578e12a18b41c949cd81504051382e094` |
+| `packages/vscode-extension/src/terminal/CheckedPowerShellSession.ts` | `4779a0f1e4b47761f776a2bcce386f713c934701ba7d216503d035c3a18d6206` |
+| `packages/vscode-extension/src/terminal/PowerShell51Worker.ts` | `855993e83ceb104fe776405174175994879fb08db0c1c2c1861cb547c030b024` |
+| `packages/vscode-extension/src/terminal/CheckedGitMetadata.ts` | `f330b8fd1fcb2ef870cf200c4bc78f860e88788f68b1522dc92a27a60ca38c9f` |
+| `packages/vscode-extension/src/__tests__/checkedPowerShellPublicationReview.test.ts` | `5c74967cc66029a0e0587a22dc8993bbbba4a69c3cf3c34255c89a19bc78ad7b` |
+
+Earlier `source-review-git-final-01.md`/`02-receipts.md` remain historical reviews of their recorded session hash; this note supersedes their session-publication disposition. The unchanged Git descriptor/worker retain their earlier bounded review scope. Current full-suite/compiler/exact package/native/affected-host/commit/byte-verification gates remain root acceptance work. No exact new native-runtime acceptance, external transport, hostile same-user atomicity, arbitrary transformed output, independent/human review, catalog promotion or rating is assigned. Returned data cannot be recalled, and only observed binding drift is certified by this control.

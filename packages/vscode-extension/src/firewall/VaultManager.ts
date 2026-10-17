@@ -14,6 +14,9 @@ import { RegisteredSecretMatcher } from "../../../core/src/RegisteredSecretMatch
 import { SecureEditorModel } from "../project-privacy/SecureEditorModel";
 import { runtimeBinding, runtimeStoreUnchanged, runtimePolicyBinding } from "../vault-runtime/RuntimeBinding";
 import { onDidChangeBoundaryRules, onDidChangeOwnerPolicySession, exportRootPolicy } from "../ai-boundary/BoundarySnapshot";
+import { ManagedOutputFilter } from "../terminal/ManagedOutputFilter";
+import { managedRootIdentity, managedPolicyBinding, managedEmptyStoreIdentity } from "../terminal/ManagedOutputBinding";
+import { isPathWithin } from "../../../core/src/pathContainment";
 
 const KEY_ID = "soterai.vaultKey", PENDING = "vault-pending.json", VAULT = "soterai-vault.enc";
 const UUID = /^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/i;
@@ -37,6 +40,15 @@ export function vaultRuntimeEnabled(): boolean {
     try {
         const config = vscode.workspace.getConfiguration("soterai");
         return vaultModeEnabled() && !vscode.env.remoteName && ["lite.vaultRuntime", "lite.secretMatching", "lite.outputRedactor"].every(name => {
+            const inspected = config.inspect<boolean>(name);
+            return (inspected ? inspected.globalValue ?? inspected.defaultValue ?? true : config.get(name, true)) === true;
+        });
+    } catch { return false; }
+}
+export function managedPowerShellOutputEnabled(): boolean {
+    try {
+        const config = vscode.workspace.getConfiguration("soterai");
+        return vaultModeEnabled() && !vscode.env.remoteName && ["lite.ps51Terminal", "lite.secretMatching", "lite.outputRedactor"].every(name => {
             const inspected = config.inspect<boolean>(name);
             return (inspected ? inspected.globalValue ?? inspected.defaultValue ?? true : config.get(name, true)) === true;
         });
@@ -264,6 +276,54 @@ export class VaultManager {
             await this.fresh(uri, basis); await this.noPending(); if (!guard()) return vaultUnavailable();
             if (await this.storage.read(VAULT) !== cipher || !guard() || await this.key(false) !== key || !guard()) return vaultUnavailable();
             return use(Object.freeze(values), guard);
+        } catch { return vaultUnavailable(); }
+    }
+    /** Internal filter capability only: no plaintext values, original files,
+     * recovery-source fallback, key generation or value-bearing public result. */
+    async createManagedOutputFilter(root: vscode.Uri, enabled: () => boolean): Promise<ManagedOutputFilter> {
+        try {
+            const epoch = this.epoch, runtimeEpoch = this.runtimeEpoch;
+            this.alive(epoch);
+            if (!managedPowerShellOutputEnabled() || enabled() !== true) return vaultUnavailable();
+            const rootIdentity = managedRootIdentity(root);
+            await BoundarySnapshot.load();
+            const policy = managedPolicyBinding(root);
+            await this.noPending(); const cipher = await this.storage.read(VAULT);
+            let emptyStore: string | undefined;
+            if (cipher === undefined) {
+                if (await this.storage.hasRecoveryRecords()) return vaultUnavailable();
+                emptyStore = managedEmptyStoreIdentity(this.storage.directory);
+            }
+            const guard = (): boolean => {
+                try {
+                    this.alive(epoch);
+                    return runtimeEpoch === this.runtimeEpoch && managedPowerShellOutputEnabled() && enabled() === true
+                        && managedRootIdentity(root) === rootIdentity && managedPolicyBinding(root) === policy
+                        && (cipher === undefined ? managedEmptyStoreIdentity(this.storage.directory) === emptyStore : runtimeStoreUnchanged(this.storage.directory, cipher));
+                } catch { return false; }
+            };
+            if (!guard()) return vaultUnavailable();
+            const values: string[] = [];
+            if (cipher !== undefined) {
+                const key = await this.key(false); if (!guard()) return vaultUnavailable();
+                const data = parseVault(await decryptVault(cipher, key));
+                for (const entry of data.entries) {
+                    if ((entry.source === undefined) !== (entry.root === undefined)) return vaultUnavailable();
+                    if (entry.root !== undefined) {
+                        const boundRoot = vscode.Uri.parse(entry.root), source = vscode.Uri.parse(entry.source!);
+                        for (const uri of [boundRoot, source]) {
+                            if (uri.scheme !== "file" || uri.authority || uri.query || uri.fragment || !path.isAbsolute(uri.fsPath)
+                                || /[\x00-\x1f\x7f-\x9f]/u.test(uri.fsPath) || vscode.Uri.file(uri.fsPath).toString() !== uri.toString()) return vaultUnavailable();
+                        }
+                        if (!isPathWithin(boundRoot.fsPath, source.fsPath) || samePath(boundRoot.fsPath, source.fsPath)) return vaultUnavailable();
+                    }
+                    if (entry.root === undefined || entry.root === root.toString()) values.push(entry.rawValue);
+                }
+                if (await this.key(false) !== key || !guard()) return vaultUnavailable();
+            }
+            const filter = new ManagedOutputFilter(values, guard);
+            if (!filter.available()) { filter.dispose(); return vaultUnavailable(); }
+            return filter;
         } catch { return vaultUnavailable(); }
     }
     async migrate(uri: vscode.Uri): Promise<number> {

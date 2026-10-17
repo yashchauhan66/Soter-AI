@@ -1,0 +1,29 @@
+{
+    "atUtc":  "2026-10-16T13:29:31.8887902Z",
+    "feature":  "F10",
+    "scope":  "test-only before PTY review fixes",
+    "fixture":  "powerShell51TerminalReview.test.ts",
+    "expandedTests":  16,
+    "declarations":  7,
+    "newRegression":  "same-turn cancel/close before deferred execute plus strict programmatic admission",
+    "sourcesChangedByAuthor":  [
+
+                               ],
+    "records":  [
+                    {
+                        "path":  "packages/vscode-extension/src/__tests__/powerShell51TerminalReview.test.ts",
+                        "bytes":  5048,
+                        "sha256":  "ae10b09fbdd65f55259bfd4938c4014100c72c8a2e655c800a74a1cbfdfb7987"
+                    },
+                    {
+                        "path":  "packages/vscode-extension/src/terminal/PowerShell51Terminal.ts",
+                        "bytes":  4681,
+                        "sha256":  "4d966c33ee8a0283ef267ec9958b86aaf1a22f9a0ddb5a30c384acc896e25f27"
+                    },
+                    {
+                        "path":  "packages/vscode-extension/src/terminal/CheckedPowerShellSession.ts",
+                        "bytes":  11270,
+                        "sha256":  "bf9646285b3426052f04ff318d4ba2e641da2e5d63fdc93cc96aaf417c4173bc"
+                    }
+                ]
+}

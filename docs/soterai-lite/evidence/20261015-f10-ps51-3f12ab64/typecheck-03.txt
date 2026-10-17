@@ -1,0 +1,28 @@
+﻿packages/vscode-extension/src/__tests__/checkedPowerShellCommands.test.ts(127,72): error TS7006: Parameter 'target' implicitly has an 'any' type.
+packages/vscode-extension/src/__tests__/checkedPowerShellCommands.test.ts(128,70): error TS7006: Parameter 'target' implicitly has an 'any' type.
+packages/vscode-extension/src/__tests__/safe-git.test.ts(8,111): error TS1149: File name 'C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/packages/vscode-extension/src/security/SafeGit.ts' differs from already included file name 'C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/packages/vscode-extension/src/security/safeGit.ts' only in casing.
+  The file is in the program because:
+    Imported via "../security/safeGit" from file 'C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/packages/vscode-extension/src/terminal/CheckedGitMetadata.ts'
+    Imported via "../security/SafeGit" from file 'C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/packages/vscode-extension/src/ai-boundary/gitDiff.ts'
+    Imported via "../security/SafeGit" from file 'C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/packages/vscode-extension/src/__tests__/safe-git.test.ts'
+    Matched by include pattern 'src/**/*.ts' in 'packages/vscode-extension/tsconfig.json'
+packages/vscode-extension/src/ai-boundary/gitDiff.ts(5,53): error TS1149: File name 'C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/packages/vscode-extension/src/security/SafeGit.ts' differs from already included file name 'C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/packages/vscode-extension/src/security/safeGit.ts' only in casing.
+  The file is in the program because:
+    Imported via "../security/safeGit" from file 'C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/packages/vscode-extension/src/terminal/CheckedGitMetadata.ts'
+    Imported via "../security/SafeGit" from file 'C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/packages/vscode-extension/src/ai-boundary/gitDiff.ts'
+    Imported via "../security/SafeGit" from file 'C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/packages/vscode-extension/src/__tests__/safe-git.test.ts'
+    Matched by include pattern 'src/**/*.ts' in 'packages/vscode-extension/tsconfig.json'
+packages/vscode-extension/src/terminal/CheckedGitMetadata.ts(6,36): error TS1261: Already included file name 'C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/packages/vscode-extension/src/security/safeGit.ts' differs from file name 'C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/packages/vscode-extension/src/security/SafeGit.ts' only in casing.
+  The file is in the program because:
+    Imported via "../security/safeGit" from file 'C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/packages/vscode-extension/src/terminal/CheckedGitMetadata.ts'
+    Imported via "../security/SafeGit" from file 'C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/packages/vscode-extension/src/ai-boundary/gitDiff.ts'
+    Imported via "../security/SafeGit" from file 'C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/packages/vscode-extension/src/__tests__/safe-git.test.ts'
+    Matched by include pattern 'src/**/*.ts' in 'packages/vscode-extension/tsconfig.json'
+packages/vscode-extension/src/terminal/PowerShell51Worker.ts(162,38): error TS2339: Property 'kind' does not exist on type '{}'.
+packages/vscode-extension/src/terminal/PowerShell51Worker.ts(162,69): error TS2339: Property 'kind' does not exist on type '{}'.
+packages/vscode-extension/src/terminal/PowerShell51Worker.ts(164,179): error TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type '{}'.
+  No index signature with a parameter of type 'string' was found on type '{}'.
+packages/vscode-extension/src/terminal/PowerShell51Worker.ts(164,205): error TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type '{}'.
+  No index signature with a parameter of type 'string' was found on type '{}'.
+packages/vscode-extension/src/terminal/PowerShell51Worker.ts(165,65): error TS2339: Property 'action' does not exist on type '{}'.
+packages/vscode-extension/src/terminal/PowerShell51Worker.ts(167,91): error TS2339: Property 'action' does not exist on type '{}'.

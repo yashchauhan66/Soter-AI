@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-10-16T13:40:41.872Z",
+  "scope": "LOW same-lineage static review and synthetic fixture authoring; no compiler/full/native execution by reviewer.",
+  "files": [
+    {
+      "file": "packages/vscode-extension/src/__tests__/checkedPowerShellCommands.test.ts",
+      "bytes": 27757,
+      "sha256": "0885f5f57cafb09a76bc0368e3bf807c1cf821cb87d80fc75a44f142244b869a"
+    },
+    {
+      "file": "packages/vscode-extension/src/__tests__/checkedPowerShellControllerReview.test.ts",
+      "bytes": 6940,
+      "sha256": "5cdb1e84e9b90ad87c170a01152773dad74ba4677d492cbcb5bac5b2dd339d20"
+    },
+    {
+      "file": "packages/vscode-extension/src/terminal/commands.ts",
+      "bytes": 11542,
+      "sha256": "ade2bcf1a1d35de2888ba870ec59c5e16345d70ea39ec11d00e205344dc1af65"
+    },
+    {
+      "file": "packages/vscode-extension/src/terminal/CheckedPowerShellProfile.ts",
+      "bytes": 7837,
+      "sha256": "52c416547abc6ca5e4fff930875cfbeae8ad22bbc1a9939be1d1baeae715ecb8"
+    },
+    {
+      "file": "packages/vscode-extension/src/terminal/CheckedPowerShellSession.ts",
+      "bytes": 11578,
+      "sha256": "22031dd55d2cac00554e1c91e668da04ec11628ccdd4b51fc5cf121d51c9e150"
+    }
+  ],
+  "commandFixture": {
+    "freeze": "command-fixtures-freeze-02.json",
+    "declarations": 30,
+    "expandedTests": 42,
+    "correctedUnexecutedSetup": "Rest-tuple register helper preserves explicit undefined bridge; default parameter previously substituted the real fixture bridge.",
+    "missingModuleBaseline": "NOT_EXECUTED. Frozen before production; sandbox commands-before-02 failed spawn EPERM before assertions; required-escalation commands-before-03 tool call was aborted after 754.4 seconds, with no raw output files. Production target was authored subsequently. No simulated missing-module result is claimed.",
+    "attemptedCommand": "& '.\\docs\\soterai-lite\\evidence\\20261015-f10-ps51-3f12ab64\\run-f10-check.ps1' -Name 'commands-before-02' -Tests 'checkedPowerShellCommands.test.ts'",
+    "escalationAttempt": "Same harness -Name commands-before-03 -Tests checkedPowerShellCommands.test.ts, sandbox_permissions=require_escalated; aborted by user.",
+    "raw": "commands-before-02.txt",
+    "rawSha256": "e0244857e6b6dcb086393dafcb49b6367f3f7ad195b6c3de375126c84417f847"
+  },
+  "findings": [
+    {
+      "id": "F10-CR02",
+      "statusAtReview": "FAIL",
+      "issue": "Sparse persisted ownership arrays skip validation because Array.map skips holes, allowing malformed admission and later rewriting corrupt metadata.",
+      "requested": "Require a dense plain array with exact data-element descriptors before parsing all rows; on any failure retain bytes and withhold admission."
+    },
+    {
+      "id": "F10-CR04",
+      "statusAtReview": "FAIL",
+      "issue": "shutdown awaits an unbounded globalState.update Promise through persist(), so storage stalls can block deactivation indefinitely.",
+      "requested": "Use a bounded shutdown flush while preserving pending ownership and cooperative cancellation; never force child completion or signal a PID."
+    }
+  ],
+  "reviewFixture": {
+    "tests": 6,
+    "currentSha256": "5cdb1e84e9b90ad87c170a01152773dad74ba4677d492cbcb5bac5b2dd339d20",
+    "note": "before-01 ran first revision with weak shutdown-only CR03 positive. CR03 then strengthened to actual PUBLIC session admission with fake worker.start that cannot spawn; rejected durable write must prevent start and later tab admission. Current six-test fixture was frozen before root fixes.",
+    "initialBaseline": "controller-review-before-01.txt",
+    "initialRawSha256": "16a6e4f1c25c07584cddf88942d7b9354663949008731753784b1681c0fe4d60",
+    "testsBefore01": 6,
+    "passBefore01": 2,
+    "failBefore01": 4
+  },
+  "reviewedExistingControls": "Session O01/O02/O03/O04/O05/O06/O11 cover awaited READY admission, refusal/withdrawal, root and policy drift, actual completion and observer failure. Profile receipt uses PREPARED-before-settings, selected-scope/root/current-value rechecks and recoverable undo; no new concrete profile data-loss finding from this review.",
+  "residualLimits": "No independent/human verification, OS boundary, arbitrary shell mediation or new coverage/rating claim. Existing root-owned later test results remain separate receipts."
+}

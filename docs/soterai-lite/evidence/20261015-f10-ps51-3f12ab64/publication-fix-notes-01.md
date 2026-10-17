@@ -1,0 +1,7 @@
+# F10 completed-result binding recheck
+
+Publicationbaseline01 executes2:1PASS1FAIL. Real single-use filter finishes under valid private registry binding; revocation before held fake worker completion previously returned COMPLETE. This proves a binding-publication race; it does not add a confirmed secret-leak scenario. New completed-only canRelease() rechecks that captured private guard after the session awaits actual worker completion. It preserves closed sink semantics and cleared matcher/plaintext; observed invalidation is sticky and there is no async gap after this final session check. Data already returned through this managed-result API cannot be recalled.
+
+Focusedafter01 executes81:79PASS2FAIL. Both publication controls now PASS; D02/D17 fail because their legacy trusted StreamingOutputRedactor test adapters do not implement the new required guard. Root adds their existing independent guard as canRelease in the three explicit test-only adapters, without changing assertions or using a production fallback. Native actual VaultManager returns the real ManagedOutputFilter. Fresh aggregate/compiler/full/new artifact/native checks remain mandatory.
+
+Previous finalfocused03 all411PASS/full03 all1799tests1795PASS4SKIP/typecheck07 and dated20261017attempt01 VSIX are retained historical evidence predating this fix. Nativeprimary15PASS1FAIL H05 has a suspected Windows drive-letter case fixture comparison; restart/affected were correctly not run. All raw results and artifacts remain retained. No F10 acceptance or source commit yet.

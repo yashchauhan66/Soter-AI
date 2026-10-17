@@ -1,0 +1,9 @@
+# F10 Unicode staged filename masking regression contract
+
+Same-lineage LOW final source-review finding, frozen before the new regression fixture and matching production correction. The existing actual filename mask control uses an ASCII registration. The fixed Git argv presently leaves core.quotePath at Git's default.
+
+[Git 2.53.0 core.quotePath](https://git-scm.com/docs/git-config/2.53.0) documents default C-style octal quoting for UTF8 bytes in non-ASCII paths. F07's declared registered-value representations cover raw, base64/base64url, hex, URL and JSON; C octal quoting is not one of them. This is therefore a concrete unhandled native metadata representation, not evidence that F07 previously promised arbitrary encoding support.
+
+Add fixed command-local `-c core.quotePath=false` to the private GIT metadata argv, keeping the finite admitted config grammar unchanged. This makes ordinary non-ASCII filenames observable to the existing strict UTF8/private registry filter as their actual text. It does not inherit repository/user settings or expand executable/argument/attribute/history scope. Git still escapes double quotes/backslashes/control characters; ordinary JSON-compatible escaping is handled by the existing matcher views. No arbitrary new C escape decoder is introduced under F10.
+
+New `checkedGitMetadataQuotedNames.test.ts` uses actual pinned Git/PS on retained synthetic unborn repos. It pairs a native default-quoting positive control with two registered Unicode filename masking controls (status/stat) and a public Unicode metadata control. Capture a fresh baseline before source; no source inference or fixture authoring is an execution PASS. Direct Git setup remains fixed, finite, shell:false, offline and kill-free. No real repository/secret/history or external application is used.

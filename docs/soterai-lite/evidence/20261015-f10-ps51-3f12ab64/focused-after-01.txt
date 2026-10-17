@@ -1,0 +1,418 @@
+﻿TAP version 13
+# Subtest: F10-P01 exported inclusive grammar/runtime limits remain exact and frozen
+ok 1 - F10-P01 exported inclusive grammar/runtime limits remain exact and frozen
+  ---
+  duration_ms: 289.3525
+  type: 'test'
+  ...
+# Subtest: F10-P02 exact location/version/date forms accept case-insensitive command names and whitespace
+ok 2 - F10-P02 exact location/version/date forms accept case-insensitive command names and whitespace
+  ---
+  duration_ms: 3.6083
+  type: 'test'
+  ...
+# Subtest: F10-P03 directory aliases default to dot and preserve a literal relative directory
+ok 3 - F10-P03 directory aliases default to dot and preserve a literal relative directory
+  ---
+  duration_ms: 3.8136
+  type: 'test'
+  ...
+# Subtest: F10-P04 write aliases preserve empty/quoted literal operands without inventing shell evaluation
+ok 4 - F10-P04 write aliases preserve empty/quoted literal operands without inventing shell evaluation
+  ---
+  duration_ms: 1.7539
+  type: 'test'
+  ...
+# Subtest: F10-P05 punctuation inside a complete quoted token is literal data
+ok 5 - F10-P05 punctuation inside a complete quoted token is literal data
+  ---
+  duration_ms: 2.3495
+  type: 'test'
+  ...
+# Subtest: F10-P06 doubled single quotes decode once while exact Unicode/case remain unchanged
+ok 6 - F10-P06 doubled single quotes decode once while exact Unicode/case remain unchanged
+  ---
+  duration_ms: 3.0709
+  type: 'test'
+  ...
+# Subtest: F10-P07 content aliases and the exact path options produce only approved-reader plans
+ok 7 - F10-P07 content aliases and the exact path options produce only approved-reader plans
+  ---
+  duration_ms: 2.372
+  type: 'test'
+  ...
+# Subtest: F10-P08 head and tail use frozen safe-view line transforms with default ten
+ok 8 - F10-P08 head and tail use frozen safe-view line transforms with default ten
+  ---
+  duration_ms: 2.5653
+  type: 'test'
+  ...
+# Subtest: F10-P09 search aliases produce literal substring plans and only declared flag forms
+ok 9 - F10-P09 search aliases produce literal substring plans and only declared flag forms
+  ---
+  duration_ms: 2.0884
+  type: 'test'
+  ...
+# Subtest: F10-P10 copy aliases retain the source and new destination without raw Copy-Item semantics
+ok 10 - F10-P10 copy aliases retain the source and new destination without raw Copy-Item semantics
+  ---
+  duration_ms: 2.06
+  type: 'test'
+  ...
+# Subtest: F10-P11 declared env forms preserve only a requested name, never a value expansion or assignment
+ok 11 - F10-P11 declared env forms preserve only a requested name, never a value expansion or assignment
+  ---
+  duration_ms: 2.0088
+  type: 'test'
+  ...
+# Subtest: F10-P12 Git forms are only fixed status and diff-stat metadata operations
+ok 12 - F10-P12 Git forms are only fixed status and diff-stat metadata operations
+  ---
+  duration_ms: 1.753
+  type: 'test'
+  ...
+# Subtest: F10-P13 fixed forms reject extra tokens rather than execute a supported prefix
+ok 13 - F10-P13 fixed forms reject extra tokens rather than execute a supported prefix
+  ---
+  duration_ms: 2.0547
+  type: 'test'
+  ...
+# Subtest: F10-P14 unknown commands, options and unimplemented parameter orderings refuse atomically
+ok 14 - F10-P14 unknown commands, options and unimplemented parameter orderings refuse atomically
+  ---
+  duration_ms: 1.4492
+  type: 'test'
+  ...
+# Subtest: F10-P15 whole chains, pipelines, redirection and expression/control syntax never yield a partial plan
+ok 15 - F10-P15 whole chains, pipelines, redirection and expression/control syntax never yield a partial plan
+  ---
+  duration_ms: 2.2885
+  type: 'test'
+  ...
+# Subtest: F10-P16 native interpreter, module-qualified and absolute executable forms have no dispatcher fallback
+ok 16 - F10-P16 native interpreter, module-qualified and absolute executable forms have no dispatcher fallback
+  ---
+  duration_ms: 1.3381
+  type: 'test'
+  ...
+# Subtest: F10-P17 every path-bearing form rejects absolute, provider, traversal, wildcard and control paths
+ok 17 - F10-P17 every path-bearing form rejects absolute, provider, traversal, wildcard and control paths
+  ---
+  duration_ms: 3.5192
+  type: 'test'
+  ...
+# Subtest: F10-P18 incomplete or concatenated quote fragments cannot be repaired into another command
+ok 18 - F10-P18 incomplete or concatenated quote fragments cannot be repaired into another command
+  ---
+  duration_ms: 1.8645
+  type: 'test'
+  ...
+# Subtest: F10-P19 backticks, unquoted dollars and double-quoted interpolation reject even in otherwise useful forms
+ok 19 - F10-P19 backticks, unquoted dollars and double-quoted interpolation reject even in otherwise useful forms
+  ---
+  duration_ms: 1.9508
+  type: 'test'
+  ...
+# Subtest: F10-P20 exact Unicode survives while lone UTF-16 surrogates never become replacement text
+ok 20 - F10-P20 exact Unicode survives while lone UTF-16 surrogates never become replacement text
+  ---
+  duration_ms: 1.2054
+  type: 'test'
+  ...
+# Subtest: F10-P21 command control bytes reject in unquoted and quoted positions
+ok 21 - F10-P21 command control bytes reject in unquoted and quoted positions
+  ---
+  duration_ms: 1.9447
+  type: 'test'
+  ...
+# Subtest: F10-P22 the token budget counts the command and is inclusive at thirty-two
+ok 22 - F10-P22 the token budget counts the command and is inclusive at thirty-two
+  ---
+  duration_ms: 3.581
+  type: 'test'
+  ...
+# Subtest: F10-P23 individual token UTF-8 bytes are inclusive and are not measured as UTF-16 units
+ok 23 - F10-P23 individual token UTF-8 bytes are inclusive and are not measured as UTF-16 units
+  ---
+  duration_ms: 2.3284
+  type: 'test'
+  ...
+# Subtest: F10-P24 whole-command bytes are inclusive without exhausting any token or count budget
+ok 24 - F10-P24 whole-command bytes are inclusive without exhausting any token or count budget
+  ---
+  duration_ms: 2.7637
+  type: 'test'
+  ...
+# Subtest: F10-P25 literal search needles fit exactly two hundred fifty-six UTF-8 bytes
+ok 25 - F10-P25 literal search needles fit exactly two hundred fifty-six UTF-8 bytes
+  ---
+  duration_ms: 1.633
+  type: 'test'
+  ...
+# Subtest: F10-P26 head/tail decimal counts are canonical and remain within one through one hundred
+ok 26 - F10-P26 head/tail decimal counts are canonical and remain within one through one hundred
+  ---
+  duration_ms: 1.5836
+  type: 'test'
+  ...
+# Subtest: F10-P27 bounded sleep accepts canonical zero through two thousand milliseconds only
+ok 27 - F10-P27 bounded sleep accepts canonical zero through two thousand milliseconds only
+  ---
+  duration_ms: 1.2313
+  type: 'test'
+  ...
+# Subtest: F10-P28 copying onto the same source and unsupported env/history/body requests refuse
+ok 28 - F10-P28 copying onto the same source and unsupported env/history/body requests refuse
+  ---
+  duration_ms: 2.0141
+  type: 'test'
+  ...
+# Subtest: F10-P29 invalid input types reject without coercion or input-bearing exceptions
+ok 29 - F10-P29 invalid input types reject without coercion or input-bearing exceptions
+  ---
+  duration_ms: 1.511
+  type: 'test'
+  ...
+# Subtest: F10-P30 every returned array/line object is deeply frozen and fresh per parse
+ok 30 - F10-P30 every returned array/line object is deeply frozen and fresh per parse
+  ---
+  duration_ms: 1.7266
+  type: 'test'
+  ...
+# Subtest: F10-P31 deterministic quoted-token fuzz preserves literal identity and refuses incomplete input
+ok 31 - F10-P31 deterministic quoted-token fuzz preserves literal identity and refuses incomplete input
+  ---
+  duration_ms: 8.709
+  type: 'test'
+  ...
+# Subtest: F10-W01 fixed encoded script and literal JSON stdin never interpolate public arguments into argv
+ok 32 - F10-W01 fixed encoded script and literal JSON stdin never interpolate public arguments into argv
+  ---
+  duration_ms: 136.9058
+  type: 'test'
+  ...
+# Subtest: F10-W02 fresh validated child environment excludes credentials, search paths, home, preload and proxy values
+ok 33 - F10-W02 fresh validated child environment excludes credentials, search paths, home, preload and proxy values
+  ---
+  duration_ms: 3.26
+  type: 'test'
+  ...
+# Subtest: F10-W03 malformed inherited temp and locale values are omitted instead of forwarded
+ok 34 - F10-W03 malformed inherited temp and locale values are omitted instead of forwarded
+  ---
+  duration_ms: 3.099
+  type: 'test'
+  ...
+# Subtest: F10-W04-read invalid operation blocks before any process or protocol write
+ok 35 - F10-W04-read invalid operation blocks before any process or protocol write
+  ---
+  duration_ms: 2.4261
+  type: 'test'
+  ...
+# Subtest: F10-W04-unknown-action invalid operation blocks before any process or protocol write
+ok 36 - F10-W04-unknown-action invalid operation blocks before any process or protocol write
+  ---
+  duration_ms: 2.1303
+  type: 'test'
+  ...
+# Subtest: F10-W04-extra-property invalid operation blocks before any process or protocol write
+ok 37 - F10-W04-extra-property invalid operation blocks before any process or protocol write
+  ---
+  duration_ms: 2.3484
+  type: 'test'
+  ...
+# Subtest: F10-W04-non-array invalid operation blocks before any process or protocol write
+ok 38 - F10-W04-non-array invalid operation blocks before any process or protocol write
+  ---
+  duration_ms: 2.4242
+  type: 'test'
+  ...
+# Subtest: F10-W04-non-string invalid operation blocks before any process or protocol write
+ok 39 - F10-W04-non-string invalid operation blocks before any process or protocol write
+  ---
+  duration_ms: 2.9124
+  type: 'test'
+  ...
+# Subtest: F10-W04-control invalid operation blocks before any process or protocol write
+ok 40 - F10-W04-control invalid operation blocks before any process or protocol write
+  ---
+  duration_ms: 4.6327
+  type: 'test'
+  ...
+# Subtest: F10-W04-long-arg invalid operation blocks before any process or protocol write
+ok 41 - F10-W04-long-arg invalid operation blocks before any process or protocol write
+  ---
+  duration_ms: 3.5289
+  type: 'test'
+  ...
+# Subtest: F10-W04-many-args invalid operation blocks before any process or protocol write
+ok 42 - F10-W04-many-args invalid operation blocks before any process or protocol write
+  ---
+  duration_ms: 2.5567
+  type: 'test'
+  ...
+# Subtest: F10-W04-large-request invalid operation blocks before any process or protocol write
+ok 43 - F10-W04-large-request invalid operation blocks before any process or protocol write
+  ---
+  duration_ms: 4.2565
+  type: 'test'
+  ...
+# Subtest: F10-W04-absolute-list invalid operation blocks before any process or protocol write
+ok 44 - F10-W04-absolute-list invalid operation blocks before any process or protocol write
+  ---
+  duration_ms: 3.0918
+  type: 'test'
+  ...
+# Subtest: F10-W04-parent-list invalid operation blocks before any process or protocol write
+ok 45 - F10-W04-parent-list invalid operation blocks before any process or protocol write
+  ---
+  duration_ms: 2.9301
+  type: 'test'
+  ...
+# Subtest: F10-W04-sleep-bound invalid operation blocks before any process or protocol write
+ok 46 - F10-W04-sleep-bound invalid operation blocks before any process or protocol write
+  ---
+  duration_ms: 4.0088
+  type: 'test'
+  ...
+# Subtest: F10-W04-location-args invalid operation blocks before any process or protocol write
+ok 47 - F10-W04-location-args invalid operation blocks before any process or protocol write
+  ---
+  duration_ms: 2.5208
+  type: 'test'
+  ...
+# Subtest: F10-W05 an invalid id is not copied into safe snapshots or completion metadata
+ok 48 - F10-W05 an invalid id is not copied into safe snapshots or completion metadata
+  ---
+  duration_ms: 2.19
+  type: 'test'
+  ...
+# Subtest: F10-W06 disabled or throwing guard and cancellation before start prevent spawn
+ok 49 - F10-W06 disabled or throwing guard and cancellation before start prevent spawn
+  ---
+  duration_ms: 11.3948
+  type: 'test'
+  ...
+# Subtest: F10-W07 start is single-use and no buffered raw chunk appears in snapshots or completion early
+ok 50 - F10-W07 start is single-use and no buffered raw chunk appears in snapshots or completion early
+  ---
+  duration_ms: 11.8289
+  type: 'test'
+  ...
+# Subtest: F10-W08 exit and both drained EOFs cannot release output before actual close
+ok 51 - F10-W08 exit and both drained EOFs cannot release output before actual close
+  ---
+  duration_ms: 3.9623
+  type: 'test'
+  ...
+# Subtest: F10-W09 real F08 output filtering masks ANSI and encoded values across byte chunks
+ok 52 - F10-W09 real F08 output filtering masks ANSI and encoded values across byte chunks
+  ---
+  duration_ms: 9.0409
+  type: 'test'
+  ...
+# Subtest: F10-W10 invalid final UTF8 and terminal rewriting withhold previously buffered public output
+ok 53 - F10-W10 invalid final UTF8 and terminal rewriting withhold previously buffered public output
+  ---
+  duration_ms: 7.3972
+  type: 'test'
+  ...
+# Subtest: F10-W11 overflow drains discarded stdout and stderr without releasing an undecided prefix
+ok 54 - F10-W11 overflow drains discarded stdout and stderr without releasing an undecided prefix
+  ---
+  duration_ms: 4.1421
+  type: 'test'
+  ...
+# Subtest: F10-W12 chunk budget overflow abandons output even under the byte limit
+ok 55 - F10-W12 chunk budget overflow abandons output even under the byte limit
+  ---
+  duration_ms: 48.8111
+  type: 'test'
+  ...
+# Subtest: F10-W13 cancellation after spawn retains the child until natural close and never calls kill
+ok 56 - F10-W13 cancellation after spawn retains the child until natural close and never calls kill
+  ---
+  duration_ms: 3.9895
+  type: 'test'
+  ...
+# Subtest: F10-W14 thirty-second timeout waits for close and withholds output through the stop grace
+ok 57 - F10-W14 thirty-second timeout waits for close and withholds output through the stop grace
+  ---
+  duration_ms: 5.9882
+  type: 'test'
+  ...
+# Subtest: F10-W15 withdrawal is sticky after reenable and later discarded bytes are still drained
+ok 58 - F10-W15 withdrawal is sticky after reenable and later discarded bytes are still drained
+  ---
+  duration_ms: 3.419
+  type: 'test'
+  ...
+# Subtest: F10-W16 spawn failure is BLOCKED while a post-spawn error is never treated as child exit
+ok 59 - F10-W16 spawn failure is BLOCKED while a post-spawn error is never treated as child exit
+  ---
+  duration_ms: 5.1282
+  type: 'test'
+  ...
+# Subtest: F10-W17-stdin missing pipe retains actual-close ownership and drains every available output pipe
+ok 60 - F10-W17-stdin missing pipe retains actual-close ownership and drains every available output pipe
+  ---
+  duration_ms: 2.8541
+  type: 'test'
+  ...
+# Subtest: F10-W17-stdout missing pipe retains actual-close ownership and drains every available output pipe
+ok 61 - F10-W17-stdout missing pipe retains actual-close ownership and drains every available output pipe
+  ---
+  duration_ms: 2.8985
+  type: 'test'
+  ...
+# Subtest: F10-W17-stderr missing pipe retains actual-close ownership and drains every available output pipe
+ok 62 - F10-W17-stderr missing pipe retains actual-close ownership and drains every available output pipe
+  ---
+  duration_ms: 2.5278
+  type: 'test'
+  ...
+# Subtest: F10-W18 stdin and output stream errors are withheld and do not imply that a live child exited
+ok 63 - F10-W18 stdin and output stream errors are withheld and do not imply that a live child exited
+  ---
+  duration_ms: 6.6241
+  type: 'test'
+  ...
+# Subtest: F10-W19 premature stream/child close without EOF cannot release a later public suffix
+ok 64 - F10-W19 premature stream/child close without EOF cannot release a later public suffix
+  ---
+  duration_ms: 2.2524
+  type: 'test'
+  ...
+# Subtest: F10-W20 structural output failures never fall back to raw buffered text
+ok 65 - F10-W20 structural output failures never fall back to raw buffered text
+  ---
+  duration_ms: 3.9294
+  type: 'test'
+  ...
+# Subtest: F10-W21 actual pinned finite PowerShell reports version 5.1 through completed UTF8 output
+ok 66 - F10-W21 actual pinned finite PowerShell reports version 5.1 through completed UTF8 output
+  ---
+  duration_ms: 1109.821
+  type: 'test'
+  ...
+# Subtest: F10-W22 actual pinned finite PowerShell preserves quoted public Unicode without script or argument interpolation
+ok 67 - F10-W22 actual pinned finite PowerShell preserves quoted public Unicode without script or argument interpolation
+  ---
+  duration_ms: 495.4365
+  type: 'test'
+  ...
+# Subtest: F10-W23 cancellation of a finite real sleep waits for its own natural close and withholds output
+ok 68 - F10-W23 cancellation of a finite real sleep waits for its own natural close and withholds output
+  ---
+  duration_ms: 734.942
+  type: 'test'
+  ...
+1..68
+# tests 68
+# suites 0
+# pass 68
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4047.4562

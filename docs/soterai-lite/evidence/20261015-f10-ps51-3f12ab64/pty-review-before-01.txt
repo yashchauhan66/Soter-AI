@@ -1,0 +1,366 @@
+﻿TAP version 13
+# Subtest: F10-TR01 same-turn Ctrl+C withdraws the reserved run before deferred session execution
+not ok 1 - F10-TR01 same-turn Ctrl+C withdraws the reserved run before deferred session execution
+  ---
+  duration_ms: 5.7887
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\powerShell51TerminalReview.test.ts:2:2212'
+  failureType: 'testCodeFailure'
+  error: |-
+    A command canceled before execution must not enter the session as a fresh generation.
+    
+    1 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 1
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\powerShell51TerminalReview.test.ts:29:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F10-TR02 same-turn close withdraws the reserved run before deferred session execution
+not ok 2 - F10-TR02 same-turn close withdraws the reserved run before deferred session execution
+  ---
+  duration_ms: 0.9936
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\powerShell51TerminalReview.test.ts:2:2936'
+  failureType: 'testCodeFailure'
+  error: |-
+    A closed terminal must not invoke a reserved command in a later microtask.
+    
+    1 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 1
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\powerShell51TerminalReview.test.ts:39:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-TR03-ascii programmatic run refuses over-4096-byte input before the trusted session
+not ok 3 - F10-TR03-ascii programmatic run refuses over-4096-byte input before the trusted session
+  ---
+  duration_ms: 0.9104
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\powerShell51TerminalReview.test.ts:2:3648'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'COMPLETE'
+    - 'WITHHELD'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'WITHHELD'
+  actual: 'COMPLETE'
+  operator: 'strictEqual'
+  stack: |-
+    withheld (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\powerShell51TerminalReview.test.ts:21:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\powerShell51TerminalReview.test.ts:47:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-TR03-utf8 programmatic run refuses over-4096-byte input before the trusted session
+not ok 4 - F10-TR03-utf8 programmatic run refuses over-4096-byte input before the trusted session
+  ---
+  duration_ms: 0.647
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\powerShell51TerminalReview.test.ts:2:3648'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'COMPLETE'
+    - 'WITHHELD'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'WITHHELD'
+  actual: 'COMPLETE'
+  operator: 'strictEqual'
+  stack: |-
+    withheld (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\powerShell51TerminalReview.test.ts:21:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\powerShell51TerminalReview.test.ts:47:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-TR04-NUL programmatic run rejects the whole control-bearing line without repairing it
+not ok 5 - F10-TR04-NUL programmatic run rejects the whole control-bearing line without repairing it
+  ---
+  duration_ms: 1.1882
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\powerShell51TerminalReview.test.ts:2:4069'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'COMPLETE'
+    - 'WITHHELD'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'WITHHELD'
+  actual: 'COMPLETE'
+  operator: 'strictEqual'
+  stack: |-
+    withheld (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\powerShell51TerminalReview.test.ts:21:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\powerShell51TerminalReview.test.ts:54:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-TR04-TAB programmatic run rejects the whole control-bearing line without repairing it
+not ok 6 - F10-TR04-TAB programmatic run rejects the whole control-bearing line without repairing it
+  ---
+  duration_ms: 0.6792
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\powerShell51TerminalReview.test.ts:2:4069'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'COMPLETE'
+    - 'WITHHELD'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'WITHHELD'
+  actual: 'COMPLETE'
+  operator: 'strictEqual'
+  stack: |-
+    withheld (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\powerShell51TerminalReview.test.ts:21:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\powerShell51TerminalReview.test.ts:54:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-TR04-ESC programmatic run rejects the whole control-bearing line without repairing it
+not ok 7 - F10-TR04-ESC programmatic run rejects the whole control-bearing line without repairing it
+  ---
+  duration_ms: 0.5304
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\powerShell51TerminalReview.test.ts:2:4069'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'COMPLETE'
+    - 'WITHHELD'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'WITHHELD'
+  actual: 'COMPLETE'
+  operator: 'strictEqual'
+  stack: |-
+    withheld (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\powerShell51TerminalReview.test.ts:21:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\powerShell51TerminalReview.test.ts:54:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-TR04-CR programmatic run rejects the whole control-bearing line without repairing it
+not ok 8 - F10-TR04-CR programmatic run rejects the whole control-bearing line without repairing it
+  ---
+  duration_ms: 0.5744
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\powerShell51TerminalReview.test.ts:2:4069'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'COMPLETE'
+    - 'WITHHELD'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'WITHHELD'
+  actual: 'COMPLETE'
+  operator: 'strictEqual'
+  stack: |-
+    withheld (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\powerShell51TerminalReview.test.ts:21:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\powerShell51TerminalReview.test.ts:54:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-TR04-LF programmatic run rejects the whole control-bearing line without repairing it
+not ok 9 - F10-TR04-LF programmatic run rejects the whole control-bearing line without repairing it
+  ---
+  duration_ms: 0.9951
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\powerShell51TerminalReview.test.ts:2:4069'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'COMPLETE'
+    - 'WITHHELD'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'WITHHELD'
+  actual: 'COMPLETE'
+  operator: 'strictEqual'
+  stack: |-
+    withheld (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\powerShell51TerminalReview.test.ts:21:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\powerShell51TerminalReview.test.ts:54:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-TR04-LS programmatic run rejects the whole control-bearing line without repairing it
+not ok 10 - F10-TR04-LS programmatic run rejects the whole control-bearing line without repairing it
+  ---
+  duration_ms: 0.74
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\powerShell51TerminalReview.test.ts:2:4069'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'COMPLETE'
+    - 'WITHHELD'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'WITHHELD'
+  actual: 'COMPLETE'
+  operator: 'strictEqual'
+  stack: |-
+    withheld (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\powerShell51TerminalReview.test.ts:21:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\powerShell51TerminalReview.test.ts:54:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-TR05-high programmatic run refuses malformed UTF16 before lossy UTF8 conversion
+not ok 11 - F10-TR05-high programmatic run refuses malformed UTF16 before lossy UTF8 conversion
+  ---
+  duration_ms: 0.589
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\powerShell51TerminalReview.test.ts:2:4490'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'COMPLETE'
+    - 'WITHHELD'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'WITHHELD'
+  actual: 'COMPLETE'
+  operator: 'strictEqual'
+  stack: |-
+    withheld (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\powerShell51TerminalReview.test.ts:21:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\powerShell51TerminalReview.test.ts:61:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-TR05-low programmatic run refuses malformed UTF16 before lossy UTF8 conversion
+not ok 12 - F10-TR05-low programmatic run refuses malformed UTF16 before lossy UTF8 conversion
+  ---
+  duration_ms: 0.3982
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\powerShell51TerminalReview.test.ts:2:4490'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'COMPLETE'
+    - 'WITHHELD'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'WITHHELD'
+  actual: 'COMPLETE'
+  operator: 'strictEqual'
+  stack: |-
+    withheld (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\powerShell51TerminalReview.test.ts:21:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\powerShell51TerminalReview.test.ts:61:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-TR06-null programmatic run refuses nonstrings without coercion or session execution
+not ok 13 - F10-TR06-null programmatic run refuses nonstrings without coercion or session execution
+  ---
+  duration_ms: 0.469
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\powerShell51TerminalReview.test.ts:2:4898'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'COMPLETE'
+    - 'WITHHELD'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'WITHHELD'
+  actual: 'COMPLETE'
+  operator: 'strictEqual'
+  stack: |-
+    withheld (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\powerShell51TerminalReview.test.ts:21:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\powerShell51TerminalReview.test.ts:68:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-TR06-object programmatic run refuses nonstrings without coercion or session execution
+not ok 14 - F10-TR06-object programmatic run refuses nonstrings without coercion or session execution
+  ---
+  duration_ms: 0.3815
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\powerShell51TerminalReview.test.ts:2:4898'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'COMPLETE'
+    - 'WITHHELD'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'WITHHELD'
+  actual: 'COMPLETE'
+  operator: 'strictEqual'
+  stack: |-
+    withheld (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\powerShell51TerminalReview.test.ts:21:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\powerShell51TerminalReview.test.ts:68:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-TR07-ascii programmatic admission preserves inclusive valid 4096-byte strings for the parser
+ok 15 - F10-TR07-ascii programmatic admission preserves inclusive valid 4096-byte strings for the parser
+  ---
+  duration_ms: 1.785
+  type: 'test'
+  ...
+# Subtest: F10-TR07-utf8 programmatic admission preserves inclusive valid 4096-byte strings for the parser
+ok 16 - F10-TR07-utf8 programmatic admission preserves inclusive valid 4096-byte strings for the parser
+  ---
+  duration_ms: 0.5744
+  type: 'test'
+  ...
+1..16
+# tests 16
+# suites 0
+# pass 2
+# fail 14
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 517.7533

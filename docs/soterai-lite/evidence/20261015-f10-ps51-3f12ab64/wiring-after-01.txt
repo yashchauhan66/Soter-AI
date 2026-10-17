@@ -1,0 +1,1022 @@
+﻿TAP version 13
+# Subtest: F10-C01 registration contributes one native provider and exactly the five declared routes
+not ok 1 - F10-C01 registration contributes one native provider and exactly the five declared routes
+  ---
+  duration_ms: 102.9253
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellCommands.test.ts:2:12673'
+  failureType: 'testCodeFailure'
+  error: 'vscode.workspace.registerTextDocumentContentProvider is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    new CheckedPowerShellProfile (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\CheckedPowerShellProfile.ts:40:53)
+    Object.registerCheckedPowerShell (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\commands.ts:86:21)
+    register (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:72:31)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:157:24)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F10-C02 contributed native profile supplies an owned pty without shellPath, args or inherited env
+not ok 2 - F10-C02 contributed native profile supplies an owned pty without shellPath, args or inherited env
+  ---
+  duration_ms: 31.4725
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellCommands.test.ts:2:13157'
+  failureType: 'testCodeFailure'
+  error: 'vscode.workspace.registerTextDocumentContentProvider is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    new CheckedPowerShellProfile (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\CheckedPowerShellProfile.ts:40:53)
+    Object.registerCheckedPowerShell (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\commands.ts:86:21)
+    register (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:72:31)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:163:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-C03 open command creates an ExtensionTerminalOptions tab and leaves project profile unchanged
+not ok 3 - F10-C03 open command creates an ExtensionTerminalOptions tab and leaves project profile unchanged
+  ---
+  duration_ms: 18.3316
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellCommands.test.ts:2:13818'
+  failureType: 'testCodeFailure'
+  error: 'vscode.workspace.registerTextDocumentContentProvider is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    new CheckedPowerShellProfile (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\CheckedPowerShellProfile.ts:40:53)
+    Object.registerCheckedPowerShell (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\commands.ts:86:21)
+    register (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:72:31)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:170:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-C04 run gets command text only from masked native input and ignores command-like caller arguments
+not ok 4 - F10-C04 run gets command text only from masked native input and ignores command-like caller arguments
+  ---
+  duration_ms: 15.4346
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellCommands.test.ts:2:14335'
+  failureType: 'testCodeFailure'
+  error: 'vscode.workspace.registerTextDocumentContentProvider is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    new CheckedPowerShellProfile (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\CheckedPowerShellProfile.ts:40:53)
+    Object.registerCheckedPowerShell (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\commands.ts:86:21)
+    register (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:72:31)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:176:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-C05 cancelled native command input never becomes caller-provided command execution
+not ok 5 - F10-C05 cancelled native command input never becomes caller-provided command execution
+  ---
+  duration_ms: 13.3632
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellCommands.test.ts:2:15046'
+  failureType: 'testCodeFailure'
+  error: 'vscode.workspace.registerTextDocumentContentProvider is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    new CheckedPowerShellProfile (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\CheckedPowerShellProfile.ts:40:53)
+    Object.registerCheckedPowerShell (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\commands.ts:86:21)
+    register (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:72:31)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:184:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-C06 run and pty share the exact bridge, preserving denial and reviewed masking
+not ok 6 - F10-C06 run and pty share the exact bridge, preserving denial and reviewed masking
+  ---
+  duration_ms: 12.0189
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellCommands.test.ts:2:15392'
+  failureType: 'testCodeFailure'
+  error: 'vscode.workspace.registerTextDocumentContentProvider is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    new CheckedPowerShellProfile (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\CheckedPowerShellProfile.ts:40:53)
+    Object.registerCheckedPowerShell (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\commands.ts:86:21)
+    register (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:72:31)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:189:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-C07 an absent internal reader withholds instead of falling back to a public command
+not ok 7 - F10-C07 an absent internal reader withholds instead of falling back to a public command
+  ---
+  duration_ms: 16.0222
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellCommands.test.ts:2:16038'
+  failureType: 'testCodeFailure'
+  error: 'vscode.workspace.registerTextDocumentContentProvider is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    new CheckedPowerShellProfile (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\CheckedPowerShellProfile.ts:40:53)
+    Object.registerCheckedPowerShell (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\commands.ts:86:21)
+    register (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:72:31)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:197:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-C08 disabled bridge prevents profile creation and native command input
+not ok 8 - F10-C08 disabled bridge prevents profile creation and native command input
+  ---
+  duration_ms: 12.9916
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellCommands.test.ts:2:16433'
+  failureType: 'testCodeFailure'
+  error: 'vscode.workspace.registerTextDocumentContentProvider is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    new CheckedPowerShellProfile (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\CheckedPowerShellProfile.ts:40:53)
+    Object.registerCheckedPowerShell (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\commands.ts:86:21)
+    register (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:72:31)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:202:28)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-C09 untrusted workspace cannot open or configure the checked terminal
+not ok 9 - F10-C09 untrusted workspace cannot open or configure the checked terminal
+  ---
+  duration_ms: 17.4031
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellCommands.test.ts:2:16831'
+  failureType: 'testCodeFailure'
+  error: 'vscode.workspace.registerTextDocumentContentProvider is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    new CheckedPowerShellProfile (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\CheckedPowerShellProfile.ts:40:53)
+    Object.registerCheckedPowerShell (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\commands.ts:86:21)
+    register (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:72:31)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:207:35)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-C10 a remote extension host never creates a local PowerShell terminal
+not ok 10 - F10-C10 a remote extension host never creates a local PowerShell terminal
+  ---
+  duration_ms: 16.0468
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellCommands.test.ts:2:17245'
+  failureType: 'testCodeFailure'
+  error: 'vscode.workspace.registerTextDocumentContentProvider is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    new CheckedPowerShellProfile (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\CheckedPowerShellProfile.ts:40:53)
+    Object.registerCheckedPowerShell (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\commands.ts:86:21)
+    register (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:72:31)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:212:121)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-C11 lite.ps51Terminal withdrawal cancels live sessions and preserves saved profile metadata
+not ok 11 - F10-C11 lite.ps51Terminal withdrawal cancels live sessions and preserves saved profile metadata
+  ---
+  duration_ms: 16.1679
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellCommands.test.ts:2:17740'
+  failureType: 'testCodeFailure'
+  error: 'vscode.workspace.registerTextDocumentContentProvider is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    new CheckedPowerShellProfile (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\CheckedPowerShellProfile.ts:40:53)
+    Object.registerCheckedPowerShell (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\commands.ts:86:21)
+    register (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:72:31)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:219:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-C11 lite.vaultMode withdrawal cancels live sessions and preserves saved profile metadata
+not ok 12 - F10-C11 lite.vaultMode withdrawal cancels live sessions and preserves saved profile metadata
+  ---
+  duration_ms: 12.399
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellCommands.test.ts:2:17740'
+  failureType: 'testCodeFailure'
+  error: 'vscode.workspace.registerTextDocumentContentProvider is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    new CheckedPowerShellProfile (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\CheckedPowerShellProfile.ts:40:53)
+    Object.registerCheckedPowerShell (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\commands.ts:86:21)
+    register (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:72:31)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:219:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-C11 lite.secretMatching withdrawal cancels live sessions and preserves saved profile metadata
+not ok 13 - F10-C11 lite.secretMatching withdrawal cancels live sessions and preserves saved profile metadata
+  ---
+  duration_ms: 12.3911
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellCommands.test.ts:2:17740'
+  failureType: 'testCodeFailure'
+  error: 'vscode.workspace.registerTextDocumentContentProvider is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    new CheckedPowerShellProfile (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\CheckedPowerShellProfile.ts:40:53)
+    Object.registerCheckedPowerShell (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\commands.ts:86:21)
+    register (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:72:31)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:219:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-C11 lite.outputRedactor withdrawal cancels live sessions and preserves saved profile metadata
+not ok 14 - F10-C11 lite.outputRedactor withdrawal cancels live sessions and preserves saved profile metadata
+  ---
+  duration_ms: 13.2175
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellCommands.test.ts:2:17740'
+  failureType: 'testCodeFailure'
+  error: 'vscode.workspace.registerTextDocumentContentProvider is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    new CheckedPowerShellProfile (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\CheckedPowerShellProfile.ts:40:53)
+    Object.registerCheckedPowerShell (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\commands.ts:86:21)
+    register (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:72:31)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:219:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-C12 workspace removal cancels its live session and blocks a new tab
+not ok 15 - F10-C12 workspace removal cancels its live session and blocks a new tab
+  ---
+  duration_ms: 15.7351
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellCommands.test.ts:2:18504'
+  failureType: 'testCodeFailure'
+  error: 'vscode.workspace.registerTextDocumentContentProvider is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    new CheckedPowerShellProfile (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\CheckedPowerShellProfile.ts:40:53)
+    Object.registerCheckedPowerShell (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\commands.ts:86:21)
+    register (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:72:31)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:226:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-C13 flag withdrawal during a native pending read cannot release late approved output
+not ok 16 - F10-C13 flag withdrawal during a native pending read cannot release late approved output
+  ---
+  duration_ms: 18.2873
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellCommands.test.ts:2:18940'
+  failureType: 'testCodeFailure'
+  error: 'vscode.workspace.registerTextDocumentContentProvider is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    new CheckedPowerShellProfile (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\CheckedPowerShellProfile.ts:40:53)
+    Object.registerCheckedPowerShell (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\commands.ts:86:21)
+    register (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:72:31)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:231:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-C14 configure and restore delegate only validated current root URIs to the owned profile manager
+not ok 17 - F10-C14 configure and restore delegate only validated current root URIs to the owned profile manager
+  ---
+  duration_ms: 14.1853
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellCommands.test.ts:2:19534'
+  failureType: 'testCodeFailure'
+  error: 'vscode.workspace.registerTextDocumentContentProvider is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    new CheckedPowerShellProfile (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\CheckedPowerShellProfile.ts:40:53)
+    Object.registerCheckedPowerShell (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\commands.ts:86:21)
+    register (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:72:31)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:239:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-C15 native folder selection resolves a root without accepting a caller command as a URI
+not ok 18 - F10-C15 native folder selection resolves a root without accepting a caller command as a URI
+  ---
+  duration_ms: 11.8963
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellCommands.test.ts:2:19980'
+  failureType: 'testCodeFailure'
+  error: 'vscode.workspace.registerTextDocumentContentProvider is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    new CheckedPowerShellProfile (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\CheckedPowerShellProfile.ts:40:53)
+    Object.registerCheckedPowerShell (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\commands.ts:86:21)
+    register (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:72:31)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:244:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-C16 invalid/outside/remote root arguments never become profile settings changes
+not ok 19 - F10-C16 invalid/outside/remote root arguments never become profile settings changes
+  ---
+  duration_ms: 10.9255
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellCommands.test.ts:2:20391'
+  failureType: 'testCodeFailure'
+  error: 'vscode.workspace.registerTextDocumentContentProvider is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    new CheckedPowerShellProfile (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\CheckedPowerShellProfile.ts:40:53)
+    Object.registerCheckedPowerShell (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\commands.ts:86:21)
+    register (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:72:31)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:249:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-C17 cancelled native folder choice does not mutate a profile
+not ok 20 - F10-C17 cancelled native folder choice does not mutate a profile
+  ---
+  duration_ms: 10.2571
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellCommands.test.ts:2:20945'
+  failureType: 'testCodeFailure'
+  error: 'vscode.workspace.registerTextDocumentContentProvider is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    new CheckedPowerShellProfile (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\CheckedPowerShellProfile.ts:40:53)
+    Object.registerCheckedPowerShell (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\commands.ts:86:21)
+    register (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:72:31)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:257:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-C18 status route returns metadata without native input, commands, values or raw input history
+not ok 21 - F10-C18 status route returns metadata without native input, commands, values or raw input history
+  ---
+  duration_ms: 12.0451
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellCommands.test.ts:2:21402'
+  failureType: 'testCodeFailure'
+  error: 'vscode.workspace.registerTextDocumentContentProvider is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    new CheckedPowerShellProfile (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\CheckedPowerShellProfile.ts:40:53)
+    Object.registerCheckedPowerShell (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\commands.ts:86:21)
+    register (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:72:31)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:261:24)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-C19 controller disposal unregisters its contributed commands and profile
+not ok 22 - F10-C19 controller disposal unregisters its contributed commands and profile
+  ---
+  duration_ms: 11.5475
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellCommands.test.ts:2:21856'
+  failureType: 'testCodeFailure'
+  error: 'vscode.workspace.registerTextDocumentContentProvider is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    new CheckedPowerShellProfile (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\CheckedPowerShellProfile.ts:40:53)
+    Object.registerCheckedPowerShell (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\commands.ts:86:21)
+    register (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:72:31)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:266:24)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-C20 module stop and controller shutdown revoke owned idle sessions without signaling a PID
+not ok 23 - F10-C20 module stop and controller shutdown revoke owned idle sessions without signaling a PID
+  ---
+  duration_ms: 11.9589
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellCommands.test.ts:2:22193'
+  failureType: 'testCodeFailure'
+  error: 'vscode.workspace.registerTextDocumentContentProvider is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    new CheckedPowerShellProfile (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\CheckedPowerShellProfile.ts:40:53)
+    Object.registerCheckedPowerShell (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\commands.ts:86:21)
+    register (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:72:31)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:271:24)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-C21 non-array null ownership blocks launch without overwriting retained metadata
+not ok 24 - F10-C21 non-array null ownership blocks launch without overwriting retained metadata
+  ---
+  duration_ms: 12.0101
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellCommands.test.ts:2:22721'
+  failureType: 'testCodeFailure'
+  error: 'vscode.workspace.registerTextDocumentContentProvider is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    new CheckedPowerShellProfile (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\CheckedPowerShellProfile.ts:40:53)
+    Object.registerCheckedPowerShell (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\commands.ts:86:21)
+    register (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:72:31)
+    async blocked (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:93:24)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:276:116)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-C21 non-array object ownership blocks launch without overwriting retained metadata
+not ok 25 - F10-C21 non-array object ownership blocks launch without overwriting retained metadata
+  ---
+  duration_ms: 15.3639
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellCommands.test.ts:2:22721'
+  failureType: 'testCodeFailure'
+  error: 'vscode.workspace.registerTextDocumentContentProvider is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    new CheckedPowerShellProfile (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\CheckedPowerShellProfile.ts:40:53)
+    Object.registerCheckedPowerShell (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\commands.ts:86:21)
+    register (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:72:31)
+    async blocked (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:93:24)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:276:116)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-C21 non-array string ownership blocks launch without overwriting retained metadata
+not ok 26 - F10-C21 non-array string ownership blocks launch without overwriting retained metadata
+  ---
+  duration_ms: 12.7752
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellCommands.test.ts:2:22721'
+  failureType: 'testCodeFailure'
+  error: 'vscode.workspace.registerTextDocumentContentProvider is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    new CheckedPowerShellProfile (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\CheckedPowerShellProfile.ts:40:53)
+    Object.registerCheckedPowerShell (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\commands.ts:86:21)
+    register (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:72:31)
+    async blocked (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:93:24)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:276:116)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-C21 non-array number ownership blocks launch without overwriting retained metadata
+not ok 27 - F10-C21 non-array number ownership blocks launch without overwriting retained metadata
+  ---
+  duration_ms: 13.2525
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellCommands.test.ts:2:22721'
+  failureType: 'testCodeFailure'
+  error: 'vscode.workspace.registerTextDocumentContentProvider is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    new CheckedPowerShellProfile (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\CheckedPowerShellProfile.ts:40:53)
+    Object.registerCheckedPowerShell (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\commands.ts:86:21)
+    register (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:72:31)
+    async blocked (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:93:24)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:276:116)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-C22 more than 64 recovered workers withholds instead of discarding prior ownership
+not ok 28 - F10-C22 more than 64 recovered workers withholds instead of discarding prior ownership
+  ---
+  duration_ms: 12.754
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellCommands.test.ts:2:22871'
+  failureType: 'testCodeFailure'
+  error: 'vscode.workspace.registerTextDocumentContentProvider is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    new CheckedPowerShellProfile (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\CheckedPowerShellProfile.ts:40:53)
+    Object.registerCheckedPowerShell (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\commands.ts:86:21)
+    register (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:72:31)
+    async blocked (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:93:24)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:280:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-C23 null row ownership fails atomically and blocks before reader/filter admission
+not ok 29 - F10-C23 null row ownership fails atomically and blocks before reader/filter admission
+  ---
+  duration_ms: 12.9178
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellCommands.test.ts:2:23375'
+  failureType: 'testCodeFailure'
+  error: 'vscode.workspace.registerTextDocumentContentProvider is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    new CheckedPowerShellProfile (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\CheckedPowerShellProfile.ts:40:53)
+    Object.registerCheckedPowerShell (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\commands.ts:86:21)
+    register (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:72:31)
+    async blocked (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:93:24)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:286:113)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-C23 unknown field ownership fails atomically and blocks before reader/filter admission
+not ok 30 - F10-C23 unknown field ownership fails atomically and blocks before reader/filter admission
+  ---
+  duration_ms: 12.9033
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellCommands.test.ts:2:23375'
+  failureType: 'testCodeFailure'
+  error: 'vscode.workspace.registerTextDocumentContentProvider is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    new CheckedPowerShellProfile (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\CheckedPowerShellProfile.ts:40:53)
+    Object.registerCheckedPowerShell (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\commands.ts:86:21)
+    register (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:72:31)
+    async blocked (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:93:24)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:286:113)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-C23 invalid UUID ownership fails atomically and blocks before reader/filter admission
+not ok 31 - F10-C23 invalid UUID ownership fails atomically and blocks before reader/filter admission
+  ---
+  duration_ms: 11.4996
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellCommands.test.ts:2:23375'
+  failureType: 'testCodeFailure'
+  error: 'vscode.workspace.registerTextDocumentContentProvider is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    new CheckedPowerShellProfile (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\CheckedPowerShellProfile.ts:40:53)
+    Object.registerCheckedPowerShell (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\commands.ts:86:21)
+    register (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:72:31)
+    async blocked (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:93:24)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:286:113)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-C23 unknown state ownership fails atomically and blocks before reader/filter admission
+not ok 32 - F10-C23 unknown state ownership fails atomically and blocks before reader/filter admission
+  ---
+  duration_ms: 10.9832
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellCommands.test.ts:2:23375'
+  failureType: 'testCodeFailure'
+  error: 'vscode.workspace.registerTextDocumentContentProvider is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    new CheckedPowerShellProfile (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\CheckedPowerShellProfile.ts:40:53)
+    Object.registerCheckedPowerShell (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\commands.ts:86:21)
+    register (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:72:31)
+    async blocked (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:93:24)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:286:113)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-C23 zero PID ownership fails atomically and blocks before reader/filter admission
+not ok 33 - F10-C23 zero PID ownership fails atomically and blocks before reader/filter admission
+  ---
+  duration_ms: 13.7933
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellCommands.test.ts:2:23375'
+  failureType: 'testCodeFailure'
+  error: 'vscode.workspace.registerTextDocumentContentProvider is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    new CheckedPowerShellProfile (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\CheckedPowerShellProfile.ts:40:53)
+    Object.registerCheckedPowerShell (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\commands.ts:86:21)
+    register (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:72:31)
+    async blocked (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:93:24)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:286:113)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-C23 fractional PID ownership fails atomically and blocks before reader/filter admission
+not ok 34 - F10-C23 fractional PID ownership fails atomically and blocks before reader/filter admission
+  ---
+  duration_ms: 12.9763
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellCommands.test.ts:2:23375'
+  failureType: 'testCodeFailure'
+  error: 'vscode.workspace.registerTextDocumentContentProvider is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    new CheckedPowerShellProfile (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\CheckedPowerShellProfile.ts:40:53)
+    Object.registerCheckedPowerShell (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\commands.ts:86:21)
+    register (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:72:31)
+    async blocked (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:93:24)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:286:113)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-C23 bad exit metadata ownership fails atomically and blocks before reader/filter admission
+not ok 35 - F10-C23 bad exit metadata ownership fails atomically and blocks before reader/filter admission
+  ---
+  duration_ms: 14.1973
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellCommands.test.ts:2:23375'
+  failureType: 'testCodeFailure'
+  error: 'vscode.workspace.registerTextDocumentContentProvider is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    new CheckedPowerShellProfile (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\CheckedPowerShellProfile.ts:40:53)
+    Object.registerCheckedPowerShell (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\commands.ts:86:21)
+    register (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:72:31)
+    async blocked (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:93:24)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:286:113)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-C24 duplicate ownership identifiers do not silently collapse distinct prior records
+not ok 36 - F10-C24 duplicate ownership identifiers do not silently collapse distinct prior records
+  ---
+  duration_ms: 16.6343
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellCommands.test.ts:2:23522'
+  failureType: 'testCodeFailure'
+  error: 'vscode.workspace.registerTextDocumentContentProvider is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    new CheckedPowerShellProfile (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\CheckedPowerShellProfile.ts:40:53)
+    Object.registerCheckedPowerShell (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\commands.ts:86:21)
+    register (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:72:31)
+    async blocked (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:93:24)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:290:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-C25 one malformed row cannot be dropped from otherwise valid recovered workers
+not ok 37 - F10-C25 one malformed row cannot be dropped from otherwise valid recovered workers
+  ---
+  duration_ms: 15.817
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellCommands.test.ts:2:23703'
+  failureType: 'testCodeFailure'
+  error: 'vscode.workspace.registerTextDocumentContentProvider is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    new CheckedPowerShellProfile (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\CheckedPowerShellProfile.ts:40:53)
+    Object.registerCheckedPowerShell (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\commands.ts:86:21)
+    register (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:72:31)
+    async blocked (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:93:24)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:294:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-C26 a throwing ownership read preserves the saved bytes and withholds launches
+not ok 38 - F10-C26 a throwing ownership read preserves the saved bytes and withholds launches
+  ---
+  duration_ms: 15.2452
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellCommands.test.ts:2:23904'
+  failureType: 'testCodeFailure'
+  error: 'vscode.workspace.registerTextDocumentContentProvider is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    new CheckedPowerShellProfile (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\CheckedPowerShellProfile.ts:40:53)
+    Object.registerCheckedPowerShell (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\commands.ts:86:21)
+    register (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:72:31)
+    async blocked (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:93:24)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:298:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-C27 recovered native worker rows are always UNVERIFIED and never adopted or signaled
+not ok 39 - F10-C27 recovered native worker rows are always UNVERIFIED and never adopted or signaled
+  ---
+  duration_ms: 14.8242
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellCommands.test.ts:2:24059'
+  failureType: 'testCodeFailure'
+  error: 'vscode.workspace.registerTextDocumentContentProvider is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    new CheckedPowerShellProfile (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\CheckedPowerShellProfile.ts:40:53)
+    Object.registerCheckedPowerShell (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\commands.ts:86:21)
+    register (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:72:31)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:303:24)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-C28 exactly 64 valid recovered rows stay visible without adopting their PIDs
+not ok 40 - F10-C28 exactly 64 valid recovered rows stay visible without adopting their PIDs
+  ---
+  duration_ms: 14.7086
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellCommands.test.ts:2:25085'
+  failureType: 'testCodeFailure'
+  error: 'vscode.workspace.registerTextDocumentContentProvider is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    new CheckedPowerShellProfile (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\CheckedPowerShellProfile.ts:40:53)
+    Object.registerCheckedPowerShell (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\commands.ts:86:21)
+    register (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:72:31)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:312:126)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-C29 unrelated global metadata is preserved through registration, use and shutdown
+not ok 41 - F10-C29 unrelated global metadata is preserved through registration, use and shutdown
+  ---
+  duration_ms: 15.8144
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellCommands.test.ts:2:25564'
+  failureType: 'testCodeFailure'
+  error: 'vscode.workspace.registerTextDocumentContentProvider is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    new CheckedPowerShellProfile (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\CheckedPowerShellProfile.ts:40:53)
+    Object.registerCheckedPowerShell (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\commands.ts:86:21)
+    register (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:72:31)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:319:24)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-C30 a non-Windows host keeps registration inert and cannot launch local PowerShell
+not ok 42 - F10-C30 a non-Windows host keeps registration inert and cannot launch local PowerShell
+  ---
+  duration_ms: 17.8807
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellCommands.test.ts:2:26082'
+  failureType: 'testCodeFailure'
+  error: 'vscode.workspace.registerTextDocumentContentProvider is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    new CheckedPowerShellProfile (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\CheckedPowerShellProfile.ts:40:53)
+    Object.registerCheckedPowerShell (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\terminal\commands.ts:86:21)
+    register (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:72:31)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellCommands.test.ts:324:107)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-O01 READY ownership admission is awaited before start and value-free snapshots report completed lifecycle
+not ok 43 - F10-O01 READY ownership admission is awaited before start and value-free snapshots report completed lifecycle
+  ---
+  duration_ms: 92.099
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellSessionOwnership.test.ts:2:5694'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      [
+    -   'RUNNING',
+        'EXITED',
+    +   'EXITED'
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'RUNNING'
+    1: 'EXITED'
+  actual:
+    0: 'EXITED'
+    1: 'EXITED'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellSessionOwnership.test.ts:90:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F10-O02-false unsuccessful durable admission closes a no-child worker without starting or releasing output
+ok 44 - F10-O02-false unsuccessful durable admission closes a no-child worker without starting or releasing output
+  ---
+  duration_ms: 27.4704
+  type: 'test'
+  ...
+# Subtest: F10-O02-reject unsuccessful durable admission closes a no-child worker without starting or releasing output
+ok 45 - F10-O02-reject unsuccessful durable admission closes a no-child worker without starting or releasing output
+  ---
+  duration_ms: 18.8993
+  type: 'test'
+  ...
+# Subtest: F10-O02-truthy unsuccessful durable admission closes a no-child worker without starting or releasing output
+ok 46 - F10-O02-truthy unsuccessful durable admission closes a no-child worker without starting or releasing output
+  ---
+  duration_ms: 20.0503
+  type: 'test'
+  ...
+# Subtest: F10-O03-cancel pending admission rechecks sticky session availability before any worker start
+ok 47 - F10-O03-cancel pending admission rechecks sticky session availability before any worker start
+  ---
+  duration_ms: 20.6957
+  type: 'test'
+  ...
+# Subtest: F10-O03-dispose pending admission rechecks sticky session availability before any worker start
+ok 48 - F10-O03-dispose pending admission rechecks sticky session availability before any worker start
+  ---
+  duration_ms: 17.0878
+  type: 'test'
+  ...
+# Subtest: F10-O03-withdraw pending admission rechecks sticky session availability before any worker start
+ok 49 - F10-O03-withdraw pending admission rechecks sticky session availability before any worker start
+  ---
+  duration_ms: 17.4972
+  type: 'test'
+  ...
+# Subtest: F10-O04 current root identity is rechecked after durable ownership await
+ok 50 - F10-O04 current root identity is rechecked after durable ownership await
+  ---
+  duration_ms: 19.8036
+  type: 'test'
+  ...
+# Subtest: F10-O05 policy binding is rechecked after durable ownership await
+ok 51 - F10-O05 policy binding is rechecked after durable ownership await
+  ---
+  duration_ms: 32.5615
+  type: 'test'
+  ...
+# Subtest: F10-O06 a running owned worker stays BUSY until actual completion and reports the same final id
+ok 52 - F10-O06 a running owned worker stays BUSY until actual completion and reports the same final id
+  ---
+  duration_ms: 54.7834
+  type: 'test'
+  ...
+# Subtest: F10-O07 no-child start failure reports BLOCKED completion instead of fabricated RUNNING or EXITED
+ok 53 - F10-O07 no-child start failure reports BLOCKED completion instead of fabricated RUNNING or EXITED
+  ---
+  duration_ms: 32.4575
+  type: 'test'
+  ...
+# Subtest: F10-O08 optional trusted hooks preserve existing internal finite-worker compatibility
+ok 54 - F10-O08 optional trusted hooks preserve existing internal finite-worker compatibility
+  ---
+  duration_ms: 54.1766
+  type: 'test'
+  ...
+# Subtest: F10-O09 directory swapped to outside junction before protocol withholds every request byte without outside enumeration
+ok 55 - F10-O09 directory swapped to outside junction before protocol withholds every request byte without outside enumeration
+  ---
+  duration_ms: 65.5927
+  type: 'test'
+  ...
+# Subtest: F10-O10 stable public directory receives exact finite list protocol and completed public output
+ok 56 - F10-O10 stable public directory receives exact finite list protocol and completed public output
+  ---
+  duration_ms: 109.3172
+  type: 'test'
+  ...
+# Subtest: F10-T01 exported local help explains declared checks and bypass limits without invoking the session
+ok 57 - F10-T01 exported local help explains declared checks and bypass limits without invoking the session
+  ---
+  duration_ms: 31.9642
+  type: 'test'
+  ...
+# Subtest: F10-T02 input stays hidden before submission and only the completed sanitized result is emitted
+ok 58 - F10-T02 input stays hidden before submission and only the completed sanitized result is emitted
+  ---
+  duration_ms: 6.1977
+  type: 'test'
+  ...
+# Subtest: F10-T03 a CRLF pair submits a whole line once whether delivered together or in split callbacks
+ok 59 - F10-T03 a CRLF pair submits a whole line once whether delivered together or in split callbacks
+  ---
+  duration_ms: 4.9897
+  type: 'test'
+  ...
+# Subtest: F10-T04-BS backspace removes exactly one Unicode scalar without exposing surrogate fragments
+ok 60 - F10-T04-BS backspace removes exactly one Unicode scalar without exposing surrogate fragments
+  ---
+  duration_ms: 3.2302
+  type: 'test'
+  ...
+# Subtest: F10-T04-DEL backspace removes exactly one Unicode scalar without exposing surrogate fragments
+ok 61 - F10-T04-DEL backspace removes exactly one Unicode scalar without exposing surrogate fragments
+  ---
+  duration_ms: 2.6864
+  type: 'test'
+  ...
+# Subtest: F10-T05 the inclusive 4096-byte input limit is measured in UTF8 rather than UTF16 units
+ok 62 - F10-T05 the inclusive 4096-byte input limit is measured in UTF8 rather than UTF16 units
+  ---
+  duration_ms: 8.753
+  type: 'test'
+  ...
+# Subtest: F10-T06 a UTF8 overflow invalidates the whole line through enter and the next line starts cleanly
+ok 63 - F10-T06 a UTF8 overflow invalidates the whole line through enter and the next line starts cleanly
+  ---
+  duration_ms: 6.4659
+  type: 'test'
+  ...
+# Subtest: F10-T07-00 unsupported controls invalidate the whole current line instead of dropping a dangerous fragment
+ok 64 - F10-T07-00 unsupported controls invalidate the whole current line instead of dropping a dangerous fragment
+  ---
+  duration_ms: 3.1216
+  type: 'test'
+  ...
+# Subtest: F10-T07-01 unsupported controls invalidate the whole current line instead of dropping a dangerous fragment
+ok 65 - F10-T07-01 unsupported controls invalidate the whole current line instead of dropping a dangerous fragment
+  ---
+  duration_ms: 2.8407
+  type: 'test'
+  ...
+# Subtest: F10-T07-1a unsupported controls invalidate the whole current line instead of dropping a dangerous fragment
+ok 66 - F10-T07-1a unsupported controls invalidate the whole current line instead of dropping a dangerous fragment
+  ---
+  duration_ms: 3.1221
+  type: 'test'
+  ...
+# Subtest: F10-T07-09 unsupported controls invalidate the whole current line instead of dropping a dangerous fragment
+ok 67 - F10-T07-09 unsupported controls invalidate the whole current line instead of dropping a dangerous fragment
+  ---
+  duration_ms: 3.3631
+  type: 'test'
+  ...
+# Subtest: F10-T07-1b5b41 unsupported controls invalidate the whole current line instead of dropping a dangerous fragment
+ok 68 - F10-T07-1b5b41 unsupported controls invalidate the whole current line instead of dropping a dangerous fragment
+  ---
+  duration_ms: 2.1439
+  type: 'test'
+  ...
+# Subtest: F10-T08 malformed UTF16 input is rejected as a whole rather than lossy UTF8 replacement
+ok 69 - F10-T08 malformed UTF16 input is rejected as a whole rather than lossy UTF8 replacement
+  ---
+  duration_ms: 2.5066
+  type: 'test'
+  ...
+# Subtest: F10-T09 local clear/help operate without session execution or raw command history
+ok 70 - F10-T09 local clear/help operate without session execution or raw command history
+  ---
+  duration_ms: 2.8685
+  type: 'test'
+  ...
+# Subtest: F10-T10 Ctrl+C clears partial hidden input and revokes the session without executing its remainder
+ok 71 - F10-T10 Ctrl+C clears partial hidden input and revokes the session without executing its remainder
+  ---
+  duration_ms: 2.0151
+  type: 'test'
+  ...
+# Subtest: F10-T11 one held command blocks programmatic and typed submissions without queuing them
+ok 72 - F10-T11 one held command blocks programmatic and typed submissions without queuing them
+  ---
+  duration_ms: 2.6303
+  type: 'test'
+  ...
+# Subtest: F10-T12 Ctrl+C requests cancellation while BUSY and retains the pending operation until actual completion
+ok 73 - F10-T12 Ctrl+C requests cancellation while BUSY and retains the pending operation until actual completion
+  ---
+  duration_ms: 2.3964
+  type: 'test'
+  ...
+# Subtest: F10-T13 completed normalized stdout/stderr use CRLF and retain nonzero status without raw input echo
+ok 74 - F10-T13 completed normalized stdout/stderr use CRLF and retain nonzero status without raw input echo
+  ---
+  duration_ms: 4.3691
+  type: 'test'
+  ...
+# Subtest: F10-T14 WITHHELD results and thrown input-bearing errors emit only fixed explanations
+ok 75 - F10-T14 WITHHELD results and thrown input-bearing errors emit only fixed explanations
+  ---
+  duration_ms: 5.7762
+  type: 'test'
+  ...
+# Subtest: F10-T15 close disposes the owned session but onDidClose waits for a held command's actual completion
+ok 76 - F10-T15 close disposes the owned session but onDidClose waits for a held command's actual completion
+  ---
+  duration_ms: 4.7056
+  type: 'test'
+  ...
+# Subtest: F10-T16 an unresolved close remains visibly STOP_UNCONFIRMED rather than claiming a child exit
+ok 77 - F10-T16 an unresolved close remains visibly STOP_UNCONFIRMED rather than claiming a child exit
+  ---
+  duration_ms: 1135.5333
+  type: 'test'
+  ...
+# Subtest: F10-T17 close without owned work emits one close and never invokes a session command
+ok 78 - F10-T17 close without owned work emits one close and never invokes a session command
+  ---
+  duration_ms: 2.6698
+  type: 'test'
+  ...
+1..78
+# tests 78
+# suites 0
+# pass 35
+# fail 43
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5242.6018

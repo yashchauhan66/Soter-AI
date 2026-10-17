@@ -1,0 +1,784 @@
+﻿TAP version 13
+# Subtest: F10-C01 registration contributes one native provider and exactly the five declared routes
+ok 1 - F10-C01 registration contributes one native provider and exactly the five declared routes
+  ---
+  duration_ms: 95.5346
+  type: 'test'
+  ...
+# Subtest: F10-C02 contributed native profile supplies an owned pty without shellPath, args or inherited env
+ok 2 - F10-C02 contributed native profile supplies an owned pty without shellPath, args or inherited env
+  ---
+  duration_ms: 83.0737
+  type: 'test'
+  ...
+# Subtest: F10-C03 open command creates an ExtensionTerminalOptions tab and leaves project profile unchanged
+ok 3 - F10-C03 open command creates an ExtensionTerminalOptions tab and leaves project profile unchanged
+  ---
+  duration_ms: 16.869
+  type: 'test'
+  ...
+# Subtest: F10-C04 run gets command text only from masked native input and ignores command-like caller arguments
+ok 4 - F10-C04 run gets command text only from masked native input and ignores command-like caller arguments
+  ---
+  duration_ms: 68.5252
+  type: 'test'
+  ...
+# Subtest: F10-C05 cancelled native command input never becomes caller-provided command execution
+ok 5 - F10-C05 cancelled native command input never becomes caller-provided command execution
+  ---
+  duration_ms: 10.3739
+  type: 'test'
+  ...
+# Subtest: F10-C06 run and pty share the exact bridge, preserving denial and reviewed masking
+ok 6 - F10-C06 run and pty share the exact bridge, preserving denial and reviewed masking
+  ---
+  duration_ms: 47.6407
+  type: 'test'
+  ...
+# Subtest: F10-C07 an absent internal reader withholds instead of falling back to a public command
+ok 7 - F10-C07 an absent internal reader withholds instead of falling back to a public command
+  ---
+  duration_ms: 13.0216
+  type: 'test'
+  ...
+# Subtest: F10-C08 disabled bridge prevents profile creation and native command input
+ok 8 - F10-C08 disabled bridge prevents profile creation and native command input
+  ---
+  duration_ms: 11.7793
+  type: 'test'
+  ...
+# Subtest: F10-C09 untrusted workspace cannot open or configure the checked terminal
+ok 9 - F10-C09 untrusted workspace cannot open or configure the checked terminal
+  ---
+  duration_ms: 16.286
+  type: 'test'
+  ...
+# Subtest: F10-C10 a remote extension host never creates a local PowerShell terminal
+ok 10 - F10-C10 a remote extension host never creates a local PowerShell terminal
+  ---
+  duration_ms: 12.1989
+  type: 'test'
+  ...
+# Subtest: F10-C11 lite.ps51Terminal withdrawal cancels live sessions and preserves saved profile metadata
+ok 11 - F10-C11 lite.ps51Terminal withdrawal cancels live sessions and preserves saved profile metadata
+  ---
+  duration_ms: 11.7617
+  type: 'test'
+  ...
+# Subtest: F10-C11 lite.vaultMode withdrawal cancels live sessions and preserves saved profile metadata
+ok 12 - F10-C11 lite.vaultMode withdrawal cancels live sessions and preserves saved profile metadata
+  ---
+  duration_ms: 12.127
+  type: 'test'
+  ...
+# Subtest: F10-C11 lite.secretMatching withdrawal cancels live sessions and preserves saved profile metadata
+ok 13 - F10-C11 lite.secretMatching withdrawal cancels live sessions and preserves saved profile metadata
+  ---
+  duration_ms: 11.4128
+  type: 'test'
+  ...
+# Subtest: F10-C11 lite.outputRedactor withdrawal cancels live sessions and preserves saved profile metadata
+ok 14 - F10-C11 lite.outputRedactor withdrawal cancels live sessions and preserves saved profile metadata
+  ---
+  duration_ms: 12.2511
+  type: 'test'
+  ...
+# Subtest: F10-C12 workspace removal cancels its live session and blocks a new tab
+ok 15 - F10-C12 workspace removal cancels its live session and blocks a new tab
+  ---
+  duration_ms: 10.8246
+  type: 'test'
+  ...
+# Subtest: F10-C13 flag withdrawal during a native pending read cannot release late approved output
+ok 16 - F10-C13 flag withdrawal during a native pending read cannot release late approved output
+  ---
+  duration_ms: 33.2716
+  type: 'test'
+  ...
+# Subtest: F10-C14 configure and restore delegate only validated current root URIs to the owned profile manager
+ok 17 - F10-C14 configure and restore delegate only validated current root URIs to the owned profile manager
+  ---
+  duration_ms: 11.2786
+  type: 'test'
+  ...
+# Subtest: F10-C15 native folder selection resolves a root without accepting a caller command as a URI
+ok 18 - F10-C15 native folder selection resolves a root without accepting a caller command as a URI
+  ---
+  duration_ms: 11.3539
+  type: 'test'
+  ...
+# Subtest: F10-C16 invalid/outside/remote root arguments never become profile settings changes
+ok 19 - F10-C16 invalid/outside/remote root arguments never become profile settings changes
+  ---
+  duration_ms: 10.1612
+  type: 'test'
+  ...
+# Subtest: F10-C17 cancelled native folder choice does not mutate a profile
+ok 20 - F10-C17 cancelled native folder choice does not mutate a profile
+  ---
+  duration_ms: 11.248
+  type: 'test'
+  ...
+# Subtest: F10-C18 status route returns metadata without native input, commands, values or raw input history
+ok 21 - F10-C18 status route returns metadata without native input, commands, values or raw input history
+  ---
+  duration_ms: 49.475
+  type: 'test'
+  ...
+# Subtest: F10-C19 controller disposal unregisters its contributed commands and profile
+ok 22 - F10-C19 controller disposal unregisters its contributed commands and profile
+  ---
+  duration_ms: 10.7493
+  type: 'test'
+  ...
+# Subtest: F10-C20 module stop and controller shutdown revoke owned idle sessions without signaling a PID
+ok 23 - F10-C20 module stop and controller shutdown revoke owned idle sessions without signaling a PID
+  ---
+  duration_ms: 10.2298
+  type: 'test'
+  ...
+# Subtest: F10-C21 non-array null ownership blocks launch without overwriting retained metadata
+ok 24 - F10-C21 non-array null ownership blocks launch without overwriting retained metadata
+  ---
+  duration_ms: 12.1194
+  type: 'test'
+  ...
+# Subtest: F10-C21 non-array object ownership blocks launch without overwriting retained metadata
+ok 25 - F10-C21 non-array object ownership blocks launch without overwriting retained metadata
+  ---
+  duration_ms: 10.0987
+  type: 'test'
+  ...
+# Subtest: F10-C21 non-array string ownership blocks launch without overwriting retained metadata
+ok 26 - F10-C21 non-array string ownership blocks launch without overwriting retained metadata
+  ---
+  duration_ms: 10.0747
+  type: 'test'
+  ...
+# Subtest: F10-C21 non-array number ownership blocks launch without overwriting retained metadata
+ok 27 - F10-C21 non-array number ownership blocks launch without overwriting retained metadata
+  ---
+  duration_ms: 10.7092
+  type: 'test'
+  ...
+# Subtest: F10-C22 more than 64 recovered workers withholds instead of discarding prior ownership
+ok 28 - F10-C22 more than 64 recovered workers withholds instead of discarding prior ownership
+  ---
+  duration_ms: 9.7481
+  type: 'test'
+  ...
+# Subtest: F10-C23 null row ownership fails atomically and blocks before reader/filter admission
+ok 29 - F10-C23 null row ownership fails atomically and blocks before reader/filter admission
+  ---
+  duration_ms: 9.9092
+  type: 'test'
+  ...
+# Subtest: F10-C23 unknown field ownership fails atomically and blocks before reader/filter admission
+ok 30 - F10-C23 unknown field ownership fails atomically and blocks before reader/filter admission
+  ---
+  duration_ms: 11.555
+  type: 'test'
+  ...
+# Subtest: F10-C23 invalid UUID ownership fails atomically and blocks before reader/filter admission
+ok 31 - F10-C23 invalid UUID ownership fails atomically and blocks before reader/filter admission
+  ---
+  duration_ms: 9.0171
+  type: 'test'
+  ...
+# Subtest: F10-C23 unknown state ownership fails atomically and blocks before reader/filter admission
+ok 32 - F10-C23 unknown state ownership fails atomically and blocks before reader/filter admission
+  ---
+  duration_ms: 10.5451
+  type: 'test'
+  ...
+# Subtest: F10-C23 zero PID ownership fails atomically and blocks before reader/filter admission
+ok 33 - F10-C23 zero PID ownership fails atomically and blocks before reader/filter admission
+  ---
+  duration_ms: 10.3914
+  type: 'test'
+  ...
+# Subtest: F10-C23 fractional PID ownership fails atomically and blocks before reader/filter admission
+ok 34 - F10-C23 fractional PID ownership fails atomically and blocks before reader/filter admission
+  ---
+  duration_ms: 10.5091
+  type: 'test'
+  ...
+# Subtest: F10-C23 bad exit metadata ownership fails atomically and blocks before reader/filter admission
+ok 35 - F10-C23 bad exit metadata ownership fails atomically and blocks before reader/filter admission
+  ---
+  duration_ms: 11.4143
+  type: 'test'
+  ...
+# Subtest: F10-C24 duplicate ownership identifiers do not silently collapse distinct prior records
+ok 36 - F10-C24 duplicate ownership identifiers do not silently collapse distinct prior records
+  ---
+  duration_ms: 18.0557
+  type: 'test'
+  ...
+# Subtest: F10-C25 one malformed row cannot be dropped from otherwise valid recovered workers
+ok 37 - F10-C25 one malformed row cannot be dropped from otherwise valid recovered workers
+  ---
+  duration_ms: 13.704
+  type: 'test'
+  ...
+# Subtest: F10-C26 a throwing ownership read preserves the saved bytes and withholds launches
+ok 38 - F10-C26 a throwing ownership read preserves the saved bytes and withholds launches
+  ---
+  duration_ms: 12.2518
+  type: 'test'
+  ...
+# Subtest: F10-C27 recovered native worker rows are always UNVERIFIED and never adopted or signaled
+ok 39 - F10-C27 recovered native worker rows are always UNVERIFIED and never adopted or signaled
+  ---
+  duration_ms: 54.8413
+  type: 'test'
+  ...
+# Subtest: F10-C28 exactly 64 valid recovered rows stay visible without adopting their PIDs
+ok 40 - F10-C28 exactly 64 valid recovered rows stay visible without adopting their PIDs
+  ---
+  duration_ms: 12.8065
+  type: 'test'
+  ...
+# Subtest: F10-C29 unrelated global metadata is preserved through registration, use and shutdown
+ok 41 - F10-C29 unrelated global metadata is preserved through registration, use and shutdown
+  ---
+  duration_ms: 11.1029
+  type: 'test'
+  ...
+# Subtest: F10-C30 a non-Windows host keeps registration inert and cannot launch local PowerShell
+ok 42 - F10-C30 a non-Windows host keeps registration inert and cannot launch local PowerShell
+  ---
+  duration_ms: 12.2511
+  type: 'test'
+  ...
+# Subtest: F10-CR01 valid empty ownership admits an idle tab and shutdown durably preserves a bounded array
+ok 43 - F10-CR01 valid empty ownership admits an idle tab and shutdown durably preserves a bounded array
+  ---
+  duration_ms: 30.3009
+  type: 'test'
+  ...
+# Subtest: F10-CR02 sparse all holes ownership withholds before tab creation and preserves the retained array
+ok 44 - F10-CR02 sparse all holes ownership withholds before tab creation and preserves the retained array
+  ---
+  duration_ms: 12.9139
+  type: 'test'
+  ...
+# Subtest: F10-CR02 sparse valid then hole ownership withholds before tab creation and preserves the retained array
+ok 45 - F10-CR02 sparse valid then hole ownership withholds before tab creation and preserves the retained array
+  ---
+  duration_ms: 11.8848
+  type: 'test'
+  ...
+# Subtest: F10-CR02 sparse hole then valid ownership withholds before tab creation and preserves the retained array
+ok 46 - F10-CR02 sparse hole then valid ownership withholds before tab creation and preserves the retained array
+  ---
+  duration_ms: 8.4358
+  type: 'test'
+  ...
+# Subtest: F10-CR03 rejected ownership persistence prevents a later terminal admission
+ok 47 - F10-CR03 rejected ownership persistence prevents a later terminal admission
+  ---
+  duration_ms: 28.8008
+  type: 'test'
+  ...
+# Subtest: F10-CR04 stalled ownership persistence cannot leave controller shutdown pending indefinitely
+ok 48 - F10-CR04 stalled ownership persistence cannot leave controller shutdown pending indefinitely
+  ---
+  duration_ms: 516.3934
+  type: 'test'
+  ...
+# Subtest: F10-PR01 stable private binding publishes completed public output after single-use filter disposal
+ok 49 - F10-PR01 stable private binding publishes completed public output after single-use filter disposal
+  ---
+  duration_ms: 133.2849
+  type: 'test'
+  ...
+# Subtest: F10-PR02 revoked private binding after filter finish but before worker completion withholds publication
+ok 50 - F10-PR02 revoked private binding after filter finish but before worker completion withholds publication
+  ---
+  duration_ms: 57.7445
+  type: 'test'
+  ...
+# Subtest: F10-D01 unsupported whole input never reaches a reader, worker, filter or destination review
+ok 51 - F10-D01 unsupported whole input never reaches a reader, worker, filter or destination review
+  ---
+  duration_ms: 81.3708
+  type: 'test'
+  ...
+# Subtest: F10-D02 public operation uses the fixed worker with a filtered private output sink
+ok 52 - F10-D02 public operation uses the fixed worker with a filtered private output sink
+  ---
+  duration_ms: 67.863
+  type: 'test'
+  ...
+# Subtest: F10-D03 protected file is routed through the trusted reader and never forwarded to a worker
+ok 53 - F10-D03 protected file is routed through the trusted reader and never forwarded to a worker
+  ---
+  duration_ms: 42.601
+  type: 'test'
+  ...
+# Subtest: F10-D04 denied approval releases no result and never creates an output filter
+ok 54 - F10-D04 denied approval releases no result and never creates an output filter
+  ---
+  duration_ms: 10.3089
+  type: 'test'
+  ...
+# Subtest: F10-D05 head tail and literal search transform only approved safe text
+ok 55 - F10-D05 head tail and literal search transform only approved safe text
+  ---
+  duration_ms: 138.1856
+  type: 'test'
+  ...
+# Subtest: F10-D06 registered output is masked even if an internal reader accidentally returns a value
+ok 56 - F10-D06 registered output is masked even if an internal reader accidentally returns a value
+  ---
+  duration_ms: 50.3372
+  type: 'test'
+  ...
+# Subtest: F10-D07 env lists only minimal child-base names with masks
+ok 57 - F10-D07 env lists only minimal child-base names with masks
+  ---
+  duration_ms: 83.8102
+  type: 'test'
+  ...
+# Subtest: F10-D08 copy reviews the new destination then writes only finalized filtered safe text
+ok 58 - F10-D08 copy reviews the new destination then writes only finalized filtered safe text
+  ---
+  duration_ms: 109.7268
+  type: 'test'
+  ...
+# Subtest: F10-D09 declined destination review starts no source read and creates no destination
+ok 59 - F10-D09 declined destination review starts no source read and creates no destination
+  ---
+  duration_ms: 27.9845
+  type: 'test'
+  ...
+# Subtest: F10-D10 copy never overwrites an existing destination
+ok 60 - F10-D10 copy never overwrites an existing destination
+  ---
+  duration_ms: 30.1358
+  type: 'test'
+  ...
+# Subtest: F10-D11 copy refuses policy and sensitive destinations
+ok 61 - F10-D11 copy refuses policy and sensitive destinations
+  ---
+  duration_ms: 26.1667
+  type: 'test'
+  ...
+# Subtest: F10-D12 source change while approval is pending withholds the old view
+ok 62 - F10-D12 source change while approval is pending withholds the old view
+  ---
+  duration_ms: 12.7206
+  type: 'test'
+  ...
+# Subtest: F10-D13 cancellation during pending read is sticky after the reader resolves
+ok 63 - F10-D13 cancellation during pending read is sticky after the reader resolves
+  ---
+  duration_ms: 10.6702
+  type: 'test'
+  ...
+# Subtest: F10-D14 feature withdrawal during output acquisition withholds result and copy
+ok 64 - F10-D14 feature withdrawal during output acquisition withholds result and copy
+  ---
+  duration_ms: 28.4916
+  type: 'test'
+  ...
+# Subtest: F10-D15 one session refuses a second pending command without extra approvals
+ok 65 - F10-D15 one session refuses a second pending command without extra approvals
+  ---
+  duration_ms: 41.804
+  type: 'test'
+  ...
+# Subtest: F10-D16 closed session stays unavailable and exposes no previous arguments or result
+ok 66 - F10-D16 closed session stays unavailable and exposes no previous arguments or result
+  ---
+  duration_ms: 11.8828
+  type: 'test'
+  ...
+# Subtest: F10-D17 normal directory listing dispatches while protected directory listing is withheld
+ok 67 - F10-D17 normal directory listing dispatches while protected directory listing is withheld
+  ---
+  duration_ms: 74.108
+  type: 'test'
+  ...
+# Subtest: F10-D18 junction directory cannot route a listing outside the project
+ok 68 - F10-D18 junction directory cannot route a listing outside the project
+  ---
+  duration_ms: 11.5132
+  type: 'test'
+  ...
+# Subtest: F10-D19 parent alias cannot receive a safe copy
+ok 69 - F10-D19 parent alias cannot receive a safe copy
+  ---
+  duration_ms: 11.0334
+  type: 'test'
+  ...
+# Subtest: F10-D20 actual finite worker releases output after its single-use private filter completes
+ok 70 - F10-D20 actual finite worker releases output after its single-use private filter completes
+  ---
+  duration_ms: 813.8712
+  type: 'test'
+  ...
+# Subtest: F10-O01 READY ownership admission is awaited before start and value-free snapshots report completed lifecycle
+ok 71 - F10-O01 READY ownership admission is awaited before start and value-free snapshots report completed lifecycle
+  ---
+  duration_ms: 113.0005
+  type: 'test'
+  ...
+# Subtest: F10-O02-false unsuccessful durable admission closes a no-child worker without starting or releasing output
+ok 72 - F10-O02-false unsuccessful durable admission closes a no-child worker without starting or releasing output
+  ---
+  duration_ms: 28.4713
+  type: 'test'
+  ...
+# Subtest: F10-O02-reject unsuccessful durable admission closes a no-child worker without starting or releasing output
+ok 73 - F10-O02-reject unsuccessful durable admission closes a no-child worker without starting or releasing output
+  ---
+  duration_ms: 23.1909
+  type: 'test'
+  ...
+# Subtest: F10-O02-truthy unsuccessful durable admission closes a no-child worker without starting or releasing output
+ok 74 - F10-O02-truthy unsuccessful durable admission closes a no-child worker without starting or releasing output
+  ---
+  duration_ms: 19.6053
+  type: 'test'
+  ...
+# Subtest: F10-O03-cancel pending admission rechecks sticky session availability before any worker start
+ok 75 - F10-O03-cancel pending admission rechecks sticky session availability before any worker start
+  ---
+  duration_ms: 20.406
+  type: 'test'
+  ...
+# Subtest: F10-O03-dispose pending admission rechecks sticky session availability before any worker start
+ok 76 - F10-O03-dispose pending admission rechecks sticky session availability before any worker start
+  ---
+  duration_ms: 20.0799
+  type: 'test'
+  ...
+# Subtest: F10-O03-withdraw pending admission rechecks sticky session availability before any worker start
+ok 77 - F10-O03-withdraw pending admission rechecks sticky session availability before any worker start
+  ---
+  duration_ms: 21.3534
+  type: 'test'
+  ...
+# Subtest: F10-O04 current root identity is rechecked after durable ownership await
+ok 78 - F10-O04 current root identity is rechecked after durable ownership await
+  ---
+  duration_ms: 25.8726
+  type: 'test'
+  ...
+# Subtest: F10-O05 policy binding is rechecked after durable ownership await
+ok 79 - F10-O05 policy binding is rechecked after durable ownership await
+  ---
+  duration_ms: 32.9221
+  type: 'test'
+  ...
+# Subtest: F10-O06 a running owned worker stays BUSY until actual completion and reports the same final id
+ok 80 - F10-O06 a running owned worker stays BUSY until actual completion and reports the same final id
+  ---
+  duration_ms: 61.2706
+  type: 'test'
+  ...
+# Subtest: F10-O07 no-child start failure reports BLOCKED completion instead of fabricated RUNNING or EXITED
+ok 81 - F10-O07 no-child start failure reports BLOCKED completion instead of fabricated RUNNING or EXITED
+  ---
+  duration_ms: 29.2231
+  type: 'test'
+  ...
+# Subtest: F10-O08 optional trusted hooks preserve existing internal finite-worker compatibility
+ok 82 - F10-O08 optional trusted hooks preserve existing internal finite-worker compatibility
+  ---
+  duration_ms: 59.7874
+  type: 'test'
+  ...
+# Subtest: F10-O09 directory swapped to outside junction before protocol withholds every request byte without outside enumeration
+ok 83 - F10-O09 directory swapped to outside junction before protocol withholds every request byte without outside enumeration
+  ---
+  duration_ms: 66.2083
+  type: 'test'
+  ...
+# Subtest: F10-O10 stable public directory receives exact finite list protocol and completed public output
+ok 84 - F10-O10 stable public directory receives exact finite list protocol and completed public output
+  ---
+  duration_ms: 93.0035
+  type: 'test'
+  ...
+# Subtest: F10-O11 throwing start observer cancels output but retains BUSY ownership until actual completion
+ok 85 - F10-O11 throwing start observer cancels output but retains BUSY ownership until actual completion
+  ---
+  duration_ms: 19.7247
+  type: 'test'
+  ...
+# Subtest: F10-O01 absent vault permits useful empty-registry output without creating storage or a key
+ok 86 - F10-O01 absent vault permits useful empty-registry output without creating storage or a key
+  ---
+  duration_ms: 122.7119
+  type: 'test'
+  ...
+# Subtest: F10-O02 a safely absent storage directory remains absent during empty-registry filtering
+ok 87 - F10-O02 a safely absent storage directory remains absent during empty-registry filtering
+  ---
+  duration_ms: 57.1686
+  type: 'test'
+  ...
+# Subtest: F10-O03 real encrypted current registrations mask raw and every representative one-layer encoding
+ok 88 - F10-O03 real encrypted current registrations mask raw and every representative one-layer encoding
+  ---
+  duration_ms: 780.6132
+  type: 'test'
+  ...
+# Subtest: F10-O04 long registrations preserve unrelated public Unicode/nonzero output
+ok 89 - F10-O04 long registrations preserve unrelated public Unicode/nonzero output
+  ---
+  duration_ms: 123.9528
+  type: 'test'
+  ...
+# Subtest: F10-O05 any short private registration conservatively masks each nonempty completed channel
+ok 90 - F10-O05 any short private registration conservatively masks each nonempty completed channel
+  ---
+  duration_ms: 189.6741
+  type: 'test'
+  ...
+# Subtest: F10-O06 short and whole-marker replacement collisions withhold instead of returning a private substring
+ok 91 - F10-O06 short and whole-marker replacement collisions withhold instead of returning a private substring
+  ---
+  duration_ms: 216.6368
+  type: 'test'
+  ...
+# Subtest: F10-O07 all legacy/current-root values register while other-root values remain excluded
+ok 92 - F10-O07 all legacy/current-root values register while other-root values remain excluded
+  ---
+  duration_ms: 223.3328
+  type: 'test'
+  ...
+# Subtest: F10-O08 partially bound entries are unavailable rather than silently omitted
+ok 93 - F10-O08 partially bound entries are unavailable rather than silently omitted
+  ---
+  duration_ms: 68.0084
+  type: 'test'
+  ...
+# Subtest: F10-O09 existing ciphertext with a missing or different existing key never regenerates a key
+ok 94 - F10-O09 existing ciphertext with a missing or different existing key never regenerates a key
+  ---
+  duration_ms: 57.0296
+  type: 'test'
+  ...
+# Subtest: F10-O10 absent current cipher with retained vault-pending.json cannot downgrade to an empty registry
+ok 95 - F10-O10 absent current cipher with retained vault-pending.json cannot downgrade to an empty registry
+  ---
+  duration_ms: 26.5686
+  type: 'test'
+  ...
+# Subtest: F10-O10 absent current cipher with retained vault-source-0123456789abcdef0123456789abcdef.json cannot downgrade to an empty registry
+ok 96 - F10-O10 absent current cipher with retained vault-source-0123456789abcdef0123456789abcdef.json cannot downgrade to an empty registry
+  ---
+  duration_ms: 31.0982
+  type: 'test'
+  ...
+# Subtest: F10-O10 absent current cipher with retained vault-generation-a3427b36-46ba-4d84-82e5-c5dfb5ba5dd1.enc cannot downgrade to an empty registry
+ok 97 - F10-O10 absent current cipher with retained vault-generation-a3427b36-46ba-4d84-82e5-c5dfb5ba5dd1.enc cannot downgrade to an empty registry
+  ---
+  duration_ms: 28.7393
+  type: 'test'
+  ...
+# Subtest: F10-O10 absent current cipher with retained vault-mutation.lock cannot downgrade to an empty registry
+ok 98 - F10-O10 absent current cipher with retained vault-mutation.lock cannot downgrade to an empty registry
+  ---
+  duration_ms: 26.6372
+  type: 'test'
+  ...
+# Subtest: F10-O10 absent current cipher with retained write-a3427b36-46ba-4d84-82e5-c5dfb5ba5dd1.enc cannot downgrade to an empty registry
+ok 99 - F10-O10 absent current cipher with retained write-a3427b36-46ba-4d84-82e5-c5dfb5ba5dd1.enc cannot downgrade to an empty registry
+  ---
+  duration_ms: 28.6839
+  type: 'test'
+  ...
+# Subtest: F10-O10 absent current cipher with retained vault-unknown-recovery.enc cannot downgrade to an empty registry
+ok 100 - F10-O10 absent current cipher with retained vault-unknown-recovery.enc cannot downgrade to an empty registry
+  ---
+  duration_ms: 29.4187
+  type: 'test'
+  ...
+# Subtest: F10-O11 pending recovery also blocks an otherwise valid encrypted current vault
+ok 101 - F10-O11 pending recovery also blocks an otherwise valid encrypted current vault
+  ---
+  duration_ms: 24.8972
+  type: 'test'
+  ...
+# Subtest: F10-O12 malformed strict vault schemas/JSON cannot return a partial usable registry
+ok 102 - F10-O12 malformed strict vault schemas/JSON cannot return a partial usable registry
+  ---
+  duration_ms: 125.6138
+  type: 'test'
+  ...
+# Subtest: F10-O13 one-value bytes exhaustion rejects the complete private registry
+ok 103 - F10-O13 one-value bytes exhaustion rejects the complete private registry
+  ---
+  duration_ms: 40.62
+  type: 'test'
+  ...
+# Subtest: F10-O13 unique registration count exhaustion rejects the complete private registry
+ok 104 - F10-O13 unique registration count exhaustion rejects the complete private registry
+  ---
+  duration_ms: 55.0786
+  type: 'test'
+  ...
+# Subtest: F10-O13 total registration bytes exhaustion rejects the complete private registry
+ok 105 - F10-O13 total registration bytes exhaustion rejects the complete private registry
+  ---
+  duration_ms: 51.3238
+  type: 'test'
+  ...
+# Subtest: F10-O13 derived variant bytes exhaustion rejects the complete private registry
+ok 106 - F10-O13 derived variant bytes exhaustion rejects the complete private registry
+  ---
+  duration_ms: 57.9909
+  type: 'test'
+  ...
+# Subtest: F10-O14 removing a captured cipher revokes permanently rather than falling back to an empty registry
+ok 107 - F10-O14 removing a captured cipher revokes permanently rather than falling back to an empty registry
+  ---
+  duration_ms: 67.8439
+  type: 'test'
+  ...
+# Subtest: F10-O15 changed ciphertext revokes even when the existing key still decrypts it
+ok 108 - F10-O15 changed ciphertext revokes even when the existing key still decrypts it
+  ---
+  duration_ms: 65.7864
+  type: 'test'
+  ...
+# Subtest: F10-O16 late pending migration revokes a filter before any buffered prefix is released
+ok 109 - F10-O16 late pending migration revokes a filter before any buffered prefix is released
+  ---
+  duration_ms: 72.5263
+  type: 'test'
+  ...
+# Subtest: F10-O17 key-change epoch revokes even if a later lookup would return the old key again
+ok 110 - F10-O17 key-change epoch revokes even if a later lookup would return the old key again
+  ---
+  duration_ms: 66.6913
+  type: 'test'
+  ...
+# Subtest: F10-O18 an existing raw policy-file edit revokes without relying on an owner-session event
+ok 111 - F10-O18 an existing raw policy-file edit revokes without relying on an owner-session event
+  ---
+  duration_ms: 113.9575
+  type: 'test'
+  ...
+# Subtest: F10-O19 saved effective policy drift revokes pending output
+ok 112 - F10-O19 saved effective policy drift revokes pending output
+  ---
+  duration_ms: 84.8894
+  type: 'test'
+  ...
+# Subtest: F10-O20 loss of exact workspace membership revokes a filter
+ok 113 - F10-O20 loss of exact workspace membership revokes a filter
+  ---
+  duration_ms: 71.5777
+  type: 'test'
+  ...
+# Subtest: F10-O21 lite.vaultMode withdrawal/re-enable is sticky for an already prepared filter
+ok 114 - F10-O21 lite.vaultMode withdrawal/re-enable is sticky for an already prepared filter
+  ---
+  duration_ms: 233.6065
+  type: 'test'
+  ...
+# Subtest: F10-O21 lite.secretMatching withdrawal/re-enable is sticky for an already prepared filter
+ok 115 - F10-O21 lite.secretMatching withdrawal/re-enable is sticky for an already prepared filter
+  ---
+  duration_ms: 275.3737
+  type: 'test'
+  ...
+# Subtest: F10-O21 lite.outputRedactor withdrawal/re-enable is sticky for an already prepared filter
+ok 116 - F10-O21 lite.outputRedactor withdrawal/re-enable is sticky for an already prepared filter
+  ---
+  duration_ms: 226.1081
+  type: 'test'
+  ...
+# Subtest: F10-O21 lite.ps51Terminal withdrawal/re-enable is sticky for an already prepared filter
+ok 117 - F10-O21 lite.ps51Terminal withdrawal/re-enable is sticky for an already prepared filter
+  ---
+  duration_ms: 533.5222
+  type: 'test'
+  ...
+# Subtest: F10-O22 cancel permanently withholds buffered output and cannot be replayed
+ok 118 - F10-O22 cancel permanently withholds buffered output and cannot be replayed
+  ---
+  duration_ms: 129.0877
+  type: 'test'
+  ...
+# Subtest: F10-O22 dispose permanently withholds buffered output and cannot be replayed
+ok 119 - F10-O22 dispose permanently withholds buffered output and cannot be replayed
+  ---
+  duration_ms: 164.4548
+  type: 'test'
+  ...
+# Subtest: F10-O23 enabled false/throw and lost trust cannot downgrade private output protection
+ok 120 - F10-O23 enabled false/throw and lost trust cannot downgrade private output protection
+  ---
+  duration_ms: 159.4169
+  type: 'test'
+  ...
+# Subtest: F10-O24 an enabled callback reentrantly calling cancel cannot release final output
+ok 121 - F10-O24 an enabled callback reentrantly calling cancel cannot release final output
+  ---
+  duration_ms: 110.9143
+  type: 'test'
+  ...
+# Subtest: F10-O24 an enabled callback reentrantly calling dispose cannot release final output
+ok 122 - F10-O24 an enabled callback reentrantly calling dispose cannot release final output
+  ---
+  duration_ms: 99.6457
+  type: 'test'
+  ...
+# Subtest: F10-O25 pending drift during the second existing-key read is rechecked before filter return
+ok 123 - F10-O25 pending drift during the second existing-key read is rechecked before filter return
+  ---
+  duration_ms: 69.945
+  type: 'test'
+  ...
+# Subtest: F10-O25 ciphertext drift during the second existing-key read is rechecked before filter return
+ok 124 - F10-O25 ciphertext drift during the second existing-key read is rechecked before filter return
+  ---
+  duration_ms: 108.5359
+  type: 'test'
+  ...
+# Subtest: F10-O26 a configuration change while a key read is held cannot return a stale filter
+ok 125 - F10-O26 a configuration change while a key read is held cannot return a stale filter
+  ---
+  duration_ms: 104.5582
+  type: 'test'
+  ...
+# Subtest: F10-O27 normal public output-file creation does not confuse directory mtime with identity
+ok 126 - F10-O27 normal public output-file creation does not confuse directory mtime with identity
+  ---
+  duration_ms: 221.4313
+  type: 'test'
+  ...
+# Subtest: F10-O28 roots must be the exact current local workspace folder without authority/query/fragment
+ok 127 - F10-O28 roots must be the exact current local workspace folder without authority/query/fragment
+  ---
+  duration_ms: 23.6221
+  type: 'test'
+  ...
+# Subtest: F10-O29 registry/filter progress serialization exposes no values, value hashes, key, cipher or source
+ok 128 - F10-O29 registry/filter progress serialization exposes no values, value hashes, key, cipher or source
+  ---
+  duration_ms: 450.9594
+  type: 'test'
+  ...
+# Subtest: F10-O30 invalid final UTF-8 and unsupported editing controls retain F08 whole-output withholding
+ok 129 - F10-O30 invalid final UTF-8 and unsupported editing controls retain F08 whole-output withholding
+  ---
+  duration_ms: 611.6638
+  type: 'test'
+  ...
+1..129
+# tests 129
+# suites 0
+# pass 129
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 15542.9257

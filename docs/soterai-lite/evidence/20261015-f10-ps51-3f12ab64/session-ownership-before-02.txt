@@ -1,0 +1,331 @@
+﻿TAP version 13
+# Subtest: F10-O01 READY ownership admission is awaited before start and value-free snapshots report completed lifecycle
+not ok 1 - F10-O01 READY ownership admission is awaited before start and value-free snapshots report completed lifecycle
+  ---
+  duration_ms: 109.1162
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellSessionOwnership.test.ts:2:5694'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+    +   admissions: 0,
+    +   settled: true,
+    +   starts: 1,
+    +   state: undefined
+    -   admissions: 1,
+    -   settled: false,
+    -   starts: 0,
+    -   state: 'READY'
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    starts: 0
+    admissions: 1
+    settled: false
+    state: 'READY'
+  actual:
+    starts: 1
+    admissions: 0
+    settled: true
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellSessionOwnership.test.ts:88:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F10-O02-false unsuccessful durable admission closes a no-child worker without starting or releasing output
+not ok 2 - F10-O02-false unsuccessful durable admission closes a no-child worker without starting or releasing output
+  ---
+  duration_ms: 50.4693
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellSessionOwnership.test.ts:2:6832'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'COMPLETE'
+    - 'WITHHELD'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'WITHHELD'
+  actual: 'COMPLETE'
+  operator: 'strictEqual'
+  stack: |-
+    withheld (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellSessionOwnership.test.ts:35:56)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellSessionOwnership.test.ts:100:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-O02-reject unsuccessful durable admission closes a no-child worker without starting or releasing output
+not ok 3 - F10-O02-reject unsuccessful durable admission closes a no-child worker without starting or releasing output
+  ---
+  duration_ms: 48.0233
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellSessionOwnership.test.ts:2:6832'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'COMPLETE'
+    - 'WITHHELD'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'WITHHELD'
+  actual: 'COMPLETE'
+  operator: 'strictEqual'
+  stack: |-
+    withheld (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellSessionOwnership.test.ts:35:56)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellSessionOwnership.test.ts:100:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-O02-truthy unsuccessful durable admission closes a no-child worker without starting or releasing output
+not ok 4 - F10-O02-truthy unsuccessful durable admission closes a no-child worker without starting or releasing output
+  ---
+  duration_ms: 49.7881
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellSessionOwnership.test.ts:2:6832'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'COMPLETE'
+    - 'WITHHELD'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'WITHHELD'
+  actual: 'COMPLETE'
+  operator: 'strictEqual'
+  stack: |-
+    withheld (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellSessionOwnership.test.ts:35:56)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellSessionOwnership.test.ts:100:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-O03-cancel pending admission rechecks sticky session availability before any worker start
+not ok 5 - F10-O03-cancel pending admission rechecks sticky session availability before any worker start
+  ---
+  duration_ms: 52.046
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellSessionOwnership.test.ts:2:7829'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'COMPLETE'
+    - 'WITHHELD'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'WITHHELD'
+  actual: 'COMPLETE'
+  operator: 'strictEqual'
+  stack: |-
+    withheld (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellSessionOwnership.test.ts:35:56)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellSessionOwnership.test.ts:114:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-O03-dispose pending admission rechecks sticky session availability before any worker start
+not ok 6 - F10-O03-dispose pending admission rechecks sticky session availability before any worker start
+  ---
+  duration_ms: 61.0365
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellSessionOwnership.test.ts:2:7829'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'COMPLETE'
+    - 'WITHHELD'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'WITHHELD'
+  actual: 'COMPLETE'
+  operator: 'strictEqual'
+  stack: |-
+    withheld (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellSessionOwnership.test.ts:35:56)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellSessionOwnership.test.ts:114:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-O03-withdraw pending admission rechecks sticky session availability before any worker start
+not ok 7 - F10-O03-withdraw pending admission rechecks sticky session availability before any worker start
+  ---
+  duration_ms: 64.4198
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellSessionOwnership.test.ts:2:7829'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'COMPLETE'
+    - 'WITHHELD'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'WITHHELD'
+  actual: 'COMPLETE'
+  operator: 'strictEqual'
+  stack: |-
+    withheld (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellSessionOwnership.test.ts:35:56)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellSessionOwnership.test.ts:114:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-O04 current root identity is rechecked after durable ownership await
+not ok 8 - F10-O04 current root identity is rechecked after durable ownership await
+  ---
+  duration_ms: 55.1484
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellSessionOwnership.test.ts:2:8761'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'COMPLETE'
+    - 'WITHHELD'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'WITHHELD'
+  actual: 'COMPLETE'
+  operator: 'strictEqual'
+  stack: |-
+    withheld (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellSessionOwnership.test.ts:35:56)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellSessionOwnership.test.ts:126:25)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-O05 policy binding is rechecked after durable ownership await
+not ok 9 - F10-O05 policy binding is rechecked after durable ownership await
+  ---
+  duration_ms: 46.2745
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellSessionOwnership.test.ts:2:9434'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'COMPLETE'
+    - 'WITHHELD'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'WITHHELD'
+  actual: 'COMPLETE'
+  operator: 'strictEqual'
+  stack: |-
+    withheld (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellSessionOwnership.test.ts:35:56)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellSessionOwnership.test.ts:135:25)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-O06 a running owned worker stays BUSY until actual completion and reports the same final id
+not ok 10 - F10-O06 a running owned worker stays BUSY until actual completion and reports the same final id
+  ---
+  duration_ms: 46.1296
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellSessionOwnership.test.ts:2:10154'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+    +   changed: [],
+    -   changed: [
+    -     'RUNNING'
+    -   ],
+        settled: false,
+        state: 'BUSY'
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    settled: false
+    state: 'BUSY'
+    changed:
+      0: 'RUNNING'
+  actual:
+    settled: false
+    state: 'BUSY'
+    changed:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellSessionOwnership.test.ts:144:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-O07 no-child start failure reports BLOCKED completion instead of fabricated RUNNING or EXITED
+not ok 11 - F10-O07 no-child start failure reports BLOCKED completion instead of fabricated RUNNING or EXITED
+  ---
+  duration_ms: 254.4359
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellSessionOwnership.test.ts:2:11059'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      test("F10-O07 no-child start failure reports BLOCKED completion instead of fabricated RUNNING or EXITED", async () => {
+      const f = fixture({ admitWorker: async () => true, workerChanged: metadata }, "blocked");
+      withheld(await bounded(f.session.execute("Get-Date"), "Blocked no-child completion was lost."));
+      assert.equal(f.starts, 1); assert.ok(f.changed.length >= 1); assert.equal(f.changed.at(-1)?.state, "BLOCKED");
+      assert.ok(f.changed.every(value => value.state === "BLOCKED")); assert.ok(f.changed.every(value => value.pid === undefined));
+      })
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellSessionOwnership.test.ts:152:39)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-O08 optional trusted hooks preserve existing internal finite-worker compatibility
+ok 12 - F10-O08 optional trusted hooks preserve existing internal finite-worker compatibility
+  ---
+  duration_ms: 35.7485
+  type: 'test'
+  ...
+# Subtest: F10-O09 directory swapped to outside junction before protocol withholds every request byte without outside enumeration
+ok 13 - F10-O09 directory swapped to outside junction before protocol withholds every request byte without outside enumeration
+  ---
+  duration_ms: 48.9031
+  type: 'test'
+  ...
+# Subtest: F10-O10 stable public directory receives exact finite list protocol and completed public output
+ok 14 - F10-O10 stable public directory receives exact finite list protocol and completed public output
+  ---
+  duration_ms: 76.2753
+  type: 'test'
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 3
+# fail 11
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1743.0901

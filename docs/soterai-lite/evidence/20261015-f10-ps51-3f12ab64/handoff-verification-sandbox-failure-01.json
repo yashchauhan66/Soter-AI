@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "command": "node docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/verify-handoff-01.cjs",
+  "initialExitCode": 1,
+  "exactError": "Error: spawnSync git EPERM",
+  "errno": -4048,
+  "code": "EPERM",
+  "syscall": "spawnSync git",
+  "spawnargs": ["rev-parse", "HEAD"],
+  "disposition": "Sandbox blocked a read-only child Git process. The required environment escalation reran the same verifier unchanged; exit 0, 56 checks PASS, output handoff-verification-01.json. No product tests or source changes implied.",
+  "checkpointGitNote": "create-handoff-checkpoint-01.cjs used nonthrowing spawnSync; its nested Git captures have null status after sandbox EPERM and must not be read as successful Git checks. Direct PowerShell Git reads separately observed branch/HEAD/no staging; final escalated verifier explicitly proved HEAD unchanged and no staged files. All source/raw-output/artifact/catalog/master hashes in the checkpoint were actual reads and matched in final verification."
+}

@@ -1,0 +1,616 @@
+{
+  "schemaVersion": 1,
+  "capturedAt": "2026-10-16T13:12:59.217Z",
+  "purpose": "User-requested new-chat handoff; F10 remains incomplete/uncommitted",
+  "git": {
+    "branch": {
+      "args": [
+        "branch",
+        "--show-current"
+      ],
+      "exitCode": null
+    },
+    "head": {
+      "args": [
+        "rev-parse",
+        "HEAD"
+      ],
+      "exitCode": null
+    },
+    "trackedChanges": {
+      "args": [
+        "diff",
+        "--name-only"
+      ],
+      "exitCode": null
+    },
+    "staged": {
+      "args": [
+        "diff",
+        "--cached",
+        "--name-only"
+      ],
+      "exitCode": null
+    }
+  },
+  "sourceFiles": [
+    {
+      "path": "packages/core/src/PowerShell51Command.ts",
+      "bytes": 8152,
+      "sha256": "ca54087a3f1720f72eb8b6afac48b6b683f29ef45b4ade5c532f3520c9588e80"
+    },
+    {
+      "path": "packages/core/src/index.ts",
+      "bytes": 843,
+      "sha256": "266a022f7b2b84d4d1267f8178a1035ae16434577de828428cb36f271009a541"
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/VaultManager.ts",
+      "bytes": 38066,
+      "sha256": "88670cc90ee3d2278d99ac3d65f43c7519cbb1cc68aab9bd0c45f81b0313388d"
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/VaultStorage.ts",
+      "bytes": 10311,
+      "sha256": "116d88e3016527b8e2c88fa3383b4a0688ba1dfe22c5c9c3d1ec88deeed870fb"
+    },
+    {
+      "path": "packages/vscode-extension/src/terminal/PowerShell51Worker.ts",
+      "bytes": 14462,
+      "sha256": "df165df6c0d7030a0df5a6e41785fcdc75518294186b72255fdbc884264fd20e"
+    },
+    {
+      "path": "packages/vscode-extension/src/terminal/ManagedOutputBinding.ts",
+      "bytes": 3033,
+      "sha256": "4b304b45e6a86c6ade886bc36805287238c3b255631afa5208d84fce41169d80"
+    },
+    {
+      "path": "packages/vscode-extension/src/terminal/ManagedOutputFilter.ts",
+      "bytes": 2981,
+      "sha256": "fd43471bab3a3b69a2445594bd1fc5b22f6a40f5ce02d13134ffdd1683e32b2d"
+    },
+    {
+      "path": "packages/vscode-extension/src/terminal/CheckedPowerShellSession.ts",
+      "bytes": 10294,
+      "sha256": "a9dd7f0beba6cb009492b91cc3a03a4d153fad4411faf170060af553abf3901c"
+    },
+    {
+      "path": "packages/vscode-extension/src/terminal/CheckedPowerShellProfile.ts",
+      "bytes": 7837,
+      "sha256": "52c416547abc6ca5e4fff930875cfbeae8ad22bbc1a9939be1d1baeae715ecb8"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/powerShell51Command.test.ts",
+      "bytes": 18586,
+      "sha256": "9a96f77a731b104bec3696c487be1300a2c1f0f5d29676c431d2d31a0478aeb7"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/powerShell51Worker.test.ts",
+      "bytes": 21920,
+      "sha256": "353acfc4146d87141dd28b6697816115ee50aadce3ce19b1f31f2980403e1913"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/managedOutputFilter.test.ts",
+      "bytes": 22901,
+      "sha256": "bf5a6c8d418923e443f04004f940ada86b654b10c7b3a275ab3a077116f1240a"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/managedOutputFilterReview.test.ts",
+      "bytes": 6902,
+      "sha256": "086d357d1ccc018e65c34de801bf27b6b6c4058fc8345bd56dbfb3ef73e4704b"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/checkedPowerShellSession.test.ts",
+      "bytes": 13045,
+      "sha256": "a4bca8b2ecf2ca6852bd6af02a69d9638e57f3b1ee74e1dd5bede07530e4adac"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/checkedPowerShellSessionReview.test.ts",
+      "bytes": 4541,
+      "sha256": "b931044049e2f950a5815eeaf9e2f1aebbf0b0f55c9b6e290c726fe02ffcb4bf"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/checkedPowerShellProfile.test.ts",
+      "bytes": 23915,
+      "sha256": "ac83c77a2f351c6d9d0ae84ac84f783f3e618ce46c385b1a35cdc5a954b10d19"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/powerShell51Terminal.test.ts",
+      "bytes": 13147,
+      "sha256": "663cec9db04c50471ead62d7e6549665083d0ab517efb0cdea89d1bca4eba8cc"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/checkedPowerShellCommands.test.ts",
+      "bytes": 27299,
+      "sha256": "3922d24d4b49c950636aacc83489ef6b6117535a45075afe905105f51fe869cf"
+    }
+  ],
+  "evidenceFiles": [
+    {
+      "path": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/agent-service-failure-01.txt",
+      "bytes": 481,
+      "sha256": "971a44631571fe3410102390d3b499fc68add280964bd1842d60e2864ee885dc"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/agent-service-failure-02.txt",
+      "bytes": 730,
+      "sha256": "53a1e7cadb15a498724b95ada459f757c93140d373c4469acb92ffd57079ebc2"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/create-handoff-checkpoint-01.cjs",
+      "bytes": 4042,
+      "sha256": "667c47965b3839abdf7ccf6708501c10fc7110a0609a9c485ed0dd0cc256efbf"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/design-01.md",
+      "bytes": 12199,
+      "sha256": "82f918488881a9d43b245e8b0a4e22b99ab70c908b5acb88f569c8b1630d6b67"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/design-02.md",
+      "bytes": 2799,
+      "sha256": "fe57221b463dcb396617b53b39239e3cd89aca848266a7aa0d0a1fcbd4016fd3"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/design-03.md",
+      "bytes": 3317,
+      "sha256": "2e91589232672316cf573ddb6ef494e3477e9dc06abdd114434f4f0c58155c3d"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/design-04.md",
+      "bytes": 4775,
+      "sha256": "b2c1a5dbccfc9edd434ac57a83791e46609130a38dc409a6a3ecc06c3544678a"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/design-05.md",
+      "bytes": 4137,
+      "sha256": "816d12517aa0ce15918c08071638b501be1118a801b8d60786283f9ec85574d8"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/design-advice-01.md",
+      "bytes": 5524,
+      "sha256": "7665b5f2611bd18e7af56526e71451df1420f56447f76c7f20075951a3452b76"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/design-review-01.md",
+      "bytes": 3161,
+      "sha256": "e629cc616a82076bdc7b826bf125b4e39374a6383242c404d3320800ee52d64b"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/dispatch-after-01.txt",
+      "bytes": 5145,
+      "sha256": "8ffc4e0148d0684beebc32ca1f3ef92b600c8f6a4553fa743cf4b722c737f5b5"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/dispatch-after-01.txt.result.json",
+      "bytes": 633,
+      "sha256": "7a1d55bd69d2a9835d4aaf509b5fec3b6dd93c44462d08e39a4814b62478e31a"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/dispatch-before-01.txt",
+      "bytes": 31332,
+      "sha256": "5e208b20e1ee12ca3b79d9e5e3ea75ac6a50c66d3d003866bd0210323b3f1978"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/dispatch-before-01.txt.result.json",
+      "bytes": 634,
+      "sha256": "5a45346283172068fabe158702efd221b19ebdb3306218dc7e87997fcbde1673"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/dispatch-review-before-01.txt",
+      "bytes": 1412,
+      "sha256": "fdb494491a9977bf8eb2f712c7d3da0a88f63c072060b33424e5760531cf2fc2"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/dispatch-review-before-01.txt.result.json",
+      "bytes": 647,
+      "sha256": "125fdc64c842b25e2fdaf212ba7c77d18af478a3d02bb8e7490cc84ea203b84a"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/filter-dispatch-after-01.txt",
+      "bytes": 16830,
+      "sha256": "f3ab57ea43cec98ed20f557d0169ca19f33ad30bef42d0f8a60e07f6fb28a9b8"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/filter-dispatch-after-01.txt.result.json",
+      "bytes": 734,
+      "sha256": "64aaba569d964a6602cb17cba593e348480deb7672cd80c83e2d90e5f80a1046"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/filter-dispatch-review-after-01.txt",
+      "bytes": 18963,
+      "sha256": "664f73b770b5c677be9c31b097597f1d3e2dcd4937b30893af3fe82c410d8166"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/filter-dispatch-review-after-01.txt.result.json",
+      "bytes": 946,
+      "sha256": "e2ec450ea2cc1fc600ee7830d841a5a0be1d52a4976b47f38e0ae41112e17d39"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/filter-profile-before-01.txt",
+      "bytes": 94370,
+      "sha256": "416852b81a97bf5fe48c51be5386aa0bf605fdd49b4dbf1e9114cd534cf80e75"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/filter-profile-before-01.txt.result.json",
+      "bytes": 734,
+      "sha256": "e08c0c8f67a333c57f84a605b231f27f097611d603d6058b083165ff5ea69087"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/filter-review-before-01.txt",
+      "bytes": 7504,
+      "sha256": "d677dd439d9420f3338d2a13dac2b6881ea45dcc7ccdb7299517d4292f00b927"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/filter-review-before-01.txt.result.json",
+      "bytes": 640,
+      "sha256": "3ce8e0f55c97fe2a3bf755e74d9034d33d1c57b2bace58d2c89ec9bd81718ae5"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/fixture-correction-01.md",
+      "bytes": 530,
+      "sha256": "9cbd1104acabf8c9464b33372514a3aca23aba378dbb054d5b1a5fc7a23de96b"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/fixture-retention-02.md",
+      "bytes": 614,
+      "sha256": "78981932a25b10c7b7cb114cb82ba343bfb00482b0e9236416c2d49f66ff5f9e"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/focused-after-01.txt",
+      "bytes": 16949,
+      "sha256": "ac4ecedd498f4850a5cb45e45c79246e1bbbfd80aa5fffa5b5d3d121c69c1395"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/focused-after-01.txt.result.json",
+      "bytes": 720,
+      "sha256": "ed1fa7cc87c465f5199b0a7e9a9342e7ad817f80d993f70157d37dc4ae7df4e5"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/focused-after-02.txt",
+      "bytes": 38360,
+      "sha256": "2475157fcded3e9834857f499c7324a62593ec309092843b18dc4fb4ef2f1de7"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/focused-after-02.txt.result.json",
+      "bytes": 1012,
+      "sha256": "7b42d2a34269a51a8c7a47084d8e93a99cf429e22781276e7fd8b4eba6baa8a7"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/focused-before-01.txt",
+      "bytes": 111580,
+      "sha256": "75c47043e3c32a3d878ff25e713e20756d18f280f943a087483c64184aef4e12"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/focused-before-01.txt.result.json",
+      "bytes": 721,
+      "sha256": "843c20ca0bf4f135ed8e840b1180fac5e3964f1eb203c62608140ed2a20611ec"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/inventory-01.md",
+      "bytes": 17454,
+      "sha256": "6f2ec9bd198b18d37219309d1b2828be2d947df10af6302466f73295f860ce77"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/run-baseline-01.ps1",
+      "bytes": 768,
+      "sha256": "f2531f1cac63f7fc2a0036b9329d44db8342126bfb2f96de9905c091daef8de5"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/run-f10-check.ps1",
+      "bytes": 1131,
+      "sha256": "d7b2ab583bb7bcf58b819163bb0d65aaaeff0ab5e4c2a6f68dc03c51e896d891"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/run-focused-01.ps1",
+      "bytes": 766,
+      "sha256": "bd463e6107082b9a988efa9fadc17204fe438f56773eecb5f5182bbd9d9bf757"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/source-review-evidence-adversarial-01.md",
+      "bytes": 5568,
+      "sha256": "2c9dab50d0c989b8121b36b170d1c00f01c12fac7cea02b000b6febf9ccca311"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/source-review-evidence-adversarial-02.md",
+      "bytes": 6508,
+      "sha256": "76dafe10f503905192dfa4571c3a11c94c9f04dd19e4740fbda5e15beb21c13c"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/typecheck-01.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/typecheck-01.txt.result.json",
+      "bytes": 572,
+      "sha256": "37fde3f928ae78af096f6b105d19324a35b8f9d711165fec6d8abf42d63fdf29"
+    }
+  ],
+  "runs": [
+    {
+      "receipt": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/dispatch-after-01.txt.result.json",
+      "command": "node",
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/checkedPowerShellSession.test.ts"
+      ],
+      "observedAt": "2026-10-16T03:23:41.0405289Z",
+      "exitCode": 1,
+      "rawSha256": "8ffc4e0148d0684beebc32ca1f3ef92b600c8f6a4553fa743cf4b722c737f5b5",
+      "receiptHashMatchesRaw": true,
+      "totals": {
+        "tests": 19,
+        "suites": 0,
+        "pass": 18,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "receipt": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/dispatch-before-01.txt.result.json",
+      "command": "node",
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/checkedPowerShellSession.test.ts"
+      ],
+      "observedAt": "2026-10-16T03:13:42.5868515Z",
+      "exitCode": 1,
+      "rawSha256": "5e208b20e1ee12ca3b79d9e5e3ea75ac6a50c66d3d003866bd0210323b3f1978",
+      "receiptHashMatchesRaw": true,
+      "totals": {
+        "tests": 19,
+        "suites": 0,
+        "pass": 0,
+        "fail": 19,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "receipt": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/dispatch-review-before-01.txt.result.json",
+      "command": "node",
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/checkedPowerShellSessionReview.test.ts"
+      ],
+      "observedAt": "2026-10-16T07:34:34.1691221Z",
+      "exitCode": 1,
+      "rawSha256": "fdb494491a9977bf8eb2f712c7d3da0a88f63c072060b33424e5760531cf2fc2",
+      "receiptHashMatchesRaw": true,
+      "totals": {
+        "tests": 2,
+        "suites": 0,
+        "pass": 1,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "receipt": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/filter-dispatch-after-01.txt.result.json",
+      "command": "node",
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/managedOutputFilter.test.ts",
+        "packages/vscode-extension/src/__tests__/checkedPowerShellSession.test.ts"
+      ],
+      "observedAt": "2026-10-16T04:01:28.1166737Z",
+      "exitCode": 1,
+      "rawSha256": "f3ab57ea43cec98ed20f557d0169ca19f33ad30bef42d0f8a60e07f6fb28a9b8",
+      "receiptHashMatchesRaw": true,
+      "totals": {
+        "tests": 64,
+        "suites": 0,
+        "pass": 63,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "receipt": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/filter-dispatch-review-after-01.txt.result.json",
+      "command": "node",
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/managedOutputFilter.test.ts",
+        "packages/vscode-extension/src/__tests__/managedOutputFilterReview.test.ts",
+        "packages/vscode-extension/src/__tests__/checkedPowerShellSession.test.ts",
+        "packages/vscode-extension/src/__tests__/checkedPowerShellSessionReview.test.ts"
+      ],
+      "observedAt": "2026-10-16T07:39:01.6170780Z",
+      "exitCode": 0,
+      "rawSha256": "664f73b770b5c677be9c31b097597f1d3e2dcd4937b30893af3fe82c410d8166",
+      "receiptHashMatchesRaw": true,
+      "totals": {
+        "tests": 75,
+        "suites": 0,
+        "pass": 75,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "receipt": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/filter-profile-before-01.txt.result.json",
+      "command": "node",
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/managedOutputFilter.test.ts",
+        "packages/vscode-extension/src/__tests__/checkedPowerShellProfile.test.ts"
+      ],
+      "observedAt": "2026-10-16T03:33:26.8716040Z",
+      "exitCode": 1,
+      "rawSha256": "416852b81a97bf5fe48c51be5386aa0bf605fdd49b4dbf1e9114cd534cf80e75",
+      "receiptHashMatchesRaw": true,
+      "totals": {
+        "tests": 65,
+        "suites": 0,
+        "pass": 0,
+        "fail": 65,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "receipt": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/filter-review-before-01.txt.result.json",
+      "command": "node",
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/managedOutputFilterReview.test.ts"
+      ],
+      "observedAt": "2026-10-16T07:37:41.5379130Z",
+      "exitCode": 1,
+      "rawSha256": "d677dd439d9420f3338d2a13dac2b6881ea45dcc7ccdb7299517d4292f00b927",
+      "receiptHashMatchesRaw": true,
+      "totals": {
+        "tests": 9,
+        "suites": 0,
+        "pass": 1,
+        "fail": 8,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "receipt": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/focused-after-01.txt.result.json",
+      "command": "node",
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/powerShell51Command.test.ts",
+        "packages/vscode-extension/src/__tests__/powerShell51Worker.test.ts"
+      ],
+      "observedAt": "2026-10-16T03:07:15.6681869Z",
+      "exitCode": 0,
+      "rawSha256": "ac4ecedd498f4850a5cb45e45c79246e1bbbfd80aa5fffa5b5d3d121c69c1395",
+      "receiptHashMatchesRaw": true,
+      "totals": {
+        "tests": 68,
+        "suites": 0,
+        "pass": 68,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "receipt": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/focused-after-02.txt.result.json",
+      "command": "node",
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/powerShell51Command.test.ts",
+        "packages/vscode-extension/src/__tests__/powerShell51Worker.test.ts",
+        "packages/vscode-extension/src/__tests__/managedOutputFilter.test.ts",
+        "packages/vscode-extension/src/__tests__/checkedPowerShellSession.test.ts",
+        "packages/vscode-extension/src/__tests__/checkedPowerShellProfile.test.ts"
+      ],
+      "observedAt": "2026-10-16T04:07:06.5928907Z",
+      "exitCode": 0,
+      "rawSha256": "2475157fcded3e9834857f499c7324a62593ec309092843b18dc4fb4ef2f1de7",
+      "receiptHashMatchesRaw": true,
+      "totals": {
+        "tests": 153,
+        "suites": 0,
+        "pass": 153,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "receipt": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/focused-before-01.txt.result.json",
+      "command": "node",
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/powerShell51Command.test.ts",
+        "packages/vscode-extension/src/__tests__/powerShell51Worker.test.ts"
+      ],
+      "observedAt": "2026-10-15T13:13:31.5472668Z",
+      "exitCode": 1,
+      "rawSha256": "75c47043e3c32a3d878ff25e713e20756d18f280f943a087483c64184aef4e12",
+      "receiptHashMatchesRaw": true,
+      "totals": {
+        "tests": 68,
+        "suites": 0,
+        "pass": 0,
+        "fail": 68,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "receipt": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/typecheck-01.txt.result.json",
+      "command": "node",
+      "arguments": [
+        "node_modules/typescript/bin/tsc",
+        "-p",
+        "packages/vscode-extension/tsconfig.json",
+        "--noEmit"
+      ],
+      "observedAt": "2026-10-16T04:10:43.7429616Z",
+      "exitCode": 0,
+      "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "receiptHashMatchesRaw": true,
+      "totals": {}
+    }
+  ],
+  "lastAcceptedArtifact": {
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-f09-20261015-attempt01.vsix",
+    "bytes": 1377965,
+    "sha256": "04157b046e5c01e111e5ef5830a4998c06085a85c14566af9bce5c9704c20bba"
+  },
+  "catalog": {
+    "path": "docs/soterai-lite/LITE-CATALOG.json",
+    "bytes": 160265,
+    "sha256": "1ce46192e9f315b5f2142c9f61542f1d513143dc2e19d4def6d95cea38c73ed4"
+  },
+  "masterCopy": {
+    "path": "docs/soterai-lite/MASTER-PROMPT-20261016.txt",
+    "bytes": 15864,
+    "sha256": "2ea0c90b1fe3bdd591e5ae24470dcd8804abfff7a75741ec1f5a1aae7e4679ae"
+  },
+  "notExecuted": [
+    "F10 full-suite on final source",
+    "F10 final typecheck after latest review fixes/new fixtures",
+    "F10 VSIX/native/affected hosts",
+    "PTY22 baseline",
+    "registration fixture validation/baseline",
+    "GIT metadata extension"
+  ],
+  "noActiveDelegatesAtHandoff": true,
+  "notes": [
+    "Tracked ML/Gradle/results changes are unrelated; preserve and exclude them from F10 commits.",
+    "The latest targeted75 PASS is a subset, not an aggregate current164-test suite PASS."
+  ]
+}

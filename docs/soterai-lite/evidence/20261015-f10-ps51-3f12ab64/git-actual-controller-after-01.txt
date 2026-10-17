@@ -1,0 +1,190 @@
+﻿TAP version 13
+# Subtest: F10-GA01 actual pinned Git version is the reviewed runtime
+ok 1 - F10-GA01 actual pinned Git version is the reviewed runtime
+  ---
+  duration_ms: 551.4492
+  type: 'test'
+  ...
+# Subtest: F10-GA02 actual checked status returns staged names and excludes unstaged/untracked names and bodies
+not ok 2 - F10-GA02 actual checked status returns staged names and excludes unstaged/untracked names and bodies
+  ---
+  duration_ms: 1428.7694
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedGitMetadataActual.test.ts:2:6102'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    1 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 1
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedGitMetadataActual.test.ts:62:59)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-GA03 actual checked diff-stat returns staged counts without source lines
+not ok 3 - F10-GA03 actual checked diff-stat returns staged counts without source lines
+  ---
+  duration_ms: 2458.1771
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedGitMetadataActual.test.ts:2:6899'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'WITHHELD'
+    - 'COMPLETE'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'COMPLETE'
+  actual: 'WITHHELD'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedGitMetadataActual.test.ts:69:12)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-GA04 actual registered filename metadata is masked by completed F08 output
+not ok 4 - F10-GA04 actual registered filename metadata is masked by completed F08 output
+  ---
+  duration_ms: 1952.1496
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedGitMetadataActual.test.ts:2:7556'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'WITHHELD'
+    - 'COMPLETE'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'COMPLETE'
+  actual: 'WITHHELD'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedGitMetadataActual.test.ts:76:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-GA05 exact cached status and statistics never invoke configured synthetic callbacks
+not ok 5 - F10-GA05 exact cached status and statistics never invoke configured synthetic callbacks
+  ---
+  duration_ms: 2176.3964
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedGitMetadataActual.test.ts:2:8209'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'WITHHELD'
+    - 'COMPLETE'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'COMPLETE'
+  actual: 'WITHHELD'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedGitMetadataActual.test.ts:89:80)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F10-GA06 unknown missing staged object withholds errors without lazy fetch or credential callback
+ok 6 - F10-GA06 unknown missing staged object withholds errors without lazy fetch or credential callback
+  ---
+  duration_ms: 1775.9002
+  type: 'test'
+  ...
+# Subtest: F10-GA07 exact Git operation cancellation withholds and waits for natural worker close
+ok 7 - F10-GA07 exact Git operation cancellation withholds and waits for natural worker close
+  ---
+  duration_ms: 1854.6085
+  type: 'test'
+  ...
+# Subtest: F10-GA08 flag withdrawal after actual spawn is sticky and releases no metadata
+ok 8 - F10-GA08 flag withdrawal after actual spawn is sticky and releases no metadata
+  ---
+  duration_ms: 1881.7578
+  type: 'test'
+  ...
+# Subtest: F10-GR01 aliased loose-object namespace refuses before target enumeration or Git spawn
+ok 9 - F10-GR01 aliased loose-object namespace refuses before target enumeration or Git spawn
+  ---
+  duration_ms: 77.9508
+  type: 'test'
+  ...
+# Subtest: F10-GR02 new aliased loose-object namespace revokes an already prepared descriptor
+ok 10 - F10-GR02 new aliased loose-object namespace revokes an already prepared descriptor
+  ---
+  duration_ms: 53.1901
+  type: 'test'
+  ...
+# Subtest: F10-GR03 ordinary empty loose-object namespace is admitted as the paired control
+ok 11 - F10-GR03 ordinary empty loose-object namespace is admitted as the paired control
+  ---
+  duration_ms: 45.6081
+  type: 'test'
+  ...
+# Subtest: F10-GR04 unknown object namespace entry refuses without interpreting its filename as an object
+ok 12 - F10-GR04 unknown object namespace entry refuses without interpreting its filename as an object
+  ---
+  duration_ms: 14.3886
+  type: 'test'
+  ...
+# Subtest: F10-CR01 valid empty ownership admits an idle tab and shutdown durably preserves a bounded array
+ok 13 - F10-CR01 valid empty ownership admits an idle tab and shutdown durably preserves a bounded array
+  ---
+  duration_ms: 31.7632
+  type: 'test'
+  ...
+# Subtest: F10-CR02 sparse all holes ownership withholds before tab creation and preserves the retained array
+ok 14 - F10-CR02 sparse all holes ownership withholds before tab creation and preserves the retained array
+  ---
+  duration_ms: 8.2813
+  type: 'test'
+  ...
+# Subtest: F10-CR02 sparse valid then hole ownership withholds before tab creation and preserves the retained array
+ok 15 - F10-CR02 sparse valid then hole ownership withholds before tab creation and preserves the retained array
+  ---
+  duration_ms: 21.3119
+  type: 'test'
+  ...
+# Subtest: F10-CR02 sparse hole then valid ownership withholds before tab creation and preserves the retained array
+ok 16 - F10-CR02 sparse hole then valid ownership withholds before tab creation and preserves the retained array
+  ---
+  duration_ms: 8.4144
+  type: 'test'
+  ...
+# Subtest: F10-CR03 rejected ownership persistence prevents a later terminal admission
+ok 17 - F10-CR03 rejected ownership persistence prevents a later terminal admission
+  ---
+  duration_ms: 24.8225
+  type: 'test'
+  ...
+# Subtest: F10-CR04 stalled ownership persistence cannot leave controller shutdown pending indefinitely
+ok 18 - F10-CR04 stalled ownership persistence cannot leave controller shutdown pending indefinitely
+  ---
+  duration_ms: 512.5262
+  type: 'test'
+  ...
+1..18
+# tests 18
+# suites 0
+# pass 14
+# fail 4
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 16817.0152

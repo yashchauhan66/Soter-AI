@@ -1,0 +1,58 @@
+﻿TAP version 13
+# Subtest: F10-RL01 ordinary workspace root directory metadata dispatches without reading a probe or child contents
+not ok 1 - F10-RL01 ordinary workspace root directory metadata dispatches without reading a probe or child contents
+  ---
+  duration_ms: 37.1791
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellRootListing.test.ts:2:4027'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'WITHHELD'
+    - 'COMPLETE'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'COMPLETE'
+  actual: 'WITHHELD'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedPowerShellRootListing.test.ts:56:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F10-RL02 ordinary child-directory metadata retains its existing positive route
+ok 2 - F10-RL02 ordinary child-directory metadata retains its existing positive route
+  ---
+  duration_ms: 89.7813
+  type: 'test'
+  ...
+# Subtest: F10-RL03 whole-project glob deny still withholds root metadata before any worker
+ok 3 - F10-RL03 whole-project glob deny still withholds root metadata before any worker
+  ---
+  duration_ms: 16.1632
+  type: 'test'
+  ...
+# Subtest: F10-RL04 whole-project folder-dot deny still withholds root metadata before any worker
+ok 4 - F10-RL04 whole-project folder-dot deny still withholds root metadata before any worker
+  ---
+  duration_ms: 18.5143
+  type: 'test'
+  ...
+# Subtest: F10-RL05 corrupt stored policy withholds root metadata before any worker
+ok 5 - F10-RL05 corrupt stored policy withholds root metadata before any worker
+  ---
+  duration_ms: 8.5137
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 4
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 946.845

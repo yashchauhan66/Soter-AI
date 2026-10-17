@@ -8,12 +8,14 @@ import { registerLedgerCommands } from "./ledger-commands";
 import { registerOutputCommands } from "./output-commands";
 import { registerCanaryCommands } from "./canary-commands";
 import { registerVaultRuntimeCommands } from "../vault-runtime/commands";
+import { registerCheckedPowerShell } from "../terminal/commands";
+import type { ManagedReaderBridge } from "../terminal/CheckedPowerShellSession";
 
 // Re-export readContextApproval so extension.ts can still import from this module.
 export { readContextApproval } from "./shared";
 
 /** Register every AI Context Firewall command. */
-export function registerFirewallCommands(context: vscode.ExtensionContext, refreshViews: () => void): void {
+export function registerFirewallCommands(context: vscode.ExtensionContext, refreshViews: () => void, reader?: ManagedReaderBridge): void {
     const vault = new VaultManager(context);
     const canary = new CanaryManager(context);
 
@@ -36,4 +38,5 @@ export function registerFirewallCommands(context: vscode.ExtensionContext, refre
     registerOutputCommands(deps);
     registerCanaryCommands(deps);
     registerVaultRuntimeCommands(deps);
+    registerCheckedPowerShell(context, vault, reader);
 }

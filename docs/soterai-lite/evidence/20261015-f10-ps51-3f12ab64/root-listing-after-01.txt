@@ -1,0 +1,274 @@
+﻿TAP version 13
+# Subtest: F10-PR01 stable private binding publishes completed public output after single-use filter disposal
+ok 1 - F10-PR01 stable private binding publishes completed public output after single-use filter disposal
+  ---
+  duration_ms: 96.1005
+  type: 'test'
+  ...
+# Subtest: F10-PR02 revoked private binding after filter finish but before worker completion withholds publication
+ok 2 - F10-PR02 revoked private binding after filter finish but before worker completion withholds publication
+  ---
+  duration_ms: 48.4853
+  type: 'test'
+  ...
+# Subtest: F10-RL01 ordinary workspace root directory metadata dispatches without reading a probe or child contents
+ok 3 - F10-RL01 ordinary workspace root directory metadata dispatches without reading a probe or child contents
+  ---
+  duration_ms: 129.0103
+  type: 'test'
+  ...
+# Subtest: F10-RL02 ordinary child-directory metadata retains its existing positive route
+ok 4 - F10-RL02 ordinary child-directory metadata retains its existing positive route
+  ---
+  duration_ms: 84.2561
+  type: 'test'
+  ...
+# Subtest: F10-RL03 whole-project glob deny still withholds root metadata before any worker
+ok 5 - F10-RL03 whole-project glob deny still withholds root metadata before any worker
+  ---
+  duration_ms: 28.9344
+  type: 'test'
+  ...
+# Subtest: F10-RL04 whole-project folder-dot deny still withholds root metadata before any worker
+ok 6 - F10-RL04 whole-project folder-dot deny still withholds root metadata before any worker
+  ---
+  duration_ms: 30.9122
+  type: 'test'
+  ...
+# Subtest: F10-RL05 corrupt stored policy withholds root metadata before any worker
+ok 7 - F10-RL05 corrupt stored policy withholds root metadata before any worker
+  ---
+  duration_ms: 9.3716
+  type: 'test'
+  ...
+# Subtest: F10-D01 unsupported whole input never reaches a reader, worker, filter or destination review
+ok 8 - F10-D01 unsupported whole input never reaches a reader, worker, filter or destination review
+  ---
+  duration_ms: 64.2076
+  type: 'test'
+  ...
+# Subtest: F10-D02 public operation uses the fixed worker with a filtered private output sink
+ok 9 - F10-D02 public operation uses the fixed worker with a filtered private output sink
+  ---
+  duration_ms: 65.8632
+  type: 'test'
+  ...
+# Subtest: F10-D03 protected file is routed through the trusted reader and never forwarded to a worker
+ok 10 - F10-D03 protected file is routed through the trusted reader and never forwarded to a worker
+  ---
+  duration_ms: 38.3843
+  type: 'test'
+  ...
+# Subtest: F10-D04 denied approval releases no result and never creates an output filter
+ok 11 - F10-D04 denied approval releases no result and never creates an output filter
+  ---
+  duration_ms: 10.7313
+  type: 'test'
+  ...
+# Subtest: F10-D05 head tail and literal search transform only approved safe text
+ok 12 - F10-D05 head tail and literal search transform only approved safe text
+  ---
+  duration_ms: 120.9686
+  type: 'test'
+  ...
+# Subtest: F10-D06 registered output is masked even if an internal reader accidentally returns a value
+ok 13 - F10-D06 registered output is masked even if an internal reader accidentally returns a value
+  ---
+  duration_ms: 36.9817
+  type: 'test'
+  ...
+# Subtest: F10-D07 env lists only minimal child-base names with masks
+ok 14 - F10-D07 env lists only minimal child-base names with masks
+  ---
+  duration_ms: 58.8316
+  type: 'test'
+  ...
+# Subtest: F10-D08 copy reviews the new destination then writes only finalized filtered safe text
+ok 15 - F10-D08 copy reviews the new destination then writes only finalized filtered safe text
+  ---
+  duration_ms: 90.1439
+  type: 'test'
+  ...
+# Subtest: F10-D09 declined destination review starts no source read and creates no destination
+ok 16 - F10-D09 declined destination review starts no source read and creates no destination
+  ---
+  duration_ms: 22.5811
+  type: 'test'
+  ...
+# Subtest: F10-D10 copy never overwrites an existing destination
+ok 17 - F10-D10 copy never overwrites an existing destination
+  ---
+  duration_ms: 36.5438
+  type: 'test'
+  ...
+# Subtest: F10-D11 copy refuses policy and sensitive destinations
+ok 18 - F10-D11 copy refuses policy and sensitive destinations
+  ---
+  duration_ms: 24.9963
+  type: 'test'
+  ...
+# Subtest: F10-D12 source change while approval is pending withholds the old view
+ok 19 - F10-D12 source change while approval is pending withholds the old view
+  ---
+  duration_ms: 11.2125
+  type: 'test'
+  ...
+# Subtest: F10-D13 cancellation during pending read is sticky after the reader resolves
+ok 20 - F10-D13 cancellation during pending read is sticky after the reader resolves
+  ---
+  duration_ms: 8.7093
+  type: 'test'
+  ...
+# Subtest: F10-D14 feature withdrawal during output acquisition withholds result and copy
+ok 21 - F10-D14 feature withdrawal during output acquisition withholds result and copy
+  ---
+  duration_ms: 23.4161
+  type: 'test'
+  ...
+# Subtest: F10-D15 one session refuses a second pending command without extra approvals
+ok 22 - F10-D15 one session refuses a second pending command without extra approvals
+  ---
+  duration_ms: 32.209
+  type: 'test'
+  ...
+# Subtest: F10-D16 closed session stays unavailable and exposes no previous arguments or result
+ok 23 - F10-D16 closed session stays unavailable and exposes no previous arguments or result
+  ---
+  duration_ms: 11.5306
+  type: 'test'
+  ...
+# Subtest: F10-D17 normal directory listing dispatches while protected directory listing is withheld
+ok 24 - F10-D17 normal directory listing dispatches while protected directory listing is withheld
+  ---
+  duration_ms: 66.2329
+  type: 'test'
+  ...
+# Subtest: F10-D18 junction directory cannot route a listing outside the project
+ok 25 - F10-D18 junction directory cannot route a listing outside the project
+  ---
+  duration_ms: 9.8836
+  type: 'test'
+  ...
+# Subtest: F10-D19 parent alias cannot receive a safe copy
+ok 26 - F10-D19 parent alias cannot receive a safe copy
+  ---
+  duration_ms: 11.6121
+  type: 'test'
+  ...
+# Subtest: F10-D20 actual finite worker releases output after its single-use private filter completes
+ok 27 - F10-D20 actual finite worker releases output after its single-use private filter completes
+  ---
+  duration_ms: 747.6325
+  type: 'test'
+  ...
+# Subtest: F10-O01 READY ownership admission is awaited before start and value-free snapshots report completed lifecycle
+ok 28 - F10-O01 READY ownership admission is awaited before start and value-free snapshots report completed lifecycle
+  ---
+  duration_ms: 83.7366
+  type: 'test'
+  ...
+# Subtest: F10-O02-false unsuccessful durable admission closes a no-child worker without starting or releasing output
+ok 29 - F10-O02-false unsuccessful durable admission closes a no-child worker without starting or releasing output
+  ---
+  duration_ms: 27.3242
+  type: 'test'
+  ...
+# Subtest: F10-O02-reject unsuccessful durable admission closes a no-child worker without starting or releasing output
+ok 30 - F10-O02-reject unsuccessful durable admission closes a no-child worker without starting or releasing output
+  ---
+  duration_ms: 25.3494
+  type: 'test'
+  ...
+# Subtest: F10-O02-truthy unsuccessful durable admission closes a no-child worker without starting or releasing output
+ok 31 - F10-O02-truthy unsuccessful durable admission closes a no-child worker without starting or releasing output
+  ---
+  duration_ms: 19.3111
+  type: 'test'
+  ...
+# Subtest: F10-O03-cancel pending admission rechecks sticky session availability before any worker start
+ok 32 - F10-O03-cancel pending admission rechecks sticky session availability before any worker start
+  ---
+  duration_ms: 17.9562
+  type: 'test'
+  ...
+# Subtest: F10-O03-dispose pending admission rechecks sticky session availability before any worker start
+ok 33 - F10-O03-dispose pending admission rechecks sticky session availability before any worker start
+  ---
+  duration_ms: 17.239
+  type: 'test'
+  ...
+# Subtest: F10-O03-withdraw pending admission rechecks sticky session availability before any worker start
+ok 34 - F10-O03-withdraw pending admission rechecks sticky session availability before any worker start
+  ---
+  duration_ms: 21.0169
+  type: 'test'
+  ...
+# Subtest: F10-O04 current root identity is rechecked after durable ownership await
+ok 35 - F10-O04 current root identity is rechecked after durable ownership await
+  ---
+  duration_ms: 20.2317
+  type: 'test'
+  ...
+# Subtest: F10-O05 policy binding is rechecked after durable ownership await
+ok 36 - F10-O05 policy binding is rechecked after durable ownership await
+  ---
+  duration_ms: 37.5572
+  type: 'test'
+  ...
+# Subtest: F10-O06 a running owned worker stays BUSY until actual completion and reports the same final id
+ok 37 - F10-O06 a running owned worker stays BUSY until actual completion and reports the same final id
+  ---
+  duration_ms: 53.8004
+  type: 'test'
+  ...
+# Subtest: F10-O07 no-child start failure reports BLOCKED completion instead of fabricated RUNNING or EXITED
+ok 38 - F10-O07 no-child start failure reports BLOCKED completion instead of fabricated RUNNING or EXITED
+  ---
+  duration_ms: 20.5105
+  type: 'test'
+  ...
+# Subtest: F10-O08 optional trusted hooks preserve existing internal finite-worker compatibility
+ok 39 - F10-O08 optional trusted hooks preserve existing internal finite-worker compatibility
+  ---
+  duration_ms: 51.0334
+  type: 'test'
+  ...
+# Subtest: F10-O09 directory swapped to outside junction before protocol withholds every request byte without outside enumeration
+ok 40 - F10-O09 directory swapped to outside junction before protocol withholds every request byte without outside enumeration
+  ---
+  duration_ms: 67.2486
+  type: 'test'
+  ...
+# Subtest: F10-O10 stable public directory receives exact finite list protocol and completed public output
+ok 41 - F10-O10 stable public directory receives exact finite list protocol and completed public output
+  ---
+  duration_ms: 93.1876
+  type: 'test'
+  ...
+# Subtest: F10-O11 throwing start observer cancels output but retains BUSY ownership until actual completion
+ok 42 - F10-O11 throwing start observer cancels output but retains BUSY ownership until actual completion
+  ---
+  duration_ms: 18.8891
+  type: 'test'
+  ...
+# Subtest: F10-DR01 late private registry invalidation during final COPY destination check prevents publication
+ok 43 - F10-DR01 late private registry invalidation during final COPY destination check prevents publication
+  ---
+  duration_ms: 105.4066
+  type: 'test'
+  ...
+# Subtest: F10-DR02 unchanged private registry preserves approved exclusive safe COPY
+ok 44 - F10-DR02 unchanged private registry preserves approved exclusive safe COPY
+  ---
+  duration_ms: 101.3132
+  type: 'test'
+  ...
+1..44
+# tests 44
+# suites 0
+# pass 44
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 6098.6665

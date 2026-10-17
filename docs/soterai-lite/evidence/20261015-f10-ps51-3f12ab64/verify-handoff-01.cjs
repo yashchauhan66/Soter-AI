@@ -1,0 +1,30 @@
+"use strict";
+const fs = require("node:fs"), path = require("node:path"), crypto = require("node:crypto"), cp = require("node:child_process");
+const repo = path.resolve(__dirname, "../../../.."), read = p => fs.readFileSync(path.join(repo, p));
+const sha = bytes => crypto.createHash("sha256").update(bytes).digest("hex");
+const checkpoint = JSON.parse(fs.readFileSync(path.join(__dirname, "handoff-checkpoint-01.json"), "utf8"));
+const checks = [];
+function check(id, pass) { checks.push({ id, pass: !!pass }); }
+const documents = ["docs/soterai-lite/NEXT-CHAT-HANDOFF-20261016.md", "docs/soterai-lite/NEXT-CHAT-PROMPT-20261016.txt", "docs/soterai-lite/MASTER-PROMPT-20261016.txt", "docs/soterai-lite/FEATURE-QUEUE.json"];
+const records = documents.map(p => { const bytes = read(p); return { path: p, bytes: bytes.length, sha256: sha(bytes) }; });
+for (const file of checkpoint.sourceFiles) check("source_unchanged:" + file.path, sha(read(file.path)) === file.sha256);
+check("catalog_frozen", sha(read(checkpoint.catalog.path)) === checkpoint.catalog.sha256);
+check("accepted_artifact", sha(read(checkpoint.lastAcceptedArtifact.path)) === checkpoint.lastAcceptedArtifact.sha256);
+check("master_exact_copy", sha(read(documents[2])) === "2ea0c90b1fe3bdd591e5ae24470dcd8804abfff7a75741ec1f5a1aae7e4679ae");
+check("head_unchanged", cp.execFileSync("git", ["rev-parse", "HEAD"], { cwd: repo, encoding: "utf8", windowsHide: true }).trim() === "24da9ce9907cd6082b7ce3a3e79136cd4c551508");
+check("no_staged_files", !cp.execFileSync("git", ["diff", "--cached", "--name-only"], { cwd: repo, encoding: "utf8", windowsHide: true }).trim());
+const queue = JSON.parse(read(documents[3]).toString("utf8").replace(/^\uFEFF/, ""));
+check("only_f10_active", queue.activeFeature === "F10" && queue.features.filter(f => f.status === "ACTIVE").length === 1 && queue.features.find(f => f.id === "F10").result === "INCOMPLETE");
+check("earlier_nine_done", queue.features.slice(0, 9).every(f => f.status === "DONE"));
+check("later_cards_pending", queue.features.slice(10).every(f => f.status === "PLANNED"));
+const text = read(documents[0]).toString("utf8");
+for (let id = 11; id <= 32; id++) check("remaining_card:F" + id, text.includes("| F" + id + " ") || text.includes("| F" + id + "a-"));
+for (let id = 1; id <= 5; id++) check("final_gate:V0" + id, text.includes("**V0" + id));
+check("pty_not_implemented", !fs.existsSync(path.join(repo, "packages/vscode-extension/src/terminal/PowerShell51Terminal.ts")));
+check("registration_not_implemented", !fs.existsSync(path.join(repo, "packages/vscode-extension/src/terminal/commands.ts")));
+check("final_rating_pending", queue.finalRating.allowed === false && queue.finalRating.status === "PENDING");
+const result = { schemaVersion: 1, observedAt: new Date().toISOString(), result: checks.every(c => c.pass) ? "PASS" : "FAIL", checks, documents: records,
+ scope: "Handoff/source/evidence identity validation only; no product tests, new build, native host or feature acceptance implied" };
+fs.writeFileSync(path.join(__dirname, "handoff-verification-01.json"), JSON.stringify(result, null, 2) + "\n", { flag: "wx" });
+process.stdout.write(JSON.stringify({ result: result.result, checks: checks.length, failed: checks.filter(c => !c.pass), documents: records }, null, 2) + "\n");
+if (result.result !== "PASS") process.exitCode = 1;

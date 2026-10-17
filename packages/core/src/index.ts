@@ -7,3 +7,5 @@ export { StreamingOutputRedactor, STREAM_OUTPUT_LIMITS } from "./StreamingOutput
 export type { OutputChannel, OutputResult } from "./StreamingOutputRedactor";
 export { parseVaultAppDescriptor, VAULT_RUNTIME_LIMITS, vaultEnvironmentNameAllowed } from "./VaultAppDescriptor";
 export type { VaultAppDescriptor } from "./VaultAppDescriptor";
+export { parsePowerShell51Command, PS51_LIMITS } from "./PowerShell51Command";
+export type { PowerShell51Command } from "./PowerShell51Command";

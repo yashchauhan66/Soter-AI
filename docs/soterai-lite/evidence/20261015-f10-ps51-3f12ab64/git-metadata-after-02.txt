@@ -1,0 +1,256 @@
+﻿TAP version 13
+# Subtest: F10-G01 only the reviewed exact installed Git version is accepted
+ok 1 - F10-G01 only the reviewed exact installed Git version is accepted
+  ---
+  duration_ms: 99.9231
+  type: 'test'
+  ...
+# Subtest: F10-G02 ordinary unborn repository gets an immutable pinned descriptor and retained empty config/hooks
+ok 2 - F10-G02 ordinary unborn repository gets an immutable pinned descriptor and retained empty config/hooks
+  ---
+  duration_ms: 37.7387
+  type: 'test'
+  ...
+# Subtest: F10-G03 inherited Git/config/credential/proxy/loader/search settings cannot reach the finite Git environment
+ok 3 - F10-G03 inherited Git/config/credential/proxy/loader/search settings cannot reach the finite Git environment
+  ---
+  duration_ms: 21.6544
+  type: 'test'
+  ...
+# Subtest: F10-G04 ambient executable-location overrides cannot replace the pinned standard Git
+ok 4 - F10-G04 ambient executable-location overrides cannot replace the pinned standard Git
+  ---
+  duration_ms: 21.9325
+  type: 'test'
+  ...
+# Subtest: F10-G05 flag withdrawal is sticky even after reenable
+ok 5 - F10-G05 flag withdrawal is sticky even after reenable
+  ---
+  duration_ms: 31.4066
+  type: 'test'
+  ...
+# Subtest: F10-G06 thrown live guard withholds permanently without disclosing exception data
+ok 6 - F10-G06 thrown live guard withholds permanently without disclosing exception data
+  ---
+  duration_ms: 24.1382
+  type: 'test'
+  ...
+# Subtest: F10-G07 local config drift invalidates captured metadata and cannot recover by restoring bytes
+ok 7 - F10-G07 local config drift invalidates captured metadata and cannot recover by restoring bytes
+  ---
+  duration_ms: 27.8616
+  type: 'test'
+  ...
+# Subtest: F10-G08 HEAD drift invalidates the captured repository
+ok 8 - F10-G08 HEAD drift invalidates the captured repository
+  ---
+  duration_ms: 28.8897
+  type: 'test'
+  ...
+# Subtest: F10-G09 false admission guard produces no descriptor
+ok 9 - F10-G09 false admission guard produces no descriptor
+  ---
+  duration_ms: 5.8225
+  type: 'test'
+  ...
+# Subtest: F10-G10 relative roots and malformed metadata refuse without repository Git execution
+ok 10 - F10-G10 relative roots and malformed metadata refuse without repository Git execution
+  ---
+  duration_ms: 9.528
+  type: 'test'
+  ...
+# Subtest: F10-G11 include config is unavailable before spawn
+ok 11 - F10-G11 include config is unavailable before spawn
+  ---
+  duration_ms: 8.4723
+  type: 'test'
+  ...
+# Subtest: F10-G11 conditional include config is unavailable before spawn
+ok 12 - F10-G11 conditional include config is unavailable before spawn
+  ---
+  duration_ms: 8.1082
+  type: 'test'
+  ...
+# Subtest: F10-G11 partial clone config is unavailable before spawn
+ok 13 - F10-G11 partial clone config is unavailable before spawn
+  ---
+  duration_ms: 10.1362
+  type: 'test'
+  ...
+# Subtest: F10-G11 promisor remote config is unavailable before spawn
+ok 14 - F10-G11 promisor remote config is unavailable before spawn
+  ---
+  duration_ms: 9.1823
+  type: 'test'
+  ...
+# Subtest: F10-G11 partial clone filter config is unavailable before spawn
+ok 15 - F10-G11 partial clone filter config is unavailable before spawn
+  ---
+  duration_ms: 9.1552
+  type: 'test'
+  ...
+# Subtest: F10-G11 external worktree config is unavailable before spawn
+ok 16 - F10-G11 external worktree config is unavailable before spawn
+  ---
+  duration_ms: 8.2853
+  type: 'test'
+  ...
+# Subtest: F10-G11 bare repository config is unavailable before spawn
+ok 17 - F10-G11 bare repository config is unavailable before spawn
+  ---
+  duration_ms: 8.6901
+  type: 'test'
+  ...
+# Subtest: F10-G11 unknown extension config is unavailable before spawn
+ok 18 - F10-G11 unknown extension config is unavailable before spawn
+  ---
+  duration_ms: 7.9279
+  type: 'test'
+  ...
+# Subtest: F10-G11 configuration continuation config is unavailable before spawn
+ok 19 - F10-G11 configuration continuation config is unavailable before spawn
+  ---
+  duration_ms: 9.1289
+  type: 'test'
+  ...
+# Subtest: F10-G11 unknown execution affecting key config is unavailable before spawn
+ok 20 - F10-G11 unknown execution affecting key config is unavailable before spawn
+  ---
+  duration_ms: 9.2183
+  type: 'test'
+  ...
+# Subtest: F10-G12 unsupported commondir repository metadata refuses
+ok 21 - F10-G12 unsupported commondir repository metadata refuses
+  ---
+  duration_ms: 8.9498
+  type: 'test'
+  ...
+# Subtest: F10-G12 unsupported config.worktree repository metadata refuses
+ok 22 - F10-G12 unsupported config.worktree repository metadata refuses
+  ---
+  duration_ms: 9.2315
+  type: 'test'
+  ...
+# Subtest: F10-G12 unsupported objects/info/alternates repository metadata refuses
+ok 23 - F10-G12 unsupported objects/info/alternates repository metadata refuses
+  ---
+  duration_ms: 11.3891
+  type: 'test'
+  ...
+# Subtest: F10-G12 unsupported objects/info/http-alternates repository metadata refuses
+ok 24 - F10-G12 unsupported objects/info/http-alternates repository metadata refuses
+  ---
+  duration_ms: 11.5497
+  type: 'test'
+  ...
+# Subtest: F10-G12 unsupported objects/pack/pack-synthetic.promisor repository metadata refuses
+ok 25 - F10-G12 unsupported objects/pack/pack-synthetic.promisor repository metadata refuses
+  ---
+  duration_ms: 13.4249
+  type: 'test'
+  ...
+# Subtest: F10-G12 unsupported info/grafts repository metadata refuses
+ok 26 - F10-G12 unsupported info/grafts repository metadata refuses
+  ---
+  duration_ms: 11.4468
+  type: 'test'
+  ...
+# Subtest: F10-G12 unsupported sharedindex.synthetic repository metadata refuses
+ok 27 - F10-G12 unsupported sharedindex.synthetic repository metadata refuses
+  ---
+  duration_ms: 6.8456
+  type: 'test'
+  ...
+# Subtest: F10-G12 unsupported shallow repository metadata refuses
+ok 28 - F10-G12 unsupported shallow repository metadata refuses
+  ---
+  duration_ms: 8.0376
+  type: 'test'
+  ...
+# Subtest: F10-G13 gitfile and linked-worktree pointer are never followed
+ok 29 - F10-G13 gitfile and linked-worktree pointer are never followed
+  ---
+  duration_ms: 2.9727
+  type: 'test'
+  ...
+# Subtest: F10-G14 invalid UTF8 and over-bound local config remain unavailable
+ok 30 - F10-G14 invalid UTF8 and over-bound local config remain unavailable
+  ---
+  duration_ms: 16.1153
+  type: 'test'
+  ...
+# Subtest: F10-G15 alternates introduced after preparation revoke the descriptor
+ok 31 - F10-G15 alternates introduced after preparation revoke the descriptor
+  ---
+  duration_ms: 30.8496
+  type: 'test'
+  ...
+# Subtest: F10-G16 GIT request without the prepared private descriptor is BLOCKED before spawn
+ok 32 - F10-G16 GIT request without the prepared private descriptor is BLOCKED before spawn
+  ---
+  duration_ms: 35.4515
+  type: 'test'
+  ...
+# Subtest: F10-G17 structurally forged descriptor cannot authorize GIT
+ok 33 - F10-G17 structurally forged descriptor cannot authorize GIT
+  ---
+  duration_ms: 22.2724
+  type: 'test'
+  ...
+# Subtest: F10-G18 extra fields/arbitrary Git operation requests refuse before spawn
+ok 34 - F10-G18 extra fields/arbitrary Git operation requests refuse before spawn
+  ---
+  duration_ms: 111.9492
+  type: 'test'
+  ...
+# Subtest: F10-G19 accessor Git operations are refused without evaluating accessors
+ok 35 - F10-G19 accessor Git operations are refused without evaluating accessors
+  ---
+  duration_ms: 33.5516
+  type: 'test'
+  ...
+# Subtest: F10-G20 prepared GIT uses fixed encoded PowerShell and private data protocol rather than a caller script
+ok 36 - F10-G20 prepared GIT uses fixed encoded PowerShell and private data protocol rather than a caller script
+  ---
+  duration_ms: 72.0759
+  type: 'test'
+  ...
+# Subtest: F10-G21 staged output goes through final masking after actual pipe drain and close
+ok 37 - F10-G21 staged output goes through final masking after actual pipe drain and close
+  ---
+  duration_ms: 80.4919
+  type: 'test'
+  ...
+# Subtest: F10-G22 failed Git/PowerShell invocation withholds its diagnostic bytes and staged label
+ok 38 - F10-G22 failed Git/PowerShell invocation withholds its diagnostic bytes and staged label
+  ---
+  duration_ms: 68.4169
+  type: 'test'
+  ...
+# Subtest: F10-G23 metadata drift between worker construction and start blocks spawning
+ok 39 - F10-G23 metadata drift between worker construction and start blocks spawning
+  ---
+  duration_ms: 30.5809
+  type: 'test'
+  ...
+# Subtest: F10-G24 cancellation of a live Git worker keeps actual-close ownership without terminating it
+ok 40 - F10-G24 cancellation of a live Git worker keeps actual-close ownership without terminating it
+  ---
+  duration_ms: 43.8655
+  type: 'test'
+  ...
+# Subtest: F10-G25 late repository drift withholds public buffered metadata
+ok 41 - F10-G25 late repository drift withholds public buffered metadata
+  ---
+  duration_ms: 53.0232
+  type: 'test'
+  ...
+1..41
+# tests 41
+# suites 0
+# pass 41
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1469.6706

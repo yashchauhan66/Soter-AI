@@ -1,0 +1,132 @@
+﻿TAP version 13
+# Subtest: F10-D01 unsupported whole input never reaches a reader, worker, filter or destination review
+ok 1 - F10-D01 unsupported whole input never reaches a reader, worker, filter or destination review
+  ---
+  duration_ms: 248.9802
+  type: 'test'
+  ...
+# Subtest: F10-D02 public operation uses the fixed worker with a filtered private output sink
+ok 2 - F10-D02 public operation uses the fixed worker with a filtered private output sink
+  ---
+  duration_ms: 53.4274
+  type: 'test'
+  ...
+# Subtest: F10-D03 protected file is routed through the trusted reader and never forwarded to a worker
+ok 3 - F10-D03 protected file is routed through the trusted reader and never forwarded to a worker
+  ---
+  duration_ms: 32.9689
+  type: 'test'
+  ...
+# Subtest: F10-D04 denied approval releases no result and never creates an output filter
+ok 4 - F10-D04 denied approval releases no result and never creates an output filter
+  ---
+  duration_ms: 9.1514
+  type: 'test'
+  ...
+# Subtest: F10-D05 head tail and literal search transform only approved safe text
+ok 5 - F10-D05 head tail and literal search transform only approved safe text
+  ---
+  duration_ms: 101.8949
+  type: 'test'
+  ...
+# Subtest: F10-D06 registered output is masked even if an internal reader accidentally returns a value
+ok 6 - F10-D06 registered output is masked even if an internal reader accidentally returns a value
+  ---
+  duration_ms: 33.6721
+  type: 'test'
+  ...
+# Subtest: F10-D07 env lists only minimal child-base names with masks
+ok 7 - F10-D07 env lists only minimal child-base names with masks
+  ---
+  duration_ms: 51.2748
+  type: 'test'
+  ...
+# Subtest: F10-D08 copy reviews the new destination then writes only finalized filtered safe text
+ok 8 - F10-D08 copy reviews the new destination then writes only finalized filtered safe text
+  ---
+  duration_ms: 75.8585
+  type: 'test'
+  ...
+# Subtest: F10-D09 declined destination review starts no source read and creates no destination
+ok 9 - F10-D09 declined destination review starts no source read and creates no destination
+  ---
+  duration_ms: 18.4233
+  type: 'test'
+  ...
+# Subtest: F10-D10 copy never overwrites an existing destination
+ok 10 - F10-D10 copy never overwrites an existing destination
+  ---
+  duration_ms: 22.5353
+  type: 'test'
+  ...
+# Subtest: F10-D11 copy refuses policy and sensitive destinations
+ok 11 - F10-D11 copy refuses policy and sensitive destinations
+  ---
+  duration_ms: 17.8318
+  type: 'test'
+  ...
+# Subtest: F10-D12 source change while approval is pending withholds the old view
+ok 12 - F10-D12 source change while approval is pending withholds the old view
+  ---
+  duration_ms: 8.1704
+  type: 'test'
+  ...
+# Subtest: F10-D13 cancellation during pending read is sticky after the reader resolves
+ok 13 - F10-D13 cancellation during pending read is sticky after the reader resolves
+  ---
+  duration_ms: 7.3879
+  type: 'test'
+  ...
+# Subtest: F10-D14 feature withdrawal during output acquisition withholds result and copy
+ok 14 - F10-D14 feature withdrawal during output acquisition withholds result and copy
+  ---
+  duration_ms: 21.437
+  type: 'test'
+  ...
+# Subtest: F10-D15 one session refuses a second pending command without extra approvals
+ok 15 - F10-D15 one session refuses a second pending command without extra approvals
+  ---
+  duration_ms: 35.7861
+  type: 'test'
+  ...
+# Subtest: F10-D16 closed session stays unavailable and exposes no previous arguments or result
+ok 16 - F10-D16 closed session stays unavailable and exposes no previous arguments or result
+  ---
+  duration_ms: 8.7415
+  type: 'test'
+  ...
+# Subtest: F10-D17 normal directory listing dispatches while protected directory listing is withheld
+not ok 17 - F10-D17 normal directory listing dispatches while protected directory listing is withheld
+  ---
+  duration_ms: 43.0732
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedPowerShellSession.test.ts:2:11718'
+  failureType: 'testCodeFailure'
+  error: 'Invalid sensitive AI path rule.'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    parseManualRules (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\ai-boundary\policy.ts:91:102)
+    <anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\ai-boundary\BoundarySnapshot.ts:111:66)
+    <anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\ai-boundary\BoundarySnapshot.ts:93:44)
+  ...
+# Subtest: F10-D18 junction directory cannot route a listing outside the project
+ok 18 - F10-D18 junction directory cannot route a listing outside the project
+  ---
+  duration_ms: 19.967
+  type: 'test'
+  ...
+# Subtest: F10-D19 parent alias cannot receive a safe copy
+ok 19 - F10-D19 parent alias cannot receive a safe copy
+  ---
+  duration_ms: 14.7138
+  type: 'test'
+  ...
+1..19
+# tests 19
+# suites 0
+# pass 18
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1665.8485
