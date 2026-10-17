@@ -1,0 +1,179 @@
+﻿TAP version 13
+# Subtest: F14-B01 lifecycle identity is controller authenticated and session bound
+not ok 1 - F14-B01 lifecycle identity is controller authenticated and session bound
+  ---
+  duration_ms: 123.8666
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\brokerSessionBoundary.test.ts:2:1652'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    404 !== 200
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 200
+  actual: 404
+  operator: 'strictEqual'
+  stack: |-
+    <anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\brokerSessionBoundary.test.ts:11:214)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async fixture (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\brokerSessionBoundary.test.ts:8:49)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F14-B02 no session cannot manage owned broker
+not ok 2 - F14-B02 no session cannot manage owned broker
+  ---
+  duration_ms: 18.9635
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\brokerSessionBoundary.test.ts:2:2176'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    200 !== 403
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 403
+  actual: 200
+  operator: 'strictEqual'
+  stack: |-
+    <anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\brokerSessionBoundary.test.ts:12:436)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async fixture (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\brokerSessionBoundary.test.ts:8:49)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F14-B02 wrong session cannot manage owned broker
+not ok 3 - F14-B02 wrong session cannot manage owned broker
+  ---
+  duration_ms: 10.5103
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\brokerSessionBoundary.test.ts:2:2176'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    200 !== 403
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 403
+  actual: 200
+  operator: 'strictEqual'
+  stack: |-
+    <anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\brokerSessionBoundary.test.ts:12:436)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async fixture (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\brokerSessionBoundary.test.ts:8:49)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F14-B02 client token cannot manage owned broker
+ok 4 - F14-B02 client token cannot manage owned broker
+  ---
+  duration_ms: 12.5912
+  type: 'test'
+  ...
+# Subtest: F14-B02 wrong auth cannot manage owned broker
+ok 5 - F14-B02 wrong auth cannot manage owned broker
+  ---
+  duration_ms: 10.7372
+  type: 'test'
+  ...
+# Subtest: F14-B03 data credential never requires shared window state for allowed data routes
+ok 6 - F14-B03 data credential never requires shared window state for allowed data routes
+  ---
+  duration_ms: 13.3583
+  type: 'test'
+  ...
+# Subtest: F14-B04 owner session is validated before any bind
+not ok 7 - F14-B04 owner session is validated before any bind
+  ---
+  duration_ms: 1.0099
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\brokerSessionBoundary.test.ts:2:2902'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\brokerSessionBoundary.test.ts:14:139)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F14-B05 separate windows reject each other's session even with same synthetic controller
+not ok 8 - F14-B05 separate windows reject each other's session even with same synthetic controller
+  ---
+  duration_ms: 11.4267
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\brokerSessionBoundary.test.ts:2:3182'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    200 !== 403
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 403
+  actual: 200
+  operator: 'strictEqual'
+  stack: |-
+    <anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\brokerSessionBoundary.test.ts:15:151)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async fixture (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\brokerSessionBoundary.test.ts:8:49)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# node:internal/modules/cjs/loader:1401
+#   const err = new Error(message);
+#               ^
+# Error: Cannot find module '../broker/OwnedBrokerLifecycle'
+# Require stack:
+# - C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\ownedBrokerLifecycle.test.ts
+#     at node:internal/modules/cjs/loader:1401:15
+#     at T._resolveFilename (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:14889)
+#     at nextResolveSimple (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\tsx\\dist\\register-BOkp8V6j.cjs:10:1017)
+#     at C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\tsx\\dist\\register-BOkp8V6j.cjs:9:4388
+#     at C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\tsx\\dist\\register-BOkp8V6j.cjs:9:3818
+#     at resolveTsPaths (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\tsx\\dist\\register-BOkp8V6j.cjs:10:770)
+#     at Function._resolveFilename (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\tsx\\dist\\register-BOkp8V6j.cjs:10:1155)
+#     at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+#     at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+#     at Function._load (node:internal/modules/cjs/loader:1211:37) {
+#   code: 'MODULE_NOT_FOUND',
+#   requireStack: [
+#     'C:\\\\Users\\\\USER\\\\OneDrive\\\\Desktop\\\\Ai-Agent-Security-Guard\\\\packages\\\\vscode-extension\\\\src\\\\__tests__\\\\ownedBrokerLifecycle.test.ts'
+#   ]
+# }
+# Node.js v22.16.0
+# Subtest: packages\\vscode-extension\\src\\__tests__\\ownedBrokerLifecycle.test.ts
+not ok 2 - packages\\vscode-extension\\src\\__tests__\\ownedBrokerLifecycle.test.ts
+  ---
+  duration_ms: 470.3552
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\ownedBrokerLifecycle.test.ts:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 3
+# fail 6
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1831.7135

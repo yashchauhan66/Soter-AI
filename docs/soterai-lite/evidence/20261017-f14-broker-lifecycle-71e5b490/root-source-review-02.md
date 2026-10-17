@@ -1,0 +1,9 @@
+# F14 final source review
+
+Same-lineage LOW/static only. This supersedes source-review01 for current bytes. source-review-bindings02 hashes19 current source/metadata/test files and8 rawreceipt pairs, validates retained backend-suite source identity and records actual focused/full counts. Native/acceptance/commit/transition remain separate gates.
+
+The declared private IPC generation/session/port0/distinct credentials/startup policy/canary/close+bothEOF protocol and limitations in design01/source-review01 remain. Root review additionally fixed cross-window canary SecretStorage withdrawal and stale routing plan ownership at approval/backup/I/O/HTTP/publication boundaries; actual failing baselines precede both corrections. Invalid local input and early token queries withhold without unnecessarily destroying initialization. Wrong session/auth/version, outage, late completion, stop timeout/disposal, stale child events and no-PID-adoption controls are retained.
+
+A routing write already executing in the OS cannot be recalled; it can leave stale setup requiring explicit fresh review, with fresh random credentials preventing authentication to another owner. Backend forwarding semantics, external tool configuration formats and independent per-tool executions remain later cards. No new hidden OS/VM control, kill/fallback, automatic config repair or unchanged-secret status assumed.
+
+Current backend143PASS1SKIP is reused only because both backend source files are byte-identical to the earlier validated source binding. One skip is not a pass. No raw failure/cancelled fixture, historical artifact or unexecuted assertion is reassigned PASS. Native concurrent-window/withdrawal/restart evidence remains scripted LOW, not independent/human/clean-install. F11 unimplemented NOT_TESTED/NOT_COVERED,44 ungraded catalog,nine unmanaged baseline leaks and no numerical rating remain.

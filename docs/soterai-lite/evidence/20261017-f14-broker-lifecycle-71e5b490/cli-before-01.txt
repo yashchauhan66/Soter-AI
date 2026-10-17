@@ -1,0 +1,74 @@
+﻿TAP version 13
+# Subtest: F14-C01 real owned CLI binds atomically despite occupied legacy47321
+not ok 1 - F14-C01 real owned CLI binds atomically despite occupied legacy47321
+  ---
+  duration_ms: 869.2287
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\ownedBrokerCli.test.ts:2:3557'
+  failureType: 'testCodeFailure'
+  error: 'Owned CLI exited before readiness'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    ChildProcess.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\ownedBrokerCli.test.ts:21:65)
+    Object.onceWrapper (node:events:633:26)
+    ChildProcess.emit (node:events:530:35)
+    maybeClose (node:internal/child_process:1101:16)
+    ChildProcess._handle.onexit (node:internal/child_process:304:5)
+  ...
+# Subtest: F14-C02 two actual windows own different bound ports and reject cross credentials
+not ok 2 - F14-C02 two actual windows own different bound ports and reject cross credentials
+  ---
+  duration_ms: 828.1827
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\ownedBrokerCli.test.ts:2:4158'
+  failureType: 'testCodeFailure'
+  error: 'Owned CLI exited before readiness'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    ChildProcess.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\ownedBrokerCli.test.ts:21:65)
+    Object.onceWrapper (node:events:633:26)
+    ChildProcess.emit (node:events:530:35)
+    maybeClose (node:internal/child_process:1101:16)
+    ChildProcess._handle.onexit (node:internal/child_process:304:5)
+  ...
+# Subtest: F14-C03 real initialization syncs canaries, restores strict mode, then closes without tokens in output
+not ok 3 - F14-C03 real initialization syncs canaries, restores strict mode, then closes without tokens in output
+  ---
+  duration_ms: 855.0123
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\ownedBrokerCli.test.ts:2:4622'
+  failureType: 'testCodeFailure'
+  error: 'Owned CLI exited before readiness'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    ChildProcess.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\ownedBrokerCli.test.ts:21:65)
+    Object.onceWrapper (node:events:633:26)
+    ChildProcess.emit (node:events:530:35)
+    maybeClose (node:internal/child_process:1101:16)
+    ChildProcess._handle.onexit (node:internal/child_process:304:5)
+  ...
+# Subtest: F14-C04 parent IPC disconnect closes its own real broker
+not ok 4 - F14-C04 parent IPC disconnect closes its own real broker
+  ---
+  duration_ms: 1354.7086
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\ownedBrokerCli.test.ts:2:5378'
+  failureType: 'testCodeFailure'
+  error: 'Owned CLI exited before readiness'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    ChildProcess.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\ownedBrokerCli.test.ts:21:65)
+    Object.onceWrapper (node:events:633:26)
+    ChildProcess.emit (node:events:530:35)
+    maybeClose (node:internal/child_process:1101:16)
+    ChildProcess._handle.onexit (node:internal/child_process:304:5)
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 0
+# fail 4
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 6495.4386

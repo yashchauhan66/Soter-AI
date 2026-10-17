@@ -117,7 +117,8 @@
         "soterai.lite.vaultRuntime",
         "soterai.lite.ps51Terminal",
         "soterai.lite.cmdTerminal",
-        "soterai.lite.gitBashTerminal"
+        "soterai.lite.gitBashTerminal",
+        "soterai.lite.gatewayLifecycle"
       ]
     }
   },
@@ -1616,7 +1617,7 @@
           "default": 47321,
           "minimum": 1024,
           "maximum": 65535,
-          "description": "Loopback-only Local AI Broker port.",
+          "description": "Legacy standalone broker port. The owned per-window extension broker atomically chooses its own loopback port; use its current displayed URL.",
           "scope": "machine"
         },
         "soterai.broker.autoStart": {
@@ -1796,6 +1797,12 @@
           "default": true,
           "scope": "machine",
           "description": "Enable owner-approved finite Node vault apps with a fresh child environment and completed filtered output. App code can inspect or upload its selected values. Stop is cooperative; no source debugger or process confinement. Turning this off stops owned apps cooperatively and preserves ciphertext and restrictions."
+        },
+        "soterai.lite.gatewayLifecycle": {
+          "type": "boolean",
+          "default": true,
+          "scope": "machine",
+          "description": "Enable the owned per-window loopback broker lifecycle. Disabling withdraws broker availability without weakening saved policy. Session URL and credentials change after restart; reviewed client setup is required again."
         }
       }
     },

@@ -59,3 +59,12 @@ Tool routing and vault migration require reviewed, explicit opt-in changes.
 Tool-specific coverage, onboarding timing and release readiness are UNVERIFIED
 for this candidate until its exact-object tests pass. This artifact is not
 published. Linux, macOS and remote workspaces are NOT_TESTED.
+
+
+### Owned local broker sessions
+
+The extension broker binds a free loopback port atomically for each window. It accepts ownership only from its bundled child over private IPC, with distinct data and controller credentials and a checked session identity. It does not attach to a saved URL, PID or another window. Startup synchronizes canaries and restores validated Safe Mode before making the session available; a fresh installation defaults to strict Safe Mode. Restricted workspaces and the machine setting `soterai.lite.gatewayLifecycle=false` withhold this broker. Local scanning remains available.
+
+Use the current broker URL from this window. The legacy `soterai.broker.port` setting applies to standalone operation; it does not select the owned extension port. Restart and token rotation create a new port/session/credentials, so previously configured clients must be reviewed and set up again. No client config is silently repaired or pointed at a different listener. Provider, safety configuration and canary changes withdraw the active broker; restart after reviewing status.
+
+Shutdown sends a cooperative private message, keeps saved policy intact and never signals a PID. An unclosed child remains owned and blocks a replacement; status reports STOP_UNCONFIRMED after the parent wait limit. Active work may finish naturally. The broker checks only traffic explicitly routed through it; it does not confine same-user processes, mediate unmanaged traffic or establish universal secret protection.

@@ -1,0 +1,106 @@
+﻿TAP version 13
+# Subtest: F14-R01 soterai.secureAllAI refuses stale owner during approval before config write
+not ok 1 - F14-R01 soterai.secureAllAI refuses stale owner during approval before config write
+  ---
+  duration_ms: 61.8148
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\brokerRoutingOwnership.test.ts:2:1422'
+  failureType: 'testCodeFailure'
+  error: |-
+    Stale ownership must withhold this configuration write.
+    + actual - expected
+    
+    + '{"baseURL":"http://127.0.0.1:49151/v1/ai/openai-compatible"}'
+    - '{"baseURL":"https://synthetic-provider.example.test/v1"}'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '{"baseURL":"https://synthetic-provider.example.test/v1"}'
+  actual: '{"baseURL":"http://127.0.0.1:49151/v1/ai/openai-compatible"}'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\brokerRoutingOwnership.test.ts:28:65)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F14-R01 soterai.secureAllAI refuses stale owner during backup before config write
+not ok 2 - F14-R01 soterai.secureAllAI refuses stale owner during backup before config write
+  ---
+  duration_ms: 33.46
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\brokerRoutingOwnership.test.ts:2:1422'
+  failureType: 'testCodeFailure'
+  error: |-
+    Stale ownership must withhold this configuration write.
+    + actual - expected
+    
+    + '{"baseURL":"http://127.0.0.1:49151/v1/ai/openai-compatible"}'
+    - '{"baseURL":"https://synthetic-provider.example.test/v1"}'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '{"baseURL":"https://synthetic-provider.example.test/v1"}'
+  actual: '{"baseURL":"http://127.0.0.1:49151/v1/ai/openai-compatible"}'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\brokerRoutingOwnership.test.ts:28:65)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F14-R01 soterai.setupBrokerIntegration refuses stale owner during approval before config write
+not ok 3 - F14-R01 soterai.setupBrokerIntegration refuses stale owner during approval before config write
+  ---
+  duration_ms: 24.1553
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\brokerRoutingOwnership.test.ts:2:1422'
+  failureType: 'testCodeFailure'
+  error: |-
+    Stale ownership must withhold this configuration write.
+    + actual - expected
+    
+    + '{"baseURL":"http://127.0.0.1:49151/v1/ai/openai-compatible"}'
+    - '{"baseURL":"https://synthetic-provider.example.test/v1"}'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '{"baseURL":"https://synthetic-provider.example.test/v1"}'
+  actual: '{"baseURL":"http://127.0.0.1:49151/v1/ai/openai-compatible"}'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\brokerRoutingOwnership.test.ts:28:65)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F14-R01 soterai.setupBrokerIntegration refuses stale owner during backup before config write
+not ok 4 - F14-R01 soterai.setupBrokerIntegration refuses stale owner during backup before config write
+  ---
+  duration_ms: 14.2777
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\brokerRoutingOwnership.test.ts:2:1422'
+  failureType: 'testCodeFailure'
+  error: |-
+    Stale ownership must withhold this configuration write.
+    + actual - expected
+    
+    + '{"baseURL":"http://127.0.0.1:49151/v1/ai/openai-compatible"}'
+    - '{"baseURL":"https://synthetic-provider.example.test/v1"}'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '{"baseURL":"https://synthetic-provider.example.test/v1"}'
+  actual: '{"baseURL":"http://127.0.0.1:49151/v1/ai/openai-compatible"}'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\brokerRoutingOwnership.test.ts:28:65)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 0
+# fail 4
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 958.6772

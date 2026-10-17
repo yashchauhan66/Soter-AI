@@ -1,0 +1,143 @@
+{
+  "status": "IMPLEMENTING_NOT_ACCEPTED",
+  "feature": "F14",
+  "source": [
+    {
+      "path": "apps/local-ai-broker/src/BrokerServer.ts",
+      "sha256": "d8e7859c6ca0b3fdd85b80b2ebd80f96c7e9e953a73c2992ae8051ca314f42f4"
+    },
+    {
+      "path": "apps/local-ai-broker/src/cli.ts",
+      "sha256": "83c875bbf14fabdafeeeac6321bb4c3f9821cc0766e5da4ab4a10fc4fff394bd"
+    },
+    {
+      "path": "packages/vscode-extension/src/broker/BrokerManager.ts",
+      "sha256": "3a1d867167c43f629ae4dc7e8b77e117fc42dd50ed3509ecefc33d2089bd8b98"
+    },
+    {
+      "path": "packages/vscode-extension/src/broker/OwnedBrokerLifecycle.ts",
+      "sha256": "3c143c1f59e099a115cac9ee22bd9cd29315e392909a7b152598eb6100a0c1b2"
+    },
+    {
+      "path": "packages/vscode-extension/src/broker/commands.ts",
+      "sha256": "0f149063ef576aef61c8e8ad9754e224fa2f0fb89e2e4576f18918eb2cad7819"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/ownedBrokerLifecycle.test.ts",
+      "sha256": "cfebf8395a3ee8f298efa5d4ce3438110101f11d97bce049053b7948a285c9c9"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/ownedBrokerManager.test.ts",
+      "sha256": "1883fea96fd1ae6954650380f03943e276d0d2e96adc259673aa28d22b4783cc"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/brokerSessionBoundary.test.ts",
+      "sha256": "df7a1428ea06cbb8888c4125a93a5a1e247e20b8957c3cfc52b8d24f5c7eb4e2"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/ownedBrokerCli.test.ts",
+      "sha256": "d8c1b4fc28b9e61a84bf0b36663985da92e6bfe3250eeca850e9d9091019ea13"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/mcp-canary-boundary.test.ts",
+      "sha256": "d9de5f90983ff940366676f892b08b3f20645972f5c1895340a5f117a584a26a"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/host/liteBrokerLifecycle.host.ts",
+      "sha256": "92d789eea4f21e1d31cf8dfb34f9aa00bdadbd3269523159a2b7dd94bfdf2c75"
+    },
+    {
+      "path": "packages/vscode-extension/src/ai-boundary/BoundarySnapshot.ts",
+      "sha256": "3d1c897501bcb5b0e03868bffe59e8ee8602affaea8fb596d4eb6ea04cbcb7d7"
+    },
+    {
+      "path": "packages/vscode-extension/package.json",
+      "sha256": "62727c8073b137f20e812f7481f47dd60ec8a026d6aa3f208ea4c11d29676a20"
+    },
+    {
+      "path": "packages/soterai-lite/package.json",
+      "sha256": "846b69f080489c68c3d4291417587ae11204af02a4cfbc4538c3aaac00835957"
+    },
+    {
+      "path": "packages/soterai-lite/README.md",
+      "sha256": "f8f8565cb1e1770aef25ca0c73f0eca17491f4826865f152869c83583976f78a"
+    },
+    {
+      "path": "packages/vscode-extension/README.md",
+      "sha256": "76313f8f7ac90322342f3bbc73aa65d6058ff7197e6c510be18fa8be3718f847"
+    },
+    {
+      "path": "docs/vscode-extension-readiness.md",
+      "sha256": "26e3ea93340a47efec9ebbc7957d3bfc0d59b5e9e1609a8b626111ab0b8b5a82"
+    }
+  ],
+  "receipts": [
+    {
+      "name": "before-01",
+      "exit": 1,
+      "rawSha256": "8f2ccf686c946eebf6d29378af93e6b8abbd2094445b4368d49a66d033109917",
+      "receiptSha256": "432feee81d417827d20a3e4584c15629b16ff2931d76a816f12f286d1598219d"
+    },
+    {
+      "name": "cli-before-01",
+      "exit": 1,
+      "rawSha256": "726fc83c6caf95493ea07cd3bf40f06ca802cb4faf179e6607d6c64a5a8d31be",
+      "receiptSha256": "0a6b0db61ce117b024e4b30c1f41c68aa4d7c0a3b6661e133120cfb1b18cf3c4"
+    },
+    {
+      "name": "manager-before-01",
+      "exit": 1,
+      "rawSha256": "8755f599962a307c36bd99e0a0fc866c347f2cdd0c4b3083101d90fdb44da72d",
+      "receiptSha256": "be65c4950f70d0b8dca9a1cff544068e1da4515ae4ff763a826da4481f6b4901"
+    },
+    {
+      "name": "after-01",
+      "exit": 1,
+      "rawSha256": "49bd64ebc040f00c1233b878928b898f14fed0c73b3c11d925f2a375cc65fb04",
+      "receiptSha256": "8f4891b69e760499a7dea764d9bc9f4d97679696b3eefc6dc6ab46eacfcdb512"
+    },
+    {
+      "name": "after-02",
+      "exit": 0,
+      "rawSha256": "401d9a2ff27218a6baad308b088e6798fd317a88a64649dd391dee12a906104f",
+      "receiptSha256": "956bcd8233bc64b4c3f14880349140486e9bb290ca270e347b000387c5b06c36"
+    },
+    {
+      "name": "after-03",
+      "exit": 1,
+      "rawSha256": "65a62ddd7bdff820d12e673e6cb0954e92dd120e1527541cc4d5eb2b0cfd7439",
+      "receiptSha256": "f2cd8f3866e2a7d377430e7700d87e0f3de2784e30b3be384df4d77df1e25e44"
+    },
+    {
+      "name": "final-focused-01",
+      "exit": 0,
+      "rawSha256": "78c068599a950a18465de1d99345d6b6d45b959a00081a7684113981d3020151",
+      "receiptSha256": "01d940e260e940c887f836231f161e3d93831a51546051f2bfb5cccfbe820fc5"
+    },
+    {
+      "name": "typecheck-01",
+      "exit": 2,
+      "rawSha256": "4901469d55430a0cf2c17a6e2b77fe48d24a083c23d78783dc661c3849fbd4b2",
+      "receiptSha256": "6b390c682c509552d1a31080496fba1d56a1b57b1f38aac57133f076d0262cee"
+    },
+    {
+      "name": "typecheck-02",
+      "exit": 2,
+      "rawSha256": "f0351f8c1ae4bb28d22446d6a3768b78c5974aee91ec7ee5af3b2b786b011ac7",
+      "receiptSha256": "6180eb6db87188f80719f30a69f2263d3f492be9cbcc020ab26ca9acae1fd931"
+    },
+    {
+      "name": "typecheck-03",
+      "exit": 0,
+      "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "receiptSha256": "9e1c084727425bbc7d9faf47cafdd035934701659cd893a781ad23e761bb24b3"
+    },
+    {
+      "name": "disconnect-probe-launch-01",
+      "exit": 0,
+      "rawSha256": "0a68620ef8c79ad9bdd3ee463b21b52d7d6de0459d712def727f7d7a7d31b0b0",
+      "receiptSha256": "c59902199052952367cf15b80d7164bf606fc078b0c4c94bd619439a72afcbf5"
+    }
+  ],
+  "observedAt": "2026-10-17T10:42:35.688Z"
+}

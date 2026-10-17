@@ -1,0 +1,51 @@
+import "./phase2/register.mjs";
+import assert from "node:assert/strict";
+import { beforeEach, test } from "node:test";
+import { EventEmitter } from "node:events";
+import { PassThrough } from "node:stream";
+import * as stub from "./phase2/vscode-stub";
+import { BrokerManager } from "../broker/BrokerManager";
+import type { OwnedBrokerOptions } from "../broker/OwnedBrokerLifecycle";
+
+beforeEach(() => stub.resetState("D:/SoterAI-Lite-test-profiles/f14-manager-memory-only"));
+function fixture() {
+    const context = stub.makeExtensionContext("D:/SoterAI-Lite-test-profiles/f14-manager-memory-only/storage"), envs: NodeJS.ProcessEnv[] = [], routes: string[] = [], modes: unknown[] = [];
+    const secretChanged = new stub.EventEmitter<{ key: string }>(); context.secrets.onDidChange = secretChanged.event;
+    const transport: Pick<OwnedBrokerOptions, "launch" | "fetchImpl" | "stopMs"> = {
+        stopMs: 30,
+        launch: ((_exe: string, _argv: string[], opts: { env: NodeJS.ProcessEnv }) => {
+            envs.push(opts.env); const child = Object.assign(new EventEmitter(), { stdout: new PassThrough(), stderr: new PassThrough(), connected: true,
+                send(_message: unknown, cb?: (error: Error | null) => void) { cb?.(null); setImmediate(() => { child.stdout.end(); child.stderr.end(); child.emit("close", 0); }); return true; },
+                kill() { assert.fail("No process signaling in fixtures."); },
+            });
+            setImmediate(() => child.emit("message", { type: "SOTERAI_BROKER_READY", version: 1, session: opts.env.SOTERAI_BROKER_SESSION, port: 49153 })); return child;
+        }) as never,
+        fetchImpl: async (input, init) => {
+            const route = new URL(String(input)).pathname; routes.push(route); const session = new Headers(init?.headers).get("x-soterai-session");
+            if (route === "/v1/lifecycle/status") return Response.json({ session, version: "0.2.0", ready: true });
+            if (route === "/v1/canaries/sync") return Response.json({ synchronized: true, count: JSON.parse(String(init?.body)).canaries.length });
+            if (route === "/v1/safe-mode/enable") { modes.push(JSON.parse(String(init?.body))); return Response.json({ enabled: true, level: JSON.parse(String(init?.body)).level }); }
+            if (route === "/version") return Response.json({ version: "0.2.0" });
+            if (route === "/v1/safe-mode/status") return Response.json({ enabled: true, level: "strict" });
+            return Response.json({ accepted: true });
+        },
+    };
+    // Baseline barrier avoids calling legacy Manager.start/stop, which signals processes.
+    assert.equal(typeof BrokerManager.prototype.ownedSnapshot, "function", "Owned manager integration is required before execution.");
+    const manager = new BrokerManager(context as never, transport);
+    return { context, manager, envs, routes, modes, secretChanged };
+}
+test("F14-M01 machine flag disable refuses without launch or legacy attach", async () => { const f = fixture(); stub.state.configInspect.set("soterai.lite.gatewayLifecycle", { defaultValue: true, globalValue: false }); await assert.rejects(f.manager.start()); assert.equal(f.envs.length, 0); await f.manager.stop(); });
+test("F14-M02 workspace flag cannot override machine disable", async () => { const f = fixture(); stub.state.config.set("soterai.lite.gatewayLifecycle", true); stub.state.configInspect.set("soterai.lite.gatewayLifecycle", { defaultValue: true, globalValue: false, workspaceValue: true }); await assert.rejects(f.manager.start()); assert.equal(f.envs.length, 0); await f.manager.stop(); });
+test("F14-M03 startup restores strict policy and complete canaries before healthy", async () => { const f = fixture(); const s = await f.manager.start(); assert.equal(s.state, "healthy"); assert.ok(f.routes.indexOf("/v1/canaries/sync") < f.routes.indexOf("/v1/safe-mode/enable")); assert.deepEqual(f.modes, [{ level: "strict" }]); await f.manager.stop(); });
+test("F14-M04 malformed saved safe mode fails before child launch", async () => { const f = fixture(); f.context._inspect.globalStore.set("soterai.safeMode", { enabled: "false", level: "unknown" }); await assert.rejects(f.manager.start()); assert.equal(f.envs.length, 0); await f.manager.stop(); });
+test("F14-M05 saved enterprise policy survives stop and new generation", async () => { const f = fixture(); const policy = { enabled: true, level: "enterprise" }; f.context._inspect.globalStore.set("soterai.safeMode", policy); await f.manager.start(); await f.manager.stop(); await f.manager.start(); assert.deepEqual(f.modes, [{ level: "enterprise" }, { level: "enterprise" }]); assert.equal(f.context._inspect.globalStore.get("soterai.safeMode"), policy); await f.manager.stop(); });
+test("F14-M06 old shared auth and memory records never attach", async () => { const f = fixture(); f.context._inspect.secretStore.set("soterai.localBrokerToken", "old-data-" + "d".repeat(40)); f.context._inspect.secretStore.set("soterai.localBrokerControlToken", "old-control-" + "c".repeat(40)); f.context._inspect.globalStore.set("soterai.memorySessionId", "old-session"); await f.manager.start(); assert.equal(f.envs.length, 1); assert.equal(f.manager.memorySessionId, undefined); assert.ok(!f.envs[0].SOTERAI_BROKER_TOKEN!.startsWith("old-data")); await f.manager.stop(); });
+test("F14-M07 restricted workspace never starts provider-bearing child", async () => { const f = fixture(); stub.state.isTrusted = false; f.context._inspect.secretStore.set("soterai.providerApiKey", "synthetic-provider-private"); await assert.rejects(f.manager.start()); assert.equal(f.envs.length, 0); await f.manager.stop(); });
+test("F14-M08 lockdown refuses child creation", async () => { const f = fixture(); f.context._inspect.globalStore.set("soterai.lockdown", { active: true }); await assert.rejects(f.manager.start()); assert.equal(f.envs.length, 0); await f.manager.stop(); });
+test("F14-M09 stale configured port does not determine actual owned endpoint", async () => { const f = fixture(); stub.state.config.set("soterai.broker.port", 47321); await f.manager.start(); assert.equal(f.manager.port, 49153); assert.equal(f.envs[0].SOTERAI_BROKER_PORT, "0"); await f.manager.stop(); });
+test("F14-M10 provider/config drift withholds rather than falling back to old listener", async () => { const f = fixture(); await f.manager.start(); stub.state.config.set("soterai.broker.openAIProviderUrl", "https://fixture.invalid/v1"); await assert.rejects(f.manager.request("/version")); await f.manager.stop(); });
+test("F14-M11 shutdown never disables stored policy or deletes another window auth", async () => { const f = fixture(); f.context._inspect.secretStore.set("soterai.localBrokerToken", "retained-shared-old-data"); await f.manager.start(); await f.manager.clearToken(); assert.equal(f.context._inspect.secretStore.get("soterai.localBrokerToken"), "retained-shared-old-data"); assert.ok(!f.routes.includes("/v1/safe-mode/disable")); });
+test("F14-M12 unavailable status never probes configured fixed port", async () => { const f = fixture(); const status = await f.manager.status(); assert.equal(status.running, false); assert.equal(f.routes.length, 0); await f.manager.stop(); });
+test("F14-M13 another window's canary SecretStorage change withdraws this owned broker", async () => { const f = fixture(); await f.manager.start(); f.secretChanged.fire({ key: "soterai.canaryTokens" }); assert.notEqual(f.manager.ownedSnapshot().state, "healthy"); await f.manager.stop(); });
+test("F14-M14 provider SecretStorage change withdraws but unrelated secret event keeps ownership", async () => { const f = fixture(); await f.manager.start(); f.secretChanged.fire({ key: "unrelated.synthetic.preference" }); assert.equal(f.manager.ownedSnapshot().state, "healthy"); f.secretChanged.fire({ key: "soterai.providerApiKey" }); assert.notEqual(f.manager.ownedSnapshot().state, "healthy"); await f.manager.stop(); });

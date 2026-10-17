@@ -1,0 +1,340 @@
+﻿TAP version 13
+# Subtest: F14-B01 lifecycle identity is controller authenticated and session bound
+ok 1 - F14-B01 lifecycle identity is controller authenticated and session bound
+  ---
+  duration_ms: 121.0297
+  type: 'test'
+  ...
+# Subtest: F14-B02 no session cannot manage owned broker
+ok 2 - F14-B02 no session cannot manage owned broker
+  ---
+  duration_ms: 22.5795
+  type: 'test'
+  ...
+# Subtest: F14-B02 wrong session cannot manage owned broker
+ok 3 - F14-B02 wrong session cannot manage owned broker
+  ---
+  duration_ms: 14.0229
+  type: 'test'
+  ...
+# Subtest: F14-B02 client token cannot manage owned broker
+ok 4 - F14-B02 client token cannot manage owned broker
+  ---
+  duration_ms: 17.6629
+  type: 'test'
+  ...
+# Subtest: F14-B02 wrong auth cannot manage owned broker
+ok 5 - F14-B02 wrong auth cannot manage owned broker
+  ---
+  duration_ms: 17.7823
+  type: 'test'
+  ...
+# Subtest: F14-B03 data credential never requires shared window state for allowed data routes
+ok 6 - F14-B03 data credential never requires shared window state for allowed data routes
+  ---
+  duration_ms: 13.1856
+  type: 'test'
+  ...
+# Subtest: F14-B04 owner session is validated before any bind
+ok 7 - F14-B04 owner session is validated before any bind
+  ---
+  duration_ms: 0.9402
+  type: 'test'
+  ...
+# Subtest: F14-B05 separate windows reject each other's session even with same synthetic controller
+ok 8 - F14-B05 separate windows reject each other's session even with same synthetic controller
+  ---
+  duration_ms: 12.7003
+  type: 'test'
+  ...
+# Subtest: F14-C01 real owned CLI binds atomically despite occupied legacy47321
+ok 9 - F14-C01 real owned CLI binds atomically despite occupied legacy47321
+  ---
+  duration_ms: 733.975
+  type: 'test'
+  ...
+# Subtest: F14-C02 two actual windows own different bound ports and reject cross credentials
+ok 10 - F14-C02 two actual windows own different bound ports and reject cross credentials
+  ---
+  duration_ms: 1416.669
+  type: 'test'
+  ...
+# Subtest: F14-C03 real initialization syncs canaries, restores strict mode, then closes without tokens in output
+ok 11 - F14-C03 real initialization syncs canaries, restores strict mode, then closes without tokens in output
+  ---
+  duration_ms: 816.4022
+  type: 'test'
+  ...
+# Subtest: F14-C04 parent IPC disconnect exits its own real broker with drained pipes
+ok 12 - F14-C04 parent IPC disconnect exits its own real broker with drained pipes
+  ---
+  duration_ms: 734.4787
+  type: 'test'
+  ...
+# Subtest: F14-L01 port0 and distinct private credentials never enter argv or snapshots
+ok 13 - F14-L01 port0 and distinct private credentials never enter argv or snapshots
+  ---
+  duration_ms: 101.0681
+  type: 'test'
+  ...
+# Subtest: F14-L02 simultaneous start calls own one launch
+ok 14 - F14-L02 simultaneous start calls own one launch
+  ---
+  duration_ms: 3.3183
+  type: 'test'
+  ...
+# Subtest: F14-L03 independent window instances never reuse credentials or sessions
+ok 15 - F14-L03 independent window instances never reuse credentials or sessions
+  ---
+  duration_ms: 3.7463
+  type: 'test'
+  ...
+# Subtest: F14-L04 no port probe or shared token attachment before private ready
+ok 16 - F14-L04 no port probe or shared token attachment before private ready
+  ---
+  duration_ms: 2.2374
+  type: 'test'
+  ...
+# Subtest: F14-L05 malformed READY missing withholds readiness
+ok 17 - F14-L05 malformed READY missing withholds readiness
+  ---
+  duration_ms: 1.7042
+  type: 'test'
+  ...
+# Subtest: F14-L05 malformed READY array withholds readiness
+ok 18 - F14-L05 malformed READY array withholds readiness
+  ---
+  duration_ms: 1.6724
+  type: 'test'
+  ...
+# Subtest: F14-L05 malformed READY wrong type withholds readiness
+ok 19 - F14-L05 malformed READY wrong type withholds readiness
+  ---
+  duration_ms: 2.3459
+  type: 'test'
+  ...
+# Subtest: F14-L05 malformed READY wrong session withholds readiness
+ok 20 - F14-L05 malformed READY wrong session withholds readiness
+  ---
+  duration_ms: 1.642
+  type: 'test'
+  ...
+# Subtest: F14-L05 malformed READY unknown version withholds readiness
+ok 21 - F14-L05 malformed READY unknown version withholds readiness
+  ---
+  duration_ms: 1.6352
+  type: 'test'
+  ...
+# Subtest: F14-L05 malformed READY port zero withholds readiness
+ok 22 - F14-L05 malformed READY port zero withholds readiness
+  ---
+  duration_ms: 1.611
+  type: 'test'
+  ...
+# Subtest: F14-L05 malformed READY port overflow withholds readiness
+ok 23 - F14-L05 malformed READY port overflow withholds readiness
+  ---
+  duration_ms: 3.2372
+  type: 'test'
+  ...
+# Subtest: F14-L05 malformed READY port string withholds readiness
+ok 24 - F14-L05 malformed READY port string withholds readiness
+  ---
+  duration_ms: 1.1762
+  type: 'test'
+  ...
+# Subtest: F14-L05 malformed READY port float withholds readiness
+ok 25 - F14-L05 malformed READY port float withholds readiness
+  ---
+  duration_ms: 1.2343
+  type: 'test'
+  ...
+# Subtest: F14-L05 malformed READY extra secret field withholds readiness
+ok 26 - F14-L05 malformed READY extra secret field withholds readiness
+  ---
+  duration_ms: 1.1203
+  type: 'test'
+  ...
+# Subtest: F14-L06 lifecycle identity uses separate controller token and exact session header
+ok 27 - F14-L06 lifecycle identity uses separate controller token and exact session header
+  ---
+  duration_ms: 3.17
+  type: 'test'
+  ...
+# Subtest: F14-L07 initialization must complete before data credentials publish
+ok 28 - F14-L07 initialization must complete before data credentials publish
+  ---
+  duration_ms: 2.255
+  type: 'test'
+  ...
+# Subtest: F14-L08 initialization failure requests STOP and never publishes
+ok 29 - F14-L08 initialization failure requests STOP and never publishes
+  ---
+  duration_ms: 3.8341
+  type: 'test'
+  ...
+# Subtest: F14-L09 disabled flag refuses before prepare or launch
+ok 30 - F14-L09 disabled flag refuses before prepare or launch
+  ---
+  duration_ms: 0.5137
+  type: 'test'
+  ...
+# Subtest: F14-L10 config drift refuses public requests and startup reuse
+ok 31 - F14-L10 config drift refuses public requests and startup reuse
+  ---
+  duration_ms: 2.9273
+  type: 'test'
+  ...
+# Subtest: F14-L11 stop while prepare is held prevents late child launch
+ok 32 - F14-L11 stop while prepare is held prevents late child launch
+  ---
+  duration_ms: 0.8843
+  type: 'test'
+  ...
+# Subtest: F14-L12 stop before READY cannot become healthy later
+ok 33 - F14-L12 stop before READY cannot become healthy later
+  ---
+  duration_ms: 1.348
+  type: 'test'
+  ...
+# Subtest: F14-L13 unconfirmed stop retains ownership and blocks replacement
+ok 34 - F14-L13 unconfirmed stop retains ownership and blocks replacement
+  ---
+  duration_ms: 25.3679
+  type: 'test'
+  ...
+# Subtest: F14-L14 exit without close and drained pipes is not release
+ok 35 - F14-L14 exit without close and drained pipes is not release
+  ---
+  duration_ms: 17.0733
+  type: 'test'
+  ...
+# Subtest: F14-L15 close without both pipe EOF retains ownership
+ok 36 - F14-L15 close without both pipe EOF retains ownership
+  ---
+  duration_ms: 30.893
+  type: 'test'
+  ...
+# Subtest: F14-L16 completed restart changes session, port ownership and credentials
+ok 37 - F14-L16 completed restart changes session, port ownership and credentials
+  ---
+  duration_ms: 12.9188
+  type: 'test'
+  ...
+# Subtest: F14-L17 dispose prevents future starts without process signaling
+ok 38 - F14-L17 dispose prevents future starts without process signaling
+  ---
+  duration_ms: 11.642
+  type: 'test'
+  ...
+# Subtest: F14-L18 request refuses absolute URL/traversal/query/user header override
+ok 39 - F14-L18 request refuses absolute URL/traversal/query/user header override
+  ---
+  duration_ms: 8.4
+  type: 'test'
+  ...
+# Subtest: F14-L19 no raw child output or error text reaches state
+ok 40 - F14-L19 no raw child output or error text reaches state
+  ---
+  duration_ms: 3.4954
+  type: 'test'
+  ...
+# Subtest: F14-L20 withdrawal invalidates credentials immediately
+ok 41 - F14-L20 withdrawal invalidates credentials immediately
+  ---
+  duration_ms: 6.7546
+  type: 'test'
+  ...
+# Subtest: F14-L21 stale child events cannot erase a newer generation
+ok 42 - F14-L21 stale child events cannot erase a newer generation
+  ---
+  duration_ms: 4.2205
+  type: 'test'
+  ...
+# Subtest: F14-L22 unexpected owned exit invalidates credentials and never adopts a listener
+ok 43 - F14-L22 unexpected owned exit invalidates credentials and never adopts a listener
+  ---
+  duration_ms: 2.6498
+  type: 'test'
+  ...
+# Subtest: F14-M01 machine flag disable refuses without launch or legacy attach
+ok 44 - F14-M01 machine flag disable refuses without launch or legacy attach
+  ---
+  duration_ms: 3.8868
+  type: 'test'
+  ...
+# Subtest: F14-M02 workspace flag cannot override machine disable
+ok 45 - F14-M02 workspace flag cannot override machine disable
+  ---
+  duration_ms: 1.0793
+  type: 'test'
+  ...
+# Subtest: F14-M03 startup restores strict policy and complete canaries before healthy
+ok 46 - F14-M03 startup restores strict policy and complete canaries before healthy
+  ---
+  duration_ms: 64.951
+  type: 'test'
+  ...
+# Subtest: F14-M04 malformed saved safe mode fails before child launch
+ok 47 - F14-M04 malformed saved safe mode fails before child launch
+  ---
+  duration_ms: 1.7204
+  type: 'test'
+  ...
+# Subtest: F14-M05 saved enterprise policy survives stop and new generation
+ok 48 - F14-M05 saved enterprise policy survives stop and new generation
+  ---
+  duration_ms: 25.8457
+  type: 'test'
+  ...
+# Subtest: F14-M06 old shared auth and memory records never attach
+ok 49 - F14-M06 old shared auth and memory records never attach
+  ---
+  duration_ms: 8.2843
+  type: 'test'
+  ...
+# Subtest: F14-M07 restricted workspace never starts provider-bearing child
+ok 50 - F14-M07 restricted workspace never starts provider-bearing child
+  ---
+  duration_ms: 0.5316
+  type: 'test'
+  ...
+# Subtest: F14-M08 lockdown refuses child creation
+ok 51 - F14-M08 lockdown refuses child creation
+  ---
+  duration_ms: 0.4372
+  type: 'test'
+  ...
+# Subtest: F14-M09 stale configured port does not determine actual owned endpoint
+ok 52 - F14-M09 stale configured port does not determine actual owned endpoint
+  ---
+  duration_ms: 7.9388
+  type: 'test'
+  ...
+# Subtest: F14-M10 provider/config drift withholds rather than falling back to old listener
+ok 53 - F14-M10 provider/config drift withholds rather than falling back to old listener
+  ---
+  duration_ms: 7.6388
+  type: 'test'
+  ...
+# Subtest: F14-M11 shutdown never disables stored policy or deletes another window auth
+ok 54 - F14-M11 shutdown never disables stored policy or deletes another window auth
+  ---
+  duration_ms: 8.3614
+  type: 'test'
+  ...
+# Subtest: F14-M12 unavailable status never probes configured fixed port
+ok 55 - F14-M12 unavailable status never probes configured fixed port
+  ---
+  duration_ms: 0.4338
+  type: 'test'
+  ...
+1..55
+# tests 55
+# suites 0
+# pass 55
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 7047.9799

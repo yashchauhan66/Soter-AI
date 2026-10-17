@@ -114,7 +114,7 @@ test("AI routing keeps review, encrypted original backup and authenticated smoke
     await fs.writeFile(configPath, original);
     stub.resetState(workspace);
     const context = stub.makeExtensionContext(path.join(root, "storage"));
-    await context.secrets.store("soterai.localBrokerToken", "synthetic-local-broker-token");
+    await context.secrets.store("soterai.localBrokerToken", "synthetic-stale-shared-broker-token");
     const requests: Array<{ url: string; headers?: Record<string, string> }> = [];
     const setupEvents: string[] = [];
     const mocks: Array<{ mock: { restore(): void } }> = [
@@ -124,7 +124,7 @@ test("AI routing keeps review, encrypted original backup and authenticated smoke
             return { status: 200, text: async () => "data: [DONE]\n\n" };
         }),
     ];
-    registerBrokerCommands(context as never, { start: async () => { setupEvents.push("broker-start"); return { running: true, state: "healthy", url: "http://127.0.0.1:47321" }; } } as never, () => {});
+    registerBrokerCommands(context as never, { port: 49155, url: "http://127.0.0.1:49155", ownedSnapshot: () => ({ state: "healthy", port: 49155, url: "http://127.0.0.1:49155", session: "synthetic-owned-session" }), getClientToken: async () => "synthetic-current-owned-broker-token", start: async () => { setupEvents.push("broker-start"); return { running: true, state: "healthy", url: "http://127.0.0.1:49155" }; } } as never, () => {});
     try {
         const decline = mock.method(stub.window, "showInformationMessage", async () => undefined);
         const cancelled = await stub.commands.executeCommand("soterai.secureAllAI") as RoutingSetupResult;
@@ -140,8 +140,9 @@ test("AI routing keeps review, encrypted original backup and authenticated smoke
         assert.equal(applied.status, "applied"); assert.equal(applied.changedConfigs, 1);
         assert.deepEqual(setupEvents.slice(0, 2), ["coverage", "broker-start"]);
         assert.ok(setupEvents.includes("operational-result"));
-        assert.match(await fs.readFile(configPath, "utf8"), /127\.0\.0\.1:47321/);
-        assert.ok(requests.some(item => item.headers?.authorization === "Bearer synthetic-local-broker-token"));
+        assert.match(await fs.readFile(configPath, "utf8"), /127\.0\.0\.1:49155/);
+        assert.ok(requests.some(item => item.headers?.authorization === "Bearer synthetic-current-owned-broker-token"));
+        assert.ok(requests.every(item => item.headers?.authorization !== "Bearer synthetic-stale-shared-broker-token"));
         const saved = context.globalState.get<Array<{ path: string; backupPath: string }>>("soterai.secureAllAI.backups")!;
         assert.equal(saved.length, 1);
         assert.match(saved[0].backupPath, /^[a-f0-9]{32}$/);

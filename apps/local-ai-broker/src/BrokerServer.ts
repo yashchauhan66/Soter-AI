@@ -80,6 +80,8 @@ export interface SafeBrokerEvent {
 }
 
 export interface BrokerServerOptions {
+    /** Private owned-child controller session; data clients use distinct auth. */
+    ownerSession?: string;
     /** Data-plane token handed to AI clients. Never authorizes management. */
     token: string;
     /** Separate controller credential; omitted means management is unavailable. */
@@ -167,11 +169,15 @@ export class BrokerServer {
     private readonly rateBuckets = new Map<string, { minute: number; count: number }>();
     private safeMode = { enabled: false, level: "developer" as SafeModeLevel };
     private startedAt?: string;
+    private stopping = false;
     private readonly checkpoints?: FilesystemCheckpointStore;
     private canaries: Array<Pick<Canary, "id" | "token" | "hash" | "redactedPreview">>;
     private canariesReady: boolean;
 
     constructor(private readonly options: BrokerServerOptions) {
+        if (options.ownerSession !== undefined && (!/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/.test(options.ownerSession) || !options.controlToken)) {
+            throw new Error("Invalid owned broker session");
+        }
         if (!options.token || options.token.length < 32) throw new Error("A broker auth token of at least 32 characters is required");
         if (options.controlToken !== undefined && (options.controlToken.length < 32 || options.controlToken === options.token)) {
             throw new Error("Controller auth must be at least 32 characters and distinct from client auth");
@@ -200,13 +206,18 @@ export class BrokerServer {
             this.server.listen(port, BROKER_HOST);
         });
         this.startedAt = new Date().toISOString();
+        this.stopping = false;
         this.safeLog("broker_started", { host: BROKER_HOST, port: this.address().port });
         return this.address();
     }
 
     async stop(): Promise<void> {
+        this.stopping = true;
         if (!this.server.listening) return;
-        await new Promise<void>((resolve, reject) => this.server.close((error) => error ? reject(error) : resolve()));
+        await new Promise<void>((resolve, reject) => {
+            this.server.close((error) => error ? reject(error) : resolve());
+            this.server.closeIdleConnections();
+        });
     }
 
     address(): { host: typeof BROKER_HOST; port: number; url: string } {
@@ -219,6 +230,7 @@ export class BrokerServer {
         const requestId = randomUUID();
         try {
             this.applySecurityHeaders(res);
+            if (this.stopping) throw new HttpError(503, "broker_stopping", "Owned broker is stopping; request withheld");
             this.enforceOrigin(req);
             const url = new URL(req.url ?? "/", `http://${BROKER_HOST}`);
             if (req.method === "OPTIONS") throw new HttpError(405, "cors_disabled", "Browser cross-origin requests are disabled");
@@ -246,12 +258,18 @@ export class BrokerServer {
             if (!controller && !client) {
                 throw new HttpError(401, "unauthorized", "A valid local broker bearer token is required");
             }
+            if (controller && this.options.ownerSession !== undefined && req.headers["x-soterai-session"] !== this.options.ownerSession) {
+                throw new HttpError(403, "owner_session_required", "This controller belongs to a different broker session");
+            }
             if (!controller && !isClientRoute(req.method, url.pathname)) {
                 throw new HttpError(403, "control_auth_required", "This operation requires the separate local controller credential");
             }
 
             if (req.method === "GET" && url.pathname === "/version") {
                 return this.json(res, 200, { name: "@soterai/local-ai-broker", version: BROKER_VERSION });
+            }
+            if (req.method === "GET" && url.pathname === "/v1/lifecycle/status" && controller && this.options.ownerSession) {
+                return this.json(res, 200, { session: this.options.ownerSession, version: BROKER_VERSION, ready: true });
             }
             if (req.method === "GET" && url.pathname === "/v1/safe-mode/status") {
                 return this.json(res, 200, { ...this.safeMode, rules: generateSafeModePolicy(this.safeMode.level).rules });

@@ -1,427 +1,130 @@
 import * as vscode from "vscode";
-import { spawn, type ChildProcess } from "node:child_process";
-import { randomBytes, randomUUID } from "node:crypto";
+import { randomUUID } from "node:crypto";
 import { LOCKDOWN_STATE_KEY, type LockdownRecord } from "../protection/LockdownState";
-import { readBoundedResponseBody } from "../security/boundedResponse";
 import { BrokerStartFailure } from "./autoStart";
 import { CanaryManager } from "../firewall/CanaryManager";
 import { brokerChildEnvironment } from "../security/childEnvironment";
+import { OwnedBrokerLifecycle, type OwnedBrokerOptions, type OwnedBrokerRequest, type OwnedBrokerSnapshot } from "./OwnedBrokerLifecycle";
 
-const TOKEN_KEY = "soterai.localBrokerToken";
-const CONTROL_TOKEN_KEY = "soterai.localBrokerControlToken";
-const SESSION_KEY = "soterai.memorySessionId";
 export const EXPECTED_BROKER_VERSION = "0.2.0";
-
-// Declared in ./autoStart because that module does not import `vscode` and can
-// therefore be unit-tested; re-exported here because this is where it is
-// thrown, so callers can catch it without knowing where it lives.
 export { BrokerStartFailure } from "./autoStart";
-
-export type BrokerLifecycleState =
-    | "stopped"
-    | "starting"
-    | "healthy"
-    | "degraded"
-    | "incompatible"
-    | "error"
-    | "stopping";
-
+export type BrokerLifecycleState = "stopped" | "starting" | "healthy" | "degraded" | "incompatible" | "error" | "stopping" | "STOP_UNCONFIRMED";
 export interface BrokerStatus {
-    running: boolean;
-    url: string;
-    state: BrokerLifecycleState;
-    version?: string;
-    lastError?: string;
-    checkedAt?: string;
-    restartCount?: number;
-    safeMode?: { enabled: boolean; level: string };
-    memorySessionId?: string;
+    running: boolean; url: string; state: BrokerLifecycleState; version?: string; lastError?: string; checkedAt?: string;
+    restartCount?: number; safeMode?: { enabled: boolean; level: string }; memorySessionId?: string;
 }
+interface SavedMode { enabled: boolean; level: "developer" | "strict" | "enterprise" }
 
+/** One window owns one private IPC child. No saved token/PID/port is adopted. */
 export class BrokerManager implements vscode.Disposable {
-    private child?: ChildProcess;
-    private startPromise?: Promise<BrokerStatus>;
-    private heartbeat?: ReturnType<typeof setInterval>;
-    private intentionalStop = false;
-    private restartTimer?: ReturnType<typeof setTimeout>;
-    private restartCount = 0;
-    private lifecycle: BrokerLifecycleState = "stopped";
-    private lastError?: string;
-
     private readonly canaries: CanaryManager;
-    private readonly canaryListener: vscode.Disposable;
-    private canarySync: Promise<void> = Promise.resolve();
-    private canarySyncError?: string;
-
-    constructor(private readonly context: vscode.ExtensionContext) {
+    private readonly lifecycle: OwnedBrokerLifecycle;
+    private readonly listeners: vscode.Disposable[];
+    private memorySession?: string;
+    private disposed = false;
+    constructor(private readonly context: vscode.ExtensionContext,
+        transport: Pick<OwnedBrokerOptions, "launch" | "fetchImpl" | "startupMs" | "stopMs"> = {}) {
         this.canaries = new CanaryManager(context);
-        this.canaryListener = this.canaries.onDidChange(() => {
-            if (this.lifecycle === "healthy") void this.syncCanaries().catch(() => {
-                this.lifecycle = "degraded";
-                void vscode.window.showWarningMessage("SoterAI could not synchronize canary monitoring with the local broker. Restart the broker before relying on canary alerts.");
-            });
+        // User input never controls the executable or argv: only the bundled entry.
+        this.lifecycle = new OwnedBrokerLifecycle({ ...transport, script: context.asAbsolutePath("dist/local-ai-broker.js"),
+            enabled: () => this.enabled(), fingerprint: () => this.binding(), prepare: () => this.prepare(), initialize: request => this.initialize(request),
         });
+        this.listeners = [this.canaries.onDidChange(() => this.withdraw()),
+            vscode.workspace.onDidChangeConfiguration(event => { if (event.affectsConfiguration("soterai")) this.withdraw(); }),
+            this.context.secrets.onDidChange(event => { if (["soterai.providerApiKey", "soterai.canaryTokens"].includes(event.key)) this.withdraw(); }),
+        ];
     }
-
-    private syncCanaries(): Promise<void> {
-        const update = this.canarySync.then(async () => {
-            const canaries = await this.canaries.loadForScan();
-            const result = await this.request<{ synchronized: boolean; count: number }>("/v1/canaries/sync", { method: "POST", body: JSON.stringify({ canaries }) });
-            if (result.synchronized !== true || result.count !== canaries.length) throw new Error("Canary synchronization was not acknowledged.");
-            this.canarySyncError = undefined;
-        }).catch(() => {
-            this.canarySyncError = "Local broker canary monitoring is unavailable.";
-            throw new BrokerStartFailure(this.canarySyncError, false);
-        });
-        this.canarySync = update.catch(() => undefined);
-        return update;
+    private enabled(): boolean {
+        if (this.disposed || !vscode.workspace.isTrusted || this.isLockedDown()) return false;
+        try {
+            const config = vscode.workspace.getConfiguration("soterai"), inspected = config.inspect<boolean>("lite.gatewayLifecycle");
+            return (inspected ? inspected.globalValue ?? inspected.defaultValue ?? true : config.get("lite.gatewayLifecycle", true)) === true;
+        } catch { return false; }
     }
-
-    get port(): number {
-        return vscode.workspace.getConfiguration("soterai").get<number>("broker.port", 47321);
-    }
-
-    get url(): string { return `http://127.0.0.1:${this.port}`; }
-
-    get memorySessionId(): string | undefined { return this.context.globalState.get<string>(SESSION_KEY); }
-
-    async start(): Promise<BrokerStatus> {
-        if (this.startPromise) return this.startPromise;
-        this.startPromise = this.startInternal();
-        try { return await this.startPromise; } finally { this.startPromise = undefined; }
-    }
-
-    private async startInternal(): Promise<BrokerStatus> {
-        if (this.isLockedDown()) throw new BrokerStartFailure("Emergency Lockdown is active; broker start is blocked", false);
-        const existing = await this.status();
-        if (existing.running && existing.version === EXPECTED_BROKER_VERSION
-            && (existing.state === "healthy" || this.canarySyncError)) {
-            await this.syncCanaries();
-            this.lifecycle = "healthy";
-            return { ...existing, state: "healthy", lastError: undefined };
-        }
-        if (existing.state === "incompatible") {
-            this.lifecycle = "incompatible";
-            this.intentionalStop = true;
-            await this.stop();
-            throw this.incompatibleError(existing.version);
-        }
-        this.clearRestartTimer();
-
-        // Retire the broker we already own before spawning its replacement.
-        //
-        // `this.child = spawn(...)` below overwrites this reference, so without
-        // this the running process is orphaned: it keeps the port, stops being
-        // stoppable, and becomes invisible to dispose() — so it outlives the
-        // editor. And one slow health check is enough to get here with a
-        // perfectly good broker running, because status() reports a busy broker
-        // as "not healthy". The old code then spawned a duplicate that could not
-        // bind, waited three seconds, and reported failure — after which no
-        // restart could ever recover, because the process holding the port was
-        // no longer referenced by anything.
-        if (this.child) {
-            this.intentionalStop = true;
-            await this.stop();
-        }
-
-        // Whatever still holds the port is not ours, and a second listener
-        // cannot bind it. Saying so beats spawning a process that is guaranteed
-        // to fail and calling that a timeout. Two editors running SoterAI at
-        // once — VS Code and Cursor, say — reach this every time, since each
-        // keeps its own broker token and cannot use the other's broker.
-        if (await this.isPortServed()) {
-            this.lifecycle = "error";
-            this.lastError = `port ${this.port} is already in use`;
-            throw new BrokerStartFailure(
-                `${this.url} is already in use, so the local AI broker cannot start there. ` +
-                    'If another editor is already running SoterAI, give this one its own port with the "soterai.broker.port" setting.',
-                false,
-            );
-        }
-
-        this.intentionalStop = false;
-        this.lifecycle = "starting";
-        this.lastError = undefined;
-        this.canarySyncError = undefined;
-        const token = await this.getOrCreateToken();
-        const controlToken = await this.getOrCreateToken(CONTROL_TOKEN_KEY);
-        const script = this.context.asAbsolutePath("dist/local-ai-broker.js");
+    private binding(): string {
         const config = vscode.workspace.getConfiguration("soterai");
-        // The stored provider key is withheld in a restricted workspace.
-        //
-        // The manifest's own `untrustedWorkspaces` description promises exactly
-        // this — "Cloud connection, token storage, and remote scan escalation
-        // are disabled in untrusted workspaces" — but the read below used to be
-        // unconditional. That was survivable while starting the broker required
-        // an explicit user command; now that activation starts it automatically,
-        // opening an untrusted folder would hand the key to a child process with
-        // no user action at all. Local scanning is unaffected: it needs no
-        // provider key, which is what keeps the manifest's other promise, that
-        // "scanning works in restricted mode".
-        const providerKey = vscode.workspace.isTrusted
-            ? await this.context.secrets.get("soterai.providerApiKey")
-            : undefined;
-        const env: NodeJS.ProcessEnv = {
-            ...brokerChildEnvironment(process.env),
-            ELECTRON_RUN_AS_NODE: "1",
-            SOTERAI_BROKER_TOKEN: token,
-            SOTERAI_BROKER_CONTROL_TOKEN: controlToken,
-            SOTERAI_BROKER_PORT: String(this.port),
-            SOTERAI_REQUIRE_CANARY_SYNC: "1",
-            SOTERAI_BROKER_STORAGE: this.context.globalStorageUri.fsPath,
-            SOTERAI_OPENAI_PROVIDER_URL: config.get<string>("broker.openAIProviderUrl", ""),
-            SOTERAI_ANTHROPIC_PROVIDER_URL: config.get<string>("broker.anthropicProviderUrl", ""),
-            SOTERAI_PROVIDER_API_KEY: providerKey,
-        };
-        // Launches only the bundled local broker entry with Electron's Node
-        // runtime. User input never controls the executable or argv.
-        //
-        // stdout and stderr are piped rather than discarded: the bundle prints
-        // its reason for refusing to start ("Broker token must be at least 32
-        // characters", a bind error) and exits, and with that discarded neither
-        // the user nor a developer could ever learn why protection was
-        // unavailable — the only symptom was a timeout. Both streams are drained
-        // so the child can never block on a full pipe.
-        const child = spawn(process.execPath, [script], { env, windowsHide: true, stdio: ["ignore", "pipe", "pipe"] });
-        this.child = child;
-        let exited = false;
-        let output = "";
-        const collect = (chunk: unknown): void => {
-            if (output.length < 2000) output += String(chunk);
-        };
-        child.stdout?.on("data", collect);
-        child.stderr?.on("data", collect);
-        child.once("error", (error) => {
-            collect(error.message);
-            this.lastError = error.message;
-            this.lifecycle = "error";
-        });
-        child.once("exit", () => {
-            // Read by the loop below. `this.child` is cleared here, so a check
-            // through `this.child?.exitCode` could never see this exit — which
-            // is why every failed start used to burn the full deadline.
-            exited = true;
-            this.child = undefined;
-            this.stopHeartbeat();
-            if (!this.intentionalStop) {
-                this.lifecycle = "degraded";
-                this.scheduleRestart();
-            } else {
-                this.lifecycle = "stopped";
-            }
-        });
-        for (let attempt = 0; attempt < 30; attempt++) {
-            await new Promise((resolve) => setTimeout(resolve, 100));
-            const status = await this.status();
-            if (status.running && status.state === "healthy") {
-                await this.syncCanaries();
-                this.lifecycle = "healthy";
-                this.restartCount = 0;
-                this.startHeartbeat();
-                return { ...status, restartCount: this.restartCount };
-            }
-            if (status.state === "incompatible") {
-                this.lifecycle = "incompatible";
-                this.intentionalStop = true;
-                await this.stop();
-                throw this.incompatibleError(status.version);
-            }
-            if (exited) break;
-        }
-        this.lifecycle = "error";
-        const reason = BrokerManager.summarizeSpawnOutput(
-            output.split(controlToken).join("[redacted]").split(providerKey || "\u0000").join("[redacted]"), token);
-        this.lastError = `Local AI Broker did not become ready before the startup deadline${reason ? `: ${reason}` : ""}`;
-        this.intentionalStop = true;
+        // Compare public routing configuration; never serialize auth material.
+        return JSON.stringify([this.enabled(), vscode.workspace.isTrusted,
+            config.get("broker.openAIProviderUrl", ""), config.get("broker.anthropicProviderUrl", "")]);
+    }
+    private savedMode(): SavedMode {
+        const value = this.context.globalState.get<unknown>("soterai.safeMode");
+        if (value === undefined) return { enabled: true, level: "strict" };
+        if (!value || typeof value !== "object" || Array.isArray(value)) throw new Error("Stored broker policy unavailable");
+        const row = value as Record<string, unknown>, level = row.level ?? (row.enabled === false ? "strict" : undefined);
+        if (typeof row.enabled !== "boolean" || !["developer", "strict", "enterprise"].includes(String(level))) throw new Error("Stored broker policy unavailable");
+        return { enabled: row.enabled, level: level as SavedMode["level"] };
+    }
+    private async prepare(): Promise<NodeJS.ProcessEnv> {
+        this.savedMode(); if (!this.enabled()) throw new Error("Broker unavailable");
+        const config = vscode.workspace.getConfiguration("soterai");
+        const providerKey = vscode.workspace.isTrusted ? await this.context.secrets.get("soterai.providerApiKey") : undefined;
+        if (!this.enabled()) throw new Error("Broker unavailable");
+        return { ...brokerChildEnvironment(process.env), SOTERAI_OPENAI_PROVIDER_URL: config.get<string>("broker.openAIProviderUrl", ""),
+            SOTERAI_ANTHROPIC_PROVIDER_URL: config.get<string>("broker.anthropicProviderUrl", ""), SOTERAI_PROVIDER_API_KEY: providerKey };
+    }
+    private async initialize(request: OwnedBrokerRequest): Promise<void> {
+        const mode = this.savedMode(), registry = await this.canaries.loadForScan();
+        const sync = await request<{ synchronized: boolean; count: number }>("/v1/canaries/sync", { method: "POST", body: JSON.stringify({ canaries: registry }) });
+        if (sync.synchronized !== true || sync.count !== registry.length) throw new Error("Registry unavailable");
+        if (mode.enabled) await request("/v1/safe-mode/enable", { method: "POST", body: JSON.stringify({ level: mode.level }) });
+        if (JSON.stringify(mode) !== JSON.stringify(this.savedMode()) || !this.enabled()) throw new Error("Policy changed");
+    }
+    private withdraw(): void { this.memorySession = undefined; this.lifecycle.invalidate(); void this.lifecycle.stop(); }
+    ownedSnapshot(): OwnedBrokerSnapshot { return this.lifecycle.snapshot(); }
+    get port(): number { return this.lifecycle.snapshot().port ?? 0; }
+    get url(): string { return this.lifecycle.snapshot().url ?? "http://127.0.0.1:0"; }
+    get memorySessionId(): string | undefined { return this.lifecycle.snapshot().state === "healthy" ? this.memorySession : undefined; }
+    async getClientToken(): Promise<string> { return this.lifecycle.clientToken(); }
+    async start(): Promise<BrokerStatus> {
+        if (this.isLockedDown()) throw new BrokerStartFailure("Emergency Lockdown is active; broker start is blocked", false);
+        try { await this.lifecycle.start(); const status = await this.status(); if (!status.running || status.state !== "healthy") throw new Error("Health unavailable"); return status; }
+        catch { throw new BrokerStartFailure("Owned local broker unavailable; protection for routed requests is unavailable. Review broker status and restart.", false); }
+    }
+    async stop(): Promise<void> { this.memorySession = undefined; await this.lifecycle.stop(); }
+    async restart(): Promise<BrokerStatus> {
         await this.stop();
-        // Retryable: a missed startup deadline is usually transient — a cold
-        // disk, or antivirus reading the bundle before the first spawn.
-        throw new BrokerStartFailure(`Local AI Broker did not become ready on 127.0.0.1${reason ? `: ${reason}` : ""}`, true);
+        if (this.lifecycle.snapshot().state === "STOP_UNCONFIRMED") throw new BrokerStartFailure("Owned broker shutdown is unconfirmed; replacement withheld.", false);
+        return this.start();
     }
-
-    private incompatibleError(version: string | undefined): Error {
-        // Not retryable: the bundled broker is whatever it is. Respawning it
-        // cannot change its version, so a retry loop would just delay telling
-        // the user their install is mismatched.
-        return new BrokerStartFailure(
-            `Local AI Broker version ${version ?? "unknown"} is incompatible; expected ${EXPECTED_BROKER_VERSION}`,
-            false,
-        );
-    }
-
-    /**
-     * Is anything at all listening on our port?
-     *
-     * status() collapses "nothing is there" and "it answered, but not the way we
-     * wanted" into the same not-healthy verdict, and the difference decides
-     * whether spawning is recovery or self-harm. Any HTTP reply — 200, 401, 429,
-     * even 404 from an unrelated service — means the port is taken. /health is
-     * the broker's unauthenticated endpoint, so a token mismatch cannot make a
-     * live broker look absent.
-     */
-    private async isPortServed(): Promise<boolean> {
-        const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 750);
-        try {
-            await fetch(`${this.url}/health`, { signal: controller.signal });
-            return true;
-        } catch {
-            return false;
-        } finally {
-            clearTimeout(timeout);
-        }
-    }
-
-    /**
-     * The child's own explanation, trimmed to one line for a notification.
-     *
-     * The token is redacted by exact match: it is in the child's environment, so
-     * a crash dump that echoes the environment would otherwise carry it into a
-     * notification and the status bar tooltip.
-     */
-    private static summarizeSpawnOutput(output: string, token: string): string {
-        if (!output.trim()) return "";
-        return output.split(token).join("[REDACTED]").replace(/\s+/g, " ").trim().slice(0, 300);
-    }
-
-    async stop(): Promise<void> {
-        this.clearRestartTimer();
-        this.intentionalStop = true;
-        this.lifecycle = "stopping";
-        this.stopHeartbeat();
-        const child = this.child;
-        if (!child) { this.lifecycle = "stopped"; return; }
-        this.child = undefined;
-        if (!child.killed) child.kill();
-        await new Promise<void>((resolve) => {
-            if (child.exitCode !== null) return resolve();
-            const timeout = setTimeout(() => { if (!child.killed) child.kill("SIGKILL"); resolve(); }, 2000);
-            child.once("exit", () => { clearTimeout(timeout); resolve(); });
-        });
-        this.lifecycle = "stopped";
-    }
-
-    async restart(): Promise<BrokerStatus> { await this.stop(); this.restartCount = 0; return this.start(); }
-
     async status(): Promise<BrokerStatus> {
-        const base = { running: false, url: this.url, state: this.lifecycle, lastError: this.lastError, checkedAt: new Date().toISOString(), restartCount: this.restartCount } as BrokerStatus;
+        let snapshot = this.lifecycle.snapshot();
+        const base = (): BrokerStatus => ({ running: false, url: this.url, state: snapshot.state, checkedAt: new Date().toISOString(), restartCount: 0 });
+        if (snapshot.state !== "healthy") return base();
         try {
-            const version = await this.request<Record<string, unknown>>("/version", { method: "GET" }, 750);
-            const versionText = typeof version.version === "string" ? version.version : undefined;
-            if (!versionText) return { ...base, state: "degraded" };
-            if (versionText !== EXPECTED_BROKER_VERSION) return { ...base, state: "incompatible", running: true, version: versionText };
-            const safeMode = await this.request<{ enabled: boolean; level: string }>("/v1/safe-mode/status", { method: "GET" }, 750);
-            return { ...base, running: true, state: this.canarySyncError ? "degraded" : "healthy", lastError: this.canarySyncError ?? base.lastError,
-                version: versionText, safeMode, memorySessionId: this.memorySessionId };
-        } catch (error) {
-            return { ...base, state: this.child ? "degraded" : "stopped", memorySessionId: this.memorySessionId, lastError: error instanceof Error ? error.message : "Broker health check failed" };
-        }
+            const identity = await this.lifecycle.request<{ session: string; version: string; ready: boolean }>("/v1/lifecycle/status");
+            if (identity.session !== snapshot.session || identity.version !== EXPECTED_BROKER_VERSION || identity.ready !== true) throw new Error("Identity unavailable");
+            const safeMode = await this.lifecycle.request<{ enabled: boolean; level: string }>("/v1/safe-mode/status");
+            if (typeof safeMode.enabled !== "boolean" || !["developer", "strict", "enterprise"].includes(safeMode.level)) throw new Error("Policy unavailable");
+            return { ...base(), running: true, state: "healthy", version: EXPECTED_BROKER_VERSION, safeMode, memorySessionId: this.memorySessionId };
+        } catch { this.withdraw(); snapshot = this.lifecycle.snapshot(); return { ...base(), lastError: "Owned broker health unavailable; requests withheld." }; }
     }
-
-    async request<T>(path: string, init: RequestInit = {}, timeoutMs = 5000): Promise<T> {
-        if (this.isLockedDown() && path !== "/v1/approvals/clear") throw new Error("Emergency Lockdown is active; broker requests fail closed");
-        const token = await this.context.secrets.get(CONTROL_TOKEN_KEY);
-        if (!token) throw new Error("Local broker token is not configured");
-        const headers = new Headers(init.headers);
-        headers.set("authorization", `Bearer ${token}`);
-        if (init.body) headers.set("content-type", "application/json");
-        const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), timeoutMs);
-        try {
-            const response = await fetch(`${this.url}${path}`, { ...init, headers, redirect: "error", signal: controller.signal });
-            const raw = await readBoundedResponseBody(response);
-            let body: (T & { error?: { message?: string } }) | undefined;
-            try { body = raw ? JSON.parse(raw) as T & { error?: { message?: string } } : undefined; } catch { throw new Error(`Broker returned malformed JSON (${response.status})`); }
-            if (!response.ok) throw new Error(body?.error?.message ?? `Broker request failed (${response.status})`);
-            if (!body) throw new Error("Broker returned an empty response");
-            return body;
-        } finally { clearTimeout(timeout); }
+    async request<T>(route: string, init: RequestInit = {}, timeoutMs = 5000): Promise<T> {
+        if (!this.enabled()) { this.withdraw(); throw new Error("Owned broker unavailable; requests withheld."); }
+        return this.lifecycle.request<T>(route, init, timeoutMs);
     }
-
-    async rotateToken(): Promise<void> {
-        const next = randomBytes(32).toString("base64url");
-        await this.request("/v1/auth/rotate", { method: "POST", body: JSON.stringify({ token: next }) });
-        await this.context.secrets.store(TOKEN_KEY, next);
-    }
-
-    async clearToken(): Promise<void> {
-        await this.stop();
-        await this.context.secrets.delete(TOKEN_KEY);
-        await this.context.secrets.delete(CONTROL_TOKEN_KEY);
-    }
-
+    async rotateToken(): Promise<void> { await this.restart(); }
+    async clearToken(): Promise<void> { await this.stop(); }
     async startMemorySession(): Promise<string> {
-        await this.start();
-        const sessionId = randomUUID();
+        await this.start(); const sessionId = randomUUID();
         await this.request("/v1/memory/session/start", { method: "POST", body: JSON.stringify({ sessionId, tool: "VS Code", provider: "SoterAI" }) });
-        await this.context.globalState.update(SESSION_KEY, sessionId);
-        return sessionId;
+        this.memorySession = sessionId; return sessionId;
     }
-
     async endMemorySession(): Promise<void> {
-        const sessionId = this.memorySessionId;
-        if (!sessionId) return;
-        await this.request("/v1/memory/session/end", { method: "POST", body: JSON.stringify({ sessionId }) });
-        await this.context.globalState.update(SESSION_KEY, undefined);
+        const sessionId = this.memorySessionId; if (!sessionId) return;
+        await this.request("/v1/memory/session/end", { method: "POST", body: JSON.stringify({ sessionId }) }); this.memorySession = undefined;
     }
-
     async clearMemorySession(): Promise<void> {
         const sessionId = this.memorySessionId;
-        await this.request("/v1/memory/session/clear", { method: "POST", body: JSON.stringify({ sessionId }) });
-        await this.context.globalState.update(SESSION_KEY, undefined);
+        await this.request("/v1/memory/session/clear", { method: "POST", body: JSON.stringify({ sessionId }) }); this.memorySession = undefined;
     }
-
     async recordMemoryEvent(event: Record<string, unknown>): Promise<void> {
-        let sessionId = this.memorySessionId;
-        if (!sessionId) sessionId = await this.startMemorySession();
+        const sessionId = this.memorySessionId ?? await this.startMemorySession();
         await this.request("/v1/memory/session/event", { method: "POST", body: JSON.stringify({ sessionId, event }) });
     }
-
-    dispose(): void { this.canaryListener.dispose(); void this.stop(); }
-
-    private startHeartbeat(): void {
-        this.stopHeartbeat();
-        this.heartbeat = setInterval(() => {
-            void this.status().then((status) => {
-                if (!status.running && !this.intentionalStop) this.lifecycle = "degraded";
-            });
-        }, 5_000);
-    }
-
-    private stopHeartbeat(): void {
-        if (this.heartbeat) clearInterval(this.heartbeat);
-        this.heartbeat = undefined;
-    }
-
-    private scheduleRestart(): void {
-        if (this.intentionalStop || this.restartTimer || this.restartCount >= 3) return;
-        const delay = Math.min(30_000, 500 * 2 ** this.restartCount);
-        this.restartCount++;
-        this.restartTimer = setTimeout(() => {
-            this.restartTimer = undefined;
-            void this.start().catch(() => { /* status remains degraded/error; no unbounded retry */ });
-        }, delay);
-    }
-
-    private clearRestartTimer(): void {
-        if (this.restartTimer) clearTimeout(this.restartTimer);
-        this.restartTimer = undefined;
-    }
-
-    private async getOrCreateToken(key = TOKEN_KEY): Promise<string> {
-        let token = await this.context.secrets.get(key);
-        if (!token) {
-            token = randomBytes(32).toString("base64url");
-            await this.context.secrets.store(key, token);
-        }
-        return token;
-    }
-
-    private isLockedDown(): boolean {
-        return Boolean(this.context.globalState.get<LockdownRecord>(LOCKDOWN_STATE_KEY)?.active);
-    }
+    dispose(): void { this.disposed = true; this.memorySession = undefined; this.listeners.forEach(listener => listener.dispose()); void this.lifecycle.dispose(); }
+    private isLockedDown(): boolean { return Boolean(this.context.globalState.get<LockdownRecord>(LOCKDOWN_STATE_KEY)?.active); }
 }
-
 let activeManager: BrokerManager | undefined;
 export function setBrokerManager(manager: BrokerManager): void { activeManager = manager; }
 export function getBrokerManager(): BrokerManager | undefined { return activeManager; }

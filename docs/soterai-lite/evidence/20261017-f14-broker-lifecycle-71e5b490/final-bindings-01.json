@@ -1,0 +1,101 @@
+{
+  "feature": "F14",
+  "parentCommit": "57e782d3bd822ae6620901b91eadc0788762649f",
+  "artifact": {
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-f14-20261017-attempt02.vsix",
+    "sha256": "b89d5c0e140d7da4001a7524b762b5ff897de281bfb62534d9a9ba2e74793aaf"
+  },
+  "inspection": "vsix-inspection-02.json",
+  "checks": [
+    {
+      "role": "focused",
+      "log": "final-focused-03.txt",
+      "kind": "tap",
+      "expected": {
+        "tests": 171,
+        "suites": 27,
+        "pass": 171,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    {
+      "role": "typecheck",
+      "log": "typecheck-07.txt"
+    },
+    {
+      "role": "full",
+      "log": "full-tests-04.txt",
+      "kind": "tap",
+      "expected": {
+        "tests": 2236,
+        "suites": 106,
+        "pass": 2232,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 4,
+        "todo": 0
+      }
+    },
+    {
+      "role": "broker",
+      "log": "broker-tests-01.txt",
+      "kind": "tap",
+      "expected": {
+        "tests": 144,
+        "suites": 13,
+        "pass": 143,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 1,
+        "todo": 0
+      }
+    },
+    {
+      "role": "readiness",
+      "log": "readiness-02.txt"
+    },
+    {
+      "role": "package",
+      "log": "package-02.txt"
+    },
+    {
+      "role": "hostBuild",
+      "log": "host-build-03.txt"
+    },
+    {
+      "role": "native",
+      "log": "native-broker-launch-02.txt"
+    },
+    {
+      "role": "affected",
+      "log": "affected-launch-01.txt"
+    }
+  ],
+  "nativeDirectory": "f14-native-host-20261017T135040Z-d9c69790",
+  "affectedDirectory": "affected-20261017T135136Z-75c2f6720bb8482e9a58f4839c82db78",
+  "probe": "prebuilt-native-hosts-03/lite-broker-host.js",
+  "reviews": [
+    "design-01.md",
+    "fixture-correction-01.md",
+    "secret-event-review-01.md",
+    "final-local-01-disposition.md",
+    "root-source-review-03.md",
+    "routing-review-01.md",
+    "root-final-disposition-01.md"
+  ],
+  "reviewDisposition": "NO_OPEN_SCOPED_BLOCKERS",
+  "priorEvidence": [
+    "docs/soterai-lite/evidence/20261017-f13-gitbash-291c8e70/acceptance-preflight-01.txt",
+    "docs/soterai-lite/evidence/20261017-f13-gitbash-291c8e70/acceptance-preflight-01.txt.result.json",
+    "docs/soterai-lite/evidence/20261017-f13-gitbash-291c8e70/transition-preflight-launch-01.txt",
+    "docs/soterai-lite/evidence/20261017-f13-gitbash-291c8e70/transition-preflight-launch-01.txt.result.json",
+    "docs/soterai-lite/evidence/20261017-f13-gitbash-291c8e70/f13-transition-commit-01.txt",
+    "docs/soterai-lite/evidence/20261017-f13-gitbash-291c8e70/f13-transition-commit-01.txt.result.json",
+    "docs/soterai-lite/evidence/20261017-f13-gitbash-291c8e70/f13-transition-byte-verification-01.json",
+    "docs/soterai-lite/evidence/20261017-f13-gitbash-291c8e70/transition-verification-launch-01.txt",
+    "docs/soterai-lite/evidence/20261017-f13-gitbash-291c8e70/transition-verification-launch-01.txt.result.json"
+  ]
+}

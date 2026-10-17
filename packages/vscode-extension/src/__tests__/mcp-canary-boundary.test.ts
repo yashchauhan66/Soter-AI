@@ -8,6 +8,8 @@ import * as stub from "./phase2/vscode-stub";
 import { MCPFirewall, registerMCPFirewallCommands } from "../mcp-firewall/MCPFirewall";
 import { CanaryManager } from "../firewall/CanaryManager";
 import { BrokerManager, EXPECTED_BROKER_VERSION } from "../broker/BrokerManager";
+import { EventEmitter } from "node:events";
+import { PassThrough } from "node:stream";
 
 let root: string;
 let context: ReturnType<typeof stub.makeExtensionContext>;
@@ -104,7 +106,7 @@ test("corrupt canary storage does not silently become an empty monitoring regist
     assert.equal((await manager.loadForScan())[0].id, replacement.id);
 });
 
-test("BrokerManager synchronizes canaries on attachment and registry changes over authenticated local requests", async () => {
+test("BrokerManager synchronizes canaries on owned startup and new generation after registry changes", async () => {
     context._inspect.secretStore.set("soterai.localBrokerToken", "fixture-auth-" + "a".repeat(40));
     context._inspect.secretStore.set("soterai.localBrokerControlToken", "fixture-controller-" + "b".repeat(40));
     const registry = new CanaryManager(context as never);
@@ -114,22 +116,30 @@ test("BrokerManager synchronizes canaries on attachment and registry changes ove
         const url = new URL(String(input));
         assert.equal(url.hostname, "127.0.0.1");
         assert.equal(init?.redirect, "error");
-        assert.match(new Headers(init?.headers).get("authorization") ?? "", /^Bearer fixture-controller-/);
+        assert.match(new Headers(init?.headers).get("authorization") ?? "", /^Bearer [A-Za-z0-9_-]{43}$/);
+        if (url.pathname === "/v1/lifecycle/status") return Response.json({ session: new Headers(init?.headers).get("x-soterai-session"), version: EXPECTED_BROKER_VERSION, ready: true });
+        if (url.pathname === "/v1/safe-mode/enable") return Response.json({ enabled: true, level: "strict" });
         if (url.pathname === "/version") return Response.json({ version: EXPECTED_BROKER_VERSION });
         if (url.pathname === "/v1/safe-mode/status") return Response.json({ enabled: false, level: "developer" });
         assert.equal(url.pathname, "/v1/canaries/sync");
-        assert.match(new Headers(init?.headers).get("authorization") ?? "", /^Bearer fixture-controller-/);
+        assert.match(new Headers(init?.headers).get("authorization") ?? "", /^Bearer [A-Za-z0-9_-]{43}$/);
         const body = JSON.parse(String(init?.body));
         batches.push(body.canaries);
         return Response.json({ synchronized: true, count: body.canaries.length });
     };
-    const manager = new BrokerManager(context as never);
+    const manager = new BrokerManager(context as never, { launch: ((_exe: string, _argv: string[], options: { env: NodeJS.ProcessEnv }) => {
+        const child = Object.assign(new EventEmitter(), { stdout: new PassThrough(), stderr: new PassThrough(), connected: true,
+            send(_message: unknown, callback?: (error: Error | null) => void) { callback?.(null); setImmediate(() => { child.stdout.end(); child.stderr.end(); child.emit("close", 0); }); return true; },
+        });
+        setImmediate(() => child.emit("message", { type: "SOTERAI_BROKER_READY", version: 1, session: options.env.SOTERAI_BROKER_SESSION, port: 49154 })); return child;
+    }) as never });
     try {
         assert.equal((await manager.start()).state, "healthy");
         assert.equal(batches[0][0].token, first.token);
         const second = await registry.create();
+        await manager.stop(); // registry invalidation withdraws rather than attaching to an old broker
         await manager.start(); // joins the serialized sync queue without arbitrary sleeps
         assert.ok(batches.at(-1)?.some(item => item.id === second.id));
         assert.equal(batches.at(-1)?.length, 2);
-    } finally { manager.dispose(); }
+    } finally { await manager.stop(); manager.dispose(); }
 });

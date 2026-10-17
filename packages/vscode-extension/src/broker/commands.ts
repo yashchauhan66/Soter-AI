@@ -27,6 +27,31 @@ const SECURE_BACKUPS_KEY = "soterai.secureAllAI.backups";
 /** Keywords the broker's extension-isolation policy substring-matches. */
 const CAPABILITY_KEYWORDS = ["workspace", "filesystem", "terminal", "network", "mcp", "debug", "scm"];
 
+function routingOwnerGuard(manager: BrokerManager): () => void {
+    const lease = manager.ownedSnapshot();
+    const verify = () => {
+        const current = manager.ownedSnapshot();
+        if (lease.state !== "healthy" || !lease.session || !lease.port || current.state !== "healthy"
+            || current.session !== lease.session || current.port !== lease.port || current.url !== lease.url) {
+            throw new Error("Owned broker session changed; review routing setup again.");
+        }
+    };
+    verify(); return verify;
+}
+function guardedRoutingFiles(io: FileIO, verify: () => void): FileIO {
+    return {
+        async readText(file) { verify(); const value = await io.readText(file); verify(); return value; },
+        async writeText(file, text) { verify(); await io.writeText(file, text); verify(); },
+        async exists(file) { verify(); const value = await io.exists(file); verify(); return value; },
+    };
+}
+function guardedRoutingHttp(io: HttpIO, verify: () => void): HttpIO {
+    return {
+        async get(url, headers) { verify(); const value = await io.get(url, headers); verify(); return value; },
+        async post(url, body, headers) { verify(); const value = await io.post(url, body, headers); verify(); return value; },
+    };
+}
+
 interface BrokerEvent {
     eventId: string;
     sessionId?: string;
@@ -94,16 +119,17 @@ export function registerBrokerCommands(context: vscode.ExtensionContext, manager
             if (!vscode.workspace.isTrusted) return result("unavailable");
             if (!(await reviewCoverageForSetup())) return result(vscode.workspace.getConfiguration("soterai").get("hardening.coverageDisclosure", true) ? "cancelled" : "unavailable");
             const s = await started(); // start broker first (health gate)
+            const verifyOwner = routingOwnerGuard(manager);
             const home = require("os").homedir();
-            const nodeFs: FileIO = {
+            const nodeFs: FileIO = guardedRoutingFiles({
                 readText: async (p: string) => { try { return await require("fs/promises").readFile(p, "utf8"); } catch { return null; } },
                 writeText: async (p: string, c: string) => require("fs/promises").writeFile(p, c, "utf8"),
                 exists: async (p: string) => { try { await require("fs/promises").access(p); return true; } catch { return false; } },
-            };
-            const nodeHttp: HttpIO = {
+            }, verifyOwner);
+            const nodeHttp: HttpIO = guardedRoutingHttp({
                 get: async (url: string, headers?: Record<string, string>) => { const r = await fetch(url, { headers }); return { status: r.status, body: await r.text() }; },
                 post: async (url: string, body: string, headers?: Record<string, string>) => { const r = await fetch(url, { method: "POST", body, headers: { "content-type": "application/json", ...headers } }); return { status: r.status, body: await r.text() }; },
-            };
+            }, verifyOwner);
             const { discoverAllAiTools, buildSecurePlan, executeSecurePlan } = await import("./AutoSecureEngine");
             // Relative candidates (".env", ".claude/settings.json") must be
             // anchored to the open workspace, never the extension host's cwd.
@@ -113,7 +139,8 @@ export function registerBrokerCommands(context: vscode.ExtensionContext, manager
             // Read every existing config's text into memory for planning (no writes yet).
             const ioFiles: Record<string, string> = {};
             for (const d of discovered) for (const c of d.configs) { const t = await nodeFs.readText(c.path); if (t !== null) ioFiles[c.path] = t; }
-            const brokerPort = Number(vscode.workspace.getConfiguration("soterai").get("broker.port", 47321));
+            verifyOwner();
+            const brokerPort = manager.port;
             const plan = buildSecurePlan(discovered, ioFiles, brokerPort);
 
             if (plan.proposed.length === 0 && plan.monitorOnly.length === 0 && plan.unsupported.length === 0) {
@@ -141,11 +168,13 @@ export function registerBrokerCommands(context: vscode.ExtensionContext, manager
             );
             if (pick !== "Apply scoped routing changes") return result("cancelled", { unsupportedConfigs: plan.unsupported.length });
 
-            const brokerToken = await context.secrets.get("soterai.localBrokerToken") ?? "";
+            const brokerToken = await manager.getClientToken();
+            verifyOwner();
             const outcome = await executeSecurePlan(
                 plan, discovered, nodeFs, nodeHttp, true, `${s.url}/health`,
                 new EncryptedBackupSink(context), brokerToken,
             );
+            verifyOwner();
             // Persist backup pointers so restore works in a later session.
             const restorable = outcome.applied.filter((a) => a.applied && a.backupPath);
             if (restorable.length > 0) {
@@ -202,12 +231,13 @@ export function registerBrokerCommands(context: vscode.ExtensionContext, manager
             (result.failed.length ? ` Failed (backup missing): ${result.failed.join(", ")}` : ""),
         );
     });
-    reg("soterai.startLocalAIBroker", async () => { const s = await started(); vscode.window.showInformationMessage(`SoterAI Local AI Broker running at ${s.url} (authenticated, local-only).`); });
-    reg("soterai.stopLocalAIBroker", async () => { await manager.stop(); refresh(); vscode.window.showInformationMessage("SoterAI Local AI Broker stopped."); });
-    reg("soterai.restartLocalAIBroker", async () => { const s = await manager.restart(); refresh(); vscode.window.showInformationMessage(`SoterAI Local AI Broker restarted at ${s.url}.`); });
+    reg("soterai.startLocalAIBroker", async () => { const s = await started(); vscode.window.showInformationMessage(`SoterAI Local AI Broker running at ${s.url} (authenticated, local-only).`); return s; });
+    reg("soterai.stopLocalAIBroker", async () => { await manager.stop(); refresh(); const owned = manager.ownedSnapshot(); vscode.window.showInformationMessage(owned.state === "STOP_UNCONFIRMED" ? "Owned broker shutdown is unconfirmed; replacement withheld." : "SoterAI Local AI Broker stopped."); return owned; });
+    reg("soterai.restartLocalAIBroker", async () => { const s = await manager.restart(); refresh(); vscode.window.showInformationMessage(`SoterAI Local AI Broker restarted at ${s.url}.`); return s; });
     reg("soterai.showBrokerStatus", async () => {
         const s = await manager.status();
         vscode.window.showInformationMessage(s.running ? `Broker running at ${s.url}; Safe Mode ${s.safeMode?.enabled ? s.safeMode.level : "off"}; Memory ${s.memorySessionId ? "active" : "idle"}.` : `Broker stopped (configured URL ${s.url}).`);
+        return s;
     });
     reg("soterai.showRuntimeCapabilitySummary", async () => {
         await started();
@@ -286,19 +316,16 @@ export function registerBrokerCommands(context: vscode.ExtensionContext, manager
     reg("soterai.configureAIBroker", async () => {
         if (!vscode.workspace.isTrusted) return void vscode.window.showWarningMessage("Provider routing configuration requires a trusted workspace. Local scanning remains available.");
         const config = vscode.workspace.getConfiguration("soterai");
-        const port = await vscode.window.showInputBox({ title: "SoterAI Broker Port", value: String(manager.port), validateInput: (v) => Number(v) >= 1024 && Number(v) <= 65535 ? undefined : "Use a port from 1024 to 65535" });
-        if (!port) return;
         const openAI = await vscode.window.showInputBox({ title: "OpenAI-compatible upstream endpoint", value: config.get("broker.openAIProviderUrl", ""), placeHolder: "https://api.openai.com/v1/chat/completions" });
         const anthropic = await vscode.window.showInputBox({ title: "Anthropic-compatible upstream endpoint", value: config.get("broker.anthropicProviderUrl", ""), placeHolder: "https://api.anthropic.com/v1/messages" });
         const key = await vscode.window.showInputBox({ title: "Provider API key (stored in SecretStorage)", password: true });
-        await config.update("broker.port", Number(port), vscode.ConfigurationTarget.Global);
         await config.update("broker.openAIProviderUrl", openAI ?? "", vscode.ConfigurationTarget.Global);
         await config.update("broker.anthropicProviderUrl", anthropic ?? "", vscode.ConfigurationTarget.Global);
         if (key) await context.secrets.store("soterai.providerApiKey", key);
         vscode.window.showInformationMessage("Broker configuration saved locally. Restart the broker to apply it.");
     });
-    reg("soterai.copyOpenAIBrokerUrl", async () => { await vscode.env.clipboard.writeText(`${manager.url}/v1/ai/openai-compatible`); vscode.window.showInformationMessage("OpenAI-compatible broker base URL copied."); });
-    reg("soterai.copyAnthropicBrokerUrl", async () => { await vscode.env.clipboard.writeText(`${manager.url}/v1/ai/anthropic-compatible`); vscode.window.showInformationMessage("Anthropic-compatible broker base URL copied."); });
+    reg("soterai.copyOpenAIBrokerUrl", async () => { await started(); await vscode.env.clipboard.writeText(`${manager.url}/v1/ai/openai-compatible`); vscode.window.showInformationMessage("Current session OpenAI-compatible broker base URL copied. Review client setup again after restart."); });
+    reg("soterai.copyAnthropicBrokerUrl", async () => { await started(); await vscode.env.clipboard.writeText(`${manager.url}/v1/ai/anthropic-compatible`); vscode.window.showInformationMessage("Current session Anthropic-compatible broker base URL copied. Review client setup again after restart."); });
     reg("soterai.testBrokerProtection", async () => {
         await started();
         const result = await manager.request<{ decision: string; redacted: boolean }>("/v1/scan", { method: "POST", body: JSON.stringify({ content: "OPENAI_API_KEY=sk-proj-1234567890abcdefghijklmnopqrstuv" }) });
@@ -486,9 +513,10 @@ export function registerBrokerCommands(context: vscode.ExtensionContext, manager
         // workspace with no AI config. Everything below is about pointing a
         // client at the broker; the broker itself must come up either way.
         const status = await started();
+        const verifyOwner = routingOwnerGuard(manager);
         const brokerUp = status.running && status.state === "healthy";
 
-        const io = workspaceFileIO();
+        const io = guardedRoutingFiles(workspaceFileIO(), verifyOwner);
         const candidates = DEFAULT_INTEGRATION_CANDIDATES.map((rel) => path.join(folder.uri.fsPath, rel));
         const detected = await detectIntegrationConfigs(candidates, io);
         if (detected.length === 0) {
@@ -527,6 +555,7 @@ export function registerBrokerCommands(context: vscode.ExtensionContext, manager
         const current = await io.readText(pick.config.path);
         if (current === null) return void vscode.window.showErrorMessage("Could not read config file.");
         const change = proposeBrokerRewrite(pick.config.path, current, pick.config.kind, manager.port);
+        verifyOwner();
 
         const doc = await vscode.workspace.openTextDocument({
             content: [
@@ -558,7 +587,9 @@ export function registerBrokerCommands(context: vscode.ExtensionContext, manager
             return;
         }
 
+        verifyOwner();
         const result = await applyProposedChange(change, io, true, new EncryptedBackupSink(context));
+        verifyOwner();
         if (!result.applied) {
             vscode.window.showErrorMessage(`Apply failed: ${result.reason ?? "unknown"}`);
             return;
@@ -566,10 +597,12 @@ export function registerBrokerCommands(context: vscode.ExtensionContext, manager
         await context.globalState.update(lastBackupKey, { path: result.path, backupPath: result.backupPath, at: Date.now() });
         vscode.window.showInformationMessage("Broker URL applied. An encrypted backup is stored outside your workspace.");
 
-        await started();
-        const health = await healthCheckBroker(manager.port, fetchHttpIO());
-        const token = await context.secrets.get("soterai.localBrokerToken") ?? "";
-        const smoke = await streamSmokeTest(manager.port, token, fetchHttpIO());
+        verifyOwner();
+        const health = await healthCheckBroker(manager.port, guardedRoutingHttp(fetchHttpIO(), verifyOwner));
+        const token = await manager.getClientToken();
+        verifyOwner();
+        const smoke = await streamSmokeTest(manager.port, token, guardedRoutingHttp(fetchHttpIO(), verifyOwner));
+        verifyOwner();
         showInfoWebview(
             "soteraiIntegrationSetup",
             "SoterAI: Integration Setup Result",

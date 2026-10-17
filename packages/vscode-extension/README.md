@@ -160,7 +160,7 @@ Run the synthetic demo, review a selection and inspect the broker's named manage
 - **Opt-out purges pending metadata.** Turning SoterAI telemetry off, returning to local privacy mode, disabling cloud, or disabling editor telemetry immediately clears SoterAI's in-memory telemetry queue.
 - **Local credential storage.** Provider and cloud credentials use VS Code SecretStorage. Keeping ciphertext outside the workspace does not establish independent custody against same-user applications.
 - **Config backups are encrypted and kept out of your workspace.** When "Secure My AI" rewrites a config, the pre-rewrite copy is encrypted (AES-GCM, key in VS Code SecretStorage) and stored in the extension's global storage — never as a plaintext sibling file that `.gitignore` would miss. If the backup cannot be written, the rewrite does not happen.
-- **Repository settings have limited authority.** The 51 safety-relevant settings are `machine`-scoped and declared as restricted in untrusted workspaces. This limits repository overrides; it does not prevent an agent running as the same user from changing user settings or other execution paths.
+- **Repository settings have limited authority.** The 52 safety-relevant settings are `machine`-scoped and declared as restricted in untrusted workspaces. This limits repository overrides; it does not prevent an agent running as the same user from changing user settings or other execution paths.
 - **The packaged artifact is inspected, not assumed safe.** Release CI rejects unexpected source, tests, maps, logs, `.env` files, dependencies, duplicate/unsafe archive paths, missing runtime bundles, and oversized archives. It records a SHA-256 and exact entry inventory, then generates a deterministic CycloneDX 1.6 SBOM with a SHA-256 component for every file that actually ships. Integrity evidence and the SBOM are not claimed to be a cryptographic signature.
 - **Broker ingress fails closed.** Request bodies are capped, declared oversize is rejected before reading, compressed and ambiguous framing is refused, and malformed UTF-8 is never replacement-decoded into apparently valid JSON.
 
@@ -281,7 +281,7 @@ editor you are actually using.
 | `soterai.protection.enabled` | `true` | Master switch for the central protection state. |
 | `soterai.sentinel.enabled` | `false` | AI activity sentinel; `soterai.sentinel.retentionDays` bounds local retention. |
 | `soterai.mcpFirewall.strictMode` | `false` | Stricter verdicts for MCP / agent tool configuration. |
-| `soterai.broker.port` | `47321` | Loopback port for the local AI broker. |
+| `soterai.broker.port` | `47321` | Legacy standalone port; the owned extension broker chooses a free port per session. |
 
 Settings that can disable a protection or change where your data goes are
 **machine-scoped**: they are read from your user/machine settings only, and a
@@ -344,3 +344,12 @@ follows the symlinked monorepo.
 ## License
 
 See [LICENSE](./LICENSE) (Business Source License 1.1). Copyright SoterAI.
+
+
+### Owned local broker sessions
+
+The extension broker binds a free loopback port atomically for each window. It accepts ownership only from its bundled child over private IPC, with distinct data and controller credentials and a checked session identity. It does not attach to a saved URL, PID or another window. Startup synchronizes canaries and restores validated Safe Mode before making the session available; a fresh installation defaults to strict Safe Mode. Restricted workspaces and the machine setting `soterai.lite.gatewayLifecycle=false` withhold this broker. Local scanning remains available.
+
+Use the current broker URL from this window. The legacy `soterai.broker.port` setting applies to standalone operation; it does not select the owned extension port. Restart and token rotation create a new port/session/credentials, so previously configured clients must be reviewed and set up again. No client config is silently repaired or pointed at a different listener. Provider, safety configuration and canary changes withdraw the active broker; restart after reviewing status.
+
+Shutdown sends a cooperative private message, keeps saved policy intact and never signals a PID. An unclosed child remains owned and blocks a replacement; status reports STOP_UNCONFIRMED after the parent wait limit. Active work may finish naturally. The broker checks only traffic explicitly routed through it; it does not confine same-user processes, mediate unmanaged traffic or establish universal secret protection.

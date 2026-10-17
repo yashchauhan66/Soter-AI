@@ -117,24 +117,39 @@
                 "soterai.lite.vaultRuntime",
                 "soterai.lite.ps51Terminal",
                 "soterai.lite.cmdTerminal",
-                "soterai.lite.gitBashTerminal"
+                "soterai.lite.gitBashTerminal",
+                "soterai.lite.gatewayLifecycle"
             ]
         }
     },
     "contributes": {
         "terminal": {
             "profiles": [
-                { "id": "soterai.ps51.checked", "title": "SoterAI PowerShell 5.1 (checked commands)" },
-                { "id": "soterai.cmd.checked", "title": "SoterAI cmd (checked commands)" },
-                { "id": "soterai.gitbash.checked", "title": "SoterAI Git Bash (checked commands)" }
+                {
+                    "id": "soterai.ps51.checked",
+                    "title": "SoterAI PowerShell 5.1 (checked commands)"
+                },
+                {
+                    "id": "soterai.cmd.checked",
+                    "title": "SoterAI cmd (checked commands)"
+                },
+                {
+                    "id": "soterai.gitbash.checked",
+                    "title": "SoterAI Git Bash (checked commands)"
+                }
             ]
         },
         "taskDefinitions": [
             {
                 "type": "soterai-vault",
-                "required": ["descriptorId"],
+                "required": [
+                    "descriptorId"
+                ],
                 "properties": {
-                    "descriptorId": { "type": "string", "description": "Saved vault app ID. Configure Vault App first; no environment values belong in task definitions." }
+                    "descriptorId": {
+                        "type": "string",
+                        "description": "Saved vault app ID. Configure Vault App first; no environment values belong in task definitions."
+                    }
                 }
             }
         ],
@@ -144,9 +159,14 @@
                 "label": "SoterAI Vault App (lifecycle only)",
                 "configurationAttributes": {
                     "launch": {
-                        "required": ["descriptorId"],
+                        "required": [
+                            "descriptorId"
+                        ],
                         "properties": {
-                            "descriptorId": { "type": "string", "description": "Saved vault app ID. Lifecycle and filtered output only; source debugging is unavailable." }
+                            "descriptorId": {
+                                "type": "string",
+                                "description": "Saved vault app ID. Lifecycle and filtered output only; source debugging is unavailable."
+                            }
                         }
                     }
                 }
@@ -512,21 +532,81 @@
                 "title": "Inspect Vault App Status",
                 "category": "SoterAI"
             },
-            { "command": "soterai.configureCheckedPowerShell", "title": "Configure Checked PowerShell 5.1 Profile", "category": "SoterAI" },
-            { "command": "soterai.openCheckedPowerShell", "title": "Open Checked PowerShell 5.1", "category": "SoterAI" },
-            { "command": "soterai.runCheckedPowerShell", "title": "Run Checked PowerShell 5.1 Command", "category": "SoterAI" },
-            { "command": "soterai.restoreCheckedPowerShell", "title": "Restore Previous Project Terminal Profile", "category": "SoterAI" },
-            { "command": "soterai.checkedPowerShellStatus", "title": "Inspect Checked PowerShell 5.1 Status", "category": "SoterAI" },
-            { "command": "soterai.configureCheckedCmd", "title": "Configure Checked cmd Profile", "category": "SoterAI" },
-            { "command": "soterai.openCheckedCmd", "title": "Open Checked cmd", "category": "SoterAI" },
-            { "command": "soterai.runCheckedCmd", "title": "Run Checked cmd Command", "category": "SoterAI" },
-            { "command": "soterai.restoreCheckedCmd", "title": "Restore Previous cmd Project Profile", "category": "SoterAI" },
-            { "command": "soterai.checkedCmdStatus", "title": "Inspect Checked cmd Status", "category": "SoterAI" },
-            { "command": "soterai.configureCheckedGitBash", "title": "Configure Checked Git Bash Profile", "category": "SoterAI" },
-            { "command": "soterai.openCheckedGitBash", "title": "Open Checked Git Bash", "category": "SoterAI" },
-            { "command": "soterai.runCheckedGitBash", "title": "Run Checked Git Bash Command", "category": "SoterAI" },
-            { "command": "soterai.restoreCheckedGitBash", "title": "Restore Previous Git Bash Project Profile", "category": "SoterAI" },
-            { "command": "soterai.checkedGitBashStatus", "title": "Inspect Checked Git Bash Status", "category": "SoterAI" },
+            {
+                "command": "soterai.configureCheckedPowerShell",
+                "title": "Configure Checked PowerShell 5.1 Profile",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.openCheckedPowerShell",
+                "title": "Open Checked PowerShell 5.1",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.runCheckedPowerShell",
+                "title": "Run Checked PowerShell 5.1 Command",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.restoreCheckedPowerShell",
+                "title": "Restore Previous Project Terminal Profile",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.checkedPowerShellStatus",
+                "title": "Inspect Checked PowerShell 5.1 Status",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.configureCheckedCmd",
+                "title": "Configure Checked cmd Profile",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.openCheckedCmd",
+                "title": "Open Checked cmd",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.runCheckedCmd",
+                "title": "Run Checked cmd Command",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.restoreCheckedCmd",
+                "title": "Restore Previous cmd Project Profile",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.checkedCmdStatus",
+                "title": "Inspect Checked cmd Status",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.configureCheckedGitBash",
+                "title": "Configure Checked Git Bash Profile",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.openCheckedGitBash",
+                "title": "Open Checked Git Bash",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.runCheckedGitBash",
+                "title": "Run Checked Git Bash Command",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.restoreCheckedGitBash",
+                "title": "Restore Previous Git Bash Project Profile",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.checkedGitBashStatus",
+                "title": "Inspect Checked Git Bash Status",
+                "category": "SoterAI"
+            },
             {
                 "command": "soterai.migrateCurrentFileToVault",
                 "title": "Migrate Current File Secrets to Vault",
@@ -1537,7 +1617,7 @@
                     "default": 47321,
                     "minimum": 1024,
                     "maximum": 65535,
-                    "description": "Loopback-only Local AI Broker port.",
+                    "description": "Legacy standalone broker port. The owned per-window extension broker atomically chooses its own loopback port; use its current displayed URL.",
                     "scope": "machine"
                 },
                 "soterai.broker.autoStart": {
@@ -1717,6 +1797,12 @@
                     "default": true,
                     "scope": "machine",
                     "description": "Enable owner-approved finite Node vault apps with a fresh child environment and completed filtered output. App code can inspect or upload its selected values. Stop is cooperative; no source debugger or process confinement. Turning this off stops owned apps cooperatively and preserves ciphertext and restrictions."
+                },
+                "soterai.lite.gatewayLifecycle": {
+                    "type": "boolean",
+                    "default": true,
+                    "scope": "machine",
+                    "description": "Enable the owned per-window loopback broker lifecycle. Disabling withdraws broker availability without weakening saved policy. Session URL and credentials change after restart; reviewed client setup is required again."
                 }
             }
         },
@@ -2129,25 +2215,82 @@
                     "command": "soterai.migrateSecretsToVault",
                     "when": "soterai.advancedCommands"
                 },
-                { "command": "soterai.configureVaultApp", "when": "soterai.advancedCommands" },
-                { "command": "soterai.runVaultApp", "when": "soterai.advancedCommands" },
-                { "command": "soterai.stopVaultApp", "when": "soterai.advancedCommands" },
-                { "command": "soterai.vaultAppStatus", "when": "soterai.advancedCommands" },
-                { "command": "soterai.configureCheckedPowerShell", "when": "soterai.advancedCommands" },
-                { "command": "soterai.openCheckedPowerShell", "when": "soterai.advancedCommands" },
-                { "command": "soterai.runCheckedPowerShell", "when": "soterai.advancedCommands" },
-                { "command": "soterai.restoreCheckedPowerShell", "when": "soterai.advancedCommands" },
-                { "command": "soterai.checkedPowerShellStatus", "when": "soterai.advancedCommands" },
-                { "command": "soterai.configureCheckedCmd", "when": "soterai.advancedCommands" },
-                { "command": "soterai.openCheckedCmd", "when": "soterai.advancedCommands" },
-                { "command": "soterai.runCheckedCmd", "when": "soterai.advancedCommands" },
-                { "command": "soterai.restoreCheckedCmd", "when": "soterai.advancedCommands" },
-                { "command": "soterai.checkedCmdStatus", "when": "soterai.advancedCommands" },
-                { "command": "soterai.configureCheckedGitBash", "when": "soterai.advancedCommands" },
-                { "command": "soterai.openCheckedGitBash", "when": "soterai.advancedCommands" },
-                { "command": "soterai.runCheckedGitBash", "when": "soterai.advancedCommands" },
-                { "command": "soterai.restoreCheckedGitBash", "when": "soterai.advancedCommands" },
-                { "command": "soterai.checkedGitBashStatus", "when": "soterai.advancedCommands" },
+                {
+                    "command": "soterai.configureVaultApp",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.runVaultApp",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.stopVaultApp",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.vaultAppStatus",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.configureCheckedPowerShell",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.openCheckedPowerShell",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.runCheckedPowerShell",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.restoreCheckedPowerShell",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.checkedPowerShellStatus",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.configureCheckedCmd",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.openCheckedCmd",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.runCheckedCmd",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.restoreCheckedCmd",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.checkedCmdStatus",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.configureCheckedGitBash",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.openCheckedGitBash",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.runCheckedGitBash",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.restoreCheckedGitBash",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.checkedGitBashStatus",
+                    "when": "soterai.advancedCommands"
+                },
                 {
                     "command": "soterai.migrateCurrentFileToVault",
                     "when": "soterai.advancedCommands"

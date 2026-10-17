@@ -1,0 +1,5 @@
+# F14 current native fixture/source binding
+
+Same-lineage LOW. source-review03 supersedes02 only for the native fixture; its source bindings compare every previously reviewed file and prove that only liteBrokerLifecycle.host.ts changed. Exact packaged input hashes remain current; no tests are packaged inputs. Compiler07/build03 PASS. Current focused171PASS/full2236tests2232PASS4SKIP/backend143PASS1SKIP remain applicable to unchanged production and regular fixtures.
+
+Native first launch TypeError was before observations, exact site UNKNOWN. Added constant setup diagnostics and removed unnecessary clipboard adapter; actual canary registry mutation is now called directly on the captured packaged manager registry, never desktop clipboard or assumed UI approval. Fresh native retry must pass on the exact unchanged attempt02 object before acceptance. Earlier failure/profile/driver retained; no native pass inferred from compiler/build or source review. Root design02/routing/secret-event review limitations, catalog44 ungraded, nine unmanaged leaks and human/independent/tool/platform gaps remain. No rating.

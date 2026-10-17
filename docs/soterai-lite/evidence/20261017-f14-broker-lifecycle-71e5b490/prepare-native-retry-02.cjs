@@ -1,0 +1,3 @@
+const fs=require('node:fs'),path=require('node:path');let text=fs.readFileSync(path.join(__dirname,'run-final-hosts-01.ps1'),'utf8').replaceAll('native-broker-launch-01','native-broker-launch-02').replaceAll('prebuilt-native-hosts-02','prebuilt-native-hosts-03');fs.writeFileSync(path.join(__dirname,'run-final-hosts-02.ps1'),text,{flag:'wx'});
+const f=path.join(__dirname,'create-final-bindings-01.cjs');text=fs.readFileSync(f,'utf8').replaceAll('typecheck-06','typecheck-07').replaceAll('host-build-02','host-build-03').replaceAll('root-source-review-02.md','root-source-review-03.md');fs.writeFileSync(f,text);
+console.log('Native fixture retry02/current compiler07/build03 authored; exact product attempt02 unchanged');
