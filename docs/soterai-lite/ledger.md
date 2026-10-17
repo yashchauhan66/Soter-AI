@@ -5,11 +5,11 @@ Read this file FIRST after any context compaction or on resumption. Do not overw
 ## Current state
 
 - **L0 scoped preflight/split/baseline/catalog freeze DONE.** The user waived the 20 GB threshold. Both verified backup bundles and the authorized old synthetic profiles are retained on D:. Supplemental full fsck ended in resource-limited FAIL; full object integrity remains UNVERIFIED.
-- L1: **ACTIVE, F01-F10 DONE; F11 ACTIVE/test-first**; F12-F32 and L2-L7 **NOT-RUN**. Do not describe this as reaching L6. Read the latest receipts below before work.
+- L1: **ACTIVE, F01-F10 DONE; F11 optional unavailable/unimplemented NOT_TESTED/NOT_COVERED; F12 ACTIVE/test-first**; F13-F32 and L2-L7 **NOT-RUN**. Do not describe this as reaching L6. Read the latest receipts below before work.
 - Source changes and isolated synthetic-profile tests are authorized; the normal VS Code profile has not been changed.
 - New Lite baseline VSIX: **BUILT / CONTENT-INSPECTED / HOST-BASELINE-TESTED**; SHA-256 `cf163471b7a022d5a9f922a3f1fcc6bfd3b56a08ab14f1aebfdfb345c337bae1`. Coverage and all final numerical ratings **PENDING / UNVERIFIED**; 44-check catalog frozen, not graded.
 - Baseline HEAD: `8ef3aeb54f4019f4ee815a844443995176a656f0`; starting branch: `security-hardening`. Inspected prior source modifications were checkpointed at `915a5300a7745e4ffaeab80b5d08d3305e3772f9`; unknown scratch/raw artifacts remain untouched.
-- P00-P03 and F01-F10 scoped source commits are complete. F11 is the sole active behavior card. Before F11 production, require the separate F10 transition commit and f10-transition-byte-verification-01.json PASS; then follow the existing F11 applicability, design and regression gates.
+- P00-P03 and F01-F10 scoped source commits and the F10 transition are byte verified. F11 remains optional unavailable/unimplemented NOT_TESTED/NOT_COVERED under frozen P03 applicability. F12 is the sole supported active behavior card; no F12 production before the F11 availability-disposition commit and its byte-verification-01.json PASS.
 
 ## STEP RECEIPT L0.1 — preflight stop
 
@@ -526,3 +526,9 @@ Scoped local acceptance PASS; source commit/byte verification remain the serial 
 ## STEP RECEIPT F10-COMMIT / F11-ACTIVATE
 
 F10 source commit 93e8487a5cd004bb9ac3a201bcdc5e6640cdf746 verified: 388 indexed byte hashes, 388 exact changed paths, zero mismatches/unexpected paths. Exact physical artifact freshly rechecked 2b5ae9571707ceb268eea44dad4f40c741560d44eaab5edbe2d7b06b4fc7102b; runtime 357a60f18bf81a7f5ee08ebcb9e4f08f3fd8e30a5cd6fdd592fa2a1a2b96bded. Native19 (primary16/restart3), functional10 and unchanged security17 (8 BLOCKED_SCOPED/9 LEAK_CONFIRMED) remain the scoped LOW evidence in the committed acceptance. Declared finite PS5.1/staged-only Git metadata, not OS confinement, unmanaged native interception or independent/human certification. Catalog44UNVERIFIED/ratingPENDING. F11 is the sole next active card; no F11 production before the separate transition commit and f10-transition-byte-verification-01.json PASS. All prior failures, evidence, synthetic profiles, user20GBwaiver and unrelated changes retained.
+
+## STEP RECEIPT F11 - optional runtime unavailable; supported queue reconciliation
+
+F10 source93e8487a5cd004bb9ac3a201bcdc5e6640cdf746 and transition6fe785e05faafa0d0ae96372e07cd777b761d236 separately bytePASS (388 sourceentries/388paths;10transitionentries/11paths). F11 fresh bounded application discovery: zero pwsh/pwsh.exe PATH hits, seven explicit standard executable candidates absent. No PS7 runtime executed/implemented/advertised; F11 remains PLANNED/UNTESTED and NOT_TESTED/NOT_COVERED, never DONE/PASS. Frozen catalog1ce46192e9f315b5f2142c9f61542f1d513143dc2e19d4def6d95cea38c73ed4 unchanged; this is not disk-wide absence proof. Current F10 VSIX freshly rechecked 2b5ae9571707ceb268eea44dad4f40c741560d44eaab5edbe2d7b06b4fc7102b. No product bytes changed; no replacement VSIX or behavioral PASS invented.
+
+P03 frozen optional absence/exclusion rule applies, but the proposed linear F12requiresF11 dependency had not been normalized before implementation. This late reconciliation is disclosed, not retrospectively claimed complete at P03: retain F11 in requested/remaining-work inventory and preserve F12 requestedInventoryRequiresF11; supported execution predecessor is now F10. No required failure relabeled optional, catalog definition/result/denominator changed or rating issued. F12 becomes sole supported active card only after this scoped documentation commit and byte-verification-01.json PASS. No F12 production yet. Existing evidence/profiles/backups/user20GBwaiver/unrelated changes retained.

@@ -1,0 +1,11 @@
+# F11 applicability-only root review
+
+Root direct review, same-lineage LOW, 17 October 2026. Delegate review failed at the usage service; exact payload retained in agent-service-failure01. No delegate completion, independent review or runtime behavioral PASS inferred.
+
+The existing IMPLEMENTATION-PLAN mandatory-gate applicability paragraph explicitly says an absent optional shell/tool stays NOT_TESTED/NOT COVERED, never DONE, with exclusion from the supported execution queue and retention in requested/final remaining-work inventory. F11's row requires a separate PS7/version gate and prohibits downloading to satisfy a label. Frozen catalog executionAvailability already records PS7 NOT_FOUND_ON_PATH/no download authorized; original catalog SHA256 remains `1ce46192e9f315b5f2142c9f61542f1d513143dc2e19d4def6d95cea38c73ed4`.
+
+Fresh availability01 records zero pwsh/pwsh.exe application hits and seven explicit standard candidates absent. It executes no runtime or alias. This is bounded route absence, not a disk-wide absence claim. The current F10 artifact rehash matches its committed identity. There is no PS7 flag/profile/runtime added, no new behavioral source and no replacement package or shell-specific acceptance.
+
+Queue reconciliation is narrowly justified by that frozen optional rule. F11 remains PLANNED/UNTESTED, supportedExecutionfalse, NOT_TESTED/NOT_COVERED and unimplemented; it never becomes DONE/PASS. F12 retains its requested inventory predecessor F11 while its supported execution predecessor becomes the completed F10. The missed normalization of the original proposed linear dependency is explicitly disclosed as late; no claim that it happened before freeze, no catalog edit/result regrade/denominator change and no required failing feature made optional.
+
+Prepared/staged/committed verification must prove exact documentation paths and bytes, unchanged product paths/catalog/artifact, pending rating, F11 exclusion and F12 admission only after the documentation byte barrier. Actual F12 design/regressions/current artifact/native/cancel/withdrawal/commit gates remain separate. No scoped blocker found for this applicability-only documentation disposition. The unavailable PS7 behavior remains requested unfinished work.

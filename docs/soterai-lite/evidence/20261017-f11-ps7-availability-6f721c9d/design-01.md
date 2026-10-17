@@ -1,0 +1,9 @@
+# F11 optional PowerShell 7 applicability check
+
+User requirement U3; card F11; proposed flag `soterai.lite.ps7Terminal` remains unimplemented unless an installed runtime can be independently tested. This card has no supported execution claim or production edits while PS7 is absent. Reuse the frozen P03 applicability rule and existing plan, not PS5.1 behavior as proof of PS7.
+
+Inspect only application discovery for `pwsh`/`pwsh.exe` and explicit standard Program Files/per-user executable candidates, with metadata and SHA256 for any ordinary existing candidate. Do not scan user files, inspect credentials, execute aliases or another shell, download, log in, or modify a profile. Missing candidates establish absence only in these checked routes, not disk-wide absence. If an ordinary candidate appears, stop this absence disposition and follow the existing F11 separate design/regression/artifact/native gates.
+
+Acceptance for this read-only applicability/documentation card: exact discovery inputs/results retained, catalog SHA unchanged, no executable advertised/registered, no product bytes changed, current F10 artifact freshly rehashed, explicit queue exclusion remains NOT_TESTED/NOT COVERED and never DONE/PASS, scoped local documentation commit and every indexed/current/Git byte verified before F12 production. No new VSIX or behavioral PASS is inferred when no behavior changed. A later installed runtime requires the F11 implementation and actual acceptance corpus.
+
+P03 froze PS7 NOT_FOUND_ON_PATH with optional exclusion, while the planning queue retained a proposed linear F12 dependency on F11. Reconcile that omission explicitly now: retain the requested inventory dependency, record F12's supported execution predecessor F10, leave F11 unimplemented and in final remaining-work inventory. Do not change frozen catalog definitions, applicability, results or denominators. No required failed route is made optional.

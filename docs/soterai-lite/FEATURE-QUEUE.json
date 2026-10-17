@@ -9,9 +9,9 @@
   "planVersion": 1,
   "clientDate": "2026-10-13",
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
-  "scope": "F01-F10 DONE for their exact scoped artifacts and byte-verified source commits; F11 alone active. F11 production waits for the separately byte-verified F10 transition and existing applicability/design/regression gates.",
+  "scope": "F01-F10 DONE for scoped byte-verified objects; F11 optional unavailable/unimplemented NOT_TESTED/NOT_COVERED, never DONE; F12 sole supported active card after this disposition commit byte verification.",
   "implementationConcurrency": 1,
-  "activeFeature": "F11",
+  "activeFeature": "F12",
   "prerequisiteBlock": {
     "id": "P00",
     "result": "FAIL",
@@ -198,22 +198,31 @@
     {
       "id": "F11",
       "title": "Managed PowerShell 7 terminal.",
+      "status": "PLANNED",
+      "result": "UNTESTED",
+      "requires": [
+        "F10"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "supportedExecution": false,
+      "coverage": "NOT_TESTED/NOT_COVERED",
+      "disposition": "OPTIONAL_UNAVAILABLE_UNIMPLEMENTED",
+      "availabilityEvidence": "docs/soterai-lite/evidence/20261017-f11-ps7-availability-6f721c9d/availability-01.json",
+      "remainingWork": "Install only if separately authorized/available later, then implement and execute all F11 gates. No PS7 support advertised."
+    },
+    {
+      "id": "F12",
+      "title": "Managed cmd profile.",
       "status": "ACTIVE",
       "result": "NOT-RUN",
       "requires": [
         "F10"
       ],
-      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
-    },
-    {
-      "id": "F12",
-      "title": "Managed cmd profile.",
-      "status": "PLANNED",
-      "result": "NOT-RUN",
-      "requires": [
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "requestedInventoryRequires": [
         "F11"
       ],
-      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+      "dependencyReason": "Frozen P03 optional PS7 absence excludes F11 only from supported execution. Proposed linear dependency reconciled here; F11 remains unimplemented/NOT_TESTED and in inventory."
     },
     {
       "id": "F13",
@@ -647,5 +656,15 @@
     "status": "FROZEN",
     "sha256": "1ce46192e9f315b5f2142c9f61542f1d513143dc2e19d4def6d95cea38c73ed4",
     "checks": 44
+  },
+  "supportedExecutionExclusions": {
+    "F11": {
+      "reason": "P03 frozen PowerShell7 NOT_FOUND_ON_PATH, fresh bounded discovery unchanged",
+      "recordedAt": "2026-10-17T02:46:49.7493288Z",
+      "evidence": "docs/soterai-lite/evidence/20261017-f11-ps7-availability-6f721c9d/availability-01.json",
+      "requestedFeatureRetained": true,
+      "requiredBehaviorReclassified": false,
+      "queueNormalization": "Late reconciliation of proposed linear F12 dependency; catalog unchanged"
+    }
   }
 }
