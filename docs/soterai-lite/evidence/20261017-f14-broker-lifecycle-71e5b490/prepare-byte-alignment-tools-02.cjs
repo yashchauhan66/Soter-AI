@@ -1,0 +1,9 @@
+const fs=require('node:fs'),path=require('node:path');
+function revised(text){for(const [a,b] of [['f14-evidence-index-01','f14-evidence-index-02'],['f14-acceptance-01','f14-acceptance-02'],['f14-commit-01','f14-commit-02'],['f14-commit-allowlist-01','f14-commit-allowlist-02'],['f14-committed-byte-verification-01','f14-committed-byte-verification-02'],['f14-transition-lib-01.cjs','f14-transition-lib-02.cjs'],['verify-commit-01.cjs','verify-commit-02.cjs'],['verify-transition-01.cjs','verify-transition-02.cjs'],['check-staged-01.cjs','check-staged-02.cjs']])text=text.replaceAll(a,b);return text;}
+for(const [from,to] of [['verify-commit-01.cjs','verify-commit-02.cjs'],['check-staged-01.cjs','check-staged-02.cjs'],['commit-f14-01.ps1','commit-f14-02.ps1'],['f14-transition-lib-01.cjs','f14-transition-lib-02.cjs'],['prepare-transition-01.cjs','prepare-transition-02.cjs'],['verify-transition-01.cjs','verify-transition-02.cjs'],['commit-transition-01.ps1','commit-transition-02.ps1']]){
+ let text=revised(fs.readFileSync(path.join(__dirname,from),'utf8'));
+ if(from==='commit-f14-01.ps1')text=text.replace('feat(lite): own broker sessions and atomic loopback lifecycle','docs(lite): align F14 indexed baseline bytes and preserve failed proof').replace('& node (Join-Path $PSScriptRoot \'check-staged-02.cjs\')',"& git -c core.autocrlf=false add --renormalize -- packages/vscode-extension/src/__tests__/broker-autostart.test.ts\nif($LASTEXITCODE -ne 0){throw 'Explicit baseline byte staging failed.'}\n& node (Join-Path $PSScriptRoot 'check-staged-02.cjs')");
+ if(from==='prepare-transition-01.cjs')text=text.replace('F14 sourcecommit ','F14 final byte-alignment sourcepoint (original feature39ec00f retained) ');
+ fs.writeFileSync(path.join(__dirname,to),text,{flag:'wx'});
+}
+console.log('Version02 byte-proof/transition tools authored, not executed. Original evidence immutable.');
