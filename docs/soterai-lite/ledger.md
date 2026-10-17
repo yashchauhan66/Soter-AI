@@ -5,11 +5,11 @@ Read this file FIRST after any context compaction or on resumption. Do not overw
 ## Current state
 
 - **L0 scoped preflight/split/baseline/catalog freeze DONE.** The user waived the 20 GB threshold. Both verified backup bundles and the authorized old synthetic profiles are retained on D:. Supplemental full fsck ended in resource-limited FAIL; full object integrity remains UNVERIFIED.
-- L1: **ACTIVE, F01-F10 DONE; F11 optional unavailable/unimplemented NOT_TESTED/NOT_COVERED; F12 ACTIVE/test-first**; F13-F32 and L2-L7 **NOT-RUN**. Do not describe this as reaching L6. Read the latest receipts below before work.
+- L1: **ACTIVE, F01-F10 and F12 DONE; F11 optional unavailable/unimplemented NOT_TESTED/NOT_COVERED; F13 ACTIVE/test-first**; F14-F32 and L2-L7 **NOT-RUN**. Do not describe this as reaching L6. Read the latest receipts below before work.
 - Source changes and isolated synthetic-profile tests are authorized; the normal VS Code profile has not been changed.
 - New Lite baseline VSIX: **BUILT / CONTENT-INSPECTED / HOST-BASELINE-TESTED**; SHA-256 `cf163471b7a022d5a9f922a3f1fcc6bfd3b56a08ab14f1aebfdfb345c337bae1`. Coverage and all final numerical ratings **PENDING / UNVERIFIED**; 44-check catalog frozen, not graded.
 - Baseline HEAD: `8ef3aeb54f4019f4ee815a844443995176a656f0`; starting branch: `security-hardening`. Inspected prior source modifications were checkpointed at `915a5300a7745e4ffaeab80b5d08d3305e3772f9`; unknown scratch/raw artifacts remain untouched.
-- P00-P03 and F01-F10 scoped source commits and the F10 transition are byte verified. F11 remains optional unavailable/unimplemented NOT_TESTED/NOT_COVERED under frozen P03 applicability. F12 is the sole supported active behavior card; no F12 production before the F11 availability-disposition commit and its byte-verification-01.json PASS.
+- P00-P03 and F01-F10 scoped source commits and the F10 transition are byte verified. F11 remains optional unavailable/unimplemented NOT_TESTED/NOT_COVERED under frozen P03 applicability. F12 scoped source bytes are verified. F13 is the sole supported active behavior card; no F13 production before the separate F12 transition commit and f12-transition-byte-verification-01.json PASS.
 
 ## STEP RECEIPT L0.1 — preflight stop
 
@@ -554,3 +554,7 @@ Current final-focused02 all586PASS (168F12+342retainedF10+76parity), compiler04P
 ## STEP RECEIPT F12 - scoped checked cmd acceptance
 
 Scoped local acceptance PASS; source commit/byte verification remain the serial barrier. Focused 586 PASS (168 F12,342 retained PS5.1 and76 retained extension parity); full 1974 tests/1970 PASS/4 SKIP; zero failures/cancellations. Exact VSIX packages/soterai-lite/soterai-lite-0.7.0-f12-20261017-attempt02.vsix SHA7940f0a8714cb58b9523b21b19362b3b0caa2bd3d5484ddead7c3bb10bd9959d (1395859 bytes), runtime cd20a320367b979fabadf1a065351849ca5524e3d6584d5089f73ad4557eaf18. Cmd native19PASS plus affected PS5.1 native19PASS, functional10PASS/security17 unchanged8BLOCKED_SCOPED9LEAK_CONFIRMED. All historical failures retained, including commands missing-module baseline NOT_EXECUTED. Declared finite cmd and affected PS5.1/staged-only Git metadata; LOW scripted API evidence, no independent/human/native-bypass/OS boundary claim. Catalog44UNVERIFIED/ratingPENDING. F12 remains ACTIVE pending its scoped commit/byte verification; no F13 production.
+
+## STEP RECEIPT F12-COMMIT / F13-ACTIVATE
+
+F12 sourcecommit f403e9d8e13afc0463ea197d9cd03dce6d7e74c7 bytePASS: 195 indexedhashes/173 exactpaths/0mismatch/0unexpected. Exact F12VSIX freshly rechecked 7940f0a8714cb58b9523b21b19362b3b0caa2bd3d5484ddead7c3bb10bd9959d; runtime cd20a320367b979fabadf1a065351849ca5524e3d6584d5089f73ad4557eaf18. Cmd19+affectedPS5119/functional10PASS/security17unchanged8BLOCKED_SCOPED9LEAK_CONFIRMED remain scopedLOW. Finite declared cmd with private safe-view type/find/set/copy; no arbitrary native interception/OS boundary/independent-human claim. F11 stays unimplemented NOT_TESTED/NOT_COVERED, never DONE. F13 next aloneactive; no F13 production before the separate transition commit and f12-transition-byte-verification-01.json PASS. Catalog44/ratingPENDING/human+actualtool+platform gates remain; all failures/profiles/evidence/userwaiver/unrelated changes retained.
