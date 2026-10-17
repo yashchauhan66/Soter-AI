@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-10-17T08:00:21.586Z",
+  "phase": "restart",
+  "syntheticOnly": true,
+  "workspace": "d:\\SoterAI-Lite-test-profiles\\f10-native-host-20261017T075939Z-d9a1c02e\\workspace",
+  "declaredProfilePath": "D:\\SoterAI-Lite-test-profiles\\f10-native-host-20261017T075939Z-d9a1c02e\\profile",
+  "hostVersion": "1.142.0",
+  "extensionBundleSha256": "cd20a320367b979fabadf1a065351849ca5524e3d6584d5089f73ad4557eaf18",
+  "currentDeveloperBundleSha256": "cd20a320367b979fabadf1a065351849ca5524e3d6584d5089f73ad4557eaf18",
+  "hostProbeSha256": "4ace212abaa62e358203f62a959751484f70f2ff596c3fd7601a3d3f35054a78",
+  "observations": [
+    {
+      "id": "F10-H17",
+      "scope": "Restart in the same isolated profile reports prior durable rows UNVERIFIED with no currently owned workers.",
+      "status": "PASS"
+    },
+    {
+      "id": "F10-H18",
+      "scope": "Restart retains ciphertext/source bytes and completed profile restoration without original source documents.",
+      "status": "PASS"
+    },
+    {
+      "id": "F10-H19",
+      "scope": "A deliberate fresh native terminal command owns a new worker id, distinct from recovered rows, and completes actual PS5.1.",
+      "status": "PASS"
+    }
+  ],
+  "passed": 3,
+  "failed": 0,
+  "notRun": 0,
+  "reviews": [],
+  "diffCount": 0,
+  "safeReviews": 0,
+  "sourceDocumentCalls": 0,
+  "sourceDocumentEvents": 0,
+  "nativeTerminalsAfterClose": 0,
+  "nativeSubchecks": {},
+  "terminalRuns": [
+    {
+      "closed": true,
+      "outputBytes": 369,
+      "safe": true
+    }
+  ],
+  "taskRuns": [],
+  "independence": "LOW",
+  "ownerPresence": "SCRIPTED_NATIVE_API_DECISIONS_NOT_HUMAN_REVIEW",
+  "identityScope": "Unchanged packaged runtime, captured actual registered profile callback and real native PTY/PS/task in two isolated native developer windows sharing one new profile.",
+  "notTested": [
+    "Native profile picker UX",
+    "Human usability/accessibility",
+    "Clean installed-VSIX lifecycle",
+    "Unmanaged terminals/native reads/uploads",
+    "External agents",
+    "OS confinement"
+  ]
+}

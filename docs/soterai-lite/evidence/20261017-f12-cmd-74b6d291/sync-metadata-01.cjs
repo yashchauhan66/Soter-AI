@@ -1,0 +1,2 @@
+const fs=require('node:fs'),path=require('node:path');const repo=path.resolve(__dirname,'../../../..'),canonical=JSON.parse(fs.readFileSync(path.join(repo,'packages/vscode-extension/package.json'),'utf8')),file=path.join(repo,'packages/soterai-lite/package.json'),lite=JSON.parse(fs.readFileSync(file,'utf8'));
+lite.contributes=canonical.contributes;lite.capabilities=canonical.capabilities;fs.writeFileSync(file,JSON.stringify(lite,null,2)+'\n');

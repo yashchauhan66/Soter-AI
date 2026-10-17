@@ -553,6 +553,8 @@ async function updateStatusBar(): Promise<void> {
 }
 
 export async function deactivate(): Promise<void> {
+    try { await (await import("./terminal/cmdCommands")).stopCheckedCmd(); }
+    catch { console.error("SoterAI checked cmd shutdown metadata is unavailable; process exit remains unverified."); }
     try { await (await import("./terminal/commands")).stopCheckedPowerShell(); }
     catch { console.error("SoterAI checked terminal shutdown metadata is unavailable; process exit remains unverified."); }
     try { await (await import("./vault-runtime/commands")).stopVaultRuntime(); }

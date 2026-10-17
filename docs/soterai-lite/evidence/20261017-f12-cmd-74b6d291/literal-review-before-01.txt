@@ -1,0 +1,217 @@
+﻿TAP version 13
+# Subtest: F12-LR01 cmd set/p line budget is conservative before any worker admission
+not ok 1 - F12-LR01 cmd set/p line budget is conservative before any worker admission
+  ---
+  duration_ms: 27.3209
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\cmdLiteralReview.test.ts:2:873'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + {
+    +   action: 'write',
+    +   args: [
+    +     'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    +   ],
+    +   kind: 'PUBLIC'
+    + }
+    - undefined
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  actual:
+    kind: 'PUBLIC'
+    action: 'write'
+    args:
+      0: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\cmdLiteralReview.test.ts:4:86)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F12-W01 only fixed cmd code enters argv; literal is private stdin and fresh env excludes inherited values
+ok 2 - F12-W01 only fixed cmd code enters argv; literal is private stdin and fresh env excludes inherited values
+  ---
+  duration_ms: 66.1194
+  type: 'test'
+  ...
+# Subtest: F12-W02 actual close and both drained pipes precede release
+ok 3 - F12-W02 actual close and both drained pipes precede release
+  ---
+  duration_ms: 2.7893
+  type: 'test'
+  ...
+# Subtest: F12-W03 byte-split UTF16 Unicode output decodes exactly through real F08
+ok 4 - F12-W03 byte-split UTF16 Unicode output decodes exactly through real F08
+  ---
+  duration_ms: 5.2988
+  type: 'test'
+  ...
+# Subtest: F12-W04-0 malformed final UTF16/control discards all channels
+ok 5 - F12-W04-0 malformed final UTF16/control discards all channels
+  ---
+  duration_ms: 1.9517
+  type: 'test'
+  ...
+# Subtest: F12-W04-1 malformed final UTF16/control discards all channels
+ok 6 - F12-W04-1 malformed final UTF16/control discards all channels
+  ---
+  duration_ms: 2.3941
+  type: 'test'
+  ...
+# Subtest: F12-W04-2 malformed final UTF16/control discards all channels
+ok 7 - F12-W04-2 malformed final UTF16/control discards all channels
+  ---
+  duration_ms: 3.2243
+  type: 'test'
+  ...
+# Subtest: F12-W05-0 malformed/unsupported operation cannot spawn
+ok 8 - F12-W05-0 malformed/unsupported operation cannot spawn
+  ---
+  duration_ms: 1.7184
+  type: 'test'
+  ...
+# Subtest: F12-W05-1 malformed/unsupported operation cannot spawn
+ok 9 - F12-W05-1 malformed/unsupported operation cannot spawn
+  ---
+  duration_ms: 1.3517
+  type: 'test'
+  ...
+# Subtest: F12-W05-2 malformed/unsupported operation cannot spawn
+ok 10 - F12-W05-2 malformed/unsupported operation cannot spawn
+  ---
+  duration_ms: 1.6236
+  type: 'test'
+  ...
+# Subtest: F12-W05-3 malformed/unsupported operation cannot spawn
+ok 11 - F12-W05-3 malformed/unsupported operation cannot spawn
+  ---
+  duration_ms: 3.0355
+  type: 'test'
+  ...
+# Subtest: F12-W05-4 malformed/unsupported operation cannot spawn
+ok 12 - F12-W05-4 malformed/unsupported operation cannot spawn
+  ---
+  duration_ms: 1.2023
+  type: 'test'
+  ...
+# Subtest: F12-W05-5 malformed/unsupported operation cannot spawn
+ok 13 - F12-W05-5 malformed/unsupported operation cannot spawn
+  ---
+  duration_ms: 1.0218
+  type: 'test'
+  ...
+# Subtest: F12-W05-6 malformed/unsupported operation cannot spawn
+ok 14 - F12-W05-6 malformed/unsupported operation cannot spawn
+  ---
+  duration_ms: 1.373
+  type: 'test'
+  ...
+# Subtest: F12-W05-7 malformed/unsupported operation cannot spawn
+ok 15 - F12-W05-7 malformed/unsupported operation cannot spawn
+  ---
+  duration_ms: 1.994
+  type: 'test'
+  ...
+# Subtest: F12-W06-stdin missing pipe retains actual close ownership
+ok 16 - F12-W06-stdin missing pipe retains actual close ownership
+  ---
+  duration_ms: 1.6543
+  type: 'test'
+  ...
+# Subtest: F12-W06-stdout missing pipe retains actual close ownership
+ok 17 - F12-W06-stdout missing pipe retains actual close ownership
+  ---
+  duration_ms: 1.218
+  type: 'test'
+  ...
+# Subtest: F12-W06-stderr missing pipe retains actual close ownership
+ok 18 - F12-W06-stderr missing pipe retains actual close ownership
+  ---
+  duration_ms: 3.3217
+  type: 'test'
+  ...
+# Subtest: F12-W07 overflow cancels output and drains until actual close without kill
+ok 19 - F12-W07 overflow cancels output and drains until actual close without kill
+  ---
+  duration_ms: 2.7707
+  type: 'test'
+  ...
+# Subtest: F12-W08 held wait stdin releases at its bound even after cancellation
+ok 20 - F12-W08 held wait stdin releases at its bound even after cancellation
+  ---
+  duration_ms: 1.9129
+  type: 'test'
+  ...
+# Subtest: F12-W09 private guard withdrawal after collected public output withholds
+ok 21 - F12-W09 private guard withdrawal after collected public output withholds
+  ---
+  duration_ms: 2.0872
+  type: 'test'
+  ...
+# Subtest: F12-W10 nonzero exit withholds all error bytes
+ok 22 - F12-W10 nonzero exit withholds all error bytes
+  ---
+  duration_ms: 2.3252
+  type: 'test'
+  ...
+# Subtest: F12-W11 directory names have an independent 256 entry bound
+ok 23 - F12-W11 directory names have an independent 256 entry bound
+  ---
+  duration_ms: 1.6926
+  type: 'test'
+  ...
+# Subtest: F12-W12 wrong literal transport prefix cannot be published
+ok 24 - F12-W12 wrong literal transport prefix cannot be published
+  ---
+  duration_ms: 1.3426
+  type: 'test'
+  ...
+# Subtest: F12-W13 raw chunk budget overflow withholds under byte limit
+ok 25 - F12-W13 raw chunk budget overflow withholds under byte limit
+  ---
+  duration_ms: 26.7646
+  type: 'test'
+  ...
+# Subtest: F12-W14 installed cmd version, stdin masking and finite wait execute actual pinned runtime
+ok 26 - F12-W14 installed cmd version, stdin masking and finite wait execute actual pinned runtime
+  ---
+  duration_ms: 264.3207
+  type: 'test'
+  ...
+# Subtest: F12-W15 transport truncation or altered literal text cannot be published
+not ok 27 - F12-W15 transport truncation or altered literal text cannot be published
+  ---
+  duration_ms: 8.1613
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\cmdWorker.test.ts:2:10246'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'COMPLETE'
+    - 'WITHHELD'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'WITHHELD'
+  actual: 'COMPLETE'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\cmdWorker.test.ts:64:201)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..27
+# tests 27
+# suites 0
+# pass 25
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1476.4732

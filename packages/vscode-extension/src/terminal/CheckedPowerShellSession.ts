@@ -2,7 +2,7 @@ import * as vscode from "vscode";
 import * as path from "node:path";
 import { constants, lstatSync, openSync, closeSync, writeFileSync, fsyncSync, fstatSync } from "node:fs";
 import { randomUUID } from "node:crypto";
-import { parsePowerShell51Command, PS51_LIMITS } from "../../../core/src/PowerShell51Command";
+import { parsePowerShell51Command, PS51_LIMITS, type PowerShell51Command } from "../../../core/src/PowerShell51Command";
 import type { OutputResult } from "../../../core/src/StreamingOutputRedactor";
 import type { AccessResult } from "../project-privacy/ProjectFileAccess";
 import { BoundarySnapshot } from "../ai-boundary/BoundarySnapshot";
@@ -13,9 +13,10 @@ import { prepareCheckedGitMetadata, type CheckedGitMetadata } from "./CheckedGit
 export interface ManagedReaderBridge { read(uri: vscode.Uri): Promise<AccessResult>; revoke(): void; isEnabled(): boolean }
 interface Filter extends PowerShell51Output { available(): boolean; canRelease(): boolean }
 interface Options { root: vscode.Uri; reader: ManagedReaderBridge;
-    vault: { createManagedOutputFilter(root: vscode.Uri, enabled: () => boolean): Promise<Filter> };
+    vault: { createManagedOutputFilter(root: vscode.Uri, enabled: () => boolean, route?: "ps51" | "cmd"): Promise<Filter> };
     enabled: () => boolean; parentEnvironment: NodeJS.ProcessEnv }
 interface Dependencies { createWorker?: (options: ConstructorParameters<typeof PowerShell51Worker>[0]) => Pick<PowerShell51Worker, "start" | "completion" | "snapshot" | "cancel" | "dispose">;
+    parseCommand?: (input: unknown) => PowerShell51Command | undefined;
     admitWorker?: (snapshot: PowerShell51Snapshot) => Promise<boolean>;
     workerChanged?: (snapshot: PowerShell51Snapshot) => void;
     reviewCopy?: (source: vscode.Uri, destination: vscode.Uri) => Promise<boolean> }
@@ -43,7 +44,7 @@ export class CheckedPowerShellSession {
         try { return !this.#closed && generation === this.#generation && this.#options.enabled() === true && this.#options.reader.isEnabled() === true; } catch { return false; }
     }
     async execute(input: unknown): Promise<OutputResult> {
-        const command = parsePowerShell51Command(input);
+        const command = (this.#deps.parseCommand ?? parsePowerShell51Command)(input);
         if (!command || this.#busy || this.#closed || CheckedPowerShellSession.#pending >= PS51_LIMITS.maxWorkers) return withheld();
         const generation = this.#generation;
         if (!this.#available(generation)) return withheld();

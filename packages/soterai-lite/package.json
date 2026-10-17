@@ -115,7 +115,8 @@
         "soterai.lite.secretMatching",
         "soterai.lite.outputRedactor",
         "soterai.lite.vaultRuntime",
-        "soterai.lite.ps51Terminal"
+        "soterai.lite.ps51Terminal",
+        "soterai.lite.cmdTerminal"
       ]
     }
   },
@@ -125,6 +126,10 @@
         {
           "id": "soterai.ps51.checked",
           "title": "SoterAI PowerShell 5.1 (checked commands)"
+        },
+        {
+          "id": "soterai.cmd.checked",
+          "title": "SoterAI cmd (checked commands)"
         }
       ]
     },
@@ -544,6 +549,31 @@
       {
         "command": "soterai.checkedPowerShellStatus",
         "title": "Inspect Checked PowerShell 5.1 Status",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.configureCheckedCmd",
+        "title": "Configure Checked cmd Profile",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.openCheckedCmd",
+        "title": "Open Checked cmd",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.runCheckedCmd",
+        "title": "Run Checked cmd Command",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.restoreCheckedCmd",
+        "title": "Restore Previous cmd Project Profile",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.checkedCmdStatus",
+        "title": "Inspect Checked cmd Status",
         "category": "SoterAI"
       },
       {
@@ -1713,6 +1743,12 @@
           "scope": "machine",
           "description": "Enable completed-output filtering for supported managed results, including UTF-8 chunks and supported terminal controls. Output stays private until final flush within 128 KiB. Turning this off withholds these results and preserves saved protection."
         },
+        "soterai.lite.cmdTerminal": {
+          "type": "boolean",
+          "default": true,
+          "scope": "machine",
+          "description": "Enable the optional finite cmd checked-command terminal. type/find/set/copy use managed safe views; public commands run with a fresh environment. Unsupported input withholds. Turning this off cancels owned output and retains saved protection and the profile restore receipt. Unmanaged shells and uploads remain outside these checks."
+        },
         "soterai.lite.ps51Terminal": {
           "type": "boolean",
           "default": true,
@@ -2170,6 +2206,26 @@
         },
         {
           "command": "soterai.checkedPowerShellStatus",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.configureCheckedCmd",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.openCheckedCmd",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.runCheckedCmd",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.restoreCheckedCmd",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.checkedCmdStatus",
           "when": "soterai.advancedCommands"
         },
         {

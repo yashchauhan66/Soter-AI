@@ -9,3 +9,4 @@ export { parseVaultAppDescriptor, VAULT_RUNTIME_LIMITS, vaultEnvironmentNameAllo
 export type { VaultAppDescriptor } from "./VaultAppDescriptor";
 export { parsePowerShell51Command, PS51_LIMITS } from "./PowerShell51Command";
 export type { PowerShell51Command } from "./PowerShell51Command";
+export { parseCmdCommand, CMD_LIMITS } from "./CmdCommand";

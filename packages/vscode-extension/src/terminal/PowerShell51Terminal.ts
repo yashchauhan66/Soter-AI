@@ -21,8 +21,10 @@ export class PowerShell51Terminal implements vscode.Pseudoterminal {
     #pending: Promise<OutputResult> | undefined;
     #generation = 0;
     #notice: ReturnType<typeof setTimeout> | undefined;
-    constructor(session: Pick<CheckedPowerShellSession, "execute" | "cancel" | "dispose" | "snapshot">) { this.#session = session; }
-    open(): void { if (!this.#closed) this.#write.fire(POWERSHELL51_HELP); }
+    #help: string;
+    #clearCommand: string;
+    constructor(session: Pick<CheckedPowerShellSession, "execute" | "cancel" | "dispose" | "snapshot">, help = POWERSHELL51_HELP, clearCommand = "clear") { this.#session = session; this.#help = help; this.#clearCommand = clearCommand; }
+    open(): void { if (!this.#closed) this.#write.fire(this.#help); }
     #reset(): void { this.#line = ""; this.#invalid = false; }
     handleInput(data: string): void {
         if (this.#closed || typeof data !== "string") return;
@@ -35,8 +37,8 @@ export class PowerShell51Terminal implements vscode.Pseudoterminal {
                 if (this.#pending) continue;
                 if (invalid || /[\ud800-\udfff]/u.test(line)) { this.#write.fire("Checked input withheld.\r\n"); continue; }
                 if (!line) continue;
-                if (line.toLowerCase() === "help") { this.#write.fire(POWERSHELL51_HELP); continue; }
-                if (line.toLowerCase() === "clear") { this.#write.fire("\x1b[2J\x1b[H"); continue; }
+                if (line.toLowerCase() === "help") { this.#write.fire(this.#help); continue; }
+                if (line.toLowerCase() === this.#clearCommand) { this.#write.fire("\x1b[2J\x1b[H"); continue; }
                 void this.run(line); continue;
             }
             // While owned work is pending, typed input is discarded, never queued.

@@ -1,0 +1,171 @@
+{
+  "schemaVersion": 1,
+  "feature": "F12",
+  "parentCommit": "d46b845d047dc14d64bcdcbb6d8b3e9330a74334",
+  "artifact": {
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-f12-20261017-attempt02.vsix",
+    "sha256": "7940f0a8714cb58b9523b21b19362b3b0caa2bd3d5484ddead7c3bb10bd9959d"
+  },
+  "inspection": {
+    "path": "vsix-inspection-02.json",
+    "sha256": "ef6efc710bc5dcd86871c11192cebdffd2677d750229a3de7ae91b0d6de0600c"
+  },
+  "checks": [
+    {
+      "role": "focused",
+      "log": "final-focused-02.txt",
+      "kind": "tap",
+      "expected": {
+        "tests": 586,
+        "suites": 22,
+        "pass": 586,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    {
+      "role": "typecheck",
+      "log": "typecheck-04.txt"
+    },
+    {
+      "role": "full",
+      "log": "full-tests-02.txt",
+      "kind": "tap",
+      "expected": {
+        "tests": 1974,
+        "suites": 106,
+        "pass": 1970,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 4,
+        "todo": 0
+      }
+    },
+    {
+      "role": "readiness",
+      "log": "readiness-01.txt"
+    },
+    {
+      "role": "package",
+      "log": "package-02.txt"
+    },
+    {
+      "role": "hostBuild",
+      "log": "host-build-02.txt"
+    },
+    {
+      "role": "native",
+      "log": "native-cmd-launch-02.txt"
+    },
+    {
+      "role": "nativePs51",
+      "log": "native-ps51-launch-02.txt"
+    },
+    {
+      "role": "affected",
+      "log": "affected-launch-02.txt"
+    }
+  ],
+  "focusedPartition": {
+    "f12": 168,
+    "retainedPs51": 342,
+    "extensionParity": 76
+  },
+  "native": {
+    "summary": {
+      "path": "f12-native-host-20261017T075900Z-e8b90387/summary.json",
+      "sha256": "30e3769c07402e43e69be2a92cbb3f5068e0d4b66cf347464e1d7de73718e353"
+    },
+    "freeze": {
+      "path": "f12-native-host-20261017T075900Z-e8b90387/freeze.json",
+      "sha256": "53b1e6651042464d8d3abfa1513d9ffa424842db2b2c491dccd4ff8bd71ae4a0"
+    },
+    "primary": {
+      "path": "f12-native-host-20261017T075900Z-e8b90387/primary-results.json",
+      "sha256": "3125bbc37d773e763501d49a75bf063dbe172152d53020f2afcd7e8452aab117"
+    },
+    "restart": {
+      "path": "f12-native-host-20261017T075900Z-e8b90387/restart-results.json",
+      "sha256": "3d31b9004bb97f3e09ad77368df2e4a7a3803afffa0b438e4579e713d00bee9e"
+    },
+    "probe": {
+      "path": "prebuilt-native-host-02/lite-cmd-host.js",
+      "sha256": "1fa4a1f7530492704242083f7c71fe159b50856bde4525808b55ff324809cb86"
+    }
+  },
+  "ps51Native": {
+    "summary": {
+      "path": "f10-native-host-20261017T075939Z-d9a1c02e/summary.json",
+      "sha256": "9dfd89b9925c7817df5dabebee61774e664281722ba7f22ac83912e4029c7ee5"
+    },
+    "freeze": {
+      "path": "f10-native-host-20261017T075939Z-d9a1c02e/freeze.json",
+      "sha256": "b31962a5ab79888c5a767863997dd863dcbe5327a7e028065d05fa06d08f1455"
+    },
+    "primary": {
+      "path": "f10-native-host-20261017T075939Z-d9a1c02e/primary-results.json",
+      "sha256": "d1d43df4ba2ab210c0543397b7a25df26a650ecb878e94295912cf3b275461e5"
+    },
+    "restart": {
+      "path": "f10-native-host-20261017T075939Z-d9a1c02e/restart-results.json",
+      "sha256": "150b1fb1a2ccecd00cf54eb5cc7eb23d89aa378b66f63cd38335e80c222b0adc"
+    },
+    "probe": {
+      "path": "prebuilt-native-ps51-01/lite-powershell51-host.js",
+      "sha256": "4ace212abaa62e358203f62a959751484f70f2ff596c3fd7601a3d3f35054a78"
+    }
+  },
+  "affected": {
+    "summary": {
+      "path": "affected-20261017T080025Z-04f7480f4b47414fb04c0c834d29ec08/affected-summary-01.json",
+      "sha256": "fd4d2d0363b9a30c264c32c3bfc8ec51de3d815bad1bfd4300260c97487d7969"
+    },
+    "comparison": {
+      "path": "affected-20261017T080025Z-04f7480f4b47414fb04c0c834d29ec08/security-comparison-01.json",
+      "sha256": "6a14dd8b040e4d020f08cd670f2f5d0989354df8bc42c9d3f9645d44be1d21e9"
+    },
+    "functional": {
+      "path": "affected-20261017T080025Z-04f7480f4b47414fb04c0c834d29ec08/functional/privacy-20261017T080028Z-854027ae/functional-results.json",
+      "sha256": "62673abb7d4daf3784544bdcf967492c7a62b9a9d39db992a057ff14232f248d"
+    },
+    "security": {
+      "path": "affected-20261017T080025Z-04f7480f4b47414fb04c0c834d29ec08/security/host-20261017T080045Z-1fee74c3149f40ccb91aa59344306f53/live-host.json",
+      "sha256": "81ef50d65dce084b7a55cee8bf225bf3b903cc0a1a1d14f15cf33b1d962b19bf"
+    }
+  },
+  "reviews": [
+    {
+      "path": "design-01.md",
+      "sha256": "7ba8d6e32bc6041f7751679d3b212b681df7985436058854fc7adcf4b28526e5"
+    },
+    {
+      "path": "literal-review-contract-01.md",
+      "sha256": "dbb7b4e47f3192f9c20e51b6db4ec67239602064fcb93cefe59408bb0ca32bdd"
+    },
+    {
+      "path": "output-route-contract-01.md",
+      "sha256": "9e599ee84d1a9015bdb75896920488a56ce7d80a5f68ab53f6f9492b52dcc78c"
+    },
+    {
+      "path": "root-source-review-01.md",
+      "sha256": "557322f29c320ecf9e1bb08ca2b18af831fb17235a068f7022db631be2fb126e"
+    },
+    {
+      "path": "root-final-disposition-01.md",
+      "sha256": "980590bd69fd38fe98a66af7ff48b7dbd0871087237daf09ae6f945f365d6a7a"
+    }
+  ],
+  "reviewDisposition": "NO_OPEN_SCOPED_BLOCKERS",
+  "priorEvidence": [
+    "docs/soterai-lite/evidence/20261017-f11-ps7-availability-6f721c9d/prepare-launch-01.txt",
+    "docs/soterai-lite/evidence/20261017-f11-ps7-availability-6f721c9d/prepare-launch-01.txt.result.json",
+    "docs/soterai-lite/evidence/20261017-f11-ps7-availability-6f721c9d/commit-allowlist-01.txt",
+    "docs/soterai-lite/evidence/20261017-f11-ps7-availability-6f721c9d/commit-01.txt",
+    "docs/soterai-lite/evidence/20261017-f11-ps7-availability-6f721c9d/commit-01.txt.result.json",
+    "docs/soterai-lite/evidence/20261017-f11-ps7-availability-6f721c9d/byte-verification-01.json",
+    "docs/soterai-lite/evidence/20261017-f11-ps7-availability-6f721c9d/verification-launch-01.txt",
+    "docs/soterai-lite/evidence/20261017-f11-ps7-availability-6f721c9d/verification-launch-01.txt.result.json"
+  ]
+}

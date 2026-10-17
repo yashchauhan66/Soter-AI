@@ -1,0 +1,5 @@
+const fs=require('node:fs'),path=require('node:path');const old=path.resolve(__dirname,'../20261015-f10-ps51-3f12ab64'),write=(n,s)=>fs.writeFileSync(path.join(__dirname,n),s,{flag:'wx'});
+const convert=s=>s.replaceAll('f10-evidence-lib.cjs','f12-evidence-lib.cjs').replaceAll('f10-transition-lib-01.cjs','f12-transition-lib-01.cjs').replaceAll('F10','F12').replaceAll('f10','f12').replaceAll('F11','F13');
+let lib=convert(fs.readFileSync(path.join(old,'f10-transition-lib-01.cjs'),'utf8')).replace('assert.equal(acceptance.checks.native.distinct, 19);','assert.equal(acceptance.checks.nativePs51.pass, 19); assert.equal(acceptance.checks.nativePs51.distinct, 19); assert.equal(acceptance.checks.native.distinct, 19);');write('f12-transition-lib-01.cjs',lib);
+let verifier=convert(fs.readFileSync(path.join(old,'verify-transition-01.cjs'),'utf8')).replaceAll('F01-F12 DONE; F13 ACTIVE/test-first','F01-F10 and F12 DONE; F11 optional unavailable/unimplemented NOT_TESTED/NOT_COVERED; F13 ACTIVE/test-first');write('verify-transition-01.cjs',verifier);
+write('commit-transition-01.ps1',convert(fs.readFileSync(path.join(old,'commit-transition-01.ps1'),'utf8')));

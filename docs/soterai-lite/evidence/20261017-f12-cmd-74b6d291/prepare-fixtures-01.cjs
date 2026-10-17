@@ -1,0 +1,10 @@
+const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');const repo=path.resolve(__dirname,'../../../..'),test=path.join(repo,'packages/vscode-extension/src/__tests__');
+const pairs=[['checkedPowerShellCommands.test.ts','checkedCmdCommands.test.ts'],['checkedPowerShellProfile.test.ts','checkedCmdProfile.test.ts'],['checkedPowerShellControllerReview.test.ts','checkedCmdControllerReview.test.ts']];const facts=[];
+for(const [source,target] of pairs){let text=fs.readFileSync(path.join(test,source),'utf8')
+ .replaceAll('CheckedPowerShellProfile','CheckedCmdProfile').replaceAll('registerCheckedPowerShell','registerCheckedCmd').replaceAll('stopCheckedPowerShell','stopCheckedCmd')
+ .replaceAll('configureCheckedPowerShell','configureCheckedCmd').replaceAll('openCheckedPowerShell','openCheckedCmd').replaceAll('runCheckedPowerShell','runCheckedCmd').replaceAll('restoreCheckedPowerShell','restoreCheckedCmd').replaceAll('checkedPowerShellStatus','checkedCmdStatus')
+ .replaceAll('../terminal/commands','../terminal/cmdCommands').replaceAll('soterai.ps51.checked','soterai.cmd.checked').replaceAll('SoterAI PowerShell 5.1 (checked commands)','SoterAI cmd (checked commands)')
+ .replaceAll('lite.ps51','lite.cmd').replaceAll('F10-','F12-').replaceAll('soterai-f10','soterai-f12').replaceAll('cat ','type ').replaceAll('Get-Content ','type ')
+ .replaceAll('checked PowerShell','checked cmd').replaceAll('checkedPowerShell','checkedCmd');
+ fs.writeFileSync(path.join(test,target),text,{flag:'wx'});facts.push({source,target,sha256:crypto.createHash('sha256').update(text).digest('hex')});}
+fs.writeFileSync(path.join(__dirname,'fixture-freeze-01.json'),JSON.stringify({feature:'F12',observedAt:new Date().toISOString(),scope:'Before production: new parser/worker fixtures plus adapted real shared-reader/controller/profile contracts; source fixtures retained unchanged',adapted:facts,catalogIds:['LS-03','LS-04','LS-09','LS-10','LS-11','LS-12','LS-13','LS-14','LS-16']},null,2)+'\n',{flag:'wx'});

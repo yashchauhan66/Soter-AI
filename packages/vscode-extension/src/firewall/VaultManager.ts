@@ -45,10 +45,12 @@ export function vaultRuntimeEnabled(): boolean {
         });
     } catch { return false; }
 }
-export function managedPowerShellOutputEnabled(): boolean {
+export function managedPowerShellOutputEnabled(route: "ps51" | "cmd" = "ps51"): boolean {
     try {
+        const flag = route === "ps51" ? "lite.ps51Terminal" : route === "cmd" ? "lite.cmdTerminal" : undefined;
+        if (!flag) return false;
         const config = vscode.workspace.getConfiguration("soterai");
-        return vaultModeEnabled() && !vscode.env.remoteName && ["lite.ps51Terminal", "lite.secretMatching", "lite.outputRedactor"].every(name => {
+        return vaultModeEnabled() && !vscode.env.remoteName && [flag, "lite.secretMatching", "lite.outputRedactor"].every(name => {
             const inspected = config.inspect<boolean>(name);
             return (inspected ? inspected.globalValue ?? inspected.defaultValue ?? true : config.get(name, true)) === true;
         });
@@ -280,11 +282,11 @@ export class VaultManager {
     }
     /** Internal filter capability only: no plaintext values, original files,
      * recovery-source fallback, key generation or value-bearing public result. */
-    async createManagedOutputFilter(root: vscode.Uri, enabled: () => boolean): Promise<ManagedOutputFilter> {
+    async createManagedOutputFilter(root: vscode.Uri, enabled: () => boolean, route: "ps51" | "cmd" = "ps51"): Promise<ManagedOutputFilter> {
         try {
             const epoch = this.epoch, runtimeEpoch = this.runtimeEpoch;
             this.alive(epoch);
-            if (!managedPowerShellOutputEnabled() || enabled() !== true) return vaultUnavailable();
+            if (!managedPowerShellOutputEnabled(route) || enabled() !== true) return vaultUnavailable();
             const rootIdentity = managedRootIdentity(root);
             await BoundarySnapshot.load();
             const policy = managedPolicyBinding(root);
@@ -297,7 +299,7 @@ export class VaultManager {
             const guard = (): boolean => {
                 try {
                     this.alive(epoch);
-                    return runtimeEpoch === this.runtimeEpoch && managedPowerShellOutputEnabled() && enabled() === true
+                    return runtimeEpoch === this.runtimeEpoch && managedPowerShellOutputEnabled(route) && enabled() === true
                         && managedRootIdentity(root) === rootIdentity && managedPolicyBinding(root) === policy
                         && (cipher === undefined ? managedEmptyStoreIdentity(this.storage.directory) === emptyStore : runtimeStoreUnchanged(this.storage.directory, cipher));
                 } catch { return false; }

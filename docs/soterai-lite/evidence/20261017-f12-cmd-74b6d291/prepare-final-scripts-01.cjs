@@ -1,0 +1,7 @@
+const fs=require('node:fs'),path=require('node:path');const old=path.resolve(__dirname,'../20261015-f10-ps51-3f12ab64');
+const write=(name,text)=>fs.writeFileSync(path.join(__dirname,name),text,{flag:'wx'});
+let inspection=fs.readFileSync(path.join(old,'inspect-vsix-03.ps1'),'utf8').replaceAll('f10','f12').replaceAll('F10','F12').replaceAll('ps51Terminal','cmdTerminal').replaceAll('soterai.ps51.checked','soterai.cmd.checked').replaceAll('CheckedPowerShell','CheckedCmd').replaceAll('checkedPowerShell','checkedCmd');
+inspection=inspection.replaceAll('-ne 49','-ne 50').replaceAll('machineSettings=49','machineSettings=50');write('inspect-vsix-01.ps1',inspection);
+const binder=fs.readFileSync(path.join(old,'f10-artifact-binding-02.ps1'),'utf8').replaceAll('f10','f12').replaceAll('F10','F12');write('artifact-binding-01.ps1',binder);
+for(const kind of ['functional','security'])write(`run-${kind}-01.ps1`,fs.readFileSync(path.join(old,`run-${kind}-03.ps1`),'utf8').replaceAll('f10-artifact-binding-02.ps1','artifact-binding-01.ps1').replaceAll('Assert-F10RuntimeBinding','Assert-F12RuntimeBinding'));
+write('run-affected-hosts-01.ps1',fs.readFileSync(path.join(old,'run-affected-hosts-04.ps1'),'utf8').replaceAll('f10-artifact-binding-02.ps1','artifact-binding-01.ps1').replaceAll('Assert-F10RuntimeBinding','Assert-F12RuntimeBinding').replaceAll('run-functional-03.ps1','run-functional-01.ps1').replaceAll('run-security-03.ps1','run-security-01.ps1'));
