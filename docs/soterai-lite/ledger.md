@@ -5,11 +5,11 @@ Read this file FIRST after any context compaction or on resumption. Do not overw
 ## Current state
 
 - **L0 scoped preflight/split/baseline/catalog freeze DONE.** The user waived the 20 GB threshold. Both verified backup bundles and the authorized old synthetic profiles are retained on D:. Supplemental full fsck ended in resource-limited FAIL; full object integrity remains UNVERIFIED.
-- L1: **ACTIVE, F01-F09 DONE; F10 ACTIVE/test-first**; F11-F32 and L2-L7 **NOT-RUN**. Do not describe this as reaching L6. Read the latest receipts below before work.
+- L1: **ACTIVE, F01-F10 DONE; F11 ACTIVE/test-first**; F12-F32 and L2-L7 **NOT-RUN**. Do not describe this as reaching L6. Read the latest receipts below before work.
 - Source changes and isolated synthetic-profile tests are authorized; the normal VS Code profile has not been changed.
 - New Lite baseline VSIX: **BUILT / CONTENT-INSPECTED / HOST-BASELINE-TESTED**; SHA-256 `cf163471b7a022d5a9f922a3f1fcc6bfd3b56a08ab14f1aebfdfb345c337bae1`. Coverage and all final numerical ratings **PENDING / UNVERIFIED**; 44-check catalog frozen, not graded.
 - Baseline HEAD: `8ef3aeb54f4019f4ee815a844443995176a656f0`; starting branch: `security-hardening`. Inspected prior source modifications were checkpointed at `915a5300a7745e4ffaeab80b5d08d3305e3772f9`; unknown scratch/raw artifacts remain untouched.
-- P00-P03 and F01-F09 scoped commits are complete. F10 is the sole active behavior card; production waits for its frozen design and failing regression baseline. No F11 production may start yet.
+- P00-P03 and F01-F10 scoped source commits are complete. F11 is the sole active behavior card. Before F11 production, require the separate F10 transition commit and f10-transition-byte-verification-01.json PASS; then follow the existing F11 applicability, design and regression gates.
 
 ## STEP RECEIPT L0.1 — preflight stop
 
@@ -522,3 +522,7 @@ Source/evidence checkpoint command node record-resume-checkpoint02.cjs exit0, so
 ## STEP RECEIPT F10 - scoped checked PowerShell acceptance
 
 Scoped local acceptance PASS; source commit/byte verification remain the serial barrier. Focused 418 PASS (342 F10 and76 retained extension parity); full 1806 tests/1802 PASS/4 SKIP; zero failures/cancellations. Exact VSIX packages/soterai-lite/soterai-lite-0.7.0-f10-20261017-attempt03.vsix SHA2b5ae9571707ceb268eea44dad4f40c741560d44eaab5edbe2d7b06b4fc7102b (1392326 bytes), runtime 357a60f18bf81a7f5ee08ebcb9e4f08f3fd8e30a5cd6fdd592fa2a1a2b96bded. Native19PASS (primary16/restart3), functional10PASS/security17 unchanged8BLOCKED_SCOPED9LEAK_CONFIRMED. All historical failures retained, including commands missing-module baseline NOT_EXECUTED. Declared finite PS5.1 and staged-only Git metadata; LOW scripted API evidence, no independent/human/native-bypass/OS boundary claim. Catalog44UNVERIFIED/ratingPENDING. F10 remains ACTIVE pending its scoped commit/byte verification; no F11 production.
+
+## STEP RECEIPT F10-COMMIT / F11-ACTIVATE
+
+F10 source commit 93e8487a5cd004bb9ac3a201bcdc5e6640cdf746 verified: 388 indexed byte hashes, 388 exact changed paths, zero mismatches/unexpected paths. Exact physical artifact freshly rechecked 2b5ae9571707ceb268eea44dad4f40c741560d44eaab5edbe2d7b06b4fc7102b; runtime 357a60f18bf81a7f5ee08ebcb9e4f08f3fd8e30a5cd6fdd592fa2a1a2b96bded. Native19 (primary16/restart3), functional10 and unchanged security17 (8 BLOCKED_SCOPED/9 LEAK_CONFIRMED) remain the scoped LOW evidence in the committed acceptance. Declared finite PS5.1/staged-only Git metadata, not OS confinement, unmanaged native interception or independent/human certification. Catalog44UNVERIFIED/ratingPENDING. F11 is the sole next active card; no F11 production before the separate transition commit and f10-transition-byte-verification-01.json PASS. All prior failures, evidence, synthetic profiles, user20GBwaiver and unrelated changes retained.

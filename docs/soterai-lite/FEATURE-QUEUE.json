@@ -9,9 +9,9 @@
   "planVersion": 1,
   "clientDate": "2026-10-13",
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
-  "scope": "F01-F09 DONE with exact scoped artifacts, current native/affected hosts and byte-verified source commits; F10 alone active, test-first managed PowerShell 5.1 integration.",
+  "scope": "F01-F10 DONE for their exact scoped artifacts and byte-verified source commits; F11 alone active. F11 production waits for the separately byte-verified F10 transition and existing applicability/design/regression gates.",
   "implementationConcurrency": 1,
-  "activeFeature": "F10",
+  "activeFeature": "F11",
   "prerequisiteBlock": {
     "id": "P00",
     "result": "FAIL",
@@ -184,17 +184,21 @@
     {
       "id": "F10",
       "title": "Managed PowerShell 5.1 terminal.",
-      "status": "ACTIVE",
-      "result": "INCOMPLETE",
+      "status": "DONE",
+      "result": "PASS",
       "requires": [
         "F09"
       ],
-      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "sourceEvidenceCommit": "93e8487a5cd004bb9ac3a201bcdc5e6640cdf746",
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/f10-acceptance-01.json",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/f10-committed-byte-verification-01.json",
+      "transitionByteVerification": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/f10-transition-byte-verification-01.json"
     },
     {
       "id": "F11",
       "title": "Managed PowerShell 7 terminal.",
-      "status": "PLANNED",
+      "status": "ACTIVE",
       "result": "NOT-RUN",
       "requires": [
         "F10"
