@@ -9,9 +9,9 @@
   "planVersion": 1,
   "clientDate": "2026-10-13",
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
-  "scope": "F01-F10 and F12 DONE for exact scoped objects and verified source bytes; F11 remains optional unavailable/unimplemented NOT_TESTED/NOT_COVERED. F13 alone supported active after the separate F12 transition byte barrier.",
+  "scope": "F01-F10 and F12-F13 DONE for exact scoped objects and verified source bytes; F11 remains optional unavailable/unimplemented NOT_TESTED/NOT_COVERED. F14 alone supported active after the separate F13 transition byte barrier.",
   "implementationConcurrency": 1,
-  "activeFeature": "F13",
+  "activeFeature": "F14",
   "prerequisiteBlock": {
     "id": "P00",
     "result": "FAIL",
@@ -231,17 +231,21 @@
     {
       "id": "F13",
       "title": "Managed Git Bash profile.",
-      "status": "ACTIVE",
-      "result": "INCOMPLETE",
+      "status": "DONE",
+      "result": "PASS",
       "requires": [
         "F12"
       ],
-      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "sourceEvidenceCommit": "99c2d78e427ef2ba07bcd0d29583e80017dbb309",
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261017-f13-gitbash-291c8e70/f13-acceptance-01.json",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261017-f13-gitbash-291c8e70/f13-committed-byte-verification-01.json",
+      "transitionByteVerification": "docs/soterai-lite/evidence/20261017-f13-gitbash-291c8e70/f13-transition-byte-verification-01.json"
     },
     {
       "id": "F14",
       "title": "Broker lifecycle and window ownership.",
-      "status": "PLANNED",
+      "status": "ACTIVE",
       "result": "NOT-RUN",
       "requires": [
         "F13"
