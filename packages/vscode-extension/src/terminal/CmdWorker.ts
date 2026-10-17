@@ -92,7 +92,7 @@ export class CmdWorker {
         if (!this.#closed || !this.#drained.stdout || !this.#drained.stderr || this.#finished) return; let output = withheld();
         try {
             if (this.#available() && this.#exitCode === 0) {
-                const texts = { stdout: new TextDecoder("utf-16le", { fatal: true }).decode(Buffer.concat(this.#buffers.stdout)), stderr: new TextDecoder("utf-16le", { fatal: true }).decode(Buffer.concat(this.#buffers.stderr)) };
+                const texts = { stdout: new TextDecoder("utf-16le", { fatal: true, ignoreBOM: true }).decode(Buffer.concat(this.#buffers.stdout)), stderr: new TextDecoder("utf-16le", { fatal: true, ignoreBOM: true }).decode(Buffer.concat(this.#buffers.stderr)) };
                 if (this.#request?.literal) { const prefix = "SOTERAI_LITERAL="; if (texts.stdout !== prefix + this.#request.expectedLiteral + "\r\n" || texts.stderr) throw Error(); texts.stdout = texts.stdout.slice(prefix.length); }
                 if (this.#request?.directory && texts.stdout.split(/\r?\n/).filter(Boolean).length > CMD_LIMITS.maxListEntries) throw Error();
                 for (const channel of ["stdout", "stderr"] as const) if (texts[channel] && this.#output?.push(channel, Buffer.from(texts[channel], "utf8")).status !== "BUFFERED") throw Error();

@@ -13,7 +13,7 @@ import { prepareCheckedGitMetadata, type CheckedGitMetadata } from "./CheckedGit
 export interface ManagedReaderBridge { read(uri: vscode.Uri): Promise<AccessResult>; revoke(): void; isEnabled(): boolean }
 interface Filter extends PowerShell51Output { available(): boolean; canRelease(): boolean }
 interface Options { root: vscode.Uri; reader: ManagedReaderBridge;
-    vault: { createManagedOutputFilter(root: vscode.Uri, enabled: () => boolean, route?: "ps51" | "cmd"): Promise<Filter> };
+    vault: { createManagedOutputFilter(root: vscode.Uri, enabled: () => boolean, route?: "ps51" | "cmd" | "gitBash"): Promise<Filter> };
     enabled: () => boolean; parentEnvironment: NodeJS.ProcessEnv }
 interface Dependencies { createWorker?: (options: ConstructorParameters<typeof PowerShell51Worker>[0]) => Pick<PowerShell51Worker, "start" | "completion" | "snapshot" | "cancel" | "dispose">;
     parseCommand?: (input: unknown) => PowerShell51Command | undefined;

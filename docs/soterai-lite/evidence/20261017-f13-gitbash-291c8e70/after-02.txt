@@ -1,0 +1,1342 @@
+﻿TAP version 13
+# Subtest: F13-C01 registration contributes one native provider and exactly the five declared routes
+ok 1 - F13-C01 registration contributes one native provider and exactly the five declared routes
+  ---
+  duration_ms: 75.3585
+  type: 'test'
+  ...
+# Subtest: F13-C02 contributed native profile supplies an owned pty without shellPath, args or inherited env
+ok 2 - F13-C02 contributed native profile supplies an owned pty without shellPath, args or inherited env
+  ---
+  duration_ms: 75.6962
+  type: 'test'
+  ...
+# Subtest: F13-C03 open command creates an ExtensionTerminalOptions tab and leaves project profile unchanged
+ok 3 - F13-C03 open command creates an ExtensionTerminalOptions tab and leaves project profile unchanged
+  ---
+  duration_ms: 25.9934
+  type: 'test'
+  ...
+# Subtest: F13-C04 run gets command text only from masked native input and ignores command-like caller arguments
+ok 4 - F13-C04 run gets command text only from masked native input and ignores command-like caller arguments
+  ---
+  duration_ms: 59.0699
+  type: 'test'
+  ...
+# Subtest: F13-C05 cancelled native command input never becomes caller-provided command execution
+ok 5 - F13-C05 cancelled native command input never becomes caller-provided command execution
+  ---
+  duration_ms: 16.9538
+  type: 'test'
+  ...
+# Subtest: F13-C06 run and pty share the exact bridge, preserving denial and reviewed masking
+ok 6 - F13-C06 run and pty share the exact bridge, preserving denial and reviewed masking
+  ---
+  duration_ms: 37.512
+  type: 'test'
+  ...
+# Subtest: F13-C07 an absent internal reader withholds instead of falling back to a public command
+ok 7 - F13-C07 an absent internal reader withholds instead of falling back to a public command
+  ---
+  duration_ms: 8.8735
+  type: 'test'
+  ...
+# Subtest: F13-C08 disabled bridge prevents profile creation and native command input
+ok 8 - F13-C08 disabled bridge prevents profile creation and native command input
+  ---
+  duration_ms: 8.7924
+  type: 'test'
+  ...
+# Subtest: F13-C09 untrusted workspace cannot open or configure the checked terminal
+ok 9 - F13-C09 untrusted workspace cannot open or configure the checked terminal
+  ---
+  duration_ms: 11.2451
+  type: 'test'
+  ...
+# Subtest: F13-C10 a remote extension host never creates a local PowerShell terminal
+ok 10 - F13-C10 a remote extension host never creates a local PowerShell terminal
+  ---
+  duration_ms: 10.6311
+  type: 'test'
+  ...
+# Subtest: F13-C11 lite.gitBashTerminal withdrawal cancels live sessions and preserves saved profile metadata
+ok 11 - F13-C11 lite.gitBashTerminal withdrawal cancels live sessions and preserves saved profile metadata
+  ---
+  duration_ms: 10.9611
+  type: 'test'
+  ...
+# Subtest: F13-C11 lite.vaultMode withdrawal cancels live sessions and preserves saved profile metadata
+ok 12 - F13-C11 lite.vaultMode withdrawal cancels live sessions and preserves saved profile metadata
+  ---
+  duration_ms: 10.0366
+  type: 'test'
+  ...
+# Subtest: F13-C11 lite.secretMatching withdrawal cancels live sessions and preserves saved profile metadata
+ok 13 - F13-C11 lite.secretMatching withdrawal cancels live sessions and preserves saved profile metadata
+  ---
+  duration_ms: 8.5234
+  type: 'test'
+  ...
+# Subtest: F13-C11 lite.outputRedactor withdrawal cancels live sessions and preserves saved profile metadata
+ok 14 - F13-C11 lite.outputRedactor withdrawal cancels live sessions and preserves saved profile metadata
+  ---
+  duration_ms: 10.5402
+  type: 'test'
+  ...
+# Subtest: F13-C12 workspace removal cancels its live session and blocks a new tab
+ok 15 - F13-C12 workspace removal cancels its live session and blocks a new tab
+  ---
+  duration_ms: 9.2322
+  type: 'test'
+  ...
+# Subtest: F13-C13 flag withdrawal during a native pending read cannot release late approved output
+ok 16 - F13-C13 flag withdrawal during a native pending read cannot release late approved output
+  ---
+  duration_ms: 26.0959
+  type: 'test'
+  ...
+# Subtest: F13-C14 configure and restore delegate only validated current root URIs to the owned profile manager
+ok 17 - F13-C14 configure and restore delegate only validated current root URIs to the owned profile manager
+  ---
+  duration_ms: 14.8743
+  type: 'test'
+  ...
+# Subtest: F13-C15 native folder selection resolves a root without accepting a caller command as a URI
+ok 18 - F13-C15 native folder selection resolves a root without accepting a caller command as a URI
+  ---
+  duration_ms: 10.0163
+  type: 'test'
+  ...
+# Subtest: F13-C16 invalid/outside/remote root arguments never become profile settings changes
+ok 19 - F13-C16 invalid/outside/remote root arguments never become profile settings changes
+  ---
+  duration_ms: 11.5045
+  type: 'test'
+  ...
+# Subtest: F13-C17 cancelled native folder choice does not mutate a profile
+ok 20 - F13-C17 cancelled native folder choice does not mutate a profile
+  ---
+  duration_ms: 9.7599
+  type: 'test'
+  ...
+# Subtest: F13-C18 status route returns metadata without native input, commands, values or raw input history
+ok 21 - F13-C18 status route returns metadata without native input, commands, values or raw input history
+  ---
+  duration_ms: 45.0067
+  type: 'test'
+  ...
+# Subtest: F13-C19 controller disposal unregisters its contributed commands and profile
+ok 22 - F13-C19 controller disposal unregisters its contributed commands and profile
+  ---
+  duration_ms: 9.5046
+  type: 'test'
+  ...
+# Subtest: F13-C20 module stop and controller shutdown revoke owned idle sessions without signaling a PID
+ok 23 - F13-C20 module stop and controller shutdown revoke owned idle sessions without signaling a PID
+  ---
+  duration_ms: 8.7884
+  type: 'test'
+  ...
+# Subtest: F13-C21 non-array null ownership blocks launch without overwriting retained metadata
+ok 24 - F13-C21 non-array null ownership blocks launch without overwriting retained metadata
+  ---
+  duration_ms: 10.567
+  type: 'test'
+  ...
+# Subtest: F13-C21 non-array object ownership blocks launch without overwriting retained metadata
+ok 25 - F13-C21 non-array object ownership blocks launch without overwriting retained metadata
+  ---
+  duration_ms: 8.0126
+  type: 'test'
+  ...
+# Subtest: F13-C21 non-array string ownership blocks launch without overwriting retained metadata
+ok 26 - F13-C21 non-array string ownership blocks launch without overwriting retained metadata
+  ---
+  duration_ms: 7.7362
+  type: 'test'
+  ...
+# Subtest: F13-C21 non-array number ownership blocks launch without overwriting retained metadata
+ok 27 - F13-C21 non-array number ownership blocks launch without overwriting retained metadata
+  ---
+  duration_ms: 7.8591
+  type: 'test'
+  ...
+# Subtest: F13-C22 more than 64 recovered workers withholds instead of discarding prior ownership
+ok 28 - F13-C22 more than 64 recovered workers withholds instead of discarding prior ownership
+  ---
+  duration_ms: 7.9295
+  type: 'test'
+  ...
+# Subtest: F13-C23 null row ownership fails atomically and blocks before reader/filter admission
+ok 29 - F13-C23 null row ownership fails atomically and blocks before reader/filter admission
+  ---
+  duration_ms: 7.7641
+  type: 'test'
+  ...
+# Subtest: F13-C23 unknown field ownership fails atomically and blocks before reader/filter admission
+ok 30 - F13-C23 unknown field ownership fails atomically and blocks before reader/filter admission
+  ---
+  duration_ms: 12.067
+  type: 'test'
+  ...
+# Subtest: F13-C23 invalid UUID ownership fails atomically and blocks before reader/filter admission
+ok 31 - F13-C23 invalid UUID ownership fails atomically and blocks before reader/filter admission
+  ---
+  duration_ms: 8.7064
+  type: 'test'
+  ...
+# Subtest: F13-C23 unknown state ownership fails atomically and blocks before reader/filter admission
+ok 32 - F13-C23 unknown state ownership fails atomically and blocks before reader/filter admission
+  ---
+  duration_ms: 7.8936
+  type: 'test'
+  ...
+# Subtest: F13-C23 zero PID ownership fails atomically and blocks before reader/filter admission
+ok 33 - F13-C23 zero PID ownership fails atomically and blocks before reader/filter admission
+  ---
+  duration_ms: 8.5085
+  type: 'test'
+  ...
+# Subtest: F13-C23 fractional PID ownership fails atomically and blocks before reader/filter admission
+ok 34 - F13-C23 fractional PID ownership fails atomically and blocks before reader/filter admission
+  ---
+  duration_ms: 7.548
+  type: 'test'
+  ...
+# Subtest: F13-C23 bad exit metadata ownership fails atomically and blocks before reader/filter admission
+ok 35 - F13-C23 bad exit metadata ownership fails atomically and blocks before reader/filter admission
+  ---
+  duration_ms: 8.7614
+  type: 'test'
+  ...
+# Subtest: F13-C24 duplicate ownership identifiers do not silently collapse distinct prior records
+ok 36 - F13-C24 duplicate ownership identifiers do not silently collapse distinct prior records
+  ---
+  duration_ms: 10.6429
+  type: 'test'
+  ...
+# Subtest: F13-C25 one malformed row cannot be dropped from otherwise valid recovered workers
+ok 37 - F13-C25 one malformed row cannot be dropped from otherwise valid recovered workers
+  ---
+  duration_ms: 9.0546
+  type: 'test'
+  ...
+# Subtest: F13-C26 a throwing ownership read preserves the saved bytes and withholds launches
+ok 38 - F13-C26 a throwing ownership read preserves the saved bytes and withholds launches
+  ---
+  duration_ms: 7.6599
+  type: 'test'
+  ...
+# Subtest: F13-C27 recovered native worker rows are always UNVERIFIED and never adopted or signaled
+ok 39 - F13-C27 recovered native worker rows are always UNVERIFIED and never adopted or signaled
+  ---
+  duration_ms: 47.8608
+  type: 'test'
+  ...
+# Subtest: F13-C28 exactly 64 valid recovered rows stay visible without adopting their PIDs
+ok 40 - F13-C28 exactly 64 valid recovered rows stay visible without adopting their PIDs
+  ---
+  duration_ms: 10.9617
+  type: 'test'
+  ...
+# Subtest: F13-C29 unrelated global metadata is preserved through registration, use and shutdown
+ok 41 - F13-C29 unrelated global metadata is preserved through registration, use and shutdown
+  ---
+  duration_ms: 8.6164
+  type: 'test'
+  ...
+# Subtest: F13-C30 a non-Windows host keeps registration inert and cannot launch local PowerShell
+ok 42 - F13-C30 a non-Windows host keeps registration inert and cannot launch local PowerShell
+  ---
+  duration_ms: 10.4214
+  type: 'test'
+  ...
+# Subtest: F13-CR01 valid empty ownership admits an idle tab and shutdown durably preserves a bounded array
+ok 43 - F13-CR01 valid empty ownership admits an idle tab and shutdown durably preserves a bounded array
+  ---
+  duration_ms: 29.8091
+  type: 'test'
+  ...
+# Subtest: F13-CR02 sparse all holes ownership withholds before tab creation and preserves the retained array
+ok 44 - F13-CR02 sparse all holes ownership withholds before tab creation and preserves the retained array
+  ---
+  duration_ms: 9.6045
+  type: 'test'
+  ...
+# Subtest: F13-CR02 sparse valid then hole ownership withholds before tab creation and preserves the retained array
+ok 45 - F13-CR02 sparse valid then hole ownership withholds before tab creation and preserves the retained array
+  ---
+  duration_ms: 8.1807
+  type: 'test'
+  ...
+# Subtest: F13-CR02 sparse hole then valid ownership withholds before tab creation and preserves the retained array
+ok 46 - F13-CR02 sparse hole then valid ownership withholds before tab creation and preserves the retained array
+  ---
+  duration_ms: 7.5451
+  type: 'test'
+  ...
+# Subtest: F13-CR03 rejected ownership persistence prevents a later terminal admission
+ok 47 - F13-CR03 rejected ownership persistence prevents a later terminal admission
+  ---
+  duration_ms: 28.8073
+  type: 'test'
+  ...
+# Subtest: F13-CR04 stalled ownership persistence cannot leave controller shutdown pending indefinitely
+ok 48 - F13-CR04 stalled ownership persistence cannot leave controller shutdown pending indefinitely
+  ---
+  duration_ms: 512.7895
+  type: 'test'
+  ...
+# Subtest: F13-P01 declined native review writes neither setting nor receipt and previews only the selected metadata
+ok 49 - F13-P01 declined native review writes neither setting nor receipt and previews only the selected metadata
+  ---
+  duration_ms: 263.9349
+  type: 'test'
+  ...
+# Subtest: F13-P02 configure durably prepares before one precise workspace write and verifies the applied record
+ok 50 - F13-P02 configure durably prepares before one precise workspace write and verifies the applied record
+  ---
+  duration_ms: 14.5479
+  type: 'test'
+  ...
+# Subtest: F13-P03 restore reviews native metadata, restores only the owned setting and clears the receipt
+ok 51 - F13-P03 restore reviews native metadata, restores only the owned setting and clears the receipt
+  ---
+  duration_ms: 11.0134
+  type: 'test'
+  ...
+# Subtest: F13-P04-absent selected-scope absence/null is preserved independently of inherited defaults
+ok 52 - F13-P04-absent selected-scope absence/null is preserved independently of inherited defaults
+  ---
+  duration_ms: 14.3439
+  type: 'test'
+  ...
+# Subtest: F13-P04-null selected-scope absence/null is preserved independently of inherited defaults
+ok 53 - F13-P04-null selected-scope absence/null is preserved independently of inherited defaults
+  ---
+  duration_ms: 12.1145
+  type: 'test'
+  ...
+# Subtest: F13-P05 a saved multi-root workspace targets only the chosen folder setting
+ok 54 - F13-P05 a saved multi-root workspace targets only the chosen folder setting
+  ---
+  duration_ms: 14.7206
+  type: 'test'
+  ...
+# Subtest: F13-P06 an unsaved multi-root workspace uses workspace scope rather than a folder override
+ok 55 - F13-P06 an unsaved multi-root workspace uses workspace scope rather than a folder override
+  ---
+  duration_ms: 8.1767
+  type: 'test'
+  ...
+# Subtest: F13-P07 declined restore preserves the applied setting and complete undo receipt
+ok 56 - F13-P07 declined restore preserves the applied setting and complete undo receipt
+  ---
+  duration_ms: 11.2798
+  type: 'test'
+  ...
+# Subtest: F13-P08 a PREPARED receipt write failure prevents any setting change
+ok 57 - F13-P08 a PREPARED receipt write failure prevents any setting change
+  ---
+  duration_ms: 8.0728
+  type: 'test'
+  ...
+# Subtest: F13-P09 an applied-setting receipt failure retains PREPARED metadata for a new instance to restore
+ok 58 - F13-P09 an applied-setting receipt failure retains PREPARED metadata for a new instance to restore
+  ---
+  duration_ms: 11.6849
+  type: 'test'
+  ...
+# Subtest: F13-P10 a no-op setting write fails readback and its owned PREPARED record can be safely cleared
+ok 59 - F13-P10 a no-op setting write fails readback and its owned PREPARED record can be safely cleared
+  ---
+  duration_ms: 12.9206
+  type: 'test'
+  ...
+# Subtest: F13-P11 apply-then-throw preserves the original-value receipt and permits later owned restoration
+ok 60 - F13-P11 apply-then-throw preserves the original-value receipt and permits later owned restoration
+  ---
+  duration_ms: 14.9276
+  type: 'test'
+  ...
+# Subtest: F13-P12 a third-party profile change is preserved and the stale undo receipt is retained
+ok 61 - F13-P12 a third-party profile change is preserved and the stale undo receipt is retained
+  ---
+  duration_ms: 8.7559
+  type: 'test'
+  ...
+# Subtest: F13-P13 corrupt or mismatched durable records are neither applied nor overwritten
+ok 62 - F13-P13 corrupt or mismatched durable records are neither applied nor overwritten
+  ---
+  duration_ms: 12.8135
+  type: 'test'
+  ...
+# Subtest: F13-P14 invalid selected-scope profile types or oversized strings are refused before preview or state writes
+ok 63 - F13-P14 invalid selected-scope profile types or oversized strings are refused before preview or state writes
+  ---
+  duration_ms: 8.1711
+  type: 'test'
+  ...
+# Subtest: F13-P15 current-setting drift during the metadata diff cancels publication without a stale before receipt
+ok 64 - F13-P15 current-setting drift during the metadata diff cancels publication without a stale before receipt
+  ---
+  duration_ms: 6.3167
+  type: 'test'
+  ...
+# Subtest: F13-P16 workspace removal during owner approval prevents the pending write
+ok 65 - F13-P16 workspace removal during owner approval prevents the pending write
+  ---
+  duration_ms: 8.0361
+  type: 'test'
+  ...
+# Subtest: F13-P17 withdrawal blocks configure/restore and revokes a held owner approval without deleting its existing receipt
+ok 66 - F13-P17 withdrawal blocks configure/restore and revokes a held owner approval without deleting its existing receipt
+  ---
+  duration_ms: 50.8428
+  type: 'test'
+  ...
+# Subtest: F13-P18 only one operation may own a pending review and a second call cannot overwrite its original before value
+ok 67 - F13-P18 only one operation may own a pending review and a second call cannot overwrite its original before value
+  ---
+  duration_ms: 23.7206
+  type: 'test'
+  ...
+# Subtest: F13-P19 restoration is bound to the original root and chosen scope and survives refusal unchanged
+ok 68 - F13-P19 restoration is bound to the original root and chosen scope and survives refusal unchanged
+  ---
+  duration_ms: 11.7084
+  type: 'test'
+  ...
+# Subtest: F13-P20 selected scope and current value are rechecked after the native owner modal
+ok 69 - F13-P20 selected scope and current value are rechecked after the native owner modal
+  ---
+  duration_ms: 9.0716
+  type: 'test'
+  ...
+# Subtest: F12-W01 only fixed cmd code enters argv; literal is private stdin and fresh env excludes inherited values
+ok 70 - F12-W01 only fixed cmd code enters argv; literal is private stdin and fresh env excludes inherited values
+  ---
+  duration_ms: 55.7323
+  type: 'test'
+  ...
+# Subtest: F12-W02 actual close and both drained pipes precede release
+ok 71 - F12-W02 actual close and both drained pipes precede release
+  ---
+  duration_ms: 3.1369
+  type: 'test'
+  ...
+# Subtest: F12-W03 byte-split UTF16 Unicode output decodes exactly through real F08
+ok 72 - F12-W03 byte-split UTF16 Unicode output decodes exactly through real F08
+  ---
+  duration_ms: 4.0973
+  type: 'test'
+  ...
+# Subtest: F12-W04-0 malformed final UTF16/control discards all channels
+ok 73 - F12-W04-0 malformed final UTF16/control discards all channels
+  ---
+  duration_ms: 1.7969
+  type: 'test'
+  ...
+# Subtest: F12-W04-1 malformed final UTF16/control discards all channels
+ok 74 - F12-W04-1 malformed final UTF16/control discards all channels
+  ---
+  duration_ms: 1.6017
+  type: 'test'
+  ...
+# Subtest: F12-W04-2 malformed final UTF16/control discards all channels
+ok 75 - F12-W04-2 malformed final UTF16/control discards all channels
+  ---
+  duration_ms: 1.8961
+  type: 'test'
+  ...
+# Subtest: F12-W05-0 malformed/unsupported operation cannot spawn
+ok 76 - F12-W05-0 malformed/unsupported operation cannot spawn
+  ---
+  duration_ms: 1.4532
+  type: 'test'
+  ...
+# Subtest: F12-W05-1 malformed/unsupported operation cannot spawn
+ok 77 - F12-W05-1 malformed/unsupported operation cannot spawn
+  ---
+  duration_ms: 1.987
+  type: 'test'
+  ...
+# Subtest: F12-W05-2 malformed/unsupported operation cannot spawn
+ok 78 - F12-W05-2 malformed/unsupported operation cannot spawn
+  ---
+  duration_ms: 2.1959
+  type: 'test'
+  ...
+# Subtest: F12-W05-3 malformed/unsupported operation cannot spawn
+ok 79 - F12-W05-3 malformed/unsupported operation cannot spawn
+  ---
+  duration_ms: 2.0406
+  type: 'test'
+  ...
+# Subtest: F12-W05-4 malformed/unsupported operation cannot spawn
+ok 80 - F12-W05-4 malformed/unsupported operation cannot spawn
+  ---
+  duration_ms: 1.3446
+  type: 'test'
+  ...
+# Subtest: F12-W05-5 malformed/unsupported operation cannot spawn
+ok 81 - F12-W05-5 malformed/unsupported operation cannot spawn
+  ---
+  duration_ms: 1.0898
+  type: 'test'
+  ...
+# Subtest: F12-W05-6 malformed/unsupported operation cannot spawn
+ok 82 - F12-W05-6 malformed/unsupported operation cannot spawn
+  ---
+  duration_ms: 0.9719
+  type: 'test'
+  ...
+# Subtest: F12-W05-7 malformed/unsupported operation cannot spawn
+ok 83 - F12-W05-7 malformed/unsupported operation cannot spawn
+  ---
+  duration_ms: 1.2811
+  type: 'test'
+  ...
+# Subtest: F12-W06-stdin missing pipe retains actual close ownership
+ok 84 - F12-W06-stdin missing pipe retains actual close ownership
+  ---
+  duration_ms: 1.8145
+  type: 'test'
+  ...
+# Subtest: F12-W06-stdout missing pipe retains actual close ownership
+ok 85 - F12-W06-stdout missing pipe retains actual close ownership
+  ---
+  duration_ms: 1.4123
+  type: 'test'
+  ...
+# Subtest: F12-W06-stderr missing pipe retains actual close ownership
+ok 86 - F12-W06-stderr missing pipe retains actual close ownership
+  ---
+  duration_ms: 1.387
+  type: 'test'
+  ...
+# Subtest: F12-W07 overflow cancels output and drains until actual close without kill
+ok 87 - F12-W07 overflow cancels output and drains until actual close without kill
+  ---
+  duration_ms: 2.9731
+  type: 'test'
+  ...
+# Subtest: F12-W08 held wait stdin releases at its bound even after cancellation
+ok 88 - F12-W08 held wait stdin releases at its bound even after cancellation
+  ---
+  duration_ms: 3.3434
+  type: 'test'
+  ...
+# Subtest: F12-W09 private guard withdrawal after collected public output withholds
+ok 89 - F12-W09 private guard withdrawal after collected public output withholds
+  ---
+  duration_ms: 6.8513
+  type: 'test'
+  ...
+# Subtest: F12-W10 nonzero exit withholds all error bytes
+ok 90 - F12-W10 nonzero exit withholds all error bytes
+  ---
+  duration_ms: 2.2073
+  type: 'test'
+  ...
+# Subtest: F12-W11 directory names have an independent 256 entry bound
+ok 91 - F12-W11 directory names have an independent 256 entry bound
+  ---
+  duration_ms: 3.2566
+  type: 'test'
+  ...
+# Subtest: F12-W12 wrong literal transport prefix cannot be published
+ok 92 - F12-W12 wrong literal transport prefix cannot be published
+  ---
+  duration_ms: 1.8357
+  type: 'test'
+  ...
+# Subtest: F12-W13 raw chunk budget overflow withholds under byte limit
+ok 93 - F12-W13 raw chunk budget overflow withholds under byte limit
+  ---
+  duration_ms: 25.2366
+  type: 'test'
+  ...
+# Subtest: F12-W14 installed cmd version, stdin masking and finite wait execute actual pinned runtime
+ok 94 - F12-W14 installed cmd version, stdin masking and finite wait execute actual pinned runtime
+  ---
+  duration_ms: 248.965
+  type: 'test'
+  ...
+# Subtest: F12-W15 transport truncation or altered literal text cannot be published
+ok 95 - F12-W15 transport truncation or altered literal text cannot be published
+  ---
+  duration_ms: 3.5582
+  type: 'test'
+  ...
+# Subtest: F12-W16 postimplementation coverage: encoded and ANSI-split registered UTF16 output uses F08 recognition
+ok 96 - F12-W16 postimplementation coverage: encoded and ANSI-split registered UTF16 output uses F08 recognition
+  ---
+  duration_ms: 10.2057
+  type: 'test'
+  ...
+# Subtest: F13-BOM-cmd leading BOM remains registered data before F08
+ok 97 - F13-BOM-cmd leading BOM remains registered data before F08
+  ---
+  duration_ms: 49.7936
+  type: 'test'
+  ...
+# Subtest: F13-BOM-gitBash leading BOM remains registered data before F08
+ok 98 - F13-BOM-gitBash leading BOM remains registered data before F08
+  ---
+  duration_ms: 15.5645
+  type: 'test'
+  ...
+# Subtest: F13-P01 declared Git Bash input produces frozen data only
+ok 99 - F13-P01 declared Git Bash input produces frozen data only
+  ---
+  duration_ms: 25.325
+  type: 'test'
+  ...
+# Subtest: F13-P02 declared Git Bash input produces frozen data only
+ok 100 - F13-P02 declared Git Bash input produces frozen data only
+  ---
+  duration_ms: 3.908
+  type: 'test'
+  ...
+# Subtest: F13-P03 declared Git Bash input produces frozen data only
+ok 101 - F13-P03 declared Git Bash input produces frozen data only
+  ---
+  duration_ms: 2.9685
+  type: 'test'
+  ...
+# Subtest: F13-P04 declared Git Bash input produces frozen data only
+ok 102 - F13-P04 declared Git Bash input produces frozen data only
+  ---
+  duration_ms: 2.5203
+  type: 'test'
+  ...
+# Subtest: F13-P05 declared Git Bash input produces frozen data only
+ok 103 - F13-P05 declared Git Bash input produces frozen data only
+  ---
+  duration_ms: 1.3924
+  type: 'test'
+  ...
+# Subtest: F13-P06 declared Git Bash input produces frozen data only
+ok 104 - F13-P06 declared Git Bash input produces frozen data only
+  ---
+  duration_ms: 1.1509
+  type: 'test'
+  ...
+# Subtest: F13-P07 declared Git Bash input produces frozen data only
+ok 105 - F13-P07 declared Git Bash input produces frozen data only
+  ---
+  duration_ms: 1.0495
+  type: 'test'
+  ...
+# Subtest: F13-P08 declared Git Bash input produces frozen data only
+ok 106 - F13-P08 declared Git Bash input produces frozen data only
+  ---
+  duration_ms: 1.0598
+  type: 'test'
+  ...
+# Subtest: F13-P09 declared Git Bash input produces frozen data only
+ok 107 - F13-P09 declared Git Bash input produces frozen data only
+  ---
+  duration_ms: 1.2225
+  type: 'test'
+  ...
+# Subtest: F13-P10 declared Git Bash input produces frozen data only
+ok 108 - F13-P10 declared Git Bash input produces frozen data only
+  ---
+  duration_ms: 1.3546
+  type: 'test'
+  ...
+# Subtest: F13-P11 declared Git Bash input produces frozen data only
+ok 109 - F13-P11 declared Git Bash input produces frozen data only
+  ---
+  duration_ms: 2.5537
+  type: 'test'
+  ...
+# Subtest: F13-P12 declared Git Bash input produces frozen data only
+ok 110 - F13-P12 declared Git Bash input produces frozen data only
+  ---
+  duration_ms: 1.6296
+  type: 'test'
+  ...
+# Subtest: F13-P13 declared Git Bash input produces frozen data only
+ok 111 - F13-P13 declared Git Bash input produces frozen data only
+  ---
+  duration_ms: 1.7843
+  type: 'test'
+  ...
+# Subtest: F13-P14 declared Git Bash input produces frozen data only
+ok 112 - F13-P14 declared Git Bash input produces frozen data only
+  ---
+  duration_ms: 1.0662
+  type: 'test'
+  ...
+# Subtest: F13-P15 declared Git Bash input produces frozen data only
+ok 113 - F13-P15 declared Git Bash input produces frozen data only
+  ---
+  duration_ms: 1.1271
+  type: 'test'
+  ...
+# Subtest: F13-P16 declared Git Bash input produces frozen data only
+ok 114 - F13-P16 declared Git Bash input produces frozen data only
+  ---
+  duration_ms: 0.9461
+  type: 'test'
+  ...
+# Subtest: F13-P17 declared Git Bash input produces frozen data only
+ok 115 - F13-P17 declared Git Bash input produces frozen data only
+  ---
+  duration_ms: 0.7921
+  type: 'test'
+  ...
+# Subtest: F13-P18 declared Git Bash input produces frozen data only
+ok 116 - F13-P18 declared Git Bash input produces frozen data only
+  ---
+  duration_ms: 1.4864
+  type: 'test'
+  ...
+# Subtest: F13-P19 declared Git Bash input produces frozen data only
+ok 117 - F13-P19 declared Git Bash input produces frozen data only
+  ---
+  duration_ms: 1.4681
+  type: 'test'
+  ...
+# Subtest: F13-P20 declared Git Bash input produces frozen data only
+ok 118 - F13-P20 declared Git Bash input produces frozen data only
+  ---
+  duration_ms: 1.7237
+  type: 'test'
+  ...
+# Subtest: F13-P21 declared Git Bash input produces frozen data only
+ok 119 - F13-P21 declared Git Bash input produces frozen data only
+  ---
+  duration_ms: 1.891
+  type: 'test'
+  ...
+# Subtest: F13-P22 declared Git Bash input produces frozen data only
+ok 120 - F13-P22 declared Git Bash input produces frozen data only
+  ---
+  duration_ms: 1.8383
+  type: 'test'
+  ...
+# Subtest: F13-P23 declared Git Bash input produces frozen data only
+ok 121 - F13-P23 declared Git Bash input produces frozen data only
+  ---
+  duration_ms: 2.2675
+  type: 'test'
+  ...
+# Subtest: F13-P24 declared Git Bash input produces frozen data only
+ok 122 - F13-P24 declared Git Bash input produces frozen data only
+  ---
+  duration_ms: 1.7769
+  type: 'test'
+  ...
+# Subtest: F13-P25 declared Git Bash input produces frozen data only
+ok 123 - F13-P25 declared Git Bash input produces frozen data only
+  ---
+  duration_ms: 1.5768
+  type: 'test'
+  ...
+# Subtest: F13-N01 unsupported whole input refuses with no shell fallback
+ok 124 - F13-N01 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 1.8569
+  type: 'test'
+  ...
+# Subtest: F13-N02 unsupported whole input refuses with no shell fallback
+ok 125 - F13-N02 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 1.4552
+  type: 'test'
+  ...
+# Subtest: F13-N03 unsupported whole input refuses with no shell fallback
+ok 126 - F13-N03 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 1.6073
+  type: 'test'
+  ...
+# Subtest: F13-N04 unsupported whole input refuses with no shell fallback
+ok 127 - F13-N04 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 1.2946
+  type: 'test'
+  ...
+# Subtest: F13-N05 unsupported whole input refuses with no shell fallback
+ok 128 - F13-N05 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 2.9599
+  type: 'test'
+  ...
+# Subtest: F13-N06 unsupported whole input refuses with no shell fallback
+ok 129 - F13-N06 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 1.9382
+  type: 'test'
+  ...
+# Subtest: F13-N07 unsupported whole input refuses with no shell fallback
+ok 130 - F13-N07 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 3.5178
+  type: 'test'
+  ...
+# Subtest: F13-N08 unsupported whole input refuses with no shell fallback
+ok 131 - F13-N08 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 1.3237
+  type: 'test'
+  ...
+# Subtest: F13-N09 unsupported whole input refuses with no shell fallback
+ok 132 - F13-N09 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 0.9502
+  type: 'test'
+  ...
+# Subtest: F13-N10 unsupported whole input refuses with no shell fallback
+ok 133 - F13-N10 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 0.9574
+  type: 'test'
+  ...
+# Subtest: F13-N11 unsupported whole input refuses with no shell fallback
+ok 134 - F13-N11 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 0.791
+  type: 'test'
+  ...
+# Subtest: F13-N12 unsupported whole input refuses with no shell fallback
+ok 135 - F13-N12 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 2.3698
+  type: 'test'
+  ...
+# Subtest: F13-N13 unsupported whole input refuses with no shell fallback
+ok 136 - F13-N13 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 1.5388
+  type: 'test'
+  ...
+# Subtest: F13-N14 unsupported whole input refuses with no shell fallback
+ok 137 - F13-N14 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 1.2203
+  type: 'test'
+  ...
+# Subtest: F13-N15 unsupported whole input refuses with no shell fallback
+ok 138 - F13-N15 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 1.2531
+  type: 'test'
+  ...
+# Subtest: F13-N16 unsupported whole input refuses with no shell fallback
+ok 139 - F13-N16 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 1.038
+  type: 'test'
+  ...
+# Subtest: F13-N17 unsupported whole input refuses with no shell fallback
+ok 140 - F13-N17 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 0.788
+  type: 'test'
+  ...
+# Subtest: F13-N18 unsupported whole input refuses with no shell fallback
+ok 141 - F13-N18 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 0.769
+  type: 'test'
+  ...
+# Subtest: F13-N19 unsupported whole input refuses with no shell fallback
+ok 142 - F13-N19 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 1.0109
+  type: 'test'
+  ...
+# Subtest: F13-N20 unsupported whole input refuses with no shell fallback
+ok 143 - F13-N20 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 0.7723
+  type: 'test'
+  ...
+# Subtest: F13-N21 unsupported whole input refuses with no shell fallback
+ok 144 - F13-N21 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 0.7342
+  type: 'test'
+  ...
+# Subtest: F13-N22 unsupported whole input refuses with no shell fallback
+ok 145 - F13-N22 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 0.7005
+  type: 'test'
+  ...
+# Subtest: F13-N23 unsupported whole input refuses with no shell fallback
+ok 146 - F13-N23 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 0.8708
+  type: 'test'
+  ...
+# Subtest: F13-N24 unsupported whole input refuses with no shell fallback
+ok 147 - F13-N24 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 0.873
+  type: 'test'
+  ...
+# Subtest: F13-N25 unsupported whole input refuses with no shell fallback
+ok 148 - F13-N25 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 0.9695
+  type: 'test'
+  ...
+# Subtest: F13-N26 unsupported whole input refuses with no shell fallback
+ok 149 - F13-N26 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 0.6465
+  type: 'test'
+  ...
+# Subtest: F13-N27 unsupported whole input refuses with no shell fallback
+ok 150 - F13-N27 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 0.6991
+  type: 'test'
+  ...
+# Subtest: F13-N28 unsupported whole input refuses with no shell fallback
+ok 151 - F13-N28 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 0.7834
+  type: 'test'
+  ...
+# Subtest: F13-N29 unsupported whole input refuses with no shell fallback
+ok 152 - F13-N29 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 0.6359
+  type: 'test'
+  ...
+# Subtest: F13-N30 unsupported whole input refuses with no shell fallback
+ok 153 - F13-N30 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 0.6032
+  type: 'test'
+  ...
+# Subtest: F13-N31 unsupported whole input refuses with no shell fallback
+ok 154 - F13-N31 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 1.057
+  type: 'test'
+  ...
+# Subtest: F13-N32 unsupported whole input refuses with no shell fallback
+ok 155 - F13-N32 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 0.7853
+  type: 'test'
+  ...
+# Subtest: F13-N33 unsupported whole input refuses with no shell fallback
+ok 156 - F13-N33 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 1.6501
+  type: 'test'
+  ...
+# Subtest: F13-N34 unsupported whole input refuses with no shell fallback
+ok 157 - F13-N34 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 0.9918
+  type: 'test'
+  ...
+# Subtest: F13-N35 unsupported whole input refuses with no shell fallback
+ok 158 - F13-N35 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 1.2525
+  type: 'test'
+  ...
+# Subtest: F13-N36 unsupported whole input refuses with no shell fallback
+ok 159 - F13-N36 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 1.3336
+  type: 'test'
+  ...
+# Subtest: F13-N37 unsupported whole input refuses with no shell fallback
+ok 160 - F13-N37 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 1.4126
+  type: 'test'
+  ...
+# Subtest: F13-N38 unsupported whole input refuses with no shell fallback
+ok 161 - F13-N38 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 1.174
+  type: 'test'
+  ...
+# Subtest: F13-N39 unsupported whole input refuses with no shell fallback
+ok 162 - F13-N39 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 1.3369
+  type: 'test'
+  ...
+# Subtest: F13-N40 unsupported whole input refuses with no shell fallback
+ok 163 - F13-N40 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 0.9929
+  type: 'test'
+  ...
+# Subtest: F13-N41 unsupported whole input refuses with no shell fallback
+ok 164 - F13-N41 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 0.742
+  type: 'test'
+  ...
+# Subtest: F13-N42 unsupported whole input refuses with no shell fallback
+ok 165 - F13-N42 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 1.0358
+  type: 'test'
+  ...
+# Subtest: F13-N43 unsupported whole input refuses with no shell fallback
+ok 166 - F13-N43 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 0.8784
+  type: 'test'
+  ...
+# Subtest: F13-N44 unsupported whole input refuses with no shell fallback
+ok 167 - F13-N44 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 0.8593
+  type: 'test'
+  ...
+# Subtest: F13-N45 unsupported whole input refuses with no shell fallback
+ok 168 - F13-N45 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 0.8089
+  type: 'test'
+  ...
+# Subtest: F13-N46 unsupported whole input refuses with no shell fallback
+ok 169 - F13-N46 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 0.6562
+  type: 'test'
+  ...
+# Subtest: F13-N47 unsupported whole input refuses with no shell fallback
+ok 170 - F13-N47 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 1.7724
+  type: 'test'
+  ...
+# Subtest: F13-N48 unsupported whole input refuses with no shell fallback
+ok 171 - F13-N48 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 0.9662
+  type: 'test'
+  ...
+# Subtest: F13-N49 unsupported whole input refuses with no shell fallback
+ok 172 - F13-N49 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 0.7723
+  type: 'test'
+  ...
+# Subtest: F13-N50 unsupported whole input refuses with no shell fallback
+ok 173 - F13-N50 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 1.1499
+  type: 'test'
+  ...
+# Subtest: F13-N51 unsupported whole input refuses with no shell fallback
+ok 174 - F13-N51 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 0.9161
+  type: 'test'
+  ...
+# Subtest: F13-N52 unsupported whole input refuses with no shell fallback
+ok 175 - F13-N52 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 1.5496
+  type: 'test'
+  ...
+# Subtest: F13-N53 unsupported whole input refuses with no shell fallback
+ok 176 - F13-N53 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 0.7216
+  type: 'test'
+  ...
+# Subtest: F13-N54 unsupported whole input refuses with no shell fallback
+ok 177 - F13-N54 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 0.7108
+  type: 'test'
+  ...
+# Subtest: F13-N55 unsupported whole input refuses with no shell fallback
+ok 178 - F13-N55 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 0.6465
+  type: 'test'
+  ...
+# Subtest: F13-N56 unsupported whole input refuses with no shell fallback
+ok 179 - F13-N56 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 2.6209
+  type: 'test'
+  ...
+# Subtest: F13-N57 unsupported whole input refuses with no shell fallback
+ok 180 - F13-N57 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 0.7024
+  type: 'test'
+  ...
+# Subtest: F13-N58 unsupported whole input refuses with no shell fallback
+ok 181 - F13-N58 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 1.3619
+  type: 'test'
+  ...
+# Subtest: F13-N59 unsupported whole input refuses with no shell fallback
+ok 182 - F13-N59 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 0.9238
+  type: 'test'
+  ...
+# Subtest: F13-N60 unsupported whole input refuses with no shell fallback
+ok 183 - F13-N60 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 1.079
+  type: 'test'
+  ...
+# Subtest: F13-N61 unsupported whole input refuses with no shell fallback
+ok 184 - F13-N61 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 1.2614
+  type: 'test'
+  ...
+# Subtest: F13-N62 unsupported whole input refuses with no shell fallback
+ok 185 - F13-N62 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 1.4443
+  type: 'test'
+  ...
+# Subtest: F13-N63 unsupported whole input refuses with no shell fallback
+ok 186 - F13-N63 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 1.501
+  type: 'test'
+  ...
+# Subtest: F13-N64 unsupported whole input refuses with no shell fallback
+ok 187 - F13-N64 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 1.1437
+  type: 'test'
+  ...
+# Subtest: F13-N65 unsupported whole input refuses with no shell fallback
+ok 188 - F13-N65 unsupported whole input refuses with no shell fallback
+  ---
+  duration_ms: 0.9041
+  type: 'test'
+  ...
+# Subtest: F13-OB01 real private Bash factory remains available with both other shell flags off
+ok 189 - F13-OB01 real private Bash factory remains available with both other shell flags off
+  ---
+  duration_ms: 101.1416
+  type: 'test'
+  ...
+# Subtest: F13-OB02 Bash flag off withholds factory despite PS5.1 flag on
+ok 190 - F13-OB02 Bash flag off withholds factory despite PS5.1 flag on
+  ---
+  duration_ms: 10.8186
+  type: 'test'
+  ...
+# Subtest: F13-OB03 selected Bash flag is checked again before completed publication
+ok 191 - F13-OB03 selected Bash flag is checked again before completed publication
+  ---
+  duration_ms: 50.7717
+  type: 'test'
+  ...
+# Subtest: F13-OB04 default PS5.1 factory retains its own positive control when Bash is off
+ok 192 - F13-OB04 default PS5.1 factory retains its own positive control when Bash is off
+  ---
+  duration_ms: 74.7287
+  type: 'test'
+  ...
+# Subtest: F13-OB05 unknown route cannot choose another availability gate
+ok 193 - F13-OB05 unknown route cannot choose another availability gate
+  ---
+  duration_ms: 10.2822
+  type: 'test'
+  ...
+# Subtest: F13-OB06 shared output matching dependency still withholds Bash
+ok 194 - F13-OB06 shared output matching dependency still withholds Bash
+  ---
+  duration_ms: 6.236
+  type: 'test'
+  ...
+# Subtest: F13-W01 only fixed Bash code enters argv; literal is private stdin and fresh env excludes inherited values
+ok 195 - F13-W01 only fixed Bash code enters argv; literal is private stdin and fresh env excludes inherited values
+  ---
+  duration_ms: 48.505
+  type: 'test'
+  ...
+# Subtest: F13-W02 actual close and both drained pipes precede release
+ok 196 - F13-W02 actual close and both drained pipes precede release
+  ---
+  duration_ms: 3.3009
+  type: 'test'
+  ...
+# Subtest: F13-W03 byte-split UTF8 Unicode output decodes exactly through real F08
+ok 197 - F13-W03 byte-split UTF8 Unicode output decodes exactly through real F08
+  ---
+  duration_ms: 5.3143
+  type: 'test'
+  ...
+# Subtest: F13-W04-0 malformed final UTF8/control discards all channels
+ok 198 - F13-W04-0 malformed final UTF8/control discards all channels
+  ---
+  duration_ms: 3.3107
+  type: 'test'
+  ...
+# Subtest: F13-W04-1 malformed final UTF8/control discards all channels
+ok 199 - F13-W04-1 malformed final UTF8/control discards all channels
+  ---
+  duration_ms: 2.0163
+  type: 'test'
+  ...
+# Subtest: F13-W04-2 malformed final UTF8/control discards all channels
+ok 200 - F13-W04-2 malformed final UTF8/control discards all channels
+  ---
+  duration_ms: 2.0906
+  type: 'test'
+  ...
+# Subtest: F13-W05-0 malformed/unsupported operation cannot spawn
+ok 201 - F13-W05-0 malformed/unsupported operation cannot spawn
+  ---
+  duration_ms: 1.4735
+  type: 'test'
+  ...
+# Subtest: F13-W05-1 malformed/unsupported operation cannot spawn
+ok 202 - F13-W05-1 malformed/unsupported operation cannot spawn
+  ---
+  duration_ms: 1.3402
+  type: 'test'
+  ...
+# Subtest: F13-W05-2 malformed/unsupported operation cannot spawn
+ok 203 - F13-W05-2 malformed/unsupported operation cannot spawn
+  ---
+  duration_ms: 1.8238
+  type: 'test'
+  ...
+# Subtest: F13-W05-3 malformed/unsupported operation cannot spawn
+ok 204 - F13-W05-3 malformed/unsupported operation cannot spawn
+  ---
+  duration_ms: 2.2407
+  type: 'test'
+  ...
+# Subtest: F13-W05-4 malformed/unsupported operation cannot spawn
+ok 205 - F13-W05-4 malformed/unsupported operation cannot spawn
+  ---
+  duration_ms: 1.196
+  type: 'test'
+  ...
+# Subtest: F13-W05-5 malformed/unsupported operation cannot spawn
+ok 206 - F13-W05-5 malformed/unsupported operation cannot spawn
+  ---
+  duration_ms: 1.5336
+  type: 'test'
+  ...
+# Subtest: F13-W05-6 malformed/unsupported operation cannot spawn
+ok 207 - F13-W05-6 malformed/unsupported operation cannot spawn
+  ---
+  duration_ms: 1.8036
+  type: 'test'
+  ...
+# Subtest: F13-W05-7 malformed/unsupported operation cannot spawn
+ok 208 - F13-W05-7 malformed/unsupported operation cannot spawn
+  ---
+  duration_ms: 1.1827
+  type: 'test'
+  ...
+# Subtest: F13-W06-stdin missing pipe retains actual close ownership
+ok 209 - F13-W06-stdin missing pipe retains actual close ownership
+  ---
+  duration_ms: 1.7207
+  type: 'test'
+  ...
+# Subtest: F13-W06-stdout missing pipe retains actual close ownership
+ok 210 - F13-W06-stdout missing pipe retains actual close ownership
+  ---
+  duration_ms: 1.451
+  type: 'test'
+  ...
+# Subtest: F13-W06-stderr missing pipe retains actual close ownership
+ok 211 - F13-W06-stderr missing pipe retains actual close ownership
+  ---
+  duration_ms: 1.372
+  type: 'test'
+  ...
+# Subtest: F13-W07 overflow cancels output and drains until actual close without kill
+ok 212 - F13-W07 overflow cancels output and drains until actual close without kill
+  ---
+  duration_ms: 1.5155
+  type: 'test'
+  ...
+# Subtest: F13-W08 held wait stdin releases at its bound even after cancellation
+ok 213 - F13-W08 held wait stdin releases at its bound even after cancellation
+  ---
+  duration_ms: 3.5455
+  type: 'test'
+  ...
+# Subtest: F13-W09 private guard withdrawal after collected public output withholds
+ok 214 - F13-W09 private guard withdrawal after collected public output withholds
+  ---
+  duration_ms: 2.3202
+  type: 'test'
+  ...
+# Subtest: F13-W10 nonzero exit withholds all error bytes
+ok 215 - F13-W10 nonzero exit withholds all error bytes
+  ---
+  duration_ms: 2.6408
+  type: 'test'
+  ...
+# Subtest: F13-W11 directory names have an independent 256 entry bound
+ok 216 - F13-W11 directory names have an independent 256 entry bound
+  ---
+  duration_ms: 2.187
+  type: 'test'
+  ...
+# Subtest: F13-W12 wrong literal transport prefix cannot be published
+ok 217 - F13-W12 wrong literal transport prefix cannot be published
+  ---
+  duration_ms: 2.0759
+  type: 'test'
+  ...
+# Subtest: F13-W13 raw chunk budget overflow withholds under byte limit
+ok 218 - F13-W13 raw chunk budget overflow withholds under byte limit
+  ---
+  duration_ms: 21.6119
+  type: 'test'
+  ...
+# Subtest: F13-W14 installed Git Bash version, stdin masking and finite wait execute actual pinned runtime
+ok 219 - F13-W14 installed Git Bash version, stdin masking and finite wait execute actual pinned runtime
+  ---
+  duration_ms: 268.1835
+  type: 'test'
+  ...
+# Subtest: F13-W15 transport truncation or altered literal text cannot be published
+ok 220 - F13-W15 transport truncation or altered literal text cannot be published
+  ---
+  duration_ms: 1.5595
+  type: 'test'
+  ...
+# Subtest: F13-W16 postimplementation coverage: encoded and ANSI-split registered UTF8 output uses F08 recognition
+ok 221 - F13-W16 postimplementation coverage: encoded and ANSI-split registered UTF8 output uses F08 recognition
+  ---
+  duration_ms: 10.4586
+  type: 'test'
+  ...
+# Subtest: F13-W17 installed UTF8 literal transport preserves empty/Unicode/BOM/metacharacters as data
+ok 222 - F13-W17 installed UTF8 literal transport preserves empty/Unicode/BOM/metacharacters as data
+  ---
+  duration_ms: 245.945
+  type: 'test'
+  ...
+1..222
+# tests 222
+# suites 0
+# pass 222
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 7373.6958

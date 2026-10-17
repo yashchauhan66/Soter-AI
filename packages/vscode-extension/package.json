@@ -116,7 +116,8 @@
                 "soterai.lite.outputRedactor",
                 "soterai.lite.vaultRuntime",
                 "soterai.lite.ps51Terminal",
-                "soterai.lite.cmdTerminal"
+                "soterai.lite.cmdTerminal",
+                "soterai.lite.gitBashTerminal"
             ]
         }
     },
@@ -124,7 +125,8 @@
         "terminal": {
             "profiles": [
                 { "id": "soterai.ps51.checked", "title": "SoterAI PowerShell 5.1 (checked commands)" },
-                { "id": "soterai.cmd.checked", "title": "SoterAI cmd (checked commands)" }
+                { "id": "soterai.cmd.checked", "title": "SoterAI cmd (checked commands)" },
+                { "id": "soterai.gitbash.checked", "title": "SoterAI Git Bash (checked commands)" }
             ]
         },
         "taskDefinitions": [
@@ -520,6 +522,11 @@
             { "command": "soterai.runCheckedCmd", "title": "Run Checked cmd Command", "category": "SoterAI" },
             { "command": "soterai.restoreCheckedCmd", "title": "Restore Previous cmd Project Profile", "category": "SoterAI" },
             { "command": "soterai.checkedCmdStatus", "title": "Inspect Checked cmd Status", "category": "SoterAI" },
+            { "command": "soterai.configureCheckedGitBash", "title": "Configure Checked Git Bash Profile", "category": "SoterAI" },
+            { "command": "soterai.openCheckedGitBash", "title": "Open Checked Git Bash", "category": "SoterAI" },
+            { "command": "soterai.runCheckedGitBash", "title": "Run Checked Git Bash Command", "category": "SoterAI" },
+            { "command": "soterai.restoreCheckedGitBash", "title": "Restore Previous Git Bash Project Profile", "category": "SoterAI" },
+            { "command": "soterai.checkedGitBashStatus", "title": "Inspect Checked Git Bash Status", "category": "SoterAI" },
             {
                 "command": "soterai.migrateCurrentFileToVault",
                 "title": "Migrate Current File Secrets to Vault",
@@ -1687,6 +1694,12 @@
                     "scope": "machine",
                     "description": "Enable completed-output filtering for supported managed results, including UTF-8 chunks and supported terminal controls. Output stays private until final flush within 128 KiB. Turning this off withholds these results and preserves saved protection."
                 },
+                "soterai.lite.gitBashTerminal": {
+                    "type": "boolean",
+                    "default": true,
+                    "scope": "machine",
+                    "description": "Enable the optional finite checked profile for the reviewed existing Git Bash runtime. Declared file/env/copy forms use managed safe data; public commands run fixed scripts with profiles/history disabled. Unsupported versions/commands withhold. Turning this off withdraws output, retaining saved protection and restore receipts. Unmanaged Bash and uploads remain outside these checks."
+                },
                 "soterai.lite.cmdTerminal": {
                     "type": "boolean",
                     "default": true,
@@ -2130,6 +2143,11 @@
                 { "command": "soterai.runCheckedCmd", "when": "soterai.advancedCommands" },
                 { "command": "soterai.restoreCheckedCmd", "when": "soterai.advancedCommands" },
                 { "command": "soterai.checkedCmdStatus", "when": "soterai.advancedCommands" },
+                { "command": "soterai.configureCheckedGitBash", "when": "soterai.advancedCommands" },
+                { "command": "soterai.openCheckedGitBash", "when": "soterai.advancedCommands" },
+                { "command": "soterai.runCheckedGitBash", "when": "soterai.advancedCommands" },
+                { "command": "soterai.restoreCheckedGitBash", "when": "soterai.advancedCommands" },
+                { "command": "soterai.checkedGitBashStatus", "when": "soterai.advancedCommands" },
                 {
                     "command": "soterai.migrateCurrentFileToVault",
                     "when": "soterai.advancedCommands"

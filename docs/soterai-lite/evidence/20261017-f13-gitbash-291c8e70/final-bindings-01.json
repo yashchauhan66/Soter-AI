@@ -1,0 +1,203 @@
+{
+  "schemaVersion": 1,
+  "feature": "F13",
+  "parentCommit": "3d176ee3525915c4f0ba9cee10da4f7aefcca5aa",
+  "artifact": {
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-f13-20261017-attempt01.vsix",
+    "sha256": "695fa839c1e00cd6de526ae596e00da249fefd9b79bf87f15bc216dc1f7e9160"
+  },
+  "inspection": {
+    "path": "vsix-inspection-01.json",
+    "sha256": "c0ba087926e627be738d3fc741936e0352117895898edfe1637793179b52ca89"
+  },
+  "checks": [
+    {
+      "role": "focused",
+      "log": "final-focused-01.txt",
+      "kind": "tap",
+      "expected": {
+        "tests": 781,
+        "suites": 22,
+        "pass": 781,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    {
+      "role": "typecheck",
+      "log": "typecheck-03.txt"
+    },
+    {
+      "role": "full",
+      "log": "full-tests-01.txt",
+      "kind": "tap",
+      "expected": {
+        "tests": 2169,
+        "suites": 106,
+        "pass": 2165,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 4,
+        "todo": 0
+      }
+    },
+    {
+      "role": "readiness",
+      "log": "readiness-01.txt"
+    },
+    {
+      "role": "package",
+      "log": "package-01.txt"
+    },
+    {
+      "role": "hostBuild",
+      "log": "host-build-01.txt"
+    },
+    {
+      "role": "native",
+      "log": "native-bash-launch-01.txt"
+    },
+    {
+      "role": "nativeCmd",
+      "log": "native-cmd-launch-01.txt"
+    },
+    {
+      "role": "nativePs51",
+      "log": "native-ps51-launch-01.txt"
+    },
+    {
+      "role": "affected",
+      "log": "affected-launch-01.txt"
+    }
+  ],
+  "focusedPartition": {
+    "f13": 195,
+    "retainedCmd": 168,
+    "retainedPs51": 342,
+    "extensionParity": 76
+  },
+  "native": {
+    "summary": {
+      "path": "f13-native-host-20261017T101529Z-4abbcc6b/summary.json",
+      "sha256": "6984fcd5b224ab35bdcdf74a68870fa797dadf12c1a0ea0b6e3154f0bd4bb87e"
+    },
+    "freeze": {
+      "path": "f13-native-host-20261017T101529Z-4abbcc6b/freeze.json",
+      "sha256": "de127f21c030895226a18de098486756219f8ef74ac2e6fa5a1ca0a96e717a1b"
+    },
+    "primary": {
+      "path": "f13-native-host-20261017T101529Z-4abbcc6b/primary-results.json",
+      "sha256": "49c6591683a19ba1a64339b14422bd0e83462a0b396b7b16c3edb599915c4db3"
+    },
+    "restart": {
+      "path": "f13-native-host-20261017T101529Z-4abbcc6b/restart-results.json",
+      "sha256": "22f9c0e3fc352092f9d938eee93fcfdc2fb3bef2e35bfb6dca33884cddacdc27"
+    },
+    "probe": {
+      "path": "prebuilt-native-hosts-01/lite-gitbash-host.js",
+      "sha256": "525d6efc1523dde42f3c98cf39c63f15e49692611d51777a53af795eca9d65d1"
+    }
+  },
+  "cmdNative": {
+    "summary": {
+      "path": "f12-native-host-20261017T101616Z-4a02fa15/summary.json",
+      "sha256": "31cd1116d241213d3b8dc208e787180efdb7616da3a17232e72766d53e89f31b"
+    },
+    "freeze": {
+      "path": "f12-native-host-20261017T101616Z-4a02fa15/freeze.json",
+      "sha256": "bff42dc12814a8e90771e2584f7c43bd2a5f39ff60ba931254b526b626e1e327"
+    },
+    "primary": {
+      "path": "f12-native-host-20261017T101616Z-4a02fa15/primary-results.json",
+      "sha256": "59f613735307860a49333dee7ba725cf7ba0dac566b27275b2b30a11016d7d09"
+    },
+    "restart": {
+      "path": "f12-native-host-20261017T101616Z-4a02fa15/restart-results.json",
+      "sha256": "fe30d04a42a125281de19b465eae667de0229e86c008f2ecfee11da918957e49"
+    },
+    "probe": {
+      "path": "prebuilt-native-hosts-01/lite-cmd-bom-host.js",
+      "sha256": "cfb120e7e6118683188256365aa51d4a276baa7ab383a9f2dff714ff7c5ac5e1"
+    }
+  },
+  "ps51Native": {
+    "summary": {
+      "path": "f10-native-host-20261017T101658Z-6550b46e/summary.json",
+      "sha256": "fcdac44c6abac8b3249af957b26cd5f6ed5753bf3da6bc2b4671ec642e5a91d7"
+    },
+    "freeze": {
+      "path": "f10-native-host-20261017T101658Z-6550b46e/freeze.json",
+      "sha256": "e59d12ac378b1c50b9acef4d98497197e04217a0c7f26a4bee0ca6fa98eb90a9"
+    },
+    "primary": {
+      "path": "f10-native-host-20261017T101658Z-6550b46e/primary-results.json",
+      "sha256": "c50839e0c47ccd5c1600bcf219a1cfb95e565a2d006e69132a5e6deb91d3704f"
+    },
+    "restart": {
+      "path": "f10-native-host-20261017T101658Z-6550b46e/restart-results.json",
+      "sha256": "515b3cd4db850ac92a80ac9962f1deb230f4607a14ced29e22694c8ab981e339"
+    },
+    "probe": {
+      "path": "prebuilt-native-hosts-01/lite-powershell51-host.js",
+      "sha256": "4ace212abaa62e358203f62a959751484f70f2ff596c3fd7601a3d3f35054a78"
+    }
+  },
+  "affected": {
+    "summary": {
+      "path": "affected-20261017T101748Z-7b2fe2a023e0456c808408618ae06070/affected-summary-01.json",
+      "sha256": "5b8215e68865cd2c69e699edfa1a433f679390b2c053e519bbb7864cbc4aaa8b"
+    },
+    "comparison": {
+      "path": "affected-20261017T101748Z-7b2fe2a023e0456c808408618ae06070/security-comparison-01.json",
+      "sha256": "9fca3f58a490781782035494b18d2a3c4ea29c286eccaf1348d97c07addc3df1"
+    },
+    "functional": {
+      "path": "affected-20261017T101748Z-7b2fe2a023e0456c808408618ae06070/functional/privacy-20261017T101751Z-cfbcf8d0/functional-results.json",
+      "sha256": "6034204a68e4547403025a0fba748dc7498438e8eb24e44bbfa7993e41fe4aef"
+    },
+    "security": {
+      "path": "affected-20261017T101748Z-7b2fe2a023e0456c808408618ae06070/security/host-20261017T101809Z-efd1d999217542c4a91356b3e44fb198/live-host.json",
+      "sha256": "5de498f8f2834b1791bb809e87a0dac6a4dcfeb4914e6f1b578edd57cbbd62f8"
+    }
+  },
+  "reviews": [
+    {
+      "path": "design-01.md",
+      "sha256": "efd9aaa148e702bc1af67483477a88efdeea197c310334d5ddb7397701e63bde"
+    },
+    {
+      "path": "design-02-version-gate.md",
+      "sha256": "3696eca69a7017b9e275432ec4dc0068b0bbe547c53ba3b20fbdca19d6df3591"
+    },
+    {
+      "path": "bom-review-contract-01.md",
+      "sha256": "e2f2f028d10c5fbba8cb1a515cdeeba8b21c459fda53c1fc6b674067a2457934"
+    },
+    {
+      "path": "fixture-correction-03.md",
+      "sha256": "9cb192654b4c799a6ba85ae60d83e0b822a314e3abaf4de5bc147435d79e595c"
+    },
+    {
+      "path": "root-source-review-01.md",
+      "sha256": "ce5f79e79815f3e5c8c47fa9d71fdbf800c04b706d4ae7d2d4e00014d8158ba7"
+    },
+    {
+      "path": "root-final-disposition-01.md",
+      "sha256": "2e903537404479ecdfc96ddbda5034d255f98cc79c448bd594f276312d9ac5bf"
+    }
+  ],
+  "reviewDisposition": "NO_OPEN_SCOPED_BLOCKERS",
+  "priorEvidence": [
+    "docs/soterai-lite/evidence/20261017-f12-cmd-74b6d291/acceptance-preflight-01.txt",
+    "docs/soterai-lite/evidence/20261017-f12-cmd-74b6d291/acceptance-preflight-01.txt.result.json",
+    "docs/soterai-lite/evidence/20261017-f12-cmd-74b6d291/transition-preflight-launch-01.txt",
+    "docs/soterai-lite/evidence/20261017-f12-cmd-74b6d291/transition-preflight-launch-01.txt.result.json",
+    "docs/soterai-lite/evidence/20261017-f12-cmd-74b6d291/f12-transition-commit-01.txt",
+    "docs/soterai-lite/evidence/20261017-f12-cmd-74b6d291/f12-transition-commit-01.txt.result.json",
+    "docs/soterai-lite/evidence/20261017-f12-cmd-74b6d291/f12-transition-byte-verification-01.json",
+    "docs/soterai-lite/evidence/20261017-f12-cmd-74b6d291/transition-verification-launch-01.txt",
+    "docs/soterai-lite/evidence/20261017-f12-cmd-74b6d291/transition-verification-launch-01.txt.result.json"
+  ]
+}

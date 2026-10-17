@@ -10,6 +10,7 @@ import { registerCanaryCommands } from "./canary-commands";
 import { registerVaultRuntimeCommands } from "../vault-runtime/commands";
 import { registerCheckedPowerShell } from "../terminal/commands";
 import { registerCheckedCmd } from "../terminal/cmdCommands";
+import { registerCheckedGitBash } from "../terminal/gitBashCommands";
 import type { ManagedReaderBridge } from "../terminal/CheckedPowerShellSession";
 
 // Re-export readContextApproval so extension.ts can still import from this module.
@@ -41,4 +42,5 @@ export function registerFirewallCommands(context: vscode.ExtensionContext, refre
     registerVaultRuntimeCommands(deps);
     registerCheckedPowerShell(context, vault, reader);
     registerCheckedCmd(context, vault, reader);
+    registerCheckedGitBash(context, vault, reader);
 }

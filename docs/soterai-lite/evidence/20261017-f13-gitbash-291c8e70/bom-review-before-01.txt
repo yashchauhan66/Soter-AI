@@ -1,0 +1,49 @@
+﻿TAP version 13
+# Subtest: F13-BOM-cmd leading BOM remains registered data before F08
+not ok 1 - F13-BOM-cmd leading BOM remains registered data before F08
+  ---
+  duration_ms: 63.396
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitBashBomReview.test.ts:2:1344'
+  failureType: 'testCodeFailure'
+  error: 'Leading BOM must not remove part of a registered synthetic value before filtering'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gitBashBomReview.test.ts:17:52)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F13-BOM-gitBash leading BOM remains registered data before F08
+not ok 2 - F13-BOM-gitBash leading BOM remains registered data before F08
+  ---
+  duration_ms: 8.6928
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitBashBomReview.test.ts:2:1344'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\terminal\\GitBashWorker' imported from C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitBashBomReview.test.ts"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:860:10)
+    defaultResolve (node:internal/modules/esm/resolve:984:11)
+    nextResolve (node:internal/modules/esm/hooks:748:28)
+    resolveBase (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:8141)
+    async resolveDirectory (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:9221)
+    async resolve2 (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:11932)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
+    async handleMessage (node:internal/modules/esm/worker:199:18)
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 0
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 733.0842

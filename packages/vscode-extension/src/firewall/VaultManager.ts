@@ -45,9 +45,9 @@ export function vaultRuntimeEnabled(): boolean {
         });
     } catch { return false; }
 }
-export function managedPowerShellOutputEnabled(route: "ps51" | "cmd" = "ps51"): boolean {
+export function managedPowerShellOutputEnabled(route: "ps51" | "cmd" | "gitBash" = "ps51"): boolean {
     try {
-        const flag = route === "ps51" ? "lite.ps51Terminal" : route === "cmd" ? "lite.cmdTerminal" : undefined;
+        const flag = route === "ps51" ? "lite.ps51Terminal" : route === "cmd" ? "lite.cmdTerminal" : route === "gitBash" ? "lite.gitBashTerminal" : undefined;
         if (!flag) return false;
         const config = vscode.workspace.getConfiguration("soterai");
         return vaultModeEnabled() && !vscode.env.remoteName && [flag, "lite.secretMatching", "lite.outputRedactor"].every(name => {
@@ -282,7 +282,7 @@ export class VaultManager {
     }
     /** Internal filter capability only: no plaintext values, original files,
      * recovery-source fallback, key generation or value-bearing public result. */
-    async createManagedOutputFilter(root: vscode.Uri, enabled: () => boolean, route: "ps51" | "cmd" = "ps51"): Promise<ManagedOutputFilter> {
+    async createManagedOutputFilter(root: vscode.Uri, enabled: () => boolean, route: "ps51" | "cmd" | "gitBash" = "ps51"): Promise<ManagedOutputFilter> {
         try {
             const epoch = this.epoch, runtimeEpoch = this.runtimeEpoch;
             this.alive(epoch);
