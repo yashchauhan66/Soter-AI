@@ -9,9 +9,9 @@
   "planVersion": 1,
   "clientDate": "2026-10-13",
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
-  "scope": "F01-F10 and F12-F13 DONE for exact scoped objects and verified source bytes; F11 remains optional unavailable/unimplemented NOT_TESTED/NOT_COVERED. F14 alone supported active after the separate F13 transition byte barrier.",
+  "scope": "F01-F10 and F12-F14 DONE for exact scoped objects and verified source bytes; F11 remains optional unavailable/unimplemented NOT_TESTED/NOT_COVERED. F15 alone supported active after the separate F14 transition byte barrier.",
   "implementationConcurrency": 1,
-  "activeFeature": "F14",
+  "activeFeature": "F15",
   "prerequisiteBlock": {
     "id": "P00",
     "result": "FAIL",
@@ -245,17 +245,21 @@
     {
       "id": "F14",
       "title": "Broker lifecycle and window ownership.",
-      "status": "ACTIVE",
-      "result": "INCOMPLETE",
+      "status": "DONE",
+      "result": "PASS",
       "requires": [
         "F13"
       ],
-      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "sourceEvidenceCommit": "0f10dcd0bab93ae709c2b5592c6262da36581867",
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261017-f14-broker-lifecycle-71e5b490/f14-acceptance-02.json",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261017-f14-broker-lifecycle-71e5b490/f14-committed-byte-verification-02.json",
+      "transitionByteVerification": "docs/soterai-lite/evidence/20261017-f14-broker-lifecycle-71e5b490/f14-transition-byte-verification-01.json"
     },
     {
       "id": "F15",
       "title": "Gateway body-decoder coverage.",
-      "status": "PLANNED",
+      "status": "ACTIVE",
       "result": "NOT-RUN",
       "requires": [
         "F14"
