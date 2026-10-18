@@ -55,7 +55,10 @@ export function approvalMessage(receipt: AccessReceipt): string {
         + "The persistent restriction remains. This editor confirmation is not agent-proof; requester identity is not OS-verified. Other tools' direct reads are outside this reader.";
 }
 
-export function registerProjectPrivacyCommands(context: vscode.ExtensionContext): ManagedReaderBridge {
+export interface ProjectReaderBridge extends ManagedReaderBridge {
+    readIntegration(uri: vscode.Uri, recipient: string, signal: AbortSignal): Promise<AccessResult>;
+}
+export function registerProjectPrivacyCommands(context: vscode.ExtensionContext): ProjectReaderBridge {
     registerSecureEditor(context);
     const pendingSensitiveWrites = new Map<string, number>();
     const fileKey = (uri: vscode.Uri) => path.resolve(uri.fsPath).toLowerCase();
@@ -66,7 +69,9 @@ export function registerProjectPrivacyCommands(context: vscode.ExtensionContext)
         && vscode.workspace.getConfiguration("soterai").get<boolean>("hardening.addOnlyPolicy", true);
     const readsEnabled = () => enabled() && safeConsentEnabled();
     const provider = new ApprovedViewProvider(readsEnabled);
+    const recipients = new WeakMap<vscode.Uri, string>();
     const access = new ProjectFileAccess<vscode.Uri>({ enabled: readsEnabled, now: () => performance.now(), capture,
+        recipient: uri => recipients.get(uri) ?? "This editor's managed reader (requester identity unverified)",
         prepare: async () => { await BoundarySnapshot.load(); }, confirm: async receipt =>
         await vscode.window.showWarningMessage(approvalMessage(receipt), { modal: true, detail: receipt.safeText }, "Allow safe read once") === "Allow safe read once" });
     context.subscriptions.push(provider, access, vscode.workspace.registerTextDocumentContentProvider("soterai-approved", provider),
@@ -202,5 +207,10 @@ export function registerProjectPrivacyCommands(context: vscode.ExtensionContext)
         return { status: "OPENED" };
     });
     return Object.freeze({ read: (uri: vscode.Uri) => request(uri, "managed-read-terminal"),
+        readIntegration: async (uri: vscode.Uri, recipient: string, signal: AbortSignal) => {
+            const target = vscode.Uri.parse(uri.toString()); recipients.set(target, recipient);
+            try { return await access.request(target, "integration-command", signal); }
+            finally { recipients.delete(target); }
+        },
         revoke: () => { access.revoke(); provider.clear(); }, isEnabled: readsEnabled });
 }

@@ -235,10 +235,10 @@ export function activate(context: vscode.ExtensionContext): void {
     // the `^1.85.0` engine floor, so both feature-detect and register nothing at
     // all on an older host — the floor stays where the Open VSX plan needs it.
     //
-    // Nothing here is enforcement. An agent that never calls these tools is
-    // unaffected, and every result says so.
+    // Advisory checks do not mediate other actions. The approved MCP reader
+    // enforces only its own saved-file route and requires native confirmation.
     const agentToolCount = registerAgentTools(context);
-    const mcpProviderRegistered = registerMcpServerProvider(context);
+    const mcpProviderRegistered = registerMcpServerProvider(context, managedReader);
     setAgentSurfaceStatus({
         languageModelTools: agentToolCount,
         mcpProviderRegistered,

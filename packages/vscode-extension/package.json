@@ -127,7 +127,8 @@
                 "soterai.lite.gatewayFramedBodies",
                 "soterai.lite.gatewayMultipartBodies",
                 "soterai.lite.gatewayBase64Bodies",
-                "soterai.lite.gatewayPolicy"
+                "soterai.lite.gatewayPolicy",
+                "soterai.lite.safeReadMcp"
             ]
         }
     },
@@ -1871,6 +1872,12 @@
                     "default": true,
                     "scope": "machine",
                     "description": "Inspect complete bounded supported chat requests and responses using the current private vault/canary/credential registry. Unknown policy or unavailable/stale registry refuses routing. Disabling withdraws ownership and refuses protected chat routes after restart; management remains available."
+                },
+                "soterai.lite.safeReadMcp": {
+                    "type": "boolean",
+                    "default": true,
+                    "scope": "machine",
+                    "description": "Offer the approved saved-file MCP reader through this editor's ephemeral private session. Every read requires native confirmation of the exact masked view; requester identity is unverified. Disabling revokes sessions and withdraws the route without releasing originals."
                 }
             }
         },

@@ -56,7 +56,8 @@ export class ProjectFileAccess<T> {
     dispose(): void { this.disposed = true; this.revoke(); }
     isPreparing(): boolean { return this.busy && this.preparingEpoch === this.epoch; }
 
-    async request(target: T, surface: RequestSurface): Promise<AccessResult> {
+    async request(target: T, surface: RequestSurface, signal?: AbortSignal): Promise<AccessResult> {
+        if (signal?.aborted) return { status: "EXPIRED" };
         if (!SURFACES.includes(surface) || !this.available()) return { status: "UNAVAILABLE" };
         if (this.busy) return { status: "BUSY" };
         this.busy = true;
@@ -69,6 +70,8 @@ export class ProjectFileAccess<T> {
             cancel = () => { cancelled = true; resolve({ status: "EXPIRED" }); };
         });
         this.pendingCancel = cancel;
+        signal?.addEventListener("abort", cancel, { once: true });
+        if (signal?.aborted) cancel();
         const timer = setTimeout(cancel, LIFETIME_MS);
         timer.unref?.();
         const valid = () => {
@@ -112,6 +115,7 @@ export class ProjectFileAccess<T> {
         try { return await Promise.race([operation(), expiration]); }
         finally {
             cancelled = true; clearTimeout(timer);
+            signal?.removeEventListener("abort", cancel);
             if (this.pendingCancel === cancel) this.pendingCancel = undefined;
             if (this.preparingEpoch === epoch) this.preparingEpoch = undefined;
             this.busy = false;

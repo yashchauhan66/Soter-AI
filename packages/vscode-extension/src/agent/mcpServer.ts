@@ -17,14 +17,16 @@
  * the VSIX bundles no runtime dependencies, and three read-only tools do not
  * justify a dependency in a security product's supply chain.
  *
- * SECURITY POSTURE. Reads stdin, writes stdout. It opens no socket, spawns no
- * child, touches no file, and makes no network call, so an agent that talks to
- * it cannot reach anything through it. Input is bounded before parsing, because
+ * The three advisory checks stay pure. The approved safe-read tool uses only
+ * the editor-owned authenticated loopback bridge; this process never reads
+ * project files directly or spawns a child. Input is bounded before parsing, because
  * the peer is an AI agent and an unbounded `JSON.parse` on agent-supplied bytes
  * is a denial-of-service waiting to happen. Nothing is logged: stdout is the
  * protocol channel, so any stray write to it would corrupt the stream.
  */
 import { AGENT_TOOLS, AGENT_TOOL_COVERAGE } from "./toolLogic";
+import { SAFE_READ_TOOL, SAFE_READ_DEFINITION, safeReadPath, safeReadResult, requestSafeRead, connectionFromEnvironment } from "./SafeReadProtocol";
+import type { AccessResult } from "../project-privacy/ProjectFileAccess";
 
 /** Protocol revision this server implements. */
 const PROTOCOL_VERSION = "2024-11-05";
@@ -192,14 +194,40 @@ export function handleMcpMessage(message: unknown): McpReply {
 export function runMcpServer(
     input: NodeJS.ReadableStream = process.stdin,
     output: NodeJS.WritableStream = process.stdout,
+    safeReader?: { read(args: unknown, signal: AbortSignal): Promise<AccessResult> },
 ): Promise<void> {
     return new Promise((resolve) => {
         let buffer = "";
         let discardingOversizedFrame = false;
+        let initialized = false, closed = false;
+        const pending = new Map<string | number, AbortController>();
 
         const write = (reply: McpReply): void => {
-            if (!reply) return;
+            if (!reply || closed) return;
             output.write(JSON.stringify(reply) + "\n");
+        };
+        const dispatch = (message: unknown): void => {
+            const value = message && typeof message === "object" && !Array.isArray(message) ? message as Record<string, unknown> : undefined;
+            const params = value?.params as Record<string, unknown> | undefined;
+            if (value?.method === "notifications/cancelled") {
+                const id = params?.requestId; if (typeof id === "string" || typeof id === "number") pending.get(id)?.abort(); return;
+            }
+            if (safeReader && value?.method === "tools/call" && params?.name === SAFE_READ_TOOL) {
+                const id = value.id;
+                if (value.jsonrpc !== "2.0" || !(typeof id === "string" && id.length <= 128 || typeof id === "number" && Number.isSafeInteger(id)) || pending.has(id)
+                    || Object.keys(value).some(key => !["jsonrpc", "id", "method", "params"].includes(key))) { write(fail(null, -32600, "Invalid Request")); return; }
+                if (!initialized || !params || Object.keys(params).sort().join(",") !== "arguments,name" || !safeReadPath(params.arguments)) { write(fail(id, -32602, "Safe read unavailable or invalid arguments")); return; }
+                if (pending.size >= 4) { write(ok(id, { content: [{ type: "text", text: '{"status":"BUSY"}' }], isError: true })); return; }
+                const controller = new AbortController(); pending.set(id, controller);
+                void Promise.resolve().then(() => safeReader.read(params.arguments, controller.signal)).then(result => {
+                    const safe = controller.signal.aborted ? { status: "EXPIRED" } : safeReadResult(result);
+                    write(ok(id, { content: [{ type: "text", text: JSON.stringify(safe) }], isError: safe.status !== "ALLOWED_ONCE" }));
+                }).catch(() => write(fail(id, -32603, "Safe read unavailable"))).finally(() => { if (pending.get(id) === controller) pending.delete(id); });
+                return;
+            }
+            if (safeReader && value?.method === "tools/list") { write(ok(value.id, { tools: [...MCP_TOOL_DEFINITIONS, SAFE_READ_DEFINITION] })); return; }
+            if (value?.method === "initialize" && value.jsonrpc === "2.0") initialized = true;
+            write(handleMcpMessage(message));
         };
 
         input.setEncoding?.("utf8");
@@ -231,12 +259,13 @@ export function runMcpServer(
                 if (!line) continue;
                 let parsed: unknown;
                 try {
+                    if (line.includes("\uFFFD")) throw new Error("Invalid UTF8");
                     parsed = JSON.parse(line);
                 } catch {
                     write(fail(null, -32700, "Parse error"));
                     continue;
                 }
-                write(handleMcpMessage(parsed));
+                dispatch(parsed);
             }
 
             // Cap the remaining unterminated frame after complete messages have
@@ -249,11 +278,13 @@ export function runMcpServer(
             }
         });
 
-        input.on("end", () => resolve());
-        input.on("close", () => resolve());
+        const close = () => { if (closed) return; closed = true; for (const controller of pending.values()) controller.abort(); pending.clear(); resolve(); };
+        input.on("end", close);
+        input.on("close", close);
         // A broken pipe is the client going away, which is a normal shutdown for
         // a stdio server — not an error worth a non-zero exit code.
-        input.on("error", () => resolve());
+        input.on("error", close);
+        output.on("error", close);
     });
 }
 
@@ -261,5 +292,9 @@ export function runMcpServer(
 // tests import the same module, and a top-level `runMcpServer()` would make the
 // test suite hang waiting on a stdin that never closes.
 if (require.main === module) {
-    void runMcpServer();
+    const connection = connectionFromEnvironment(process.env);
+    // The inherited ephemeral capability is held privately, never echoed by a
+    // protocol result. A disconnected editor never falls back to filesystem IO.
+    delete process.env.SOTERAI_SAFE_READ_TOKEN;
+    void runMcpServer(process.stdin, process.stdout, { read: (args, signal) => requestSafeRead(connection, args, signal) });
 }

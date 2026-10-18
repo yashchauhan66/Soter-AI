@@ -1,0 +1,100 @@
+﻿TAP version 13
+# Subtest: F17 aborting an active F04 review promptly withholds a late approval
+ok 1 - F17 aborting an active F04 review promptly withholds a late approval
+  ---
+  duration_ms: 14.423
+  type: 'test'
+  ...
+# Subtest: F17 already aborted requests never capture or review content
+ok 2 - F17 already aborted requests never capture or review content
+  ---
+  duration_ms: 0.4787
+  type: 'test'
+  ...
+# Subtest: F17 safe path schema rejects caller approval, absolute paths, aliases and unsupported fields
+ok 3 - F17 safe path schema rejects caller approval, absolute paths, aliases and unsupported fields
+  ---
+  duration_ms: 5.8387
+  type: 'test'
+  ...
+# Subtest: F17 connection schema accepts only the fixed local route and private session shape
+ok 4 - F17 connection schema accepts only the fixed local route and private session shape
+  ---
+  duration_ms: 7.6494
+  type: 'test'
+  ...
+# Subtest: F17 actual HTTP bridge public control binds a server-owned recipient
+ok 5 - F17 actual HTTP bridge public control binds a server-owned recipient
+  ---
+  duration_ms: 88.3571
+  type: 'test'
+  ...
+# Subtest: F17 actual bridge reuses safe-view reader: ordinary saved deny with approval
+ok 6 - F17 actual bridge reuses safe-view reader: ordinary saved deny with approval
+  ---
+  duration_ms: 15.8129
+  type: 'test'
+  ...
+# Subtest: F17 actual bridge reuses safe-view reader: env names only
+ok 7 - F17 actual bridge reuses safe-view reader: env names only
+  ---
+  duration_ms: 8.9114
+  type: 'test'
+  ...
+# Subtest: F17 actual bridge reuses safe-view reader: marked sensitive
+ok 8 - F17 actual bridge reuses safe-view reader: marked sensitive
+  ---
+  duration_ms: 8.0658
+  type: 'test'
+  ...
+# Subtest: F17 invalid auth and session never reach the native reader
+ok 9 - F17 invalid auth and session never reach the native reader
+  ---
+  duration_ms: 11.3746
+  type: 'test'
+  ...
+# Subtest: F17 flag withdrawal while native confirmation waits releases no output
+ok 10 - F17 flag withdrawal while native confirmation waits releases no output
+  ---
+  duration_ms: 7.7917
+  type: 'test'
+  ...
+# Subtest: F17 explicit session rotation invalidates pending and prior clients
+ok 11 - F17 explicit session rotation invalidates pending and prior clients
+  ---
+  duration_ms: 10.2126
+  type: 'test'
+  ...
+# Subtest: F17 client cancellation propagates to the actual host read and withholds late data
+ok 12 - F17 client cancellation propagates to the actual host read and withholds late data
+  ---
+  duration_ms: 7.6961
+  type: 'test'
+  ...
+# Subtest: F17 actual bridge malformed/oversize/unknown fields return fixed errors with no read
+ok 13 - F17 actual bridge malformed/oversize/unknown fields return fixed errors with no read
+  ---
+  duration_ms: 17.0345
+  type: 'test'
+  ...
+# Subtest: F17 actual bridge outage has no original-file fallback
+ok 14 - F17 actual bridge outage has no original-file fallback
+  ---
+  duration_ms: 6.0365
+  type: 'test'
+  ...
+# Subtest: F17 actual stdio route advertises and dispatches the safe reader
+ok 15 - F17 actual stdio route advertises and dispatches the safe reader
+  ---
+  duration_ms: 2.841
+  type: 'test'
+  ...
+1..15
+# tests 15
+# suites 0
+# pass 15
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 933.7981

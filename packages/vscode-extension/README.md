@@ -15,6 +15,8 @@ Scan locally · Redact sensitive context · Guard supported AI traffic — no ac
 
 ## See it in action
 
+The bundled MCP tool `soterai_read_project_file_safely` uses the live editor's authenticated local session and existing saved-file reader. Every read needs native review of the exact safe output; dotenv values remain masked and persistent restrictions remain. Cancellation, policy/file/session drift and outages withhold content. The machine setting `soterai.lite.safeReadMcp` revokes the route. This supports a trusted single local workspace; same-user requester identity and vendor-agent routing are unverified. Other tools can still read originals directly.
+
 Local scans can flag recognized synthetic secrets. A scanner verdict does not establish interception of another tool's traffic or confinement of a same-user process.
 
 ### Project privacy in the local source build
@@ -160,7 +162,7 @@ Run the synthetic demo, review a selection and inspect the broker's named manage
 - **Opt-out purges pending metadata.** Turning SoterAI telemetry off, returning to local privacy mode, disabling cloud, or disabling editor telemetry immediately clears SoterAI's in-memory telemetry queue.
 - **Local credential storage.** Provider and cloud credentials use VS Code SecretStorage. Keeping ciphertext outside the workspace does not establish independent custody against same-user applications.
 - **Config backups are encrypted and kept out of your workspace.** When "Secure My AI" rewrites a config, the pre-rewrite copy is encrypted (AES-GCM, key in VS Code SecretStorage) and stored in the extension's global storage — never as a plaintext sibling file that `.gitignore` would miss. If the backup cannot be written, the rewrite does not happen.
-- **Repository settings have limited authority.** The 61 safety-relevant settings are `machine`-scoped and declared as restricted in untrusted workspaces. This limits repository overrides; it does not prevent an agent running as the same user from changing user settings or other execution paths.
+- **Repository settings have limited authority.** The 62 safety-relevant settings are `machine`-scoped and declared as restricted in untrusted workspaces. This limits repository overrides; it does not prevent an agent running as the same user from changing user settings or other execution paths.
 - **The packaged artifact is inspected, not assumed safe.** Release CI rejects unexpected source, tests, maps, logs, `.env` files, dependencies, duplicate/unsafe archive paths, missing runtime bundles, and oversized archives. It records a SHA-256 and exact entry inventory, then generates a deterministic CycloneDX 1.6 SBOM with a SHA-256 component for every file that actually ships. Integrity evidence and the SBOM are not claimed to be a cryptographic signature.
 - **Broker ingress fails closed.** Request bodies are capped, declared oversize is rejected before reading, compressed and ambiguous framing is refused, and malformed UTF-8 is never replacement-decoded into apparently valid JSON.
 
