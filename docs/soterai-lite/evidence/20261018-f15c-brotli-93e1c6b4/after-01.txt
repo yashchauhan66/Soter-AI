@@ -1,0 +1,143 @@
+﻿TAP version 13
+# Subtest: F15c-B01 complete Brotli returns exact public Unicode bytes
+ok 1 - F15c-B01 complete Brotli returns exact public Unicode bytes
+  ---
+  duration_ms: 21.6572
+  type: 'test'
+  ...
+# Subtest: F15c-B02 truncated stream refuses 0
+ok 2 - F15c-B02 truncated stream refuses 0
+  ---
+  duration_ms: 2.1864
+  type: 'test'
+  ...
+# Subtest: F15c-B02 truncated stream refuses 1
+ok 3 - F15c-B02 truncated stream refuses 1
+  ---
+  duration_ms: 4.95
+  type: 'test'
+  ...
+# Subtest: F15c-B02 truncated stream refuses 30
+ok 4 - F15c-B02 truncated stream refuses 30
+  ---
+  duration_ms: 1.4276
+  type: 'test'
+  ...
+# Subtest: F15c-B02 truncated stream refuses 60
+ok 5 - F15c-B02 truncated stream refuses 60
+  ---
+  duration_ms: 1.4264
+  type: 'test'
+  ...
+# Subtest: F15c-B03 trailing or concatenated streams refuse 1
+ok 6 - F15c-B03 trailing or concatenated streams refuse 1
+  ---
+  duration_ms: 2.347
+  type: 'test'
+  ...
+# Subtest: F15c-B03 trailing or concatenated streams refuse 2
+ok 7 - F15c-B03 trailing or concatenated streams refuse 2
+  ---
+  duration_ms: 1.7726
+  type: 'test'
+  ...
+# Subtest: F15c-B03 trailing or concatenated streams refuse 1
+ok 8 - F15c-B03 trailing or concatenated streams refuse 1
+  ---
+  duration_ms: 1.5398
+  type: 'test'
+  ...
+# Subtest: F15c-B03 trailing or concatenated streams refuse 61
+ok 9 - F15c-B03 trailing or concatenated streams refuse 61
+  ---
+  duration_ms: 3.037
+  type: 'test'
+  ...
+# Subtest: F15c-B04 invalid bitstream refuses
+ok 10 - F15c-B04 invalid bitstream refuses
+  ---
+  duration_ms: 2.4057
+  type: 'test'
+  ...
+# Subtest: F15c-B05 exact tighter byte budget accepted, overflow refused
+ok 11 - F15c-B05 exact tighter byte budget accepted, overflow refused
+  ---
+  duration_ms: 9.4289
+  type: 'test'
+  ...
+# Subtest: F15c-B06 high expansion refuses before returning data
+ok 12 - F15c-B06 high expansion refuses before returning data
+  ---
+  duration_ms: 21.8002
+  type: 'test'
+  ...
+# Subtest: F15c-B07 invalid limits and bounded errors
+ok 13 - F15c-B07 invalid limits and bounded errors
+  ---
+  duration_ms: 2.1971
+  type: 'test'
+  ...
+# Subtest: F15c-W01 public gzip and retained identity JSON reach actual provider canonically
+ok 14 - F15c-W01 public gzip and retained identity JSON reach actual provider canonically
+  ---
+  duration_ms: 236.7585
+  type: 'test'
+  ...
+# Subtest: F15c-W02 flagoff withholds gzip while public JSON continues
+ok 15 - F15c-W02 flagoff withholds gzip while public JSON continues
+  ---
+  duration_ms: 43.1659
+  type: 'test'
+  ...
+# Subtest: F15c-W03 truncated/corrupt/trailing/multimember bodies send no provider bytes
+ok 16 - F15c-W03 truncated/corrupt/trailing/multimember bodies send no provider bytes
+  ---
+  duration_ms: 21.5927
+  type: 'test'
+  ...
+# Subtest: F15c-W04 complete decoded JSON still enforces duplicatekeys and strict UTF8
+ok 17 - F15c-W04 complete decoded JSON still enforces duplicatekeys and strict UTF8
+  ---
+  duration_ms: 21.9269
+  type: 'test'
+  ...
+# Subtest: F15c-W05 nested unknown and duplicate content encodings refuse
+ok 18 - F15c-W05 nested unknown and duplicate content encodings refuse
+  ---
+  duration_ms: 38.3427
+  type: 'test'
+  ...
+# Subtest: F15c-W06 expansion/decoded bound refuses before provider admission
+ok 19 - F15c-W06 expansion/decoded bound refuses before provider admission
+  ---
+  duration_ms: 34.7369
+  type: 'test'
+  ...
+# {"id":"F15c-W07","status":200,"providerRequests":1,"containsSynthetic":false}
+# Subtest: F15c-W07 synthetic provider credential in decoded gzip never reaches receiver
+ok 20 - F15c-W07 synthetic provider credential in decoded gzip never reaches receiver
+  ---
+  duration_ms: 37.8006
+  type: 'test'
+  ...
+# Subtest: F15c-W08 complete inspection waits for final gzip trailer
+ok 21 - F15c-W08 complete inspection waits for final gzip trailer
+  ---
+  duration_ms: 72.6044
+  type: 'test'
+  ...
+# Subtest: F15c-W09 incomplete compressed cancellation and shutdown never forward
+ok 22 - F15c-W09 incomplete compressed cancellation and shutdown never forward
+  ---
+  duration_ms: 76.0088
+  type: 'test'
+  ...
+1..22
+# tests 22
+# suites 0
+# pass 22
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2563.8914

@@ -1,0 +1,5 @@
+# Evidence byte read optimization — LOW
+
+Read-only Git batch reads replace one Git process per blob in C precommit/source/transition checks. Paths/revisions are bounded, each batch record must be a blob with exact length/newline framing, its SHA1 Git object ID is recomputed, and all original expected SHA256/current-working-file/path-set checks remain. Staged checks preload the current index; source/transition checks preload the explicit committed revision. No cached data crosses a process or a mutation stage.
+
+batch-proof-validation01 verified all167 committed bytes/SHA256 facts from the already verified B source74faf895f39e49f0d3b8105287bba3cbcd273c9b against its immutable index. Missing object and path escape controls refused. This is tooling evidence only; current C source acceptance/commit byte checks are still required. Current working files intentionally differ from historical B and were not claimed byte-equivalent to B. No product/scanner/flag/runtime change or independent promotion.

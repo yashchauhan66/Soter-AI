@@ -1,0 +1,12 @@
+import assert from "node:assert/strict";
+import { test } from "node:test";
+import { brotliCompressSync } from "node:zlib";
+import { decodeBoundedBrotli } from "../../../../apps/local-ai-broker/src/BoundedBrotli";
+const bytes=Buffer.from('{"messages":[{"role":"user","content":"Public br 🙂"}]}'),wire=brotliCompressSync(bytes);
+test("F15c-B01 complete Brotli returns exact public Unicode bytes",async()=>assert.deepEqual(await decodeBoundedBrotli(wire),bytes));
+for(const cut of [0,1,Math.floor(wire.length/2),wire.length-1])test("F15c-B02 truncated stream refuses "+cut,async()=>assert.rejects(decodeBoundedBrotli(wire.subarray(0,cut))));
+for(const tail of [Buffer.from([0]),Buffer.from([1,2]),brotliCompressSync(Buffer.alloc(0)),wire])test("F15c-B03 trailing or concatenated streams refuse "+tail.length,async()=>assert.rejects(decodeBoundedBrotli(Buffer.concat([wire,tail]))));
+test("F15c-B04 invalid bitstream refuses",async()=>assert.rejects(decodeBoundedBrotli(Buffer.from([255,255,255,255]))));
+test("F15c-B05 exact tighter byte budget accepted, overflow refused",async()=>{const size=Math.max(wire.length,bytes.length);assert.deepEqual(await decodeBoundedBrotli(wire,{maxBytes:size}),bytes);await assert.rejects(decodeBoundedBrotli(wire,{maxBytes:wire.length-1}));const data=Buffer.from(Array.from({length:100},(_,i)=>'public-entry-'+i).join(',')),encoded=brotliCompressSync(data);assert.deepEqual(await decodeBoundedBrotli(encoded,{maxBytes:data.length}),data);await assert.rejects(decodeBoundedBrotli(encoded,{maxBytes:data.length-1}));});
+test("F15c-B06 high expansion refuses before returning data",async()=>assert.rejects(decodeBoundedBrotli(brotliCompressSync(Buffer.alloc(100000,65)))));
+test("F15c-B07 invalid limits and bounded errors",async()=>{for(const maxBytes of [0,-1,NaN,Infinity,1048577])await assert.rejects(decodeBoundedBrotli(wire,{maxBytes}));try{await decodeBoundedBrotli(Buffer.from('synthetic-private-no-echo'));assert.fail();}catch(error){assert.ok(!String(error).includes('synthetic-private-no-echo'));}});

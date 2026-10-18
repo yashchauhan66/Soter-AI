@@ -1,0 +1,1 @@
+const fs=require('node:fs'),path=require('node:path'),f=path.join(__dirname,'finalize-bindings-01.cjs');fs.writeFileSync(f,fs.readFileSync(f,'utf8').replace("reviews:['root-source-review-01.md'","reviews:['root-source-review-01.md','root-source-review-02.md'"));console.log('Included readonly byte-check optimization review.');

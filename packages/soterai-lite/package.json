@@ -120,7 +120,8 @@
         "soterai.lite.gitBashTerminal",
         "soterai.lite.gatewayLifecycle",
         "soterai.lite.gatewayJsonBodies",
-        "soterai.lite.gatewayGzipBodies"
+        "soterai.lite.gatewayGzipBodies",
+        "soterai.lite.gatewayBrotliBodies"
       ]
     }
   },
@@ -1817,6 +1818,12 @@
           "default": true,
           "scope": "machine",
           "description": "Enable complete bounded single-member gzip JSON request decoding for the owned broker. Disabling withdraws the owner and refuses gzip after restart; ordinary JSON remains available. Nested/trailing encodings and expansion beyond the declared budget refuse."
+        },
+        "soterai.lite.gatewayBrotliBodies": {
+          "type": "boolean",
+          "default": true,
+          "scope": "machine",
+          "description": "Enable complete bounded standard-window Brotli JSON request decoding for the owned broker. Disabling withdraws the owner and refuses br after restart; ordinary JSON and gzip remain available. Invalid, trailing, nested and over-budget data refuse."
         }
       }
     },
