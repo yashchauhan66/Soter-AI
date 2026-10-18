@@ -268,17 +268,21 @@
         {
           "id": "F15a",
           "title": "JSON",
-          "status": "ACTIVE",
-          "result": "INCOMPLETE",
+          "status": "DONE",
+          "result": "PASS",
           "requires": [
             "parent prerequisites"
-          ]
+          ],
+          "sourceRevision": "dec76fa3957a79a55f8a73cb0b4fdf64465c443d",
+          "evidence": "docs/soterai-lite/evidence/20261017-f15a-json-4c82d1a7/f15a-acceptance-01.json",
+          "commitByteVerification": "docs/soterai-lite/evidence/20261017-f15a-json-4c82d1a7/f15a-committed-byte-verification-01.json",
+          "transitionByteVerification": "docs/soterai-lite/evidence/20261017-f15a-json-4c82d1a7/f15a-transition-byte-verification-01.json"
         },
         {
           "id": "F15b",
           "title": "gzip",
-          "status": "PLANNED",
-          "result": "NOT-RUN",
+          "status": "ACTIVE",
+          "result": "INCOMPLETE",
           "requires": [
             "F15a"
           ]
