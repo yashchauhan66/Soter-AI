@@ -1,0 +1,19 @@
+{
+  "status": "SOURCE_COMMITTED_VERIFICATION_LAUNCH_RETRY_REQUIRED",
+  "sourceRevision": "e0f4bbe906950691929742017a52ab35c650fc37",
+  "indexedEntries": 219,
+  "committedPaths": 189,
+  "stagedByteProof": "PASS",
+  "sourceByteProof": "NOT_EXECUTED_BY_FAILED_LAUNCH",
+  "failure": {
+    "log": "source-byte-verification-01.txt",
+    "exitCode": 1,
+    "arguments": [
+      "docs/soterai-lite/evidence/20261018-f16-gateway-policy-6e9a31d4/verify-commit-01.cjs e0f4bbe906950691929742017a52ab35c650fc37 c7f4ed2eefcbcb9c71882f118800e2ec5c47cd3cf83a86c005c412d807d2f83a"
+    ],
+    "sha256": "a89716d16f6c8568805359d7bf8dd8338dcf4c0245cf8c391bf8d0e2a20347c2"
+  },
+  "cause": "PowerShell concatenation inside an array expression collapsed script path/source/artifact into one argument; Node could not load the combined path. Additive retry uses parenthesized first arguments and explicit array-count checks.",
+  "unchanged": "All indexed source/tool/ledger/queue bytes, exact VSIX, compiler/test/native/affected results; no next-feature production.",
+  "observedAt": "2026-10-18T11:14:04.936Z"
+}

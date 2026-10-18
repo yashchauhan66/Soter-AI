@@ -1,0 +1,3 @@
+# F16 indexed-byte reconciliation — LOW
+
+Both mismatches are existing shared-source CRLF working bytes versus LF Git blobs, newly included as index-only inputs. All219 working files still match the frozen source index. All other217 Git blobs match. Neither source file is edited: explicit core.autocrlf=false add --renormalize binds their already-tested bytes. The first source commit and failed verification receipts remain immutable. This additional local evidence/byte-binding commit has its own parent/index/acceptance/proof. Existing exact VSIX and347 runtime inputs are freshly identical, so no production/runtime/test result is changed or retested without cause. LOW review; completion still requires every current indexed Git/current byte and separate transition proof.

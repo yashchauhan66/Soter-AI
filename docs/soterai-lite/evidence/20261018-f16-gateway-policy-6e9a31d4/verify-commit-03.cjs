@@ -1,0 +1,19 @@
+"use strict";
+// Source-byte serial barrier only. No queue/ledger/source edits or transition.
+const h = require("./f16-evidence-lib.cjs"), { fs, path, assert, repo, base, sha, hash, read, inside, own, git, lines, noOutputs, write } = h;
+const revision = process.argv[2], expectedArtifact = process.argv[3]; assert.match(revision ?? "", /^[a-f0-9]{40}$/); assert.match(expectedArtifact ?? "", /^[a-f0-9]{64}$/);
+assert.equal(lines(git("rev-parse", "HEAD"))[0], revision); assert.deepEqual(lines(git("diff", "--cached", "--name-only")), []);
+const indexPath = base + "/f16-evidence-index-02.json", committedIndex = git("show", revision + ":" + indexPath); assert.equal(hash(inside(repo, indexPath)), sha(committedIndex));
+const index = JSON.parse(committedIndex.toString("utf8")), indexed = new Set();
+git.preload(revision, index.entries.map(entry => entry.path));
+for (const entry of index.entries) { assert.ok(!indexed.has(entry.path)); indexed.add(entry.path); const committed = git("show", revision + ":" + entry.path); assert.equal(committed.length, entry.bytes); assert.equal(sha(committed), entry.sha256); assert.equal(hash(inside(repo, entry.path)), entry.sha256); assert.equal(fs.statSync(inside(repo, entry.path)).size, entry.bytes); }
+const actual = lines(git("diff-tree", "--no-commit-id", "--name-only", "-r", revision)).sort(); assert.deepEqual(actual, [...index.expectedCommitPaths].sort()); assert.ok(actual.every(name => name === indexPath || indexed.has(name)));
+const acceptance = JSON.parse(git("show", revision + ":" + base + "/f16-acceptance-02.json").toString("utf8")); assert.equal(acceptance.status, "PASS"); assert.equal(acceptance.feature, "F16"); assert.equal(lines(git("rev-parse", revision + "^"))[0], acceptance.parent); assert.equal(acceptance.parent, index.parent);
+assert.equal(acceptance.artifact.sha256, expectedArtifact); const artifact = inside(repo, acceptance.artifact.path); assert.equal(hash(artifact), expectedArtifact); assert.equal(fs.statSync(artifact).size, acceptance.artifact.bytes);
+for (const input of acceptance.inputs) { const file = inside(repo, input.path); assert.equal(hash(file), input.sha256); assert.equal(fs.statSync(file).size, input.bytes); }
+const inspection = read(inside(repo, acceptance.inspection.path)); for (const output of inspection.sourceProvenance.inventory) { const file = inside(inspection.extractedExtensionRoot, "dist/" + output.name); assert.equal(hash(file), output.sha256); assert.equal(fs.statSync(file).size, output.bytes); }
+const queue = read(inside(repo, "docs/soterai-lite/FEATURE-QUEUE.json")); assert.equal(queue.activeFeature, "F16"); assert.equal(queue.features.find(row => row.id === "F16").status, "ACTIVE");
+const commitLog = own("f16-byte-reconciliation-commit-01.txt"), commitReceipt = read(commitLog + ".result.json"); assert.equal(commitReceipt.exitCode, 0); assert.equal(hash(commitLog), commitReceipt.sha256);
+const output = "f16-committed-byte-verification-02.json"; noOutputs([output]);
+write(output, { status: "PASS", feature: "F16", revision, indexedEntries: index.entries.length, committedPaths: actual.length, mismatches: [], unexpectedPaths: 0, artifact: { path: acceptance.artifact.path, bytes: acceptance.artifact.bytes, sha256: hash(artifact), recheck: "PASS" }, runtimeSha256: acceptance.artifact.runtimeSha256, commitOutput: { path: base + "/f16-byte-reconciliation-commit-01.txt", sha256: hash(commitLog) }, serialBarrier: "SOURCE_BYTES_VERIFIED; F16 remains ACTIVE until a separate explicit transition commit and its byte verification.", observedAt: new Date().toISOString() });
+console.log(JSON.stringify({ status: "PASS_SOURCE_BYTES_PENDING_SEPARATE_TRANSITION", revision, indexedEntries: index.entries.length, committedPaths: actual.length, artifact: hash(artifact) }));
