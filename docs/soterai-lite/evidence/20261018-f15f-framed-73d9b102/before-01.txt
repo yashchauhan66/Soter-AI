@@ -1,0 +1,253 @@
+﻿TAP version 13
+# node:internal/modules/cjs/loader:1401
+#   const err = new Error(message);
+#               ^
+# Error: Cannot find module '../../../../apps/local-ai-broker/src/BoundedChatFrames'
+# Require stack:
+# - C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayFramedDecoder.test.ts
+#     at node:internal/modules/cjs/loader:1401:15
+#     at T._resolveFilename (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:14889)
+#     at nextResolveSimple (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\tsx\\dist\\register-BOkp8V6j.cjs:10:1017)
+#     at C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\tsx\\dist\\register-BOkp8V6j.cjs:9:4388
+#     at C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\tsx\\dist\\register-BOkp8V6j.cjs:9:3818
+#     at resolveTsPaths (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\tsx\\dist\\register-BOkp8V6j.cjs:10:770)
+#     at Function._resolveFilename (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\tsx\\dist\\register-BOkp8V6j.cjs:10:1155)
+#     at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+#     at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+#     at Function._load (node:internal/modules/cjs/loader:1211:37) {
+#   code: 'MODULE_NOT_FOUND',
+#   requireStack: [
+#     'C:\\\\Users\\\\USER\\\\OneDrive\\\\Desktop\\\\Ai-Agent-Security-Guard\\\\packages\\\\vscode-extension\\\\src\\\\__tests__\\\\gatewayFramedDecoder.test.ts'
+#   ]
+# }
+# Node.js v22.16.0
+# Subtest: packages\\vscode-extension\\src\\__tests__\\gatewayFramedDecoder.test.ts
+not ok 1 - packages\\vscode-extension\\src\\__tests__\\gatewayFramedDecoder.test.ts
+  ---
+  duration_ms: 504.6529
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayFramedDecoder.test.ts:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: F15f-W01 real NDJSON batches transcode to one complete canonical JSON request
+not ok 2 - F15f-W01 real NDJSON batches transcode to one complete canonical JSON request
+  ---
+  duration_ms: 109.2443
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayFramedWire.test.ts:2:2984'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    415 !== 200
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 200
+  actual: 415
+  operator: 'strictEqual'
+  stack: |-
+    <anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayFramedWire.test.ts:10:129)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async fixture (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayFramedWire.test.ts:8:921)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F15f-W02 SSE data/metadata and Anthropic route preserve all messages
+not ok 3 - F15f-W02 SSE data/metadata and Anthropic route preserve all messages
+  ---
+  duration_ms: 14.9725
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayFramedWire.test.ts:2:3396'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    415 !== 200
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 200
+  actual: 415
+  operator: 'strictEqual'
+  stack: |-
+    <anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayFramedWire.test.ts:11:315)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async fixture (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayFramedWire.test.ts:8:921)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F15f-W03 flagoff refuses both framed media while JSON works
+not ok 4 - F15f-W03 flagoff refuses both framed media while JSON works
+  ---
+  duration_ms: 11.2793
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayFramedWire.test.ts:2:4033'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    415 !== 503
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 503
+  actual: 415
+  operator: 'strictEqual'
+  stack: |-
+    fixture.framedBodies (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayFramedWire.test.ts:12:111)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async fixture (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayFramedWire.test.ts:8:921)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F15f-W04 malformed duplicates/conflicts/truncation send zero receiver bytes
+not ok 5 - F15f-W04 malformed duplicates/conflicts/truncation send zero receiver bytes
+  ---
+  duration_ms: 11.1236
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayFramedWire.test.ts:2:4483'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    415 !== 400
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 400
+  actual: 415
+  operator: 'strictEqual'
+  stack: |-
+    <anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayFramedWire.test.ts:13:269)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async fixture (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayFramedWire.test.ts:8:921)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F15f-W05 strict UTF8 and record budget refuse before admission
+not ok 6 - F15f-W05 strict UTF8 and record budget refuse before admission
+  ---
+  duration_ms: 15.4453
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayFramedWire.test.ts:2:4968'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    415 !== 400
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 400
+  actual: 415
+  operator: 'strictEqual'
+  stack: |-
+    <anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayFramedWire.test.ts:14:114)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async fixture (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayFramedWire.test.ts:8:921)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F15f-W06 synthetic credential in a later framed message never reaches receiver
+ok 7 - F15f-W06 synthetic credential in a later framed message never reaches receiver
+  ---
+  duration_ms: 13.3686
+  type: 'test'
+  ...
+# Subtest: F15f-W07 gzip framing uses existing one-layer decoding before framed JSON
+not ok 8 - F15f-W07 gzip framing uses existing one-layer decoding before framed JSON
+  ---
+  duration_ms: 15.0789
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayFramedWire.test.ts:2:5716'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    415 !== 200
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 200
+  actual: 415
+  operator: 'strictEqual'
+  stack: |-
+    <anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayFramedWire.test.ts:16:125)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async fixture (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayFramedWire.test.ts:8:921)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F15f-W08 completed early frame stays private until finite chunked body ends
+not ok 9 - F15f-W08 completed early frame stays private until finite chunked body ends
+  ---
+  duration_ms: 58.1775
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayFramedWire.test.ts:2:6107'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    415 !== 200
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 200
+  actual: 415
+  operator: 'strictEqual'
+  stack: |-
+    <anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayFramedWire.test.ts:17:573)
+    async fixture (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayFramedWire.test.ts:8:921)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F15f-W09 framed media never becomes a controller protocol
+ok 10 - F15f-W09 framed media never becomes a controller protocol
+  ---
+  duration_ms: 21.4787
+  type: 'test'
+  ...
+# Subtest: F15f-W10 finite read deadline on a complete early record withholds
+not ok 11 - F15f-W10 finite read deadline on a complete early record withholds
+  ---
+  duration_ms: 11.0733
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayFramedWire.test.ts:2:7273'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    415 !== 408
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 408
+  actual: 415
+  operator: 'strictEqual'
+  stack: |-
+    fixture.requestTimeoutMs (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayFramedWire.test.ts:19:544)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async fixture (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayFramedWire.test.ts:8:921)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F15f-W11 cancellation after one record never forwards remaining partial request
+ok 12 - F15f-W11 cancellation after one record never forwards remaining partial request
+  ---
+  duration_ms: 64.4323
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 3
+# fail 9
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1564.9645

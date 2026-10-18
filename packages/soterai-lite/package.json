@@ -123,7 +123,8 @@
         "soterai.lite.gatewayGzipBodies",
         "soterai.lite.gatewayBrotliBodies",
         "soterai.lite.gatewayDeflateBodies",
-        "soterai.lite.gatewayChunkedBodies"
+        "soterai.lite.gatewayChunkedBodies",
+        "soterai.lite.gatewayFramedBodies"
       ]
     }
   },
@@ -1838,6 +1839,12 @@
           "default": true,
           "scope": "machine",
           "description": "Enable complete bounded HTTP/1.1 chunked request admission for the owned broker. Disabling withdraws the owner and refuses chunked after restart; length-framed JSON/encodings remain available. Unsupported/duplicate transfer coding and trailers refuse; Node owns raw framing."
+        },
+        "soterai.lite.gatewayFramedBodies": {
+          "type": "boolean",
+          "default": true,
+          "scope": "machine",
+          "description": "Enable bounded finite NDJSON/SSE chat batches for the owned broker. Complete records merge ordered messages and equal options into one inspected JSON request. Disabling withdraws ownership and refuses framed media after restart; ordinary JSON remains available."
         }
       }
     },
