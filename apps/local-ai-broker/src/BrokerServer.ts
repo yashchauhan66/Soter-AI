@@ -5,6 +5,7 @@ import { promisify } from "node:util";
 import { decodeBoundedJson, BoundedJsonError, JSON_LIMITS } from "./BoundedJson";
 import { decodeBoundedChatFrames, BoundedChatFramesError } from "./BoundedChatFrames";
 import { decodeBoundedMultipart, parseMultipartMedia, BoundedMultipartError } from "./BoundedMultipart";
+import { decodeBoundedBase64Envelope, decodeChatBase64Blobs, BoundedBase64Error } from "./BoundedBase64";
 import { decodeBoundedGzip, BoundedGzipError } from "./BoundedGzip";
 import { decodeBoundedBrotli, BoundedBrotliError } from "./BoundedBrotli";
 import { decodeBoundedDeflate, BoundedDeflateError } from "./BoundedDeflate";
@@ -94,6 +95,7 @@ export interface BrokerServerOptions {
     chunkedBodies?: boolean;
     framedBodies?: boolean;
     multipartBodies?: boolean;
+    base64Bodies?: boolean;
     /** Private owned-child controller session; data clients use distinct auth. */
     ownerSession?: string;
     /** Data-plane token handed to AI clients. Never authorizes management. */
@@ -1107,16 +1109,17 @@ export class BrokerServer {
         if (encoding === "br" && this.options.brotliBodies === false) throw new HttpError(503, "br_unavailable", "Brotli request decoding is unavailable");
         if (encoding === "deflate" && this.options.deflateBodies === false) throw new HttpError(503, "deflate_unavailable", "Deflate request decoding is unavailable");
         const media: string[] = []; for (let i = 0; i < req.rawHeaders.length - 1; i += 2) if (req.rawHeaders[i].toLowerCase() === "content-type") media.push(req.rawHeaders[i + 1]);
-        const match = media.length === 1 ? /^[ \t]*(application\/json|application\/x-ndjson|application\/ndjson|text\/event-stream)(?:[ \t]*;[ \t]*charset[ \t]*=[ \t]*(?:utf-8|"utf-8"))?[ \t]*$/i.exec(media[0]) : null;
+        const match = media.length === 1 ? /^[ \t]*(application\/json|application\/x-ndjson|application\/ndjson|text\/event-stream|application\/vnd\.soterai\.chat-base64\+json)(?:[ \t]*;[ \t]*charset[ \t]*=[ \t]*(?:utf-8|"utf-8"))?[ \t]*$/i.exec(media[0]) : null;
         const multipart = media.length === 1 && /^[ \t]*multipart\/form-data(?:[ \t]*;|[ \t]*$)/i.test(media[0]);
         let boundary: string | undefined;
         if (multipart) { try { boundary = parseMultipartMedia(media[0]); } catch { throw new HttpError(400, "multipart_invalid", "Multipart media could not be safely decoded"); } }
         const supported = !!match || multipart, type = match?.[1].toLowerCase();
-        const kind = multipart ? "multipart" : type === "text/event-stream" ? "sse" : type === "application/ndjson" || type === "application/x-ndjson" ? "ndjson" : "json";
+        const kind = multipart ? "multipart" : type === "application/vnd.soterai.chat-base64+json" ? "base64" : type === "text/event-stream" ? "sse" : type === "application/ndjson" || type === "application/x-ndjson" ? "ndjson" : "json";
         if (media.length && !supported) throw new HttpError(415, "json_media_unsupported", "A single supported UTF-8 request media type is required");
         if (kind !== "json") {
             if (!["/v1/ai/openai-compatible/chat/completions", "/v1/ai/anthropic-compatible/messages"].includes((req.url ?? "").split("?")[0])) throw new HttpError(415, "framed_route_unsupported", "Framed chat media requires a provider chat route");
-            if (kind === "multipart") { if (this.options.multipartBodies === false) throw new HttpError(503, "multipart_unavailable", "Multipart chat request decoding is unavailable"); }
+            if (kind === "base64") { if (this.options.base64Bodies === false) throw new HttpError(503, "base64_unavailable", "Base64 chat request decoding is unavailable"); }
+            else if (kind === "multipart") { if (this.options.multipartBodies === false) throw new HttpError(503, "multipart_unavailable", "Multipart chat request decoding is unavailable"); }
             else if (this.options.framedBodies === false) throw new HttpError(503, "framed_unavailable", "Framed chat request decoding is unavailable");
         }
         return new Promise<JsonBody>((resolve, reject) => {
@@ -1138,11 +1141,12 @@ export class BrokerServer {
                     const wire = Buffer.concat(chunks, size);
                     const decoded = encoding === "gzip" ? await decodeBoundedGzip(wire, { maxBytes: limit }) : encoding === "br" ? await decodeBoundedBrotli(wire, { maxBytes: limit }) : encoding === "deflate" ? await decodeBoundedDeflate(wire, { maxBytes: limit }) : wire;
                     if (settled) return;
-                    const body = kind === "multipart" ? decodeBoundedMultipart(decoded, boundary!).body : kind !== "json" ? decodeBoundedChatFrames(decoded, kind).body : decoded.length === 0 && (!encoding || encoding === "identity") ? Object.freeze(Object.create(null)) : decodeBoundedJson(decoded, { maxBytes: limit }).body;
+                    const parsed = kind === "base64" ? decodeBoundedBase64Envelope(decoded, this.options.base64Bodies !== false).body : kind === "multipart" ? decodeBoundedMultipart(decoded, boundary!).body : kind !== "json" ? decodeBoundedChatFrames(decoded, kind).body : decoded.length === 0 && (!encoding || encoding === "identity") ? Object.freeze(Object.create(null)) : decodeBoundedJson(decoded, { maxBytes: limit }).body;
+                    const body = kind !== "base64" && ["/v1/ai/openai-compatible/chat/completions", "/v1/ai/anthropic-compatible/messages"].includes((req.url ?? "").split("?")[0]) ? decodeChatBase64Blobs(parsed, this.options.base64Bodies !== false).body : parsed;
                     settled = true; cleanup(); resolve(body as JsonBody);
                 } catch (error) {
-                    const status = error instanceof BoundedGzipError || error instanceof BoundedBrotliError || error instanceof BoundedDeflateError || error instanceof BoundedChatFramesError || error instanceof BoundedMultipartError ? error.code.endsWith("_timeout") ? 408 : error.code.endsWith("_limit") ? 413 : 400 : error instanceof BoundedJsonError && ["body_too_large", "json_complexity"].includes(error.code) ? 413 : 400;
-                    fail(new HttpError(status, error instanceof BoundedGzipError || error instanceof BoundedBrotliError || error instanceof BoundedDeflateError || error instanceof BoundedChatFramesError || error instanceof BoundedMultipartError || error instanceof BoundedJsonError ? error.code : "invalid_json", "Request body could not be safely decoded"));
+                    const status = error instanceof BoundedBase64Error ? error.code === "base64_unavailable" ? 503 : error.code === "base64_unsupported" ? 415 : error.code === "base64_limit" ? 413 : 400 : error instanceof BoundedGzipError || error instanceof BoundedBrotliError || error instanceof BoundedDeflateError || error instanceof BoundedChatFramesError || error instanceof BoundedMultipartError ? error.code.endsWith("_timeout") ? 408 : error.code.endsWith("_limit") ? 413 : 400 : error instanceof BoundedJsonError && ["body_too_large", "json_complexity"].includes(error.code) ? 413 : 400;
+                    fail(new HttpError(status, error instanceof BoundedBase64Error || error instanceof BoundedGzipError || error instanceof BoundedBrotliError || error instanceof BoundedDeflateError || error instanceof BoundedChatFramesError || error instanceof BoundedMultipartError || error instanceof BoundedJsonError ? error.code : "invalid_json", "Request body could not be safely decoded"));
                 }
             };
             const timer = setTimeout(() => fail(new HttpError(408, "json_read_timeout", "JSON request read deadline exceeded")), Math.min(30000, Math.max(1, this.options.requestTimeoutMs ?? 30000)));

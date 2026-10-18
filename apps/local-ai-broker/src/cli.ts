@@ -35,6 +35,7 @@ async function main(): Promise<void> {
         chunkedBodies: process.env.SOTERAI_GATEWAY_CHUNKED_BODIES !== "0",
         framedBodies: process.env.SOTERAI_GATEWAY_FRAMED_BODIES !== "0",
         multipartBodies: process.env.SOTERAI_GATEWAY_MULTIPART_BODIES !== "0",
+        base64Bodies: process.env.SOTERAI_GATEWAY_BASE64_BODIES !== "0",
         requireCanarySync: process.env.SOTERAI_REQUIRE_CANARY_SYNC === "1",
         openAIProviderUrl: process.env.SOTERAI_OPENAI_PROVIDER_URL,
         anthropicProviderUrl: process.env.SOTERAI_ANTHROPIC_PROVIDER_URL,

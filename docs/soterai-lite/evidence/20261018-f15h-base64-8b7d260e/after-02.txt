@@ -1,0 +1,172 @@
+﻿TAP version 13
+# Subtest: F15h-B01 text data URI and part preserve Unicode and strip encoding metadata
+ok 1 - F15h-B01 text data URI and part preserve Unicode and strip encoding metadata
+  ---
+  duration_ms: 5.463
+  type: 'test'
+  ...
+# Subtest: F15h-B02 canonical base64url and JSON text blobs work
+ok 2 - F15h-B02 canonical base64url and JSON text blobs work
+  ---
+  duration_ms: 1.9135
+  type: 'test'
+  ...
+# Subtest: F15h-B03 complete JSON envelope both encodings and inert prototypes
+ok 3 - F15h-B03 complete JSON envelope both encodings and inert prototypes
+  ---
+  duration_ms: 2.1732
+  type: 'test'
+  ...
+# Subtest: F15h-B04 public unmarked base64-looking strings remain public text
+ok 4 - F15h-B04 public unmarked base64-looking strings remain public text
+  ---
+  duration_ms: 0.3525
+  type: 'test'
+  ...
+# Subtest: F15h-B05 malformed/noncanonical base64 refuses ""
+ok 5 - F15h-B05 malformed/noncanonical base64 refuses ""
+  ---
+  duration_ms: 0.7084
+  type: 'test'
+  ...
+# Subtest: F15h-B05 malformed/noncanonical base64 refuses "Zg"
+ok 6 - F15h-B05 malformed/noncanonical base64 refuses "Zg"
+  ---
+  duration_ms: 0.2684
+  type: 'test'
+  ...
+# Subtest: F15h-B05 malformed/noncanonical base64 refuses "Zh=="
+ok 7 - F15h-B05 malformed/noncanonical base64 refuses "Zh=="
+  ---
+  duration_ms: 0.3447
+  type: 'test'
+  ...
+# Subtest: F15h-B05 malformed/noncanonical base64 refuses "Zg==="
+ok 8 - F15h-B05 malformed/noncanonical base64 refuses "Zg==="
+  ---
+  duration_ms: 0.2319
+  type: 'test'
+  ...
+# Subtest: F15h-B05 malformed/noncanonical base64 refuses "Z g=="
+ok 9 - F15h-B05 malformed/noncanonical base64 refuses "Z g=="
+  ---
+  duration_ms: 0.5807
+  type: 'test'
+  ...
+# Subtest: F15h-B05 malformed/noncanonical base64 refuses "Zg==\\n"
+ok 10 - F15h-B05 malformed/noncanonical base64 refuses "Zg==\\n"
+  ---
+  duration_ms: 0.7785
+  type: 'test'
+  ...
+# Subtest: F15h-B05 malformed/noncanonical base64 refuses "Zg__"
+ok 11 - F15h-B05 malformed/noncanonical base64 refuses "Zg__"
+  ---
+  duration_ms: 0.2941
+  type: 'test'
+  ...
+# Subtest: F15h-B05 malformed/noncanonical base64 refuses "-w=="
+ok 12 - F15h-B05 malformed/noncanonical base64 refuses "-w=="
+  ---
+  duration_ms: 0.2226
+  type: 'test'
+  ...
+# Subtest: F15h-B06 base64url padding/mixed alphabets/unknown shape refuse
+ok 13 - F15h-B06 base64url padding/mixed alphabets/unknown shape refuse
+  ---
+  duration_ms: 0.845
+  type: 'test'
+  ...
+# Subtest: F15h-B07 malformed/ambiguous data URI, binary, invalid UTF8/control refuse
+ok 14 - F15h-B07 malformed/ambiguous data URI, binary, invalid UTF8/control refuse
+  ---
+  duration_ms: 1.1386
+  type: 'test'
+  ...
+# Subtest: F15h-B08 duplicate/unknown envelope fields and malformed inner JSON refuse
+ok 15 - F15h-B08 duplicate/unknown envelope fields and malformed inner JSON refuse
+  ---
+  duration_ms: 1.1882
+  type: 'test'
+  ...
+# Subtest: F15h-B09 nested URI/explicit blob/envelope refuse
+ok 16 - F15h-B09 nested URI/explicit blob/envelope refuse
+  ---
+  duration_ms: 0.7686
+  type: 'test'
+  ...
+# Subtest: F15h-B10 exact bytes/count/cumulative limits and overflow
+ok 17 - F15h-B10 exact bytes/count/cumulative limits and overflow
+  ---
+  duration_ms: 28.9479
+  type: 'test'
+  ...
+# Subtest: F15h-B11 flagoff withholds every explicit representation, no-echo errors
+ok 18 - F15h-B11 flagoff withholds every explicit representation, no-echo errors
+  ---
+  duration_ms: 0.6577
+  type: 'test'
+  ...
+# Subtest: F15h-W01 public blob parts and data URI become exact inspected text
+ok 19 - F15h-W01 public blob parts and data URI become exact inspected text
+  ---
+  duration_ms: 165.5384
+  type: 'test'
+  ...
+# Subtest: F15h-W02 public envelopes use both canonical alphabets
+ok 20 - F15h-W02 public envelopes use both canonical alphabets
+  ---
+  duration_ms: 70.5582
+  type: 'test'
+  ...
+# Subtest: F15h-W03 flagoff withholds all explicit blobs, JSON remains healthy
+ok 21 - F15h-W03 flagoff withholds all explicit blobs, JSON remains healthy
+  ---
+  duration_ms: 45.7267
+  type: 'test'
+  ...
+# Subtest: F15h-W04 malformed/noncanonical/binary/nested/overbudget refuse
+ok 22 - F15h-W04 malformed/noncanonical/binary/nested/overbudget refuse
+  ---
+  duration_ms: 50.8222
+  type: 'test'
+  ...
+# Subtest: F15h-W05 decoded synthetic credential and original encoding never reach receiver
+ok 23 - F15h-W05 decoded synthetic credential and original encoding never reach receiver
+  ---
+  duration_ms: 41.0278
+  type: 'test'
+  ...
+# Subtest: F15h-W06 outer gzip envelope and gzip JSON blob follow one-layer transport decoding
+ok 24 - F15h-W06 outer gzip envelope and gzip JSON blob follow one-layer transport decoding
+  ---
+  duration_ms: 39.7963
+  type: 'test'
+  ...
+# Subtest: F15h-W07 chunked early complete field never forwards before JSON end
+ok 25 - F15h-W07 chunked early complete field never forwards before JSON end
+  ---
+  duration_ms: 52.4502
+  type: 'test'
+  ...
+# Subtest: F15h-W08 envelope controller refusal and finite body timeout
+ok 26 - F15h-W08 envelope controller refusal and finite body timeout
+  ---
+  duration_ms: 101.4494
+  type: 'test'
+  ...
+# Subtest: F15h-W09 canceled partial envelope forwards zero and keeps owner responsive
+ok 27 - F15h-W09 canceled partial envelope forwards zero and keeps owner responsive
+  ---
+  duration_ms: 63.2679
+  type: 'test'
+  ...
+1..27
+# tests 27
+# suites 0
+# pass 27
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2051.6743

@@ -125,7 +125,8 @@
         "soterai.lite.gatewayDeflateBodies",
         "soterai.lite.gatewayChunkedBodies",
         "soterai.lite.gatewayFramedBodies",
-        "soterai.lite.gatewayMultipartBodies"
+        "soterai.lite.gatewayMultipartBodies",
+        "soterai.lite.gatewayBase64Bodies"
       ]
     }
   },
@@ -1852,6 +1853,12 @@
           "default": true,
           "scope": "machine",
           "description": "Enable bounded finite multipart chat forms with one JSON request and up to 16 UTF8 text attachments. Complete forms transcode to one inspected JSON chat request. Disabling withdraws the owner and refuses multipart after restart; ordinary JSON remains available."
+        },
+        "soterai.lite.gatewayBase64Bodies": {
+          "type": "boolean",
+          "default": true,
+          "scope": "machine",
+          "description": "Enable bounded canonical base64/base64url text and JSON blobs and explicit chat envelopes. Complete declared blobs decode before inspection; binary/nested/noncanonical payloads refuse. Disabling withdraws the owner and refuses explicit blobs after restart; ordinary JSON remains available."
         }
       }
     },

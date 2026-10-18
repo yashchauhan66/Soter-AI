@@ -1,0 +1,94 @@
+﻿TAP version 13
+# node:internal/modules/run_main:123
+#     triggerUncaughtException(
+#     ^
+# Error: Transform failed with 1 error:
+# C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayBase64Decoder.test.ts:15:504: ERROR: Expected ")" but found ";"
+#     at failureErrorWithLog (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:1748:15)
+#     at C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:1017:50
+#     at responseCallbacks.<computed> (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:884:9)
+#     at handleIncomingPacket (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:939:12)
+#     at Socket.readFromStdout (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:862:7)
+#     at Socket.emit (node:events:518:28)
+#     at addChunk (node:internal/streams/readable:561:12)
+#     at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+#     at Readable.push (node:internal/streams/readable:392:5)
+#     at Pipe.onStreamRead (node:internal/stream_base_commons:189:23) {
+#   name: 'TransformError'
+# }
+# Node.js v22.16.0
+# Subtest: packages\\vscode-extension\\src\\__tests__\\gatewayBase64Decoder.test.ts
+not ok 1 - packages\\vscode-extension\\src\\__tests__\\gatewayBase64Decoder.test.ts
+  ---
+  duration_ms: 552.5718
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayBase64Decoder.test.ts:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: F15h-W01 public blob parts and data URI become exact inspected text
+ok 2 - F15h-W01 public blob parts and data URI become exact inspected text
+  ---
+  duration_ms: 202.3332
+  type: 'test'
+  ...
+# Subtest: F15h-W02 public envelopes use both canonical alphabets
+ok 3 - F15h-W02 public envelopes use both canonical alphabets
+  ---
+  duration_ms: 49.6003
+  type: 'test'
+  ...
+# Subtest: F15h-W03 flagoff withholds all explicit blobs, JSON remains healthy
+ok 4 - F15h-W03 flagoff withholds all explicit blobs, JSON remains healthy
+  ---
+  duration_ms: 38.0876
+  type: 'test'
+  ...
+# Subtest: F15h-W04 malformed/noncanonical/binary/nested/overbudget refuse
+ok 5 - F15h-W04 malformed/noncanonical/binary/nested/overbudget refuse
+  ---
+  duration_ms: 41.3843
+  type: 'test'
+  ...
+# Subtest: F15h-W05 decoded synthetic credential and original encoding never reach receiver
+ok 6 - F15h-W05 decoded synthetic credential and original encoding never reach receiver
+  ---
+  duration_ms: 40.0058
+  type: 'test'
+  ...
+# Subtest: F15h-W06 outer gzip envelope and gzip JSON blob follow one-layer transport decoding
+ok 7 - F15h-W06 outer gzip envelope and gzip JSON blob follow one-layer transport decoding
+  ---
+  duration_ms: 41.3735
+  type: 'test'
+  ...
+# Subtest: F15h-W07 chunked early complete field never forwards before JSON end
+ok 8 - F15h-W07 chunked early complete field never forwards before JSON end
+  ---
+  duration_ms: 65.7524
+  type: 'test'
+  ...
+# Subtest: F15h-W08 envelope controller refusal and finite body timeout
+ok 9 - F15h-W08 envelope controller refusal and finite body timeout
+  ---
+  duration_ms: 96.9507
+  type: 'test'
+  ...
+# Subtest: F15h-W09 canceled partial envelope forwards zero and keeps owner responsive
+ok 10 - F15h-W09 canceled partial envelope forwards zero and keeps owner responsive
+  ---
+  duration_ms: 65.2142
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 9
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2373.1297
