@@ -28,6 +28,7 @@ async function main(): Promise<void> {
         controlToken,
         port,
         ownerSession,
+        jsonBodies: process.env.SOTERAI_GATEWAY_JSON_BODIES !== "0",
         requireCanarySync: process.env.SOTERAI_REQUIRE_CANARY_SYNC === "1",
         openAIProviderUrl: process.env.SOTERAI_OPENAI_PROVIDER_URL,
         anthropicProviderUrl: process.env.SOTERAI_ANTHROPIC_PROVIDER_URL,
@@ -45,7 +46,7 @@ async function main(): Promise<void> {
     const address = await broker.start();
     if (requestedStop) { await broker.stop(); if (process.connected) process.disconnect(); return; }
     if (ownerSession) {
-        try { process.send!({ type: "SOTERAI_BROKER_READY", version: 1, session: ownerSession, port: address.port }, error => { if (error) void shutdown(); }); }
+        try { process.send!({ type: "SOTERAI_BROKER_READY", version: 1, session: ownerSession, port: address.port }, (error: Error | null) => { if (error) void shutdown(); }); }
         catch { await shutdown(); }
     }
     else console.log(JSON.stringify({ status: "ready", url: address.url, localOnly: true, auth: "required", tokenStoredAt: path.join(storageDir, "auth-token") }));

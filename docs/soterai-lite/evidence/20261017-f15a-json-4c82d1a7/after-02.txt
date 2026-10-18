@@ -1,0 +1,250 @@
+﻿TAP version 13
+# Subtest: F15a-J01 public nested Unicode/escaped values return complete canonical JSON
+ok 1 - F15a-J01 public nested Unicode/escaped values return complete canonical JSON
+  ---
+  duration_ms: 3.9798
+  type: 'test'
+  ...
+# Subtest: F15a-J02 duplicate decoded key refuses {"x":1,"x":2}
+ok 2 - F15a-J02 duplicate decoded key refuses {"x":1,"x":2}
+  ---
+  duration_ms: 1.011
+  type: 'test'
+  ...
+# Subtest: F15a-J02 duplicate decoded key refuses {"x":1,"\\u0078":2}
+ok 3 - F15a-J02 duplicate decoded key refuses {"x":1,"\\u0078":2}
+  ---
+  duration_ms: 0.2625
+  type: 'test'
+  ...
+# Subtest: F15a-J02 duplicate decoded key refuses {"nested":{"key":1,"key":2}}
+ok 4 - F15a-J02 duplicate decoded key refuses {"nested":{"key":1,"key":2}}
+  ---
+  duration_ms: 0.3381
+  type: 'test'
+  ...
+# Subtest: F15a-J03 case-sensitive keys remain distinct inert data
+ok 5 - F15a-J03 case-sensitive keys remain distinct inert data
+  ---
+  duration_ms: 0.3331
+  type: 'test'
+  ...
+# Subtest: F15a-J04 invalid or nonobject JSON refuses 
+ok 6 - F15a-J04 invalid or nonobject JSON refuses 
+  ---
+  duration_ms: 0.239
+  type: 'test'
+  ...
+# Subtest: F15a-J04 invalid or nonobject JSON refuses []
+ok 7 - F15a-J04 invalid or nonobject JSON refuses []
+  ---
+  duration_ms: 0.265
+  type: 'test'
+  ...
+# Subtest: F15a-J04 invalid or nonobject JSON refuses null
+ok 8 - F15a-J04 invalid or nonobject JSON refuses null
+  ---
+  duration_ms: 0.3181
+  type: 'test'
+  ...
+# Subtest: F15a-J04 invalid or nonobject JSON refuses "text"
+ok 9 - F15a-J04 invalid or nonobject JSON refuses "text"
+  ---
+  duration_ms: 0.545
+  type: 'test'
+  ...
+# Subtest: F15a-J04 invalid or nonobject JSON refuses 42
+ok 10 - F15a-J04 invalid or nonobject JSON refuses 42
+  ---
+  duration_ms: 0.9059
+  type: 'test'
+  ...
+# Subtest: F15a-J04 invalid or nonobject JSON refuses {"a":1}x
+ok 11 - F15a-J04 invalid or nonobject JSON refuses {"a":1}x
+  ---
+  duration_ms: 0.2246
+  type: 'test'
+  ...
+# Subtest: F15a-J04 invalid or nonobject JSON refuses {"a":}
+ok 12 - F15a-J04 invalid or nonobject JSON refuses {"a":}
+  ---
+  duration_ms: 0.1895
+  type: 'test'
+  ...
+# Subtest: F15a-J04 invalid or nonobject JSON refuses {"a":1,}
+ok 13 - F15a-J04 invalid or nonobject JSON refuses {"a":1,}
+  ---
+  duration_ms: 0.1483
+  type: 'test'
+  ...
+# Subtest: F15a-J04 invalid or nonobject JSON refuses {a:1}
+ok 14 - F15a-J04 invalid or nonobject JSON refuses {a:1}
+  ---
+  duration_ms: 0.2133
+  type: 'test'
+  ...
+# Subtest: F15a-J04 invalid or nonobject JSON refuses {"a":NaN}
+ok 15 - F15a-J04 invalid or nonobject JSON refuses {"a":NaN}
+  ---
+  duration_ms: 0.1529
+  type: 'test'
+  ...
+# Subtest: F15a-J05 nonfinite/unsafe number or lone surrogate refuses {"a":1e999}
+ok 16 - F15a-J05 nonfinite/unsafe number or lone surrogate refuses {"a":1e999}
+  ---
+  duration_ms: 0.4793
+  type: 'test'
+  ...
+# Subtest: F15a-J05 nonfinite/unsafe number or lone surrogate refuses {"a":9007199254740993}
+ok 17 - F15a-J05 nonfinite/unsafe number or lone surrogate refuses {"a":9007199254740993}
+  ---
+  duration_ms: 0.376
+  type: 'test'
+  ...
+# Subtest: F15a-J05 nonfinite/unsafe number or lone surrogate refuses {"a":"\\ud800"}
+ok 18 - F15a-J05 nonfinite/unsafe number or lone surrogate refuses {"a":"\\ud800"}
+  ---
+  duration_ms: 0.3792
+  type: 'test'
+  ...
+# Subtest: F15a-J05 nonfinite/unsafe number or lone surrogate refuses {"a":"\\udfff"}
+ok 19 - F15a-J05 nonfinite/unsafe number or lone surrogate refuses {"a":"\\udfff"}
+  ---
+  duration_ms: 0.2288
+  type: 'test'
+  ...
+# Subtest: F15a-J05 nonfinite/unsafe number or lone surrogate refuses {"\\ud800":1}
+ok 20 - F15a-J05 nonfinite/unsafe number or lone surrogate refuses {"\\ud800":1}
+  ---
+  duration_ms: 0.1702
+  type: 'test'
+  ...
+# Subtest: F15a-J06 BOM outside JSON refuses while registered-like BOM inside text stays byte-exact
+ok 21 - F15a-J06 BOM outside JSON refuses while registered-like BOM inside text stays byte-exact
+  ---
+  duration_ms: 0.4839
+  type: 'test'
+  ...
+# Subtest: F15a-J07 malformed UTF8 never substitutes a replacement character
+ok 22 - F15a-J07 malformed UTF8 never substitutes a replacement character
+  ---
+  duration_ms: 0.2219
+  type: 'test'
+  ...
+# Subtest: F15a-J08 exact byte limit succeeds; one extra byte refuses
+ok 23 - F15a-J08 exact byte limit succeeds; one extra byte refuses
+  ---
+  duration_ms: 0.2724
+  type: 'test'
+  ...
+# Subtest: F15a-J09 depth and key/value node budgets reject overflow without unbounded recursion
+ok 24 - F15a-J09 depth and key/value node budgets reject overflow without unbounded recursion
+  ---
+  duration_ms: 0.7082
+  type: 'test'
+  ...
+# Subtest: F15a-J10 decoded string UTF8 budget includes Unicode and keys
+ok 25 - F15a-J10 decoded string UTF8 budget includes Unicode and keys
+  ---
+  duration_ms: 0.6329
+  type: 'test'
+  ...
+# Subtest: F15a-J11 errors never echo arbitrary input fragments
+ok 26 - F15a-J11 errors never echo arbitrary input fragments
+  ---
+  duration_ms: 0.299
+  type: 'test'
+  ...
+# Subtest: F15a-W01 real public JSON bytes reach loopback provider after complete decode
+ok 27 - F15a-W01 real public JSON bytes reach loopback provider after complete decode
+  ---
+  duration_ms: 234.0665
+  type: 'test'
+  ...
+# Subtest: F15a-W02 duplicate decoded key never opens provider request
+ok 28 - F15a-W02 duplicate decoded key never opens provider request
+  ---
+  duration_ms: 20.5853
+  type: 'test'
+  ...
+# Subtest: F15a-W02 duplicate decoded key never opens provider request
+ok 29 - F15a-W02 duplicate decoded key never opens provider request
+  ---
+  duration_ms: 14.4333
+  type: 'test'
+  ...
+# Subtest: F15a-W03 unsupported media/charset text/plain
+ok 30 - F15a-W03 unsupported media/charset text/plain
+  ---
+  duration_ms: 13.1262
+  type: 'test'
+  ...
+# Subtest: F15a-W03 unsupported media/charset application/json; charset=latin1
+ok 31 - F15a-W03 unsupported media/charset application/json; charset=latin1
+  ---
+  duration_ms: 13.6964
+  type: 'test'
+  ...
+# Subtest: F15a-W03 unsupported media/charset application/octet-stream
+ok 32 - F15a-W03 unsupported media/charset application/octet-stream
+  ---
+  duration_ms: 11.3842
+  type: 'test'
+  ...
+# Subtest: F15a-W03 nonempty body without media header refuses
+ok 33 - F15a-W03 nonempty body without media header refuses
+  ---
+  duration_ms: 11.7676
+  type: 'test'
+  ...
+# Subtest: F15a-W04 duplicate media header refuses before forwarding
+ok 34 - F15a-W04 duplicate media header refuses before forwarding
+  ---
+  duration_ms: 12.5709
+  type: 'test'
+  ...
+# Subtest: F15a-W05 format flag off refuses rather than legacy pass-through
+ok 35 - F15a-W05 format flag off refuses rather than legacy pass-through
+  ---
+  duration_ms: 13.2131
+  type: 'test'
+  ...
+# Subtest: F15a-W06 invalid UTF8/BOM/truncation never forwards a partial request
+ok 36 - F15a-W06 invalid UTF8/BOM/truncation never forwards a partial request
+  ---
+  duration_ms: 15.4214
+  type: 'test'
+  ...
+# Subtest: F15a-W07 recognized synthetic provider credential is withheld from actual receiver
+ok 37 - F15a-W07 recognized synthetic provider credential is withheld from actual receiver
+  ---
+  duration_ms: 44.3145
+  type: 'test'
+  ...
+# Subtest: F15a-W08 body read deadline refuses an incomplete finite request before provider contact
+ok 38 - F15a-W08 body read deadline refuses an incomplete finite request before provider contact
+  ---
+  duration_ms: 118.9987
+  type: 'test'
+  ...
+# Subtest: F15a-W09 broker shutdown while body is incomplete refuses its late complete request
+ok 39 - F15a-W09 broker shutdown while body is incomplete refuses its late complete request
+  ---
+  duration_ms: 4067.9525
+  type: 'test'
+  ...
+# Subtest: F15a-W10 client cancellation never forwards and leaves public broker health available
+ok 40 - F15a-W10 client cancellation never forwards and leaves public broker health available
+  ---
+  duration_ms: 41.4671
+  type: 'test'
+  ...
+1..40
+# tests 40
+# suites 0
+# pass 40
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 6409.8733

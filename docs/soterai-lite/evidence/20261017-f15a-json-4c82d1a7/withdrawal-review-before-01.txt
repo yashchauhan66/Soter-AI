@@ -1,0 +1,108 @@
+﻿TAP version 13
+# Subtest: F15a-W01 real public JSON bytes reach loopback provider after complete decode
+ok 1 - F15a-W01 real public JSON bytes reach loopback provider after complete decode
+  ---
+  duration_ms: 191.3391
+  type: 'test'
+  ...
+# Subtest: F15a-W02 duplicate decoded key never opens provider request
+ok 2 - F15a-W02 duplicate decoded key never opens provider request
+  ---
+  duration_ms: 22.5943
+  type: 'test'
+  ...
+# Subtest: F15a-W02 duplicate decoded key never opens provider request
+ok 3 - F15a-W02 duplicate decoded key never opens provider request
+  ---
+  duration_ms: 10.3998
+  type: 'test'
+  ...
+# Subtest: F15a-W03 unsupported media/charset text/plain
+ok 4 - F15a-W03 unsupported media/charset text/plain
+  ---
+  duration_ms: 10.986
+  type: 'test'
+  ...
+# Subtest: F15a-W03 unsupported media/charset application/json; charset=latin1
+ok 5 - F15a-W03 unsupported media/charset application/json; charset=latin1
+  ---
+  duration_ms: 9.9296
+  type: 'test'
+  ...
+# Subtest: F15a-W03 unsupported media/charset application/octet-stream
+ok 6 - F15a-W03 unsupported media/charset application/octet-stream
+  ---
+  duration_ms: 8.6141
+  type: 'test'
+  ...
+# Subtest: F15a-W03 nonempty body without media header refuses
+ok 7 - F15a-W03 nonempty body without media header refuses
+  ---
+  duration_ms: 12.2601
+  type: 'test'
+  ...
+# Subtest: F15a-W04 duplicate media header refuses before forwarding
+ok 8 - F15a-W04 duplicate media header refuses before forwarding
+  ---
+  duration_ms: 11.6494
+  type: 'test'
+  ...
+# Subtest: F15a-W05 format flag off refuses rather than legacy pass-through
+ok 9 - F15a-W05 format flag off refuses rather than legacy pass-through
+  ---
+  duration_ms: 9.3604
+  type: 'test'
+  ...
+# Subtest: F15a-W06 invalid UTF8/BOM/truncation never forwards a partial request
+ok 10 - F15a-W06 invalid UTF8/BOM/truncation never forwards a partial request
+  ---
+  duration_ms: 15.9299
+  type: 'test'
+  ...
+# Subtest: F15a-W07 recognized synthetic provider credential is withheld from actual receiver
+ok 11 - F15a-W07 recognized synthetic provider credential is withheld from actual receiver
+  ---
+  duration_ms: 44.27
+  type: 'test'
+  ...
+# Subtest: F15a-W08 body read deadline refuses an incomplete finite request before provider contact
+ok 12 - F15a-W08 body read deadline refuses an incomplete finite request before provider contact
+  ---
+  duration_ms: 111.9672
+  type: 'test'
+  ...
+# Subtest: F15a-W09 broker shutdown while body is incomplete refuses its late complete request
+not ok 13 - F15a-W09 broker shutdown while body is incomplete refuses its late complete request
+  ---
+  duration_ms: 4224.5219
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayJsonWire.test.ts:2:6530'
+  failureType: 'testCodeFailure'
+  error: 'false == true'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    <anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayJsonWire.test.ts:43:59)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async fixture (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayJsonWire.test.ts:12:49)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F15a-W10 client cancellation never forwards and leaves public broker health available
+ok 14 - F15a-W10 client cancellation never forwards and leaves public broker health available
+  ---
+  duration_ms: 36.143
+  type: 'test'
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 13
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5495.6734

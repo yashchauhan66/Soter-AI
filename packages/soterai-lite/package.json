@@ -118,7 +118,8 @@
         "soterai.lite.ps51Terminal",
         "soterai.lite.cmdTerminal",
         "soterai.lite.gitBashTerminal",
-        "soterai.lite.gatewayLifecycle"
+        "soterai.lite.gatewayLifecycle",
+        "soterai.lite.gatewayJsonBodies"
       ]
     }
   },
@@ -1803,6 +1804,12 @@
           "default": true,
           "scope": "machine",
           "description": "Enable the owned per-window loopback broker lifecycle. Disabling withdraws broker availability without weakening saved policy. Session URL and credentials change after restart; reviewed client setup is required again."
+        },
+        "soterai.lite.gatewayJsonBodies": {
+          "type": "boolean",
+          "scope": "machine",
+          "default": true,
+          "description": "Enable bounded complete UTF-8 JSON request decoding for the owned broker. Disabling withholds JSON control/provider requests and prevents owned startup; no unchecked decoder fallback. Other body formats have separate verification gates."
         }
       }
     },

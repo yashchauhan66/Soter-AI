@@ -8,7 +8,12 @@ import { BrokerManager } from "../broker/BrokerManager";
 import type { OwnedBrokerOptions } from "../broker/OwnedBrokerLifecycle";
 
 beforeEach(() => stub.resetState("D:/SoterAI-Lite-test-profiles/f14-manager-memory-only"));
-function fixture() {
+// F15a wiring checks were added after its initial implementation; native checks
+// separately exercise the actual child decoder instead of this HTTP fixture.
+test("F15a-M01 default JSON flag reaches the private owned child", async () => { const f = fixture(); await f.manager.start(); assert.equal(f.envs[0].SOTERAI_GATEWAY_JSON_BODIES, "1"); await f.manager.stop(); });
+test("F15a-M02 machine JSON disable survives workspace override and failed initialization", async () => { const f = fixture(true); stub.state.configInspect.set("soterai.lite.gatewayJsonBodies", { defaultValue: true, globalValue: false, workspaceValue: true }); await assert.rejects(f.manager.start()); assert.equal(f.envs[0].SOTERAI_GATEWAY_JSON_BODIES, "0"); assert.notEqual(f.manager.ownedSnapshot().state, "healthy"); assert.deepEqual(f.modes, []); await f.manager.stop(); });
+test("F15a-M03 changed JSON flag invalidates existing owned routing authority", async () => { const f = fixture(); await f.manager.start(); stub.state.configInspect.set("soterai.lite.gatewayJsonBodies", { defaultValue: true, globalValue: false }); await assert.rejects(f.manager.request("/version")); assert.notEqual(f.manager.ownedSnapshot().state, "healthy"); await f.manager.stop(); });
+function fixture(jsonUnavailable = false) {
     const context = stub.makeExtensionContext("D:/SoterAI-Lite-test-profiles/f14-manager-memory-only/storage"), envs: NodeJS.ProcessEnv[] = [], routes: string[] = [], modes: unknown[] = [];
     const secretChanged = new stub.EventEmitter<{ key: string }>(); context.secrets.onDidChange = secretChanged.event;
     const transport: Pick<OwnedBrokerOptions, "launch" | "fetchImpl" | "stopMs"> = {
@@ -23,7 +28,7 @@ function fixture() {
         fetchImpl: async (input, init) => {
             const route = new URL(String(input)).pathname; routes.push(route); const session = new Headers(init?.headers).get("x-soterai-session");
             if (route === "/v1/lifecycle/status") return Response.json({ session, version: "0.2.0", ready: true });
-            if (route === "/v1/canaries/sync") return Response.json({ synchronized: true, count: JSON.parse(String(init?.body)).canaries.length });
+            if (route === "/v1/canaries/sync") return jsonUnavailable ? Response.json({ error: "json_unavailable" }, { status: 503 }) : Response.json({ synchronized: true, count: JSON.parse(String(init?.body)).canaries.length });
             if (route === "/v1/safe-mode/enable") { modes.push(JSON.parse(String(init?.body))); return Response.json({ enabled: true, level: JSON.parse(String(init?.body)).level }); }
             if (route === "/version") return Response.json({ version: "0.2.0" });
             if (route === "/v1/safe-mode/status") return Response.json({ enabled: true, level: "strict" });

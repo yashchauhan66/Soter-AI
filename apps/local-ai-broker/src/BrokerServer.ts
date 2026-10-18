@@ -2,6 +2,7 @@ import { createServer, type IncomingMessage, type Server, type ServerResponse } 
 import { randomUUID } from "node:crypto";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
+import { decodeBoundedJson, BoundedJsonError, JSON_LIMITS } from "./BoundedJson";
 import {
     ApprovalStore,
     analyzeControlledTerminalCommand,
@@ -80,6 +81,8 @@ export interface SafeBrokerEvent {
 }
 
 export interface BrokerServerOptions {
+    /** F15a availability only; false refuses JSON without a legacy decoder. */
+    jsonBodies?: boolean;
     /** Private owned-child controller session; data clients use distinct auth. */
     ownerSession?: string;
     /** Data-plane token handed to AI clients. Never authorizes management. */
@@ -291,6 +294,7 @@ export class BrokerServer {
             }
 
             const body = await this.readJson(req);
+            if (this.stopping) throw new HttpError(503, "broker_stopping", "Owned broker is stopping; requests withheld");
             if (req.method === "POST" && url.pathname === "/v1/canaries/sync") return void await this.syncCanaries(res, body);
             if (req.method === "POST" && url.pathname === "/v1/scan") return void await this.scanEndpoint(res, body);
             if (req.method === "POST" && url.pathname === "/v1/redact") return this.redactEndpoint(res, body);
@@ -328,6 +332,7 @@ export class BrokerServer {
             const message = error instanceof HttpError ? error.message : "The local broker could not complete the request";
             this.safeLog("request_failed", { requestId, status, code });
             if (!res.headersSent) {
+                if (!req.complete || status === 408) res.setHeader("connection", "close");
                 this.json(res, status, {
                     error: {
                         code,
@@ -787,6 +792,7 @@ export class BrokerServer {
         const timeout = setTimeout(() => controller.abort(), this.options.requestTimeoutMs ?? 60_000);
         let upstream: Response;
         try {
+            if (this.stopping) throw new HttpError(503, "broker_stopping", "Owned broker is stopping; requests withheld");
             upstream = await (this.options.fetchImpl ?? fetch)(target, {
                 method: "POST",
                 headers,
@@ -1011,6 +1017,7 @@ export class BrokerServer {
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), this.options.requestTimeoutMs ?? 30_000);
         try {
+            if (this.stopping) throw new HttpError(503, "broker_stopping", "Owned broker is stopping; requests withheld");
             const response = await (this.options.fetchImpl ?? fetch)(target, { method: "POST", headers, body: wire, redirect: "error", signal: controller.signal });
             const parsed = parseProviderJson(await readProviderBody(response));
             if (!parsed) throw new HttpError(502, "provider_error", "The provider returned invalid JSON.");
@@ -1068,28 +1075,36 @@ export class BrokerServer {
     }
 
     private async readJson(req: IncomingMessage): Promise<JsonBody> {
-        const limit = this.options.bodyLimitBytes ?? 1_048_576;
+        if (this.options.jsonBodies === false) throw new HttpError(503, "json_unavailable", "JSON request decoding is unavailable");
+        const limit = this.options.bodyLimitBytes ?? JSON_LIMITS.maxBytes;
+        if (!Number.isSafeInteger(limit) || limit < 1 || limit > JSON_LIMITS.maxBytes) throw new HttpError(503, "json_limit_unavailable", "JSON request limit is unavailable");
         validateRequestBodyHeaders(req.headers, req.rawHeaders, limit);
-        const chunks: Buffer[] = [];
-        let size = 0;
-        for await (const chunk of req) {
-            const buffer = Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk);
-            size += buffer.length;
-            if (size > limit) throw new HttpError(413, "body_too_large", "Request body exceeds the local broker limit");
-            chunks.push(buffer);
-        }
-        if (chunks.length === 0) return {};
-        let decoded: string;
-        try {
-            decoded = new TextDecoder("utf-8", { fatal: true }).decode(Buffer.concat(chunks));
-        } catch {
-            throw new HttpError(400, "invalid_utf8", "Request body must be valid UTF-8");
-        }
-        try {
-            const parsed = JSON.parse(decoded);
-            if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) throw new Error();
-            return parsed as JsonBody;
-        } catch { throw new HttpError(400, "invalid_json", "Request body must be a JSON object"); }
+        const media: string[] = []; for (let i = 0; i < req.rawHeaders.length - 1; i += 2) if (req.rawHeaders[i].toLowerCase() === "content-type") media.push(req.rawHeaders[i + 1]);
+        const supported = media.length === 1 && /^[ \t]*application\/json(?:[ \t]*;[ \t]*charset[ \t]*=[ \t]*(?:utf-8|"utf-8"))?[ \t]*$/i.test(media[0]);
+        if (media.length && !supported) throw new HttpError(415, "json_media_unsupported", "A single application/json UTF-8 media type is required");
+        return new Promise<JsonBody>((resolve, reject) => {
+            const chunks: Buffer[] = []; let size = 0, settled = false;
+            const cleanup = () => { clearTimeout(timer); req.off("data", data); req.off("end", end); req.off("error", aborted); req.off("aborted", aborted); };
+            const fail = (error: HttpError) => { if (settled) return; settled = true; cleanup(); req.resume(); reject(error); };
+            const aborted = () => fail(new HttpError(400, "json_aborted", "JSON request was not completed"));
+            const data = (chunk: Buffer | string) => {
+                if (settled) return;
+                if (!supported) return fail(new HttpError(415, "json_media_unsupported", "A single application/json UTF-8 media type is required"));
+                const buffer = Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk); size += buffer.length;
+                if (size > limit || chunks.length >= 4096) return fail(new HttpError(413, "body_too_large", "Request body exceeds the local broker limit"));
+                chunks.push(buffer);
+            };
+            const end = () => {
+                if (settled) return;
+                try {
+                    const body = size === 0 ? Object.freeze(Object.create(null)) : decodeBoundedJson(Buffer.concat(chunks, size), { maxBytes: limit }).body;
+                    settled = true; cleanup(); resolve(body as JsonBody);
+                } catch (error) { fail(new HttpError(error instanceof BoundedJsonError && ["body_too_large", "json_complexity"].includes(error.code) ? 413 : 400, error instanceof BoundedJsonError ? error.code : "invalid_json", "Request JSON could not be safely decoded")); }
+            };
+            const timer = setTimeout(() => fail(new HttpError(408, "json_read_timeout", "JSON request read deadline exceeded")), Math.min(30000, Math.max(1, this.options.requestTimeoutMs ?? 30000)));
+            req.on("data", data); req.once("end", end); req.once("error", aborted); req.once("aborted", aborted);
+            if (req.aborted || req.destroyed) aborted();
+        });
     }
 
     private requireCheckpointStore(): FilesystemCheckpointStore {
