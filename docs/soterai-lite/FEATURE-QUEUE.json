@@ -346,17 +346,21 @@
         {
           "id": "F15g",
           "title": "multipart",
-          "status": "ACTIVE",
-          "result": "INCOMPLETE",
+          "status": "DONE",
+          "result": "PASS",
           "requires": [
             "F15f"
-          ]
+          ],
+          "sourceRevision": "3397190e0906efec6e4036ae021fcb5efb6f8785",
+          "evidence": "docs/soterai-lite/evidence/20261018-f15g-multipart-4a6c139b/f15g-acceptance-01.json",
+          "commitByteVerification": "docs/soterai-lite/evidence/20261018-f15g-multipart-4a6c139b/f15g-committed-byte-verification-01.json",
+          "transitionByteVerification": "docs/soterai-lite/evidence/20261018-f15g-multipart-4a6c139b/f15g-transition-byte-verification-01.json"
         },
         {
           "id": "F15h",
           "title": "base64 blobs",
-          "status": "PLANNED",
-          "result": "NOT-RUN",
+          "status": "ACTIVE",
+          "result": "INCOMPLETE",
           "requires": [
             "F15g"
           ]
