@@ -9,9 +9,9 @@
   "planVersion": 1,
   "clientDate": "2026-10-13",
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
-  "scope": "F01-F10 and F12-F15 DONE for exact scoped objects and verified source bytes; F11 remains optional unavailable/unimplemented NOT_TESTED/NOT_COVERED. F16 alone supported active after the separate F15 parent transition byte barrier.",
+  "scope": "F01-F10 and F12-F16 DONE for exact scoped objects and verified source bytes; F11 remains optional unavailable/unimplemented NOT_TESTED/NOT_COVERED. F17 alone supported active after the separate F16 transition byte barrier.",
   "implementationConcurrency": 1,
-  "activeFeature": "F16",
+  "activeFeature": "F17",
   "prerequisiteBlock": {
     "id": "P00",
     "result": "FAIL",
@@ -381,17 +381,21 @@
     {
       "id": "F16",
       "title": "Gateway per-tool policy and self-test.",
-      "status": "ACTIVE",
-      "result": "INCOMPLETE",
+      "status": "DONE",
+      "result": "PASS",
       "requires": [
         "F15"
       ],
-      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "sourceEvidenceCommit": "5891325f56ca4801c3e330727c3627ee783d1d2b",
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261018-f16-gateway-policy-6e9a31d4/f16-acceptance-02.json",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261018-f16-gateway-policy-6e9a31d4/f16-committed-byte-verification-02.json",
+      "transitionByteVerification": "docs/soterai-lite/evidence/20261018-f16-gateway-policy-6e9a31d4/f16-transition-byte-verification-01.json"
     },
     {
       "id": "F17",
       "title": "Approved safe-read MCP adapter.",
-      "status": "PLANNED",
+      "status": "ACTIVE",
       "result": "NOT-RUN",
       "requires": [
         "F16"
