@@ -124,7 +124,8 @@
         "soterai.lite.gatewayBrotliBodies",
         "soterai.lite.gatewayDeflateBodies",
         "soterai.lite.gatewayChunkedBodies",
-        "soterai.lite.gatewayFramedBodies"
+        "soterai.lite.gatewayFramedBodies",
+        "soterai.lite.gatewayMultipartBodies"
       ]
     }
   },
@@ -1845,6 +1846,12 @@
           "default": true,
           "scope": "machine",
           "description": "Enable bounded finite NDJSON/SSE chat batches for the owned broker. Complete records merge ordered messages and equal options into one inspected JSON request. Disabling withdraws ownership and refuses framed media after restart; ordinary JSON remains available."
+        },
+        "soterai.lite.gatewayMultipartBodies": {
+          "type": "boolean",
+          "default": true,
+          "scope": "machine",
+          "description": "Enable bounded finite multipart chat forms with one JSON request and up to 16 UTF8 text attachments. Complete forms transcode to one inspected JSON chat request. Disabling withdraws the owner and refuses multipart after restart; ordinary JSON remains available."
         }
       }
     },

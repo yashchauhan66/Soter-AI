@@ -1,0 +1,199 @@
+﻿TAP version 13
+# node:internal/modules/cjs/loader:1401
+#   const err = new Error(message);
+#               ^
+# Error: Cannot find module '../../../../apps/local-ai-broker/src/BoundedMultipart'
+# Require stack:
+# - C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayMultipartDecoder.test.ts
+#     at node:internal/modules/cjs/loader:1401:15
+#     at T._resolveFilename (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:14889)
+#     at nextResolveSimple (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\tsx\\dist\\register-BOkp8V6j.cjs:10:1017)
+#     at C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\tsx\\dist\\register-BOkp8V6j.cjs:9:4388
+#     at C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\tsx\\dist\\register-BOkp8V6j.cjs:9:3818
+#     at resolveTsPaths (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\tsx\\dist\\register-BOkp8V6j.cjs:10:770)
+#     at Function._resolveFilename (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\tsx\\dist\\register-BOkp8V6j.cjs:10:1155)
+#     at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+#     at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+#     at Function._load (node:internal/modules/cjs/loader:1211:37) {
+#   code: 'MODULE_NOT_FOUND',
+#   requireStack: [
+#     'C:\\\\Users\\\\USER\\\\OneDrive\\\\Desktop\\\\Ai-Agent-Security-Guard\\\\packages\\\\vscode-extension\\\\src\\\\__tests__\\\\gatewayMultipartDecoder.test.ts'
+#   ]
+# }
+# Node.js v22.16.0
+# Subtest: packages\\vscode-extension\\src\\__tests__\\gatewayMultipartDecoder.test.ts
+not ok 1 - packages\\vscode-extension\\src\\__tests__\\gatewayMultipartDecoder.test.ts
+  ---
+  duration_ms: 466.1394
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayMultipartDecoder.test.ts:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: F15g-W01 complete form forwards ordered JSON/text messages once
+not ok 2 - F15g-W01 complete form forwards ordered JSON/text messages once
+  ---
+  duration_ms: 100.4173
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayMultipartWire.test.ts:2:3346'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    415 !== 200
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 200
+  actual: 415
+  operator: 'strictEqual'
+  stack: |-
+    <anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayMultipartWire.test.ts:12:115)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async fixture (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayMultipartWire.test.ts:8:921)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F15g-W02 flagoff withholds multipart, ordinary JSON healthy
+not ok 3 - F15g-W02 flagoff withholds multipart, ordinary JSON healthy
+  ---
+  duration_ms: 13.0514
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayMultipartWire.test.ts:2:3765'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    415 !== 503
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 503
+  actual: 415
+  operator: 'strictEqual'
+  stack: |-
+    fixture.multipartBodies (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayMultipartWire.test.ts:13:111)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async fixture (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayMultipartWire.test.ts:8:921)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F15g-W03 secret text attachment never reaches provider
+ok 4 - F15g-W03 secret text attachment never reaches provider
+  ---
+  duration_ms: 12.8564
+  type: 'test'
+  ...
+# Subtest: F15g-W04 malformed, binary, nested and oversized parts refuse
+not ok 5 - F15g-W04 malformed, binary, nested and oversized parts refuse
+  ---
+  duration_ms: 12.2635
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayMultipartWire.test.ts:2:4479'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    415 !== 400
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 400
+  actual: 415
+  operator: 'strictEqual'
+  stack: |-
+    <anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayMultipartWire.test.ts:15:325)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async fixture (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayMultipartWire.test.ts:8:921)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F15g-W05 gzip outer form accepted and controllers refuse form
+not ok 6 - F15g-W05 gzip outer form accepted and controllers refuse form
+  ---
+  duration_ms: 16.8494
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayMultipartWire.test.ts:2:4990'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    415 !== 200
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 200
+  actual: 415
+  operator: 'strictEqual'
+  stack: |-
+    <anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayMultipartWire.test.ts:16:113)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async fixture (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayMultipartWire.test.ts:8:921)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F15g-W06 no early JSON part forwarding before chunked final form
+not ok 7 - F15g-W06 no early JSON part forwarding before chunked final form
+  ---
+  duration_ms: 47.5819
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayMultipartWire.test.ts:2:5517'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    415 !== 200
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 200
+  actual: 415
+  operator: 'strictEqual'
+  stack: |-
+    <anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayMultipartWire.test.ts:17:603)
+    async fixture (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayMultipartWire.test.ts:8:921)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F15g-W07 finite read timeout withholds complete first part
+not ok 8 - F15g-W07 finite read timeout withholds complete first part
+  ---
+  duration_ms: 9.1437
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayMultipartWire.test.ts:2:6220'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    415 !== 408
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 408
+  actual: 415
+  operator: 'strictEqual'
+  stack: |-
+    fixture.requestTimeoutMs (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayMultipartWire.test.ts:18:570)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async fixture (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayMultipartWire.test.ts:8:921)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F15g-W08 canceled partial form withholds and owner stays healthy
+ok 9 - F15g-W08 canceled partial form withholds and owner stays healthy
+  ---
+  duration_ms: 72.1563
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 2
+# fail 7
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1696.3093

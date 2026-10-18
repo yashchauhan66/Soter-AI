@@ -1,0 +1,93 @@
+{
+  "feature": "F15g",
+  "artifact": "packages/soterai-lite/soterai-lite-0.7.0-f15g-20261018-attempt01.vsix",
+  "checks": [
+    {
+      "role": "typecheck",
+      "log": "typecheck-01.txt"
+    },
+    {
+      "role": "focused",
+      "log": "focused-01.txt",
+      "kind": "tap",
+      "expected": {
+        "tests": 391,
+        "suites": 27,
+        "pass": 391,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    {
+      "role": "brokerTypecheck",
+      "log": "broker-typecheck-01.txt"
+    },
+    {
+      "role": "broker",
+      "log": "broker-tests-01.txt",
+      "kind": "tap",
+      "expected": {
+        "tests": 144,
+        "suites": 13,
+        "pass": 143,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 1,
+        "todo": 0
+      }
+    },
+    {
+      "role": "full",
+      "log": "full-tests-01.txt",
+      "kind": "tap",
+      "expected": {
+        "tests": 2456,
+        "suites": 106,
+        "pass": 2452,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 4,
+        "todo": 0
+      }
+    },
+    {
+      "role": "readiness",
+      "log": "readiness-01.txt"
+    },
+    {
+      "role": "package",
+      "log": "package-01.txt"
+    },
+    {
+      "role": "hostBuild",
+      "log": "host-build-03.txt"
+    },
+    {
+      "role": "native",
+      "log": "native-launch-03.txt"
+    },
+    {
+      "role": "affected",
+      "log": "affected-launch-01.txt"
+    }
+  ],
+  "nativeDirectory": "f15g-native-host-20261018T094514Z-c7f6accb",
+  "affectedDirectory": "affected-20261018T094603Z-ab927c192f3a48ac9785aa683b70b0e3",
+  "reviews": [
+    "root-source-review-01.md",
+    "final-review-01.md",
+    "final-source-bindings-01.json"
+  ],
+  "reviewDisposition": "NO_OPEN_SCOPED_BLOCKERS",
+  "priorEvidence": [
+    "docs/soterai-lite/evidence/20261018-f15f-framed-73d9b102/f15f-transition-byte-verification-01.json",
+    "docs/soterai-lite/evidence/20261018-f15f-framed-73d9b102/f15f-transition-commit-01.txt",
+    "docs/soterai-lite/evidence/20261018-f15f-framed-73d9b102/f15f-transition-commit-01.txt.result.json",
+    "docs/soterai-lite/evidence/20261018-f15f-framed-73d9b102/transition-preparation-launch-01.txt",
+    "docs/soterai-lite/evidence/20261018-f15f-framed-73d9b102/transition-preparation-launch-01.txt.result.json",
+    "docs/soterai-lite/evidence/20261018-f15f-framed-73d9b102/transition-verification-01.txt",
+    "docs/soterai-lite/evidence/20261018-f15f-framed-73d9b102/transition-verification-01.txt.result.json"
+  ]
+}
