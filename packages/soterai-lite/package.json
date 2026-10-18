@@ -122,7 +122,8 @@
         "soterai.lite.gatewayJsonBodies",
         "soterai.lite.gatewayGzipBodies",
         "soterai.lite.gatewayBrotliBodies",
-        "soterai.lite.gatewayDeflateBodies"
+        "soterai.lite.gatewayDeflateBodies",
+        "soterai.lite.gatewayChunkedBodies"
       ]
     }
   },
@@ -1831,6 +1832,12 @@
           "default": true,
           "scope": "machine",
           "description": "Enable bounded complete zlib-wrapped deflate JSON request decoding for the owned broker. Disabling withdraws the owner and refuses deflate after restart; JSON, gzip and br remain available. Raw streams, dictionaries, trailing/nested and over-budget data refuse."
+        },
+        "soterai.lite.gatewayChunkedBodies": {
+          "type": "boolean",
+          "default": true,
+          "scope": "machine",
+          "description": "Enable complete bounded HTTP/1.1 chunked request admission for the owned broker. Disabling withdraws the owner and refuses chunked after restart; length-framed JSON/encodings remain available. Unsupported/duplicate transfer coding and trailers refuse; Node owns raw framing."
         }
       }
     },

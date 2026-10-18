@@ -1,0 +1,142 @@
+﻿TAP version 13
+# Subtest: F15e-H01 one chunked coding accepts
+ok 1 - F15e-H01 one chunked coding accepts
+  ---
+  duration_ms: 11.2493
+  type: 'test'
+  ...
+# Subtest: F15e-H02 unsupported transfer coding refuses gzip, chunked
+ok 2 - F15e-H02 unsupported transfer coding refuses gzip, chunked
+  ---
+  duration_ms: 4.1895
+  type: 'test'
+  ...
+# Subtest: F15e-H02 unsupported transfer coding refuses identity
+ok 3 - F15e-H02 unsupported transfer coding refuses identity
+  ---
+  duration_ms: 0.5389
+  type: 'test'
+  ...
+# Subtest: F15e-H02 unsupported transfer coding refuses chunked, gzip
+ok 4 - F15e-H02 unsupported transfer coding refuses chunked, gzip
+  ---
+  duration_ms: 1.0946
+  type: 'test'
+  ...
+# Subtest: F15e-H02 unsupported transfer coding refuses 
+ok 5 - F15e-H02 unsupported transfer coding refuses 
+  ---
+  duration_ms: 1.0289
+  type: 'test'
+  ...
+# Subtest: F15e-H03 duplicate transfer fields refuse in application header boundary
+ok 6 - F15e-H03 duplicate transfer fields refuse in application header boundary
+  ---
+  duration_ms: 1.2822
+  type: 'test'
+  ...
+# Subtest: F15e-H04 unsupported trailer declaration refuses
+ok 7 - F15e-H04 unsupported trailer declaration refuses
+  ---
+  duration_ms: 1.6729
+  type: 'test'
+  ...
+# Subtest: F15e-H05 retained mixed content-length/transfer framing refuses
+ok 8 - F15e-H05 retained mixed content-length/transfer framing refuses
+  ---
+  duration_ms: 0.8363
+  type: 'test'
+  ...
+# Subtest: F15e-H06 retained identity length framing accepts
+ok 9 - F15e-H06 retained identity length framing accepts
+  ---
+  duration_ms: 1.1435
+  type: 'test'
+  ...
+# Subtest: F15e-W01 complete split UTF8 with opaque chunk extensions reaches actual provider
+ok 10 - F15e-W01 complete split UTF8 with opaque chunk extensions reaches actual provider
+  ---
+  duration_ms: 258.9278
+  type: 'test'
+  ...
+# Subtest: F15e-W02 flagoff refuses chunked while length-framed JSON stays available
+ok 11 - F15e-W02 flagoff refuses chunked while length-framed JSON stays available
+  ---
+  duration_ms: 75.5888
+  type: 'test'
+  ...
+# Subtest: F15e-W03 unsupported transfer coding never becomes identity JSON
+ok 12 - F15e-W03 unsupported transfer coding never becomes identity JSON
+  ---
+  duration_ms: 17.7926
+  type: 'test'
+  ...
+# Subtest: F15e-W04 declared trailers refuse before forwarding
+ok 13 - F15e-W04 declared trailers refuse before forwarding
+  ---
+  duration_ms: 13.3225
+  type: 'test'
+  ...
+# Subtest: F15e-W04 undeclared received trailers refuse after complete framing
+ok 14 - F15e-W04 undeclared received trailers refuse after complete framing
+  ---
+  duration_ms: 21.7356
+  type: 'test'
+  ...
+# Subtest: F15e-W05 complete JSON stays private until final framing terminator
+ok 15 - F15e-W05 complete JSON stays private until final framing terminator
+  ---
+  duration_ms: 66.2417
+  type: 'test'
+  ...
+# Subtest: F15e-W06 chunked gzip decodes one content layer then JSON
+ok 16 - F15e-W06 chunked gzip decodes one content layer then JSON
+  ---
+  duration_ms: 37.0645
+  type: 'test'
+  ...
+# Subtest: F15e-W07 synthetic credential split over framing never reaches receiver
+ok 17 - F15e-W07 synthetic credential split over framing never reaches receiver
+  ---
+  duration_ms: 64.9637
+  type: 'test'
+  ...
+# Subtest: F15e-W08 Node HTTP parser layer malformed controls with zero provider bytes
+ok 18 - F15e-W08 Node HTTP parser layer malformed controls with zero provider bytes
+  ---
+  duration_ms: 16.6804
+  type: 'test'
+  ...
+# Subtest: F15e-W09 finite body deadline before final terminator withholds
+ok 19 - F15e-W09 finite body deadline before final terminator withholds
+  ---
+  duration_ms: 102.2029
+  type: 'test'
+  ...
+# Subtest: F15e-W10 retained received-chunk budget refuses a valid oversized event count
+ok 20 - F15e-W10 retained received-chunk budget refuses a valid oversized event count
+  ---
+  duration_ms: 138.7901
+  type: 'test'
+  ...
+# Subtest: F15e-W11 client cancellation before framing completion preserves local availability
+ok 21 - F15e-W11 client cancellation before framing completion preserves local availability
+  ---
+  duration_ms: 66.7281
+  type: 'test'
+  ...
+# Subtest: F15e-W12 Node EOF in a declared incomplete chunk never admits complete-looking JSON
+ok 22 - F15e-W12 Node EOF in a declared incomplete chunk never admits complete-looking JSON
+  ---
+  duration_ms: 43.9778
+  type: 'test'
+  ...
+1..22
+# tests 22
+# suites 0
+# pass 22
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2961.2709

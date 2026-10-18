@@ -1,0 +1,10 @@
+import assert from "node:assert/strict";
+import { test } from "node:test";
+import { validateRequestBodyHeaders, HttpError } from "../../../../apps/local-ai-broker/src/BrokerServer";
+const refuses=(headers:Record<string,string>,raw:string[],status:number)=>assert.throws(()=>validateRequestBodyHeaders(headers,raw,1048576),e=>e instanceof HttpError&&e.status===status);
+test("F15e-H01 one chunked coding accepts",()=>assert.doesNotThrow(()=>validateRequestBodyHeaders({"transfer-encoding":"chunked"},["Transfer-Encoding","chunked"],1048576)));
+for(const coding of ["gzip, chunked","identity","chunked, gzip",""])test("F15e-H02 unsupported transfer coding refuses "+coding,()=>refuses({"transfer-encoding":coding},["Transfer-Encoding",coding],415));
+test("F15e-H03 duplicate transfer fields refuse in application header boundary",()=>refuses({"transfer-encoding":"chunked, chunked"},["Transfer-Encoding","chunked","Transfer-Encoding","chunked"],400));
+test("F15e-H04 unsupported trailer declaration refuses",()=>refuses({"transfer-encoding":"chunked",trailer:"X-Public"},["Transfer-Encoding","chunked","Trailer","X-Public"],415));
+test("F15e-H05 retained mixed content-length/transfer framing refuses",()=>refuses({"transfer-encoding":"chunked","content-length":"2"},["Transfer-Encoding","chunked","Content-Length","2"],400));
+test("F15e-H06 retained identity length framing accepts",()=>assert.doesNotThrow(()=>validateRequestBodyHeaders({"content-length":"2","content-encoding":"identity"},["Content-Length","2","Content-Encoding","identity"],1048576)));

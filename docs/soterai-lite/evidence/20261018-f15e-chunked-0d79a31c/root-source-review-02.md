@@ -1,0 +1,3 @@
+# Fixture typing — LOW
+
+Compiler01 failed two fixture parameters inferred too narrowly as Buffer<ArrayBuffer> when gzipSync returns Buffer<ArrayBufferLike>. Explicit Buffer annotations in raw-wire framed data and native chunkRequest change no runtime bytes/assertions/product. Local/native pipeline01 stopped at compiler; no later execution/PASS assigned. Resume compiler02 and previously unexecuted current gates/newartifact/native/affected checks. The generated native text01 remains retained as the initial fixture template; current TS source/probe compilation binds the corrected type annotation. No independence/human promotion.

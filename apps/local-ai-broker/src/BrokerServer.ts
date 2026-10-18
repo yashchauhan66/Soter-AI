@@ -89,6 +89,7 @@ export interface BrokerServerOptions {
     gzipBodies?: boolean;
     brotliBodies?: boolean;
     deflateBodies?: boolean;
+    chunkedBodies?: boolean;
     /** Private owned-child controller session; data clients use distinct auth. */
     ownerSession?: string;
     /** Data-plane token handed to AI clients. Never authorizes management. */
@@ -161,6 +162,16 @@ export function validateRequestBodyHeaders(
     if (headers["transfer-encoding"] !== undefined && headers["content-length"] !== undefined) {
         throw new HttpError(400, "ambiguous_framing", "Content-Length and Transfer-Encoding cannot be combined");
     }
+    const transfers: string[] = []; let declaredTrailers = headers.trailer !== undefined;
+    for (let index = 0; index < rawHeaders.length - 1; index += 2) {
+        if (rawHeaders[index].toLowerCase() === "transfer-encoding") transfers.push(rawHeaders[index + 1]);
+        if (rawHeaders[index].toLowerCase() === "trailer") declaredTrailers = true;
+    }
+    if (transfers.length > 1) throw new HttpError(400, "ambiguous_framing", "Duplicate Transfer-Encoding headers are not accepted");
+    if ((headers["transfer-encoding"] !== undefined || transfers.length > 0) && stringValue(headers["transfer-encoding"])?.trim().toLowerCase() !== "chunked") {
+        throw new HttpError(415, "transfer_encoding_unsupported", "Only one chunked transfer coding is supported");
+    }
+    if (declaredTrailers) throw new HttpError(415, "trailers_unsupported", "Request trailers are not supported");
     const declared = stringValue(headers["content-length"]);
     if (declared !== undefined) {
         if (!/^\d+$/.test(declared)) throw new HttpError(400, "invalid_content_length", "Content-Length must be a non-negative integer");
@@ -1086,6 +1097,7 @@ export class BrokerServer {
         const limit = this.options.bodyLimitBytes ?? JSON_LIMITS.maxBytes;
         if (!Number.isSafeInteger(limit) || limit < 1 || limit > JSON_LIMITS.maxBytes) throw new HttpError(503, "json_limit_unavailable", "JSON request limit is unavailable");
         validateRequestBodyHeaders(req.headers, req.rawHeaders, limit, ["gzip", "br", "deflate"]);
+        if (req.headers["transfer-encoding"] !== undefined && this.options.chunkedBodies === false) throw new HttpError(503, "chunked_unavailable", "Chunked request admission is unavailable");
         const encoding = stringValue(req.headers["content-encoding"])?.trim().toLowerCase();
         if (encoding === "gzip" && this.options.gzipBodies === false) throw new HttpError(503, "gzip_unavailable", "Gzip request decoding is unavailable");
         if (encoding === "br" && this.options.brotliBodies === false) throw new HttpError(503, "br_unavailable", "Brotli request decoding is unavailable");
@@ -1107,6 +1119,7 @@ export class BrokerServer {
             };
             const end = async () => {
                 if (settled) return;
+                if (req.rawTrailers.length > 0 || Object.keys(req.trailers).length > 0) return fail(new HttpError(400, "trailers_unsupported", "Request trailers are not supported"));
                 try {
                     const wire = Buffer.concat(chunks, size);
                     const decoded = encoding === "gzip" ? await decodeBoundedGzip(wire, { maxBytes: limit }) : encoding === "br" ? await decodeBoundedBrotli(wire, { maxBytes: limit }) : encoding === "deflate" ? await decodeBoundedDeflate(wire, { maxBytes: limit }) : wire;

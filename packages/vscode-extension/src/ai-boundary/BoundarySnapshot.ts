@@ -38,7 +38,7 @@ export function ownerPolicyReviewEnabled(): boolean {
 }
 function publicSettings(): unknown {
     const config = vscode.workspace.getConfiguration("soterai");
-    return [vscode.workspace.isTrusted, ["lite.policyDrift", "lite.safeConsent", "lite.secureEditor", "lite.vaultMode", "lite.secretMatching", "lite.outputRedactor", "lite.vaultRuntime", "lite.ps51Terminal", "lite.cmdTerminal", "lite.gitBashTerminal", "lite.gatewayLifecycle", "lite.gatewayJsonBodies", "lite.gatewayGzipBodies", "lite.gatewayBrotliBodies", "lite.gatewayDeflateBodies", "lite.versionedPolicy", "lite.restrictionSave", "hardening.addOnlyPolicy",
+    return [vscode.workspace.isTrusted, ["lite.policyDrift", "lite.safeConsent", "lite.secureEditor", "lite.vaultMode", "lite.secretMatching", "lite.outputRedactor", "lite.vaultRuntime", "lite.ps51Terminal", "lite.cmdTerminal", "lite.gitBashTerminal", "lite.gatewayLifecycle", "lite.gatewayJsonBodies", "lite.gatewayGzipBodies", "lite.gatewayBrotliBodies", "lite.gatewayDeflateBodies", "lite.gatewayChunkedBodies", "lite.versionedPolicy", "lite.restrictionSave", "hardening.addOnlyPolicy",
         "projectPrivacy.enabled", "projectPrivacy.atomicSensitivePolicy", "projectPrivacy.safeViewComposition", "broker.autoStart",
         "terminal.protectionMode"].map(key => {
         const value = config.inspect(key);

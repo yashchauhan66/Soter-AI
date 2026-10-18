@@ -1,0 +1,298 @@
+﻿TAP version 13
+# Subtest: F15e-H01 one chunked coding accepts
+ok 1 - F15e-H01 one chunked coding accepts
+  ---
+  duration_ms: 3.4351
+  type: 'test'
+  ...
+# Subtest: F15e-H02 unsupported transfer coding refuses gzip, chunked
+not ok 2 - F15e-H02 unsupported transfer coding refuses gzip, chunked
+  ---
+  duration_ms: 5.2545
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayChunkedHeaders.test.ts:2:1561'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    refuses (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayChunkedHeaders.test.ts:4:82)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayChunkedHeaders.test.ts:6:133)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F15e-H02 unsupported transfer coding refuses identity
+not ok 3 - F15e-H02 unsupported transfer coding refuses identity
+  ---
+  duration_ms: 0.7932
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayChunkedHeaders.test.ts:2:1561'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    refuses (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayChunkedHeaders.test.ts:4:82)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayChunkedHeaders.test.ts:6:133)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F15e-H02 unsupported transfer coding refuses chunked, gzip
+not ok 4 - F15e-H02 unsupported transfer coding refuses chunked, gzip
+  ---
+  duration_ms: 0.8689
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayChunkedHeaders.test.ts:2:1561'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    refuses (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayChunkedHeaders.test.ts:4:82)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayChunkedHeaders.test.ts:6:133)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F15e-H02 unsupported transfer coding refuses 
+not ok 5 - F15e-H02 unsupported transfer coding refuses 
+  ---
+  duration_ms: 1.3931
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayChunkedHeaders.test.ts:2:1561'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    refuses (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayChunkedHeaders.test.ts:4:82)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayChunkedHeaders.test.ts:6:133)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F15e-H03 duplicate transfer fields refuse in application header boundary
+not ok 6 - F15e-H03 duplicate transfer fields refuse in application header boundary
+  ---
+  duration_ms: 1.3057
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayChunkedHeaders.test.ts:2:1718'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    refuses (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayChunkedHeaders.test.ts:4:82)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayChunkedHeaders.test.ts:7:85)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F15e-H04 unsupported trailer declaration refuses
+not ok 7 - F15e-H04 unsupported trailer declaration refuses
+  ---
+  duration_ms: 1.7732
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayChunkedHeaders.test.ts:2:1940'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    refuses (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayChunkedHeaders.test.ts:4:82)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayChunkedHeaders.test.ts:8:61)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F15e-H05 retained mixed content-length/transfer framing refuses
+ok 8 - F15e-H05 retained mixed content-length/transfer framing refuses
+  ---
+  duration_ms: 1.0985
+  type: 'test'
+  ...
+# Subtest: F15e-H06 retained identity length framing accepts
+ok 9 - F15e-H06 retained identity length framing accepts
+  ---
+  duration_ms: 0.7287
+  type: 'test'
+  ...
+# Subtest: F15e-W01 complete split UTF8 with opaque chunk extensions reaches actual provider
+ok 10 - F15e-W01 complete split UTF8 with opaque chunk extensions reaches actual provider
+  ---
+  duration_ms: 234.9684
+  type: 'test'
+  ...
+# Subtest: F15e-W02 flagoff refuses chunked while length-framed JSON stays available
+not ok 11 - F15e-W02 flagoff refuses chunked while length-framed JSON stays available
+  ---
+  duration_ms: 63.894
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayChunkedWire.test.ts:2:4580'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    200 !== 503
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 503
+  actual: 200
+  operator: 'strictEqual'
+  stack: |-
+    fixture.chunkedBodies (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayChunkedWire.test.ts:15:125)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async fixture (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayChunkedWire.test.ts:9:735)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F15e-W03 unsupported transfer coding never becomes identity JSON
+not ok 12 - F15e-W03 unsupported transfer coding never becomes identity JSON
+  ---
+  duration_ms: 24.2701
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayChunkedWire.test.ts:2:4968'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    200 !== 415
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 415
+  actual: 200
+  operator: 'strictEqual'
+  stack: |-
+    <anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayChunkedWire.test.ts:16:116)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async fixture (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayChunkedWire.test.ts:9:735)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F15e-W04 declared trailers refuse before forwarding
+not ok 13 - F15e-W04 declared trailers refuse before forwarding
+  ---
+  duration_ms: 22.3668
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayChunkedWire.test.ts:2:5249'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    200 !== 415
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 415
+  actual: 200
+  operator: 'strictEqual'
+  stack: |-
+    <anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayChunkedWire.test.ts:17:103)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async fixture (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayChunkedWire.test.ts:9:735)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F15e-W04 undeclared received trailers refuse after complete framing
+not ok 14 - F15e-W04 undeclared received trailers refuse after complete framing
+  ---
+  duration_ms: 28.5586
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayChunkedWire.test.ts:2:5531'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    200 !== 400
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 400
+  actual: 200
+  operator: 'strictEqual'
+  stack: |-
+    <anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayChunkedWire.test.ts:18:119)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async fixture (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayChunkedWire.test.ts:9:735)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F15e-W05 complete JSON stays private until final framing terminator
+ok 15 - F15e-W05 complete JSON stays private until final framing terminator
+  ---
+  duration_ms: 61.2032
+  type: 'test'
+  ...
+# Subtest: F15e-W06 chunked gzip decodes one content layer then JSON
+ok 16 - F15e-W06 chunked gzip decodes one content layer then JSON
+  ---
+  duration_ms: 21.5089
+  type: 'test'
+  ...
+# Subtest: F15e-W07 synthetic credential split over framing never reaches receiver
+ok 17 - F15e-W07 synthetic credential split over framing never reaches receiver
+  ---
+  duration_ms: 30.0434
+  type: 'test'
+  ...
+# Subtest: F15e-W08 Node HTTP parser layer malformed controls with zero provider bytes
+ok 18 - F15e-W08 Node HTTP parser layer malformed controls with zero provider bytes
+  ---
+  duration_ms: 10.7398
+  type: 'test'
+  ...
+# Subtest: F15e-W09 finite body deadline before final terminator withholds
+ok 19 - F15e-W09 finite body deadline before final terminator withholds
+  ---
+  duration_ms: 101.4971
+  type: 'test'
+  ...
+# Subtest: F15e-W10 retained received-chunk budget refuses a valid oversized event count
+ok 20 - F15e-W10 retained received-chunk budget refuses a valid oversized event count
+  ---
+  duration_ms: 91.446
+  type: 'test'
+  ...
+# Subtest: F15e-W11 client cancellation before framing completion preserves local availability
+ok 21 - F15e-W11 client cancellation before framing completion preserves local availability
+  ---
+  duration_ms: 68.0959
+  type: 'test'
+  ...
+# Subtest: F15e-W12 Node EOF in a declared incomplete chunk never admits complete-looking JSON
+ok 22 - F15e-W12 Node EOF in a declared incomplete chunk never admits complete-looking JSON
+  ---
+  duration_ms: 44.0945
+  type: 'test'
+  ...
+1..22
+# tests 22
+# suites 0
+# pass 12
+# fail 10
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2822.5548

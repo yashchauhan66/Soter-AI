@@ -1,0 +1,5 @@
+# Raw client framing correction before source
+
+before01:21tests7PASS14FAIL. Six pure-header missing-exception failures reached the current application header validator. Most wire positives returned0 because the fixture half-closed TCP immediately after writing complete HTTP framing; the current asynchronous handler could close before sending its provider response. These0 results are not accepted product/framing failures or successful secret inspections. Some synchronous parser/budget/deadline/cancel negatives passed, but a working public round-trip control is required.
+
+Keep TCP writable after complete request framing and let Connection:close close it after the server response. Retain the explicit half-close option only for the added W12 incomplete-chunk EOF fixture; there no provider request and healthy subsequent version control are required, with0/HTTP-error status labelled as transport/parser closure, not an application error code guarantee. No broker production source changed before fresh baseline02; all status/byte/secrecy assertions of the earlier cases remain.
