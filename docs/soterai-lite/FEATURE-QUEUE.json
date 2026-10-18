@@ -333,17 +333,21 @@
         {
           "id": "F15f",
           "title": "NDJSON/SSE",
-          "status": "ACTIVE",
-          "result": "INCOMPLETE",
+          "status": "DONE",
+          "result": "PASS",
           "requires": [
             "F15e"
-          ]
+          ],
+          "sourceRevision": "65e86d4e394a4e1a4f278a53ba607aab958f50c0",
+          "evidence": "docs/soterai-lite/evidence/20261018-f15f-framed-73d9b102/f15f-acceptance-01.json",
+          "commitByteVerification": "docs/soterai-lite/evidence/20261018-f15f-framed-73d9b102/f15f-committed-byte-verification-01.json",
+          "transitionByteVerification": "docs/soterai-lite/evidence/20261018-f15f-framed-73d9b102/f15f-transition-byte-verification-01.json"
         },
         {
           "id": "F15g",
           "title": "multipart",
-          "status": "PLANNED",
-          "result": "NOT-RUN",
+          "status": "ACTIVE",
+          "result": "INCOMPLETE",
           "requires": [
             "F15f"
           ]
