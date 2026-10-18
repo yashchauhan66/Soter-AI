@@ -1,0 +1,7 @@
+# Gzip checksum correction — LOW
+
+Selected checksum-review-before01 actually contains1 test/0 PASS/1 FAIL/0 SKIP: G10 fails gzip_invalid with the optional Node checksum primitive absent. The other19 declared decoder tests were omitted by the name filter (NOT_EXECUTED), not emitted as SKIP. This corrects the anticipated label in checksum-review01; no result is promoted. No older editor/runtime was run.
+
+Replace the newer Node checksum dependency with a private portable bounded CRC32 lookup/table calculation. The same gzipSync-generated trailer/header checks remain as independent engine-produced format fixtures, including corruption and exact consumption. Initial attempt01 ba5be1d7db7b9e01fe65c874102432ec9e844c8328dd133d3a371e5f77ef03e3/runtime286003c74257954df9c7a4a9e01cf029dae93997dc3436cf8496032ece357348 is historical, with no native acceptance. Initial full01 had2310tests2306PASS4SKIP; current checksum code must instead complete compiler03/focused03/backend03/full02 and newattempt02 before native acceptance. Current native fixture source is unchanged, but rebuilt probe02 will bind its current execution.
+
+This addresses the specific optional primitive dependency. It does not establish older editor/platform compatibility, which remains untested. No secret detection authority moved into this syntax helper; existing JSON/scanner/policy and later shared-registry/tool gates remain unchanged. Dynamic results and exact source bindings override this static LOW disposition.

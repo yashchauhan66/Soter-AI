@@ -1,0 +1,1 @@
+const fs=require('node:fs'),path=require('node:path'),file=path.join(__dirname,'finalize-bindings-01.cjs');fs.writeFileSync(file,fs.readFileSync(file,'utf8').replace("'root-source-review-03.md','final-review-01.md'","'root-source-review-03.md','root-source-review-04.md','final-review-01.md'"));console.log('Include exact three-runtime native copy review in final evidence.');

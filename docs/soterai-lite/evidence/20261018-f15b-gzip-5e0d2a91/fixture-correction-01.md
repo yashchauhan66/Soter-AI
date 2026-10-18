@@ -1,0 +1,5 @@
+# Gzip provider test outcome semantics
+
+before01:10 entries/3 PASS/7 FAIL, including one file-level missing decoder (19 internal cases NOT_EXECUTED); the three apparent negative passes were preexisting header rejection, not gzip inspection. after01:28 tests/27 PASS/1 FAIL. W07 failed its asserted HTTP-error requirement before inspecting receiver bytes, so that result alone does not establish a leak or successful masking.
+
+The existing standalone broker's configured default pipeline may redact a recognized value and return200. The requirement is that the synthetic credential never reaches the real loopback receiver; the fixture incorrectly required refusal only. Correct W07 to inspect the actual receiver bytes, require no exact synthetic credential, and require exactly one provider request if200, zero if refused. Print only status/count/containsSynthetic booleans. Retained public control still must reach the provider. Do not transfer a PASS to after01 or call this a product correction. Native enterprise policy may refuse instead; report each actual outcome separately.

@@ -1,0 +1,7 @@
+# Exact native copies — STATIC_ONLY / LOW
+
+Current full02:2311tests2307PASS4SKIP0FAIL; focused03 all246PASS; both compiler03 PASS; backend03:144tests143PASS1SKIP0FAIL. New exact attempt02 VSIX a103924f6889481f2bbca2659afde91209542d24fe749de63a4fb538dbf0ab1f is1404194bytes; extension runtime286003c74257954df9c7a4a9e01cf029dae93997dc3436cf8496032ece357348 and broker runtime13530e9f6d4a0858518166d94bfbe2b5bca51d34d5a5689989e72f5fe49aa16e. Extension bytes match the first attempt because the checksum correction belongs to the separate broker bundle. First attempt remains historical/no native result.
+
+Strengthen the native runner before execution: explicitly hash each of the three exact archive runtime entries against both extracted source and copied execution files, record all three in freeze.runtimeBindings, recheck them before/after each primary/restart phase. This makes the changed broker file binding visible even when the extension bundle hash is unchanged. The actual bundled manager still launches its fixed copied broker script; owned children/EOF and actual loopback results must pass. These are runner-only changes after product full/build; no product/assertion/probe source changed. Acceptance additionally validates the same copy paths/hashes. Native/affected dynamic receipts remain required and cannot be inferred from this static review.
+
+No independent/human/old-runtime or OS confinement claim. Other F15 subcards, F16 policy and later integration gates remain pending. No rating.

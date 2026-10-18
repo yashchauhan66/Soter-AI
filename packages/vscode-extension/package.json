@@ -119,7 +119,8 @@
                 "soterai.lite.cmdTerminal",
                 "soterai.lite.gitBashTerminal",
                 "soterai.lite.gatewayLifecycle",
-                "soterai.lite.gatewayJsonBodies"
+                "soterai.lite.gatewayJsonBodies",
+                "soterai.lite.gatewayGzipBodies"
             ]
         }
     },
@@ -1810,6 +1811,12 @@
                     "scope": "machine",
                     "default": true,
                     "description": "Enable bounded complete UTF-8 JSON request decoding for the owned broker. Disabling withholds JSON control/provider requests and prevents owned startup; no unchecked decoder fallback. Other body formats have separate verification gates."
+                },
+                "soterai.lite.gatewayGzipBodies": {
+                    "type": "boolean",
+                    "default": true,
+                    "scope": "machine",
+                    "description": "Enable complete bounded single-member gzip JSON request decoding for the owned broker. Disabling withdraws the owner and refuses gzip after restart; ordinary JSON remains available. Nested/trailing encodings and expansion beyond the declared budget refuse."
                 }
             }
         },

@@ -1,0 +1,196 @@
+﻿TAP version 13
+# Subtest: F15b-G01 complete gzip produces exact public UTF8 bytes
+ok 1 - F15b-G01 complete gzip produces exact public UTF8 bytes
+  ---
+  duration_ms: 13.265
+  type: 'test'
+  ...
+# Subtest: F15b-G02 truncation refuses at 0
+ok 2 - F15b-G02 truncation refuses at 0
+  ---
+  duration_ms: 0.7538
+  type: 'test'
+  ...
+# Subtest: F15b-G02 truncation refuses at 1
+ok 3 - F15b-G02 truncation refuses at 1
+  ---
+  duration_ms: 0.2153
+  type: 'test'
+  ...
+# Subtest: F15b-G02 truncation refuses at 9
+ok 4 - F15b-G02 truncation refuses at 9
+  ---
+  duration_ms: 0.1964
+  type: 'test'
+  ...
+# Subtest: F15b-G02 truncation refuses at 12
+ok 5 - F15b-G02 truncation refuses at 12
+  ---
+  duration_ms: 0.2244
+  type: 'test'
+  ...
+# Subtest: F15b-G02 truncation refuses at 78
+ok 6 - F15b-G02 truncation refuses at 78
+  ---
+  duration_ms: 4.8887
+  type: 'test'
+  ...
+# Subtest: F15b-G03 corrupt method/magic/CRC/ISIZE refuses 0
+ok 7 - F15b-G03 corrupt method/magic/CRC/ISIZE refuses 0
+  ---
+  duration_ms: 0.956
+  type: 'test'
+  ...
+# Subtest: F15b-G03 corrupt method/magic/CRC/ISIZE refuses 2
+ok 8 - F15b-G03 corrupt method/magic/CRC/ISIZE refuses 2
+  ---
+  duration_ms: 0.4062
+  type: 'test'
+  ...
+# Subtest: F15b-G03 corrupt method/magic/CRC/ISIZE refuses 71
+ok 9 - F15b-G03 corrupt method/magic/CRC/ISIZE refuses 71
+  ---
+  duration_ms: 3.7056
+  type: 'test'
+  ...
+# Subtest: F15b-G03 corrupt method/magic/CRC/ISIZE refuses 75
+ok 10 - F15b-G03 corrupt method/magic/CRC/ISIZE refuses 75
+  ---
+  duration_ms: 5.6754
+  type: 'test'
+  ...
+# Subtest: F15b-G04 trailing bytes or another member refuses 1
+ok 11 - F15b-G04 trailing bytes or another member refuses 1
+  ---
+  duration_ms: 1.4029
+  type: 'test'
+  ...
+# Subtest: F15b-G04 trailing bytes or another member refuses 2
+ok 12 - F15b-G04 trailing bytes or another member refuses 2
+  ---
+  duration_ms: 1.2458
+  type: 'test'
+  ...
+# Subtest: F15b-G04 trailing bytes or another member refuses 20
+ok 13 - F15b-G04 trailing bytes or another member refuses 20
+  ---
+  duration_ms: 1.4687
+  type: 'test'
+  ...
+# Subtest: F15b-G04 trailing bytes or another member refuses 79
+ok 14 - F15b-G04 trailing bytes or another member refuses 79
+  ---
+  duration_ms: 1.2037
+  type: 'test'
+  ...
+# Subtest: F15b-G05 bounded optional metadata/headerCRC accepted, never returned
+ok 15 - F15b-G05 bounded optional metadata/headerCRC accepted, never returned
+  ---
+  duration_ms: 2.3152
+  type: 'test'
+  ...
+# Subtest: F15b-G06 reserved flags and unbounded optional metadata refuse
+ok 16 - F15b-G06 reserved flags and unbounded optional metadata refuse
+  ---
+  duration_ms: 0.938
+  type: 'test'
+  ...
+# Subtest: F15b-G07 encoded and decoded exact bounds accepted and overflow refused
+ok 17 - F15b-G07 encoded and decoded exact bounds accepted and overflow refused
+  ---
+  duration_ms: 3.7549
+  type: 'test'
+  ...
+# Subtest: F15b-G08 compression expansion is bounded before returning data
+ok 18 - F15b-G08 compression expansion is bounded before returning data
+  ---
+  duration_ms: 1.7067
+  type: 'test'
+  ...
+# Subtest: F15b-G09 invalid limits refuse and errors do not echo input
+ok 19 - F15b-G09 invalid limits refuse and errors do not echo input
+  ---
+  duration_ms: 1.2997
+  type: 'test'
+  ...
+# Subtest: F15b-W01 public gzip and retained identity JSON reach actual provider canonically
+ok 20 - F15b-W01 public gzip and retained identity JSON reach actual provider canonically
+  ---
+  duration_ms: 207.6478
+  type: 'test'
+  ...
+# Subtest: F15b-W02 flagoff withholds gzip while public JSON continues
+ok 21 - F15b-W02 flagoff withholds gzip while public JSON continues
+  ---
+  duration_ms: 30.4939
+  type: 'test'
+  ...
+# Subtest: F15b-W03 truncated/corrupt/trailing/multimember bodies send no provider bytes
+ok 22 - F15b-W03 truncated/corrupt/trailing/multimember bodies send no provider bytes
+  ---
+  duration_ms: 16.99
+  type: 'test'
+  ...
+# Subtest: F15b-W04 complete decoded JSON still enforces duplicatekeys and strict UTF8
+ok 23 - F15b-W04 complete decoded JSON still enforces duplicatekeys and strict UTF8
+  ---
+  duration_ms: 16.1679
+  type: 'test'
+  ...
+# Subtest: F15b-W05 nested unknown and duplicate content encodings refuse
+ok 24 - F15b-W05 nested unknown and duplicate content encodings refuse
+  ---
+  duration_ms: 20.0675
+  type: 'test'
+  ...
+# Subtest: F15b-W06 expansion/decoded bound refuses before provider admission
+ok 25 - F15b-W06 expansion/decoded bound refuses before provider admission
+  ---
+  duration_ms: 10.0785
+  type: 'test'
+  ...
+# Subtest: F15b-W07 synthetic provider credential in decoded gzip never reaches receiver
+not ok 26 - F15b-W07 synthetic provider credential in decoded gzip never reaches receiver
+  ---
+  duration_ms: 244.3533
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayGzipWire.test.ts:2:5281'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      setTimeout(done,20)
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    <anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayGzipWire.test.ts:17:189)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async fixture (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayGzipWire.test.ts:9:746)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F15b-W08 complete inspection waits for final gzip trailer
+ok 27 - F15b-W08 complete inspection waits for final gzip trailer
+  ---
+  duration_ms: 63.6936
+  type: 'test'
+  ...
+# Subtest: F15b-W09 incomplete compressed cancellation and shutdown never forward
+ok 28 - F15b-W09 incomplete compressed cancellation and shutdown never forward
+  ---
+  duration_ms: 68.1966
+  type: 'test'
+  ...
+1..28
+# tests 28
+# suites 0
+# pass 27
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2174.0409

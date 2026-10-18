@@ -105,15 +105,15 @@ describe("Local AI Broker server", () => {
         });
     });
 
-    it("rejects compressed and declared-oversized bodies before JSON parsing", async () => {
+    it("rejects invalid gzip and declared-oversized bodies before JSON parsing", async () => {
         await withBroker({ bodyLimitBytes: 100 }, async (url) => {
             const compressed = await request(url, "/v1/scan", {
                 method: "POST",
                 headers: { "content-encoding": "gzip" },
                 body: "not-actually-compressed",
             });
-            assert.equal(compressed.status, 415);
-            assert.equal((await compressed.json() as { error: { code: string } }).error.code, "content_encoding_unsupported");
+            assert.equal(compressed.status, 400);
+            assert.equal((await compressed.json() as { error: { code: string } }).error.code, "gzip_invalid");
 
             const { request: rawRequest } = await import("node:http");
             const oversized = await new Promise<{ status: number; body: string }>((resolve, reject) => {

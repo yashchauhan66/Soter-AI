@@ -1,0 +1,179 @@
+﻿TAP version 13
+# Subtest: F15b-G01 complete gzip produces exact public UTF8 bytes
+ok 1 - F15b-G01 complete gzip produces exact public UTF8 bytes
+  ---
+  duration_ms: 11.3365
+  type: 'test'
+  ...
+# Subtest: F15b-G02 truncation refuses at 0
+ok 2 - F15b-G02 truncation refuses at 0
+  ---
+  duration_ms: 0.7316
+  type: 'test'
+  ...
+# Subtest: F15b-G02 truncation refuses at 1
+ok 3 - F15b-G02 truncation refuses at 1
+  ---
+  duration_ms: 0.202
+  type: 'test'
+  ...
+# Subtest: F15b-G02 truncation refuses at 9
+ok 4 - F15b-G02 truncation refuses at 9
+  ---
+  duration_ms: 0.1833
+  type: 'test'
+  ...
+# Subtest: F15b-G02 truncation refuses at 12
+ok 5 - F15b-G02 truncation refuses at 12
+  ---
+  duration_ms: 0.2036
+  type: 'test'
+  ...
+# Subtest: F15b-G02 truncation refuses at 78
+ok 6 - F15b-G02 truncation refuses at 78
+  ---
+  duration_ms: 5.4416
+  type: 'test'
+  ...
+# Subtest: F15b-G03 corrupt method/magic/CRC/ISIZE refuses 0
+ok 7 - F15b-G03 corrupt method/magic/CRC/ISIZE refuses 0
+  ---
+  duration_ms: 0.5313
+  type: 'test'
+  ...
+# Subtest: F15b-G03 corrupt method/magic/CRC/ISIZE refuses 2
+ok 8 - F15b-G03 corrupt method/magic/CRC/ISIZE refuses 2
+  ---
+  duration_ms: 0.364
+  type: 'test'
+  ...
+# Subtest: F15b-G03 corrupt method/magic/CRC/ISIZE refuses 71
+ok 9 - F15b-G03 corrupt method/magic/CRC/ISIZE refuses 71
+  ---
+  duration_ms: 1.9635
+  type: 'test'
+  ...
+# Subtest: F15b-G03 corrupt method/magic/CRC/ISIZE refuses 75
+ok 10 - F15b-G03 corrupt method/magic/CRC/ISIZE refuses 75
+  ---
+  duration_ms: 1.8257
+  type: 'test'
+  ...
+# Subtest: F15b-G04 trailing bytes or another member refuses 1
+ok 11 - F15b-G04 trailing bytes or another member refuses 1
+  ---
+  duration_ms: 1.4359
+  type: 'test'
+  ...
+# Subtest: F15b-G04 trailing bytes or another member refuses 2
+ok 12 - F15b-G04 trailing bytes or another member refuses 2
+  ---
+  duration_ms: 1.1813
+  type: 'test'
+  ...
+# Subtest: F15b-G04 trailing bytes or another member refuses 20
+ok 13 - F15b-G04 trailing bytes or another member refuses 20
+  ---
+  duration_ms: 1.1687
+  type: 'test'
+  ...
+# Subtest: F15b-G04 trailing bytes or another member refuses 79
+ok 14 - F15b-G04 trailing bytes or another member refuses 79
+  ---
+  duration_ms: 1.1143
+  type: 'test'
+  ...
+# Subtest: F15b-G05 bounded optional metadata/headerCRC accepted, never returned
+ok 15 - F15b-G05 bounded optional metadata/headerCRC accepted, never returned
+  ---
+  duration_ms: 1.9094
+  type: 'test'
+  ...
+# Subtest: F15b-G06 reserved flags and unbounded optional metadata refuse
+ok 16 - F15b-G06 reserved flags and unbounded optional metadata refuse
+  ---
+  duration_ms: 1.1482
+  type: 'test'
+  ...
+# Subtest: F15b-G07 encoded and decoded exact bounds accepted and overflow refused
+ok 17 - F15b-G07 encoded and decoded exact bounds accepted and overflow refused
+  ---
+  duration_ms: 6.4878
+  type: 'test'
+  ...
+# Subtest: F15b-G08 compression expansion is bounded before returning data
+ok 18 - F15b-G08 compression expansion is bounded before returning data
+  ---
+  duration_ms: 1.8672
+  type: 'test'
+  ...
+# Subtest: F15b-G09 invalid limits refuse and errors do not echo input
+ok 19 - F15b-G09 invalid limits refuse and errors do not echo input
+  ---
+  duration_ms: 1.137
+  type: 'test'
+  ...
+# Subtest: F15b-W01 public gzip and retained identity JSON reach actual provider canonically
+ok 20 - F15b-W01 public gzip and retained identity JSON reach actual provider canonically
+  ---
+  duration_ms: 208.4121
+  type: 'test'
+  ...
+# Subtest: F15b-W02 flagoff withholds gzip while public JSON continues
+ok 21 - F15b-W02 flagoff withholds gzip while public JSON continues
+  ---
+  duration_ms: 36.22
+  type: 'test'
+  ...
+# Subtest: F15b-W03 truncated/corrupt/trailing/multimember bodies send no provider bytes
+ok 22 - F15b-W03 truncated/corrupt/trailing/multimember bodies send no provider bytes
+  ---
+  duration_ms: 20.6106
+  type: 'test'
+  ...
+# Subtest: F15b-W04 complete decoded JSON still enforces duplicatekeys and strict UTF8
+ok 23 - F15b-W04 complete decoded JSON still enforces duplicatekeys and strict UTF8
+  ---
+  duration_ms: 20.7202
+  type: 'test'
+  ...
+# Subtest: F15b-W05 nested unknown and duplicate content encodings refuse
+ok 24 - F15b-W05 nested unknown and duplicate content encodings refuse
+  ---
+  duration_ms: 23.2552
+  type: 'test'
+  ...
+# Subtest: F15b-W06 expansion/decoded bound refuses before provider admission
+ok 25 - F15b-W06 expansion/decoded bound refuses before provider admission
+  ---
+  duration_ms: 12.4969
+  type: 'test'
+  ...
+# {"id":"F15b-W07","status":200,"providerRequests":1,"containsSynthetic":false}
+# Subtest: F15b-W07 synthetic provider credential in decoded gzip never reaches receiver
+ok 26 - F15b-W07 synthetic provider credential in decoded gzip never reaches receiver
+  ---
+  duration_ms: 42.3669
+  type: 'test'
+  ...
+# Subtest: F15b-W08 complete inspection waits for final gzip trailer
+ok 27 - F15b-W08 complete inspection waits for final gzip trailer
+  ---
+  duration_ms: 65.9476
+  type: 'test'
+  ...
+# Subtest: F15b-W09 incomplete compressed cancellation and shutdown never forward
+ok 28 - F15b-W09 incomplete compressed cancellation and shutdown never forward
+  ---
+  duration_ms: 82.0208
+  type: 'test'
+  ...
+1..28
+# tests 28
+# suites 0
+# pass 28
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1853.7574

@@ -1,0 +1,27 @@
+﻿TAP version 13
+# Subtest: F15b-G10 gzip does not depend on the newer optional zlib crc32 primitive
+not ok 1 - F15b-G10 gzip does not depend on the newer optional zlib crc32 primitive
+  ---
+  duration_ms: 9.3506
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayGzipDecoder.test.ts:2:4627'
+  failureType: 'testCodeFailure'
+  error: 'Compressed request could not be safely decoded'
+  code: 'gzip_invalid'
+  stack: |-
+    fail (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\apps\local-ai-broker\src\BoundedGzip.ts:21:125)
+    InflateRaw.cb (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\apps\local-ai-broker\src\BoundedGzip.ts:35:27)
+    InflateRaw.zlibBufferOnEnd (node:zlib:159:10)
+    InflateRaw.emit (node:events:518:28)
+    endReadableNT (node:internal/streams/readable:1698:12)
+    process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 854.3808

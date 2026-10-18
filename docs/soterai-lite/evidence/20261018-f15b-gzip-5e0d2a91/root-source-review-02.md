@@ -1,0 +1,5 @@
+# F15b follow-up — static / LOW
+
+Compiler02 PASS. Combined focused01:245 tests/244 PASS/1 FAIL solely README stale53 versus54 machine settings; documentation count corrected, focused02 all245 PASS. Standalone compiler01 PASS. Backend tests01:144 tests/142 PASS/1 FAIL/1 SKIP; the single legacy malformed-gzip test still expected “unsupported encoding”415, although gzip is now supported and its deliberately invalid bytes are correctly rejected as gzip_invalid400. Update that exact error classification and title; retain the invalid/oversize refusal assertions. New gzip fixture already proves valid forwarding and flagoff behavior. No production change, passing skip, or previous failed result is reclassified. Current backend02/full/new-object gates remain required.
+
+The current implementation bytes remain those from passing compiler02/focused02. This follow-up changes only the legacy backend fixture's expected error category; its new bytes must run in backend02 and be explicitly indexed in the scoped commit. The new exact package still needs native35/functional10/security17 and all byte barriers. No independent/human promotion.

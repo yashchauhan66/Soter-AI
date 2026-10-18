@@ -1,0 +1,205 @@
+﻿TAP version 13
+# node:internal/modules/cjs/loader:1401
+#   const err = new Error(message);
+#               ^
+# Error: Cannot find module '../../../../apps/local-ai-broker/src/BoundedGzip'
+# Require stack:
+# - C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayGzipDecoder.test.ts
+#     at node:internal/modules/cjs/loader:1401:15
+#     at T._resolveFilename (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:14889)
+#     at nextResolveSimple (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\tsx\\dist\\register-BOkp8V6j.cjs:10:1017)
+#     at C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\tsx\\dist\\register-BOkp8V6j.cjs:9:4388
+#     at C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\tsx\\dist\\register-BOkp8V6j.cjs:9:3818
+#     at resolveTsPaths (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\tsx\\dist\\register-BOkp8V6j.cjs:10:770)
+#     at Function._resolveFilename (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\tsx\\dist\\register-BOkp8V6j.cjs:10:1155)
+#     at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+#     at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+#     at Function._load (node:internal/modules/cjs/loader:1211:37) {
+#   code: 'MODULE_NOT_FOUND',
+#   requireStack: [
+#     'C:\\\\Users\\\\USER\\\\OneDrive\\\\Desktop\\\\Ai-Agent-Security-Guard\\\\packages\\\\vscode-extension\\\\src\\\\__tests__\\\\gatewayGzipDecoder.test.ts'
+#   ]
+# }
+# Node.js v22.16.0
+# Subtest: packages\\vscode-extension\\src\\__tests__\\gatewayGzipDecoder.test.ts
+not ok 1 - packages\\vscode-extension\\src\\__tests__\\gatewayGzipDecoder.test.ts
+  ---
+  duration_ms: 741.4898
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayGzipDecoder.test.ts:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: F15b-W01 public gzip and retained identity JSON reach actual provider canonically
+not ok 2 - F15b-W01 public gzip and retained identity JSON reach actual provider canonically
+  ---
+  duration_ms: 272.1331
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayGzipWire.test.ts:2:2865'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    415 !== 200
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 200
+  actual: 415
+  operator: 'strictEqual'
+  stack: |-
+    <anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayGzipWire.test.ts:11:186)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async fixture (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayGzipWire.test.ts:9:746)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F15b-W02 flagoff withholds gzip while public JSON continues
+not ok 3 - F15b-W02 flagoff withholds gzip while public JSON continues
+  ---
+  duration_ms: 14.3914
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayGzipWire.test.ts:2:3311'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    415 !== 503
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 503
+  actual: 415
+  operator: 'strictEqual'
+  stack: |-
+    fixture.gzipBodies (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayGzipWire.test.ts:12:111)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async fixture (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayGzipWire.test.ts:9:746)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F15b-W03 truncated/corrupt/trailing/multimember bodies send no provider bytes
+not ok 4 - F15b-W03 truncated/corrupt/trailing/multimember bodies send no provider bytes
+  ---
+  duration_ms: 10.8942
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayGzipWire.test.ts:2:3657'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    415 !== 400
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 400
+  actual: 415
+  operator: 'strictEqual'
+  stack: |-
+    <anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayGzipWire.test.ts:13:343)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async fixture (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayGzipWire.test.ts:9:746)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F15b-W04 complete decoded JSON still enforces duplicatekeys and strict UTF8
+not ok 5 - F15b-W04 complete decoded JSON still enforces duplicatekeys and strict UTF8
+  ---
+  duration_ms: 13.3973
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayGzipWire.test.ts:2:4155'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    415 !== 400
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 400
+  actual: 415
+  operator: 'strictEqual'
+  stack: |-
+    <anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayGzipWire.test.ts:14:272)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async fixture (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayGzipWire.test.ts:9:746)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F15b-W05 nested unknown and duplicate content encodings refuse
+ok 6 - F15b-W05 nested unknown and duplicate content encodings refuse
+  ---
+  duration_ms: 21.3348
+  type: 'test'
+  ...
+# Subtest: F15b-W06 expansion/decoded bound refuses before provider admission
+not ok 7 - F15b-W06 expansion/decoded bound refuses before provider admission
+  ---
+  duration_ms: 7.6935
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayGzipWire.test.ts:2:5002'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    415 !== 413
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 413
+  actual: 415
+  operator: 'strictEqual'
+  stack: |-
+    <anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayGzipWire.test.ts:16:118)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async fixture (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayGzipWire.test.ts:9:746)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F15b-W07 synthetic provider credential in decoded gzip never reaches receiver
+ok 8 - F15b-W07 synthetic provider credential in decoded gzip never reaches receiver
+  ---
+  duration_ms: 6.5394
+  type: 'test'
+  ...
+# Subtest: F15b-W08 complete inspection waits for final gzip trailer
+not ok 9 - F15b-W08 complete inspection waits for final gzip trailer
+  ---
+  duration_ms: 45.4253
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayGzipWire.test.ts:2:5697'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    415 !== 200
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 200
+  actual: 415
+  operator: 'strictEqual'
+  stack: |-
+    <anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayGzipWire.test.ts:18:656)
+    async fixture (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayGzipWire.test.ts:9:746)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F15b-W09 incomplete compressed cancellation and shutdown never forward
+ok 10 - F15b-W09 incomplete compressed cancellation and shutdown never forward
+  ---
+  duration_ms: 79.1597
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 3
+# fail 7
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2162.1325

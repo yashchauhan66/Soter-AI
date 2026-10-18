@@ -29,6 +29,7 @@ async function main(): Promise<void> {
         port,
         ownerSession,
         jsonBodies: process.env.SOTERAI_GATEWAY_JSON_BODIES !== "0",
+        gzipBodies: process.env.SOTERAI_GATEWAY_GZIP_BODIES !== "0",
         requireCanarySync: process.env.SOTERAI_REQUIRE_CANARY_SYNC === "1",
         openAIProviderUrl: process.env.SOTERAI_OPENAI_PROVIDER_URL,
         anthropicProviderUrl: process.env.SOTERAI_ANTHROPIC_PROVIDER_URL,
