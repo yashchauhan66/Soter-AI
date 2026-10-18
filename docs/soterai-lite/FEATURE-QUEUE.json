@@ -294,17 +294,21 @@
         {
           "id": "F15c",
           "title": "Brotli",
-          "status": "ACTIVE",
-          "result": "INCOMPLETE",
+          "status": "DONE",
+          "result": "PASS",
           "requires": [
             "F15b"
-          ]
+          ],
+          "sourceRevision": "b273a838a147ff9714599e0668b6298119c5eaf4",
+          "evidence": "docs/soterai-lite/evidence/20261018-f15c-brotli-93e1c6b4/f15c-acceptance-01.json",
+          "commitByteVerification": "docs/soterai-lite/evidence/20261018-f15c-brotli-93e1c6b4/f15c-committed-byte-verification-01.json",
+          "transitionByteVerification": "docs/soterai-lite/evidence/20261018-f15c-brotli-93e1c6b4/f15c-transition-byte-verification-01.json"
         },
         {
           "id": "F15d",
           "title": "deflate",
-          "status": "PLANNED",
-          "result": "NOT-RUN",
+          "status": "ACTIVE",
+          "result": "INCOMPLETE",
           "requires": [
             "F15c"
           ]
