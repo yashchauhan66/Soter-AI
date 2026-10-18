@@ -416,8 +416,8 @@ describe("OpenAI-compatible proxy", () => {
             providerAuthorization = new Headers(init?.headers).get("authorization") ?? "";
             return new Response(JSON.stringify({ id: "chatcmpl_test", choices: [{ message: { role: "assistant", content: "Use a typed helper." } }] }), { status: 200, headers: { "content-type": "application/json" } });
         };
-        await withBroker({ openAIProviderUrl: "https://provider.invalid/v1/chat/completions", fetchImpl }, async (url) => {
-            const response = await request(url, "/v1/ai/openai-compatible/chat/completions", { method: "POST", headers: { "x-soterai-provider-key": "provider-secret" }, body: JSON.stringify({ model: "mock", messages: [{ role: "user", content: "Write a typed helper" }] }) });
+        await withBroker({ openAIProviderUrl: "https://provider.invalid/v1/chat/completions", providerApiKey: "provider-secret", fetchImpl }, async (url) => {
+            const response = await request(url, "/v1/ai/openai-compatible/chat/completions", { method: "POST", body: JSON.stringify({ model: "mock", messages: [{ role: "user", content: "Write a typed helper" }] }) });
             assert.equal(response.status, 200);
             assert.equal(response.headers.get("x-soterai-response-decision"), "allow");
             assert.equal(providerAuthorization, "Bearer provider-secret");
@@ -481,11 +481,10 @@ describe("OpenAI-compatible proxy", () => {
             });
             const raw = await response.text();
             const payload = JSON.parse(raw) as { error: { code: string; message: string; details: Record<string, unknown> } };
-            assert.equal(response.status, 422);
-            assert.equal(payload.error.code, "provider_safety_rejected");
-            assert.match(payload.error.message, /provider rejected|content-safety policy/i);
-            assert.equal(payload.error.details.providerCode, "sensitive_words_detected");
-            assert.equal(payload.error.details.retryable, false);
+            assert.equal(response.status, 502);
+            assert.equal(payload.error.code, "gateway_provider_error");
+            assert.equal(payload.error.message, "Gateway policy withheld protected data");
+            assert.equal(payload.error.details, undefined);
             assert.equal(raw.includes(providerRequestId), false);
             assert.equal(raw.includes("provider-internal-model"), false);
             assert.equal(raw.includes("new_api_error"), false);
@@ -506,8 +505,8 @@ describe("OpenAI-compatible proxy", () => {
                 body: JSON.stringify({ stream: true, model: "mock", messages: [{ role: "user", content: "Summarize this document." }] }),
             });
             const raw = await response.text();
-            assert.equal(response.status, 422);
-            assert.equal((JSON.parse(raw) as { error: { code: string } }).error.code, "provider_safety_rejected");
+            assert.equal(response.status, 502);
+            assert.equal((JSON.parse(raw) as { error: { code: string } }).error.code, "gateway_provider_error");
             assert.equal(raw.includes(providerRequestId), false);
             assert.doesNotMatch(response.headers.get("content-type") ?? "", /text\/event-stream/);
         });
@@ -547,8 +546,8 @@ describe("Anthropic-compatible proxy", () => {
             apiKey = new Headers(init?.headers).get("x-api-key") ?? "";
             return new Response(JSON.stringify({ content: [{ type: "text", text: "Use a narrow interface." }] }), { headers: { "content-type": "application/json" } });
         };
-        await withBroker({ anthropicProviderUrl: "https://provider.invalid/v1/messages", fetchImpl }, async (url) => {
-            const response = await request(url, "/v1/ai/anthropic-compatible/messages", { method: "POST", headers: { "x-soterai-provider-key": "anthropic-local-key" }, body: JSON.stringify({ model: "mock", max_tokens: 50, messages: [{ role: "user", content: "Design an interface" }] }) });
+        await withBroker({ anthropicProviderUrl: "https://provider.invalid/v1/messages", providerApiKey: "anthropic-local-key", fetchImpl }, async (url) => {
+            const response = await request(url, "/v1/ai/anthropic-compatible/messages", { method: "POST", body: JSON.stringify({ model: "mock", max_tokens: 50, messages: [{ role: "user", content: "Design an interface" }] }) });
             assert.equal(response.status, 200);
             assert.equal(response.headers.get("x-soterai-response-decision"), "allow");
             assert.equal(apiKey, "anthropic-local-key");
@@ -588,7 +587,7 @@ describe("Phase 6 streaming proxy", () => {
                     }),
                 });
                 assert.equal(response.status, 200);
-                assert.equal(response.headers.get("x-soterai-streaming"), "1");
+                assert.equal(response.headers.get("x-soterai-stream-buffered"), "1");
                 assert.match(response.headers.get("content-type") ?? "", /text\/event-stream/);
                 const text = await response.text();
                 assert.match(text, /Hello /);
@@ -627,12 +626,12 @@ describe("Phase 6 streaming proxy", () => {
                     }),
                 });
                 const text = await response.text();
-                assert.equal(response.status, 200);
+                assert.equal(response.status, 422);
                 // Neither assembled canary nor an earlier prefix may reach the client.
                 assert.equal(text.includes(canary.token), false);
                 assert.equal(text.includes(part1), false);
                 assert.equal(text.includes(part2), false);
-                assert.match(text, /unsafe_provider_response|Stream aborted/);
+                assert.match(text, /gateway_output_withheld/);
             },
         );
     });
@@ -659,7 +658,7 @@ describe("Phase 6 streaming proxy", () => {
                 });
                 const text = await response.text();
                 assert.equal(text.includes(secret), false);
-                assert.match(text, /unsafe_provider_response|Stream aborted/);
+                assert.match(text, /gateway_output_withheld/);
             },
         );
     });

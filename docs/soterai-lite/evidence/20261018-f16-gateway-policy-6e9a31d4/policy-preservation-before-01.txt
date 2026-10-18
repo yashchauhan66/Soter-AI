@@ -1,0 +1,58 @@
+﻿TAP version 13
+# Subtest: F16-W15 prior enterprise approval and safe PII redaction remain enforced
+not ok 1 - F16-W15 prior enterprise approval and safe PII redaction remain enforced
+  ---
+  duration_ms: 142.4413
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayPolicyWire.test.ts:2:10692'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    200 !== 403
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 403
+  actual: 200
+  operator: 'strictEqual'
+  stack: |-
+    <anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayPolicyWire.test.ts:43:12)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async fixture (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayPolicyWire.test.ts:15:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F16-W16 prior dangerous-command output warning remains visible
+not ok 2 - F16-W16 prior dangerous-command output warning remains visible
+  ---
+  duration_ms: 30.5688
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayPolicyWire.test.ts:2:11777'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    'allow' !== 'warn'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'warn'
+  actual: 'allow'
+  operator: 'strictEqual'
+  stack: |-
+    fixture.choices.message.content (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayPolicyWire.test.ts:48:284)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async fixture (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayPolicyWire.test.ts:15:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 0
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1034.6327

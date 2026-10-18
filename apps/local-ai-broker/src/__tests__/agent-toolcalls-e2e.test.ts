@@ -54,7 +54,7 @@ describe("Agent tool-call conversations through the broker (Claude Code / Cline 
     it("Claude Code (Anthropic): assistant tool_use + user tool_result SURVIVE the broker", async () => {
         const provider = await startRecordingProvider();
         try {
-            await withRealBroker({ anthropicProviderUrl: `${provider.url}/v1/messages`, providerApiKey: "k" }, async (brokerUrl) => {
+            await withRealBroker({ anthropicProviderUrl: `${provider.url}/v1/messages`, providerApiKey: "synthetic-provider-private-fixture" }, async (brokerUrl) => {
                 // Exact shape Claude Code sends after a tool call:
                 // assistant with tool_use block, then user with tool_result.
                 const conversation = {
@@ -96,7 +96,7 @@ describe("Agent tool-call conversations through the broker (Claude Code / Cline 
     it("Cline/opencode (OpenAI): assistant tool_calls with null content is NOT rejected", async () => {
         const provider = await startRecordingProvider();
         try {
-            await withRealBroker({ openAIProviderUrl: `${provider.url}/v1/chat/completions`, providerApiKey: "k" }, async (brokerUrl) => {
+            await withRealBroker({ openAIProviderUrl: `${provider.url}/v1/chat/completions`, providerApiKey: "synthetic-provider-private-fixture" }, async (brokerUrl) => {
                 // Exact shape Cline and opencode send: assistant messages carry
                 // tool_calls with content: null.
                 const conversation = {
@@ -137,8 +137,8 @@ describe("Agent tool-call conversations through the broker (Claude Code / Cline 
             req.on("end", () => {
                 received.push({ body: Buffer.concat(chunks).toString("utf8") });
                 res.setHeader("content-type", "text/event-stream; charset=utf-8");
-                res.write('data: {"id":"1","choices":[{"index":0,"delta":{"role":"assistant","tool_calls":[{"index":0,"id":"call_s1","type":"function","function":{"name":"Bash","arguments":"{\\"command\\":"}}]}}}]}\n\n');
-                res.write('data: {"id":"1","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"ls -la\\"}"}}]}}]}\n\n');
+                res.write("data: {\"id\":\"1\",\"choices\":[{\"index\":0,\"delta\":{\"role\":\"assistant\",\"tool_calls\":[{\"index\":0,\"id\":\"call_s1\",\"type\":\"function\",\"function\":{\"name\":\"Bash\",\"arguments\":\"{\\\"command\\\":\\\"\"}}]}}]}\n\n");
+                res.write("data: {\"id\":\"1\",\"choices\":[{\"index\":0,\"delta\":{\"tool_calls\":[{\"index\":0,\"function\":{\"arguments\":\"ls -la\\\"}\"}}]}}]}\n\n");
                 res.write("data: [DONE]\n\n");
                 res.end();
             });
@@ -147,7 +147,7 @@ describe("Agent tool-call conversations through the broker (Claude Code / Cline 
         const providerUrl = `http://127.0.0.1:${(server.address() as AddressInfo).port}`;
 
         try {
-            await withRealBroker({ openAIProviderUrl: `${providerUrl}/v1/chat/completions`, providerApiKey: "k" }, async (brokerUrl) => {
+            await withRealBroker({ openAIProviderUrl: `${providerUrl}/v1/chat/completions`, providerApiKey: "synthetic-provider-private-fixture" }, async (brokerUrl) => {
                 const response = await request(brokerUrl, "/v1/ai/openai-compatible/chat/completions", {
                     method: "POST",
                     body: JSON.stringify({

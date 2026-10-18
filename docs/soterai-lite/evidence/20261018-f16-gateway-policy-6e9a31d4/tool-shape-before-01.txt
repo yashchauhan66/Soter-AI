@@ -1,0 +1,29 @@
+﻿TAP version 13
+# Subtest: F16-P13 bounded Anthropic tool use/results preserve public data and refuse unsupported blocks
+not ok 1 - F16-P13 bounded Anthropic tool use/results preserve public data and refuse unsupported blocks
+  ---
+  duration_ms: 7.8903
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayPolicyBoundary.test.ts:2:7046'
+  failureType: 'testCodeFailure'
+  error: 'Gateway policy withheld protected data'
+  code: 'gateway_schema_unsupported'
+  stack: |-
+    fail (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\apps\local-ai-broker\src\GatewayBoundary.ts:10:67)
+    textContent (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\apps\local-ai-broker\src\GatewayBoundary.ts:73:183)
+    GatewayBoundary.prepareRequest (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\apps\local-ai-broker\src\GatewayBoundary.ts:79:56)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayPolicyBoundary.test.ts:51:44)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 538.8069

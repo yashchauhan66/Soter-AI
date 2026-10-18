@@ -111,6 +111,7 @@ test("BrokerManager synchronizes canaries on owned startup and new generation af
     context._inspect.secretStore.set("soterai.localBrokerControlToken", "fixture-controller-" + "b".repeat(40));
     const registry = new CanaryManager(context as never);
     const first = await registry.create();
+    let generation="";
     const batches: Array<Array<{ id: string; token: string }>> = [];
     globalThis.fetch = async (input, init) => {
         const url = new URL(String(input));
@@ -120,7 +121,9 @@ test("BrokerManager synchronizes canaries on owned startup and new generation af
         if (url.pathname === "/v1/lifecycle/status") return Response.json({ session: new Headers(init?.headers).get("x-soterai-session"), version: EXPECTED_BROKER_VERSION, ready: true });
         if (url.pathname === "/v1/safe-mode/enable") return Response.json({ enabled: true, level: "strict" });
         if (url.pathname === "/version") return Response.json({ version: EXPECTED_BROKER_VERSION });
-        if (url.pathname === "/v1/safe-mode/status") return Response.json({ enabled: false, level: "developer" });
+        if (url.pathname === "/v1/safe-mode/status") return Response.json({ enabled: true, level: "strict" });
+        if(url.pathname==="/v1/gateway/sync"){generation=JSON.parse(String(init?.body)).generation;return Response.json({version:1,synchronized:true,generation});}
+        if(url.pathname==="/v1/gateway/status")return Response.json({version:1,enabled:true,ready:true,generation});
         assert.equal(url.pathname, "/v1/canaries/sync");
         assert.match(new Headers(init?.headers).get("authorization") ?? "", /^Bearer [A-Za-z0-9_-]{43}$/);
         const body = JSON.parse(String(init?.body));
@@ -132,7 +135,7 @@ test("BrokerManager synchronizes canaries on owned startup and new generation af
             send(_message: unknown, callback?: (error: Error | null) => void) { callback?.(null); setImmediate(() => { child.stdout.end(); child.stderr.end(); child.emit("close", 0); }); return true; },
         });
         setImmediate(() => child.emit("message", { type: "SOTERAI_BROKER_READY", version: 1, session: options.env.SOTERAI_BROKER_SESSION, port: 49154 })); return child;
-    }) as never });
+    }) as never }, {async createGatewayRegistry(enabled){return{available:enabled,async use(consume){return consume([]);},dispose(){}};}});
     try {
         assert.equal((await manager.start()).state, "healthy");
         assert.equal(batches[0][0].token, first.token);

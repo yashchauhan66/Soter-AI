@@ -1,0 +1,183 @@
+{
+  "status": "PASS",
+  "feature": "F15",
+  "activeNextFeature": "F16",
+  "revision": "c30ad46d0e186797f422afbf3b67c30e9376fa78",
+  "sourceRevision": "b36da66d79ed75871ffc4de36e5145a2ffe27e69",
+  "subcards": [
+    {
+      "id": "F15a",
+      "sourceRevision": "dec76fa3957a79a55f8a73cb0b4fdf64465c443d",
+      "indexedEntries": 144,
+      "paths": 144,
+      "status": "DONE_SCOPED_PASS"
+    },
+    {
+      "id": "F15b",
+      "sourceRevision": "74faf895f39e49f0d3b8105287bba3cbcd273c9b",
+      "indexedEntries": 167,
+      "paths": 163,
+      "status": "DONE_SCOPED_PASS"
+    },
+    {
+      "id": "F15c",
+      "sourceRevision": "b273a838a147ff9714599e0668b6298119c5eaf4",
+      "indexedEntries": 132,
+      "paths": 125,
+      "status": "DONE_SCOPED_PASS"
+    },
+    {
+      "id": "F15d",
+      "sourceRevision": "8e11c01c00d5a531961b112a012f2689a5992430",
+      "indexedEntries": 156,
+      "paths": 145,
+      "status": "DONE_SCOPED_PASS"
+    },
+    {
+      "id": "F15e",
+      "sourceRevision": "021c0a89cf0960e86376f61f5c6d5927c242e904",
+      "indexedEntries": 144,
+      "paths": 130,
+      "status": "DONE_SCOPED_PASS"
+    },
+    {
+      "id": "F15f",
+      "sourceRevision": "65e86d4e394a4e1a4f278a53ba607aab958f50c0",
+      "indexedEntries": 143,
+      "paths": 127,
+      "status": "DONE_SCOPED_PASS"
+    },
+    {
+      "id": "F15g",
+      "sourceRevision": "3397190e0906efec6e4036ae021fcb5efb6f8785",
+      "indexedEntries": 160,
+      "paths": 141,
+      "status": "DONE_SCOPED_PASS"
+    },
+    {
+      "id": "F15h",
+      "sourceRevision": "b36da66d79ed75871ffc4de36e5145a2ffe27e69",
+      "indexedEntries": 147,
+      "paths": 125,
+      "status": "DONE_SCOPED_PASS"
+    }
+  ],
+  "allEightHistoricalSourceIndexesAndPathsVerified": true,
+  "priorSevenTransitionProofsVerified": true,
+  "currentHTransitionProof": {
+    "path": "docs/soterai-lite/evidence/20261018-f15h-base64-8b7d260e/f15h-transition-byte-verification-01.json",
+    "bytes": 624,
+    "sha256": "30540ed81c702bc34ec2d0685827c623d9b34888fb48147435aa72c1f212548a"
+  },
+  "parentAcceptance": {
+    "path": "docs/soterai-lite/evidence/20261018-f15h-base64-8b7d260e/f15-parent-acceptance-01.json",
+    "bytes": 16430,
+    "sha256": "c01b87a4c60df5d40b76556956d6f53d867475400c938657918fd7f8cccaa12c"
+  },
+  "transitionIndexedEntries": 12,
+  "transitionCommittedPaths": 13,
+  "mismatches": [],
+  "unexpectedPaths": 0,
+  "artifact": {
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-f15h-20261018-attempt01.vsix",
+    "bytes": 1410788,
+    "sha256": "4dbd9511ccedbdc1eb782b63d4ab66a60511f84fede6897499cf92e32c9ece4e",
+    "runtimeSha256": "b02bc36048fd516ecba78f5ef4d36da7c40b9166477d314816cf44bd5d5ebb6a",
+    "recheck": "PASS"
+  },
+  "currentChecks": {
+    "focused": {
+      "tests": 421,
+      "suites": 27,
+      "pass": 421,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "full": {
+      "tests": 2486,
+      "suites": 106,
+      "pass": 2482,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 4,
+      "todo": 0
+    },
+    "broker": {
+      "tests": 144,
+      "suites": 13,
+      "pass": 143,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 1,
+      "todo": 0
+    },
+    "native": {
+      "pass": 83,
+      "distinct": 83,
+      "phases": [
+        {
+          "phase": "primary",
+          "pass": 80,
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261018-f15h-base64-8b7d260e/f15h-native-host-20261018T095802Z-132aae44/primary-results.json",
+            "bytes": 12601,
+            "sha256": "680cd39a12617524298ea4b8a2a05607eb5b2b0d1e8e376400f7374ffe25f703"
+          }
+        },
+        {
+          "phase": "restart",
+          "pass": 3,
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261018-f15h-base64-8b7d260e/f15h-native-host-20261018T095802Z-132aae44/restart-results.json",
+            "bytes": 1239,
+            "sha256": "a6cf1343fae3675626b3e5526f2aa0727a7da7165faabcd4d26db0d7bd726c69"
+          }
+        }
+      ]
+    },
+    "functional": {
+      "pass": 10,
+      "fail": 0
+    },
+    "security": {
+      "scenarios": 17,
+      "blockedScoped": 8,
+      "leakConfirmed": 9,
+      "changed": 0
+    },
+    "latency": {
+      "status": "PASS_SCOPED",
+      "milliseconds": [
+        68,
+        17,
+        6,
+        3,
+        3,
+        3,
+        3,
+        6,
+        4,
+        7,
+        5,
+        4,
+        4,
+        3,
+        108,
+        15
+      ],
+      "maxMilliseconds": 108,
+      "budgetMilliseconds": 5000,
+      "scope": "Observed finite loopback explicit base64 complete requests"
+    }
+  },
+  "independence": "LOW",
+  "catalog": {
+    "status": "44_UNVERIFIED",
+    "graded": false
+  },
+  "rating": "PENDING",
+  "limitations": "F16 shared registered-value/per-tool policy and later integration/human/independent/actual-AI-tool/platform gates pending. Earlier G native01/02 H15 policy assertions remain unexplained/intermittent, current G diagnostic passes allenterprise; no product-fix or free-of-timing-failure claim. F11 absent, nine unmanaged leaks remain. No perfect/global/OS confinement protection or final score.",
+  "observedAt": "2026-10-18T10:01:15.021Z"
+}

@@ -1,3 +1,4 @@
+import {randomUUID} from "node:crypto";
 import assert from "node:assert/strict";
 import test from "node:test";
 import { randomBytes } from "node:crypto";
@@ -58,6 +59,7 @@ test("clearing the registry with a client token cannot enable canary exfiltratio
         const token = canary.token;
         assert.equal((await request(url, "/v1/canaries/sync", CONTROL, { canaries: [canary] })).status, 200);
         assert.equal((await request(url, "/v1/canaries/sync", DATA, { canaries: [] })).status, 403);
+        assert.equal((await request(url,"/v1/gateway/sync",CONTROL,{version:1,generation:randomUUID(),mode:{enabled:false,level:"developer"},values:[]})).status,200);
         const response = await request(url, ROUTE, DATA, { messages: [{ role: "user", content: "Summarize this memo: " + token }] });
         assert.equal(response.status, 422);
         assert.equal(wires.length, 0, "synthetic canary reached provider transport");

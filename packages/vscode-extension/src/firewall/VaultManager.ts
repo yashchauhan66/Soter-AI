@@ -17,6 +17,7 @@ import { onDidChangeBoundaryRules, onDidChangeOwnerPolicySession, exportRootPoli
 import { ManagedOutputFilter } from "../terminal/ManagedOutputFilter";
 import { managedRootIdentity, managedPolicyBinding, managedEmptyStoreIdentity } from "../terminal/ManagedOutputBinding";
 import { isPathWithin } from "../../../core/src/pathContainment";
+import { GatewayRegistryLease } from "../broker/GatewayRegistryLease";
 
 const KEY_ID = "soterai.vaultKey", PENDING = "vault-pending.json", VAULT = "soterai-vault.enc";
 const UUID = /^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/i;
@@ -326,6 +327,57 @@ export class VaultManager {
             const filter = new ManagedOutputFilter(values, guard);
             if (!filter.available()) { filter.dispose(); return vaultUnavailable(); }
             return filter;
+        } catch { return vaultUnavailable(); }
+    }
+    /** Complete current-window registry lease for the private owned gateway.
+     * No source reads, recovery fallback, key creation or public value result. */
+    async createGatewayRegistry(enabled: () => boolean): Promise<GatewayRegistryLease> {
+        try {
+            const epoch = this.epoch;
+            this.alive(epoch);
+            const flags = () => {
+                const config = vscode.workspace.getConfiguration("soterai");
+                return vaultModeEnabled() && !vscode.env.remoteName && enabled() === true && ["lite.secretMatching", "lite.outputRedactor"].every(name => {
+                    const inspected = config.inspect<boolean>(name);
+                    return (inspected ? inspected.globalValue ?? inspected.defaultValue ?? true : config.get(name, true)) === true;
+                });
+            };
+            if (!flags()) return vaultUnavailable();
+            const roots = (vscode.workspace.workspaceFolders ?? []).map(folder => folder.uri);
+            if (!roots.length || roots.length > 16) return vaultUnavailable();
+            const identities = roots.map(root => managedRootIdentity(root));await BoundarySnapshot.load();
+            const runtimeEpoch = this.runtimeEpoch;
+            const policies = roots.map(root => managedPolicyBinding(root));
+            await this.noPending();const cipher = await this.storage.read(VAULT);
+            let emptyStore: string | undefined;
+            if (cipher === undefined) { if (await this.storage.hasRecoveryRecords()) return vaultUnavailable();emptyStore = managedEmptyStoreIdentity(this.storage.directory); }
+            const guard = () => {
+                try {
+                    this.alive(epoch);
+                    return flags() && runtimeEpoch === this.runtimeEpoch
+                        && JSON.stringify((vscode.workspace.workspaceFolders ?? []).map(folder => folder.uri.toString())) === JSON.stringify(roots.map(root => root.toString()))
+                        && roots.every((root, i) => managedRootIdentity(root) === identities[i] && managedPolicyBinding(root) === policies[i])
+                        && (cipher === undefined ? managedEmptyStoreIdentity(this.storage.directory) === emptyStore : runtimeStoreUnchanged(this.storage.directory, cipher));
+                } catch { return false; }
+            };
+            if (!guard()) return vaultUnavailable();
+            const values: string[] = [];
+            if (cipher !== undefined) {
+                const key = await this.key(false);if (!guard()) return vaultUnavailable();
+                const data = parseVault(await decryptVault(cipher, key));
+                for (const entry of data.entries) {
+                    if ((entry.source === undefined) !== (entry.root === undefined)) return vaultUnavailable();
+                    if (entry.root !== undefined) {
+                        const boundRoot = vscode.Uri.parse(entry.root), source = vscode.Uri.parse(entry.source!);
+                        for (const uri of [boundRoot, source]) if (uri.scheme !== "file" || uri.authority || uri.query || uri.fragment || !path.isAbsolute(uri.fsPath)
+                            || /[\x00-\x1f\x7f-\x9f]/u.test(uri.fsPath) || vscode.Uri.file(uri.fsPath).toString() !== uri.toString()) return vaultUnavailable();
+                        if (!isPathWithin(boundRoot.fsPath, source.fsPath) || samePath(boundRoot.fsPath, source.fsPath)) return vaultUnavailable();
+                    }
+                    if (entry.root === undefined || roots.some(root => root.toString() === entry.root)) values.push(entry.rawValue);
+                }
+                if (await this.key(false) !== key || !guard()) return vaultUnavailable();
+            }
+            return new GatewayRegistryLease(values, guard);
         } catch { return vaultUnavailable(); }
     }
     async migrate(uri: vscode.Uri): Promise<number> {

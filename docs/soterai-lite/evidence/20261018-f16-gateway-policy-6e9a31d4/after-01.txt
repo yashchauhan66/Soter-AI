@@ -1,0 +1,258 @@
+﻿TAP version 13
+# Subtest: F16-P01 public immutable request preserves supported options
+ok 1 - F16-P01 public immutable request preserves supported options
+  ---
+  duration_ms: 10.8163
+  type: 'test'
+  ...
+# Subtest: F16-P02 registered representation refuses 34
+ok 2 - F16-P02 registered representation refuses 34
+  ---
+  duration_ms: 1.3077
+  type: 'test'
+  ...
+# Subtest: F16-P02 registered representation refuses 48
+ok 3 - F16-P02 registered representation refuses 48
+  ---
+  duration_ms: 0.922
+  type: 'test'
+  ...
+# Subtest: F16-P02 registered representation refuses 46
+ok 4 - F16-P02 registered representation refuses 46
+  ---
+  duration_ms: 0.6646
+  type: 'test'
+  ...
+# Subtest: F16-P02 registered representation refuses 68
+ok 5 - F16-P02 registered representation refuses 68
+  ---
+  duration_ms: 0.734
+  type: 'test'
+  ...
+# Subtest: F16-P02 registered representation refuses 34
+ok 6 - F16-P02 registered representation refuses 34
+  ---
+  duration_ms: 0.7337
+  type: 'test'
+  ...
+# Subtest: F16-P02 registered representation refuses 36
+ok 7 - F16-P02 registered representation refuses 36
+  ---
+  duration_ms: 0.6594
+  type: 'test'
+  ...
+# Subtest: F16-P03 ordered content joins detect registered fragments across roles/messages
+ok 8 - F16-P03 ordered content joins detect registered fragments across roles/messages
+  ---
+  duration_ms: 1.1451
+  type: 'test'
+  ...
+# Subtest: F16-P04 provider patterns and fixed entropy controls with public negatives
+not ok 9 - F16-P04 provider patterns and fixed entropy controls with public negatives
+  ---
+  duration_ms: 7.0222
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayPolicyBoundary.test.ts:2:2573'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayPolicyBoundary.test.ts:15:119)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F16-P05 unknown schemas and auth/URL overrides refuse
+ok 10 - F16-P05 unknown schemas and auth/URL overrides refuse
+  ---
+  duration_ms: 2.4056
+  type: 'test'
+  ...
+# Subtest: F16-P06 unavailable/unknown policy and invalid registry never degrade to empty
+ok 11 - F16-P06 unavailable/unknown policy and invalid registry never degrade to empty
+  ---
+  duration_ms: 2.6781
+  type: 'test'
+  ...
+# Subtest: F16-P07 complete semantic/request bounds withhold
+ok 12 - F16-P07 complete semantic/request bounds withhold
+  ---
+  duration_ms: 1.6634
+  type: 'test'
+  ...
+# Subtest: F16-P08 output JSON semantics and raw boundaries withhold complete response
+ok 13 - F16-P08 output JSON semantics and raw boundaries withhold complete response
+  ---
+  duration_ms: 4.524
+  type: 'test'
+  ...
+# Subtest: F16-P09 finite SSE output waits for complete inspected stream
+ok 14 - F16-P09 finite SSE output waits for complete inspected stream
+  ---
+  duration_ms: 3.1048
+  type: 'test'
+  ...
+# Subtest: F16-P10 malformed/control/UTF8/output budget failures release nothing
+ok 15 - F16-P10 malformed/control/UTF8/output budget failures release nothing
+  ---
+  duration_ms: 5.8762
+  type: 'test'
+  ...
+# Subtest: F16-P11 bounded seeded public/fragment controls
+ok 16 - F16-P11 bounded seeded public/fragment controls
+  ---
+  duration_ms: 36.7727
+  type: 'test'
+  ...
+# Subtest: F16-P12 errors expose no input or registry contents
+ok 17 - F16-P12 errors expose no input or registry contents
+  ---
+  duration_ms: 0.3287
+  type: 'test'
+  ...
+# Subtest: F16-M01 valid but wrong enterprise startup policy cannot be healthy
+ok 18 - F16-M01 valid but wrong enterprise startup policy cannot be healthy
+  ---
+  duration_ms: 56.2235
+  type: 'test'
+  ...
+# Subtest: F16-M02 valid runtime policy downgrade withdraws owner
+ok 19 - F16-M02 valid runtime policy downgrade withdraws owner
+  ---
+  duration_ms: 26.4687
+  type: 'test'
+  ...
+# Subtest: F16-M03 saved mode drift revokes prior generation
+ok 20 - F16-M03 saved mode drift revokes prior generation
+  ---
+  duration_ms: 11.0523
+  type: 'test'
+  ...
+# Subtest: F16-M04 wrong mode enable acknowledgment is not ignored
+ok 21 - F16-M04 wrong mode enable acknowledgment is not ignored
+  ---
+  duration_ms: 6.85
+  type: 'test'
+  ...
+# Subtest: F16-M05 default machine flag reaches child and complete registry sync
+ok 22 - F16-M05 default machine flag reaches child and complete registry sync
+  ---
+  duration_ms: 10.6173
+  type: 'test'
+  ...
+# Subtest: F16-M06 unavailable private registry fails before child launch
+ok 23 - F16-M06 unavailable private registry fails before child launch
+  ---
+  duration_ms: 0.851
+  type: 'test'
+  ...
+# Subtest: F16-M07 stale registry source cannot retain request authority
+ok 24 - F16-M07 stale registry source cannot retain request authority
+  ---
+  duration_ms: 9.5024
+  type: 'test'
+  ...
+# Subtest: F16-M08 unknown gateway policy version never becomes healthy
+ok 25 - F16-M08 unknown gateway policy version never becomes healthy
+  ---
+  duration_ms: 10.2506
+  type: 'test'
+  ...
+# Subtest: F16-M09 machine disable ignores repository override
+ok 26 - F16-M09 machine disable ignores repository override
+  ---
+  duration_ms: 7.5132
+  type: 'test'
+  ...
+# Subtest: F16-W01 public exact collector positive and controlled auth headers
+ok 27 - F16-W01 public exact collector positive and controlled auth headers
+  ---
+  duration_ms: 134.3383
+  type: 'test'
+  ...
+# Subtest: F16-W02 registered raw and encoded representations send zero provider bytes
+ok 28 - F16-W02 registered raw and encoded representations send zero provider bytes
+  ---
+  duration_ms: 42.648
+  type: 'test'
+  ...
+# Subtest: F16-W03 split messages and metadata/tool argument secrets withhold
+ok 29 - F16-W03 split messages and metadata/tool argument secrets withhold
+  ---
+  duration_ms: 26.4219
+  type: 'test'
+  ...
+# Subtest: F16-W04 flagoff never falls back to earlier scanning
+ok 30 - F16-W04 flagoff never falls back to earlier scanning
+  ---
+  duration_ms: 17.2124
+  type: 'test'
+  ...
+# Subtest: F16-W05 unknown profile/version/query and credential overrides refuse
+ok 31 - F16-W05 unknown profile/version/query and credential overrides refuse
+  ---
+  duration_ms: 27.8868
+  type: 'test'
+  ...
+# Subtest: F16-W06 F15 gzip/framed/base64 paths enter same policy snapshot
+ok 32 - F16-W06 F15 gzip/framed/base64 paths enter same policy snapshot
+  ---
+  duration_ms: 30.8364
+  type: 'test'
+  ...
+# Subtest: F16-W07 registered provider output is blocked before body release
+ok 33 - F16-W07 registered provider output is blocked before body release
+  ---
+  duration_ms: 15.0072
+  type: 'test'
+  ...
+# Subtest: F16-W08 finite SSE registered split output withholds prefix and secret
+ok 34 - F16-W08 finite SSE registered split output withholds prefix and secret
+  ---
+  duration_ms: 14.3663
+  type: 'test'
+  ...
+# Subtest: F16-W09 public complete SSE protocol preserved
+ok 35 - F16-W09 public complete SSE protocol preserved
+  ---
+  duration_ms: 15.7593
+  type: 'test'
+  ...
+# Subtest: F16-W10 registry/guard unavailable never forwards
+ok 36 - F16-W10 registry/guard unavailable never forwards
+  ---
+  duration_ms: 18.6912
+  type: 'test'
+  ...
+# Subtest: F16-W11 audit metadata never repeats input/model/session secrets
+ok 37 - F16-W11 audit metadata never repeats input/model/session secrets
+  ---
+  duration_ms: 9.1274
+  type: 'test'
+  ...
+# Subtest: F16-W12 held early body does not forward; cancellation stays responsive
+ok 38 - F16-W12 held early body does not forward; cancellation stays responsive
+  ---
+  duration_ms: 80.568
+  type: 'test'
+  ...
+# Subtest: F16-W13 private built-in loopback selftest requires controller
+ok 39 - F16-W13 private built-in loopback selftest requires controller
+  ---
+  duration_ms: 45.5992
+  type: 'test'
+  ...
+1..39
+# tests 39
+# suites 0
+# pass 38
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2583.6227

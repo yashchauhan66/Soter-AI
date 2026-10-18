@@ -1,0 +1,4399 @@
+﻿TAP version 13
+# Subtest: accepted automatic setup sequences managed controls and operational checks and enables broker auto-start
+ok 1 - accepted automatic setup sequences managed controls and operational checks and enables broker auto-start
+  ---
+  duration_ms: 11.2711
+  type: 'test'
+  ...
+# Subtest: untrusted, absent workspace and lockdown refuse setup without any control or routing mutation
+ok 2 - untrusted, absent workspace and lockdown refuse setup without any control or routing mutation
+  ---
+  duration_ms: 1.7534
+  type: 'test'
+  ...
+# Subtest: cancelled or unavailable routing does not claim complete IDE protection
+ok 3 - cancelled or unavailable routing does not claim complete IDE protection
+  ---
+  duration_ms: 4.2721
+  type: 'test'
+  ...
+# Subtest: failed verification and errors remain incomplete without leaking exception data
+ok 4 - failed verification and errors remain incomplete without leaking exception data
+  ---
+  duration_ms: 3.5172
+  type: 'test'
+  ...
+# Subtest: palette and panel calls share one pending setup, and a later retry can run
+ok 5 - palette and panel calls share one pending setup, and a later retry can run
+  ---
+  duration_ms: 15.547
+  type: 'test'
+  ...
+# Subtest: full-protection self-test rejects allowed or malformed scan responses
+ok 6 - full-protection self-test rejects allowed or malformed scan responses
+  ---
+  duration_ms: 5.303
+  type: 'test'
+  ...
+# Subtest: AI routing keeps review, encrypted original backup and authenticated smoke requests
+ok 7 - AI routing keeps review, encrypted original backup and authenticated smoke requests
+  ---
+  duration_ms: 95.8848
+  type: 'test'
+  ...
+# Subtest: broker auto-start: the broker actually starts
+    # Subtest: starts the broker on activation — the whole point of the feature
+    ok 1 - starts the broker on activation — the whole point of the feature
+      ---
+      duration_ms: 1.4745
+      type: 'test'
+      ...
+    # Subtest: does not start when the user turned auto-start off, and records that protection is advisory
+    ok 2 - does not start when the user turned auto-start off, and records that protection is advisory
+      ---
+      duration_ms: 0.5714
+      type: 'test'
+      ...
+    1..2
+ok 8 - broker auto-start: the broker actually starts
+  ---
+  duration_ms: 3.9036
+  type: 'suite'
+  ...
+# Subtest: broker auto-start: failures are never silent
+    # Subtest: retries a transient failure and succeeds — a slow first spawn is not a dead broker
+    ok 1 - retries a transient failure and succeeds — a slow first spawn is not a dead broker
+      ---
+      duration_ms: 2.191
+      type: 'test'
+      ...
+    # Subtest: does NOT retry a port conflict — three identical errors only delay the truth
+    ok 2 - does NOT retry a port conflict — three identical errors only delay the truth
+      ---
+      duration_ms: 0.8984
+      type: 'test'
+      ...
+    # Subtest: tells the user enforcement is OFF when every attempt fails — not just that a start failed
+    ok 3 - tells the user enforcement is OFF when every attempt fails — not just that a start failed
+      ---
+      duration_ms: 0.6139
+      type: 'test'
+      ...
+    # Subtest: offers a way forward and runs what the user picks
+    ok 4 - offers a way forward and runs what the user picks
+      ---
+      duration_ms: 0.6127
+      type: 'test'
+      ...
+    # Subtest: stays quiet when the user dismisses the notification
+    ok 5 - stays quiet when the user dismisses the notification
+      ---
+      duration_ms: 0.9704
+      type: 'test'
+      ...
+    # Subtest: treats an UNKNOWN error as retryable — an unexpected fault is the worst case to give up on
+    ok 6 - treats an UNKNOWN error as retryable — an unexpected fault is the worst case to give up on
+      ---
+      duration_ms: 1.13
+      type: 'test'
+      ...
+    1..6
+ok 9 - broker auto-start: failures are never silent
+  ---
+  duration_ms: 7.3916
+  type: 'suite'
+  ...
+# Subtest: broker auto-start: lockdown is the guard working, not a fault
+    # Subtest: does not alarm the user when Emergency Lockdown blocks the start
+    ok 1 - does not alarm the user when Emergency Lockdown blocks the start
+      ---
+      duration_ms: 1.1158
+      type: 'test'
+      ...
+    1..1
+ok 10 - broker auto-start: lockdown is the guard working, not a fault
+  ---
+  duration_ms: 1.5804
+  type: 'suite'
+  ...
+# Subtest: broker start failures carry retryability as a flag, not as prose
+    # Subtest: keys retries on the typed flag so a copy edit cannot change enforcement
+    ok 1 - keys retries on the typed flag so a copy edit cannot change enforcement
+      ---
+      duration_ms: 0.5422
+      type: 'test'
+      ...
+    1..1
+ok 11 - broker start failures carry retryability as a flag, not as prose
+  ---
+  duration_ms: 0.7461
+  type: 'suite'
+  ...
+# Subtest: F14-R01 soterai.secureAllAI refuses stale owner during approval before config write
+ok 12 - F14-R01 soterai.secureAllAI refuses stale owner during approval before config write
+  ---
+  duration_ms: 39.9714
+  type: 'test'
+  ...
+# Subtest: F14-R01 soterai.secureAllAI refuses stale owner during backup before config write
+ok 13 - F14-R01 soterai.secureAllAI refuses stale owner during backup before config write
+  ---
+  duration_ms: 22.4655
+  type: 'test'
+  ...
+# Subtest: F14-R01 soterai.setupBrokerIntegration refuses stale owner during approval before config write
+ok 14 - F14-R01 soterai.setupBrokerIntegration refuses stale owner during approval before config write
+  ---
+  duration_ms: 19.7876
+  type: 'test'
+  ...
+# Subtest: F14-R01 soterai.setupBrokerIntegration refuses stale owner during backup before config write
+ok 15 - F14-R01 soterai.setupBrokerIntegration refuses stale owner during backup before config write
+  ---
+  duration_ms: 16.3529
+  type: 'test'
+  ...
+# Subtest: F14-B01 lifecycle identity is controller authenticated and session bound
+ok 16 - F14-B01 lifecycle identity is controller authenticated and session bound
+  ---
+  duration_ms: 103.8465
+  type: 'test'
+  ...
+# Subtest: F14-B02 no session cannot manage owned broker
+ok 17 - F14-B02 no session cannot manage owned broker
+  ---
+  duration_ms: 25.8082
+  type: 'test'
+  ...
+# Subtest: F14-B02 wrong session cannot manage owned broker
+ok 18 - F14-B02 wrong session cannot manage owned broker
+  ---
+  duration_ms: 12.5863
+  type: 'test'
+  ...
+# Subtest: F14-B02 client token cannot manage owned broker
+ok 19 - F14-B02 client token cannot manage owned broker
+  ---
+  duration_ms: 14.1112
+  type: 'test'
+  ...
+# Subtest: F14-B02 wrong auth cannot manage owned broker
+ok 20 - F14-B02 wrong auth cannot manage owned broker
+  ---
+  duration_ms: 18.7242
+  type: 'test'
+  ...
+# Subtest: F14-B03 data credential never requires shared window state for allowed data routes
+ok 21 - F14-B03 data credential never requires shared window state for allowed data routes
+  ---
+  duration_ms: 14.6713
+  type: 'test'
+  ...
+# Subtest: F14-B04 owner session is validated before any bind
+ok 22 - F14-B04 owner session is validated before any bind
+  ---
+  duration_ms: 1.8176
+  type: 'test'
+  ...
+# Subtest: F14-B05 separate windows reject each other's session even with same synthetic controller
+ok 23 - F14-B05 separate windows reject each other's session even with same synthetic controller
+  ---
+  duration_ms: 18.0135
+  type: 'test'
+  ...
+# Subtest: Command registration parity (\#4)
+    # Subtest: every declared command is registered
+    ok 1 - every declared command is registered
+      ---
+      duration_ms: 1.7135
+      type: 'test'
+      ...
+    # Subtest: every registered command is declared (no orphan handlers)
+    ok 2 - every registered command is declared (no orphan handlers)
+      ---
+      duration_ms: 0.5968
+      type: 'test'
+      ...
+    # Subtest: the three previously-missing commands are still registered
+    ok 3 - the three previously-missing commands are still registered
+      ---
+      duration_ms: 0.3729
+      type: 'test'
+      ...
+    1..3
+ok 24 - Command registration parity (\#4)
+  ---
+  duration_ms: 4.0392
+  type: 'suite'
+  ...
+# Subtest: AI Context Firewall commands (Phases 1–7)
+    # Subtest: all firewall commands are declared AND registered
+    ok 1 - all firewall commands are declared AND registered
+      ---
+      duration_ms: 0.5154
+      type: 'test'
+      ...
+    1..1
+ok 25 - AI Context Firewall commands (Phases 1–7)
+  ---
+  duration_ms: 0.7237
+  type: 'suite'
+  ...
+# Subtest: Workspace Trust (\#5)
+    # Subtest: declares limited untrusted-workspace support
+    ok 1 - declares limited untrusted-workspace support
+      ---
+      duration_ms: 0.3082
+      type: 'test'
+      ...
+    # Subtest: gates cloud connection behind workspace trust
+    ok 2 - gates cloud connection behind workspace trust
+      ---
+      duration_ms: 0.3887
+      type: 'test'
+      ...
+    # Subtest: gates the secret vault behind workspace trust
+    ok 3 - gates the secret vault behind workspace trust
+      ---
+      duration_ms: 0.4619
+      type: 'test'
+      ...
+    1..3
+ok 26 - Workspace Trust (\#5)
+  ---
+  duration_ms: 1.5598
+  type: 'suite'
+  ...
+# Subtest: Workspace filesystem containment
+    # Subtest: canonicalizes targets and rejects symlink or junction escapes before vault writes
+    ok 1 - canonicalizes targets and rejects symlink or junction escapes before vault writes
+      ---
+      duration_ms: 0.2627
+      type: 'test'
+      ...
+    1..1
+ok 27 - Workspace filesystem containment
+  ---
+  duration_ms: 0.4166
+  type: 'suite'
+  ...
+# Subtest: Vault safety — dry-run preview + backup + confirm
+    # Subtest: migration backup is encrypted and OUTSIDE the workspace (no plaintext .bak)
+    ok 1 - migration backup is encrypted and OUTSIDE the workspace (no plaintext .bak)
+      ---
+      duration_ms: 0.3761
+      type: 'test'
+      ...
+    # Subtest: migration requires an explicit modal confirmation after previewing
+    ok 2 - migration requires an explicit modal confirmation after previewing
+      ---
+      duration_ms: 0.4188
+      type: 'test'
+      ...
+    # Subtest: vault status/preview surface metadata only — rawValue stays inside the encrypted store
+    ok 3 - vault status/preview surface metadata only — rawValue stays inside the encrypted store
+      ---
+      duration_ms: 0.3243
+      type: 'test'
+      ...
+    1..3
+ok 28 - Vault safety — dry-run preview + backup + confirm
+  ---
+  duration_ms: 1.3635
+  type: 'suite'
+  ...
+# Subtest: Ledger privacy — no raw secrets persisted (\#6)
+    # Subtest: every ledger write goes through sanitizeLedgerEntry / buildLedgerEntry
+    ok 1 - every ledger write goes through sanitizeLedgerEntry / buildLedgerEntry
+      ---
+      duration_ms: 0.169
+      type: 'test'
+      ...
+    # Subtest: ledger store never references raw content fields
+    ok 2 - ledger store never references raw content fields
+      ---
+      duration_ms: 0.2027
+      type: 'test'
+      ...
+    1..2
+ok 29 - Ledger privacy — no raw secrets persisted (\#6)
+  ---
+  duration_ms: 0.4986
+  type: 'suite'
+  ...
+# Subtest: Telemetry contains no raw content (\#6)
+    # Subtest: telemetry never references redactedText or raw content fields
+    ok 1 - telemetry never references redactedText or raw content fields
+      ---
+      duration_ms: 0.2169
+      type: 'test'
+      ...
+    # Subtest: event payload only uses the safe redacted preview
+    ok 2 - event payload only uses the safe redacted preview
+      ---
+      duration_ms: 0.139
+      type: 'test'
+      ...
+    1..2
+ok 30 - Telemetry contains no raw content (\#6)
+  ---
+  duration_ms: 0.4692
+  type: 'suite'
+  ...
+# Subtest: SecretStorage token hygiene (\#6)
+    # Subtest: token is stored via context.secrets, never logged
+    ok 1 - token is stored via context.secrets, never logged
+      ---
+      duration_ms: 0.4544
+      type: 'test'
+      ...
+    # Subtest: vault key and canary tokens live in SecretStorage, not globalState/logs
+    ok 2 - vault key and canary tokens live in SecretStorage, not globalState/logs
+      ---
+      duration_ms: 0.1787
+      type: 'test'
+      ...
+    1..2
+ok 31 - SecretStorage token hygiene (\#6)
+  ---
+  duration_ms: 0.7461
+  type: 'suite'
+  ...
+# Subtest: Launch readiness command surface
+    # Subtest: declares and registers launch-critical command names
+    ok 1 - declares and registers launch-critical command names
+      ---
+      duration_ms: 0.1904
+      type: 'test'
+      ...
+    # Subtest: keeps friendly launch aliases mapped to implemented scanners
+    ok 2 - keeps friendly launch aliases mapped to implemented scanners
+      ---
+      duration_ms: 0.1527
+      type: 'test'
+      ...
+    # Subtest: has build and lint scripts required by release automation
+    ok 3 - has build and lint scripts required by release automation
+      ---
+      duration_ms: 0.131
+      type: 'test'
+      ...
+    1..3
+ok 32 - Launch readiness command surface
+  ---
+  duration_ms: 0.6187
+  type: 'suite'
+  ...
+# Subtest: Marketplace README media hygiene
+    # Subtest: preserves historical screenshot sources without presenting them as current evidence
+    ok 1 - preserves historical screenshot sources without presenting them as current evidence
+      ---
+      duration_ms: 0.7157
+      type: 'test'
+      ...
+    # Subtest: preserves the historical demo GIF while withdrawing its release reference
+    ok 2 - preserves the historical demo GIF while withdrawing its release reference
+      ---
+      duration_ms: 0.3435
+      type: 'test'
+      ...
+    1..2
+ok 33 - Marketplace README media hygiene
+  ---
+  duration_ms: 1.2027
+  type: 'suite'
+  ...
+# Subtest: Local-first privacy mode
+    # Subtest: declares soterai.privacyMode with local default
+    ok 1 - declares soterai.privacyMode with local default
+      ---
+      duration_ms: 0.3485
+      type: 'test'
+      ...
+    # Subtest: prevents telemetry flush in local mode and untrusted workspaces
+    ok 2 - prevents telemetry flush in local mode and untrusted workspaces
+      ---
+      duration_ms: 0.3705
+      type: 'test'
+      ...
+    # Subtest: health reports never include raw secrets or prompt text
+    ok 3 - health reports never include raw secrets or prompt text
+      ---
+      duration_ms: 0.1819
+      type: 'test'
+      ...
+    # Subtest: privacy report scopes local handling and preserves same-user and unmarked-data limits
+    ok 4 - privacy report scopes local handling and preserves same-user and unmarked-data limits
+      ---
+      duration_ms: 0.2667
+      type: 'test'
+      ...
+    # Subtest: README separates local scanning from provider egress and incomplete custody
+    ok 5 - README separates local scanning from provider egress and incomplete custody
+      ---
+      duration_ms: 0.4393
+      type: 'test'
+      ...
+    # Subtest: trust checklist and product matrix lock the reviewer-facing privacy contract
+    ok 6 - trust checklist and product matrix lock the reviewer-facing privacy contract
+      ---
+      duration_ms: 0.1933
+      type: 'test'
+      ...
+    1..6
+ok 34 - Local-first privacy mode
+  ---
+  duration_ms: 2.0391
+  type: 'suite'
+  ...
+# Subtest: Clipboard safety for firewall handlers (\#1)
+    # Subtest: all firewall clipboard writes go through redactForSharing or a canary token by design
+    ok 1 - all firewall clipboard writes go through redactForSharing or a canary token by design
+      ---
+      duration_ms: 0.3328
+      type: 'test'
+      ...
+    1..1
+ok 35 - Clipboard safety for firewall handlers (\#1)
+  ---
+  duration_ms: 0.4418
+  type: 'suite'
+  ...
+# Subtest: Webview hardening (\#7)
+    # Subtest: all webviews declare a Content-Security-Policy
+    ok 1 - all webviews declare a Content-Security-Policy
+      ---
+      duration_ms: 0.4288
+      type: 'test'
+      ...
+    # Subtest: webviews escape finding fields before HTML interpolation
+    ok 2 - webviews escape finding fields before HTML interpolation
+      ---
+      duration_ms: 0.1404
+      type: 'test'
+      ...
+    # Subtest: firewall info webviews disable scripts
+    ok 3 - firewall info webviews disable scripts
+      ---
+      duration_ms: 0.3399
+      type: 'test'
+      ...
+    # Subtest: dashboard message handler keeps a strict command allowlist including new actions
+    ok 4 - dashboard message handler keeps a strict command allowlist including new actions
+      ---
+      duration_ms: 0.3914
+      type: 'test'
+      ...
+    # Subtest: dashboard surfaces the 9+ trust center without overstating enforcement
+    ok 5 - dashboard surfaces the 9+ trust center without overstating enforcement
+      ---
+      duration_ms: 0.1844
+      type: 'test'
+      ...
+    1..5
+ok 36 - Webview hardening (\#7)
+  ---
+  duration_ms: 1.6707
+  type: 'suite'
+  ...
+# Subtest: Enterprise policy export
+    # Subtest: exports a buyer-ready enterprise policy bundle with honest enforcement scope
+    ok 1 - exports a buyer-ready enterprise policy bundle with honest enforcement scope
+      ---
+      duration_ms: 0.275
+      type: 'test'
+      ...
+    1..1
+ok 37 - Enterprise policy export
+  ---
+  duration_ms: 0.3728
+  type: 'suite'
+  ...
+# Subtest: Broker auto-start wiring (activation actually turns protection on)
+    # Subtest: activate() starts the broker, not just constructs one
+    ok 1 - activate() starts the broker, not just constructs one
+      ---
+      duration_ms: 0.3958
+      type: 'test'
+      ...
+    # Subtest: does not await the start, so a slow broker cannot hang activation
+    ok 2 - does not await the start, so a slow broker cannot hang activation
+      ---
+      duration_ms: 0.1233
+      type: 'test'
+      ...
+    # Subtest: exposes an opt-out that is declared, machine-scoped, and restricted
+    ok 3 - exposes an opt-out that is declared, machine-scoped, and restricted
+      ---
+      duration_ms: 0.1981
+      type: 'test'
+      ...
+    # Subtest: never fails silently — every non-started outcome notifies the user
+    ok 4 - never fails silently — every non-started outcome notifies the user
+      ---
+      duration_ms: 0.1645
+      type: 'test'
+      ...
+    # Subtest: withholds the provider key in a restricted workspace
+    ok 5 - withholds the provider key in a restricted workspace
+      ---
+      duration_ms: 0.1696
+      type: 'test'
+      ...
+    1..5
+ok 38 - Broker auto-start wiring (activation actually turns protection on)
+  ---
+  duration_ms: 1.2611
+  type: 'suite'
+  ...
+# Subtest: Local AI Broker, Safe Mode, and Memory Inspector
+    # Subtest: declares and registers every new command
+    ok 1 - declares and registers every new command
+      ---
+      duration_ms: 0.3083
+      type: 'test'
+      ...
+    # Subtest: stores broker/provider tokens in SecretStorage and fixes the host to loopback
+    ok 2 - stores broker/provider tokens in SecretStorage and fixes the host to loopback
+      ---
+      duration_ms: 0.226
+      type: 'test'
+      ...
+    # Subtest: never injects a token or provider key into a webview
+    ok 3 - never injects a token or provider key into a webview
+      ---
+      duration_ms: 0.4155
+      type: 'test'
+      ...
+    # Subtest: redacts Memory Inspector exports and trust-gates provider configuration
+    ok 4 - redacts Memory Inspector exports and trust-gates provider configuration
+      ---
+      duration_ms: 0.1839
+      type: 'test'
+      ...
+    # Subtest: warns on raw terminals and routes users to controlled broker execution
+    ok 5 - warns on raw terminals and routes users to controlled broker execution
+      ---
+      duration_ms: 0.1762
+      type: 'test'
+      ...
+    # Subtest: surfaces extension isolation through the authenticated broker preflight
+    ok 6 - surfaces extension isolation through the authenticated broker preflight
+      ---
+      duration_ms: 0.1254
+      type: 'test'
+      ...
+    1..6
+ok 39 - Local AI Broker, Safe Mode, and Memory Inspector
+  ---
+  duration_ms: 1.6689
+  type: 'suite'
+  ...
+# Subtest: Command-palette hygiene (clutter control)
+    # Subtest: core commands are always palette-visible (not gated)
+    ok 1 - core commands are always palette-visible (not gated)
+      ---
+      duration_ms: 0.1827
+      type: 'test'
+      ...
+    # Subtest: keeps the default palette to a small set of clear, reversible newcomer workflows
+    ok 2 - keeps the default palette to a small set of clear, reversible newcomer workflows
+      ---
+      duration_ms: 0.1134
+      type: 'test'
+      ...
+    # Subtest: every non-core declared command is gated behind soterai.advancedCommands (or fully hidden)
+    ok 3 - every non-core declared command is gated behind soterai.advancedCommands (or fully hidden)
+      ---
+      duration_ms: 0.1898
+      type: 'test'
+      ...
+    # Subtest: the context key is driven by stable and experimental command visibility settings
+    ok 4 - the context key is driven by stable and experimental command visibility settings
+      ---
+      duration_ms: 0.2102
+      type: 'test'
+      ...
+    1..4
+ok 40 - Command-palette hygiene (clutter control)
+  ---
+  duration_ms: 0.8445
+  type: 'suite'
+  ...
+# Subtest: Onboarding walkthrough (UX)
+    # Subtest: contributes a Getting Started walkthrough with 3 value-first steps
+    ok 1 - contributes a Getting Started walkthrough with 3 value-first steps
+      ---
+      duration_ms: 0.2737
+      type: 'test'
+      ...
+    # Subtest: every walkthrough step points to an existing markdown media file
+    ok 2 - every walkthrough step points to an existing markdown media file
+      ---
+      duration_ms: 0.4313
+      type: 'test'
+      ...
+    # Subtest: every walkthrough command button targets a declared or built-in command
+    ok 3 - every walkthrough command button targets a declared or built-in command
+      ---
+      duration_ms: 0.2628
+      type: 'test'
+      ...
+    # Subtest: declares onWalkthrough activation and a registered openWalkthrough command
+    ok 4 - declares onWalkthrough activation and a registered openWalkthrough command
+      ---
+      duration_ms: 0.1749
+      type: 'test'
+      ...
+    # Subtest: opens the walkthrough only once via a globalState onboarding flag
+    ok 5 - opens the walkthrough only once via a globalState onboarding flag
+      ---
+      duration_ms: 0.1914
+      type: 'test'
+      ...
+    1..5
+ok 41 - Onboarding walkthrough (UX)
+  ---
+  duration_ms: 1.5231
+  type: 'suite'
+  ...
+# Subtest: Live inline scanning + Quick Fixes (UX)
+    # Subtest: does not pass a ThemeIcon id as a decoration file URI
+    ok 1 - does not pass a ThemeIcon id as a decoration file URI
+      ---
+      duration_ms: 0.2636
+      type: 'test'
+      ...
+    # Subtest: declares soterai.liveScan.enabled defaulting to on and registers the scanner
+    ok 2 - declares soterai.liveScan.enabled defaulting to on and registers the scanner
+      ---
+      duration_ms: 0.267
+      type: 'test'
+      ...
+    # Subtest: uses a debounced, local-only scan mapped to a DiagnosticCollection
+    ok 3 - uses a debounced, local-only scan mapped to a DiagnosticCollection
+      ---
+      duration_ms: 0.2398
+      type: 'test'
+      ...
+    # Subtest: skips non-file schemes, oversized files, and excluded globs
+    ok 4 - skips non-file schemes, oversized files, and excluded globs
+      ---
+      duration_ms: 0.1344
+      type: 'test'
+      ...
+    # Subtest: offers redact + copy-safe Quick Fixes and gates the internal fix command
+    ok 5 - offers redact + copy-safe Quick Fixes and gates the internal fix command
+      ---
+      duration_ms: 0.3525
+      type: 'test'
+      ...
+    # Subtest: redaction never writes raw secrets and disposes its timers
+    ok 6 - redaction never writes raw secrets and disposes its timers
+      ---
+      duration_ms: 0.2638
+      type: 'test'
+      ...
+    1..6
+ok 42 - Live inline scanning + Quick Fixes (UX)
+  ---
+  duration_ms: 1.7705
+  type: 'suite'
+  ...
+# Subtest: Clipboard / paste guard (UX)
+    # Subtest: registers scanClipboard (core) and safePaste (advanced) commands
+    ok 1 - registers scanClipboard (core) and safePaste (advanced) commands
+      ---
+      duration_ms: 0.2943
+      type: 'test'
+      ...
+    # Subtest: scans clipboard locally and offers a redacted safe version
+    ok 2 - scans clipboard locally and offers a redacted safe version
+      ---
+      duration_ms: 0.2374
+      type: 'test'
+      ...
+    # Subtest: safe paste can insert a redacted version instead of the raw clipboard
+    ok 3 - safe paste can insert a redacted version instead of the raw clipboard
+      ---
+      duration_ms: 0.1795
+      type: 'test'
+      ...
+    # Subtest: never logs the raw clipboard value
+    ok 4 - never logs the raw clipboard value
+      ---
+      duration_ms: 0.1191
+      type: 'test'
+      ...
+    1..4
+ok 43 - Clipboard / paste guard (UX)
+  ---
+  duration_ms: 1.0696
+  type: 'suite'
+  ...
+# Subtest: Security search guardrails
+    # Subtest: does not use console.log in extension source
+    ok 1 - does not use console.log in extension source
+      ---
+      duration_ms: 1.0718
+      type: 'test'
+      ...
+    # Subtest: documents every child process boundary as non-shell fixed argv usage
+    ok 2 - documents every child process boundary as non-shell fixed argv usage
+      ---
+      duration_ms: 0.9173
+      type: 'test'
+      ...
+    1..2
+ok 44 - Security search guardrails
+  ---
+  duration_ms: 2.1113
+  type: 'suite'
+  ...
+# Subtest: Control Panel (consolidated sidebar toggles)
+    # Subtest: declares the control panel as a webview view in the SoterAI sidebar
+    ok 1 - declares the control panel as a webview view in the SoterAI sidebar
+      ---
+      duration_ms: 0.232
+      type: 'test'
+      ...
+    # Subtest: registers the webview view provider with the matching viewType
+    ok 2 - registers the webview view provider with the matching viewType
+      ---
+      duration_ms: 0.2208
+      type: 'test'
+      ...
+    # Subtest: every toggle delegates to a command or setting that actually exists
+    ok 3 - every toggle delegates to a command or setting that actually exists
+      ---
+      duration_ms: 0.2462
+      type: 'test'
+      ...
+    # Subtest: Phase 11: five primary workflows are allowlisted and wired to real commands
+    ok 4 - Phase 11: five primary workflows are allowlisted and wired to real commands
+      ---
+      duration_ms: 0.2205
+      type: 'test'
+      ...
+    # Subtest: uses the central protection state instead of an any-toggle ENFORCED roll-up
+    ok 5 - uses the central protection state instead of an any-toggle ENFORCED roll-up
+      ---
+      duration_ms: 0.3148
+      type: 'test'
+      ...
+    # Subtest: exposes one primary Full Protection action and persistent lockdown recovery
+    ok 6 - exposes one primary Full Protection action and persistent lockdown recovery
+      ---
+      duration_ms: 0.5767
+      type: 'test'
+      ...
+    # Subtest: resolves live-scan and MCP badges from CAPABILITY_REGISTRY (no stronger claim than registry)
+    ok 7 - resolves live-scan and MCP badges from CAPABILITY_REGISTRY (no stronger claim than registry)
+      ---
+      duration_ms: 0.9167
+      type: 'test'
+      ...
+    # Subtest: rejects webview messages outside the allowlist
+    ok 8 - rejects webview messages outside the allowlist
+      ---
+      duration_ms: 0.1733
+      type: 'test'
+      ...
+    # Subtest: never sends secrets or raw content to the webview
+    ok 9 - never sends secrets or raw content to the webview
+      ---
+      duration_ms: 0.2094
+      type: 'test'
+      ...
+    1..9
+ok 45 - Control Panel (consolidated sidebar toggles)
+  ---
+  duration_ms: 3.425
+  type: 'suite'
+  ...
+# Subtest: F15h-B01 text data URI and part preserve Unicode and strip encoding metadata
+ok 46 - F15h-B01 text data URI and part preserve Unicode and strip encoding metadata
+  ---
+  duration_ms: 4.5872
+  type: 'test'
+  ...
+# Subtest: F15h-B02 canonical base64url and JSON text blobs work
+ok 47 - F15h-B02 canonical base64url and JSON text blobs work
+  ---
+  duration_ms: 1.139
+  type: 'test'
+  ...
+# Subtest: F15h-B03 complete JSON envelope both encodings and inert prototypes
+ok 48 - F15h-B03 complete JSON envelope both encodings and inert prototypes
+  ---
+  duration_ms: 1.9162
+  type: 'test'
+  ...
+# Subtest: F15h-B04 public unmarked base64-looking strings remain public text
+ok 49 - F15h-B04 public unmarked base64-looking strings remain public text
+  ---
+  duration_ms: 0.3393
+  type: 'test'
+  ...
+# Subtest: F15h-B05 malformed/noncanonical base64 refuses ""
+ok 50 - F15h-B05 malformed/noncanonical base64 refuses ""
+  ---
+  duration_ms: 0.6463
+  type: 'test'
+  ...
+# Subtest: F15h-B05 malformed/noncanonical base64 refuses "Zg"
+ok 51 - F15h-B05 malformed/noncanonical base64 refuses "Zg"
+  ---
+  duration_ms: 0.2655
+  type: 'test'
+  ...
+# Subtest: F15h-B05 malformed/noncanonical base64 refuses "Zh=="
+ok 52 - F15h-B05 malformed/noncanonical base64 refuses "Zh=="
+  ---
+  duration_ms: 0.3264
+  type: 'test'
+  ...
+# Subtest: F15h-B05 malformed/noncanonical base64 refuses "Zg==="
+ok 53 - F15h-B05 malformed/noncanonical base64 refuses "Zg==="
+  ---
+  duration_ms: 0.2397
+  type: 'test'
+  ...
+# Subtest: F15h-B05 malformed/noncanonical base64 refuses "Z g=="
+ok 54 - F15h-B05 malformed/noncanonical base64 refuses "Z g=="
+  ---
+  duration_ms: 0.4455
+  type: 'test'
+  ...
+# Subtest: F15h-B05 malformed/noncanonical base64 refuses "Zg==\\n"
+ok 55 - F15h-B05 malformed/noncanonical base64 refuses "Zg==\\n"
+  ---
+  duration_ms: 1.5623
+  type: 'test'
+  ...
+# Subtest: F15h-B05 malformed/noncanonical base64 refuses "Zg__"
+ok 56 - F15h-B05 malformed/noncanonical base64 refuses "Zg__"
+  ---
+  duration_ms: 0.2902
+  type: 'test'
+  ...
+# Subtest: F15h-B05 malformed/noncanonical base64 refuses "-w=="
+ok 57 - F15h-B05 malformed/noncanonical base64 refuses "-w=="
+  ---
+  duration_ms: 0.2055
+  type: 'test'
+  ...
+# Subtest: F15h-B06 base64url padding/mixed alphabets/unknown shape refuse
+ok 58 - F15h-B06 base64url padding/mixed alphabets/unknown shape refuse
+  ---
+  duration_ms: 0.8175
+  type: 'test'
+  ...
+# Subtest: F15h-B07 malformed/ambiguous data URI, binary, invalid UTF8/control refuse
+ok 59 - F15h-B07 malformed/ambiguous data URI, binary, invalid UTF8/control refuse
+  ---
+  duration_ms: 0.8022
+  type: 'test'
+  ...
+# Subtest: F15h-B08 duplicate/unknown envelope fields and malformed inner JSON refuse
+ok 60 - F15h-B08 duplicate/unknown envelope fields and malformed inner JSON refuse
+  ---
+  duration_ms: 0.991
+  type: 'test'
+  ...
+# Subtest: F15h-B09 nested URI/explicit blob/envelope refuse
+ok 61 - F15h-B09 nested URI/explicit blob/envelope refuse
+  ---
+  duration_ms: 0.668
+  type: 'test'
+  ...
+# Subtest: F15h-B10 exact bytes/count/cumulative limits and overflow
+ok 62 - F15h-B10 exact bytes/count/cumulative limits and overflow
+  ---
+  duration_ms: 24.1018
+  type: 'test'
+  ...
+# Subtest: F15h-B11 flagoff withholds every explicit representation, no-echo errors
+ok 63 - F15h-B11 flagoff withholds every explicit representation, no-echo errors
+  ---
+  duration_ms: 0.6154
+  type: 'test'
+  ...
+# Subtest: F15h-W01 public blob parts and data URI become exact inspected text
+ok 64 - F15h-W01 public blob parts and data URI become exact inspected text
+  ---
+  duration_ms: 213.0242
+  type: 'test'
+  ...
+# Subtest: F15h-W02 public envelopes use both canonical alphabets
+ok 65 - F15h-W02 public envelopes use both canonical alphabets
+  ---
+  duration_ms: 66.7324
+  type: 'test'
+  ...
+# Subtest: F15h-W03 flagoff withholds all explicit blobs, JSON remains healthy
+ok 66 - F15h-W03 flagoff withholds all explicit blobs, JSON remains healthy
+  ---
+  duration_ms: 40.6279
+  type: 'test'
+  ...
+# Subtest: F15h-W04 malformed/noncanonical/binary/nested/overbudget refuse
+ok 67 - F15h-W04 malformed/noncanonical/binary/nested/overbudget refuse
+  ---
+  duration_ms: 49.1296
+  type: 'test'
+  ...
+# Subtest: F15h-W05 decoded synthetic credential and original encoding never reach receiver
+ok 68 - F15h-W05 decoded synthetic credential and original encoding never reach receiver
+  ---
+  duration_ms: 29.0774
+  type: 'test'
+  ...
+# Subtest: F15h-W06 outer gzip envelope and gzip JSON blob follow one-layer transport decoding
+ok 69 - F15h-W06 outer gzip envelope and gzip JSON blob follow one-layer transport decoding
+  ---
+  duration_ms: 37.6456
+  type: 'test'
+  ...
+# Subtest: F15h-W07 chunked early complete field never forwards before JSON end
+ok 70 - F15h-W07 chunked early complete field never forwards before JSON end
+  ---
+  duration_ms: 57.9696
+  type: 'test'
+  ...
+# Subtest: F15h-W08 envelope controller refusal and finite body timeout
+ok 71 - F15h-W08 envelope controller refusal and finite body timeout
+  ---
+  duration_ms: 96.1135
+  type: 'test'
+  ...
+# Subtest: F15h-W09 canceled partial envelope forwards zero and keeps owner responsive
+ok 72 - F15h-W09 canceled partial envelope forwards zero and keeps owner responsive
+  ---
+  duration_ms: 65.5972
+  type: 'test'
+  ...
+# Subtest: F15c-B01 complete Brotli returns exact public Unicode bytes
+ok 73 - F15c-B01 complete Brotli returns exact public Unicode bytes
+  ---
+  duration_ms: 9.6751
+  type: 'test'
+  ...
+# Subtest: F15c-B02 truncated stream refuses 0
+ok 74 - F15c-B02 truncated stream refuses 0
+  ---
+  duration_ms: 0.6341
+  type: 'test'
+  ...
+# Subtest: F15c-B02 truncated stream refuses 1
+ok 75 - F15c-B02 truncated stream refuses 1
+  ---
+  duration_ms: 3.198
+  type: 'test'
+  ...
+# Subtest: F15c-B02 truncated stream refuses 30
+ok 76 - F15c-B02 truncated stream refuses 30
+  ---
+  duration_ms: 1.0491
+  type: 'test'
+  ...
+# Subtest: F15c-B02 truncated stream refuses 60
+ok 77 - F15c-B02 truncated stream refuses 60
+  ---
+  duration_ms: 1.0803
+  type: 'test'
+  ...
+# Subtest: F15c-B03 trailing or concatenated streams refuse 1
+ok 78 - F15c-B03 trailing or concatenated streams refuse 1
+  ---
+  duration_ms: 1.2742
+  type: 'test'
+  ...
+# Subtest: F15c-B03 trailing or concatenated streams refuse 2
+ok 79 - F15c-B03 trailing or concatenated streams refuse 2
+  ---
+  duration_ms: 1.0654
+  type: 'test'
+  ...
+# Subtest: F15c-B03 trailing or concatenated streams refuse 1
+ok 80 - F15c-B03 trailing or concatenated streams refuse 1
+  ---
+  duration_ms: 1.108
+  type: 'test'
+  ...
+# Subtest: F15c-B03 trailing or concatenated streams refuse 61
+ok 81 - F15c-B03 trailing or concatenated streams refuse 61
+  ---
+  duration_ms: 1.5094
+  type: 'test'
+  ...
+# Subtest: F15c-B04 invalid bitstream refuses
+ok 82 - F15c-B04 invalid bitstream refuses
+  ---
+  duration_ms: 2.3678
+  type: 'test'
+  ...
+# Subtest: F15c-B05 exact tighter byte budget accepted, overflow refused
+ok 83 - F15c-B05 exact tighter byte budget accepted, overflow refused
+  ---
+  duration_ms: 5.5721
+  type: 'test'
+  ...
+# Subtest: F15c-B06 high expansion refuses before returning data
+ok 84 - F15c-B06 high expansion refuses before returning data
+  ---
+  duration_ms: 16.3949
+  type: 'test'
+  ...
+# Subtest: F15c-B07 invalid limits and bounded errors
+ok 85 - F15c-B07 invalid limits and bounded errors
+  ---
+  duration_ms: 1.3894
+  type: 'test'
+  ...
+# Subtest: F15c-W01 public Brotli and retained identity JSON reach actual provider canonically
+ok 86 - F15c-W01 public Brotli and retained identity JSON reach actual provider canonically
+  ---
+  duration_ms: 208.6735
+  type: 'test'
+  ...
+# Subtest: F15c-W02 flagoff withholds Brotli while public JSON continues
+ok 87 - F15c-W02 flagoff withholds Brotli while public JSON continues
+  ---
+  duration_ms: 32.2407
+  type: 'test'
+  ...
+# Subtest: F15c-W03 truncated/corrupt/trailing/multimember bodies send no provider bytes
+ok 88 - F15c-W03 truncated/corrupt/trailing/multimember bodies send no provider bytes
+  ---
+  duration_ms: 18.4309
+  type: 'test'
+  ...
+# Subtest: F15c-W04 complete decoded JSON still enforces duplicatekeys and strict UTF8
+ok 89 - F15c-W04 complete decoded JSON still enforces duplicatekeys and strict UTF8
+  ---
+  duration_ms: 18.4634
+  type: 'test'
+  ...
+# Subtest: F15c-W05 nested unknown and duplicate content encodings refuse
+ok 90 - F15c-W05 nested unknown and duplicate content encodings refuse
+  ---
+  duration_ms: 24.4156
+  type: 'test'
+  ...
+# Subtest: F15c-W06 expansion/decoded bound refuses before provider admission
+ok 91 - F15c-W06 expansion/decoded bound refuses before provider admission
+  ---
+  duration_ms: 25.7776
+  type: 'test'
+  ...
+# {"id":"F15c-W07","status":422,"providerRequests":0,"containsSynthetic":false}
+# Subtest: F15c-W07 synthetic provider credential in decoded Brotli never reaches receiver
+ok 92 - F15c-W07 synthetic provider credential in decoded Brotli never reaches receiver
+  ---
+  duration_ms: 15.056
+  type: 'test'
+  ...
+# Subtest: F15c-W08 complete inspection waits for last Brotli bytes
+ok 93 - F15c-W08 complete inspection waits for last Brotli bytes
+  ---
+  duration_ms: 65.2329
+  type: 'test'
+  ...
+# Subtest: F15c-W09 incomplete compressed cancellation and shutdown never forward
+ok 94 - F15c-W09 incomplete compressed cancellation and shutdown never forward
+  ---
+  duration_ms: 69.3589
+  type: 'test'
+  ...
+# Subtest: F15e-H01 one chunked coding accepts
+ok 95 - F15e-H01 one chunked coding accepts
+  ---
+  duration_ms: 2.8206
+  type: 'test'
+  ...
+# Subtest: F15e-H02 unsupported transfer coding refuses gzip, chunked
+ok 96 - F15e-H02 unsupported transfer coding refuses gzip, chunked
+  ---
+  duration_ms: 1.231
+  type: 'test'
+  ...
+# Subtest: F15e-H02 unsupported transfer coding refuses identity
+ok 97 - F15e-H02 unsupported transfer coding refuses identity
+  ---
+  duration_ms: 0.1896
+  type: 'test'
+  ...
+# Subtest: F15e-H02 unsupported transfer coding refuses chunked, gzip
+ok 98 - F15e-H02 unsupported transfer coding refuses chunked, gzip
+  ---
+  duration_ms: 0.2344
+  type: 'test'
+  ...
+# Subtest: F15e-H02 unsupported transfer coding refuses 
+ok 99 - F15e-H02 unsupported transfer coding refuses 
+  ---
+  duration_ms: 0.319
+  type: 'test'
+  ...
+# Subtest: F15e-H03 duplicate transfer fields refuse in application header boundary
+ok 100 - F15e-H03 duplicate transfer fields refuse in application header boundary
+  ---
+  duration_ms: 0.196
+  type: 'test'
+  ...
+# Subtest: F15e-H04 unsupported trailer declaration refuses
+ok 101 - F15e-H04 unsupported trailer declaration refuses
+  ---
+  duration_ms: 0.282
+  type: 'test'
+  ...
+# Subtest: F15e-H05 retained mixed content-length/transfer framing refuses
+ok 102 - F15e-H05 retained mixed content-length/transfer framing refuses
+  ---
+  duration_ms: 0.2204
+  type: 'test'
+  ...
+# Subtest: F15e-H06 retained identity length framing accepts
+ok 103 - F15e-H06 retained identity length framing accepts
+  ---
+  duration_ms: 0.4994
+  type: 'test'
+  ...
+# Subtest: F15e-W01 complete split UTF8 with opaque chunk extensions reaches actual provider
+ok 104 - F15e-W01 complete split UTF8 with opaque chunk extensions reaches actual provider
+  ---
+  duration_ms: 148.5872
+  type: 'test'
+  ...
+# Subtest: F15e-W02 flagoff refuses chunked while length-framed JSON stays available
+ok 105 - F15e-W02 flagoff refuses chunked while length-framed JSON stays available
+  ---
+  duration_ms: 33.41
+  type: 'test'
+  ...
+# Subtest: F15e-W03 unsupported transfer coding never becomes identity JSON
+ok 106 - F15e-W03 unsupported transfer coding never becomes identity JSON
+  ---
+  duration_ms: 8.5153
+  type: 'test'
+  ...
+# Subtest: F15e-W04 declared trailers refuse before forwarding
+ok 107 - F15e-W04 declared trailers refuse before forwarding
+  ---
+  duration_ms: 6.4697
+  type: 'test'
+  ...
+# Subtest: F15e-W04 undeclared received trailers refuse after complete framing
+ok 108 - F15e-W04 undeclared received trailers refuse after complete framing
+  ---
+  duration_ms: 7.189
+  type: 'test'
+  ...
+# Subtest: F15e-W05 complete JSON stays private until final framing terminator
+ok 109 - F15e-W05 complete JSON stays private until final framing terminator
+  ---
+  duration_ms: 57.7037
+  type: 'test'
+  ...
+# Subtest: F15e-W06 chunked gzip decodes one content layer then JSON
+ok 110 - F15e-W06 chunked gzip decodes one content layer then JSON
+  ---
+  duration_ms: 17.9421
+  type: 'test'
+  ...
+# Subtest: F15e-W07 synthetic credential split over framing never reaches receiver
+ok 111 - F15e-W07 synthetic credential split over framing never reaches receiver
+  ---
+  duration_ms: 12.3765
+  type: 'test'
+  ...
+# Subtest: F15e-W08 Node HTTP parser layer malformed controls with zero provider bytes
+ok 112 - F15e-W08 Node HTTP parser layer malformed controls with zero provider bytes
+  ---
+  duration_ms: 8.3949
+  type: 'test'
+  ...
+# Subtest: F15e-W09 finite body deadline before final terminator withholds
+ok 113 - F15e-W09 finite body deadline before final terminator withholds
+  ---
+  duration_ms: 92.8988
+  type: 'test'
+  ...
+# Subtest: F15e-W10 retained received-chunk budget refuses a valid oversized event count
+ok 114 - F15e-W10 retained received-chunk budget refuses a valid oversized event count
+  ---
+  duration_ms: 67.7137
+  type: 'test'
+  ...
+# Subtest: F15e-W11 client cancellation before framing completion preserves local availability
+ok 115 - F15e-W11 client cancellation before framing completion preserves local availability
+  ---
+  duration_ms: 73.0881
+  type: 'test'
+  ...
+# Subtest: F15e-W12 Node EOF in a declared incomplete chunk never admits complete-looking JSON
+ok 116 - F15e-W12 Node EOF in a declared incomplete chunk never admits complete-looking JSON
+  ---
+  duration_ms: 29.4351
+  type: 'test'
+  ...
+# Subtest: F15d-D01 complete zlib deflate returns exact public Unicode bytes
+ok 117 - F15d-D01 complete zlib deflate returns exact public Unicode bytes
+  ---
+  duration_ms: 9.8459
+  type: 'test'
+  ...
+# Subtest: F15d-D02 truncated stream refuses 0
+ok 118 - F15d-D02 truncated stream refuses 0
+  ---
+  duration_ms: 0.8765
+  type: 'test'
+  ...
+# Subtest: F15d-D02 truncated stream refuses 1
+ok 119 - F15d-D02 truncated stream refuses 1
+  ---
+  duration_ms: 0.187
+  type: 'test'
+  ...
+# Subtest: F15d-D02 truncated stream refuses 32
+ok 120 - F15d-D02 truncated stream refuses 32
+  ---
+  duration_ms: 2.553
+  type: 'test'
+  ...
+# Subtest: F15d-D02 truncated stream refuses 64
+ok 121 - F15d-D02 truncated stream refuses 64
+  ---
+  duration_ms: 1.264
+  type: 'test'
+  ...
+# Subtest: F15d-D03 trailing or concatenated streams refuse 1
+ok 122 - F15d-D03 trailing or concatenated streams refuse 1
+  ---
+  duration_ms: 1.49
+  type: 'test'
+  ...
+# Subtest: F15d-D03 trailing or concatenated streams refuse 2
+ok 123 - F15d-D03 trailing or concatenated streams refuse 2
+  ---
+  duration_ms: 1.011
+  type: 'test'
+  ...
+# Subtest: F15d-D03 trailing or concatenated streams refuse 8
+ok 124 - F15d-D03 trailing or concatenated streams refuse 8
+  ---
+  duration_ms: 0.9027
+  type: 'test'
+  ...
+# Subtest: F15d-D03 trailing or concatenated streams refuse 65
+ok 125 - F15d-D03 trailing or concatenated streams refuse 65
+  ---
+  duration_ms: 1.1986
+  type: 'test'
+  ...
+# Subtest: F15d-D04 invalid bitstream refuses
+ok 126 - F15d-D04 invalid bitstream refuses
+  ---
+  duration_ms: 0.7346
+  type: 'test'
+  ...
+# Subtest: F15d-D05 exact tighter byte budget accepted, overflow refused
+ok 127 - F15d-D05 exact tighter byte budget accepted, overflow refused
+  ---
+  duration_ms: 4.1743
+  type: 'test'
+  ...
+# Subtest: F15d-D06 high expansion refuses before returning data
+ok 128 - F15d-D06 high expansion refuses before returning data
+  ---
+  duration_ms: 1.3019
+  type: 'test'
+  ...
+# Subtest: F15d-D07 invalid limits and bounded errors
+ok 129 - F15d-D07 invalid limits and bounded errors
+  ---
+  duration_ms: 0.7118
+  type: 'test'
+  ...
+# Subtest: F15d-D08 rejects wrong wrapper or preset dictionary raw
+ok 130 - F15d-D08 rejects wrong wrapper or preset dictionary raw
+  ---
+  duration_ms: 0.1566
+  type: 'test'
+  ...
+# Subtest: F15d-D08 rejects wrong wrapper or preset dictionary gzip
+ok 131 - F15d-D08 rejects wrong wrapper or preset dictionary gzip
+  ---
+  duration_ms: 0.1683
+  type: 'test'
+  ...
+# Subtest: F15d-D08 rejects wrong wrapper or preset dictionary dictionary
+ok 132 - F15d-D08 rejects wrong wrapper or preset dictionary dictionary
+  ---
+  duration_ms: 0.1211
+  type: 'test'
+  ...
+# Subtest: F15d-W01 public deflate and retained identity JSON reach actual provider canonically
+ok 133 - F15d-W01 public deflate and retained identity JSON reach actual provider canonically
+  ---
+  duration_ms: 178.8965
+  type: 'test'
+  ...
+# Subtest: F15d-W02 flagoff withholds deflate while public JSON continues
+ok 134 - F15d-W02 flagoff withholds deflate while public JSON continues
+  ---
+  duration_ms: 34.4092
+  type: 'test'
+  ...
+# Subtest: F15d-W03 truncated/corrupt/trailing/multimember bodies send no provider bytes
+ok 135 - F15d-W03 truncated/corrupt/trailing/multimember bodies send no provider bytes
+  ---
+  duration_ms: 14.2785
+  type: 'test'
+  ...
+# Subtest: F15d-W04 complete decoded JSON still enforces duplicatekeys and strict UTF8
+ok 136 - F15d-W04 complete decoded JSON still enforces duplicatekeys and strict UTF8
+  ---
+  duration_ms: 13.9634
+  type: 'test'
+  ...
+# Subtest: F15d-W05 nested unknown and duplicate content encodings refuse
+ok 137 - F15d-W05 nested unknown and duplicate content encodings refuse
+  ---
+  duration_ms: 17.7708
+  type: 'test'
+  ...
+# Subtest: F15d-W06 expansion/decoded bound refuses before provider admission
+ok 138 - F15d-W06 expansion/decoded bound refuses before provider admission
+  ---
+  duration_ms: 8.0715
+  type: 'test'
+  ...
+# {"id":"F15d-W07","status":422,"providerRequests":0,"containsSynthetic":false}
+# Subtest: F15d-W07 synthetic provider credential in decoded deflate never reaches receiver
+ok 139 - F15d-W07 synthetic provider credential in decoded deflate never reaches receiver
+  ---
+  duration_ms: 11.6098
+  type: 'test'
+  ...
+# Subtest: F15d-W08 complete inspection waits for last deflate bytes
+ok 140 - F15d-W08 complete inspection waits for last deflate bytes
+  ---
+  duration_ms: 64.1838
+  type: 'test'
+  ...
+# Subtest: F15d-W09 incomplete compressed cancellation and shutdown never forward
+ok 141 - F15d-W09 incomplete compressed cancellation and shutdown never forward
+  ---
+  duration_ms: 67.7018
+  type: 'test'
+  ...
+# {"id":"F15d-W10","coding":"gzip","status":400,"providerRequests":0}
+# {"id":"F15d-W10","coding":"br","status":400,"providerRequests":0}
+# {"id":"F15d-W10","coding":"deflate","status":400,"providerRequests":0}
+# Subtest: F15d-W10 empty decoded compressed bytes never become a compatible empty control body
+ok 142 - F15d-W10 empty decoded compressed bytes never become a compatible empty control body
+  ---
+  duration_ms: 17.4994
+  type: 'test'
+  ...
+# Subtest: F15f-F01 multiple NDJSON chat records preserve ordered messages and compatible options
+ok 143 - F15f-F01 multiple NDJSON chat records preserve ordered messages and compatible options
+  ---
+  duration_ms: 4.555
+  type: 'test'
+  ...
+# Subtest: F15f-F02 CRLF blank NDJSON lines and options stated once work
+ok 144 - F15f-F02 CRLF blank NDJSON lines and options stated once work
+  ---
+  duration_ms: 0.6448
+  type: 'test'
+  ...
+# Subtest: F15f-F03 SSE complete data events and terminal marker newline "\\n"
+ok 145 - F15f-F03 SSE complete data events and terminal marker newline "\\n"
+  ---
+  duration_ms: 0.5439
+  type: 'test'
+  ...
+# Subtest: F15f-F03 SSE complete data events and terminal marker newline "\\r\\n"
+ok 146 - F15f-F03 SSE complete data events and terminal marker newline "\\r\\n"
+  ---
+  duration_ms: 0.6033
+  type: 'test'
+  ...
+# Subtest: F15f-F03 SSE complete data events and terminal marker newline "\\r"
+ok 147 - F15f-F03 SSE complete data events and terminal marker newline "\\r"
+  ---
+  duration_ms: 0.3034
+  type: 'test'
+  ...
+# Subtest: F15f-F04 multiline SSE JSON joins data lines without dropping values/BOM
+ok 148 - F15f-F04 multiline SSE JSON joins data lines without dropping values/BOM
+  ---
+  duration_ms: 0.3193
+  type: 'test'
+  ...
+# Subtest: F15f-F05 invalid NDJSON/schema refuses 0
+ok 149 - F15f-F05 invalid NDJSON/schema refuses 0
+  ---
+  duration_ms: 0.4868
+  type: 'test'
+  ...
+# Subtest: F15f-F05 invalid NDJSON/schema refuses 3
+ok 150 - F15f-F05 invalid NDJSON/schema refuses 3
+  ---
+  duration_ms: 0.2192
+  type: 'test'
+  ...
+# Subtest: F15f-F05 invalid NDJSON/schema refuses 3
+ok 151 - F15f-F05 invalid NDJSON/schema refuses 3
+  ---
+  duration_ms: 0.497
+  type: 'test'
+  ...
+# Subtest: F15f-F05 invalid NDJSON/schema refuses 16
+ok 152 - F15f-F05 invalid NDJSON/schema refuses 16
+  ---
+  duration_ms: 0.609
+  type: 'test'
+  ...
+# Subtest: F15f-F05 invalid NDJSON/schema refuses 24
+ok 153 - F15f-F05 invalid NDJSON/schema refuses 24
+  ---
+  duration_ms: 0.2374
+  type: 'test'
+  ...
+# Subtest: F15f-F05 invalid NDJSON/schema refuses 45
+ok 154 - F15f-F05 invalid NDJSON/schema refuses 45
+  ---
+  duration_ms: 0.1755
+  type: 'test'
+  ...
+# Subtest: F15f-F05 invalid NDJSON/schema refuses 30
+ok 155 - F15f-F05 invalid NDJSON/schema refuses 30
+  ---
+  duration_ms: 0.1592
+  type: 'test'
+  ...
+# Subtest: F15f-F05 invalid NDJSON/schema refuses 72
+ok 156 - F15f-F05 invalid NDJSON/schema refuses 72
+  ---
+  duration_ms: 0.1082
+  type: 'test'
+  ...
+# Subtest: F15f-F05 invalid NDJSON/schema refuses 74
+ok 157 - F15f-F05 invalid NDJSON/schema refuses 74
+  ---
+  duration_ms: 0.2179
+  type: 'test'
+  ...
+# Subtest: F15f-F06 invalid/incomplete SSE or data after terminal refuses 78
+ok 158 - F15f-F06 invalid/incomplete SSE or data after terminal refuses 78
+  ---
+  duration_ms: 0.358
+  type: 'test'
+  ...
+# Subtest: F15f-F06 invalid/incomplete SSE or data after terminal refuses 98
+ok 159 - F15f-F06 invalid/incomplete SSE or data after terminal refuses 98
+  ---
+  duration_ms: 0.1586
+  type: 'test'
+  ...
+# Subtest: F15f-F06 invalid/incomplete SSE or data after terminal refuses 96
+ok 160 - F15f-F06 invalid/incomplete SSE or data after terminal refuses 96
+  ---
+  duration_ms: 0.1124
+  type: 'test'
+  ...
+# Subtest: F15f-F06 invalid/incomplete SSE or data after terminal refuses 95
+ok 161 - F15f-F06 invalid/incomplete SSE or data after terminal refuses 95
+  ---
+  duration_ms: 0.1105
+  type: 'test'
+  ...
+# Subtest: F15f-F06 invalid/incomplete SSE or data after terminal refuses 88
+ok 162 - F15f-F06 invalid/incomplete SSE or data after terminal refuses 88
+  ---
+  duration_ms: 0.1074
+  type: 'test'
+  ...
+# Subtest: F15f-F06 invalid/incomplete SSE or data after terminal refuses 14
+ok 163 - F15f-F06 invalid/incomplete SSE or data after terminal refuses 14
+  ---
+  duration_ms: 0.1034
+  type: 'test'
+  ...
+# Subtest: F15f-F06 invalid/incomplete SSE or data after terminal refuses 174
+ok 164 - F15f-F06 invalid/incomplete SSE or data after terminal refuses 174
+  ---
+  duration_ms: 0.196
+  type: 'test'
+  ...
+# Subtest: F15f-F07 conflicting repeated options refuse rather than last-wins
+ok 165 - F15f-F07 conflicting repeated options refuse rather than last-wins
+  ---
+  duration_ms: 0.5251
+  type: 'test'
+  ...
+# Subtest: F15f-F08 record/line/message/byte budgets reject overflow
+ok 166 - F15f-F08 record/line/message/byte budgets reject overflow
+  ---
+  duration_ms: 13.5082
+  type: 'test'
+  ...
+# Subtest: F15f-F09 exact record byte budget accepted, next byte refused
+ok 167 - F15f-F09 exact record byte budget accepted, next byte refused
+  ---
+  duration_ms: 3.1371
+  type: 'test'
+  ...
+# Subtest: F15f-F10 prototype keys inert and invalid UTF8/diagnostics bounded
+ok 168 - F15f-F10 prototype keys inert and invalid UTF8/diagnostics bounded
+  ---
+  duration_ms: 0.5921
+  type: 'test'
+  ...
+# Subtest: F15f-W01 real NDJSON batches transcode to one complete canonical JSON request
+ok 169 - F15f-W01 real NDJSON batches transcode to one complete canonical JSON request
+  ---
+  duration_ms: 183.2585
+  type: 'test'
+  ...
+# Subtest: F15f-W02 SSE data/metadata and Anthropic route preserve all messages
+ok 170 - F15f-W02 SSE data/metadata and Anthropic route preserve all messages
+  ---
+  duration_ms: 26.3908
+  type: 'test'
+  ...
+# Subtest: F15f-W03 flagoff refuses both framed media while JSON works
+ok 171 - F15f-W03 flagoff refuses both framed media while JSON works
+  ---
+  duration_ms: 43.4869
+  type: 'test'
+  ...
+# Subtest: F15f-W04 malformed duplicates/conflicts/truncation send zero receiver bytes
+ok 172 - F15f-W04 malformed duplicates/conflicts/truncation send zero receiver bytes
+  ---
+  duration_ms: 32.0496
+  type: 'test'
+  ...
+# Subtest: F15f-W05 strict UTF8 and record budget refuse before admission
+ok 173 - F15f-W05 strict UTF8 and record budget refuse before admission
+  ---
+  duration_ms: 28.7952
+  type: 'test'
+  ...
+# Subtest: F15f-W06 synthetic credential in a later framed message never reaches receiver
+ok 174 - F15f-W06 synthetic credential in a later framed message never reaches receiver
+  ---
+  duration_ms: 11.7083
+  type: 'test'
+  ...
+# Subtest: F15f-W07 gzip framing uses existing one-layer decoding before framed JSON
+ok 175 - F15f-W07 gzip framing uses existing one-layer decoding before framed JSON
+  ---
+  duration_ms: 19.8128
+  type: 'test'
+  ...
+# Subtest: F15f-W08 completed early frame stays private until finite chunked body ends
+ok 176 - F15f-W08 completed early frame stays private until finite chunked body ends
+  ---
+  duration_ms: 62.8292
+  type: 'test'
+  ...
+# Subtest: F15f-W09 framed media never becomes a controller protocol
+ok 177 - F15f-W09 framed media never becomes a controller protocol
+  ---
+  duration_ms: 20.8725
+  type: 'test'
+  ...
+# Subtest: F15f-W10 finite read deadline on a complete early record withholds
+ok 178 - F15f-W10 finite read deadline on a complete early record withholds
+  ---
+  duration_ms: 100.6244
+  type: 'test'
+  ...
+# Subtest: F15f-W11 cancellation after one record never forwards remaining partial request
+ok 179 - F15f-W11 cancellation after one record never forwards remaining partial request
+  ---
+  duration_ms: 70.9472
+  type: 'test'
+  ...
+# Subtest: F15b-G01 complete gzip produces exact public UTF8 bytes
+ok 180 - F15b-G01 complete gzip produces exact public UTF8 bytes
+  ---
+  duration_ms: 8.9875
+  type: 'test'
+  ...
+# Subtest: F15b-G02 truncation refuses at 0
+ok 181 - F15b-G02 truncation refuses at 0
+  ---
+  duration_ms: 0.8988
+  type: 'test'
+  ...
+# Subtest: F15b-G02 truncation refuses at 1
+ok 182 - F15b-G02 truncation refuses at 1
+  ---
+  duration_ms: 0.2412
+  type: 'test'
+  ...
+# Subtest: F15b-G02 truncation refuses at 9
+ok 183 - F15b-G02 truncation refuses at 9
+  ---
+  duration_ms: 0.1944
+  type: 'test'
+  ...
+# Subtest: F15b-G02 truncation refuses at 12
+ok 184 - F15b-G02 truncation refuses at 12
+  ---
+  duration_ms: 0.1812
+  type: 'test'
+  ...
+# Subtest: F15b-G02 truncation refuses at 78
+ok 185 - F15b-G02 truncation refuses at 78
+  ---
+  duration_ms: 4.4014
+  type: 'test'
+  ...
+# Subtest: F15b-G03 corrupt method/magic/CRC/ISIZE refuses 0
+ok 186 - F15b-G03 corrupt method/magic/CRC/ISIZE refuses 0
+  ---
+  duration_ms: 0.6515
+  type: 'test'
+  ...
+# Subtest: F15b-G03 corrupt method/magic/CRC/ISIZE refuses 2
+ok 187 - F15b-G03 corrupt method/magic/CRC/ISIZE refuses 2
+  ---
+  duration_ms: 0.4008
+  type: 'test'
+  ...
+# Subtest: F15b-G03 corrupt method/magic/CRC/ISIZE refuses 71
+ok 188 - F15b-G03 corrupt method/magic/CRC/ISIZE refuses 71
+  ---
+  duration_ms: 2.5426
+  type: 'test'
+  ...
+# Subtest: F15b-G03 corrupt method/magic/CRC/ISIZE refuses 75
+ok 189 - F15b-G03 corrupt method/magic/CRC/ISIZE refuses 75
+  ---
+  duration_ms: 3.5201
+  type: 'test'
+  ...
+# Subtest: F15b-G04 trailing bytes or another member refuses 1
+ok 190 - F15b-G04 trailing bytes or another member refuses 1
+  ---
+  duration_ms: 1.0734
+  type: 'test'
+  ...
+# Subtest: F15b-G04 trailing bytes or another member refuses 2
+ok 191 - F15b-G04 trailing bytes or another member refuses 2
+  ---
+  duration_ms: 0.9481
+  type: 'test'
+  ...
+# Subtest: F15b-G04 trailing bytes or another member refuses 20
+ok 192 - F15b-G04 trailing bytes or another member refuses 20
+  ---
+  duration_ms: 0.8951
+  type: 'test'
+  ...
+# Subtest: F15b-G04 trailing bytes or another member refuses 79
+ok 193 - F15b-G04 trailing bytes or another member refuses 79
+  ---
+  duration_ms: 0.9105
+  type: 'test'
+  ...
+# Subtest: F15b-G05 bounded optional metadata/headerCRC accepted, never returned
+ok 194 - F15b-G05 bounded optional metadata/headerCRC accepted, never returned
+  ---
+  duration_ms: 1.467
+  type: 'test'
+  ...
+# Subtest: F15b-G06 reserved flags and unbounded optional metadata refuse
+ok 195 - F15b-G06 reserved flags and unbounded optional metadata refuse
+  ---
+  duration_ms: 0.6271
+  type: 'test'
+  ...
+# Subtest: F15b-G07 encoded and decoded exact bounds accepted and overflow refused
+ok 196 - F15b-G07 encoded and decoded exact bounds accepted and overflow refused
+  ---
+  duration_ms: 2.3196
+  type: 'test'
+  ...
+# Subtest: F15b-G08 compression expansion is bounded before returning data
+ok 197 - F15b-G08 compression expansion is bounded before returning data
+  ---
+  duration_ms: 1.3292
+  type: 'test'
+  ...
+# Subtest: F15b-G09 invalid limits refuse and errors do not echo input
+ok 198 - F15b-G09 invalid limits refuse and errors do not echo input
+  ---
+  duration_ms: 0.629
+  type: 'test'
+  ...
+# Subtest: F15b-G10 gzip does not depend on the newer optional zlib crc32 primitive
+ok 199 - F15b-G10 gzip does not depend on the newer optional zlib crc32 primitive
+  ---
+  duration_ms: 1.0431
+  type: 'test'
+  ...
+# Subtest: F15b-W01 public gzip and retained identity JSON reach actual provider canonically
+ok 200 - F15b-W01 public gzip and retained identity JSON reach actual provider canonically
+  ---
+  duration_ms: 169.8041
+  type: 'test'
+  ...
+# Subtest: F15b-W02 flagoff withholds gzip while public JSON continues
+ok 201 - F15b-W02 flagoff withholds gzip while public JSON continues
+  ---
+  duration_ms: 32.0578
+  type: 'test'
+  ...
+# Subtest: F15b-W03 truncated/corrupt/trailing/multimember bodies send no provider bytes
+ok 202 - F15b-W03 truncated/corrupt/trailing/multimember bodies send no provider bytes
+  ---
+  duration_ms: 14.9205
+  type: 'test'
+  ...
+# Subtest: F15b-W04 complete decoded JSON still enforces duplicatekeys and strict UTF8
+ok 203 - F15b-W04 complete decoded JSON still enforces duplicatekeys and strict UTF8
+  ---
+  duration_ms: 16.1599
+  type: 'test'
+  ...
+# Subtest: F15b-W05 nested unknown and duplicate content encodings refuse
+ok 204 - F15b-W05 nested unknown and duplicate content encodings refuse
+  ---
+  duration_ms: 16.6042
+  type: 'test'
+  ...
+# Subtest: F15b-W06 expansion/decoded bound refuses before provider admission
+ok 205 - F15b-W06 expansion/decoded bound refuses before provider admission
+  ---
+  duration_ms: 6.9297
+  type: 'test'
+  ...
+# {"id":"F15b-W07","status":422,"providerRequests":0,"containsSynthetic":false}
+# Subtest: F15b-W07 synthetic provider credential in decoded gzip never reaches receiver
+ok 206 - F15b-W07 synthetic provider credential in decoded gzip never reaches receiver
+  ---
+  duration_ms: 10.3577
+  type: 'test'
+  ...
+# Subtest: F15b-W08 complete inspection waits for final gzip trailer
+ok 207 - F15b-W08 complete inspection waits for final gzip trailer
+  ---
+  duration_ms: 61.4906
+  type: 'test'
+  ...
+# Subtest: F15b-W09 incomplete compressed cancellation and shutdown never forward
+ok 208 - F15b-W09 incomplete compressed cancellation and shutdown never forward
+  ---
+  duration_ms: 78.2429
+  type: 'test'
+  ...
+# Subtest: F15a-J01 public nested Unicode/escaped values return complete canonical JSON
+ok 209 - F15a-J01 public nested Unicode/escaped values return complete canonical JSON
+  ---
+  duration_ms: 3.2009
+  type: 'test'
+  ...
+# Subtest: F15a-J02 duplicate decoded key refuses {"x":1,"x":2}
+ok 210 - F15a-J02 duplicate decoded key refuses {"x":1,"x":2}
+  ---
+  duration_ms: 0.6709
+  type: 'test'
+  ...
+# Subtest: F15a-J02 duplicate decoded key refuses {"x":1,"\\u0078":2}
+ok 211 - F15a-J02 duplicate decoded key refuses {"x":1,"\\u0078":2}
+  ---
+  duration_ms: 0.1842
+  type: 'test'
+  ...
+# Subtest: F15a-J02 duplicate decoded key refuses {"nested":{"key":1,"key":2}}
+ok 212 - F15a-J02 duplicate decoded key refuses {"nested":{"key":1,"key":2}}
+  ---
+  duration_ms: 0.2317
+  type: 'test'
+  ...
+# Subtest: F15a-J03 case-sensitive keys remain distinct inert data
+ok 213 - F15a-J03 case-sensitive keys remain distinct inert data
+  ---
+  duration_ms: 0.2401
+  type: 'test'
+  ...
+# Subtest: F15a-J04 invalid or nonobject JSON refuses 
+ok 214 - F15a-J04 invalid or nonobject JSON refuses 
+  ---
+  duration_ms: 0.1697
+  type: 'test'
+  ...
+# Subtest: F15a-J04 invalid or nonobject JSON refuses []
+ok 215 - F15a-J04 invalid or nonobject JSON refuses []
+  ---
+  duration_ms: 0.1254
+  type: 'test'
+  ...
+# Subtest: F15a-J04 invalid or nonobject JSON refuses null
+ok 216 - F15a-J04 invalid or nonobject JSON refuses null
+  ---
+  duration_ms: 0.2214
+  type: 'test'
+  ...
+# Subtest: F15a-J04 invalid or nonobject JSON refuses "text"
+ok 217 - F15a-J04 invalid or nonobject JSON refuses "text"
+  ---
+  duration_ms: 0.3085
+  type: 'test'
+  ...
+# Subtest: F15a-J04 invalid or nonobject JSON refuses 42
+ok 218 - F15a-J04 invalid or nonobject JSON refuses 42
+  ---
+  duration_ms: 0.4284
+  type: 'test'
+  ...
+# Subtest: F15a-J04 invalid or nonobject JSON refuses {"a":1}x
+ok 219 - F15a-J04 invalid or nonobject JSON refuses {"a":1}x
+  ---
+  duration_ms: 0.1526
+  type: 'test'
+  ...
+# Subtest: F15a-J04 invalid or nonobject JSON refuses {"a":}
+ok 220 - F15a-J04 invalid or nonobject JSON refuses {"a":}
+  ---
+  duration_ms: 0.119
+  type: 'test'
+  ...
+# Subtest: F15a-J04 invalid or nonobject JSON refuses {"a":1,}
+ok 221 - F15a-J04 invalid or nonobject JSON refuses {"a":1,}
+  ---
+  duration_ms: 0.1054
+  type: 'test'
+  ...
+# Subtest: F15a-J04 invalid or nonobject JSON refuses {a:1}
+ok 222 - F15a-J04 invalid or nonobject JSON refuses {a:1}
+  ---
+  duration_ms: 0.1664
+  type: 'test'
+  ...
+# Subtest: F15a-J04 invalid or nonobject JSON refuses {"a":NaN}
+ok 223 - F15a-J04 invalid or nonobject JSON refuses {"a":NaN}
+  ---
+  duration_ms: 0.1182
+  type: 'test'
+  ...
+# Subtest: F15a-J05 nonfinite/unsafe number or lone surrogate refuses {"a":1e999}
+ok 224 - F15a-J05 nonfinite/unsafe number or lone surrogate refuses {"a":1e999}
+  ---
+  duration_ms: 0.1558
+  type: 'test'
+  ...
+# Subtest: F15a-J05 nonfinite/unsafe number or lone surrogate refuses {"a":9007199254740993}
+ok 225 - F15a-J05 nonfinite/unsafe number or lone surrogate refuses {"a":9007199254740993}
+  ---
+  duration_ms: 0.1094
+  type: 'test'
+  ...
+# Subtest: F15a-J05 nonfinite/unsafe number or lone surrogate refuses {"a":"\\ud800"}
+ok 226 - F15a-J05 nonfinite/unsafe number or lone surrogate refuses {"a":"\\ud800"}
+  ---
+  duration_ms: 0.1058
+  type: 'test'
+  ...
+# Subtest: F15a-J05 nonfinite/unsafe number or lone surrogate refuses {"a":"\\udfff"}
+ok 227 - F15a-J05 nonfinite/unsafe number or lone surrogate refuses {"a":"\\udfff"}
+  ---
+  duration_ms: 0.1109
+  type: 'test'
+  ...
+# Subtest: F15a-J05 nonfinite/unsafe number or lone surrogate refuses {"\\ud800":1}
+ok 228 - F15a-J05 nonfinite/unsafe number or lone surrogate refuses {"\\ud800":1}
+  ---
+  duration_ms: 0.0914
+  type: 'test'
+  ...
+# Subtest: F15a-J06 BOM outside JSON refuses while registered-like BOM inside text stays byte-exact
+ok 229 - F15a-J06 BOM outside JSON refuses while registered-like BOM inside text stays byte-exact
+  ---
+  duration_ms: 0.2697
+  type: 'test'
+  ...
+# Subtest: F15a-J07 malformed UTF8 never substitutes a replacement character
+ok 230 - F15a-J07 malformed UTF8 never substitutes a replacement character
+  ---
+  duration_ms: 0.172
+  type: 'test'
+  ...
+# Subtest: F15a-J08 exact byte limit succeeds; one extra byte refuses
+ok 231 - F15a-J08 exact byte limit succeeds; one extra byte refuses
+  ---
+  duration_ms: 0.206
+  type: 'test'
+  ...
+# Subtest: F15a-J09 depth and key/value node budgets reject overflow without unbounded recursion
+ok 232 - F15a-J09 depth and key/value node budgets reject overflow without unbounded recursion
+  ---
+  duration_ms: 0.4253
+  type: 'test'
+  ...
+# Subtest: F15a-J10 decoded string UTF8 budget includes Unicode and keys
+ok 233 - F15a-J10 decoded string UTF8 budget includes Unicode and keys
+  ---
+  duration_ms: 0.3745
+  type: 'test'
+  ...
+# Subtest: F15a-J11 errors never echo arbitrary input fragments
+ok 234 - F15a-J11 errors never echo arbitrary input fragments
+  ---
+  duration_ms: 0.1707
+  type: 'test'
+  ...
+# Subtest: F15a-W01 real public JSON bytes reach loopback provider after complete decode
+ok 235 - F15a-W01 real public JSON bytes reach loopback provider after complete decode
+  ---
+  duration_ms: 178.3705
+  type: 'test'
+  ...
+# Subtest: F15a-W02 duplicate decoded key never opens provider request
+ok 236 - F15a-W02 duplicate decoded key never opens provider request
+  ---
+  duration_ms: 15.7734
+  type: 'test'
+  ...
+# Subtest: F15a-W02 duplicate decoded key never opens provider request
+ok 237 - F15a-W02 duplicate decoded key never opens provider request
+  ---
+  duration_ms: 7.5788
+  type: 'test'
+  ...
+# Subtest: F15a-W03 unsupported media/charset text/plain
+ok 238 - F15a-W03 unsupported media/charset text/plain
+  ---
+  duration_ms: 7.0599
+  type: 'test'
+  ...
+# Subtest: F15a-W03 unsupported media/charset application/json; charset=latin1
+ok 239 - F15a-W03 unsupported media/charset application/json; charset=latin1
+  ---
+  duration_ms: 7.2261
+  type: 'test'
+  ...
+# Subtest: F15a-W03 unsupported media/charset application/octet-stream
+ok 240 - F15a-W03 unsupported media/charset application/octet-stream
+  ---
+  duration_ms: 5.5687
+  type: 'test'
+  ...
+# Subtest: F15a-W03 nonempty body without media header refuses
+ok 241 - F15a-W03 nonempty body without media header refuses
+  ---
+  duration_ms: 5.3916
+  type: 'test'
+  ...
+# Subtest: F15a-W04 duplicate media header refuses before forwarding
+ok 242 - F15a-W04 duplicate media header refuses before forwarding
+  ---
+  duration_ms: 6.4152
+  type: 'test'
+  ...
+# Subtest: F15a-W05 format flag off refuses rather than legacy pass-through
+ok 243 - F15a-W05 format flag off refuses rather than legacy pass-through
+  ---
+  duration_ms: 6.9225
+  type: 'test'
+  ...
+# Subtest: F15a-W06 invalid UTF8/BOM/truncation never forwards a partial request
+ok 244 - F15a-W06 invalid UTF8/BOM/truncation never forwards a partial request
+  ---
+  duration_ms: 8.9524
+  type: 'test'
+  ...
+# Subtest: F15a-W07 recognized synthetic provider credential is withheld from actual receiver
+ok 245 - F15a-W07 recognized synthetic provider credential is withheld from actual receiver
+  ---
+  duration_ms: 10.2717
+  type: 'test'
+  ...
+# Subtest: F15a-W08 body read deadline refuses an incomplete finite request before provider contact
+ok 246 - F15a-W08 body read deadline refuses an incomplete finite request before provider contact
+  ---
+  duration_ms: 110.4295
+  type: 'test'
+  ...
+# Subtest: F15a-W09 broker shutdown while body is incomplete refuses its late complete request
+ok 247 - F15a-W09 broker shutdown while body is incomplete refuses its late complete request
+  ---
+  duration_ms: 4057.2586
+  type: 'test'
+  ...
+# Subtest: F15a-W10 client cancellation never forwards and leaves public broker health available
+ok 248 - F15a-W10 client cancellation never forwards and leaves public broker health available
+  ---
+  duration_ms: 34.9828
+  type: 'test'
+  ...
+# Subtest: F15g-P01 public JSON plus UTF8 text attachment transcodes without metadata
+ok 249 - F15g-P01 public JSON plus UTF8 text attachment transcodes without metadata
+  ---
+  duration_ms: 4.8482
+  type: 'test'
+  ...
+# Subtest: F15g-P02 one JSON part, zero attachments and inert prototype options work
+ok 250 - F15g-P02 one JSON part, zero attachments and inert prototype options work
+  ---
+  duration_ms: 1.541
+  type: 'test'
+  ...
+# Subtest: F15g-P03 media boundary quoted or unquoted only one bounded parameter
+ok 251 - F15g-P03 media boundary quoted or unquoted only one bounded parameter
+  ---
+  duration_ms: 0.8096
+  type: 'test'
+  ...
+# Subtest: F15g-P04 malformed/ambiguous multipart refuses 19
+ok 252 - F15g-P04 malformed/ambiguous multipart refuses 19
+  ---
+  duration_ms: 0.7343
+  type: 'test'
+  ...
+# Subtest: F15g-P04 malformed/ambiguous multipart refuses 45
+ok 253 - F15g-P04 malformed/ambiguous multipart refuses 45
+  ---
+  duration_ms: 0.1992
+  type: 'test'
+  ...
+# Subtest: F15g-P04 malformed/ambiguous multipart refuses 45
+ok 254 - F15g-P04 malformed/ambiguous multipart refuses 45
+  ---
+  duration_ms: 0.6274
+  type: 'test'
+  ...
+# Subtest: F15g-P04 malformed/ambiguous multipart refuses 52
+ok 255 - F15g-P04 malformed/ambiguous multipart refuses 52
+  ---
+  duration_ms: 0.4079
+  type: 'test'
+  ...
+# Subtest: F15g-P04 malformed/ambiguous multipart refuses 71
+ok 256 - F15g-P04 malformed/ambiguous multipart refuses 71
+  ---
+  duration_ms: 0.3472
+  type: 'test'
+  ...
+# Subtest: F15g-P04 malformed/ambiguous multipart refuses 137
+ok 257 - F15g-P04 malformed/ambiguous multipart refuses 137
+  ---
+  duration_ms: 0.4667
+  type: 'test'
+  ...
+# Subtest: F15g-P04 malformed/ambiguous multipart refuses 140
+ok 258 - F15g-P04 malformed/ambiguous multipart refuses 140
+  ---
+  duration_ms: 1.0161
+  type: 'test'
+  ...
+# Subtest: F15g-P05 duplicate JSON request, missing request, nested/binary/unsafe filename refuse
+ok 259 - F15g-P05 duplicate JSON request, missing request, nested/binary/unsafe filename refuse
+  ---
+  duration_ms: 2.2355
+  type: 'test'
+  ...
+# Subtest: F15g-P06 part/header/complete byte bounds and exact text part boundary
+ok 260 - F15g-P06 part/header/complete byte bounds and exact text part boundary
+  ---
+  duration_ms: 10.2828
+  type: 'test'
+  ...
+# Subtest: F15g-P07 duplicate JSON keys and constant no-echo errors refuse
+ok 261 - F15g-P07 duplicate JSON keys and constant no-echo errors refuse
+  ---
+  duration_ms: 0.4607
+  type: 'test'
+  ...
+# Subtest: F15g-P08 ordinary boundary at EOF cannot replace a closing boundary
+ok 262 - F15g-P08 ordinary boundary at EOF cannot replace a closing boundary
+  ---
+  duration_ms: 0.4173
+  type: 'test'
+  ...
+# Subtest: F15g-P09 pretty JSON request part keeps JSON whitespace semantics
+ok 263 - F15g-P09 pretty JSON request part keeps JSON whitespace semantics
+  ---
+  duration_ms: 0.5078
+  type: 'test'
+  ...
+# Subtest: F15g-W01 complete form forwards ordered JSON/text messages once
+ok 264 - F15g-W01 complete form forwards ordered JSON/text messages once
+  ---
+  duration_ms: 166.7309
+  type: 'test'
+  ...
+# Subtest: F15g-W02 flagoff withholds multipart, ordinary JSON healthy
+ok 265 - F15g-W02 flagoff withholds multipart, ordinary JSON healthy
+  ---
+  duration_ms: 31.1958
+  type: 'test'
+  ...
+# Subtest: F15g-W03 secret text attachment never reaches provider
+ok 266 - F15g-W03 secret text attachment never reaches provider
+  ---
+  duration_ms: 13.2249
+  type: 'test'
+  ...
+# Subtest: F15g-W04 malformed, binary, nested and oversized parts refuse
+ok 267 - F15g-W04 malformed, binary, nested and oversized parts refuse
+  ---
+  duration_ms: 30.9
+  type: 'test'
+  ...
+# Subtest: F15g-W05 gzip outer form accepted and controllers refuse form
+ok 268 - F15g-W05 gzip outer form accepted and controllers refuse form
+  ---
+  duration_ms: 41.8038
+  type: 'test'
+  ...
+# Subtest: F15g-W06 no early JSON part forwarding before chunked final form
+ok 269 - F15g-W06 no early JSON part forwarding before chunked final form
+  ---
+  duration_ms: 72.6537
+  type: 'test'
+  ...
+# Subtest: F15g-W07 finite read timeout withholds complete first part
+ok 270 - F15g-W07 finite read timeout withholds complete first part
+  ---
+  duration_ms: 87.1686
+  type: 'test'
+  ...
+# Subtest: F15g-W08 canceled partial form withholds and owner stays healthy
+ok 271 - F15g-W08 canceled partial form withholds and owner stays healthy
+  ---
+  duration_ms: 63.896
+  type: 'test'
+  ...
+# Subtest: F16-P01 public immutable request preserves supported options
+ok 272 - F16-P01 public immutable request preserves supported options
+  ---
+  duration_ms: 10.0971
+  type: 'test'
+  ...
+# Subtest: F16-P02 registered representation refuses 34
+ok 273 - F16-P02 registered representation refuses 34
+  ---
+  duration_ms: 1.105
+  type: 'test'
+  ...
+# Subtest: F16-P02 registered representation refuses 48
+ok 274 - F16-P02 registered representation refuses 48
+  ---
+  duration_ms: 0.8789
+  type: 'test'
+  ...
+# Subtest: F16-P02 registered representation refuses 46
+ok 275 - F16-P02 registered representation refuses 46
+  ---
+  duration_ms: 0.5912
+  type: 'test'
+  ...
+# Subtest: F16-P02 registered representation refuses 68
+ok 276 - F16-P02 registered representation refuses 68
+  ---
+  duration_ms: 0.7336
+  type: 'test'
+  ...
+# Subtest: F16-P02 registered representation refuses 34
+ok 277 - F16-P02 registered representation refuses 34
+  ---
+  duration_ms: 1.1669
+  type: 'test'
+  ...
+# Subtest: F16-P02 registered representation refuses 36
+ok 278 - F16-P02 registered representation refuses 36
+  ---
+  duration_ms: 0.6684
+  type: 'test'
+  ...
+# Subtest: F16-P03 ordered content joins detect registered fragments across roles/messages
+ok 279 - F16-P03 ordered content joins detect registered fragments across roles/messages
+  ---
+  duration_ms: 1.9854
+  type: 'test'
+  ...
+# Subtest: F16-P04 provider patterns and fixed entropy controls with public negatives
+ok 280 - F16-P04 provider patterns and fixed entropy controls with public negatives
+  ---
+  duration_ms: 8.1119
+  type: 'test'
+  ...
+# Subtest: F16-P05 unknown schemas and auth/URL overrides refuse
+ok 281 - F16-P05 unknown schemas and auth/URL overrides refuse
+  ---
+  duration_ms: 1.8623
+  type: 'test'
+  ...
+# Subtest: F16-P06 unavailable/unknown policy and invalid registry never degrade to empty
+ok 282 - F16-P06 unavailable/unknown policy and invalid registry never degrade to empty
+  ---
+  duration_ms: 2.6105
+  type: 'test'
+  ...
+# Subtest: F16-P07 complete semantic/request bounds withhold
+ok 283 - F16-P07 complete semantic/request bounds withhold
+  ---
+  duration_ms: 1.4079
+  type: 'test'
+  ...
+# Subtest: F16-P08 output JSON semantics and raw boundaries withhold complete response
+ok 284 - F16-P08 output JSON semantics and raw boundaries withhold complete response
+  ---
+  duration_ms: 4.3771
+  type: 'test'
+  ...
+# Subtest: F16-P09 finite SSE output waits for complete inspected stream
+ok 285 - F16-P09 finite SSE output waits for complete inspected stream
+  ---
+  duration_ms: 3.0079
+  type: 'test'
+  ...
+# Subtest: F16-P10 malformed/control/UTF8/output budget failures release nothing
+ok 286 - F16-P10 malformed/control/UTF8/output budget failures release nothing
+  ---
+  duration_ms: 5.1793
+  type: 'test'
+  ...
+# Subtest: F16-P11 bounded seeded public/fragment controls
+ok 287 - F16-P11 bounded seeded public/fragment controls
+  ---
+  duration_ms: 39.1513
+  type: 'test'
+  ...
+# Subtest: F16-P12 errors expose no input or registry contents
+ok 288 - F16-P12 errors expose no input or registry contents
+  ---
+  duration_ms: 0.3902
+  type: 'test'
+  ...
+# Subtest: F16-P13 bounded Anthropic tool use/results preserve public data and refuse unsupported blocks
+ok 289 - F16-P13 bounded Anthropic tool use/results preserve public data and refuse unsupported blocks
+  ---
+  duration_ms: 2.0486
+  type: 'test'
+  ...
+# Subtest: F16-M01 valid but wrong enterprise startup policy cannot be healthy
+ok 290 - F16-M01 valid but wrong enterprise startup policy cannot be healthy
+  ---
+  duration_ms: 53.2367
+  type: 'test'
+  ...
+# Subtest: F16-M02 valid runtime policy downgrade withdraws owner
+ok 291 - F16-M02 valid runtime policy downgrade withdraws owner
+  ---
+  duration_ms: 19.7676
+  type: 'test'
+  ...
+# Subtest: F16-M03 saved mode drift revokes prior generation
+ok 292 - F16-M03 saved mode drift revokes prior generation
+  ---
+  duration_ms: 7.5525
+  type: 'test'
+  ...
+# Subtest: F16-M04 wrong mode enable acknowledgment is not ignored
+ok 293 - F16-M04 wrong mode enable acknowledgment is not ignored
+  ---
+  duration_ms: 5.4601
+  type: 'test'
+  ...
+# Subtest: F16-M05 default machine flag reaches child and complete registry sync
+ok 294 - F16-M05 default machine flag reaches child and complete registry sync
+  ---
+  duration_ms: 8.0353
+  type: 'test'
+  ...
+# Subtest: F16-M06 unavailable private registry fails before child launch
+ok 295 - F16-M06 unavailable private registry fails before child launch
+  ---
+  duration_ms: 0.6711
+  type: 'test'
+  ...
+# Subtest: F16-M07 stale registry source cannot retain request authority
+ok 296 - F16-M07 stale registry source cannot retain request authority
+  ---
+  duration_ms: 8.395
+  type: 'test'
+  ...
+# Subtest: F16-M08 unknown gateway policy version never becomes healthy
+ok 297 - F16-M08 unknown gateway policy version never becomes healthy
+  ---
+  duration_ms: 8.9757
+  type: 'test'
+  ...
+# Subtest: F16-M09 machine disable ignores repository override
+ok 298 - F16-M09 machine disable ignores repository override
+  ---
+  duration_ms: 6.504
+  type: 'test'
+  ...
+# Subtest: F16-W01 public exact collector positive and controlled auth headers
+ok 299 - F16-W01 public exact collector positive and controlled auth headers
+  ---
+  duration_ms: 146.9774
+  type: 'test'
+  ...
+# Subtest: F16-W02 registered raw and encoded representations send zero provider bytes
+ok 300 - F16-W02 registered raw and encoded representations send zero provider bytes
+  ---
+  duration_ms: 33.7466
+  type: 'test'
+  ...
+# Subtest: F16-W03 split messages and metadata/tool argument secrets withhold
+ok 301 - F16-W03 split messages and metadata/tool argument secrets withhold
+  ---
+  duration_ms: 22.8056
+  type: 'test'
+  ...
+# Subtest: F16-W04 flagoff never falls back to earlier scanning
+ok 302 - F16-W04 flagoff never falls back to earlier scanning
+  ---
+  duration_ms: 13.001
+  type: 'test'
+  ...
+# Subtest: F16-W05 unknown profile/version/query and credential overrides refuse
+ok 303 - F16-W05 unknown profile/version/query and credential overrides refuse
+  ---
+  duration_ms: 25.7817
+  type: 'test'
+  ...
+# Subtest: F16-W06 F15 gzip/framed/base64 paths enter same policy snapshot
+ok 304 - F16-W06 F15 gzip/framed/base64 paths enter same policy snapshot
+  ---
+  duration_ms: 26.5191
+  type: 'test'
+  ...
+# Subtest: F16-W07 registered provider output is blocked before body release
+ok 305 - F16-W07 registered provider output is blocked before body release
+  ---
+  duration_ms: 30.8773
+  type: 'test'
+  ...
+# Subtest: F16-W08 finite SSE registered split output withholds prefix and secret
+ok 306 - F16-W08 finite SSE registered split output withholds prefix and secret
+  ---
+  duration_ms: 13.6378
+  type: 'test'
+  ...
+# Subtest: F16-W09 public complete SSE protocol preserved
+ok 307 - F16-W09 public complete SSE protocol preserved
+  ---
+  duration_ms: 15.4079
+  type: 'test'
+  ...
+# Subtest: F16-W10 registry/guard unavailable never forwards
+ok 308 - F16-W10 registry/guard unavailable never forwards
+  ---
+  duration_ms: 16.9197
+  type: 'test'
+  ...
+# Subtest: F16-W11 audit metadata never repeats input/model/session secrets
+ok 309 - F16-W11 audit metadata never repeats input/model/session secrets
+  ---
+  duration_ms: 9.0072
+  type: 'test'
+  ...
+# Subtest: F16-W12 held early body does not forward; cancellation stays responsive
+ok 310 - F16-W12 held early body does not forward; cancellation stays responsive
+  ---
+  duration_ms: 75.8466
+  type: 'test'
+  ...
+# Subtest: F16-W13 private built-in loopback selftest requires controller
+ok 311 - F16-W13 private built-in loopback selftest requires controller
+  ---
+  duration_ms: 41.5749
+  type: 'test'
+  ...
+# Subtest: F16-W14 any canary resync invalidates old boundary until complete policy sync
+ok 312 - F16-W14 any canary resync invalidates old boundary until complete policy sync
+  ---
+  duration_ms: 24.4404
+  type: 'test'
+  ...
+# Subtest: F16-W15 prior enterprise approval and safe PII redaction remain enforced
+ok 313 - F16-W15 prior enterprise approval and safe PII redaction remain enforced
+  ---
+  duration_ms: 28.5969
+  type: 'test'
+  ...
+# Subtest: F16-W16 prior dangerous-command output warning remains visible
+ok 314 - F16-W16 prior dangerous-command output warning remains visible
+  ---
+  duration_ms: 14.5613
+  type: 'test'
+  ...
+# Subtest: F16-W17 freshness failure after provider read releases no output
+ok 315 - F16-W17 freshness failure after provider read releases no output
+  ---
+  duration_ms: 12.6858
+  type: 'test'
+  ...
+# Subtest: F16-W18 backend exception and provider error body never escape
+ok 316 - F16-W18 backend exception and provider error body never escape
+  ---
+  duration_ms: 17.7145
+  type: 'test'
+  ...
+# Subtest: F16-W19 provider output stays buffered until complete and stale policy refuses release
+ok 317 - F16-W19 provider output stays buffered until complete and stale policy refuses release
+  ---
+  duration_ms: 13.869
+  type: 'test'
+  ...
+# Subtest: F16-W20 client cancellation after provider prefix releases no bytes
+ok 318 - F16-W20 client cancellation after provider prefix releases no bytes
+  ---
+  duration_ms: 4029.6552
+  type: 'test'
+  ...
+# Subtest: F16-I01 no release permission before initialization completes
+ok 319 - F16-I01 no release permission before initialization completes
+  ---
+  duration_ms: 39.3647
+  type: 'test'
+  ...
+# Subtest: F16-I02 healthy bound challenge succeeds; negative guard withdraws
+ok 320 - F16-I02 healthy bound challenge succeeds; negative guard withdraws
+  ---
+  duration_ms: 2.8588
+  type: 'test'
+  ...
+# Subtest: F16-I03 wrong session and extra payload fail closed
+ok 321 - F16-I03 wrong session and extra payload fail closed
+  ---
+  duration_ms: 3.0136
+  type: 'test'
+  ...
+# Subtest: F16-I04 parent reply requires exact session/id/schema; old reply cannot authorize next request
+ok 322 - F16-I04 parent reply requires exact session/id/schema; old reply cannot authorize next request
+  ---
+  duration_ms: 0.9845
+  type: 'test'
+  ...
+# Subtest: F16-I05 parent outage and bounded outstanding challenges deny
+ok 323 - F16-I05 parent outage and bounded outstanding challenges deny
+  ---
+  duration_ms: 1.7384
+  type: 'test'
+  ...
+# Subtest: F16-I06 missing response expires without payload disclosure
+ok 324 - F16-I06 missing response expires without payload disclosure
+  ---
+  duration_ms: 1014.2785
+  type: 'test'
+  ...
+# Subtest: F16-V01 absent vault is an explicit empty snapshot without storage/key creation
+ok 325 - F16-V01 absent vault is an explicit empty snapshot without storage/key creation
+  ---
+  duration_ms: 91.9123
+  type: 'test'
+  ...
+# Subtest: F16-V02 real encrypted current and legacy records are complete; other root excluded
+ok 326 - F16-V02 real encrypted current and legacy records are complete; other root excluded
+  ---
+  duration_ms: 74.5791
+  type: 'test'
+  ...
+# Subtest: F16-V03 all selected roots are captured
+ok 327 - F16-V03 all selected roots are captured
+  ---
+  duration_ms: 82.3801
+  type: 'test'
+  ...
+# Subtest: F16-V04 malformed excluded-root metadata never becomes partial snapshot
+ok 328 - F16-V04 malformed excluded-root metadata never becomes partial snapshot
+  ---
+  duration_ms: 41.8809
+  type: 'test'
+  ...
+# Subtest: F16-V05 cipher replacement revokes captured lease and late use result
+ok 329 - F16-V05 cipher replacement revokes captured lease and late use result
+  ---
+  duration_ms: 58.7917
+  type: 'test'
+  ...
+# Subtest: F16-V06 key change event revokes lease
+ok 330 - F16-V06 key change event revokes lease
+  ---
+  duration_ms: 53.2188
+  type: 'test'
+  ...
+# Subtest: F16-V07 pending transaction added after capture revokes lease
+ok 331 - F16-V07 pending transaction added after capture revokes lease
+  ---
+  duration_ms: 48.4325
+  type: 'test'
+  ...
+# Subtest: F16-V08 new vault invalidates prior absent snapshot
+ok 332 - F16-V08 new vault invalidates prior absent snapshot
+  ---
+  duration_ms: 35.6755
+  type: 'test'
+  ...
+# Subtest: F16-V09 root selection and policy drift revoke snapshot
+ok 333 - F16-V09 root selection and policy drift revoke snapshot
+  ---
+  duration_ms: 93.228
+  type: 'test'
+  ...
+# Subtest: F16-V10 disabled dependencies refuse before copy
+ok 334 - F16-V10 disabled dependencies refuse before copy
+  ---
+  duration_ms: 8.1592
+  type: 'test'
+  ...
+# Subtest: F16-V11 invalid encrypted schema/key and oversized registration set refuse
+ok 335 - F16-V11 invalid encrypted schema/key and oversized registration set refuse
+  ---
+  duration_ms: 99.4239
+  type: 'test'
+  ...
+# Subtest: F16-V12 disposal and disabled guard are sticky
+ok 336 - F16-V12 disposal and disabled guard are sticky
+  ---
+  duration_ms: 33.6207
+  type: 'test'
+  ...
+# Subtest: F10-O01 absent vault permits useful empty-registry output without creating storage or a key
+ok 337 - F10-O01 absent vault permits useful empty-registry output without creating storage or a key
+  ---
+  duration_ms: 107.935
+  type: 'test'
+  ...
+# Subtest: F10-O02 a safely absent storage directory remains absent during empty-registry filtering
+ok 338 - F10-O02 a safely absent storage directory remains absent during empty-registry filtering
+  ---
+  duration_ms: 69.0514
+  type: 'test'
+  ...
+# Subtest: F10-O03 real encrypted current registrations mask raw and every representative one-layer encoding
+ok 339 - F10-O03 real encrypted current registrations mask raw and every representative one-layer encoding
+  ---
+  duration_ms: 585.8019
+  type: 'test'
+  ...
+# Subtest: F10-O04 long registrations preserve unrelated public Unicode/nonzero output
+ok 340 - F10-O04 long registrations preserve unrelated public Unicode/nonzero output
+  ---
+  duration_ms: 102.8116
+  type: 'test'
+  ...
+# Subtest: F10-O05 any short private registration conservatively masks each nonempty completed channel
+ok 341 - F10-O05 any short private registration conservatively masks each nonempty completed channel
+  ---
+  duration_ms: 189.1202
+  type: 'test'
+  ...
+# Subtest: F10-O06 short and whole-marker replacement collisions withhold instead of returning a private substring
+ok 342 - F10-O06 short and whole-marker replacement collisions withhold instead of returning a private substring
+  ---
+  duration_ms: 207.2316
+  type: 'test'
+  ...
+# Subtest: F10-O07 all legacy/current-root values register while other-root values remain excluded
+ok 343 - F10-O07 all legacy/current-root values register while other-root values remain excluded
+  ---
+  duration_ms: 238.0273
+  type: 'test'
+  ...
+# Subtest: F10-O08 partially bound entries are unavailable rather than silently omitted
+ok 344 - F10-O08 partially bound entries are unavailable rather than silently omitted
+  ---
+  duration_ms: 67.2689
+  type: 'test'
+  ...
+# Subtest: F10-O09 existing ciphertext with a missing or different existing key never regenerates a key
+ok 345 - F10-O09 existing ciphertext with a missing or different existing key never regenerates a key
+  ---
+  duration_ms: 61.7134
+  type: 'test'
+  ...
+# Subtest: F10-O10 absent current cipher with retained vault-pending.json cannot downgrade to an empty registry
+ok 346 - F10-O10 absent current cipher with retained vault-pending.json cannot downgrade to an empty registry
+  ---
+  duration_ms: 36.6654
+  type: 'test'
+  ...
+# Subtest: F10-O10 absent current cipher with retained vault-source-0123456789abcdef0123456789abcdef.json cannot downgrade to an empty registry
+ok 347 - F10-O10 absent current cipher with retained vault-source-0123456789abcdef0123456789abcdef.json cannot downgrade to an empty registry
+  ---
+  duration_ms: 24.8522
+  type: 'test'
+  ...
+# Subtest: F10-O10 absent current cipher with retained vault-generation-a3427b36-46ba-4d84-82e5-c5dfb5ba5dd1.enc cannot downgrade to an empty registry
+ok 348 - F10-O10 absent current cipher with retained vault-generation-a3427b36-46ba-4d84-82e5-c5dfb5ba5dd1.enc cannot downgrade to an empty registry
+  ---
+  duration_ms: 24.1999
+  type: 'test'
+  ...
+# Subtest: F10-O10 absent current cipher with retained vault-mutation.lock cannot downgrade to an empty registry
+ok 349 - F10-O10 absent current cipher with retained vault-mutation.lock cannot downgrade to an empty registry
+  ---
+  duration_ms: 24.2026
+  type: 'test'
+  ...
+# Subtest: F10-O10 absent current cipher with retained write-a3427b36-46ba-4d84-82e5-c5dfb5ba5dd1.enc cannot downgrade to an empty registry
+ok 350 - F10-O10 absent current cipher with retained write-a3427b36-46ba-4d84-82e5-c5dfb5ba5dd1.enc cannot downgrade to an empty registry
+  ---
+  duration_ms: 26.4302
+  type: 'test'
+  ...
+# Subtest: F10-O10 absent current cipher with retained vault-unknown-recovery.enc cannot downgrade to an empty registry
+ok 351 - F10-O10 absent current cipher with retained vault-unknown-recovery.enc cannot downgrade to an empty registry
+  ---
+  duration_ms: 25.7029
+  type: 'test'
+  ...
+# Subtest: F10-O11 pending recovery also blocks an otherwise valid encrypted current vault
+ok 352 - F10-O11 pending recovery also blocks an otherwise valid encrypted current vault
+  ---
+  duration_ms: 24.7045
+  type: 'test'
+  ...
+# Subtest: F10-O12 malformed strict vault schemas/JSON cannot return a partial usable registry
+ok 353 - F10-O12 malformed strict vault schemas/JSON cannot return a partial usable registry
+  ---
+  duration_ms: 116.4985
+  type: 'test'
+  ...
+# Subtest: F10-O13 one-value bytes exhaustion rejects the complete private registry
+ok 354 - F10-O13 one-value bytes exhaustion rejects the complete private registry
+  ---
+  duration_ms: 52.2575
+  type: 'test'
+  ...
+# Subtest: F10-O13 unique registration count exhaustion rejects the complete private registry
+ok 355 - F10-O13 unique registration count exhaustion rejects the complete private registry
+  ---
+  duration_ms: 46.9804
+  type: 'test'
+  ...
+# Subtest: F10-O13 total registration bytes exhaustion rejects the complete private registry
+ok 356 - F10-O13 total registration bytes exhaustion rejects the complete private registry
+  ---
+  duration_ms: 50.3298
+  type: 'test'
+  ...
+# Subtest: F10-O13 derived variant bytes exhaustion rejects the complete private registry
+ok 357 - F10-O13 derived variant bytes exhaustion rejects the complete private registry
+  ---
+  duration_ms: 59.6965
+  type: 'test'
+  ...
+# Subtest: F10-O14 removing a captured cipher revokes permanently rather than falling back to an empty registry
+ok 358 - F10-O14 removing a captured cipher revokes permanently rather than falling back to an empty registry
+  ---
+  duration_ms: 63.6421
+  type: 'test'
+  ...
+# Subtest: F10-O15 changed ciphertext revokes even when the existing key still decrypts it
+ok 359 - F10-O15 changed ciphertext revokes even when the existing key still decrypts it
+  ---
+  duration_ms: 60.8708
+  type: 'test'
+  ...
+# Subtest: F10-O16 late pending migration revokes a filter before any buffered prefix is released
+ok 360 - F10-O16 late pending migration revokes a filter before any buffered prefix is released
+  ---
+  duration_ms: 72.3519
+  type: 'test'
+  ...
+# Subtest: F10-O17 key-change epoch revokes even if a later lookup would return the old key again
+ok 361 - F10-O17 key-change epoch revokes even if a later lookup would return the old key again
+  ---
+  duration_ms: 54.8245
+  type: 'test'
+  ...
+# Subtest: F10-O18 an existing raw policy-file edit revokes without relying on an owner-session event
+ok 362 - F10-O18 an existing raw policy-file edit revokes without relying on an owner-session event
+  ---
+  duration_ms: 93.035
+  type: 'test'
+  ...
+# Subtest: F10-O19 saved effective policy drift revokes pending output
+ok 363 - F10-O19 saved effective policy drift revokes pending output
+  ---
+  duration_ms: 74.1293
+  type: 'test'
+  ...
+# Subtest: F10-O20 loss of exact workspace membership revokes a filter
+ok 364 - F10-O20 loss of exact workspace membership revokes a filter
+  ---
+  duration_ms: 65.5886
+  type: 'test'
+  ...
+# Subtest: F10-O21 lite.vaultMode withdrawal/re-enable is sticky for an already prepared filter
+ok 365 - F10-O21 lite.vaultMode withdrawal/re-enable is sticky for an already prepared filter
+  ---
+  duration_ms: 130.693
+  type: 'test'
+  ...
+# Subtest: F10-O21 lite.secretMatching withdrawal/re-enable is sticky for an already prepared filter
+ok 366 - F10-O21 lite.secretMatching withdrawal/re-enable is sticky for an already prepared filter
+  ---
+  duration_ms: 137.9417
+  type: 'test'
+  ...
+# Subtest: F10-O21 lite.outputRedactor withdrawal/re-enable is sticky for an already prepared filter
+ok 367 - F10-O21 lite.outputRedactor withdrawal/re-enable is sticky for an already prepared filter
+  ---
+  duration_ms: 135.0493
+  type: 'test'
+  ...
+# Subtest: F10-O21 lite.ps51Terminal withdrawal/re-enable is sticky for an already prepared filter
+ok 368 - F10-O21 lite.ps51Terminal withdrawal/re-enable is sticky for an already prepared filter
+  ---
+  duration_ms: 122.7503
+  type: 'test'
+  ...
+# Subtest: F10-O22 cancel permanently withholds buffered output and cannot be replayed
+ok 369 - F10-O22 cancel permanently withholds buffered output and cannot be replayed
+  ---
+  duration_ms: 62.6465
+  type: 'test'
+  ...
+# Subtest: F10-O22 dispose permanently withholds buffered output and cannot be replayed
+ok 370 - F10-O22 dispose permanently withholds buffered output and cannot be replayed
+  ---
+  duration_ms: 57.9166
+  type: 'test'
+  ...
+# Subtest: F10-O23 enabled false/throw and lost trust cannot downgrade private output protection
+ok 371 - F10-O23 enabled false/throw and lost trust cannot downgrade private output protection
+  ---
+  duration_ms: 56.9821
+  type: 'test'
+  ...
+# Subtest: F10-O24 an enabled callback reentrantly calling cancel cannot release final output
+ok 372 - F10-O24 an enabled callback reentrantly calling cancel cannot release final output
+  ---
+  duration_ms: 62.8619
+  type: 'test'
+  ...
+# Subtest: F10-O24 an enabled callback reentrantly calling dispose cannot release final output
+ok 373 - F10-O24 an enabled callback reentrantly calling dispose cannot release final output
+  ---
+  duration_ms: 70.5504
+  type: 'test'
+  ...
+# Subtest: F10-O25 pending drift during the second existing-key read is rechecked before filter return
+ok 374 - F10-O25 pending drift during the second existing-key read is rechecked before filter return
+  ---
+  duration_ms: 37.7166
+  type: 'test'
+  ...
+# Subtest: F10-O25 ciphertext drift during the second existing-key read is rechecked before filter return
+ok 375 - F10-O25 ciphertext drift during the second existing-key read is rechecked before filter return
+  ---
+  duration_ms: 32.5281
+  type: 'test'
+  ...
+# Subtest: F10-O26 a configuration change while a key read is held cannot return a stale filter
+ok 376 - F10-O26 a configuration change while a key read is held cannot return a stale filter
+  ---
+  duration_ms: 27.5134
+  type: 'test'
+  ...
+# Subtest: F10-O27 normal public output-file creation does not confuse directory mtime with identity
+ok 377 - F10-O27 normal public output-file creation does not confuse directory mtime with identity
+  ---
+  duration_ms: 80.0362
+  type: 'test'
+  ...
+# Subtest: F10-O28 roots must be the exact current local workspace folder without authority/query/fragment
+ok 378 - F10-O28 roots must be the exact current local workspace folder without authority/query/fragment
+  ---
+  duration_ms: 11.366
+  type: 'test'
+  ...
+# Subtest: F10-O29 registry/filter progress serialization exposes no values, value hashes, key, cipher or source
+ok 379 - F10-O29 registry/filter progress serialization exposes no values, value hashes, key, cipher or source
+  ---
+  duration_ms: 58.1296
+  type: 'test'
+  ...
+# Subtest: F10-O30 invalid final UTF-8 and unsupported editing controls retain F08 whole-output withholding
+ok 380 - F10-O30 invalid final UTF-8 and unsupported editing controls retain F08 whole-output withholding
+  ---
+  duration_ms: 139.4673
+  type: 'test'
+  ...
+# Subtest: F10-OR-root-malformed complete malformed binding withholds instead of omitting a registry entry
+ok 381 - F10-OR-root-malformed complete malformed binding withholds instead of omitting a registry entry
+  ---
+  duration_ms: 63.1837
+  type: 'test'
+  ...
+# Subtest: F10-OR-root-non-file complete malformed binding withholds instead of omitting a registry entry
+ok 382 - F10-OR-root-non-file complete malformed binding withholds instead of omitting a registry entry
+  ---
+  duration_ms: 41.1203
+  type: 'test'
+  ...
+# Subtest: F10-OR-source-malformed complete malformed binding withholds instead of omitting a registry entry
+ok 383 - F10-OR-source-malformed complete malformed binding withholds instead of omitting a registry entry
+  ---
+  duration_ms: 46.8984
+  type: 'test'
+  ...
+# Subtest: F10-OR-source-outside-root complete malformed binding withholds instead of omitting a registry entry
+ok 384 - F10-OR-source-outside-root complete malformed binding withholds instead of omitting a registry entry
+  ---
+  duration_ms: 41.8907
+  type: 'test'
+  ...
+# Subtest: F10-OR-source-authority complete malformed binding withholds instead of omitting a registry entry
+ok 385 - F10-OR-source-authority complete malformed binding withholds instead of omitting a registry entry
+  ---
+  duration_ms: 41.3112
+  type: 'test'
+  ...
+# Subtest: F10-OR-source-query complete malformed binding withholds instead of omitting a registry entry
+ok 386 - F10-OR-source-query complete malformed binding withholds instead of omitting a registry entry
+  ---
+  duration_ms: 40.4176
+  type: 'test'
+  ...
+# Subtest: F10-OR-source-fragment complete malformed binding withholds instead of omitting a registry entry
+ok 387 - F10-OR-source-fragment complete malformed binding withholds instead of omitting a registry entry
+  ---
+  duration_ms: 40.8568
+  type: 'test'
+  ...
+# Subtest: F10-OR-other-root-mismatched-source complete malformed binding withholds instead of omitting a registry entry
+ok 388 - F10-OR-other-root-mismatched-source complete malformed binding withholds instead of omitting a registry entry
+  ---
+  duration_ms: 44.9756
+  type: 'test'
+  ...
+# Subtest: F10-OR-valid-other-root current registry masks while valid other-project metadata is excluded without source reads
+ok 389 - F10-OR-valid-other-root current registry masks while valid other-project metadata is excluded without source reads
+  ---
+  duration_ms: 175.2309
+  type: 'test'
+  ...
+# Subtest: stored MCP deny-list blocks SoterAI preflight before broker contact
+ok 390 - stored MCP deny-list blocks SoterAI preflight before broker contact
+  ---
+  duration_ms: 22.5001
+  type: 'test'
+  ...
+# Subtest: strict policy is passed to preflight and runtime tool name is distinct from server
+ok 391 - strict policy is passed to preflight and runtime tool name is distinct from server
+  ---
+  duration_ms: 14.2584
+  type: 'test'
+  ...
+# Subtest: JSON primitives and arrays never reach MCP preflight as argument objects
+ok 392 - JSON primitives and arrays never reach MCP preflight as argument objects
+  ---
+  duration_ms: 13.698
+  type: 'test'
+  ...
+# Subtest: concurrent canary creation retains every token and rotation publishes complete state
+ok 393 - concurrent canary creation retains every token and rotation publishes complete state
+  ---
+  duration_ms: 11.543
+  type: 'test'
+  ...
+# Subtest: corrupt canary storage does not silently become an empty monitoring registry
+ok 394 - corrupt canary storage does not silently become an empty monitoring registry
+  ---
+  duration_ms: 4.434
+  type: 'test'
+  ...
+# Subtest: BrokerManager synchronizes canaries on owned startup and new generation after registry changes
+ok 395 - BrokerManager synchronizes canaries on owned startup and new generation after registry changes
+  ---
+  duration_ms: 68.7531
+  type: 'test'
+  ...
+# Subtest: F14-C01 real owned CLI binds atomically despite occupied legacy47321
+ok 396 - F14-C01 real owned CLI binds atomically despite occupied legacy47321
+  ---
+  duration_ms: 753.6881
+  type: 'test'
+  ...
+# Subtest: F14-C02 two actual windows own different bound ports and reject cross credentials
+ok 397 - F14-C02 two actual windows own different bound ports and reject cross credentials
+  ---
+  duration_ms: 1236.8351
+  type: 'test'
+  ...
+# Subtest: F14-C03 real initialization syncs canaries, restores strict mode, then closes without tokens in output
+ok 398 - F14-C03 real initialization syncs canaries, restores strict mode, then closes without tokens in output
+  ---
+  duration_ms: 635.197
+  type: 'test'
+  ...
+# Subtest: F14-C04 parent IPC disconnect exits its own real broker with drained pipes
+ok 399 - F14-C04 parent IPC disconnect exits its own real broker with drained pipes
+  ---
+  duration_ms: 605.1384
+  type: 'test'
+  ...
+# Subtest: F14-L01 port0 and distinct private credentials never enter argv or snapshots
+ok 400 - F14-L01 port0 and distinct private credentials never enter argv or snapshots
+  ---
+  duration_ms: 47.994
+  type: 'test'
+  ...
+# Subtest: F14-L02 simultaneous start calls own one launch
+ok 401 - F14-L02 simultaneous start calls own one launch
+  ---
+  duration_ms: 2.6113
+  type: 'test'
+  ...
+# Subtest: F14-L03 independent window instances never reuse credentials or sessions
+ok 402 - F14-L03 independent window instances never reuse credentials or sessions
+  ---
+  duration_ms: 3.3962
+  type: 'test'
+  ...
+# Subtest: F14-L04 no port probe or shared token attachment before private ready
+ok 403 - F14-L04 no port probe or shared token attachment before private ready
+  ---
+  duration_ms: 2.1362
+  type: 'test'
+  ...
+# Subtest: F14-L05 malformed READY missing withholds readiness
+ok 404 - F14-L05 malformed READY missing withholds readiness
+  ---
+  duration_ms: 1.511
+  type: 'test'
+  ...
+# Subtest: F14-L05 malformed READY array withholds readiness
+ok 405 - F14-L05 malformed READY array withholds readiness
+  ---
+  duration_ms: 1.4719
+  type: 'test'
+  ...
+# Subtest: F14-L05 malformed READY wrong type withholds readiness
+ok 406 - F14-L05 malformed READY wrong type withholds readiness
+  ---
+  duration_ms: 1.6367
+  type: 'test'
+  ...
+# Subtest: F14-L05 malformed READY wrong session withholds readiness
+ok 407 - F14-L05 malformed READY wrong session withholds readiness
+  ---
+  duration_ms: 1.5851
+  type: 'test'
+  ...
+# Subtest: F14-L05 malformed READY unknown version withholds readiness
+ok 408 - F14-L05 malformed READY unknown version withholds readiness
+  ---
+  duration_ms: 1.6268
+  type: 'test'
+  ...
+# Subtest: F14-L05 malformed READY port zero withholds readiness
+ok 409 - F14-L05 malformed READY port zero withholds readiness
+  ---
+  duration_ms: 2.1011
+  type: 'test'
+  ...
+# Subtest: F14-L05 malformed READY port overflow withholds readiness
+ok 410 - F14-L05 malformed READY port overflow withholds readiness
+  ---
+  duration_ms: 1.2039
+  type: 'test'
+  ...
+# Subtest: F14-L05 malformed READY port string withholds readiness
+ok 411 - F14-L05 malformed READY port string withholds readiness
+  ---
+  duration_ms: 3.5004
+  type: 'test'
+  ...
+# Subtest: F14-L05 malformed READY port float withholds readiness
+ok 412 - F14-L05 malformed READY port float withholds readiness
+  ---
+  duration_ms: 1.2563
+  type: 'test'
+  ...
+# Subtest: F14-L05 malformed READY extra secret field withholds readiness
+ok 413 - F14-L05 malformed READY extra secret field withholds readiness
+  ---
+  duration_ms: 1.025
+  type: 'test'
+  ...
+# Subtest: F14-L06 lifecycle identity uses separate controller token and exact session header
+ok 414 - F14-L06 lifecycle identity uses separate controller token and exact session header
+  ---
+  duration_ms: 2.1887
+  type: 'test'
+  ...
+# Subtest: F14-L07 initialization must complete before data credentials publish
+ok 415 - F14-L07 initialization must complete before data credentials publish
+  ---
+  duration_ms: 1.8562
+  type: 'test'
+  ...
+# Subtest: F14-L08 initialization failure requests STOP and never publishes
+ok 416 - F14-L08 initialization failure requests STOP and never publishes
+  ---
+  duration_ms: 1.9657
+  type: 'test'
+  ...
+# Subtest: F14-L09 disabled flag refuses before prepare or launch
+ok 417 - F14-L09 disabled flag refuses before prepare or launch
+  ---
+  duration_ms: 0.2698
+  type: 'test'
+  ...
+# Subtest: F14-L10 config drift refuses public requests and startup reuse
+ok 418 - F14-L10 config drift refuses public requests and startup reuse
+  ---
+  duration_ms: 1.931
+  type: 'test'
+  ...
+# Subtest: F14-L11 stop while prepare is held prevents late child launch
+ok 419 - F14-L11 stop while prepare is held prevents late child launch
+  ---
+  duration_ms: 0.7073
+  type: 'test'
+  ...
+# Subtest: F14-L12 stop before READY cannot become healthy later
+ok 420 - F14-L12 stop before READY cannot become healthy later
+  ---
+  duration_ms: 1.0173
+  type: 'test'
+  ...
+# Subtest: F14-L13 unconfirmed stop retains ownership and blocks replacement
+ok 421 - F14-L13 unconfirmed stop retains ownership and blocks replacement
+  ---
+  duration_ms: 14.1159
+  type: 'test'
+  ...
+# Subtest: F14-L14 exit without close and drained pipes is not release
+ok 422 - F14-L14 exit without close and drained pipes is not release
+  ---
+  duration_ms: 15.2834
+  type: 'test'
+  ...
+# Subtest: F14-L15 close without both pipe EOF retains ownership
+ok 423 - F14-L15 close without both pipe EOF retains ownership
+  ---
+  duration_ms: 15.0101
+  type: 'test'
+  ...
+# Subtest: F14-L16 completed restart changes session, port ownership and credentials
+ok 424 - F14-L16 completed restart changes session, port ownership and credentials
+  ---
+  duration_ms: 2.2396
+  type: 'test'
+  ...
+# Subtest: F14-L17 dispose prevents future starts without process signaling
+ok 425 - F14-L17 dispose prevents future starts without process signaling
+  ---
+  duration_ms: 1.2982
+  type: 'test'
+  ...
+# Subtest: F14-L18 request refuses absolute URL/traversal/query/user header override
+ok 426 - F14-L18 request refuses absolute URL/traversal/query/user header override
+  ---
+  duration_ms: 1.7028
+  type: 'test'
+  ...
+# Subtest: F14-L19 no raw child output or error text reaches state
+ok 427 - F14-L19 no raw child output or error text reaches state
+  ---
+  duration_ms: 1.6214
+  type: 'test'
+  ...
+# Subtest: F14-L20 withdrawal invalidates credentials immediately
+ok 428 - F14-L20 withdrawal invalidates credentials immediately
+  ---
+  duration_ms: 1.4688
+  type: 'test'
+  ...
+# Subtest: F14-L21 stale child events cannot erase a newer generation
+ok 429 - F14-L21 stale child events cannot erase a newer generation
+  ---
+  duration_ms: 3.3782
+  type: 'test'
+  ...
+# Subtest: F14-L22 unexpected owned exit invalidates credentials and never adopts a listener
+ok 430 - F14-L22 unexpected owned exit invalidates credentials and never adopts a listener
+  ---
+  duration_ms: 1.7443
+  type: 'test'
+  ...
+# Subtest: F14-L23 authenticated identity wrong session refuses startup
+ok 431 - F14-L23 authenticated identity wrong session refuses startup
+  ---
+  duration_ms: 1.6285
+  type: 'test'
+  ...
+# Subtest: F14-L23 authenticated identity wrong version refuses startup
+ok 432 - F14-L23 authenticated identity wrong version refuses startup
+  ---
+  duration_ms: 0.8663
+  type: 'test'
+  ...
+# Subtest: F14-L23 authenticated identity not ready refuses startup
+ok 433 - F14-L23 authenticated identity not ready refuses startup
+  ---
+  duration_ms: 0.7882
+  type: 'test'
+  ...
+# Subtest: F14-L24 outage invalidates owned endpoint without adopting another listener
+ok 434 - F14-L24 outage invalidates owned endpoint without adopting another listener
+  ---
+  duration_ms: 1.2098
+  type: 'test'
+  ...
+# Subtest: F14-L25 late response after withdrawal is withheld
+ok 435 - F14-L25 late response after withdrawal is withheld
+  ---
+  duration_ms: 1.6132
+  type: 'test'
+  ...
+# Subtest: F14-L26 startup deadline with held initialization requests STOP and refuses late publication
+ok 436 - F14-L26 startup deadline with held initialization requests STOP and refuses late publication
+  ---
+  duration_ms: 26.2107
+  type: 'test'
+  ...
+# Subtest: F15e-M01 default chunked flag reaches owned child
+ok 437 - F15e-M01 default chunked flag reaches owned child
+  ---
+  duration_ms: 69.2077
+  type: 'test'
+  ...
+# Subtest: F15e-M02 machine chunked disable survives workspace override and keeps encoding startup
+ok 438 - F15e-M02 machine chunked disable survives workspace override and keeps encoding startup
+  ---
+  duration_ms: 16.5493
+  type: 'test'
+  ...
+# Subtest: F15e-M03 chunked flag drift invalidates old routing authority
+ok 439 - F15e-M03 chunked flag drift invalidates old routing authority
+  ---
+  duration_ms: 10.111
+  type: 'test'
+  ...
+# Subtest: F15d-M01 default deflate flag reaches owned child
+ok 440 - F15d-M01 default deflate flag reaches owned child
+  ---
+  duration_ms: 17.3655
+  type: 'test'
+  ...
+# Subtest: F15d-M02 machine deflate disable survives workspace override and keeps existing formats
+ok 441 - F15d-M02 machine deflate disable survives workspace override and keeps existing formats
+  ---
+  duration_ms: 10.924
+  type: 'test'
+  ...
+# Subtest: F15d-M03 deflate flag drift invalidates old routing authority
+ok 442 - F15d-M03 deflate flag drift invalidates old routing authority
+  ---
+  duration_ms: 11.2725
+  type: 'test'
+  ...
+# Subtest: F15c-M01 default Brotli flag reaches owned child
+ok 443 - F15c-M01 default Brotli flag reaches owned child
+  ---
+  duration_ms: 9.244
+  type: 'test'
+  ...
+# Subtest: F15c-M02 machine Brotli disable survives workspace override and preserves JSON/gzip startup
+ok 444 - F15c-M02 machine Brotli disable survives workspace override and preserves JSON/gzip startup
+  ---
+  duration_ms: 8.9163
+  type: 'test'
+  ...
+# Subtest: F15c-M03 Brotli flag drift invalidates old routing authority
+ok 445 - F15c-M03 Brotli flag drift invalidates old routing authority
+  ---
+  duration_ms: 10.5339
+  type: 'test'
+  ...
+# Subtest: F15b-M01 default gzip flag reaches owned child
+ok 446 - F15b-M01 default gzip flag reaches owned child
+  ---
+  duration_ms: 8.4182
+  type: 'test'
+  ...
+# Subtest: F15b-M02 machine gzip disable survives workspace override while JSON startup remains available
+ok 447 - F15b-M02 machine gzip disable survives workspace override while JSON startup remains available
+  ---
+  duration_ms: 7.2659
+  type: 'test'
+  ...
+# Subtest: F15b-M03 gzip flag drift invalidates old routing authority
+ok 448 - F15b-M03 gzip flag drift invalidates old routing authority
+  ---
+  duration_ms: 7.5192
+  type: 'test'
+  ...
+# Subtest: F15a-M01 default JSON flag reaches the private owned child
+ok 449 - F15a-M01 default JSON flag reaches the private owned child
+  ---
+  duration_ms: 9.3631
+  type: 'test'
+  ...
+# Subtest: F15a-M02 machine JSON disable survives workspace override and failed initialization
+ok 450 - F15a-M02 machine JSON disable survives workspace override and failed initialization
+  ---
+  duration_ms: 7.1962
+  type: 'test'
+  ...
+# Subtest: F15a-M03 changed JSON flag invalidates existing owned routing authority
+ok 451 - F15a-M03 changed JSON flag invalidates existing owned routing authority
+  ---
+  duration_ms: 6.6963
+  type: 'test'
+  ...
+# Subtest: F14-M01 machine flag disable refuses without launch or legacy attach
+ok 452 - F14-M01 machine flag disable refuses without launch or legacy attach
+  ---
+  duration_ms: 0.4524
+  type: 'test'
+  ...
+# Subtest: F14-M02 workspace flag cannot override machine disable
+ok 453 - F14-M02 workspace flag cannot override machine disable
+  ---
+  duration_ms: 0.2946
+  type: 'test'
+  ...
+# Subtest: F14-M03 startup restores strict policy and complete canaries before healthy
+ok 454 - F14-M03 startup restores strict policy and complete canaries before healthy
+  ---
+  duration_ms: 6.6597
+  type: 'test'
+  ...
+# Subtest: F14-M04 malformed saved safe mode fails before child launch
+ok 455 - F14-M04 malformed saved safe mode fails before child launch
+  ---
+  duration_ms: 0.4912
+  type: 'test'
+  ...
+# Subtest: F14-M05 saved enterprise policy survives stop and new generation
+ok 456 - F14-M05 saved enterprise policy survives stop and new generation
+  ---
+  duration_ms: 11.7368
+  type: 'test'
+  ...
+# Subtest: F14-M06 old shared auth and memory records never attach
+ok 457 - F14-M06 old shared auth and memory records never attach
+  ---
+  duration_ms: 6.893
+  type: 'test'
+  ...
+# Subtest: F14-M07 restricted workspace never starts provider-bearing child
+ok 458 - F14-M07 restricted workspace never starts provider-bearing child
+  ---
+  duration_ms: 0.4155
+  type: 'test'
+  ...
+# Subtest: F14-M08 lockdown refuses child creation
+ok 459 - F14-M08 lockdown refuses child creation
+  ---
+  duration_ms: 0.2692
+  type: 'test'
+  ...
+# Subtest: F14-M09 stale configured port does not determine actual owned endpoint
+ok 460 - F14-M09 stale configured port does not determine actual owned endpoint
+  ---
+  duration_ms: 9.4168
+  type: 'test'
+  ...
+# Subtest: F14-M10 provider/config drift withholds rather than falling back to old listener
+ok 461 - F14-M10 provider/config drift withholds rather than falling back to old listener
+  ---
+  duration_ms: 6.6728
+  type: 'test'
+  ...
+# Subtest: F14-M11 shutdown never disables stored policy or deletes another window auth
+ok 462 - F14-M11 shutdown never disables stored policy or deletes another window auth
+  ---
+  duration_ms: 6.6912
+  type: 'test'
+  ...
+# Subtest: F14-M12 unavailable status never probes configured fixed port
+ok 463 - F14-M12 unavailable status never probes configured fixed port
+  ---
+  duration_ms: 0.3246
+  type: 'test'
+  ...
+# Subtest: F14-M13 another window's canary SecretStorage change withdraws this owned broker
+ok 464 - F14-M13 another window's canary SecretStorage change withdraws this owned broker
+  ---
+  duration_ms: 7.4564
+  type: 'test'
+  ...
+# Subtest: F14-M14 provider SecretStorage change withdraws but unrelated secret event keeps ownership
+ok 465 - F14-M14 provider SecretStorage change withdraws but unrelated secret event keeps ownership
+  ---
+  duration_ms: 7.1318
+  type: 'test'
+  ...
+# Subtest: F15f-M01 default framed flag reaches owned child
+ok 466 - F15f-M01 default framed flag reaches owned child
+  ---
+  duration_ms: 11.5647
+  type: 'test'
+  ...
+# Subtest: F15f-M02 machine framed disable survives workspace override and keeps encoding startup
+ok 467 - F15f-M02 machine framed disable survives workspace override and keeps encoding startup
+  ---
+  duration_ms: 9.268
+  type: 'test'
+  ...
+# Subtest: F15f-M03 framed flag drift invalidates old routing authority
+ok 468 - F15f-M03 framed flag drift invalidates old routing authority
+  ---
+  duration_ms: 9.4726
+  type: 'test'
+  ...
+# Subtest: F15g-M01 default multipart flag reaches owned child
+ok 469 - F15g-M01 default multipart flag reaches owned child
+  ---
+  duration_ms: 6.9722
+  type: 'test'
+  ...
+# Subtest: F15g-M02 machine multipart disable survives workspace override and keeps encoding startup
+ok 470 - F15g-M02 machine multipart disable survives workspace override and keeps encoding startup
+  ---
+  duration_ms: 9.7245
+  type: 'test'
+  ...
+# Subtest: F15g-M03 multipart flag drift invalidates old routing authority
+ok 471 - F15g-M03 multipart flag drift invalidates old routing authority
+  ---
+  duration_ms: 7.4384
+  type: 'test'
+  ...
+# Subtest: F15h-M01 default base64 flag reaches owned child
+ok 472 - F15h-M01 default base64 flag reaches owned child
+  ---
+  duration_ms: 6.6051
+  type: 'test'
+  ...
+# Subtest: F15h-M02 machine base64 disable survives workspace override and keeps encoding startup
+ok 473 - F15h-M02 machine base64 disable survives workspace override and keeps encoding startup
+  ---
+  duration_ms: 8.1223
+  type: 'test'
+  ...
+# Subtest: F15h-M03 base64 flag drift invalidates old routing authority
+ok 474 - F15h-M03 base64 flag drift invalidates old routing authority
+  ---
+  duration_ms: 9.5217
+  type: 'test'
+  ...
+# Subtest: README accuracy
+    # Subtest: names only commands that exist
+    ok 1 - names only commands that exist
+      ---
+      duration_ms: 1.878
+      type: 'test'
+      ...
+    # Subtest: names only settings that exist, with the manifest's real defaults
+    ok 2 - names only settings that exist, with the manifest's real defaults
+      ---
+      duration_ms: 0.632
+      type: 'test'
+      ...
+    # Subtest: does not advertise a version other than the one being published
+    ok 3 - does not advertise a version other than the one being published
+      ---
+      duration_ms: 0.3401
+      type: 'test'
+      ...
+    # Subtest: points at a license file that ships in the VSIX
+    ok 4 - points at a license file that ships in the VSIX
+      ---
+      duration_ms: 1.5657
+      type: 'test'
+      ...
+    # Subtest: states the real count of machine-scoped settings
+    ok 5 - states the real count of machine-scoped settings
+      ---
+      duration_ms: 0.3726
+      type: 'test'
+      ...
+    1..5
+ok 475 - README accuracy
+  ---
+  duration_ms: 6.2848
+  type: 'suite'
+  ...
+# Subtest: F07-R01 registered hex inside a public URL path retains source coordinates
+ok 476 - F07-R01 registered hex inside a public URL path retains source coordinates
+  ---
+  duration_ms: 9.8751
+  type: 'test'
+  ...
+# Subtest: F07-R02 mixed-case hex in a URL query remains recognized
+ok 477 - F07-R02 mixed-case hex in a URL query remains recognized
+  ---
+  duration_ms: 1.5869
+  type: 'test'
+  ...
+# Subtest: F07-R03 hex in a URL path split across explicit request parts maps every original part
+ok 478 - F07-R03 hex in a URL path split across explicit request parts maps every original part
+  ---
+  duration_ms: 0.8964
+  type: 'test'
+  ...
+# Subtest: F07-R04 base64 value in a URL path is recognized without network parsing
+ok 479 - F07-R04 base64 value in a URL path is recognized without network parsing
+  ---
+  duration_ms: 1.5703
+  type: 'test'
+  ...
+# Subtest: F07-R05 base64 query value remains a strict canonical positive control
+ok 480 - F07-R05 base64 query value remains a strict canonical positive control
+  ---
+  duration_ms: 2.4276
+  type: 'test'
+  ...
+# Subtest: F07-R04 base64url value in a URL path is recognized without network parsing
+ok 481 - F07-R04 base64url value in a URL path is recognized without network parsing
+  ---
+  duration_ms: 0.4062
+  type: 'test'
+  ...
+# Subtest: F07-R05 base64url query value remains a strict canonical positive control
+ok 482 - F07-R05 base64url query value remains a strict canonical positive control
+  ---
+  duration_ms: 0.7951
+  type: 'test'
+  ...
+# Subtest: F07-R06 hex embedded inside a JSON URL string remains one-layer recognition
+ok 483 - F07-R06 hex embedded inside a JSON URL string remains one-layer recognition
+  ---
+  duration_ms: 0.6369
+  type: 'test'
+  ...
+# Subtest: F07-R07 partial JSON Unicode escaping is recognized at original string coordinates
+ok 484 - F07-R07 partial JSON Unicode escaping is recognized at original string coordinates
+  ---
+  duration_ms: 0.7076
+  type: 'test'
+  ...
+# Subtest: F07-R08 JSON decoding never recursively interprets a decoded literal escape
+ok 485 - F07-R08 JSON decoding never recursively interprets a decoded literal escape
+  ---
+  duration_ms: 1.5883
+  type: 'test'
+  ...
+# Subtest: F07-R09 malformed UTF-8 hex cannot invent a registered replacement character
+ok 486 - F07-R09 malformed UTF-8 hex cannot invent a registered replacement character
+  ---
+  duration_ms: 0.4779
+  type: 'test'
+  ...
+# Subtest: F07-R09 malformed UTF-8 base64 cannot invent a registered replacement character
+ok 487 - F07-R09 malformed UTF-8 base64 cannot invent a registered replacement character
+  ---
+  duration_ms: 0.3674
+  type: 'test'
+  ...
+# Subtest: F07-R09 malformed UTF-8 base64url cannot invent a registered replacement character
+ok 488 - F07-R09 malformed UTF-8 base64url cannot invent a registered replacement character
+  ---
+  duration_ms: 0.3049
+  type: 'test'
+  ...
+# Subtest: F07-R10 extra base64 padding is not repaired into a canonical registered value
+ok 489 - F07-R10 extra base64 padding is not repaired into a canonical registered value
+  ---
+  duration_ms: 0.235
+  type: 'test'
+  ...
+# Subtest: F07-R11 duplicate registration input at the frozen total-byte bound remains usable
+ok 490 - F07-R11 duplicate registration input at the frozen total-byte bound remains usable
+  ---
+  duration_ms: 18.3155
+  type: 'test'
+  ...
+# Subtest: F07-R12 duplicate registration input above the total-byte bound withholds rather than looping unbounded
+ok 491 - F07-R12 duplicate registration input above the total-byte bound withholds rather than looping unbounded
+  ---
+  duration_ms: 13.9653
+  type: 'test'
+  ...
+# Subtest: F07-R13 a short encoded value occupying one explicit part stays recognizable beside unrelated alphabetic parts
+ok 492 - F07-R13 a short encoded value occupying one explicit part stays recognizable beside unrelated alphabetic parts
+  ---
+  duration_ms: 1.1108
+  type: 'test'
+  ...
+# Subtest: F07-M01 public exports retain the frozen inclusive budgets and entropy-policy descriptor
+ok 493 - F07-M01 public exports retain the frozen inclusive budgets and entropy-policy descriptor
+  ---
+  duration_ms: 2.5124
+  type: 'test'
+  ...
+# Subtest: F07-M02 raw exact registrations match useful surrounding text and return source-safe coordinates
+ok 494 - F07-M02 raw exact registrations match useful surrounding text and return source-safe coordinates
+  ---
+  duration_ms: 8.3705
+  type: 'test'
+  ...
+# Subtest: F07-M03 base64 padded has a paired registered-secret and public-control outcome
+ok 495 - F07-M03 base64 padded has a paired registered-secret and public-control outcome
+  ---
+  duration_ms: 2.9658
+  type: 'test'
+  ...
+# Subtest: F07-M03 base64 unpadded has a paired registered-secret and public-control outcome
+ok 496 - F07-M03 base64 unpadded has a paired registered-secret and public-control outcome
+  ---
+  duration_ms: 0.889
+  type: 'test'
+  ...
+# Subtest: F07-M03 base64url padded has a paired registered-secret and public-control outcome
+ok 497 - F07-M03 base64url padded has a paired registered-secret and public-control outcome
+  ---
+  duration_ms: 0.7948
+  type: 'test'
+  ...
+# Subtest: F07-M03 base64url unpadded has a paired registered-secret and public-control outcome
+ok 498 - F07-M03 base64url unpadded has a paired registered-secret and public-control outcome
+  ---
+  duration_ms: 0.6956
+  type: 'test'
+  ...
+# Subtest: F07-M03 lowercase hex has a paired registered-secret and public-control outcome
+ok 499 - F07-M03 lowercase hex has a paired registered-secret and public-control outcome
+  ---
+  duration_ms: 0.6833
+  type: 'test'
+  ...
+# Subtest: F07-M03 uppercase hex has a paired registered-secret and public-control outcome
+ok 500 - F07-M03 uppercase hex has a paired registered-secret and public-control outcome
+  ---
+  duration_ms: 0.5017
+  type: 'test'
+  ...
+# Subtest: F07-M03 mixed-case hex has a paired registered-secret and public-control outcome
+ok 501 - F07-M03 mixed-case hex has a paired registered-secret and public-control outcome
+  ---
+  duration_ms: 0.8006
+  type: 'test'
+  ...
+# Subtest: F07-M04 canonical URL escaping matches without case-folding raw registered bytes
+ok 502 - F07-M04 canonical URL escaping matches without case-folding raw registered bytes
+  ---
+  duration_ms: 2.0634
+  type: 'test'
+  ...
+# Subtest: F07-M04 full uppercase URL escaping matches without case-folding raw registered bytes
+ok 503 - F07-M04 full uppercase URL escaping matches without case-folding raw registered bytes
+  ---
+  duration_ms: 1.9404
+  type: 'test'
+  ...
+# Subtest: F07-M04 full lowercase URL escaping matches without case-folding raw registered bytes
+ok 504 - F07-M04 full lowercase URL escaping matches without case-folding raw registered bytes
+  ---
+  duration_ms: 3.4372
+  type: 'test'
+  ...
+# Subtest: F07-M04 partial URL escaping matches without case-folding raw registered bytes
+ok 505 - F07-M04 partial URL escaping matches without case-folding raw registered bytes
+  ---
+  duration_ms: 1.0942
+  type: 'test'
+  ...
+# Subtest: F07-M05 URL plus is literal plus and is never repaired into a space
+ok 506 - F07-M05 URL plus is literal plus and is never repaired into a space
+  ---
+  duration_ms: 0.7971
+  type: 'test'
+  ...
+# Subtest: F07-M06 valid JSON quoted preserves exact semantic registered bytes
+ok 507 - F07-M06 valid JSON quoted preserves exact semantic registered bytes
+  ---
+  duration_ms: 0.9001
+  type: 'test'
+  ...
+# Subtest: F07-M06 valid JSON string-body preserves exact semantic registered bytes
+ok 508 - F07-M06 valid JSON string-body preserves exact semantic registered bytes
+  ---
+  duration_ms: 0.5768
+  type: 'test'
+  ...
+# Subtest: F07-M06 valid JSON partial Unicode preserves exact semantic registered bytes
+ok 509 - F07-M06 valid JSON partial Unicode preserves exact semantic registered bytes
+  ---
+  duration_ms: 0.5875
+  type: 'test'
+  ...
+# Subtest: F07-M06 valid JSON surrogate pair preserves exact semantic registered bytes
+ok 510 - F07-M06 valid JSON surrogate pair preserves exact semantic registered bytes
+  ---
+  duration_ms: 0.5927
+  type: 'test'
+  ...
+# Subtest: F07-M07 an unrelated malformed escape cannot suppress a later raw or canonical registered form
+ok 511 - F07-M07 an unrelated malformed escape cannot suppress a later raw or canonical registered form
+  ---
+  duration_ms: 0.9936
+  type: 'test'
+  ...
+# Subtest: F07-M08 invalid UTF-8 encoded bytes never become replacement-character registered matches
+ok 512 - F07-M08 invalid UTF-8 encoded bytes never become replacement-character registered matches
+  ---
+  duration_ms: 1.2069
+  type: 'test'
+  ...
+# Subtest: F07-M09 neither case folding, Unicode normalization nor whitespace removal invents a registered match
+ok 513 - F07-M09 neither case folding, Unicode normalization nor whitespace removal invents a registered match
+  ---
+  duration_ms: 0.7995
+  type: 'test'
+  ...
+# Subtest: F07-M10 short registration of 1 Unicode scalars matches explicit whole groups only
+ok 514 - F07-M10 short registration of 1 Unicode scalars matches explicit whole groups only
+  ---
+  duration_ms: 1.5288
+  type: 'test'
+  ...
+# Subtest: F07-M10 short registration of 7 Unicode scalars matches explicit whole groups only
+ok 515 - F07-M10 short registration of 7 Unicode scalars matches explicit whole groups only
+  ---
+  duration_ms: 1.4807
+  type: 'test'
+  ...
+# Subtest: F07-M10 short registration of 7 Unicode scalars matches explicit whole groups only
+ok 516 - F07-M10 short registration of 7 Unicode scalars matches explicit whole groups only
+  ---
+  duration_ms: 1.0656
+  type: 'test'
+  ...
+# Subtest: F07-M11 eight Unicode scalars can match a substring even when their UTF-16 width is sixteen
+ok 517 - F07-M11 eight Unicode scalars can match a substring even when their UTF-16 width is sixteen
+  ---
+  duration_ms: 0.5386
+  type: 'test'
+  ...
+# Subtest: F07-M12 all representative raw/encoded/escaped split positions are local to the explicit request
+ok 518 - F07-M12 all representative raw/encoded/escaped split positions are local to the explicit request
+  ---
+  duration_ms: 111.3951
+  type: 'test'
+  ...
+# Subtest: F07-M13 a Unicode scalar may straddle explicit parts without making the joined input invalid
+ok 519 - F07-M13 a Unicode scalar may straddle explicit parts without making the joined input invalid
+  ---
+  duration_ms: 0.3303
+  type: 'test'
+  ...
+# Subtest: F07-M14 separate calls never accumulate, reorder or remove separators from requests
+ok 520 - F07-M14 separate calls never accumulate, reorder or remove separators from requests
+  ---
+  duration_ms: 0.9534
+  type: 'test'
+  ...
+# Subtest: F07-M15 duplicate registrations retain their first opaque ID and overlapping registrations each match
+ok 521 - F07-M15 duplicate registrations retain their first opaque ID and overlapping registrations each match
+  ---
+  duration_ms: 0.6445
+  type: 'test'
+  ...
+# Subtest: F07-M16 explicit placeholder and low-entropy registrations override heuristic allowlists
+ok 522 - F07-M16 explicit placeholder and low-entropy registrations override heuristic allowlists
+  ---
+  duration_ms: 0.5622
+  type: 'test'
+  ...
+# Subtest: F07-M17 invalid construction or request input is typed WITHHELD without partial matches or secret-bearing errors
+ok 523 - F07-M17 invalid construction or request input is typed WITHHELD without partial matches or secret-bearing errors
+  ---
+  duration_ms: 0.7504
+  type: 'test'
+  ...
+# Subtest: F07-M18 unique registration count is inclusive and duplicates do not spend unique-registration budget
+ok 524 - F07-M18 unique registration count is inclusive and duplicates do not spend unique-registration budget
+  ---
+  duration_ms: 6.3672
+  type: 'test'
+  ...
+# Subtest: F07-M19 each registered value's UTF-8 byte bound is inclusive
+ok 525 - F07-M19 each registered value's UTF-8 byte bound is inclusive
+  ---
+  duration_ms: 1.1056
+  type: 'test'
+  ...
+# Subtest: F07-M20 registered total bytes are inclusive and overflow cannot leave an earlier usable registration
+ok 526 - F07-M20 registered total bytes are inclusive and overflow cannot leave an earlier usable registration
+  ---
+  duration_ms: 12.4551
+  type: 'test'
+  ...
+# Subtest: F07-M21 explicit-part and joined-input limits are inclusive and withhold all partial matches on overflow
+ok 527 - F07-M21 explicit-part and joined-input limits are inclusive and withhold all partial matches on overflow
+  ---
+  duration_ms: 29.7172
+  type: 'test'
+  ...
+# Subtest: F07-M22 every raw occurrence fits the returned-match limit exactly; the next occurrence withholds all matches
+ok 528 - F07-M22 every raw occurrence fits the returned-match limit exactly; the next occurrence withholds all matches
+  ---
+  duration_ms: 21.3315
+  type: 'test'
+  ...
+# Subtest: F07-M23 charged search-work exhaustion returns WITHHELD rather than an early partial match
+ok 529 - F07-M23 charged search-work exhaustion returns WITHHELD rather than an early partial match
+  ---
+  duration_ms: 8.6077
+  type: 'test'
+  ...
+# Subtest: F07-M24 provider recognition is distinct from registered values and preserves safe source coordinates
+ok 530 - F07-M24 provider recognition is distinct from registered values and preserves safe source coordinates
+  ---
+  duration_ms: 3.9839
+  type: 'test'
+  ...
+# Subtest: F07-M25 assignment entropy requires the frozen length and character-class gates
+ok 531 - F07-M25 assignment entropy requires the frozen length and character-class gates
+  ---
+  duration_ms: 8.7008
+  type: 'test'
+  ...
+# Subtest: F07-M26 one decoding layer does not recognize a nested encoding of an unformatted registered value
+ok 532 - F07-M26 one decoding layer does not recognize a nested encoding of an unformatted registered value
+  ---
+  duration_ms: 1.5816
+  type: 'test'
+  ...
+# Subtest: F07-M27 deterministic positive/negative fuzz preserves exact value identity and source spans
+ok 533 - F07-M27 deterministic positive/negative fuzz preserves exact value identity and source spans
+  ---
+  duration_ms: 23.8432
+  type: 'test'
+  ...
+# Subtest: F07-M28 derived-variant exhaustion is independent of registration count, value bytes and registered total
+ok 534 - F07-M28 derived-variant exhaustion is independent of registration count, value bytes and registered total
+  ---
+  duration_ms: 12.6652
+  type: 'test'
+  ...
+# Subtest: F07-M29 decoded-candidate count is inclusive and overflow discards earlier registered matches
+ok 535 - F07-M29 decoded-candidate count is inclusive and overflow discards earlier registered matches
+  ---
+  duration_ms: 2.2326
+  type: 'test'
+  ...
+# Subtest: F07-M30 overlapping original-source decoded views spend the decoded-byte budget without an input overflow
+ok 536 - F07-M30 overlapping original-source decoded views spend the decoded-byte budget without an input overflow
+  ---
+  duration_ms: 964.0194
+  type: 'test'
+  ...
+# Subtest: F07-M31 serializing a valid or invalid registry exposes neither values nor their derived spellings
+ok 537 - F07-M31 serializing a valid or invalid registry exposes neither values nor their derived spellings
+  ---
+  duration_ms: 0.4834
+  type: 'test'
+  ...
+# Subtest: F07-M32 nonzero unused base64 pad bits are rejected in padded and unpadded spellings
+ok 538 - F07-M32 nonzero unused base64 pad bits are rejected in padded and unpadded spellings
+  ---
+  duration_ms: 1.3778
+  type: 'test'
+  ...
+# Subtest: F07-M33 padding inserted inside encoded secret bytes or given the wrong count is not repaired
+ok 539 - F07-M33 padding inserted inside encoded secret bytes or given the wrong count is not repaired
+  ---
+  duration_ms: 0.6649
+  type: 'test'
+  ...
+# Subtest: F07-M34 canonical provider detection also applies to one-layer encoded original-source views
+ok 540 - F07-M34 canonical provider detection also applies to one-layer encoded original-source views
+  ---
+  duration_ms: 1.4549
+  type: 'test'
+  ...
+# Subtest: F07-M35 entropy recognition uses decoded semantic credential keys while public keys remain negative
+ok 541 - F07-M35 entropy recognition uses decoded semantic credential keys while public keys remain negative
+  ---
+  duration_ms: 1.5757
+  type: 'test'
+  ...
+# Subtest: F08-I01 the existing string filter removes SGR obfuscation before whole-response secret matching
+ok 542 - F08-I01 the existing string filter removes SGR obfuscation before whole-response secret matching
+  ---
+  duration_ms: 12.6831
+  type: 'test'
+  ...
+# Subtest: F08-I02 completed public stdout/stderr preserve Unicode, BOM and normalized line endings while removing SGR and OSC
+ok 543 - F08-I02 completed public stdout/stderr preserve Unicode, BOM and normalized line endings while removing SGR and OSC
+  ---
+  duration_ms: 6.1625
+  type: 'test'
+  ...
+# Subtest: F08-I03 all raw and encoded byte split positions remain private until a sanitized completed result
+ok 544 - F08-I03 all raw and encoded byte split positions remain private until a sanitized completed result
+  ---
+  duration_ms: 86.3579
+  type: 'test'
+  ...
+# Subtest: F08-I04 a match across explicit stdout/stderr grouping masks both channels and preserves a nonzero exit code
+ok 545 - F08-I04 a match across explicit stdout/stderr grouping masks both channels and preserves a nonzero exit code
+  ---
+  duration_ms: 0.8189
+  type: 'test'
+  ...
+# Subtest: F08-I05 decoder-emission arrival order is inspected without inventing an arbitrary channel permutation
+ok 546 - F08-I05 decoder-emission arrival order is inspected without inventing an arbitrary channel permutation
+  ---
+  duration_ms: 1.3423
+  type: 'test'
+  ...
+# Subtest: F08-I06 string filtering retains request-local F07 JSON semantic-leaf matching after normalization
+ok 547 - F08-I06 string filtering retains request-local F07 JSON semantic-leaf matching after normalization
+  ---
+  duration_ms: 4.1893
+  type: 'test'
+  ...
+# Subtest: F08-I07 legacy sensitive-request checks still apply to normalized public-channel output
+ok 548 - F08-I07 legacy sensitive-request checks still apply to normalized public-channel output
+  ---
+  duration_ms: 0.7721
+  type: 'test'
+  ...
+# Subtest: F08-I08-output-off both real filter entry points withhold without a raw fallback
+ok 549 - F08-I08-output-off both real filter entry points withhold without a raw fallback
+  ---
+  duration_ms: 0.6655
+  type: 'test'
+  ...
+# Subtest: F08-I08-output-throws both real filter entry points withhold without a raw fallback
+ok 550 - F08-I08-output-throws both real filter entry points withhold without a raw fallback
+  ---
+  duration_ms: 0.6126
+  type: 'test'
+  ...
+# Subtest: F08-I08-matching-off both real filter entry points withhold without a raw fallback
+ok 551 - F08-I08-matching-off both real filter entry points withhold without a raw fallback
+  ---
+  duration_ms: 0.5977
+  type: 'test'
+  ...
+# Subtest: F08-I08-matching-throws both real filter entry points withhold without a raw fallback
+ok 552 - F08-I08-matching-throws both real filter entry points withhold without a raw fallback
+  ---
+  duration_ms: 0.2983
+  type: 'test'
+  ...
+# Subtest: F08-I09 withdrawal during chunk collection withholds that operation and a fresh operation can resume
+ok 553 - F08-I09 withdrawal during chunk collection withholds that operation and a fresh operation can resume
+  ---
+  duration_ms: 1.1575
+  type: 'test'
+  ...
+# Subtest: F08-I10 malformed UTF-8 or terminal rewriting withholds the entire result instead of a public prefix
+ok 554 - F08-I10 malformed UTF-8 or terminal rewriting withholds the entire result instead of a public prefix
+  ---
+  duration_ms: 1.187
+  type: 'test'
+  ...
+# Subtest: F08-I11 inclusive byte/chunk limits retain long public output while overflow withholds atomically
+ok 555 - F08-I11 inclusive byte/chunk limits retain long public output while overflow withholds atomically
+  ---
+  duration_ms: 471.9871
+  type: 'test'
+  ...
+# Subtest: F08-I12 string input is validated losslessly rather than repaired from invalid JavaScript surrogates
+ok 556 - F08-I12 string input is validated losslessly rather than repaired from invalid JavaScript surrogates
+  ---
+  duration_ms: 2.3234
+  type: 'test'
+  ...
+# Subtest: F08-I13-withdrawn an actual mediated transport completion is audited sent but releases no response
+ok 557 - F08-I13-withdrawn an actual mediated transport completion is audited sent but releases no response
+  ---
+  duration_ms: 4.9057
+  type: 'test'
+  ...
+# Subtest: F08-I13-invalid-control an actual mediated transport completion is audited sent but releases no response
+ok 558 - F08-I13-invalid-control an actual mediated transport completion is audited sent but releases no response
+  ---
+  duration_ms: 1.0203
+  type: 'test'
+  ...
+# Subtest: F08-I14 mediated ANSI-obfuscated reflection is wholly redacted through the actual response filter
+ok 559 - F08-I14 mediated ANSI-obfuscated reflection is wholly redacted through the actual response filter
+  ---
+  duration_ms: 1.6133
+  type: 'test'
+  ...
+# Subtest: F08-X01 a registered redaction marker cannot be released as its own replacement
+ok 560 - F08-X01 a registered redaction marker cannot be released as its own replacement
+  ---
+  duration_ms: 8.8154
+  type: 'test'
+  ...
+# Subtest: F08-X02 the string filter withholds marker collisions found only by semantic JSON leaf grouping
+ok 561 - F08-X02 the string filter withholds marker collisions found only by semantic JSON leaf grouping
+  ---
+  duration_ms: 1.8857
+  type: 'test'
+  ...
+# Subtest: F08-X03 a registered marker does not prevent unrelated public completed output
+ok 562 - F08-X03 a registered marker does not prevent unrelated public completed output
+  ---
+  duration_ms: 1.1154
+  type: 'test'
+  ...
+# Subtest: F08-X04 short registered words inside the replacement marker cannot be released as a purported mask
+ok 563 - F08-X04 short registered words inside the replacement marker cannot be released as a purported mask
+  ---
+  duration_ms: 0.8605
+  type: 'test'
+  ...
+# Subtest: F08-X05 semantic JSON leaf grouping cannot release a marker containing a short registered value
+ok 564 - F08-X05 semantic JSON leaf grouping cannot release a marker containing a short registered value
+  ---
+  duration_ms: 1.231
+  type: 'test'
+  ...
+# Subtest: F08-X06 bidi control U+061C withholds at every byte split
+ok 565 - F08-X06 bidi control U+061C withholds at every byte split
+  ---
+  duration_ms: 1.2716
+  type: 'test'
+  ...
+# Subtest: F08-X06 bidi control U+200E withholds at every byte split
+ok 566 - F08-X06 bidi control U+200E withholds at every byte split
+  ---
+  duration_ms: 0.9046
+  type: 'test'
+  ...
+# Subtest: F08-X06 bidi control U+200F withholds at every byte split
+ok 567 - F08-X06 bidi control U+200F withholds at every byte split
+  ---
+  duration_ms: 1.8752
+  type: 'test'
+  ...
+# Subtest: F08-X06 bidi control U+202A withholds at every byte split
+ok 568 - F08-X06 bidi control U+202A withholds at every byte split
+  ---
+  duration_ms: 1.1207
+  type: 'test'
+  ...
+# Subtest: F08-X06 bidi control U+202B withholds at every byte split
+ok 569 - F08-X06 bidi control U+202B withholds at every byte split
+  ---
+  duration_ms: 1.0897
+  type: 'test'
+  ...
+# Subtest: F08-X06 bidi control U+202C withholds at every byte split
+ok 570 - F08-X06 bidi control U+202C withholds at every byte split
+  ---
+  duration_ms: 0.8505
+  type: 'test'
+  ...
+# Subtest: F08-X06 bidi control U+202D withholds at every byte split
+ok 571 - F08-X06 bidi control U+202D withholds at every byte split
+  ---
+  duration_ms: 0.7939
+  type: 'test'
+  ...
+# Subtest: F08-X06 bidi control U+202E withholds at every byte split
+ok 572 - F08-X06 bidi control U+202E withholds at every byte split
+  ---
+  duration_ms: 0.7861
+  type: 'test'
+  ...
+# Subtest: F08-X06 bidi control U+2066 withholds at every byte split
+ok 573 - F08-X06 bidi control U+2066 withholds at every byte split
+  ---
+  duration_ms: 0.8149
+  type: 'test'
+  ...
+# Subtest: F08-X06 bidi control U+2067 withholds at every byte split
+ok 574 - F08-X06 bidi control U+2067 withholds at every byte split
+  ---
+  duration_ms: 0.84
+  type: 'test'
+  ...
+# Subtest: F08-X06 bidi control U+2068 withholds at every byte split
+ok 575 - F08-X06 bidi control U+2068 withholds at every byte split
+  ---
+  duration_ms: 0.8947
+  type: 'test'
+  ...
+# Subtest: F08-X06 bidi control U+2069 withholds at every byte split
+ok 576 - F08-X06 bidi control U+2069 withholds at every byte split
+  ---
+  duration_ms: 0.9368
+  type: 'test'
+  ...
+# Subtest: F08-X07 non-ST ESC inside OSC is malformed rather than a removable complete control
+ok 577 - F08-X07 non-ST ESC inside OSC is malformed rather than a removable complete control
+  ---
+  duration_ms: 0.5264
+  type: 'test'
+  ...
+# Subtest: F08-X07 nested CSI inside OSC is malformed rather than a removable complete control
+ok 578 - F08-X07 nested CSI inside OSC is malformed rather than a removable complete control
+  ---
+  duration_ms: 0.2449
+  type: 'test'
+  ...
+# Subtest: F08-X07 nested OSC inside OSC is malformed rather than a removable complete control
+ok 579 - F08-X07 nested OSC inside OSC is malformed rather than a removable complete control
+  ---
+  duration_ms: 0.2176
+  type: 'test'
+  ...
+# Subtest: F08-X07 repeated ESC inside OSC is malformed rather than a removable complete control
+ok 580 - F08-X07 repeated ESC inside OSC is malformed rather than a removable complete control
+  ---
+  duration_ms: 0.2037
+  type: 'test'
+  ...
+# Subtest: F08-X07 ESC followed by BEL inside OSC is malformed rather than a removable complete control
+ok 581 - F08-X07 ESC followed by BEL inside OSC is malformed rather than a removable complete control
+  ---
+  duration_ms: 0.2459
+  type: 'test'
+  ...
+# Subtest: F08-X07 ESC followed by C1 ST inside OSC is malformed rather than a removable complete control
+ok 582 - F08-X07 ESC followed by C1 ST inside OSC is malformed rather than a removable complete control
+  ---
+  duration_ms: 0.2608
+  type: 'test'
+  ...
+# Subtest: F08-X08 unsupported C0 bytes inside OSC withhold the operation
+ok 583 - F08-X08 unsupported C0 bytes inside OSC withhold the operation
+  ---
+  duration_ms: 3.3117
+  type: 'test'
+  ...
+# Subtest: F08-X08 unsupported DEL bytes inside OSC withhold the operation
+ok 584 - F08-X08 unsupported DEL bytes inside OSC withhold the operation
+  ---
+  duration_ms: 0.2191
+  type: 'test'
+  ...
+# Subtest: F08-X08 unsupported C1 bytes inside OSC withhold the operation
+ok 585 - F08-X08 unsupported C1 bytes inside OSC withhold the operation
+  ---
+  duration_ms: 3.4941
+  type: 'test'
+  ...
+# Subtest: F08-X09 ordinary Unicode OSC payloads and each legal terminator remain supported across chunks
+ok 586 - F08-X09 ordinary Unicode OSC payloads and each legal terminator remain supported across chunks
+  ---
+  duration_ms: 2.3234
+  type: 'test'
+  ...
+# Subtest: F08-X10 a final availability callback that calls cancel cannot release cached output
+ok 587 - F08-X10 a final availability callback that calls cancel cannot release cached output
+  ---
+  duration_ms: 0.5095
+  type: 'test'
+  ...
+# Subtest: F08-X10 a final availability callback that calls dispose cannot release cached output
+ok 588 - F08-X10 a final availability callback that calls dispose cannot release cached output
+  ---
+  duration_ms: 0.4566
+  type: 'test'
+  ...
+# Subtest: F08-R01 public exports preserve all frozen inclusive stream limits
+ok 589 - F08-R01 public exports preserve all frozen inclusive stream limits
+  ---
+  duration_ms: 2.7154
+  type: 'test'
+  ...
+# Subtest: F08-R02 public text stays buffered until finish and retains both useful output channels
+ok 590 - F08-R02 public text stays buffered until finish and retains both useful output channels
+  ---
+  duration_ms: 9.4543
+  type: 'test'
+  ...
+# Subtest: F08-R03 an empty operation and empty chunks release empty completed output
+ok 591 - F08-R03 an empty operation and empty chunks release empty completed output
+  ---
+  duration_ms: 0.522
+  type: 'test'
+  ...
+# Subtest: F08-R04 every byte split of raw masks the complete nonempty channel without a prefix leak
+ok 592 - F08-R04 every byte split of raw masks the complete nonempty channel without a prefix leak
+  ---
+  duration_ms: 25.0211
+  type: 'test'
+  ...
+# Subtest: F08-R04 every byte split of base64 padded masks the complete nonempty channel without a prefix leak
+ok 593 - F08-R04 every byte split of base64 padded masks the complete nonempty channel without a prefix leak
+  ---
+  duration_ms: 31.8491
+  type: 'test'
+  ...
+# Subtest: F08-R04 every byte split of base64 unpadded masks the complete nonempty channel without a prefix leak
+ok 594 - F08-R04 every byte split of base64 unpadded masks the complete nonempty channel without a prefix leak
+  ---
+  duration_ms: 28.6444
+  type: 'test'
+  ...
+# Subtest: F08-R04 every byte split of base64url padded masks the complete nonempty channel without a prefix leak
+ok 595 - F08-R04 every byte split of base64url padded masks the complete nonempty channel without a prefix leak
+  ---
+  duration_ms: 29.3684
+  type: 'test'
+  ...
+# Subtest: F08-R04 every byte split of base64url unpadded masks the complete nonempty channel without a prefix leak
+ok 596 - F08-R04 every byte split of base64url unpadded masks the complete nonempty channel without a prefix leak
+  ---
+  duration_ms: 28.9305
+  type: 'test'
+  ...
+# Subtest: F08-R04 every byte split of hex lowercase masks the complete nonempty channel without a prefix leak
+ok 597 - F08-R04 every byte split of hex lowercase masks the complete nonempty channel without a prefix leak
+  ---
+  duration_ms: 32.1098
+  type: 'test'
+  ...
+# Subtest: F08-R04 every byte split of hex uppercase masks the complete nonempty channel without a prefix leak
+ok 598 - F08-R04 every byte split of hex uppercase masks the complete nonempty channel without a prefix leak
+  ---
+  duration_ms: 31.0505
+  type: 'test'
+  ...
+# Subtest: F08-R04 every byte split of hex mixed case masks the complete nonempty channel without a prefix leak
+ok 599 - F08-R04 every byte split of hex mixed case masks the complete nonempty channel without a prefix leak
+  ---
+  duration_ms: 38.2857
+  type: 'test'
+  ...
+# Subtest: F08-R04 every byte split of URL full masks the complete nonempty channel without a prefix leak
+ok 600 - F08-R04 every byte split of URL full masks the complete nonempty channel without a prefix leak
+  ---
+  duration_ms: 132.1078
+  type: 'test'
+  ...
+# Subtest: F08-R04 every byte split of URL partial masks the complete nonempty channel without a prefix leak
+ok 601 - F08-R04 every byte split of URL partial masks the complete nonempty channel without a prefix leak
+  ---
+  duration_ms: 19.6001
+  type: 'test'
+  ...
+# Subtest: F08-R04 every byte split of JSON quoted masks the complete nonempty channel without a prefix leak
+ok 602 - F08-R04 every byte split of JSON quoted masks the complete nonempty channel without a prefix leak
+  ---
+  duration_ms: 25.1469
+  type: 'test'
+  ...
+# Subtest: F08-R04 every byte split of JSON string body masks the complete nonempty channel without a prefix leak
+ok 603 - F08-R04 every byte split of JSON string body masks the complete nonempty channel without a prefix leak
+  ---
+  duration_ms: 19.5853
+  type: 'test'
+  ...
+# Subtest: F08-R05 every byte split preserves public Unicode, a leading BOM and exact normalization distinctions
+ok 604 - F08-R05 every byte split preserves public Unicode, a leading BOM and exact normalization distinctions
+  ---
+  duration_ms: 7.5655
+  type: 'test'
+  ...
+# Subtest: F08-R06 one-byte pushes may split every scalar while separate decoders preserve interleaved channels
+ok 605 - F08-R06 one-byte pushes may split every scalar while separate decoders preserve interleaved channels
+  ---
+  duration_ms: 1.0065
+  type: 'test'
+  ...
+# Subtest: F08-R07 channels cannot complete each other's pending UTF-8 scalar
+ok 606 - F08-R07 channels cannot complete each other's pending UTF-8 scalar
+  ---
+  duration_ms: 0.6262
+  type: 'test'
+  ...
+# Subtest: F08-R08 ANSI SGR insertion between every scalar is removed before registered-value recognition
+ok 607 - F08-R08 ANSI SGR insertion between every scalar is removed before registered-value recognition
+  ---
+  duration_ms: 81.2122
+  type: 'test'
+  ...
+# Subtest: F08-R09 complete OSC title, clipboard and hyperlink payloads never reach completed output
+ok 608 - F08-R09 complete OSC title, clipboard and hyperlink payloads never reach completed output
+  ---
+  duration_ms: 22.5741
+  type: 'test'
+  ...
+# Subtest: F08-R10 CRLF normalization preserves LF and tab across every byte split
+ok 609 - F08-R10 CRLF normalization preserves LF and tab across every byte split
+  ---
+  duration_ms: 3.8016
+  type: 'test'
+  ...
+# Subtest: F08-R11 per-channel ANSI parser states survive interleaving without consuming the other channel
+ok 610 - F08-R11 per-channel ANSI parser states survive interleaving without consuming the other channel
+  ---
+  duration_ms: 0.8168
+  type: 'test'
+  ...
+# Subtest: F08-R12 insertion inside a UTF-8 scalar is invalid rather than repaired after stripping ANSI
+ok 611 - F08-R12 insertion inside a UTF-8 scalar is invalid rather than repaired after stripping ANSI
+  ---
+  duration_ms: 0.2541
+  type: 'test'
+  ...
+# Subtest: F08-R13 emission-arrival grouping recognizes secrets absent from either normalized channel alone
+ok 612 - F08-R13 emission-arrival grouping recognizes secrets absent from either normalized channel alone
+  ---
+  duration_ms: 1.1461
+  type: 'test'
+  ...
+# Subtest: F08-R14 the consumer's stdout-then-stderr group is checked even when arrival order differs
+ok 613 - F08-R14 the consumer's stdout-then-stderr group is checked even when arrival order differs
+  ---
+  duration_ms: 0.6732
+  type: 'test'
+  ...
+# Subtest: F08-R15 matching one channel masks every nonempty channel while preserving an empty channel
+ok 614 - F08-R15 matching one channel masks every nonempty channel while preserving an empty channel
+  ---
+  duration_ms: 1.8439
+  type: 'test'
+  ...
+# Subtest: F08-R16 grouping does not permute fragments, remove separators or combine independent operations
+ok 615 - F08-R16 grouping does not permute fragments, remove separators or combine independent operations
+  ---
+  duration_ms: 0.9814
+  type: 'test'
+  ...
+# Subtest: F08-R17 public output reaches the exact input and output byte limits across both channels
+ok 616 - F08-R17 public output reaches the exact input and output byte limits across both channels
+  ---
+  duration_ms: 76.6652
+  type: 'test'
+  ...
+# Subtest: F08-R18 raw bytes count before removed controls and overflow atomically withholds earlier output
+ok 617 - F08-R18 raw bytes count before removed controls and overflow atomically withholds earlier output
+  ---
+  duration_ms: 4.8
+  type: 'test'
+  ...
+# Subtest: F08-R19 every push including empty chunks spends the inclusive chunk budget
+ok 618 - F08-R19 every push including empty chunks spends the inclusive chunk budget
+  ---
+  duration_ms: 16.9281
+  type: 'test'
+  ...
+# Subtest: F08-R20 SGR sequence length includes its introducer and terminator at the exact limit
+ok 619 - F08-R20 SGR sequence length includes its introducer and terminator at the exact limit
+  ---
+  duration_ms: 0.7095
+  type: 'test'
+  ...
+# Subtest: F08-R21 OSC sequence length includes every supported introducer and terminator at the exact limit
+ok 620 - F08-R21 OSC sequence length includes every supported introducer and terminator at the exact limit
+  ---
+  duration_ms: 18.744
+  type: 'test'
+  ...
+# Subtest: F08-R22 masking a one-byte secret stays within the minimum output expansion allowance
+ok 621 - F08-R22 masking a one-byte secret stays within the minimum output expansion allowance
+  ---
+  duration_ms: 0.8183
+  type: 'test'
+  ...
+# Subtest: F08-R23 signed 32-bit nonzero exit codes retain useful sanitized output
+ok 622 - F08-R23 signed 32-bit nonzero exit codes retain useful sanitized output
+  ---
+  duration_ms: 2.1603
+  type: 'test'
+  ...
+# Subtest: F08-R24 invalid exit metadata withholds the whole operation rather than returning its buffered text
+ok 623 - F08-R24 invalid exit metadata withholds the whole operation rather than returning its buffered text
+  ---
+  duration_ms: 0.5154
+  type: 'test'
+  ...
+# Subtest: F08-R25 cancel and dispose immediately terminate buffered operations and cannot be reversed
+ok 624 - F08-R25 cancel and dispose immediately terminate buffered operations and cannot be reversed
+  ---
+  duration_ms: 0.3621
+  type: 'test'
+  ...
+# Subtest: F08-R26 completion is single-use and later calls cannot replay the completed result
+ok 625 - F08-R26 completion is single-use and later calls cannot replay the completed result
+  ---
+  duration_ms: 0.4544
+  type: 'test'
+  ...
+# Subtest: F08-R27 an initially withdrawn flag permanently withholds while a fresh re-enabled operation succeeds
+ok 626 - F08-R27 an initially withdrawn flag permanently withholds while a fresh re-enabled operation succeeds
+  ---
+  duration_ms: 0.4774
+  type: 'test'
+  ...
+# Subtest: F08-R28 flag withdrawal during collection or final flush never falls back to retained plaintext
+ok 627 - F08-R28 flag withdrawal during collection or final flush never falls back to retained plaintext
+  ---
+  duration_ms: 0.3983
+  type: 'test'
+  ...
+# Subtest: F08-R29 throwing flag callbacks produce constant safe withholding without exposing exception messages
+ok 628 - F08-R29 throwing flag callbacks produce constant safe withholding without exposing exception messages
+  ---
+  duration_ms: 0.3305
+  type: 'test'
+  ...
+# Subtest: F08-R30 invalid UTF-8 sequences and unfinished final scalars withhold the complete operation
+ok 629 - F08-R30 invalid UTF-8 sequences and unfinished final scalars withhold the complete operation
+  ---
+  duration_ms: 0.798
+  type: 'test'
+  ...
+# Subtest: F08-R31 unsupported editing, C0, C1 and bidi controls cannot reach any completed output
+ok 630 - F08-R31 unsupported editing, C0, C1 and bidi controls cannot reach any completed output
+  ---
+  duration_ms: 0.9886
+  type: 'test'
+  ...
+# Subtest: F08-R32 bare carriage returns and unfinished ESC, CSI or OSC states withhold at final flush
+ok 631 - F08-R32 bare carriage returns and unfinished ESC, CSI or OSC states withhold at final flush
+  ---
+  duration_ms: 0.6579
+  type: 'test'
+  ...
+# Subtest: F08-R33 the processor copies only a supplied byte view and caller mutation cannot change its decision
+ok 632 - F08-R33 the processor copies only a supplied byte view and caller mutation cannot change its decision
+  ---
+  duration_ms: 1.0179
+  type: 'test'
+  ...
+# Subtest: F08-R34 stream state serialization exposes no registered values, retained chunks or derived spellings
+ok 633 - F08-R34 stream state serialization exposes no registered values, retained chunks or derived spellings
+  ---
+  duration_ms: 0.7955
+  type: 'test'
+  ...
+# Subtest: F08-R35 F07 invalid-registration, match-count and work budgets remain atomic in the byte pipeline
+ok 634 - F08-R35 F07 invalid-registration, match-count and work budgets remain atomic in the byte pipeline
+  ---
+  duration_ms: 57.6299
+  type: 'test'
+  ...
+# Subtest: F08-R36 deterministic byte partitions preserve public normalization and mask encoded secret operations
+ok 635 - F08-R36 deterministic byte partitions preserve public normalization and mask encoded secret operations
+  ---
+  duration_ms: 42.2607
+  type: 'test'
+  ...
+1..635
+# tests 699
+# suites 27
+# pass 699
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 47411.707

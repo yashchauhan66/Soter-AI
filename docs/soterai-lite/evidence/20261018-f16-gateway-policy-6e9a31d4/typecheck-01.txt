@@ -1,0 +1,5 @@
+﻿apps/local-ai-broker/src/GatewayParentGuard.ts(17,108): error TS7006: Parameter 'error' implicitly has an 'any' type.
+packages/vscode-extension/src/__tests__/gatewayPolicyWire.test.ts(21,313): error TS2345: Argument of type '{ "x-soterai-tool": string; "x-soterai-policy-version"?: undefined; "x-soterai-provider-key"?: undefined; "anthropic-version"?: undefined; } | { "x-soterai-policy-version": string; "x-soterai-tool"?: undefined; "x-soterai-provider-key"?: undefined; "anthropic-version"?: undefined; } | { ...; } | { ...; }' is not assignable to parameter of type 'Record<string, string> | undefined'.
+  Type '{ "x-soterai-tool": string; "x-soterai-policy-version"?: undefined; "x-soterai-provider-key"?: undefined; "anthropic-version"?: undefined; }' is not assignable to type 'Record<string, string>'.
+    Property '"x-soterai-policy-version"' is incompatible with index signature.
+      Type 'undefined' is not assignable to type 'string'.

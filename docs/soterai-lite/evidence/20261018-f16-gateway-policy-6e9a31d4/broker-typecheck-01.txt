@@ -1,0 +1,13 @@
+﻿apps/local-ai-broker/src/BrokerServer.ts(718,19): error TS6133: 'proxyOpenAI' is declared but its value is never read.
+apps/local-ai-broker/src/BrokerServer.ts(756,19): error TS6133: 'proxyAnthropic' is declared but its value is never read.
+apps/local-ai-broker/src/GatewayBoundary.ts(1,41): error TS6059: File 'C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/packages/core/src/RegisteredSecretMatcher.ts' is not under 'rootDir' 'C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/apps/local-ai-broker/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "../../../packages/core/src/RegisteredSecretMatcher" from file 'C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/apps/local-ai-broker/src/GatewayBoundary.ts'
+    Imported via "./RegisteredSecretMatcher" from file 'C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/packages/core/src/StreamingOutputRedactor.ts'
+apps/local-ai-broker/src/GatewayBoundary.ts(2,41): error TS6059: File 'C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/packages/core/src/StreamingOutputRedactor.ts' is not under 'rootDir' 'C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/apps/local-ai-broker/src'. 'rootDir' is expected to contain all source files.
+packages/core/src/RegisteredSecretMatcher.ts(2,31): error TS6059: File 'C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/packages/guard-core/src/detectors/SecretDetector.ts' is not under 'rootDir' 'C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/apps/local-ai-broker/src'. 'rootDir' is expected to contain all source files.
+packages/guard-core/src/detectors/SecretDetector.ts(1,56): error TS6059: File 'C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/packages/guard-core/src/types.ts' is not under 'rootDir' 'C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/apps/local-ai-broker/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "../types" from file 'C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/packages/guard-core/src/detectors/SecretDetector.ts'
+    Imported via "../types" from file 'C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/packages/guard-core/src/detectors/utils.ts'
+packages/guard-core/src/detectors/SecretDetector.ts(2,35): error TS6059: File 'C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/packages/guard-core/src/detectors/utils.ts' is not under 'rootDir' 'C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/apps/local-ai-broker/src'. 'rootDir' is expected to contain all source files.

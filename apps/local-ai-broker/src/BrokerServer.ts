@@ -9,6 +9,9 @@ import { decodeBoundedBase64Envelope, decodeChatBase64Blobs, BoundedBase64Error 
 import { decodeBoundedGzip, BoundedGzipError } from "./BoundedGzip";
 import { decodeBoundedBrotli, BoundedBrotliError } from "./BoundedBrotli";
 import { decodeBoundedDeflate, BoundedDeflateError } from "./BoundedDeflate";
+import { GatewayPolicy, type GatewayOptions } from "./GatewayPolicy";
+import { GatewayPolicyError } from "./GatewayBoundary";
+import { gatewaySelfTest } from "./GatewaySelfTest";
 import {
     ApprovalStore,
     analyzeControlledTerminalCommand,
@@ -55,7 +58,7 @@ import {
 import { tokenMatches } from "./auth";
 import { isClientRoute } from "./ClientRoutes";
 import { controlledInvocation, controlledEnvironment } from "./ControlledExecution";
-import { validateProviderTarget, readProviderBody, MAX_PROVIDER_RESPONSE_BYTES } from "./ProviderTarget";
+import { validateProviderTarget } from "./ProviderTarget";
 import {
     CheckpointScopeError,
     FilesystemCheckpointStore,
@@ -86,7 +89,7 @@ export interface SafeBrokerEvent {
     policyVersion: string;
 }
 
-export interface BrokerServerOptions {
+export interface BrokerServerOptions extends GatewayOptions {
     /** F15a availability only; false refuses JSON without a legacy decoder. */
     jsonBodies?: boolean;
     gzipBodies?: boolean;
@@ -200,6 +203,7 @@ export class BrokerServer {
     private readonly checkpoints?: FilesystemCheckpointStore;
     private canaries: Array<Pick<Canary, "id" | "token" | "hash" | "redactedPreview">>;
     private canariesReady: boolean;
+    private readonly gateway: GatewayPolicy;
 
     constructor(private readonly options: BrokerServerOptions) {
         if (options.ownerSession !== undefined && (!/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/.test(options.ownerSession) || !options.controlToken)) {
@@ -216,6 +220,20 @@ export class BrokerServer {
         }
         this.canaries = (options.canaries ?? []).map(canary => ({ ...canary }));
         this.canariesReady = options.requireCanarySync !== true;
+        this.gateway = new GatewayPolicy(options, () => ({ ...this.safeMode }), () => this.stopping, event => this.record({ eventType: "gateway_" + event, decision: event.endsWith("allowed") ? "allow" : "block", riskScore: event.endsWith("allowed") ? 0 : 100, categories: ["gateway_policy_v1"] }), {
+            canaries: () => this.canaries.map(c => c.token),
+            request: async (body, provider, session) => {
+                const messages = normalizeMessages(body.messages);
+                if (provider === "anthropic" && body.system !== undefined) messages.unshift(...normalizeMessages([{ role: "system", content: body.system }]));
+                const scan = await scanBrokerRequest(messages, { engine: this.engine, safeMode: this.safeMode, canaries: this.canaries });
+                const approved = this.approvals.consume(typeof body.session_id === "string" ? body.session_id : session ?? "", scan.contentHash);
+                if (!scan.safe || !shouldForward(scan.decision, approved)) return { body, decision: scan.decision === "approval_required" ? "approval_required" : "block" };
+                const forward = { ...body, messages: forwardRawMessages(scan.redacted ? "redact" : scan.decision, body.messages),
+                    ...(provider === "anthropic" && body.system !== undefined ? { system: forwardRawSystem(scan.redacted ? "redact" : scan.decision, body.system) } : {}) };
+                return { body: forward, decision: this.unsafePayload(JSON.stringify(forward)) ? "block" : scan.redacted ? "redact" : scan.decision === "approval_required" ? "allow" : scan.decision };
+            },
+            response: async text => { const scan = await scanBrokerResponse(text, { canaries: this.canaries });return this.unsafePayload(text) ? "block" : scan.decision; },
+        });
         this.checkpoints = options.checkpoint ? new FilesystemCheckpointStore(options.checkpoint) : undefined;
         this.server = createServer((req, res) => void this.handle(req, res));
         this.server.requestTimeout = options.requestTimeoutMs ?? 30_000;
@@ -240,6 +258,7 @@ export class BrokerServer {
 
     async stop(): Promise<void> {
         this.stopping = true;
+        this.gateway.dispose();
         if (!this.server.listening) return;
         await new Promise<void>((resolve, reject) => {
             this.server.close((error) => error ? reject(error) : resolve());
@@ -301,6 +320,7 @@ export class BrokerServer {
             if (req.method === "GET" && url.pathname === "/v1/safe-mode/status") {
                 return this.json(res, 200, { ...this.safeMode, rules: generateSafeModePolicy(this.safeMode.level).rules });
             }
+            if (req.method === "GET" && url.pathname === "/v1/gateway/status" && controller) return this.json(res, 200, this.gateway.status());
             if (req.method === "GET" && url.pathname === "/v1/events/recent") {
                 return this.json(res, 200, { events: this.events.slice(-100) });
             }
@@ -320,6 +340,8 @@ export class BrokerServer {
             const body = await this.readJson(req);
             if (this.stopping) throw new HttpError(503, "broker_stopping", "Owned broker is stopping; requests withheld");
             if (req.method === "POST" && url.pathname === "/v1/canaries/sync") return void await this.syncCanaries(res, body);
+            if (req.method === "POST" && url.pathname === "/v1/gateway/sync" && controller) return this.json(res, 200, this.gateway.synchronize(body));
+            if (req.method === "POST" && url.pathname === "/v1/gateway/self-test" && controller) return this.json(res, 200, await gatewaySelfTest(this.gateway, options => new BrokerServer(options)));
             if (req.method === "POST" && url.pathname === "/v1/scan") return void await this.scanEndpoint(res, body);
             if (req.method === "POST" && url.pathname === "/v1/redact") return this.redactEndpoint(res, body);
             if (req.method === "POST" && url.pathname === "/v1/decision") return void await this.scanEndpoint(res, body);
@@ -344,16 +366,16 @@ export class BrokerServer {
             if (req.method === "POST" && url.pathname === "/v1/checkpoint/create") return void await this.createCheckpoint(res, body, req);
             if (req.method === "POST" && url.pathname === "/v1/checkpoint/rollback") return void await this.rollbackCheckpoint(res, body, req);
             if (req.method === "POST" && url.pathname === "/v1/ai/openai-compatible/chat/completions") {
-                return void await this.proxyOpenAI(res, body, req);
+                this.requireCanaryMonitoring();return void await this.gateway.proxy("openai", body, req, res);
             }
             if (req.method === "POST" && url.pathname === "/v1/ai/anthropic-compatible/messages") {
-                return void await this.proxyAnthropic(res, body, req);
+                this.requireCanaryMonitoring();return void await this.gateway.proxy("anthropic", body, req, res);
             }
             throw new HttpError(404, "not_found", "Endpoint not found");
         } catch (error) {
-            const status = error instanceof HttpError ? error.status : 500;
-            const code = error instanceof HttpError ? error.code : "internal_error";
-            const message = error instanceof HttpError ? error.message : "The local broker could not complete the request";
+            const status = error instanceof HttpError ? error.status : error instanceof GatewayPolicyError ? error.code === "gateway_unavailable" ? 503 : error.code === "gateway_approval_required" ? 403 : error.code === "gateway_limit" ? 413 : error.code === "gateway_provider_error" ? 502 : ["gateway_sensitive", "gateway_output_withheld"].includes(error.code) ? 422 : 400 : 500;
+            const code = error instanceof HttpError || error instanceof GatewayPolicyError ? error.code : "internal_error";
+            const message = error instanceof HttpError || error instanceof GatewayPolicyError ? error.message : "The local broker could not complete the request";
             this.safeLog("request_failed", { requestId, status, code });
             if (!res.headersSent) {
                 if (!req.complete || status === 408) res.setHeader("connection", "close");
@@ -597,6 +619,7 @@ export class BrokerServer {
     }
 
     private async syncCanaries(res: ServerResponse, body: JsonBody): Promise<void> {
+        this.gateway.invalidate();
         this.canariesReady = false;
         if (!Array.isArray(body.canaries) || body.canaries.length > 1024) {
             throw new HttpError(400, "invalid_canary_registry", "Expected a bounded array of canary records.");
@@ -692,379 +715,11 @@ export class BrokerServer {
         this.json(res, 200, decision);
     }
 
-    private async proxyOpenAI(res: ServerResponse, body: JsonBody, req: IncomingMessage): Promise<void> {
-        this.requireCanaryMonitoring();
-        const messages = normalizeMessages(body.messages);
-        const sessionId = stringValue(body.session_id) ?? stringValue(req.headers["x-soterai-session-id"]) ?? randomUUID();
-        const model = stringValue(body.model);
-        const scan = await scanBrokerRequest(messages, { engine: this.engine, safeMode: this.safeMode, canaries: this.canaries });
-        const approved = this.approvals.consume(sessionId, scan.contentHash);
-        this.recordRequestMemory(sessionId, scan, model, "openai-compatible");
-        if (!scan.safe || !shouldForward(scan.decision, approved)) {
-            this.record({ sessionId, eventType: "broker_request_blocked", decision: scan.decision, riskScore: scan.riskScore, categories: scan.categories, contentHash: scan.contentHash, model, provider: "openai-compatible", redactedEvidence: scan.evidencePreview });
-            throw new HttpError(scan.decision === "approval_required" ? 403 : 422, scan.decision, scan.decision === "approval_required" ? "Local approval is required for this content hash" : "The request was blocked by local policy");
-        }
-        const forward = { ...body, messages: forwardRawMessages(scan.redacted ? "redact" : scan.decision, body.messages) };
-        res.setHeader("x-soterai-request-decision", scan.decision);
-
-        if (body.stream === true) {
-            await this.proxyStreaming("openai", res, forward, req, sessionId, model, "openai-compatible");
-            return;
-        }
-
-        const provider = await this.forwardProvider("openai", forward, req, sessionId, model);
-        const responseText = extractOpenAIResponse(provider.body);
-        const responseScan = await scanBrokerResponse(responseText, { canaries: this.canaries });
-        const wireResponse = JSON.stringify(provider.body);
-        const unsafeResponse = responseScan.decision === "block" || this.unsafePayload(wireResponse);
-        if (unsafeResponse) {
-            responseScan.decision = "block";
-            responseScan.canaryLeaked ||= matchCanaries(wireResponse, this.canaries).length > 0;
-            responseScan.categories = [...new Set([...responseScan.categories, "output_boundary_block"])];
-        }
-        this.recordResponseMemory(sessionId, responseScan, model, "openai-compatible");
-        if (unsafeResponse) {
-            throw new HttpError(422, "unsafe_provider_response", "The provider response was blocked by local output protection");
-        }
-        res.setHeader("x-soterai-response-decision", responseScan.decision);
-        this.json(res, provider.status, provider.body);
-    }
-
-    private async proxyAnthropic(res: ServerResponse, body: JsonBody, req: IncomingMessage): Promise<void> {
-        this.requireCanaryMonitoring();
-        const system = typeof body.system === "string" ? [{ role: "system", content: body.system }] : [];
-        const messages = [...system, ...normalizeMessages(body.messages)];
-        const sessionId = stringValue(body.session_id) ?? stringValue(req.headers["x-soterai-session-id"]) ?? randomUUID();
-        const model = stringValue(body.model);
-        const scan = await scanBrokerRequest(messages, { engine: this.engine, safeMode: this.safeMode, canaries: this.canaries });
-        const approved = this.approvals.consume(sessionId, scan.contentHash);
-        this.recordRequestMemory(sessionId, scan, model, "anthropic-compatible");
-        if (!scan.safe || !shouldForward(scan.decision, approved)) {
-            throw new HttpError(scan.decision === "approval_required" ? 403 : 422, scan.decision, "The request was blocked by local policy");
-        }
-        const rawForwarded = forwardRawMessages(scan.redacted ? "redact" : scan.decision, body.messages);
-        const rawList = Array.isArray(rawForwarded) ? rawForwarded as Array<Record<string, unknown>> : [];
-        const inlineSystem = rawList.find((m) => m?.role === "system");
-        const forward = {
-            ...body,
-            // `system` is folded into the scan set above, so it must be redacted
-            // on the same terms as the messages — forwarding body.system verbatim
-            // sent a scanned secret while claiming decision=redact.
-            system: forwardRawSystem(
-                scan.redacted ? "redact" : scan.decision,
-                body.system ?? inlineSystem?.content,
-            ),
-            messages: rawList.filter((m) => m?.role !== "system"),
-        };
-        res.setHeader("x-soterai-request-decision", scan.decision);
-
-        if (body.stream === true) {
-            await this.proxyStreaming("anthropic", res, forward, req, sessionId, model, "anthropic-compatible");
-            return;
-        }
-
-        const provider = await this.forwardProvider("anthropic", forward, req, sessionId, model);
-        const responseText = extractAnthropicResponse(provider.body);
-        const responseScan = await scanBrokerResponse(responseText, { canaries: this.canaries });
-        const wireResponse = JSON.stringify(provider.body);
-        const unsafeResponse = responseScan.decision === "block" || this.unsafePayload(wireResponse);
-        if (unsafeResponse) {
-            responseScan.decision = "block";
-            responseScan.canaryLeaked ||= matchCanaries(wireResponse, this.canaries).length > 0;
-            responseScan.categories = [...new Set([...responseScan.categories, "output_boundary_block"])];
-        }
-        this.recordResponseMemory(sessionId, responseScan, model, "anthropic-compatible");
-        if (unsafeResponse) {
-            throw new HttpError(422, "unsafe_provider_response", "The provider response was blocked by local output protection");
-        }
-        res.setHeader("x-soterai-response-decision", responseScan.decision);
-        this.json(res, provider.status, provider.body);
-    }
-
-    /**
-     * Buffer SSE output until the complete bounded response passes scanning.
-     * Preserves SSE framing but deliberately delays tokens until verification.
-     */
-    private async proxyStreaming(
-        kind: "openai" | "anthropic",
-        res: ServerResponse,
-        body: JsonBody,
-        req: IncomingMessage,
-        sessionId: string,
-        model: string | undefined,
-        providerLabel: string,
-    ): Promise<void> {
-        const target = kind === "openai" ? this.options.openAIProviderUrl : this.options.anthropicProviderUrl;
-        if (!target) throw new HttpError(503, "provider_not_configured", `${kind} provider routing is not configured`);
-        const apiKey = this.options.providerApiKey ?? stringValue(req.headers["x-soterai-provider-key"]);
-        if (!apiKey) throw new HttpError(401, "provider_key_required", "A local provider key is required");
-
-        const headers: Record<string, string> = {
-            "content-type": "application/json",
-            accept: "text/event-stream",
-        };
-        if (kind === "openai") headers.authorization = `Bearer ${apiKey}`;
-        else {
-            headers["x-api-key"] = apiKey;
-            headers["anthropic-version"] = stringValue(req.headers["anthropic-version"]) ?? "2023-06-01";
-        }
-
-        // Same egress invariant as the non-streaming path, before the socket
-        // opens — and before the abort timer, so a block leaves no dangling timer.
-        const wire = this.serializeEgress({ ...body, stream: true }, providerLabel, sessionId, model);
-        const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), this.options.requestTimeoutMs ?? 60_000);
-        let upstream: Response;
-        try {
-            if (this.stopping) throw new HttpError(503, "broker_stopping", "Owned broker is stopping; requests withheld");
-            upstream = await (this.options.fetchImpl ?? fetch)(target, {
-                method: "POST",
-                headers,
-                body: wire,
-                redirect: "error",
-                signal: controller.signal,
-            });
-        } catch {
-            clearTimeout(timeout);
-            throw new HttpError(502, "provider_error", "The configured provider could not be reached for streaming");
-        }
-
-        if (!upstream.ok || !upstream.body) {
-            try {
-                const errText = await readProviderBody(upstream).catch(() => "");
-                const parsed = parseProviderJson(errText);
-                if (parsed) throw providerSafetyError(kind, upstream.status, parsed);
-                throw new HttpError(502, "provider_error", "The provider returned an invalid streaming response.");
-            } finally { clearTimeout(timeout); }
-        }
-
-        res.statusCode = 200;
-        res.setHeader("content-type", "text/event-stream; charset=utf-8");
-        res.setHeader("cache-control", "no-cache, no-store");
-        res.setHeader("connection", "keep-alive");
-        res.setHeader("x-soterai-streaming", "1");
-        res.setHeader("x-soterai-response-decision", "pending");
-
-        const reader = upstream.body.getReader();
-        const decoder = new TextDecoder("utf-8", { fatal: true });
-        let accumulated = "";
-        let blocked = false;
-        let buffer = "";
-        const pendingParts: string[] = [];
-        let responseBytes = 0;
-        let wroteBody = false;
-        let finalDecision: GuardAction = "allow";
-
-        const writeBlockAndAbort = async (
-            responseScan: Awaited<ReturnType<typeof scanBrokerResponse>>,
-        ): Promise<void> => {
-            blocked = true;
-            pendingParts.length = 0;
-            finalDecision = "block";
-            this.recordResponseMemory(sessionId, { ...responseScan, decision: "block" }, model, providerLabel);
-            // Headers may already be sent after the first safe chunk — never call setHeader then.
-            if (!wroteBody && !res.headersSent) {
-                res.setHeader("x-soterai-response-decision", "block");
-            }
-            res.write(
-                `data: ${JSON.stringify({ error: { code: "unsafe_provider_response", message: "Stream aborted: local output protection blocked secret/canary leak" } })}\n\n`,
-            );
-            res.write("data: [DONE]\n\n");
-            wroteBody = true;
-            try { await reader.cancel(); } catch { /* ignore */ }
-        };
-
-        /**
-         * Fail-closed stream gate: block canaries, explicit block decisions, and any
-         * high-risk secret that still survives in the accumulated assistant text.
-         * Secrets often score as "warn" in scanAIOutput; for streaming we still refuse
-         * to forward raw credentials (scan-before-forward invariant).
-         */
-        const shouldBlockStream = async (text: string): Promise<Awaited<ReturnType<typeof scanBrokerResponse>> | null> => {
-            if (!text) return null;
-            const responseScan = await scanBrokerResponse(text, { canaries: this.canaries });
-            if (responseScan.decision === "block" || responseScan.canaryLeaked || this.unsafePayload(text)) {
-                return responseScan;
-            }
-            return null;
-        };
-
-        try {
-            while (true) {
-                const { done, value } = await reader.read();
-                if (done) break;
-                responseBytes += value.byteLength;
-                if (responseBytes > MAX_PROVIDER_RESPONSE_BYTES) {
-                    await writeBlockAndAbort({
-                        ...await scanBrokerResponse(""), decision: "block", riskScore: 100,
-                        categories: ["response_size_limit"],
-                    });
-                    break;
-                }
-                const chunk = decoder.decode(value, { stream: true });
-                buffer += chunk;
-
-                // Scan on SSE event boundaries; never forward a part until the
-                // accumulated assistant-visible text is clean.
-                const parts = buffer.split(/\r?\n\r?\n/);
-                buffer = parts.pop() ?? "";
-                for (const part of parts) {
-                    if (!part.trim()) continue;
-                    const content = extractStreamDelta(part);
-                    if (content) accumulated += content;
-
-                    const blockScan = await shouldBlockStream(accumulated) ?? await shouldBlockStream(part);
-                    if (blockScan) {
-                        await writeBlockAndAbort(blockScan);
-                        break;
-                    }
-                    // Buffer until the whole response passes: a later delta may
-                    // complete a credential whose prefix is not detectable yet.
-                    pendingParts.push(part + "\n\n");
-                }
-                if (blocked) break;
-            }
-
-            if (!blocked) buffer += decoder.decode();
-            if (!blocked && buffer.trim()) {
-                const content = extractStreamDelta(buffer);
-                if (content) accumulated += content;
-                const blockScan = await shouldBlockStream(accumulated) ?? await shouldBlockStream(buffer);
-                if (blockScan) {
-                    await writeBlockAndAbort(blockScan);
-                } else {
-                    pendingParts.push(buffer);
-                    const responseScan = await scanBrokerResponse(accumulated || buffer, { canaries: this.canaries });
-                    this.recordResponseMemory(sessionId, responseScan, model, providerLabel);
-                    finalDecision = responseScan.decision;
-                    if (!res.headersSent) res.setHeader("x-soterai-response-decision", responseScan.decision);
-                }
-            } else if (!blocked && accumulated) {
-                const responseScan = await scanBrokerResponse(accumulated, { canaries: this.canaries });
-                this.recordResponseMemory(sessionId, responseScan, model, providerLabel);
-                finalDecision = responseScan.decision;
-            }
-
-            if (!blocked) {
-                if (!res.headersSent) res.setHeader("x-soterai-response-decision", finalDecision);
-                for (const part of pendingParts) res.write(part);
-                wroteBody = pendingParts.length > 0;
-            }
-
-            // Best-effort final decision header if nothing was written yet.
-            if (!wroteBody && !res.headersSent) {
-                res.setHeader("x-soterai-response-decision", blocked ? "block" : finalDecision);
-            }
-
-            this.record({
-                sessionId,
-                eventType: blocked ? "broker_stream_blocked" : "broker_stream_completed",
-                decision: blocked ? "block" : finalDecision,
-                riskScore: blocked ? 90 : 0,
-                categories: blocked ? ["stream_output_block"] : [],
-                model,
-                provider: providerLabel,
-            });
-        } catch {
-            if (!blocked && !res.destroyed) await writeBlockAndAbort({
-                ...await scanBrokerResponse(""), decision: "block", riskScore: 100,
-                categories: ["incomplete_provider_stream"],
-            });
-        } finally {
-            clearTimeout(timeout);
-            controller.abort();
-            try { reader.releaseLock(); } catch { /* ignore */ }
-            res.end();
-        }
-    }
-
-
-    /**
-     * The egress invariant — the last gate before any byte leaves this process.
-     *
-     * Scanning runs on a FLATTENED copy of the request, but the forwarded body
-     * is rebuilt from the original fields (`{ ...body }` plus targeted
-     * rewrites). Every field that rebuild copies through is scanned-but-never-
-     * redacted, and each new provider parameter silently widens that gap. Rather
-     * than chase field names, this verifies the serialized bytes that are about
-     * to be written and fails CLOSED if any high-risk secret class survives.
-     *
-     * It is a backstop, not the primary control: with redaction correct it never
-     * fires. When it does fire, either a passthrough field carries a secret we
-     * cannot safely rewrite (unknown shape — blocking is the honest answer) or
-     * the scanner and the redactor disagree, which is a bug worth surfacing.
-     *
-     * Deliberately not disableable: an opt-out here would recreate exactly the
-     * "reported protection it did not deliver" failure this closes.
-     */
     private unsafePayload(text: string): boolean {
         return findSurvivingSecrets(text).length > 0
             || detectEncodedSecrets(text).matches.length > 0
             || redactAIContext(text) !== redactForSharing(text)
             || matchCanaries(text, this.canaries ?? []).length > 0;
-    }
-
-    private serializeEgress(body: JsonBody, provider: string, sessionId?: string, model?: string): string {
-        const wire = JSON.stringify(body);
-        const survivors = findSurvivingSecrets(wire);
-        if (detectEncodedSecrets(wire).matches.length || redactAIContext(wire) !== redactForSharing(wire)) survivors.push("encoded_or_unscannable_content");
-        if (matchCanaries(wire, this.canaries ?? []).length) survivors.push("canary");
-        if (survivors.length === 0) return wire;
-        this.record({
-            sessionId,
-            eventType: "broker_egress_blocked",
-            decision: "block",
-            riskScore: 100,
-            categories: ["egress_secret_survived", ...survivors],
-            model,
-            provider,
-        });
-        throw new HttpError(
-            422,
-            "egress_secret_blocked",
-            `The request was stopped at the wire: ${survivors.join(", ")} survived redaction and would have reached the provider. ` +
-            "Move the value into the Protected Vault, or remove it from the request.",
-            { survivingSecretClasses: survivors, stage: "egress_verify" },
-        );
-    }
-
-    private async forwardProvider(kind: "openai" | "anthropic", body: JsonBody, req: IncomingMessage, sessionId?: string, model?: string): Promise<{ status: number; body: JsonBody }> {
-        const target = kind === "openai" ? this.options.openAIProviderUrl : this.options.anthropicProviderUrl;
-        if (!target) throw new HttpError(503, "provider_not_configured", `${kind} provider routing is not configured`);
-        const apiKey = this.options.providerApiKey ?? stringValue(req.headers["x-soterai-provider-key"]);
-        if (!apiKey) throw new HttpError(401, "provider_key_required", "A local provider key is required");
-        const headers: Record<string, string> = { "content-type": "application/json" };
-        if (kind === "openai") headers.authorization = `Bearer ${apiKey}`;
-        else { headers["x-api-key"] = apiKey; headers["anthropic-version"] = stringValue(req.headers["anthropic-version"]) ?? "2023-06-01"; }
-        // Serialize and verify BEFORE opening the socket.
-        const wire = this.serializeEgress(body, `${kind}-compatible`, sessionId, model);
-        const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), this.options.requestTimeoutMs ?? 30_000);
-        try {
-            if (this.stopping) throw new HttpError(503, "broker_stopping", "Owned broker is stopping; requests withheld");
-            const response = await (this.options.fetchImpl ?? fetch)(target, { method: "POST", headers, body: wire, redirect: "error", signal: controller.signal });
-            const parsed = parseProviderJson(await readProviderBody(response));
-            if (!parsed) throw new HttpError(502, "provider_error", "The provider returned invalid JSON.");
-            if (!response.ok) throw providerSafetyError(kind, response.status, parsed);
-            return { status: response.status, body: parsed };
-        } catch (error) {
-            if (error instanceof HttpError) throw error;
-            throw new HttpError(502, "provider_error", "The configured provider could not be reached or returned invalid JSON");
-        } finally { clearTimeout(timeout); }
-    }
-
-
-    private recordRequestMemory(sessionId: string, scan: Awaited<ReturnType<typeof scanBrokerRequest>>, model: string | undefined, provider: string): void {
-        if (!this.memory.getSession(sessionId)) this.memory.startSession({ sessionId, source: "broker", provider });
-        const kind: MemoryEventKind = scan.decision === "block" ? "broker_request_blocked" : scan.redacted ? "broker_request_redacted" : "broker_request_scanned";
-        this.memory.addEvent(sessionId, { eventId: randomUUID(), timestamp: new Date().toISOString(), kind, source: "broker", decision: scan.decision, riskScore: scan.riskScore, categories: scan.categories, redactedEvidence: scan.evidencePreview, requestHash: scan.contentHash, model, provider, contentSize: 0 });
-        this.record({ sessionId, eventType: kind, decision: scan.decision, riskScore: scan.riskScore, categories: scan.categories, contentHash: scan.contentHash, model, provider, redactedEvidence: scan.evidencePreview });
-    }
-
-    private recordResponseMemory(sessionId: string, scan: Awaited<ReturnType<typeof scanBrokerResponse>>, model: string | undefined, provider: string): void {
-        const kind: MemoryEventKind = scan.canaryLeaked ? "broker_response_leak_detected" : "broker_response_scanned";
-        this.memory.addEvent(sessionId, { eventId: randomUUID(), timestamp: new Date().toISOString(), kind, source: "broker", decision: scan.decision, riskScore: scan.riskScore, categories: scan.categories, redactedEvidence: scan.evidencePreview, responseHash: scan.contentHash, canaryExposed: scan.canaryLeaked, model, provider, contentSize: 0 });
-        this.record({ sessionId, eventType: kind, decision: scan.decision, riskScore: scan.riskScore, categories: scan.categories, responseHash: scan.contentHash, model, provider, redactedEvidence: scan.evidencePreview });
     }
 
     private record(input: Omit<SafeBrokerEvent, "eventId" | "timestamp" | "source" | "safeMode" | "policyVersion">): void {
@@ -1355,66 +1010,6 @@ function forwardRawSystem(decision: GuardAction, raw: unknown): unknown {
 
 function safeRequestResult(result: Awaited<ReturnType<typeof scanBrokerRequest>>): JsonBody {
     return { decision: result.decision, riskScore: result.riskScore, categories: result.categories, redactedMessages: result.redactedMessages, redacted: result.redacted, canaryInRequest: result.canaryInRequest, contentHash: result.contentHash, safe: result.safe, evidencePreview: result.evidencePreview };
-}
-
-function extractOpenAIResponse(body: JsonBody): string {
-    const choices = body.choices;
-    if (!Array.isArray(choices)) return "";
-    return choices.map((choice) => choice && typeof choice === "object" ? stringValue((choice as Record<string, unknown>).message && ((choice as Record<string, unknown>).message as Record<string, unknown>).content) ?? "" : "").join("\n");
-}
-
-function extractAnthropicResponse(body: JsonBody): string {
-    const content = body.content;
-    if (!Array.isArray(content)) return "";
-    return content.map((part) => part && typeof part === "object" ? stringValue((part as Record<string, unknown>).text) ?? "" : "").join("\n");
-}
-
-function parseProviderJson(raw: string): JsonBody | undefined {
-    try {
-        const parsed = JSON.parse(raw) as unknown;
-        return parsed && typeof parsed === "object" && !Array.isArray(parsed) ? parsed as JsonBody : undefined;
-    } catch {
-        return undefined;
-    }
-}
-
-function providerSafetyError(kind: "openai" | "anthropic", status: number, body: JsonBody): HttpError {
-    const error = objectValue(body.error);
-    const details = objectValue(body.details);
-    const nestedDetails = objectValue(error.details);
-    const providerCode = [body.code, error.code, details.code, nestedDetails.code]
-        .map(stringValue)
-        .find(Boolean);
-    const providerMessage = [body.message, error.message, details.message, nestedDetails.message]
-        .map(stringValue)
-        .find(Boolean);
-    const sensitiveWords = providerCode?.toLowerCase() === "sensitive_words_detected" ||
-        /\bsensitive[\s_-]+words?\b/i.test(providerMessage ?? "");
-
-    if (sensitiveWords) {
-        return new HttpError(
-            422,
-            "provider_safety_rejected",
-            "The provider rejected this request under its content-safety policy. Revise the request or use a provider/model whose policy fits the task; SoterAI will not bypass provider safety controls.",
-            {
-                provider: `${kind}-compatible`,
-                category: "content_policy",
-                providerCode: "sensitive_words_detected",
-                retryable: false,
-            },
-        );
-    }
-
-    return new HttpError(
-        status >= 400 && status < 500 ? status : 502,
-        "provider_rejected",
-        `The configured ${kind}-compatible provider rejected the request (${status}).`,
-        {
-            provider: `${kind}-compatible`,
-            ...(providerCode ? { providerCode: providerCode.slice(0, 80) } : {}),
-            retryable: status === 408 || status === 429 || status >= 500,
-        },
-    );
 }
 
 /**

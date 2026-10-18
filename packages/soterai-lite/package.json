@@ -126,7 +126,8 @@
         "soterai.lite.gatewayChunkedBodies",
         "soterai.lite.gatewayFramedBodies",
         "soterai.lite.gatewayMultipartBodies",
-        "soterai.lite.gatewayBase64Bodies"
+        "soterai.lite.gatewayBase64Bodies",
+        "soterai.lite.gatewayPolicy"
       ]
     }
   },
@@ -823,6 +824,11 @@
       {
         "command": "soterai.showBrokerStatus",
         "title": "Show Broker Status",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.runGatewaySelfTest",
+        "title": "Run Gateway Loopback Self-Test",
         "category": "SoterAI"
       },
       {
@@ -1859,6 +1865,12 @@
           "default": true,
           "scope": "machine",
           "description": "Enable bounded canonical base64/base64url text and JSON blobs and explicit chat envelopes. Complete declared blobs decode before inspection; binary/nested/noncanonical payloads refuse. Disabling withdraws the owner and refuses explicit blobs after restart; ordinary JSON remains available."
+        },
+        "soterai.lite.gatewayPolicy": {
+          "type": "boolean",
+          "default": true,
+          "scope": "machine",
+          "description": "Inspect complete bounded supported chat requests and responses using the current private vault/canary/credential registry. Unknown policy or unavailable/stale registry refuses routing. Disabling withdraws ownership and refuses protected chat routes after restart; management remains available."
         }
       }
     },
@@ -2769,6 +2781,10 @@
         },
         {
           "command": "soterai.recoverVaultMigration",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.runGatewaySelfTest",
           "when": "soterai.advancedCommands"
         }
       ]

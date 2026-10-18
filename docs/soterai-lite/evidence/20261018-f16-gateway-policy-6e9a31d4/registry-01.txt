@@ -1,0 +1,93 @@
+﻿TAP version 13
+# Subtest: F16-V01 absent vault is an explicit empty snapshot without storage/key creation
+ok 1 - F16-V01 absent vault is an explicit empty snapshot without storage/key creation
+  ---
+  duration_ms: 129.3603
+  type: 'test'
+  ...
+# Subtest: F16-V02 real encrypted current and legacy records are complete; other root excluded
+ok 2 - F16-V02 real encrypted current and legacy records are complete; other root excluded
+  ---
+  duration_ms: 143.8592
+  type: 'test'
+  ...
+# Subtest: F16-V03 all selected roots are captured
+not ok 3 - F16-V03 all selected roots are captured
+  ---
+  duration_ms: 66.9293
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayVaultRegistry.test.ts:2:5413'
+  failureType: 'testCodeFailure'
+  error: 'Protected vault operation withheld. Encrypted recovery is retained; no plaintext rollback was performed.'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    vaultUnavailable (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\firewall\VaultStorage.ts:10:54)
+    VaultManager.createGatewayRegistry (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\firewall\VaultManager.ts:380:26)
+    async lease (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayVaultRegistry.test.ts:18:52)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayVaultRegistry.test.ts:23:185)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F16-V04 malformed excluded-root metadata never becomes partial snapshot
+ok 4 - F16-V04 malformed excluded-root metadata never becomes partial snapshot
+  ---
+  duration_ms: 122.2816
+  type: 'test'
+  ...
+# Subtest: F16-V05 cipher replacement revokes captured lease and late use result
+ok 5 - F16-V05 cipher replacement revokes captured lease and late use result
+  ---
+  duration_ms: 98.9837
+  type: 'test'
+  ...
+# Subtest: F16-V06 key change event revokes lease
+ok 6 - F16-V06 key change event revokes lease
+  ---
+  duration_ms: 98.6941
+  type: 'test'
+  ...
+# Subtest: F16-V07 pending transaction added after capture revokes lease
+ok 7 - F16-V07 pending transaction added after capture revokes lease
+  ---
+  duration_ms: 107.5278
+  type: 'test'
+  ...
+# Subtest: F16-V08 new vault invalidates prior absent snapshot
+ok 8 - F16-V08 new vault invalidates prior absent snapshot
+  ---
+  duration_ms: 70.1509
+  type: 'test'
+  ...
+# Subtest: F16-V09 root selection and policy drift revoke snapshot
+ok 9 - F16-V09 root selection and policy drift revoke snapshot
+  ---
+  duration_ms: 138.9073
+  type: 'test'
+  ...
+# Subtest: F16-V10 disabled dependencies and remote workspace refuse before copy
+ok 10 - F16-V10 disabled dependencies and remote workspace refuse before copy
+  ---
+  duration_ms: 8.6511
+  type: 'test'
+  ...
+# Subtest: F16-V11 invalid encrypted schema/key and oversized registration set refuse
+ok 11 - F16-V11 invalid encrypted schema/key and oversized registration set refuse
+  ---
+  duration_ms: 146.1335
+  type: 'test'
+  ...
+# Subtest: F16-V12 disposal and disabled guard are sticky
+ok 12 - F16-V12 disposal and disabled guard are sticky
+  ---
+  duration_ms: 47.6851
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 11
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2152.9814

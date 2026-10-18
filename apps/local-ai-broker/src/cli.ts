@@ -3,6 +3,7 @@ import path from "node:path";
 import os from "node:os";
 import { BrokerServer, DEFAULT_BROKER_PORT } from "./BrokerServer";
 import { createBrokerCredentialLoader, BrokerCredentialError } from "./auth";
+import { createGatewayParentGuard } from "./GatewayParentGuard";
 
 async function main(): Promise<void> {
     const ownerSession = process.env.SOTERAI_BROKER_SESSION;
@@ -28,6 +29,9 @@ async function main(): Promise<void> {
         controlToken,
         port,
         ownerSession,
+        gatewayPolicy: process.env.SOTERAI_GATEWAY_POLICY !== "0",
+        requireGatewaySync: process.env.SOTERAI_REQUIRE_GATEWAY_SYNC === "1",
+        gatewayGuard: ownerSession ? createGatewayParentGuard(ownerSession) : undefined,
         jsonBodies: process.env.SOTERAI_GATEWAY_JSON_BODIES !== "0",
         gzipBodies: process.env.SOTERAI_GATEWAY_GZIP_BODIES !== "0",
         brotliBodies: process.env.SOTERAI_GATEWAY_BROTLI_BODIES !== "0",

@@ -106,18 +106,15 @@ async function assertBlockedAtEgress(res: Response, received: string[], label: s
     assert.equal(received.length, 0, `${label}: the provider was called despite the egress block`);
     assert.equal(res.status, 422, `${label}: expected 422, got ${res.status}`);
     const body = await res.json() as { error?: { code?: string; details?: { survivingSecretClasses?: string[] } } };
-    assert.equal(body.error?.code, "egress_secret_blocked", `${label}: wrong error code ${body.error?.code}`);
-    assert.ok(
-        (body.error?.details?.survivingSecretClasses ?? []).length > 0,
-        `${label}: the block did not name the surviving secret class`,
-    );
+    assert.equal(body.error?.code, "gateway_sensitive", `${label}: wrong error code ${body.error?.code}`);
+    assert.equal(body.error?.details, undefined, "metadata-only refusal must not expose findings");
 }
 
 describe("Wire egress invariant: no raw secret may leave the broker", () => {
     it("Anthropic: a secret in `system` must not reach the provider", async () => {
         const provider = await startRecordingProvider();
         try {
-            await withBroker({ anthropicProviderUrl: `${provider.url}/v1/messages`, providerApiKey: "k" }, async (brokerUrl) => {
+            await withBroker({ anthropicProviderUrl: `${provider.url}/v1/messages`, providerApiKey: "synthetic-provider-private-fixture" }, async (brokerUrl) => {
                 const res = await post(brokerUrl, "/v1/ai/anthropic-compatible/messages", {
                     model: "test-model",
                     max_tokens: 64,
@@ -127,7 +124,7 @@ describe("Wire egress invariant: no raw secret may leave the broker", () => {
                 // The request is forwardable (decision=redact), so the provider
                 // was called — that is exactly the leak window.
                 assert.ok(res.status < 400 || res.status === 422, `unexpected broker status ${res.status}`);
-                assertRedactedAndForwarded(provider.received, SK48, "anthropic system field");
+                await assertBlockedAtEgress(res, provider.received, "anthropic system field");assertNoSecretOnWire(provider.received, SK48, "anthropic system field");
             });
         } finally { provider.server.close(); }
     });
@@ -135,7 +132,7 @@ describe("Wire egress invariant: no raw secret may leave the broker", () => {
     it("Anthropic streaming: a secret in `system` must not reach the provider", async () => {
         const provider = await startRecordingProvider(true);
         try {
-            await withBroker({ anthropicProviderUrl: `${provider.url}/v1/messages`, providerApiKey: "k" }, async (brokerUrl) => {
+            await withBroker({ anthropicProviderUrl: `${provider.url}/v1/messages`, providerApiKey: "synthetic-provider-private-fixture" }, async (brokerUrl) => {
                 const res = await post(brokerUrl, "/v1/ai/anthropic-compatible/messages", {
                     model: "test-model",
                     max_tokens: 64,
@@ -143,8 +140,7 @@ describe("Wire egress invariant: no raw secret may leave the broker", () => {
                     system: `Internal runbook. Token: ${GHP}`,
                     messages: [{ role: "user", content: "summarise the runbook" }],
                 });
-                await res.text();
-                assertRedactedAndForwarded(provider.received, GHP, "anthropic streaming system field");
+                await assertBlockedAtEgress(res, provider.received, "anthropic streaming system field");assertNoSecretOnWire(provider.received, GHP, "anthropic streaming system field");
             });
         } finally { provider.server.close(); }
     });
@@ -152,8 +148,8 @@ describe("Wire egress invariant: no raw secret may leave the broker", () => {
     it("OpenAI: a secret in tool_calls[].function.arguments must not reach the provider", async () => {
         const provider = await startRecordingProvider();
         try {
-            await withBroker({ openAIProviderUrl: `${provider.url}/v1/chat/completions`, providerApiKey: "k" }, async (brokerUrl) => {
-                await post(brokerUrl, "/v1/ai/openai-compatible/chat/completions", {
+            await withBroker({ openAIProviderUrl: `${provider.url}/v1/chat/completions`, providerApiKey: "synthetic-provider-private-fixture" }, async (brokerUrl) => {
+                const res = await post(brokerUrl, "/v1/ai/openai-compatible/chat/completions", {
                     model: "test-model",
                     messages: [
                         { role: "user", content: "deploy the service" },
@@ -169,7 +165,7 @@ describe("Wire egress invariant: no raw secret may leave the broker", () => {
                         },
                     ],
                 });
-                assertRedactedAndForwarded(provider.received, SK48, "openai tool_calls arguments");
+                await assertBlockedAtEgress(res, provider.received, "openai tool_calls arguments");assertNoSecretOnWire(provider.received, SK48, "openai tool_calls arguments");
             });
         } finally { provider.server.close(); }
     });
@@ -177,7 +173,7 @@ describe("Wire egress invariant: no raw secret may leave the broker", () => {
     it("A secret in an unscanned passthrough field is BLOCKED at the wire", async () => {
         const provider = await startRecordingProvider();
         try {
-            await withBroker({ anthropicProviderUrl: `${provider.url}/v1/messages`, providerApiKey: "k" }, async (brokerUrl) => {
+            await withBroker({ anthropicProviderUrl: `${provider.url}/v1/messages`, providerApiKey: "synthetic-provider-private-fixture" }, async (brokerUrl) => {
                 const res = await post(brokerUrl, "/v1/ai/anthropic-compatible/messages", {
                     model: "test-model",
                     max_tokens: 64,
@@ -195,7 +191,7 @@ describe("Wire egress invariant: no raw secret may leave the broker", () => {
     it("The egress guard is wired on the OpenAI route too, not just Anthropic", async () => {
         const provider = await startRecordingProvider();
         try {
-            await withBroker({ openAIProviderUrl: `${provider.url}/v1/chat/completions`, providerApiKey: "k" }, async (brokerUrl) => {
+            await withBroker({ openAIProviderUrl: `${provider.url}/v1/chat/completions`, providerApiKey: "synthetic-provider-private-fixture" }, async (brokerUrl) => {
                 const res = await post(brokerUrl, "/v1/ai/openai-compatible/chat/completions", {
                     model: "test-model",
                     metadata: { deploy_token: GHP },
@@ -209,18 +205,18 @@ describe("Wire egress invariant: no raw secret may leave the broker", () => {
     it("HONESTY: whenever the response says `redact`, the wire must actually be redacted", async () => {
         const provider = await startRecordingProvider();
         try {
-            await withBroker({ anthropicProviderUrl: `${provider.url}/v1/messages`, providerApiKey: "k" }, async (brokerUrl) => {
+            await withBroker({ anthropicProviderUrl: `${provider.url}/v1/messages`, providerApiKey: "synthetic-provider-private-fixture" }, async (brokerUrl) => {
                 const res = await post(brokerUrl, "/v1/ai/anthropic-compatible/messages", {
                     model: "test-model",
                     max_tokens: 64,
-                    system: `key=${SK48}`,
+                    system: "Contact user@example.com",
                     messages: [{ role: "user", content: "hi" }],
                 });
                 const claimed = res.headers.get("x-soterai-request-decision");
                 assert.equal(claimed, "redact", `expected a redact decision, got ${claimed}`);
                 // The header is a claim about what was done. Check it against
                 // the bytes, not against the decision object that produced it.
-                assertRedactedAndForwarded(provider.received, SK48, `claimed decision "${claimed}"`);
+                assertRedactedAndForwarded(provider.received, "user@example.com", `claimed decision "${claimed}"`);
             });
         } finally { provider.server.close(); }
     });
@@ -228,7 +224,7 @@ describe("Wire egress invariant: no raw secret may leave the broker", () => {
     it("CONTROL: a clean request still reaches the provider unchanged", async () => {
         const provider = await startRecordingProvider();
         try {
-            await withBroker({ anthropicProviderUrl: `${provider.url}/v1/messages`, providerApiKey: "k" }, async (brokerUrl) => {
+            await withBroker({ anthropicProviderUrl: `${provider.url}/v1/messages`, providerApiKey: "synthetic-provider-private-fixture" }, async (brokerUrl) => {
                 const res = await post(brokerUrl, "/v1/ai/anthropic-compatible/messages", {
                     model: "test-model",
                     max_tokens: 64,

@@ -28,6 +28,7 @@ test("F15a-M03 changed JSON flag invalidates existing owned routing authority", 
 function fixture(jsonUnavailable = false) {
     const context = stub.makeExtensionContext("D:/SoterAI-Lite-test-profiles/f14-manager-memory-only/storage"), envs: NodeJS.ProcessEnv[] = [], routes: string[] = [], modes: unknown[] = [];
     const secretChanged = new stub.EventEmitter<{ key: string }>(); context.secrets.onDidChange = secretChanged.event;
+    let mode={enabled:true,level:"strict"},generation="";
     const transport: Pick<OwnedBrokerOptions, "launch" | "fetchImpl" | "stopMs"> = {
         stopMs: 30,
         launch: ((_exe: string, _argv: string[], opts: { env: NodeJS.ProcessEnv }) => {
@@ -41,15 +42,17 @@ function fixture(jsonUnavailable = false) {
             const route = new URL(String(input)).pathname; routes.push(route); const session = new Headers(init?.headers).get("x-soterai-session");
             if (route === "/v1/lifecycle/status") return Response.json({ session, version: "0.2.0", ready: true });
             if (route === "/v1/canaries/sync") return jsonUnavailable ? Response.json({ error: "json_unavailable" }, { status: 503 }) : Response.json({ synchronized: true, count: JSON.parse(String(init?.body)).canaries.length });
-            if (route === "/v1/safe-mode/enable") { modes.push(JSON.parse(String(init?.body))); return Response.json({ enabled: true, level: JSON.parse(String(init?.body)).level }); }
+            if (route === "/v1/safe-mode/enable") { modes.push(JSON.parse(String(init?.body))); mode={enabled:true,level:JSON.parse(String(init?.body)).level}; return Response.json(mode); }
+            if(route==="/v1/gateway/sync"){generation=JSON.parse(String(init?.body)).generation;return Response.json({version:1,synchronized:true,generation});}
+            if(route==="/v1/gateway/status")return Response.json({version:1,enabled:envs.at(-1)?.SOTERAI_GATEWAY_POLICY!=="0",ready:true,generation});
             if (route === "/version") return Response.json({ version: "0.2.0" });
-            if (route === "/v1/safe-mode/status") return Response.json({ enabled: true, level: "strict" });
+            if (route === "/v1/safe-mode/status") return Response.json(mode);
             return Response.json({ accepted: true });
         },
     };
     // Baseline barrier avoids calling legacy Manager.start/stop, which signals processes.
     assert.equal(typeof BrokerManager.prototype.ownedSnapshot, "function", "Owned manager integration is required before execution.");
-    const manager = new BrokerManager(context as never, transport);
+    const manager = new BrokerManager(context as never, transport, {async createGatewayRegistry(enabled){return {available:enabled,async use(consume){return consume([]);},dispose(){}};}});
     return { context, manager, envs, routes, modes, secretChanged };
 }
 test("F14-M01 machine flag disable refuses without launch or legacy attach", async () => { const f = fixture(); stub.state.configInspect.set("soterai.lite.gatewayLifecycle", { defaultValue: true, globalValue: false }); await assert.rejects(f.manager.start()); assert.equal(f.envs.length, 0); await f.manager.stop(); });

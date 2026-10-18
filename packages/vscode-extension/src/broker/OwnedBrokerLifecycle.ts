@@ -10,6 +10,7 @@ export interface OwnedBrokerOptions {
     fingerprint(): string;
     prepare(): Promise<NodeJS.ProcessEnv>;
     initialize(request: OwnedBrokerRequest): Promise<void>;
+    gatewayGuard?(generation: string): boolean | Promise<boolean>;
     launch?: typeof spawn;
     fetchImpl?: typeof fetch;
     startupMs?: number;
@@ -97,8 +98,21 @@ export class OwnedBrokerLifecycle {
         child.once("error", () => { rejectReady(unavailable()); this.invalidateGeneration(g); });
         child.once("exit", () => { rejectReady(unavailable()); this.invalidateGeneration(g); });
         child.once("close", () => { g.closed = true; rejectReady(unavailable()); if (this.generation === g) this.invalidateGeneration(g); complete(); });
-        let readySeen = false;
+        let readySeen = false, gatewayPending = 0;
         child.on("message", (message: unknown) => {
+            if (readySeen && message && typeof message === "object" && !Array.isArray(message)) {
+                const row = message as Record<string, unknown>, uuid = /^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/;
+                if (Object.keys(row).sort().join(",") === "generation,id,session,type,version" && row.type === "SOTERAI_GATEWAY_GUARD_REQUEST" && row.version === 1 && row.session === session
+                    && typeof row.id === "string" && uuid.test(row.id) && typeof row.generation === "string" && uuid.test(row.generation)) {
+                    if (++gatewayPending > 32) { gatewayPending--;this.invalidateGeneration(g);return; }
+                    void Promise.resolve().then(() => this.state === "healthy" && this.current(g) && this.options.gatewayGuard ? this.options.gatewayGuard(row.generation as string) : false).catch(() => false).then(allowed => {
+                        const current = allowed === true && this.state === "healthy" && this.current(g);
+                        if (child.connected) { try { child.send({ type: "SOTERAI_GATEWAY_GUARD_RESPONSE", version: 1, session, id: row.id, allowed: current }, error => { if (error) this.invalidateGeneration(g); }); } catch { this.invalidateGeneration(g); } }
+                        if (!current) this.invalidateGeneration(g);
+                    }).finally(() => { gatewayPending--; });
+                    return;
+                }
+            }
             if (readySeen || !message || typeof message !== "object" || Array.isArray(message)) { rejectReady(unavailable()); this.invalidateGeneration(g); return; }
             const row = message as Record<string, unknown>;
             if (Object.keys(row).sort().join(",") !== "port,session,type,version" || row.type !== "SOTERAI_BROKER_READY" || row.version !== 1 || row.session !== session

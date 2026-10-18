@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { randomUUID } from "node:crypto";
 import { test } from "node:test";
 import { createServer, type Server } from "node:http";
 import type { AddressInfo } from "node:net";
@@ -76,7 +77,7 @@ test("responses block recognized raw and encoded credentials in content or passt
             const response = await post(url, input());
             assert.equal(response.status, 422);
             const body = await response.text();
-            assert.match(body, /unsafe_provider_response/);
+            assert.match(body, /gateway_output_withheld/);
             assert.ok(!body.includes(FAKE));
         });
         assert.equal(calls, 1);
@@ -93,7 +94,7 @@ test("a canary in non-message request metadata is stopped at the final wire gate
     }, async url => {
         const response = await post(url, { ...input(), metadata: { note: token } });
         assert.equal(response.status, 422);
-        assert.match(await response.text(), /egress_secret_blocked/);
+        assert.match(await response.text(), /gateway_sensitive/);
     });
     assert.equal(calls, 0);
 });
@@ -106,8 +107,8 @@ test("an encoded credential beyond the detector's first candidate batch cannot l
         fetchImpl: async () => { calls++; return Response.json({ choices: [] }); },
     }, async url => {
         const response = await post(url, { ...input(), metadata: [...harmless, Buffer.from(FAKE).toString("base64")] });
-        assert.equal(response.status, 422);
-        assert.match(await response.text(), /egress_secret_blocked/);
+        assert.equal(response.status, 413);
+        assert.match(await response.text(), /gateway_limit/);
     });
     assert.equal(calls, 0);
 });
@@ -136,7 +137,7 @@ test("split SSE credentials release neither prefix nor suffix, including CRLF fr
         const response = await post(url, input(true));
         const text = await response.text();
         assert.equal(response.headers.get("x-soterai-response-decision"), "block");
-        assert.match(text, /unsafe_provider_response/);
+        assert.match(text, /gateway_output_withheld/);
         assert.ok(!text.includes(prefix));
         assert.ok(!text.includes(suffix));
     });
@@ -150,7 +151,7 @@ test("a final unterminated event cannot leak metadata after earlier clean text",
     }, async url => {
         const response = await post(url, input(true));
         const text = await response.text();
-        assert.match(text, /unsafe_provider_response/);
+        assert.match(text, /gateway_output_withheld/);
         assert.ok(!text.includes(FAKE));
         assert.ok(!text.includes("Hello."));
     });
@@ -165,7 +166,7 @@ test("provider bodies are bounded even without a Content-Length header", async (
     }, async url => {
         const response = await post(url, input(true));
         assert.equal(response.headers.get("x-soterai-response-decision"), "block");
-        assert.match(await response.text(), /unsafe_provider_response/);
+        assert.match(await response.text(), /gateway_output_withheld/);
     });
 });
 
@@ -176,7 +177,7 @@ test("incomplete or invalid UTF-8 streams fail closed", async () => {
     }, async url => {
         const response = await post(url, input(true));
         assert.equal(response.headers.get("x-soterai-response-decision"), "block");
-        assert.match(await response.text(), /unsafe_provider_response/);
+        assert.match(await response.text(), /gateway_output_withheld/);
     });
 });
 
@@ -205,6 +206,7 @@ test("extension-managed brokers require authenticated canary sync before forward
             method: "POST", headers: { "content-type": "application/json", ...(authenticated ? { authorization: "Bearer " + CONTROL } : {}) },
             body: JSON.stringify({ canaries }),
         });
+        const policySync = async () => { const response=await fetch(url+"/v1/gateway/sync",{method:"POST",headers:{authorization:"Bearer "+CONTROL,"content-type":"application/json"},body:JSON.stringify({version:1,generation:randomUUID(),mode:{enabled:false,level:"developer"},values:[]})});assert.equal(response.status,200); };
         const initial = await post(url, input());
         assert.equal(initial.status, 503);
         assert.match(await initial.text(), /canary_monitor_unavailable/);
@@ -219,6 +221,7 @@ test("extension-managed brokers require authenticated canary sync before forward
         });
         const result = await scan.json() as { categories: string[] };
         assert.ok(result.categories.includes("canary"));
+        await policySync();
         const leakedOutput = await post(url, input());
         assert.equal(leakedOutput.status, 422);
         assert.ok(!(await leakedOutput.text()).includes(canary.token));
@@ -227,6 +230,7 @@ test("extension-managed brokers require authenticated canary sync before forward
         assert.equal((await sync([{ ...canary, hash: "0".repeat(64) }])).status, 400);
         assert.equal((await post(url, input())).status, 503);
         assert.equal((await sync([])).status, 200);
+        await policySync();
         output = "Hello.";
         assert.equal((await post(url, input())).status, 200);
     });

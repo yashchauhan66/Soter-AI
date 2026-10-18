@@ -239,6 +239,18 @@ export function registerBrokerCommands(context: vscode.ExtensionContext, manager
         vscode.window.showInformationMessage(s.running ? `Broker running at ${s.url}; Safe Mode ${s.safeMode?.enabled ? s.safeMode.level : "off"}; Memory ${s.memorySessionId ? "active" : "idle"}.` : `Broker stopped (configured URL ${s.url}).`);
         return s;
     });
+    reg("soterai.runGatewaySelfTest", async () => {
+        try {
+            await started();
+            const report = await manager.request<{ status: "PASS" | "FAIL"; version: number; checks: Array<{ id: string; status: string }>; independence: string }>("/v1/gateway/self-test", { method: "POST", body: "{}" }, 15000);
+            if (report.version !== 1 || !["PASS", "FAIL"].includes(report.status) || report.independence !== "LOW" || report.checks?.length !== 6) throw Error("Self-test unavailable");
+            vscode.window.showInformationMessage(`Gateway loopback self-test: ${report.status} (${report.checks.filter(row => row.status === "PASS").length}/6). Synthetic local transport checks only; real tool routing and independent review remain unverified.`);
+            return report;
+        } catch {
+            vscode.window.showWarningMessage("Gateway loopback self-test unavailable; review broker status and gateway policy settings.");
+            return { status: "UNAVAILABLE", independence: "LOW" };
+        } finally { refresh(); }
+    });
     reg("soterai.showRuntimeCapabilitySummary", async () => {
         await started();
         const workspaceRoots = vscode.workspace.workspaceFolders?.map((folder) => folder.uri.fsPath) ?? [];

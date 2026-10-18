@@ -1,0 +1,105 @@
+{
+  "feature": "F16",
+  "artifact": "packages/soterai-lite/soterai-lite-0.7.0-f16-20261018-attempt01.vsix",
+  "checks": [
+    {
+      "role": "typecheck",
+      "log": "typecheck-05.txt"
+    },
+    {
+      "role": "focused",
+      "log": "focused-02.txt",
+      "kind": "tap",
+      "expected": {
+        "tests": 699,
+        "suites": 27,
+        "pass": 699,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    {
+      "role": "brokerTypecheck",
+      "log": "broker-typecheck-05.txt"
+    },
+    {
+      "role": "broker",
+      "log": "broker-tests-03.txt",
+      "kind": "tap",
+      "expected": {
+        "tests": 144,
+        "suites": 13,
+        "pass": 143,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 1,
+        "todo": 0
+      }
+    },
+    {
+      "role": "standaloneBuild",
+      "log": "standalone-build-01.txt"
+    },
+    {
+      "role": "standaloneCli",
+      "log": "standalone-cli-01.txt"
+    },
+    {
+      "role": "full",
+      "log": "full-tests-03.txt",
+      "kind": "tap",
+      "expected": {
+        "tests": 2551,
+        "suites": 106,
+        "pass": 2547,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 4,
+        "todo": 0
+      }
+    },
+    {
+      "role": "readiness",
+      "log": "readiness-01.txt"
+    },
+    {
+      "role": "package",
+      "log": "package-01.txt"
+    },
+    {
+      "role": "hostBuild",
+      "log": "host-build-01.txt"
+    },
+    {
+      "role": "native",
+      "log": "native-launch-01.txt"
+    },
+    {
+      "role": "affected",
+      "log": "affected-launch-01.txt"
+    }
+  ],
+  "nativeDirectory": "f16-native-host-20261018T110633Z-df54eae0",
+  "affectedDirectory": "affected-20261018T110740Z-6dbd4d3fc4174cbe98d35978d04f1215",
+  "reviews": [
+    "root-source-review-01.md",
+    "review-addendum-01.md",
+    "final-review-01.md",
+    "final-source-bindings-01.json"
+  ],
+  "reviewDisposition": "NO_OPEN_SCOPED_BLOCKERS",
+  "priorEvidence": [
+    "docs/soterai-lite/evidence/20261018-f15h-base64-8b7d260e/f15-parent-completion-byte-verification-01.json",
+    "docs/soterai-lite/evidence/20261018-f15h-base64-8b7d260e/f15h-transition-byte-verification-01.json",
+    "docs/soterai-lite/evidence/20261018-f15h-base64-8b7d260e/f15h-transition-commit-01.txt",
+    "docs/soterai-lite/evidence/20261018-f15h-base64-8b7d260e/f15h-transition-commit-01.txt.result.json",
+    "docs/soterai-lite/evidence/20261018-f15h-base64-8b7d260e/parent-completion-launch-01.txt",
+    "docs/soterai-lite/evidence/20261018-f15h-base64-8b7d260e/parent-completion-launch-01.txt.result.json",
+    "docs/soterai-lite/evidence/20261018-f15h-base64-8b7d260e/transition-preparation-launch-01.txt",
+    "docs/soterai-lite/evidence/20261018-f15h-base64-8b7d260e/transition-preparation-launch-01.txt.result.json",
+    "docs/soterai-lite/evidence/20261018-f15h-base64-8b7d260e/transition-verification-01.txt",
+    "docs/soterai-lite/evidence/20261018-f15h-base64-8b7d260e/transition-verification-01.txt.result.json"
+  ]
+}
