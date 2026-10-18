@@ -281,17 +281,21 @@
         {
           "id": "F15b",
           "title": "gzip",
-          "status": "ACTIVE",
-          "result": "INCOMPLETE",
+          "status": "DONE",
+          "result": "PASS",
           "requires": [
             "F15a"
-          ]
+          ],
+          "sourceRevision": "74faf895f39e49f0d3b8105287bba3cbcd273c9b",
+          "evidence": "docs/soterai-lite/evidence/20261018-f15b-gzip-5e0d2a91/f15b-acceptance-01.json",
+          "commitByteVerification": "docs/soterai-lite/evidence/20261018-f15b-gzip-5e0d2a91/f15b-committed-byte-verification-01.json",
+          "transitionByteVerification": "docs/soterai-lite/evidence/20261018-f15b-gzip-5e0d2a91/f15b-transition-byte-verification-01.json"
         },
         {
           "id": "F15c",
           "title": "Brotli",
-          "status": "PLANNED",
-          "result": "NOT-RUN",
+          "status": "ACTIVE",
+          "result": "INCOMPLETE",
           "requires": [
             "F15b"
           ]
