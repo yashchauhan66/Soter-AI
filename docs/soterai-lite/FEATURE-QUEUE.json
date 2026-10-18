@@ -307,17 +307,21 @@
         {
           "id": "F15d",
           "title": "deflate",
-          "status": "ACTIVE",
-          "result": "INCOMPLETE",
+          "status": "DONE",
+          "result": "PASS",
           "requires": [
             "F15c"
-          ]
+          ],
+          "sourceRevision": "8e11c01c00d5a531961b112a012f2689a5992430",
+          "evidence": "docs/soterai-lite/evidence/20261018-f15d-deflate-26b04d8f/f15d-acceptance-01.json",
+          "commitByteVerification": "docs/soterai-lite/evidence/20261018-f15d-deflate-26b04d8f/f15d-committed-byte-verification-01.json",
+          "transitionByteVerification": "docs/soterai-lite/evidence/20261018-f15d-deflate-26b04d8f/f15d-transition-byte-verification-01.json"
         },
         {
           "id": "F15e",
           "title": "chunked framing",
-          "status": "PLANNED",
-          "result": "NOT-RUN",
+          "status": "ACTIVE",
+          "result": "INCOMPLETE",
           "requires": [
             "F15d"
           ]

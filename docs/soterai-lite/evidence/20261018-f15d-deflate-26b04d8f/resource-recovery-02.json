@@ -1,0 +1,66 @@
+{
+  "status": "PASS_WRITABLE_SPACE_AND_RETAINED_BYTES",
+  "actualFailure": {
+    "log": {
+      "path": "docs/soterai-lite/evidence/20261018-f15d-deflate-26b04d8f/f15d-transition-commit-01.txt",
+      "bytes": 479,
+      "sha256": "f90c4aa57179ed6aa0b55afbc8cb0fd57c008186c34f40f1f3396b15c222357c"
+    },
+    "receipt": {
+      "path": "docs/soterai-lite/evidence/20261018-f15d-deflate-26b04d8f/f15d-transition-commit-01.txt.result.json",
+      "bytes": 754,
+      "sha256": "e495e83caf3bf7891c72d6c2c277ef2c0086292f396b1c4be04e87e6b721ae2a"
+    },
+    "exitCode": 128,
+    "message": "No space left on device",
+    "measuredCFreeBytes": 0,
+    "measuredDFreeBytes": 222108303360
+  },
+  "compression": {
+    "scope": "Only task-generated packages/soterai-lite/builds files",
+    "result": "INCOMPLETE_RECEIPT_WRITE_FAILED",
+    "message": "Out-File : There is not enough space on the disk.",
+    "partialRaw": {
+      "path": "docs/soterai-lite/evidence/20261018-f15d-deflate-26b04d8f/generated-build-compression-01.txt",
+      "bytes": 560,
+      "sha256": "ec5f34bf75413a62f3276883f1425b53e736279161c53d4f77823b79e0570638"
+    },
+    "completeBeforeAfterByteVerdict": "NOT_RECORDED"
+  },
+  "backupMetadataFirstAttempt": {
+    "result": "FAIL_METADATA_ONLY",
+    "message": "Measure-Object : The property \"bytes\" cannot be found in the input for any objects.",
+    "correctedManifest": "retained-build-backup-manifest-01.json"
+  },
+  "recovery": {
+    "archive": "D:/SoterAI-Lite-test-profiles/f15d-retained-builds-20261018-recovery01",
+    "backup": {
+      "path": "docs/soterai-lite/evidence/20261018-f15d-deflate-26b04d8f/retained-build-backup-manifest-01.json",
+      "bytes": 194494,
+      "sha256": "4895e877a8102334d00afb167087e118311f155af3dd16f4b194ce18aa583aee"
+    },
+    "relocation": {
+      "path": "docs/soterai-lite/evidence/20261018-f15d-deflate-26b04d8f/retained-build-relocation-02.json",
+      "bytes": 201327,
+      "sha256": "f66e90f58108bc28fa1f8ee4d3365deea8ded1d4c5ccd335812a8e9f191f1abb"
+    },
+    "directories": 33,
+    "files": 659,
+    "logicalBytes": 125626532,
+    "freeCBytesAfter": 99868672,
+    "twoVerifiedDCopies": true,
+    "currentBuildRetained": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\soterai-lite\\builds\\2026-10-18T05-52-11-703Z-4899d176"
+  },
+  "product": {
+    "sourceRevision": "8e11c01c00d5a531961b112a012f2689a5992430",
+    "sourceByteProof": {
+      "path": "docs/soterai-lite/evidence/20261018-f15d-deflate-26b04d8f/f15d-committed-byte-verification-01.json",
+      "bytes": 893,
+      "sha256": "062605cf88e309e3ca914694c7429bcacb3d165fc93a001aba8accf3bc62e68b"
+    },
+    "artifactSha256": "e1d03f401f9636f60730761123d1b62449a6370029d923041043158bfafa070d",
+    "unchanged": true
+  },
+  "threshold": "Original20GBwaiver retained; no new minimum or threshold PASS claimed.",
+  "observedAt": "2026-10-18T06:56:23.822Z"
+}
