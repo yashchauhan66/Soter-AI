@@ -320,17 +320,21 @@
         {
           "id": "F15e",
           "title": "chunked framing",
-          "status": "ACTIVE",
-          "result": "INCOMPLETE",
+          "status": "DONE",
+          "result": "PASS",
           "requires": [
             "F15d"
-          ]
+          ],
+          "sourceRevision": "021c0a89cf0960e86376f61f5c6d5927c242e904",
+          "evidence": "docs/soterai-lite/evidence/20261018-f15e-chunked-0d79a31c/f15e-acceptance-01.json",
+          "commitByteVerification": "docs/soterai-lite/evidence/20261018-f15e-chunked-0d79a31c/f15e-committed-byte-verification-01.json",
+          "transitionByteVerification": "docs/soterai-lite/evidence/20261018-f15e-chunked-0d79a31c/f15e-transition-byte-verification-01.json"
         },
         {
           "id": "F15f",
           "title": "NDJSON/SSE",
-          "status": "PLANNED",
-          "result": "NOT-RUN",
+          "status": "ACTIVE",
+          "result": "INCOMPLETE",
           "requires": [
             "F15e"
           ]
