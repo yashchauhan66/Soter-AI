@@ -1,0 +1,36 @@
+﻿TAP version 13
+# {"id":"F15d-W10","coding":"gzip","status":400,"providerRequests":0}
+# {"id":"F15d-W10","coding":"br","status":200,"providerRequests":0}
+# Subtest: F15d-W10 empty decoded compressed bytes never become a compatible empty control body
+not ok 1 - F15d-W10 empty decoded compressed bytes never become a compatible empty control body
+  ---
+  duration_ms: 75.6514
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayDeflateWire.test.ts:2:7392'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    200 !== 400
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 400
+  actual: 200
+  operator: 'strictEqual'
+  stack: |-
+    <anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayDeflateWire.test.ts:20:527)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async fixture (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayDeflateWire.test.ts:9:746)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1001.9886

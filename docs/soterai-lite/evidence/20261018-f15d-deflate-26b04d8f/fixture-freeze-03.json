@@ -1,0 +1,11 @@
+{
+  "status": "CONTROL_ROUTE_BASELINE_BEFORE_DEFLATE_PRODUCTION",
+  "file": {
+    "path": "packages/vscode-extension/src/__tests__/gatewayDeflateWire.test.ts",
+    "bytes": 6503,
+    "sha256": "c47ae6891e4aff62bef7f31cdc2bafe491b7f2688400851d09b350afb2711bb1"
+  },
+  "prior": "fixture-freeze-02.json",
+  "reason": "before02 proxy route returned400 for both gzip/br empty and415 for absent deflate; it did not expose the suspected empty-control distinction. Use an authenticated control route whose identity-empty positive control returns200, then require compressed-empty JSON rejection. No before02 br failure invented.",
+  "observedAt": "2026-10-18T05:44:44.709Z"
+}

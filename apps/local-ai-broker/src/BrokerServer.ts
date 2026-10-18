@@ -5,6 +5,7 @@ import { promisify } from "node:util";
 import { decodeBoundedJson, BoundedJsonError, JSON_LIMITS } from "./BoundedJson";
 import { decodeBoundedGzip, BoundedGzipError } from "./BoundedGzip";
 import { decodeBoundedBrotli, BoundedBrotliError } from "./BoundedBrotli";
+import { decodeBoundedDeflate, BoundedDeflateError } from "./BoundedDeflate";
 import {
     ApprovalStore,
     analyzeControlledTerminalCommand,
@@ -87,6 +88,7 @@ export interface BrokerServerOptions {
     jsonBodies?: boolean;
     gzipBodies?: boolean;
     brotliBodies?: boolean;
+    deflateBodies?: boolean;
     /** Private owned-child controller session; data clients use distinct auth. */
     ownerSession?: string;
     /** Data-plane token handed to AI clients. Never authorizes management. */
@@ -1083,10 +1085,11 @@ export class BrokerServer {
         if (this.options.jsonBodies === false) throw new HttpError(503, "json_unavailable", "JSON request decoding is unavailable");
         const limit = this.options.bodyLimitBytes ?? JSON_LIMITS.maxBytes;
         if (!Number.isSafeInteger(limit) || limit < 1 || limit > JSON_LIMITS.maxBytes) throw new HttpError(503, "json_limit_unavailable", "JSON request limit is unavailable");
-        validateRequestBodyHeaders(req.headers, req.rawHeaders, limit, ["gzip", "br"]);
+        validateRequestBodyHeaders(req.headers, req.rawHeaders, limit, ["gzip", "br", "deflate"]);
         const encoding = stringValue(req.headers["content-encoding"])?.trim().toLowerCase();
         if (encoding === "gzip" && this.options.gzipBodies === false) throw new HttpError(503, "gzip_unavailable", "Gzip request decoding is unavailable");
         if (encoding === "br" && this.options.brotliBodies === false) throw new HttpError(503, "br_unavailable", "Brotli request decoding is unavailable");
+        if (encoding === "deflate" && this.options.deflateBodies === false) throw new HttpError(503, "deflate_unavailable", "Deflate request decoding is unavailable");
         const media: string[] = []; for (let i = 0; i < req.rawHeaders.length - 1; i += 2) if (req.rawHeaders[i].toLowerCase() === "content-type") media.push(req.rawHeaders[i + 1]);
         const supported = media.length === 1 && /^[ \t]*application\/json(?:[ \t]*;[ \t]*charset[ \t]*=[ \t]*(?:utf-8|"utf-8"))?[ \t]*$/i.test(media[0]);
         if (media.length && !supported) throw new HttpError(415, "json_media_unsupported", "A single application/json UTF-8 media type is required");
@@ -1106,13 +1109,13 @@ export class BrokerServer {
                 if (settled) return;
                 try {
                     const wire = Buffer.concat(chunks, size);
-                    const decoded = encoding === "gzip" ? await decodeBoundedGzip(wire, { maxBytes: limit }) : encoding === "br" ? await decodeBoundedBrotli(wire, { maxBytes: limit }) : wire;
+                    const decoded = encoding === "gzip" ? await decodeBoundedGzip(wire, { maxBytes: limit }) : encoding === "br" ? await decodeBoundedBrotli(wire, { maxBytes: limit }) : encoding === "deflate" ? await decodeBoundedDeflate(wire, { maxBytes: limit }) : wire;
                     if (settled) return;
-                    const body = decoded.length === 0 && encoding !== "gzip" ? Object.freeze(Object.create(null)) : decodeBoundedJson(decoded, { maxBytes: limit }).body;
+                    const body = decoded.length === 0 && (!encoding || encoding === "identity") ? Object.freeze(Object.create(null)) : decodeBoundedJson(decoded, { maxBytes: limit }).body;
                     settled = true; cleanup(); resolve(body as JsonBody);
                 } catch (error) {
-                    const status = error instanceof BoundedGzipError || error instanceof BoundedBrotliError ? error.code.endsWith("_timeout") ? 408 : error.code.endsWith("_limit") ? 413 : 400 : error instanceof BoundedJsonError && ["body_too_large", "json_complexity"].includes(error.code) ? 413 : 400;
-                    fail(new HttpError(status, error instanceof BoundedGzipError || error instanceof BoundedBrotliError || error instanceof BoundedJsonError ? error.code : "invalid_json", "Request body could not be safely decoded"));
+                    const status = error instanceof BoundedGzipError || error instanceof BoundedBrotliError || error instanceof BoundedDeflateError ? error.code.endsWith("_timeout") ? 408 : error.code.endsWith("_limit") ? 413 : 400 : error instanceof BoundedJsonError && ["body_too_large", "json_complexity"].includes(error.code) ? 413 : 400;
+                    fail(new HttpError(status, error instanceof BoundedGzipError || error instanceof BoundedBrotliError || error instanceof BoundedDeflateError || error instanceof BoundedJsonError ? error.code : "invalid_json", "Request body could not be safely decoded"));
                 }
             };
             const timer = setTimeout(() => fail(new HttpError(408, "json_read_timeout", "JSON request read deadline exceeded")), Math.min(30000, Math.max(1, this.options.requestTimeoutMs ?? 30000)));

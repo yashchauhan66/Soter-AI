@@ -1,0 +1,11 @@
+{
+  "status": "ADDITIVE_EMPTY_COMPRESSION_REVIEW_BEFORE_DEFLATE_PRODUCTION",
+  "file": {
+    "path": "packages/vscode-extension/src/__tests__/gatewayDeflateWire.test.ts",
+    "bytes": 6343,
+    "sha256": "4b1186eef44a2d526f75a0687e63c9c94a0a96219b004881cf6b6dccf991d462"
+  },
+  "prior": "fixture-freeze-01.json",
+  "reason": "Existing empty-body compatibility exception excluded gzip only. Regress complete empty gzip/br/deflate before the new source; no earlier dynamic failure invented.",
+  "observedAt": "2026-10-18T05:43:53.209Z"
+}

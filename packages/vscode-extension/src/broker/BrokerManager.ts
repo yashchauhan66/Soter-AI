@@ -45,7 +45,7 @@ export class BrokerManager implements vscode.Disposable {
         const config = vscode.workspace.getConfiguration("soterai");
         // Compare public routing configuration; never serialize auth material.
         return JSON.stringify([this.enabled(), vscode.workspace.isTrusted,
-            config.get("broker.openAIProviderUrl", ""), config.get("broker.anthropicProviderUrl", ""), this.jsonEnabled(), this.gzipEnabled(), this.brotliEnabled()]);
+            config.get("broker.openAIProviderUrl", ""), config.get("broker.anthropicProviderUrl", ""), this.jsonEnabled(), this.gzipEnabled(), this.brotliEnabled(), this.deflateEnabled()]);
     }
     private jsonEnabled(): boolean {
         const config = vscode.workspace.getConfiguration("soterai"), inspected = config.inspect<boolean>("lite.gatewayJsonBodies");
@@ -58,6 +58,10 @@ export class BrokerManager implements vscode.Disposable {
     private brotliEnabled(): boolean {
         const config = vscode.workspace.getConfiguration("soterai"), inspected = config.inspect<boolean>("lite.gatewayBrotliBodies");
         return (inspected ? inspected.globalValue ?? inspected.defaultValue ?? true : config.get("lite.gatewayBrotliBodies", true)) === true;
+    }
+    private deflateEnabled(): boolean {
+        const config = vscode.workspace.getConfiguration("soterai"), inspected = config.inspect<boolean>("lite.gatewayDeflateBodies");
+        return (inspected ? inspected.globalValue ?? inspected.defaultValue ?? true : config.get("lite.gatewayDeflateBodies", true)) === true;
     }
     private savedMode(): SavedMode {
         const value = this.context.globalState.get<unknown>("soterai.safeMode");
@@ -73,7 +77,7 @@ export class BrokerManager implements vscode.Disposable {
         const providerKey = vscode.workspace.isTrusted ? await this.context.secrets.get("soterai.providerApiKey") : undefined;
         if (!this.enabled()) throw new Error("Broker unavailable");
         return { ...brokerChildEnvironment(process.env), SOTERAI_OPENAI_PROVIDER_URL: config.get<string>("broker.openAIProviderUrl", ""),
-            SOTERAI_ANTHROPIC_PROVIDER_URL: config.get<string>("broker.anthropicProviderUrl", ""), SOTERAI_PROVIDER_API_KEY: providerKey, SOTERAI_GATEWAY_JSON_BODIES: this.jsonEnabled() ? "1" : "0", SOTERAI_GATEWAY_GZIP_BODIES: this.gzipEnabled() ? "1" : "0", SOTERAI_GATEWAY_BROTLI_BODIES: this.brotliEnabled() ? "1" : "0" };
+            SOTERAI_ANTHROPIC_PROVIDER_URL: config.get<string>("broker.anthropicProviderUrl", ""), SOTERAI_PROVIDER_API_KEY: providerKey, SOTERAI_GATEWAY_JSON_BODIES: this.jsonEnabled() ? "1" : "0", SOTERAI_GATEWAY_GZIP_BODIES: this.gzipEnabled() ? "1" : "0", SOTERAI_GATEWAY_BROTLI_BODIES: this.brotliEnabled() ? "1" : "0", SOTERAI_GATEWAY_DEFLATE_BODIES: this.deflateEnabled() ? "1" : "0" };
     }
     private async initialize(request: OwnedBrokerRequest): Promise<void> {
         const mode = this.savedMode(), registry = await this.canaries.loadForScan();

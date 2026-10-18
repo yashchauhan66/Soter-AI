@@ -1,0 +1,7 @@
+# Native intended-error client correction — LOW
+
+First native primary profile f15d-native-host-20261018T061632Z-c078033c:48 checks/44PASS/4FAIL/0NOT_RUN; D02/D03/D04/D05 failed. All17 owned children observed close+bothEOF; restart phase not executed. No product leak or all51 PASS inferred. Product current300focused/compiler01/backend143PASS1SKIP/full2365tests2361PASS4SKIP/newVSIXe1d03f401f9636f60730761123d1b62449a6370029d923041043158bfafa070d remains unchanged.
+
+D02 used Manager.request for intentionally invalid compressed control requests. OwnedBrokerLifecycle.request deliberately invalidates its generation on every HTTP failure. Static source and the failure order support this fixture-induced withdrawal as the cause of D02 and the following three data-client failures; the corrected fresh run must verify that inference. Change only those negatives to a raw authenticated HTTP controller client with the actual private session header; drain response and require400, then require healthy enterprise policy. Retain the valid manager control request and all malformed/public/size/nested/secret assertions. No owner withdrawal behavior was relaxed.
+
+New native fixture/probe02 plus compiler02 are required, new isolated profile/native receipt02, then affected host checks. Full/backend results bind unchanged product/other tests; do not reassign the first failure or rebuild/change the exact VSIX. The first probe/freeze/profile/raw output/template01 remain immutable. This is implementing-agent LOW, not independent/human evidence.

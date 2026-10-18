@@ -121,7 +121,8 @@
                 "soterai.lite.gatewayLifecycle",
                 "soterai.lite.gatewayJsonBodies",
                 "soterai.lite.gatewayGzipBodies",
-                "soterai.lite.gatewayBrotliBodies"
+                "soterai.lite.gatewayBrotliBodies",
+                "soterai.lite.gatewayDeflateBodies"
             ]
         }
     },
@@ -1824,6 +1825,12 @@
                     "default": true,
                     "scope": "machine",
                     "description": "Enable complete bounded standard-window Brotli JSON request decoding for the owned broker. Disabling withdraws the owner and refuses br after restart; ordinary JSON and gzip remain available. Invalid, trailing, nested and over-budget data refuse."
+                },
+                "soterai.lite.gatewayDeflateBodies": {
+                    "type": "boolean",
+                    "default": true,
+                    "scope": "machine",
+                    "description": "Enable bounded complete zlib-wrapped deflate JSON request decoding for the owned broker. Disabling withdraws the owner and refuses deflate after restart; JSON, gzip and br remain available. Raw streams, dictionaries, trailing/nested and over-budget data refuse."
                 }
             }
         },
