@@ -9,9 +9,9 @@
   "planVersion": 1,
   "clientDate": "2026-10-13",
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
-  "scope": "F01-F10 and F12-F16 DONE for exact scoped objects and verified source bytes; F11 remains optional unavailable/unimplemented NOT_TESTED/NOT_COVERED. F17 alone supported active after the separate F16 transition byte barrier.",
+  "scope": "F01-F10 and F12-F17 DONE for scoped exact objects and verified bytes; F11 optional unavailable/unimplemented NOT_TESTED/NOT_COVERED. F18 alone active after the separate F17 transition byte barrier.",
   "implementationConcurrency": 1,
-  "activeFeature": "F17",
+  "activeFeature": "F18",
   "prerequisiteBlock": {
     "id": "P00",
     "result": "FAIL",
@@ -395,17 +395,21 @@
     {
       "id": "F17",
       "title": "Approved safe-read MCP adapter.",
-      "status": "ACTIVE",
-      "result": "NOT-RUN",
+      "status": "DONE",
+      "result": "PASS",
       "requires": [
         "F16"
       ],
-      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "sourceEvidenceCommit": "c97a8b5cf344a29707117f476c1fef5f014bf33c",
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261018-f17-safe-read-73bc91a2/f17-acceptance-02.json",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261018-f17-safe-read-73bc91a2/f17-committed-byte-verification-02.json",
+      "transitionByteVerification": "docs/soterai-lite/evidence/20261018-f17-safe-read-73bc91a2/f17-transition-byte-verification-01.json"
     },
     {
       "id": "F18",
       "title": "Cline adapter, one pinned version.",
-      "status": "PLANNED",
+      "status": "ACTIVE",
       "result": "NOT-RUN",
       "requires": [
         "F17"

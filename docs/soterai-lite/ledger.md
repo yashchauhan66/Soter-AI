@@ -5,11 +5,11 @@ Read this file FIRST after any context compaction or on resumption. Do not overw
 ## Current state
 
 - **L0 scoped preflight/split/baseline/catalog freeze DONE.** The user waived the 20 GB threshold. Both verified backup bundles and the authorized old synthetic profiles are retained on D:. Supplemental full fsck ended in resource-limited FAIL; full object integrity remains UNVERIFIED.
-- L1: **ACTIVE, F01-F10 and F12-F16 DONE; F11 optional unavailable/unimplemented NOT_TESTED/NOT_COVERED; F17 ACTIVE/test-first**; F18-F32 and L2-L7 **NOT-RUN**. Do not describe this as reaching L6. Read the latest receipts below before work.
+- L1: **ACTIVE, F01-F10 and F12-F17 DONE; F11 optional unavailable/unimplemented NOT_TESTED/NOT_COVERED; F18 ACTIVE/test-first**; F19-F32 and L2-L7 **NOT-RUN**. Do not describe this as reaching L6. Read the latest receipts below before work.
 - Source changes and isolated synthetic-profile tests are authorized; the normal VS Code profile has not been changed.
 - New Lite baseline VSIX: **BUILT / CONTENT-INSPECTED / HOST-BASELINE-TESTED**; SHA-256 `cf163471b7a022d5a9f922a3f1fcc6bfd3b56a08ab14f1aebfdfb345c337bae1`. Coverage and all final numerical ratings **PENDING / UNVERIFIED**; 44-check catalog frozen, not graded.
 - Baseline HEAD: `8ef3aeb54f4019f4ee815a844443995176a656f0`; starting branch: `security-hardening`. Inspected prior source modifications were checkpointed at `915a5300a7745e4ffaeab80b5d08d3305e3772f9`; unknown scratch/raw artifacts remain untouched.
-- P00-P03 and F01-F10 scoped source commits and the F10 transition are byte verified. F11 remains optional unavailable/unimplemented NOT_TESTED/NOT_COVERED under frozen P03 applicability. F12 scoped source bytes are verified. F17 is the sole supported active behavior card; no F17 production before the separate F16 transition commit and f16-transition-byte-verification-01.json PASS.
+- P00-P03 and F01-F10 scoped source commits and the F10 transition are byte verified. F11 remains optional unavailable/unimplemented NOT_TESTED/NOT_COVERED under frozen P03 applicability. F12 scoped source bytes are verified. F18 is the sole supported active behavior card; no F18 production before the separate F17 transition commit and f17-transition-byte-verification-01.json PASS.
 
 ## STEP RECEIPT L0.1 — preflight stop
 
@@ -818,3 +818,7 @@ F17 local acceptancePASS pending scopedsource/all-indexed Git/currentbyte proof 
 ## STEP RECEIPT F17-PRECOMMIT-BYTE-BINDING
 
 Before any F17sourcecommit, all-indexed staged/current audit caught two existing index-only readFile.ts and WorkspacePathGuard.ts CRLF/LF mismatches. Original staged verification stopped at the first mismatch; the additive audit exhaustively checked all153 entries, with151 other staged blobs and all153 current working bytes matching index01. Original stagedverification01FAIL/index01 retained. Correct exact testedCRLF bytes will be bound with explicit --renormalize for these two indexed dependencies; no working production source edit. Acceptance02/index02/sourceproof02 govern added evidence/metadata and the originalimplementation together. Current exactVSIX a0637f51fc73d0371ccc031383b67da4505ebac9958249f7b4bfd94c173c0062/all runtimeinputs unchanged; focused289/full2572tests2568PASS4SKIP/backend143PASS1SKIP/native106/functional10/security17same8blocks9leaks scopedLOW. F17stillACTIVE until allbyteproof+separatetransitionPASS; no nextfeatureproduction.
+
+## STEP RECEIPT F17-COMMIT / F18-ACTIVATE
+
+F17 sourcec97a8b5cf344a29707117f476c1fef5f014bf33c all-bytePASS 173indexed/171exactpaths/0mismatch/0unexpected. ExactVSIXa0637f51fc73d0371ccc031383b67da4505ebac9958249f7b4bfd94c173c0062 freshly rechecked; focused289/full2572tests2568PASS4SKIP/backend143PASS1SKIP/native106/functional10/security17same8blocks9leaks scopedLOW. Actual standalone MCP+native editor bridge, scripted modal decisions, allownedchildren naturalclose+bothEOF. F18 preparedsoleACTIVE, no production before separate transitioncommit/f17-transition-byte-verification-01.json PASS. Frozen44UNVERIFIED/F11absence/nineleaks/ratingPENDING/human+vendor+independent+platform gates/L6STOP/userwaiver/unrelatedchanges/allfailures retained.
