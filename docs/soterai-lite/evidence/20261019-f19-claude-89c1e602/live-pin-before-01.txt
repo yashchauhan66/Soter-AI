@@ -1,0 +1,75 @@
+﻿TAP version 13
+# Subtest: F19-C01 construction/status perform no tool config or broker launch
+ok 1 - F19-C01 construction/status perform no tool config or broker launch
+  ---
+  duration_ms: 132.7072
+  type: 'test'
+  ...
+# Subtest: F19-C02 cancelled native review preserves config and fresh empty-vault lease
+ok 2 - F19-C02 cancelled native review preserves config and fresh empty-vault lease
+  ---
+  duration_ms: 86.2659
+  type: 'test'
+  ...
+# Subtest: F19-C03 reviewed current setup has encrypted backups and honest unverified status
+ok 3 - F19-C03 reviewed current setup has encrypted backups and honest unverified status
+  ---
+  duration_ms: 225.9871
+  type: 'test'
+  ...
+# Subtest: F19-C04 existing same-profile receipt blocks reconfiguration until reviewed restore
+ok 4 - F19-C04 existing same-profile receipt blocks reconfiguration until reviewed restore
+  ---
+  duration_ms: 144.198
+  type: 'test'
+  ...
+# Subtest: F19-C05 workspace native config override is refused before broker startup
+ok 5 - F19-C05 workspace native config override is refused before broker startup
+  ---
+  duration_ms: 12.8516
+  type: 'test'
+  ...
+# Subtest: F19-C06 persistence failure retains encrypted recovery receipt and stops live routing
+ok 6 - F19-C06 persistence failure retains encrypted recovery receipt and stops live routing
+  ---
+  duration_ms: 206.5968
+  type: 'test'
+  ...
+# Subtest: F19-C08 durable recovery receipt write failure precedes vendor config writes
+ok 7 - F19-C08 durable recovery receipt write failure precedes vendor config writes
+  ---
+  duration_ms: 73.9944
+  type: 'test'
+  ...
+# Subtest: F19-C13 live artifact freshness withdrawal blocks current native hooks
+not ok 8 - F19-C13 live artifact freshness withdrawal blocks current native hooks
+  ---
+  duration_ms: 283.1874
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\claudeAdapterLifecycle.test.ts:2:9054'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    200 !== 503
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 503
+  actual: 200
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\claudeAdapterLifecycle.test.ts:94:29)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 7
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2232.2552

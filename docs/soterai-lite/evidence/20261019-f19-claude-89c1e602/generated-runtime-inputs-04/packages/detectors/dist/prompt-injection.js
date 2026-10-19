@@ -1,0 +1,122 @@
+import { runRegexDetectors } from "./core";
+const PROMPT_INJECTION_SPECS = [
+    {
+        type: "prompt_injection",
+        label: "Prompt injection",
+        severity: "high",
+        score: 26,
+        pattern: /\b(ignore (?:all )?(?:previous|prior|above) instructions|developer mode|jailbreak|do anything now|DAN mode|reveal (?:the )?(?:system|developer) prompt|disable safety|bypass policy)\b/gi,
+        message: "Prompt injection or jailbreak wording detected.",
+    },
+    {
+        type: "prompt_injection",
+        label: "Prompt injection",
+        severity: "high",
+        score: 24,
+        pattern: /\b(?:system|developer)\s*:\s*(?:you are|ignore|override)\b/gi,
+        message: "Instruction-role override pattern detected.",
+    },
+    {
+        type: "prompt_injection",
+        label: "Paraphrased instruction override",
+        severity: "high",
+        score: 30,
+        pattern: /\b(?:disregard|set aside|treat as optional|supersede|override|do not follow)\b[^\n]{0,80}\b(?:governing|standing|existing|earlier|prior|original|safety|policy)\b[^\n]{0,40}\b(?:instructions?|rules?|constraints?|guidance|directives?)\b/gi,
+        message: "Paraphrased instruction-override intent detected.",
+    },
+    {
+        type: "prompt_injection",
+        label: "Split-word prompt injection",
+        severity: "high",
+        score: 30,
+        pattern: /\bi(?=[a-z]*[\s._-]+[a-z])[\s._-]*g[\s._-]*n[\s._-]*o[\s._-]*r[\s._-]*e\b[^\n]{0,50}\b(?:previous|prior|earlier|above|system)\b[^\n]{0,30}\b(?:instructions?|rules?|prompts?|guidelines?)\b/gi,
+        message: "A split-word instruction override was reconstructed.",
+    },
+    {
+        type: "prompt_injection",
+        label: "Jailbreak persona",
+        severity: "high",
+        score: 26,
+        pattern: /\b(?:DAN|jailbreak|unfiltered|no (?:ethics|restrictions|limits)|act as (?:an? )?(?:unrestricted|evil|uncensored))\b|forget (?:your )?(?:ethics|rules|instructions|safety)/gi,
+        message: "Jailbreak persona or ethics-forgetting wording detected.",
+    },
+    {
+        type: "prompt_injection",
+        label: "Prompt injection (multilingual)",
+        severity: "high",
+        score: 26,
+        pattern: /(?:이전|모든)?\s*(?:지시|규칙|명령).*(?:무시|잊어)|시스템\s*프롬프트|(?:игнор\w*|забуд\w*)[^\n]{0,40}(?:предыдущ\w*|инструкц\w*)|(?:предыдущ\w*|инструкц\w*)[^\n]{0,40}(?:игнор\w*|забуд\w*)|системн\w*\s*промпт|(?:पिछल|सभी)\s*(?:निर्देश|नियम).*(?:अनदेखा|भूल)|(?:忽略|无视).*(?:之前|以前|以上).*(?:指令|指示)|系统提示|(?:تجاهل|تجاوز).*(?:التعليمات|السابقة)|موجه\s*النظام|(?:ignorier|vergiss).*(?:anweisung|instruktion)/giu,
+        message: "Multilingual prompt-injection wording detected.",
+    },
+    {
+        type: "prompt_injection",
+        label: "Prompt extraction",
+        severity: "high",
+        score: 26,
+        pattern: /\b(?:reveal|show|print|leak|display|tell me|expose)\b[^\n]{0,40}\b(?:system prompt|your instructions|hidden prompt|developer message|api keys?|credentials?)\b/gi,
+        message: "Attempt to extract system prompt or credentials detected.",
+    },
+    {
+        type: "prompt_injection",
+        label: "Indirect instruction extraction",
+        severity: "high",
+        score: 30,
+        pattern: /\b(?:hidden|embedded|concealed|internal)\s+(?:system\s+)?(?:instructions?|prompt|directives?|rules?)\b[^\n]{0,120}\b(?:document|file|attachment|content|webpage|tool output)\b[^\n]{0,120}\b(?:extract|recover|read|follow|execute|obey|apply)\b/gi,
+        message: "Indirect extraction or execution of hidden instructions detected.",
+    },
+    {
+        type: "prompt_injection",
+        label: "Hinglish prompt extraction",
+        severity: "high",
+        score: 26,
+        pattern: /(?:apna|tumhara|hamara|tera|mera|apne)\s+(?:system\s*prompt|prompt|secret|api\s*key|password|token|instruction)s?\s+(?:dikhao|batao|bataiye|do|de\s*do|show|reveal|leak|batana|dikhana|nikalo)/gi,
+        message: "Hinglish prompt/credential extraction attempt detected.",
+    },
+    {
+        type: "prompt_injection",
+        label: "Hinglish instruction override",
+        severity: "high",
+        score: 26,
+        pattern: /(?:pichle|pichli|purane|purani|saare|sabhi)\s+(?:instructions?|nirdesh|rules?|commands?|aadesh)\s+(?:bhool\s*jao|bhool\s*ja|ignore\s*karo|chhod\s*do|hatao|mat\s*maano|mat\s*sunno)/gi,
+        message: "Hinglish instruction-override wording detected.",
+    },
+    {
+        type: "prompt_injection",
+        label: "Hinglish role hijack",
+        severity: "high",
+        score: 24,
+        pattern: /(?:ab\s+(?:tum|aap)\s+(?:ek|ho)|act\s+as\s+(?:ek|an?)\s+\w+\s+(?:bano|ban\s*jao)|tum\s+ab\s+\w+\s+ho|developer\s+mode\s+(?:on|chalu|activate)\s+karo)/gi,
+        message: "Hinglish role-hijack or mode-activation wording detected.",
+    },
+    {
+        type: "prompt_injection",
+        label: "Hindi instruction override",
+        severity: "high",
+        score: 30,
+        pattern: /(?:पिछल(?:े|ा|ी)?|पुरान(?:े|ा|ी)?|सभी|सारे)\s+(?:निर्देश(?:ों)?|नियम(?:ों)?|आदेश(?:ों)?)[^\n]{0,60}(?:अनदेखा|नज़रअंदाज़|भूल|मत\s+मान)/gu,
+        message: "Devanagari Hindi instruction-override wording detected.",
+    },
+    {
+        type: "prompt_injection",
+        label: "Hindi prompt extraction",
+        severity: "high",
+        score: 30,
+        pattern: /(?:सिस्टम|डेवलपर)\s+(?:प्रॉम्प्ट|निर्देश|संदेश)[^\n]{0,40}(?:बताओ|दिखाओ|लिखो|उजागर|निकालो)/gu,
+        message: "Devanagari Hindi system-prompt extraction wording detected.",
+    },
+    {
+        // Byte smuggling: arbitrary bytes hidden as a run of variation selectors riding on one emoji
+        // (U+FE00..FE0F encode 0..15, U+E0100..E01EF encode 16..255). A legitimate emoji uses at most
+        // ONE selector, so a run of eight or more is always a concealed payload. We flag the RUN rather
+        // than decode it — robust, and matches the backend promptInjectionDetector's parity check.
+        type: "prompt_injection",
+        label: "Variation-selector data smuggling",
+        severity: "high",
+        score: 30,
+        pattern: /[\uFE00-\uFE0F\u{E0100}-\u{E01EF}]{8,}/gu,
+        message: "A hidden payload was smuggled as a run of variation selectors on an emoji.",
+    },
+];
+export function detectPromptInjection(text) {
+    return runRegexDetectors(text, PROMPT_INJECTION_SPECS);
+}

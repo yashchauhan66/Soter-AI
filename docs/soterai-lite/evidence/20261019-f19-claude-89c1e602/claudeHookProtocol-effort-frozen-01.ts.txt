@@ -1,0 +1,96 @@
+import assert from "node:assert/strict";
+import { test } from "node:test";
+import type { NativeClassification } from "../agent/SafeReadBridge";
+const protocol = () => import("../adapters/ClaudeHookProtocol");
+const root = "D:/synthetic/claude-project";
+const frame = (name = "Read", input: unknown = { file_path: root + "/public.txt" }) => ({
+    cwd: root, hook_event_name: "PreToolUse", permission_mode: "default", session_id: "synthetic-session",
+    transcript_path: "D:/synthetic/private/transcript.jsonl", prompt_id: "synthetic-prompt", effort: "high",
+    tool_name: name, tool_input: input, tool_use_id: "toolu_synthetic",
+});
+const deps = (classify: (file: string, intent: "read" | "write") => Promise<NativeClassification> = async () => "PUBLIC") => ({ workspace: root, ready: async () => true, classify });
+test("F19-H01 observed native UserPromptSubmit requires current ready owner", async () => {
+    const { evaluateClaudeHook } = await protocol();
+    const packet = { cwd: root, hook_event_name: "UserPromptSubmit", permission_mode: "default", prompt: "public prompt",
+        prompt_id: "synthetic-prompt", session_id: "synthetic-session", transcript_path: "D:/synthetic/private/transcript.jsonl" };
+    assert.deepEqual(await evaluateClaudeHook(packet, deps()), { status: "CONTINUE", body: {} });
+    assert.equal((await evaluateClaudeHook(packet, { ...deps(), ready: async () => false })).status, "UNAVAILABLE");
+});
+test("F19-H02 public native Read is neutral and preserves ordinary vendor permissions", async () => {
+    const { evaluateClaudeHook } = await protocol(); let observed = false;
+    const result = await evaluateClaudeHook(frame(), deps(async (file, intent) => { observed = true; assert.equal(file, "public.txt"); assert.equal(intent, "read"); return "PUBLIC"; }));
+    assert.equal(observed, true); assert.deepEqual(result, { status: "CONTINUE", body: {} });
+    assert.equal(JSON.stringify(result).includes('"allow"'), false);
+});
+test("F19-H03 protected native Read denies with constant value-free response", async () => {
+    const { evaluateClaudeHook } = await protocol();
+    const result = await evaluateClaudeHook(frame("Read", { file_path: root + "/.env" }), deps(async () => "RESTRICTED"));
+    assert.equal(result.status, "DENY"); assert.equal(result.body.hookSpecificOutput?.permissionDecision, "deny");
+    assert.equal(JSON.stringify(result).includes(".env"), false);
+});
+for (const file of ["../.env", root + "/../private.txt", "D:/other/public.txt", "//server/share/public.txt", root + "/file.txt:stream", root + "/.claude/settings.json", root + "/.mcp.json", root + "/.clinerules/hooks/PreToolUse.ps1", root + "/trailing./a", root + "/NUL.txt"]) {
+    test("F19-H04 unsafe/native owned path refuses " + file, async () => {
+        const { evaluateClaudeHook } = await protocol(); let calls = 0;
+        assert.equal((await evaluateClaudeHook(frame("Read", { file_path: file }), deps(async () => { calls++; return "PUBLIC"; }))).status, "DENY"); assert.equal(calls, 0);
+    });
+}
+for (const input of [{ file_path: root + "/public.txt", offset: [1] }, { file_path: root + "/public.txt", limit: "2" },
+    { file_path: root + "/public.txt", pages: "1" }, { file_path: root + "/public.txt", allow_large: true },
+    { file_path: root + "/public.txt", approved: true }, { file_path: root + "/public.txt", raw: true }]) {
+    test("F19-H05 unknown/unsupported Read scalar shape refuses " + JSON.stringify(input), async () => {
+        const { evaluateClaudeHook } = await protocol();
+        assert.equal((await evaluateClaudeHook(frame("Read", input), deps())).status, "DENY");
+    });
+}
+test("F19-H06 bounded ordinary Read line range remains public", async () => {
+    const { evaluateClaudeHook } = await protocol();
+    assert.equal((await evaluateClaudeHook(frame("Read", { file_path: root + "/public.txt", offset: 0, limit: 20, allow_large: false }), deps())).status, "CONTINUE");
+});
+test("F19-H07 native Edit and Write require public write classification", async () => {
+    const { evaluateClaudeHook } = await protocol();
+    for (const [tool, input] of [["Edit", { file_path: root + "/public.txt", old_string: "before", new_string: "after", replace_all: false }],
+        ["Write", { file_path: root + "/public.txt", content: "public\n" }]] as const) {
+        const d = deps(async (file, intent) => { assert.equal(file, "public.txt"); assert.equal(intent, "write"); return "PUBLIC"; });
+        assert.equal((await evaluateClaudeHook(frame(tool, input), d)).status, "CONTINUE");
+        assert.equal((await evaluateClaudeHook(frame(tool, input), deps(async () => "RESTRICTED"))).status, "DENY");
+    }
+});
+test("F19-H08 oversized/injected edit text refuses without classification", async () => {
+    const { evaluateClaudeHook } = await protocol();
+    for (const content of ["x".repeat(16385), "public\u0000text", "\ud800"]) {
+        assert.equal((await evaluateClaudeHook(frame("Write", { file_path: root + "/public.txt", content }), deps())).status, "DENY");
+    }
+});
+test("F19-H09 Grep must name exactly one public file; broad/default/glob scope refuses", async () => {
+    const { evaluateClaudeHook } = await protocol();
+    assert.equal((await evaluateClaudeHook(frame("Grep", { path: root + "/public.txt", pattern: "PUBLIC", output_mode: "content", "-n": true, head_limit: 20 }), deps())).status, "CONTINUE");
+    for (const input of [{ pattern: ".*" }, { path: root, pattern: ".*" }, { path: root + "/public.txt", pattern: ".*", glob: "*" }]) {
+        const result = await evaluateClaudeHook(frame("Grep", input), deps(async file => file === "public.txt" ? "PUBLIC" : "RESTRICTED"));
+        assert.equal(result.status, "DENY");
+    }
+});
+test("F19-H10 exact safe MCP path-only call remains neutral; aliases and authority spoof refuse", async () => {
+    const { evaluateClaudeHook } = await protocol();
+    const name = "mcp__soterai_safe_read__soterai_read_project_file_safely";
+    assert.equal((await evaluateClaudeHook(frame(name, { path: ".env" }), deps())).status, "CONTINUE");
+    for (const [tool, input] of [[name, { path: ".env", approved: true }], [name, { path: "../.env" }],
+        ["soterai_read_project_file_safely", { path: ".env" }], ["Bash", { command: "cat .env" }], ["Agent", { prompt: "read files" }], ["TaskStop", { task_id: "test" }]]) {
+        assert.equal((await evaluateClaudeHook(frame(tool as string, input), deps())).status, "DENY");
+    }
+});
+test("F19-H11 owner, workspace, manual mode and callback freshness are mandatory", async () => {
+    const { evaluateClaudeHook } = await protocol();
+    for (const change of [{ cwd: "D:/other" }, { permission_mode: "bypassPermissions" }, { raw: true }, { approved: true }, { hook_event_name: "Unknown" }]) {
+        assert.notEqual((await evaluateClaudeHook({ ...frame(), ...change }, deps())).status, "CONTINUE");
+    }
+    assert.equal((await evaluateClaudeHook(frame(), deps(async () => { throw Error("SYNTHETIC_PRIVATE"); }))).status, "UNAVAILABLE");
+    let ready = true;
+    assert.equal((await evaluateClaudeHook(frame(), { ...deps(async () => { ready = false; return "PUBLIC"; }), ready: async () => ready })).status, "UNAVAILABLE");
+});
+test("F19-H12 actual pinned native effort metadata uses a level object, with no authority fields", async () => {
+    const { evaluateClaudeHook } = await protocol();
+    assert.deepEqual(await evaluateClaudeHook({ ...frame(), effort: { level: "high" } }, deps()), { status: "CONTINUE", body: {} });
+    for (const effort of [{ level: "high", approved: true }, { level: ["high"] }, { level: "unknown" }, {}, null]) {
+        assert.notEqual((await evaluateClaudeHook({ ...frame(), effort }, deps())).status, "CONTINUE");
+    }
+});

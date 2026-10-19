@@ -1,0 +1,191 @@
+﻿TAP version 13
+# Subtest: F19-H01 observed native UserPromptSubmit requires current ready owner
+ok 1 - F19-H01 observed native UserPromptSubmit requires current ready owner
+  ---
+  duration_ms: 23.3376
+  type: 'test'
+  ...
+# Subtest: F19-H02 public native Read is neutral and preserves ordinary vendor permissions
+ok 2 - F19-H02 public native Read is neutral and preserves ordinary vendor permissions
+  ---
+  duration_ms: 1.9224
+  type: 'test'
+  ...
+# Subtest: F19-H03 protected native Read denies with constant value-free response
+ok 3 - F19-H03 protected native Read denies with constant value-free response
+  ---
+  duration_ms: 1.4534
+  type: 'test'
+  ...
+# Subtest: F19-H04 unsafe/native owned path refuses ../.env
+ok 4 - F19-H04 unsafe/native owned path refuses ../.env
+  ---
+  duration_ms: 1.098
+  type: 'test'
+  ...
+# Subtest: F19-H04 unsafe/native owned path refuses D:/synthetic/claude-project/../private.txt
+ok 5 - F19-H04 unsafe/native owned path refuses D:/synthetic/claude-project/../private.txt
+  ---
+  duration_ms: 1.0146
+  type: 'test'
+  ...
+# Subtest: F19-H04 unsafe/native owned path refuses D:/other/public.txt
+ok 6 - F19-H04 unsafe/native owned path refuses D:/other/public.txt
+  ---
+  duration_ms: 1.0036
+  type: 'test'
+  ...
+# Subtest: F19-H04 unsafe/native owned path refuses //server/share/public.txt
+ok 7 - F19-H04 unsafe/native owned path refuses //server/share/public.txt
+  ---
+  duration_ms: 0.9371
+  type: 'test'
+  ...
+# Subtest: F19-H04 unsafe/native owned path refuses D:/synthetic/claude-project/file.txt:stream
+ok 8 - F19-H04 unsafe/native owned path refuses D:/synthetic/claude-project/file.txt:stream
+  ---
+  duration_ms: 1.0528
+  type: 'test'
+  ...
+# Subtest: F19-H04 unsafe/native owned path refuses D:/synthetic/claude-project/.claude/settings.json
+ok 9 - F19-H04 unsafe/native owned path refuses D:/synthetic/claude-project/.claude/settings.json
+  ---
+  duration_ms: 1.3529
+  type: 'test'
+  ...
+# Subtest: F19-H04 unsafe/native owned path refuses D:/synthetic/claude-project/.mcp.json
+ok 10 - F19-H04 unsafe/native owned path refuses D:/synthetic/claude-project/.mcp.json
+  ---
+  duration_ms: 2.8301
+  type: 'test'
+  ...
+# Subtest: F19-H04 unsafe/native owned path refuses D:/synthetic/claude-project/.clinerules/hooks/PreToolUse.ps1
+ok 11 - F19-H04 unsafe/native owned path refuses D:/synthetic/claude-project/.clinerules/hooks/PreToolUse.ps1
+  ---
+  duration_ms: 1.1886
+  type: 'test'
+  ...
+# Subtest: F19-H04 unsafe/native owned path refuses D:/synthetic/claude-project/trailing./a
+ok 12 - F19-H04 unsafe/native owned path refuses D:/synthetic/claude-project/trailing./a
+  ---
+  duration_ms: 1.0819
+  type: 'test'
+  ...
+# Subtest: F19-H04 unsafe/native owned path refuses D:/synthetic/claude-project/NUL.txt
+ok 13 - F19-H04 unsafe/native owned path refuses D:/synthetic/claude-project/NUL.txt
+  ---
+  duration_ms: 2.0979
+  type: 'test'
+  ...
+# Subtest: F19-H05 unknown/unsupported Read scalar shape refuses {"file_path":"D:/synthetic/claude-project/public.txt","offset":[1]}
+ok 14 - F19-H05 unknown/unsupported Read scalar shape refuses {"file_path":"D:/synthetic/claude-project/public.txt","offset":[1]}
+  ---
+  duration_ms: 1.869
+  type: 'test'
+  ...
+# Subtest: F19-H05 unknown/unsupported Read scalar shape refuses {"file_path":"D:/synthetic/claude-project/public.txt","limit":"2"}
+ok 15 - F19-H05 unknown/unsupported Read scalar shape refuses {"file_path":"D:/synthetic/claude-project/public.txt","limit":"2"}
+  ---
+  duration_ms: 1.2525
+  type: 'test'
+  ...
+# Subtest: F19-H05 unknown/unsupported Read scalar shape refuses {"file_path":"D:/synthetic/claude-project/public.txt","pages":"1"}
+ok 16 - F19-H05 unknown/unsupported Read scalar shape refuses {"file_path":"D:/synthetic/claude-project/public.txt","pages":"1"}
+  ---
+  duration_ms: 0.8819
+  type: 'test'
+  ...
+# Subtest: F19-H05 unknown/unsupported Read scalar shape refuses {"file_path":"D:/synthetic/claude-project/public.txt","allow_large":true}
+ok 17 - F19-H05 unknown/unsupported Read scalar shape refuses {"file_path":"D:/synthetic/claude-project/public.txt","allow_large":true}
+  ---
+  duration_ms: 1.3233
+  type: 'test'
+  ...
+# Subtest: F19-H05 unknown/unsupported Read scalar shape refuses {"file_path":"D:/synthetic/claude-project/public.txt","approved":true}
+ok 18 - F19-H05 unknown/unsupported Read scalar shape refuses {"file_path":"D:/synthetic/claude-project/public.txt","approved":true}
+  ---
+  duration_ms: 0.8904
+  type: 'test'
+  ...
+# Subtest: F19-H05 unknown/unsupported Read scalar shape refuses {"file_path":"D:/synthetic/claude-project/public.txt","raw":true}
+ok 19 - F19-H05 unknown/unsupported Read scalar shape refuses {"file_path":"D:/synthetic/claude-project/public.txt","raw":true}
+  ---
+  duration_ms: 0.8357
+  type: 'test'
+  ...
+# Subtest: F19-H06 bounded ordinary Read line range remains public
+ok 20 - F19-H06 bounded ordinary Read line range remains public
+  ---
+  duration_ms: 1.168
+  type: 'test'
+  ...
+# Subtest: F19-H07 native Edit and Write require public write classification
+ok 21 - F19-H07 native Edit and Write require public write classification
+  ---
+  duration_ms: 2.5168
+  type: 'test'
+  ...
+# Subtest: F19-H08 oversized/injected edit text refuses without classification
+ok 22 - F19-H08 oversized/injected edit text refuses without classification
+  ---
+  duration_ms: 1.2774
+  type: 'test'
+  ...
+# Subtest: F19-H09 Grep must name exactly one public file; broad/default/glob scope refuses
+ok 23 - F19-H09 Grep must name exactly one public file; broad/default/glob scope refuses
+  ---
+  duration_ms: 1.887
+  type: 'test'
+  ...
+# Subtest: F19-H10 exact safe MCP path-only call remains neutral; aliases and authority spoof refuse
+ok 24 - F19-H10 exact safe MCP path-only call remains neutral; aliases and authority spoof refuse
+  ---
+  duration_ms: 1.412
+  type: 'test'
+  ...
+# Subtest: F19-H11 owner, workspace, manual mode and callback freshness are mandatory
+ok 25 - F19-H11 owner, workspace, manual mode and callback freshness are mandatory
+  ---
+  duration_ms: 1.6714
+  type: 'test'
+  ...
+# Subtest: F19-H12 actual pinned native effort metadata uses a level object, with no authority fields
+not ok 26 - F19-H12 actual pinned native effort metadata uses a level object, with no authority fields
+  ---
+  duration_ms: 4.8795
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\claudeHookProtocol.test.ts:2:7744'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+        body: {},
+    +   status: 'UNAVAILABLE'
+    -   status: 'CONTINUE'
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    status: 'CONTINUE'
+    body:
+  actual:
+    status: 'UNAVAILABLE'
+    body:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\claudeHookProtocol.test.ts:92:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..26
+# tests 26
+# suites 0
+# pass 25
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 592.0393

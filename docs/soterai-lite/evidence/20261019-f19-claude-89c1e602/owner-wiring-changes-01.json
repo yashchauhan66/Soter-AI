@@ -1,0 +1,47 @@
+{
+  "status": "IMPLEMENTED_NOT_TESTED",
+  "changes": [
+    {
+      "path": "packages/vscode-extension/src/broker/BrokerManager.ts",
+      "beforeSha256": "f1594fb500c545d3499a7bda7970824b7486e0531bc5e2ffa03cd6f8640712a2",
+      "afterSha256": "f67a6c3fdd4d450d1043230a93eed00e466d3f796a3bc61f17f5e6c31f2ea6c6"
+    },
+    {
+      "path": "apps/local-ai-broker/src/BrokerServer.ts",
+      "scope": "Both framed-route allowlists add only the flagged exact alias"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/gatewayPolicyManager.test.ts",
+      "beforeSha256": "cd7bc9ee9faca8c70f011fdc012ae3320dbd3c014dc8ba44a5e367589a695363",
+      "afterSha256": "bc1796fbb4ad3cb10f534d462ddf170cad34ad2e1f1b08c0fd93d48a6bb67857"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/ownedBrokerManager.test.ts",
+      "beforeSha256": "2bbce32b633f6543d4fff830a1cf1fa621d393d0b3a227ff88b14c6811068355",
+      "afterSha256": "8e1ec7bcc579294c96ddd3defa47fdfdb6d7ce7e21baa52ff92d7ffffd4eded0"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/mcp-canary-boundary.test.ts",
+      "beforeSha256": "811f3751dd6403cbce13a6e84f6537288231a0028b6eb81846286c5afec9dc2b",
+      "afterSha256": "b9a11457a53e7b8f6a5e54522166255f12693514759ba019a73a4d30c11971a3"
+    },
+    {
+      "path": "packages/vscode-extension/src/broker/AutoSecureEngine.ts",
+      "scope": "Withdraw unverified full-redaction claim"
+    },
+    {
+      "path": "packages/vscode-extension/package.json",
+      "scope": "One new machine/restricted/defaulttrue flag; preserve other bytes"
+    },
+    {
+      "path": "packages/soterai-lite/package.json",
+      "scope": "One new machine/restricted/defaulttrue flag; preserve other bytes"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/claudeGatewayWire.test.ts",
+      "beforeSha256": "f99044f804a6a276df5980785d6d3830e8c73e3d212961b0dbcce0dd5162715b",
+      "afterSha256": "8c8256bbb16e1293c4af7a823037355da8afd7f6df1e7d79d0864ac02e0eca11"
+    }
+  ],
+  "scope": "Current flags/capability/exact alias and fixed public SDK beta metadata. Raw failures/frozen01 retained; frozen02 adds observed beta replacement control."
+}

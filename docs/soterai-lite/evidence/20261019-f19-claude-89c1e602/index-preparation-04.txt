@@ -1,0 +1,370 @@
+﻿node.exe : node:assert:95
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (node:assert:95:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  throw new AssertionError(obj);
+  ^
+
+AssertionError [ERR_ASSERTION]: Non-scoped non-line-ending difference refused: docs/soterai-lite/ledger.md
++ actual - expected
+... Skipped lines
+
+  '# SoterAI Lite ledger\n' +
+    '\n' +
+    'Read this file FIRST after any context compaction or on resumption. Do not overwrite evidence or repeat finished 
+work. User request identity is recorded in `evidence/20261013-l0-disk-gate-51f892d0/request-identity.json`.\n' +
+    '\n' +
+    '## Current state\n' +
+...
+    '\n' +
++   'Artifact gap: current extension SHA-256 is `d8abff1a7ac48809420bb4f2862b8d9700ccc85c9b5cd97152608be85556b032`; 
+tested dated candidate SHA-256 is `7b590560325aa46c3519cbf6bf0300c7bf7783d910cbae7d89e4636010e61c2c`. The normal local 
+`soterai-ide-guard-0.6.3.vsix` has SHA-256 `dcbcd9738cb480616cf4d3aa66d1a1ac2287e1754aa7307dea7ac23fee7c3677` and an 
+older extension/r'... 210116 more characters
+-   'Artifact gap: current extension SHA-256 is `d8abff1a7ac48809420bb4f2862b8d9700ccc85c9b5cd97152608be85556b032`; 
+tested dated candidate SHA-256 is `7b590560325aa46c3519cbf6bf0300c7bf7783d910cbae7d89e4636010e61c2c`. The normal local 
+`soterai-ide-guard-0.6.3.vsix` has SHA-256 `dcbcd9738cb480616cf4d3aa66d1a1ac2287e1754aa7307dea7ac23fee7c3677` and an 
+older extension/r'... 224505 more characters
+
+    at Object.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261019-f
+19-claude-89c1e602\prepare-index-04.cjs:29:9)
+    at Module._compile (node:internal/modules/cjs/loader:1730:14)
+    at Object..js (node:internal/modules/cjs/loader:1895:10)
+    at Module.load (node:internal/modules/cjs/loader:1465:32)
+    at Function._load (node:internal/modules/cjs/loader:1282:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: '# SoterAI Lite ledger\n' +
+    '\n' +
+    'Read this file FIRST after any context compaction or on resumption. Do not overwrite evidence or repeat finished 
+work. User request identity is recorded in `evidence/20261013-l0-disk-gate-51f892d0/request-identity.json`.\n' +
+    '\n' +
+    '## Current state\n' +
+    '\n' +
+    '- **L0 scoped preflight/split/baseline/catalog freeze DONE.** The user waived the 20 GB threshold. Both verified 
+backup bundles and the authorized old synthetic profiles are retained on D:. Supplemental full fsck ended in 
+resource-limited FAIL; full object integrity remains UNVERIFIED.\n' +
+    '- L1: **ACTIVE, F01-F10 and F12-F18 DONE; F11 optional unavailable/unimplemented NOT_TESTED/NOT_COVERED; F19 
+ACTIVE/test-first**; F20-F32 and L2-L7 **NOT-RUN**. Do not describe this as reaching L6. Read the latest receipts 
+below before work.\n' +
+    '- Source changes and isolated synthetic-profile tests are authorized; the normal VS Code profile has not been 
+changed.\n' +
+    '- New Lite baseline VSIX: **BUILT / CONTENT-INSPECTED / HOST-BASELINE-TESTED**; SHA-256 
+`cf163471b7a022d5a9f922a3f1fcc6bfd3b56a08ab14f1aebfdfb345c337bae1`. Coverage and all final numerical ratings **PENDING 
+/ UNVERIFIED**; 44-check catalog frozen, not graded.\n' +
+    '- Baseline HEAD: `8ef3aeb54f4019f4ee815a844443995176a656f0`; starting branch: `security-hardening`. Inspected 
+prior source modifications were checkpointed at `915a5300a7745e4ffaeab80b5d08d3305e3772f9`; unknown scratch/raw 
+artifacts remain untouched.\n' +
+    '- P00-P03 and F01-F10 scoped source commits and the F10 transition are byte verified. F11 remains optional 
+unavailable/unimplemented NOT_TESTED/NOT_COVERED under frozen P03 applicability. F12 scoped source bytes are verified. 
+F19 is the sole supported active behavior card; no F19 production before the separate F18 transition commit and 
+f18-transition-byte-verification-01.json PASS.\n' +
+    '\n' +
+    '## STEP RECEIPT L0.1 — preflight stop\n' +
+    '\n' +
+    'Result: **FAIL** (disk gate); **INCOMPLETE** (L0 overall).\n' +
+    '\n' +
+    'Exact executed gate command:\n' +
+    '\n' +
+    '```powershell\n' +
+    "& '.\\docs\\soterai-lite\\evidence\\20261013-l0-disk-gate-51f892d0\\preflight.ps1'\n" +
+    '```\n' +
+    '\n' +
+    'The exact read-only commands for disk measurement, Git status, branch, HEAD and request hashing are in that 
+script. Raw measurement and Git outputs are saved beside it. The exec tool reported exit code `1`; the script 
+requested `20`. Both are recorded explicitly in `execution-result.json`.\n' +
+    '\n' +
+    'Saved measurement: **3,051,290,624 bytes available on C:** at `2026-10-13T04:19:12.0779265Z`, using 
+`System.IO.DriveInfo.AvailableFreeSpace`. This is **3.051290624 GB / 2.84173583984375 GiB**, below both 20 GB and 20 
+GiB. Earlier direct measurement: 3,091,800,064 bytes; also FAIL. Initial null `Get-PSDrive.Free` was not treated as 
+zero. CIM corroboration was INCOMPLETE with exact message `Get-CimInstance : Access denied`; see 
+`initial-observations.txt`.\n' +
+    '\n' +
+    'The request says "check free disk (>= 20 GB else STOP)". This specific gate overrides continued stage work. No 
+disk cleanup, process termination, download, login, publication, backup bundle, fsck, catalog freeze, split, build, 
+suite, host test or installation was performed.\n' +
+    '\n' +
+    'Files changed and computed SHA-256 (paths relative to this directory):\n' +
+    '\n' +
+    '| File | SHA-256 |\n' +
+    '| --- | --- |\n' +
+    '| `evidence/20261013-l0-disk-gate-51f892d0/disk-measurement.json` | 
+`F7671CC5974FD259559333ED97B98E6E8B15157E086E37BB2408982E7E984123` |\n' +
+    '| `evidence/20261013-l0-disk-gate-51f892d0/execution-result.json` | 
+`62426054221BD145ACDE4120962CE83F8D073121A77C88A0D437EACFB56C7623` |\n' +
+    '| `evidence/20261013-l0-disk-gate-51f892d0/git-branch-before.txt` | 
+`8DF13568F5FBD22AC0AEA86D7883CB03A3747EA614DE8226144C5BBC145BF9A0` |\n' +
+    '| `evidence/20261013-l0-disk-gate-51f892d0/git-head-before.txt` | 
+`99188ED9196A8FA235B4CE86C10DEFFC27B2C3715F3E2F6AAF3FFE90DA1440F1` |\n' +
+    '| `evidence/20261013-l0-disk-gate-51f892d0/git-status-before.txt` | 
+`8FAB22024A0FAC804C38722BFEFF22F04F95C3C38ACC9F509D683D175798F7C5` |\n' +
+    '| `evidence/20261013-l0-disk-gate-51f892d0/initial-observations.txt` | 
+`3E91D26B42A056FEE5B9A5A2AF3D66E3E563E347E6A58393CF97ED3D29114100` |\n' +
+    '| `evidence/20261013-l0-disk-gate-51f892d0/offline-hooks/.keep` | 
+`44F4DD67009324A9FD4FAED0040A49CD696429EC8C7AD062BA6BDE15178A61F9` |\n' +
+    '| `evidence/20261013-l0-disk-gate-51f892d0/preflight.ps1` | 
+`87F3E7602B66AE6E5E0C2D0CC9909D42B84D105D04C852A4B8F4667AB4392CA9` |\n' +
+    '| `evidence/20261013-l0-disk-gate-51f892d0/request-identity.json` | 
+`341A4EB78E684F942665661F0948929D808DC8A2447211644BEB74D5032D71FD` |\n' +
+    '| `PREFLIGHT-STOP.md` | `B91E6E35CEB0F72ECC2BC8E7968766D3C6660513CD47AEACAFF6753BF7AF7976` |\n' +
+    '\n' +
+    "The ledger's own computed hash is in `evidence-index.json`, avoiding a self-referential hash. Any later receipt 
+must get a new evidence index; do not overwrite the current one.\n" +
+    '\n' +
+    'Adversarial review: a same-lineage sub-agent checked only the stop decision and unit conversion. Independence 
+**LOW**; this does not count as product review.\n' +
+    '\n' +
+    'What remains unprotected: the existing product configuration is unverified in this task; no new mitigation is 
+installed. The same-user hostile-process model remains outside the intended Lite scope. Cooperative-tool coverage is 
+unmeasured, not assumed.\n' +
+    '\n' +
+    'Next: stop. User frees C: space to at least 20 GiB, then sends the exact resume text in `PREFLIGHT-STOP.md`. 
+Recheck disk with new unique evidence paths before further L0 work. The remaining preflight, catalog freeze and stages 
+have not been completed and must still run.\n' +
+    '\n' +
+    '## Evidence-only Git operation\n' +
+    '\n' +
+    'Planned exact commands, recorded here before execution:\n' +
+    '\n' +
+    '```powershell\n' +
+    'git -c core.hooksPath=docs/soterai-lite/evidence/20261013-l0-disk-gate-51f892d0/offline-hooks switch -c 
+soterai-lite\n' +
+    'git add -- docs/soterai-lite\n' +
+    'git -c core.hooksPath=docs/soterai-lite/evidence/20261013-l0-disk-gate-51f892d0/offline-hooks commit -m 
+"docs(soterai-lite): record failed L0 disk gate and stop"\n' +
+    '```\n' +
+    '\n' +
+    "Per-command `core.hooksPath` avoids invoking the existing external Qoder post-commit tracker or LFS checkout 
+hooks. It does not change persistent Git configuration or product protection. Only task evidence may be staged. Verify 
+no unrelated file is staged before committing. Store each command's actual output in a new evidence file, and verify 
+the commit afterwards.\n" +
+    '\n' +
+    "Branch creation is now **PASS**: `git branch --show-current` returned `soterai-lite`. Branch command exit code 
+was `0`; PowerShell represented Git's informational stderr as `NativeCommandError`, which does not indicate a failed 
+switch. Raw output: `evidence/20261013-l0-disk-gate-51f892d0/branch-result.txt`, SHA-256 
+`E2FEEF21395C0A5B5651E6E5BEC4AEFCD9F84E23EF42FA083E58F125E0F8A2F9`.\n" +
+    '\n' +
+    'The initial `evidence-index.json` snapshot was verified: **11 entries checked, 0 hash mismatches**, before this 
+append. Preserve that index as a historical snapshot; `evidence-index-20261013-l0-stop.json` records the final 
+appended ledger and all pre-commit files. Actual staging uses `git -c core.autocrlf=false add -- docs/soterai-lite` to 
+preserve evidence bytes. This per-command option leaves persistent Git configuration unchanged. The exact final 
+mutation commands are in `evidence/20261013-l0-disk-gate-51f892d0/commit-evidence.ps1`; raw commit output and 
+post-commit identity will be written to new files after the commit and are deliberately outside that commit.\n' +
+    '\n' +
+    '## STEP RECEIPT REVIEW-01 — requested requirements assessment\n' +
+    '\n' +
+    'The user explicitly requested checking which of their five demands are implemented and what remains. This 
+authorizes a read-only source/evidence assessment while the earlier implementation disk gate remains failed; it does 
+not waive that gate or start L1. The first evidence commit was verified as `3ce43885f0d1dc996e786817f1bf4b8404b278f6`: 
+14 SHA-256 entries and 15 committed byte objects matched; 0 unrelated committed files; 0 differences in existing 
+project status. Its post-commit outputs remain outside that commit.\n' +
+    '\n' +
+    'Exact inspection command:\n' +
+    '\n' +
+    '```powershell\n' +
+    "& '.\\docs\\soterai-lite\\evidence\\20261013-requirements-audit-a816bcf9\\audit-evidence.ps1'\n" +
+    '```\n' +
+    '\n' +
+    'The script records exact commands for metadata-only recounts, in-memory ZIP inspection without extraction, 
+artifact/source hashing and the disk measurement. Raw output file: 
+`evidence/20261013-requirements-audit-a816bcf9/audit-raw-metadata.json`. Tool exit: `0`. Last audit disk measurement: 
+**1,913,761,792 available bytes**; gate **FAIL**. No real secret files, credentials or live AI sessions were used; no 
+build, suite, install, upload or publication ran.\n' +
+    '\n' +
+    'Result labels: requirements **PARTIAL / INCOMPLETE**; source assessment **STATIC-ONLY**; retained evidence 
+integrity/recount **PASS**; fresh product execution **NOT-RUN**; new Lite artifact **NOT-BUILT**; Lite Coverage Score 
+**UNMEASURED**. Retained 2026-10-12 records: 793 tests/106 suites, 0 failing TAP records, 3 skips (790 passes); 
+functional 10 PASS; SecurityReview 8 scoped blocks/9 leaks; 17 comparison rows/0 mismatches; all 16 candidate archive 
+entries match inventory. Visual 30/0 is aggregate metadata, not a recount of individual assertions. Independence 
+**LOW** (same-lineage adversarial reviewers only).\n' +
+    '\n' +
+    'Files changed and computed SHA-256:\n' +
+    '\n' +
+    '| File | SHA-256 |\n' +
+    '| --- | --- |\n' +
+    '| `REQUIREMENTS-AUDIT-20261013.md` | `1F41B8F934AC2ABD1B8E73946A537D9B924C15194DDBDDC02B846952DBFB6D1A` |\n' +
+    '| `evidence/20261013-requirements-audit-a816bcf9/audit-evidence.ps1` | 
+`91CA655AB6075DD480D132E891B4B635639033ABC292A32DD06F48DEAD36CB4F` |\n' +
+    '| `evidence/20261013-requirements-audit-a816bcf9/audit-raw-metadata.json` | 
+`E3D415970EDDF691B70EF79DC7D11FA45039160C875EA45BFD82FF3705E22E5C` |\n' +
+    '\n' +
+    'The appended ledger and review-commit script hashes are computed in the new immutable review evidence index. 
+Existing indexes remain historical snapshots and are not overwritten.\n' +
+    '\n' +
+    'Artifact gap: current extension SHA-256 is `d8abff1a7ac48809420bb4f2862b8d9700ccc85c9b5cd97152608be85556b032`; 
+tested dated candidate SHA-256 is `7b590560325aa46c3519cbf6bf0300c7bf7783d910cbae7d89e4636010e61c2c`. The normal local 
+`soterai-ide-guard-0.6.3.vsix` has SHA-256 `dcbcd9738cb480616cf4d3aa66d1a1ac2287e1754aa7307dea7ac23fee7c3677` and an 
+older extension/r'... 210116 more characters,
+  expected: '# SoterAI Lite ledger\n' +
+    '\n' +
+    'Read this file FIRST after any context compaction or on resumption. Do not overwrite evidence or repeat finished 
+work. User request identity is recorded in `evidence/20261013-l0-disk-gate-51f892d0/request-identity.json`.\n' +
+    '\n' +
+    '## Current state\n' +
+    '\n' +
+    '- **L0 scoped preflight/split/baseline/catalog freeze DONE.** The user waived the 20 GB threshold. Both verified 
+backup bundles and the authorized old synthetic profiles are retained on D:. Supplemental full fsck ended in 
+resource-limited FAIL; full object integrity remains UNVERIFIED.\n' +
+    '- L1: **ACTIVE, F01-F10 and F12-F18 DONE; F11 optional unavailable/unimplemented NOT_TESTED/NOT_COVERED; F19 
+ACTIVE/test-first**; F20-F32 and L2-L7 **NOT-RUN**. Do not describe this as reaching L6. Read the latest receipts 
+below before work.\n' +
+    '- Source changes and isolated synthetic-profile tests are authorized; the normal VS Code profile has not been 
+changed.\n' +
+    '- New Lite baseline VSIX: **BUILT / CONTENT-INSPECTED / HOST-BASELINE-TESTED**; SHA-256 
+`cf163471b7a022d5a9f922a3f1fcc6bfd3b56a08ab14f1aebfdfb345c337bae1`. Coverage and all final numerical ratings **PENDING 
+/ UNVERIFIED**; 44-check catalog frozen, not graded.\n' +
+    '- Baseline HEAD: `8ef3aeb54f4019f4ee815a844443995176a656f0`; starting branch: `security-hardening`. Inspected 
+prior source modifications were checkpointed at `915a5300a7745e4ffaeab80b5d08d3305e3772f9`; unknown scratch/raw 
+artifacts remain untouched.\n' +
+    '- P00-P03 and F01-F10 scoped source commits and the F10 transition are byte verified. F11 remains optional 
+unavailable/unimplemented NOT_TESTED/NOT_COVERED under frozen P03 applicability. F12 scoped source bytes are verified. 
+F19 is the sole supported active behavior card; no F19 production before the separate F18 transition commit and 
+f18-transition-byte-verification-01.json PASS.\n' +
+    '\n' +
+    '## STEP RECEIPT L0.1 — preflight stop\n' +
+    '\n' +
+    'Result: **FAIL** (disk gate); **INCOMPLETE** (L0 overall).\n' +
+    '\n' +
+    'Exact executed gate command:\n' +
+    '\n' +
+    '```powershell\n' +
+    "& '.\\docs\\soterai-lite\\evidence\\20261013-l0-disk-gate-51f892d0\\preflight.ps1'\n" +
+    '```\n' +
+    '\n' +
+    'The exact read-only commands for disk measurement, Git status, branch, HEAD and request hashing are in that 
+script. Raw measurement and Git outputs are saved beside it. The exec tool reported exit code `1`; the script 
+requested `20`. Both are recorded explicitly in `execution-result.json`.\n' +
+    '\n' +
+    'Saved measurement: **3,051,290,624 bytes available on C:** at `2026-10-13T04:19:12.0779265Z`, using 
+`System.IO.DriveInfo.AvailableFreeSpace`. This is **3.051290624 GB / 2.84173583984375 GiB**, below both 20 GB and 20 
+GiB. Earlier direct measurement: 3,091,800,064 bytes; also FAIL. Initial null `Get-PSDrive.Free` was not treated as 
+zero. CIM corroboration was INCOMPLETE with exact message `Get-CimInstance : Access denied`; see 
+`initial-observations.txt`.\n' +
+    '\n' +
+    'The request says "check free disk (>= 20 GB else STOP)". This specific gate overrides continued stage work. No 
+disk cleanup, process termination, download, login, publication, backup bundle, fsck, catalog freeze, split, build, 
+suite, host test or installation was performed.\n' +
+    '\n' +
+    'Files changed and computed SHA-256 (paths relative to this directory):\n' +
+    '\n' +
+    '| File | SHA-256 |\n' +
+    '| --- | --- |\n' +
+    '| `evidence/20261013-l0-disk-gate-51f892d0/disk-measurement.json` | 
+`F7671CC5974FD259559333ED97B98E6E8B15157E086E37BB2408982E7E984123` |\n' +
+    '| `evidence/20261013-l0-disk-gate-51f892d0/execution-result.json` | 
+`62426054221BD145ACDE4120962CE83F8D073121A77C88A0D437EACFB56C7623` |\n' +
+    '| `evidence/20261013-l0-disk-gate-51f892d0/git-branch-before.txt` | 
+`8DF13568F5FBD22AC0AEA86D7883CB03A3747EA614DE8226144C5BBC145BF9A0` |\n' +
+    '| `evidence/20261013-l0-disk-gate-51f892d0/git-head-before.txt` | 
+`99188ED9196A8FA235B4CE86C10DEFFC27B2C3715F3E2F6AAF3FFE90DA1440F1` |\n' +
+    '| `evidence/20261013-l0-disk-gate-51f892d0/git-status-before.txt` | 
+`8FAB22024A0FAC804C38722BFEFF22F04F95C3C38ACC9F509D683D175798F7C5` |\n' +
+    '| `evidence/20261013-l0-disk-gate-51f892d0/initial-observations.txt` | 
+`3E91D26B42A056FEE5B9A5A2AF3D66E3E563E347E6A58393CF97ED3D29114100` |\n' +
+    '| `evidence/20261013-l0-disk-gate-51f892d0/offline-hooks/.keep` | 
+`44F4DD67009324A9FD4FAED0040A49CD696429EC8C7AD062BA6BDE15178A61F9` |\n' +
+    '| `evidence/20261013-l0-disk-gate-51f892d0/preflight.ps1` | 
+`87F3E7602B66AE6E5E0C2D0CC9909D42B84D105D04C852A4B8F4667AB4392CA9` |\n' +
+    '| `evidence/20261013-l0-disk-gate-51f892d0/request-identity.json` | 
+`341A4EB78E684F942665661F0948929D808DC8A2447211644BEB74D5032D71FD` |\n' +
+    '| `PREFLIGHT-STOP.md` | `B91E6E35CEB0F72ECC2BC8E7968766D3C6660513CD47AEACAFF6753BF7AF7976` |\n' +
+    '\n' +
+    "The ledger's own computed hash is in `evidence-index.json`, avoiding a self-referential hash. Any later receipt 
+must get a new evidence index; do not overwrite the current one.\n" +
+    '\n' +
+    'Adversarial review: a same-lineage sub-agent checked only the stop decision and unit conversion. Independence 
+**LOW**; this does not count as product review.\n' +
+    '\n' +
+    'What remains unprotected: the existing product configuration is unverified in this task; no new mitigation is 
+installed. The same-user hostile-process model remains outside the intended Lite scope. Cooperative-tool coverage is 
+unmeasured, not assumed.\n' +
+    '\n' +
+    'Next: stop. User frees C: space to at least 20 GiB, then sends the exact resume text in `PREFLIGHT-STOP.md`. 
+Recheck disk with new unique evidence paths before further L0 work. The remaining preflight, catalog freeze and stages 
+have not been completed and must still run.\n' +
+    '\n' +
+    '## Evidence-only Git operation\n' +
+    '\n' +
+    'Planned exact commands, recorded here before execution:\n' +
+    '\n' +
+    '```powershell\n' +
+    'git -c core.hooksPath=docs/soterai-lite/evidence/20261013-l0-disk-gate-51f892d0/offline-hooks switch -c 
+soterai-lite\n' +
+    'git add -- docs/soterai-lite\n' +
+    'git -c core.hooksPath=docs/soterai-lite/evidence/20261013-l0-disk-gate-51f892d0/offline-hooks commit -m 
+"docs(soterai-lite): record failed L0 disk gate and stop"\n' +
+    '```\n' +
+    '\n' +
+    "Per-command `core.hooksPath` avoids invoking the existing external Qoder post-commit tracker or LFS checkout 
+hooks. It does not change persistent Git configuration or product protection. Only task evidence may be staged. Verify 
+no unrelated file is staged before committing. Store each command's actual output in a new evidence file, and verify 
+the commit afterwards.\n" +
+    '\n' +
+    "Branch creation is now **PASS**: `git branch --show-current` returned `soterai-lite`. Branch command exit code 
+was `0`; PowerShell represented Git's informational stderr as `NativeCommandError`, which does not indicate a failed 
+switch. Raw output: `evidence/20261013-l0-disk-gate-51f892d0/branch-result.txt`, SHA-256 
+`E2FEEF21395C0A5B5651E6E5BEC4AEFCD9F84E23EF42FA083E58F125E0F8A2F9`.\n" +
+    '\n' +
+    'The initial `evidence-index.json` snapshot was verified: **11 entries checked, 0 hash mismatches**, before this 
+append. Preserve that index as a historical snapshot; `evidence-index-20261013-l0-stop.json` records the final 
+appended ledger and all pre-commit files. Actual staging uses `git -c core.autocrlf=false add -- docs/soterai-lite` to 
+preserve evidence bytes. This per-command option leaves persistent Git configuration unchanged. The exact final 
+mutation commands are in `evidence/20261013-l0-disk-gate-51f892d0/commit-evidence.ps1`; raw commit output and 
+post-commit identity will be written to new files after the commit and are deliberately outside that commit.\n' +
+    '\n' +
+    '## STEP RECEIPT REVIEW-01 — requested requirements assessment\n' +
+    '\n' +
+    'The user explicitly requested checking which of their five demands are implemented and what remains. This 
+authorizes a read-only source/evidence assessment while the earlier implementation disk gate remains failed; it does 
+not waive that gate or start L1. The first evidence commit was verified as `3ce43885f0d1dc996e786817f1bf4b8404b278f6`: 
+14 SHA-256 entries and 15 committed byte objects matched; 0 unrelated committed files; 0 differences in existing 
+project status. Its post-commit outputs remain outside that commit.\n' +
+    '\n' +
+    'Exact inspection command:\n' +
+    '\n' +
+    '```powershell\n' +
+    "& '.\\docs\\soterai-lite\\evidence\\20261013-requirements-audit-a816bcf9\\audit-evidence.ps1'\n" +
+    '```\n' +
+    '\n' +
+    'The script records exact commands for metadata-only recounts, in-memory ZIP inspection without extraction, 
+artifact/source hashing and the disk measurement. Raw output file: 
+`evidence/20261013-requirements-audit-a816bcf9/audit-raw-metadata.json`. Tool exit: `0`. Last audit disk measurement: 
+**1,913,761,792 available bytes**; gate **FAIL**. No real secret files, credentials or live AI sessions were used; no 
+build, suite, install, upload or publication ran.\n' +
+    '\n' +
+    'Result labels: requirements **PARTIAL / INCOMPLETE**; source assessment **STATIC-ONLY**; retained evidence 
+integrity/recount **PASS**; fresh product execution **NOT-RUN**; new Lite artifact **NOT-BUILT**; Lite Coverage Score 
+**UNMEASURED**. Retained 2026-10-12 records: 793 tests/106 suites, 0 failing TAP records, 3 skips (790 passes); 
+functional 10 PASS; SecurityReview 8 scoped blocks/9 leaks; 17 comparison rows/0 mismatches; all 16 candidate archive 
+entries match inventory. Visual 30/0 is aggregate metadata, not a recount of individual assertions. Independence 
+**LOW** (same-lineage adversarial reviewers only).\n' +
+    '\n' +
+    'Files changed and computed SHA-256:\n' +
+    '\n' +
+    '| File | SHA-256 |\n' +
+    '| --- | --- |\n' +
+    '| `REQUIREMENTS-AUDIT-20261013.md` | `1F41B8F934AC2ABD1B8E73946A537D9B924C15194DDBDDC02B846952DBFB6D1A` |\n' +
+    '| `evidence/20261013-requirements-audit-a816bcf9/audit-evidence.ps1` | 
+`91CA655AB6075DD480D132E891B4B635639033ABC292A32DD06F48DEAD36CB4F` |\n' +
+    '| `evidence/20261013-requirements-audit-a816bcf9/audit-raw-metadata.json` | 
+`E3D415970EDDF691B70EF79DC7D11FA45039160C875EA45BFD82FF3705E22E5C` |\n' +
+    '\n' +
+    'The appended ledger and review-commit script hashes are computed in the new immutable review evidence index. 
+Existing indexes remain historical snapshots and are not overwritten.\n' +
+    '\n' +
+    'Artifact gap: current extension SHA-256 is `d8abff1a7ac48809420bb4f2862b8d9700ccc85c9b5cd97152608be85556b032`; 
+tested dated candidate SHA-256 is `7b590560325aa46c3519cbf6bf0300c7bf7783d910cbae7d89e4636010e61c2c`. The normal local 
+`soterai-ide-guard-0.6.3.vsix` has SHA-256 `dcbcd9738cb480616cf4d3aa66d1a1ac2287e1754aa7307dea7ac23fee7c3677` and an 
+older extension/r'... 224505 more characters,
+  operator: 'strictEqual'
+}
+
+Node.js v22.16.0

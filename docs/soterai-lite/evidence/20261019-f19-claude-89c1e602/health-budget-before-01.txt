@@ -1,0 +1,46 @@
+﻿TAP version 13
+# Subtest: F19-R01 exact owner health endpoints do not consume provider request quota
+not ok 1 - F19-R01 exact owner health endpoints do not consume provider request quota
+  ---
+  duration_ms: 1.8958
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\claudeHealthBudget.test.ts:2:1082'
+  failureType: 'testCodeFailure'
+  error: 'A broker auth token of at least 32 characters is required'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    new BrokerServer (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\apps\local-ai-broker\src\BrokerServer.ts:212:64)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\claudeHealthBudget.test.ts:7:44)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: F19-R02 owner health remains authenticated/session-bound and separately metered
+not ok 2 - F19-R02 owner health remains authenticated/session-bound and separately metered
+  ---
+  duration_ms: 0.3833
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\claudeHealthBudget.test.ts:2:2140'
+  failureType: 'testCodeFailure'
+  error: 'A broker auth token of at least 32 characters is required'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    new BrokerServer (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\apps\local-ai-broker\src\BrokerServer.ts:212:64)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\claudeHealthBudget.test.ts:20:44)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 0
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 633.5474

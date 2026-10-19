@@ -293,7 +293,8 @@ export class BrokerServer {
             // Still metered, at a ceiling no legitimate client approaches, so a
             // runaway loop cannot spin the CPU on JSON responses.
             const liveness = req.method === "GET" &&
-                (url.pathname === "/health" || url.pathname === "/version" || url.pathname === "/v1/safe-mode/status");
+                (url.pathname === "/health" || url.pathname === "/version" || url.pathname === "/v1/safe-mode/status"
+                    || this.options.claudeToolSchemas === true && (url.pathname === "/v1/lifecycle/status" || url.pathname === "/v1/gateway/status"));
             this.enforceRateLimit(req, liveness);
 
             if (req.method === "GET" && url.pathname === "/health") {
@@ -307,7 +308,8 @@ export class BrokerServer {
             if (controller && this.options.ownerSession !== undefined && req.headers["x-soterai-session"] !== this.options.ownerSession) {
                 throw new HttpError(403, "owner_session_required", "This controller belongs to a different broker session");
             }
-            if (!controller && !isClientRoute(req.method, url.pathname)) {
+            if (!controller && !isClientRoute(req.method, url.pathname)
+                && !(this.options.claudeToolSchemas === true && req.method === "POST" && url.pathname === "/v1/ai/anthropic-compatible/v1/messages")) {
                 throw new HttpError(403, "control_auth_required", "This operation requires the separate local controller credential");
             }
 
@@ -368,7 +370,8 @@ export class BrokerServer {
             if (req.method === "POST" && url.pathname === "/v1/ai/openai-compatible/chat/completions") {
                 this.requireCanaryMonitoring();return void await this.gateway.proxy("openai", body, req, res);
             }
-            if (req.method === "POST" && url.pathname === "/v1/ai/anthropic-compatible/messages") {
+            if (req.method === "POST" && (url.pathname === "/v1/ai/anthropic-compatible/messages"
+                || this.options.claudeToolSchemas === true && url.pathname === "/v1/ai/anthropic-compatible/v1/messages")) {
                 this.requireCanaryMonitoring();return void await this.gateway.proxy("anthropic", body, req, res);
             }
             throw new HttpError(404, "not_found", "Endpoint not found");
@@ -772,7 +775,7 @@ export class BrokerServer {
         const kind = multipart ? "multipart" : type === "application/vnd.soterai.chat-base64+json" ? "base64" : type === "text/event-stream" ? "sse" : type === "application/ndjson" || type === "application/x-ndjson" ? "ndjson" : "json";
         if (media.length && !supported) throw new HttpError(415, "json_media_unsupported", "A single supported UTF-8 request media type is required");
         if (kind !== "json") {
-            if (!["/v1/ai/openai-compatible/chat/completions", "/v1/ai/anthropic-compatible/messages"].includes((req.url ?? "").split("?")[0])) throw new HttpError(415, "framed_route_unsupported", "Framed chat media requires a provider chat route");
+            if (!["/v1/ai/openai-compatible/chat/completions", "/v1/ai/anthropic-compatible/messages", ...(this.options.claudeToolSchemas === true ? ["/v1/ai/anthropic-compatible/v1/messages"] : [])].includes((req.url ?? "").split("?")[0])) throw new HttpError(415, "framed_route_unsupported", "Framed chat media requires a provider chat route");
             if (kind === "base64") { if (this.options.base64Bodies === false) throw new HttpError(503, "base64_unavailable", "Base64 chat request decoding is unavailable"); }
             else if (kind === "multipart") { if (this.options.multipartBodies === false) throw new HttpError(503, "multipart_unavailable", "Multipart chat request decoding is unavailable"); }
             else if (this.options.framedBodies === false) throw new HttpError(503, "framed_unavailable", "Framed chat request decoding is unavailable");
@@ -797,7 +800,7 @@ export class BrokerServer {
                     const decoded = encoding === "gzip" ? await decodeBoundedGzip(wire, { maxBytes: limit }) : encoding === "br" ? await decodeBoundedBrotli(wire, { maxBytes: limit }) : encoding === "deflate" ? await decodeBoundedDeflate(wire, { maxBytes: limit }) : wire;
                     if (settled) return;
                     const parsed = kind === "base64" ? decodeBoundedBase64Envelope(decoded, this.options.base64Bodies !== false).body : kind === "multipart" ? decodeBoundedMultipart(decoded, boundary!).body : kind !== "json" ? decodeBoundedChatFrames(decoded, kind).body : decoded.length === 0 && (!encoding || encoding === "identity") ? Object.freeze(Object.create(null)) : decodeBoundedJson(decoded, { maxBytes: limit }).body;
-                    const body = kind !== "base64" && ["/v1/ai/openai-compatible/chat/completions", "/v1/ai/anthropic-compatible/messages"].includes((req.url ?? "").split("?")[0]) ? decodeChatBase64Blobs(parsed, this.options.base64Bodies !== false).body : parsed;
+                    const body = kind !== "base64" && ["/v1/ai/openai-compatible/chat/completions", "/v1/ai/anthropic-compatible/messages", ...(this.options.claudeToolSchemas === true ? ["/v1/ai/anthropic-compatible/v1/messages"] : [])].includes((req.url ?? "").split("?")[0]) ? decodeChatBase64Blobs(parsed, this.options.base64Bodies !== false).body : parsed;
                     settled = true; cleanup(); resolve(body as JsonBody);
                 } catch (error) {
                     const status = error instanceof BoundedBase64Error ? error.code === "base64_unavailable" ? 503 : error.code === "base64_unsupported" ? 415 : error.code === "base64_limit" ? 413 : 400 : error instanceof BoundedGzipError || error instanceof BoundedBrotliError || error instanceof BoundedDeflateError || error instanceof BoundedChatFramesError || error instanceof BoundedMultipartError ? error.code.endsWith("_timeout") ? 408 : error.code.endsWith("_limit") ? 413 : 400 : error instanceof BoundedJsonError && ["body_too_large", "json_complexity"].includes(error.code) ? 413 : 400;

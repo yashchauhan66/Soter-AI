@@ -1,0 +1,2182 @@
+{
+  "status": "F19_PARTIAL_UNCOMMITTED_NOT_ACCEPTANCE",
+  "sources": [
+    {
+      "path": "apps/local-ai-broker/src/BrokerServer.ts",
+      "bytes": 75041,
+      "sha256": "185ea2c1b523fa14e5715d5df9f95fadfab4627a6ba1e7a13c4c93a7d46c40c3"
+    },
+    {
+      "path": "apps/local-ai-broker/src/GatewayBoundary.ts",
+      "bytes": 18194,
+      "sha256": "1470723689e9906ad2b353475d8cf315b4cf31119ebadf625a9a6d68251d2d69"
+    },
+    {
+      "path": "apps/local-ai-broker/src/GatewayPolicy.ts",
+      "bytes": 12305,
+      "sha256": "40c60e0dda4a21176098c13046c876b74423bdd6fcd66e78caf3e92740526394"
+    },
+    {
+      "path": "apps/local-ai-broker/src/cli.ts",
+      "bytes": 5429,
+      "sha256": "ee67380e13ffe8e936c4e89cd63826f166558a2ddd960ca56774206d3cc9985d"
+    },
+    {
+      "path": "packages/core/src/RegisteredSecretMatcher.ts",
+      "bytes": 17574,
+      "sha256": "82175760c43de04aa91e801c1a4e0659b2058f39d1ce3b7d3eb4bfec51d151e3"
+    },
+    {
+      "path": "packages/vscode-extension/src/broker/BrokerManager.ts",
+      "bytes": 18751,
+      "sha256": "f67a6c3fdd4d450d1043230a93eed00e466d3f796a3bc61f17f5e6c31f2ea6c6"
+    },
+    {
+      "path": "packages/vscode-extension/src/broker/AutoSecureEngine.ts",
+      "bytes": 15727,
+      "sha256": "e53cbc59cb98ab43eee02107c0c322fa3dde0b1a1d322cad24de57bacc54c28d"
+    },
+    {
+      "path": "packages/vscode-extension/src/extension.ts",
+      "bytes": 33380,
+      "sha256": "4004aa94b9cd3c6b9c6acc90c03e2f226a5bac406b60fea4bf709632bdf58868"
+    },
+    {
+      "path": "packages/vscode-extension/src/adapters/ClaudeHookProtocol.ts",
+      "bytes": 7191,
+      "sha256": "1f4ed13b306459fe1f280b4d63f95c61cb7176ea7dfccad0d2dbfedcbf2ff138"
+    },
+    {
+      "path": "packages/vscode-extension/src/adapters/ClaudeHttpBridge.ts",
+      "bytes": 11179,
+      "sha256": "ca2727d871b5d2138b03e6cb36116d8dd1a8e925423b6351305050125d26b401"
+    },
+    {
+      "path": "packages/vscode-extension/src/adapters/ClaudeAdapterPolicy.ts",
+      "bytes": 19128,
+      "sha256": "0fcab59859d039654064de842a1123fec098e2d14d390676b6f4a3d30cd19ffa"
+    },
+    {
+      "path": "packages/vscode-extension/src/adapters/ClaudeAdapter.ts",
+      "bytes": 22146,
+      "sha256": "3d662282bee93054a02864c390e90c1274eeee674056a0b6238d2a333af7a542"
+    },
+    {
+      "path": "packages/vscode-extension/package.json",
+      "bytes": 125841,
+      "sha256": "5369ceaaaa9f84885861e55e09e209779a5a3b00b03cc5dab32157935ca85216"
+    },
+    {
+      "path": "packages/soterai-lite/package.json",
+      "bytes": 101196,
+      "sha256": "f353768aee9d4685a1b2f6891fe9301494d6a87f90b33fedad132343920ef898"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/claudeAdapterAtomicIO.test.ts",
+      "bytes": 1811,
+      "sha256": "af080d9de62cf680ea7d1cd1182b599975908360eddb494b8e968ec7704aa21c"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/claudeAdapterLifecycle.test.ts",
+      "bytes": 8803,
+      "sha256": "eb5932d6927eb0162ad391671bfccc3f9b2ea9d40e5daf6bdff7f1e9f86474f5"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/claudeAdapterPolicy.test.ts",
+      "bytes": 12408,
+      "sha256": "d79bf9e36637dd45254465ba79aa789ea439e8e14a56c0bdcfff41ec08eca4db"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/claudeAdapterRegistration.test.ts",
+      "bytes": 3102,
+      "sha256": "60546d9ed44fbc627017a343ca00806415e505b9bb59c9cb7c1a5726cb7e4bad"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/claudeGatewayManager.test.ts",
+      "bytes": 4644,
+      "sha256": "d24a15c8433e17092d0b664aaf172efd29c6b6d7352fdb4f316ca90f08d02654"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/claudeGatewaySchemas.test.ts",
+      "bytes": 4037,
+      "sha256": "8cb3a68de0f7a8a98f66c4d9be54b22c81f844115be413828e41d199b8624056"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/claudeGatewayWire.test.ts",
+      "bytes": 4871,
+      "sha256": "8c8256bbb16e1293c4af7a823037355da8afd7f6df1e7d79d0864ac02e0eca11"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/claudeHookProtocol.test.ts",
+      "bytes": 7723,
+      "sha256": "e37f2f79e415f8b7dad6d03e6f132ee7308a99fe802cf56f9f469c8f67c7e196"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/claudeHttpBridge.test.ts",
+      "bytes": 6816,
+      "sha256": "a3f8705e7b7441b1e1cb32b547d5bbcea0bd9eb306f7b86574cd02b07c1e9c73"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/claudeLegacyRoute.test.ts",
+      "bytes": 830,
+      "sha256": "07b80df349e3938c285f8753376d934a929c4528ea06a596ef7fc3154b6476ad"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/claudeMatcherBudget.test.ts",
+      "bytes": 2386,
+      "sha256": "64cd8adb52f3bcc6d881abde3e0a498d988bf28a7b50d91e487f9aa01f961e4d"
+    },
+    {
+      "path": "packages/vscode-extension/README.md",
+      "bytes": 42575,
+      "sha256": "aa9bbab42623b9d71480fbab7a37312e945e5a10af53d8127547d824c63b3fb2"
+    },
+    {
+      "path": "packages/soterai-lite/README.md",
+      "bytes": 30938,
+      "sha256": "bede9505be8f5cefc1348b3d58cf572bf485833459aeeb5066bbd57302e126b8"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/readme-accuracy.test.ts",
+      "bytes": 5994,
+      "sha256": "59175228a0596d6270491cf1072c16a5acdc49ae6268a915382362d2b44b56ce"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/claudeConversationBudget.test.ts",
+      "bytes": 4608,
+      "sha256": "baa810cee9f7cfee404896982c11b1e58649faf1cac64dab43ffc1b7c118198f"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/claudeHealthBudget.test.ts",
+      "bytes": 2486,
+      "sha256": "9f7fe163de35bf5e371c66cd084c444fd20b9bfb339a1111a40fa36c739b5e06"
+    },
+    {
+      "path": "docs/vscode-extension-readiness.md",
+      "bytes": 3792,
+      "sha256": "98fbebcdc1cb3097abdd09a515c4d1452f16d7186a0490f5341faf2e24db6546"
+    }
+  ],
+  "runs": [
+    {
+      "name": "affected-hosts-01",
+      "exitCode": 1,
+      "command": [
+        "powershell.exe",
+        "-NoLogo",
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261019-f19-claude-89c1e602\\run-affected-hosts-01.ps1",
+        "-VsixPath",
+        "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\soterai-lite\\soterai-lite-0.7.0-f19-20261019-attempt01.vsix",
+        "-ExpectedVsixSha256",
+        "ebbb4a8080ba3ceb8e52b36c5bc6c05602c1a1237ffdc2cb403e9514c67af83c",
+        "-ExpectedBundleSha256",
+        "eca2d74b331eaf44e887ecfee67cba56a3849ba56d5dc2e42d798c257f330c87",
+        "-InspectionName",
+        "01"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/affected-hosts-01.txt",
+        "bytes": 972,
+        "sha256": "306bd61160f052592322483849f6223e4599d0ae156ab4a2be83e3503400285c"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/affected-hosts-01.txt.result.json",
+        "bytes": 1294,
+        "sha256": "b9a1459638768cb589d48415ec9a29aa54fde8ca22ea4720d3df2b9796acb929"
+      },
+      "counts": {}
+    },
+    {
+      "name": "affected-hosts-02",
+      "exitCode": 0,
+      "command": [
+        "powershell.exe",
+        "-NoLogo",
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261019-f19-claude-89c1e602\\run-affected-hosts-02.ps1",
+        "-VsixPath",
+        "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\soterai-lite\\soterai-lite-0.7.0-f19-20261019-attempt01.vsix",
+        "-ExpectedVsixSha256",
+        "ebbb4a8080ba3ceb8e52b36c5bc6c05602c1a1237ffdc2cb403e9514c67af83c",
+        "-ExpectedBundleSha256",
+        "eca2d74b331eaf44e887ecfee67cba56a3849ba56d5dc2e42d798c257f330c87",
+        "-InspectionName",
+        "01"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/affected-hosts-02.txt",
+        "bytes": 4376,
+        "sha256": "3db964bb2d62271e623c50560e0c2b0b4b119b6f41700994a35ac5ea6ed42606"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/affected-hosts-02.txt.result.json",
+        "bytes": 1294,
+        "sha256": "4b071ef4a6a5965cbc3e98fe5d87c990e0b0bf6ec86f7c25af165675598ee841"
+      },
+      "counts": {}
+    },
+    {
+      "name": "broker-tests-01",
+      "exitCode": 0,
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "apps/local-ai-broker/src/__tests__/*.test.ts"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/broker-tests-01.txt",
+        "bytes": 34832,
+        "sha256": "5faabf74d85642043df60c36fa823df396fc709ed67d068b37c5f9f5bfb92997"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/broker-tests-01.txt.result.json",
+        "bytes": 605,
+        "sha256": "b9f6da4863e316105fe955e6d7bbde371c6f3da9edde986c173f1b3b4a76ce2e"
+      },
+      "counts": {
+        "tests": 144,
+        "pass": 143,
+        "fail": 0,
+        "skipped": 1,
+        "cancelled": 0
+      }
+    },
+    {
+      "name": "broker-tests-02",
+      "exitCode": 0,
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "apps/local-ai-broker/src/__tests__/*.test.ts"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/broker-tests-02.txt",
+        "bytes": 34842,
+        "sha256": "150d531d897bd2e69e18b5f0fa70328518dc979ba7a1c72edb3259f8a2e03dfe"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/broker-tests-02.txt.result.json",
+        "bytes": 605,
+        "sha256": "3d6a290b1d835faebbbfc88cad470a5b2c69e35b12a6182502ee686453abc75b"
+      },
+      "counts": {
+        "tests": 144,
+        "pass": 143,
+        "fail": 0,
+        "skipped": 1,
+        "cancelled": 0
+      }
+    },
+    {
+      "name": "broker-typecheck-01",
+      "exitCode": 0,
+      "command": [
+        "node",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "-p",
+        "apps/local-ai-broker/tsconfig.json"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/broker-typecheck-01.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/broker-typecheck-01.txt.result.json",
+        "bytes": 511,
+        "sha256": "9129f9954658d83f310689b0f0cfc9f72bbe07bbd1c293edf5498066828081cf"
+      },
+      "counts": {}
+    },
+    {
+      "name": "broker-typecheck-02",
+      "exitCode": 0,
+      "command": [
+        "node",
+        "node_modules/typescript/bin/tsc",
+        "-p",
+        "apps/local-ai-broker/tsconfig.json",
+        "--noEmit"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/broker-typecheck-02.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/broker-typecheck-02.txt.result.json",
+        "bytes": 576,
+        "sha256": "2204254b04777eb67dec072ab76018b3b2b2d3cf2e46cb154245028e3a621e47"
+      },
+      "counts": {}
+    },
+    {
+      "name": "broker-typecheck-03",
+      "exitCode": 0,
+      "command": [
+        "node",
+        "node_modules/typescript/bin/tsc",
+        "-p",
+        "apps/local-ai-broker/tsconfig.json",
+        "--noEmit"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/broker-typecheck-03.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/broker-typecheck-03.txt.result.json",
+        "bytes": 576,
+        "sha256": "8786042ba63e13591b1312a5c90b1068a5e7035cee463de76acaa982f27b14e7"
+      },
+      "counts": {}
+    },
+    {
+      "name": "build-candidate-launch-01",
+      "exitCode": 1,
+      "command": [
+        "powershell.exe",
+        "-NoLogo",
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/build-candidate-01.ps1"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/build-candidate-launch-01.txt",
+        "bytes": 1024,
+        "sha256": "a3043ca3dfd89f278e3ee5e614a017ebf4f7939dd1562fc2cafc0fd1f06024cf"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/build-candidate-launch-01.txt.result.json",
+        "bytes": 628,
+        "sha256": "5ed7ba44d3196bf89e69f93b4a180e32947a6cda82fe167d8c20930bbb77fc3a"
+      },
+      "counts": {}
+    },
+    {
+      "name": "build-candidate-launch-02",
+      "exitCode": -196608,
+      "command": [
+        "powershell.exe",
+        "-NoLogo",
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/build-candidate-02.ps1"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/build-candidate-launch-02.txt",
+        "bytes": 730,
+        "sha256": "727570804573195a1860eeb389808e38f6a52bbe4c1ccd59fe8254128f6c7554"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/build-candidate-launch-02.txt.result.json",
+        "bytes": 634,
+        "sha256": "ebf4d98ff9fb0ff83ea8222a15deff21427e0a5d6f4a7a52da0e6706954f13c5"
+      },
+      "counts": {}
+    },
+    {
+      "name": "build-candidate-launch-03",
+      "exitCode": 0,
+      "command": [
+        "powershell.exe",
+        "-NoLogo",
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/build-candidate-03.ps1"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/build-candidate-launch-03.txt",
+        "bytes": 1996,
+        "sha256": "a09e4ee975ac855da0b6f6c3f4258e45f7bb5e000a720de673b4d0387f18eef7"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/build-candidate-launch-03.txt.result.json",
+        "bytes": 628,
+        "sha256": "7aea882dc849968bee5b20846dfa7fedb34f385fa5ae8119c600eb8d98c1a9bd"
+      },
+      "counts": {}
+    },
+    {
+      "name": "build-candidate-launch-04",
+      "exitCode": 0,
+      "command": [
+        "powershell.exe",
+        "-NoLogo",
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/build-candidate-04.ps1"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/build-candidate-launch-04.txt",
+        "bytes": 1996,
+        "sha256": "38c04478f617b0185f7ae8c0a11349402af2721b7371af2ec4e0b45576dc9d7e"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/build-candidate-launch-04.txt.result.json",
+        "bytes": 628,
+        "sha256": "c2c91deb48c4eec4d89ce22ef5c95c5891e1f416406ad015235206530da5f92a"
+      },
+      "counts": {}
+    },
+    {
+      "name": "checkpoint-01",
+      "exitCode": 0,
+      "command": [
+        "node",
+        "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/checkpoint-01.cjs"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/checkpoint-01.txt",
+        "bytes": 164,
+        "sha256": "cab934068fbd098564d21d974f5eb7da5f57adb144659d2f4676624c8e05a418"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/checkpoint-01.txt.result.json",
+        "bytes": 422,
+        "sha256": "36afbad452be519c6518a699084084a7cfa1868cc5a3decca3750155c22fefe5"
+      },
+      "counts": {}
+    },
+    {
+      "name": "cli-preparation-launch-01",
+      "exitCode": 0,
+      "command": [
+        "powershell",
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/probe-cli-help-01.ps1"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/cli-preparation-launch-01.txt",
+        "bytes": 1562,
+        "sha256": "055cfd7f35e45739da00de553dc8fe3afe9ffe8864f35e06ee88e5cddec88806"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/cli-preparation-launch-01.txt.result.json",
+        "bytes": 589,
+        "sha256": "fda04a87411e381e73263dfbfbd6b03fd401f79147eb6899d85f67504f76be19"
+      },
+      "counts": {}
+    },
+    {
+      "name": "combined-after-01",
+      "exitCode": 0,
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/claudeAdapterRegistration.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeAdapterPolicy.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeAdapterLifecycle.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeAdapterAtomicIO.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeHookProtocol.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeHttpBridge.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeGatewayManager.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeGatewayWire.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeLegacyRoute.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeGatewaySchemas.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeMatcherBudget.test.ts",
+        "packages/vscode-extension/src/__tests__/gatewayPolicyManager.test.ts",
+        "packages/vscode-extension/src/__tests__/ownedBrokerManager.test.ts",
+        "packages/vscode-extension/src/__tests__/mcp-canary-boundary.test.ts",
+        "packages/vscode-extension/src/__tests__/gatewayPolicyWire.test.ts",
+        "packages/vscode-extension/src/__tests__/clineGatewaySchemas.test.ts",
+        "packages/vscode-extension/src/__tests__/clineMatcherBudget.test.ts"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/combined-after-01.txt",
+        "bytes": 37613,
+        "sha256": "4911e9997757500266a7d270d360aeaae7022aa654a90788f98631983336f796"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/combined-after-01.txt.result.json",
+        "bytes": 2071,
+        "sha256": "a8f23aeb366af182e46b653554d2975f7ee02cb65a6cd3b52fdab72a8162c91d"
+      },
+      "counts": {
+        "tests": 166,
+        "pass": 166,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "name": "controller-before-01",
+      "exitCode": 1,
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/claudeAdapterLifecycle.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeAdapterAtomicIO.test.ts"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/controller-before-01.txt",
+        "bytes": 11561,
+        "sha256": "8260c733f8ea303c3c3b7b58222449e6f5baa977e2791cad50e6f9819347e698"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/controller-before-01.txt.result.json",
+        "bytes": 667,
+        "sha256": "70964d41c3c997e3175ab65c342e981c336bcb77decb0847bc3e85875baa43af"
+      },
+      "counts": {
+        "tests": 7,
+        "pass": 0,
+        "fail": 7,
+        "skipped": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "name": "conversation-budget-before-01",
+      "exitCode": 1,
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/claudeConversationBudget.test.ts"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/conversation-budget-before-01.txt",
+        "bytes": 5948,
+        "sha256": "1186e3050f28c8874ee5fa76ec6344009418b8b6b779c66a38e778d109e997d0"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/conversation-budget-before-01.txt.result.json",
+        "bytes": 582,
+        "sha256": "d2eb258e2b02e58540a94b321756af11511377e088e8cdb51cff794767009492"
+      },
+      "counts": {
+        "tests": 5,
+        "pass": 2,
+        "fail": 3,
+        "skipped": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "name": "conversation-health-after-01",
+      "exitCode": 1,
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/claudeConversationBudget.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeHealthBudget.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeGatewaySchemas.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeMatcherBudget.test.ts",
+        "packages/vscode-extension/src/__tests__/clineGatewaySchemas.test.ts",
+        "packages/vscode-extension/src/__tests__/clineMatcherBudget.test.ts"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/conversation-health-after-01.txt",
+        "bytes": 7421,
+        "sha256": "f6697ebe062d3e27e1289cb92fe715c50f7ccbefe4c121edd96fe346559124f3"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/conversation-health-after-01.txt.result.json",
+        "bytes": 1050,
+        "sha256": "67766a0b9262787260f5756d1d1369862c3c6156803f08bcdb7631be688b07c1"
+      },
+      "counts": {
+        "tests": 22,
+        "pass": 20,
+        "fail": 2,
+        "skipped": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "name": "conversation-health-after-02",
+      "exitCode": 0,
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/claudeHealthBudget.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeConversationBudget.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeGatewaySchemas.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeMatcherBudget.test.ts",
+        "packages/vscode-extension/src/__tests__/clineGatewaySchemas.test.ts",
+        "packages/vscode-extension/src/__tests__/clineMatcherBudget.test.ts"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/conversation-health-after-02.txt",
+        "bytes": 5636,
+        "sha256": "8bafbcb607b013765ef88e5ffe16ae7e8729bdc7f078611d91151a760d196c8f"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/conversation-health-after-02.txt.result.json",
+        "bytes": 1050,
+        "sha256": "f539d1e3b046dafcb35971580729c8b21c6c43f4f5756a3e410581ad8c6b1cf0"
+      },
+      "counts": {
+        "tests": 22,
+        "pass": 22,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "name": "current-affected-launch-01",
+      "exitCode": 1,
+      "command": [
+        "powershell.exe",
+        "-NoLogo",
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/run-current-affected-01.ps1"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/current-affected-launch-01.txt",
+        "bytes": 2296,
+        "sha256": "349edf5466609e788d1ad93c26c7ae1686ef7f7c533c52d68cb928292a4e654f"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/current-affected-launch-01.txt.result.json",
+        "bytes": 634,
+        "sha256": "da305cb3d8f81662e57000e37b885ec69c2d5d355bb5b2e41bf795a7ae134a7a"
+      },
+      "counts": {}
+    },
+    {
+      "name": "current-affected-launch-02",
+      "exitCode": 0,
+      "command": [
+        "powershell.exe",
+        "-NoLogo",
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/run-current-affected-02.ps1"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/current-affected-launch-02.txt",
+        "bytes": 1294,
+        "sha256": "4b071ef4a6a5965cbc3e98fe5d87c990e0b0bf6ec86f7c25af165675598ee841"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/current-affected-launch-02.txt.result.json",
+        "bytes": 634,
+        "sha256": "6589aabc773d28b264c1da1bb8c10e0c17e744382f08981f42dcc0d7766247be"
+      },
+      "counts": {}
+    },
+    {
+      "name": "current-retained-launch-01",
+      "exitCode": 0,
+      "command": [
+        "powershell.exe",
+        "-NoLogo",
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/run-current-retained-01.ps1"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/current-retained-launch-01.txt",
+        "bytes": 2428,
+        "sha256": "407f37c4a24cf708d12e138f568c380be64dc2d02b8e4cbd838bed0010fd786a"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/current-retained-launch-01.txt.result.json",
+        "bytes": 634,
+        "sha256": "50ab0fe6bb6027f9d8b1df26e536df727d7bd9faecb0b2a3a118b46c2f7a0fd1"
+      },
+      "counts": {}
+    },
+    {
+      "name": "full-tests-01",
+      "exitCode": 0,
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "../vscode-extension/src/__tests__/**/*.test.ts"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/full-tests-01.txt",
+        "bytes": 643462,
+        "sha256": "747e084a706fa9d89d3fc78d017fb5c7caf7c66298ce4a04ead3d95667da2492"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/full-tests-01.txt.result.json",
+        "bytes": 605,
+        "sha256": "024f017cea5d844d9c2aadeaebec272e594edc1134073e8eeaac326b2e2ec04f"
+      },
+      "counts": {
+        "tests": 2716,
+        "pass": 2712,
+        "fail": 0,
+        "skipped": 4,
+        "cancelled": 0
+      }
+    },
+    {
+      "name": "full-tests-02",
+      "exitCode": 0,
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "../vscode-extension/src/__tests__/**/*.test.ts"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/full-tests-02.txt",
+        "bytes": 643797,
+        "sha256": "7dc22891eb497d3bc2597bb352919deb297c715dab8eec7681827b793a9ae4c6"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/full-tests-02.txt.result.json",
+        "bytes": 605,
+        "sha256": "22d12fd38bb64ed316cd217fb8e5a40643d63a19a0a96b2adc3a83d3b3a193d2"
+      },
+      "counts": {
+        "tests": 2717,
+        "pass": 2713,
+        "fail": 0,
+        "skipped": 4,
+        "cancelled": 0
+      }
+    },
+    {
+      "name": "gateway-after-01",
+      "exitCode": 1,
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/claudeGatewaySchemas.test.ts",
+        "packages/vscode-extension/src/__tests__/clineGatewaySchemas.test.ts",
+        "packages/vscode-extension/src/__tests__/gatewayPolicyBoundary.test.ts"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/gateway-after-01.txt",
+        "bytes": 8811,
+        "sha256": "eec114c1ba009fbc4b6af2adfb79bee723a44568e43f8cdf4e9a81f8720d9ee3"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/gateway-after-01.txt.result.json",
+        "bytes": 755,
+        "sha256": "181d5b009c59cd6ad67c551d9f65ac74aa9d6dd9c5581233ab3f350f13fdd6be"
+      },
+      "counts": {
+        "tests": 27,
+        "pass": 24,
+        "fail": 3,
+        "skipped": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "name": "gateway-before-01",
+      "exitCode": 1,
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/claudeGatewaySchemas.test.ts"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/gateway-before-01.txt",
+        "bytes": 5329,
+        "sha256": "b61123acbd80d2dcab1344e5d0b58b20269bae86322e855f89fbd27c0c667061"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/gateway-before-01.txt.result.json",
+        "bytes": 566,
+        "sha256": "f7e6ba92bdcaad6f8fe139567b830953c675229200c2221d7198f01a2d209deb"
+      },
+      "counts": {
+        "tests": 5,
+        "pass": 1,
+        "fail": 4,
+        "skipped": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "name": "gateway-matcher-after-02",
+      "exitCode": 0,
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/claudeMatcherBudget.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeGatewaySchemas.test.ts",
+        "packages/vscode-extension/src/__tests__/clineMatcherBudget.test.ts",
+        "packages/vscode-extension/src/__tests__/clineGatewaySchemas.test.ts",
+        "packages/vscode-extension/src/__tests__/gatewayPolicyBoundary.test.ts"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/gateway-matcher-after-02.txt",
+        "bytes": 7378,
+        "sha256": "295243cf264a02a59176c23172782b270e64d46371a8347e99220738706920de"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/gateway-matcher-after-02.txt.result.json",
+        "bytes": 950,
+        "sha256": "5d5182fc4317a52752ac7491baef8f08ac4072a14711b8289e76e2e8977daf6a"
+      },
+      "counts": {
+        "tests": 33,
+        "pass": 33,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "name": "health-budget-before-01",
+      "exitCode": 1,
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/claudeHealthBudget.test.ts"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/health-budget-before-01.txt",
+        "bytes": 2375,
+        "sha256": "055f986c4df5acdf3e7dfe6421c9e5e4f8870f5e90feea5b98da43bc6725a3d4"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/health-budget-before-01.txt.result.json",
+        "bytes": 570,
+        "sha256": "b34139f3c192e12a3e69e4af4efeb60ab90cabc721ea231e61d795b5d61b8caa"
+      },
+      "counts": {
+        "tests": 2,
+        "pass": 0,
+        "fail": 2,
+        "skipped": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "name": "health-budget-reference-before-02",
+      "exitCode": 1,
+      "command": [
+        "node",
+        "--test",
+        "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/health-reference-before-01.cjs"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/health-budget-reference-before-02.txt",
+        "bytes": 2237,
+        "sha256": "837f026ce0c481dfd1582bf671bd527958405254495a411ae09295f564258cb1"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/health-budget-reference-before-02.txt.result.json",
+        "bytes": 488,
+        "sha256": "008887c26567c99f0ee2b0ecacacc478645341661f877f2fc85bfc2b32b73790"
+      },
+      "counts": {
+        "tests": 2,
+        "pass": 0,
+        "fail": 2,
+        "skipped": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "name": "hook-bridge-after-01",
+      "exitCode": 1,
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/claudeHookProtocol.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeHttpBridge.test.ts"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/hook-bridge-after-01.txt",
+        "bytes": 2048,
+        "sha256": "5ad49c8a62a0b66ba3efd760f4bfc6d97d9c1b0b50cd41f40b51d58c34a76147"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/hook-bridge-after-01.txt.result.json",
+        "bytes": 658,
+        "sha256": "70689f4cba7c857f3889ff4c7b08e2e59bf623223fa3bcad6d8644af898426fc"
+      },
+      "counts": {
+        "tests": 2,
+        "pass": 0,
+        "fail": 2,
+        "skipped": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "name": "hook-bridge-after-02",
+      "exitCode": 1,
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/claudeHookProtocol.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeHttpBridge.test.ts"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/hook-bridge-after-02.txt",
+        "bytes": 8521,
+        "sha256": "459872fde037781ad7cce4ba961995bd0570265d3dd6c08dca98d09da854d521"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/hook-bridge-after-02.txt.result.json",
+        "bytes": 658,
+        "sha256": "df4cd8fe51bbe98927f1eec0d3678729b9fc2bc03c1fb4a0910a1eff242c3144"
+      },
+      "counts": {
+        "tests": 31,
+        "pass": 30,
+        "fail": 1,
+        "skipped": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "name": "hook-bridge-before-01",
+      "exitCode": 1,
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/claudeHookProtocol.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeHttpBridge.test.ts"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/hook-bridge-before-01.txt",
+        "bytes": 2050,
+        "sha256": "448796b53513eb07033071b36435508810ee3e13d103178d8f059c35aee76c54"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/hook-bridge-before-01.txt.result.json",
+        "bytes": 659,
+        "sha256": "caea0e0bc5c31291e18f005dff3a6dce706561469e54401549d983d5b95b9695"
+      },
+      "counts": {
+        "tests": 2,
+        "pass": 0,
+        "fail": 2,
+        "skipped": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "name": "live-pin-after-01",
+      "exitCode": 0,
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/claudeAdapterLifecycle.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeAdapterPolicy.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeAdapterAtomicIO.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeHookProtocol.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeHttpBridge.test.ts"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/live-pin-after-01.txt",
+        "bytes": 13967,
+        "sha256": "d0557fe6cd8640ab4e514274816cc975745872d9b5d1a9d734ea6b124718ee6a"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/live-pin-after-01.txt.result.json",
+        "bytes": 942,
+        "sha256": "36382d71c0117c81aa331cd4f3d124a689976a154f885379c2b7f03f28e37626"
+      },
+      "counts": {
+        "tests": 58,
+        "pass": 58,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "name": "live-pin-before-01",
+      "exitCode": 1,
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/claudeAdapterLifecycle.test.ts"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/live-pin-before-01.txt",
+        "bytes": 2751,
+        "sha256": "fae3b547e1492525b6a5904f4a7fd66e6ec30b263066f5e3f2c0d045342ec04b"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/live-pin-before-01.txt.result.json",
+        "bytes": 569,
+        "sha256": "e373de2be47d790b4248f6bcf2fff2f00c1e459f98f9a403b319fb45260ed5ad"
+      },
+      "counts": {
+        "tests": 8,
+        "pass": 7,
+        "fail": 1,
+        "skipped": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "name": "matcher-before-01",
+      "exitCode": 1,
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "--test",
+        "packages/vscode-extension/src/__tests__/claudeMatcherBudget.test.ts"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/matcher-before-01.txt",
+        "bytes": 2808,
+        "sha256": "c815d6efd77faabfc09f2b96e71aa24fef87ddf41e3999f9d805e53a98da991e"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/matcher-before-01.txt.result.json",
+        "bytes": 518,
+        "sha256": "28d81d925f16c227d60a64f8d8ac4153c5e1eaebbedea6ba06e8fc6f4f7f2adc"
+      },
+      "counts": {
+        "tests": 3,
+        "pass": 1,
+        "fail": 2,
+        "skipped": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "name": "matcher-diagnostic-launch-01",
+      "exitCode": 0,
+      "command": [
+        "node",
+        "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/diagnose-matcher-01.cjs"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/matcher-diagnostic-launch-01.txt",
+        "bytes": 628,
+        "sha256": "16751fe3e537de3664c2385d07624890515ef688e246fbbef0ad6fd959385a8a"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/matcher-diagnostic-launch-01.txt.result.json",
+        "bytes": 443,
+        "sha256": "1261a189bebe8fe9016525379919cfe95efd10e4d5d6c6483260545acd61de0e"
+      },
+      "counts": {}
+    },
+    {
+      "name": "native-effort-after-01",
+      "exitCode": 0,
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/claudeHookProtocol.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeHttpBridge.test.ts"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/native-effort-after-01.txt",
+        "bytes": 7999,
+        "sha256": "97a20b6d8991fdfa093b923a4ed37cd0df5d6dafc2ece1d108901783cc9b1000"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/native-effort-after-01.txt.result.json",
+        "bytes": 660,
+        "sha256": "f4d53d5417f9b10f257373929f643417e10789252dc6b8764defecab95f20aeb"
+      },
+      "counts": {
+        "tests": 32,
+        "pass": 32,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "name": "native-effort-before-01",
+      "exitCode": 1,
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/claudeHookProtocol.test.ts"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/native-effort-before-01.txt",
+        "bytes": 7441,
+        "sha256": "784d8dc3cb7d60d41161c811a2f612de18a6f611f0f6d842d2699bc4418dbe5c"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/native-effort-before-01.txt.result.json",
+        "bytes": 570,
+        "sha256": "f43303e07f1a666dce3dec131a9644528f0c6eb5dd293d1d1c96c6a76cc13b20"
+      },
+      "counts": {
+        "tests": 26,
+        "pass": 25,
+        "fail": 1,
+        "skipped": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "name": "owner-wire-after-01",
+      "exitCode": 0,
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/claudeGatewayManager.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeGatewayWire.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeLegacyRoute.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeGatewaySchemas.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeMatcherBudget.test.ts",
+        "packages/vscode-extension/src/__tests__/gatewayPolicyManager.test.ts",
+        "packages/vscode-extension/src/__tests__/ownedBrokerManager.test.ts",
+        "packages/vscode-extension/src/__tests__/mcp-canary-boundary.test.ts",
+        "packages/vscode-extension/src/__tests__/gatewayPolicyWire.test.ts",
+        "packages/vscode-extension/src/__tests__/clineGatewaySchemas.test.ts",
+        "packages/vscode-extension/src/__tests__/clineMatcherBudget.test.ts"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/owner-wire-after-01.txt",
+        "bytes": 23270,
+        "sha256": "506d16755722ab9d1469eaa135a444fb2c4b80d6212a0fca7421ff8692e3adfd"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/owner-wire-after-01.txt.result.json",
+        "bytes": 1502,
+        "sha256": "6412a932185dbd702b49ca2d63ed51b78305b7b35cf20a8eb182a7e8155853ad"
+      },
+      "counts": {
+        "tests": 106,
+        "pass": 106,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "name": "owner-wire-before-01",
+      "exitCode": 1,
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/claudeGatewayManager.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeGatewayWire.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeLegacyRoute.test.ts"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/owner-wire-before-01.txt",
+        "bytes": 10232,
+        "sha256": "069d4beec795aee833c40b3aef4b6f82d71a63910ad33361705b190efd5524be"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/owner-wire-before-01.txt.result.json",
+        "bytes": 753,
+        "sha256": "2846f650e452442f79bb0f1e13c95c94751ec6d29831ae7b6507103a60ae2122"
+      },
+      "counts": {
+        "tests": 12,
+        "pass": 2,
+        "fail": 10,
+        "skipped": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "name": "package-01",
+      "exitCode": 0,
+      "command": [
+        "node",
+        "packages/soterai-lite/scripts/package.cjs",
+        "soterai-lite-0.7.0-f19-20261019-attempt01.vsix"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/package-01.txt",
+        "bytes": 1776,
+        "sha256": "00de9a3c357d6049c5cc03e76d28e40a8e4e93c338e5423928ffe29dba3347bf"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/package-01.txt.result.json",
+        "bytes": 525,
+        "sha256": "1c01c7e7bdb6db9a0b7b643d37124dacf3dea43a6f94ceb8ffbae1d2c41d643c"
+      },
+      "counts": {}
+    },
+    {
+      "name": "package-02",
+      "exitCode": 0,
+      "command": [
+        "node",
+        "packages/soterai-lite/scripts/package.cjs",
+        "soterai-lite-0.7.0-f19-20261019-attempt02.vsix"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/package-02.txt",
+        "bytes": 1776,
+        "sha256": "bedce9313789251e3c0030c698f380c3db8827dcbc5f0504d8f70db026fd509a"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/package-02.txt.result.json",
+        "bytes": 525,
+        "sha256": "b3380aa3e348793c82683b02e79b5088ef17194ac6823896a754e3c4e30f8998"
+      },
+      "counts": {}
+    },
+    {
+      "name": "policy-before-hook-after-01",
+      "exitCode": 1,
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/claudeAdapterPolicy.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeHookProtocol.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeHttpBridge.test.ts"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/policy-before-hook-after-01.txt",
+        "bytes": 32196,
+        "sha256": "e16a4477bdbfde289e511f0abd3e030896b7e02fe52a986869c33fd5a325c73d"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/policy-before-hook-after-01.txt.result.json",
+        "bytes": 759,
+        "sha256": "a95a60130e14040de66d5cee0af753e352289ec1347b8193cb1e766d4754ef73"
+      },
+      "counts": {
+        "tests": 46,
+        "pass": 31,
+        "fail": 15,
+        "skipped": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "name": "policy-hook-bridge-after-01",
+      "exitCode": 0,
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/claudeAdapterPolicy.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeHookProtocol.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeHttpBridge.test.ts"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/policy-hook-bridge-after-01.txt",
+        "bytes": 11150,
+        "sha256": "58cb389f1ceb558808a091313de2034ebeff941cc34e668372df66239eee48c8"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/policy-hook-bridge-after-01.txt.result.json",
+        "bytes": 759,
+        "sha256": "2e0c0da135cb470bcf2a501e5a301399f37ee622884ba5ae821009ca8b72d429"
+      },
+      "counts": {
+        "tests": 46,
+        "pass": 46,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "name": "product-matrix-launch-01",
+      "exitCode": 1,
+      "command": [
+        "powershell.exe",
+        "-NoLogo",
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/run-product-matrix-01.ps1"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/product-matrix-launch-01.txt",
+        "bytes": 7631,
+        "sha256": "6b5016d24cac18e4713a5f0733b20c85c8b7a3b49fee7fc17c66993e509f43d4"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/product-matrix-launch-01.txt.result.json",
+        "bytes": 630,
+        "sha256": "8375bea19bf12b417618564f695846a93c610d9efd8618659a164e758d8f8227"
+      },
+      "counts": {}
+    },
+    {
+      "name": "product-matrix-launch-02",
+      "exitCode": 1,
+      "command": [
+        "powershell.exe",
+        "-NoLogo",
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/run-product-matrix-02.ps1"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/product-matrix-launch-02.txt",
+        "bytes": 2118,
+        "sha256": "e6d258c4a84af5bc145207290b0b963e7141be8ee8ef18449a76ed066e03a6f7"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/product-matrix-launch-02.txt.result.json",
+        "bytes": 630,
+        "sha256": "ffbf0629e77e8d5e35919338a42bc67e1171be8fd16eb48c04cb25a85c9522e6"
+      },
+      "counts": {}
+    },
+    {
+      "name": "product-matrix-launch-03",
+      "exitCode": 1,
+      "command": [
+        "powershell.exe",
+        "-NoLogo",
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/run-product-matrix-03.ps1"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/product-matrix-launch-03.txt",
+        "bytes": 7143,
+        "sha256": "ce46356704ee08700370d41bc5dc52bb2170e0e8ceade491cbae7c4c070f463e"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/product-matrix-launch-03.txt.result.json",
+        "bytes": 630,
+        "sha256": "d657f46d61166cff187f9fe0eb71a3587d4a02f3b46f86dc0ae2306f02d8aef6"
+      },
+      "counts": {}
+    },
+    {
+      "name": "readiness-01",
+      "exitCode": 0,
+      "command": [
+        "node",
+        "packages/vscode-extension/scripts/generate-readiness.mjs",
+        "--check"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/readiness-01.txt",
+        "bytes": 29,
+        "sha256": "ef4aeafa2fe246d4c0e652ca0eb17afaf2df5fff75a6f54040c505bcd5de153f"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/readiness-01.txt.result.json",
+        "bytes": 503,
+        "sha256": "d9a90a4e703a787269fdc273e8e493858caeeecc97c1096f56f30c761d3af8b6"
+      },
+      "counts": {}
+    },
+    {
+      "name": "readiness-02",
+      "exitCode": 0,
+      "command": [
+        "node",
+        "packages/vscode-extension/scripts/generate-readiness.mjs",
+        "--check"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/readiness-02.txt",
+        "bytes": 29,
+        "sha256": "ef4aeafa2fe246d4c0e652ca0eb17afaf2df5fff75a6f54040c505bcd5de153f"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/readiness-02.txt.result.json",
+        "bytes": 503,
+        "sha256": "5c109eb2076035c0159808ee0cf90deacf790d05fb12943107d23e6030e06030"
+      },
+      "counts": {}
+    },
+    {
+      "name": "readme-readiness-01",
+      "exitCode": 1,
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/readme-accuracy.test.ts",
+        "packages/vscode-extension/src/__tests__/readiness-doc.test.ts"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/readme-readiness-01.txt",
+        "bytes": 5319,
+        "sha256": "fd4f462274defdb3b68a169c7c8bb4055f65cc57ffc787ba8adc3458ee4bbbc9"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/readme-readiness-01.txt.result.json",
+        "bytes": 716,
+        "sha256": "5efd2e440cea4362a654478665697c5c45bfd2c2490650c372cd521ecb5d4293"
+      },
+      "counts": {
+        "tests": 16,
+        "pass": 15,
+        "fail": 1,
+        "skipped": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "name": "readme-readiness-02",
+      "exitCode": 0,
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/readme-accuracy.test.ts",
+        "packages/vscode-extension/src/__tests__/readiness-doc.test.ts"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/readme-readiness-02.txt",
+        "bytes": 4039,
+        "sha256": "271a8d6f63e919fa566f6136a8494a193e8523a311378adaa2a4d5ef9f1f4e27"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/readme-readiness-02.txt.result.json",
+        "bytes": 716,
+        "sha256": "8dc398bceb75804bdc7f6fdb75b72ea0ca20239399c4ac56dcf16e778deee3f3"
+      },
+      "counts": {
+        "tests": 16,
+        "pass": 16,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "name": "readme-readiness-03",
+      "exitCode": 0,
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/readme-accuracy.test.ts",
+        "packages/vscode-extension/src/__tests__/readiness-doc.test.ts"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/readme-readiness-03.txt",
+        "bytes": 4042,
+        "sha256": "c7cd2a843cb09fc2c0c6e9a173eb47ddc61037ff9de6595c6926ea87b7312e0a"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/readme-readiness-03.txt.result.json",
+        "bytes": 716,
+        "sha256": "4371a79f22a2fbea2d361dc950112a2a6f4974491e76ace7b9ab9aa72dfa1494"
+      },
+      "counts": {
+        "tests": 16,
+        "pass": 16,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "name": "registration-before-01",
+      "exitCode": 1,
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/claudeAdapterRegistration.test.ts"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/registration-before-01.txt",
+        "bytes": 51024,
+        "sha256": "14922f60fad0af2c701c44fb36b28d76bf7395340a0b1c4c4bf94ade950abe8f"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/registration-before-01.txt.result.json",
+        "bytes": 576,
+        "sha256": "1ae6f9955d1d1384fd96e1f007e1cf570a9718b2968d8e6e0463f1dfda690964"
+      },
+      "counts": {
+        "tests": 4,
+        "pass": 2,
+        "fail": 2,
+        "skipped": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "name": "retained-native-01",
+      "exitCode": 0,
+      "command": [
+        "powershell.exe",
+        "-NoLogo",
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261019-f19-claude-89c1e602\\run-retained-native-01.ps1",
+        "-CodePath",
+        "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe",
+        "-HostTestsPath",
+        "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261019-f19-claude-89c1e602\\prebuilt-native-hosts-01\\lite-broker-host.js",
+        "-ExtensionRoot",
+        "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261019-f19-claude-89c1e602\\vsix-extracted-01\\extension",
+        "-VsixPath",
+        "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\soterai-lite\\soterai-lite-0.7.0-f19-20261019-attempt01.vsix",
+        "-ExpectedVsixSha256",
+        "ebbb4a8080ba3ceb8e52b36c5bc6c05602c1a1237ffdc2cb403e9514c67af83c",
+        "-ExpectedBundleSha256",
+        "eca2d74b331eaf44e887ecfee67cba56a3849ba56d5dc2e42d798c257f330c87"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/retained-native-01.txt",
+        "bytes": 201,
+        "sha256": "8eb5407166511924d293eb215607df7abbaf422c75dfe24b77b5a2cee71d7c96"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/retained-native-01.txt.result.json",
+        "bytes": 1809,
+        "sha256": "3ed3985da348817006202ce933e434d2910f33bcdd1758b6ae32b755ceefe5c9"
+      },
+      "counts": {}
+    },
+    {
+      "name": "retained-native-build-01",
+      "exitCode": 0,
+      "command": [
+        "node",
+        "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261019-f19-claude-89c1e602\\build-native-hosts-01.cjs",
+        "prebuilt-native-hosts-01"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/retained-native-build-01.txt",
+        "bytes": 235,
+        "sha256": "68e8df98e703c902acb30ac4ddbeaa24186347878d83618f017b5948ac6248bb"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/retained-native-build-01.txt.result.json",
+        "bytes": 622,
+        "sha256": "e01e412463f5f2fac8900e2852c50ea3c2a72ec55b7a02fb4dbdab741cf0563f"
+      },
+      "counts": {}
+    },
+    {
+      "name": "suites-launch-01",
+      "exitCode": 0,
+      "command": [
+        "powershell.exe",
+        "-NoLogo",
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/run-suites-01.ps1"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/suites-launch-01.txt",
+        "bytes": 98,
+        "sha256": "babe2a406f1e861b4ef7b0ab544e12cdec0ccfb7e4e2319c91204487b99bfa89"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/suites-launch-01.txt.result.json",
+        "bytes": 614,
+        "sha256": "aff4be1b4aafb871446f5a8ddf711b6f86c877cde0c720533f99fd233a18f97e"
+      },
+      "counts": {}
+    },
+    {
+      "name": "suites-launch-02",
+      "exitCode": 0,
+      "command": [
+        "powershell.exe",
+        "-NoLogo",
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/run-suites-02.ps1"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/suites-launch-02.txt",
+        "bytes": 98,
+        "sha256": "0286b1204bbde57c80f07adf0865aa95550d2e81cde2fea19651ae242f880374"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/suites-launch-02.txt.result.json",
+        "bytes": 614,
+        "sha256": "db2a1c06e2757b0cf90342f1f091ca2f854844b3cf4d277ea38bd2d360f6d4eb"
+      },
+      "counts": {}
+    },
+    {
+      "name": "transaction-review-after-01",
+      "exitCode": 0,
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/claudeAdapterPolicy.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeAdapterLifecycle.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeAdapterAtomicIO.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeHookProtocol.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeHttpBridge.test.ts"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/transaction-review-after-01.txt",
+        "bytes": 13486,
+        "sha256": "747091086fa744aceb01933033945a5ecd7d8247122f76ecdc1e2bd9a78aeba1"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/transaction-review-after-01.txt.result.json",
+        "bytes": 952,
+        "sha256": "5094ef8f8b31e5a824c74a10d8bf89ea7558cfd8a16c2ec85a1a4527cf488823"
+      },
+      "counts": {
+        "tests": 56,
+        "pass": 56,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "name": "transaction-review-before-01",
+      "exitCode": 1,
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/claudeAdapterPolicy.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeAdapterLifecycle.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeAdapterAtomicIO.test.ts"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/transaction-review-before-01.txt",
+        "bytes": 11943,
+        "sha256": "cfba80d8d34b8f818e65300c76b64f84619697ce0b5d96dbc6f60f88cb3be519"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/transaction-review-before-01.txt.result.json",
+        "bytes": 769,
+        "sha256": "2f5fb8eb4483b1e79ee1a2fa58e3daa804982e1722799d6daca5fa9405361834"
+      },
+      "counts": {
+        "tests": 25,
+        "pass": 22,
+        "fail": 3,
+        "skipped": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "name": "typecheck-01",
+      "exitCode": 2,
+      "command": [
+        "node",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "-p",
+        "packages/vscode-extension/tsconfig.json"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/typecheck-01.txt",
+        "bytes": 8980,
+        "sha256": "8ef26585b4e99e9600f5c5b7faf30d922138d18c1d77b7e681a0ec4aa1edd1e3"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/typecheck-01.txt.result.json",
+        "bytes": 509,
+        "sha256": "3d9f4a6d02a4c3575c16e422cf2d539fc562cca2daa2779d810a5507dc00cf62"
+      },
+      "counts": {}
+    },
+    {
+      "name": "typecheck-02",
+      "exitCode": 0,
+      "command": [
+        "node",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "-p",
+        "packages/vscode-extension/tsconfig.json"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/typecheck-02.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/typecheck-02.txt.result.json",
+        "bytes": 509,
+        "sha256": "cfb54884b81380046cc3898f6be23ad56f56791e34ba2ee98dd0628970019d73"
+      },
+      "counts": {}
+    },
+    {
+      "name": "typecheck-03",
+      "exitCode": 0,
+      "command": [
+        "node",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "-p",
+        "packages/vscode-extension/tsconfig.json"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/typecheck-03.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/typecheck-03.txt.result.json",
+        "bytes": 509,
+        "sha256": "03effb733bfa54ae8c30e951027f2810afbb63567182d319221d4449775c657c"
+      },
+      "counts": {}
+    },
+    {
+      "name": "typecheck-04",
+      "exitCode": 0,
+      "command": [
+        "node",
+        "node_modules/typescript/bin/tsc",
+        "-p",
+        "packages/vscode-extension/tsconfig.json",
+        "--noEmit"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/typecheck-04.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/typecheck-04.txt.result.json",
+        "bytes": 574,
+        "sha256": "fce2bccf85746772d6b443a8c05f85b2039638da16ee1169fe5cc8c8fbb7f4f6"
+      },
+      "counts": {}
+    },
+    {
+      "name": "typecheck-05",
+      "exitCode": 0,
+      "command": [
+        "node",
+        "node_modules/typescript/bin/tsc",
+        "-p",
+        "packages/vscode-extension/tsconfig.json",
+        "--noEmit"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/typecheck-05.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/typecheck-05.txt.result.json",
+        "bytes": 574,
+        "sha256": "42df5d8371986f5924c8b460b29105b6c3a839fb166718505aff050a6a14dc4d"
+      },
+      "counts": {}
+    },
+    {
+      "name": "typecheck-06",
+      "exitCode": 0,
+      "command": [
+        "node",
+        "node_modules/typescript/bin/tsc",
+        "-p",
+        "packages/vscode-extension/tsconfig.json",
+        "--noEmit"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/typecheck-06.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/typecheck-06.txt.result.json",
+        "bytes": 574,
+        "sha256": "3c5d0cb484850bea1ae1e4be5526e14ac061148eca7637c605d341279f7765d7"
+      },
+      "counts": {}
+    },
+    {
+      "name": "vendor-feasibility-launch-01",
+      "exitCode": 1,
+      "command": [
+        "node",
+        "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/probe-vendor-01.cjs"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/vendor-feasibility-launch-01.txt",
+        "bytes": 694,
+        "sha256": "f2e05e62ac7adbde803f3cbfa304c0ba61ac9839addd7864ad823e4951d1a95e"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/vendor-feasibility-launch-01.txt.result.json",
+        "bytes": 439,
+        "sha256": "32ee57edeaac7faa06347df1998ce0489ebf054ddd2fbcbc4830193cfd3fc857"
+      },
+      "counts": {}
+    },
+    {
+      "name": "vendor-feasibility-launch-02",
+      "exitCode": 0,
+      "command": [
+        "node",
+        "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/probe-vendor-02.cjs"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/vendor-feasibility-launch-02.txt",
+        "bytes": 695,
+        "sha256": "f2bd6444af072a202a82c37281fb5ef56052c641830995c339cf6eec2b5c7c7a"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/vendor-feasibility-launch-02.txt.result.json",
+        "bytes": 439,
+        "sha256": "e85196cc7eaa135391037a2e57c1aada961ffa56feed2cf1dfbf5085bea358dc"
+      },
+      "counts": {}
+    },
+    {
+      "name": "vendor-feasibility-launch-03",
+      "exitCode": 1,
+      "command": [
+        "node",
+        "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/probe-vendor-03.cjs"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/vendor-feasibility-launch-03.txt",
+        "bytes": 694,
+        "sha256": "327f17e1b5ffe6174c427541a40e6a98df13b1ef6858df87aae8434dc3786038"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/vendor-feasibility-launch-03.txt.result.json",
+        "bytes": 439,
+        "sha256": "2c9c8e90d8e58cba6787c0e62e277f9f6fb29ad1521af9c6c359f365f9ff4045"
+      },
+      "counts": {}
+    },
+    {
+      "name": "vendor-feasibility-launch-04",
+      "exitCode": 0,
+      "command": [
+        "node",
+        "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/probe-vendor-04.cjs"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/vendor-feasibility-launch-04.txt",
+        "bytes": 695,
+        "sha256": "64b18cbbb7d61f6aaabfe7dcdcdacbd71c7e642aea5363dbbcb17c9bfbd6d69f"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/vendor-feasibility-launch-04.txt.result.json",
+        "bytes": 439,
+        "sha256": "177453f53524e4169669d67083c1f7b5cb5c0a2aee789731a9c3737fd94a7a19"
+      },
+      "counts": {}
+    },
+    {
+      "name": "vendor-feasibility-launch-05",
+      "exitCode": 0,
+      "command": [
+        "node",
+        "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/probe-vendor-05.cjs"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/vendor-feasibility-launch-05.txt",
+        "bytes": 254,
+        "sha256": "7f519c2e7c0df2864bfdeb0b48d5b6649bf3c03beab61379947223f1330913be"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/vendor-feasibility-launch-05.txt.result.json",
+        "bytes": 439,
+        "sha256": "47bc21ad071bcc09c003f995d80356cff7933ef4943de78cc2d40ecd6bed3153"
+      },
+      "counts": {}
+    },
+    {
+      "name": "vendor-feasibility-launch-06",
+      "exitCode": 0,
+      "command": [
+        "node",
+        "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/probe-vendor-06.cjs"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/vendor-feasibility-launch-06.txt",
+        "bytes": 263,
+        "sha256": "bee16d72a731ab089e03a4f863ed3ba5e8209fa8e3d2d68b9c27cf99e9d615b6"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/vendor-feasibility-launch-06.txt.result.json",
+        "bytes": 439,
+        "sha256": "d4a7d2baa89d25f8e18e8e6e4b24b347a4545a8d0d9bf17bc9d82b104119a90a"
+      },
+      "counts": {}
+    },
+    {
+      "name": "vendor-feasibility-launch-07",
+      "exitCode": 0,
+      "command": [
+        "node",
+        "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/probe-vendor-07.cjs"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/vendor-feasibility-launch-07.txt",
+        "bytes": 248,
+        "sha256": "2e6b37a440984f313717e54d324b79470ff89f00508cdae0ff6eec5b161f24ff"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/vendor-feasibility-launch-07.txt.result.json",
+        "bytes": 439,
+        "sha256": "94a1610a1cadae475b1b489bc796d14ddf5f89b83e87a1d667d4333d24370f0f"
+      },
+      "counts": {}
+    },
+    {
+      "name": "vendor-feasibility-launch-08",
+      "exitCode": 0,
+      "command": [
+        "node",
+        "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/probe-vendor-08.cjs"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/vendor-feasibility-launch-08.txt",
+        "bytes": 698,
+        "sha256": "7250d5a87658361e089eb7d2cc56c4fb1da71379645cd8f6d7574faf5898389a"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/vendor-feasibility-launch-08.txt.result.json",
+        "bytes": 439,
+        "sha256": "8fb2a7cb6c22421a85626c3ed124d4d85432ec4fb15bd12b5f5b13a84754648b"
+      },
+      "counts": {}
+    },
+    {
+      "name": "vendor-feasibility-launch-09",
+      "exitCode": 0,
+      "command": [
+        "node",
+        "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/probe-vendor-09.cjs"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/vendor-feasibility-launch-09.txt",
+        "bytes": 250,
+        "sha256": "3de796a06fd43863780bc9ccc619a360576bbb3e772bdf3b41d6579da9c459b2"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/vendor-feasibility-launch-09.txt.result.json",
+        "bytes": 439,
+        "sha256": "ecbdb24e7f2398a0820fcdf298f0bb864f6e5bd169f8b66e800c461fb167bc25"
+      },
+      "counts": {}
+    },
+    {
+      "name": "vendor-feasibility-launch-10",
+      "exitCode": 0,
+      "command": [
+        "node",
+        "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/probe-vendor-10.cjs"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/vendor-feasibility-launch-10.txt",
+        "bytes": 256,
+        "sha256": "5ea073f0a4995638a0cf8fa4a9adf78c2114780c02dfb4a27d38c4417fe6e711"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/vendor-feasibility-launch-10.txt.result.json",
+        "bytes": 439,
+        "sha256": "243eb7c3303148f43afbaafd0a081101a80e258727b2e4718aeb9d29b4d3a1df"
+      },
+      "counts": {}
+    }
+  ],
+  "matrices": [
+    {
+      "run": "f19-product-20261019T100158Z-ce151953",
+      "status": "INCOMPLETE_PRODUCT_MATRIX",
+      "checks": 22,
+      "pass": 8,
+      "fail": 14,
+      "record": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/f19-product-20261019T100158Z-ce151953/product-result.json",
+        "bytes": 38744,
+        "sha256": "5c97e64dd4de8a216f2638f64ef750daa83f432476bd43422deed2faf1ef7de1"
+      },
+      "privateOriginalLeak": false,
+      "nativeClosed": true
+    },
+    {
+      "run": "f19-product-20261019T101343Z-e53f8cdf",
+      "status": "INCOMPLETE_PRODUCT_MATRIX",
+      "checks": 4,
+      "pass": 3,
+      "fail": 1,
+      "record": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/f19-product-20261019T101343Z-e53f8cdf/product-result.json",
+        "bytes": 10786,
+        "sha256": "f7987a813e9644b889c3f6c0c38cec74b89b28270ed4b8063d4f3c9fed666e97"
+      },
+      "privateOriginalLeak": false,
+      "nativeClosed": true
+    },
+    {
+      "run": "f19-product-20261019T101911Z-56c7e874",
+      "status": "INCOMPLETE_PRODUCT_MATRIX",
+      "checks": 22,
+      "pass": 10,
+      "fail": 12,
+      "record": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/f19-product-20261019T101911Z-56c7e874/product-result.json",
+        "bytes": 62148,
+        "sha256": "9ceb672bc2c1a1ab22d995b7e0d7b73ff388b25a0b23e2c5b89a7bf1c5ef6a9f"
+      },
+      "privateOriginalLeak": false,
+      "nativeClosed": true
+    }
+  ],
+  "artifacts": [
+    {
+      "number": "01",
+      "status": "HISTORICAL_AFTER_CURRENT_SOURCE_CHANGES",
+      "inspection": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/vsix-inspection-01.json",
+        "bytes": 350379,
+        "sha256": "a05da182bb960fac2f39a62d85bf65d764c3f06d1dedf8fad1f8f071c486e0d2"
+      },
+      "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\soterai-lite\\soterai-lite-0.7.0-f19-20261019-attempt01.vsix",
+      "sha256": "ebbb4a8080ba3ceb8e52b36c5bc6c05602c1a1237ffdc2cb403e9514c67af83c",
+      "bytes": 1453807
+    },
+    {
+      "number": "02",
+      "status": "HISTORICAL_AFTER_CURRENT_SOURCE_CHANGES",
+      "inspection": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/vsix-inspection-02.json",
+        "bytes": 350379,
+        "sha256": "849df8b0fb5ceee12d92ed627f60cb401e83280914b781c0dfd1cf72a1fc1e06"
+      },
+      "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\soterai-lite\\soterai-lite-0.7.0-f19-20261019-attempt02.vsix",
+      "sha256": "ceab36d4a0047362ab68d758ee78257ddb05eb7ac90663f9f65e014fd21ed89c",
+      "bytes": 1453836
+    }
+  ],
+  "remaining": [
+    "Current candidate03 build/inspection and suites03 pending",
+    "Actual current product CLI22 matrix",
+    "Current exact artifact retained106+functional10/security17",
+    "LOW review/acceptance/ledger/scoped commit/all indexed Git+current byte proof",
+    "Separate F20 transition before later work"
+  ],
+  "corrections": [
+    "Health-budget-before01 and conversation-health-after01 failed before HTTP route checks because synthetic tokens were below32 characters; NOT_EXECUTED route behavior. Corrected frozen02 and explicit before-variant source COPY reproduce429 vs200/403; production source was not reverted. Current conversation-health-after02 all22PASS.",
+    "Matrix01 registered-prompt8th PASS is not isolated egress coverage: preceding routes were already unavailable. Matrix03 adds adjacent public and successful prompt-hook controls; no matrix accepted.",
+    "Prior full01/full02 and retained/affected results predate latest live-pin, literal-count and rate-path fixes; not final current verification."
+  ],
+  "limits": [
+    "Current owner badge Uncovered",
+    "Frozen44 UNVERIFIED",
+    "F11 absent/unimplemented NOT_TESTED NOT_COVERED",
+    "Nine unmanaged baseline leaks retained",
+    "No rating",
+    "Original L6 HUMAN-ACTIONS then STOP",
+    "Synthetic only; no login/download/push/publish/tag/process signals/normal profile or OS changes",
+    "20GB threshold waived"
+  ],
+  "prepared": "prepare-candidate-03.cjs not acceptance"
+}

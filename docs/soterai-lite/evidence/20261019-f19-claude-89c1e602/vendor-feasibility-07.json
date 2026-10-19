@@ -1,0 +1,198 @@
+{
+  "status": "PASS_SCOPED_HTTP_MCP_USER_PROFILE",
+  "version": "2.1.301",
+  "root": "D:\\SoterAI-Lite-test-profiles\\f19-vendor-20261019T074806Z-05267610",
+  "checks": [
+    {
+      "phase": "mcp-public",
+      "status": "PASS",
+      "child": {
+        "phase": "mcp-public",
+        "closed": true,
+        "stdoutEOF": true,
+        "stderrEOF": true,
+        "exitCode": 0,
+        "signal": null,
+        "stdoutSha256": "25bda46f5975627fbdf1463d98bddb944049be54bd28d831919e27faf45d1df0",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutBytes": 6120,
+        "stderrBytes": 0,
+        "rawPrivateSeen": false,
+        "authUnavailable": false,
+        "resultComplete": true,
+        "status": "CLOSED"
+      },
+      "modelRequests": 2,
+      "hookCount": 1
+    }
+  ],
+  "requests": [
+    {
+      "phase": "mcp-public",
+      "route": "/v1/messages?beta=true",
+      "bytes": 90015,
+      "authenticated": true,
+      "configuredBearer": true,
+      "unmanagedOrigin": false,
+      "publicSeen": false,
+      "privateOriginal": false,
+      "fields": [
+        "max_tokens",
+        "messages",
+        "metadata",
+        "model",
+        "output_config",
+        "stream",
+        "system",
+        "temperature",
+        "thinking",
+        "tools"
+      ],
+      "tools": [
+        "Agent",
+        "Bash",
+        "CronCreate",
+        "CronDelete",
+        "CronList",
+        "Edit",
+        "EnterWorktree",
+        "ExitWorktree",
+        "Glob",
+        "Grep",
+        "ListAgents",
+        "NotebookEdit",
+        "Read",
+        "ReportFindings",
+        "ScheduleWakeup",
+        "SendMessage",
+        "Skill",
+        "TaskCreate",
+        "TaskGet",
+        "TaskList",
+        "TaskStop",
+        "TaskUpdate",
+        "WebFetch",
+        "WebSearch",
+        "Workflow",
+        "Write",
+        "mcp__soterai_safe_read__soterai_read_project_file_safely"
+      ]
+    },
+    {
+      "phase": "mcp-public",
+      "route": "/v1/messages?beta=true",
+      "bytes": 90448,
+      "authenticated": true,
+      "configuredBearer": true,
+      "unmanagedOrigin": false,
+      "publicSeen": true,
+      "privateOriginal": false,
+      "fields": [
+        "max_tokens",
+        "messages",
+        "metadata",
+        "model",
+        "output_config",
+        "stream",
+        "system",
+        "temperature",
+        "thinking",
+        "tools"
+      ],
+      "tools": [
+        "Agent",
+        "Bash",
+        "CronCreate",
+        "CronDelete",
+        "CronList",
+        "Edit",
+        "EnterWorktree",
+        "ExitWorktree",
+        "Glob",
+        "Grep",
+        "ListAgents",
+        "NotebookEdit",
+        "Read",
+        "ReportFindings",
+        "ScheduleWakeup",
+        "SendMessage",
+        "Skill",
+        "TaskCreate",
+        "TaskGet",
+        "TaskList",
+        "TaskStop",
+        "TaskUpdate",
+        "WebFetch",
+        "WebSearch",
+        "Workflow",
+        "Write",
+        "mcp__soterai_safe_read__soterai_read_project_file_safely"
+      ]
+    }
+  ],
+  "hooks": [
+    {
+      "phase": "mcp-public",
+      "event": "UserPromptSubmit",
+      "authenticated": true,
+      "cwdCurrent": true
+    }
+  ],
+  "mcpRequests": [
+    {
+      "method": "server/discover",
+      "authenticated": true
+    },
+    {
+      "method": "initialize",
+      "authenticated": true,
+      "protocol": "2025-11-25"
+    },
+    {
+      "method": "notifications/initialized",
+      "authenticated": true
+    },
+    {
+      "method": "tools/list",
+      "authenticated": true
+    },
+    {
+      "method": "tools/call",
+      "authenticated": true
+    }
+  ],
+  "children": [
+    {
+      "phase": "mcp-public",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "25bda46f5975627fbdf1463d98bddb944049be54bd28d831919e27faf45d1df0",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 6120,
+      "stderrBytes": 0,
+      "rawPrivateSeen": false,
+      "authUnavailable": false,
+      "resultComplete": true
+    }
+  ],
+  "independence": "LOW",
+  "scope": "Actual pinned native CLI, fixed loopback synthetic provider/hooks, fresh user setting source plus explicit private settings, no product adapter/IDE/human/real provider/OS/all-descendant traffic claim.",
+  "userMcpPreserved": true,
+  "vendorAddedStateKeys": [
+    "firstStartTime",
+    "firstStartVersion",
+    "machineID",
+    "opusProMigrationComplete",
+    "sonnet1m45MigrationComplete",
+    "seenNotifications",
+    "hasResetAutoModeOptInForDefaultOffer",
+    "migrationVersion",
+    "userID",
+    "pluginUsage"
+  ],
+  "binarySha256": "84d61feeb1a07e5a5b3354d68432591cac18a5d38a419a30d86d0f3ad8cba397",
+  "driverSha256": "8fd892b8beda60d70904c5e846a5be996dffd69f3a50f8e2b18750ada92481af"
+}

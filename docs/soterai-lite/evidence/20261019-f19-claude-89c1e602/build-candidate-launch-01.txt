@@ -1,0 +1,17 @@
+﻿typecheck-04 exit=0
+readme-readiness-01 exit=1
+powershell.exe : F19 candidate gate failed: readme-readiness-01
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (F19 candidate g...me-readiness-01:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261019-f19-claude-89c1e602\build
+-candidate-01.ps1:8 char:33
++ ... skResult.exitCode -ne 0){throw ('F19 candidate gate failed: '+$Name)}
++                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (F19 candidate g...me-readiness-01:String) [], RuntimeException
+    + FullyQualifiedErrorId : F19 candidate gate failed: readme-readiness-01
+ 

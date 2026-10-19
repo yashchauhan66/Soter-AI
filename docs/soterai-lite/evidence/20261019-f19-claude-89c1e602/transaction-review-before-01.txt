@@ -1,0 +1,315 @@
+﻿TAP version 13
+# Subtest: F19-C07 actual atomic IO preserves old config and cleans only its owned partial temporary
+ok 1 - F19-C07 actual atomic IO preserves old config and cleans only its owned partial temporary
+  ---
+  duration_ms: 447.0489
+  type: 'test'
+  ...
+# Subtest: F19-C01 construction/status perform no tool config or broker launch
+ok 2 - F19-C01 construction/status perform no tool config or broker launch
+  ---
+  duration_ms: 97.3398
+  type: 'test'
+  ...
+# Subtest: F19-C02 cancelled native review preserves config and fresh empty-vault lease
+ok 3 - F19-C02 cancelled native review preserves config and fresh empty-vault lease
+  ---
+  duration_ms: 137.9124
+  type: 'test'
+  ...
+# Subtest: F19-C03 reviewed current setup has encrypted backups and honest unverified status
+ok 4 - F19-C03 reviewed current setup has encrypted backups and honest unverified status
+  ---
+  duration_ms: 385.0093
+  type: 'test'
+  ...
+# Subtest: F19-C04 existing same-profile receipt blocks reconfiguration until reviewed restore
+ok 5 - F19-C04 existing same-profile receipt blocks reconfiguration until reviewed restore
+  ---
+  duration_ms: 181.9436
+  type: 'test'
+  ...
+# Subtest: F19-C05 workspace native config override is refused before broker startup
+ok 6 - F19-C05 workspace native config override is refused before broker startup
+  ---
+  duration_ms: 9.8362
+  type: 'test'
+  ...
+# Subtest: F19-C06 persistence failure retains encrypted recovery receipt and stops live routing
+ok 7 - F19-C06 persistence failure retains encrypted recovery receipt and stops live routing
+  ---
+  duration_ms: 177.4884
+  type: 'test'
+  ...
+# Subtest: F19-C08 durable recovery receipt write failure precedes vendor config writes
+not ok 8 - F19-C08 durable recovery receipt write failure precedes vendor config writes
+  ---
+  duration_ms: 102.7418
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\claudeAdapterLifecycle.test.ts:2:8194'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + '{\n' +
+    +   '  "permissions": {\n' +
+    +   '    "deny": [\n' +
+    +   '      "Read(.env)"\n' +
+    +   '    ],\n' +
+    +   '    "defaultMode": "default"\n' +
+    +   '  },\n' +
+    +   '  "public": "keep",\n' +
+    +   '  "env": {\n' +
+    +   '    "ANTHROPIC_BASE_URL": "http://127.0.0.1:12345/v1/ai/anthropic-compatible",\n' +
+    +   '    "ANTHROPIC_API_KEY": "",\n' +
+    +   '    "ANTHROPIC_AUTH_TOKEN": "TEST_ONLY_F19_CURRENT_GATEWAY",\n' +
+    +   '    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",\n' +
+    +   '    "DISABLE_AUTOUPDATER": "1",\n' +
+    +   '    "DISABLE_TELEMETRY": "1",\n' +
+    +   '    "DISABLE_ERROR_REPORTING": "1",\n' +
+    +   '    "CLAUDE_CODE_DISABLE_AUTO_MEMORY": "1"\n' +
+    +   '  },\n' +
+    +   '  "alwaysThinkingEnabled": false,\n' +
+    +   '  "disableAllHooks": false,\n' +
+    +   '  "hooks": {\n' +
+    +   '    "UserPromptSubmit": [\n' +
+    +   '      {\n' +
+    +   '        "hooks": [\n' +
+    +   '          {\n' +
+    +   '            "type": "http",\n' +
+    +   '            "url": "http://127.0.0.1:58288/claude/hooks",\n' +
+    +   '            "headers": {\n' +
+    +   '              "Authorization": "Bearer e02fb5a551ee1f9de3128accfa220862c435cf8d63a0f7539ef2599090c59cc4"\n' +
+    +   '            },\n' +
+    +   '            "timeout": 70,\n' +
+    +   '            "onFailure": "block"\n' +
+    +   '          }\n' +
+    +   '        ]\n' +
+    +   '      }\n' +
+    +   '    ],\n' +
+    +   '    "PreToolUse": [\n' +
+    +   '      {\n' +
+    +   '        "matcher": ".*",\n' +
+    +   '        "hooks": [\n' +
+    +   '          {\n' +
+    +   '            "type": "http",\n' +
+    +   '            "url": "http://127.0.0.1:58288/claude/hooks",\n' +
+    +   '            "headers": {\n' +
+    +   '              "Authorization": "Bearer e02fb5a551ee1f9de3128accfa220862c435cf8d63a0f7539ef2599090c59cc4"\n' +
+    +   '            },\n' +
+    +   '            "timeout": 70,\n' +
+    +   '            "onFailure": "block"\n' +
+    +   '          }\n' +
+    +   '        ]\n' +
+    +   '      }\n' +
+    +   '    ]\n' +
+    +   '  }\n' +
+    +   '}\n'
+    - '{"permissions":{"deny":["Read(.env)"]},"public":"keep"}'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '{"permissions":{"deny":["Read(.env)"]},"public":"keep"}'
+  actual: |-
+    {
+      "permissions": {
+        "deny": [
+          "Read(.env)"
+        ],
+        "defaultMode": "default"
+      },
+      "public": "keep",
+      "env": {
+        "ANTHROPIC_BASE_URL": "http://127.0.0.1:12345/v1/ai/anthropic-compatible",
+        "ANTHROPIC_API_KEY": "",
+        "ANTHROPIC_AUTH_TOKEN": "TEST_ONLY_F19_CURRENT_GATEWAY",
+        "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
+        "DISABLE_AUTOUPDATER": "1",
+        "DISABLE_TELEMETRY": "1",
+        "DISABLE_ERROR_REPORTING": "1",
+        "CLAUDE_CODE_DISABLE_AUTO_MEMORY": "1"
+      },
+      "alwaysThinkingEnabled": false,
+      "disableAllHooks": false,
+      "hooks": {
+        "UserPromptSubmit": [
+          {
+            "hooks": [
+              {
+                "type": "http",
+                "url": "http://127.0.0.1:58288/claude/hooks",
+                "headers": {
+                  "Authorization": "Bearer e02fb5a551ee1f9de3128accfa220862c435cf8d63a0f7539ef2599090c59cc4"
+                },
+                "timeout": 70,
+                "onFailure": "block"
+              }
+            ]
+          }
+        ],
+        "PreToolUse": [
+          {
+            "matcher": ".*",
+            "hooks": [
+              {
+                "type": "http",
+                "url": "http://127.0.0.1:58288/claude/hooks",
+                "headers": {
+                  "Authorization": "Bearer e02fb5a551ee1f9de3128accfa220862c435cf8d63a0f7539ef2599090c59cc4"
+                },
+                "timeout": 70,
+                "onFailure": "block"
+              }
+            ]
+          }
+        ]
+      }
+    }
+    
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\claudeAdapterLifecycle.test.ts:80:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F19-P01 pin verifies manifest/runtime/native digest and exact version/main
+ok 9 - F19-P01 pin verifies manifest/runtime/native digest and exact version/main
+  ---
+  duration_ms: 29.3115
+  type: 'test'
+  ...
+# Subtest: F19-P02 private plans/reviews/receipts never serialize credentials or originals
+ok 10 - F19-P02 private plans/reviews/receipts never serialize credentials or originals
+  ---
+  duration_ms: 9.8187
+  type: 'test'
+  ...
+# Subtest: F19-P03 both encrypted backups exist before first write and default vendor denies remain
+ok 11 - F19-P03 both encrypted backups exist before first write and default vendor denies remain
+  ---
+  duration_ms: 5.7231
+  type: 'test'
+  ...
+# Subtest: F19-P04 exact complete undo returns original byte snapshots
+ok 12 - F19-P04 exact complete undo returns original byte snapshots
+  ---
+  duration_ms: 6.5888
+  type: 'test'
+  ...
+# Subtest: F19-P05 field-aware undo preserves vendor startup metadata and unrelated MCP edits
+ok 13 - F19-P05 field-aware undo preserves vendor startup metadata and unrelated MCP edits
+  ---
+  duration_ms: 7.1096
+  type: 'test'
+  ...
+# Subtest: F19-P06 later owned MCP changes and settings drift withhold undo without writes
+ok 14 - F19-P06 later owned MCP changes and settings drift withhold undo without writes
+  ---
+  duration_ms: 9.3663
+  type: 'test'
+  ...
+# Subtest: F19-P07 cancellation, disabled flag and owner drift create no write/backup authority
+ok 15 - F19-P07 cancellation, disabled flag and owner drift create no write/backup authority
+  ---
+  duration_ms: 7.62
+  type: 'test'
+  ...
+# Subtest: F19-P08 settings drift during approval invalidates complete plan
+ok 16 - F19-P08 settings drift during approval invalidates complete plan
+  ---
+  duration_ms: 2.6365
+  type: 'test'
+  ...
+# Subtest: F19-P09 backup failure precedes writes and exceptions remain value-free
+ok 17 - F19-P09 backup failure precedes writes and exceptions remain value-free
+  ---
+  duration_ms: 2.6775
+  type: 'test'
+  ...
+# Subtest: F19-P10 partial apply restores exact unchanged owned files and preserves backups
+ok 18 - F19-P10 partial apply restores exact unchanged owned files and preserves backups
+  ---
+  duration_ms: 3.9356
+  type: 'test'
+  ...
+# Subtest: F19-P11 post-write throw is detected and owned after-state is safely restored
+ok 19 - F19-P11 post-write throw is detected and owned after-state is safely restored
+  ---
+  duration_ms: 3.4902
+  type: 'test'
+  ...
+# Subtest: F19-P12 absent state undo keeps later native metadata and removes only owned namespace
+ok 20 - F19-P12 absent state undo keeps later native metadata and removes only owned namespace
+  ---
+  duration_ms: 4.5903
+  type: 'test'
+  ...
+# Subtest: F19-P13 corrupt backups cannot restore unverified content
+ok 21 - F19-P13 corrupt backups cannot restore unverified content
+  ---
+  duration_ms: 3.6248
+  type: 'test'
+  ...
+# Subtest: F19-P14 custom hook, helper, disabled gate, unknown schema and owned namespace refuse
+ok 22 - F19-P14 custom hook, helper, disabled gate, unknown schema and owned namespace refuse
+  ---
+  duration_ms: 6.106
+  type: 'test'
+  ...
+# Subtest: F19-P15 abort wakes pending review without waiting for unresolved UI
+ok 23 - F19-P15 abort wakes pending review without waiting for unresolved UI
+  ---
+  duration_ms: 2.0773
+  type: 'test'
+  ...
+# Subtest: F19-P16 over-budget profiles refuse before encrypted-backup roundtrip becomes unsupported
+not ok 24 - F19-P16 over-budget profiles refuse before encrypted-backup roundtrip becomes unsupported
+  ---
+  duration_ms: 15.5328
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\claudeAdapterPolicy.test.ts:2:12413'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\claudeAdapterPolicy.test.ts:117:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F19-P17 durable prepared receipt failure precedes every config write
+not ok 25 - F19-P17 durable prepared receipt failure precedes every config write
+  ---
+  duration_ms: 7.3024
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\claudeAdapterPolicy.test.ts:2:12805'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'APPLIED'
+    - 'UNAVAILABLE'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'UNAVAILABLE'
+  actual: 'APPLIED'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\claudeAdapterPolicy.test.ts:122:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..25
+# tests 25
+# suites 0
+# pass 22
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3902.9596

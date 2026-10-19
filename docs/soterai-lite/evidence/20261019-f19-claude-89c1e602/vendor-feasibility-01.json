@@ -1,0 +1,507 @@
+{
+  "status": "INCOMPLETE_VENDOR_FEASIBILITY",
+  "version": "2.1.301",
+  "root": "D:\\SoterAI-Lite-test-profiles\\f19-vendor-20261019T051205Z-9837de03",
+  "checks": [
+    {
+      "phase": "provider-public",
+      "status": "PASS",
+      "child": {
+        "phase": "provider-public",
+        "closed": true,
+        "stdoutEOF": true,
+        "stderrEOF": true,
+        "exitCode": 0,
+        "signal": null,
+        "stdoutSha256": "d91611491c58aec1b4354ca3b8bea0cbef9481be61b98dee125be84df5eabb96",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutBytes": 5175,
+        "stderrBytes": 0,
+        "rawPrivateSeen": false,
+        "authUnavailable": false,
+        "resultComplete": true,
+        "status": "CLOSED"
+      },
+      "modelRequests": 1,
+      "hookCount": 0
+    },
+    {
+      "phase": "read-public",
+      "status": "FAIL",
+      "child": {
+        "phase": "read-public",
+        "closed": true,
+        "stdoutEOF": true,
+        "stderrEOF": true,
+        "exitCode": 0,
+        "signal": null,
+        "stdoutSha256": "4fd6022f4e97ce203459ce0ed3e5a2cb776f0d39ab4d4d8276cb384e7868ca69",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutBytes": 6484,
+        "stderrBytes": 0,
+        "rawPrivateSeen": false,
+        "authUnavailable": false,
+        "resultComplete": true,
+        "status": "CLOSED"
+      },
+      "modelRequests": 2,
+      "hookCount": 0
+    },
+    {
+      "phase": "read-private",
+      "status": "FAIL",
+      "child": {
+        "phase": "read-private",
+        "closed": true,
+        "stdoutEOF": true,
+        "stderrEOF": true,
+        "exitCode": 1,
+        "signal": null,
+        "stdoutSha256": "17b8ae5e30991a5847b46269c385b4efde5ee99e97b73e033b17d47829bc01ba",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutBytes": 6962,
+        "stderrBytes": 0,
+        "rawPrivateSeen": true,
+        "authUnavailable": false,
+        "resultComplete": false,
+        "status": "CLOSED"
+      },
+      "modelRequests": 4,
+      "hookCount": 0
+    },
+    {
+      "phase": "prompt-outage",
+      "status": "FAIL",
+      "child": {
+        "phase": "prompt-outage",
+        "closed": true,
+        "stdoutEOF": true,
+        "stderrEOF": true,
+        "exitCode": 1,
+        "signal": null,
+        "stdoutSha256": "e467f4746d050ab8a35d24be113a815fa680c7f81ef530157fb68530244c3543",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutBytes": 4548,
+        "stderrBytes": 0,
+        "rawPrivateSeen": false,
+        "authUnavailable": false,
+        "resultComplete": false,
+        "status": "CLOSED"
+      },
+      "modelRequests": 3,
+      "hookCount": 0
+    },
+    {
+      "phase": "read-hook-failure",
+      "status": "FAIL",
+      "child": {
+        "phase": "read-hook-failure",
+        "closed": true,
+        "stdoutEOF": true,
+        "stderrEOF": true,
+        "exitCode": 1,
+        "signal": null,
+        "stdoutSha256": "66ecce8b7d59bf73ba750cf3a79b8fb4eb649222c24225f4466f4f9cadcfc14a",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutBytes": 4556,
+        "stderrBytes": 0,
+        "rawPrivateSeen": false,
+        "authUnavailable": false,
+        "resultComplete": false,
+        "status": "CLOSED"
+      },
+      "modelRequests": 3,
+      "hookCount": 0
+    }
+  ],
+  "requests": [
+    {
+      "phase": "provider-public",
+      "route": "/v1/messages?beta=true",
+      "bytes": 7315,
+      "authenticated": true,
+      "publicSeen": false,
+      "privateOriginal": false,
+      "fields": [
+        "context_management",
+        "max_tokens",
+        "messages",
+        "metadata",
+        "model",
+        "output_config",
+        "safeguards",
+        "stream",
+        "system",
+        "thinking",
+        "tools"
+      ],
+      "tools": []
+    },
+    {
+      "phase": "read-public",
+      "route": "/v1/messages?beta=true",
+      "bytes": 8363,
+      "authenticated": true,
+      "publicSeen": false,
+      "privateOriginal": false,
+      "fields": [
+        "context_management",
+        "max_tokens",
+        "messages",
+        "metadata",
+        "model",
+        "output_config",
+        "safeguards",
+        "stream",
+        "system",
+        "thinking",
+        "tools"
+      ],
+      "tools": [
+        "Read"
+      ]
+    },
+    {
+      "phase": "read-public",
+      "route": "/v1/messages?beta=true",
+      "bytes": 2437,
+      "authenticated": true,
+      "publicSeen": true,
+      "privateOriginal": false,
+      "fields": [
+        "context_management",
+        "max_tokens",
+        "messages",
+        "metadata",
+        "model",
+        "output_config",
+        "stream",
+        "system",
+        "thinking",
+        "tools"
+      ],
+      "tools": [
+        "Read"
+      ]
+    },
+    {
+      "phase": "read-private",
+      "route": "/v1/messages?beta=true",
+      "bytes": 8379,
+      "authenticated": true,
+      "publicSeen": false,
+      "privateOriginal": false,
+      "fields": [
+        "context_management",
+        "max_tokens",
+        "messages",
+        "metadata",
+        "model",
+        "output_config",
+        "safeguards",
+        "stream",
+        "system",
+        "thinking",
+        "tools"
+      ],
+      "tools": [
+        "Read"
+      ]
+    },
+    {
+      "phase": "read-private",
+      "route": "/v1/messages?beta=true",
+      "bytes": 2490,
+      "authenticated": true,
+      "publicSeen": false,
+      "privateOriginal": true,
+      "fields": [
+        "context_management",
+        "max_tokens",
+        "messages",
+        "metadata",
+        "model",
+        "output_config",
+        "stream",
+        "system",
+        "thinking",
+        "tools"
+      ],
+      "tools": [
+        "Read"
+      ]
+    },
+    {
+      "phase": "read-private",
+      "route": "/v1/messages?beta=true",
+      "bytes": 2470,
+      "authenticated": true,
+      "publicSeen": false,
+      "privateOriginal": true,
+      "fields": [
+        "context_management",
+        "max_tokens",
+        "messages",
+        "metadata",
+        "model",
+        "output_config",
+        "stream",
+        "system",
+        "thinking",
+        "tools"
+      ],
+      "tools": [
+        "Read"
+      ]
+    },
+    {
+      "phase": "read-private",
+      "route": "/v1/messages?beta=true",
+      "bytes": 2470,
+      "authenticated": true,
+      "publicSeen": false,
+      "privateOriginal": true,
+      "fields": [
+        "context_management",
+        "max_tokens",
+        "messages",
+        "metadata",
+        "model",
+        "output_config",
+        "stream",
+        "system",
+        "thinking",
+        "tools"
+      ],
+      "tools": [
+        "Read"
+      ]
+    },
+    {
+      "phase": "prompt-outage",
+      "route": "/v1/messages?beta=true",
+      "bytes": 8395,
+      "authenticated": true,
+      "publicSeen": false,
+      "privateOriginal": false,
+      "fields": [
+        "context_management",
+        "max_tokens",
+        "messages",
+        "metadata",
+        "model",
+        "output_config",
+        "safeguards",
+        "stream",
+        "system",
+        "thinking",
+        "tools"
+      ],
+      "tools": [
+        "Read"
+      ]
+    },
+    {
+      "phase": "prompt-outage",
+      "route": "/v1/messages?beta=true",
+      "bytes": 8375,
+      "authenticated": true,
+      "publicSeen": false,
+      "privateOriginal": false,
+      "fields": [
+        "context_management",
+        "max_tokens",
+        "messages",
+        "metadata",
+        "model",
+        "output_config",
+        "safeguards",
+        "stream",
+        "system",
+        "thinking",
+        "tools"
+      ],
+      "tools": [
+        "Read"
+      ]
+    },
+    {
+      "phase": "prompt-outage",
+      "route": "/v1/messages?beta=true",
+      "bytes": 2095,
+      "authenticated": true,
+      "publicSeen": false,
+      "privateOriginal": false,
+      "fields": [
+        "context_management",
+        "max_tokens",
+        "messages",
+        "metadata",
+        "model",
+        "output_config",
+        "stream",
+        "system",
+        "thinking",
+        "tools"
+      ],
+      "tools": [
+        "Read"
+      ]
+    },
+    {
+      "phase": "read-hook-failure",
+      "route": "/v1/messages?beta=true",
+      "bytes": 8459,
+      "authenticated": true,
+      "publicSeen": false,
+      "privateOriginal": false,
+      "fields": [
+        "context_management",
+        "max_tokens",
+        "messages",
+        "metadata",
+        "model",
+        "output_config",
+        "safeguards",
+        "stream",
+        "system",
+        "thinking",
+        "tools"
+      ],
+      "tools": [
+        "Read"
+      ]
+    },
+    {
+      "phase": "read-hook-failure",
+      "route": "/v1/messages?beta=true",
+      "bytes": 8439,
+      "authenticated": true,
+      "publicSeen": false,
+      "privateOriginal": false,
+      "fields": [
+        "context_management",
+        "max_tokens",
+        "messages",
+        "metadata",
+        "model",
+        "output_config",
+        "safeguards",
+        "stream",
+        "system",
+        "thinking",
+        "tools"
+      ],
+      "tools": [
+        "Read"
+      ]
+    },
+    {
+      "phase": "read-hook-failure",
+      "route": "/v1/messages?beta=true",
+      "bytes": 2095,
+      "authenticated": true,
+      "publicSeen": false,
+      "privateOriginal": false,
+      "fields": [
+        "context_management",
+        "max_tokens",
+        "messages",
+        "metadata",
+        "model",
+        "output_config",
+        "stream",
+        "system",
+        "thinking",
+        "tools"
+      ],
+      "tools": [
+        "Read"
+      ]
+    }
+  ],
+  "hooks": [],
+  "children": [
+    {
+      "phase": "provider-public",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "d91611491c58aec1b4354ca3b8bea0cbef9481be61b98dee125be84df5eabb96",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 5175,
+      "stderrBytes": 0,
+      "rawPrivateSeen": false,
+      "authUnavailable": false,
+      "resultComplete": true
+    },
+    {
+      "phase": "read-public",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "4fd6022f4e97ce203459ce0ed3e5a2cb776f0d39ab4d4d8276cb384e7868ca69",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 6484,
+      "stderrBytes": 0,
+      "rawPrivateSeen": false,
+      "authUnavailable": false,
+      "resultComplete": true
+    },
+    {
+      "phase": "read-private",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "exitCode": 1,
+      "signal": null,
+      "stdoutSha256": "17b8ae5e30991a5847b46269c385b4efde5ee99e97b73e033b17d47829bc01ba",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 6962,
+      "stderrBytes": 0,
+      "rawPrivateSeen": true,
+      "authUnavailable": false,
+      "resultComplete": false
+    },
+    {
+      "phase": "prompt-outage",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "exitCode": 1,
+      "signal": null,
+      "stdoutSha256": "e467f4746d050ab8a35d24be113a815fa680c7f81ef530157fb68530244c3543",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 4548,
+      "stderrBytes": 0,
+      "rawPrivateSeen": false,
+      "authUnavailable": false,
+      "resultComplete": false
+    },
+    {
+      "phase": "read-hook-failure",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "exitCode": 1,
+      "signal": null,
+      "stdoutSha256": "66ecce8b7d59bf73ba750cf3a79b8fb4eb649222c24225f4466f4f9cadcfc14a",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 4556,
+      "stderrBytes": 0,
+      "rawPrivateSeen": false,
+      "authUnavailable": false,
+      "resultComplete": false
+    }
+  ],
+  "independence": "LOW",
+  "scope": "Actual pinned native CLI, fixed loopback synthetic provider/hooks, --bare plus explicit private settings, no product adapter/IDE/human/real provider/OS/all-descendant traffic claim.",
+  "privateOriginalLeak": true,
+  "leakPhase": "read-private",
+  "binarySha256": "84d61feeb1a07e5a5b3354d68432591cac18a5d38a419a30d86d0f3ad8cba397",
+  "driverSha256": "8584ee103393867e5aa09b28077855f9fedb92fec93b04f64280d1abf2cf7112"
+}

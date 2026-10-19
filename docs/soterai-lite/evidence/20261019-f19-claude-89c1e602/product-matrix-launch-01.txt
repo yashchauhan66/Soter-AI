@@ -1,0 +1,184 @@
+﻿{
+    "status":  "INCOMPLETE_PRODUCT_MATRIX",
+    "checks":  [
+                   {
+                       "id":  "F19-N01",
+                       "status":  "PASS"
+                   },
+                   {
+                       "id":  "F19-N02",
+                       "status":  "PASS"
+                   },
+                   {
+                       "id":  "F19-N03",
+                       "status":  "PASS"
+                   },
+                   {
+                       "id":  "F19-N04",
+                       "status":  "FAIL",
+                       "error":  {
+                                     "name":  "AssertionError",
+                                     "code":  "ERR_ASSERTION"
+                                 },
+                       "fixtureDeadline":  false
+                   },
+                   {
+                       "id":  "F19-N05",
+                       "status":  "FAIL",
+                       "error":  {
+                                     "name":  "AssertionError",
+                                     "code":  "ERR_ASSERTION"
+                                 },
+                       "fixtureDeadline":  false
+                   },
+                   {
+                       "id":  "F19-N06",
+                       "status":  "FAIL",
+                       "error":  {
+                                     "name":  "Error",
+                                     "code":  "ENOENT"
+                                 },
+                       "fixtureDeadline":  false
+                   },
+                   {
+                       "id":  "F19-N07",
+                       "status":  "FAIL",
+                       "error":  {
+                                     "name":  "AssertionError",
+                                     "code":  "ERR_ASSERTION"
+                                 },
+                       "fixtureDeadline":  false
+                   },
+                   {
+                       "id":  "F19-N08",
+                       "status":  "FAIL",
+                       "error":  {
+                                     "name":  "AssertionError",
+                                     "code":  "ERR_ASSERTION"
+                                 },
+                       "fixtureDeadline":  false
+                   },
+                   {
+                       "id":  "F19-N09",
+                       "status":  "FAIL",
+                       "error":  {
+                                     "name":  "AssertionError",
+                                     "code":  "ERR_ASSERTION"
+                                 },
+                       "fixtureDeadline":  false
+                   },
+                   {
+                       "id":  "F19-N10",
+                       "status":  "FAIL",
+                       "error":  {
+                                     "name":  "AssertionError",
+                                     "code":  "ERR_ASSERTION"
+                                 },
+                       "fixtureDeadline":  false
+                   },
+                   {
+                       "id":  "F19-N11",
+                       "status":  "FAIL",
+                       "error":  {
+                                     "name":  "AssertionError",
+                                     "code":  "ERR_ASSERTION"
+                                 },
+                       "fixtureDeadline":  false
+                   },
+                   {
+                       "id":  "F19-N12",
+                       "status":  "FAIL",
+                       "error":  {
+                                     "name":  "AssertionError",
+                                     "code":  "ERR_ASSERTION"
+                                 },
+                       "fixtureDeadline":  false
+                   },
+                   {
+                       "id":  "F19-N13",
+                       "status":  "FAIL",
+                       "error":  {
+                                     "name":  "AssertionError",
+                                     "code":  "ERR_ASSERTION"
+                                 },
+                       "fixtureDeadline":  false
+                   },
+                   {
+                       "id":  "F19-N14",
+                       "status":  "FAIL",
+                       "error":  {
+                                     "name":  "AssertionError",
+                                     "code":  "ERR_ASSERTION"
+                                 },
+                       "fixtureDeadline":  false
+                   },
+                   {
+                       "id":  "F19-N15",
+                       "status":  "FAIL",
+                       "error":  {
+                                     "name":  "AssertionError",
+                                     "code":  "ERR_ASSERTION"
+                                 },
+                       "fixtureDeadline":  false
+                   },
+                   {
+                       "id":  "F19-N16",
+                       "status":  "FAIL",
+                       "error":  {
+                                     "name":  "AssertionError",
+                                     "code":  "ERR_ASSERTION"
+                                 },
+                       "fixtureDeadline":  false
+                   },
+                   {
+                       "id":  "F19-N17",
+                       "status":  "FAIL",
+                       "error":  {
+                                     "name":  "AssertionError",
+                                     "code":  "ERR_ASSERTION"
+                                 },
+                       "fixtureDeadline":  false
+                   },
+                   {
+                       "id":  "F19-N18",
+                       "status":  "PASS"
+                   },
+                   {
+                       "id":  "F19-N19",
+                       "status":  "PASS"
+                   },
+                   {
+                       "id":  "F19-N20",
+                       "status":  "PASS"
+                   },
+                   {
+                       "id":  "F19-N21",
+                       "status":  "PASS"
+                   },
+                   {
+                       "id":  "F19-N22",
+                       "status":  "PASS"
+                   }
+               ],
+    "configureStatus":  "APPLIED",
+    "cancelStatus":  "CANCELLED",
+    "driverFailure":  null,
+    "childShutdown":  null,
+    "encryptedBackups":  2,
+    "unownedNativeStatePreserved":  true
+}
+powershell.exe : INCOMPLETE: current product CLI matrix did not pass
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (INCOMPLETE: cur...ix did not pass:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261019-f19-claude-89c1e602\run-p
+roduct-matrix-01.ps1:98 char:65
++ ... LI_MATRIX'){throw 'INCOMPLETE: current product CLI matrix did not pas ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (INCOMPLETE: cur...ix did not pass:String) [], RuntimeException
+    + FullyQualifiedErrorId : INCOMPLETE: current product CLI matrix did not pass
+ 

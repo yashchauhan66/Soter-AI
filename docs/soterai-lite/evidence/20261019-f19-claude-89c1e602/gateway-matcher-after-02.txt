@@ -1,0 +1,208 @@
+﻿TAP version 13
+# Subtest: F19 actual default26 Claude tools and manual text controls pass only their declared protocol profile
+ok 1 - F19 actual default26 Claude tools and manual text controls pass only their declared protocol profile
+  ---
+  duration_ms: 340.7484
+  type: 'test'
+  ...
+# Subtest: F19 registered originals and encodings in native schema metadata are withheld
+ok 2 - F19 registered originals and encodings in native schema metadata are withheld
+  ---
+  duration_ms: 412.6205
+  type: 'test'
+  ...
+# Subtest: F19 ordinary metadata remains inspected and bounded
+ok 3 - F19 ordinary metadata remains inspected and bounded
+  ---
+  duration_ms: 154.4574
+  type: 'test'
+  ...
+# Subtest: F19 unsupported model controls, tool definitions, images and resource overflow remain withheld
+ok 4 - F19 unsupported model controls, tool definitions, images and resource overflow remain withheld
+  ---
+  duration_ms: 41.1819
+  type: 'test'
+  ...
+# Subtest: F19 profile supports empty/ordinary Anthropic tool lists without relaxing the OpenAI profile
+ok 5 - F19 profile supports empty/ordinary Anthropic tool lists without relaxing the OpenAI profile
+  ---
+  duration_ms: 3.7667
+  type: 'test'
+  ...
+# Subtest: F19 structured profile permits captured26-tool public schemas while original F07/F18 candidate bounds remain
+ok 6 - F19 structured profile permits captured26-tool public schemas while original F07/F18 candidate bounds remain
+  ---
+  duration_ms: 348.1937
+  type: 'test'
+  ...
+# Subtest: F19 structured candidate profile keeps raw, encoded and semantic split registrations protected
+ok 7 - F19 structured candidate profile keeps raw, encoded and semantic split registrations protected
+  ---
+  duration_ms: 593.6159
+  type: 'test'
+  ...
+# Subtest: F19 unknown, ambiguous and excessive structured inspection withholds instead of disabling registrations
+ok 8 - F19 unknown, ambiguous and excessive structured inspection withholds instead of disabling registrations
+  ---
+  duration_ms: 6.0389
+  type: 'test'
+  ...
+# Subtest: F18 enabled schema profile preserves ordinary public requests and an empty tool list
+ok 9 - F18 enabled schema profile preserves ordinary public requests and an empty tool list
+  ---
+  duration_ms: 10.3383
+  type: 'test'
+  ...
+# Subtest: F18 bounded multi-tool schema public request passes only its explicit profile
+ok 10 - F18 bounded multi-tool schema public request passes only its explicit profile
+  ---
+  duration_ms: 14.4127
+  type: 'test'
+  ...
+# Subtest: F18 tool metadata remains inspected for raw/encoded values and ordered splits
+ok 11 - F18 tool metadata remains inspected for raw/encoded values and ordered splits
+  ---
+  duration_ms: 27.7128
+  type: 'test'
+  ...
+# Subtest: F18 schema profile keeps generic metadata, malformed definitions and resource bounds withheld
+ok 12 - F18 schema profile keeps generic metadata, malformed definitions and resource bounds withheld
+  ---
+  duration_ms: 8.2839
+  type: 'test'
+  ...
+# Subtest: F18 metadata candidate budget is explicit; the original F07 default remains bounded
+ok 13 - F18 metadata candidate budget is explicit; the original F07 default remains bounded
+  ---
+  duration_ms: 20.3148
+  type: 'test'
+  ...
+# Subtest: F18 expanded bounded candidate inspection still detects protected spellings and ordered fragments
+ok 14 - F18 expanded bounded candidate inspection still detects protected spellings and ordered fragments
+  ---
+  duration_ms: 30.86
+  type: 'test'
+  ...
+# Subtest: F18 invalid or excessive candidate budgets never silently become an empty registry
+ok 15 - F18 invalid or excessive candidate budgets never silently become an empty registry
+  ---
+  duration_ms: 1.272
+  type: 'test'
+  ...
+# Subtest: F16-P01 public immutable request preserves supported options
+ok 16 - F16-P01 public immutable request preserves supported options
+  ---
+  duration_ms: 10.9344
+  type: 'test'
+  ...
+# Subtest: F16-P02 registered representation refuses 34
+ok 17 - F16-P02 registered representation refuses 34
+  ---
+  duration_ms: 1.5345
+  type: 'test'
+  ...
+# Subtest: F16-P02 registered representation refuses 48
+ok 18 - F16-P02 registered representation refuses 48
+  ---
+  duration_ms: 1.1443
+  type: 'test'
+  ...
+# Subtest: F16-P02 registered representation refuses 46
+ok 19 - F16-P02 registered representation refuses 46
+  ---
+  duration_ms: 0.8491
+  type: 'test'
+  ...
+# Subtest: F16-P02 registered representation refuses 68
+ok 20 - F16-P02 registered representation refuses 68
+  ---
+  duration_ms: 0.7307
+  type: 'test'
+  ...
+# Subtest: F16-P02 registered representation refuses 34
+ok 21 - F16-P02 registered representation refuses 34
+  ---
+  duration_ms: 0.7139
+  type: 'test'
+  ...
+# Subtest: F16-P02 registered representation refuses 36
+ok 22 - F16-P02 registered representation refuses 36
+  ---
+  duration_ms: 0.7186
+  type: 'test'
+  ...
+# Subtest: F16-P03 ordered content joins detect registered fragments across roles/messages
+ok 23 - F16-P03 ordered content joins detect registered fragments across roles/messages
+  ---
+  duration_ms: 1.1992
+  type: 'test'
+  ...
+# Subtest: F16-P04 provider patterns and fixed entropy controls with public negatives
+ok 24 - F16-P04 provider patterns and fixed entropy controls with public negatives
+  ---
+  duration_ms: 9.7137
+  type: 'test'
+  ...
+# Subtest: F16-P05 unknown schemas and auth/URL overrides refuse
+ok 25 - F16-P05 unknown schemas and auth/URL overrides refuse
+  ---
+  duration_ms: 2.0533
+  type: 'test'
+  ...
+# Subtest: F16-P06 unavailable/unknown policy and invalid registry never degrade to empty
+ok 26 - F16-P06 unavailable/unknown policy and invalid registry never degrade to empty
+  ---
+  duration_ms: 2.1744
+  type: 'test'
+  ...
+# Subtest: F16-P07 complete semantic/request bounds withhold
+ok 27 - F16-P07 complete semantic/request bounds withhold
+  ---
+  duration_ms: 1.2829
+  type: 'test'
+  ...
+# Subtest: F16-P08 output JSON semantics and raw boundaries withhold complete response
+ok 28 - F16-P08 output JSON semantics and raw boundaries withhold complete response
+  ---
+  duration_ms: 3.9243
+  type: 'test'
+  ...
+# Subtest: F16-P09 finite SSE output waits for complete inspected stream
+ok 29 - F16-P09 finite SSE output waits for complete inspected stream
+  ---
+  duration_ms: 2.7995
+  type: 'test'
+  ...
+# Subtest: F16-P10 malformed/control/UTF8/output budget failures release nothing
+ok 30 - F16-P10 malformed/control/UTF8/output budget failures release nothing
+  ---
+  duration_ms: 4.8216
+  type: 'test'
+  ...
+# Subtest: F16-P11 bounded seeded public/fragment controls
+ok 31 - F16-P11 bounded seeded public/fragment controls
+  ---
+  duration_ms: 34.5266
+  type: 'test'
+  ...
+# Subtest: F16-P12 errors expose no input or registry contents
+ok 32 - F16-P12 errors expose no input or registry contents
+  ---
+  duration_ms: 0.3047
+  type: 'test'
+  ...
+# Subtest: F16-P13 bounded Anthropic tool use/results preserve public data and refuse unsupported blocks
+ok 33 - F16-P13 bounded Anthropic tool use/results preserve public data and refuse unsupported blocks
+  ---
+  duration_ms: 1.8823
+  type: 'test'
+  ...
+1..33
+# tests 33
+# suites 0
+# pass 33
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3799.9111

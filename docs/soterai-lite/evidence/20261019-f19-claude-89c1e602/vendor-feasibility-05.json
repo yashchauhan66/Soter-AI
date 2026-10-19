@@ -1,0 +1,103 @@
+{
+  "status": "PASS_SCOPED_DEFAULT_TOOLSET_PUBLIC",
+  "version": "2.1.301",
+  "root": "D:\\SoterAI-Lite-test-profiles\\f19-vendor-20261019T052414Z-feabbc8c",
+  "checks": [
+    {
+      "phase": "provider-public",
+      "status": "PASS",
+      "child": {
+        "phase": "provider-public",
+        "closed": true,
+        "stdoutEOF": true,
+        "stderrEOF": true,
+        "exitCode": 0,
+        "signal": null,
+        "stdoutSha256": "78a4748c375837ccfa40bab1b030d03512ad9e92cbcd805196137fe0c138ced4",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutBytes": 4711,
+        "stderrBytes": 0,
+        "rawPrivateSeen": false,
+        "authUnavailable": false,
+        "resultComplete": true,
+        "status": "CLOSED"
+      },
+      "modelRequests": 1,
+      "hookCount": 0
+    }
+  ],
+  "requests": [
+    {
+      "phase": "provider-public",
+      "route": "/v1/messages?beta=true",
+      "bytes": 89769,
+      "authenticated": true,
+      "configuredBearer": true,
+      "unmanagedOrigin": false,
+      "publicSeen": false,
+      "privateOriginal": false,
+      "fields": [
+        "max_tokens",
+        "messages",
+        "metadata",
+        "model",
+        "output_config",
+        "stream",
+        "system",
+        "temperature",
+        "thinking",
+        "tools"
+      ],
+      "tools": [
+        "Agent",
+        "Bash",
+        "CronCreate",
+        "CronDelete",
+        "CronList",
+        "Edit",
+        "EnterWorktree",
+        "ExitWorktree",
+        "Glob",
+        "Grep",
+        "ListAgents",
+        "NotebookEdit",
+        "Read",
+        "ReportFindings",
+        "ScheduleWakeup",
+        "SendMessage",
+        "Skill",
+        "TaskCreate",
+        "TaskGet",
+        "TaskList",
+        "TaskStop",
+        "TaskUpdate",
+        "WebFetch",
+        "WebSearch",
+        "Workflow",
+        "Write"
+      ]
+    }
+  ],
+  "hooks": [],
+  "children": [
+    {
+      "phase": "provider-public",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "78a4748c375837ccfa40bab1b030d03512ad9e92cbcd805196137fe0c138ced4",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 4711,
+      "stderrBytes": 0,
+      "rawPrivateSeen": false,
+      "authUnavailable": false,
+      "resultComplete": true
+    }
+  ],
+  "independence": "LOW",
+  "scope": "Actual pinned native CLI, fixed loopback synthetic provider/hooks, fresh automatic user settings; manual permissions and ordinary default toolset, no product adapter/IDE/human/real provider/OS/all-descendant traffic claim.",
+  "binarySha256": "84d61feeb1a07e5a5b3354d68432591cac18a5d38a419a30d86d0f3ad8cba397",
+  "driverSha256": "7d0a3eb90e36d720f9984a81bf02b25ecb95e2555bdf68452418407715733faf"
+}

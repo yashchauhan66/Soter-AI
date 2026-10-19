@@ -1,0 +1,385 @@
+{
+  "status": "PASS_SCOPED_NATIVE_CONVERSATION_METADATA",
+  "version": "2.1.301",
+  "root": "D:\\SoterAI-Lite-test-profiles\\f19-vendor-20261019T102436Z-90ad98d8",
+  "checks": [
+    {
+      "phase": "read-public",
+      "status": "PASS",
+      "child": {
+        "phase": "read-public",
+        "closed": true,
+        "stdoutEOF": true,
+        "stderrEOF": true,
+        "exitCode": 0,
+        "signal": null,
+        "stdoutSha256": "b921de0d6fc98ba4b01599eafca2089552920db89bb9ccc51d07b4aa3dcf050d",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutBytes": 6009,
+        "stderrBytes": 0,
+        "rawPrivateSeen": false,
+        "authUnavailable": false,
+        "resultComplete": true,
+        "status": "CLOSED"
+      },
+      "modelRequests": 2,
+      "hookCount": 2
+    }
+  ],
+  "requests": [
+    {
+      "phase": "read-public",
+      "route": "/v1/messages?beta=true",
+      "bytes": 104184,
+      "authenticated": true,
+      "configuredBearer": true,
+      "unmanagedOrigin": false,
+      "publicSeen": false,
+      "privateOriginal": false,
+      "ordinaryStrings": 30,
+      "conversationShape": [
+        {
+          "fields": [
+            "content",
+            "role"
+          ],
+          "role": "user",
+          "contentType": "object",
+          "parts": [
+            {
+              "type": "text",
+              "fields": [
+                "text",
+                "type"
+              ]
+            },
+            {
+              "type": "text",
+              "fields": [
+                "text",
+                "type"
+              ]
+            },
+            {
+              "type": "text",
+              "fields": [
+                "text",
+                "type"
+              ]
+            },
+            {
+              "type": "text",
+              "fields": [
+                "text",
+                "type"
+              ]
+            },
+            {
+              "type": "text",
+              "fields": [
+                "text",
+                "type"
+              ]
+            },
+            {
+              "type": "text",
+              "fields": [
+                "text",
+                "type"
+              ]
+            },
+            {
+              "type": "text",
+              "fields": [
+                "text",
+                "type"
+              ]
+            },
+            {
+              "type": "text",
+              "fields": [
+                "cache_control",
+                "text",
+                "type"
+              ]
+            }
+          ]
+        }
+      ],
+      "fields": [
+        "max_tokens",
+        "messages",
+        "metadata",
+        "model",
+        "output_config",
+        "stream",
+        "system",
+        "temperature",
+        "thinking",
+        "tools"
+      ],
+      "publicHeaders": {
+        "beta": "claude-code-20250219,interleaved-thinking-2025-05-14,thinking-token-count-2026-05-13,context-management-2025-06-27,prompt-caching-scope-2026-01-05,effort-2025-11-24",
+        "version": "2023-06-01",
+        "app": "cli"
+      },
+      "tools": [
+        "Agent",
+        "Bash",
+        "CronCreate",
+        "CronDelete",
+        "CronList",
+        "Edit",
+        "EnterWorktree",
+        "ExitWorktree",
+        "Glob",
+        "Grep",
+        "ListAgents",
+        "NotebookEdit",
+        "Read",
+        "ReportFindings",
+        "ScheduleWakeup",
+        "SendMessage",
+        "Skill",
+        "TaskCreate",
+        "TaskGet",
+        "TaskList",
+        "TaskStop",
+        "TaskUpdate",
+        "WebFetch",
+        "WebSearch",
+        "Workflow",
+        "Write"
+      ]
+    },
+    {
+      "phase": "read-public",
+      "route": "/v1/messages?beta=true",
+      "bytes": 104621,
+      "authenticated": true,
+      "configuredBearer": true,
+      "unmanagedOrigin": false,
+      "publicSeen": true,
+      "privateOriginal": false,
+      "ordinaryStrings": 39,
+      "conversationShape": [
+        {
+          "fields": [
+            "content",
+            "role"
+          ],
+          "role": "user",
+          "contentType": "object",
+          "parts": [
+            {
+              "type": "text",
+              "fields": [
+                "text",
+                "type"
+              ]
+            },
+            {
+              "type": "text",
+              "fields": [
+                "text",
+                "type"
+              ]
+            },
+            {
+              "type": "text",
+              "fields": [
+                "text",
+                "type"
+              ]
+            },
+            {
+              "type": "text",
+              "fields": [
+                "text",
+                "type"
+              ]
+            },
+            {
+              "type": "text",
+              "fields": [
+                "text",
+                "type"
+              ]
+            },
+            {
+              "type": "text",
+              "fields": [
+                "text",
+                "type"
+              ]
+            },
+            {
+              "type": "text",
+              "fields": [
+                "text",
+                "type"
+              ]
+            },
+            {
+              "type": "text",
+              "fields": [
+                "text",
+                "type"
+              ]
+            }
+          ]
+        },
+        {
+          "fields": [
+            "content",
+            "role"
+          ],
+          "role": "assistant",
+          "contentType": "object",
+          "parts": [
+            {
+              "type": "tool_use",
+              "fields": [
+                "id",
+                "input",
+                "name",
+                "type"
+              ],
+              "inputFields": [
+                "file_path"
+              ]
+            }
+          ]
+        },
+        {
+          "fields": [
+            "content",
+            "role"
+          ],
+          "role": "user",
+          "contentType": "object",
+          "parts": [
+            {
+              "type": "tool_result",
+              "fields": [
+                "cache_control",
+                "content",
+                "tool_use_id",
+                "type"
+              ]
+            }
+          ]
+        }
+      ],
+      "fields": [
+        "max_tokens",
+        "messages",
+        "metadata",
+        "model",
+        "output_config",
+        "stream",
+        "system",
+        "temperature",
+        "thinking",
+        "tools"
+      ],
+      "publicHeaders": {
+        "beta": "claude-code-20250219,interleaved-thinking-2025-05-14,thinking-token-count-2026-05-13,context-management-2025-06-27,prompt-caching-scope-2026-01-05,effort-2025-11-24",
+        "version": "2023-06-01",
+        "app": "cli"
+      },
+      "tools": [
+        "Agent",
+        "Bash",
+        "CronCreate",
+        "CronDelete",
+        "CronList",
+        "Edit",
+        "EnterWorktree",
+        "ExitWorktree",
+        "Glob",
+        "Grep",
+        "ListAgents",
+        "NotebookEdit",
+        "Read",
+        "ReportFindings",
+        "ScheduleWakeup",
+        "SendMessage",
+        "Skill",
+        "TaskCreate",
+        "TaskGet",
+        "TaskList",
+        "TaskStop",
+        "TaskUpdate",
+        "WebFetch",
+        "WebSearch",
+        "Workflow",
+        "Write"
+      ]
+    }
+  ],
+  "hooks": [
+    {
+      "phase": "read-public",
+      "event": "UserPromptSubmit",
+      "authenticated": true,
+      "cwdCurrent": true,
+      "fields": [
+        "cwd",
+        "hook_event_name",
+        "permission_mode",
+        "prompt",
+        "prompt_id",
+        "session_id",
+        "transcript_path"
+      ]
+    },
+    {
+      "phase": "read-public",
+      "event": "PreToolUse",
+      "authenticated": true,
+      "cwdCurrent": true,
+      "fields": [
+        "cwd",
+        "effort",
+        "hook_event_name",
+        "permission_mode",
+        "prompt_id",
+        "session_id",
+        "tool_input",
+        "tool_name",
+        "tool_use_id",
+        "transcript_path"
+      ],
+      "toolName": "Read",
+      "inputFields": [
+        "file_path"
+      ],
+      "effortMetadata": {
+        "level": "high"
+      },
+      "decision": "allow"
+    }
+  ],
+  "children": [
+    {
+      "phase": "read-public",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "b921de0d6fc98ba4b01599eafca2089552920db89bb9ccc51d07b4aa3dcf050d",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 6009,
+      "stderrBytes": 0,
+      "rawPrivateSeen": false,
+      "authUnavailable": false,
+      "resultComplete": true
+    }
+  ],
+  "independence": "LOW",
+  "scope": "Actual pinned native CLI, fixed loopback synthetic provider/hooks, fresh automatic user settings; manual permissions and ordinary default toolset, no product adapter/IDE/human/real provider/OS/all-descendant traffic claim.",
+  "binarySha256": "84d61feeb1a07e5a5b3354d68432591cac18a5d38a419a30d86d0f3ad8cba397",
+  "driverSha256": "1b620462a7e75b214a020b7129485c6303b2675d69baa72857f5a84b20c7b26c"
+}

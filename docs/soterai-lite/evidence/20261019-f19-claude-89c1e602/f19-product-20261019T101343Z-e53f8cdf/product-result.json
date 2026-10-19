@@ -1,0 +1,491 @@
+{
+  "status": "INCOMPLETE_PRODUCT_MATRIX",
+  "scope": "ACTUAL_EXACT_VSIX_EDITOR_CONTROLLER_AND_PINNED_CLAUDE_NATIVE_CLI",
+  "independence": "LOW",
+  "checks": [
+    {
+      "id": "F19-N01",
+      "status": "PASS"
+    },
+    {
+      "id": "F19-N02",
+      "status": "PASS"
+    },
+    {
+      "id": "F19-N03",
+      "status": "PASS"
+    },
+    {
+      "id": "F19-N04",
+      "status": "FAIL",
+      "error": {
+        "name": "AssertionError",
+        "code": "ERR_ASSERTION"
+      },
+      "fixtureDeadline": false
+    }
+  ],
+  "requests": [
+    {
+      "phase": "provider-public",
+      "route": "/",
+      "bytes": 104793,
+      "upstreamAuth": true,
+      "publicSeen": false,
+      "maskedEnvSeen": false,
+      "privateOriginal": false,
+      "tools": [
+        "Agent",
+        "Bash",
+        "CronCreate",
+        "CronDelete",
+        "CronList",
+        "Edit",
+        "EnterWorktree",
+        "ExitWorktree",
+        "Glob",
+        "Grep",
+        "ListAgents",
+        "NotebookEdit",
+        "Read",
+        "ReportFindings",
+        "ScheduleWakeup",
+        "SendMessage",
+        "Skill",
+        "TaskCreate",
+        "TaskGet",
+        "TaskList",
+        "TaskStop",
+        "TaskUpdate",
+        "WebFetch",
+        "WebSearch",
+        "Workflow",
+        "Write",
+        "mcp__soterai_safe_read__soterai_read_project_file_safely"
+      ]
+    },
+    {
+      "phase": "read-public",
+      "route": "/",
+      "bytes": 104793,
+      "upstreamAuth": true,
+      "publicSeen": false,
+      "maskedEnvSeen": false,
+      "privateOriginal": false,
+      "tools": [
+        "Agent",
+        "Bash",
+        "CronCreate",
+        "CronDelete",
+        "CronList",
+        "Edit",
+        "EnterWorktree",
+        "ExitWorktree",
+        "Glob",
+        "Grep",
+        "ListAgents",
+        "NotebookEdit",
+        "Read",
+        "ReportFindings",
+        "ScheduleWakeup",
+        "SendMessage",
+        "Skill",
+        "TaskCreate",
+        "TaskGet",
+        "TaskList",
+        "TaskStop",
+        "TaskUpdate",
+        "WebFetch",
+        "WebSearch",
+        "Workflow",
+        "Write",
+        "mcp__soterai_safe_read__soterai_read_project_file_safely"
+      ]
+    }
+  ],
+  "hooks": [
+    {
+      "phase": "provider-public",
+      "code": 200,
+      "bytes": 561,
+      "event": "UserPromptSubmit",
+      "fields": [
+        "cwd",
+        "hook_event_name",
+        "permission_mode",
+        "prompt",
+        "prompt_id",
+        "session_id",
+        "transcript_path"
+      ],
+      "permissionMode": "default",
+      "effort": "undefined",
+      "privatePromptSeen": false,
+      "denied": false
+    },
+    {
+      "phase": "read-public",
+      "code": 200,
+      "bytes": 561,
+      "event": "UserPromptSubmit",
+      "fields": [
+        "cwd",
+        "hook_event_name",
+        "permission_mode",
+        "prompt",
+        "prompt_id",
+        "session_id",
+        "transcript_path"
+      ],
+      "permissionMode": "default",
+      "effort": "undefined",
+      "privatePromptSeen": false,
+      "denied": false
+    },
+    {
+      "phase": "read-public",
+      "code": 503,
+      "bytes": 685,
+      "event": "PreToolUse",
+      "tool": "Read",
+      "fields": [
+        "cwd",
+        "effort",
+        "hook_event_name",
+        "permission_mode",
+        "prompt_id",
+        "session_id",
+        "tool_input",
+        "tool_name",
+        "tool_use_id",
+        "transcript_path"
+      ],
+      "permissionMode": "default",
+      "effort": "object",
+      "inputFields": [
+        "file_path"
+      ],
+      "privatePromptSeen": false,
+      "denied": false
+    }
+  ],
+  "mcp": [
+    {
+      "phase": "provider-public",
+      "code": 200,
+      "bytes": 458,
+      "method": "server/discover"
+    },
+    {
+      "phase": "provider-public",
+      "code": 200,
+      "bytes": 341,
+      "method": "initialize"
+    },
+    {
+      "phase": "provider-public",
+      "code": 202,
+      "bytes": 54,
+      "method": "notifications/initialized"
+    },
+    {
+      "phase": "provider-public",
+      "code": 503,
+      "invalid": true
+    },
+    {
+      "phase": "provider-public",
+      "code": 200,
+      "bytes": 46,
+      "method": "tools/list"
+    },
+    {
+      "phase": "read-public",
+      "code": 200,
+      "bytes": 458,
+      "method": "server/discover"
+    },
+    {
+      "phase": "read-public",
+      "code": 200,
+      "bytes": 341,
+      "method": "initialize"
+    },
+    {
+      "phase": "read-public",
+      "code": 202,
+      "bytes": 54,
+      "method": "notifications/initialized"
+    },
+    {
+      "phase": "read-public",
+      "code": 503,
+      "invalid": true
+    },
+    {
+      "phase": "read-public",
+      "code": 200,
+      "bytes": 46,
+      "method": "tools/list"
+    }
+  ],
+  "modals": [
+    {
+      "phase": "idle",
+      "kind": "config",
+      "bytes": 1145,
+      "sha256": "75503f1359e0310e247f528c76884f7436439d191609f8a3f153150f975ecd62"
+    },
+    {
+      "phase": "idle",
+      "kind": "config",
+      "bytes": 1145,
+      "sha256": "75503f1359e0310e247f528c76884f7436439d191609f8a3f153150f975ecd62"
+    }
+  ],
+  "native": [
+    {
+      "phase": "provider-public",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "96913accea56c83879ee9d642d797847fc2fb062b32e17521b93bd2463982e95",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 4775,
+      "stderrBytes": 0,
+      "complete": true,
+      "privateOutputSeen": false
+    },
+    {
+      "phase": "read-public",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "exitCode": 1,
+      "signal": null,
+      "stdoutSha256": "48bb78fba8b5e6b79ef540573649e89c150d71cc463d3222a4ff59c819e13a6f",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 7399,
+      "stderrBytes": 0,
+      "complete": false,
+      "privateOutputSeen": false
+    }
+  ],
+  "phase": "read-public",
+  "limits": [
+    "Scripted native editor decisions/developer bootstrap; not clean installed VSIX or human review",
+    "Vendor webview prompt session UNVERIFIED; CLI text route only",
+    "Current owner badge Uncovered",
+    "Parent Node guards are not OS or all-descendant traffic certification"
+  ],
+  "deniedExternal": [],
+  "deniedSignals": [],
+  "deniedChildLaunches": [],
+  "deniedFileAccess": [],
+  "deniedDirectSpawns": [],
+  "deniedWorkerLaunches": [],
+  "providerUrl": "http://127.0.0.1:59609",
+  "cancelStatus": "CANCELLED",
+  "configureStatus": "APPLIED",
+  "controllerStages": [
+    {
+      "phase": "provider-public",
+      "method": "projectEligible",
+      "result": true
+    },
+    {
+      "phase": "provider-public",
+      "method": "read",
+      "file": "settings.json",
+      "result": "STRING_1546"
+    },
+    {
+      "phase": "provider-public",
+      "method": "read",
+      "file": ".claude.json",
+      "result": "STRING_1003"
+    },
+    {
+      "phase": "provider-public",
+      "method": "projectEligible",
+      "result": true
+    },
+    {
+      "phase": "provider-public",
+      "method": "read",
+      "file": "settings.json",
+      "result": "STRING_1546"
+    },
+    {
+      "phase": "provider-public",
+      "method": "read",
+      "file": ".claude.json",
+      "result": "STRING_1003"
+    },
+    {
+      "phase": "provider-public",
+      "method": "projectEligible",
+      "result": true
+    },
+    {
+      "phase": "provider-public",
+      "method": "read",
+      "file": "settings.json",
+      "result": "STRING_1546"
+    },
+    {
+      "phase": "provider-public",
+      "method": "read",
+      "file": ".claude.json",
+      "result": "STRING_1003"
+    },
+    {
+      "phase": "provider-public",
+      "method": "projectEligible",
+      "result": true
+    },
+    {
+      "phase": "provider-public",
+      "method": "read",
+      "file": "settings.json",
+      "result": "STRING_1546"
+    },
+    {
+      "phase": "provider-public",
+      "method": "read",
+      "file": ".claude.json",
+      "result": "STRING_1003"
+    },
+    {
+      "phase": "provider-public",
+      "method": "projectEligible",
+      "result": true
+    },
+    {
+      "phase": "provider-public",
+      "method": "read",
+      "file": "settings.json",
+      "result": "STRING_1546"
+    },
+    {
+      "phase": "provider-public",
+      "method": "read",
+      "file": ".claude.json",
+      "result": "STRING_1003"
+    },
+    {
+      "phase": "read-public",
+      "method": "projectEligible",
+      "result": true
+    },
+    {
+      "phase": "read-public",
+      "method": "read",
+      "file": "settings.json",
+      "result": "STRING_1546"
+    },
+    {
+      "phase": "read-public",
+      "method": "read",
+      "file": ".claude.json",
+      "result": "STRING_1003"
+    },
+    {
+      "phase": "read-public",
+      "method": "projectEligible",
+      "result": true
+    },
+    {
+      "phase": "read-public",
+      "method": "read",
+      "file": "settings.json",
+      "result": "STRING_1546"
+    },
+    {
+      "phase": "read-public",
+      "method": "read",
+      "file": ".claude.json",
+      "result": "STRING_1003"
+    },
+    {
+      "phase": "read-public",
+      "method": "projectEligible",
+      "result": true
+    },
+    {
+      "phase": "read-public",
+      "method": "read",
+      "file": "settings.json",
+      "result": "STRING_1546"
+    },
+    {
+      "phase": "read-public",
+      "method": "read",
+      "file": ".claude.json",
+      "result": "STRING_1003"
+    },
+    {
+      "phase": "read-public",
+      "method": "projectEligible",
+      "result": true
+    },
+    {
+      "phase": "read-public",
+      "method": "read",
+      "file": "settings.json",
+      "result": "STRING_1546"
+    },
+    {
+      "phase": "read-public",
+      "method": "read",
+      "file": ".claude.json",
+      "result": "STRING_1003"
+    },
+    {
+      "phase": "read-public",
+      "method": "projectEligible",
+      "result": true
+    },
+    {
+      "phase": "read-public",
+      "method": "read",
+      "file": "settings.json",
+      "result": "STRING_1546"
+    },
+    {
+      "phase": "read-public",
+      "method": "read",
+      "file": ".claude.json",
+      "result": "STRING_1003"
+    }
+  ],
+  "driverFailure": {
+    "name": "Error"
+  },
+  "children": [
+    {
+      "phase": "setup",
+      "role": "broker",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "phase": "provider-public",
+      "role": "ticket",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "phase": "read-public",
+      "role": "ticket",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    }
+  ],
+  "runtimeSha256": "eca2d74b331eaf44e887ecfee67cba56a3849ba56d5dc2e42d798c257f330c87"
+}

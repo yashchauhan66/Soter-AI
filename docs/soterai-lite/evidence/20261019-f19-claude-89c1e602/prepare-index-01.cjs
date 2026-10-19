@@ -1,0 +1,25 @@
+'use strict';
+const h=require('./evidence-lib-01.cjs'),{fs,path,assert,repo,base,sha,hash,read,inside,relative,fact,write,git,lines,current,receipt}=h;
+const parent='c6c78c9d71fdb09cc0790faa4671999f4a911c4b';assert.equal(lines(git('rev-parse','HEAD'))[0],parent);assert.deepEqual(lines(git('diff','--cached','--name-only')),[]);
+const acceptance=read(path.join(__dirname,'f19-acceptance-01.json'));assert.equal(acceptance.status,'PASS');current(acceptance.artifact);for(const input of acceptance.inputs)current(input);for(const command of acceptance.commands)receipt(command.name+'.txt');
+const sourceRoots=['apps/local-ai-broker/src','packages/core/src','packages/vscode-extension/src','packages/guard-core/src','packages/detectors/src','packages/soterai-lite/src'];
+const ownSources=new Set(read(path.join(__dirname,'implementation-progress-03.json')).sources.map(row=>row.path));
+const modified=lines(git('diff','--name-only','HEAD','--',...sourceRoots));for(const name of modified)assert(ownSources.has(name),'Unrelated source modification refused: '+name);
+const names=new Set([...modified,...acceptance.inputs.map(row=>row.path),'packages/vscode-extension/package.json','packages/soterai-lite/package.json','packages/vscode-extension/README.md','packages/soterai-lite/README.md','docs/vscode-extension-readiness.md','docs/soterai-lite/ledger.md','docs/soterai-lite/FEATURE-QUEUE.json','docs/soterai-lite/IMPLEMENTATION-PLAN.md','docs/soterai-lite/MASTER-PROMPT-20261016.txt','docs/soterai-lite/LITE-CATALOG.json','docs/soterai-lite/evidence/20261018-f16-gateway-policy-6e9a31d4/git-batch-01.cjs']);
+for(const name of lines(git('ls-files','--others','--exclude-standard','--',...sourceRoots))){
+ assert(/\/(?:Claude|claude)[^/]*\.(?:ts|test\.ts)$/.test(name)||/\/fixtures\/claude-(?:tools|protocol)-2\.1\.301-01\.json$/.test(name),'Unexpected untracked source refused: '+name);names.add(name);
+}
+const focused=read(path.join(__dirname,'focused-02.txt.result.json')).arguments.filter(name=>name.endsWith('.test.ts'));for(const name of focused)names.add(relative(path.resolve(repo,name)));
+const hosts=path.join(repo,'packages/vscode-extension/src/__tests__/host');for(const entry of fs.readdirSync(hosts,{withFileTypes:true}))if(entry.isFile()&&entry.name.endsWith('.ts'))names.add(relative(path.join(hosts,entry.name)));
+const previous='docs/soterai-lite/evidence/20261018-f18-cline-46a8c902';
+for(const name of lines(git('ls-files','--others','--exclude-standard','--',previous)))if(new RegExp('^'+previous+'/[a-z0-9.-]+\\.(json|txt)$').test(name))names.add(name);
+function walk(directory){for(const entry of fs.readdirSync(directory,{withFileTypes:true})){assert(!entry.isSymbolicLink());const file=path.join(directory,entry.name);if(entry.isDirectory()){if(/^(?:vsix-extracted-|prebuilt-)/.test(entry.name)||['extension','extensions','profile','profiles','node_modules','dist','builds','runtime','.git'].includes(entry.name))continue;walk(file);}else if(/\.(?:json|txt|md|ps1|cjs|ts|js)$/.test(entry.name))names.add(relative(file));}}
+walk(__dirname);
+const indexPath=base+'/f19-evidence-index-01.json',allowPath=base+'/f19-commit-allowlist-01.txt';assert(!names.has(indexPath)&&!names.has(allowPath));
+const tracked=new Set(lines(git('ls-files','--',...sourceRoots,'packages/vscode-extension/package.json','packages/soterai-lite/package.json','packages/vscode-extension/README.md','packages/soterai-lite/README.md','docs/vscode-extension-readiness.md','docs/soterai-lite')).filter(name=>names.has(name)));
+git.preload(parent,[...tracked]);
+const changed=[...names].filter(name=>!tracked.has(name)||sha(git('show',parent+':'+name))!==hash(inside(repo,name)));
+for(const name of changed)if(!name.startsWith(base+'/')&&!name.startsWith(previous+'/')&&!['docs/soterai-lite/ledger.md'].includes(name))assert(ownSources.has(name),'Unexpected changed indexed input refused: '+name);
+const expected=[...changed,indexPath,allowPath].sort();fs.writeFileSync(inside(repo,allowPath),expected.join('\n')+'\n',{flag:'wx'});names.add(allowPath);
+write('f19-evidence-index-01.json',{schemaVersion:1,parent,scope:'F19 exact pinned Claude native CLI/editor owner adapter, every packaged runtime input, affected tests/fixtures/docs and retained failures/successes; unrelated changes excluded.',entries:[...names].sort().map(name=>fact(inside(repo,name))),expectedCommitPaths:expected});
+console.log(JSON.stringify({status:'PASS_PREPARED_NOT_COMMITTED',indexed:names.size,paths:expected.length,artifact:acceptance.artifact.sha256}));

@@ -1,0 +1,113 @@
+import assert from "node:assert/strict";
+import { test } from "node:test";
+import { createHash } from "node:crypto";
+const policy = () => import("../adapters/ClaudeAdapterPolicy");
+const sha = (value: string) => createHash("sha256").update(value).digest("hex");
+const binding = { url: "http://127.0.0.1:12345/v1/ai/anthropic-compatible", credential: "TEST_ONLY_F19_CURRENT_GATEWAY",
+    hookUrl: "http://127.0.0.1:12346/claude/hooks", hookToken: "a".repeat(64), mcpUrl: "http://127.0.0.1:12346/claude/mcp", mcpToken: "b".repeat(64) };
+const original = () => ({ settings: JSON.stringify({ env: { ANTHROPIC_API_KEY: "TEST_ONLY_F19_OLD", PRESERVED_PUBLIC: "yes" },
+    permissions: { deny: ["Read(.env)"], allow: ["Read(public.txt)"] }, theme: "public" }), state: JSON.stringify({ mcpServers: { preserved: { type: "http", url: "http://127.0.0.1:20000/public" } }, nativePublic: "keep" }) });
+async function fixture() {
+    const module = await policy(), files: Record<"settings" | "state", string | undefined> = original(), saved = new Map<string, string>(); let writes = 0, reviews = 0;
+    const deps = { enabled: () => true, fingerprint: () => "synthetic-owner",
+        read: async (key: "settings" | "state") => files[key],
+        write: async (key: "settings" | "state", value: string | undefined) => { writes++; files[key] = value; },
+        backups: { store: async (_key: string, text: string) => { const handle = "saved-" + saved.size; saved.set(handle, text); return handle; },
+            retrieve: async (handle: string) => saved.get(handle) ?? null },
+        confirm: async (preview: unknown) => { reviews++; const text = JSON.stringify(preview); for (const secret of [binding.credential, binding.hookToken, binding.mcpToken, "TEST_ONLY_F19_OLD"]) assert.equal(text.includes(secret), false); return true; } };
+    return { module, files, saved, deps, counts: () => ({ writes, reviews }), plan: module.createClaudePlan(files, binding) };
+}
+test("F19-P01 pin verifies manifest/runtime/native digest and exact version/main", async () => {
+    const { verifyClaudeArtifact } = await policy(), manifest = JSON.stringify({ publisher: "Anthropic", name: "claude-code", version: "2.1.301", main: "./extension.js" }), runtime = "public runtime", native = sha("public native");
+    const pin = { publisher: "Anthropic", name: "claude-code", version: "2.1.301", manifestSha256: sha(manifest), runtimeSha256: sha(runtime), nativeSha256: native };
+    assert.equal(verifyClaudeArtifact(Buffer.from(manifest), Buffer.from(runtime), native, pin), true);
+    for (const [m, r, n] of [[manifest + " ", runtime, native], [manifest, runtime + " ", native], [manifest, runtime, sha("changed")], [manifest.replace("./extension.js", "./other.js"), runtime, native]]) {
+        assert.equal(verifyClaudeArtifact(Buffer.from(m), Buffer.from(r), n, pin), false);
+    }
+});
+test("F19-P02 private plans/reviews/receipts never serialize credentials or originals", async () => {
+    const f = await fixture();
+    for (const value of [f.plan, f.plan.preview(), await f.plan.apply(f.deps)]) for (const secret of [binding.credential, binding.hookToken, binding.mcpToken, "TEST_ONLY_F19_OLD"]) assert.equal(JSON.stringify(value).includes(secret), false);
+});
+test("F19-P03 both encrypted backups exist before first write and default vendor denies remain", async () => {
+    const f = await fixture(), write = f.deps.write; f.deps.write = async (key, value) => { assert.equal(f.saved.size, 2); await write(key, value); };
+    assert.equal((await f.plan.apply(f.deps)).status, "APPLIED"); assert.equal(f.counts().reviews, 1);
+    const settings = JSON.parse(f.files.settings!), state = JSON.parse(f.files.state!);
+    assert.deepEqual(settings.permissions.deny, ["Read(.env)"]); assert.deepEqual(settings.permissions.allow, ["Read(public.txt)"]); assert.equal(settings.permissions.defaultMode, "default");
+    assert.equal(settings.env.ANTHROPIC_BASE_URL, binding.url); assert.equal(settings.env.ANTHROPIC_API_KEY, ""); assert.equal(settings.env.ANTHROPIC_AUTH_TOKEN, binding.credential);
+    assert.equal(settings.env.PRESERVED_PUBLIC, "yes"); assert.equal(settings.alwaysThinkingEnabled, false);
+    for (const event of ["UserPromptSubmit", "PreToolUse"]) { const hook = settings.hooks[event][0].hooks[0]; assert.equal(hook.type, "http"); assert.equal(hook.onFailure, "block"); assert.equal(hook.url, binding.hookUrl); assert.equal(hook.headers.Authorization, "Bearer " + binding.hookToken); }
+    assert.equal(state.mcpServers.soterai_safe_read.type, "http"); assert.equal(state.mcpServers.soterai_safe_read.url, binding.mcpUrl); assert.equal(state.nativePublic, "keep");
+});
+test("F19-P04 exact complete undo returns original byte snapshots", async () => {
+    const f = await fixture(), before = { ...f.files }, result = await f.plan.apply(f.deps);
+    assert.equal((await f.module.undoClaudeFiles(result.receipt, f.deps)).status, "RESTORED"); assert.deepEqual(f.files, before);
+});
+test("F19-P05 field-aware undo preserves vendor startup metadata and unrelated MCP edits", async () => {
+    const f = await fixture(), before = JSON.parse(f.files.state!), result = await f.plan.apply(f.deps);
+    const state = JSON.parse(f.files.state!); state.firstStartVersion = "2.1.301"; state.migrations = { public: true }; state.mcpServers.newPublic = { type: "http", url: "http://127.0.0.1:20001/public" }; f.files.state = JSON.stringify(state);
+    assert.equal(await f.module.claudeFilesCurrent(result.receipt, f.deps), true);
+    assert.equal((await f.module.undoClaudeFiles(result.receipt, f.deps)).status, "RESTORED");
+    const after = JSON.parse(f.files.state!); assert.equal(after.firstStartVersion, "2.1.301"); assert.deepEqual(after.migrations, { public: true }); assert.ok(after.mcpServers.newPublic);
+    assert.equal(after.mcpServers.soterai_safe_read, undefined); assert.deepEqual(after.mcpServers.preserved, before.mcpServers.preserved); assert.equal(f.files.settings, original().settings);
+});
+test("F19-P06 later owned MCP changes and settings drift withhold undo without writes", async () => {
+    for (const key of ["settings", "state"] as const) {
+        const f = await fixture(), result = await f.plan.apply(f.deps);
+        if (key === "settings") f.files.settings += " "; else { const state = JSON.parse(f.files.state!); state.mcpServers.soterai_safe_read.url += "/changed"; f.files.state = JSON.stringify(state); }
+        const changed = { ...f.files }, writes = f.counts().writes;
+        assert.equal(await f.module.claudeFilesCurrent(result.receipt, f.deps), false);
+        assert.equal((await f.module.undoClaudeFiles(result.receipt, f.deps)).status, "CHANGED"); assert.equal(f.counts().writes, writes); assert.deepEqual(f.files, changed);
+    }
+});
+test("F19-P07 cancellation, disabled flag and owner drift create no write/backup authority", async () => {
+    for (const kind of ["cancel", "disabled", "drift"]) {
+        const f = await fixture(); if (kind === "cancel") f.deps.confirm = async () => false;
+        if (kind === "disabled") f.deps.enabled = () => false;
+        if (kind === "drift") f.deps.confirm = async () => { f.deps.fingerprint = () => "other"; return true; };
+        assert.notEqual((await f.plan.apply(f.deps)).status, "APPLIED"); assert.equal(f.counts().writes, 0); assert.equal(f.saved.size, 0);
+    }
+});
+test("F19-P08 settings drift during approval invalidates complete plan", async () => {
+    const f = await fixture(); f.deps.confirm = async () => { f.files.settings += " "; return true; };
+    assert.equal((await f.plan.apply(f.deps)).status, "CHANGED"); assert.equal(f.counts().writes, 0);
+});
+test("F19-P09 backup failure precedes writes and exceptions remain value-free", async () => {
+    const f = await fixture(); f.deps.backups.store = async () => { throw Error(binding.credential); };
+    const result = await f.plan.apply(f.deps); assert.equal(result.status, "UNAVAILABLE"); assert.equal(f.counts().writes, 0); assert.equal(JSON.stringify(result).includes(binding.credential), false);
+});
+test("F19-P10 partial apply restores exact unchanged owned files and preserves backups", async () => {
+    const f = await fixture(), before = { ...f.files }, write = f.deps.write; let calls = 0;
+    f.deps.write = async (key, value) => { if (++calls === 2) throw Error("synthetic write failure"); await write(key, value); };
+    assert.equal((await f.plan.apply(f.deps)).status, "ROLLED_BACK"); assert.deepEqual(f.files, before); assert.equal(f.saved.size, 2);
+});
+test("F19-P11 post-write throw is detected and owned after-state is safely restored", async () => {
+    const f = await fixture(), before = { ...f.files }, write = f.deps.write; let first = true;
+    f.deps.write = async (key, value) => { await write(key, value); if (first) { first = false; throw Error("synthetic postwrite"); } };
+    assert.equal((await f.plan.apply(f.deps)).status, "ROLLED_BACK"); assert.deepEqual(f.files, before);
+});
+test("F19-P12 absent state undo keeps later native metadata and removes only owned namespace", async () => {
+    const f = await fixture(); f.files.state = undefined; const plan = f.module.createClaudePlan(f.files, binding), result = await plan.apply(f.deps);
+    const state = JSON.parse(f.files.state!); state.firstStartTime = "synthetic"; f.files.state = JSON.stringify(state);
+    assert.equal((await f.module.undoClaudeFiles(result.receipt, f.deps)).status, "RESTORED");
+    assert.equal(JSON.parse(f.files.state!).firstStartTime, "synthetic"); assert.equal(JSON.parse(f.files.state!).mcpServers, undefined);
+});
+test("F19-P13 corrupt backups cannot restore unverified content", async () => {
+    const f = await fixture(), result = await f.plan.apply(f.deps), before = { ...f.files }; f.deps.backups.retrieve = async () => '{"version":1,"present":true,"before":"SYNTHETIC_UNTRUSTED"}';
+    assert.notEqual((await f.module.undoClaudeFiles(result.receipt, f.deps)).status, "RESTORED"); assert.deepEqual(f.files, before);
+});
+test("F19-P14 custom hook, helper, disabled gate, unknown schema and owned namespace refuse", async () => {
+    const { createClaudePlan } = await policy();
+    for (const settings of [
+        { hooks: { UserPromptSubmit: [{ hooks: [{ type: "command", command: "public" }] }] } },
+        { disableAllHooks: true }, { apiKeyHelper: "public" }, { permissions: { defaultMode: "bypassPermissions" } },
+        { env: { ANTHROPIC_CUSTOM_HEADERS: "public" } }, { model: ["malformed"] }, { settingsSchemaVersion: 999 },
+    ]) assert.throws(() => createClaudePlan({ ...original(), settings: JSON.stringify(settings) }, binding), /unavailable|unsupported/i);
+    assert.throws(() => createClaudePlan({ ...original(), state: '{"mcpServers":{"soterai_safe_read":{}}}' }, binding), /unavailable|unsupported/i);
+    for (const change of [{ url: "https://synthetic.invalid" }, { hookUrl: binding.hookUrl + "?alias=1" }, { hookToken: "invalid" }, { mcpUrl: "http://localhost:12346/claude/mcp" }]) assert.throws(() => createClaudePlan(original(), { ...binding, ...change }), /unavailable|unsupported/i);
+});
+test("F19-P15 abort wakes pending review without waiting for unresolved UI", async () => {
+    const f = await fixture(), controller = new AbortController(); f.deps.confirm = async () => new Promise<boolean>(() => {});
+    const pending = f.plan.apply(f.deps, controller.signal); setImmediate(() => controller.abort());
+    assert.equal((await pending).status, "CANCELLED"); assert.equal(f.counts().writes, 0);
+});

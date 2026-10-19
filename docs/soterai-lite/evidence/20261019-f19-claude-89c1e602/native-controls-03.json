@@ -1,0 +1,398 @@
+{
+  "thinking": {
+    "type": "adaptive",
+    "display": "updates"
+  },
+  "output_config": {
+    "effort": "high"
+  },
+  "context_management": {
+    "edits": [
+      {
+        "type": "clear_thinking_20251015",
+        "keep": "all"
+      }
+    ]
+  },
+  "safeguards": [
+    {
+      "type": "dangerous_tool_use",
+      "classifier_context": {
+        "v": 1,
+        "permission_mode": "auto",
+        "platform": "windows",
+        "live_cwd": "/d/SoterAI-Lite-test-profiles/f19-vendor-20261019T051639Z-c5c9ba37/provider-public/workspace",
+        "home_dir": "/d/SoterAI-Lite-test-profiles/f19-vendor-20261019T051639Z-c5c9ba37/provider-public/profile",
+        "rule_roots": {
+          "userSettings": "/d/SoterAI-Lite-test-profiles/f19-vendor-20261019T051639Z-c5c9ba37/provider-public/profile/claude",
+          "projectSettings": "/d/SoterAI-Lite-test-profiles/f19-vendor-20261019T051639Z-c5c9ba37/provider-public/workspace",
+          "localSettings": "/d/SoterAI-Lite-test-profiles/f19-vendor-20261019T051639Z-c5c9ba37/provider-public/workspace",
+          "flagSettings": "/d/SoterAI-Lite-test-profiles/f19-vendor-20261019T051639Z-c5c9ba37/provider-public/profile",
+          "policySettings": "/d/SoterAI-Lite-test-profiles/f19-vendor-20261019T051639Z-c5c9ba37/provider-public/workspace",
+          "cliArg": "/d/SoterAI-Lite-test-profiles/f19-vendor-20261019T051639Z-c5c9ba37/provider-public/workspace",
+          "command": "/d/SoterAI-Lite-test-profiles/f19-vendor-20261019T051639Z-c5c9ba37/provider-public/workspace",
+          "session": "/d/SoterAI-Lite-test-profiles/f19-vendor-20261019T051639Z-c5c9ba37/provider-public/workspace",
+          "toolsNarrowing": "/d/SoterAI-Lite-test-profiles/f19-vendor-20261019T051639Z-c5c9ba37/provider-public/workspace",
+          "mcpServerPolicy": "/d/SoterAI-Lite-test-profiles/f19-vendor-20261019T051639Z-c5c9ba37/provider-public/workspace",
+          "hostCredential": "/d/SoterAI-Lite-test-profiles/f19-vendor-20261019T051639Z-c5c9ba37/provider-public/workspace"
+        },
+        "trusted_directories": {
+          "primary": {
+            "path": "/d/SoterAI-Lite-test-profiles/f19-vendor-20261019T051639Z-c5c9ba37/provider-public/workspace",
+            "resolved": [
+              "/d/SoterAI-Lite-test-profiles/f19-vendor-20261019T051639Z-c5c9ba37/provider-public/workspace"
+            ]
+          },
+          "additional": [],
+          "network": [],
+          "block_reads_outside_working_directories": false
+        },
+        "rules": {
+          "allow": [
+            {
+              "rule": "Read",
+              "source": "flagSettings"
+            }
+          ],
+          "deny": [
+            {
+              "rule": "Agent",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "Bash",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "Glob",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "Grep",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "ExitPlanMode",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "Read",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "Edit",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "Write",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "NotebookEdit",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "memory_list",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "memory_read",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "memory_write",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "WebFetch",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "TodoWrite",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "ReportFindings",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "WebSearch",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "TaskStop",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "AskUserQuestion",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "SendFeedback",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "Skill",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "EnterPlanMode",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "DesignSync",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "Projects",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "TaskCreate",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "TaskGet",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "TaskUpdate",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "TaskList",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "Artifact",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "ArtifactComments",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "ArtifactData",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "ArtifactCheck",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "AppifactRepl",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "LSP",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "EnterWorktree",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "ExitWorktree",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "SendMessage",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "SendFile",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "ListAgents",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "ShareOnboardingGuide",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "Poll",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "Workflow",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "CronCreate",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "CronDelete",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "CronList",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "ScheduleWakeup",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "RemoteTrigger",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "SearchMcpRegistry",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "SuggestConnectors",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "ShowOnboardingRolePicker",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "OfferChromeSetup",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "ReadNotifications",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "enable__mcp__claude-in-chrome",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "enable__mcp__remote-devices__Claude_Browser",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "enable__mcp__remote-devices__computer",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "request_computer",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "ListConnectors",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "SearchPlugins",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "SearchSkills",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "SuggestPluginInstall",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "SuggestSkills",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "ListPlugins",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "ListSkills",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "Monitor",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "SendUserMessage",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "SendUserFile",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "propose_skills",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "ProposeGoal",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "PublishPlugin",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "PushNotification",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "FetchInboxMessage",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "EndConversation",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "ListMcpResourcesTool",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "ReadMcpResourceTool",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "ReadMcpResourceDirTool",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "WaitForMcpServers",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "GetTask",
+              "source": "toolsNarrowing"
+            },
+            {
+              "rule": "PowerShell",
+              "source": "toolsNarrowing"
+            }
+          ],
+          "ask": []
+        },
+        "auto_mode": {
+          "allow": [],
+          "soft_deny": [],
+          "hard_deny": [],
+          "environment": []
+        },
+        "artifact_consent_holdback": false,
+        "case_insensitive_paths": true,
+        "restricted": false,
+        "is_remote_mode": false,
+        "classify_all_shell": false,
+        "user_identity": "USER",
+        "git_state": {
+          "cwd": "/d/SoterAI-Lite-test-profiles/f19-vendor-20261019T051639Z-c5c9ba37/provider-public/workspace",
+          "root": null,
+          "branch": null,
+          "default_branch": null,
+          "status": null,
+          "visibility": {
+            "origin": null,
+            "push_remote": null,
+            "remotes": [],
+            "visibility_cache": []
+          },
+          "error": "not_a_repo"
+        }
+      }
+    }
+  ]
+}

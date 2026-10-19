@@ -1,0 +1,102 @@
+﻿TAP version 13
+# Subtest: F19-GT01 observed 30-to-39 string public native tool conversation remains inspected and usable
+not ok 1 - F19-GT01 observed 30-to-39 string public native tool conversation remains inspected and usable
+  ---
+  duration_ms: 24.5729
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\claudeConversationBudget.test.ts:2:2742'
+  failureType: 'testCodeFailure'
+  error: 'Gateway policy withheld protected data'
+  code: 'gateway_limit'
+  stack: |-
+    fail (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\apps\local-ai-broker\src\GatewayBoundary.ts:10:67)
+    strings (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\apps\local-ai-broker\src\GatewayBoundary.ts:16:89)
+    strings (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\apps\local-ai-broker\src\GatewayBoundary.ts:18:70)
+    strings (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\apps\local-ai-broker\src\GatewayBoundary.ts:17:62)
+    claudeSchemaStrings (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\apps\local-ai-broker\src\GatewayBoundary.ts:65:47)
+    GatewayBoundary.#inspect (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\apps\local-ai-broker\src\GatewayBoundary.ts:107:54)
+    GatewayBoundary.prepareRequest (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\apps\local-ai-broker\src\GatewayBoundary.ts:149:18)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\claudeConversationBudget.test.ts:22:93)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+  ...
+# Subtest: F19-GT02 native tool result, tool identifier and split public-text carriers retain exact matching
+not ok 2 - F19-GT02 native tool result, tool identifier and split public-text carriers retain exact matching
+  ---
+  duration_ms: 12.0569
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\claudeConversationBudget.test.ts:2:3040'
+  failureType: 'testCodeFailure'
+  error: |-
+    The validation function is expected to return "true". Received false
+    
+    Caught error:
+    
+    Error: Gateway policy withheld protected data
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\claudeConversationBudget.test.ts:30:22)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F19-GT03 33 ordinary content strings still exceed the original content budget
+ok 3 - F19-GT03 33 ordinary content strings still exceed the original content budget
+  ---
+  duration_ms: 1.5389
+  type: 'test'
+  ...
+# Subtest: F19-GT04 only fixed validated protocol literals receive their separate bounded count
+not ok 4 - F19-GT04 only fixed validated protocol literals receive their separate bounded count
+  ---
+  duration_ms: 2.7276
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\claudeConversationBudget.test.ts:2:4104'
+  failureType: 'testCodeFailure'
+  error: |-
+    Got unwanted exception.
+    Actual message: "Gateway policy withheld protected data"
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  actual:
+  error: 'Gateway policy withheld protected data'
+  stack: |-
+    fail (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\apps\local-ai-broker\src\GatewayBoundary.ts:10:67)
+    strings (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\apps\local-ai-broker\src\GatewayBoundary.ts:16:89)
+    strings (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\apps\local-ai-broker\src\GatewayBoundary.ts:18:70)
+    strings (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\apps\local-ai-broker\src\GatewayBoundary.ts:17:62)
+    claudeSchemaStrings (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\apps\local-ai-broker\src\GatewayBoundary.ts:65:47)
+    GatewayBoundary.#inspect (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\apps\local-ai-broker\src\GatewayBoundary.ts:107:54)
+    GatewayBoundary.prepareRequest (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\apps\local-ai-broker\src\GatewayBoundary.ts:149:18)
+    <anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\claudeConversationBudget.test.ts:40:37)
+    getActual (node:assert:531:5)
+    Function.doesNotThrow (node:assert:697:32)
+  operator: 'doesNotThrow'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\claudeConversationBudget.test.ts:40:16)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F19-GT05 ordinary F16/F18 and disabled-Claude limits do not gain protocol-literal allowances
+ok 5 - F19-GT05 ordinary F16/F18 and disabled-Claude limits do not gain protocol-literal allowances
+  ---
+  duration_ms: 1.6581
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 2
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 592.9506

@@ -11,6 +11,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { CLINE_PIN } from "../adapters/ClineAdapterPolicy";
+import { CLAUDE_PIN } from "../adapters/ClaudeAdapterPolicy";
 
 const extensionRoot = join(__dirname, "..", "..");
 const manifest = JSON.parse(readFileSync(join(extensionRoot, "package.json"), "utf8"));
@@ -75,7 +76,8 @@ describe("README accuracy", () => {
         // bound to its actual product pin; another vendor version still fails.
         const engineFloor = String(manifest.engines?.vscode ?? "").replace(/^[^\d]*/, "");
         const allowed = new Set([manifest.version, engineFloor].filter(Boolean));
-        const productClaims = readme.replaceAll(`Cline **${CLINE_PIN.version}**`, "Cline [pinned vendor]");
+        const productClaims = readme.replaceAll("Cline **" + CLINE_PIN.version + "**", "Cline [pinned vendor]")
+            .replaceAll("Claude Code **" + CLAUDE_PIN.version + "**", "Claude Code [pinned vendor]");
         const versions = [...new Set([...productClaims.matchAll(/\b\d+\.\d+\.\d+\b/g)].map((m) => m[0]))];
         const stale = versions.filter((v) => !allowed.has(v));
         assert.deepEqual(

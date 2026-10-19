@@ -1,0 +1,7 @@
+F19 transaction review refinement
+
+The owned settings and native user-state profiles are capped at 48 KiB each, including the proposed result. A full previous snapshot is embedded as one string in an encrypted recovery envelope; the shared bounded parser cannot restore an arbitrarily large embedded string. Refusing oversized profiles before writes preserves the existing decoder's bounds and ensures the supported snapshot roundtrip. This limits the profile size, not the original gateway body limits.
+
+Both encrypted backups and a durable value-free prepared receipt must exist outside the project before the first vendor configuration write. The prepared receipt contains hashes, backup handles, workspace/profile paths and ownership metadata; no provider values, original settings, hook capability or MCP capability. A prepared-receipt failure means no vendor configuration write. A later editor-state persistence failure withdraws the live route and attempts only guarded restoration, retaining the prepared receipt and encrypted backups.
+
+Original module-missing contract baselines remain NOT_EXECUTED behavior contracts. The first hook/bridge before/after launches failed with sandbox spawn EPERM before tests; corrected native workers ran. The first actual hook/bridge run was 30 PASS/1 FAIL because a PreToolUse fixture retained UserPromptSubmit's prompt field. The corrected exact event shape passes all31. These facts do not establish actual vendor product acceptance.

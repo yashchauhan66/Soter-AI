@@ -129,6 +129,7 @@
         "soterai.lite.gatewayBase64Bodies",
         "soterai.lite.gatewayPolicy",
         "soterai.lite.safeReadMcp",
+        "soterai.lite.claudeAdapter",
         "soterai.lite.clineAdapter"
       ]
     }
@@ -1244,6 +1245,21 @@
         "command": "soterai.clineAdapterStatus",
         "title": "Show Pinned Cline Adapter Status",
         "category": "SoterAI"
+      },
+      {
+        "command": "soterai.configurePinnedClaude",
+        "title": "Review Pinned Claude Code Setup",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.restorePinnedClaude",
+        "title": "Restore Previous Claude Code Config",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.claudeAdapterStatus",
+        "title": "Show Pinned Claude Code Adapter Status",
+        "category": "SoterAI"
       }
     ],
     "viewsContainers": {
@@ -1894,6 +1910,12 @@
           "default": true,
           "scope": "machine",
           "description": "Offer the approved saved-file MCP reader through this editor's ephemeral private session. Every read requires native confirmation of the exact masked view; requester identity is unverified. Disabling revokes sessions and withdraws the route without releasing originals."
+        },
+        "soterai.lite.claudeAdapter": {
+          "type": "boolean",
+          "default": true,
+          "scope": "machine",
+          "description": "Enable reviewed setup for the pinned Windows Claude Code manual text mode with an owned gateway and approved HTTP MCP reader. Unverified current instances remain Uncovered. Disabling withdraws managed sessions while saved project denies remain; direct context, unsupported attachments and independent traffic are outside verified routes."
         },
         "soterai.lite.clineAdapter": {
           "type": "boolean",
@@ -2826,6 +2848,18 @@
         },
         {
           "command": "soterai.clineAdapterStatus",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.configurePinnedClaude",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.restorePinnedClaude",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.claudeAdapterStatus",
           "when": "soterai.advancedCommands"
         }
       ]

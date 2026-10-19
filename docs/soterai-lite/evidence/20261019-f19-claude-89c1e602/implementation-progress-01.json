@@ -1,0 +1,437 @@
+{
+  "status": "F19_PARTIAL_UNCOMMITTED_NOT_ACCEPTANCE",
+  "before": {
+    "tests": 5,
+    "pass": 1,
+    "fail": 4,
+    "skipped": 0,
+    "cancelled": 0
+  },
+  "after": {
+    "tests": 27,
+    "pass": 24,
+    "fail": 3,
+    "skipped": 0,
+    "cancelled": 0
+  },
+  "matcherBefore": {
+    "tests": 3,
+    "pass": 1,
+    "fail": 2,
+    "skipped": 0,
+    "cancelled": 0
+  },
+  "combined": {
+    "tests": 33,
+    "pass": 33,
+    "fail": 0,
+    "skipped": 0,
+    "cancelled": 0
+  },
+  "native": {
+    "02": {
+      "status": "PASS_SCOPED_VENDOR_FEASIBILITY",
+      "root": "D:\\SoterAI-Lite-test-profiles\\f19-vendor-20261019T051410Z-a04f674f",
+      "record": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/vendor-feasibility-02.json",
+        "bytes": 10765,
+        "sha256": "3e335304922492777e4860b0011115b5fc6b4e3699658294b3f2e8ee22028c1a"
+      },
+      "checks": [
+        {
+          "phase": "provider-public",
+          "status": "PASS"
+        },
+        {
+          "phase": "read-public",
+          "status": "PASS"
+        },
+        {
+          "phase": "read-private",
+          "status": "PASS"
+        },
+        {
+          "phase": "prompt-outage",
+          "status": "PASS"
+        },
+        {
+          "phase": "read-hook-failure",
+          "status": "PASS"
+        }
+      ]
+    },
+    "04": {
+      "status": "PASS_SCOPED_VENDOR_FEASIBILITY",
+      "root": "D:\\SoterAI-Lite-test-profiles\\f19-vendor-20261019T052024Z-e25c51ba",
+      "record": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/vendor-feasibility-04.json",
+        "bytes": 11213,
+        "sha256": "e42f10f714842bfdbc7b0fa18c9dbeab9139be7eb1282a95804d30f27ce4989f"
+      },
+      "checks": [
+        {
+          "phase": "provider-public",
+          "status": "PASS"
+        },
+        {
+          "phase": "read-public",
+          "status": "PASS"
+        },
+        {
+          "phase": "read-private",
+          "status": "PASS"
+        },
+        {
+          "phase": "prompt-outage",
+          "status": "PASS"
+        },
+        {
+          "phase": "read-hook-failure",
+          "status": "PASS"
+        }
+      ]
+    },
+    "05": {
+      "status": "PASS_SCOPED_DEFAULT_TOOLSET_PUBLIC",
+      "root": "D:\\SoterAI-Lite-test-profiles\\f19-vendor-20261019T052414Z-feabbc8c",
+      "record": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/vendor-feasibility-05.json",
+        "bytes": 2862,
+        "sha256": "c95fac7da3420647a5880bb64966fe288e2f3eb09540a9420783b08b9dcd1084"
+      },
+      "checks": [
+        {
+          "phase": "provider-public",
+          "status": "PASS"
+        }
+      ]
+    },
+    "06": {
+      "status": "PASS_SCOPED_DEFAULT_SYSTEM_AND_TOOLS_PUBLIC",
+      "root": "D:\\SoterAI-Lite-test-profiles\\f19-vendor-20261019T072902Z-0c1222da",
+      "record": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/vendor-feasibility-06.json",
+        "bytes": 2872,
+        "sha256": "51d1c04054d1239e975a41b8e2e7d998482b176cd763b7443c84b574c37ec021"
+      },
+      "checks": [
+        {
+          "phase": "provider-public",
+          "status": "PASS"
+        }
+      ]
+    },
+    "07": {
+      "status": "PASS_SCOPED_HTTP_MCP_USER_PROFILE",
+      "root": "D:\\SoterAI-Lite-test-profiles\\f19-vendor-20261019T074806Z-05267610",
+      "record": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/vendor-feasibility-07.json",
+        "bytes": 4870,
+        "sha256": "43a61e15edef235a73480619f632323ff4318e28b4e8109063199a1abaf11f98"
+      },
+      "checks": [
+        {
+          "phase": "mcp-public",
+          "status": "PASS"
+        }
+      ]
+    }
+  },
+  "commands": [
+    {
+      "name": "gateway-before-01",
+      "command": {
+        "file": "node",
+        "arguments": [
+          "--import",
+          "tsx",
+          "--test",
+          "--test-concurrency=1",
+          "packages/vscode-extension/src/__tests__/claudeGatewaySchemas.test.ts"
+        ]
+      },
+      "exitCode": 1,
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/gateway-before-01.txt",
+        "bytes": 5329,
+        "sha256": "b61123acbd80d2dcab1344e5d0b58b20269bae86322e855f89fbd27c0c667061"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/gateway-before-01.txt.result.json",
+        "bytes": 566,
+        "sha256": "f7e6ba92bdcaad6f8fe139567b830953c675229200c2221d7198f01a2d209deb"
+      }
+    },
+    {
+      "name": "gateway-after-01",
+      "command": {
+        "file": "node",
+        "arguments": [
+          "--import",
+          "tsx",
+          "--test",
+          "--test-concurrency=1",
+          "packages/vscode-extension/src/__tests__/claudeGatewaySchemas.test.ts",
+          "packages/vscode-extension/src/__tests__/clineGatewaySchemas.test.ts",
+          "packages/vscode-extension/src/__tests__/gatewayPolicyBoundary.test.ts"
+        ]
+      },
+      "exitCode": 1,
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/gateway-after-01.txt",
+        "bytes": 8811,
+        "sha256": "eec114c1ba009fbc4b6af2adfb79bee723a44568e43f8cdf4e9a81f8720d9ee3"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/gateway-after-01.txt.result.json",
+        "bytes": 755,
+        "sha256": "181d5b009c59cd6ad67c551d9f65ac74aa9d6dd9c5581233ab3f350f13fdd6be"
+      }
+    },
+    {
+      "name": "matcher-before-01",
+      "command": {
+        "file": "node",
+        "arguments": [
+          "--import",
+          "tsx",
+          "--test",
+          "packages/vscode-extension/src/__tests__/claudeMatcherBudget.test.ts"
+        ]
+      },
+      "exitCode": 1,
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/matcher-before-01.txt",
+        "bytes": 2808,
+        "sha256": "c815d6efd77faabfc09f2b96e71aa24fef87ddf41e3999f9d805e53a98da991e"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/matcher-before-01.txt.result.json",
+        "bytes": 518,
+        "sha256": "28d81d925f16c227d60a64f8d8ac4153c5e1eaebbedea6ba06e8fc6f4f7f2adc"
+      }
+    },
+    {
+      "name": "gateway-matcher-after-02",
+      "command": {
+        "file": "node",
+        "arguments": [
+          "--import",
+          "tsx",
+          "--test",
+          "--test-concurrency=1",
+          "packages/vscode-extension/src/__tests__/claudeMatcherBudget.test.ts",
+          "packages/vscode-extension/src/__tests__/claudeGatewaySchemas.test.ts",
+          "packages/vscode-extension/src/__tests__/clineMatcherBudget.test.ts",
+          "packages/vscode-extension/src/__tests__/clineGatewaySchemas.test.ts",
+          "packages/vscode-extension/src/__tests__/gatewayPolicyBoundary.test.ts"
+        ]
+      },
+      "exitCode": 0,
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/gateway-matcher-after-02.txt",
+        "bytes": 7378,
+        "sha256": "295243cf264a02a59176c23172782b270e64d46371a8347e99220738706920de"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/gateway-matcher-after-02.txt.result.json",
+        "bytes": 950,
+        "sha256": "5d5182fc4317a52752ac7491baef8f08ac4072a14711b8289e76e2e8977daf6a"
+      }
+    },
+    {
+      "name": "matcher-diagnostic-launch-01",
+      "command": {
+        "file": "node",
+        "arguments": [
+          "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/diagnose-matcher-01.cjs"
+        ]
+      },
+      "exitCode": 0,
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/matcher-diagnostic-launch-01.txt",
+        "bytes": 628,
+        "sha256": "16751fe3e537de3664c2385d07624890515ef688e246fbbef0ad6fd959385a8a"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/matcher-diagnostic-launch-01.txt.result.json",
+        "bytes": 443,
+        "sha256": "1261a189bebe8fe9016525379919cfe95efd10e4d5d6c6483260545acd61de0e"
+      }
+    },
+    {
+      "name": "vendor-feasibility-launch-01",
+      "command": {
+        "file": "node",
+        "arguments": [
+          "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/probe-vendor-01.cjs"
+        ]
+      },
+      "exitCode": 1,
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/vendor-feasibility-launch-01.txt",
+        "bytes": 694,
+        "sha256": "f2e05e62ac7adbde803f3cbfa304c0ba61ac9839addd7864ad823e4951d1a95e"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/vendor-feasibility-launch-01.txt.result.json",
+        "bytes": 439,
+        "sha256": "32ee57edeaac7faa06347df1998ce0489ebf054ddd2fbcbc4830193cfd3fc857"
+      }
+    },
+    {
+      "name": "vendor-feasibility-launch-02",
+      "command": {
+        "file": "node",
+        "arguments": [
+          "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/probe-vendor-02.cjs"
+        ]
+      },
+      "exitCode": 0,
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/vendor-feasibility-launch-02.txt",
+        "bytes": 695,
+        "sha256": "f2bd6444af072a202a82c37281fb5ef56052c641830995c339cf6eec2b5c7c7a"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/vendor-feasibility-launch-02.txt.result.json",
+        "bytes": 439,
+        "sha256": "e85196cc7eaa135391037a2e57c1aada961ffa56feed2cf1dfbf5085bea358dc"
+      }
+    },
+    {
+      "name": "vendor-feasibility-launch-03",
+      "command": {
+        "file": "node",
+        "arguments": [
+          "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/probe-vendor-03.cjs"
+        ]
+      },
+      "exitCode": 1,
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/vendor-feasibility-launch-03.txt",
+        "bytes": 694,
+        "sha256": "327f17e1b5ffe6174c427541a40e6a98df13b1ef6858df87aae8434dc3786038"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/vendor-feasibility-launch-03.txt.result.json",
+        "bytes": 439,
+        "sha256": "2c9c8e90d8e58cba6787c0e62e277f9f6fb29ad1521af9c6c359f365f9ff4045"
+      }
+    },
+    {
+      "name": "vendor-feasibility-launch-04",
+      "command": {
+        "file": "node",
+        "arguments": [
+          "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/probe-vendor-04.cjs"
+        ]
+      },
+      "exitCode": 0,
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/vendor-feasibility-launch-04.txt",
+        "bytes": 695,
+        "sha256": "64b18cbbb7d61f6aaabfe7dcdcdacbd71c7e642aea5363dbbcb17c9bfbd6d69f"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/vendor-feasibility-launch-04.txt.result.json",
+        "bytes": 439,
+        "sha256": "177453f53524e4169669d67083c1f7b5cb5c0a2aee789731a9c3737fd94a7a19"
+      }
+    },
+    {
+      "name": "vendor-feasibility-launch-05",
+      "command": {
+        "file": "node",
+        "arguments": [
+          "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/probe-vendor-05.cjs"
+        ]
+      },
+      "exitCode": 0,
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/vendor-feasibility-launch-05.txt",
+        "bytes": 254,
+        "sha256": "7f519c2e7c0df2864bfdeb0b48d5b6649bf3c03beab61379947223f1330913be"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/vendor-feasibility-launch-05.txt.result.json",
+        "bytes": 439,
+        "sha256": "47bc21ad071bcc09c003f995d80356cff7933ef4943de78cc2d40ecd6bed3153"
+      }
+    },
+    {
+      "name": "vendor-feasibility-launch-06",
+      "command": {
+        "file": "node",
+        "arguments": [
+          "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/probe-vendor-06.cjs"
+        ]
+      },
+      "exitCode": 0,
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/vendor-feasibility-launch-06.txt",
+        "bytes": 263,
+        "sha256": "bee16d72a731ab089e03a4f863ed3ba5e8209fa8e3d2d68b9c27cf99e9d615b6"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/vendor-feasibility-launch-06.txt.result.json",
+        "bytes": 439,
+        "sha256": "d4a7d2baa89d25f8e18e8e6e4b24b347a4545a8d0d9bf17bc9d82b104119a90a"
+      }
+    },
+    {
+      "name": "vendor-feasibility-launch-07",
+      "command": {
+        "file": "node",
+        "arguments": [
+          "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/probe-vendor-07.cjs"
+        ]
+      },
+      "exitCode": 0,
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/vendor-feasibility-launch-07.txt",
+        "bytes": 248,
+        "sha256": "2e6b37a440984f313717e54d324b79470ff89f00508cdae0ff6eec5b161f24ff"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/vendor-feasibility-launch-07.txt.result.json",
+        "bytes": 439,
+        "sha256": "94a1610a1cadae475b1b489bc796d14ddf5f89b83e87a1d667d4333d24370f0f"
+      }
+    }
+  ],
+  "sources": [
+    {
+      "path": "apps/local-ai-broker/src/GatewayBoundary.ts",
+      "bytes": 16523,
+      "sha256": "2ddec8a78bd2f0b70584723a8538141485bd6acfa950bf0c9a2de0f9f0e3c287"
+    },
+    {
+      "path": "packages/core/src/RegisteredSecretMatcher.ts",
+      "bytes": 17574,
+      "sha256": "82175760c43de04aa91e801c1a4e0659b2058f39d1ce3b7d3eb4bfec51d151e3"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/claudeGatewaySchemas.test.ts",
+      "bytes": 4037,
+      "sha256": "8cb3a68de0f7a8a98f66c4d9be54b22c81f844115be413828e41d199b8624056"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/claudeMatcherBudget.test.ts",
+      "bytes": 2386,
+      "sha256": "64cd8adb52f3bcc6d881abde3e0a498d988bf28a7b50d91e487f9aa01f961e4d"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/fixtures/claude-tools-2.1.301-01.json",
+      "bytes": 87610,
+      "sha256": "8b01824b1d54e0ba9fe395ac31aed26200ad46c2ced4e6ea47ed3648cfb14c6f"
+    }
+  ],
+  "diagnostic": {
+    "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/matcher-diagnostic-01.json",
+    "bytes": 1004,
+    "sha256": "0a9e1e26afe7dffbe6f5da9a85cca3691bd818175cf8e49bc7e033477e50d13a"
+  },
+  "time": "2026-10-19T07:57:41.387Z",
+  "remaining": "CLI/owner flag/immutable profile acknowledgment and route alias/beta wire tests; actual private HTTP MCP/F04/native-confirmation integration; pinned reviewed config/field-aware restore; controller/UI; final current suites/exactVSIX/native/affected/review/commit-byte barriers."
+}

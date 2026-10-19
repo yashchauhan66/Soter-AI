@@ -1,0 +1,13 @@
+const fs=require("node:fs"),path=require("node:path"),base=__dirname;
+const write=(name,text)=>fs.writeFileSync(path.join(base,name),text,{flag:"wx"});
+let script=fs.readFileSync(path.join(base,"build-candidate-04.ps1"),"utf8").replace("'typecheck-06'","'typecheck-07'").replace("'readme-readiness-03'","'readme-readiness-04'").replace("'package-02'","'package-03'").split("attempt02.vsix").join("attempt03.vsix").replace("-InspectionName '02'","-InspectionName '03'");
+const focused=JSON.parse(fs.readFileSync(path.join(base,"combined-after-01.txt.result.json"),"utf8").replace(/^\uFEFF/,"")).arguments;
+focused.push("packages/vscode-extension/src/__tests__/claudeConversationBudget.test.ts","packages/vscode-extension/src/__tests__/claudeHealthBudget.test.ts");
+const quoted=focused.map(value=>"'"+value.replaceAll("'","''")+"'").join(",");
+script=script.replace("Invoke-F19Candidate 'readme-readiness-04'","Invoke-F19Candidate 'focused-01' @("+quoted+")\nInvoke-F19Candidate 'readme-readiness-04'");
+write("build-candidate-05.ps1",script);
+let suites=fs.readFileSync(path.join(base,"run-suites-02.ps1"),"utf8").split("'broker-typecheck-03'").join("'broker-typecheck-04'").split("'broker-tests-02'").join("'broker-tests-03'").split("'full-tests-02'").join("'full-tests-03'").split("'readiness-02'").join("'readiness-03'");write("run-suites-03.ps1",suites);
+let launcher=fs.readFileSync(path.join(base,"run-product-matrix-03.ps1"),"utf8").split("vsix-inspection-02.json").join("vsix-inspection-03.json");write("run-product-matrix-04.ps1",launcher);
+let affected=fs.readFileSync(path.join(base,"run-current-affected-02.ps1"),"utf8").split("vsix-inspection-01.json").join("vsix-inspection-03.json").replace("'-InspectionName','01'","'-InspectionName','03'").split("affected-hosts-02.txt").join("affected-hosts-03.txt");write("run-current-affected-03.ps1",affected);
+let retained=fs.readFileSync(path.join(base,"run-current-retained-01.ps1"),"utf8").split("vsix-inspection-01.json").join("vsix-inspection-03.json").split("prebuilt-native-hosts-01").join("prebuilt-native-hosts-02").split("retained-native-build-01.txt").join("retained-native-build-02.txt").split("retained-native-01.txt").join("retained-native-02.txt");write("run-current-retained-02.ps1",retained);
+console.log("Prepared candidate03 and current final gates; no gate executed by preparation.");

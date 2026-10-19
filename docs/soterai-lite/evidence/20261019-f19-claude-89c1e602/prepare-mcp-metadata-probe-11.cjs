@@ -1,0 +1,13 @@
+const fs=require("node:fs"),path=require("node:path"),assert=require("node:assert/strict"),base=__dirname;
+let text=fs.readFileSync(path.join(base,"probe-vendor-07.cjs"),"utf8");
+for(const name of["native-tool-schemas","native-controls","vendor-feasibility"])text=text.split(name+"-07.json").join(name+"-11.json");
+text=text.replace("matcher:'Read'","matcher:'.*'");
+const hook="const row={phase:current,event,authenticated,cwdCurrent};";assert.equal(text.split(hook).length,2);
+text=text.replace(hook,'const shape=(value,depth=0)=>{if(depth>3)return "DEPTH_LIMIT";if(value===null)return "null";if(Array.isArray(value))return {type:"array",length:value.length};if(typeof value==="object")return Object.fromEntries(Object.keys(value).sort().map(key=>[key,shape(value[key],depth+1)]));return{type:typeof value,serverNameMatches:value==="soterai_safe_read",httpTypeMatches:value==="http"};};const row={phase:current,event,authenticated,cwdCurrent,fields:Object.keys(frame).sort(),mcpServerShape:shape(frame.mcp_server)};');
+const permit="const allowed=frame.tool_name==='Read'&&path.resolve(frame.tool_input?.file_path||'').toLowerCase()===path.join(workspace,'public.txt').toLowerCase();";assert.equal(text.split(permit).length,2);
+text=text.replace(permit,"const allowed=frame.tool_name==='mcp__soterai_safe_read__soterai_read_project_file_safely'&&frame.tool_input?.path==='public.txt';");
+const rpc="record.mcpRequests.push({method:frame.method,authenticated,protocol:frame.method==='initialize'?frame.params?.protocolVersion:undefined});";assert.equal(text.split(rpc).length,2);
+text=text.replace(rpc,"record.mcpRequests.push({method:frame.method,authenticated,fields:Object.keys(frame).sort(),paramFields:frame.params?Object.keys(frame.params).sort():undefined,argumentFields:frame.params?.arguments?Object.keys(frame.params.arguments).sort():undefined,metaFields:frame.params?._meta?Object.keys(frame.params._meta).sort():undefined,protocol:frame.method==='initialize'?frame.params?.protocolVersion:undefined});");
+text=text.split("PASS_SCOPED_HTTP_MCP_USER_PROFILE").join("PASS_SCOPED_MCP_HOOK_METADATA");
+fs.writeFileSync(path.join(base,"probe-vendor-11.cjs"),text,{flag:"wx"});
+console.log("Prepared native public MCP hook/RPC field-metadata probe; no capabilities, source or prompts captured.");

@@ -1,0 +1,348 @@
+{
+  "status": "PINNED_PUBLIC_INPUTS_NOT_EXECUTED",
+  "vendor": "C:/Users/USER/.vscode/extensions/anthropic.claude-code-2.1.301-win32-x64",
+  "id": "Anthropic.claude-code",
+  "version": "2.1.301",
+  "files": [
+    {
+      "path": "C:\\Users\\USER\\.vscode\\extensions\\anthropic.claude-code-2.1.301-win32-x64\\package.json",
+      "relative": "package.json",
+      "bytes": 21557,
+      "sha256": "0159028b1582350192613d452f92250c98320526cd189773d6637d7bb321a92d"
+    },
+    {
+      "path": "C:\\Users\\USER\\.vscode\\extensions\\anthropic.claude-code-2.1.301-win32-x64\\extension.js",
+      "relative": "extension.js",
+      "bytes": 3581665,
+      "sha256": "65d43f4637c6a519d2b9b6b06be3b1f40532a437303684da87f349b7d1e2cd61"
+    },
+    {
+      "path": "C:\\Users\\USER\\.vscode\\extensions\\anthropic.claude-code-2.1.301-win32-x64\\resources\\native-binary\\claude.exe",
+      "relative": "resources/native-binary/claude.exe",
+      "bytes": 271840416,
+      "sha256": "84d61feeb1a07e5a5b3354d68432591cac18a5d38a419a30d86d0f3ad8cba397"
+    },
+    {
+      "path": "C:\\Users\\USER\\.vscode\\extensions\\anthropic.claude-code-2.1.301-win32-x64\\claude-code-settings.schema.json",
+      "relative": "claude-code-settings.schema.json",
+      "bytes": 272841,
+      "sha256": "a7597e5fd4ad8a8f0e0c28ceaa0356d4e8d8fbff2cbd21bd62e41b1828dc56e6"
+    },
+    {
+      "path": "C:\\Users\\USER\\.vscode\\extensions\\anthropic.claude-code-2.1.301-win32-x64\\README.md",
+      "relative": "README.md",
+      "bytes": 1463,
+      "sha256": "4e25991b954166afe0edddf49c00f3a054614b41ad72d5c16b6a43b4fb56e10b"
+    }
+  ],
+  "features": {
+    "http": true,
+    "onFailure": true,
+    "userPromptSubmit": true
+  },
+  "snippets": [
+    {
+      "key": "ANTHROPIC_BASE_URL",
+      "offset": 498573,
+      "excerpt": "PIC_BEDROCK_SERVICE_TIER:()=>pS4,ANTHROPIC_BEDROCK_REGION_PREFIX:()=>hS4,ANTHROPIC_BEDROCK_MANTLE_BASE_URL:()=>cS4,ANTHROPIC_BEDROCK_BASE_URL:()=>mS4,ANTHROPIC_BASE_URL:()=>yS4,ANTHROPIC_AWS_WORKSPACE_ID:()=>dS4,ANTHROPIC_AWS_BASE_URL:()=>lS4,AGENT_PROXY_URL:()=>db4});var TS4,ES4,SS4,bS4,kS4,fS4,yS4,gS4,uS4,mS4,hS4,pS4,cS4,lS4,dS4,iS4,nS4,oS4,aS4,rS4,sS4,tS4,eS4,$b4,Jb4,Qb4,Xb4,Yb4,Wb4,zb4,Gb4,K"
+    },
+    {
+      "key": "ANTHROPIC_BASE_URL",
+      "offset": 1368737,
+      "excerpt": "sionVersion),platform:process.platform,arch:process.arch},additional_metadata:Buffer.from(JSON.stringify(Y)).toString(\"base64\")})}]},V=`${process.env.ANTHROPIC_BASE_URL===\"https://api-staging.anthropic.com\"?\"https://api-staging.anthropic.com\":\"https://api.anthropic.com\"}/api/event_logging/v2/batch`,U={\"Content-Type\":\"application/json\",\"x-service-name\":\"claude-code\"};function B(q){if(ZN1)return;Z"
+    },
+    {
+      "key": "ANTHROPIC_BASE_URL",
+      "offset": 1713444,
+      "excerpt": "0,https_proxy:()=>tZ0,no_proxy:()=>eZ0});var uT1={};U3(uT1,{AGENT_PROXY_URL:()=>VN0,ANTHROPIC_AWS_BASE_URL:()=>KM0,ANTHROPIC_AWS_WORKSPACE_ID:()=>VM0,ANTHROPIC_BASE_URL:()=>JM0,ANTHROPIC_BEDROCK_BASE_URL:()=>YM0,ANTHROPIC_BEDROCK_MANTLE_BASE_URL:()=>GM0,ANTHROPIC_BEDROCK_REGION_PREFIX:()=>WM0,ANTHROPIC_BEDROCK_SERVICE_TIER:()=>zM0,ANTHROPIC_FOUNDRY_BASE_URL:()=>NM0,ANTHROPIC_FOUNDRY_RESOURCE:()="
+    },
+    {
+      "key": "ANTHROPIC_BASE_URL",
+      "offset": 2341281,
+      "excerpt": "_CODE_USE_BEDROCK\",\"CLAUDE_CODE_USE_ANTHROPIC_AWS\",\"CLAUDE_CODE_USE_MANTLE\"],Mw1=\"OTEL_EXPORTER_OTLP_\";var J15=[Mw1,`ANT_${Mw1}`],Q15={apiKeyHelper:[\"ANTHROPIC_BASE_URL\",\"_CLAUDE_CODE_ASSUME_FIRST_PARTY_BASE_URL\"],awsAuthRefresh:[...Fw1,\"ANTHROPIC_BEDROCK_BASE_URL\",\"ANTHROPIC_AWS_BASE_URL\",\"ANTHROPIC_BEDROCK_MANTLE_BASE_URL\"],awsCredentialExport:[...Fw1,\"ANTHROPIC_BEDROCK_BASE_URL\",\"ANTHROPIC_AW"
+    },
+    {
+      "key": "CLAUDE_CONFIG_DIR",
+      "offset": 104829,
+      "excerpt": "d+)[eE][+-]?\\d+$/,z34=/^[+-]?\\d{1,3}([_,\\u00A0\\u202F ])\\d{3}(?:\\1\\d{3})*$/,G34=/[_,\\u00A0\\u202F ]/g});var yQ1=()=>{};function aq(){return process.env.CLAUDE_CONFIG_DIR}function mQ1($){let J=$===\"CLAUDE_CONFIG_DIR\"?aq():process.env[$];if(J===void 0)return;let Q=String(J).trim();return Q?Q:void 0}function hQ1(){return $_()?null:T8()}function pQ1(){return process.env.CLAUDE_CODE_PROJECT_DIR_NAME}f"
+    },
+    {
+      "key": "CLAUDE_CONFIG_DIR",
+      "offset": 104874,
+      "excerpt": "0\\u202F ])\\d{3}(?:\\1\\d{3})*$/,G34=/[_,\\u00A0\\u202F ]/g});var yQ1=()=>{};function aq(){return process.env.CLAUDE_CONFIG_DIR}function mQ1($){let J=$===\"CLAUDE_CONFIG_DIR\"?aq():process.env[$];if(J===void 0)return;let Q=String(J).trim();return Q?Q:void 0}function hQ1(){return $_()?null:T8()}function pQ1(){return process.env.CLAUDE_CODE_PROJECT_DIR_NAME}function U34($){if(!$||!K34.test($)||V34.test("
+    },
+    {
+      "key": "CLAUDE_CONFIG_DIR",
+      "offset": 434369,
+      "excerpt": "e()&&(Q.size>0||(Q.mode&146)!==0&&!F0().existsSync(J)))return $}catch{}return J}function iZ1(){let $=`.claude${qI()}.json`;return r3.join(process.env.CLAUDE_CONFIG_DIR||aZ1.homedir(),$)}async function AF4(){return null}async function YU($){try{return!!await Sd($)}catch{return!1}}async function RF4(){let $=[];if(await YU(\"npm\"))$.push(\"npm\");if(await YU(\"yarn\"))$.push(\"yarn\");if(await YU(\"pnpm\")"
+    },
+    {
+      "key": "CLAUDE_CONFIG_DIR",
+      "offset": 472700,
+      "excerpt": "ATH_OVERRIDE:()=>NP4,CLAUDE_COWORK_MEMORY_INDEX_CONTENT:()=>MP4,CLAUDE_COWORK_MEMORY_GUIDELINES:()=>FP4,CLAUDE_COWORK_MEMORY_EXTRA_GUIDELINES:()=>ZP4,CLAUDE_CONFIG_DIR:()=>qP4,CLAUDE_CODE_WORKSPACE_HOST_PATHS:()=>HP4,CLAUDE_CODE_WORKER_EPOCH:()=>qT4,CLAUDE_CODE_WORKER_CHECKIN_SCHEDULE:()=>BP4,CLAUDE_CODE_WEB_SEARCH_REFILLS_PER_HOUR:()=>iw4,CLAUDE_CODE_VOICE_FORWARD_INTERIMS_TYPED:()=>Iw4,CLAUDE"
+    },
+    {
+      "key": "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC",
+      "offset": 428457,
+      "excerpt": "[0].kind===\"text\")return $;return J.map((Q)=>Q.kind===\"text\"?Q.text:Q.body).join(\"\")}var Td=()=>{};var CZ1=y(()=>{Td()});function tF(){if(process.env.CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC)return\"essential-traffic\";if(process.env.DISABLE_TELEMETRY)return\"no-telemetry\";if(y4(process.env.DO_NOT_TRACK))return\"no-telemetry\";return\"default\"}function wZ1(){return tF()===\"essential-traffic\"}var fI=y(()=>{w$()});class EZ1{"
+    },
+    {
+      "key": "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC",
+      "offset": 452281,
+      "excerpt": "LE_OFFICIAL_MARKETPLACE_AUTOINSTALL:()=>HN4,CLAUDE_CODE_DISABLE_NOTIFICATION_PRESENCE_CHECK:()=>BN4,CLAUDE_CODE_DISABLE_NONSTREAMING_FALLBACK:()=>UN4,CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC:()=>VN4,CLAUDE_CODE_DISABLE_NESTED_USER_REPAIR:()=>KN4,CLAUDE_CODE_DISABLE_NESTED_CHAIN_IDLE:()=>GN4,CLAUDE_CODE_DISABLE_MOUSE_CLICKS:()=>zN4,CLAUDE_CODE_DISABLE_MOUSE:()=>WN4,CLAUDE_CODE_DISABLE_MEMORY_STREAM_LIST:()=>QN4,CLAUDE"
+    },
+    {
+      "key": "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC",
+      "offset": 1381212,
+      "excerpt": "bleAuthLogin||this.skipsAuthLogin()}skipsAuthLogin(){return y4(this.env.CLAUDE_CODE_SKIP_AUTH_LOGIN)}isNonessentialTrafficDisabled(){return!!this.env.CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC}isThirdPartyProviderEnv(){return NJ(this.env)}isThirdPartyProvider(){return this.isThirdPartyProviderEnv()||this.cliReportedThirdPartyProvider}statusForWebview($){if(this.readsAsThirdParty())return Hg4;if(!this.skipsAuthLogin())r"
+    },
+    {
+      "key": "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC",
+      "offset": 1683207,
+      "excerpt": "E_MOUSE:()=>_30,CLAUDE_CODE_DISABLE_MOUSE_CLICKS:()=>A30,CLAUDE_CODE_DISABLE_NESTED_CHAIN_IDLE:()=>R30,CLAUDE_CODE_DISABLE_NESTED_USER_REPAIR:()=>x30,CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC:()=>I30,CLAUDE_CODE_DISABLE_NONSTREAMING_FALLBACK:()=>v30,CLAUDE_CODE_DISABLE_NOTIFICATION_PRESENCE_CHECK:()=>P30,CLAUDE_CODE_DISABLE_OFFICIAL_MARKETPLACE_AUTOINSTALL:()=>C30,CLAUDE_CODE_DISABLE_ORG_MEMORY:()=>w30,CLAUDE_CODE_DIS"
+    },
+    {
+      "key": "DISABLE_AUTOUPDATER",
+      "offset": 445011,
+      "excerpt": "LE_DOCTOR_COMMAND:()=>ej4,DISABLE_COST_WARNINGS:()=>tj4,DISABLE_BUG_COMMAND:()=>sj4,DISABLE_BRIEF_MODE_STOP_HOOK:()=>rj4,DISABLE_AUTO_COMPACT:()=>oj4,DISABLE_AUTOUPDATER:()=>aj4,CLAUDE_WORKFLOW_NAME_ONLY:()=>cj4,CLAUDE_RUNNER_DISABLE_AWAITING_ACTION_OVERRIDE:()=>pj4,CLAUDE_IMPORT_CONVERSATIONS:()=>hj4,CLAUDE_DISABLE_ADOPT:()=>mj4,CLAUDE_CODE_WORKFLOW_SIZE_WARNING_TOKENS:()=>dj4,CLAUDE_CODE_WORKFL"
+    },
+    {
+      "key": "DISABLE_AUTOUPDATER",
+      "offset": 1690498,
+      "excerpt": "DE_DISABLE_ADOPT:()=>XX0,CLAUDE_IMPORT_CONVERSATIONS:()=>YX0,CLAUDE_RUNNER_DISABLE_AWAITING_ACTION_OVERRIDE:()=>WX0,CLAUDE_WORKFLOW_NAME_ONLY:()=>zX0,DISABLE_AUTOUPDATER:()=>HX0,DISABLE_AUTO_COMPACT:()=>BX0,DISABLE_BRIEF_MODE_STOP_HOOK:()=>qX0,DISABLE_BUG_COMMAND:()=>ZX0,DISABLE_COST_WARNINGS:()=>FX0,DISABLE_DOCTOR_COMMAND:()=>MX0,DISABLE_ERROR_REPORTING:()=>NX0,DISABLE_EXTRA_USAGE_COMMAND:()=>LX"
+    },
+    {
+      "key": "DISABLE_AUTOUPDATER",
+      "offset": 2350350,
+      "excerpt": ",\"CLAUDE_CODE_USE_GATEWAY\",\"CLAUDE_CODE_USE_MANTLE\",\"CLAUDE_CODE_USE_POWERSHELL_TOOL\",\"CLAUDE_CODE_USE_VERTEX\",\"CLAUDE_CODE_WORKFLOW_SUBAGENT_MODEL\",\"DISABLE_AUTOUPDATER\",\"DISABLE_BUG_COMMAND\",\"DISABLE_COST_WARNINGS\",\"DISABLE_FEEDBACK_COMMAND\",\"DISABLE_GROWTHBOOK\",\"DISABLE_INSTALLATION_CHECKS\",\"DISABLE_UPDATES\",\"ENABLE_TOOL_SEARCH\",\"MAX_MCP_OUTPUT_TOKENS\",\"MAX_THINKING_TOKENS\",\"MCP_CONNECT_TIMEOU"
+    },
+    {
+      "key": "DISABLE_TELEMETRY",
+      "offset": 428539,
+      "excerpt": "\")}var Td=()=>{};var CZ1=y(()=>{Td()});function tF(){if(process.env.CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC)return\"essential-traffic\";if(process.env.DISABLE_TELEMETRY)return\"no-telemetry\";if(y4(process.env.DO_NOT_TRACK))return\"no-telemetry\";return\"default\"}function wZ1(){return tF()===\"essential-traffic\"}var fI=y(()=>{w$()});class EZ1{recentErrors=[];queue=[];droppedBeforeSink=0;sink=null;hard"
+    },
+    {
+      "key": "DISABLE_TELEMETRY",
+      "offset": 444344,
+      "excerpt": "AUDEAI_MCP_SERVERS:()=>LO4,ENABLE_BETA_TRACING_DETAILED:()=>NO4,EMBEDDED_SEARCH_TOOLS:()=>yO4,DISABLE_UPGRADE_COMMAND:()=>MO4,DISABLE_UPDATES:()=>FO4,DISABLE_TELEMETRY:()=>ZO4,DISABLE_PROMPT_CACHING_SONNET:()=>BO4,DISABLE_PROMPT_CACHING_OPUS:()=>UO4,DISABLE_PROMPT_CACHING_MYTHOS:()=>qO4,DISABLE_PROMPT_CACHING_HAIKU:()=>VO4,DISABLE_PROMPT_CACHING_FABLE:()=>HO4,DISABLE_PROMPT_CACHING:()=>KO4,DISA"
+    },
+    {
+      "key": "DISABLE_TELEMETRY",
+      "offset": 1691167,
+      "excerpt": ",DISABLE_PROMPT_CACHING_HAIKU:()=>IX0,DISABLE_PROMPT_CACHING_MYTHOS:()=>wX0,DISABLE_PROMPT_CACHING_OPUS:()=>vX0,DISABLE_PROMPT_CACHING_SONNET:()=>PX0,DISABLE_TELEMETRY:()=>TX0,DISABLE_UPDATES:()=>EX0,DISABLE_UPGRADE_COMMAND:()=>SX0,EMBEDDED_SEARCH_TOOLS:()=>$Y0,ENABLE_BETA_TRACING_DETAILED:()=>bX0,ENABLE_CLAUDEAI_MCP_SERVERS:()=>kX0,ENABLE_ENHANCED_TELEMETRY_BETA:()=>fX0,ENABLE_LOCKLESS_UPDATES"
+    },
+    {
+      "key": "DISABLE_TELEMETRY",
+      "offset": 1883451,
+      "excerpt": "kind===\"text\"?Q.text:Q.body).join(\"\")}function O70(){if(process.env.CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC)return\"essential-traffic\";if(process.env.DISABLE_TELEMETRY)return\"no-telemetry\";if(G6(process.env.DO_NOT_TRACK))return\"no-telemetry\";return\"default\"}function _70(){return O70()===\"essential-traffic\"}var A70=100,R70=1000;class _b1{recentErrors=[];queue=[];droppedBeforeSink=0;sink=null;har"
+    },
+    {
+      "key": "native-binary",
+      "offset": 3403038,
+      "excerpt": "let W=$.asAbsolutePath(W6.join(\"resources\",\"native-binaries\",\"win32-x64\",J));if(p5.existsSync(W))return W}let Y=$.asAbsolutePath(W6.join(\"resources\",\"native-binary\",J));if(p5.existsSync(Y))return Y;return}function Rz6($){let J=WD();for(let Q of[\"claude\",\"claude.exe\"]){let X=HE($.asAbsolutePath(W6.join(\"resources\",\"native-binary\",Q)));if(X!==void 0&&X!==J)return X}return}function xz6($,J){re"
+    },
+    {
+      "key": "native-binary",
+      "offset": 3403204,
+      "excerpt": "));if(p5.existsSync(Y))return Y;return}function Rz6($){let J=WD();for(let Q of[\"claude\",\"claude.exe\"]){let X=HE($.asAbsolutePath(W6.join(\"resources\",\"native-binary\",Q)));if(X!==void 0&&X!==J)return X}return}function xz6($,J){return Object.assign(Error($),{errorClass:J})}function c5($){let J=mb(c4(\"environmentVariables\")),Q={...process.env};if($)Q.PATH=$;Q.MCP_CONNECTION_NONBLOCKING=\"true\",Q"
+    },
+    {
+      "key": "spawnClaude",
+      "offset": 2630715,
+      "excerpt": "ns.debugFile)o.push(l0(\"--debug-file\",this.options.debugFile));else if(this.options.debug)o.push(\"--debug\");if(!this.options.debugFile&&!this.options.spawnClaudeCodeProcess){let X1=Lw0();if(X1)o.push(l0(\"--debug-file\",X1))}if(k){if(j)throw Error(\"canUseTool callback cannot be used with permissionPromptToolName. Please use one or the other.\");o.push(\"--permission-prompt-tool=stdio\")}else i"
+    },
+    {
+      "key": "spawnClaude",
+      "offset": 2633327,
+      "excerpt": " delete V.DEBUG;let a=mh0(K),b=a?K:W,f=a?[...z,...o]:[...z,K,...o],u={command:b,args:f,cwd:Y,env:V,signal:this.forwardedAbort.signal};if(this.options.spawnClaudeCodeProcess)p$(`Spawning Claude Code (custom): ${b} ${f.join(\" \")}`),this.process=this.options.spawnClaudeCodeProcess(u);else p$(`Spawning Claude Code: ${b} ${f.join(\" \")}`),this.process=this.spawnLocalProcess(u);if(this.processSt"
+    },
+    {
+      "key": "spawnClaude",
+      "offset": 2633433,
+      "excerpt": "this.forwardedAbort.signal};if(this.options.spawnClaudeCodeProcess)p$(`Spawning Claude Code (custom): ${b} ${f.join(\" \")}`),this.process=this.options.spawnClaudeCodeProcess(u);else p$(`Spawning Claude Code: ${b} ${f.join(\" \")}`),this.process=this.spawnLocalProcess(u);if(this.processStdin=this.process.stdin,this.processStdout=this.process.stdout,this.processStdin.on(\"error\",(X1)=>{p$(`[Pro"
+    },
+    {
+      "key": "spawnClaude",
+      "offset": 2698621,
+      "excerpt": "eCheckpointing is not yet supported with sessionStore (backup blobs are not mirrored, so rewindFiles() fails after a store-backed resume).\");if(J1&&U.spawnClaudeCodeProcess)x4(\"sessionStore with custom spawnClaudeCodeProcess: ensure the subprocess CLAUDE_CONFIG_DIR matches the parent (same path, same separators) or transcript_mirror frames will be dropped.\",{level:\"warn\"});if(lp0(!!x,n71?"
+    }
+  ],
+  "settingsKeys": [
+    "$schema",
+    "apiKeyHelper",
+    "proxyAuthHelper",
+    "awsCredentialExport",
+    "awsAuthRefresh",
+    "gcpAuthRefresh",
+    "processWrapper",
+    "policyHelper",
+    "fileSuggestion",
+    "respectGitignore",
+    "cleanupPeriodDays",
+    "desktopSessionCleanupPeriodDays",
+    "syncClaudeAiSkills",
+    "syncClaudeAiPlugins",
+    "skillListingMaxDescChars",
+    "skillListingBudgetFraction",
+    "wslInheritsWindowsSettings",
+    "env",
+    "attribution",
+    "includeCoAuthoredBy",
+    "includeGitInstructions",
+    "permissions",
+    "model",
+    "fallbackModel",
+    "availableModels",
+    "enforceAvailableModels",
+    "availableModelsMatch",
+    "deniedModels",
+    "modelOverrides",
+    "modelPicker",
+    "modelPricing",
+    "enableAllProjectMcpServers",
+    "enabledMcpjsonServers",
+    "disabledMcpjsonServers",
+    "disableClaudeAiConnectors",
+    "skillOverrides",
+    "disableBundledSkills",
+    "managedMcpServers",
+    "allowedMcpServers",
+    "deniedMcpServers",
+    "hooks",
+    "worktree",
+    "disableAllHooks",
+    "disableAgentView",
+    "disableRemoteControl",
+    "disableWorkflows",
+    "disableArtifact",
+    "enableArtifact",
+    "enableWorkflows",
+    "workflowSizeGuideline",
+    "workflowKeywordTriggerEnabled",
+    "disableSkillShellExecution",
+    "defaultShell",
+    "bashEditDiffEnabled",
+    "bashOutputMaxChars",
+    "taskOutputMaxChars",
+    "respondToBashCommands",
+    "allowManagedHooksOnly",
+    "allowedHttpHookUrls",
+    "httpHookAllowedEnvVars",
+    "allowManagedPermissionRulesOnly",
+    "allowManagedMcpServersOnly",
+    "allowAllClaudeAiMcps",
+    "allowClaudeInChromeWithManagedMcp",
+    "strictPluginOnlyCustomization",
+    "statusLine",
+    "prUrlTemplate",
+    "footerLinksRegexes",
+    "subagentStatusLine",
+    "enabledPlugins",
+    "prependPlugins",
+    "appendPlugins",
+    "extraKnownMarketplaces",
+    "additionalMarketplaces",
+    "strictKnownMarketplaces",
+    "allowedMarketplaces",
+    "blockedMarketplaces",
+    "disableCommandPluginSources",
+    "disableSideloadFlags",
+    "pluginSuggestionMarketplaces",
+    "forceLoginMethod",
+    "forceLoginGatewayUrl",
+    "gatewayInternalNetworks",
+    "parentSettingsBehavior",
+    "managedSourcesBehavior",
+    "forceLoginOrgUUID",
+    "allowedProviders",
+    "forceRemoteSettingsRefresh",
+    "otelHeadersHelper",
+    "outputStyle",
+    "viewMode",
+    "language",
+    "skipWebFetchPreflight",
+    "sandbox",
+    "feedbackSurveyRate",
+    "feedbackDrafts",
+    "spinnerTipsEnabled",
+    "spinnerVerbs",
+    "spinnerTipsOverride",
+    "syntaxHighlightingDisabled",
+    "maxProseWidth",
+    "spellcheck",
+    "terminalTitleFromRename",
+    "promptCacheTtl",
+    "subagentPromptCacheTtl",
+    "alwaysThinkingEnabled",
+    "effortLevel",
+    "maxEffortLevel",
+    "modelSettings",
+    "ultracode",
+    "autoCompactWindow",
+    "advisorModel",
+    "fastMode",
+    "fastModePerSessionOptIn",
+    "promptSuggestionEnabled",
+    "emojiCompletionEnabled",
+    "showClearContextOnPlanAccept",
+    "askUserQuestionTimeout",
+    "dialogExpiry",
+    "agent",
+    "companyAnnouncements",
+    "pluginConfigs",
+    "remote",
+    "autoUpdatesChannel",
+    "minimumVersion",
+    "requiredMinimumVersion",
+    "requiredMaximumVersion",
+    "plansDirectory",
+    "tui",
+    "voice",
+    "channelsEnabled",
+    "allowedChannelPlugins",
+    "prefersReducedMotion",
+    "timeFormat",
+    "timeZone",
+    "autoMemoryEnabled",
+    "autoMemoryDirectory",
+    "autoDreamEnabled",
+    "showThinkingSummaries",
+    "skipDangerousModePermissionPrompt",
+    "disableAutoMode",
+    "sshConfigs",
+    "claudeMd",
+    "claudeMdExcludes",
+    "pluginTrustMessage",
+    "theme",
+    "editorMode",
+    "keybindingFlavor",
+    "vimInsertModeRemaps",
+    "verbose",
+    "preferredNotifChannel",
+    "autoCompactEnabled",
+    "precomputeCompactionEnabled",
+    "idleCompaction",
+    "switchModelsOnFlag",
+    "autoContinueAtUsageLimit",
+    "autoScrollEnabled",
+    "wheelScrollAccelerationEnabled",
+    "fileCheckpointingEnabled",
+    "showTurnDuration",
+    "showMessageTimestamps",
+    "terminalProgressBarEnabled",
+    "todoFeatureEnabled",
+    "teammateMode",
+    "remoteControlAtStartup",
+    "isolatePeerMachines",
+    "daemonColdStart",
+    "crossSessionInbound",
+    "autoUploadSessions",
+    "inputNeededNotifEnabled",
+    "agentPushNotifEnabled",
+    "disableDeepLinkRegistration",
+    "voiceEnabled",
+    "defaultView"
+  ],
+  "time": "2026-10-19T05:05:43.754Z",
+  "scope": "Read-only public installed artifacts only; no user configuration, authentication, account/history or secrets read."
+}

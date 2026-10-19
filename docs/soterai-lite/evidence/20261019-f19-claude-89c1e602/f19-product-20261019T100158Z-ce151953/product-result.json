@@ -1,0 +1,1746 @@
+{
+  "status": "INCOMPLETE_PRODUCT_MATRIX",
+  "scope": "ACTUAL_EXACT_VSIX_EDITOR_CONTROLLER_AND_PINNED_CLAUDE_NATIVE_CLI",
+  "independence": "LOW",
+  "checks": [
+    {
+      "id": "F19-N01",
+      "status": "PASS"
+    },
+    {
+      "id": "F19-N02",
+      "status": "PASS"
+    },
+    {
+      "id": "F19-N03",
+      "status": "PASS"
+    },
+    {
+      "id": "F19-N04",
+      "status": "FAIL",
+      "error": {
+        "name": "AssertionError",
+        "code": "ERR_ASSERTION"
+      },
+      "fixtureDeadline": false
+    },
+    {
+      "id": "F19-N05",
+      "status": "FAIL",
+      "error": {
+        "name": "AssertionError",
+        "code": "ERR_ASSERTION"
+      },
+      "fixtureDeadline": false
+    },
+    {
+      "id": "F19-N06",
+      "status": "FAIL",
+      "error": {
+        "name": "Error",
+        "code": "ENOENT"
+      },
+      "fixtureDeadline": false
+    },
+    {
+      "id": "F19-N07",
+      "status": "FAIL",
+      "error": {
+        "name": "AssertionError",
+        "code": "ERR_ASSERTION"
+      },
+      "fixtureDeadline": false
+    },
+    {
+      "id": "F19-N08",
+      "status": "FAIL",
+      "error": {
+        "name": "AssertionError",
+        "code": "ERR_ASSERTION"
+      },
+      "fixtureDeadline": false
+    },
+    {
+      "id": "F19-N09",
+      "status": "FAIL",
+      "error": {
+        "name": "AssertionError",
+        "code": "ERR_ASSERTION"
+      },
+      "fixtureDeadline": false
+    },
+    {
+      "id": "F19-N10",
+      "status": "FAIL",
+      "error": {
+        "name": "AssertionError",
+        "code": "ERR_ASSERTION"
+      },
+      "fixtureDeadline": false
+    },
+    {
+      "id": "F19-N11",
+      "status": "FAIL",
+      "error": {
+        "name": "AssertionError",
+        "code": "ERR_ASSERTION"
+      },
+      "fixtureDeadline": false
+    },
+    {
+      "id": "F19-N12",
+      "status": "FAIL",
+      "error": {
+        "name": "AssertionError",
+        "code": "ERR_ASSERTION"
+      },
+      "fixtureDeadline": false
+    },
+    {
+      "id": "F19-N13",
+      "status": "FAIL",
+      "error": {
+        "name": "AssertionError",
+        "code": "ERR_ASSERTION"
+      },
+      "fixtureDeadline": false
+    },
+    {
+      "id": "F19-N14",
+      "status": "FAIL",
+      "error": {
+        "name": "AssertionError",
+        "code": "ERR_ASSERTION"
+      },
+      "fixtureDeadline": false
+    },
+    {
+      "id": "F19-N15",
+      "status": "FAIL",
+      "error": {
+        "name": "AssertionError",
+        "code": "ERR_ASSERTION"
+      },
+      "fixtureDeadline": false
+    },
+    {
+      "id": "F19-N16",
+      "status": "FAIL",
+      "error": {
+        "name": "AssertionError",
+        "code": "ERR_ASSERTION"
+      },
+      "fixtureDeadline": false
+    },
+    {
+      "id": "F19-N17",
+      "status": "FAIL",
+      "error": {
+        "name": "AssertionError",
+        "code": "ERR_ASSERTION"
+      },
+      "fixtureDeadline": false
+    },
+    {
+      "id": "F19-N18",
+      "status": "PASS"
+    },
+    {
+      "id": "F19-N19",
+      "status": "PASS"
+    },
+    {
+      "id": "F19-N20",
+      "status": "PASS"
+    },
+    {
+      "id": "F19-N21",
+      "status": "PASS"
+    },
+    {
+      "id": "F19-N22",
+      "status": "PASS"
+    }
+  ],
+  "requests": [
+    {
+      "phase": "provider-public",
+      "route": "/",
+      "bytes": 104793,
+      "upstreamAuth": true,
+      "publicSeen": false,
+      "maskedEnvSeen": false,
+      "privateOriginal": false,
+      "tools": [
+        "Agent",
+        "Bash",
+        "CronCreate",
+        "CronDelete",
+        "CronList",
+        "Edit",
+        "EnterWorktree",
+        "ExitWorktree",
+        "Glob",
+        "Grep",
+        "ListAgents",
+        "NotebookEdit",
+        "Read",
+        "ReportFindings",
+        "ScheduleWakeup",
+        "SendMessage",
+        "Skill",
+        "TaskCreate",
+        "TaskGet",
+        "TaskList",
+        "TaskStop",
+        "TaskUpdate",
+        "WebFetch",
+        "WebSearch",
+        "Workflow",
+        "Write",
+        "mcp__soterai_safe_read__soterai_read_project_file_safely"
+      ]
+    },
+    {
+      "phase": "read-public",
+      "route": "/",
+      "bytes": 104793,
+      "upstreamAuth": true,
+      "publicSeen": false,
+      "maskedEnvSeen": false,
+      "privateOriginal": false,
+      "tools": [
+        "Agent",
+        "Bash",
+        "CronCreate",
+        "CronDelete",
+        "CronList",
+        "Edit",
+        "EnterWorktree",
+        "ExitWorktree",
+        "Glob",
+        "Grep",
+        "ListAgents",
+        "NotebookEdit",
+        "Read",
+        "ReportFindings",
+        "ScheduleWakeup",
+        "SendMessage",
+        "Skill",
+        "TaskCreate",
+        "TaskGet",
+        "TaskList",
+        "TaskStop",
+        "TaskUpdate",
+        "WebFetch",
+        "WebSearch",
+        "Workflow",
+        "Write",
+        "mcp__soterai_safe_read__soterai_read_project_file_safely"
+      ]
+    },
+    {
+      "phase": "read-private",
+      "route": "/",
+      "bytes": 104793,
+      "upstreamAuth": true,
+      "publicSeen": false,
+      "maskedEnvSeen": false,
+      "privateOriginal": false,
+      "tools": [
+        "Agent",
+        "Bash",
+        "CronCreate",
+        "CronDelete",
+        "CronList",
+        "Edit",
+        "EnterWorktree",
+        "ExitWorktree",
+        "Glob",
+        "Grep",
+        "ListAgents",
+        "NotebookEdit",
+        "Read",
+        "ReportFindings",
+        "ScheduleWakeup",
+        "SendMessage",
+        "Skill",
+        "TaskCreate",
+        "TaskGet",
+        "TaskList",
+        "TaskStop",
+        "TaskUpdate",
+        "WebFetch",
+        "WebSearch",
+        "Workflow",
+        "Write",
+        "mcp__soterai_safe_read__soterai_read_project_file_safely"
+      ]
+    },
+    {
+      "phase": "write-public",
+      "route": "/",
+      "bytes": 104793,
+      "upstreamAuth": true,
+      "publicSeen": false,
+      "maskedEnvSeen": false,
+      "privateOriginal": false,
+      "tools": [
+        "Agent",
+        "Bash",
+        "CronCreate",
+        "CronDelete",
+        "CronList",
+        "Edit",
+        "EnterWorktree",
+        "ExitWorktree",
+        "Glob",
+        "Grep",
+        "ListAgents",
+        "NotebookEdit",
+        "Read",
+        "ReportFindings",
+        "ScheduleWakeup",
+        "SendMessage",
+        "Skill",
+        "TaskCreate",
+        "TaskGet",
+        "TaskList",
+        "TaskStop",
+        "TaskUpdate",
+        "WebFetch",
+        "WebSearch",
+        "Workflow",
+        "Write",
+        "mcp__soterai_safe_read__soterai_read_project_file_safely"
+      ]
+    },
+    {
+      "phase": "edit-public",
+      "route": "/",
+      "bytes": 104793,
+      "upstreamAuth": true,
+      "publicSeen": false,
+      "maskedEnvSeen": false,
+      "privateOriginal": false,
+      "tools": [
+        "Agent",
+        "Bash",
+        "CronCreate",
+        "CronDelete",
+        "CronList",
+        "Edit",
+        "EnterWorktree",
+        "ExitWorktree",
+        "Glob",
+        "Grep",
+        "ListAgents",
+        "NotebookEdit",
+        "Read",
+        "ReportFindings",
+        "ScheduleWakeup",
+        "SendMessage",
+        "Skill",
+        "TaskCreate",
+        "TaskGet",
+        "TaskList",
+        "TaskStop",
+        "TaskUpdate",
+        "WebFetch",
+        "WebSearch",
+        "Workflow",
+        "Write",
+        "mcp__soterai_safe_read__soterai_read_project_file_safely"
+      ]
+    },
+    {
+      "phase": "search-public",
+      "route": "/",
+      "bytes": 104793,
+      "upstreamAuth": true,
+      "publicSeen": false,
+      "maskedEnvSeen": false,
+      "privateOriginal": false,
+      "tools": [
+        "Agent",
+        "Bash",
+        "CronCreate",
+        "CronDelete",
+        "CronList",
+        "Edit",
+        "EnterWorktree",
+        "ExitWorktree",
+        "Glob",
+        "Grep",
+        "ListAgents",
+        "NotebookEdit",
+        "Read",
+        "ReportFindings",
+        "ScheduleWakeup",
+        "SendMessage",
+        "Skill",
+        "TaskCreate",
+        "TaskGet",
+        "TaskList",
+        "TaskStop",
+        "TaskUpdate",
+        "WebFetch",
+        "WebSearch",
+        "Workflow",
+        "Write",
+        "mcp__soterai_safe_read__soterai_read_project_file_safely"
+      ]
+    },
+    {
+      "phase": "write-private",
+      "route": "/",
+      "bytes": 104793,
+      "upstreamAuth": true,
+      "publicSeen": false,
+      "maskedEnvSeen": false,
+      "privateOriginal": false,
+      "tools": [
+        "Agent",
+        "Bash",
+        "CronCreate",
+        "CronDelete",
+        "CronList",
+        "Edit",
+        "EnterWorktree",
+        "ExitWorktree",
+        "Glob",
+        "Grep",
+        "ListAgents",
+        "NotebookEdit",
+        "Read",
+        "ReportFindings",
+        "ScheduleWakeup",
+        "SendMessage",
+        "Skill",
+        "TaskCreate",
+        "TaskGet",
+        "TaskList",
+        "TaskStop",
+        "TaskUpdate",
+        "WebFetch",
+        "WebSearch",
+        "Workflow",
+        "Write",
+        "mcp__soterai_safe_read__soterai_read_project_file_safely"
+      ]
+    },
+    {
+      "phase": "edit-private",
+      "route": "/",
+      "bytes": 104793,
+      "upstreamAuth": true,
+      "publicSeen": false,
+      "maskedEnvSeen": false,
+      "privateOriginal": false,
+      "tools": [
+        "Agent",
+        "Bash",
+        "CronCreate",
+        "CronDelete",
+        "CronList",
+        "Edit",
+        "EnterWorktree",
+        "ExitWorktree",
+        "Glob",
+        "Grep",
+        "ListAgents",
+        "NotebookEdit",
+        "Read",
+        "ReportFindings",
+        "ScheduleWakeup",
+        "SendMessage",
+        "Skill",
+        "TaskCreate",
+        "TaskGet",
+        "TaskList",
+        "TaskStop",
+        "TaskUpdate",
+        "WebFetch",
+        "WebSearch",
+        "Workflow",
+        "Write",
+        "mcp__soterai_safe_read__soterai_read_project_file_safely"
+      ]
+    },
+    {
+      "phase": "search-private",
+      "route": "/",
+      "bytes": 104793,
+      "upstreamAuth": true,
+      "publicSeen": false,
+      "maskedEnvSeen": false,
+      "privateOriginal": false,
+      "tools": [
+        "Agent",
+        "Bash",
+        "CronCreate",
+        "CronDelete",
+        "CronList",
+        "Edit",
+        "EnterWorktree",
+        "ExitWorktree",
+        "Glob",
+        "Grep",
+        "ListAgents",
+        "NotebookEdit",
+        "Read",
+        "ReportFindings",
+        "ScheduleWakeup",
+        "SendMessage",
+        "Skill",
+        "TaskCreate",
+        "TaskGet",
+        "TaskList",
+        "TaskStop",
+        "TaskUpdate",
+        "WebFetch",
+        "WebSearch",
+        "Workflow",
+        "Write",
+        "mcp__soterai_safe_read__soterai_read_project_file_safely"
+      ]
+    }
+  ],
+  "hooks": [
+    {
+      "phase": "provider-public",
+      "code": 200,
+      "bytes": 561,
+      "event": "UserPromptSubmit",
+      "fields": [
+        "cwd",
+        "hook_event_name",
+        "permission_mode",
+        "prompt",
+        "prompt_id",
+        "session_id",
+        "transcript_path"
+      ],
+      "privatePromptSeen": false,
+      "denied": false
+    },
+    {
+      "phase": "read-public",
+      "code": 200,
+      "bytes": 561,
+      "event": "UserPromptSubmit",
+      "fields": [
+        "cwd",
+        "hook_event_name",
+        "permission_mode",
+        "prompt",
+        "prompt_id",
+        "session_id",
+        "transcript_path"
+      ],
+      "privatePromptSeen": false,
+      "denied": false
+    },
+    {
+      "phase": "read-public",
+      "code": 503,
+      "bytes": 685,
+      "event": "PreToolUse",
+      "tool": "Read",
+      "fields": [
+        "cwd",
+        "effort",
+        "hook_event_name",
+        "permission_mode",
+        "prompt_id",
+        "session_id",
+        "tool_input",
+        "tool_name",
+        "tool_use_id",
+        "transcript_path"
+      ],
+      "privatePromptSeen": false,
+      "denied": false
+    },
+    {
+      "phase": "read-private",
+      "code": 200,
+      "bytes": 561,
+      "event": "UserPromptSubmit",
+      "fields": [
+        "cwd",
+        "hook_event_name",
+        "permission_mode",
+        "prompt",
+        "prompt_id",
+        "session_id",
+        "transcript_path"
+      ],
+      "privatePromptSeen": false,
+      "denied": false
+    },
+    {
+      "phase": "read-private",
+      "code": 503,
+      "bytes": 679,
+      "event": "PreToolUse",
+      "tool": "Read",
+      "fields": [
+        "cwd",
+        "effort",
+        "hook_event_name",
+        "permission_mode",
+        "prompt_id",
+        "session_id",
+        "tool_input",
+        "tool_name",
+        "tool_use_id",
+        "transcript_path"
+      ],
+      "privatePromptSeen": false,
+      "denied": false
+    },
+    {
+      "phase": "write-public",
+      "code": 200,
+      "bytes": 561,
+      "event": "UserPromptSubmit",
+      "fields": [
+        "cwd",
+        "hook_event_name",
+        "permission_mode",
+        "prompt",
+        "prompt_id",
+        "session_id",
+        "transcript_path"
+      ],
+      "privatePromptSeen": false,
+      "denied": false
+    },
+    {
+      "phase": "write-public",
+      "code": 503,
+      "bytes": 736,
+      "event": "PreToolUse",
+      "tool": "Write",
+      "fields": [
+        "cwd",
+        "effort",
+        "hook_event_name",
+        "permission_mode",
+        "prompt_id",
+        "session_id",
+        "tool_input",
+        "tool_name",
+        "tool_use_id",
+        "transcript_path"
+      ],
+      "privatePromptSeen": false,
+      "denied": false
+    },
+    {
+      "phase": "edit-public",
+      "code": 200,
+      "bytes": 561,
+      "event": "UserPromptSubmit",
+      "fields": [
+        "cwd",
+        "hook_event_name",
+        "permission_mode",
+        "prompt",
+        "prompt_id",
+        "session_id",
+        "transcript_path"
+      ],
+      "privatePromptSeen": false,
+      "denied": false
+    },
+    {
+      "phase": "edit-public",
+      "code": 503,
+      "bytes": 796,
+      "event": "PreToolUse",
+      "tool": "Edit",
+      "fields": [
+        "cwd",
+        "effort",
+        "hook_event_name",
+        "permission_mode",
+        "prompt_id",
+        "session_id",
+        "tool_input",
+        "tool_name",
+        "tool_use_id",
+        "transcript_path"
+      ],
+      "privatePromptSeen": false,
+      "denied": false
+    },
+    {
+      "phase": "search-public",
+      "code": 200,
+      "bytes": 561,
+      "event": "UserPromptSubmit",
+      "fields": [
+        "cwd",
+        "hook_event_name",
+        "permission_mode",
+        "prompt",
+        "prompt_id",
+        "session_id",
+        "transcript_path"
+      ],
+      "privatePromptSeen": false,
+      "denied": false
+    },
+    {
+      "phase": "search-public",
+      "code": 503,
+      "bytes": 734,
+      "event": "PreToolUse",
+      "tool": "Grep",
+      "fields": [
+        "cwd",
+        "effort",
+        "hook_event_name",
+        "permission_mode",
+        "prompt_id",
+        "session_id",
+        "tool_input",
+        "tool_name",
+        "tool_use_id",
+        "transcript_path"
+      ],
+      "privatePromptSeen": false,
+      "denied": false
+    },
+    {
+      "phase": "write-private",
+      "code": 200,
+      "bytes": 561,
+      "event": "UserPromptSubmit",
+      "fields": [
+        "cwd",
+        "hook_event_name",
+        "permission_mode",
+        "prompt",
+        "prompt_id",
+        "session_id",
+        "transcript_path"
+      ],
+      "privatePromptSeen": false,
+      "denied": false
+    },
+    {
+      "phase": "write-private",
+      "code": 503,
+      "bytes": 722,
+      "event": "PreToolUse",
+      "tool": "Write",
+      "fields": [
+        "cwd",
+        "effort",
+        "hook_event_name",
+        "permission_mode",
+        "prompt_id",
+        "session_id",
+        "tool_input",
+        "tool_name",
+        "tool_use_id",
+        "transcript_path"
+      ],
+      "privatePromptSeen": false,
+      "denied": false
+    },
+    {
+      "phase": "edit-private",
+      "code": 200,
+      "bytes": 561,
+      "event": "UserPromptSubmit",
+      "fields": [
+        "cwd",
+        "hook_event_name",
+        "permission_mode",
+        "prompt",
+        "prompt_id",
+        "session_id",
+        "transcript_path"
+      ],
+      "privatePromptSeen": false,
+      "denied": false
+    },
+    {
+      "phase": "edit-private",
+      "code": 503,
+      "bytes": 749,
+      "event": "PreToolUse",
+      "tool": "Edit",
+      "fields": [
+        "cwd",
+        "effort",
+        "hook_event_name",
+        "permission_mode",
+        "prompt_id",
+        "session_id",
+        "tool_input",
+        "tool_name",
+        "tool_use_id",
+        "transcript_path"
+      ],
+      "privatePromptSeen": false,
+      "denied": false
+    },
+    {
+      "phase": "search-private",
+      "code": 200,
+      "bytes": 561,
+      "event": "UserPromptSubmit",
+      "fields": [
+        "cwd",
+        "hook_event_name",
+        "permission_mode",
+        "prompt",
+        "prompt_id",
+        "session_id",
+        "transcript_path"
+      ],
+      "privatePromptSeen": false,
+      "denied": false
+    },
+    {
+      "phase": "search-private",
+      "code": 503,
+      "bytes": 720,
+      "event": "PreToolUse",
+      "tool": "Grep",
+      "fields": [
+        "cwd",
+        "effort",
+        "hook_event_name",
+        "permission_mode",
+        "prompt_id",
+        "session_id",
+        "tool_input",
+        "tool_name",
+        "tool_use_id",
+        "transcript_path"
+      ],
+      "privatePromptSeen": false,
+      "denied": false
+    },
+    {
+      "phase": "shell-private",
+      "code": 503,
+      "denied": false,
+      "bytes": 561,
+      "event": "UserPromptSubmit",
+      "fields": [
+        "cwd",
+        "hook_event_name",
+        "permission_mode",
+        "prompt",
+        "prompt_id",
+        "session_id",
+        "transcript_path"
+      ],
+      "privatePromptSeen": false
+    },
+    {
+      "phase": "git-private",
+      "code": 503,
+      "denied": false,
+      "bytes": 561,
+      "event": "UserPromptSubmit",
+      "fields": [
+        "cwd",
+        "hook_event_name",
+        "permission_mode",
+        "prompt",
+        "prompt_id",
+        "session_id",
+        "transcript_path"
+      ],
+      "privatePromptSeen": false
+    },
+    {
+      "phase": "self-settings",
+      "code": 503,
+      "denied": false,
+      "bytes": 561,
+      "event": "UserPromptSubmit",
+      "fields": [
+        "cwd",
+        "hook_event_name",
+        "permission_mode",
+        "prompt",
+        "prompt_id",
+        "session_id",
+        "transcript_path"
+      ],
+      "privatePromptSeen": false
+    },
+    {
+      "phase": "mcp-public",
+      "code": 503,
+      "denied": false,
+      "bytes": 561,
+      "event": "UserPromptSubmit",
+      "fields": [
+        "cwd",
+        "hook_event_name",
+        "permission_mode",
+        "prompt",
+        "prompt_id",
+        "session_id",
+        "transcript_path"
+      ],
+      "privatePromptSeen": false
+    },
+    {
+      "phase": "mcp-env",
+      "code": 503,
+      "denied": false,
+      "bytes": 561,
+      "event": "UserPromptSubmit",
+      "fields": [
+        "cwd",
+        "hook_event_name",
+        "permission_mode",
+        "prompt",
+        "prompt_id",
+        "session_id",
+        "transcript_path"
+      ],
+      "privatePromptSeen": false
+    },
+    {
+      "phase": "mcp-cancel",
+      "code": 503,
+      "denied": false,
+      "bytes": 561,
+      "event": "UserPromptSubmit",
+      "fields": [
+        "cwd",
+        "hook_event_name",
+        "permission_mode",
+        "prompt",
+        "prompt_id",
+        "session_id",
+        "transcript_path"
+      ],
+      "privatePromptSeen": false
+    },
+    {
+      "phase": "registered-prompt",
+      "code": 503,
+      "denied": false,
+      "bytes": 596,
+      "event": "UserPromptSubmit",
+      "fields": [
+        "cwd",
+        "hook_event_name",
+        "permission_mode",
+        "prompt",
+        "prompt_id",
+        "session_id",
+        "transcript_path"
+      ],
+      "privatePromptSeen": true
+    },
+    {
+      "phase": "flag-off",
+      "code": 503,
+      "denied": false,
+      "bytes": 561,
+      "event": "UserPromptSubmit",
+      "fields": [
+        "cwd",
+        "hook_event_name",
+        "permission_mode",
+        "prompt",
+        "prompt_id",
+        "session_id",
+        "transcript_path"
+      ],
+      "privatePromptSeen": false
+    }
+  ],
+  "mcp": [
+    {
+      "phase": "provider-public",
+      "code": 200,
+      "bytes": 458,
+      "method": "server/discover"
+    },
+    {
+      "phase": "provider-public",
+      "code": 200,
+      "bytes": 341,
+      "method": "initialize"
+    },
+    {
+      "phase": "provider-public",
+      "code": 202,
+      "bytes": 54,
+      "method": "notifications/initialized"
+    },
+    {
+      "phase": "provider-public",
+      "code": 503,
+      "invalid": true
+    },
+    {
+      "phase": "provider-public",
+      "code": 200,
+      "bytes": 46,
+      "method": "tools/list"
+    },
+    {
+      "phase": "read-public",
+      "code": 200,
+      "bytes": 458,
+      "method": "server/discover"
+    },
+    {
+      "phase": "read-public",
+      "code": 200,
+      "bytes": 341,
+      "method": "initialize"
+    },
+    {
+      "phase": "read-public",
+      "code": 202,
+      "bytes": 54,
+      "method": "notifications/initialized"
+    },
+    {
+      "phase": "read-public",
+      "code": 503,
+      "invalid": true
+    },
+    {
+      "phase": "read-public",
+      "code": 200,
+      "bytes": 46,
+      "method": "tools/list"
+    },
+    {
+      "phase": "read-private",
+      "code": 200,
+      "bytes": 458,
+      "method": "server/discover"
+    },
+    {
+      "phase": "read-private",
+      "code": 200,
+      "bytes": 341,
+      "method": "initialize"
+    },
+    {
+      "phase": "read-private",
+      "code": 202,
+      "bytes": 54,
+      "method": "notifications/initialized"
+    },
+    {
+      "phase": "read-private",
+      "code": 503,
+      "invalid": true
+    },
+    {
+      "phase": "read-private",
+      "code": 200,
+      "bytes": 46,
+      "method": "tools/list"
+    },
+    {
+      "phase": "write-public",
+      "code": 200,
+      "bytes": 458,
+      "method": "server/discover"
+    },
+    {
+      "phase": "write-public",
+      "code": 200,
+      "bytes": 341,
+      "method": "initialize"
+    },
+    {
+      "phase": "write-public",
+      "code": 202,
+      "bytes": 54,
+      "method": "notifications/initialized"
+    },
+    {
+      "phase": "write-public",
+      "code": 503,
+      "invalid": true
+    },
+    {
+      "phase": "write-public",
+      "code": 200,
+      "bytes": 46,
+      "method": "tools/list"
+    },
+    {
+      "phase": "edit-public",
+      "code": 200,
+      "bytes": 458,
+      "method": "server/discover"
+    },
+    {
+      "phase": "edit-public",
+      "code": 200,
+      "bytes": 341,
+      "method": "initialize"
+    },
+    {
+      "phase": "edit-public",
+      "code": 202,
+      "bytes": 54,
+      "method": "notifications/initialized"
+    },
+    {
+      "phase": "edit-public",
+      "code": 503,
+      "invalid": true
+    },
+    {
+      "phase": "edit-public",
+      "code": 200,
+      "bytes": 46,
+      "method": "tools/list"
+    },
+    {
+      "phase": "search-public",
+      "code": 200,
+      "bytes": 458,
+      "method": "server/discover"
+    },
+    {
+      "phase": "search-public",
+      "code": 200,
+      "bytes": 341,
+      "method": "initialize"
+    },
+    {
+      "phase": "search-public",
+      "code": 202,
+      "bytes": 54,
+      "method": "notifications/initialized"
+    },
+    {
+      "phase": "search-public",
+      "code": 503,
+      "invalid": true
+    },
+    {
+      "phase": "search-public",
+      "code": 200,
+      "bytes": 46,
+      "method": "tools/list"
+    },
+    {
+      "phase": "write-private",
+      "code": 200,
+      "bytes": 458,
+      "method": "server/discover"
+    },
+    {
+      "phase": "write-private",
+      "code": 200,
+      "bytes": 341,
+      "method": "initialize"
+    },
+    {
+      "phase": "write-private",
+      "code": 202,
+      "bytes": 54,
+      "method": "notifications/initialized"
+    },
+    {
+      "phase": "write-private",
+      "code": 503,
+      "invalid": true
+    },
+    {
+      "phase": "write-private",
+      "code": 200,
+      "bytes": 46,
+      "method": "tools/list"
+    },
+    {
+      "phase": "edit-private",
+      "code": 200,
+      "bytes": 458,
+      "method": "server/discover"
+    },
+    {
+      "phase": "edit-private",
+      "code": 200,
+      "bytes": 341,
+      "method": "initialize"
+    },
+    {
+      "phase": "edit-private",
+      "code": 202,
+      "bytes": 54,
+      "method": "notifications/initialized"
+    },
+    {
+      "phase": "edit-private",
+      "code": 503,
+      "invalid": true
+    },
+    {
+      "phase": "edit-private",
+      "code": 200,
+      "bytes": 46,
+      "method": "tools/list"
+    },
+    {
+      "phase": "search-private",
+      "code": 200,
+      "bytes": 458,
+      "method": "server/discover"
+    },
+    {
+      "phase": "search-private",
+      "code": 200,
+      "bytes": 341,
+      "method": "initialize"
+    },
+    {
+      "phase": "search-private",
+      "code": 202,
+      "bytes": 54,
+      "method": "notifications/initialized"
+    },
+    {
+      "phase": "search-private",
+      "code": 503,
+      "invalid": true
+    },
+    {
+      "phase": "search-private",
+      "code": 200,
+      "bytes": 46,
+      "method": "tools/list"
+    },
+    {
+      "phase": "shell-private",
+      "code": 200,
+      "bytes": 458,
+      "method": "server/discover"
+    },
+    {
+      "phase": "shell-private",
+      "code": 200,
+      "bytes": 341,
+      "method": "initialize"
+    },
+    {
+      "phase": "shell-private",
+      "code": 503,
+      "bytes": 54,
+      "method": "notifications/initialized"
+    },
+    {
+      "phase": "git-private",
+      "code": 503,
+      "bytes": 458,
+      "method": "server/discover"
+    },
+    {
+      "phase": "git-private",
+      "code": 503,
+      "bytes": 341,
+      "method": "initialize"
+    },
+    {
+      "phase": "self-settings",
+      "code": 503,
+      "bytes": 458,
+      "method": "server/discover"
+    },
+    {
+      "phase": "self-settings",
+      "code": 503,
+      "bytes": 341,
+      "method": "initialize"
+    },
+    {
+      "phase": "mcp-public",
+      "code": 503,
+      "bytes": 458,
+      "method": "server/discover"
+    },
+    {
+      "phase": "mcp-public",
+      "code": 503,
+      "bytes": 341,
+      "method": "initialize"
+    },
+    {
+      "phase": "mcp-env",
+      "code": 503,
+      "bytes": 458,
+      "method": "server/discover"
+    },
+    {
+      "phase": "mcp-env",
+      "code": 503,
+      "bytes": 341,
+      "method": "initialize"
+    },
+    {
+      "phase": "mcp-cancel",
+      "code": 503,
+      "bytes": 458,
+      "method": "server/discover"
+    },
+    {
+      "phase": "mcp-cancel",
+      "code": 503,
+      "bytes": 341,
+      "method": "initialize"
+    },
+    {
+      "phase": "registered-prompt",
+      "code": 503,
+      "bytes": 458,
+      "method": "server/discover"
+    },
+    {
+      "phase": "registered-prompt",
+      "code": 503,
+      "bytes": 341,
+      "method": "initialize"
+    },
+    {
+      "phase": "flag-off",
+      "code": 503,
+      "bytes": 458,
+      "method": "server/discover"
+    },
+    {
+      "phase": "flag-off",
+      "code": 503,
+      "bytes": 341,
+      "method": "initialize"
+    }
+  ],
+  "modals": [
+    {
+      "phase": "idle",
+      "kind": "config",
+      "bytes": 1145,
+      "sha256": "75503f1359e0310e247f528c76884f7436439d191609f8a3f153150f975ecd62"
+    },
+    {
+      "phase": "idle",
+      "kind": "config",
+      "bytes": 1145,
+      "sha256": "75503f1359e0310e247f528c76884f7436439d191609f8a3f153150f975ecd62"
+    },
+    {
+      "phase": "flag-off",
+      "kind": "config",
+      "bytes": 540,
+      "sha256": "25f84b72fafd44176a01366af50446335fc7ae1ae79743fee2067b32de409172"
+    },
+    {
+      "phase": "flag-off",
+      "kind": "config",
+      "bytes": 540,
+      "sha256": "25f84b72fafd44176a01366af50446335fc7ae1ae79743fee2067b32de409172"
+    }
+  ],
+  "native": [
+    {
+      "phase": "provider-public",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "73bc2b7b52e91e45be452769645b3f80f2b474f3c8453373445e446b38f3017e",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 4774,
+      "stderrBytes": 0,
+      "complete": true,
+      "privateOutputSeen": false
+    },
+    {
+      "phase": "read-public",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "exitCode": 1,
+      "signal": null,
+      "stdoutSha256": "dad30266a84943a641d3f2f758df12db03c34db5d54da4ba49ee3b56bd33e3b7",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 7398,
+      "stderrBytes": 0,
+      "complete": false,
+      "privateOutputSeen": false
+    },
+    {
+      "phase": "read-private",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "exitCode": 1,
+      "signal": null,
+      "stdoutSha256": "c6c15c4ab7b9f8539bf6721ffbf2210f397b616159064d3c7cffad8fb6f4166c",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 7386,
+      "stderrBytes": 0,
+      "complete": false,
+      "privateOutputSeen": false
+    },
+    {
+      "phase": "write-public",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "exitCode": 1,
+      "signal": null,
+      "stdoutSha256": "7eeeec9a38769617d684b58861091dff1796ab41f7a2e87735338a40dc04a6be",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 7502,
+      "stderrBytes": 0,
+      "complete": false,
+      "privateOutputSeen": false
+    },
+    {
+      "phase": "edit-public",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "exitCode": 1,
+      "signal": null,
+      "stdoutSha256": "ece9fdababc455a271c1de3ba70fd1bf1d47a6b42f1cbdcb629b785e8fb83c78",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 7620,
+      "stderrBytes": 0,
+      "complete": false,
+      "privateOutputSeen": false
+    },
+    {
+      "phase": "search-public",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "exitCode": 1,
+      "signal": null,
+      "stdoutSha256": "6dfa4cd75f6edf8e4db0af77f299c0e0c72a13c4db72db1f7ddd84461ea72b79",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 7496,
+      "stderrBytes": 0,
+      "complete": false,
+      "privateOutputSeen": false
+    },
+    {
+      "phase": "write-private",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "exitCode": 1,
+      "signal": null,
+      "stdoutSha256": "dc18be6120237f86dc24b303a526ba492378cb7e585f1eddc258194b50ef1cd1",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 7474,
+      "stderrBytes": 0,
+      "complete": false,
+      "privateOutputSeen": false
+    },
+    {
+      "phase": "edit-private",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "exitCode": 1,
+      "signal": null,
+      "stdoutSha256": "2b2fbb58c5fde14a3d339d91100e34fef51c6d3d1f530ffc36d009f4b60dfdea",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 7526,
+      "stderrBytes": 0,
+      "complete": false,
+      "privateOutputSeen": false
+    },
+    {
+      "phase": "search-private",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "exitCode": 1,
+      "signal": null,
+      "stdoutSha256": "e230117ba0dac96b4c311738c9bc7e65979f6dcbeb3af57e8fefc37608690203",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 7468,
+      "stderrBytes": 0,
+      "complete": false,
+      "privateOutputSeen": false
+    },
+    {
+      "phase": "shell-private",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "fe26e9bcd81c9d907a912841ee9324e034964af1e6bc8366a33608c4b58dfa4f",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 4409,
+      "stderrBytes": 0,
+      "complete": false,
+      "privateOutputSeen": false
+    },
+    {
+      "phase": "git-private",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "c5f1eddc3b38eb2372c19377115fb5f6b768a39354a8324c39af38ae15e24068",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 4409,
+      "stderrBytes": 0,
+      "complete": false,
+      "privateOutputSeen": false
+    },
+    {
+      "phase": "self-settings",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "06548b313ec24361087ee3107e122e9113d1c17c77d0d780eecdb19950b9e944",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 4409,
+      "stderrBytes": 0,
+      "complete": false,
+      "privateOutputSeen": false
+    },
+    {
+      "phase": "mcp-public",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "b8801152cbe578f3f50965aee4e1521e8296852d059153a3b1e8bf1814f64044",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 4409,
+      "stderrBytes": 0,
+      "complete": false,
+      "privateOutputSeen": false
+    },
+    {
+      "phase": "mcp-env",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "54541ca41b5f99b29e96c10f876e255afb188944178caf0295f7004ebf9e804c",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 4409,
+      "stderrBytes": 0,
+      "complete": false,
+      "privateOutputSeen": false
+    },
+    {
+      "phase": "mcp-cancel",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "f0a830ac4e75414f27b2a44f473772d6e87900cf7fa25f9232e33e744884bf0b",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 4409,
+      "stderrBytes": 0,
+      "complete": false,
+      "privateOutputSeen": false
+    },
+    {
+      "phase": "registered-prompt",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "c95984e8f208db49762e290a70eecb83b9e3e0b0714833e54e714d08f6585566",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 4409,
+      "stderrBytes": 0,
+      "complete": false,
+      "privateOutputSeen": false
+    },
+    {
+      "phase": "flag-off",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "17a6441bb22df1edcccff932a0085962e381637b54f12dcc1c7f3f325d73c974",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 4409,
+      "stderrBytes": 0,
+      "complete": false,
+      "privateOutputSeen": false
+    }
+  ],
+  "phase": "flag-off",
+  "limits": [
+    "Scripted native editor decisions/developer bootstrap; not clean installed VSIX or human review",
+    "Vendor webview prompt session UNVERIFIED; CLI text route only",
+    "Current owner badge Uncovered",
+    "Parent Node guards are not OS or all-descendant traffic certification"
+  ],
+  "deniedExternal": [],
+  "deniedSignals": [],
+  "deniedChildLaunches": [],
+  "deniedFileAccess": [],
+  "deniedDirectSpawns": [],
+  "deniedWorkerLaunches": [],
+  "providerUrl": "http://127.0.0.1:59200",
+  "cancelStatus": "CANCELLED",
+  "configureStatus": "APPLIED",
+  "unownedNativeStatePreserved": true,
+  "encryptedBackups": 2,
+  "children": [
+    {
+      "phase": "setup",
+      "role": "broker",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "phase": "provider-public",
+      "role": "ticket",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "phase": "read-public",
+      "role": "ticket",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "phase": "read-private",
+      "role": "ticket",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "phase": "write-public",
+      "role": "ticket",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "phase": "edit-public",
+      "role": "ticket",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "phase": "search-public",
+      "role": "ticket",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "phase": "write-private",
+      "role": "ticket",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "phase": "edit-private",
+      "role": "ticket",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "phase": "search-private",
+      "role": "ticket",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "phase": "shell-private",
+      "role": "ticket",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "phase": "git-private",
+      "role": "ticket",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "phase": "self-settings",
+      "role": "ticket",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "phase": "mcp-public",
+      "role": "ticket",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "phase": "mcp-env",
+      "role": "ticket",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "phase": "mcp-cancel",
+      "role": "ticket",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "phase": "registered-prompt",
+      "role": "ticket",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "phase": "flag-off",
+      "role": "ticket",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    }
+  ],
+  "runtimeSha256": "eca2d74b331eaf44e887ecfee67cba56a3849ba56d5dc2e42d798c257f330c87"
+}

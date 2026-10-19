@@ -1,0 +1,10 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path');
+let s=fs.readFileSync(path.join(__dirname,'probe-vendor-02.cjs'),'utf8');
+s=s.replace("const settings={autoUpdates:false,env:{","const settings={autoUpdates:false,env:{ANTHROPIC_BASE_URL:providerUrl,ANTHROPIC_API_KEY:'',ANTHROPIC_AUTH_TOKEN:KEY,");
+s=s.replace("ANTHROPIC_API_KEY:KEY,ANTHROPIC_BASE_URL:providerUrl","ANTHROPIC_API_KEY:'TEST_ONLY_F19_OLD_INHERITED_KEY',ANTHROPIC_AUTH_TOKEN:'TEST_ONLY_F19_OLD_INHERITED_AUTH',ANTHROPIC_BASE_URL:providerUrl+'/unmanaged-origin'");
+s=s.replace("authenticated,publicSeen:text.includes(PUBLIC)","authenticated,configuredBearer:req.headers.authorization==='Bearer '+KEY,unmanagedOrigin:req.url.startsWith('/unmanaged-origin'),publicSeen:text.includes(PUBLIC)");
+s=s.replace("requests.length>0;","requests.length>0&&requests.every(v=>v.configuredBearer&&!v.unmanagedOrigin);");
+s=s.replace("stage++;send(res,","if(!fs.existsSync(path.join(base,'native-controls-03.json'))){const fields={};for(const key of['thinking','output_config','context_management','safeguards'])if(parsed[key]!==undefined)fields[key]=parsed[key];write(path.join(base,'native-controls-03.json'),JSON.stringify(fields,null,2)+'\\n');}stage++;send(res,");
+s=s.replace('native-tool-schemas-02.json','native-tool-schemas-03.json').replace('vendor-feasibility-02.json','vendor-feasibility-03.json');
+fs.writeFileSync(path.join(__dirname,'probe-vendor-03.cjs'),s,{flag:'wx'});

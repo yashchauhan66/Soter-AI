@@ -1,0 +1,11 @@
+const fs=require("node:fs"),path=require("node:path"),assert=require("node:assert/strict"),base=__dirname;
+let text=fs.readFileSync(path.join(base,"probe-vendor-08.cjs"),"utf8");
+for(const name of["native-tool-schemas","native-controls","vendor-feasibility"])text=text.split(name+"-08.json").join(name+"-09.json");
+const before="inputFields:frame.tool_input?Object.keys(frame.tool_input).sort():undefined";
+assert.equal(text.split(before).length,2);
+text=text.replace(before,before+',effortMetadata:JSON.stringify(frame.effort||{}).length<=1024?frame.effort:"OVERSIZE_PUBLIC_METADATA"');
+const loop="for(const name of['provider-public','read-public','read-private','prompt-outage','read-hook-failure'])";
+assert.equal(text.split(loop).length,2);text=text.replace(loop,"for(const name of['read-public'])");
+text=text.replace("record.checks.length===5","record.checks.length===1").split("PASS_SCOPED_DEFAULT_PROFILE_HOOKS").join("PASS_SCOPED_NATIVE_EFFORT_METADATA");
+fs.writeFileSync(path.join(base,"probe-vendor-09.cjs"),text,{flag:"wx"});
+console.log("Prepared one actual public native Read metadata probe. Product candidate unchanged.");

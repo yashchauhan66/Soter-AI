@@ -45,9 +45,16 @@ export class RegisteredSecretMatcher {
     #needles: Needle[] = [];
     #invalid = false;
     #decodedCandidateLimit: number = SECRET_MATCH_LIMITS.maxDecodedCandidates;
-    constructor(values: readonly string[], options: { maxDecodedCandidates?: number } = {}) {
+    constructor(values: readonly string[], options: { maxDecodedCandidates?: number; decodedCandidateProfile?: "structured-json-v1" } = {}) {
         try {
-            if (!options || typeof options !== "object" || Array.isArray(options) || Object.keys(options).some(key => key !== "maxDecodedCandidates")) throw new Error();
+            if (!options || typeof options !== "object" || Array.isArray(options) || Object.keys(options).some(key => !["maxDecodedCandidates", "decodedCandidateProfile"].includes(key))) throw new Error();
+            if (Object.hasOwn(options, "decodedCandidateProfile")) {
+                if (options.decodedCandidateProfile !== "structured-json-v1" || Object.hasOwn(options, "maxDecodedCandidates")) throw new Error();
+                // Explicit large structured-input profile. Original default128
+                // and the separate1..1024 option retain their exact contracts.
+                // Decoded bytes, search work, input bytes and parts stay bounded.
+                this.#decodedCandidateLimit = 2048;
+            }
             if (Object.hasOwn(options, "maxDecodedCandidates")) {
                 const limit = options.maxDecodedCandidates;
                 if (!Number.isSafeInteger(limit) || limit! < 1 || limit! > 1024) throw new Error();

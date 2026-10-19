@@ -1,0 +1,45 @@
+﻿TAP version 13
+# Subtest: F19-R01 exact owner health endpoints do not consume provider request quota
+ok 1 - F19-R01 exact owner health endpoints do not consume provider request quota
+  ---
+  duration_ms: 127.6022
+  type: 'test'
+  ...
+# Subtest: F19-R02 owner health remains authenticated/session-bound and separately metered
+ok 2 - F19-R02 owner health remains authenticated/session-bound and separately metered
+  ---
+  duration_ms: 29.2606
+  type: 'test'
+  ...
+# Subtest: F19-R03 disabling the Claude profile preserves the previous health accounting
+not ok 3 - F19-R03 disabling the Claude profile preserves the previous health accounting
+  ---
+  duration_ms: 11.033
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\claudeHealthBudget.test.ts:2:3274'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    200 !== 429
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 429
+  actual: 200
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\claudeHealthBudget.test.ts:37:20)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..3
+# tests 3
+# suites 0
+# pass 2
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 776.225

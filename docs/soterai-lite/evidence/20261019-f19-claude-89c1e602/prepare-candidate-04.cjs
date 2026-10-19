@@ -1,0 +1,8 @@
+const fs=require("node:fs"),path=require("node:path"),base=__dirname;
+const write=(name,text)=>fs.writeFileSync(path.join(base,name),text,{flag:"wx"});
+let script=fs.readFileSync(path.join(base,"build-candidate-05.ps1"),"utf8").replace("'typecheck-07'","'typecheck-08'").replace("'focused-01'","'focused-02'").replace("'readme-readiness-04'","'readme-readiness-05'").replace("'package-03'","'package-04'").split("attempt03.vsix").join("attempt04.vsix").replace("-InspectionName '03'","-InspectionName '04'");write("build-candidate-06.ps1",script);
+let suites=fs.readFileSync(path.join(base,"run-suites-03.ps1"),"utf8").split("'broker-typecheck-04'").join("'broker-typecheck-05'").split("'broker-tests-03'").join("'broker-tests-04'").split("'full-tests-03'").join("'full-tests-04'").split("'readiness-03'").join("'readiness-04'");write("run-suites-04.ps1",suites);
+let launcher=fs.readFileSync(path.join(base,"run-product-matrix-04.ps1"),"utf8").split("vsix-inspection-03.json").join("vsix-inspection-04.json");write("run-product-matrix-05.ps1",launcher);
+let affected=fs.readFileSync(path.join(base,"run-current-affected-03.ps1"),"utf8").split("vsix-inspection-03.json").join("vsix-inspection-04.json").replace("'-InspectionName','03'","'-InspectionName','04'").split("affected-hosts-03.txt").join("affected-hosts-04.txt");write("run-current-affected-04.ps1",affected);
+let retained=fs.readFileSync(path.join(base,"run-current-retained-02.ps1"),"utf8").split("vsix-inspection-03.json").join("vsix-inspection-04.json");write("run-current-retained-03.ps1",retained);
+console.log("Prepared candidate04 and current final gates for observed MCP metadata. Candidate03 remains retained historical.");

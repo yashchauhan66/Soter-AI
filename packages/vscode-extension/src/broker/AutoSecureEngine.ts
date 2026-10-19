@@ -76,7 +76,7 @@ export const KNOWN_AI_TOOLS: AiToolSpec[] = [
             "${HOME}/.config/claude-code/config.json",
             ".claude/settings.json",
         ],
-        coverageNote: "Routed via ANTHROPIC_BASE_URL — full redaction. ✅",
+        coverageNote: "Requires the separately verified pinned Claude Code adapter; generic environment rewriting does not establish routing.",
     },
     {
         id: "continue",
@@ -206,6 +206,11 @@ export function buildSecurePlan(discovered: DiscoveredTool[], ioFiles: Record<st
     const summaryLines: string[] = [];
 
     for (const d of discovered) {
+        if (d.spec.id === "claude-code" && d.status === "found") {
+            for (const cfg of d.configs) unsupported.push({ toolId: d.spec.id, path: cfg.path, reason: "Use the pinned Claude Code adapter. This generic writer has no verified version or live route." });
+            summaryLines.push("Claude Code: generic routing unavailable; review the pinned adapter.");
+            continue;
+        }
         if (d.spec.id === "cline" && d.status === "found") {
             for (const cfg of d.configs) unsupported.push({ toolId: d.spec.id, path: cfg.path, reason: "Use the pinned Cline adapter. This generic writer has no verified version or live route." });
             summaryLines.push("Cline: generic routing unavailable; review the pinned adapter.");

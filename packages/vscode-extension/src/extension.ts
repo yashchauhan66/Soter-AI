@@ -17,6 +17,7 @@ import { BrokerManager, setBrokerManager } from "./broker/BrokerManager";
 import { autoStartBroker, RETRY_START } from "./broker/autoStart";
 import { registerBrokerCommands } from "./broker/commands";
 import { registerClineAdapter } from "./adapters/ClineAdapter";
+import { registerClaudeAdapter } from "./adapters/ClaudeAdapter";
 import { AISentinel } from "./sentinel/AISentinel";
 import { registerSentinelCommands } from "./sentinel/commands";
 import { PermissionStore } from "./permissions/PermissionStore";
@@ -204,6 +205,7 @@ export function activate(context: vscode.ExtensionContext): void {
     registerScannerCommands(context, async () => (await protectionState?.refresh())?.descriptor);
     registerBrokerCommands(context, brokerManager, refreshViews);
     registerClineAdapter(context, brokerManager, managedReader);
+    registerClaudeAdapter(context, brokerManager, managedReader);
     registerSentinelCommands(context, sentinel);
     registerPermissionCommands(context, permissionStore);
     registerWorkspaceGuardCommands(context, workspaceGuard);

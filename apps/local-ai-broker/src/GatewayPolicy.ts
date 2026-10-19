@@ -10,6 +10,7 @@ interface GatewayChecks {
 export interface GatewayOptions {
     gatewayPolicy?: boolean;
     clineToolSchemas?: boolean;
+    claudeToolSchemas?: boolean;
     requireGatewaySync?: boolean;
     registeredValues?: readonly string[];
     gatewayGuard?: (generation: string) => Promise<boolean>;
@@ -25,6 +26,9 @@ export interface GatewayOptions {
     fetchImpl?: typeof fetch;
 }
 const uuid = /^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/;
+// Captured public declarations of the pinned2.1.301 manual/text client.
+// Caller-supplied beta/header values never become provider headers.
+const CLAUDE_BETAS = "claude-code-20250219,interleaved-thinking-2025-05-14,thinking-token-count-2026-05-13,context-management-2025-06-27,prompt-caching-scope-2026-01-05,effort-2025-11-24";
 const fail = (code: GatewayPolicyError["code"]): never => { throw new GatewayPolicyError(code); };
 /** Only owned controller sync can replace a live private policy/registry snapshot. */
 export class GatewayPolicy {
@@ -39,10 +43,10 @@ export class GatewayPolicy {
         if (options.gatewayPolicy !== false && !options.requireGatewaySync) this.#boundary = options.gatewayBoundary ?? this.compile(options.registeredValues ?? []);
     }
     private compile(values: readonly string[]): GatewayBoundary {
-        return new GatewayBoundary({ version: 1, clineToolSchemas: this.options.clineToolSchemas === true, values: [...values, ...[this.options.token, this.options.controlToken, this.options.providerApiKey].filter((v): v is string => !!v), ...(this.checks.canaries?.() ?? (this.options.canaries ?? []).map(c => c.token))] });
+        return new GatewayBoundary({ version: 1, clineToolSchemas: this.options.clineToolSchemas === true, claudeToolSchemas: this.options.claudeToolSchemas === true, values: [...values, ...[this.options.token, this.options.controlToken, this.options.providerApiKey].filter((v): v is string => !!v), ...(this.checks.canaries?.() ?? (this.options.canaries ?? []).map(c => c.token))] });
     }
-    status(): { version: number; enabled: boolean; ready: boolean; generation: string; clineToolSchemas: boolean } {
-        return { version: 1, enabled: this.options.gatewayPolicy !== false, ready: !this.#closed && this.#boundary?.available() === true && (!this.#mode || JSON.stringify(this.#mode) === JSON.stringify(this.mode())), generation: this.#generation, clineToolSchemas: this.options.clineToolSchemas === true };
+    status(): { version: number; enabled: boolean; ready: boolean; generation: string; clineToolSchemas: boolean; claudeToolSchemas: boolean } {
+        return { version: 1, enabled: this.options.gatewayPolicy !== false, ready: !this.#closed && this.#boundary?.available() === true && (!this.#mode || JSON.stringify(this.#mode) === JSON.stringify(this.mode())), generation: this.#generation, clineToolSchemas: this.options.clineToolSchemas === true, claudeToolSchemas: this.options.claudeToolSchemas === true };
     }
     synchronize(value: Record<string, unknown>): { version: number; synchronized: boolean; generation: string } {
         this.invalidate();
@@ -80,7 +84,8 @@ export class GatewayPolicy {
         try {
             await this.fresh(boundary);if (!boundary) return fail("gateway_unavailable");
             const route = new URL(req.url ?? "/", "http://127.0.0.1"), profile = provider + "-compatible";
-            if (route.search || route.hash || req.headers["x-soterai-provider-key"] !== undefined || req.headers["anthropic-version"] !== undefined && req.headers["anthropic-version"] !== "2023-06-01") return fail("gateway_schema_unsupported");
+            const nativeClaude = provider === "anthropic" && this.options.claudeToolSchemas === true && route.pathname === "/v1/ai/anthropic-compatible/v1/messages";
+            if (route.search && !(nativeClaude && route.search === "?beta=true") || route.hash || req.headers["x-soterai-provider-key"] !== undefined || req.headers["anthropic-version"] !== undefined && req.headers["anthropic-version"] !== "2023-06-01") return fail("gateway_schema_unsupported");
             for (const name of ["x-soterai-tool", "x-soterai-policy-version"]) {
                 let count = 0;for (let i = 0; i < req.rawHeaders.length; i += 2) if (req.rawHeaders[i].toLowerCase() === name) count++;
                 if (count > 1) return fail("gateway_policy_unknown");
@@ -94,7 +99,7 @@ export class GatewayPolicy {
             const url = new URL(validateProviderTarget(target));if (url.search) return fail("gateway_policy_unknown");
             const streaming = inspected.body.stream === true, headers: Record<string, string> = { "content-type": "application/json", accept: streaming ? "text/event-stream" : "application/json" };
             if (provider === "openai") headers.authorization = "Bearer " + this.options.providerApiKey;
-            else { headers["x-api-key"] = this.options.providerApiKey;headers["anthropic-version"] = "2023-06-01"; }
+            else { headers["x-api-key"] = this.options.providerApiKey;headers["anthropic-version"] = "2023-06-01";if(nativeClaude)headers["anthropic-beta"] = CLAUDE_BETAS; }
             await this.fresh(boundary);
             if (req.aborted || req.destroyed && !req.complete || res.destroyed) return fail("gateway_unavailable");
             req.once("aborted", cancelled);res.once("close", cancelled);this.#active.add(controller);

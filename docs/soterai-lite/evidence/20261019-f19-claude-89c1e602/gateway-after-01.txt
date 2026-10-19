@@ -1,0 +1,221 @@
+﻿TAP version 13
+# Subtest: F19 actual default26 Claude tools and manual text controls pass only their declared protocol profile
+not ok 1 - F19 actual default26 Claude tools and manual text controls pass only their declared protocol profile
+  ---
+  duration_ms: 192.2655
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\claudeGatewaySchemas.test.ts:2:1871'
+  failureType: 'testCodeFailure'
+  error: 'Gateway policy withheld protected data'
+  code: 'gateway_limit'
+  stack: |-
+    fail (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\apps\local-ai-broker\src\GatewayBoundary.ts:10:67)
+    GatewayBoundary.#inspect (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\apps\local-ai-broker\src\GatewayBoundary.ts:110:53)
+    GatewayBoundary.prepareRequest (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\apps\local-ai-broker\src\GatewayBoundary.ts:146:18)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\claudeGatewaySchemas.test.ts:12:68)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: F19 registered originals and encodings in native schema metadata are withheld
+not ok 2 - F19 registered originals and encodings in native schema metadata are withheld
+  ---
+  duration_ms: 175.1049
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\claudeGatewaySchemas.test.ts:2:2387'
+  failureType: 'testCodeFailure'
+  error: |-
+    The "sensitive" validation function is expected to return "true". Received false
+    
+    Caught error:
+    
+    Error: Gateway policy withheld protected data
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\claudeGatewaySchemas.test.ts:19:16)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F19 ordinary metadata remains inspected and bounded
+not ok 3 - F19 ordinary metadata remains inspected and bounded
+  ---
+  duration_ms: 170.3635
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\claudeGatewaySchemas.test.ts:2:2980'
+  failureType: 'testCodeFailure'
+  error: |-
+    The "sensitive" validation function is expected to return "true". Received false
+    
+    Caught error:
+    
+    Error: Gateway policy withheld protected data
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\claudeGatewaySchemas.test.ts:25:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F19 unsupported model controls, tool definitions, images and resource overflow remain withheld
+ok 4 - F19 unsupported model controls, tool definitions, images and resource overflow remain withheld
+  ---
+  duration_ms: 50.5519
+  type: 'test'
+  ...
+# Subtest: F19 profile supports empty/ordinary Anthropic tool lists without relaxing the OpenAI profile
+ok 5 - F19 profile supports empty/ordinary Anthropic tool lists without relaxing the OpenAI profile
+  ---
+  duration_ms: 6.8403
+  type: 'test'
+  ...
+# Subtest: F18 enabled schema profile preserves ordinary public requests and an empty tool list
+ok 6 - F18 enabled schema profile preserves ordinary public requests and an empty tool list
+  ---
+  duration_ms: 15.6348
+  type: 'test'
+  ...
+# Subtest: F18 bounded multi-tool schema public request passes only its explicit profile
+ok 7 - F18 bounded multi-tool schema public request passes only its explicit profile
+  ---
+  duration_ms: 20.0902
+  type: 'test'
+  ...
+# Subtest: F18 tool metadata remains inspected for raw/encoded values and ordered splits
+ok 8 - F18 tool metadata remains inspected for raw/encoded values and ordered splits
+  ---
+  duration_ms: 40.0413
+  type: 'test'
+  ...
+# Subtest: F18 schema profile keeps generic metadata, malformed definitions and resource bounds withheld
+ok 9 - F18 schema profile keeps generic metadata, malformed definitions and resource bounds withheld
+  ---
+  duration_ms: 13.2331
+  type: 'test'
+  ...
+# Subtest: F16-P01 public immutable request preserves supported options
+ok 10 - F16-P01 public immutable request preserves supported options
+  ---
+  duration_ms: 12.246
+  type: 'test'
+  ...
+# Subtest: F16-P02 registered representation refuses 34
+ok 11 - F16-P02 registered representation refuses 34
+  ---
+  duration_ms: 1.7079
+  type: 'test'
+  ...
+# Subtest: F16-P02 registered representation refuses 48
+ok 12 - F16-P02 registered representation refuses 48
+  ---
+  duration_ms: 1.0964
+  type: 'test'
+  ...
+# Subtest: F16-P02 registered representation refuses 46
+ok 13 - F16-P02 registered representation refuses 46
+  ---
+  duration_ms: 0.8709
+  type: 'test'
+  ...
+# Subtest: F16-P02 registered representation refuses 68
+ok 14 - F16-P02 registered representation refuses 68
+  ---
+  duration_ms: 0.7517
+  type: 'test'
+  ...
+# Subtest: F16-P02 registered representation refuses 34
+ok 15 - F16-P02 registered representation refuses 34
+  ---
+  duration_ms: 0.7717
+  type: 'test'
+  ...
+# Subtest: F16-P02 registered representation refuses 36
+ok 16 - F16-P02 registered representation refuses 36
+  ---
+  duration_ms: 0.831
+  type: 'test'
+  ...
+# Subtest: F16-P03 ordered content joins detect registered fragments across roles/messages
+ok 17 - F16-P03 ordered content joins detect registered fragments across roles/messages
+  ---
+  duration_ms: 1.9064
+  type: 'test'
+  ...
+# Subtest: F16-P04 provider patterns and fixed entropy controls with public negatives
+ok 18 - F16-P04 provider patterns and fixed entropy controls with public negatives
+  ---
+  duration_ms: 16.6894
+  type: 'test'
+  ...
+# Subtest: F16-P05 unknown schemas and auth/URL overrides refuse
+ok 19 - F16-P05 unknown schemas and auth/URL overrides refuse
+  ---
+  duration_ms: 3.1303
+  type: 'test'
+  ...
+# Subtest: F16-P06 unavailable/unknown policy and invalid registry never degrade to empty
+ok 20 - F16-P06 unavailable/unknown policy and invalid registry never degrade to empty
+  ---
+  duration_ms: 3.1758
+  type: 'test'
+  ...
+# Subtest: F16-P07 complete semantic/request bounds withhold
+ok 21 - F16-P07 complete semantic/request bounds withhold
+  ---
+  duration_ms: 1.6695
+  type: 'test'
+  ...
+# Subtest: F16-P08 output JSON semantics and raw boundaries withhold complete response
+ok 22 - F16-P08 output JSON semantics and raw boundaries withhold complete response
+  ---
+  duration_ms: 9.879
+  type: 'test'
+  ...
+# Subtest: F16-P09 finite SSE output waits for complete inspected stream
+ok 23 - F16-P09 finite SSE output waits for complete inspected stream
+  ---
+  duration_ms: 3.4843
+  type: 'test'
+  ...
+# Subtest: F16-P10 malformed/control/UTF8/output budget failures release nothing
+ok 24 - F16-P10 malformed/control/UTF8/output budget failures release nothing
+  ---
+  duration_ms: 5.1819
+  type: 'test'
+  ...
+# Subtest: F16-P11 bounded seeded public/fragment controls
+ok 25 - F16-P11 bounded seeded public/fragment controls
+  ---
+  duration_ms: 44.7691
+  type: 'test'
+  ...
+# Subtest: F16-P12 errors expose no input or registry contents
+ok 26 - F16-P12 errors expose no input or registry contents
+  ---
+  duration_ms: 0.3674
+  type: 'test'
+  ...
+# Subtest: F16-P13 bounded Anthropic tool use/results preserve public data and refuse unsupported blocks
+ok 27 - F16-P13 bounded Anthropic tool use/results preserve public data and refuse unsupported blocks
+  ---
+  duration_ms: 2.1741
+  type: 'test'
+  ...
+1..27
+# tests 27
+# suites 0
+# pass 24
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2176.6972

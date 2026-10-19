@@ -1,0 +1,656 @@
+{
+  "status": "F19_PARTIAL_UNCOMMITTED_NOT_ACCEPTANCE",
+  "head": "c6c78c9d71fdb09cc0790faa4671999f4a911c4b",
+  "sources": [
+    {
+      "path": "apps/local-ai-broker/src/BrokerServer.ts",
+      "bytes": 74936,
+      "sha256": "6b41fe5645aaa43cda75c5c06f3220a859e326fff756cbe2ef2092f0348d55d1"
+    },
+    {
+      "path": "apps/local-ai-broker/src/GatewayBoundary.ts",
+      "bytes": 16523,
+      "sha256": "2ddec8a78bd2f0b70584723a8538141485bd6acfa950bf0c9a2de0f9f0e3c287"
+    },
+    {
+      "path": "apps/local-ai-broker/src/GatewayPolicy.ts",
+      "bytes": 12305,
+      "sha256": "40c60e0dda4a21176098c13046c876b74423bdd6fcd66e78caf3e92740526394"
+    },
+    {
+      "path": "apps/local-ai-broker/src/cli.ts",
+      "bytes": 5429,
+      "sha256": "ee67380e13ffe8e936c4e89cd63826f166558a2ddd960ca56774206d3cc9985d"
+    },
+    {
+      "path": "packages/core/src/RegisteredSecretMatcher.ts",
+      "bytes": 17574,
+      "sha256": "82175760c43de04aa91e801c1a4e0659b2058f39d1ce3b7d3eb4bfec51d151e3"
+    },
+    {
+      "path": "packages/vscode-extension/src/broker/BrokerManager.ts",
+      "bytes": 18751,
+      "sha256": "f67a6c3fdd4d450d1043230a93eed00e466d3f796a3bc61f17f5e6c31f2ea6c6"
+    },
+    {
+      "path": "packages/vscode-extension/src/broker/AutoSecureEngine.ts",
+      "bytes": 15727,
+      "sha256": "e53cbc59cb98ab43eee02107c0c322fa3dde0b1a1d322cad24de57bacc54c28d"
+    },
+    {
+      "path": "packages/vscode-extension/src/extension.ts",
+      "bytes": 33380,
+      "sha256": "4004aa94b9cd3c6b9c6acc90c03e2f226a5bac406b60fea4bf709632bdf58868"
+    },
+    {
+      "path": "packages/vscode-extension/src/adapters/ClaudeHookProtocol.ts",
+      "bytes": 6988,
+      "sha256": "32b06a94b03761b50e9a0c3bbd22017644dbfd7d4514ed2fd364d0631e029a6f"
+    },
+    {
+      "path": "packages/vscode-extension/src/adapters/ClaudeHttpBridge.ts",
+      "bytes": 11179,
+      "sha256": "ca2727d871b5d2138b03e6cb36116d8dd1a8e925423b6351305050125d26b401"
+    },
+    {
+      "path": "packages/vscode-extension/src/adapters/ClaudeAdapterPolicy.ts",
+      "bytes": 19128,
+      "sha256": "0fcab59859d039654064de842a1123fec098e2d14d390676b6f4a3d30cd19ffa"
+    },
+    {
+      "path": "packages/vscode-extension/src/adapters/ClaudeAdapter.ts",
+      "bytes": 20048,
+      "sha256": "03bf4ab1c43eb9f668b292021d330518b4d33ae11296bc687446aa05e9fbc859"
+    },
+    {
+      "path": "packages/vscode-extension/package.json",
+      "bytes": 125841,
+      "sha256": "5369ceaaaa9f84885861e55e09e209779a5a3b00b03cc5dab32157935ca85216"
+    },
+    {
+      "path": "packages/soterai-lite/package.json",
+      "bytes": 101196,
+      "sha256": "f353768aee9d4685a1b2f6891fe9301494d6a87f90b33fedad132343920ef898"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/claudeAdapterAtomicIO.test.ts",
+      "bytes": 1811,
+      "sha256": "af080d9de62cf680ea7d1cd1182b599975908360eddb494b8e968ec7704aa21c"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/claudeAdapterLifecycle.test.ts",
+      "bytes": 7618,
+      "sha256": "03597fb84e700fa6afe64b237abca444e633a4114ad113a7db9ac28285633eb0"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/claudeAdapterPolicy.test.ts",
+      "bytes": 12408,
+      "sha256": "d79bf9e36637dd45254465ba79aa789ea439e8e14a56c0bdcfff41ec08eca4db"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/claudeAdapterRegistration.test.ts",
+      "bytes": 3102,
+      "sha256": "60546d9ed44fbc627017a343ca00806415e505b9bb59c9cb7c1a5726cb7e4bad"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/claudeGatewayManager.test.ts",
+      "bytes": 4644,
+      "sha256": "d24a15c8433e17092d0b664aaf172efd29c6b6d7352fdb4f316ca90f08d02654"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/claudeGatewaySchemas.test.ts",
+      "bytes": 4037,
+      "sha256": "8cb3a68de0f7a8a98f66c4d9be54b22c81f844115be413828e41d199b8624056"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/claudeGatewayWire.test.ts",
+      "bytes": 4871,
+      "sha256": "8c8256bbb16e1293c4af7a823037355da8afd7f6df1e7d79d0864ac02e0eca11"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/claudeHookProtocol.test.ts",
+      "bytes": 7193,
+      "sha256": "55328c83c2ae2d067152ee2c251e363988f3a79d3bfe205e852ee5e730340e76"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/claudeHttpBridge.test.ts",
+      "bytes": 6816,
+      "sha256": "a3f8705e7b7441b1e1cb32b547d5bbcea0bd9eb306f7b86574cd02b07c1e9c73"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/claudeLegacyRoute.test.ts",
+      "bytes": 830,
+      "sha256": "07b80df349e3938c285f8753376d934a929c4528ea06a596ef7fc3154b6476ad"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/claudeMatcherBudget.test.ts",
+      "bytes": 2386,
+      "sha256": "64cd8adb52f3bcc6d881abde3e0a498d988bf28a7b50d91e487f9aa01f961e4d"
+    }
+  ],
+  "runs": [
+    {
+      "name": "owner-wire-before-01",
+      "exitCode": 1,
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/claudeGatewayManager.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeGatewayWire.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeLegacyRoute.test.ts"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/owner-wire-before-01.txt",
+        "bytes": 10232,
+        "sha256": "069d4beec795aee833c40b3aef4b6f82d71a63910ad33361705b190efd5524be"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/owner-wire-before-01.txt.result.json",
+        "bytes": 753,
+        "sha256": "2846f650e452442f79bb0f1e13c95c94751ec6d29831ae7b6507103a60ae2122"
+      },
+      "counts": {
+        "tests": 12,
+        "pass": 2,
+        "fail": 10,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "classification": "FAIL_RETAINED"
+    },
+    {
+      "name": "owner-wire-after-01",
+      "exitCode": 0,
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/claudeGatewayManager.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeGatewayWire.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeLegacyRoute.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeGatewaySchemas.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeMatcherBudget.test.ts",
+        "packages/vscode-extension/src/__tests__/gatewayPolicyManager.test.ts",
+        "packages/vscode-extension/src/__tests__/ownedBrokerManager.test.ts",
+        "packages/vscode-extension/src/__tests__/mcp-canary-boundary.test.ts",
+        "packages/vscode-extension/src/__tests__/gatewayPolicyWire.test.ts",
+        "packages/vscode-extension/src/__tests__/clineGatewaySchemas.test.ts",
+        "packages/vscode-extension/src/__tests__/clineMatcherBudget.test.ts"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/owner-wire-after-01.txt",
+        "bytes": 23270,
+        "sha256": "506d16755722ab9d1469eaa135a444fb2c4b80d6212a0fca7421ff8692e3adfd"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/owner-wire-after-01.txt.result.json",
+        "bytes": 1502,
+        "sha256": "6412a932185dbd702b49ca2d63ed51b78305b7b35cf20a8eb182a7e8155853ad"
+      },
+      "counts": {
+        "tests": 106,
+        "pass": 106,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "classification": "PASS"
+    },
+    {
+      "name": "hook-bridge-before-01",
+      "exitCode": 1,
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/claudeHookProtocol.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeHttpBridge.test.ts"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/hook-bridge-before-01.txt",
+        "bytes": 2050,
+        "sha256": "448796b53513eb07033071b36435508810ee3e13d103178d8f059c35aee76c54"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/hook-bridge-before-01.txt.result.json",
+        "bytes": 659,
+        "sha256": "caea0e0bc5c31291e18f005dff3a6dce706561469e54401549d983d5b95b9695"
+      },
+      "counts": {
+        "tests": 2,
+        "pass": 0,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "classification": "NOT_EXECUTED_SANDBOX_LAUNCH"
+    },
+    {
+      "name": "hook-bridge-after-01",
+      "exitCode": 1,
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/claudeHookProtocol.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeHttpBridge.test.ts"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/hook-bridge-after-01.txt",
+        "bytes": 2048,
+        "sha256": "5ad49c8a62a0b66ba3efd760f4bfc6d97d9c1b0b50cd41f40b51d58c34a76147"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/hook-bridge-after-01.txt.result.json",
+        "bytes": 658,
+        "sha256": "70689f4cba7c857f3889ff4c7b08e2e59bf623223fa3bcad6d8644af898426fc"
+      },
+      "counts": {
+        "tests": 2,
+        "pass": 0,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "classification": "NOT_EXECUTED_SANDBOX_LAUNCH"
+    },
+    {
+      "name": "hook-bridge-after-02",
+      "exitCode": 1,
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/claudeHookProtocol.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeHttpBridge.test.ts"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/hook-bridge-after-02.txt",
+        "bytes": 8521,
+        "sha256": "459872fde037781ad7cce4ba961995bd0570265d3dd6c08dca98d09da854d521"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/hook-bridge-after-02.txt.result.json",
+        "bytes": 658,
+        "sha256": "df4cd8fe51bbe98927f1eec0d3678729b9fc2bc03c1fb4a0910a1eff242c3144"
+      },
+      "counts": {
+        "tests": 31,
+        "pass": 30,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "classification": "FAIL_RETAINED"
+    },
+    {
+      "name": "policy-before-hook-after-01",
+      "exitCode": 1,
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/claudeAdapterPolicy.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeHookProtocol.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeHttpBridge.test.ts"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/policy-before-hook-after-01.txt",
+        "bytes": 32196,
+        "sha256": "e16a4477bdbfde289e511f0abd3e030896b7e02fe52a986869c33fd5a325c73d"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/policy-before-hook-after-01.txt.result.json",
+        "bytes": 759,
+        "sha256": "a95a60130e14040de66d5cee0af753e352289ec1347b8193cb1e766d4754ef73"
+      },
+      "counts": {
+        "tests": 46,
+        "pass": 31,
+        "fail": 15,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "classification": "MISSING_MODULE_CONTRACTS_NOT_EXECUTED_BEHAVIOR"
+    },
+    {
+      "name": "policy-hook-bridge-after-01",
+      "exitCode": 0,
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/claudeAdapterPolicy.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeHookProtocol.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeHttpBridge.test.ts"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/policy-hook-bridge-after-01.txt",
+        "bytes": 11150,
+        "sha256": "58cb389f1ceb558808a091313de2034ebeff941cc34e668372df66239eee48c8"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/policy-hook-bridge-after-01.txt.result.json",
+        "bytes": 759,
+        "sha256": "2e0c0da135cb470bcf2a501e5a301399f37ee622884ba5ae821009ca8b72d429"
+      },
+      "counts": {
+        "tests": 46,
+        "pass": 46,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "classification": "PASS"
+    },
+    {
+      "name": "controller-before-01",
+      "exitCode": 1,
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/claudeAdapterLifecycle.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeAdapterAtomicIO.test.ts"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/controller-before-01.txt",
+        "bytes": 11561,
+        "sha256": "8260c733f8ea303c3c3b7b58222449e6f5baa977e2791cad50e6f9819347e698"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/controller-before-01.txt.result.json",
+        "bytes": 667,
+        "sha256": "70964d41c3c997e3175ab65c342e981c336bcb77decb0847bc3e85875baa43af"
+      },
+      "counts": {
+        "tests": 7,
+        "pass": 0,
+        "fail": 7,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "classification": "MISSING_MODULE_CONTRACTS_NOT_EXECUTED_BEHAVIOR"
+    },
+    {
+      "name": "transaction-review-before-01",
+      "exitCode": 1,
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/claudeAdapterPolicy.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeAdapterLifecycle.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeAdapterAtomicIO.test.ts"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/transaction-review-before-01.txt",
+        "bytes": 11943,
+        "sha256": "cfba80d8d34b8f818e65300c76b64f84619697ce0b5d96dbc6f60f88cb3be519"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/transaction-review-before-01.txt.result.json",
+        "bytes": 769,
+        "sha256": "2f5fb8eb4483b1e79ee1a2fa58e3daa804982e1722799d6daca5fa9405361834"
+      },
+      "counts": {
+        "tests": 25,
+        "pass": 22,
+        "fail": 3,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "classification": "FAIL_RETAINED"
+    },
+    {
+      "name": "transaction-review-after-01",
+      "exitCode": 0,
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/claudeAdapterPolicy.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeAdapterLifecycle.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeAdapterAtomicIO.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeHookProtocol.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeHttpBridge.test.ts"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/transaction-review-after-01.txt",
+        "bytes": 13486,
+        "sha256": "747091086fa744aceb01933033945a5ecd7d8247122f76ecdc1e2bd9a78aeba1"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/transaction-review-after-01.txt.result.json",
+        "bytes": 952,
+        "sha256": "5094ef8f8b31e5a824c74a10d8bf89ea7558cfd8a16c2ec85a1a4527cf488823"
+      },
+      "counts": {
+        "tests": 56,
+        "pass": 56,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "classification": "PASS"
+    },
+    {
+      "name": "registration-before-01",
+      "exitCode": 1,
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/claudeAdapterRegistration.test.ts"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/registration-before-01.txt",
+        "bytes": 51024,
+        "sha256": "14922f60fad0af2c701c44fb36b28d76bf7395340a0b1c4c4bf94ade950abe8f"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/registration-before-01.txt.result.json",
+        "bytes": 576,
+        "sha256": "1ae6f9955d1d1384fd96e1f007e1cf570a9718b2968d8e6e0463f1dfda690964"
+      },
+      "counts": {
+        "tests": 4,
+        "pass": 2,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "classification": "FAIL_RETAINED"
+    },
+    {
+      "name": "combined-after-01",
+      "exitCode": 0,
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "packages/vscode-extension/src/__tests__/claudeAdapterRegistration.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeAdapterPolicy.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeAdapterLifecycle.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeAdapterAtomicIO.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeHookProtocol.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeHttpBridge.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeGatewayManager.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeGatewayWire.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeLegacyRoute.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeGatewaySchemas.test.ts",
+        "packages/vscode-extension/src/__tests__/claudeMatcherBudget.test.ts",
+        "packages/vscode-extension/src/__tests__/gatewayPolicyManager.test.ts",
+        "packages/vscode-extension/src/__tests__/ownedBrokerManager.test.ts",
+        "packages/vscode-extension/src/__tests__/mcp-canary-boundary.test.ts",
+        "packages/vscode-extension/src/__tests__/gatewayPolicyWire.test.ts",
+        "packages/vscode-extension/src/__tests__/clineGatewaySchemas.test.ts",
+        "packages/vscode-extension/src/__tests__/clineMatcherBudget.test.ts"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/combined-after-01.txt",
+        "bytes": 37613,
+        "sha256": "4911e9997757500266a7d270d360aeaae7022aa654a90788f98631983336f796"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/combined-after-01.txt.result.json",
+        "bytes": 2071,
+        "sha256": "a8f23aeb366af182e46b653554d2975f7ee02cb65a6cd3b52fdab72a8162c91d"
+      },
+      "counts": {
+        "tests": 166,
+        "pass": 166,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "classification": "PASS"
+    },
+    {
+      "name": "typecheck-01",
+      "exitCode": 2,
+      "command": [
+        "node",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "-p",
+        "packages/vscode-extension/tsconfig.json"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/typecheck-01.txt",
+        "bytes": 8980,
+        "sha256": "8ef26585b4e99e9600f5c5b7faf30d922138d18c1d77b7e681a0ec4aa1edd1e3"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/typecheck-01.txt.result.json",
+        "bytes": 509,
+        "sha256": "3d9f4a6d02a4c3575c16e422cf2d539fc562cca2daa2779d810a5507dc00cf62"
+      },
+      "counts": {},
+      "classification": "FAIL_RETAINED"
+    },
+    {
+      "name": "typecheck-02",
+      "exitCode": 0,
+      "command": [
+        "node",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "-p",
+        "packages/vscode-extension/tsconfig.json"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/typecheck-02.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/typecheck-02.txt.result.json",
+        "bytes": 509,
+        "sha256": "cfb54884b81380046cc3898f6be23ad56f56791e34ba2ee98dd0628970019d73"
+      },
+      "counts": {},
+      "classification": "PASS"
+    },
+    {
+      "name": "typecheck-03",
+      "exitCode": 0,
+      "command": [
+        "node",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "-p",
+        "packages/vscode-extension/tsconfig.json"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/typecheck-03.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/typecheck-03.txt.result.json",
+        "bytes": 509,
+        "sha256": "03effb733bfa54ae8c30e951027f2810afbb63567182d319221d4449775c657c"
+      },
+      "counts": {},
+      "classification": "PASS"
+    },
+    {
+      "name": "broker-typecheck-01",
+      "exitCode": 0,
+      "command": [
+        "node",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "-p",
+        "apps/local-ai-broker/tsconfig.json"
+      ],
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/broker-typecheck-01.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/broker-typecheck-01.txt.result.json",
+        "bytes": 511,
+        "sha256": "9129f9954658d83f310689b0f0cfc9f72bbe07bbd1c293edf5498066828081cf"
+      },
+      "counts": {},
+      "classification": "PASS"
+    }
+  ],
+  "native08": {
+    "raw": {
+      "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/vendor-feasibility-08.json",
+      "bytes": 18342,
+      "sha256": "79986777fbbb54a321f8199319e957b173b35df0d24dec06f4f409a0f023a13e"
+    },
+    "root": "D:\\SoterAI-Lite-test-profiles\\f19-vendor-20261019T080522Z-0cc9c768",
+    "status": "PASS_SCOPED_DEFAULT_PROFILE_HOOKS",
+    "scope": "Vendor feasibility only; no product route acceptance."
+  },
+  "remaining": [
+    "Exact new VSIX/content/source inspection",
+    "Actual pinned Claude product CLI/IDE route matrix and native consent",
+    "Affected retained native106 and functional10/security17",
+    "Final current full/backend/readiness tests",
+    "LOW review and ledger acceptance",
+    "Scoped source commit and every indexed Git/current byte proof",
+    "Separate F20 transition and proof"
+  ],
+  "limits": [
+    "Current owner badge Uncovered",
+    "Frozen44 UNVERIFIED",
+    "F11 absent/unimplemented NOT_TESTED NOT_COVERED",
+    "Nine unmanaged baseline leaks retained",
+    "No rating",
+    "Original L6 HUMAN-ACTIONS then STOP",
+    "Synthetic only; no login/download/push/publish/tag/process signals/normal profile or OS changes",
+    "20GB threshold waived"
+  ]
+}

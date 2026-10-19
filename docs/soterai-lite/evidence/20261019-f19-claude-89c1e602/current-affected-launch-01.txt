@@ -1,0 +1,38 @@
+﻿{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261019-f19-claude-89c1e602\\affected-hosts-01.txt",
+    "observedAt":  "2026-10-19T10:11:57.7985092Z",
+    "exitCode":  1,
+    "arguments":  [
+                      "-NoLogo",
+                      "-NoProfile",
+                      "-ExecutionPolicy",
+                      "Bypass",
+                      "-File",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261019-f19-claude-89c1e602\\run-affected-hosts-01.ps1",
+                      "-VsixPath",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\soterai-lite\\soterai-lite-0.7.0-f19-20261019-attempt01.vsix",
+                      "-ExpectedVsixSha256",
+                      "ebbb4a8080ba3ceb8e52b36c5bc6c05602c1a1237ffdc2cb403e9514c67af83c",
+                      "-ExpectedBundleSha256",
+                      "eca2d74b331eaf44e887ecfee67cba56a3849ba56d5dc2e42d798c257f330c87",
+                      "-InspectionName",
+                      "01"
+                  ],
+    "sha256":  "306BD61160F052592322483849F6223E4599D0AE156AB4A2BE83E3503400285C",
+    "file":  "powershell.exe"
+}
+powershell.exe : Current affected hosts incomplete; raw evidence retained
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Current affecte...idence retained:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261019-f19-claude-89c1e602\run-c
+urrent-affected-01.ps1:8 char:32
++ ... Code -ne 0){throw 'Current affected hosts incomplete; raw evidence re ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (Current affecte...idence retained:String) [], RuntimeException
+    + FullyQualifiedErrorId : Current affected hosts incomplete; raw evidence retained
+ 

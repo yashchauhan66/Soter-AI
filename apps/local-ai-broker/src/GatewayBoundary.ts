@@ -44,6 +44,56 @@ function toolSchemaStrings(value: unknown): string[] {
     }
     return all;
 }
+/** Pinned Claude manual/text tools. Bound every metadata string without
+ * changing the ordinary request-content budget or skipping inspection. */
+function claudeSchemaStrings(value: unknown): string[] {
+    if (!record(value) || value.tools === undefined) return strings(value);
+    if (!Array.isArray(value.tools) || value.tools.length > 32) return fail("gateway_schema_unsupported");
+    for (const definition of value.tools) {
+        if (!record(definition) || Object.keys(definition).some(key => !["name", "description", "input_schema"].includes(key))
+            || typeof definition.name !== "string" || !/^[A-Za-z0-9_-]{1,128}$/.test(definition.name) || !record(definition.input_schema)
+            || definition.description !== undefined && (typeof definition.description !== "string" || Buffer.byteLength(definition.description) > 16384)) return fail("gateway_schema_unsupported");
+    }
+    const all: string[] = [], general: string[] = []; let metadata = 0;
+    const collect = (item: unknown): void => {
+        if (typeof item === "string") { if (++metadata > 512) return fail("gateway_limit"); all.push(item); }
+        else if (Array.isArray(item)) item.forEach(collect);
+        else if (record(item)) Object.values(item).forEach(collect);
+    };
+    // Only validated role/type constants receive a protocol count. Text,
+    // identifiers, arguments, cache-control metadata and every other carrier
+    // retain the original 32-string budget. All strings keep their order and
+    // still pass canonical, ordered and semantic secret inspection.
+    let protocolLiterals = 0;
+    const literal = (item: string): void => { if (++protocolLiterals > 128) return fail("gateway_limit"); all.push(item); };
+    const ordinary = (item: unknown): void => { const before = general.length; strings(item, general); all.push(...general.slice(before)); };
+    const content = (item: unknown): void => {
+        if (!Array.isArray(item)) { ordinary(item); return; }
+        for (const part of item) {
+            if (!record(part)) return fail("gateway_schema_unsupported");
+            for (const [key, child] of Object.entries(part)) {
+                if (key === "type" && typeof child === "string" && ["text", "tool_use", "tool_result"].includes(child)) literal(child);
+                else if (key === "content" && part.type === "tool_result") content(child);
+                else ordinary(child);
+            }
+        }
+    };
+    for (const [key, item] of Object.entries(value)) {
+        if (key === "tools") collect(item);
+        else if (key === "messages" && Array.isArray(item)) {
+            for (const message of item) {
+                if (!record(message)) return fail("gateway_schema_unsupported");
+                for (const [field, child] of Object.entries(message)) {
+                    if (field === "role" && typeof child === "string" && ["user", "assistant"].includes(child)) literal(child);
+                    else if (field === "content") content(child);
+                    else ordinary(child);
+                }
+            }
+        } else if (key === "system") content(item);
+        else ordinary(item);
+    }
+    return all;
+}
 function contentStrings(value: unknown, result: string[] = []): string[] {
     if (Array.isArray(value)) for (const item of value) contentStrings(item, result);
     else if (record(value)) for (const [key, item] of Object.entries(value)) {
@@ -56,32 +106,37 @@ function contentStrings(value: unknown, result: string[] = []): string[] {
 export class GatewayBoundary {
     #values: readonly string[];
     #matcher: RegisteredSecretMatcher;
+    #claudeMatcher: RegisteredSecretMatcher | undefined;
     #available: boolean;
     #short: boolean;
     #clineToolSchemas: boolean;
-    constructor(options: { values: readonly string[]; version: number; enabled?: boolean; clineToolSchemas?: boolean }) {
+    #claudeToolSchemas: boolean;
+    constructor(options: { values: readonly string[]; version: number; enabled?: boolean; clineToolSchemas?: boolean; claudeToolSchemas?: boolean }) {
         this.#values = Object.freeze(Array.isArray(options.values) ? [...options.values] : []);
         this.#clineToolSchemas = options.clineToolSchemas === true;
+        this.#claudeToolSchemas = options.claudeToolSchemas === true;
         this.#matcher = new RegisteredSecretMatcher(options.values, this.#clineToolSchemas ? { maxDecodedCandidates: 1024 } : {});
-        this.#available = options.version === 1 && options.enabled !== false && this.#matcher.inspectRequest([]).status === "CLEAN";
+        this.#claudeMatcher = this.#claudeToolSchemas ? new RegisteredSecretMatcher(options.values, { decodedCandidateProfile: "structured-json-v1" }) : undefined;
+        this.#available = options.version === 1 && options.enabled !== false && this.#matcher.inspectRequest([]).status === "CLEAN"
+            && (!this.#claudeMatcher || this.#claudeMatcher.inspectRequest([]).status === "CLEAN");
         this.#short = this.#values.some(v => typeof v === "string" && Array.from(v).length < 8);
     }
     available(): boolean { return this.#available; }
-    dispose(): void { this.#available = false; this.#values = []; this.#matcher = new RegisteredSecretMatcher([""]); }
+    dispose(): void { this.#available = false; this.#values = []; this.#matcher = new RegisteredSecretMatcher([""]); this.#claudeMatcher = undefined; }
     /** Internal fixture capability: clone current registrations without returning them. */
     withSynthetic<T>(value: string, operation: (copy: GatewayBoundary) => Promise<T>): Promise<T> {
         if (!this.#available) return Promise.reject(new GatewayPolicyError("gateway_unavailable"));
-        const copy = new GatewayBoundary({ values: [...this.#values, value], version: 1, clineToolSchemas: this.#clineToolSchemas });
+        const copy = new GatewayBoundary({ values: [...this.#values, value], version: 1, clineToolSchemas: this.#clineToolSchemas, claudeToolSchemas: this.#claudeToolSchemas });
         return operation(copy).finally(() => copy.dispose());
     }
-    #inspect(value: unknown, canonical: string, start: number, toolSchemas = false): void {
+    #inspect(value: unknown, canonical: string, start: number, toolSchemas: false | GatewayProvider = false): void {
         if (!this.#available) return fail("gateway_unavailable");
         if (this.#short) return fail("gateway_sensitive");
-        const leaves = toolSchemas ? toolSchemaStrings(value) : strings(value), texts = contentStrings(value);
+        const leaves = toolSchemas === "anthropic" ? claudeSchemaStrings(value) : toolSchemas ? toolSchemaStrings(value) : strings(value), texts = contentStrings(value);
         // F07 scans joined input. Short registrations already withhold above;
         // joining this bounded metadata adds no short-value exception.
         for (const parts of [[canonical], leaves.length > 32 ? [leaves.join("")] : leaves, texts]) {
-            const decision = this.#matcher.inspectRequest(parts);
+            const decision = (toolSchemas === "anthropic" ? this.#claudeMatcher! : this.#matcher).inspectRequest(parts);
             if (decision.status === "MATCHED") return fail("gateway_sensitive");
             if (decision.status !== "CLEAN") return fail("gateway_limit");
             if (Date.now() - start > GATEWAY_LIMITS.inspectionMs) return fail("gateway_limit");
@@ -93,7 +148,10 @@ export class GatewayBoundary {
             if (!this.#available) return fail("gateway_unavailable");
             if (!Object.hasOwn(fields, provider)) return fail("gateway_policy_unknown");
             const parsed = decodeBoundedJson(Buffer.from(JSON.stringify(value)), { maxBytes: GATEWAY_LIMITS.bytes }), body = parsed.body;
-            if (Object.keys(body).some(key => !fields[provider].has(key)) || !Array.isArray(body.messages) || !body.messages.length) return fail("gateway_schema_unsupported");
+            const claude = provider === "anthropic" && this.#claudeToolSchemas;
+            if (Object.keys(body).some(key => !fields[provider].has(key) && !(claude && ["thinking", "output_config"].includes(key))) || !Array.isArray(body.messages) || !body.messages.length) return fail("gateway_schema_unsupported");
+            if (claude && (body.thinking !== undefined && (!record(body.thinking) || Object.keys(body.thinking).join(",") !== "type" || body.thinking.type !== "disabled")
+                || body.output_config !== undefined && (!record(body.output_config) || Object.keys(body.output_config).join(",") !== "effort" || typeof body.output_config.effort !== "string" || !["low", "medium", "high", "max"].includes(body.output_config.effort)))) return fail("gateway_schema_unsupported");
             if (body.model !== undefined && (typeof body.model !== "string" || !body.model)) return fail("gateway_schema_unsupported");
             if (body.stream !== undefined && typeof body.stream !== "boolean") return fail("gateway_schema_unsupported");
             const textContent = (content: unknown, tools = true): void => {
@@ -116,7 +174,7 @@ export class GatewayBoundary {
                 else if (!Array.isArray(message.tool_calls) && !record(message.function_call)) return fail("gateway_schema_unsupported");
             }
             if (body.system !== undefined) textContent(body.system);
-            this.#inspect(body, parsed.canonical, start, provider === "openai" && this.#clineToolSchemas); return Object.freeze(parsed);
+            this.#inspect(body, parsed.canonical, start, provider === "openai" && this.#clineToolSchemas ? "openai" : claude ? "anthropic" : false); return Object.freeze(parsed);
         } catch (error) { if (error instanceof GatewayPolicyError) throw error; return fail("gateway_limit"); }
     }
     inspectResponse(provider: GatewayProvider, chunks: readonly Uint8Array[], streaming: boolean): { readonly wire: string; readonly media: string; readonly semantic: string } {
@@ -134,7 +192,7 @@ export class GatewayBoundary {
             if (completed.status !== "COMPLETE" || completed.redacted || completed.stdout !== wire.replace(/\r\n/g, "\n")) return fail("gateway_output_withheld");
             let semantic: string;
             if (!streaming) {
-                const parsed = decodeBoundedJson(Buffer.from(wire), { maxBytes: GATEWAY_LIMITS.bytes });this.#inspect(parsed.body, parsed.canonical, start);
+                const parsed = decodeBoundedJson(Buffer.from(wire), { maxBytes: GATEWAY_LIMITS.bytes });this.#inspect(parsed.body, parsed.canonical, start, provider === "anthropic" && this.#claudeToolSchemas ? "anthropic" : false);
                 semantic = contentStrings(parsed.body).join("");
             } else {
                 if (!wire.endsWith("\n\n") && !wire.endsWith("\r\n\r\n")) return fail("gateway_output_withheld");
@@ -154,7 +212,7 @@ export class GatewayBoundary {
                     else return fail("gateway_output_withheld");
                 }
                 if (!terminal || !values.length || data.length) return fail("gateway_output_withheld");
-                this.#inspect(values, wire, start);
+                this.#inspect(values, wire, start, provider === "anthropic" && this.#claudeToolSchemas ? "anthropic" : false);
                 semantic = contentStrings(values).join("");
             }
             return Object.freeze({ wire, semantic, media: streaming ? "text/event-stream; charset=utf-8" : "application/json; charset=utf-8" });

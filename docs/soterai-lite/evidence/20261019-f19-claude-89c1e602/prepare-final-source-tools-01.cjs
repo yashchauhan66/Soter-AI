@@ -1,0 +1,24 @@
+const fs=require("node:fs"),path=require("node:path"),assert=require("node:assert/strict"),crypto=require("node:crypto"),base=__dirname;
+const write=(name,text)=>fs.writeFileSync(path.join(base,name),text,{flag:"wx"}),sha=bytes=>crypto.createHash("sha256").update(bytes).digest("hex");
+const previous=JSON.parse(fs.readFileSync(path.join(base,"f19-product-20261019T104729Z-307f886e/product-result.json"),"utf8"));
+assert.equal(previous.checks.filter(row=>row.status==="PASS").length,21);assert.deepEqual(previous.checks.filter(row=>row.status!=="PASS").map(row=>row.id),["F19-N03"]);
+const rawPath="D:/SoterAI-Lite-test-profiles/f19-product-20261019T104729Z-307f886e/native-provider-public-stdout.txt",raw=fs.readFileSync(rawPath);
+assert.equal(sha(raw),previous.native.find(row=>row.phase==="provider-public").stdoutSha256);
+const errorRows=raw.toString("utf8").split(/\r?\n/).flatMap(line=>{try{const row=JSON.parse(line);return row.type==="assistant"&&row.api_error_status===413?[row]:[];}catch{return[];}});
+assert.equal(errorRows.length,1);
+write("startup-http413-diagnostic-01.json",JSON.stringify({status:"UNRESOLVED_INITIAL_PUBLIC_HTTP413",artifact:"d55395efa0be758975053f405156669608ab2b0897d8f0a41086514023797fdc",previousRun:"f19-product-20261019T104729Z-307f886e",
+ httpStatus:413,errorEnum:errorRows[0].error,raw:{path:rawPath,bytes:raw.length,sha256:sha(raw)},scope:"Initial public native request failed during concurrent synthetic hosts/full tests. Exact internal cause and actual request size were not captured. Native SDK's generic 32MB/image explanation is not a measured broker limit. Same unchanged artifact/source/limits later passed all22 in a fresh sequential run. No historical cause/fix certainty. F28 stress/reliability must audit."},null,2)+"\n");
+let acceptance=fs.readFileSync(path.join(base,"prepare-acceptance-01.cjs"),"utf8");
+assert.equal(acceptance.split("'product-matrix-launch-05'").length,2);acceptance=acceptance.replace("'product-matrix-launch-05'","'product-matrix-launch-06'");
+acceptance=acceptance.replace("const review='","const review='Caveat: earlier candidate04 initial public request HTTP413 is unresolved; exact unchanged bytes later pass22 sequentially. F28 reliability audit remains required. ");
+acceptance=acceptance.replace("vendorPin:fact(own('installed-public-inputs-01.json')),commands,review,","vendorPin:fact(own('installed-public-inputs-01.json')),commands,startupCaveat:fact(own('startup-http413-diagnostic-01.json')),review,");
+acceptance=acceptance.replace("Previous failed matrices, failed constructor baselines, counterfactual health copy and all artifacts retained, never regraded.","Earlier candidate04 parallel run21PASS1FAIL (first public HTTP413) remains unresolved; unchanged artifact later passes22 sequentially, no historical rootcause claim. Audit under F28 reliability. Previous failed matrices, failed constructor baselines, counterfactual health copy and all artifacts retained, never regraded.");
+write("prepare-acceptance-02.cjs",acceptance);
+let index=fs.readFileSync(path.join(base,"prepare-index-01.cjs"),"utf8");
+const marker="const modified=lines(git(";
+assert.equal(index.split(marker).length,2);
+index=index.replace(marker,"for(const name of ['packages/vscode-extension/src/__tests__/gatewayPolicyManager.test.ts','packages/vscode-extension/src/__tests__/ownedBrokerManager.test.ts','packages/vscode-extension/src/__tests__/mcp-canary-boundary.test.ts'])ownSources.add(name);\n"+marker);
+write("prepare-index-02.cjs",index);
+let close=fs.readFileSync(path.join(base,"close-source-01.ps1"),"utf8").split("prepare-index-01.cjs").join("prepare-index-02.cjs").split("index-preparation-01").join("index-preparation-02");
+write("close-source-02.ps1",close);
+console.log("Prepared final receipt/proof tools with explicit startup caveat and all three previously recorded owner-ack fixtures. No staging/commit yet.");

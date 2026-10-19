@@ -1,0 +1,166 @@
+﻿TAP version 13
+# Subtest: F19-GT01 observed 30-to-39 string public native tool conversation remains inspected and usable
+ok 1 - F19-GT01 observed 30-to-39 string public native tool conversation remains inspected and usable
+  ---
+  duration_ms: 383.5417
+  type: 'test'
+  ...
+# Subtest: F19-GT02 native tool result, tool identifier and split public-text carriers retain exact matching
+ok 2 - F19-GT02 native tool result, tool identifier and split public-text carriers retain exact matching
+  ---
+  duration_ms: 656.226
+  type: 'test'
+  ...
+# Subtest: F19-GT03 33 ordinary content strings still exceed the original content budget
+ok 3 - F19-GT03 33 ordinary content strings still exceed the original content budget
+  ---
+  duration_ms: 0.8994
+  type: 'test'
+  ...
+# Subtest: F19-GT04 only fixed validated protocol literals receive their separate bounded count
+ok 4 - F19-GT04 only fixed validated protocol literals receive their separate bounded count
+  ---
+  duration_ms: 13.3218
+  type: 'test'
+  ...
+# Subtest: F19-GT05 ordinary F16/F18 and disabled-Claude limits do not gain protocol-literal allowances
+ok 5 - F19-GT05 ordinary F16/F18 and disabled-Claude limits do not gain protocol-literal allowances
+  ---
+  duration_ms: 1.1005
+  type: 'test'
+  ...
+# Subtest: F19 actual default26 Claude tools and manual text controls pass only their declared protocol profile
+ok 6 - F19 actual default26 Claude tools and manual text controls pass only their declared protocol profile
+  ---
+  duration_ms: 394.217
+  type: 'test'
+  ...
+# Subtest: F19 registered originals and encodings in native schema metadata are withheld
+ok 7 - F19 registered originals and encodings in native schema metadata are withheld
+  ---
+  duration_ms: 569.465
+  type: 'test'
+  ...
+# Subtest: F19 ordinary metadata remains inspected and bounded
+ok 8 - F19 ordinary metadata remains inspected and bounded
+  ---
+  duration_ms: 252.4388
+  type: 'test'
+  ...
+# Subtest: F19 unsupported model controls, tool definitions, images and resource overflow remain withheld
+ok 9 - F19 unsupported model controls, tool definitions, images and resource overflow remain withheld
+  ---
+  duration_ms: 68.8442
+  type: 'test'
+  ...
+# Subtest: F19 profile supports empty/ordinary Anthropic tool lists without relaxing the OpenAI profile
+ok 10 - F19 profile supports empty/ordinary Anthropic tool lists without relaxing the OpenAI profile
+  ---
+  duration_ms: 7.3054
+  type: 'test'
+  ...
+# Subtest: F19-R01 exact owner health endpoints do not consume provider request quota
+not ok 11 - F19-R01 exact owner health endpoints do not consume provider request quota
+  ---
+  duration_ms: 2.1309
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\claudeHealthBudget.test.ts:2:1082'
+  failureType: 'testCodeFailure'
+  error: 'A broker auth token of at least 32 characters is required'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    new BrokerServer (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\apps\local-ai-broker\src\BrokerServer.ts:212:64)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\claudeHealthBudget.test.ts:7:44)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: F19-R02 owner health remains authenticated/session-bound and separately metered
+not ok 12 - F19-R02 owner health remains authenticated/session-bound and separately metered
+  ---
+  duration_ms: 0.4241
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\claudeHealthBudget.test.ts:2:2140'
+  failureType: 'testCodeFailure'
+  error: 'A broker auth token of at least 32 characters is required'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    new BrokerServer (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\apps\local-ai-broker\src\BrokerServer.ts:212:64)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\claudeHealthBudget.test.ts:20:44)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F19 structured profile permits captured26-tool public schemas while original F07/F18 candidate bounds remain
+ok 13 - F19 structured profile permits captured26-tool public schemas while original F07/F18 candidate bounds remain
+  ---
+  duration_ms: 387.0342
+  type: 'test'
+  ...
+# Subtest: F19 structured candidate profile keeps raw, encoded and semantic split registrations protected
+ok 14 - F19 structured candidate profile keeps raw, encoded and semantic split registrations protected
+  ---
+  duration_ms: 677.8943
+  type: 'test'
+  ...
+# Subtest: F19 unknown, ambiguous and excessive structured inspection withholds instead of disabling registrations
+ok 15 - F19 unknown, ambiguous and excessive structured inspection withholds instead of disabling registrations
+  ---
+  duration_ms: 7.9627
+  type: 'test'
+  ...
+# Subtest: F18 enabled schema profile preserves ordinary public requests and an empty tool list
+ok 16 - F18 enabled schema profile preserves ordinary public requests and an empty tool list
+  ---
+  duration_ms: 13.298
+  type: 'test'
+  ...
+# Subtest: F18 bounded multi-tool schema public request passes only its explicit profile
+ok 17 - F18 bounded multi-tool schema public request passes only its explicit profile
+  ---
+  duration_ms: 17.3192
+  type: 'test'
+  ...
+# Subtest: F18 tool metadata remains inspected for raw/encoded values and ordered splits
+ok 18 - F18 tool metadata remains inspected for raw/encoded values and ordered splits
+  ---
+  duration_ms: 27.9882
+  type: 'test'
+  ...
+# Subtest: F18 schema profile keeps generic metadata, malformed definitions and resource bounds withheld
+ok 19 - F18 schema profile keeps generic metadata, malformed definitions and resource bounds withheld
+  ---
+  duration_ms: 8.6725
+  type: 'test'
+  ...
+# Subtest: F18 metadata candidate budget is explicit; the original F07 default remains bounded
+ok 20 - F18 metadata candidate budget is explicit; the original F07 default remains bounded
+  ---
+  duration_ms: 24.2147
+  type: 'test'
+  ...
+# Subtest: F18 expanded bounded candidate inspection still detects protected spellings and ordered fragments
+ok 21 - F18 expanded bounded candidate inspection still detects protected spellings and ordered fragments
+  ---
+  duration_ms: 39.6565
+  type: 'test'
+  ...
+# Subtest: F18 invalid or excessive candidate budgets never silently become an empty registry
+ok 22 - F18 invalid or excessive candidate budgets never silently become an empty registry
+  ---
+  duration_ms: 1.9779
+  type: 'test'
+  ...
+1..22
+# tests 22
+# suites 0
+# pass 20
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 6403.0264
