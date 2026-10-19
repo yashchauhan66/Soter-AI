@@ -131,7 +131,8 @@
         "soterai.lite.safeReadMcp",
         "soterai.lite.claudeAdapter",
         "soterai.lite.clineAdapter",
-        "soterai.lite.codexCliAdapter"
+        "soterai.lite.codexCliAdapter",
+        "soterai.broker.codexResponsesProviderUrl"
       ]
     }
   },
@@ -1944,6 +1945,12 @@
           "default": true,
           "scope": "machine",
           "description": "Enable owner-reviewed pinned Codex CLI dedicated safe-read profile setup. Native provider traffic/context and other profiles remain uncovered. Disabling withdraws MCP and preserves the restrictive profile."
+        },
+        "soterai.broker.codexResponsesProviderUrl": {
+          "type": "string",
+          "default": "",
+          "scope": "machine",
+          "description": "Full upstream Responses endpoint for the pinned Codex CLI route. Requires the owned broker and provider key in SecretStorage; request bodies cannot choose the destination. Blank withholds provider traffic."
         }
       }
     },

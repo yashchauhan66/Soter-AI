@@ -1,0 +1,119 @@
+﻿TAP version 13
+# Subtest: F20A Responses exact owned capability acknowledgment
+not ok 1 - F20A Responses exact owned capability acknowledgment
+  ---
+  duration_ms: 119.7131
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\codexResponsesWire.test.ts:2:3158'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: 'strictEqual'
+  stack: |-
+    <anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\codexResponsesWire.test.ts:21:192)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async fixture (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\codexResponsesWire.test.ts:18:35)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F20A Responses adjacent public request reaches only configured target with upstream-only auth
+not ok 2 - F20A Responses adjacent public request reaches only configured target with upstream-only auth
+  ---
+  duration_ms: 26.6611
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\codexResponsesWire.test.ts:2:3432'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    403 !== 200
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 200
+  actual: 403
+  operator: 'strictEqual'
+  stack: |-
+    <anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\codexResponsesWire.test.ts:22:176)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async fixture (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\codexResponsesWire.test.ts:18:35)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F20A Responses registered context and encoded tool output send zero provider requests
+not ok 3 - F20A Responses registered context and encoded tool output send zero provider requests
+  ---
+  duration_ms: 13.5177
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\codexResponsesWire.test.ts:2:4099'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    403 !== 422
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 422
+  actual: 403
+  operator: 'strictEqual'
+  stack: |-
+    <anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\codexResponsesWire.test.ts:23:286)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async fixture (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\codexResponsesWire.test.ts:18:35)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F20A Responses protected provider output is withheld completely
+not ok 4 - F20A Responses protected provider output is withheld completely
+  ---
+  duration_ms: 14.9552
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\codexResponsesWire.test.ts:2:4545'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    403 !== 422
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 422
+  actual: 403
+  operator: 'strictEqual'
+  stack: |-
+    <anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\codexResponsesWire.test.ts:24:213)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async fixture (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\codexResponsesWire.test.ts:18:35)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F20A Responses query/unknown route/invalid auth never forward
+ok 5 - F20A Responses query/unknown route/invalid auth never forward
+  ---
+  duration_ms: 31.0777
+  type: 'test'
+  ...
+# Subtest: F20A Responses disabled adapter never forwards
+ok 6 - F20A Responses disabled adapter never forwards
+  ---
+  duration_ms: 12.7314
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 2
+# fail 4
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 906.9455

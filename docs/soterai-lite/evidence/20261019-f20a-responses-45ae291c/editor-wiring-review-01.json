@@ -1,0 +1,42 @@
+{
+  "status": "WIRED_NOT_FULLY_VERIFIED",
+  "changes": [
+    {
+      "path": "packages/vscode-extension/package.json",
+      "before": "159a46716e619da0b8f84ea895e69a3611ddf9d303c88ded9697f8fe39d6d46d",
+      "after": "5c4ba2a997ec92cd98c07a4e09aca5a9e5d0f851b143fa287102ee5c7df6f907"
+    },
+    {
+      "path": "packages/soterai-lite/package.json",
+      "before": "e7ccf55e2a3d6c1e91cf7da86fce72bc929e5a35db0ae735bbf6598d25d37372",
+      "after": "624b4bdeda48e96b94c5fd310136156dd61bb9c3245105a042f9aeb3f507c6f1"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/claudeGatewayManager.test.ts",
+      "before": "d24a15c8433e17092d0b664aaf172efd29c6b6d7352fdb4f316ca90f08d02654",
+      "after": "d11b2418911b570c9bea852950a3108a846e447d6f43189dee449444de9313b0"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/gatewayPolicyManager.test.ts",
+      "before": "bc1796fbb4ad3cb10f534d462ddf170cad34ad2e1f1b08c0fd93d48a6bb67857",
+      "after": "e571702ae9fe0c35e9a4c8ab6e80c4c5732c359eb40539a576324646be6f86fa"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/ownedBrokerManager.test.ts",
+      "before": "8e1ec7bcc579294c96ddd3defa47fdfdb6d7ce7e21baa52ff92d7ffffd4eded0",
+      "after": "069b4ac1e0d01c270de01d156c797a0c98ab696bcf8b5c36ed4cd58245fe2d74"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/mcp-canary-boundary.test.ts",
+      "before": "b9a11457a53e7b8f6a5e54522166255f12693514759ba019a73a4d30c11971a3",
+      "after": "c6fafdcf73142d9b93bc555f2481654626705ad98a2cbfdb95714bfba5126df6"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/codexCliAdapterRegistration.test.ts",
+      "before": "3dba1d959e5e561cb00af4b334002940c88b928c7cd640cee62ee345c629db6c",
+      "after": "e4f86cb74a263e192826a5f8e2cefb92dd5387d5da32c2fc3884308e8afc31a5"
+    }
+  ],
+  "fixtureReason": "Existing simulated child fixtures acknowledge the new required flag-scoped Codex capability from the current child environment. Existing assertions retained. Registration assertion now requires broker manager dependency.",
+  "assertionsRemoved": 0
+}

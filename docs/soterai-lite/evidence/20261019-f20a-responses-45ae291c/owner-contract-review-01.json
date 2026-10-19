@@ -1,0 +1,8 @@
+{
+  "status": "FROZEN_BEFORE_PROXY_OR_OWNER_IMPLEMENTATION",
+  "original": "84037550385848a711659dfdec35bcfb037c8846b584e6e36538695ac09c6d02",
+  "current": "80eb99eb3c6c08b640b9c8fa48e187d834975403ed02bced81689aa206d96fe1",
+  "bridgeTest": "ae773abb71f06b00a2a0429e1dea996edbef102257e9b2dfb29dbaf019c2774c",
+  "reason": "Use a distinct revocable native capability rather than serializing the shared internal broker token. Renderer tests still check explicit local capability; owner config must omit internal token and select dynamic /codex proxy. Replace unsupported config store assertion with exact wire_api responses; actual body store=false remains enforced in frozen schema tests.",
+  "assertionsRemoved": 0
+}

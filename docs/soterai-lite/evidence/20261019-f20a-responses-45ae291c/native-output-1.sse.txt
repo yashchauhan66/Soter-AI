@@ -1,0 +1,12 @@
+event: response.created
+data: {"type":"response.created","response":{"id":"resp_f20","object":"response","created_at":1,"status":"in_progress","model":"f20-fixture","output":[],"usage":{"input_tokens":1,"output_tokens":1,"total_tokens":2}}}
+
+event: response.output_item.added
+data: {"type":"response.output_item.added","output_index":0,"item":{"id":"fc_f20","type":"function_call","status":"in_progress","name":"soterai_read_project_file_safely","namespace":"mcp__soterai_safe_read","call_id":"call_f20","arguments":"{\"path\":\".env\"}","content":[]}}
+
+event: response.output_item.done
+data: {"type":"response.output_item.done","output_index":0,"item":{"id":"fc_f20","type":"function_call","status":"completed","name":"soterai_read_project_file_safely","namespace":"mcp__soterai_safe_read","call_id":"call_f20","arguments":"{\"path\":\".env\"}"}}
+
+event: response.completed
+data: {"type":"response.completed","response":{"id":"resp_f20","object":"response","created_at":1,"status":"completed","model":"f20-fixture","output":[{"id":"fc_f20","type":"function_call","status":"completed","name":"soterai_read_project_file_safely","namespace":"mcp__soterai_safe_read","call_id":"call_f20","arguments":"{\"path\":\".env\"}"}],"usage":{"input_tokens":1,"output_tokens":1,"total_tokens":2}}}
+

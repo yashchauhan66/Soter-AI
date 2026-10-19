@@ -1,0 +1,148 @@
+﻿TAP version 13
+# Subtest: F20A Responses accepts actual pinned public request and replayed MCP result without changing body
+ok 1 - F20A Responses accepts actual pinned public request and replayed MCP result without changing body
+  ---
+  duration_ms: 391.2306
+  type: 'test'
+  ...
+# Subtest: F20A Responses remains capability-scoped and does not relax chat schemas
+ok 2 - F20A Responses remains capability-scoped and does not relax chat schemas
+  ---
+  duration_ms: 6.1625
+  type: 'test'
+  ...
+# Subtest: F20A Responses registered original withheld in instructions
+ok 3 - F20A Responses registered original withheld in instructions
+  ---
+  duration_ms: 36.1361
+  type: 'test'
+  ...
+# Subtest: F20A Responses registered original withheld in text
+ok 4 - F20A Responses registered original withheld in text
+  ---
+  duration_ms: 64.3314
+  type: 'test'
+  ...
+# Subtest: F20A Responses registered original withheld in arguments
+ok 5 - F20A Responses registered original withheld in arguments
+  ---
+  duration_ms: 72.623
+  type: 'test'
+  ...
+# Subtest: F20A Responses registered original withheld in output
+ok 6 - F20A Responses registered original withheld in output
+  ---
+  duration_ms: 72.8968
+  type: 'test'
+  ...
+# Subtest: F20A Responses registered original withheld in metadata
+ok 7 - F20A Responses registered original withheld in metadata
+  ---
+  duration_ms: 69.9637
+  type: 'test'
+  ...
+# Subtest: F20A Responses registered original withheld in tool-description
+ok 8 - F20A Responses registered original withheld in tool-description
+  ---
+  duration_ms: 60.2339
+  type: 'test'
+  ...
+# Subtest: F20A Responses registered original withheld in tool-parameters
+ok 9 - F20A Responses registered original withheld in tool-parameters
+  ---
+  duration_ms: 88.0483
+  type: 'test'
+  ...
+# Subtest: F20A Responses registered original withheld in cache-key
+ok 10 - F20A Responses registered original withheld in cache-key
+  ---
+  duration_ms: 98.664
+  type: 'test'
+  ...
+# Subtest: F20A Responses encoded and ordered split carriers are withheld
+ok 11 - F20A Responses encoded and ordered split carriers are withheld
+  ---
+  duration_ms: 385.9135
+  type: 'test'
+  ...
+# Subtest: F20A Responses unknown routes, server state, images, encrypted replay and tools are refused
+ok 12 - F20A Responses unknown routes, server state, images, encrypted replay and tools are refused
+  ---
+  duration_ms: 22.3519
+  type: 'test'
+  ...
+# Subtest: F20A Responses original numerical byte/string/content/tool limits remain bounded
+ok 13 - F20A Responses original numerical byte/string/content/tool limits remain bounded
+  ---
+  duration_ms: 6.1941
+  type: 'test'
+  ...
+# Subtest: F20A Responses accepts actual namespaced function call and completed text SSE
+ok 14 - F20A Responses accepts actual namespaced function call and completed text SSE
+  ---
+  duration_ms: 20.297
+  type: 'test'
+  ...
+# Subtest: F20A Responses output originals, escaped values and split deltas are withheld before release
+ok 15 - F20A Responses output originals, escaped values and split deltas are withheld before release
+  ---
+  duration_ms: 30.2326
+  type: 'test'
+  ...
+# Subtest: F20A Responses missing completion, failure, trailing event, mismatched framing and unknown item are withheld
+ok 16 - F20A Responses missing completion, failure, trailing event, mismatched framing and unknown item are withheld
+  ---
+  duration_ms: 26.4598
+  type: 'test'
+  ...
+# Subtest: F20A Responses revocation withholds both input and output
+ok 17 - F20A Responses revocation withholds both input and output
+  ---
+  duration_ms: 1.0213
+  type: 'test'
+  ...
+# Subtest: F20A Responses exact owned capability acknowledgment
+ok 18 - F20A Responses exact owned capability acknowledgment
+  ---
+  duration_ms: 89.289
+  type: 'test'
+  ...
+# Subtest: F20A Responses adjacent public request reaches only configured target with upstream-only auth
+ok 19 - F20A Responses adjacent public request reaches only configured target with upstream-only auth
+  ---
+  duration_ms: 453.8343
+  type: 'test'
+  ...
+# Subtest: F20A Responses registered context and encoded tool output send zero provider requests
+ok 20 - F20A Responses registered context and encoded tool output send zero provider requests
+  ---
+  duration_ms: 163.9241
+  type: 'test'
+  ...
+# Subtest: F20A Responses protected provider output is withheld completely
+ok 21 - F20A Responses protected provider output is withheld completely
+  ---
+  duration_ms: 353.5605
+  type: 'test'
+  ...
+# Subtest: F20A Responses query/unknown route/invalid auth never forward
+ok 22 - F20A Responses query/unknown route/invalid auth never forward
+  ---
+  duration_ms: 28.1479
+  type: 'test'
+  ...
+# Subtest: F20A Responses disabled adapter never forwards
+ok 23 - F20A Responses disabled adapter never forwards
+  ---
+  duration_ms: 11.5946
+  type: 'test'
+  ...
+1..23
+# tests 23
+# suites 0
+# pass 23
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3716.1498

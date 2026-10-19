@@ -1,8 +1,9 @@
 import { RegisteredSecretMatcher } from "../../../packages/core/src/RegisteredSecretMatcher";
 import { StreamingOutputRedactor } from "../../../packages/core/src/StreamingOutputRedactor";
 import { decodeBoundedJson } from "./BoundedJson";
+import { validateCodexRequest, validateCodexEvent, codexStrings } from "./CodexResponsesSchema";
 
-export type GatewayProvider = "openai" | "anthropic";
+export type GatewayProvider = "openai" | "anthropic" | "codex";
 export const GATEWAY_LIMITS = Object.freeze({ bytes: 131072, leaves: 32, chunks: 4096, events: 256, lines: 2048, inspectionMs: 1000 });
 export class GatewayPolicyError extends Error {
     constructor(readonly code: "gateway_unavailable" | "gateway_policy_unknown" | "gateway_schema_unsupported" | "gateway_limit" | "gateway_sensitive" | "gateway_output_withheld" | "gateway_provider_error" | "gateway_approval_required") { super("Gateway policy withheld protected data"); }
@@ -10,7 +11,7 @@ export class GatewayPolicyError extends Error {
 const fail = (code: GatewayPolicyError["code"]): never => { throw new GatewayPolicyError(code); };
 const record = (v: unknown): v is Record<string, unknown> => !!v && typeof v === "object" && !Array.isArray(v);
 const common = ["model", "messages", "stream", "temperature", "top_p", "max_tokens", "stop", "tools", "tool_choice", "metadata", "session_id"];
-const fields = { openai: new Set([...common, "n", "seed", "user", "response_format", "frequency_penalty", "presence_penalty", "max_completion_tokens", "stream_options", "parallel_tool_calls", "logprobs", "top_logprobs", "reasoning_effort"]), anthropic: new Set([...common, "system", "top_k", "stop_sequences"])};
+const fields = { openai: new Set([...common, "n", "seed", "user", "response_format", "frequency_penalty", "presence_penalty", "max_completion_tokens", "stream_options", "parallel_tool_calls", "logprobs", "top_logprobs", "reasoning_effort"]), anthropic: new Set([...common, "system", "top_k", "stop_sequences"]), codex: new Set<string>()};
 const messageFields = new Set(["role", "content", "name", "tool_calls", "tool_call_id", "function_call"]);
 function strings(value: unknown, result: string[] = []): string[] {
     if (typeof value === "string") { if (result.length >= GATEWAY_LIMITS.leaves) return fail("gateway_limit"); result.push(value); }
@@ -111,32 +112,38 @@ export class GatewayBoundary {
     #short: boolean;
     #clineToolSchemas: boolean;
     #claudeToolSchemas: boolean;
-    constructor(options: { values: readonly string[]; version: number; enabled?: boolean; clineToolSchemas?: boolean; claudeToolSchemas?: boolean }) {
+    #codexResponses: boolean;
+    #codexMatcher: RegisteredSecretMatcher | undefined;
+    constructor(options: { values: readonly string[]; version: number; enabled?: boolean; clineToolSchemas?: boolean; claudeToolSchemas?: boolean; codexResponses?: boolean }) {
         this.#values = Object.freeze(Array.isArray(options.values) ? [...options.values] : []);
         this.#clineToolSchemas = options.clineToolSchemas === true;
         this.#claudeToolSchemas = options.claudeToolSchemas === true;
+        this.#codexResponses = options.codexResponses === true;
+        this.#codexMatcher = this.#codexResponses ? new RegisteredSecretMatcher(options.values, { decodedCandidateProfile: "structured-json-v1" }) : undefined;
         this.#matcher = new RegisteredSecretMatcher(options.values, this.#clineToolSchemas ? { maxDecodedCandidates: 1024 } : {});
         this.#claudeMatcher = this.#claudeToolSchemas ? new RegisteredSecretMatcher(options.values, { decodedCandidateProfile: "structured-json-v1" }) : undefined;
         this.#available = options.version === 1 && options.enabled !== false && this.#matcher.inspectRequest([]).status === "CLEAN"
-            && (!this.#claudeMatcher || this.#claudeMatcher.inspectRequest([]).status === "CLEAN");
+            && (!this.#claudeMatcher || this.#claudeMatcher.inspectRequest([]).status === "CLEAN")
+            && (!this.#codexMatcher || this.#codexMatcher.inspectRequest([]).status === "CLEAN");
         this.#short = this.#values.some(v => typeof v === "string" && Array.from(v).length < 8);
     }
     available(): boolean { return this.#available; }
-    dispose(): void { this.#available = false; this.#values = []; this.#matcher = new RegisteredSecretMatcher([""]); this.#claudeMatcher = undefined; }
+    dispose(): void { this.#available = false; this.#values = []; this.#matcher = new RegisteredSecretMatcher([""]); this.#claudeMatcher = undefined; this.#codexMatcher = undefined; }
     /** Internal fixture capability: clone current registrations without returning them. */
     withSynthetic<T>(value: string, operation: (copy: GatewayBoundary) => Promise<T>): Promise<T> {
         if (!this.#available) return Promise.reject(new GatewayPolicyError("gateway_unavailable"));
-        const copy = new GatewayBoundary({ values: [...this.#values, value], version: 1, clineToolSchemas: this.#clineToolSchemas, claudeToolSchemas: this.#claudeToolSchemas });
+        const copy = new GatewayBoundary({ values: [...this.#values, value], version: 1, clineToolSchemas: this.#clineToolSchemas, claudeToolSchemas: this.#claudeToolSchemas, codexResponses: this.#codexResponses });
         return operation(copy).finally(() => copy.dispose());
     }
     #inspect(value: unknown, canonical: string, start: number, toolSchemas: false | GatewayProvider = false): void {
         if (!this.#available) return fail("gateway_unavailable");
         if (this.#short) return fail("gateway_sensitive");
-        const leaves = toolSchemas === "anthropic" ? claudeSchemaStrings(value) : toolSchemas ? toolSchemaStrings(value) : strings(value), texts = contentStrings(value);
+        const codex = toolSchemas === "codex" ? codexStrings(value) : undefined;
+        const leaves = codex?.leaves ?? (toolSchemas === "anthropic" ? claudeSchemaStrings(value) : toolSchemas ? toolSchemaStrings(value) : strings(value)), texts = codex?.texts ?? contentStrings(value);
         // F07 scans joined input. Short registrations already withhold above;
         // joining this bounded metadata adds no short-value exception.
         for (const parts of [[canonical], leaves.length > 32 ? [leaves.join("")] : leaves, texts]) {
-            const decision = (toolSchemas === "anthropic" ? this.#claudeMatcher! : this.#matcher).inspectRequest(parts);
+            const decision = (toolSchemas === "codex" ? this.#codexMatcher! : toolSchemas === "anthropic" ? this.#claudeMatcher! : this.#matcher).inspectRequest(parts);
             if (decision.status === "MATCHED") return fail("gateway_sensitive");
             if (decision.status !== "CLEAN") return fail("gateway_limit");
             if (Date.now() - start > GATEWAY_LIMITS.inspectionMs) return fail("gateway_limit");
@@ -148,6 +155,10 @@ export class GatewayBoundary {
             if (!this.#available) return fail("gateway_unavailable");
             if (!Object.hasOwn(fields, provider)) return fail("gateway_policy_unknown");
             const parsed = decodeBoundedJson(Buffer.from(JSON.stringify(value)), { maxBytes: GATEWAY_LIMITS.bytes }), body = parsed.body;
+            if (provider === "codex") {
+                if (!this.#codexResponses) return fail("gateway_policy_unknown");
+                validateCodexRequest(body); this.#inspect(body, parsed.canonical, start, "codex"); return Object.freeze(parsed);
+            }
             const claude = provider === "anthropic" && this.#claudeToolSchemas;
             if (Object.keys(body).some(key => !fields[provider].has(key) && !(claude && ["thinking", "output_config"].includes(key))) || !Array.isArray(body.messages) || !body.messages.length) return fail("gateway_schema_unsupported");
             if (claude && (body.thinking !== undefined && (!record(body.thinking) || Object.keys(body.thinking).join(",") !== "type" || body.thinking.type !== "disabled")
@@ -180,7 +191,7 @@ export class GatewayBoundary {
     inspectResponse(provider: GatewayProvider, chunks: readonly Uint8Array[], streaming: boolean): { readonly wire: string; readonly media: string; readonly semantic: string } {
         const start = Date.now(); let redactor: StreamingOutputRedactor | undefined;
         try {
-            if (!this.#available || !Object.hasOwn(fields, provider)) return fail("gateway_unavailable");
+            if (!this.#available || !Object.hasOwn(fields, provider) || provider === "codex" && (!this.#codexResponses || !streaming)) return fail("gateway_unavailable");
             if (!Array.isArray(chunks) || chunks.length > GATEWAY_LIMITS.chunks) return fail("gateway_output_withheld");
             redactor = new StreamingOutputRedactor(this.#values, { enabled: () => this.#available });
             let bytes = 0; const buffers: Buffer[] = [];
@@ -197,23 +208,25 @@ export class GatewayBoundary {
             } else {
                 if (!wire.endsWith("\n\n") && !wire.endsWith("\r\n\r\n")) return fail("gateway_output_withheld");
                 const rows = wire.replace(/\r\n/g, "\n").split("\n");if (rows.length - 1 > GATEWAY_LIMITS.lines || rows.some(row => row.includes("\r"))) return fail("gateway_output_withheld");
-                const data: string[] = [], values: unknown[] = [];let terminal = false, events = 0;
+                const data: string[] = [], values: unknown[] = [];let terminal = false, events = 0, eventLabel = "";
                 for (const row of rows) {
                     if (!row) {
                         if (!data.length) continue;
                         if (terminal || ++events > GATEWAY_LIMITS.events) return fail("gateway_output_withheld");
                         const text = data.join("\n");data.length = 0;
-                        if (text === "[DONE]") { terminal = true;continue; }
+                        if (text === "[DONE]") { if (provider === "codex") return fail("gateway_output_withheld"); terminal = true;continue; }
                         const parsed = decodeBoundedJson(Buffer.from(text), { maxBytes: GATEWAY_LIMITS.bytes });values.push(parsed.body);
+                        if (provider === "codex") { terminal = validateCodexEvent(parsed.body, eventLabel); eventLabel = ""; }
                         if (provider === "anthropic" && parsed.body.type === "message_stop") terminal = true;
                     } else if (row.startsWith("data:")) data.push(row.slice(5).replace(/^ /, ""));
                     else if (row.startsWith(":")) { /* Opaque comments remain scanned in raw wire. */ }
-                    else if (/^(?:event|id|retry):/.test(row)) { /* Fixed metadata is covered by raw-wire matching. */ }
+                    else if (provider === "codex" && row.startsWith("event:")) { if (eventLabel) return fail("gateway_output_withheld"); eventLabel = row.slice(6).replace(/^ /, ""); }
+                    else if (provider !== "codex" && /^(?:event|id|retry):/.test(row)) { /* Fixed metadata is covered by raw-wire matching. */ }
                     else return fail("gateway_output_withheld");
                 }
                 if (!terminal || !values.length || data.length) return fail("gateway_output_withheld");
-                this.#inspect(values, wire, start, provider === "anthropic" && this.#claudeToolSchemas ? "anthropic" : false);
-                semantic = contentStrings(values).join("");
+                this.#inspect(values, wire, start, provider === "codex" ? "codex" : provider === "anthropic" && this.#claudeToolSchemas ? "anthropic" : false);
+                semantic = (provider === "codex" ? codexStrings(values).texts : contentStrings(values)).join("");
             }
             return Object.freeze({ wire, semantic, media: streaming ? "text/event-stream; charset=utf-8" : "application/json; charset=utf-8" });
         } catch { return fail("gateway_output_withheld"); } finally { redactor?.dispose(); }

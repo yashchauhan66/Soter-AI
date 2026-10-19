@@ -9,6 +9,8 @@ import { decodeBoundedJson } from "../../../../apps/local-ai-broker/src/BoundedJ
 import type { ProjectReaderBridge } from "../project-privacy/commands";
 import { safeReadMcpEnabled } from "../agent/mcpProvider";
 import { CodexHttpBridge } from "./CodexHttpBridge";
+import { CodexResponsesBridge } from "./CodexResponsesBridge";
+import type { BrokerManager } from "../broker/BrokerManager";
 import { CODEX_CLI_PIN, verifyCodexCliArtifact, createCodexCliPlan, codexCliDigest, codexCliProfileCurrent, undoCodexCliProfile,
     type CodexCliDependencies, type CodexCliReceipt } from "./CodexCliAdapterPolicy";
 const RECEIPT = "soterai.lite.codexCliAdapter.receipt.v1";
@@ -20,14 +22,15 @@ export function codexCliAdapterEnabled(): boolean {
     try { const config = vscode.workspace.getConfiguration("soterai"), entry = config.inspect<boolean>("lite.codexCliAdapter");
         return (entry ? entry.globalValue ?? entry.defaultValue ?? true : config.get("lite.codexCliAdapter", true)) === true; } catch { return false; }
 }
-/** Owner-only creation of a NEW dedicated home. Never edits or scans a normal
- * vendor profile, launches native Codex, or claims to mediate Responses egress. */
+/** Owner-only creation of a NEW dedicated home. The registered editor route
+ * uses separate MCP/Responses roles and the current owned broker. It never
+ * reads normal vendor profiles or launches native Codex. */
 export class CodexCliAdapter implements vscode.Disposable {
-    #busy = false; #disposed = false; #bridge: CodexHttpBridge | undefined;
+    #busy = false; #disposed = false; #bridge: CodexHttpBridge | undefined; #responses: CodexResponsesBridge | undefined;
     #lease: (() => boolean) | undefined; #abort: AbortController | undefined;
     #receipt: CodexCliReceipt | undefined; #profile: string | undefined; #pin: Stamp[] | undefined;
     #poll: ReturnType<typeof setInterval>;
-    constructor(private readonly context: vscode.ExtensionContext, private readonly reader: ProjectReaderBridge) {
+    constructor(private readonly context: vscode.ExtensionContext, private readonly reader: ProjectReaderBridge, private readonly manager?: BrokerManager) {
         this.#poll = setInterval(() => { if (this.#lease && !this.#lease()) this.withdraw(); }, 250); this.#poll.unref?.();
     }
     private available(restoring = false): boolean {
@@ -35,11 +38,12 @@ export class CodexCliAdapter implements vscode.Disposable {
             && vscode.workspace.workspaceFolders?.length === 1 && vscode.workspace.workspaceFolders[0].uri.scheme === "file"
             && (restoring || codexCliAdapterEnabled() && safeReadMcpEnabled() && this.reader.isEnabled()); } catch { return false; }
     }
-    withdraw(): void { this.#abort?.abort(); this.#lease = undefined; this.#receipt = undefined; this.#bridge?.rotate(); }
-    dispose(): void { this.#disposed = true; this.withdraw(); clearInterval(this.#poll); void this.#bridge?.dispose(); this.#bridge = undefined; }
+    withdraw(): void { this.#abort?.abort(); this.#lease = undefined; this.#receipt = undefined; this.#bridge?.rotate(); this.#responses?.rotate(); }
+    dispose(): void { this.#disposed = true; this.withdraw(); clearInterval(this.#poll); void this.#bridge?.dispose(); void this.#responses?.dispose(); this.#bridge = undefined; this.#responses = undefined; }
     status(): object { return { status: this.#receipt && this.#lease?.() ? "CONFIGURED_RESTART_AND_ROUTE_VERIFICATION_REQUIRED" : "UNAVAILABLE",
         version: CODEX_CLI_PIN.version, badge: "Uncovered", profileDirectory: this.#profile,
-        scope: "Dedicated vendor safe-read profile only. Provider traffic is unmediated. Native context/attachments, explicit overrides and other profiles remain uncovered; current owner routing unverified." }; }
+        scope: this.manager ? "Dedicated text Responses and safe-read profile; output is buffered for complete inspection. Overrides, unsupported context/attachments and other profiles remain uncovered; current owner routing unverified."
+            : "Dedicated vendor safe-read profile only. Provider traffic is unmediated. Native context/attachments, explicit overrides and other profiles remain uncovered; current owner routing unverified." }; }
     private async stamp(file: string): Promise<Stamp> {
         const s = await lstat(file);
         if (!s.isFile() || s.isSymbolicLink() || s.nlink !== 1 || !same(await realpath(file), file)) throw Error("Unavailable");
@@ -196,18 +200,30 @@ export class CodexCliAdapter implements vscode.Disposable {
             await this.artifact(); if (!await this.projectEligible()) return { status: "PROJECT_CODEX_OVERRIDE_REQUIRES_REVIEW" };
             await this.parent(this.directory());
             const directory = path.join(this.directory(), "codex-cli-" + randomUUID()); await mkdir(directory); await this.parent(directory);
-            this.withdraw(); if (this.#bridge) await this.#bridge.dispose(); this.#abort = new AbortController();
-            const lease = () => this.available() && vscode.workspace.workspaceFolders?.[0]?.uri.toString() === root;
+            this.withdraw(); if (this.#bridge) await this.#bridge.dispose(); if (this.#responses) await this.#responses.dispose(); this.#abort = new AbortController();
+            const status = this.manager ? await this.manager.start() : undefined, broker = this.manager?.ownedSnapshot();
+            if (this.manager && (!status?.running || broker?.state !== "healthy" || !broker.session)) return { status: "UNAVAILABLE" };
+            if (this.manager) { const ack = await this.manager.request<{ version: number; enabled: boolean; ready: boolean; codexResponses: boolean }>("/v1/gateway/status");
+                if (ack.version !== 1 || ack.enabled !== true || ack.ready !== true || ack.codexResponses !== true) return { status: "UNAVAILABLE" }; }
+            const lease = () => { const current = this.manager?.ownedSnapshot(); return this.available() && vscode.workspace.workspaceFolders?.[0]?.uri.toString() === root
+                && (!this.manager || current?.state === "healthy" && current.session === broker?.session && current.port === broker?.port); };
             const owner = createHash("sha256").update(root + "\0" + directory).digest("hex"), deps = this.dependencies(directory, lease, owner);
             this.#lease = lease; this.#profile = directory;
             const ready = async (signal: AbortSignal) => !signal.aborted && lease() && await this.artifactCurrent() && await this.projectEligible()
-                && await codexCliProfileCurrent(this.#receipt, deps) && !signal.aborted && lease();
+                && await codexCliProfileCurrent(this.#receipt, deps) && (!this.manager || (await this.manager.status()).running) && !signal.aborted && lease();
             this.#bridge = new CodexHttpBridge({ enabled: lease, ready, read: async (file, recipient, signal) => {
                 if (!await ready(signal)) return { status: "UNAVAILABLE" };
                 const result = await this.reader.readIntegration(vscode.Uri.joinPath(uri, file), recipient, signal);
                 return await ready(signal) ? result : { status: "CHANGED" };
             } });
-            const connection = await this.#bridge.start(), plan = createCodexCliPlan(await deps.read(), connection);
+            const connection = await this.#bridge.start();
+            let gateway;
+            if (this.manager && status && broker?.session) {
+                this.#responses = new CodexResponsesBridge({ enabled: lease, ready, session: broker.session,
+                    target: status.url + "/v1/ai/openai-responses/responses", credential: await this.manager.getClientToken() });
+                gateway = await this.#responses.start();
+            }
+            const plan = createCodexCliPlan(await deps.read(), connection, gateway);
             deps.prepare = async receipt => {
                 if (!lease()) throw Error("Unavailable");
                 await this.write(path.join(directory, "recovery.json"), JSON.stringify({ version: 1, root, profileDirectory: directory, receipt }));
@@ -240,8 +256,8 @@ export class CodexCliAdapter implements vscode.Disposable {
         finally { this.#busy = false; }
     }
 }
-export function registerCodexCliAdapter(context: vscode.ExtensionContext, reader: ProjectReaderBridge): void {
-    const adapter = new CodexCliAdapter(context, reader);
+export function registerCodexCliAdapter(context: vscode.ExtensionContext, reader: ProjectReaderBridge, manager?: BrokerManager): void {
+    const adapter = new CodexCliAdapter(context, reader, manager);
     context.subscriptions.push(adapter,
         vscode.commands.registerCommand("soterai.configurePinnedCodexCli", async () => {
             const result = await adapter.configure() as { status: string };

@@ -11,6 +11,7 @@ import { decodeBoundedBrotli, BoundedBrotliError } from "./BoundedBrotli";
 import { decodeBoundedDeflate, BoundedDeflateError } from "./BoundedDeflate";
 import { GatewayPolicy, type GatewayOptions } from "./GatewayPolicy";
 import { GatewayPolicyError } from "./GatewayBoundary";
+import { codexStrings } from "./CodexResponsesSchema";
 import { gatewaySelfTest } from "./GatewaySelfTest";
 import {
     ApprovalStore,
@@ -215,7 +216,7 @@ export class BrokerServer {
         }
         if (options.requireCanarySync && !options.controlToken) throw new Error("Canary synchronization requires controller auth");
         this.options = { ...options };
-        for (const target of [options.openAIProviderUrl, options.anthropicProviderUrl]) {
+        for (const target of [options.openAIProviderUrl, options.anthropicProviderUrl, options.codexResponsesProviderUrl]) {
             if (target) validateProviderTarget(target);
         }
         this.canaries = (options.canaries ?? []).map(canary => ({ ...canary }));
@@ -223,6 +224,13 @@ export class BrokerServer {
         this.gateway = new GatewayPolicy(options, () => ({ ...this.safeMode }), () => this.stopping, event => this.record({ eventType: "gateway_" + event, decision: event.endsWith("allowed") ? "allow" : "block", riskScore: event.endsWith("allowed") ? 0 : 100, categories: ["gateway_policy_v1"] }), {
             canaries: () => this.canaries.map(c => c.token),
             request: async (body, provider, session) => {
+                if (provider === "codex") {
+                    const messages = normalizeMessages([{ role: "user", content: codexStrings(body).texts.join("\n") }]);
+                    const scan = await scanBrokerRequest(messages, { engine: this.engine, safeMode: this.safeMode, canaries: this.canaries });
+                    // A JSON rewrite could alter identifiers or tool associations.
+                    // Withhold the complete native request instead of mutating it.
+                    return { body, decision: !scan.safe || scan.redacted || !["allow", "warn"].includes(scan.decision) ? "block" : scan.decision };
+                }
                 const messages = normalizeMessages(body.messages);
                 if (provider === "anthropic" && body.system !== undefined) messages.unshift(...normalizeMessages([{ role: "system", content: body.system }]));
                 const scan = await scanBrokerRequest(messages, { engine: this.engine, safeMode: this.safeMode, canaries: this.canaries });
@@ -294,7 +302,7 @@ export class BrokerServer {
             // runaway loop cannot spin the CPU on JSON responses.
             const liveness = req.method === "GET" &&
                 (url.pathname === "/health" || url.pathname === "/version" || url.pathname === "/v1/safe-mode/status"
-                    || this.options.claudeToolSchemas === true && (url.pathname === "/v1/lifecycle/status" || url.pathname === "/v1/gateway/status"));
+                    || (this.options.claudeToolSchemas === true || this.options.codexResponses === true) && (url.pathname === "/v1/lifecycle/status" || url.pathname === "/v1/gateway/status"));
             this.enforceRateLimit(req, liveness);
 
             if (req.method === "GET" && url.pathname === "/health") {
@@ -309,7 +317,8 @@ export class BrokerServer {
                 throw new HttpError(403, "owner_session_required", "This controller belongs to a different broker session");
             }
             if (!controller && !isClientRoute(req.method, url.pathname)
-                && !(this.options.claudeToolSchemas === true && req.method === "POST" && url.pathname === "/v1/ai/anthropic-compatible/v1/messages")) {
+                && !(this.options.claudeToolSchemas === true && req.method === "POST" && url.pathname === "/v1/ai/anthropic-compatible/v1/messages")
+                && !(this.options.codexResponses === true && req.method === "POST" && url.pathname === "/v1/ai/openai-responses/responses")) {
                 throw new HttpError(403, "control_auth_required", "This operation requires the separate local controller credential");
             }
 
@@ -369,6 +378,9 @@ export class BrokerServer {
             if (req.method === "POST" && url.pathname === "/v1/checkpoint/rollback") return void await this.rollbackCheckpoint(res, body, req);
             if (req.method === "POST" && url.pathname === "/v1/ai/openai-compatible/chat/completions") {
                 this.requireCanaryMonitoring();return void await this.gateway.proxy("openai", body, req, res);
+            }
+            if (req.method === "POST" && this.options.codexResponses === true && url.pathname === "/v1/ai/openai-responses/responses") {
+                this.requireCanaryMonitoring();return void await this.gateway.proxy("codex", body, req, res);
             }
             if (req.method === "POST" && (url.pathname === "/v1/ai/anthropic-compatible/messages"
                 || this.options.claudeToolSchemas === true && url.pathname === "/v1/ai/anthropic-compatible/v1/messages")) {

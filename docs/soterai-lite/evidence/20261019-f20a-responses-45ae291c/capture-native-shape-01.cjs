@@ -1,0 +1,14 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto'),assert=require('node:assert/strict');
+const prior=path.resolve(__dirname,'../20261019-f20-codex-cli-17b8e403');
+let source=fs.readFileSync(path.join(prior,'probe-cli-07.cjs'),'utf8');
+const replace=(from,to)=>{assert(source.includes(from),from);source=source.replace(from,to);};
+source=source.replaceAll('-07','-08');
+replace("path.join(base,'installed-cli-public-inputs-03.json')","path.join(base,'../20261019-f20-codex-cli-17b8e403/installed-cli-public-inputs-03.json')");
+replace("await run('default-tools',url,false);await run('disabled-command-tools',url,true);","await run('disabled-command-tools',url,true);");
+replace("&&report.requests.some(r=>r.phase==='default-tools')",'');
+replace('report.requests.push({phase:current,path:req.url,bytes:n',"write(path.join(base,'native-request-'+(turn+1)+'.json'),JSON.stringify(body,null,2)+'\\n');report.requests.push({phase:current,path:req.url,bytes:n");
+replace("const emit=(type,data)=>res.write('event: '+type+'\\ndata: '+JSON.stringify({type,...data})+'\\n\\n');","const events=[];const emit=(type,data)=>{const wire='event: '+type+'\\ndata: '+JSON.stringify({type,...data})+'\\n\\n';events.push(wire);res.write(wire);};");
+replace("emit('response.completed',{response});res.end();","emit('response.completed',{response});write(path.join(base,'native-output-'+turn+'.sse.txt'),events.join(''));res.end();");
+fs.writeFileSync(path.join(__dirname,'probe-cli-08.cjs'),source,{flag:'wx'});
+fs.writeFileSync(path.join(__dirname,'native-shape-freeze-01.json'),JSON.stringify({status:'FROZEN_NOT_RUN',driverSha256:crypto.createHash('sha256').update(source).digest('hex'),scope:'Pinned0.160.1 native safe-reader tool loop request schema; isolated synthetic CODEX_HOME/public vendor binary/loopback provider; no OS or real-provider claim.'},null,2)+'\n',{flag:'wx'});

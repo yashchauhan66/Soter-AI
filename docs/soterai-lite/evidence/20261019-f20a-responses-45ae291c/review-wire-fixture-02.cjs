@@ -1,0 +1,11 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto'),assert=require('node:assert/strict');
+const file=path.resolve(__dirname,'../../../../packages/vscode-extension/src/__tests__/codexResponsesWire.test.ts'),before=fs.readFileSync(file),sha=b=>crypto.createHash('sha256').update(b).digest('hex');
+fs.writeFileSync(path.join(__dirname,'codexResponsesWire-original-02.ts'),before,{flag:'wx'});
+let text=before.toString('utf8');
+for(const name of ['CLIENT','CONTROL','PROVIDER'])text=text.replace('TEST_ONLY_F20A_RESPONSES_'+name+'"','TEST_ONLY_F20A_RESPONSES_'+name+'_CREDENTIAL"');
+text=text.replace('const records:any[]=[];let output=wire();','assert.ok(DATA.length>=32&&CONTROL.length>=32);\n const records:any[]=[];let output=wire();');
+const start='const broker=new BrokerServer(',end='const {url}=await broker.start();try{await run(url,records,v=>output=v);}finally{await broker.stop();';
+assert.ok(text.includes(start)&&text.includes(end));text=text.replace(start,'let broker:BrokerServer|undefined;try{broker=new BrokerServer(').replace(end,'const {url}=await broker.start();await run(url,records,v=>output=v);}finally{await broker?.stop();');
+fs.writeFileSync(file,text);
+fs.writeFileSync(path.join(__dirname,'wire-fixture-review-02.json'),JSON.stringify({status:'FIXTURE_CONSTRUCTOR_FAILURE_NOT_ROUTE_EVIDENCE',before:sha(before),after:sha(Buffer.from(text)),assertionsRemoved:0,rootCause:'DATA token31chars and CONTROL32? Constructor requires minimum32; public receivers were started before the constructor outside the finally block.',correction:'Synthetic credentials explicitly length-checked before listen; constructor/start inside try with optional broker and guaranteed cooperative receiver close.',retainedRuns:[{receipt:'responses-before-01',session:11701,status:'PENDING_RETAINED_NO_SIGNAL'},{receipt:'wire-before-02',session:72516,status:'PENDING_RETAINED_NO_SIGNAL'},{receipt:'live-single-diagnostic',session:47543,status:'PENDING_RETAINED_NO_SIGNAL',observedError:'A broker auth token of at least 32 characters is required'}],limits:'Known owned synthetic loopback receivers remain open in those failed workers; no product route reached and no secret data used. No process termination authorized or sent.'},null,2)+'\n',{flag:'wx'});

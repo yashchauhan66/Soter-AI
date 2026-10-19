@@ -1,0 +1,27 @@
+{
+  "status": "FIXTURE_CONSTRUCTOR_FAILURE_NOT_ROUTE_EVIDENCE",
+  "before": "11d24dbc7ae30eb98539afdcdb67cbaa62a50be51653d6ccc6abd4304a9511d7",
+  "after": "ecb09ba1c55366d51a9527ec05443b8d34e10bb434e36c67e464dbefdcc09c07",
+  "assertionsRemoved": 0,
+  "rootCause": "DATA token31chars and CONTROL32? Constructor requires minimum32; public receivers were started before the constructor outside the finally block.",
+  "correction": "Synthetic credentials explicitly length-checked before listen; constructor/start inside try with optional broker and guaranteed cooperative receiver close.",
+  "retainedRuns": [
+    {
+      "receipt": "responses-before-01",
+      "session": 11701,
+      "status": "PENDING_RETAINED_NO_SIGNAL"
+    },
+    {
+      "receipt": "wire-before-02",
+      "session": 72516,
+      "status": "PENDING_RETAINED_NO_SIGNAL"
+    },
+    {
+      "receipt": "live-single-diagnostic",
+      "session": 47543,
+      "status": "PENDING_RETAINED_NO_SIGNAL",
+      "observedError": "A broker auth token of at least 32 characters is required"
+    }
+  ],
+  "limits": "Known owned synthetic loopback receivers remain open in those failed workers; no product route reached and no secret data used. No process termination authorized or sent."
+}

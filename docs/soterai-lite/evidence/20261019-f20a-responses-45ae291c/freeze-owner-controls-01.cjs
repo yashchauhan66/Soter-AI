@@ -1,0 +1,11 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),crypto=require('node:crypto');
+const repo=path.resolve(__dirname,'../../../..'),tests=path.join(repo,'packages/vscode-extension/src/__tests__');
+let text=fs.readFileSync(path.join(tests,'claudeGatewayManager.test.ts'),'utf8');
+text=text.replaceAll('F19','F20A').replaceAll('claudeAck','codexAck');
+text=text.replace('claudeToolSchemas:Object.hasOwn(extra,"codexAck")?extra.codexAck:envs.at(-1)?.SOTERAI_CLAUDE_TOOL_SCHEMAS==="1"','claudeToolSchemas:envs.at(-1)?.SOTERAI_CLAUDE_TOOL_SCHEMAS==="1",codexResponses:Object.hasOwn(extra,"codexAck")?extra.codexAck:envs.at(-1)?.SOTERAI_CODEX_RESPONSES==="1"');
+text=text.replaceAll('soterai.lite.claudeAdapter','soterai.lite.codexCliAdapter').replaceAll('f.envs[0].SOTERAI_CLAUDE_TOOL_SCHEMAS','f.envs[0].SOTERAI_CODEX_RESPONSES');
+assert(text.includes('codexResponses:Object.hasOwn'));
+fs.writeFileSync(path.join(tests,'codexResponsesManager.test.ts'),text,{flag:'wx'});
+const sha=b=>crypto.createHash('sha256').update(b).digest('hex');const names=['codexResponsesOwner.test.ts','codexResponsesManager.test.ts'];
+fs.writeFileSync(path.join(__dirname,'owner-controls-freeze-01.json'),JSON.stringify({status:'FROZEN_BEFORE_OWNER_IMPLEMENTATION',tests:names.map(n=>({path:'packages/vscode-extension/src/__tests__/'+n,sha256:sha(fs.readFileSync(path.join(tests,n)))})),scope:'Owned machine-scoped schema ack/env drift and profile route/credential/session bindings; new synthetic directories only; unrelated adapter fixtures preserved.'},null,2)+'\n',{flag:'wx'});

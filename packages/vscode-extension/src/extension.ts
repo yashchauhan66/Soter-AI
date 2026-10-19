@@ -207,7 +207,7 @@ export function activate(context: vscode.ExtensionContext): void {
     registerBrokerCommands(context, brokerManager, refreshViews);
     registerClineAdapter(context, brokerManager, managedReader);
     registerClaudeAdapter(context, brokerManager, managedReader);
-    registerCodexCliAdapter(context, managedReader);
+    registerCodexCliAdapter(context, managedReader, brokerManager);
     registerSentinelCommands(context, sentinel);
     registerPermissionCommands(context, permissionStore);
     registerWorkspaceGuardCommands(context, workspaceGuard);

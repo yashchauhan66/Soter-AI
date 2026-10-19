@@ -9,5 +9,5 @@ for (const name of ["vscode-extension", "soterai-lite"]) test("F20A-M01 " + name
     for (const cmd of ["configurePinnedCodexCli", "restorePinnedCodexCli", "codexCliAdapterStatus"]) assert.ok(m.contributes.commands.some((c: any) => c.command === "soterai." + cmd));
 });
 test("F20A-M02 activation passes the private reader without auto-native launch", () => {
-    const text = readFileSync(resolve(__dirname, "../extension.ts"), "utf8"); assert.match(text, /registerCodexCliAdapter\(context, managedReader\)/);
+    const text = readFileSync(resolve(__dirname, "../extension.ts"), "utf8"); assert.match(text, /registerCodexCliAdapter\(context, managedReader, brokerManager\)/);
 });
