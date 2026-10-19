@@ -1,0 +1,58 @@
+﻿TAP version 13
+# Subtest: F20A-R02 retained restored receipt cannot block setup for a different project
+not ok 1 - F20A-R02 retained restored receipt cannot block setup for a different project
+  ---
+  duration_ms: 333.8441
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\codexCliOwnerRecovery.review.test.ts:2:2124'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'UNAVAILABLE'
+    - 'APPLIED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'APPLIED'
+  actual: 'UNAVAILABLE'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\codexCliOwnerRecovery.review.test.ts:20:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F20A-R03 restart has no implicit live route, keeps receipt and allows reviewed restore
+ok 2 - F20A-R03 restart has no implicit live route, keeps receipt and allows reviewed restore
+  ---
+  duration_ms: 49.2724
+  type: 'test'
+  ...
+# Subtest: F20A-R04 workspace drift during review creates no native config
+ok 3 - F20A-R04 workspace drift during review creates no native config
+  ---
+  duration_ms: 12.6267
+  type: 'test'
+  ...
+# Subtest: F20A-R05 storage inside project is refused
+ok 4 - F20A-R05 storage inside project is refused
+  ---
+  duration_ms: 6.083
+  type: 'test'
+  ...
+# Subtest: F20A-R06 forged saved profile path cannot delete another local file
+ok 5 - F20A-R06 forged saved profile path cannot delete another local file
+  ---
+  duration_ms: 39.2381
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 4
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1083.7054

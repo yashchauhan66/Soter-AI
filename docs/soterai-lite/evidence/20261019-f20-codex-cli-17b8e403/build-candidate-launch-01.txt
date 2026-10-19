@@ -1,0 +1,18 @@
+﻿typecheck-02 exit=0
+generate-readiness-01 exit=0
+focused-01 exit=1
+powershell.exe : F20A candidate gate failed: focused-01
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (F20A candidate gate failed: focused-01:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261019-f20-codex-cli-17b8e403\bu
+ild-candidate-01.ps1:8 char:33
++ ... kResult.exitCode -ne 0){throw ('F20A candidate gate failed: '+$Name)}
++                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (F20A candidate gate failed: focused-01:String) [], RuntimeException
+    + FullyQualifiedErrorId : F20A candidate gate failed: focused-01
+ 

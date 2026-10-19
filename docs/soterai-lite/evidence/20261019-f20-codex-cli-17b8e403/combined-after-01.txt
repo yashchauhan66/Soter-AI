@@ -1,0 +1,314 @@
+﻿TAP version 13
+# Subtest: F20A-C01 constructor/status never read native config or launch a process
+ok 1 - F20A-C01 constructor/status never read native config or launch a process
+  ---
+  duration_ms: 2026.2983
+  type: 'test'
+  ...
+# Subtest: F20A-C02 cancel leaves native configuration absent and grants no read
+ok 2 - F20A-C02 cancel leaves native configuration absent and grants no read
+  ---
+  duration_ms: 57.7569
+  type: 'test'
+  ...
+# Subtest: F20A-C03 reviewed setup/restore own one dedicated config with encrypted recovery
+not ok 3 - F20A-C03 reviewed setup/restore own one dedicated config with encrypted recovery
+  ---
+  duration_ms: 40.1221
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\codexCliAdapterLifecycle.test.ts:2:3135'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'UNAVAILABLE'
+    - 'APPLIED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'APPLIED'
+  actual: 'UNAVAILABLE'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\codexCliAdapterLifecycle.test.ts:27:58)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F20A-C04 prior receipt blocks duplicate setup
+not ok 4 - F20A-C04 prior receipt blocks duplicate setup
+  ---
+  duration_ms: 23.5204
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\codexCliAdapterLifecycle.test.ts:2:4587'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'UNAVAILABLE'
+    - 'APPLIED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'APPLIED'
+  actual: 'UNAVAILABLE'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\codexCliAdapterLifecycle.test.ts:37:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F20A-C05 project override refuses before creating profile
+ok 5 - F20A-C05 project override refuses before creating profile
+  ---
+  duration_ms: 8.0646
+  type: 'test'
+  ...
+# Subtest: F20A-C06 durable recovery write failure creates no vendor config
+ok 6 - F20A-C06 durable recovery write failure creates no vendor config
+  ---
+  duration_ms: 21.6465
+  type: 'test'
+  ...
+# Subtest: F20A-C07 memento failure retains durable recovery and withdraws session
+not ok 7 - F20A-C07 memento failure retains durable recovery and withdraws session
+  ---
+  duration_ms: 25.6898
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\codexCliAdapterLifecycle.test.ts:2:6119'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'UNAVAILABLE'
+    - 'INCOMPLETE'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'INCOMPLETE'
+  actual: 'UNAVAILABLE'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\codexCliAdapterLifecycle.test.ts:52:103)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F20A-C08 withdrawal preserves restrictive profile bytes and ends capability
+not ok 8 - F20A-C08 withdrawal preserves restrictive profile bytes and ends capability
+  ---
+  duration_ms: 24.1302
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\codexCliAdapterLifecycle.test.ts:2:6945'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open 'C:\\Users\\USER\\AppData\\Local\\Temp\\soterai-f20a-owner-8aKfWc\\profile\\globalStorage\\adapter-sessions\\codex-cli-4de928d1-6d3e-4d19-a8f7-7bb8d6ff6115\\config.toml'"
+  code: 'ENOENT'
+  stack: |-
+    async open (node:internal/fs/promises:633:25)
+    async readFile (node:internal/fs/promises:1237:14)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\codexCliAdapterLifecycle.test.ts:59:60)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F20A-P01 new profile disables native commands/images and exposes only F04 MCP
+ok 9 - F20A-P01 new profile disables native commands/images and exposes only F04 MCP
+  ---
+  duration_ms: 61.8351
+  type: 'test'
+  ...
+# Subtest: F20A-P02 refuses existing config instead of silently merging unknown routes
+ok 10 - F20A-P02 refuses existing config instead of silently merging unknown routes
+  ---
+  duration_ms: 4.7916
+  type: 'test'
+  ...
+# Subtest: F20A-P03 rejects malformed connections and profile injection
+ok 11 - F20A-P03 rejects malformed connections and profile injection
+  ---
+  duration_ms: 5.6541
+  type: 'test'
+  ...
+# Subtest: F20A-P04 review is value-free and plan is single use
+ok 12 - F20A-P04 review is value-free and plan is single use
+  ---
+  duration_ms: 4.0401
+  type: 'test'
+  ...
+# Subtest: F20A-P05 no write on cancel
+ok 13 - F20A-P05 no write on cancel
+  ---
+  duration_ms: 5.5623
+  type: 'test'
+  ...
+# Subtest: F20A-P05 no write on disabled
+ok 14 - F20A-P05 no write on disabled
+  ---
+  duration_ms: 4.8037
+  type: 'test'
+  ...
+# Subtest: F20A-P05 no write on owner-drift
+ok 15 - F20A-P05 no write on owner-drift
+  ---
+  duration_ms: 3.2011
+  type: 'test'
+  ...
+# Subtest: F20A-P05 no write on file-drift
+ok 16 - F20A-P05 no write on file-drift
+  ---
+  duration_ms: 2.4924
+  type: 'test'
+  ...
+# Subtest: F20A-P05 no write on aborted
+ok 17 - F20A-P05 no write on aborted
+  ---
+  duration_ms: 2.4682
+  type: 'test'
+  ...
+# Subtest: F20A-P06 backup failure precedes writes
+ok 18 - F20A-P06 backup failure precedes writes
+  ---
+  duration_ms: 3.6123
+  type: 'test'
+  ...
+# Subtest: F20A-P06 durable-receipt failure precedes writes
+ok 19 - F20A-P06 durable-receipt failure precedes writes
+  ---
+  duration_ms: 5.5571
+  type: 'test'
+  ...
+# Subtest: F20A-P07 write-then-throw rolls back only exact owned bytes
+ok 20 - F20A-P07 write-then-throw rolls back only exact owned bytes
+  ---
+  duration_ms: 2.7203
+  type: 'test'
+  ...
+# Subtest: F20A-P08 post-write unowned changes are retained with INCOMPLETE recovery
+ok 21 - F20A-P08 post-write unowned changes are retained with INCOMPLETE recovery
+  ---
+  duration_ms: 2.8367
+  type: 'test'
+  ...
+# Subtest: F20A-P09 explicit reviewed restore removes owned config and retains backup
+ok 22 - F20A-P09 explicit reviewed restore removes owned config and retains backup
+  ---
+  duration_ms: 3.8387
+  type: 'test'
+  ...
+# Subtest: F20A-P10 restore withholds on cancel
+ok 23 - F20A-P10 restore withholds on cancel
+  ---
+  duration_ms: 3.6544
+  type: 'test'
+  ...
+# Subtest: F20A-P10 restore withholds on config-drift
+ok 24 - F20A-P10 restore withholds on config-drift
+  ---
+  duration_ms: 2.9099
+  type: 'test'
+  ...
+# Subtest: F20A-P10 restore withholds on corrupt-backup
+ok 25 - F20A-P10 restore withholds on corrupt-backup
+  ---
+  duration_ms: 2.7569
+  type: 'test'
+  ...
+# Subtest: F20A-P10 restore withholds on owner-drift
+ok 26 - F20A-P10 restore withholds on owner-drift
+  ---
+  duration_ms: 2.5078
+  type: 'test'
+  ...
+# Subtest: F20A-P10 restore withholds on bad-receipt
+ok 27 - F20A-P10 restore withholds on bad-receipt
+  ---
+  duration_ms: 2.693
+  type: 'test'
+  ...
+# Subtest: F20A-P11 drift during restore review cannot delete unowned config
+ok 28 - F20A-P11 drift during restore review cannot delete unowned config
+  ---
+  duration_ms: 3.11
+  type: 'test'
+  ...
+# Subtest: F20A-P12 current profile authority is withdrawn on owner, feature or byte drift
+ok 29 - F20A-P12 current profile authority is withdrawn on owner, feature or byte drift
+  ---
+  duration_ms: 7.3667
+  type: 'test'
+  ...
+# Subtest: F20A-M01 vscode-extension machine/restricted flag and owner commands
+ok 30 - F20A-M01 vscode-extension machine/restricted flag and owner commands
+  ---
+  duration_ms: 6.2969
+  type: 'test'
+  ...
+# Subtest: F20A-M01 soterai-lite machine/restricted flag and owner commands
+ok 31 - F20A-M01 soterai-lite machine/restricted flag and owner commands
+  ---
+  duration_ms: 2.8855
+  type: 'test'
+  ...
+# Subtest: F20A-M02 activation passes the private reader without auto-native launch
+ok 32 - F20A-M02 activation passes the private reader without auto-native launch
+  ---
+  duration_ms: 1.4122
+  type: 'test'
+  ...
+# Subtest: F20A-B01 real loopback initialization/discovery and masked path-only read
+ok 33 - F20A-B01 real loopback initialization/discovery and masked path-only read
+  ---
+  duration_ms: 158.5657
+  type: 'test'
+  ...
+# Subtest: F20A-B02 auth, aliases, origin, media and nonPOST refuse before reader
+ok 34 - F20A-B02 auth, aliases, origin, media and nonPOST refuse before reader
+  ---
+  duration_ms: 40.4266
+  type: 'test'
+  ...
+# Subtest: F20A-B03 malformed, oversized, duplicate JSON and authority injection withhold
+ok 35 - F20A-B03 malformed, oversized, duplicate JSON and authority injection withhold
+  ---
+  duration_ms: 34.0608
+  type: 'test'
+  ...
+# Subtest: F20A-B04 only bounded native metadata is ignored, never passed to authorizer
+ok 36 - F20A-B04 only bounded native metadata is ignored, never passed to authorizer
+  ---
+  duration_ms: 26.7701
+  type: 'test'
+  ...
+# Subtest: F20A-B05 owner unready before/after read cannot return late content
+ok 37 - F20A-B05 owner unready before/after read cannot return late content
+  ---
+  duration_ms: 13.2483
+  type: 'test'
+  ...
+# Subtest: F20A-B06 session rotation aborts pending approvals and rejects stale credentials
+ok 38 - F20A-B06 session rotation aborts pending approvals and rejects stale credentials
+  ---
+  duration_ms: 25.4798
+  type: 'test'
+  ...
+# Subtest: F20A-B07 busy admission withholds another request and flag withdrawal returns no data
+ok 39 - F20A-B07 busy admission withholds another request and flag withdrawal returns no data
+  ---
+  duration_ms: 14.0193
+  type: 'test'
+  ...
+# Subtest: F20A-R01 rotation settles HTTP while asynchronous owner readiness remains pending
+ok 40 - F20A-R01 rotation settles HTTP while asynchronous owner readiness remains pending
+  ---
+  duration_ms: 131.1572
+  type: 'test'
+  ...
+1..40
+# tests 40
+# suites 0
+# pass 36
+# fail 4
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3100.7931

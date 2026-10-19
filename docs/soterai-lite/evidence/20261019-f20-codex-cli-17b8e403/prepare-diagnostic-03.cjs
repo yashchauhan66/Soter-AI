@@ -1,0 +1,10 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),crypto=require('node:crypto');
+let driver=fs.readFileSync(path.join(__dirname,'product-matrix-02.cjs'),'utf8');
+const anchor='throw error;}};';assert.equal(driver.split(anchor).length,2);driver=driver.replace(anchor,'throw error;}};}');
+fs.writeFileSync(path.join(__dirname,'product-matrix-03.cjs'),driver,{flag:'wx'});
+const launcher=fs.readFileSync(path.join(__dirname,'run-product-matrix-02.ps1'),'utf8').replaceAll('product-matrix-02.cjs','product-matrix-03.cjs');
+fs.writeFileSync(path.join(__dirname,'run-product-matrix-03.ps1'),launcher,{flag:'wx'});
+const facts=['product-matrix-03.cjs','run-product-matrix-03.ps1'].map(name=>{const b=fs.readFileSync(path.join(__dirname,name));return {path:name,bytes:b.length,sha256:crypto.createHash('sha256').update(b).digest('hex')};});
+fs.writeFileSync(path.join(__dirname,'native-diagnostic-correction-03.json'),JSON.stringify({status:'CORRECTED_FIXTURE_NOT_EXECUTED',facts,reason:'Diagnostic02 generator omitted the closing brace of its observation loop. Module failed to parse before activation; no product/native/provider route executed. Owned failed test window retained without process signals. Exact VSIX unchanged; add node --check before GUI launch.',retainedRoot:'D:/SoterAI-Lite-test-profiles/f20a-product-20261019T141643Z-1f629d90'},null,2)+'\n',{flag:'wx'});
+console.log('PREPARED_SYNTAX_CORRECTED_OWNER_DIAGNOSTIC_03');

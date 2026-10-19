@@ -1,0 +1,184 @@
+﻿TAP version 13
+# Subtest: F20A-P01 new profile disables native commands/images and exposes only F04 MCP
+ok 1 - F20A-P01 new profile disables native commands/images and exposes only F04 MCP
+  ---
+  duration_ms: 48.2516
+  type: 'test'
+  ...
+# Subtest: F20A-P02 refuses existing config instead of silently merging unknown routes
+ok 2 - F20A-P02 refuses existing config instead of silently merging unknown routes
+  ---
+  duration_ms: 4.1515
+  type: 'test'
+  ...
+# Subtest: F20A-P03 rejects malformed connections and profile injection
+ok 3 - F20A-P03 rejects malformed connections and profile injection
+  ---
+  duration_ms: 4.8997
+  type: 'test'
+  ...
+# Subtest: F20A-P04 review is value-free and plan is single use
+ok 4 - F20A-P04 review is value-free and plan is single use
+  ---
+  duration_ms: 6.5716
+  type: 'test'
+  ...
+# Subtest: F20A-P05 no write on cancel
+ok 5 - F20A-P05 no write on cancel
+  ---
+  duration_ms: 3.7435
+  type: 'test'
+  ...
+# Subtest: F20A-P05 no write on disabled
+ok 6 - F20A-P05 no write on disabled
+  ---
+  duration_ms: 2.4382
+  type: 'test'
+  ...
+# Subtest: F20A-P05 no write on owner-drift
+ok 7 - F20A-P05 no write on owner-drift
+  ---
+  duration_ms: 4.0195
+  type: 'test'
+  ...
+# Subtest: F20A-P05 no write on file-drift
+ok 8 - F20A-P05 no write on file-drift
+  ---
+  duration_ms: 8.8028
+  type: 'test'
+  ...
+# Subtest: F20A-P05 no write on aborted
+ok 9 - F20A-P05 no write on aborted
+  ---
+  duration_ms: 3.2326
+  type: 'test'
+  ...
+# Subtest: F20A-P06 backup failure precedes writes
+ok 10 - F20A-P06 backup failure precedes writes
+  ---
+  duration_ms: 3.8383
+  type: 'test'
+  ...
+# Subtest: F20A-P06 durable-receipt failure precedes writes
+ok 11 - F20A-P06 durable-receipt failure precedes writes
+  ---
+  duration_ms: 5.662
+  type: 'test'
+  ...
+# Subtest: F20A-P07 write-then-throw rolls back only exact owned bytes
+ok 12 - F20A-P07 write-then-throw rolls back only exact owned bytes
+  ---
+  duration_ms: 4.5156
+  type: 'test'
+  ...
+# Subtest: F20A-P08 post-write unowned changes are retained with INCOMPLETE recovery
+ok 13 - F20A-P08 post-write unowned changes are retained with INCOMPLETE recovery
+  ---
+  duration_ms: 4.8811
+  type: 'test'
+  ...
+# Subtest: F20A-P09 explicit reviewed restore removes owned config and retains backup
+ok 14 - F20A-P09 explicit reviewed restore removes owned config and retains backup
+  ---
+  duration_ms: 12.1845
+  type: 'test'
+  ...
+# Subtest: F20A-P10 restore withholds on cancel
+ok 15 - F20A-P10 restore withholds on cancel
+  ---
+  duration_ms: 4.5313
+  type: 'test'
+  ...
+# Subtest: F20A-P10 restore withholds on config-drift
+ok 16 - F20A-P10 restore withholds on config-drift
+  ---
+  duration_ms: 3.054
+  type: 'test'
+  ...
+# Subtest: F20A-P10 restore withholds on corrupt-backup
+ok 17 - F20A-P10 restore withholds on corrupt-backup
+  ---
+  duration_ms: 6.2491
+  type: 'test'
+  ...
+# Subtest: F20A-P10 restore withholds on owner-drift
+ok 18 - F20A-P10 restore withholds on owner-drift
+  ---
+  duration_ms: 3.9064
+  type: 'test'
+  ...
+# Subtest: F20A-P10 restore withholds on bad-receipt
+ok 19 - F20A-P10 restore withholds on bad-receipt
+  ---
+  duration_ms: 2.8206
+  type: 'test'
+  ...
+# Subtest: F20A-P11 drift during restore review cannot delete unowned config
+ok 20 - F20A-P11 drift during restore review cannot delete unowned config
+  ---
+  duration_ms: 6.1531
+  type: 'test'
+  ...
+# Subtest: F20A-P12 current profile authority is withdrawn on owner, feature or byte drift
+ok 21 - F20A-P12 current profile authority is withdrawn on owner, feature or byte drift
+  ---
+  duration_ms: 11.063
+  type: 'test'
+  ...
+# Subtest: F20A-B01 real loopback initialization/discovery and masked path-only read
+ok 22 - F20A-B01 real loopback initialization/discovery and masked path-only read
+  ---
+  duration_ms: 152.4683
+  type: 'test'
+  ...
+# Subtest: F20A-B02 auth, aliases, origin, media and nonPOST refuse before reader
+ok 23 - F20A-B02 auth, aliases, origin, media and nonPOST refuse before reader
+  ---
+  duration_ms: 35.9322
+  type: 'test'
+  ...
+# Subtest: F20A-B03 malformed, oversized, duplicate JSON and authority injection withhold
+ok 24 - F20A-B03 malformed, oversized, duplicate JSON and authority injection withhold
+  ---
+  duration_ms: 29.2305
+  type: 'test'
+  ...
+# Subtest: F20A-B04 only bounded native metadata is ignored, never passed to authorizer
+ok 25 - F20A-B04 only bounded native metadata is ignored, never passed to authorizer
+  ---
+  duration_ms: 25.2562
+  type: 'test'
+  ...
+# Subtest: F20A-B05 owner unready before/after read cannot return late content
+ok 26 - F20A-B05 owner unready before/after read cannot return late content
+  ---
+  duration_ms: 9.3957
+  type: 'test'
+  ...
+# Subtest: F20A-B06 session rotation aborts pending approvals and rejects stale credentials
+ok 27 - F20A-B06 session rotation aborts pending approvals and rejects stale credentials
+  ---
+  duration_ms: 14.7066
+  type: 'test'
+  ...
+# Subtest: F20A-B07 busy admission withholds another request and flag withdrawal returns no data
+ok 28 - F20A-B07 busy admission withholds another request and flag withdrawal returns no data
+  ---
+  duration_ms: 14.7437
+  type: 'test'
+  ...
+# Subtest: F20A-R01 rotation settles HTTP while asynchronous owner readiness remains pending
+ok 29 - F20A-R01 rotation settles HTTP while asynchronous owner readiness remains pending
+  ---
+  duration_ms: 327.5457
+  type: 'test'
+  ...
+1..29
+# tests 29
+# suites 0
+# pass 29
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1385.0512

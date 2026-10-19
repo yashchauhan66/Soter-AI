@@ -1,0 +1,39 @@
+﻿TAP version 13
+# Subtest: F20A-R07 observed native turn metadata is ignored and cannot approve denied read
+not ok 1 - F20A-R07 observed native turn metadata is ignored and cannot approve denied read
+  ---
+  duration_ms: 156.6415
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\codexNativeMetadata.review.test.ts:2:2142'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\codexNativeMetadata.review.test.ts:16:69)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F20A-R08 wrong turn-metadata fields/types/bounds refuse before authorizer
+ok 2 - F20A-R08 wrong turn-metadata fields/types/bounds refuse before authorizer
+  ---
+  duration_ms: 45.3997
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 1
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 952.5443

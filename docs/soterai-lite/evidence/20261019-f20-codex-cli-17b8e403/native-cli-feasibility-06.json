@@ -1,0 +1,333 @@
+{
+  "status": "PASS_SCOPED_NATIVE_FEASIBILITY",
+  "scope": "Native CLI0.160.1 isolated feasibility, synthetic loopback provider only. Not product integration or OS/network isolation evidence.",
+  "requests": [
+    {
+      "phase": "default-tools",
+      "path": "/v1/responses",
+      "bytes": 33070,
+      "keys": [
+        "model",
+        "instructions",
+        "input",
+        "tools",
+        "tool_choice",
+        "parallel_tool_calls",
+        "reasoning",
+        "store",
+        "stream",
+        "include",
+        "prompt_cache_key",
+        "client_metadata"
+      ],
+      "tools": [
+        {
+          "type": "function",
+          "name": "exec_command"
+        },
+        {
+          "type": "function",
+          "name": "write_stdin"
+        },
+        {
+          "type": "function",
+          "name": "list_mcp_resources"
+        },
+        {
+          "type": "function",
+          "name": "list_mcp_resource_templates"
+        },
+        {
+          "type": "function",
+          "name": "read_mcp_resource"
+        },
+        {
+          "type": "function",
+          "name": "request_user_input"
+        },
+        {
+          "type": "namespace",
+          "name": "mcp__soterai_safe_read"
+        },
+        {
+          "type": "function",
+          "name": "get_goal"
+        },
+        {
+          "type": "function",
+          "name": "create_goal"
+        },
+        {
+          "type": "function",
+          "name": "update_goal"
+        }
+      ],
+      "inputItems": 3,
+      "maskedResult": false
+    },
+    {
+      "phase": "disabled-command-tools",
+      "path": "/v1/responses",
+      "bytes": 29676,
+      "keys": [
+        "model",
+        "instructions",
+        "input",
+        "tools",
+        "tool_choice",
+        "parallel_tool_calls",
+        "reasoning",
+        "store",
+        "stream",
+        "include",
+        "prompt_cache_key",
+        "client_metadata"
+      ],
+      "tools": [
+        {
+          "type": "function",
+          "name": "list_mcp_resources"
+        },
+        {
+          "type": "function",
+          "name": "list_mcp_resource_templates"
+        },
+        {
+          "type": "function",
+          "name": "read_mcp_resource"
+        },
+        {
+          "type": "function",
+          "name": "request_user_input"
+        },
+        {
+          "type": "namespace",
+          "name": "mcp__soterai_safe_read"
+        },
+        {
+          "type": "function",
+          "name": "get_goal"
+        },
+        {
+          "type": "function",
+          "name": "create_goal"
+        },
+        {
+          "type": "function",
+          "name": "update_goal"
+        }
+      ],
+      "inputItems": 3,
+      "maskedResult": false
+    },
+    {
+      "phase": "disabled-command-tools",
+      "path": "/v1/responses",
+      "bytes": 30151,
+      "keys": [
+        "model",
+        "instructions",
+        "input",
+        "tools",
+        "tool_choice",
+        "parallel_tool_calls",
+        "reasoning",
+        "store",
+        "stream",
+        "include",
+        "prompt_cache_key",
+        "client_metadata"
+      ],
+      "tools": [
+        {
+          "type": "function",
+          "name": "list_mcp_resources"
+        },
+        {
+          "type": "function",
+          "name": "list_mcp_resource_templates"
+        },
+        {
+          "type": "function",
+          "name": "read_mcp_resource"
+        },
+        {
+          "type": "function",
+          "name": "request_user_input"
+        },
+        {
+          "type": "namespace",
+          "name": "mcp__soterai_safe_read"
+        },
+        {
+          "type": "function",
+          "name": "get_goal"
+        },
+        {
+          "type": "function",
+          "name": "create_goal"
+        },
+        {
+          "type": "function",
+          "name": "update_goal"
+        }
+      ],
+      "inputItems": 5,
+      "maskedResult": true
+    }
+  ],
+  "children": [
+    {
+      "phase": "default-tools",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "code": 0,
+      "signal": null,
+      "stdoutSha256": "7061e131c8a8eeab282746c69f802652a265a286b2853f32a62b4fd13fc047b6",
+      "stderrSha256": "99939b963a922575d9af785e4af8cc6377469809004942ebac78b0416951c0b3"
+    },
+    {
+      "phase": "disabled-command-tools",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "code": 0,
+      "signal": null,
+      "stdoutSha256": "c46fddbfb4a13f84250a2a36705e876949000b33c143d8ad3d01118de6b71175",
+      "stderrSha256": "34d65183cf53ed017f8164f11928191ed9c2d3ae865319ecac1bcbaac9355c30"
+    }
+  ],
+  "independence": "LOW",
+  "mcp": [
+    {
+      "phase": "default-tools",
+      "method": "initialize",
+      "keys": [
+        "protocolVersion",
+        "capabilities",
+        "clientInfo"
+      ],
+      "protocol": "2025-06-18",
+      "metadataKeys": [],
+      "metadataTypes": {}
+    },
+    {
+      "phase": "default-tools",
+      "method": "notifications/initialized",
+      "keys": [],
+      "metadataKeys": [],
+      "metadataTypes": {}
+    },
+    {
+      "phase": "default-tools",
+      "method": "tools/list",
+      "keys": [
+        "_meta"
+      ],
+      "metadataKeys": [
+        "progressToken"
+      ],
+      "metadataTypes": {
+        "progressToken": {
+          "type": "number",
+          "array": false
+        }
+      }
+    },
+    {
+      "phase": "disabled-command-tools",
+      "method": "initialize",
+      "keys": [
+        "protocolVersion",
+        "capabilities",
+        "clientInfo"
+      ],
+      "protocol": "2025-06-18",
+      "metadataKeys": [],
+      "metadataTypes": {}
+    },
+    {
+      "phase": "disabled-command-tools",
+      "method": "notifications/initialized",
+      "keys": [],
+      "metadataKeys": [],
+      "metadataTypes": {}
+    },
+    {
+      "phase": "disabled-command-tools",
+      "method": "tools/list",
+      "keys": [
+        "_meta"
+      ],
+      "metadataKeys": [
+        "progressToken"
+      ],
+      "metadataTypes": {
+        "progressToken": {
+          "type": "number",
+          "array": false
+        }
+      }
+    },
+    {
+      "phase": "disabled-command-tools",
+      "method": "tools/call",
+      "keys": [
+        "_meta",
+        "name",
+        "arguments"
+      ],
+      "metadataKeys": [
+        "callId",
+        "x-codex-turn-metadata",
+        "threadId",
+        "sessionId",
+        "windowId",
+        "itemId",
+        "progressToken"
+      ],
+      "metadataTypes": {
+        "callId": {
+          "type": "string",
+          "array": false,
+          "bytes": 8
+        },
+        "x-codex-turn-metadata": {
+          "type": "object",
+          "array": false
+        },
+        "threadId": {
+          "type": "string",
+          "array": false,
+          "bytes": 36
+        },
+        "sessionId": {
+          "type": "string",
+          "array": false,
+          "bytes": 36
+        },
+        "windowId": {
+          "type": "string",
+          "array": false,
+          "bytes": 38
+        },
+        "itemId": {
+          "type": "string",
+          "array": false,
+          "bytes": 6
+        },
+        "progressToken": {
+          "type": "number",
+          "array": false
+        }
+      }
+    }
+  ],
+  "namespaceTools": [
+    {
+      "name": "soterai_read_project_file_safely",
+      "type": "function"
+    }
+  ]
+}

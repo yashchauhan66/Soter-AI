@@ -1,0 +1,70 @@
+{
+  "status": "INCOMPLETE_PRODUCT_MATRIX",
+  "independence": "LOW",
+  "checks": [
+    {
+      "id": "F20A-N01",
+      "status": "FAIL",
+      "error": {
+        "name": "AssertionError",
+        "code": "ERR_ASSERTION"
+      }
+    },
+    {
+      "id": "F20A-N02",
+      "status": "FAIL",
+      "error": {
+        "name": "AssertionError",
+        "code": "ERR_ASSERTION"
+      }
+    }
+  ],
+  "requests": [],
+  "mcp": [],
+  "modals": [],
+  "native": [],
+  "phase": "setup",
+  "limits": [
+    "Actual exact VSIX runtime via isolated developer bootstrap; no clean-install/human/independent claim",
+    "Native CLI0.160.1 dedicated safe-read profile only; IDE separate and unverified",
+    "Provider Responses traffic and supplied context unmediated; known disclosure control retained",
+    "Parent Node guards do not establish OS or all-descendant traffic isolation"
+  ],
+  "deniedExternal": [],
+  "deniedSignals": [],
+  "deniedChildLaunches": [],
+  "deniedFileAccess": [],
+  "deniedDirectSpawns": [],
+  "deniedWorkerLaunches": [],
+  "providerUrl": "http://127.0.0.1:58773",
+  "ownerDiagnostic": {
+    "found": true,
+    "available": true,
+    "readerEnabled": true,
+    "trusted": true,
+    "folders": 1,
+    "roamingRelative": "public-vendor"
+  },
+  "ownerStages": [
+    {
+      "method": "saved",
+      "leaf": "workspace",
+      "error": {
+        "name": "Error"
+      }
+    },
+    {
+      "method": "saved",
+      "leaf": "workspace",
+      "error": {
+        "name": "Error"
+      }
+    }
+  ],
+  "driverFailure": {
+    "name": "AssertionError",
+    "code": "ERR_ASSERTION"
+  },
+  "children": [],
+  "runtimeSha256": "d4c14bd9e931afe23e03a6d492dacfd3e650bdce29e5eb33a3cc1d3803921b75"
+}

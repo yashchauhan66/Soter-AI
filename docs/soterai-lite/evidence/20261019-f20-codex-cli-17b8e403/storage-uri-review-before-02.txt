@@ -1,0 +1,136 @@
+﻿TAP version 13
+# Subtest: F20A-R09 actual local vscode-userdata storage scheme accepts reviewed dedicated profile
+not ok 1 - F20A-R09 actual local vscode-userdata storage scheme accepts reviewed dedicated profile
+  ---
+  duration_ms: 167.4255
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\codexStorageUri.review.test.ts:2:2432'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'UNAVAILABLE'
+    - 'APPLIED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'APPLIED'
+  actual: 'UNAVAILABLE'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\codexStorageUri.review.test.ts:22:77)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F20A-R10 storage refuses unsupported scheme
+ok 2 - F20A-R10 storage refuses unsupported scheme
+  ---
+  duration_ms: 7.8416
+  type: 'test'
+  ...
+# Subtest: F20A-R10 storage refuses authority
+not ok 3 - F20A-R10 storage refuses authority
+  ---
+  duration_ms: 66.5064
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\codexStorageUri.review.test.ts:2:2996'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'APPLIED'
+    - 'UNAVAILABLE'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'UNAVAILABLE'
+  actual: 'APPLIED'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\codexStorageUri.review.test.ts:29:55)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F20A-R10 storage refuses query
+not ok 4 - F20A-R10 storage refuses query
+  ---
+  duration_ms: 30.6131
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\codexStorageUri.review.test.ts:2:2996'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'APPLIED'
+    - 'UNAVAILABLE'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'UNAVAILABLE'
+  actual: 'APPLIED'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\codexStorageUri.review.test.ts:29:55)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F20A-R10 storage refuses fragment
+not ok 5 - F20A-R10 storage refuses fragment
+  ---
+  duration_ms: 28.0783
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\codexStorageUri.review.test.ts:2:2996'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'APPLIED'
+    - 'UNAVAILABLE'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'UNAVAILABLE'
+  actual: 'APPLIED'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\codexStorageUri.review.test.ts:29:55)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F20A-R10 storage refuses mismatched physical path
+not ok 6 - F20A-R10 storage refuses mismatched physical path
+  ---
+  duration_ms: 25.9155
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\codexStorageUri.review.test.ts:2:2996'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'APPLIED'
+    - 'UNAVAILABLE'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'UNAVAILABLE'
+  actual: 'APPLIED'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\codexStorageUri.review.test.ts:29:55)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 1
+# fail 5
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 776.6526

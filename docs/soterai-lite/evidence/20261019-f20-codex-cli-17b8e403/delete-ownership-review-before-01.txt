@@ -1,0 +1,47 @@
+﻿TAP version 13
+# Subtest: F20A-R11 config change after policy check but before writer must survive restore
+not ok 1 - F20A-R11 config change after policy check but before writer must survive restore
+  ---
+  duration_ms: 523.5813
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\codexDeleteOwnership.review.test.ts:2:2217'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected "actual" to be strictly unequal to:
+    
+    'RESTORED'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'RESTORED'
+  actual: 'RESTORED'
+  operator: 'notStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\codexDeleteOwnership.review.test.ts:24:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F20A-R12 owned file removal rejects a mismatched expected current digest
+not ok 2 - F20A-R12 owned file removal rejects a mismatched expected current digest
+  ---
+  duration_ms: 69.4455
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\codexDeleteOwnership.review.test.ts:2:2913'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  operator: 'rejects'
+  stack: |-
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\codexDeleteOwnership.review.test.ts:29:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 0
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1802.4255

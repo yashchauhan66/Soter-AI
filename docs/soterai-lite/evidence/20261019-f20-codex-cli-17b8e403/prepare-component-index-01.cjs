@@ -1,0 +1,43 @@
+'use strict';
+const h=require('./evidence-lib-01.cjs'),{fs,path,assert,repo,base,sha,hash,read,inside,relative,fact,write,git,lines,current,receipt}=h;
+const parent='6e98442f025c3a839428f4eafff23c3e8e4f3086';assert.equal(lines(git('rev-parse','HEAD'))[0],parent);assert.deepEqual(lines(git('diff','--cached','--name-only')),[]);
+const acceptance=read(path.join(__dirname,'f20a-mcp-acceptance-01.json'));assert.equal(acceptance.status,'PASS');current(acceptance.artifact);for(const input of acceptance.inputs)current(input);for(const command of acceptance.commands)receipt(command.name+'.txt');
+const sourceRoots=['apps/local-ai-broker/src','packages/core/src','packages/vscode-extension/src','packages/guard-core/src','packages/detectors/src','packages/soterai-lite/src'];
+const ownSources=new Set([
+ 'packages/vscode-extension/src/extension.ts',
+ 'packages/vscode-extension/src/adapters/CodexCliAdapter.ts',
+ 'packages/vscode-extension/src/adapters/CodexCliAdapterPolicy.ts',
+ 'packages/vscode-extension/src/adapters/CodexHttpBridge.ts',
+ ...['codexCliAdapterPolicy','codexHttpBridge','codexHttpReadiness.review','codexCliAdapterLifecycle','codexCliAdapterRegistration','codexCliOwnerRecovery.review','codexNativeMetadata.review','codexStorageUri.review','codexDeleteOwnership.review'].map(n=>'packages/vscode-extension/src/__tests__/'+n+'.test.ts'),
+ 'packages/vscode-extension/package.json','packages/soterai-lite/package.json',
+ 'packages/vscode-extension/README.md','packages/soterai-lite/README.md',
+ 'docs/vscode-extension-readiness.md','docs/soterai-lite/FEATURE-QUEUE.json'
+]);
+const modified=lines(git('diff','--name-only','HEAD','--',...sourceRoots));for(const name of modified)assert(ownSources.has(name),'Unrelated source modification refused: '+name);
+const names=new Set([...modified,...acceptance.inputs.map(row=>row.path),'packages/vscode-extension/package.json','packages/soterai-lite/package.json','packages/vscode-extension/README.md','packages/soterai-lite/README.md','docs/vscode-extension-readiness.md','docs/soterai-lite/ledger.md','docs/soterai-lite/FEATURE-QUEUE.json','docs/soterai-lite/IMPLEMENTATION-PLAN.md','docs/soterai-lite/MASTER-PROMPT-20261016.txt','docs/soterai-lite/LITE-CATALOG.json','docs/soterai-lite/evidence/20261018-f16-gateway-policy-6e9a31d4/git-batch-01.cjs']);
+const generatedInputSnapshots=[],snapshotRoot=inside(__dirname,'generated-runtime-inputs-01');assert(!fs.existsSync(snapshotRoot));fs.mkdirSync(snapshotRoot);
+const generated=new Map();for(const input of acceptance.inputs){if(!input.path.startsWith('packages/guard-core/dist/')&&!input.path.startsWith('packages/detectors/dist/'))continue;assert(input.path.endsWith('.js'));if(generated.has(input.path)){assert.equal(generated.get(input.path).sha256,input.sha256);continue;}generated.set(input.path,input);}
+for(const input of generated.values()){current(input);const target=inside(snapshotRoot,input.path);fs.mkdirSync(path.dirname(target),{recursive:true});fs.writeFileSync(target,fs.readFileSync(inside(repo,input.path)),{flag:'wx'});const snapshot=fact(target);assert.equal(snapshot.sha256,input.sha256);assert.equal(snapshot.bytes,input.bytes);current(input);names.delete(input.path);names.add(snapshot.path);generatedInputSnapshots.push({original:input,snapshot});}
+for(const name of lines(git('ls-files','--others','--exclude-standard','--',...sourceRoots))){
+ assert(ownSources.has(name),'Unexpected untracked source refused: '+name);names.add(name);
+}
+const focused=read(path.join(__dirname,'focused-04.txt.result.json')).arguments.filter(name=>name.endsWith('.test.ts'));for(const name of focused)names.add(relative(path.resolve(repo,name)));
+const hosts=path.join(repo,'packages/vscode-extension/src/__tests__/host');for(const entry of fs.readdirSync(hosts,{withFileTypes:true}))if(entry.isFile()&&entry.name.endsWith('.ts'))names.add(relative(path.join(hosts,entry.name)));
+const previous='docs/soterai-lite/evidence/20261019-f19-claude-89c1e602';
+for(const name of lines(git('ls-files','--others','--exclude-standard','--',previous)))if(new RegExp('^'+previous+'/[a-z0-9.-]+\\.(json|txt)$').test(name))names.add(name);
+function walk(directory){for(const entry of fs.readdirSync(directory,{withFileTypes:true})){assert(!entry.isSymbolicLink());const file=path.join(directory,entry.name);if(entry.isDirectory()){if(/^(?:vsix-extracted-|prebuilt-)/.test(entry.name)||['extension','extensions','profile','profiles','node_modules','dist','builds','runtime','.git'].includes(entry.name))continue;walk(file);}else if(/\.(?:json|txt|md|ps1|cjs|ts|js)$/.test(entry.name))names.add(relative(file));}}
+walk(__dirname);
+const indexPath=base+'/f20a-mcp-evidence-index-01.json',allowPath=base+'/f20a-mcp-commit-allowlist-01.txt';assert(!names.has(indexPath)&&!names.has(allowPath));
+const tracked=new Set(lines(git('ls-files','--',...sourceRoots,'packages/vscode-extension/package.json','packages/soterai-lite/package.json','packages/vscode-extension/README.md','packages/soterai-lite/README.md','docs/vscode-extension-readiness.md','docs/soterai-lite')).filter(name=>names.has(name)));
+git.preload(parent,[...tracked]);
+for(const name of [...names]){
+ if(name==='docs/soterai-lite/ledger.md'||name.startsWith(base+'/')||name.startsWith(previous+'/')||ownSources.has(name)||!tracked.has(name))continue;
+ const originalBytes=fs.readFileSync(inside(repo,name)),blob=git('show',parent+':'+name);if(sha(originalBytes)===sha(blob))continue;
+ assert.equal(blob.toString('utf8').replace(/\r\n/g,'\n'),originalBytes.toString('utf8').replace(/\r\n/g,'\n'),'Non-scoped non-line-ending difference refused: '+name);
+ const original=fact(inside(repo,name)),target=inside(snapshotRoot,name);assert(!fs.existsSync(target));fs.mkdirSync(path.dirname(target),{recursive:true});fs.writeFileSync(target,originalBytes,{flag:'wx'});const snapshot=fact(target);assert.equal(snapshot.sha256,original.sha256);assert.equal(snapshot.bytes,original.bytes);current(original);names.delete(name);names.add(snapshot.path);generatedInputSnapshots.push({original,snapshot,reason:'Existing Git/working-tree line-ending normalization; original source unchanged.'});
+}
+const changed=[...names].filter(name=>!tracked.has(name)||sha(git('show',parent+':'+name))!==hash(inside(repo,name)));
+for(const name of changed)if(!name.startsWith(base+'/')&&!name.startsWith(previous+'/')&&!['docs/soterai-lite/ledger.md'].includes(name))assert(ownSources.has(name),'Unexpected changed indexed input refused: '+name);
+const expected=[...changed,indexPath,allowPath].sort();fs.writeFileSync(inside(repo,allowPath),expected.join('\n')+'\n',{flag:'wx'});names.add(allowPath);
+write('f20a-mcp-evidence-index-01.json',{schemaVersion:1,parent,generatedInputSnapshots,scope:'F20A restricted safe-reader component checkpoint only. F20/F20A remain ACTIVE for Responses integration; all runtime input bytes, tests, fixtures, docs and retained failures included; unrelated changes excluded.',entries:[...names].sort().map(name=>fact(inside(repo,name))),expectedCommitPaths:expected});
+console.log(JSON.stringify({status:'PASS_PREPARED_NOT_COMMITTED',indexed:names.size,paths:expected.length,artifact:acceptance.artifact.sha256}));

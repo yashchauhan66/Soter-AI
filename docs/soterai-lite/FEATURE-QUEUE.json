@@ -440,13 +440,53 @@
       "id": "F20",
       "title": "Other discovered adapters, one at a time.",
       "status": "ACTIVE",
-      "result": "NOT-RUN",
+      "result": "INCOMPLETE",
       "requires": [
         "F19"
       ],
       "childCards": "One per additional supported tool/version; enumerate at P03 before frozen applicability",
       "completionRule": "No supported additional adapter bypasses actual-tool acceptance",
-      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "progressEvidence": "docs/soterai-lite/evidence/20261019-f20-codex-cli-17b8e403/f20a-mcp-acceptance-01.json",
+      "orderedSubcards": [
+        {
+          "id": "F20A",
+          "tool": "codexCli",
+          "version": "0.160.1",
+          "status": "ACTIVE",
+          "result": "INCOMPLETE",
+          "evidence": "docs/soterai-lite/evidence/20261019-f20-codex-cli-17b8e403/design-01.md",
+          "components": [
+            {
+              "id": "F20A-MCP",
+              "status": "VERIFIED_PENDING_COMMIT",
+              "result": "PASS_SCOPED",
+              "acceptance": "docs/soterai-lite/evidence/20261019-f20-codex-cli-17b8e403/f20a-mcp-acceptance-01.json"
+            },
+            {
+              "id": "F20A-RESPONSES",
+              "status": "PLANNED",
+              "result": "NOT-RUN",
+              "requiredBeforeNextVendor": true,
+              "evidence": "docs/soterai-lite/evidence/20261019-f20-codex-cli-17b8e403/design-02-required-route-followup.md"
+            }
+          ]
+        },
+        {
+          "id": "F20B",
+          "tool": "codexIde",
+          "status": "PLANNED",
+          "result": "NOT-RUN",
+          "pin": "P03 IDE/runtime candidate retained; current artifact recheck required separately"
+        },
+        {
+          "id": "F20C",
+          "tool": "geminiCli",
+          "status": "PLANNED",
+          "result": "NOT-RUN",
+          "pin": "P03 0.55.1 candidate retained; current artifact recheck required separately"
+        }
+      ]
     },
     {
       "id": "F21",

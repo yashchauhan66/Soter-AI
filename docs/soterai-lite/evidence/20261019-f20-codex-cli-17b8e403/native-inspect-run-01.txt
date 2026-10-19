@@ -1,0 +1,26 @@
+﻿node.exe : Error: spawn EPERM
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Error: spawn EPERM:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+    at ChildProcess.spawn (node:internal/child_process:420:11)
+    at Object.spawn (node:child_process:753:9)
+    at C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261019-f20-codex-cli-17b8e40
+3\native-inspect-01.cjs:10:84
+    at new Promise (<anonymous>)
+    at run (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261019-f20-codex-cli-17
+b8e403\native-inspect-01.cjs:10:38)
+    at C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261019-f20-codex-cli-17b8e40
+3\native-inspect-01.cjs:11:18
+    at Object.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261019-f
+20-codex-cli-17b8e403\native-inspect-01.cjs:11:249)
+    at Module._compile (node:internal/modules/cjs/loader:1730:14)
+    at Object..js (node:internal/modules/cjs/loader:1895:10)
+    at Module.load (node:internal/modules/cjs/loader:1465:32) {
+  errno: -4048,
+  code: 'EPERM',
+  syscall: 'spawn'
+}

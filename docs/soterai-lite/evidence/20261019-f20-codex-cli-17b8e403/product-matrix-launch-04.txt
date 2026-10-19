@@ -1,0 +1,45 @@
+﻿{
+    "status":  "INCOMPLETE_PRODUCT_MATRIX",
+    "checks":  [
+                   {
+                       "id":  "F20A-N01",
+                       "status":  "FAIL",
+                       "error":  {
+                                     "name":  "AssertionError",
+                                     "code":  "ERR_ASSERTION"
+                                 }
+                   },
+                   {
+                       "id":  "F20A-N02",
+                       "status":  "FAIL",
+                       "error":  {
+                                     "name":  "AssertionError",
+                                     "code":  "ERR_ASSERTION"
+                                 }
+                   }
+               ],
+    "configureStatus":  null,
+    "cancelStatus":  null,
+    "driverFailure":  {
+                          "name":  "AssertionError",
+                          "code":  "ERR_ASSERTION"
+                      },
+    "childShutdown":  null,
+    "encryptedBackups":  null,
+    "unownedNativeStatePreserved":  null
+}
+powershell.exe : INCOMPLETE: current product CLI matrix did not pass
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (INCOMPLETE: cur...ix did not pass:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261019-f20-codex-cli-17b8e403\ru
+n-product-matrix-04.ps1:92 char:65
++ ... LI_MATRIX'){throw 'INCOMPLETE: current product CLI matrix did not pas ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (INCOMPLETE: cur...ix did not pass:String) [], RuntimeException
+    + FullyQualifiedErrorId : INCOMPLETE: current product CLI matrix did not pass
+ 

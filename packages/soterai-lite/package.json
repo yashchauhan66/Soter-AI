@@ -130,7 +130,8 @@
         "soterai.lite.gatewayPolicy",
         "soterai.lite.safeReadMcp",
         "soterai.lite.claudeAdapter",
-        "soterai.lite.clineAdapter"
+        "soterai.lite.clineAdapter",
+        "soterai.lite.codexCliAdapter"
       ]
     }
   },
@@ -1260,6 +1261,21 @@
         "command": "soterai.claudeAdapterStatus",
         "title": "Show Pinned Claude Code Adapter Status",
         "category": "SoterAI"
+      },
+      {
+        "command": "soterai.configurePinnedCodexCli",
+        "title": "Review Pinned Codex CLI Safe-Read Profile",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.restorePinnedCodexCli",
+        "title": "Restore Pinned Codex CLI Profile Config",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.codexCliAdapterStatus",
+        "title": "Show Pinned Codex CLI Profile Status",
+        "category": "SoterAI"
       }
     ],
     "viewsContainers": {
@@ -1922,6 +1938,12 @@
           "default": true,
           "scope": "machine",
           "description": "Enable reviewed setup for the pinned Windows Cline version using an owned broker, approved safe-read MCP session and native hook. Unverified versions/configs withhold setup. Disabling invalidates managed sessions and retains saved denies; vendor hook failures/direct context remain outside this route."
+        },
+        "soterai.lite.codexCliAdapter": {
+          "type": "boolean",
+          "default": true,
+          "scope": "machine",
+          "description": "Enable owner-reviewed pinned Codex CLI dedicated safe-read profile setup. Native provider traffic/context and other profiles remain uncovered. Disabling withdraws MCP and preserves the restrictive profile."
         }
       }
     },
@@ -2860,6 +2882,18 @@
         },
         {
           "command": "soterai.claudeAdapterStatus",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.configurePinnedCodexCli",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.restorePinnedCodexCli",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.codexCliAdapterStatus",
           "when": "soterai.advancedCommands"
         }
       ]

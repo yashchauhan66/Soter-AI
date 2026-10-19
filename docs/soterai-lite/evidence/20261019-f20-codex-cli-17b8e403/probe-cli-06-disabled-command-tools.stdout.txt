@@ -1,0 +1,7 @@
+{"type":"thread.started","thread_id":"01a15478-34f7-7990-900a-c83a7071659b"}
+{"type":"item.completed","item":{"id":"item_0","type":"error","message":"Model metadata for `f20-fixture` not found. Defaulting to fallback metadata; this can degrade performance and cause issues."}}
+{"type":"turn.started"}
+{"type":"item.started","item":{"id":"item_1","type":"mcp_tool_call","server":"soterai_safe_read","tool":"soterai_read_project_file_safely","arguments":{"path":".env"},"result":null,"error":null,"status":"in_progress"}}
+{"type":"item.completed","item":{"id":"item_1","type":"mcp_tool_call","server":"soterai_safe_read","tool":"soterai_read_project_file_safely","arguments":{"path":".env"},"result":{"content":[{"type":"text","text":"{\"status\":\"ALLOWED_ONCE\",\"kind\":\"environment-schema\",\"text\":\"TEST_KEY=[MASKED]\"}"}],"structured_content":null},"error":null,"status":"completed"}}
+{"type":"item.completed","item":{"id":"item_2","type":"agent_message","text":"F20_SYNTHETIC_DONE"}}
+{"type":"turn.completed","usage":{"input_tokens":2,"cached_input_tokens":0,"cache_write_input_tokens":0,"output_tokens":2,"reasoning_output_tokens":0}}

@@ -1,0 +1,396 @@
+{
+  "status": "PASS_SCOPED_NATIVE_FEASIBILITY",
+  "scope": "Native CLI0.160.1 isolated feasibility, synthetic loopback provider only. Not product integration or OS/network isolation evidence.",
+  "requests": [
+    {
+      "phase": "default-tools",
+      "path": "/v1/responses",
+      "bytes": 33070,
+      "keys": [
+        "model",
+        "instructions",
+        "input",
+        "tools",
+        "tool_choice",
+        "parallel_tool_calls",
+        "reasoning",
+        "store",
+        "stream",
+        "include",
+        "prompt_cache_key",
+        "client_metadata"
+      ],
+      "tools": [
+        {
+          "type": "function",
+          "name": "exec_command"
+        },
+        {
+          "type": "function",
+          "name": "write_stdin"
+        },
+        {
+          "type": "function",
+          "name": "list_mcp_resources"
+        },
+        {
+          "type": "function",
+          "name": "list_mcp_resource_templates"
+        },
+        {
+          "type": "function",
+          "name": "read_mcp_resource"
+        },
+        {
+          "type": "function",
+          "name": "request_user_input"
+        },
+        {
+          "type": "namespace",
+          "name": "mcp__soterai_safe_read"
+        },
+        {
+          "type": "function",
+          "name": "get_goal"
+        },
+        {
+          "type": "function",
+          "name": "create_goal"
+        },
+        {
+          "type": "function",
+          "name": "update_goal"
+        }
+      ],
+      "inputItems": 3,
+      "maskedResult": false
+    },
+    {
+      "phase": "disabled-command-tools",
+      "path": "/v1/responses",
+      "bytes": 29676,
+      "keys": [
+        "model",
+        "instructions",
+        "input",
+        "tools",
+        "tool_choice",
+        "parallel_tool_calls",
+        "reasoning",
+        "store",
+        "stream",
+        "include",
+        "prompt_cache_key",
+        "client_metadata"
+      ],
+      "tools": [
+        {
+          "type": "function",
+          "name": "list_mcp_resources"
+        },
+        {
+          "type": "function",
+          "name": "list_mcp_resource_templates"
+        },
+        {
+          "type": "function",
+          "name": "read_mcp_resource"
+        },
+        {
+          "type": "function",
+          "name": "request_user_input"
+        },
+        {
+          "type": "namespace",
+          "name": "mcp__soterai_safe_read"
+        },
+        {
+          "type": "function",
+          "name": "get_goal"
+        },
+        {
+          "type": "function",
+          "name": "create_goal"
+        },
+        {
+          "type": "function",
+          "name": "update_goal"
+        }
+      ],
+      "inputItems": 3,
+      "maskedResult": false
+    },
+    {
+      "phase": "disabled-command-tools",
+      "path": "/v1/responses",
+      "bytes": 30151,
+      "keys": [
+        "model",
+        "instructions",
+        "input",
+        "tools",
+        "tool_choice",
+        "parallel_tool_calls",
+        "reasoning",
+        "store",
+        "stream",
+        "include",
+        "prompt_cache_key",
+        "client_metadata"
+      ],
+      "tools": [
+        {
+          "type": "function",
+          "name": "list_mcp_resources"
+        },
+        {
+          "type": "function",
+          "name": "list_mcp_resource_templates"
+        },
+        {
+          "type": "function",
+          "name": "read_mcp_resource"
+        },
+        {
+          "type": "function",
+          "name": "request_user_input"
+        },
+        {
+          "type": "namespace",
+          "name": "mcp__soterai_safe_read"
+        },
+        {
+          "type": "function",
+          "name": "get_goal"
+        },
+        {
+          "type": "function",
+          "name": "create_goal"
+        },
+        {
+          "type": "function",
+          "name": "update_goal"
+        }
+      ],
+      "inputItems": 5,
+      "maskedResult": true
+    }
+  ],
+  "children": [
+    {
+      "phase": "default-tools",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "code": 0,
+      "signal": null,
+      "stdoutSha256": "1dd2f3ef2cfb6c451c532c8363969d40bb5977face0aa77963af225bfbe8fe0f",
+      "stderrSha256": "dedfbf8a985f29be2e69d4c1d04338fb810595965533dd8841a44eea4c1cf762"
+    },
+    {
+      "phase": "disabled-command-tools",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "code": 0,
+      "signal": null,
+      "stdoutSha256": "e535b96397666607f6922b672a35f5ac530817e1a4e309badde0d0f81dcc9448",
+      "stderrSha256": "9ef4b3cd61478bff64d5e1c7f3ad6911b81ee314660c3ee6530ea0cac23f59e2"
+    }
+  ],
+  "independence": "LOW",
+  "mcp": [
+    {
+      "phase": "default-tools",
+      "method": "initialize",
+      "keys": [
+        "protocolVersion",
+        "capabilities",
+        "clientInfo"
+      ],
+      "protocol": "2025-06-18",
+      "metadataKeys": [],
+      "metadataTypes": {}
+    },
+    {
+      "phase": "default-tools",
+      "method": "notifications/initialized",
+      "keys": [],
+      "metadataKeys": [],
+      "metadataTypes": {}
+    },
+    {
+      "phase": "default-tools",
+      "method": "tools/list",
+      "keys": [
+        "_meta"
+      ],
+      "metadataKeys": [
+        "progressToken"
+      ],
+      "metadataTypes": {
+        "progressToken": {
+          "type": "number",
+          "array": false
+        }
+      }
+    },
+    {
+      "phase": "disabled-command-tools",
+      "method": "initialize",
+      "keys": [
+        "protocolVersion",
+        "capabilities",
+        "clientInfo"
+      ],
+      "protocol": "2025-06-18",
+      "metadataKeys": [],
+      "metadataTypes": {}
+    },
+    {
+      "phase": "disabled-command-tools",
+      "method": "notifications/initialized",
+      "keys": [],
+      "metadataKeys": [],
+      "metadataTypes": {}
+    },
+    {
+      "phase": "disabled-command-tools",
+      "method": "tools/list",
+      "keys": [
+        "_meta"
+      ],
+      "metadataKeys": [
+        "progressToken"
+      ],
+      "metadataTypes": {
+        "progressToken": {
+          "type": "number",
+          "array": false
+        }
+      }
+    },
+    {
+      "phase": "disabled-command-tools",
+      "method": "tools/call",
+      "keys": [
+        "_meta",
+        "name",
+        "arguments"
+      ],
+      "metadataKeys": [
+        "callId",
+        "x-codex-turn-metadata",
+        "threadId",
+        "sessionId",
+        "windowId",
+        "itemId",
+        "progressToken"
+      ],
+      "metadataTypes": {
+        "callId": {
+          "type": "string",
+          "array": false,
+          "bytes": 8
+        },
+        "x-codex-turn-metadata": {
+          "type": "object",
+          "array": false,
+          "fields": {
+            "session_id": {
+              "type": "string",
+              "array": false,
+              "bytes": 36
+            },
+            "thread_id": {
+              "type": "string",
+              "array": false,
+              "bytes": 36
+            },
+            "model": {
+              "type": "string",
+              "array": false,
+              "bytes": 11
+            },
+            "turn_id": {
+              "type": "string",
+              "array": false,
+              "bytes": 36
+            },
+            "turn_started_at_unix_ms": {
+              "type": "number",
+              "array": false
+            },
+            "thread_source": {
+              "type": "string",
+              "array": false,
+              "bytes": 4
+            },
+            "turn_trigger": {
+              "type": "string",
+              "array": false,
+              "bytes": 4
+            },
+            "sandbox": {
+              "type": "string",
+              "array": false,
+              "bytes": 4
+            },
+            "sandbox_mode": {
+              "type": "string",
+              "array": false,
+              "bytes": 9
+            },
+            "auto_review_enabled": {
+              "type": "boolean",
+              "array": false
+            },
+            "node_repl_auto_review_required": {
+              "type": "boolean",
+              "array": false
+            },
+            "node_repl_disabled": {
+              "type": "boolean",
+              "array": false
+            },
+            "codex_version": {
+              "type": "string",
+              "array": false,
+              "bytes": 7
+            }
+          }
+        },
+        "threadId": {
+          "type": "string",
+          "array": false,
+          "bytes": 36
+        },
+        "sessionId": {
+          "type": "string",
+          "array": false,
+          "bytes": 36
+        },
+        "windowId": {
+          "type": "string",
+          "array": false,
+          "bytes": 38
+        },
+        "itemId": {
+          "type": "string",
+          "array": false,
+          "bytes": 6
+        },
+        "progressToken": {
+          "type": "number",
+          "array": false
+        }
+      }
+    }
+  ],
+  "namespaceTools": [
+    {
+      "name": "soterai_read_project_file_safely",
+      "type": "function"
+    }
+  ]
+}
