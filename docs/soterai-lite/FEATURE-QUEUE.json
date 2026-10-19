@@ -453,8 +453,8 @@
           "id": "F20A",
           "tool": "codexCli",
           "version": "0.160.1",
-          "status": "ACTIVE",
-          "result": "INCOMPLETE",
+          "status": "DONE",
+          "result": "PASS_SCOPED",
           "evidence": "docs/soterai-lite/evidence/20261019-f20-codex-cli-17b8e403/design-01.md",
           "components": [
             {
@@ -468,18 +468,36 @@
             },
             {
               "id": "F20A-RESPONSES",
-              "status": "VERIFIED_PENDING_COMMIT",
+              "status": "DONE_SCOPED",
               "result": "PASS_SCOPED",
               "requiredBeforeNextVendor": true,
               "evidence": "docs/soterai-lite/evidence/20261019-f20a-responses-45ae291c/progress-01.json",
-              "acceptance": "docs/soterai-lite/evidence/20261019-f20a-responses-45ae291c/f20a-responses-acceptance-01.json"
+              "acceptance": "docs/soterai-lite/evidence/20261019-f20a-responses-45ae291c/f20a-responses-acceptance-01.json",
+              "sourceEvidenceCommit": "fd50edb37d0fc01c6b66aa9e467aaa9aaa289fdd",
+              "commitByteVerification": "docs/soterai-lite/evidence/20261019-f20a-responses-45ae291c/f20a-responses-committed-byte-verification-01.json",
+              "transitionByteVerification": "docs/soterai-lite/evidence/20261019-f20a-responses-45ae291c/f20a-responses-transition-byte-verification-01.json"
             }
-          ]
+          ],
+          "sourceEvidenceCommit": "fd50edb37d0fc01c6b66aa9e467aaa9aaa289fdd",
+          "acceptanceEvidence": "docs/soterai-lite/evidence/20261019-f20a-responses-45ae291c/f20a-responses-acceptance-01.json",
+          "commitByteVerification": "docs/soterai-lite/evidence/20261019-f20a-responses-45ae291c/f20a-responses-committed-byte-verification-01.json",
+          "transitionByteVerification": "docs/soterai-lite/evidence/20261019-f20a-responses-45ae291c/f20a-responses-transition-byte-verification-01.json",
+          "scope": "Pinned native CLI0.160.1 restricted stateless HTTP text Responses and F04 safe-read; native20/current actual owner/withdrawal. Output fully buffered, no general incremental gateway/real-provider compatibility; explicit provider overrides remain uncovered; badge Uncovered, scripted LOW.",
+          "retainedDiagnosticWorkers": {
+            "sessions": [
+              11701,
+              72516,
+              47543
+            ],
+            "status": "WITHDRAWAL_INCOMPLETE_NO_SIGNALS",
+            "productRouteReached": false,
+            "followup": "F28 fixture lifecycle audit and original L6 human actions; no clean historical-worker teardown claim"
+          }
         },
         {
           "id": "F20B",
           "tool": "codexIde",
-          "status": "PLANNED",
+          "status": "ACTIVE",
           "result": "NOT-RUN",
           "pin": "P03 IDE/runtime candidate retained; current artifact recheck required separately"
         },
