@@ -9,9 +9,9 @@
   "planVersion": 1,
   "clientDate": "2026-10-13",
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
-  "scope": "F01-F10 and F12-F17 DONE for scoped exact objects and verified bytes; F11 optional unavailable/unimplemented NOT_TESTED/NOT_COVERED. F18 alone active after the separate F17 transition byte barrier.",
+  "scope": "F01-F10 and F12-F18 DONE for scoped exact objects and verified bytes; F11 optional unavailable/unimplemented NOT_TESTED/NOT_COVERED. F19 alone active after the separate F18 transition byte barrier.",
   "implementationConcurrency": 1,
-  "activeFeature": "F18",
+  "activeFeature": "F19",
   "prerequisiteBlock": {
     "id": "P00",
     "result": "FAIL",
@@ -409,17 +409,22 @@
     {
       "id": "F18",
       "title": "Cline adapter, one pinned version.",
-      "status": "ACTIVE",
-      "result": "NOT-RUN",
+      "status": "DONE",
+      "result": "PASS",
       "requires": [
         "F17"
       ],
-      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "sourceEvidenceCommit": "c0c427bb164aed74aad0907cc2fbaaf32eb7afdf",
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261018-f18-cline-46a8c902/f18-acceptance-01.json",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261018-f18-cline-46a8c902/f18-committed-byte-verification-01.json",
+      "transitionByteVerification": "docs/soterai-lite/evidence/20261018-f18-cline-46a8c902/f18-transition-byte-verification-01.json",
+      "scope": "Pinned Cline4.1.25 managed OpenAI-compatible+safe MCP; LOW actual scripted routes. Vendor hooks only; native context/images/independent traffic Uncovered, current-owner status unverified."
     },
     {
       "id": "F19",
       "title": "Claude Code adapter, one pinned version.",
-      "status": "PLANNED",
+      "status": "ACTIVE",
       "result": "NOT-RUN",
       "requires": [
         "F18"
