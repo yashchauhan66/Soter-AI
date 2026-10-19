@@ -5,11 +5,11 @@ Read this file FIRST after any context compaction or on resumption. Do not overw
 ## Current state
 
 - **L0 scoped preflight/split/baseline/catalog freeze DONE.** The user waived the 20 GB threshold. Both verified backup bundles and the authorized old synthetic profiles are retained on D:. Supplemental full fsck ended in resource-limited FAIL; full object integrity remains UNVERIFIED.
-- L1: **ACTIVE, F01-F10 and F12-F18 DONE; F11 optional unavailable/unimplemented NOT_TESTED/NOT_COVERED; F19 ACTIVE/test-first**; F20-F32 and L2-L7 **NOT-RUN**. Do not describe this as reaching L6. Read the latest receipts below before work.
+- L1: **ACTIVE, F01-F10 and F12-F19 DONE; F11 optional unavailable/unimplemented NOT_TESTED/NOT_COVERED; F20 ACTIVE/test-first**; F21-F32 and L2-L7 **NOT-RUN**. Do not describe this as reaching L6. Read the latest receipts below before work.
 - Source changes and isolated synthetic-profile tests are authorized; the normal VS Code profile has not been changed.
 - New Lite baseline VSIX: **BUILT / CONTENT-INSPECTED / HOST-BASELINE-TESTED**; SHA-256 `cf163471b7a022d5a9f922a3f1fcc6bfd3b56a08ab14f1aebfdfb345c337bae1`. Coverage and all final numerical ratings **PENDING / UNVERIFIED**; 44-check catalog frozen, not graded.
 - Baseline HEAD: `8ef3aeb54f4019f4ee815a844443995176a656f0`; starting branch: `security-hardening`. Inspected prior source modifications were checkpointed at `915a5300a7745e4ffaeab80b5d08d3305e3772f9`; unknown scratch/raw artifacts remain untouched.
-- P00-P03 and F01-F10 scoped source commits and the F10 transition are byte verified. F11 remains optional unavailable/unimplemented NOT_TESTED/NOT_COVERED under frozen P03 applicability. F12 scoped source bytes are verified. F19 is the sole supported active behavior card; no F19 production before the separate F18 transition commit and f18-transition-byte-verification-01.json PASS.
+- P00-P03 and F01-F10 scoped source commits and the F10 transition are byte verified. F11 remains optional unavailable/unimplemented NOT_TESTED/NOT_COVERED under frozen P03 applicability. F12 scoped source bytes are verified. F20 is the sole supported active behavior card; no F20 production before the separate F19 transition commit and f19-transition-byte-verification-01.json PASS.
 
 ## STEP RECEIPT L0.1 — preflight stop
 
@@ -973,3 +973,8 @@ Read-only index02 stopped before staging because ignored generated guard-core/de
 ## STEP RECEIPT F19-INDEX04 / unchanged normalized source bytes
 
 Index03 also stopped before staging on state.ts: Git and working bytes differed only by existing CRLF/LF normalization, with no Git content diff. Its generated snapshots and failed raw receipt remain. Index04 additionally binds those unchanged non-scoped input bytes through exact evidence copies, after explicit newline-only equality checks. Original source/generated files are not rewritten or staged. All indexed copies and their original-current mappings are checked; actual runtime/artifact/tests unchanged. No prior failed index is a committed-byte proof.
+
+
+## STEP RECEIPT F19-COMMIT / F20-ACTIVATE
+
+F19 sourcef1d1fd1bfe1717c29fc411c3945965120455ecc2 all-bytePASS 995 indexed/866 exactpaths/0mismatch/0unexpected. ExactVSIX d55395efa0be758975053f405156669608ab2b0897d8f0a41086514023797fdc freshly rechecked; focused178/full2728 tests 2724PASS4SKIP/backend143PASS1SKIP/native106/vendorCLI22/functional10PASS/security17same8BLOCKED_SCOPED9LEAK_CONFIRMED scopedLOW. Actual editor setup/consent/cancel/drift/current pin+role sessions and two encrypted backups; native public read/write/edit/search/private denials, public/masked env MCP and native consent cancellation, registered egress and flag withdrawal; exact settings undo preserves unrelated native state. Native webview prompt session and current owner routing UNVERIFIED; badge Uncovered. Context/images/independent native traffic and hostile same-user behavior remain limited, no OS/all-descendant/human/independent/real provider or clean-install claim. F20 prepared soleACTIVE; no production before separate transitioncommit/f19-transition-byte-verification-01.json PASS. Frozen44/F11absence/nineleaks/no rating/originalL6STOP/user20GBwaiver/allfailures/profiles/evidence/unrelatedchanges retained.

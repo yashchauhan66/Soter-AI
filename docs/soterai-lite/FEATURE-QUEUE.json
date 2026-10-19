@@ -9,9 +9,9 @@
   "planVersion": 1,
   "clientDate": "2026-10-13",
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
-  "scope": "F01-F10 and F12-F18 DONE for scoped exact objects and verified bytes; F11 optional unavailable/unimplemented NOT_TESTED/NOT_COVERED. F19 alone active after the separate F18 transition byte barrier.",
+  "scope": "F01-F10 and F12-F19 DONE for scoped exact objects and verified bytes; F11 optional unavailable/unimplemented NOT_TESTED/NOT_COVERED. F20 alone active after the separate F19 transition byte barrier.",
   "implementationConcurrency": 1,
-  "activeFeature": "F19",
+  "activeFeature": "F20",
   "prerequisiteBlock": {
     "id": "P00",
     "result": "FAIL",
@@ -424,17 +424,22 @@
     {
       "id": "F19",
       "title": "Claude Code adapter, one pinned version.",
-      "status": "ACTIVE",
-      "result": "NOT-RUN",
+      "status": "DONE",
+      "result": "PASS",
       "requires": [
         "F18"
       ],
-      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "sourceEvidenceCommit": "f1d1fd1bfe1717c29fc411c3945965120455ecc2",
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/f19-acceptance-01.json",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/f19-committed-byte-verification-01.json",
+      "transitionByteVerification": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/f19-transition-byte-verification-01.json",
+      "scope": "Pinned Claude Code2.1.301 native CLI text route plus actual editor owner setup/consent/restore. LOW scripted native22; vendor hooks only. Webview prompt session, context/images/independent traffic and current-owner routing UNVERIFIED; badge Uncovered."
     },
     {
       "id": "F20",
       "title": "Other discovered adapters, one at a time.",
-      "status": "PLANNED",
+      "status": "ACTIVE",
       "result": "NOT-RUN",
       "requires": [
         "F19"
