@@ -1,0 +1,100 @@
+﻿TAP version 13
+# Subtest: F18 enabled schema profile preserves ordinary public requests and an empty tool list
+not ok 1 - F18 enabled schema profile preserves ordinary public requests and an empty tool list
+  ---
+  duration_ms: 29.8699
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\clineGatewaySchemas.test.ts:2:1720'
+  failureType: 'testCodeFailure'
+  error: 'Gateway policy withheld protected data'
+  code: 'gateway_schema_unsupported'
+  stack: |-
+    fail (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\apps\local-ai-broker\src\GatewayBoundary.ts:10:67)
+    toolSchemaStrings (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\apps\local-ai-broker\src\GatewayBoundary.ts:26:77)
+    GatewayBoundary.#inspect (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\apps\local-ai-broker\src\GatewayBoundary.ts:80:38)
+    GatewayBoundary.prepareRequest (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\apps\local-ai-broker\src\GatewayBoundary.ts:119:18)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\clineGatewaySchemas.test.ts:9:219)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: F18 bounded multi-tool schema public request passes only its explicit profile
+ok 2 - F18 bounded multi-tool schema public request passes only its explicit profile
+  ---
+  duration_ms: 43.1461
+  type: 'test'
+  ...
+# Subtest: F18 tool metadata remains inspected for raw/encoded values and ordered splits
+ok 3 - F18 tool metadata remains inspected for raw/encoded values and ordered splits
+  ---
+  duration_ms: 62.4419
+  type: 'test'
+  ...
+# Subtest: F18 schema profile keeps generic metadata, malformed definitions and resource bounds withheld
+ok 4 - F18 schema profile keeps generic metadata, malformed definitions and resource bounds withheld
+  ---
+  duration_ms: 15.0129
+  type: 'test'
+  ...
+# Subtest: F18 observed read_files.files schema normalizes owned absolute paths and nullable line bounds
+ok 5 - F18 observed read_files.files schema normalizes owned absolute paths and nullable line bounds
+  ---
+  duration_ms: 7.3525
+  type: 'test'
+  ...
+# Subtest: F18 published multi-file read with a protected target never permits the batch
+ok 6 - F18 published multi-file read with a protected target never permits the batch
+  ---
+  duration_ms: 1.0316
+  type: 'test'
+  ...
+# Subtest: F18 native absolute escapes, device/UNC/ADS/dot aliases and caller roots obtain no grant
+ok 7 - F18 native absolute escapes, device/UNC/ADS/dot aliases and caller roots obtain no grant
+  ---
+  duration_ms: 2.5574
+  type: 'test'
+  ...
+# Subtest: F18 published editor absolute path and null insert_line retain write classification
+ok 8 - F18 published editor absolute path and null insert_line retain write classification
+  ---
+  duration_ms: 1.3251
+  type: 'test'
+  ...
+# Subtest: F18 native editor cannot rewrite the managed hooks even if their text classifies public
+ok 9 - F18 native editor cannot rewrite the managed hooks even if their text classifies public
+  ---
+  duration_ms: 0.6354
+  type: 'test'
+  ...
+# Subtest: F18 published per-file authority/range/shape and batch bounds remain refused
+not ok 10 - F18 published per-file authority/range/shape and batch bounds remain refused
+  ---
+  duration_ms: 5.9867
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\clineNativePaths.test.ts:2:3574'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\clineNativePaths.test.ts:34:274)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 8
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1049.7082

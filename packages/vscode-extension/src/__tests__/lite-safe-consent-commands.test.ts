@@ -21,6 +21,7 @@ type Result = { status: string; kind?: string; text?: string };
 type Modal = { message: string; options: { modal?: boolean; detail?: string }; actions: unknown[] };
 type Provider = { provideTextDocumentContent(uri: stub.Uri): string | Promise<string>; onDidChange?: (listener: (uri: stub.Uri) => void) => { dispose(): void } };
 let root: string, context: ReturnType<typeof stub.makeExtensionContext>;
+let integrationReader: ReturnType<typeof registerProjectPrivacyCommands>;
 let modals: Modal[], opened: Array<{ uri: stub.Uri; text: string }>, shown: string[], providers: Map<string, Provider>;
 let decision: (modal: Modal) => Promise<string | undefined>;
 let configurationChanged: ((event: { affectsConfiguration(section: string): boolean }) => void) | undefined;
@@ -96,7 +97,7 @@ beforeEach(async () => {
     });
     // Complete default policy enrollment before registration or any observed sink.
     await BoundarySnapshot.load();
-    registerProjectPrivacyCommands(context as never);
+    integrationReader = registerProjectPrivacyCommands(context as never);
     stub.resetSinks();
 });
 
@@ -108,6 +109,27 @@ afterEach(async () => {
     const target = resolve(root);
     assert.equal(dirname(target), resolve(tmpdir())); assert.ok(basename(target).startsWith("soterai-f04-consent-commands-"));
     await rm(target, { recursive: true, force: true });
+});
+
+test("F18 authoritative native classification exposes no text or approval grant", async () => {
+    const classify = (integrationReader as any).classifyIntegration.bind(integrationReader);
+    await write("public-native.txt", "Public useful document.");
+    assert.equal(await classify(uri("public-native.txt"), "read", new AbortController().signal), "PUBLIC");
+    await write("ordinary-native.txt", "Public but persistently restricted."); await deny("ordinary-native.txt");
+    await write(".env.native", `TOKEN=${PRIVATE}\nPORT=1234`); await write("native-key.ts", `const API_KEY='${KEY}';`);
+    for (const file of ["ordinary-native.txt", ".env.native", "native-key.ts"]) assert.notEqual(await classify(uri(file), "read", new AbortController().signal), "PUBLIC");
+    assert.equal(modals.length, 0); assert.equal(opened.length, 0); assert.equal(shown.length, 0);
+    assert.ok(!JSON.stringify(stub.sinks).includes(PRIVATE));
+});
+test("F18 authoritative native write classification retains sensitive and parent-path denies", async () => {
+    const classify = (integrationReader as any).classifyIntegration.bind(integrationReader);
+    assert.equal(await classify(uri("new-public.ts"), "write", new AbortController().signal), "PUBLIC");
+    assert.notEqual(await classify(uri(".env.new"), "write", new AbortController().signal), "PUBLIC");
+    assert.notEqual(await classify(uri("missing-parent/new.ts"), "write", new AbortController().signal), "PUBLIC");
+    const abort = new AbortController(); abort.abort();
+    assert.notEqual(await classify(uri("new-public.ts"), "write", abort.signal), "PUBLIC");
+    withdraw(); assert.notEqual(await classify(uri("new-public.ts"), "write", new AbortController().signal), "PUBLIC");
+    assert.equal(modals.length, 0); assert.equal(opened.length, 0);
 });
 
 test("F04-C01 native consent previews exactly the masked dotenv output without opening a document before approval", async () => {

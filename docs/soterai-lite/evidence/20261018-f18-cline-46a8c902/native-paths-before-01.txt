@@ -1,0 +1,133 @@
+﻿TAP version 13
+# Subtest: F18 observed read_files.files schema normalizes owned absolute paths and nullable line bounds
+not ok 1 - F18 observed read_files.files schema normalizes owned absolute paths and nullable line bounds
+  ---
+  duration_ms: 12.3993
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\clineNativePaths.test.ts:2:1268'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+    +   cancel: true,
+    +   errorMessage: 'Native operation withheld. Use the approved SoterAI safe reader for protected saved files or a SoterAI checked terminal. Direct context and vendor hook failures remain outside this route.'
+    -   cancel: false
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    cancel: false
+  actual:
+    cancel: true
+    errorMessage: 'Native operation withheld. Use the approved SoterAI safe reader for protected saved files or a SoterAI checked terminal. Direct context and vendor hook failures remain outside this route.'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\clineNativePaths.test.ts:10:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F18 published multi-file read with a protected target never permits the batch
+not ok 2 - F18 published multi-file read with a protected target never permits the batch
+  ---
+  duration_ms: 1.8124
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\clineNativePaths.test.ts:2:1808'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + []
+    - [
+    -   'public.txt',
+    -   '.env'
+    - ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'public.txt'
+    1: '.env'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\clineNativePaths.test.ts:15:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F18 native absolute escapes, device/UNC/ADS/dot aliases and caller roots obtain no grant
+ok 3 - F18 native absolute escapes, device/UNC/ADS/dot aliases and caller roots obtain no grant
+  ---
+  duration_ms: 0.5883
+  type: 'test'
+  ...
+# Subtest: F18 published editor absolute path and null insert_line retain write classification
+not ok 4 - F18 published editor absolute path and null insert_line retain write classification
+  ---
+  duration_ms: 1.6758
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\clineNativePaths.test.ts:2:2725'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+    +   cancel: true,
+    +   errorMessage: 'Native operation withheld. Use the approved SoterAI safe reader for protected saved files or a SoterAI checked terminal. Direct context and vendor hook failures remain outside this route.'
+    -   cancel: false
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    cancel: false
+  actual:
+    cancel: true
+    errorMessage: 'Native operation withheld. Use the approved SoterAI safe reader for protected saved files or a SoterAI checked terminal. Direct context and vendor hook failures remain outside this route.'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\clineNativePaths.test.ts:24:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F18 native editor cannot rewrite the managed hooks even if their text classifies public
+not ok 5 - F18 native editor cannot rewrite the managed hooks even if their text classifies public
+  ---
+  duration_ms: 5.4274
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\clineNativePaths.test.ts:2:3159'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\clineNativePaths.test.ts:29:104)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F18 published per-file authority/range/shape and batch bounds remain refused
+ok 6 - F18 published per-file authority/range/shape and batch bounds remain refused
+  ---
+  duration_ms: 0.9535
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 2
+# fail 4
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 993.9691

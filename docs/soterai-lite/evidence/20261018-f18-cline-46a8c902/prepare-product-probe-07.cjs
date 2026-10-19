@@ -1,0 +1,10 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path');
+const read=name=>fs.readFileSync(path.join(__dirname,name),'utf8');
+const save=(name,text)=>fs.writeFileSync(path.join(__dirname,name),text,{flag:'wx'});
+let guard=read('product-test-guards-04.cjs');
+guard=guard.replace("children.push(row);if(['TaskStart'", "children.push(row);if(row.role==='mcp'){let opening='';child.stdout?.on('data',chunk=>{if(!row.toolsListed&&opening.length<16384){opening+=chunk.toString('utf8');if(opening.includes('\\\"name\\\":\\\"soterai_read_project_file_safely\\\"')){row.toolsListed=true;opening='';}}});}if(['TaskStart'");
+save('product-test-guards-05.cjs',guard);
+let probe=read('product-probe-06.cjs').replaceAll('product-test-guards-04.cjs','product-test-guards-05.cjs').replace("await new Promise(done=>setTimeout(done,3000));", "await until(()=>guard.children.some(item=>item.role==='mcp'&&item.toolsListed===true));await new Promise(done=>setTimeout(done,750));");
+save('product-probe-07.cjs',probe);
+save('run-product-probe-09.ps1',read('run-product-probe-08.ps1').replaceAll('product-probe-06.cjs','product-probe-07.cjs').replaceAll('product-test-guards-04.cjs','product-test-guards-05.cjs'));

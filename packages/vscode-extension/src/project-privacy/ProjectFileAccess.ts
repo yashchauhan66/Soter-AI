@@ -55,6 +55,8 @@ export class ProjectFileAccess<T> {
     revoke(): void { this.epoch++; this.pendingCancel?.(); }
     dispose(): void { this.disposed = true; this.revoke(); }
     isPreparing(): boolean { return this.busy && this.preparingEpoch === this.epoch; }
+    isBusy(): boolean { return this.busy; }
+    metadataRevision(): number { return this.epoch; }
 
     async request(target: T, surface: RequestSurface, signal?: AbortSignal): Promise<AccessResult> {
         if (signal?.aborted) return { status: "EXPIRED" };

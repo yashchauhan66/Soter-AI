@@ -1,0 +1,58 @@
+﻿TAP version 13
+# Subtest: F18 review rejects non-ASCII aliases of an otherwise valid sealed ticket frame
+ok 1 - F18 review rejects non-ASCII aliases of an otherwise valid sealed ticket frame
+  ---
+  duration_ms: 2.8702
+  type: 'test'
+  ...
+# Subtest: F18 review refuses noncanonical aliases of the pinned broker URL
+ok 2 - F18 review refuses noncanonical aliases of the pinned broker URL
+  ---
+  duration_ms: 1.5073
+  type: 'test'
+  ...
+# Subtest: F18 review a ticket path inside the project cannot enter the vendor config
+ok 3 - F18 review a ticket path inside the project cannot enter the vendor config
+  ---
+  duration_ms: 0.3472
+  type: 'test'
+  ...
+# Subtest: F18 review abort promptly resolves a pending native review without writes
+ok 4 - F18 review abort promptly resolves a pending native review without writes
+  ---
+  duration_ms: 8.7468
+  type: 'test'
+  ...
+# Subtest: F18 review a withdrawn partial apply can recover untouched and written entries after owner re-enables
+not ok 5 - F18 review a withdrawn partial apply can recover untouched and written entries after owner re-enables
+  ---
+  duration_ms: 5.1457
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\clineAdapterPolicy.review.test.ts:2:3830'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'CHANGED'
+    - 'RESTORED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'RESTORED'
+  actual: 'CHANGED'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\clineAdapterPolicy.review.test.ts:35:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 4
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 577.997

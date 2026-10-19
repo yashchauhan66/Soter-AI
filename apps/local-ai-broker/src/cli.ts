@@ -6,6 +6,8 @@ import { createBrokerCredentialLoader, BrokerCredentialError } from "./auth";
 import { createGatewayParentGuard } from "./GatewayParentGuard";
 
 async function main(): Promise<void> {
+    const schemaFlag = process.env.SOTERAI_CLINE_TOOL_SCHEMAS;
+    if (schemaFlag !== undefined && !["0", "1"].includes(schemaFlag)) throw new Error("Gateway tool-schema profile unavailable");
     const ownerSession = process.env.SOTERAI_BROKER_SESSION;
     if (ownerSession !== undefined && (!/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/.test(ownerSession)
         || !process.send || !process.connected || process.env.SOTERAI_BROKER_PORT !== "0"
@@ -30,6 +32,7 @@ async function main(): Promise<void> {
         port,
         ownerSession,
         gatewayPolicy: process.env.SOTERAI_GATEWAY_POLICY !== "0",
+        clineToolSchemas: schemaFlag === "1",
         requireGatewaySync: process.env.SOTERAI_REQUIRE_GATEWAY_SYNC === "1",
         gatewayGuard: ownerSession ? createGatewayParentGuard(ownerSession) : undefined,
         jsonBodies: process.env.SOTERAI_GATEWAY_JSON_BODIES !== "0",

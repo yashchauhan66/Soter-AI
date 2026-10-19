@@ -27,6 +27,8 @@
 import { AGENT_TOOLS, AGENT_TOOL_COVERAGE } from "./toolLogic";
 import { SAFE_READ_TOOL, SAFE_READ_DEFINITION, safeReadPath, safeReadResult, requestSafeRead, connectionFromEnvironment } from "./SafeReadProtocol";
 import type { AccessResult } from "../project-privacy/ProjectFileAccess";
+import { loadBridgeTicket } from "./SealedBridgeTicket";
+import { runClineHook } from "../adapters/ClineHookProtocol";
 
 /** Protocol revision this server implements. */
 const PROTOCOL_VERSION = "2024-11-05";
@@ -292,9 +294,13 @@ export function runMcpServer(
 // tests import the same module, and a top-level `runMcpServer()` would make the
 // test suite hang waiting on a stdin that never closes.
 if (require.main === module) {
-    const connection = connectionFromEnvironment(process.env);
-    // The inherited ephemeral capability is held privately, never echoed by a
-    // protocol result. A disconnected editor never falls back to filesystem IO.
-    delete process.env.SOTERAI_SAFE_READ_TOKEN;
-    void runMcpServer(process.stdin, process.stdout, { read: (args, signal) => requestSafeRead(connection, args, signal) });
+    void (async () => {
+        const connection = connectionFromEnvironment(process.env)
+            ?? await loadBridgeTicket(process.env.SOTERAI_SAFE_READ_TICKET_PATH);
+        // Private current-session material stays in memory. The ticket contains
+        // only OS-protected connection metadata, never project source data.
+        delete process.env.SOTERAI_SAFE_READ_TOKEN;
+        if (process.argv.slice(2).includes("--cline-hook")) await runClineHook(connection);
+        else await runMcpServer(process.stdin, process.stdout, { read: (args, signal) => requestSafeRead(connection, args, signal) });
+    })();
 }

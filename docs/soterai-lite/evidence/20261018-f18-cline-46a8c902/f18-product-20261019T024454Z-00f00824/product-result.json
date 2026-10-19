@@ -1,0 +1,1573 @@
+{
+  "scope": "ACTUAL_PACKAGED_PRODUCT_AND_PINNED_CLINE_SCRIPTED_APIS",
+  "independence": "LOW",
+  "checks": [
+    {
+      "id": "F18-P02",
+      "status": "PASS"
+    },
+    {
+      "id": "F18-P03",
+      "status": "PASS"
+    },
+    {
+      "id": "F18-P01",
+      "status": "PASS"
+    },
+    {
+      "id": "F18-P04",
+      "status": "FAIL",
+      "error": {
+        "name": "Error"
+      }
+    },
+    {
+      "id": "F18-P05",
+      "status": "FAIL",
+      "error": {
+        "name": "Error"
+      }
+    },
+    {
+      "id": "F18-P06",
+      "status": "PASS"
+    }
+  ],
+  "modals": [
+    {
+      "kind": "config",
+      "bytes": 1055,
+      "digest": "4dc01e68002bcffd28ed138fbb708b2281c761caa0572812e0cc5ab82d5c9f82"
+    },
+    {
+      "kind": "config",
+      "bytes": 1055,
+      "digest": "4dc01e68002bcffd28ed138fbb708b2281c761caa0572812e0cc5ab82d5c9f82"
+    }
+  ],
+  "requests": [],
+  "phase": "setup",
+  "deniedExternal": [],
+  "deniedSignals": [
+    "ZERO_SIGNAL_LIVENESS_REFUSED",
+    "ZERO_SIGNAL_LIVENESS_REFUSED",
+    "ZERO_SIGNAL_LIVENESS_REFUSED",
+    "ZERO_SIGNAL_LIVENESS_REFUSED",
+    "ZERO_SIGNAL_LIVENESS_REFUSED",
+    "ZERO_SIGNAL_LIVENESS_REFUSED"
+  ],
+  "deniedChildLaunches": [
+    {
+      "executable": "powershell",
+      "argc": 3,
+      "cwdSynthetic": false
+    },
+    {
+      "method": "exec",
+      "executable": "v MachineGuid",
+      "argc": 0
+    },
+    {
+      "executable": "cmd.exe",
+      "argc": 5,
+      "cwdSynthetic": true
+    },
+    {
+      "method": "execFile",
+      "executable": "git",
+      "argc": 2
+    },
+    {
+      "method": "execFile",
+      "executable": "git",
+      "argc": 2
+    },
+    {
+      "executable": "powershell",
+      "argc": 3,
+      "cwdSynthetic": false
+    },
+    {
+      "executable": "powershell",
+      "argc": 3,
+      "cwdSynthetic": false
+    },
+    {
+      "method": "execFile",
+      "executable": "git",
+      "argc": 2
+    },
+    {
+      "method": "execFile",
+      "executable": "git",
+      "argc": 2
+    },
+    {
+      "executable": "powershell",
+      "argc": 3,
+      "cwdSynthetic": false
+    },
+    {
+      "executable": "powershell",
+      "argc": 3,
+      "cwdSynthetic": false
+    },
+    {
+      "method": "execFile",
+      "executable": "git",
+      "argc": 2
+    },
+    {
+      "method": "execFile",
+      "executable": "git",
+      "argc": 2
+    },
+    {
+      "executable": "powershell",
+      "argc": 3,
+      "cwdSynthetic": false
+    },
+    {
+      "executable": "powershell",
+      "argc": 3,
+      "cwdSynthetic": false
+    },
+    {
+      "method": "execFile",
+      "executable": "git",
+      "argc": 2
+    },
+    {
+      "method": "execFile",
+      "executable": "git",
+      "argc": 2
+    },
+    {
+      "executable": "powershell",
+      "argc": 3,
+      "cwdSynthetic": false
+    },
+    {
+      "executable": "powershell",
+      "argc": 3,
+      "cwdSynthetic": false
+    },
+    {
+      "method": "execFile",
+      "executable": "git",
+      "argc": 2
+    },
+    {
+      "method": "execFile",
+      "executable": "git",
+      "argc": 2
+    },
+    {
+      "executable": "powershell",
+      "argc": 3,
+      "cwdSynthetic": false
+    },
+    {
+      "executable": "powershell",
+      "argc": 3,
+      "cwdSynthetic": false
+    },
+    {
+      "method": "execFile",
+      "executable": "git",
+      "argc": 2
+    },
+    {
+      "method": "execFile",
+      "executable": "git",
+      "argc": 2
+    },
+    {
+      "executable": "powershell",
+      "argc": 3,
+      "cwdSynthetic": false
+    },
+    {
+      "method": "execFile",
+      "executable": "git",
+      "argc": 2
+    },
+    {
+      "method": "execFile",
+      "executable": "git",
+      "argc": 2
+    },
+    {
+      "method": "execFile",
+      "executable": "git",
+      "argc": 2
+    },
+    {
+      "executable": "powershell",
+      "argc": 3,
+      "cwdSynthetic": false
+    },
+    {
+      "executable": "powershell",
+      "argc": 3,
+      "cwdSynthetic": false
+    },
+    {
+      "executable": "powershell",
+      "argc": 3,
+      "cwdSynthetic": false
+    },
+    {
+      "method": "execFile",
+      "executable": "git",
+      "argc": 2
+    },
+    {
+      "executable": "powershell",
+      "argc": 3,
+      "cwdSynthetic": false
+    },
+    {
+      "method": "execFile",
+      "executable": "git",
+      "argc": 2
+    },
+    {
+      "method": "execFile",
+      "executable": "git",
+      "argc": 2
+    },
+    {
+      "executable": "powershell",
+      "argc": 3,
+      "cwdSynthetic": false
+    },
+    {
+      "executable": "powershell",
+      "argc": 3,
+      "cwdSynthetic": false
+    },
+    {
+      "method": "execFile",
+      "executable": "git",
+      "argc": 2
+    },
+    {
+      "method": "execFile",
+      "executable": "git",
+      "argc": 2
+    },
+    {
+      "executable": "powershell",
+      "argc": 3,
+      "cwdSynthetic": false
+    },
+    {
+      "executable": "powershell",
+      "argc": 3,
+      "cwdSynthetic": false
+    },
+    {
+      "method": "execFile",
+      "executable": "git",
+      "argc": 2
+    },
+    {
+      "method": "execFile",
+      "executable": "git",
+      "argc": 2
+    },
+    {
+      "executable": "powershell",
+      "argc": 3,
+      "cwdSynthetic": false
+    },
+    {
+      "executable": "powershell",
+      "argc": 3,
+      "cwdSynthetic": false
+    },
+    {
+      "method": "execFile",
+      "executable": "git",
+      "argc": 2
+    },
+    {
+      "method": "execFile",
+      "executable": "git",
+      "argc": 2
+    },
+    {
+      "executable": "powershell",
+      "argc": 3,
+      "cwdSynthetic": false
+    },
+    {
+      "executable": "powershell",
+      "argc": 3,
+      "cwdSynthetic": false
+    },
+    {
+      "method": "execFile",
+      "executable": "git",
+      "argc": 2
+    },
+    {
+      "method": "execFile",
+      "executable": "git",
+      "argc": 2
+    },
+    {
+      "executable": "powershell",
+      "argc": 3,
+      "cwdSynthetic": false
+    },
+    {
+      "method": "execFile",
+      "executable": "git",
+      "argc": 2
+    },
+    {
+      "method": "execFile",
+      "executable": "git",
+      "argc": 2
+    },
+    {
+      "method": "execFile",
+      "executable": "git",
+      "argc": 2
+    },
+    {
+      "executable": "powershell",
+      "argc": 3,
+      "cwdSynthetic": false
+    },
+    {
+      "executable": "powershell",
+      "argc": 3,
+      "cwdSynthetic": false
+    },
+    {
+      "method": "execFile",
+      "executable": "git",
+      "argc": 2
+    },
+    {
+      "executable": "powershell",
+      "argc": 3,
+      "cwdSynthetic": false
+    },
+    {
+      "method": "execFile",
+      "executable": "git",
+      "argc": 2
+    },
+    {
+      "method": "execFile",
+      "executable": "git",
+      "argc": 2
+    }
+  ],
+  "deniedFileAccess": [
+    "readdirSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync"
+  ],
+  "vendorPrepared": true,
+  "brokerStages": [
+    {
+      "method": "stop",
+      "state": "stopped"
+    },
+    {
+      "method": "start",
+      "state": "healthy",
+      "running": true,
+      "urlShape": "/"
+    },
+    {
+      "method": "start",
+      "state": "healthy",
+      "running": true,
+      "urlShape": "/"
+    },
+    {
+      "method": "stop",
+      "state": "stopped"
+    }
+  ],
+  "controllerStages": [
+    {
+      "stage": "artifact",
+      "status": "RETURNED"
+    },
+    {
+      "stage": "read",
+      "file": "globalState.json",
+      "status": "RETURNED",
+      "bytes": 1202
+    },
+    {
+      "stage": "eligible",
+      "status": "RETURNED",
+      "value": true
+    },
+    {
+      "stage": "read",
+      "file": "providers.json",
+      "status": "RETURNED",
+      "bytes": 278
+    },
+    {
+      "stage": "read",
+      "file": "cline_mcp_settings.json",
+      "status": "RETURNED",
+      "bytes": 17
+    },
+    {
+      "stage": "read",
+      "file": "global-settings.json",
+      "status": "RETURNED",
+      "bytes": 50
+    },
+    {
+      "stage": "read",
+      "file": "PreToolUse.ps1",
+      "status": "RETURNED"
+    },
+    {
+      "stage": "read",
+      "file": "TaskStart.ps1",
+      "status": "RETURNED"
+    },
+    {
+      "stage": "read",
+      "file": "providers.json",
+      "status": "RETURNED",
+      "bytes": 278
+    },
+    {
+      "stage": "read",
+      "file": "cline_mcp_settings.json",
+      "status": "RETURNED",
+      "bytes": 17
+    },
+    {
+      "stage": "read",
+      "file": "global-settings.json",
+      "status": "RETURNED",
+      "bytes": 50
+    },
+    {
+      "stage": "read",
+      "file": "PreToolUse.ps1",
+      "status": "RETURNED"
+    },
+    {
+      "stage": "read",
+      "file": "TaskStart.ps1",
+      "status": "RETURNED"
+    },
+    {
+      "stage": "artifact",
+      "status": "RETURNED"
+    },
+    {
+      "stage": "read",
+      "file": "globalState.json",
+      "status": "RETURNED",
+      "bytes": 1202
+    },
+    {
+      "stage": "eligible",
+      "status": "RETURNED",
+      "value": true
+    },
+    {
+      "stage": "read",
+      "file": "providers.json",
+      "status": "RETURNED",
+      "bytes": 278
+    },
+    {
+      "stage": "read",
+      "file": "cline_mcp_settings.json",
+      "status": "RETURNED",
+      "bytes": 17
+    },
+    {
+      "stage": "read",
+      "file": "global-settings.json",
+      "status": "RETURNED",
+      "bytes": 50
+    },
+    {
+      "stage": "read",
+      "file": "PreToolUse.ps1",
+      "status": "RETURNED"
+    },
+    {
+      "stage": "read",
+      "file": "TaskStart.ps1",
+      "status": "RETURNED"
+    },
+    {
+      "stage": "read",
+      "file": "providers.json",
+      "status": "RETURNED",
+      "bytes": 278
+    },
+    {
+      "stage": "read",
+      "file": "cline_mcp_settings.json",
+      "status": "RETURNED",
+      "bytes": 17
+    },
+    {
+      "stage": "read",
+      "file": "global-settings.json",
+      "status": "RETURNED",
+      "bytes": 50
+    },
+    {
+      "stage": "read",
+      "file": "PreToolUse.ps1",
+      "status": "RETURNED"
+    },
+    {
+      "stage": "read",
+      "file": "TaskStart.ps1",
+      "status": "RETURNED"
+    },
+    {
+      "stage": "artifact",
+      "status": "RETURNED"
+    },
+    {
+      "stage": "read",
+      "file": "providers.json",
+      "status": "RETURNED",
+      "bytes": 278
+    },
+    {
+      "stage": "read",
+      "file": "cline_mcp_settings.json",
+      "status": "RETURNED",
+      "bytes": 17
+    },
+    {
+      "stage": "read",
+      "file": "global-settings.json",
+      "status": "RETURNED",
+      "bytes": 50
+    },
+    {
+      "stage": "read",
+      "file": "PreToolUse.ps1",
+      "status": "RETURNED"
+    },
+    {
+      "stage": "read",
+      "file": "TaskStart.ps1",
+      "status": "RETURNED"
+    },
+    {
+      "stage": "read",
+      "file": "providers.json",
+      "status": "RETURNED",
+      "bytes": 278
+    },
+    {
+      "stage": "read",
+      "file": "providers.json",
+      "status": "RETURNED",
+      "bytes": 278
+    },
+    {
+      "stage": "read",
+      "file": "providers.json",
+      "status": "RETURNED",
+      "bytes": 278
+    },
+    {
+      "stage": "write",
+      "file": "providers.json",
+      "status": "RETURNED"
+    },
+    {
+      "stage": "read",
+      "file": "providers.json",
+      "status": "RETURNED",
+      "bytes": 448
+    },
+    {
+      "stage": "read",
+      "file": "cline_mcp_settings.json",
+      "status": "RETURNED",
+      "bytes": 17
+    },
+    {
+      "stage": "read",
+      "file": "cline_mcp_settings.json",
+      "status": "RETURNED",
+      "bytes": 17
+    },
+    {
+      "stage": "read",
+      "file": "cline_mcp_settings.json",
+      "status": "RETURNED",
+      "bytes": 17
+    },
+    {
+      "stage": "write",
+      "file": "cline_mcp_settings.json",
+      "status": "RETURNED"
+    },
+    {
+      "stage": "read",
+      "file": "cline_mcp_settings.json",
+      "status": "RETURNED",
+      "bytes": 615
+    },
+    {
+      "stage": "read",
+      "file": "global-settings.json",
+      "status": "RETURNED",
+      "bytes": 50
+    },
+    {
+      "stage": "read",
+      "file": "global-settings.json",
+      "status": "RETURNED",
+      "bytes": 50
+    },
+    {
+      "stage": "read",
+      "file": "global-settings.json",
+      "status": "RETURNED",
+      "bytes": 50
+    },
+    {
+      "stage": "write",
+      "file": "global-settings.json",
+      "status": "RETURNED"
+    },
+    {
+      "stage": "read",
+      "file": "global-settings.json",
+      "status": "RETURNED",
+      "bytes": 60
+    },
+    {
+      "stage": "read",
+      "file": "PreToolUse.ps1",
+      "status": "RETURNED"
+    },
+    {
+      "stage": "read",
+      "file": "PreToolUse.ps1",
+      "status": "RETURNED"
+    },
+    {
+      "stage": "read",
+      "file": "PreToolUse.ps1",
+      "status": "RETURNED"
+    },
+    {
+      "stage": "write",
+      "file": "PreToolUse.ps1",
+      "status": "RETURNED"
+    },
+    {
+      "stage": "read",
+      "file": "PreToolUse.ps1",
+      "status": "RETURNED",
+      "bytes": 3645
+    },
+    {
+      "stage": "read",
+      "file": "TaskStart.ps1",
+      "status": "RETURNED"
+    },
+    {
+      "stage": "read",
+      "file": "TaskStart.ps1",
+      "status": "RETURNED"
+    },
+    {
+      "stage": "read",
+      "file": "TaskStart.ps1",
+      "status": "RETURNED"
+    },
+    {
+      "stage": "write",
+      "file": "TaskStart.ps1",
+      "status": "RETURNED"
+    },
+    {
+      "stage": "read",
+      "file": "TaskStart.ps1",
+      "status": "RETURNED",
+      "bytes": 3645
+    },
+    {
+      "stage": "read",
+      "file": "globalState.json",
+      "status": "RETURNED",
+      "bytes": 1202
+    },
+    {
+      "stage": "eligible",
+      "status": "RETURNED",
+      "value": true
+    },
+    {
+      "stage": "read",
+      "file": "providers.json",
+      "status": "RETURNED",
+      "bytes": 448
+    },
+    {
+      "stage": "read",
+      "file": "cline_mcp_settings.json",
+      "status": "RETURNED",
+      "bytes": 615
+    },
+    {
+      "stage": "read",
+      "file": "global-settings.json",
+      "status": "RETURNED",
+      "bytes": 60
+    },
+    {
+      "stage": "read",
+      "file": "PreToolUse.ps1",
+      "status": "RETURNED",
+      "bytes": 3645
+    },
+    {
+      "stage": "read",
+      "file": "TaskStart.ps1",
+      "status": "RETURNED",
+      "bytes": 3645
+    },
+    {
+      "stage": "configuredFiles",
+      "status": "RETURNED",
+      "value": true
+    },
+    {
+      "stage": "read",
+      "file": "globalState.json",
+      "status": "RETURNED",
+      "bytes": 1761
+    },
+    {
+      "stage": "eligible",
+      "status": "RETURNED",
+      "value": true
+    },
+    {
+      "stage": "read",
+      "file": "providers.json",
+      "status": "RETURNED",
+      "bytes": 448
+    },
+    {
+      "stage": "read",
+      "file": "cline_mcp_settings.json",
+      "status": "RETURNED",
+      "bytes": 615
+    },
+    {
+      "stage": "read",
+      "file": "global-settings.json",
+      "status": "RETURNED",
+      "bytes": 60
+    },
+    {
+      "stage": "read",
+      "file": "PreToolUse.ps1",
+      "status": "RETURNED",
+      "bytes": 3645
+    },
+    {
+      "stage": "read",
+      "file": "TaskStart.ps1",
+      "status": "RETURNED",
+      "bytes": 3645
+    },
+    {
+      "stage": "configuredFiles",
+      "status": "RETURNED",
+      "value": true
+    },
+    {
+      "stage": "read",
+      "file": "globalState.json",
+      "status": "RETURNED",
+      "bytes": 1761
+    },
+    {
+      "stage": "eligible",
+      "status": "RETURNED",
+      "value": true
+    },
+    {
+      "stage": "read",
+      "file": "providers.json",
+      "status": "RETURNED",
+      "bytes": 448
+    },
+    {
+      "stage": "read",
+      "file": "cline_mcp_settings.json",
+      "status": "RETURNED",
+      "bytes": 615
+    },
+    {
+      "stage": "read",
+      "file": "global-settings.json",
+      "status": "RETURNED",
+      "bytes": 60
+    },
+    {
+      "stage": "read",
+      "file": "PreToolUse.ps1",
+      "status": "RETURNED",
+      "bytes": 3645
+    },
+    {
+      "stage": "read",
+      "file": "TaskStart.ps1",
+      "status": "RETURNED",
+      "bytes": 3645
+    },
+    {
+      "stage": "configuredFiles",
+      "status": "RETURNED",
+      "value": true
+    },
+    {
+      "stage": "read",
+      "file": "globalState.json",
+      "status": "RETURNED",
+      "bytes": 1761
+    },
+    {
+      "stage": "eligible",
+      "status": "RETURNED",
+      "value": true
+    },
+    {
+      "stage": "read",
+      "file": "providers.json",
+      "status": "RETURNED",
+      "bytes": 448
+    },
+    {
+      "stage": "read",
+      "file": "cline_mcp_settings.json",
+      "status": "RETURNED",
+      "bytes": 615
+    },
+    {
+      "stage": "read",
+      "file": "global-settings.json",
+      "status": "RETURNED",
+      "bytes": 60
+    },
+    {
+      "stage": "read",
+      "file": "PreToolUse.ps1",
+      "status": "RETURNED",
+      "bytes": 3645
+    },
+    {
+      "stage": "read",
+      "file": "TaskStart.ps1",
+      "status": "RETURNED",
+      "bytes": 3645
+    },
+    {
+      "stage": "configuredFiles",
+      "status": "RETURNED",
+      "value": true
+    },
+    {
+      "stage": "read",
+      "file": "globalState.json",
+      "status": "RETURNED",
+      "bytes": 1761
+    },
+    {
+      "stage": "eligible",
+      "status": "RETURNED",
+      "value": true
+    },
+    {
+      "stage": "read",
+      "file": "providers.json",
+      "status": "RETURNED",
+      "bytes": 448
+    },
+    {
+      "stage": "read",
+      "file": "cline_mcp_settings.json",
+      "status": "RETURNED",
+      "bytes": 615
+    },
+    {
+      "stage": "read",
+      "file": "global-settings.json",
+      "status": "RETURNED",
+      "bytes": 60
+    },
+    {
+      "stage": "read",
+      "file": "PreToolUse.ps1",
+      "status": "RETURNED",
+      "bytes": 3645
+    },
+    {
+      "stage": "read",
+      "file": "TaskStart.ps1",
+      "status": "RETURNED",
+      "bytes": 3645
+    },
+    {
+      "stage": "configuredFiles",
+      "status": "RETURNED",
+      "value": true
+    },
+    {
+      "stage": "read",
+      "file": "globalState.json",
+      "status": "RETURNED",
+      "bytes": 1761
+    },
+    {
+      "stage": "eligible",
+      "status": "RETURNED",
+      "value": true
+    },
+    {
+      "stage": "read",
+      "file": "providers.json",
+      "status": "RETURNED",
+      "bytes": 448
+    },
+    {
+      "stage": "read",
+      "file": "cline_mcp_settings.json",
+      "status": "RETURNED",
+      "bytes": 615
+    },
+    {
+      "stage": "read",
+      "file": "global-settings.json",
+      "status": "RETURNED",
+      "bytes": 60
+    },
+    {
+      "stage": "read",
+      "file": "PreToolUse.ps1",
+      "status": "RETURNED",
+      "bytes": 3645
+    },
+    {
+      "stage": "read",
+      "file": "TaskStart.ps1",
+      "status": "RETURNED",
+      "bytes": 3645
+    },
+    {
+      "stage": "configuredFiles",
+      "status": "RETURNED",
+      "value": true
+    },
+    {
+      "stage": "read",
+      "file": "globalState.json",
+      "status": "RETURNED",
+      "bytes": 1761
+    },
+    {
+      "stage": "eligible",
+      "status": "RETURNED",
+      "value": true
+    },
+    {
+      "stage": "read",
+      "file": "providers.json",
+      "status": "RETURNED",
+      "bytes": 448
+    },
+    {
+      "stage": "read",
+      "file": "cline_mcp_settings.json",
+      "status": "RETURNED",
+      "bytes": 615
+    },
+    {
+      "stage": "read",
+      "file": "global-settings.json",
+      "status": "RETURNED",
+      "bytes": 60
+    },
+    {
+      "stage": "read",
+      "file": "PreToolUse.ps1",
+      "status": "RETURNED",
+      "bytes": 3645
+    },
+    {
+      "stage": "read",
+      "file": "TaskStart.ps1",
+      "status": "RETURNED",
+      "bytes": 3645
+    },
+    {
+      "stage": "configuredFiles",
+      "status": "RETURNED",
+      "value": true
+    },
+    {
+      "stage": "read",
+      "file": "globalState.json",
+      "status": "RETURNED",
+      "bytes": 1761
+    },
+    {
+      "stage": "eligible",
+      "status": "RETURNED",
+      "value": true
+    },
+    {
+      "stage": "read",
+      "file": "providers.json",
+      "status": "RETURNED",
+      "bytes": 448
+    },
+    {
+      "stage": "read",
+      "file": "cline_mcp_settings.json",
+      "status": "RETURNED",
+      "bytes": 615
+    },
+    {
+      "stage": "read",
+      "file": "global-settings.json",
+      "status": "RETURNED",
+      "bytes": 60
+    },
+    {
+      "stage": "read",
+      "file": "PreToolUse.ps1",
+      "status": "RETURNED",
+      "bytes": 3645
+    },
+    {
+      "stage": "read",
+      "file": "TaskStart.ps1",
+      "status": "RETURNED",
+      "bytes": 3645
+    },
+    {
+      "stage": "configuredFiles",
+      "status": "RETURNED",
+      "value": true
+    },
+    {
+      "stage": "read",
+      "file": "globalState.json",
+      "status": "RETURNED",
+      "bytes": 1761
+    },
+    {
+      "stage": "eligible",
+      "status": "RETURNED",
+      "value": true
+    },
+    {
+      "stage": "read",
+      "file": "providers.json",
+      "status": "RETURNED",
+      "bytes": 448
+    },
+    {
+      "stage": "read",
+      "file": "cline_mcp_settings.json",
+      "status": "RETURNED",
+      "bytes": 615
+    },
+    {
+      "stage": "read",
+      "file": "global-settings.json",
+      "status": "RETURNED",
+      "bytes": 60
+    },
+    {
+      "stage": "read",
+      "file": "PreToolUse.ps1",
+      "status": "RETURNED",
+      "bytes": 3645
+    },
+    {
+      "stage": "read",
+      "file": "TaskStart.ps1",
+      "status": "RETURNED",
+      "bytes": 3645
+    },
+    {
+      "stage": "configuredFiles",
+      "status": "RETURNED",
+      "value": true
+    },
+    {
+      "stage": "read",
+      "file": "globalState.json",
+      "status": "RETURNED",
+      "bytes": 1761
+    },
+    {
+      "stage": "eligible",
+      "status": "RETURNED",
+      "value": true
+    },
+    {
+      "stage": "read",
+      "file": "providers.json",
+      "status": "RETURNED",
+      "bytes": 448
+    },
+    {
+      "stage": "read",
+      "file": "cline_mcp_settings.json",
+      "status": "RETURNED",
+      "bytes": 615
+    },
+    {
+      "stage": "read",
+      "file": "global-settings.json",
+      "status": "RETURNED",
+      "bytes": 60
+    },
+    {
+      "stage": "read",
+      "file": "PreToolUse.ps1",
+      "status": "RETURNED",
+      "bytes": 3645
+    },
+    {
+      "stage": "read",
+      "file": "TaskStart.ps1",
+      "status": "RETURNED",
+      "bytes": 3645
+    },
+    {
+      "stage": "configuredFiles",
+      "status": "RETURNED",
+      "value": true
+    },
+    {
+      "stage": "read",
+      "file": "globalState.json",
+      "status": "RETURNED",
+      "bytes": 1761
+    },
+    {
+      "stage": "eligible",
+      "status": "RETURNED",
+      "value": true
+    },
+    {
+      "stage": "read",
+      "file": "providers.json",
+      "status": "RETURNED",
+      "bytes": 448
+    },
+    {
+      "stage": "read",
+      "file": "cline_mcp_settings.json",
+      "status": "RETURNED",
+      "bytes": 615
+    },
+    {
+      "stage": "read",
+      "file": "global-settings.json",
+      "status": "RETURNED",
+      "bytes": 60
+    },
+    {
+      "stage": "read",
+      "file": "PreToolUse.ps1",
+      "status": "RETURNED",
+      "bytes": 3645
+    },
+    {
+      "stage": "read",
+      "file": "TaskStart.ps1",
+      "status": "RETURNED",
+      "bytes": 3645
+    },
+    {
+      "stage": "configuredFiles",
+      "status": "RETURNED",
+      "value": true
+    },
+    {
+      "stage": "read",
+      "file": "globalState.json",
+      "status": "RETURNED",
+      "bytes": 1761
+    },
+    {
+      "stage": "eligible",
+      "status": "RETURNED",
+      "value": true
+    },
+    {
+      "stage": "read",
+      "file": "providers.json",
+      "status": "RETURNED",
+      "bytes": 448
+    },
+    {
+      "stage": "read",
+      "file": "cline_mcp_settings.json",
+      "status": "RETURNED",
+      "bytes": 615
+    },
+    {
+      "stage": "read",
+      "file": "global-settings.json",
+      "status": "RETURNED",
+      "bytes": 60
+    },
+    {
+      "stage": "read",
+      "file": "PreToolUse.ps1",
+      "status": "RETURNED",
+      "bytes": 3645
+    },
+    {
+      "stage": "read",
+      "file": "TaskStart.ps1",
+      "status": "RETURNED",
+      "bytes": 3645
+    },
+    {
+      "stage": "configuredFiles",
+      "status": "RETURNED",
+      "value": true
+    }
+  ],
+  "providerUrl": "http://127.0.0.1:64813/v1",
+  "vendorVersion": "4.1.25",
+  "withdrawals": [
+    {
+      "state": "healthy",
+      "stack": [
+        "extension.js",
+        "task_queues",
+        "extension.js"
+      ]
+    },
+    {
+      "state": "healthy",
+      "stack": [
+        "extension.js",
+        "extension.js",
+        "extensionHostProcess.js"
+      ]
+    },
+    {
+      "state": "healthy",
+      "stack": [
+        "extension.js",
+        "task_queues",
+        "extension.js"
+      ]
+    },
+    {
+      "state": "stopping",
+      "stack": [
+        "extension.js",
+        "extensionHostProcess.js",
+        "extensionHostProcess.js"
+      ]
+    }
+  ],
+  "tokenShape": {
+    "type": "string",
+    "length": 43,
+    "whitespace": false
+  },
+  "cancelStatus": "CANCELLED",
+  "configureStatus": "APPLIED",
+  "directHook": {
+    "status": "READY",
+    "code": 0,
+    "errBytes": 0,
+    "bytes": 17
+  },
+  "children": [
+    {
+      "role": "broker",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "role": "ticket",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "role": "ticket",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "role": "mcp",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "role": "mcp",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "toolsListed": true
+    },
+    {
+      "role": "ticket",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "role": "ticket",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "role": "ticket",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "role": "ticket",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "role": "ticket",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "role": "TaskStart",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "hookCancel": false,
+      "resultKind": "NO_ERROR",
+      "hookResponseValid": true
+    },
+    {
+      "role": "TaskStart",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "hookCancel": false,
+      "resultKind": "NO_ERROR",
+      "hookResponseValid": true
+    },
+    {
+      "role": "TaskStart",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "hookCancel": false,
+      "resultKind": "NO_ERROR",
+      "hookResponseValid": true
+    },
+    {
+      "role": "TaskStart",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "hookCancel": false,
+      "resultKind": "NO_ERROR",
+      "hookResponseValid": true
+    },
+    {
+      "role": "TaskStart",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "hookCancel": false,
+      "resultKind": "NO_ERROR",
+      "hookResponseValid": true
+    },
+    {
+      "role": "TaskStart",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "hookCancel": false,
+      "resultKind": "NO_ERROR",
+      "hookResponseValid": true
+    },
+    {
+      "role": "TaskStart",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "hookCancel": false,
+      "resultKind": "NO_ERROR",
+      "hookResponseValid": true
+    },
+    {
+      "role": "TaskStart",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "hookCancel": false,
+      "resultKind": "NO_ERROR",
+      "hookResponseValid": true
+    },
+    {
+      "role": "TaskStart",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "hookCancel": false,
+      "resultKind": "NO_ERROR",
+      "hookResponseValid": true
+    },
+    {
+      "role": "TaskStart",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "hookCancel": false,
+      "resultKind": "NO_ERROR",
+      "hookResponseValid": true
+    },
+    {
+      "role": "TaskStart",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "hookCancel": false,
+      "resultKind": "NO_ERROR",
+      "hookResponseValid": true
+    },
+    {
+      "role": "TaskStart",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "hookCancel": true,
+      "resultKind": "CLASSIFICATION_WITHHELD",
+      "hookResponseValid": true
+    },
+    {
+      "role": "TaskStart",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "hookCancel": true,
+      "resultKind": "CLASSIFICATION_WITHHELD",
+      "hookResponseValid": true
+    }
+  ],
+  "runtimeSha256": "61f7490a41c7e1518fc11f854901546ab66d52cbf3273acad5b69f1eff42fd9a",
+  "status": "INCOMPLETE_PRODUCT_PROBE"
+}

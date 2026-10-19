@@ -1,0 +1,22 @@
+﻿[
+    {
+        "term":  "function zkp(",
+        "offset":  12111872,
+        "text":  ".length\u003e0?w.data:void 0}function FYe(t){return typeof t==\"number\"\u0026\u0026Number.isFinite(t)\u0026\u0026t\u003e0?t:void 0}function zkp(t,e,r){if(t!==Okp||!e.baseUrl||!e.model)return;let i=FYe(r?.contextWindow)??Fkp,a=FYe(r?.maxTokens),o=FYe(r?.inputPrice),n=FYe(r?.outputPrice),s=FYe(r?.temperature),u=[\"streaming\",\"tools\"];return r?.supportsImages!==!1\u0026\u0026u.push(\"images\"),r?.supportsPromptCache===!0\u0026\u0026u.push(\"prompt-cache\"),{provider:{name:\"OpenAI Compatible\",baseUrl:e.baseUrl,defaultModelId:e.model},models:{[e.model]:{id:e.model,name:e.model,contextWindow:i,maxInputTokens:i,capabilities:u,...a!==void 0?{maxTokens:a}:{},...o!==void 0?{inputPrice:o}:{},...n!==void 0?{outputPrice:n}:{},...s!==void 0?{temperature:s}:{}}}}}function jkp(t,e){let r=new Set;for(let a of[t.actModeApiProvider,t.planModeApiProvider]){let o=oo(a);o\u0026\u0026r.add(tLt(o))}oo(e.apiKey)\u0026\u0026r.add(\"anthropic\"),oo(e.openRouterApiKey)\u0026\u0026r.add(\"openrouter\"),oo(e.openAiApiKey)\u0026\u0026r.add(eLt),oo(e.openAiNativeApiKey)\u0026\u0026r.add(\"openai-native\"),oo(e[\"openai-codex-oauth-credentials\"])\u0026\u0026r.add(\"openai-codex\"),oo(e.geminiApiKey)\u0026\u0026r.add(\"gemini\"),oo(e.ollamaApiKey)\u0026\u0026r.add(\"ollama\"),oo(e.deepSeekApiKey)\u0026\u0026r.add(\"deepseek\"),oo(e.requestyApiKey)\u0026\u0026r.add(\"requesty\"),oo(e.togetherApiKey)\u0026\u0026r.add(\"together\"),oo(e.fireworksApiKey)\u0026\u0026r.add(\"fireworks\"),oo(e.qwenApiKey)\u0026\u0026r.add(\"qwen\"),oo(e.doubaoApiKey)\u0026\u0026r.add(\"doubao\"),oo(e.mistralApiKey)\u0026\u0026r.add(\"mistral\"),oo(e.liteLlmApiKey)\u0026\u0026r.add(\"litellm\"),oo(e.asksageApiKey)\u0026\u0026r.add(\"asksage\"),oo(e.xaiApiKey)\u0026\u0026r.add(\"xai\"),oo(e.moonshotApiKey)\u0026\u0026r.add(\"moonshot\"),oo(e.zaiApiKey)\u0026\u0026r.add(\"zai\"),oo(e.huggingFaceApiKey)\u0026\u0026r.add(\"huggingface\"),oo(e.nebiusApiKey)\u0026\u0026r.add(\"nebius\"),oo(e.sambanovaApiKey)\u0026\u0026r.add(\"sambanova\"),oo(e.cerebrasApiKey)\u0026\u0026r.add(\"cerebras\"),oo(e.groqApiKey)\u0026\u0026r.add(\"groq\"),oo(e.huaweiCloudMaasApiKey)\u0026\u0026r.add(\"huawei-clo"
+    },
+    {
+        "term":  "resolveContextMentions:",
+        "offset":  24666115,
+        "text":  "TurnPhase:()=\u003ethis.turnStateTracker.currentPhase,setTurnPhase:(i,a)=\u003ethis.turnStateTracker.set(i,a),resolveContextMentions:i=\u003ethis.resolveContextMentions(i),rebuilds:this.sessionRebuilds,onAutoContinueStarting:()=\u003e{this.turnStateTracker.set(\"streaming\"),this.messageTranslatorState.clearTurnOutcome()},onAutoContinueFailed:()=\u003e{this.turnStateTracker.set(\"error\")}}),this.mcpTools=new Vgr({stateManager:this.stateManager,sessions:this.sessions,messages:this.messages,sessionConfigBuilder:this.sessionConfigBuilder,getWorkspaceRoot:()=\u003ethis.getWorkspaceRoot(),loadInitialMessages:async(i,a)=\u003eawait this.sessionHistory.loadInitialMessages(i,a)??[],buildStartSessionInput:s$,postStateToWebview:()=\u003ethis.postStateToWebview(),rebuilds:this.sessionRebuilds}),this.sessionConfigChanges=new iAr({stateManager:this.stateManager,sessions:this.sessions,messages:this.messages,sessionConfigBuilder:this.sessionConfigBuilder,getWorkspaceRoot:()=\u003ethis.getWorkspaceRoot(),loadInitialMessages:async(i,a)=\u003eawait this.sessionHistory.loadInitialMessages(i,a)??[],buildStartSessionInput:s$,postStateToWebview:()=\u003ethis.postStateToWebview(),rebuilds:this.sessionRebuilds}),this.providerChanges=new rAr({stateManager:this.stateManager,sessions:this.sessions,messages:this.messages,sessionConfigBuilder:this.sessionConfigBuilder,getTask:()=\u003ethis.task,getWorkspaceRoot:()=\u003ethis.getWorkspaceRoot(),loadInitialMessages:async(i,a)=\u003eawait this.sessionHistory.loadInitialMessages(i,a)??[],buildStartSessionInput:s$,postStateToWebview:()=\u003ethis.postStateToWebview(),rebuilds:this.sessionRebuilds}),this.followups=new Hgr({stateManager:this.stateManager,interactions:this.interactions,sessions:this.sessions,messages:this.messages,taskHistory:this.taskHistory,sessionConfigBuilder:this.sessionConfigBuilder,runExclusive:i=\u003ethis.sessio"
+    },
+    {
+        "term":  "parseMentions",
+        "offset":  -1,
+        "text":  ""
+    },
+    {
+        "term":  "cline.addToChat",
+        "offset":  -1,
+        "text":  ""
+    }
+]

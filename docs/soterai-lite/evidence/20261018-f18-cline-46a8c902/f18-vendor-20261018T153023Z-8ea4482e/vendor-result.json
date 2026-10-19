@@ -1,0 +1,166 @@
+{
+  "scope": "ACTUAL_INSTALLED_VENDOR_FEASIBILITY_ONLY",
+  "version": "4.1.25",
+  "independence": "LOW",
+  "publicSeen": true,
+  "requests": [
+    {
+      "route": "/v1/chat/completions",
+      "bytes": 12922,
+      "tools": [
+        "read_files",
+        "search_codebase",
+        "fetch_web_content",
+        "editor",
+        "ask_question",
+        "run_commands"
+      ],
+      "publicControl": false,
+      "privateOriginal": false
+    },
+    {
+      "route": "/v1/chat/completions",
+      "bytes": 13248,
+      "tools": [
+        "read_files",
+        "search_codebase",
+        "fetch_web_content",
+        "editor",
+        "ask_question",
+        "run_commands"
+      ],
+      "publicControl": true,
+      "privateOriginal": false
+    }
+  ],
+  "deniedExternal": [],
+  "deniedSignals": [
+    "ZERO_SIGNAL_LIVENESS_REFUSED"
+  ],
+  "children": [
+    {
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    }
+  ],
+  "hooks": [
+    {
+      "tool": "read_files",
+      "blocked": false,
+      "bytes": 0
+    },
+    {
+      "tool": "read_files",
+      "blocked": true,
+      "bytes": 0
+    }
+  ],
+  "failures": [],
+  "deniedFileAccess": [
+    "readdirSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "promise-mkdir",
+    "promise-mkdir",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "promise-mkdir",
+    "promise-mkdir",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "lstatSync",
+    "promise-mkdir",
+    "promise-mkdir"
+  ],
+  "exportedApi": [
+    "startNewTask",
+    "sendMessage",
+    "pressPrimaryButton",
+    "pressSecondaryButton"
+  ],
+  "activated": true,
+  "status": "PASS_SCOPED_VENDOR_PROBE",
+  "loadedRuntimeSha256": "a3e8eda18b38547df9c614e62d04106cdf3bf2df2cb16241af3f7b3770088022"
+}

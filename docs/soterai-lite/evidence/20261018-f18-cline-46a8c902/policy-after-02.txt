@@ -1,0 +1,318 @@
+﻿TAP version 13
+# Subtest: proposeBrokerRewrite never corrupts the file it claims to protect
+    # Subtest: refuses to append a shell directive to JSON with no base-URL field
+    ok 1 - refuses to append a shell directive to JSON with no base-URL field
+      ---
+      duration_ms: 3.8893
+      type: 'test'
+      ...
+    # Subtest: refuses YAML with no base-URL field rather than breaking the document
+    ok 2 - refuses YAML with no base-URL field rather than breaking the document
+      ---
+      duration_ms: 0.6969
+      type: 'test'
+      ...
+    # Subtest: edits an existing base-URL field in place and keeps JSON parseable
+    ok 3 - edits an existing base-URL field in place and keeps JSON parseable
+      ---
+      duration_ms: 0.4443
+      type: 'test'
+      ...
+    # Subtest: writes `export` in shell profiles so child processes actually inherit the var
+    ok 4 - writes `export` in shell profiles so child processes actually inherit the var
+      ---
+      duration_ms: 2.8791
+      type: 'test'
+      ...
+    # Subtest: omits `export` in .env files, which dotenv loaders would treat as part of the key
+    ok 5 - omits `export` in .env files, which dotenv loaders would treat as part of the key
+      ---
+      duration_ms: 0.5078
+      type: 'test'
+      ...
+    # Subtest: routes anthropic and openai kinds to their own broker paths
+    ok 6 - routes anthropic and openai kinds to their own broker paths
+      ---
+      duration_ms: 0.6747
+      type: 'test'
+      ...
+    1..6
+ok 1 - proposeBrokerRewrite never corrupts the file it claims to protect
+  ---
+  duration_ms: 11.768
+  type: 'suite'
+  ...
+# Subtest: detectConfigFormat
+    # Subtest: classifies by filename first
+    ok 1 - classifies by filename first
+      ---
+      duration_ms: 0.772
+      type: 'test'
+      ...
+    # Subtest: falls back to content shape for unnamed files
+    ok 2 - falls back to content shape for unnamed files
+      ---
+      duration_ms: 0.9994
+      type: 'test'
+      ...
+    1..2
+ok 2 - detectConfigFormat
+  ---
+  duration_ms: 2.5242
+  type: 'suite'
+  ...
+# Subtest: discoverAllAiTools path anchoring
+    # Subtest: resolves workspace-relative candidates against the workspace, not the host cwd
+    ok 1 - resolves workspace-relative candidates against the workspace, not the host cwd
+      ---
+      duration_ms: 6.5716
+      type: 'test'
+      ...
+    # Subtest: skips relative candidates entirely when no workspace is open
+    ok 2 - skips relative candidates entirely when no workspace is open
+      ---
+      duration_ms: 1.599
+      type: 'test'
+      ...
+    # Subtest: reports monitor-only tools as monitor-only, never as covered
+    ok 3 - reports monitor-only tools as monitor-only, never as covered
+      ---
+      duration_ms: 0.9867
+      type: 'test'
+      ...
+    # Subtest: every auto-securable tool declares at least one config candidate
+    ok 4 - every auto-securable tool declares at least one config candidate
+      ---
+      duration_ms: 0.3809
+      type: 'test'
+      ...
+    1..4
+ok 3 - discoverAllAiTools path anchoring
+  ---
+  duration_ms: 10.1393
+  type: 'suite'
+  ...
+# Subtest: buildSecurePlan honesty
+    # Subtest: reports a JSON config it refused to rewrite instead of claiming coverage
+    ok 1 - reports a JSON config it refused to rewrite instead of claiming coverage
+      ---
+      duration_ms: 2.3841
+      type: 'test'
+      ...
+    # Subtest: keeps each config's own kind rather than coercing everything to anthropic
+    ok 2 - keeps each config's own kind rather than coercing everything to anthropic
+      ---
+      duration_ms: 1.238
+      type: 'test'
+      ...
+    1..2
+ok 4 - buildSecurePlan honesty
+  ---
+  duration_ms: 4.0306
+  type: 'suite'
+  ...
+# Subtest: executeSecurePlan
+    # Subtest: refuses to rewrite anything while the broker is offline
+    ok 1 - refuses to rewrite anything while the broker is offline
+      ---
+      duration_ms: 2.2109
+      type: 'test'
+      ...
+    # Subtest: does not claim redaction when the smoke test fails
+    ok 2 - does not claim redaction when the smoke test fails
+      ---
+      duration_ms: 2.7553
+      type: 'test'
+      ...
+    # Subtest: applies, backs up, and round-trips through restoreAll
+    ok 3 - applies, backs up, and round-trips through restoreAll
+      ---
+      duration_ms: 2.1004
+      type: 'test'
+      ...
+    # Subtest: a reachable route with an upstream failure cannot claim redaction
+    ok 4 - a reachable route with an upstream failure cannot claim redaction
+      ---
+      duration_ms: 1.835
+      type: 'test'
+      ...
+    # Subtest: writes nothing when the user did not approve
+    ok 5 - writes nothing when the user did not approve
+      ---
+      duration_ms: 0.999
+      type: 'test'
+      ...
+    1..5
+ok 5 - executeSecurePlan
+  ---
+  duration_ms: 10.5541
+  type: 'suite'
+  ...
+# Subtest: F18 legacy generic Cline env writer cannot advertise a version-unverified routing change
+ok 6 - F18 legacy generic Cline env writer cannot advertise a version-unverified routing change
+  ---
+  duration_ms: 4.4105
+  type: 'test'
+  ...
+# Subtest: F18 artifact gate uses actual bytes and refuses version/publisher/runtime/manifest drift
+ok 7 - F18 artifact gate uses actual bytes and refuses version/publisher/runtime/manifest drift
+  ---
+  duration_ms: 242.2089
+  type: 'test'
+  ...
+# Subtest: F18 current providers/MCP/global schema preserves unrelated fields and masks the entire review
+ok 8 - F18 current providers/MCP/global schema preserves unrelated fields and masks the entire review
+  ---
+  duration_ms: 8.8652
+  type: 'test'
+  ...
+# Subtest: F18 approval, backup and exact apply round trip route only the selected pinned provider
+ok 9 - F18 approval, backup and exact apply round trip route only the selected pinned provider
+  ---
+  duration_ms: 9.3036
+  type: 'test'
+  ...
+# Subtest: F18 cancelled review writes nothing and creates no backup grant
+ok 10 - F18 cancelled review writes nothing and creates no backup grant
+  ---
+  duration_ms: 3.7414
+  type: 'test'
+  ...
+# Subtest: F18 unavailable encrypted backup stops all config writes without echoing its exception
+ok 11 - F18 unavailable encrypted backup stops all config writes without echoing its exception
+  ---
+  duration_ms: 4.1875
+  type: 'test'
+  ...
+# Subtest: F18 config drift while review is pending invalidates the complete planned write
+ok 12 - F18 config drift while review is pending invalidates the complete planned write
+  ---
+  duration_ms: 4.2001
+  type: 'test'
+  ...
+# Subtest: F18 owner/session/flag withdrawal after review returns no changes
+ok 13 - F18 owner/session/flag withdrawal after review returns no changes
+  ---
+  duration_ms: 3.7742
+  type: 'test'
+  ...
+# Subtest: F18 a partial write failure restores only unchanged owned changes using encrypted backups
+ok 14 - F18 a partial write failure restores only unchanged owned changes using encrypted backups
+  ---
+  duration_ms: 4.5176
+  type: 'test'
+  ...
+# Subtest: F18 undo restores the exact previous private configuration without exposing it
+ok 15 - F18 undo restores the exact previous private configuration without exposing it
+  ---
+  duration_ms: 7.1547
+  type: 'test'
+  ...
+# Subtest: F18 undo refuses to overwrite a later vendor/user config edit
+ok 16 - F18 undo refuses to overwrite a later vendor/user config edit
+  ---
+  duration_ms: 5.257
+  type: 'test'
+  ...
+# Subtest: F18 malformed/future schemas, custom modes, unowned MCP name/hook and external destinations refuse
+ok 17 - F18 malformed/future schemas, custom modes, unowned MCP name/hook and external destinations refuse
+  ---
+  duration_ms: 7.5512
+  type: 'test'
+  ...
+# Subtest: IntegrationAdapter detect + propose
+    # Subtest: detects openai-compatible config and extracts base URL
+    ok 1 - detects openai-compatible config and extracts base URL
+      ---
+      duration_ms: 3.8299
+      type: 'test'
+      ...
+    # Subtest: proposes a rewrite to loopback broker without writing
+    ok 2 - proposes a rewrite to loopback broker without writing
+      ---
+      duration_ms: 2.0041
+      type: 'test'
+      ...
+    1..2
+ok 18 - IntegrationAdapter detect + propose
+  ---
+  duration_ms: 10.5417
+  type: 'suite'
+  ...
+# Subtest: IntegrationAdapter apply + restore (never silent)
+    # Subtest: refuses to write without approval
+    ok 1 - refuses to write without approval
+      ---
+      duration_ms: 1.6881
+      type: 'test'
+      ...
+    # Subtest: apply + restore round-trip preserves original content
+    ok 2 - apply + restore round-trip preserves original content
+      ---
+      duration_ms: 2.6759
+      type: 'test'
+      ...
+    # Subtest: never writes the pre-rewrite copy of a secret file to the filesystem
+    ok 3 - never writes the pre-rewrite copy of a secret file to the filesystem
+      ---
+      duration_ms: 4.6077
+      type: 'test'
+      ...
+    # Subtest: leaves the original untouched when the backup sink fails
+    ok 4 - leaves the original untouched when the backup sink fails
+      ---
+      duration_ms: 1.0372
+      type: 'test'
+      ...
+    # Subtest: refuses apply when file drifted since proposal
+    ok 5 - refuses apply when file drifted since proposal
+      ---
+      duration_ms: 0.834
+      type: 'test'
+      ...
+    # Subtest: refuses restore without approval
+    ok 6 - refuses restore without approval
+      ---
+      duration_ms: 2.2416
+      type: 'test'
+      ...
+    1..6
+ok 19 - IntegrationAdapter apply + restore (never silent)
+  ---
+  duration_ms: 15.8976
+  type: 'suite'
+  ...
+# Subtest: IntegrationAdapter health + stream smoke
+    # Subtest: reports health OK on 200
+    ok 1 - reports health OK on 200
+      ---
+      duration_ms: 1.1735
+      type: 'test'
+      ...
+    # Subtest: stream smoke fails closed without auth token
+    ok 2 - stream smoke fails closed without auth token
+      ---
+      duration_ms: 1.2302
+      type: 'test'
+      ...
+    # Subtest: stream smoke accepts non-404 route responses
+    ok 3 - stream smoke accepts non-404 route responses
+      ---
+      duration_ms: 1.2123
+      type: 'test'
+      ...
+    1..3
+ok 20 - IntegrationAdapter health + stream smoke
+  ---
+  duration_ms: 4.6029
+  type: 'suite'
+  ...
+1..20
+# tests 42
+# suites 8
+# pass 42
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1116.8132

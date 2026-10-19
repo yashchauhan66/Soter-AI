@@ -18,6 +18,32 @@ function strings(value: unknown, result: string[] = []): string[] {
     else if (record(value)) for (const item of Object.values(value)) strings(item, result);
     return result;
 }
+/** Expanded metadata budget only for the declared OpenAI function schema.
+ * Every string retains its original order and remains inspected. */
+function toolSchemaStrings(value: unknown): string[] {
+    if (!record(value) || value.tools === undefined) return strings(value);
+    const tools = value.tools;
+    if (!Array.isArray(tools) || tools.length > 32) return fail("gateway_schema_unsupported");
+    for (const tool of tools) {
+        if (!record(tool) || Object.keys(tool).some(key => !["type", "function"].includes(key)) || tool.type !== "function" || !record(tool.function)) return fail("gateway_schema_unsupported");
+        const definition = tool.function;
+        if (Object.keys(definition).some(key => !["name", "description", "parameters", "strict"].includes(key))
+            || typeof definition.name !== "string" || !/^[A-Za-z0-9_-]{1,128}$/.test(definition.name) || !record(definition.parameters)
+            || definition.description !== undefined && (typeof definition.description !== "string" || Buffer.byteLength(definition.description) > 16384)
+            || definition.strict !== undefined && typeof definition.strict !== "boolean") return fail("gateway_schema_unsupported");
+    }
+    const all: string[] = [], general: string[] = []; let metadata = 0;
+    const collect = (item: unknown): void => {
+        if (typeof item === "string") { if (++metadata > 512) return fail("gateway_limit"); all.push(item); }
+        else if (Array.isArray(item)) item.forEach(collect);
+        else if (record(item)) Object.values(item).forEach(collect);
+    };
+    for (const [key, item] of Object.entries(value)) {
+        if (key === "tools") collect(item);
+        else { const before = general.length; strings(item, general); all.push(...general.slice(before)); }
+    }
+    return all;
+}
 function contentStrings(value: unknown, result: string[] = []): string[] {
     if (Array.isArray(value)) for (const item of value) contentStrings(item, result);
     else if (record(value)) for (const [key, item] of Object.entries(value)) {
@@ -32,9 +58,11 @@ export class GatewayBoundary {
     #matcher: RegisteredSecretMatcher;
     #available: boolean;
     #short: boolean;
-    constructor(options: { values: readonly string[]; version: number; enabled?: boolean }) {
+    #clineToolSchemas: boolean;
+    constructor(options: { values: readonly string[]; version: number; enabled?: boolean; clineToolSchemas?: boolean }) {
         this.#values = Object.freeze(Array.isArray(options.values) ? [...options.values] : []);
-        this.#matcher = new RegisteredSecretMatcher(options.values);
+        this.#clineToolSchemas = options.clineToolSchemas === true;
+        this.#matcher = new RegisteredSecretMatcher(options.values, this.#clineToolSchemas ? { maxDecodedCandidates: 1024 } : {});
         this.#available = options.version === 1 && options.enabled !== false && this.#matcher.inspectRequest([]).status === "CLEAN";
         this.#short = this.#values.some(v => typeof v === "string" && Array.from(v).length < 8);
     }
@@ -43,14 +71,16 @@ export class GatewayBoundary {
     /** Internal fixture capability: clone current registrations without returning them. */
     withSynthetic<T>(value: string, operation: (copy: GatewayBoundary) => Promise<T>): Promise<T> {
         if (!this.#available) return Promise.reject(new GatewayPolicyError("gateway_unavailable"));
-        const copy = new GatewayBoundary({ values: [...this.#values, value], version: 1 });
+        const copy = new GatewayBoundary({ values: [...this.#values, value], version: 1, clineToolSchemas: this.#clineToolSchemas });
         return operation(copy).finally(() => copy.dispose());
     }
-    #inspect(value: unknown, canonical: string, start: number): void {
+    #inspect(value: unknown, canonical: string, start: number, toolSchemas = false): void {
         if (!this.#available) return fail("gateway_unavailable");
         if (this.#short) return fail("gateway_sensitive");
-        const leaves = strings(value), texts = contentStrings(value);
-        for (const parts of [[canonical], leaves, texts]) {
+        const leaves = toolSchemas ? toolSchemaStrings(value) : strings(value), texts = contentStrings(value);
+        // F07 scans joined input. Short registrations already withhold above;
+        // joining this bounded metadata adds no short-value exception.
+        for (const parts of [[canonical], leaves.length > 32 ? [leaves.join("")] : leaves, texts]) {
             const decision = this.#matcher.inspectRequest(parts);
             if (decision.status === "MATCHED") return fail("gateway_sensitive");
             if (decision.status !== "CLEAN") return fail("gateway_limit");
@@ -86,7 +116,7 @@ export class GatewayBoundary {
                 else if (!Array.isArray(message.tool_calls) && !record(message.function_call)) return fail("gateway_schema_unsupported");
             }
             if (body.system !== undefined) textContent(body.system);
-            this.#inspect(body, parsed.canonical, start); return Object.freeze(parsed);
+            this.#inspect(body, parsed.canonical, start, provider === "openai" && this.#clineToolSchemas); return Object.freeze(parsed);
         } catch (error) { if (error instanceof GatewayPolicyError) throw error; return fail("gateway_limit"); }
     }
     inspectResponse(provider: GatewayProvider, chunks: readonly Uint8Array[], streaming: boolean): { readonly wire: string; readonly media: string; readonly semantic: string } {

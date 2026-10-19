@@ -1,0 +1,120 @@
+﻿[
+  {
+    "term": "user_settings.json",
+    "count": 0,
+    "excerpts": []
+  },
+  {
+    "term": "global_settings.json",
+    "count": 0,
+    "excerpts": []
+  },
+  {
+    "term": "globalState.json",
+    "count": 3,
+    "excerpts": [
+      {
+        "offset": 14479392,
+        "text": "=dne.default.join(e,\"workspaces\",o)}R5n.default.mkdirSync(e,{recursive:!0}),R5n.default.mkdirSync(r,{recursive:!0});let i=new F4e(dne.default.join(e,\"globalState.json\"),\"GlobalState\");return{globalState:i,globalStateBackingStore:i,secrets:new F4e(dne.default.join(e,\"secrets.json\"),\"Secrets\",{fileMode:384}),workspaceState:new F4e(dne.default.join(r,\"workspaceState.json\"),\"WorkspaceState\"),dataDir:e,workspaceStoragePath:r}}var R5n,Cxs,dne,Ixs,qJt=se(()=>{\"use strict\";R5n=dt(require(\"node:fs\")),Cxs=dt(require(\"node:os\")),dne=dt(require(\"node:path\"));wxs();Ixs=\"data\"});function sN(t){return t||cnt()}function p6f(t){return pne.default.join(sN(t),\"globalState.json\")}function f6f(t){return pne.default.join(sN(t),\"secrets.json\")}function Sxs(t){return pne.default.join(sN(t),\"state\",\"taskHistory.js"
+      },
+      {
+        "offset": 14479892,
+        "text": "=dt(require(\"node:os\")),dne=dt(require(\"node:path\"));wxs();Ixs=\"data\"});function sN(t){return t||cnt()}function p6f(t){return pne.default.join(sN(t),\"globalState.json\")}function f6f(t){return pne.default.join(sN(t),\"secrets.json\")}function Sxs(t){return pne.default.join(sN(t),\"state\",\"taskHistory.json\")}function dnt(t,e){return pne.default.join(sN(e),\"tasks\",t)}function h6f(t,e){return pne.default.join(dnt(t,e),\"api_conversation_history.json\")}function m6f(t,e){return pne.default.join(dnt(t,e),\"ui_messages.json\")}function pnt(t,e){try{if(!N4e.default.existsSync(t))return e;let r=N4e.default.readFileSync(t,\"utf-8\").trim();return!r||r===\"{}\"?e:JSON.parse(r)}catch(r){return Re.warn(`[LegacyStateReader] Failed to read ${t}:`,r),e}}function Txs(t){return pnt(p6f(t),{})}function kxs(t){return pn"
+      }
+    ]
+  },
+  {
+    "term": "global_state.json",
+    "count": 0,
+    "excerpts": []
+  },
+  {
+    "term": "settings.json",
+    "count": 43,
+    "excerpts": [
+      {
+        "offset": 12836991,
+        "text": "on\",contextHistory:\"context_history.json\",uiMessages:\"ui_messages.json\",clineRecommendedModels:\"cline_recommended_models.json\",mcpSettings:\"cline_mcp_settings.json\",clineRules:\".clinerules\",workflows:\".clinerules/workflows\",hooksDir:\".clinerules/hooks\",clineruleSkillsDir:\".clinerules/skills\",clineSkillsDir:\".cline/skills\",claudeSkillsDir:\".claude/skills\",agentsSkillsDir:\".agents/skills\",cursorRulesDir:\".cursor/rules\",cursorRulesFile:\".cursorrules\",windsurfRules:\".windsurfrules\",agentsRulesFile:\"AGENTS.md\",taskMetadata:\"task_metadata.json\",remoteConfig:t=>`remote_config_${t}.json`}});var Fg,izo=se(()=>{\"use strict\";Fg=\"StateManager must be initialized before attempting to access state.\"});function n7p(t){return t&&t.__esModule&&Object.prototype.hasOwnProperty.call(t,\"default\")?t.default:t}f"
+      },
+      {
+        "offset": 25916871,
+        "text": "}};Dvn();Rr();sZe();var Pft=require(\"node:fs\"),_Mu=dt(require(\"node:os\")),RNe=dt(require(\"node:path\"));mUt();UJt();Rr();lli();Hp();var Ovr=\"cline_mcp_settings.json\",SMu=\"__vscodeLegacyMcpSettingsMigration\";function j2(t){return typeof t==\"object\"&&t!==null&&!Array.isArray(t)}function so0(t){try{if(!(0,Pft.existsSync)(t))return;let e=JSON.parse((0,Pft.readFileSync)(t,\"utf8\"));return j2(e)?e:void 0}catch(e){Re.warn(`[Migration] Failed to read legacy MCP settings from ${t}:`,e);return}}function uo0(t){let e=t?.mcpServers;return j2(e)?e:{}}function EMu(t){if(t===\"stdio\"||t===\"sse\"||t===\"streamableHttp\")return t;if(t===\"http\")return\"streamableHttp\"}function wMu(t){if(!Array.isArray(t))return;let e=t.filter(r=>typeof r==\"string\");return e.length===t.length?e:void 0}function CMu(t){if(!j2(t))retu"
+      }
+    ]
+  },
+  {
+    "term": "cline.updateSettings",
+    "count": 0,
+    "excerpts": []
+  },
+  {
+    "term": "apiConfiguration",
+    "count": 49,
+    "excerpts": [
+      {
+        "offset": 24755367,
+        "text": ">{\"use strict\";Gi()});async function dTu(t,e){try{if(e.clineEnv!==void 0&&e.clineEnv!==\"\"&&(Lh.setEnvironment(e.clineEnv),await G4e(t,Ir.create())),e.apiConfiguration){let r=e.apiConfiguration,i={...r,planModeApiProvider:r.planModeApiProvider?zy(r.planModeApiProvider):void 0,actModeApiProvider:r.actModeApiProvider?zy(r.actModeApiProvider):void 0,planModeReasoningEffort:r.planModeReasoningEffort,actModeReasoningEffort:r.actModeReasoningEffort},a=t.stateManager.getApiConfiguration(),o=Noe(t.getProviderConfigStore(),a,i);if(t.stateManager.setApiConfiguration(o),t.task){let n=t.stateManager.getGlobalSettingsKey(\"mode\"),s=KM(o,n);t.task.api=Kq(s)}t.handleApiConfigurationChanged(a,o)}if(e.telemetrySetting&&await t.updateTelemetrySetting(e.telemetrySetting),e.planActSeparateModelsSetting!==void 0"
+      },
+      {
+        "offset": 24755393,
+        "text": "c function dTu(t,e){try{if(e.clineEnv!==void 0&&e.clineEnv!==\"\"&&(Lh.setEnvironment(e.clineEnv),await G4e(t,Ir.create())),e.apiConfiguration){let r=e.apiConfiguration,i={...r,planModeApiProvider:r.planModeApiProvider?zy(r.planModeApiProvider):void 0,actModeApiProvider:r.actModeApiProvider?zy(r.actModeApiProvider):void 0,planModeReasoningEffort:r.planModeReasoningEffort,actModeReasoningEffort:r.actModeReasoningEffort},a=t.stateManager.getApiConfiguration(),o=Noe(t.getProviderConfigStore(),a,i);if(t.stateManager.setApiConfiguration(o),t.task){let n=t.stateManager.getGlobalSettingsKey(\"mode\"),s=KM(o,n);t.task.api=Kq(s)}t.handleApiConfigurationChanged(a,o)}if(e.telemetrySetting&&await t.updateTelemetrySetting(e.telemetrySetting),e.planActSeparateModelsSetting!==void 0&&t.stateManager.setGlobal"
+      }
+    ]
+  },
+  {
+    "term": "setApiConfiguration",
+    "count": 5,
+    "excerpts": [
+      {
+        "offset": 23625302,
+        "text": "ApiConfiguration(),i=Hgu(e.apiConfiguration),a={...r};for(let n of e.updateMask)a[n]=i[n];let o=Noe(t.getProviderConfigStore(),r,a);if(t.stateManager.setApiConfiguration(o),G8e(t,o),t.task){let n=t.stateManager.getGlobalSettingsKey(\"mode\"),s=KM(o,n);t.task.api=Kq(s)}return t.handleApiConfigurationChanged(r,o),await t.postStateToWebview(),Ir.create()}catch(r){throw Re.error(`Failed to update API configuration (partial): ${r}`),r}}var Ygu=se(()=>{\"use strict\";Gi();Foe();Rr();vhr();ldt();Qve()});async function bhr(t){return FI(t,\"groq\")}var iai=se(()=>{\"use strict\";KS()});async function Xgu(t,e){let r=await bhr(t);return cd.create({models:R2(r)})}var Zgu=se(()=>{\"use strict\";dA();iD();iai()});async function xhr(t){return FI(t,\"baseten\")}var aai=se(()=>{\"use strict\";KS()});async function eAu(t"
+      },
+      {
+        "offset": 24755759,
+        "text": "ffort,actModeReasoningEffort:r.actModeReasoningEffort},a=t.stateManager.getApiConfiguration(),o=Noe(t.getProviderConfigStore(),a,i);if(t.stateManager.setApiConfiguration(o),t.task){let n=t.stateManager.getGlobalSettingsKey(\"mode\"),s=KM(o,n);t.task.api=Kq(s)}t.handleApiConfigurationChanged(a,o)}if(e.telemetrySetting&&await t.updateTelemetrySetting(e.telemetrySetting),e.planActSeparateModelsSetting!==void 0&&t.stateManager.setGlobalState(\"planActSeparateModelsSetting\",e.planActSeparateModelsSetting),e.enableCheckpointsSetting!==void 0){let r=t.stateManager.getGlobalSettingsKey(\"enableCheckpointsSetting\")??!0,i=e.enableCheckpointsSetting;t.stateManager.setGlobalState(\"enableCheckpointsSetting\",i),r!==i&&t.handleCheckpointsSettingChanged(r,i)}if(e.mcpResponsesCollapsed!==void 0&&t.stateManager"
+      }
+    ]
+  },
+  {
+    "term": "updateApiConfiguration",
+    "count": 13,
+    "excerpts": [
+      {
+        "offset": 25848861,
+        "text": "dels:zr.EmptyRequest.fromJSON,subscribeToLiteLlmModels:zr.EmptyRequest.fromJSON,updateApiConfigurationProto:zr.UpdateApiConfigurationRequest.fromJSON,updateApiConfiguration:zr.UpdateApiConfigurationRequestNew.fromJSON,updateApiConfigurationPartial:zr.UpdateApiConfigurationPartialRequest.fromJSON,refreshGroqModelsRpc:zr.EmptyRequest.fromJSON,refreshBasetenModelsRpc:zr.EmptyRequest.fromJSON,getSapAiCoreModels:zr.SapAiCoreModelsRequest.fromJSON,refreshOcaModels:zr.StringRequest.fromJSON,getAihubmixModels:zr.EmptyRequest.fromJSON,refreshVercelAiGatewayModelsRpc:zr.EmptyRequest.fromJSON,listProviders:zr.Empty.fromJSON,resolveProviderModels:zr.ResolveProviderModelsRequest.fromJSON,resolveModelInfo:zr.ResolveModelInfoRequest.fromJSON,readProviderConfig:zr.StringRequest.fromJSON,writeProviderConfi"
+      },
+      {
+        "offset": 25848929,
+        "text": "st.fromJSON,updateApiConfigurationProto:zr.UpdateApiConfigurationRequest.fromJSON,updateApiConfiguration:zr.UpdateApiConfigurationRequestNew.fromJSON,updateApiConfigurationPartial:zr.UpdateApiConfigurationPartialRequest.fromJSON,refreshGroqModelsRpc:zr.EmptyRequest.fromJSON,refreshBasetenModelsRpc:zr.EmptyRequest.fromJSON,getSapAiCoreModels:zr.SapAiCoreModelsRequest.fromJSON,refreshOcaModels:zr.StringRequest.fromJSON,getAihubmixModels:zr.EmptyRequest.fromJSON,refreshVercelAiGatewayModelsRpc:zr.EmptyRequest.fromJSON,listProviders:zr.Empty.fromJSON,resolveProviderModels:zr.ResolveProviderModelsRequest.fromJSON,resolveModelInfo:zr.ResolveModelInfoRequest.fromJSON,readProviderConfig:zr.StringRequest.fromJSON,writeProviderConfig:zr.WriteProviderConfigRequest.fromJSON,commitModelSelection:zr.Com"
+      }
+    ]
+  },
+  {
+    "term": "openAiBaseUrl",
+    "count": 54,
+    "excerpts": [
+      {
+        "offset": 25890124,
+        "text": "ii();tii();nii();Pfr();BAr();Lve();Rr();var rMu=\"__openAiBaseUrlV1Migrated\";function nMu(t){if(t.globalState.get(rMu))return;let e=t.globalState.get(\"openAiBaseUrl\")?.trim();if(e&&URL.canParse(e)){let r=new URL(e);r.pathname===\"/\"&&(r.pathname=\"/v1\",t.globalState.update(\"openAiBaseUrl\",r.toString().replace(/\\/$/,\"\")),Re.info(\"[Migration] Added /v1 to the host-only OpenAI Compatible base URL\"))}t.globalState.update(rMu,!0)}var e0i=dt(require(\"fs/promises\")),iMu=dt(require(\"path\"));fnt();Rr();Ux();async function aMu(t){let e=[\"apiProvider\",\"apiModelId\",\"thinkingBudgetTokens\",\"reasoningEffort\",\"vsCodeLmModelSelector\",\"awsBedrockCustomSelected\",\"awsBedrockCustomModelBaseId\",\"openRouterModelId\",\"openRouterModelInfo\",\"openAiModelId\",\"openAiModelInfo\",\"ollamaModelId\",\"lmStudioModelId\",\"liteLlmMod"
+      },
+      {
+        "offset": 25890246,
+        "text": "rn;let e=t.globalState.get(\"openAiBaseUrl\")?.trim();if(e&&URL.canParse(e)){let r=new URL(e);r.pathname===\"/\"&&(r.pathname=\"/v1\",t.globalState.update(\"openAiBaseUrl\",r.toString().replace(/\\/$/,\"\")),Re.info(\"[Migration] Added /v1 to the host-only OpenAI Compatible base URL\"))}t.globalState.update(rMu,!0)}var e0i=dt(require(\"fs/promises\")),iMu=dt(require(\"path\"));fnt();Rr();Ux();async function aMu(t){let e=[\"apiProvider\",\"apiModelId\",\"thinkingBudgetTokens\",\"reasoningEffort\",\"vsCodeLmModelSelector\",\"awsBedrockCustomSelected\",\"awsBedrockCustomModelBaseId\",\"openRouterModelId\",\"openRouterModelInfo\",\"openAiModelId\",\"openAiModelInfo\",\"ollamaModelId\",\"lmStudioModelId\",\"liteLlmModelId\",\"liteLlmModelInfo\",\"requestyModelId\",\"requestyModelInfo\",\"togetherModelId\",\"fireworksModelId\",\"sapAiCoreModelId\",\"gr"
+      }
+    ]
+  },
+  {
+    "term": "read_files",
+    "count": 23,
+    "excerpts": [
+      {
+        "offset": 24470729,
+        "text": "i=>{let a=r.find(o=>i.startsWith(o));return a?a+($li(i.substring(a.length).trim(),e)??\"\"):i}).join(`\n`)}function Jli(t,e){let r=ese(e);switch(t){case\"read_files\":case\"read_file\":{let i=MCu(r)[0];return{tool:\"readFile\",path:i?.path??\"\",...OCu(i)}}case\"list_files\":{let i=Kc(r,\"path\")??\"\";return{tool:Tjh(r,\"recursive\")??!1?\"listFilesRecursive\":\"listFilesTopLevel\",path:i}}case\"list_code_definition_names\":return{tool:\"listCodeDefinitionNames\",path:Kc(r,\"path\")??\"\"};case\"editor\":case\"replace_in_file\":{let i=Kc(r,\"path\")??\"\",a=Kc(r,\"new_text\")??Kc(r,\"new_str\")??Kc(r,\"content\"),o=Kc(r,\"patch\")??Kc(r,\"diff\"),n=Kc(r,\"old_text\")??Kc(r,\"old_str\"),s=Apt(r,\"insert_line\"),u=t===\"replace_in_file\"||!!n||s!=null,c=n&&a?`------- SEARCH\n${n}\n=======\n${a}\n+++++++ REPLACE`:a;return{tool:u?\"editedExistingFile\":\""
+      },
+      {
+        "offset": 24482618,
+        "text": "r.push({ts:e.nextTs(),type:\"say\",say:\"mcp_server_response\",text:f,partial:!1});break}let o=e.getStreamingToolInput(),n=e.clearStreamingTool();if(i===\"read_files\"||i===\"read_file\"){let u=ese(o),c=MCu(u);if(c.length>1){let d=e.currentCwd();c.forEach((f,p)=>{let h={tool:\"readFile\",path:f.path,...OCu(f)};r.push({ts:p===0?n:e.nextTs(),type:\"say\",say:\"tool\",text:JSON.stringify(gpt(h,d)),partial:!1})});break}}if(i===\"apply_patch\"&&!t.error){let u=FCu(o),c=u?Ijh(u):[];if(c.length>1){let d=e.currentCwd();c.forEach((f,p)=>{r.push({ts:p===0?n:e.nextTs(),type:\"say\",say:\"tool\",text:JSON.stringify(gpt(f,d)),partial:!1})});break}}let s=gpt(Jli(i,o),e.currentCwd());t.error?(r.push({ts:n,type:\"say\",say:\"tool\",text:JSON.stringify(s),partial:!1}),r.push({ts:e.nextTs(),type:\"say\",say:\"error\",text:t.error,part"
+      }
+    ]
+  }
+]

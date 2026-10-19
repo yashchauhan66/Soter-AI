@@ -1,0 +1,138 @@
+﻿TAP version 13
+# Subtest: F16-M01 valid but wrong enterprise startup policy cannot be healthy
+ok 1 - F16-M01 valid but wrong enterprise startup policy cannot be healthy
+  ---
+  duration_ms: 85.9304
+  type: 'test'
+  ...
+# Subtest: F16-M02 valid runtime policy downgrade withdraws owner
+ok 2 - F16-M02 valid runtime policy downgrade withdraws owner
+  ---
+  duration_ms: 32.4134
+  type: 'test'
+  ...
+# Subtest: F16-M03 saved mode drift revokes prior generation
+ok 3 - F16-M03 saved mode drift revokes prior generation
+  ---
+  duration_ms: 20.7892
+  type: 'test'
+  ...
+# Subtest: F16-M04 wrong mode enable acknowledgment is not ignored
+ok 4 - F16-M04 wrong mode enable acknowledgment is not ignored
+  ---
+  duration_ms: 16.8185
+  type: 'test'
+  ...
+# Subtest: F16-M05 default machine flag reaches child and complete registry sync
+ok 5 - F16-M05 default machine flag reaches child and complete registry sync
+  ---
+  duration_ms: 28.3389
+  type: 'test'
+  ...
+# Subtest: F16-M06 unavailable private registry fails before child launch
+ok 6 - F16-M06 unavailable private registry fails before child launch
+  ---
+  duration_ms: 1.9065
+  type: 'test'
+  ...
+# Subtest: F16-M07 stale registry source cannot retain request authority
+ok 7 - F16-M07 stale registry source cannot retain request authority
+  ---
+  duration_ms: 27.8994
+  type: 'test'
+  ...
+# Subtest: F16-M08 unknown gateway policy version never becomes healthy
+ok 8 - F16-M08 unknown gateway policy version never becomes healthy
+  ---
+  duration_ms: 20.8897
+  type: 'test'
+  ...
+# Subtest: F16-M09 machine disable ignores repository override
+ok 9 - F16-M09 machine disable ignores repository override
+  ---
+  duration_ms: 13.0208
+  type: 'test'
+  ...
+# Subtest: F18 rich tool-schema profile is bound to the owned child and machine setting
+not ok 10 - F18 rich tool-schema profile is bound to the owned child and machine setting
+  ---
+  duration_ms: 23.2986
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayPolicyManager.test.ts:2:6803'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    undefined !== '1'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '1'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayPolicyManager.test.ts:40:148)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F18 disabling the machine adapter withdraws the schema profile despite a workspace override
+not ok 11 - F18 disabling the machine adapter withdraws the schema profile despite a workspace override
+  ---
+  duration_ms: 21.832
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayPolicyManager.test.ts:2:7137'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    undefined !== '0'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '0'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayPolicyManager.test.ts:41:279)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F18 missing or mismatched schema capability acknowledgment is unavailable false
+not ok 12 - F18 missing or mismatched schema capability acknowledgment is unavailable false
+  ---
+  duration_ms: 18.3486
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayPolicyManager.test.ts:2:7569'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  operator: 'rejects'
+  stack: |-
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayPolicyManager.test.ts:42:179)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F18 missing or mismatched schema capability acknowledgment is unavailable true
+not ok 13 - F18 missing or mismatched schema capability acknowledgment is unavailable true
+  ---
+  duration_ms: 11.081
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gatewayPolicyManager.test.ts:2:7569'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  operator: 'rejects'
+  stack: |-
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\gatewayPolicyManager.test.ts:42:179)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 9
+# fail 4
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1530.0888

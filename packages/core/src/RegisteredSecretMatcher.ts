@@ -44,8 +44,15 @@ export class RegisteredSecretMatcher {
     #values: Value[] = [];
     #needles: Needle[] = [];
     #invalid = false;
-    constructor(values: readonly string[]) {
+    #decodedCandidateLimit: number = SECRET_MATCH_LIMITS.maxDecodedCandidates;
+    constructor(values: readonly string[], options: { maxDecodedCandidates?: number } = {}) {
         try {
+            if (!options || typeof options !== "object" || Array.isArray(options) || Object.keys(options).some(key => key !== "maxDecodedCandidates")) throw new Error();
+            if (Object.hasOwn(options, "maxDecodedCandidates")) {
+                const limit = options.maxDecodedCandidates;
+                if (!Number.isSafeInteger(limit) || limit! < 1 || limit! > 1024) throw new Error();
+                this.#decodedCandidateLimit = limit!;
+            }
             if (!Array.isArray(values)) throw new Error();
             let total = 0, expanded = 0; const seen = new Set<string>();
             for (const text of values) {
@@ -144,7 +151,7 @@ export class RegisteredSecretMatcher {
                 if (!decoded || !validUnicode(decoded)) return;
                 const key = `${representation}:${start}:${end}`; if (seenViews.has(key)) return;
                 seenViews.add(key);
-                if (views.length >= SECRET_MATCH_LIMITS.maxDecodedCandidates) throw new Error();
+                if (views.length >= this.#decodedCandidateLimit) throw new Error();
                 decodedBytes += Buffer.byteLength(decoded, "utf8"); if (decodedBytes > SECRET_MATCH_LIMITS.maxDecodedBytes) throw new Error();
                 views.push({ text: decoded, start, end, representation });
             };

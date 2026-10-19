@@ -6,6 +6,7 @@ import { gzipSync } from "node:zlib";
 import { randomUUID } from "node:crypto";
 import { BrokerServer } from "../../../../apps/local-ai-broker/src/BrokerServer";
 const TOKEN="synthetic-f16-data-"+"d".repeat(40),CONTROL="synthetic-f16-control-"+"c".repeat(40),KEY="synthetic-f16-provider-private",VALUE="synthetic_registry_f16_token_value",ROUTE="/v1/ai/openai-compatible/chat/completions",chat=(content:unknown="Public input")=>({model:"synthetic",messages:[{role:"user",content}]}),json=(value:unknown)=>JSON.stringify(value);
+const clineTools=()=>Array.from({length:10},(_,i)=>({type:"function",function:{name:"public_tool_"+i,description:"Public synthetic tool",parameters:{type:"object",properties:{path:{type:"string",description:"Public relative path"},text:{type:"string",description:"Public text"}},required:["path"],additionalProperties:false}}}));
 async function close(server:Server){await new Promise<void>(done=>{server.close(()=>done());server.closeIdleConnections();});}
 type Wire={text:string;headers:Record<string,unknown>};
 async function fixture(run:(url:string,wires:Wire[])=>Promise<void>,extra={},output:unknown={choices:[{message:{content:"Public output"}}],content:[{type:"text",text:"Public output"}]}){
@@ -16,6 +17,15 @@ async function fixture(run:(url:string,wires:Wire[])=>Promise<void>,extra={},out
 }
 async function post(url:string,body:unknown=chat(),headers:Record<string,string>={},route=ROUTE){const response=await fetch(url+route,{method:"POST",headers:{authorization:"Bearer "+TOKEN,"content-type":"application/json",...headers},body:typeof body==="string"?body:json(body)});const text=await response.text();return{status:response.status,text};}
 test("F16-W01 public exact collector positive and controlled auth headers",async()=>fixture(async(url,wires)=>{const input={...chat(),temperature:0.2};assert.equal((await post(url,input,{"x-public-client":"discard-me"})).status,200);assert.equal(wires.length,1);assert.deepEqual(JSON.parse(wires[0].text),input);assert.equal(wires[0].headers.authorization,"Bearer "+KEY);assert.equal(wires[0].headers["x-public-client"],undefined);assert.ok(!json(wires).includes(TOKEN));}));
+
+test("F18 actual strict broker forwards bounded public tool schemas and withholds protected metadata",async()=>fixture(async(url,wires)=>{
+    assert.equal((await post(url,{level:"strict"},{authorization:"Bearer "+CONTROL},"/v1/safe-mode/enable")).status,200);
+    assert.equal((await post(url,{version:1,generation:randomUUID(),mode:{enabled:true,level:"strict"},values:[VALUE]},{authorization:"Bearer "+CONTROL},"/v1/gateway/sync")).status,200);
+    const status=await fetch(url+"/v1/gateway/status",{headers:{authorization:"Bearer "+CONTROL}});assert.equal((await status.json() as {clineToolSchemas:boolean}).clineToolSchemas,true);
+    const body={...chat(),tools:clineTools()};assert.equal((await post(url,body)).status,200);assert.equal(wires.length,1);assert.deepEqual(JSON.parse(wires[0].text),body);assert.equal(wires[0].headers.authorization,"Bearer "+KEY);
+    for(const value of [VALUE,Buffer.from(VALUE).toString("base64")]){body.tools[8].function.description=value;assert.ok((await post(url,body)).status>=400);assert.equal(wires.length,1);}
+},{clineToolSchemas:true}));
+test("F18 absent schema capability keeps the original bounded request refusal",async()=>fixture(async(url,wires)=>{assert.ok((await post(url,{...chat(),tools:clineTools()})).status>=400);assert.equal(wires.length,0);},{clineToolSchemas:false}));
 test("F16-W02 registered raw and encoded representations send zero provider bytes",async()=>fixture(async(url,wires)=>{for(const content of [VALUE,Buffer.from(VALUE).toString("base64"),Buffer.from(VALUE).toString("hex"),encodeURIComponent(VALUE),JSON.stringify(VALUE)])assert.ok((await post(url,chat(content))).status>=400);assert.equal(wires.length,0);}));
 test("F16-W03 split messages and metadata/tool argument secrets withhold",async()=>fixture(async(url,wires)=>{for(const body of [{messages:[{role:"user",content:VALUE.slice(0,12)},{role:"assistant",content:VALUE.slice(12)}]},{...chat(),metadata:{public:VALUE}},{...chat(),tools:[{type:"function",function:{name:"public",description:VALUE}}]}])assert.ok((await post(url,body)).status>=400);assert.equal(wires.length,0);}));
 test("F16-W04 flagoff never falls back to earlier scanning",async()=>fixture(async(url,wires)=>{assert.equal((await post(url)).status,503);assert.equal(wires.length,0);assert.equal((await fetch(url+"/version",{headers:{authorization:"Bearer "+TOKEN}})).status,200);},{gatewayPolicy:false}));

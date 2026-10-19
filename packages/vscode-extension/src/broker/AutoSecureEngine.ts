@@ -64,7 +64,7 @@ export const KNOWN_AI_TOOLS: AiToolSpec[] = [
             "${HOME}/AppData/Roaming/Code/User/globalStorage/saoudrizwan.claude-dev/settings/cline_mcp_settings.json",
             ".cline/config.json",
         ],
-        coverageNote: "Routed to broker via OPENAI_BASE_URL — full redaction. ✅",
+        coverageNote: "Requires the separately verified pinned Cline adapter; generic environment rewriting does not establish routing.",
     },
     {
         id: "claude-code",
@@ -206,6 +206,11 @@ export function buildSecurePlan(discovered: DiscoveredTool[], ioFiles: Record<st
     const summaryLines: string[] = [];
 
     for (const d of discovered) {
+        if (d.spec.id === "cline" && d.status === "found") {
+            for (const cfg of d.configs) unsupported.push({ toolId: d.spec.id, path: cfg.path, reason: "Use the pinned Cline adapter. This generic writer has no verified version or live route." });
+            summaryLines.push("Cline: generic routing unavailable; review the pinned adapter.");
+            continue;
+        }
         if (d.status === "monitor-only") {
             monitorOnly.push(d.spec.id);
             summaryLines.push(`⚠️  ${d.spec.name}: monitor-only (cannot auto-route)`);

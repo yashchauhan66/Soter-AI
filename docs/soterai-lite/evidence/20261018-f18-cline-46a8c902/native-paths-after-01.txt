@@ -1,0 +1,136 @@
+﻿TAP version 13
+# Subtest: F18 bounded native editor permits only a current public write classification
+ok 1 - F18 bounded native editor permits only a current public write classification
+  ---
+  duration_ms: 7.2049
+  type: 'test'
+  ...
+# Subtest: F18 editor protected targets and unavailable classifiers remain withheld
+ok 2 - F18 editor protected targets and unavailable classifiers remain withheld
+  ---
+  duration_ms: 1.6402
+  type: 'test'
+  ...
+# Subtest: F18 editor unknown authority, traversal, ambiguous and oversized inputs obtain no classification
+ok 3 - F18 editor unknown authority, traversal, ambiguous and oversized inputs obtain no classification
+  ---
+  duration_ms: 1.4094
+  type: 'test'
+  ...
+# Subtest: F18 existing bridge grants no classification capability unless explicitly supplied
+ok 4 - F18 existing bridge grants no classification capability unless explicitly supplied
+  ---
+  duration_ms: 148.5116
+  type: 'test'
+  ...
+# Subtest: F18 private native read classification returns metadata only
+ok 5 - F18 private native read classification returns metadata only
+  ---
+  duration_ms: 24.5736
+  type: 'test'
+  ...
+# Subtest: F18 private native write classification returns metadata only
+ok 6 - F18 private native write classification returns metadata only
+  ---
+  duration_ms: 10.5242
+  type: 'test'
+  ...
+# Subtest: F18 private classification never treats an unknown object/original as a public decision
+ok 7 - F18 private classification never treats an unknown object/original as a public decision
+  ---
+  duration_ms: 11.4801
+  type: 'test'
+  ...
+# Subtest: F18 native classifier withdrawal while a decision is pending releases no public grant
+ok 8 - F18 native classifier withdrawal while a decision is pending releases no public grant
+  ---
+  duration_ms: 27.6616
+  type: 'test'
+  ...
+# Subtest: F18 hook public reads require every explicit target to pass the current classifier
+ok 9 - F18 hook public reads require every explicit target to pass the current classifier
+  ---
+  duration_ms: 201.4124
+  type: 'test'
+  ...
+# Subtest: F18 any protected/malformed/unknown/read outage path withholds the native operation
+ok 10 - F18 any protected/malformed/unknown/read outage path withholds the native operation
+  ---
+  duration_ms: 3.1743
+  type: 'test'
+  ...
+# Subtest: F18 unknown shell/history/search scope cannot inherit a public file decision
+ok 11 - F18 unknown shell/history/search scope cannot inherit a public file decision
+  ---
+  duration_ms: 2.419
+  type: 'test'
+  ...
+# Subtest: F18 TaskStart requires the current private session before the first model request
+ok 12 - F18 TaskStart requires the current private session before the first model request
+  ---
+  duration_ms: 11.4
+  type: 'test'
+  ...
+# Subtest: F18 a copied hook from another workspace receives no native grant
+ok 13 - F18 a copied hook from another workspace receives no native grant
+  ---
+  duration_ms: 11.3842
+  type: 'test'
+  ...
+# Subtest: F18 actual pinned Cline MCP tool name reaches the separate approved reader
+ok 14 - F18 actual pinned Cline MCP tool name reaches the separate approved reader
+  ---
+  duration_ms: 7.9302
+  type: 'test'
+  ...
+# Subtest: F18 guessed aliases, other namespaces and caller raw authority remain withheld
+ok 15 - F18 guessed aliases, other namespaces and caller raw authority remain withheld
+  ---
+  duration_ms: 1.248
+  type: 'test'
+  ...
+# Subtest: F18 observed read_files.files schema normalizes owned absolute paths and nullable line bounds
+ok 16 - F18 observed read_files.files schema normalizes owned absolute paths and nullable line bounds
+  ---
+  duration_ms: 10.3615
+  type: 'test'
+  ...
+# Subtest: F18 published multi-file read with a protected target never permits the batch
+ok 17 - F18 published multi-file read with a protected target never permits the batch
+  ---
+  duration_ms: 1.2066
+  type: 'test'
+  ...
+# Subtest: F18 native absolute escapes, device/UNC/ADS/dot aliases and caller roots obtain no grant
+ok 18 - F18 native absolute escapes, device/UNC/ADS/dot aliases and caller roots obtain no grant
+  ---
+  duration_ms: 3.0242
+  type: 'test'
+  ...
+# Subtest: F18 published editor absolute path and null insert_line retain write classification
+ok 19 - F18 published editor absolute path and null insert_line retain write classification
+  ---
+  duration_ms: 1.8657
+  type: 'test'
+  ...
+# Subtest: F18 native editor cannot rewrite the managed hooks even if their text classifies public
+ok 20 - F18 native editor cannot rewrite the managed hooks even if their text classifies public
+  ---
+  duration_ms: 0.8726
+  type: 'test'
+  ...
+# Subtest: F18 published per-file authority/range/shape and batch bounds remain refused
+ok 21 - F18 published per-file authority/range/shape and batch bounds remain refused
+  ---
+  duration_ms: 2.2131
+  type: 'test'
+  ...
+1..21
+# tests 21
+# suites 0
+# pass 21
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1381.1701

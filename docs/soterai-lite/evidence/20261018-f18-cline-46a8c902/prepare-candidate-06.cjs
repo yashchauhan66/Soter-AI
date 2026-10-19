@@ -1,0 +1,12 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path');
+const read=name=>fs.readFileSync(path.join(__dirname,name),'utf8');
+const save=(name,text)=>fs.writeFileSync(path.join(__dirname,name),text,{flag:'wx'});
+let build=read('build-candidate-09.ps1').replace("'typecheck-11'","'typecheck-12'").replace("'focused-07'","'focused-08'").replace("'package-05'","'package-06'").replace("'clineProviderHeaders'","'clineProviderHeaders','clineGatewaySchemas','clineMatcherBudget'").replaceAll('f18-20261019-attempt05.vsix','f18-20261019-attempt06.vsix').replace("-InspectionName '05'","-InspectionName '06'");
+build=build.replace("Invoke-F18Candidate 'focused-08'", "Invoke-F18Candidate 'broker-typecheck-02' @('node_modules/typescript/bin/tsc','-p','apps/local-ai-broker/tsconfig.json','--noEmit')\nInvoke-F18Candidate 'focused-08'");
+save('build-candidate-10.ps1',build);
+save('run-product-probe-13.ps1',read('run-product-probe-11.ps1').replaceAll('vsix-inspection-05.json','vsix-inspection-06.json'));
+save('run-suites-02.ps1',read('run-suites-01.ps1').replaceAll("'broker-typecheck-01'","'broker-typecheck-03'").replaceAll("'broker-tests-01'","'broker-tests-02'").replaceAll("'full-tests-01'","'full-tests-02'").replaceAll("'readiness-01'","'readiness-02'"));
+const prior=path.join(__dirname,'../20261018-f17-safe-read-73bc91a2');
+save('build-native-hosts-01.cjs',fs.readFileSync(path.join(prior,'build-native-hosts-01.cjs'),'utf8'));
+save('run-retained-native-01.ps1',fs.readFileSync(path.join(prior,'run-native-broker-01.ps1'),'utf8').replace("$taskName='f17-native-host-'","$taskName='f18-retained-native-'"));

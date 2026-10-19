@@ -1,0 +1,73 @@
+﻿[
+  {
+    "term": "worker_threads",
+    "count": 7,
+    "excerpts": [
+      {
+        "offset": 14086054,
+        "text": "_CODEPOINTS:Xtt}});var Jj=re((_1g,URn)=>{\"use strict\";var Khs={__proto__:null,\"node:crypto\":()=>require(\"node:crypto\"),\"node:sqlite\":()=>require(\"node:sqlite\"),\"node:worker_threads\":()=>require(\"node:worker_threads\"),\"node:zlib\":()=>require(\"node:zlib\")};function wvf(t){try{return Khs[t](),!0}catch(e){if(e.code!==\"ERR_UNKNOWN_BUILTIN_MODULE\"&&e.code!==\"ERR_NO_CRYPTO\")throw e;return!1}}function Cvf(t,e){return typeof Khs[t]()[e]<\"u\"}var $hs=[\"markAsUncloneable\",\"zstd\"],Ivf={markAsUncloneable:[\"node:worker_threads\",\"markAsUncloneable\"],zstd:[\"node:zlib\",\"createZstdDecompress\"]},Jhs=[\"crypto\",\"sqlite\"],_vf=[...Jhs,...$hs];function Svf(t){if(Jhs.includes(t))return wvf(`node:${t}`);if($hs.includes(t)){let[e,r]=Ivf[t];return Cvf(e,r)}throw new TypeError(`unknown feature: ${t}`)}var QRn=class{#e=new Map;clear(){this.#e.clear()}has(e){return this.#e.get(e)??this.#t(e)}set(e,r){if(_vf.includes(e)===!1)throw new TypeError(`unknown feature: ${e}`);this.#e.set(e,r)}#t(e){let r=Svf(e);return this.#"
+      },
+      {
+        "offset": 14086357,
+        "text": "if(e.code!==\"ERR_UNKNOWN_BUILTIN_MODULE\"&&e.code!==\"ERR_NO_CRYPTO\")throw e;return!1}}function Cvf(t,e){return typeof Khs[t]()[e]<\"u\"}var $hs=[\"markAsUncloneable\",\"zstd\"],Ivf={markAsUncloneable:[\"node:worker_threads\",\"markAsUncloneable\"],zstd:[\"node:zlib\",\"createZstdDecompress\"]},Jhs=[\"crypto\",\"sqlite\"],_vf=[...Jhs,...$hs];function Svf(t){if(Jhs.includes(t))return wvf(`node:${t}`);if($hs.includes(t)){let[e,r]=Ivf[t];return Cvf(e,r)}throw new TypeError(`unknown feature: ${t}`)}var QRn=class{#e=new Map;clear(){this.#e.clear()}has(e){return this.#e.get(e)??this.#t(e)}set(e,r){if(_vf.includes(e)===!1)throw new TypeError(`unknown feature: ${e}`);this.#e.set(e,r)}#t(e){let r=Svf(e);return this.#e.set(e,r),r}},Yhs=new QRn;URn.exports.runtimeFeatures=Yhs;URn.exports.default=Yhs});var uw=re((S1g,Zhs)=>{\"use strict\";var Tvf=require(\"node:assert\"),{types:Ty,inspect:kvf}=require(\"node:util\"),{runtimeFeatures:Rvf}=Jj(),WRn=1,qRn=2,HKt=3,zKt=4,GRn=5,jKt=6,HRn=7,r4=8,Xhs=Function.call.bind(Function.pr"
+      },
+      {
+        "offset": 14088980,
+        "text": "urn\"String\";case zKt:return\"Symbol\";case GRn:return\"Number\";case jKt:return\"BigInt\";case HRn:return\"Null\";case r4:return\"Object\"}};dn.util.markAsUncloneable=Rvf.has(\"markAsUncloneable\")?require(\"node:worker_threads\").markAsUncloneable:()=>{};dn.util.ConvertToInt=function(t,e,r,i){let a,o;e===64?(a=Math.pow(2,53)-1,r===\"unsigned\"?o=0:o=Math.pow(-2,53)+1):r===\"unsigned\"?(o=0,a=Math.pow(2,e)-1):(o=-Math.pow(2,e-1),a=Math.pow(2,e-1)-1);let n=Number(t);if(n===0&&(n=0),dn.util.HasFlag(i,dn.attributes.EnforceRange)){if(Number.isNaN(n)||n===Number.POSITIVE_INFINITY||n===Number.NEGATIVE_INFINITY)throw dn.errors.exception({header:\"Integer conversion\",message:`Could not convert ${dn.util.Stringify(t)} to an integer.`});if(n=dn.util.IntegerPart(n),n<o||n>a)throw dn.errors.exception({header:\"Integer conversion\",message:`Value must be between ${o}-${a}, got ${n}.`});return n}return!Number.isNaN(n)&&dn.util.HasFlag(i,dn.attributes.Clamp)?(n=Math.min(Math.max(n,o),a),Math.floor(n)%2===0?n=Math.floor(n"
+      }
+    ]
+  },
+  {
+    "term": "new Worker(",
+    "count": 6,
+    "excerpts": [
+      {
+        "offset": 21213415,
+        "text": "lize:function(){var ee=this;if(!w&&!(0,n.getDefaultSetting)(\"disableWorker\")&&typeof Worker<\"u\"){var X=j();try{(0,o.isSameOrigin)(window.location.href,X)||(X=K(new URL(X,window.location).href));var Z=new Worker(X),ie=new o.MessageHandler(\"main\",\"worker\",Z),ae=function(){Z.removeEventListener(\"error\",oe),ie.destroy(),Z.terminate(),ee.destroyed?ee._readyCapability.reject(new Error(\"Worker was destroyed\")):ee._setupFakeWorker()},oe=function(){ee._webWorker||ae()};Z.addEventListener(\"error\",oe),ie.on(\"test\",function(ce){if(Z.removeEventListener(\"error\",oe),ee.destroyed){ae();return}var de=ce&&ce.supportTypedArray;de?(ee._messageHandler=ie,ee._port=Z,ee._webWorker=Z,ce.supportTransfers||(ee.postMessageTransfers=!1,b=!0),ee._readyCapability.resolve(),ie.send(\"configure\",{verbosity:(0,o.getVerbosityLevel)()})):(ee._setupFakeWorker(),ie.destroy(),Z.terminate())}),ie.on(\"console_log\",function(ce){console.log.apply(console,ce)}),ie.on(\"console_error\",function(ce){console.error.apply(console,ce)}"
+      },
+      {
+        "offset": 22206120,
+        "text": "alize:function(){var $=this;if(!h&&!(0,n.getDefaultSetting)(\"disableWorker\")&&typeof Worker<\"u\"){var Y=P();try{(0,o.isSameOrigin)(window.location.href,Y)||(Y=j(new URL(Y,window.location).href));var J=new Worker(Y),ee=new o.MessageHandler(\"main\",\"worker\",J),X=function(){J.removeEventListener(\"error\",Z),ee.destroy(),J.terminate(),$.destroyed?$._readyCapability.reject(new Error(\"Worker was destroyed\")):$._setupFakeWorker()},Z=function(){$._webWorker||X()};J.addEventListener(\"error\",Z),ee.on(\"test\",function(ae){if(J.removeEventListener(\"error\",Z),$.destroyed){X();return}var oe=ae&&ae.supportTypedArray;oe?($._messageHandler=ee,$._port=J,$._webWorker=J,ae.supportTransfers||($.postMessageTransfers=!1,g=!0),$._readyCapability.resolve(),ee.send(\"configure\",{verbosity:(0,o.getVerbosityLevel)()})):($._setupFakeWorker(),ee.destroy(),J.terminate())}),ee.on(\"console_log\",function(ae){console.log.apply(console,ae)}),ee.on(\"console_error\",function(ae){console.error.apply(console,ae)}),ee.on(\"ready\",fu"
+      },
+      {
+        "offset": 23285335,
+        "text": "adyCapability.resolve()},_initialize:function(){var ie=this;if(typeof Worker<\"u\"&&!T&&!K()){var ae=V();try{(0,o.isSameOrigin)(window.location.href,ae)||(ae=J(new URL(ae,window.location).href));var oe=new Worker(ae),ue=new h.MessageHandler(\"main\",\"worker\",oe),ce=function(){oe.removeEventListener(\"error\",de),ue.destroy(),oe.terminate(),ie.destroyed?ie._readyCapability.reject(new Error(\"Worker was destroyed\")):ie._setupFakeWorker()},de=function(){ie._webWorker||ce()};oe.addEventListener(\"error\",de),ue.on(\"test\",function(Ae){if(oe.removeEventListener(\"error\",de),ie.destroyed){ce();return}var be=Ae&&Ae.supportTypedArray;be?(ie._messageHandler=ue,ie._port=oe,ie._webWorker=oe,Ae.supportTransfers||(ie.postMessageTransfers=!1),ie._readyCapability.resolve(),ue.send(\"configure\",{verbosity:ie.verbosity})):(ie._setupFakeWorker(),ue.destroy(),oe.terminate())}),ue.on(\"ready\",function(Ae){if(oe.removeEventListener(\"error\",de),ie.destroyed){ce();return}try{ye()}catch{ie._setupFakeWorker()}});var ye=fun"
+      }
+    ]
+  },
+  {
+    "term": "new WorkerThread",
+    "count": 0,
+    "excerpts": []
+  },
+  {
+    "term": "CLINE_RIPGREP_PATH",
+    "count": 0,
+    "excerpts": []
+  },
+  {
+    "term": "getRgPath",
+    "count": 0,
+    "excerpts": []
+  },
+  {
+    "term": "rgPath",
+    "count": 0,
+    "excerpts": []
+  },
+  {
+    "term": "startNewTask:",
+    "count": 1,
+    "excerpts": [
+      {
+        "offset": 25866759,
+        "text": "Activation:()=>_o0});module.exports=Zt(Po0);var NMu=dt(require(\"node:assert\"));Vn();var Jo=dt(require(\"vscode\"));Rr();Vhi();m1e();odi();adi();idi();sdi();udi();g1e();m1e();Rr();function qBu(t){return{startNewTask:async(r,i)=>{await t.clearTask(),await t.postStateToWebview(),await c$(),await t.initTask(r,i)},sendMessage:async(r,i)=>{t.task?await t.task.handleWebviewAskResponse(\"messageResponse\",r||\"\",i||[]):Re.error(\"No active task to send message to\")},pressPrimaryButton:async()=>{t.task?await t.task.handleWebviewAskResponse(\"yesButtonClicked\",\"\",[]):Re.error(\"No active task to press button for\")},pressSecondaryButton:async()=>{t.task?await t.task.handleWebviewAskResponse(\"noButtonClicked\",\"\",[]):Re.error(\"No active task to press button for\")}}}Hp();var LMu=dt(require(\"node:path\"));Ls();Nvn();Khi();var $hi=class{serviceName;methodRegistry={};streamingMethodRegistry={};methodMetadata={};constructor(e){this.serviceName=e}registerMethod(e,r,i){let a=i?.isStreaming||!1;a?this.streamingMeth"
+      }
+    ]
+  },
+  {
+    "term": "registerCommand(\"cline.addToChat\"",
+    "count": 0,
+    "excerpts": []
+  }
+]

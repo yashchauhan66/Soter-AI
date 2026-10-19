@@ -6,7 +6,7 @@ import { PassThrough } from "node:stream";
 import * as stub from "./phase2/vscode-stub";
 import { BrokerManager } from "../broker/BrokerManager";
 beforeEach(()=>stub.resetState("D:/SoterAI-Lite-test-profiles/f16-manager-memory-only"));
-function fixture(extra:{forcedLevel?:string;wrongAck?:boolean;registryFailure?:boolean;version?:number}={}){
+function fixture(extra:{forcedLevel?:string;wrongAck?:boolean;registryFailure?:boolean;version?:number;clineAck?:unknown}={}){
     const context=stub.makeExtensionContext("D:/SoterAI-Lite-test-profiles/f16-manager-memory-only/storage"),envs:NodeJS.ProcessEnv[]=[],routes:string[]=[];
     let mode={enabled:true,level:"strict"},registryAlive=true,generation="",syncCount=0;
     const source={async createGatewayRegistry(enabled:()=>boolean){if(extra.registryFailure)throw Error("Synthetic registry unavailable");return{available:()=>registryAlive&&enabled(),async use<T>(consume:(values:readonly string[])=>Promise<T>){assert.ok(registryAlive&&enabled());return consume([]);},dispose(){registryAlive=false;}};}};
@@ -21,7 +21,7 @@ function fixture(extra:{forcedLevel?:string;wrongAck?:boolean;registryFailure?:b
         if(route==="/v1/safe-mode/disable"){mode={...mode,enabled:false};return Response.json(mode);}
         if(route==="/v1/safe-mode/status")return Response.json({...mode,...(extra.forcedLevel?{level:extra.forcedLevel}:{})});
         if(route==="/v1/gateway/sync"){generation=body.generation;syncCount++;return Response.json({version:1,synchronized:true,generation});}
-        if(route==="/v1/gateway/status")return Response.json({version:extra.version??1,enabled:envs.at(-1)?.SOTERAI_GATEWAY_POLICY!=="0",ready:true,generation});
+        if(route==="/v1/gateway/status")return Response.json({version:extra.version??1,enabled:envs.at(-1)?.SOTERAI_GATEWAY_POLICY!=="0",ready:true,generation,clineToolSchemas:Object.hasOwn(extra,"clineAck")?extra.clineAck:envs.at(-1)?.SOTERAI_CLINE_TOOL_SCHEMAS==="1"});
         return Response.json({version:"0.2.0"});
     }};
     const manager=new BrokerManager(context as never,transport as never,source as never);
@@ -36,3 +36,7 @@ test("F16-M06 unavailable private registry fails before child launch",async()=>{
 test("F16-M07 stale registry source cannot retain request authority",async()=>{const f=fixture();try{await f.manager.start();f.stale();await assert.rejects(f.manager.request("/version"));}finally{await f.manager.stop();}});
 test("F16-M08 unknown gateway policy version never becomes healthy",async()=>{const f=fixture({version:2});try{await assert.rejects(f.manager.start());}finally{await f.manager.stop();}});
 test("F16-M09 machine disable ignores repository override",async()=>{const f=fixture();stub.state.configInspect.set("soterai.lite.gatewayPolicy",{defaultValue:true,globalValue:false,workspaceValue:true});try{await f.manager.start();assert.equal(f.envs[0].SOTERAI_GATEWAY_POLICY,"0");}finally{await f.manager.stop();}});
+
+test("F18 rich tool-schema profile is bound to the owned child and machine setting",async()=>{const f=fixture();try{await f.manager.start();assert.equal(f.envs[0].SOTERAI_CLINE_TOOL_SCHEMAS,"1");assert.equal((await f.manager.status()).running,true);}finally{await f.manager.stop();}});
+test("F18 disabling the machine adapter withdraws the schema profile despite a workspace override",async()=>{const f=fixture();stub.state.configInspect.set("soterai.lite.clineAdapter",{defaultValue:true,globalValue:false,workspaceValue:true});try{await f.manager.start();assert.equal(f.envs[0].SOTERAI_CLINE_TOOL_SCHEMAS,"0");}finally{await f.manager.stop();}});
+for(const clineAck of [false,"true"])test("F18 missing or mismatched schema capability acknowledgment is unavailable "+String(clineAck),async()=>{const f=fixture({clineAck});try{await assert.rejects(f.manager.start());assert.notEqual(f.manager.ownedSnapshot().state,"healthy");}finally{await f.manager.stop();}});

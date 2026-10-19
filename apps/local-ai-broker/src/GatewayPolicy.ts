@@ -9,6 +9,7 @@ interface GatewayChecks {
 }
 export interface GatewayOptions {
     gatewayPolicy?: boolean;
+    clineToolSchemas?: boolean;
     requireGatewaySync?: boolean;
     registeredValues?: readonly string[];
     gatewayGuard?: (generation: string) => Promise<boolean>;
@@ -38,10 +39,10 @@ export class GatewayPolicy {
         if (options.gatewayPolicy !== false && !options.requireGatewaySync) this.#boundary = options.gatewayBoundary ?? this.compile(options.registeredValues ?? []);
     }
     private compile(values: readonly string[]): GatewayBoundary {
-        return new GatewayBoundary({ version: 1, values: [...values, ...[this.options.token, this.options.controlToken, this.options.providerApiKey].filter((v): v is string => !!v), ...(this.checks.canaries?.() ?? (this.options.canaries ?? []).map(c => c.token))] });
+        return new GatewayBoundary({ version: 1, clineToolSchemas: this.options.clineToolSchemas === true, values: [...values, ...[this.options.token, this.options.controlToken, this.options.providerApiKey].filter((v): v is string => !!v), ...(this.checks.canaries?.() ?? (this.options.canaries ?? []).map(c => c.token))] });
     }
-    status(): { version: number; enabled: boolean; ready: boolean; generation: string } {
-        return { version: 1, enabled: this.options.gatewayPolicy !== false, ready: !this.#closed && this.#boundary?.available() === true && (!this.#mode || JSON.stringify(this.#mode) === JSON.stringify(this.mode())), generation: this.#generation };
+    status(): { version: number; enabled: boolean; ready: boolean; generation: string; clineToolSchemas: boolean } {
+        return { version: 1, enabled: this.options.gatewayPolicy !== false, ready: !this.#closed && this.#boundary?.available() === true && (!this.#mode || JSON.stringify(this.#mode) === JSON.stringify(this.mode())), generation: this.#generation, clineToolSchemas: this.options.clineToolSchemas === true };
     }
     synchronize(value: Record<string, unknown>): { version: number; synchronized: boolean; generation: string } {
         this.invalidate();

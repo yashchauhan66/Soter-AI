@@ -1,0 +1,26 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path');
+const read=name=>fs.readFileSync(path.join(__dirname,name),'utf8');
+const save=(name,text)=>fs.writeFileSync(path.join(__dirname,name),text,{flag:'wx'});
+let guard=read('product-test-guards-01.cjs');
+guard=guard.replace("if(syntheticFile(value))return true;", "if(syntheticFile(value))return true;const resolved=path.resolve(value).toLowerCase(),owned=path.resolve(root).toLowerCase();if(/^(?:l?stat|realpath|access)(?:Sync)?$/.test(key)&&(owned.startsWith(resolved.endsWith(path.sep)?resolved:resolved+path.sep)))return true;");
+save('product-test-guards-02.cjs',guard);
+let probe=read('product-probe-01.cjs').replaceAll('product-test-guards-01.cjs','product-test-guards-02.cjs');
+probe=probe.replace('let captured,api,vendorActual,permit,server,', 'let captured,api,vendorActual,permit,server,vendorActivation,');
+probe=probe.replace('  await permit;\n  const info=', '  const info=');
+probe=probe.replace("  vendorActual=require(path.join(vendorContext.extensionUri.fsPath,'dist/extension.js'));", "  records.vendorPrepared=true;await permit;\n  vendorActual=require(path.join(vendorContext.extensionUri.fsPath,'dist/extension.js'));");
+probe=probe.replace("if(records.controllerStages.length<128)records.controllerStages.push({stage:name,status:'RETURNED',", "if(records.controllerStages.length<128)records.controllerStages.push({stage:name,file:name==='read'||name==='write'?path.basename(args[0]):undefined,status:'RETURNED',");
+probe=probe.replace("if(records.controllerStages.length<128)records.controllerStages.push({stage:name,status:'FAILED',", "if(records.controllerStages.length<128)records.controllerStages.push({stage:name,file:name==='read'||name==='write'?path.basename(args[0]):undefined,status:'FAILED',");
+probe=probe.replace("  const adapter=context.subscriptions.find", `  records.brokerStages=[];for(const method of ['start','stop']){const original=manager[method];manager[method]=async function(...args){try{const result=await Reflect.apply(original,this,args);records.brokerStages.push({method,state:this.ownedSnapshot().state,running:result?.running});return result;}catch(error){records.brokerStages.push({method,state:this.ownedSnapshot().state,error:safeError(error)});throw error;}};}
+  const adapter=context.subscriptions.find`);
+probe=probe.replace("records.requests.push({scenario,route:req.url,", "if(records.requests.length>=8){records.fixtureRequestBudget=true;res.writeHead(429);res.end('{}');return;}\n   records.requests.push({scenario,route:req.url,");
+probe=probe.replace("response(res,{role:'assistant',content:'Synthetic local route probe complete.'});", "response(res,{role:'assistant',content:'<attempt_completion><result>Synthetic local route probe complete.</result></attempt_completion>'});");
+probe=probe.replace("  globalThis.__SOTERAI_F18_RELEASE_VENDOR__();\n  await check('F18-P01',async()=>{const extension=vscode.extensions.getExtension('saoudrizwan.claude-dev');if(!extension)throw Error('Pinned vendor missing');await extension.activate();if(!api?.startNewTask)throw Error('Actual vendor API unavailable');records.vendorVersion=extension.packageJSON.version;});", "  const extension=vscode.extensions.getExtension('saoudrizwan.claude-dev');if(!extension)throw Error('Pinned vendor missing');vendorActivation=extension.activate();await until(()=>records.vendorPrepared===true);records.vendorVersion=extension.packageJSON.version;");
+probe=probe.replace("if(result?.status!=='CANCELLED')", "records.cancelStatus=result?.status;if(result?.status!=='CANCELLED')");
+probe=probe.replace("  approvalTimer=setInterval", "  if(records.configureStatus!=='APPLIED')throw Error('Configuration gate failed; dependent vendor routes not executed');\n  globalThis.__SOTERAI_F18_RELEASE_VENDOR__();\n  await check('F18-P01',async()=>{await vendorActivation;if(!api?.startNewTask)throw Error('Actual vendor API unavailable');});\n  approvalTimer=setInterval");
+probe=probe.replace(" }catch(error){records.driverFailure=safeError(error);}", " }catch(error){records.driverFailure=safeError(error);globalThis.__SOTERAI_F18_RELEASE_VENDOR__();if(vendorActivation)try{await vendorActivation;}catch{records.vendorActivationFailed=true;}} ");
+save('product-probe-02.cjs',probe);
+let launch=read('run-product-probe-01.ps1').replaceAll('product-probe-01.cjs','product-probe-02.cjs').replaceAll('product-test-guards-01.cjs','product-test-guards-02.cjs');
+launch=launch.replace("'--disable-extension=vscode.git',", "'--disable-extension=vscode.json-language-features','--disable-extension=vscode.configuration-editing','--disable-extension=vscode.github','--disable-extension=vscode.git',");
+launch=launch.replace("if(Test-Path -LiteralPath $taskResult){Get-Content -LiteralPath $taskResult -Raw}else{throw 'INCOMPLETE: actual product result missing'}", "if(Test-Path -LiteralPath $taskResult){$taskObserved=Get-Content -LiteralPath $taskResult -Raw|ConvertFrom-Json;$taskObserved|Select-Object status,checks,configureStatus,cancelStatus,brokerStages,controllerStages,driverFailure,childShutdown|ConvertTo-Json -Depth 8;if($taskObserved.status -cne 'PASS_SCOPED_PRODUCT_PROBE'){throw 'INCOMPLETE: actual product assertions did not pass'}}else{throw 'INCOMPLETE: actual product result missing'}");
+save('run-product-probe-02.ps1',launch);

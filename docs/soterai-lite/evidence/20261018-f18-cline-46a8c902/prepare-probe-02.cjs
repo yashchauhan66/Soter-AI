@@ -1,0 +1,10 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),own=name=>path.join(__dirname,name);
+let source=fs.readFileSync(own('native-vendor-probe-01.cjs'),'utf8');
+source=source.replace("records.status=status;records.children=children;","records.status=status;records.children=children;");
+source=source.replace("if(server)await new Promise(done=>{server.close(done);server.closeIdleConnections();});","if(status==='REVIEW_FINAL_VENDOR_ROUTE')records.status=records.publicSeen&&records.hooks.some(item=>item.blocked)?'PASS_SCOPED_VENDOR_PROBE':'INCOMPLETE_VENDOR_ROUTE';\n  if(server)await new Promise(done=>{server.close(done);server.closeIdleConnections();});");
+source=source.replace("finish(records.publicSeen&&records.hooks.some(item=>item.blocked)?'PASS_SCOPED_VENDOR_PROBE':'INCOMPLETE_VENDOR_ROUTE')","finish('REVIEW_FINAL_VENDOR_ROUTE')");
+source=source.replace("patch(process,'kill',function(){records.deniedSignals.push('PROCESS_SIGNAL_REFUSED');","patch(process,'kill',function(_pid,signal){records.deniedSignals.push(signal===0?'ZERO_SIGNAL_LIVENESS_REFUSED':'PROCESS_SIGNAL_REFUSED');");
+fs.writeFileSync(own('native-vendor-probe-02.cjs'),source,{flag:'wx'});
+let launcher=fs.readFileSync(own('run-vendor-probe-01.ps1'),'utf8').replaceAll('native-vendor-probe-01.cjs','native-vendor-probe-02.cjs');
+fs.writeFileSync(own('run-vendor-probe-02.ps1'),launcher,{flag:'wx'});

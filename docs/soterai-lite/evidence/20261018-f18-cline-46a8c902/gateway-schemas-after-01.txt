@@ -1,0 +1,149 @@
+﻿TAP version 13
+# Subtest: F18 bounded multi-tool schema public request passes only its explicit profile
+not ok 1 - F18 bounded multi-tool schema public request passes only its explicit profile
+  ---
+  duration_ms: 23.8523
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\clineGatewaySchemas.test.ts:2:1720'
+  failureType: 'testCodeFailure'
+  error: 'Gateway policy withheld protected data'
+  code: 'gateway_limit'
+  stack: |-
+    fail (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\apps\local-ai-broker\src\GatewayBoundary.ts:10:67)
+    GatewayBoundary.#inspect (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\apps\local-ai-broker\src\GatewayBoundary.ts:86:53)
+    GatewayBoundary.prepareRequest (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\apps\local-ai-broker\src\GatewayBoundary.ts:119:18)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\clineGatewaySchemas.test.ts:9:68)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: F18 tool metadata remains inspected for raw/encoded values and ordered splits
+ok 2 - F18 tool metadata remains inspected for raw/encoded values and ordered splits
+  ---
+  duration_ms: 47.7125
+  type: 'test'
+  ...
+# Subtest: F18 schema profile keeps generic metadata, malformed definitions and resource bounds withheld
+ok 3 - F18 schema profile keeps generic metadata, malformed definitions and resource bounds withheld
+  ---
+  duration_ms: 7.3421
+  type: 'test'
+  ...
+# Subtest: F16-P01 public immutable request preserves supported options
+ok 4 - F16-P01 public immutable request preserves supported options
+  ---
+  duration_ms: 15.4496
+  type: 'test'
+  ...
+# Subtest: F16-P02 registered representation refuses 34
+ok 5 - F16-P02 registered representation refuses 34
+  ---
+  duration_ms: 2.8899
+  type: 'test'
+  ...
+# Subtest: F16-P02 registered representation refuses 48
+ok 6 - F16-P02 registered representation refuses 48
+  ---
+  duration_ms: 1.7625
+  type: 'test'
+  ...
+# Subtest: F16-P02 registered representation refuses 46
+ok 7 - F16-P02 registered representation refuses 46
+  ---
+  duration_ms: 0.9064
+  type: 'test'
+  ...
+# Subtest: F16-P02 registered representation refuses 68
+ok 8 - F16-P02 registered representation refuses 68
+  ---
+  duration_ms: 1.1167
+  type: 'test'
+  ...
+# Subtest: F16-P02 registered representation refuses 34
+ok 9 - F16-P02 registered representation refuses 34
+  ---
+  duration_ms: 0.9416
+  type: 'test'
+  ...
+# Subtest: F16-P02 registered representation refuses 36
+ok 10 - F16-P02 registered representation refuses 36
+  ---
+  duration_ms: 0.9821
+  type: 'test'
+  ...
+# Subtest: F16-P03 ordered content joins detect registered fragments across roles/messages
+ok 11 - F16-P03 ordered content joins detect registered fragments across roles/messages
+  ---
+  duration_ms: 1.7201
+  type: 'test'
+  ...
+# Subtest: F16-P04 provider patterns and fixed entropy controls with public negatives
+ok 12 - F16-P04 provider patterns and fixed entropy controls with public negatives
+  ---
+  duration_ms: 15.428
+  type: 'test'
+  ...
+# Subtest: F16-P05 unknown schemas and auth/URL overrides refuse
+ok 13 - F16-P05 unknown schemas and auth/URL overrides refuse
+  ---
+  duration_ms: 4.1411
+  type: 'test'
+  ...
+# Subtest: F16-P06 unavailable/unknown policy and invalid registry never degrade to empty
+ok 14 - F16-P06 unavailable/unknown policy and invalid registry never degrade to empty
+  ---
+  duration_ms: 4.0654
+  type: 'test'
+  ...
+# Subtest: F16-P07 complete semantic/request bounds withhold
+ok 15 - F16-P07 complete semantic/request bounds withhold
+  ---
+  duration_ms: 2.9437
+  type: 'test'
+  ...
+# Subtest: F16-P08 output JSON semantics and raw boundaries withhold complete response
+ok 16 - F16-P08 output JSON semantics and raw boundaries withhold complete response
+  ---
+  duration_ms: 8.2199
+  type: 'test'
+  ...
+# Subtest: F16-P09 finite SSE output waits for complete inspected stream
+ok 17 - F16-P09 finite SSE output waits for complete inspected stream
+  ---
+  duration_ms: 7.3152
+  type: 'test'
+  ...
+# Subtest: F16-P10 malformed/control/UTF8/output budget failures release nothing
+ok 18 - F16-P10 malformed/control/UTF8/output budget failures release nothing
+  ---
+  duration_ms: 10.8007
+  type: 'test'
+  ...
+# Subtest: F16-P11 bounded seeded public/fragment controls
+ok 19 - F16-P11 bounded seeded public/fragment controls
+  ---
+  duration_ms: 58.678
+  type: 'test'
+  ...
+# Subtest: F16-P12 errors expose no input or registry contents
+ok 20 - F16-P12 errors expose no input or registry contents
+  ---
+  duration_ms: 0.3872
+  type: 'test'
+  ...
+# Subtest: F16-P13 bounded Anthropic tool use/results preserve public data and refuse unsupported blocks
+ok 21 - F16-P13 bounded Anthropic tool use/results preserve public data and refuse unsupported blocks
+  ---
+  duration_ms: 2.2291
+  type: 'test'
+  ...
+1..21
+# tests 21
+# suites 0
+# pass 20
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 867.5299

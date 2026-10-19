@@ -1,0 +1,564 @@
+﻿TAP version 13
+# Subtest: F18 existing bridge grants no classification capability unless explicitly supplied
+ok 1 - F18 existing bridge grants no classification capability unless explicitly supplied
+  ---
+  duration_ms: 119.844
+  type: 'test'
+  ...
+# Subtest: F18 private native read classification returns metadata only
+ok 2 - F18 private native read classification returns metadata only
+  ---
+  duration_ms: 21.165
+  type: 'test'
+  ...
+# Subtest: F18 private native write classification returns metadata only
+ok 3 - F18 private native write classification returns metadata only
+  ---
+  duration_ms: 12.1204
+  type: 'test'
+  ...
+# Subtest: F18 private classification never treats an unknown object/original as a public decision
+ok 4 - F18 private classification never treats an unknown object/original as a public decision
+  ---
+  duration_ms: 13.3151
+  type: 'test'
+  ...
+# Subtest: F18 native classifier withdrawal while a decision is pending releases no public grant
+ok 5 - F18 native classifier withdrawal while a decision is pending releases no public grant
+  ---
+  duration_ms: 15.2349
+  type: 'test'
+  ...
+# Subtest: F18 hook public reads require every explicit target to pass the current classifier
+ok 6 - F18 hook public reads require every explicit target to pass the current classifier
+  ---
+  duration_ms: 35.4104
+  type: 'test'
+  ...
+# Subtest: F18 any protected/malformed/unknown/read outage path withholds the native operation
+ok 7 - F18 any protected/malformed/unknown/read outage path withholds the native operation
+  ---
+  duration_ms: 5.5601
+  type: 'test'
+  ...
+# Subtest: F18 unknown shell/history/search scope cannot inherit a public file decision
+ok 8 - F18 unknown shell/history/search scope cannot inherit a public file decision
+  ---
+  duration_ms: 4.0073
+  type: 'test'
+  ...
+# Subtest: F18 authoritative native classification exposes no text or approval grant
+ok 9 - F18 authoritative native classification exposes no text or approval grant
+  ---
+  duration_ms: 243.9875
+  type: 'test'
+  ...
+# Subtest: F18 authoritative native write classification retains sensitive and parent-path denies
+ok 10 - F18 authoritative native write classification retains sensitive and parent-path denies
+  ---
+  duration_ms: 65.0281
+  type: 'test'
+  ...
+# Subtest: F04-C01 native consent previews exactly the masked dotenv output without opening a document before approval
+ok 11 - F04-C01 native consent previews exactly the masked dotenv output without opening a document before approval
+  ---
+  duration_ms: 89.5971
+  type: 'test'
+  ...
+# Subtest: F04-C02 public and ordinary restricted files release precisely the modal detail while persistent deny remains
+ok 12 - F04-C02 public and ordinary restricted files release precisely the modal detail while persistent deny remains
+  ---
+  duration_ms: 157.6023
+  type: 'test'
+  ...
+# Subtest: F04-C03 denying the native modal exposes no preview document and no released result text
+ok 13 - F04-C03 denying the native modal exposes no preview document and no released result text
+  ---
+  duration_ms: 52.31
+  type: 'test'
+  ...
+# Subtest: F04-C04 arbitrary command arguments cannot authorize or replace the route, recipient, preview or expiry
+ok 14 - F04-C04 arbitrary command arguments cannot authorize or replace the route, recipient, preview or expiry
+  ---
+  duration_ms: 107.4304
+  type: 'test'
+  ...
+# Subtest: F04-C05 a machine flag withdrawal withholds integration, preview and managed terminal reads and retains denies
+ok 15 - F04-C05 a machine flag withdrawal withholds integration, preview and managed terminal reads and retains denies
+  ---
+  duration_ms: 38.516
+  type: 'test'
+  ...
+# Subtest: F04-C06 withdrawing the flag invalidates already opened safe provider views and notifies their refresh
+ok 16 - F04-C06 withdrawing the flag invalidates already opened safe provider views and notifies their refresh
+  ---
+  duration_ms: 84.2368
+  type: 'test'
+  ...
+# Subtest: F04-C07 workspace overrides cannot enable a globally disabled flag or disable the machine default
+ok 17 - F04-C07 workspace overrides cannot enable a globally disabled flag or disable the machine default
+  ---
+  duration_ms: 77.7829
+  type: 'test'
+  ...
+# Subtest: F04-C08 disabling safe consent leaves ordinary and sensitive restriction saves usable
+ok 18 - F04-C08 disabling safe consent leaves ordinary and sensitive restriction saves usable
+  ---
+  duration_ms: 55.062
+  type: 'test'
+  ...
+# Subtest: F04-C09 recognized and manually marked sensitive files show summary-only detail and release that same summary
+ok 19 - F04-C09 recognized and manually marked sensitive files show summary-only detail and release that same summary
+  ---
+  duration_ms: 140.9042
+  type: 'test'
+  ...
+# Subtest: F04-C10 protected regions never appear in native detail and protected dotenv syntax withholds the whole schema
+ok 20 - F04-C10 protected regions never appear in native detail and protected dotenv syntax withholds the whole schema
+  ---
+  duration_ms: 148.5376
+  type: 'test'
+  ...
+# Subtest: F04-C11 binary, oversized input and safe output above 16 KiB are withheld before consent; the exact limit remains useful
+ok 21 - F04-C11 binary, oversized input and safe output above 16 KiB are withheld before consent; the exact limit remains useful
+  ---
+  duration_ms: 217.1533
+  type: 'test'
+  ...
+# Subtest: F04-C12 a cold first request enrolls additive project protection inside its own preparation and still reaches exact consent
+ok 22 - F04-C12 a cold first request enrolls additive project protection inside its own preparation and still reaches exact consent
+  ---
+  duration_ms: 106.4178
+  type: 'test'
+  ...
+# Subtest: F04-C13 explicit restriction intent expires a read while its initial policy preparation is held
+ok 23 - F04-C13 explicit restriction intent expires a read while its initial policy preparation is held
+  ---
+  duration_ms: 44.2696
+  type: 'test'
+  ...
+# (node:20228) ExperimentalWarning: The MockTimers API is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: F04 receipt previews exactly the released public text on safe-preview
+ok 24 - F04 receipt previews exactly the released public text on safe-preview
+  ---
+  duration_ms: 27.256
+  type: 'test'
+  ...
+# Subtest: F04 receipt previews exactly the released public text on managed-read-terminal
+ok 25 - F04 receipt previews exactly the released public text on managed-read-terminal
+  ---
+  duration_ms: 1.552
+  type: 'test'
+  ...
+# Subtest: F04 receipt previews exactly the released public text on integration-command
+ok 26 - F04 receipt previews exactly the released public text on integration-command
+  ---
+  duration_ms: 2.084
+  type: 'test'
+  ...
+# Subtest: F04 the fallback recipient is a fixed nonempty internal label
+ok 27 - F04 the fallback recipient is a fixed nonempty internal label
+  ---
+  duration_ms: 4.6608
+  type: 'test'
+  ...
+# Subtest: F04 confirmation cannot mutate the immutable reviewed output or recipient
+ok 28 - F04 confirmation cannot mutate the immutable reviewed output or recipient
+  ---
+  duration_ms: 1.8498
+  type: 'test'
+  ...
+# Subtest: F04 dotenv receipt and result mask every value including public-looking values and multiline data
+ok 29 - F04 dotenv receipt and result mask every value including public-looking values and multiline data
+  ---
+  duration_ms: 3.3623
+  type: 'test'
+  ...
+# Subtest: F04 protected multiline dotenv never previews apparent names inside masked value data
+ok 30 - F04 protected multiline dotenv never previews apparent names inside masked value data
+  ---
+  duration_ms: 1.5723
+  type: 'test'
+  ...
+# Subtest: F04 an ordinary protected region keeps useful adjacent public text in exact preview
+ok 31 - F04 an ordinary protected region keeps useful adjacent public text in exact preview
+  ---
+  duration_ms: 1.6509
+  type: 'test'
+  ...
+# Subtest: F04 marked sensitive files show only the same summary that is released
+ok 32 - F04 marked sensitive files show only the same summary that is released
+  ---
+  duration_ms: 1.7774
+  type: 'test'
+  ...
+# Subtest: F04 recognized sensitive files show only the same summary that is released
+ok 33 - F04 recognized sensitive files show only the same summary that is released
+  ---
+  duration_ms: 1.5341
+  type: 'test'
+  ...
+# Subtest: F04 managed terminal reviews its control-character-stripped payload before consent
+ok 34 - F04 managed terminal reviews its control-character-stripped payload before consent
+  ---
+  duration_ms: 4.4141
+  type: 'test'
+  ...
+# Subtest: F04 undeclared runtime surface "invented-surface" is unavailable before capture or UI
+ok 35 - F04 undeclared runtime surface "invented-surface" is unavailable before capture or UI
+  ---
+  duration_ms: 0.7801
+  type: 'test'
+  ...
+# Subtest: F04 undeclared runtime surface "" is unavailable before capture or UI
+ok 36 - F04 undeclared runtime surface "" is unavailable before capture or UI
+  ---
+  duration_ms: 0.4416
+  type: 'test'
+  ...
+# Subtest: F04 undeclared runtime surface null is unavailable before capture or UI
+ok 37 - F04 undeclared runtime surface null is unavailable before capture or UI
+  ---
+  duration_ms: 0.4664
+  type: 'test'
+  ...
+# Subtest: F04 undeclared runtime surface undefined is unavailable before capture or UI
+ok 38 - F04 undeclared runtime surface undefined is unavailable before capture or UI
+  ---
+  duration_ms: 0.4996
+  type: 'test'
+  ...
+# Subtest: F04 undeclared runtime surface {"approved":true} is unavailable before capture or UI
+ok 39 - F04 undeclared runtime surface {"approved":true} is unavailable before capture or UI
+  ---
+  duration_ms: 0.727
+  type: 'test'
+  ...
+# Subtest: F04 only boolean true authorizes a request
+ok 40 - F04 only boolean true authorizes a request
+  ---
+  duration_ms: 4.0174
+  type: 'test'
+  ...
+# Subtest: F04 changed recipient during first-capture releases no text
+ok 41 - F04 changed recipient during first-capture releases no text
+  ---
+  duration_ms: 0.8494
+  type: 'test'
+  ...
+# Subtest: F04 changed recipient during confirmation releases no text
+ok 42 - F04 changed recipient during confirmation releases no text
+  ---
+  duration_ms: 0.9516
+  type: 'test'
+  ...
+# Subtest: F04 changed recipient during fresh-capture releases no text
+ok 43 - F04 changed recipient during fresh-capture releases no text
+  ---
+  duration_ms: 0.9553
+  type: 'test'
+  ...
+# Subtest: F04 recapture rejects changed workspace while preserving the original safe preview
+ok 44 - F04 recapture rejects changed workspace while preserving the original safe preview
+  ---
+  duration_ms: 1.4295
+  type: 'test'
+  ...
+# Subtest: F04 recapture rejects changed relativePath while preserving the original safe preview
+ok 45 - F04 recapture rejects changed relativePath while preserving the original safe preview
+  ---
+  duration_ms: 0.9263
+  type: 'test'
+  ...
+# Subtest: F04 recapture rejects changed policyRevision while preserving the original safe preview
+ok 46 - F04 recapture rejects changed policyRevision while preserving the original safe preview
+  ---
+  duration_ms: 0.9809
+  type: 'test'
+  ...
+# Subtest: F04 recapture rejects changed fileIdentity while preserving the original safe preview
+ok 47 - F04 recapture rejects changed fileIdentity while preserving the original safe preview
+  ---
+  duration_ms: 0.9239
+  type: 'test'
+  ...
+# Subtest: F04 recapture rejects changed content while preserving the original safe preview
+ok 48 - F04 recapture rejects changed content while preserving the original safe preview
+  ---
+  duration_ms: 0.8314
+  type: 'test'
+  ...
+# Subtest: F04 recapture rejects changed regionView while preserving the original safe preview
+ok 49 - F04 recapture rejects changed regionView while preserving the original safe preview
+  ---
+  duration_ms: 0.8497
+  type: 'test'
+  ...
+# Subtest: F04 recapture rejects changed sensitive while preserving the original safe preview
+ok 50 - F04 recapture rejects changed sensitive while preserving the original safe preview
+  ---
+  duration_ms: 0.9807
+  type: 'test'
+  ...
+# Subtest: F04 exactly 16 KiB of UTF-8 safe output remains useful and can be reviewed
+ok 51 - F04 exactly 16 KiB of UTF-8 safe output remains useful and can be reviewed
+  ---
+  duration_ms: 4.4986
+  type: 'test'
+  ...
+# Subtest: F04 ordinary output over 16 KiB is unavailable before confirmation
+ok 52 - F04 ordinary output over 16 KiB is unavailable before confirmation
+  ---
+  duration_ms: 3.4827
+  type: 'test'
+  ...
+# Subtest: F04 environment output over 16 KiB is unavailable before confirmation
+ok 53 - F04 environment output over 16 KiB is unavailable before confirmation
+  ---
+  duration_ms: 2.0306
+  type: 'test'
+  ...
+# Subtest: F04 oversized-original is rejected even if the alternate captured view is small and safe
+ok 54 - F04 oversized-original is rejected even if the alternate captured view is small and safe
+  ---
+  duration_ms: 0.8693
+  type: 'test'
+  ...
+# Subtest: F04 binary-original is rejected even if the alternate captured view is small and safe
+ok 55 - F04 binary-original is rejected even if the alternate captured view is small and safe
+  ---
+  duration_ms: 0.597
+  type: 'test'
+  ...
+# Subtest: F04 oversized-region is rejected even if the alternate captured view is small and safe
+ok 56 - F04 oversized-region is rejected even if the alternate captured view is small and safe
+  ---
+  duration_ms: 0.62
+  type: 'test'
+  ...
+# Subtest: F04 binary-region is rejected even if the alternate captured view is small and safe
+ok 57 - F04 binary-region is rejected even if the alternate captured view is small and safe
+  ---
+  duration_ms: 1.0101
+  type: 'test'
+  ...
+# Subtest: F04 unsupported dotenv syntax gives an exact withheld summary and never original text
+ok 58 - F04 unsupported dotenv syntax gives an exact withheld summary and never original text
+  ---
+  duration_ms: 1.276
+  type: 'test'
+  ...
+# Subtest: F04 the 60-second deadline resolves an unanswered capture without waiting for it
+ok 59 - F04 the 60-second deadline resolves an unanswered capture without waiting for it
+  ---
+  duration_ms: 61.3939
+  type: 'test'
+  ...
+# Subtest: F04 the 60-second deadline resolves an unanswered confirmation without waiting for it
+ok 60 - F04 the 60-second deadline resolves an unanswered confirmation without waiting for it
+  ---
+  duration_ms: 3.3295
+  type: 'test'
+  ...
+# Subtest: F04 the owned deadline expires even when the injected elapsed clock does not advance
+ok 61 - F04 the owned deadline expires even when the injected elapsed clock does not advance
+  ---
+  duration_ms: 11.1565
+  type: 'test'
+  ...
+# Subtest: F04 revoke immediately expires a request waiting on capture
+ok 62 - F04 revoke immediately expires a request waiting on capture
+  ---
+  duration_ms: 2.5426
+  type: 'test'
+  ...
+# Subtest: F04 revoke immediately expires a request waiting on confirmation
+ok 63 - F04 revoke immediately expires a request waiting on confirmation
+  ---
+  duration_ms: 2.238
+  type: 'test'
+  ...
+# Subtest: F04 dispose immediately expires a request waiting on capture
+ok 64 - F04 dispose immediately expires a request waiting on capture
+  ---
+  duration_ms: 1.7426
+  type: 'test'
+  ...
+# Subtest: F04 dispose immediately expires a request waiting on confirmation
+ok 65 - F04 dispose immediately expires a request waiting on confirmation
+  ---
+  duration_ms: 1.9127
+  type: 'test'
+  ...
+# Subtest: F04 a late revoked approval cannot clear a newer request's busy state or grant it
+ok 66 - F04 a late revoked approval cannot clear a newer request's busy state or grant it
+  ---
+  duration_ms: 3.5235
+  type: 'test'
+  ...
+# Subtest: F04 late expired capture cannot open UI or hold a newer request busy
+ok 67 - F04 late expired capture cannot open UI or hold a newer request busy
+  ---
+  duration_ms: 3.1015
+  type: 'test'
+  ...
+# Subtest: F04 finishing an old request clears its timer instead of expiring a newer request
+ok 68 - F04 finishing an old request clears its timer instead of expiring a newer request
+  ---
+  duration_ms: 2.7876
+  type: 'test'
+  ...
+# Subtest: F04 preparation completes inside the request before content capture or approval
+ok 69 - F04 preparation completes inside the request before content capture or approval
+  ---
+  duration_ms: 1.8187
+  type: 'test'
+  ...
+# Subtest: F04 a hung preparation expires at the owned deadline and never captures content later
+ok 70 - F04 a hung preparation expires at the owned deadline and never captures content later
+  ---
+  duration_ms: 1.2233
+  type: 'test'
+  ...
+# Subtest: F04 late revoked preparation cannot clear the newer request's preparation ownership
+ok 71 - F04 late revoked preparation cannot clear the newer request's preparation ownership
+  ---
+  duration_ms: 1.8537
+  type: 'test'
+  ...
+# Subtest: F17 review exact result schema refuses originals/unknown kinds/oversized release
+ok 72 - F17 review exact result schema refuses originals/unknown kinds/oversized release
+  ---
+  duration_ms: 4.7551
+  type: 'test'
+  ...
+# Subtest: F17 review preinitialize, spoofed fields and duplicate pending IDs reach no additional reader
+ok 73 - F17 review preinitialize, spoofed fields and duplicate pending IDs reach no additional reader
+  ---
+  duration_ms: 22.203
+  type: 'test'
+  ...
+# Subtest: F17 review cancellation is request-bound and no late public text is released
+ok 74 - F17 review cancellation is request-bound and no late public text is released
+  ---
+  duration_ms: 4.101
+  type: 'test'
+  ...
+# Subtest: F17 review pending queue is bounded and EOF aborts every active read
+ok 75 - F17 review pending queue is bounded and EOF aborts every active read
+  ---
+  duration_ms: 4.3359
+  type: 'test'
+  ...
+# Subtest: F17 review malformed and oversized frames resynchronize without executing a valid tail
+ok 76 - F17 review malformed and oversized frames resynchronize without executing a valid tail
+  ---
+  duration_ms: 6.2661
+  type: 'test'
+  ...
+# Subtest: F17 review synchronous route exceptions are fixed errors and transport survives
+ok 77 - F17 review synchronous route exceptions are fixed errors and transport survives
+  ---
+  duration_ms: 3.3648
+  type: 'test'
+  ...
+# Subtest: F17 aborting an active F04 review promptly withholds a late approval
+ok 78 - F17 aborting an active F04 review promptly withholds a late approval
+  ---
+  duration_ms: 31.1362
+  type: 'test'
+  ...
+# Subtest: F17 already aborted requests never capture or review content
+ok 79 - F17 already aborted requests never capture or review content
+  ---
+  duration_ms: 1.1912
+  type: 'test'
+  ...
+# Subtest: F17 safe path schema rejects caller approval, absolute paths, aliases and unsupported fields
+ok 80 - F17 safe path schema rejects caller approval, absolute paths, aliases and unsupported fields
+  ---
+  duration_ms: 11.0675
+  type: 'test'
+  ...
+# Subtest: F17 connection schema accepts only the fixed local route and private session shape
+ok 81 - F17 connection schema accepts only the fixed local route and private session shape
+  ---
+  duration_ms: 9.0521
+  type: 'test'
+  ...
+# Subtest: F17 actual HTTP bridge public control binds a server-owned recipient
+ok 82 - F17 actual HTTP bridge public control binds a server-owned recipient
+  ---
+  duration_ms: 82.9342
+  type: 'test'
+  ...
+# Subtest: F17 actual bridge reuses safe-view reader: ordinary saved deny with approval
+ok 83 - F17 actual bridge reuses safe-view reader: ordinary saved deny with approval
+  ---
+  duration_ms: 24.4759
+  type: 'test'
+  ...
+# Subtest: F17 actual bridge reuses safe-view reader: env names only
+ok 84 - F17 actual bridge reuses safe-view reader: env names only
+  ---
+  duration_ms: 20.1358
+  type: 'test'
+  ...
+# Subtest: F17 actual bridge reuses safe-view reader: marked sensitive
+ok 85 - F17 actual bridge reuses safe-view reader: marked sensitive
+  ---
+  duration_ms: 10.6177
+  type: 'test'
+  ...
+# Subtest: F17 invalid auth and session never reach the native reader
+ok 86 - F17 invalid auth and session never reach the native reader
+  ---
+  duration_ms: 14.4803
+  type: 'test'
+  ...
+# Subtest: F17 flag withdrawal while native confirmation waits releases no output
+ok 87 - F17 flag withdrawal while native confirmation waits releases no output
+  ---
+  duration_ms: 14.153
+  type: 'test'
+  ...
+# Subtest: F17 explicit session rotation invalidates pending and prior clients
+ok 88 - F17 explicit session rotation invalidates pending and prior clients
+  ---
+  duration_ms: 22.2345
+  type: 'test'
+  ...
+# Subtest: F17 client cancellation propagates to the actual host read and withholds late data
+ok 89 - F17 client cancellation propagates to the actual host read and withholds late data
+  ---
+  duration_ms: 16.8827
+  type: 'test'
+  ...
+# Subtest: F17 actual bridge malformed/oversize/unknown fields return fixed errors with no read
+ok 90 - F17 actual bridge malformed/oversize/unknown fields return fixed errors with no read
+  ---
+  duration_ms: 18.3593
+  type: 'test'
+  ...
+# Subtest: F17 actual bridge outage has no original-file fallback
+ok 91 - F17 actual bridge outage has no original-file fallback
+  ---
+  duration_ms: 6.7111
+  type: 'test'
+  ...
+# Subtest: F17 actual stdio route advertises and dispatches the safe reader
+ok 92 - F17 actual stdio route advertises and dispatches the safe reader
+  ---
+  duration_ms: 7.5453
+  type: 'test'
+  ...
+1..92
+# tests 92
+# suites 0
+# pass 92
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3276.0788

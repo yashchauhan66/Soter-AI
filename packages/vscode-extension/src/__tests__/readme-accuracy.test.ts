@@ -10,6 +10,7 @@ import { describe, it } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
+import { CLINE_PIN } from "../adapters/ClineAdapterPolicy";
 
 const extensionRoot = join(__dirname, "..", "..");
 const manifest = JSON.parse(readFileSync(join(extensionRoot, "package.json"), "utf8"));
@@ -70,11 +71,12 @@ describe("README accuracy", () => {
         // The engine floor is a version the README legitimately states, and it
         // is verifiable against the manifest rather than hand-maintained — Gap 2
         // added "SoterAI keeps its VS Code `^1.85.0` floor", which this check
-        // read as a stale product version. Allow exactly the declared floor, and
-        // nothing else.
+        // read as a stale product version. The explicit Cline vendor mention is
+        // bound to its actual product pin; another vendor version still fails.
         const engineFloor = String(manifest.engines?.vscode ?? "").replace(/^[^\d]*/, "");
         const allowed = new Set([manifest.version, engineFloor].filter(Boolean));
-        const versions = [...new Set([...readme.matchAll(/\b\d+\.\d+\.\d+\b/g)].map((m) => m[0]))];
+        const productClaims = readme.replaceAll(`Cline **${CLINE_PIN.version}**`, "Cline [pinned vendor]");
+        const versions = [...new Set([...productClaims.matchAll(/\b\d+\.\d+\.\d+\b/g)].map((m) => m[0]))];
         const stale = versions.filter((v) => !allowed.has(v));
         assert.deepEqual(
             stale,

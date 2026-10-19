@@ -1,0 +1,174 @@
+﻿{
+  "version": "4.1.25",
+  "inputs": [
+    {
+      "path": "C:\\Users\\USER\\.vscode\\extensions\\saoudrizwan.claude-dev-4.1.25\\package.json",
+      "bytes": 18092,
+      "sha256": "4a91298536329c8987b77223c06d3a6778af3a7e3678ed7173dd430f3636d7eb"
+    },
+    {
+      "path": "C:\\Users\\USER\\.vscode\\extensions\\saoudrizwan.claude-dev-4.1.25\\dist\\extension.js",
+      "bytes": 25960382,
+      "sha256": "a3e8eda18b38547df9c614e62d04106cdf3bf2df2cb16241af3f7b3770088022"
+    },
+    {
+      "path": "C:\\Users\\USER\\.vscode\\extensions\\saoudrizwan.claude-dev-4.1.25\\readme.md",
+      "bytes": 10540,
+      "sha256": "8b8fd533c1831b95c909c1825f7da0b994ccff39b3ab91e683bc7d08ee7e84b6"
+    },
+    {
+      "path": "C:\\Users\\USER\\.vscode\\extensions\\saoudrizwan.claude-dev-4.1.25\\.vsixmanifest",
+      "bytes": 2835,
+      "sha256": "f408f4d79f713315b6e265e94ea43d009c70f88a36e58198de9c3e6846f8cb07"
+    }
+  ],
+  "snippets": [
+    {
+      "term": ".clineignore",
+      "count": 0,
+      "first": []
+    },
+    {
+      "term": "BeforeTool",
+      "count": 0,
+      "first": []
+    },
+    {
+      "term": "beforeTool",
+      "count": 15,
+      "first": [
+        {
+          "offset": 11231073,
+          "snippet": "config;listeners=new Set;tools=new Map;hooks={beforeRun:[],afterRun:[],beforeModel:[],afterModel:[],beforeTool:[],afterTool:[],onEvent:[]};pendingHookContexts=[];state={agentId:\"\",agentRole:void 0,parentAgentId:void 0,runId:void 0,status:\"idle\",iteration:0,messages:[],pendingToolCalls:[],usage:kee(Aun),lastEr"
+        },
+        {
+          "offset": 11233975,
+          "snippet": "this.hooks.beforeModel.push(e.beforeModel),e.afterModel&&this.hooks.afterModel.push(e.afterModel),e.beforeTool&&this.hooks.beforeTool.push(e.beforeTool),e.afterTool&&this.hooks.afterTool.push(e.afterTool),e.onEvent&&this.hooks.onEvent.push(e.onEvent))}getRequiredCompletionToolNames(){return this.config.comple"
+        }
+      ]
+    },
+    {
+      "term": "hooksEnabled",
+      "count": 32,
+      "first": [
+        {
+          "offset": 680095,
+          "snippet": "ut:void 0,defaultTerminalProfile:void 0,useAutoCondense:void 0,preferredLanguage:void 0,mode:void 0,hooksEnabled:void 0,subagentsEnabled:void 0,backgroundEditEnabled:void 0,optOutOfRemoteConfig:void 0,openTelemetryEnabled:void 0,openTelemetryMetricsExporter:void 0,openTelemetryLogsExporter:void 0,openTelemetr"
+        },
+        {
+          "offset": 682379,
+          "snippet": "useAutoCondense:void 0,browserSettings:void 0,defaultTerminalProfile:void 0,multiRootEnabled:void 0,hooksEnabled:void 0,vscodeTerminalExecutionMode:void 0,subagentsEnabled:void 0,subagentTerminalOutputLineLimit:void 0,clineEnv:void 0,onboardingModels:void 0,backgroundEditEnabled:void 0,ocaReasoningEffort:void"
+        }
+      ]
+    },
+    {
+      "term": "openAiBaseUrl",
+      "count": 54,
+      "first": [
+        {
+          "offset": 143556,
+          "snippet": "al(),outputPrice:Ka().optional(),supportsImages:_d().optional()}),n9u=Ni({models:dc(r9u).optional(),openAiBaseUrl:br().optional(),openAiHeaders:$1(br(),br()).optional(),azureApiVersion:br().optional(),azureIdentity:_d().optional()}),i9u=Ni({id:br(),thinkingBudgetTokens:Ka().optional()}),a9u=Ni({name:br(),base"
+        },
+        {
+          "offset": 392787,
+          "snippet": "e:void 0,awsBedrockEndpoint:void 0,claudeCodePath:void 0,vertexProjectId:void 0,vertexRegion:void 0,openAiBaseUrl:void 0,ollamaBaseUrl:void 0,ollamaApiOptionsCtxNum:void 0,lmStudioBaseUrl:void 0,geminiBaseUrl:void 0,requestyBaseUrl:void 0,fireworksModelMaxCompletionTokens:void 0,fireworksModelMaxTokens:void 0"
+        }
+      ]
+    },
+    {
+      "term": "openAiApiKey",
+      "count": 45,
+      "first": [
+        {
+          "offset": 391739,
+          "snippet": "piKey:void 0,awsAccessKey:void 0,awsSecretKey:void 0,awsSessionToken:void 0,awsBedrockApiKey:void 0,openAiApiKey:void 0,ollamaApiKey:void 0,geminiApiKey:void 0,openAiNativeApiKey:void 0,deepSeekApiKey:void 0,requestyApiKey:void 0,togetherApiKey:void 0,fireworksApiKey:void 0,qwenApiKey:void 0,doubaoApiKey:void"
+        },
+        {
+          "offset": 397935,
+          "snippet": "dpoint:void 0,claudeCodePath:void 0,vertexProjectId:void 0,vertexRegion:void 0,openAiBaseUrl:void 0,openAiApiKey:void 0,ollamaBaseUrl:void 0,ollamaApiOptionsCtxNum:void 0,lmStudioBaseUrl:void 0,geminiApiKey:void 0,geminiBaseUrl:void 0,openAiNativeApiKey:void 0,deepSeekApiKey:void 0,requestyApiKey:void 0,reque"
+        }
+      ]
+    },
+    {
+      "term": "openai-native",
+      "count": 29,
+      "first": [
+        {
+          "offset": 8170803,
+          "snippet": ")&&(e[r]=kQd(i));return e}function ovo(t){switch(t){case\"cline\":case\"cline-pass\":return\"cline\";case\"openai-native\":return\"openai\";case\"anthropic\":return\"anthropic\";case\"google\":case\"gemini\":return\"google\";case\"vertex\":return\"vertex\";case\"bedrock\":return\"bedrock\";case\"mistral\":return\"mistral\";case\"claude-code\""
+        },
+        {
+          "offset": 8179270,
+          "snippet": "ice(1)}`}}return{opus:t(\"opus\"),sonnet:t(\"sonnet\"),haiku:t(\"haiku\")}}function oUd(){return JPt(dfe(\"openai-native\"[LONG_LITERAL_OMITTED]\"openai-codex\"?JPt(e):e}function sUd(){return{scribe_v2:{id:\"scribe_v2\",name:\"Scribe v2\",description:\"ElevenLabs speec"
+        }
+      ]
+    },
+    {
+      "term": "telemetrySetting",
+      "count": 61,
+      "first": [
+        {
+          "offset": 679882,
+          "snippet": "eRulesToggles:void 0,globalWorkflowToggles:void 0,globalSkillsToggles:void 0,browserSettings:void 0,telemetrySetting:void 0,planActSeparateModelsSetting:void 0,enableCheckpointsSetting:void 0,shellIntegrationTimeout:void 0,defaultTerminalProfile:void 0,useAutoCondense:void 0,preferredLanguage:void 0,mode:void"
+        },
+        {
+          "offset": 682011,
+          "snippet": "void 0,settings:void 0,taskId:void 0}}function $bi(){return{metadata:void 0,apiConfiguration:void 0,telemetrySetting:void 0,planActSeparateModelsSetting:void 0,enableCheckpointsSetting:void 0,mcpMarketplaceEnabled:void 0,shellIntegrationTimeout:void 0,terminalReuseEnabled:void 0,mcpResponsesCollapsed:void 0,m"
+        }
+      ]
+    },
+    {
+      "term": "DO_NOT_TRACK",
+      "count": 2,
+      "first": [
+        {
+          "offset": 6591039,
+          "snippet": "CODE_DISABLE_NONESSENTIAL_TRAFFIC?\"essential-traffic\":process.env.DISABLE_TELEMETRY||Fm(process.env.DO_NOT_TRACK)?\"no-telemetry\":\"default\"}function Jfd(){return $fd()===\"essential-traffic\"}function Zao(t){let e=XVe(t);try{if(Fm(process.env.CLAUDE_CODE_USE_BEDROCK)||Fm(process.env.CLAUDE_CODE_USE_VERTEX)||Fm(p"
+        },
+        {
+          "offset": 7552403,
+          "snippet": "uTask:()=>Dyd,DAYTONA_WS_ID:()=>Evd,DEMO_VERSION:()=>r1d,DENO_DEPLOYMENT_ID:()=>Dvd,DISPLAY:()=>DAd,DO_NOT_TRACK:()=>ryd,DYNO:()=>kvd,EDITOR:()=>TAd,FORCE_COLOR:()=>ZAd,GCLOUD_PROJECT:()=>Fvd,GCM_INTERACTIVE:()=>Hyd,GH_ENTERPRISE_TOKEN:()=>$yd,GH_HOST:()=>Kyd,GH_TOKEN:()=>Vyd,GITHUB_ACTIONS:()=>evd,GITHUB_ACT"
+        }
+      ]
+    },
+    {
+      "term": "startNewTask",
+      "count": 1,
+      "first": [
+        {
+          "offset": 25866759,
+          "snippet": "e(\"vscode\"[LONG_LITERAL_OMITTED]\"messageResponse\",r||\"\",i||[]):"
+        }
+      ]
+    },
+    {
+      "term": "startTask",
+      "count": 0,
+      "first": []
+    },
+    {
+      "term": "exports",
+      "count": 2525,
+      "first": [
+        {
+          "offset": 425,
+          "snippet": "(\"Module not found in bundle: \"[LONG_LITERAL_OMITTED]\"object\"||typeof e==\"function\")for(let a of WMu(e))!GMu.call(t,a)&&a!==r&&Kft(t,a,"
+        },
+        {
+          "offset": 438,
+          "snippet": "found in bundle: \"[LONG_LITERAL_OMITTED]\"object\"||typeof e==\"function\")for(let a of WMu(e))!GMu.call(t,a)&&a!==r&&Kft(t,a,{get:()=>e[a]"
+        }
+      ]
+    },
+    {
+      "term": "activate =",
+      "count": 0,
+      "first": []
+    },
+    {
+      "term": "activate=",
+      "count": 0,
+      "first": []
+    }
+  ]
+}

@@ -6,6 +6,9 @@ import { BoundarySnapshot, updateRules, onDidChangeBoundaryRules, onDidChangeOwn
 import { readBoundaryFile } from "../ai-boundary/readFile";
 import { relativePath, OMITTED } from "../ai-boundary/policy";
 import { assertWorkspaceFileUri } from "../security/WorkspacePathGuard";
+import { verifyOutputPath } from "../security/FileSystemPathPolicy";
+import { buildSafeFileView } from "./SafeFileView";
+import { documentDigest } from "../ai-boundary/policy";
 import { ProjectFileAccess, type CapturedFile, type AccessReceipt, type AccessResult, type RequestSurface } from "./ProjectFileAccess";
 import { ProjectReadTerminal } from "./ReadTerminal";
 import { openProjectPrivacyPanel } from "./panel";
@@ -57,6 +60,7 @@ export function approvalMessage(receipt: AccessReceipt): string {
 
 export interface ProjectReaderBridge extends ManagedReaderBridge {
     readIntegration(uri: vscode.Uri, recipient: string, signal: AbortSignal): Promise<AccessResult>;
+    classifyIntegration(uri: vscode.Uri, intent: "read" | "write", signal: AbortSignal): Promise<"PUBLIC" | "RESTRICTED" | "UNAVAILABLE">;
 }
 export function registerProjectPrivacyCommands(context: vscode.ExtensionContext): ProjectReaderBridge {
     registerSecureEditor(context);
@@ -108,6 +112,42 @@ export function registerProjectPrivacyCommands(context: vscode.ExtensionContext)
             fileIdentity: JSON.stringify([stat.dev, stat.ino, stat.birthtimeMs, stat.size, stat.mtimeMs]),
             content, regionView: boundary.approvedRegionView(uri, content),
             sensitive: boundary.isSensitive(uri) || boundary.classify(uri).level !== "normal" };
+    }
+
+    async function classifyIntegration(uri: vscode.Uri, intent: "read" | "write", signal: AbortSignal): Promise<"PUBLIC" | "RESTRICTED" | "UNAVAILABLE"> {
+        const epoch = access.metadataRevision();
+        const valid = () => readsEnabled() && !signal.aborted && !access.isBusy() && access.metadataRevision() === epoch;
+        try {
+            if (!valid() || !(uri instanceof vscode.Uri) || uri.scheme !== "file" || !["read", "write"].includes(intent)) return "UNAVAILABLE";
+            const folder = vscode.workspace.getWorkspaceFolder(uri); if (!folder || folder.uri.scheme !== "file") return "UNAVAILABLE";
+            const rel = relativePath(path.relative(folder.uri.fsPath, uri.fsPath).replace(/\\/g, "/"));
+            if (NEVER_RELEASE.test(rel) || manualRestrictionPending(folder.uri.toString(), uri) || pendingSensitiveWrites.has(fileKey(uri))) return "RESTRICTED";
+            const before = await BoundarySnapshot.load(), revision = before.accessRevision(uri);
+            if (!valid() || !revision) return "UNAVAILABLE";
+            if (before.blocks(uri) || before.isSensitive(uri) || before.hasRegions(uri)) return "RESTRICTED";
+            let absent = false;
+            try { const stat = await lstat(uri.fsPath); if (!stat.isFile() || stat.isSymbolicLink() || stat.nlink !== 1) return "RESTRICTED"; }
+            catch (error) { if (intent !== "write" || (error as { code?: string }).code !== "ENOENT") return "UNAVAILABLE"; absent = true; }
+            if (absent) {
+                const canonical = await verifyOutputPath(folder.uri.fsPath, uri.fsPath);
+                if (path.resolve(canonical).toLowerCase() !== fileKey(uri) || !valid()) return "UNAVAILABLE";
+                const fresh = await BoundarySnapshot.load();
+                if (!valid() || fresh.accessRevision(uri) !== revision || fresh.blocks(uri) || fresh.isSensitive(uri) || fresh.hasRegions(uri)) return "UNAVAILABLE";
+                try { await lstat(uri.fsPath); return "UNAVAILABLE"; } catch (error) { if ((error as { code?: string }).code !== "ENOENT") return "UNAVAILABLE"; }
+                if (path.resolve(await verifyOutputPath(folder.uri.fsPath, uri.fsPath)).toLowerCase() !== fileKey(uri)) return "UNAVAILABLE";
+                return valid() ? "PUBLIC" : "UNAVAILABLE";
+            }
+            // Same private bounded capture and safe-view authority as F04. No
+            // source text, redacted view or approval is returned by this route.
+            const captured = await capture(uri);
+            if (!valid() || captured.policyRevision !== revision) return "UNAVAILABLE";
+            const view = buildSafeFileView(captured.relativePath, captured.regionView, captured.sensitive, captured.content);
+            if (view.kind !== "redacted-file" || view.text !== captured.content) return "RESTRICTED";
+            const fresh = await capture(uri);
+            if (!valid() || fresh.policyRevision !== revision || fresh.fileIdentity !== captured.fileIdentity || documentDigest(fresh.content) !== documentDigest(captured.content)
+                || fresh.regionView !== captured.regionView || fresh.sensitive !== captured.sensitive) return "UNAVAILABLE";
+            return "PUBLIC";
+        } catch { return "UNAVAILABLE"; }
     }
 
     async function chooseFile(): Promise<vscode.Uri | undefined> {
@@ -207,6 +247,7 @@ export function registerProjectPrivacyCommands(context: vscode.ExtensionContext)
         return { status: "OPENED" };
     });
     return Object.freeze({ read: (uri: vscode.Uri) => request(uri, "managed-read-terminal"),
+        classifyIntegration,
         readIntegration: async (uri: vscode.Uri, recipient: string, signal: AbortSignal) => {
             const target = vscode.Uri.parse(uri.toString()); recipients.set(target, recipient);
             try { return await access.request(target, "integration-command", signal); }

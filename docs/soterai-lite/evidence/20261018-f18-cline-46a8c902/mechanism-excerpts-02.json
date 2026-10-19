@@ -1,0 +1,159 @@
+{
+  "status": "STATIC_ONLY_NOT_VERIFIED_ROUTING",
+  "sha256": "a3e8eda18b38547df9c614e62d04106cdf3bf2df2cb16241af3f7b3770088022",
+  "excerpts": [
+    {
+      "term": "PreToolUse",
+      "count": 19,
+      "excerpts": [
+        {
+          "offset": 24420674,
+          "text": "=>!!c?.trim()).join(`\n\n`);return u?{appendContext:u}:void 0},async beforeTool(o){let n;try{if(!i())return;let s=cpt(o.snapshot),u=o.toolCall.toolName,d=await a().create(\"PreToolUse\",s,u);if(d.isNoOp)return;let f=ZS({hookName:\"PreToolUse\",toolName:u,status:\"running\"});n=f.ts,e?.(f);let p=await d.run({taskId:s,preToolUse:{toolName:u,parameters:Bwu(o.input)}});return e?.(ZS({hookName:\"PreToolUse\",toolName:u,status:p.cancel?\"cancelled\":\"completed\",ts:n})),tgr(p)}catch(s){e?.(ZS({hookName:\"PreToolUse\",toolName:o.toolCall.toolName,status:\"failed\",ts:n})),Re.error(\"[HooksAdapter] beforeTool hook failed:\",s);return}},async afterTool(o){let n;try{if(!i())return;let s=cpt(o.snapshot),u=o.toolCall.toolName,d=await a().create(\"PostToolUse\",s,u);if(d.isNoOp)return;let f=ZS({hookName:\"PostToolUse\",toolName:u,status:\"running\"});n=f.ts,e?.(f);let p=await d.run({taskId:s,postToolUse:{toolName:u,parameters:Bwu(o.input),resul"
+        },
+        {
+          "offset": 24420730,
+          "text": "d 0},async beforeTool(o){let n;try{if(!i())return;let s=cpt(o.snapshot),u=o.toolCall.toolName,d=await a().create(\"PreToolUse\",s,u);if(d.isNoOp)return;let f=ZS({hookName:\"PreToolUse\",toolName:u,status:\"running\"});n=f.ts,e?.(f);let p=await d.run({taskId:s,preToolUse:{toolName:u,parameters:Bwu(o.input)}});return e?.(ZS({hookName:\"PreToolUse\",toolName:u,status:p.cancel?\"cancelled\":\"completed\",ts:n})),tgr(p)}catch(s){e?.(ZS({hookName:\"PreToolUse\",toolName:o.toolCall.toolName,status:\"failed\",ts:n})),Re.error(\"[HooksAdapter] beforeTool hook failed:\",s);return}},async afterTool(o){let n;try{if(!i())return;let s=cpt(o.snapshot),u=o.toolCall.toolName,d=await a().create(\"PostToolUse\",s,u);if(d.isNoOp)return;let f=ZS({hookName:\"PostToolUse\",toolName:u,status:\"running\"});n=f.ts,e?.(f);let p=await d.run({taskId:s,postToolUse:{toolName:u,parameters:Bwu(o.input),result:String(o.result.output??\"\"),success:!o.result.isError,"
+        },
+        {
+          "offset": 24420889,
+          "text": "{hookName:\"PreToolUse\",toolName:u,status:\"running\"});n=f.ts,e?.(f);let p=await d.run({taskId:s,preToolUse:{toolName:u,parameters:Bwu(o.input)}});return e?.(ZS({hookName:\"PreToolUse\",toolName:u,status:p.cancel?\"cancelled\":\"completed\",ts:n})),tgr(p)}catch(s){e?.(ZS({hookName:\"PreToolUse\",toolName:o.toolCall.toolName,status:\"failed\",ts:n})),Re.error(\"[HooksAdapter] beforeTool hook failed:\",s);return}},async afterTool(o){let n;try{if(!i())return;let s=cpt(o.snapshot),u=o.toolCall.toolName,d=await a().create(\"PostToolUse\",s,u);if(d.isNoOp)return;let f=ZS({hookName:\"PostToolUse\",toolName:u,status:\"running\"});n=f.ts,e?.(f);let p=await d.run({taskId:s,postToolUse:{toolName:u,parameters:Bwu(o.input),result:String(o.result.output??\"\"),success:!o.result.isError,executionTimeMs:o.durationMs}});return e?.(ZS({hookName:\"PostToolUse\",toolName:u,status:p.cancel?\"cancelled\":\"completed\",ts:n})),tgr(p)}catch(s){e?.(ZS({hookNa"
+        },
+        {
+          "offset": 24420994,
+          "text": ":{toolName:u,parameters:Bwu(o.input)}});return e?.(ZS({hookName:\"PreToolUse\",toolName:u,status:p.cancel?\"cancelled\":\"completed\",ts:n})),tgr(p)}catch(s){e?.(ZS({hookName:\"PreToolUse\",toolName:o.toolCall.toolName,status:\"failed\",ts:n})),Re.error(\"[HooksAdapter] beforeTool hook failed:\",s);return}},async afterTool(o){let n;try{if(!i())return;let s=cpt(o.snapshot),u=o.toolCall.toolName,d=await a().create(\"PostToolUse\",s,u);if(d.isNoOp)return;let f=ZS({hookName:\"PostToolUse\",toolName:u,status:\"running\"});n=f.ts,e?.(f);let p=await d.run({taskId:s,postToolUse:{toolName:u,parameters:Bwu(o.input),result:String(o.result.output??\"\"),success:!o.result.isError,executionTimeMs:o.durationMs}});return e?.(ZS({hookName:\"PostToolUse\",toolName:u,status:p.cancel?\"cancelled\":\"completed\",ts:n})),tgr(p)}catch(s){e?.(ZS({hookName:\"PostToolUse\",toolName:o.toolCall.toolName,status:\"failed\",ts:n})),Re.error(\"[HooksAdapter] afterTool "
+        }
+      ]
+    },
+    {
+      "term": ".ps1",
+      "count": 8,
+      "excerpts": [
+        {
+          "offset": 24711736,
+          "text": "tf-8\"),r.mode!==void 0&&await Dpt.default.chmod(i,r.mode)}}function sKh(){return process.platform===\"win32\"?[{fileName:\"TaskStart.ps1\",content:uKh},{fileName:\"PostToolUse.ps1\",content:lKh},{fileName:\"TaskComplete.ps1\",content:cKh}]:[{fileName:\"TaskStart\",content:dKh,mode:493},{fileName:\"PostToolUse\",content:pKh,mode:493},{fileName:\"TaskComplete\",content:fKh,mode:493}]}var Dpt,AAr,uKh,lKh,cKh,zci,dKh,pKh,fKh,Q_u=se(()=>{\"use strict\";Dpt=dt(require(\"fs/promises\")),AAr=dt(require(\"path\"));Ux();uKh=`try {\n    $rawInput = [Console]::In.ReadToEnd()\n    $inputData = $null\n    if ($rawInput) {\n        $inputData = $rawInput | ConvertFrom-Json -Depth 100\n    }\n} catch {\n    $inputData = $null\n}\n\ntry {\n    $documentsPath = [System.Environment]::GetFolderPath([System.Environment+SpecialFolder]::MyDocuments)\n    if (-not $documentsPath) {\n        $documentsPath = Join-Path $HOME \"Documents\"\n    }\n\n    $configPath = Joi"
+        },
+        {
+          "offset": 24711778,
+          "text": "chmod(i,r.mode)}}function sKh(){return process.platform===\"win32\"?[{fileName:\"TaskStart.ps1\",content:uKh},{fileName:\"PostToolUse.ps1\",content:lKh},{fileName:\"TaskComplete.ps1\",content:cKh}]:[{fileName:\"TaskStart\",content:dKh,mode:493},{fileName:\"PostToolUse\",content:pKh,mode:493},{fileName:\"TaskComplete\",content:fKh,mode:493}]}var Dpt,AAr,uKh,lKh,cKh,zci,dKh,pKh,fKh,Q_u=se(()=>{\"use strict\";Dpt=dt(require(\"fs/promises\")),AAr=dt(require(\"path\"));Ux();uKh=`try {\n    $rawInput = [Console]::In.ReadToEnd()\n    $inputData = $null\n    if ($rawInput) {\n        $inputData = $rawInput | ConvertFrom-Json -Depth 100\n    }\n} catch {\n    $inputData = $null\n}\n\ntry {\n    $documentsPath = [System.Environment]::GetFolderPath([System.Environment+SpecialFolder]::MyDocuments)\n    if (-not $documentsPath) {\n        $documentsPath = Join-Path $HOME \"Documents\"\n    }\n\n    $configPath = Join-Path (Join-Path $documentsPath \"Cline\") "
+        }
+      ]
+    },
+    {
+      "term": "powershell.exe",
+      "count": 8,
+      "excerpts": [
+        {
+          "offset": 23538320,
+          "text": "bin/tcsh\",FALLBACK:\"/bin/sh\"}});function COh(t){return[...new Set(t.filter(Boolean))]}function IOh(){return ehr}function _Oh(){let t=[...Rii(),ehr],e=[\"pwsh.exe\",\"pwsh\",\"powershell.exe\",\"powershell\"];return COh([...t,...e])}async function SOh(t,e=EOh){return await new Promise(r=>{let i=M0u.spawn(t,[\"-NoProfile\",\"-NonInteractive\",\"-Command\",\"$PSVersionTable.PSVersion\"],{stdio:\"ignore\",windowsHide:!0,shell:!1}),a=!1,o=s=>{a||(a=!0,clearTimeout(n),r(s))},n=setTimeout(()=>{i.killed||i.kill(\"SIGTERM\"),o(!1)},e);i.once(\"error\",()=>o(!1)),i.once(\"exit\",s=>o(s===0))})}async function O0u(){return Dii||(Dii=(async()=>{let t=_Oh();for(let r of t)if(await wOh(r))return Re.debug(`[PowerShellResolver] Using PowerShell executable: ${r}`),r;let e=IOh();return Re.warn(`[PowerShellResolver] Could not resolve PowerShell executable from candidates ${t.join(\", \")}. Falling back to ${e}.`),e})()),Dii}var M0u,EOh,Dii,wOh,F0u=se(("
+        },
+        {
+          "offset": 24784220,
+          "text": "win32\")try{await r(`start \"\" \"${t}\"`),Re.log(\"Opened URL with Windows 'start' command\");return}catch(i){Re.error(`Error with Windows 'start' command: ${i}`);try{await r(`powershell.exe -Command \"Start-Process '${t}'\"`),Re.log(\"Opened URL with PowerShell command\");return}catch(a){Re.error(`Error with PowerShell command: ${a}`)}}else if(e===\"darwin\"){await r(`open \"${t}\"`),Re.log(\"Opened URL with macOS 'open' command\");return}else{let i=[\"xdg-open\",\"gnome-open\",\"kde-open\",\"wslview\"];for(let a of i)try{await r(`${a} \"${t}\"`),Re.log(`Opened URL with '${a}' command`);return}catch(o){Re.error(`Error with '${a}' command: ${o}`)}}throw new Error(\"All OS commands failed\")}catch(e){Re.error(`OS commands failed: ${e}`);try{await zg(t),Re.log(\"Opened URL with openExternal utility (note: URL encoding may be affected)\");return}catch(r){Re.error(`Error with openExternal utility: ${r}`),$r.window.showMessage({type:1,messag"
+        }
+      ]
+    },
+    {
+      "term": "cancel:true",
+      "count": 0,
+      "excerpts": []
+    },
+    {
+      "term": "cancel===",
+      "count": 5,
+      "excerpts": [
+        {
+          "offset": 12139699,
+          "text": "?.trim()&&(e.appendContext=t.context),t.overrideInput!==void 0&&(e.input=t.overrideInput),Object.keys(e).length>0?e:void 0}function lBo(t){if(!t)return;let e={};return t.cancel===!0?(e.stop=!0,t.cancelReason?.trim()&&(e.reason=t.cancelReason)):t.context?.trim()&&(e.appendContext=t.context),Object.keys(e).length>0?e:void 0}function hRp(t){let e={cwd:t.workspacePath,workspacePath:t.workspacePath,rootSessionId:t.rootSessionId,workspaceInfo:t.workspaceInfo},r=i=>{let a=`${JSON.stringify({ts:new Date().toISOString(),...i})}\n`,o=(process.env.CLINE_HOOKS_LOG_PATH?.trim()||void 0)??(0,GFo.join)(pue(),\"hooks.jsonl\");pue(o),(0,XLt.appendFileSync)(o,a,\"utf8\")};return{beforeRun:async i=>{let a=hgn(i,\"\");r({...QC(a,e),hookName:\"agent_start\",taskStart:{taskMetadata:{}}})},beforeTool:async i=>{let a=KFo(i);r({...QC(a,e),hookName:\"tool_call\",iteration:a.iteration,tool_call:{id:a.call.id,name:a.call.name,input:a.call.input}"
+        },
+        {
+          "offset": 23552598,
+          "text": ",this.hookName)}}},Nii=class extends Yct{constructor(r,i,a){super(r,a);this.runners=i}async[Jct](r){let i=await Promise.all(this.runners.map(s=>s[Jct](r))),a=i.some(s=>s.cancel===!0),o=i.map(s=>s.contextModification?.trim()).filter(s=>s).join(`\n\n`),n=i.map(s=>s.errorMessage?.trim()).filter(s=>s).join(`\n`);return Y$.create({cancel:a,contextModification:o,errorMessage:n})}};W8e=class t{constructor(e){this.options=e}sessionHooksDir(){let e=this.options?.sessionWorkspaceRoot;return e?U8e.default.join(e,\".clinerules\",\"hooks\"):void 0}async findSessionScripts(e){let r=this.sessionHooksDir();if(!r)return[];let i=await t.findHookInHooksDir(e,r);return i?[i]:[]}async create(e,r,i){return this.createWithStreaming(e,void 0,void 0,r,i)}async createWithStreaming(e,r,i,a,o){let n=await QZe(),s=this.options?.sessionWorkspaceRoot,u=s&&!n.includes(s)?[...n,s]:n,c=await LZe(n),{HookDiscoveryCache:d}=await Promise.resolve().th"
+        }
+      ]
+    },
+    {
+      "term": "contextModification",
+      "count": 63,
+      "excerpts": [
+        {
+          "offset": 24419545,
+          "text": ";let e={};for(let[r,i]of Object.entries(t))e[r]=typeof i==\"string\"?i:JSON.stringify(i);return e}function YHh(t){return t.cancel?{stop:!0,reason:t.errorMessage?.trim()||t.contextModification?.trim()||void 0}:void 0}function tgr(t){let e=YHh(t);if(e)return e;let r=t.contextModification?.trim();return r?{appendContext:r}:void 0}function cpt(t){return t.conversationId??t.runId??t.agentId}function XHh(t){return t.filter(e=>e.type===\"text\"&&typeof e.text==\"string\").map(e=>e.text).join(\"\")}function Pwu(t){for(let e=t.snapshot.messages.length-1;e>=0;e-=1){let r=t.snapshot.messages[e];if(r?.role===\"user\"&&r.metadata?.displayRole!==\"system\")return XHh(r.content)}return\"\"}function ZS(t){return{ts:t.ts??Date.now(),type:\"say\",say:\"hook_status\",text:JSON.stringify({hookName:t.hookName,...t.toolName&&{toolName:t.toolName},status:t.status}),partial:!1}}function rgr(t,e,r){let i=()=>egr(t.getGlobalSettingsKey(\"hooksEnabled\""
+        },
+        {
+          "offset": 24419640,
+          "text": "}function YHh(t){return t.cancel?{stop:!0,reason:t.errorMessage?.trim()||t.contextModification?.trim()||void 0}:void 0}function tgr(t){let e=YHh(t);if(e)return e;let r=t.contextModification?.trim();return r?{appendContext:r}:void 0}function cpt(t){return t.conversationId??t.runId??t.agentId}function XHh(t){return t.filter(e=>e.type===\"text\"&&typeof e.text==\"string\").map(e=>e.text).join(\"\")}function Pwu(t){for(let e=t.snapshot.messages.length-1;e>=0;e-=1){let r=t.snapshot.messages[e];if(r?.role===\"user\"&&r.metadata?.displayRole!==\"system\")return XHh(r.content)}return\"\"}function ZS(t){return{ts:t.ts??Date.now(),type:\"say\",say:\"hook_status\",text:JSON.stringify({hookName:t.hookName,...t.toolName&&{toolName:t.toolName},status:t.status}),partial:!1}}function rgr(t,e,r){let i=()=>egr(t.getGlobalSettingsKey(\"hooksEnabled\")),a=()=>new W8e({sessionWorkspaceRoot:r});return{async beforeRun(o){let n=await ZHh(o,i,a,e);i"
+        }
+      ]
+    },
+    {
+      "term": "qBu(",
+      "count": 2,
+      "excerpts": [
+        {
+          "offset": 25866745,
+          "text": "o0});module.exports=Zt(Po0);var NMu=dt(require(\"node:assert\"));Vn();var Jo=dt(require(\"vscode\"));Rr();Vhi();m1e();odi();adi();idi();sdi();udi();g1e();m1e();Rr();function qBu(t){return{startNewTask:async(r,i)=>{await t.clearTask(),await t.postStateToWebview(),await c$(),await t.initTask(r,i)},sendMessage:async(r,i)=>{t.task?await t.task.handleWebviewAskResponse(\"messageResponse\",r||\"\",i||[]):Re.error(\"No active task to send message to\")},pressPrimaryButton:async()=>{t.task?await t.task.handleWebviewAskResponse(\"yesButtonClicked\",\"\",[]):Re.error(\"No active task to press button for\")},pressSecondaryButton:async()=>{t.task?await t.task.handleWebviewAskResponse(\"noButtonClicked\",\"\",[]):Re.error(\"No active task to press button for\")}}}Hp();var LMu=dt(require(\"node:path\"));Ls();Nvn();Khi();var $hi=class{serviceName;methodRegistry={};streamingMethodRegistry={};methodMetadata={};constructor(e){this.serviceName=e}reg"
+        },
+        {
+          "offset": 25932074,
+          "text": "AndRetrieveAuthInfo():m?.handleDeauth(\"cross_window_sync\")}});return t.subscriptions.push({dispose:c}),Re.log(`[Cline] extension activated in ${performance.now()-e} ms`),qBu(a.controller)}async function MMu(t,e){return new Promise(r=>{let i=Jo.window.createQuickPick();i.title=t,i.placeholder=e,i.ignoreFocusOut=!0,i.canSelectMany=!1;let a=\"\";i.onDidChangeValue(o=>{a=o,o?i.items=[{label:\"$(check) Use this prompt\",detail:o,alwaysShow:!0}]:i.items=[]}),i.onDidAccept(()=>{a&&(r(a),i.hide())}),i.onDidHide(()=>{a||r(void 0),i.dispose()}),i.show()})}function To0(t){dPu(t).appendLine(\"[Cline] Setting up VS Code host...\");let r=()=>new Dft(t),i=()=>new Mvr,a=()=>AMu(),o=async(n,s)=>{let u=Jo.env.uriScheme||\"vscode\",c=Jo.Uri.parse(`${u}://${t.extension.id}${n}`);return Jo.env.uiKind===Jo.UIKind.Web?(await Jo.env.asExternalUri(c)).toString(!0):c.toString(!0)};$r.initialize(r,i,a,zPu,()=>{},o,Ro0,t.extensionUri.fsPath,t"
+        }
+      ]
+    },
+    {
+      "term": "openAiBaseUrl",
+      "count": 54,
+      "excerpts": [
+        {
+          "offset": 25890124,
+          "text": "rdown:\",t)}}}eii();rii();tii();nii();Pfr();BAr();Lve();Rr();var rMu=\"__openAiBaseUrlV1Migrated\";function nMu(t){if(t.globalState.get(rMu))return;let e=t.globalState.get(\"openAiBaseUrl\")?.trim();if(e&&URL.canParse(e)){let r=new URL(e);r.pathname===\"/\"&&(r.pathname=\"/v1\",t.globalState.update(\"openAiBaseUrl\",r.toString().replace(/\\/$/,\"\")),Re.info(\"[Migration] Added /v1 to the host-only OpenAI Compatible base URL\"))}t.globalState.update(rMu,!0)}var e0i=dt(require(\"fs/promises\")),iMu=dt(require(\"path\"));fnt();Rr();Ux();async function aMu(t){let e=[\"apiProvider\",\"apiModelId\",\"thinkingBudgetTokens\",\"reasoningEffort\",\"vsCodeLmModelSelector\",\"awsBedrockCustomSelected\",\"awsBedrockCustomModelBaseId\",\"openRouterModelId\",\"openRouterModelInfo\",\"openAiModelId\",\"openAiModelInfo\",\"ollamaModelId\",\"lmStudioModelId\",\"liteLlmModelId\",\"liteLlmModelInfo\",\"requestyModelId\",\"requestyModelInfo\",\"togetherModelId\",\"fireworksModelId\","
+        },
+        {
+          "offset": 25890246,
+          "text": "lState.get(rMu))return;let e=t.globalState.get(\"openAiBaseUrl\")?.trim();if(e&&URL.canParse(e)){let r=new URL(e);r.pathname===\"/\"&&(r.pathname=\"/v1\",t.globalState.update(\"openAiBaseUrl\",r.toString().replace(/\\/$/,\"\")),Re.info(\"[Migration] Added /v1 to the host-only OpenAI Compatible base URL\"))}t.globalState.update(rMu,!0)}var e0i=dt(require(\"fs/promises\")),iMu=dt(require(\"path\"));fnt();Rr();Ux();async function aMu(t){let e=[\"apiProvider\",\"apiModelId\",\"thinkingBudgetTokens\",\"reasoningEffort\",\"vsCodeLmModelSelector\",\"awsBedrockCustomSelected\",\"awsBedrockCustomModelBaseId\",\"openRouterModelId\",\"openRouterModelInfo\",\"openAiModelId\",\"openAiModelInfo\",\"ollamaModelId\",\"lmStudioModelId\",\"liteLlmModelId\",\"liteLlmModelInfo\",\"requestyModelId\",\"requestyModelInfo\",\"togetherModelId\",\"fireworksModelId\",\"sapAiCoreModelId\",\"groqModelId\",\"groqModelInfo\",\"huggingFaceModelId\",\"huggingFaceModelInfo\",\"previousModeApiProvider\",\"pr"
+        }
+      ]
+    },
+    {
+      "term": "hooksEnabled",
+      "count": 32,
+      "excerpts": [
+        {
+          "offset": 24757749,
+          "text": "vscodeTerminalExecutionMode\",i),t.handleTerminalExecutionModeChanged(r,i)}if(e.hooksEnabled!==void 0){let r=t.stateManager.getGlobalSettingsKey(\"hooksEnabled\")??!0,i=!!e.hooksEnabled;t.stateManager.setGlobalState(\"hooksEnabled\",i),t.task&&r!==i&&Mn.captureFeatureToggle(t.task.ulid,\"hooks\",i,t.task.api.getModel().id)}if(e.worktreesEnabled!==void 0&&t.stateManager.setGlobalState(\"worktreesEnabled\",e.worktreesEnabled),e.cloudSessionsEnabled!==void 0&&(t.stateManager.setGlobalState(\"cloudSessionsEnabled\",e.cloudSessionsEnabled),t.invalidateTaskHistoryCache()),e.subagentsEnabled!==void 0){let r=t.stateManager.getGlobalSettingsKey(\"subagentsEnabled\")??!1,i=!!e.subagentsEnabled;t.stateManager.setGlobalState(\"subagentsEnabled\",i),r!==i&&Mn.captureSubagentToggle(i)}if(e.useAutoCondense!==void 0&&(t.task&&Mn.captureAutoCondenseToggle(t.task.ulid,e.useAutoCondense,t.task.api.getModel().id),t.stateManager.setGlobalStat"
+        },
+        {
+          "offset": 24757793,
+          "text": "inalExecutionModeChanged(r,i)}if(e.hooksEnabled!==void 0){let r=t.stateManager.getGlobalSettingsKey(\"hooksEnabled\")??!0,i=!!e.hooksEnabled;t.stateManager.setGlobalState(\"hooksEnabled\",i),t.task&&r!==i&&Mn.captureFeatureToggle(t.task.ulid,\"hooks\",i,t.task.api.getModel().id)}if(e.worktreesEnabled!==void 0&&t.stateManager.setGlobalState(\"worktreesEnabled\",e.worktreesEnabled),e.cloudSessionsEnabled!==void 0&&(t.stateManager.setGlobalState(\"cloudSessionsEnabled\",e.cloudSessionsEnabled),t.invalidateTaskHistoryCache()),e.subagentsEnabled!==void 0){let r=t.stateManager.getGlobalSettingsKey(\"subagentsEnabled\")??!1,i=!!e.subagentsEnabled;t.stateManager.setGlobalState(\"subagentsEnabled\",i),r!==i&&Mn.captureSubagentToggle(i)}if(e.useAutoCondense!==void 0&&(t.task&&Mn.captureAutoCondenseToggle(t.task.ulid,e.useAutoCondense,t.task.api.getModel().id),t.stateManager.setGlobalState(\"useAutoCondense\",e.useAutoCondense)),e.we"
+        }
+      ]
+    },
+    {
+      "term": "mcpMarketplaceEnabled",
+      "count": 24,
+      "excerpts": [
+        {
+          "offset": 24610356,
+          "text": "getGlobalSettingsKey(\"useAutoCondense\"),f=lLt(),p=cLt(\"web_search\"),h=e.getGlobalSettingsKey(\"subagentsEnabled\"),m=e.getGlobalStateKey(\"userInfo\"),g=e.getGlobalStateKey(\"mcpMarketplaceEnabled\"),w=e.getGlobalStateKey(\"mcpDisplayMode\"),v=e.getGlobalSettingsKey(\"telemetrySetting\"),b=e.getGlobalSettingsKey(\"planActSeparateModelsSetting\"),C=e.getGlobalSettingsKey(\"enableCheckpointsSetting\"),T=e.getGlobalStateKey(\"globalClineRulesToggles\"),y=e.getGlobalStateKey(\"globalWorkflowToggles\"),I=e.getGlobalStateKey(\"globalSkillsToggles\"),E=e.getWorkspaceStateKey(\"localSkillsToggles\"),R=e.getGlobalStateKey(\"remoteRulesToggles\"),x=e.getGlobalStateKey(\"remoteWorkflowToggles\"),S=e.getGlobalSettingsKey(\"shellIntegrationTimeout\"),D=e.getGlobalStateKey(\"terminalReuseEnabled\"),k=e.getGlobalStateKey(\"vscodeTerminalExecutionMode\"),F=e.getGlobalSettingsKey(\"defaultTerminalProfile\"),Q=e.getGlobalStateKey(\"isNewUser\"),W=!!e.getGlobal"
+        },
+        {
+          "offset": 24612586,
+          "text": "estoreInput:$,autoApprovalSettings:n,browserSettings:s,preferredLanguage:u,mode:c,useAutoCondense:d,compactionStrategy:f,webSearchEnabled:p,subagentsEnabled:h,userInfo:m,mcpMarketplaceEnabled:g,mcpDisplayMode:w,telemetrySetting:v,planActSeparateModelsSetting:b,enableCheckpointsSetting:C??!0,platform:X,environment:oe,hostName:ce,distinctId:Z,globalClineRulesToggles:T||{},localClineRulesToggles:P||{},localWindsurfRulesToggles:L||{},localCursorRulesToggles:H||{},localAgentsRulesToggles:j||{},localWorkflowToggles:z||{},globalWorkflowToggles:y||{},globalSkillsToggles:I||{},localSkillsToggles:E||{},remoteRulesToggles:R,remoteWorkflowToggles:x,shellIntegrationTimeout:S,terminalReuseEnabled:D,vscodeTerminalExecutionMode:k,defaultTerminalProfile:F,isNewUser:Q,welcomeViewCompleted:W,onboardingModels:r,mcpResponsesCollapsed:q,taskHistory:Y,shouldShowAnnouncement:ee,favoritedModelIds:U,backgroundCommandRunning:t.backgr"
+        }
+      ]
+    },
+    {
+      "term": "optOutOfRemoteConfig",
+      "count": 32,
+      "excerpts": [
+        {
+          "offset": 24760126,
+          "text": "anager.setGlobalState(\"multiRootEnabled\",!!e.multiRootEnabled),e.optOutOfRemoteConfig!==void 0){let r=!!t.stateManager.getGlobalSettingsKey(\"optOutOfRemoteConfig\"),i=!!e.optOutOfRemoteConfig;t.stateManager.setGlobalState(\"optOutOfRemoteConfig\",i),i!==r&&await t.refreshRemoteConfig({force:!0})}return e.showFeatureTips!==void 0&&t.stateManager.setGlobalState(\"showFeatureTips\",e.showFeatureTips),await t.postStateToWebview(),Ir.create()}catch(r){throw Re.error(\"Failed to update settings:\",r),r}}var pTu=se(()=>{\"use strict\";of();Gi();AT();Foe();uS();Rr();Kd();nYt();ldt();Qve()});function f$(t){if(Ali(t))return t;if(typeof t==\"string\")return Ymr(t);switch(t){case 0:return\"low\";case 1:return\"medium\";case 2:return\"high\";default:return Ymr()}}var CAr=se(()=>{\"use strict\";AT();yli()});async function fTu(t,e){let r=i=>i===0?\"plan\":\"act\";if(e.environment!==void 0&&(Lh.setEnvironment(e.environment),await G4e(t,Ir.create"
+        },
+        {
+          "offset": 24760178,
+          "text": "otEnabled),e.optOutOfRemoteConfig!==void 0){let r=!!t.stateManager.getGlobalSettingsKey(\"optOutOfRemoteConfig\"),i=!!e.optOutOfRemoteConfig;t.stateManager.setGlobalState(\"optOutOfRemoteConfig\",i),i!==r&&await t.refreshRemoteConfig({force:!0})}return e.showFeatureTips!==void 0&&t.stateManager.setGlobalState(\"showFeatureTips\",e.showFeatureTips),await t.postStateToWebview(),Ir.create()}catch(r){throw Re.error(\"Failed to update settings:\",r),r}}var pTu=se(()=>{\"use strict\";of();Gi();AT();Foe();uS();Rr();Kd();nYt();ldt();Qve()});function f$(t){if(Ali(t))return t;if(typeof t==\"string\")return Ymr(t);switch(t){case 0:return\"low\";case 1:return\"medium\";case 2:return\"high\";default:return Ymr()}}var CAr=se(()=>{\"use strict\";AT();yli()});async function fTu(t,e){let r=i=>i===0?\"plan\":\"act\";if(e.environment!==void 0&&(Lh.setEnvironment(e.environment),await G4e(t,Ir.create())),e.settings){let{autoApprovalSettings:i,planMode"
+        }
+      ]
+    }
+  ]
+}

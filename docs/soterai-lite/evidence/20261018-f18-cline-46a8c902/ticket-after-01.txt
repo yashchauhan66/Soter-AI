@@ -1,0 +1,46 @@
+﻿TAP version 13
+# Subtest: F18 sealed ticket round trip encrypts all private connection material
+ok 1 - F18 sealed ticket round trip encrypts all private connection material
+  ---
+  duration_ms: 142.1433
+  type: 'test'
+  ...
+# Subtest: F18 corrupted ticket/wrong user key returns unavailable without private exceptions
+ok 2 - F18 corrupted ticket/wrong user key returns unavailable without private exceptions
+  ---
+  duration_ms: 4.4008
+  type: 'test'
+  ...
+# Subtest: F18 malformed, oversized and unknown ticket versions never call the decryptor
+ok 3 - F18 malformed, oversized and unknown ticket versions never call the decryptor
+  ---
+  duration_ms: 1.814
+  type: 'test'
+  ...
+# Subtest: F18 decrypted connection schema refuses nonloopback, unknown fields and stale-format payloads
+ok 4 - F18 decrypted connection schema refuses nonloopback, unknown fields and stale-format payloads
+  ---
+  duration_ms: 5.0124
+  type: 'test'
+  ...
+# Subtest: F18 OS protection outage produces no ticket or echoed source capability
+ok 5 - F18 OS protection outage produces no ticket or echoed source capability
+  ---
+  duration_ms: 2.4648
+  type: 'test'
+  ...
+# Subtest: F18 actual Windows CurrentUser DPAPI private pipe round trip
+ok 6 - F18 actual Windows CurrentUser DPAPI private pipe round trip
+  ---
+  duration_ms: 1177.3212
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1805.8871

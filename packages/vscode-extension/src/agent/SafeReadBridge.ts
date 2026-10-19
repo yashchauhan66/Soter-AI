@@ -2,10 +2,18 @@ import { createServer, type Server, type IncomingMessage, type ServerResponse } 
 import { randomBytes, randomUUID, timingSafeEqual } from "node:crypto";
 import { TextDecoder } from "node:util";
 import type { Socket } from "node:net";
+import * as path from "node:path";
 import type { AccessResult } from "../project-privacy/ProjectFileAccess";
 import { safeReadPath, safeReadResult, validSession, type SafeReadConnection } from "./SafeReadProtocol";
 
-interface Dependencies { enabled(): boolean; read(file: string, recipient: string, signal: AbortSignal): Promise<AccessResult> }
+export type NativeClassification = "PUBLIC" | "RESTRICTED" | "UNAVAILABLE";
+interface Dependencies {
+    enabled(): boolean; read(file: string, recipient: string, signal: AbortSignal): Promise<AccessResult>;
+    workspace?: string;
+    ready?(signal: AbortSignal): Promise<boolean>;
+    /** Adapter-owned bridge only; absent on the ordinary F17 MCP bridge. */
+    classify?(file: string, intent: "read" | "write", signal: AbortSignal): Promise<NativeClassification>;
+}
 /** Private editor-owned cooperative route. Same-user processes are not isolated. */
 export class SafeReadBridge {
     private server: Server | undefined;
@@ -45,7 +53,7 @@ export class SafeReadBridge {
         if (server) await new Promise<void>(done => server.close(() => done()));
     }
     private async handle(req: IncomingMessage, res: ServerResponse): Promise<void> {
-        const reply = (result: AccessResult) => { if (!res.destroyed && !res.writableEnded) {
+        const reply = (result: AccessResult | { status: NativeClassification; session?: string }) => { if (!res.destroyed && !res.writableEnded) {
             res.writeHead(200, { "content-type": "application/json", "cache-control": "no-store", connection: "close" }); res.end(JSON.stringify(result));
         } };
         try {
@@ -59,8 +67,13 @@ export class SafeReadBridge {
             for await (const chunk of req) { const part = Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk); size += part.length;
                 if (size > 8192) { reply({ status: "UNAVAILABLE" }); req.resume(); return; } body.push(part); }
             const envelope: unknown = JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(Buffer.concat(body)));
-            if (!envelope || typeof envelope !== "object" || Array.isArray(envelope) || Object.keys(envelope).sort().join(",") !== "id,path,session,version") { reply({ status: "UNAVAILABLE" }); return; }
+            if (!envelope || typeof envelope !== "object" || Array.isArray(envelope)) { reply({ status: "UNAVAILABLE" }); return; }
             const value = envelope as Record<string, unknown>, file = safeReadPath({ path: value.path });
+            const ready = value.operation === "classify-ready", classification = ready || value.operation === "classify-read" || value.operation === "classify-write";
+            if (Object.keys(value).sort().join(",") !== (classification ? "id,operation,path,session,version,workspace" : "id,path,session,version")
+                || classification && (ready ? !this.deps.ready : !this.deps.classify)) { reply({ status: "UNAVAILABLE" }); return; }
+            if (classification && (typeof value.workspace !== "string" || value.workspace.length > 1024 || !path.win32.isAbsolute(value.workspace)
+                || !this.deps.workspace || path.win32.resolve(value.workspace).toLowerCase() !== path.win32.resolve(this.deps.workspace).toLowerCase())) { reply({ status: "UNAVAILABLE" }); return; }
             if (!file || value.version !== 1 || value.session !== session || !validSession(value.id) || session !== this.session || !this.enabled()) { reply({ status: "UNAVAILABLE" }); return; }
             if (this.active) { reply({ status: "BUSY" }); return; }
             const controller = new AbortController(); this.active = controller;
@@ -69,8 +82,13 @@ export class SafeReadBridge {
             const cancellation = new Promise<AccessResult>(resolve => { cancel = () => resolve({ status: "EXPIRED" }); controller.signal.addEventListener("abort", cancel, { once: true }); });
             const timer = setTimeout(closed, 65_000); timer.unref?.();
             try {
-                const result = await Promise.race([this.deps.read(file, `SoterAI MCP session ${session.slice(0, 8)} (requester identity unverified)`, controller.signal), cancellation]);
-                reply(controller.signal.aborted || session !== this.session || !this.enabled() ? { status: "EXPIRED" } : safeReadResult(result));
+                const work = classification
+                    ? (ready ? this.deps.ready!(controller.signal).then(decision => decision === true ? "PUBLIC" as const : "UNAVAILABLE" as const)
+                        : this.deps.classify!(file, value.operation === "classify-write" ? "write" : "read", controller.signal))
+                        .then(decision => ({ status: decision === "PUBLIC" || decision === "RESTRICTED" ? decision : "UNAVAILABLE", session } as { status: NativeClassification; session: string }))
+                    : this.deps.read(file, `SoterAI MCP session ${session.slice(0, 8)} (requester identity unverified)`, controller.signal);
+                const result = await Promise.race([work, cancellation]);
+                reply(controller.signal.aborted || session !== this.session || !this.enabled() ? { status: "EXPIRED" } : classification ? result : safeReadResult(result));
             } catch { reply({ status: "UNAVAILABLE" }); }
             finally { clearTimeout(timer); res.removeListener("close", closed); controller.signal.removeEventListener("abort", cancel); if (this.active === controller) this.active = undefined; }
         } catch { reply({ status: "UNAVAILABLE" }); }

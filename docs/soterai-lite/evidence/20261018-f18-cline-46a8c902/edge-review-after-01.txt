@@ -1,0 +1,148 @@
+﻿TAP version 13
+# Subtest: F18 bounded native editor permits only a current public write classification
+ok 1 - F18 bounded native editor permits only a current public write classification
+  ---
+  duration_ms: 7.0076
+  type: 'test'
+  ...
+# Subtest: F18 editor protected targets and unavailable classifiers remain withheld
+ok 2 - F18 editor protected targets and unavailable classifiers remain withheld
+  ---
+  duration_ms: 1.0376
+  type: 'test'
+  ...
+# Subtest: F18 editor unknown authority, traversal, ambiguous and oversized inputs obtain no classification
+ok 3 - F18 editor unknown authority, traversal, ambiguous and oversized inputs obtain no classification
+  ---
+  duration_ms: 1.5387
+  type: 'test'
+  ...
+# Subtest: F18 enabled schema profile preserves ordinary public requests and an empty tool list
+ok 4 - F18 enabled schema profile preserves ordinary public requests and an empty tool list
+  ---
+  duration_ms: 25.2356
+  type: 'test'
+  ...
+# Subtest: F18 bounded multi-tool schema public request passes only its explicit profile
+ok 5 - F18 bounded multi-tool schema public request passes only its explicit profile
+  ---
+  duration_ms: 37.6015
+  type: 'test'
+  ...
+# Subtest: F18 tool metadata remains inspected for raw/encoded values and ordered splits
+ok 6 - F18 tool metadata remains inspected for raw/encoded values and ordered splits
+  ---
+  duration_ms: 56.7808
+  type: 'test'
+  ...
+# Subtest: F18 schema profile keeps generic metadata, malformed definitions and resource bounds withheld
+ok 7 - F18 schema profile keeps generic metadata, malformed definitions and resource bounds withheld
+  ---
+  duration_ms: 16.9564
+  type: 'test'
+  ...
+# Subtest: F18 existing bridge grants no classification capability unless explicitly supplied
+ok 8 - F18 existing bridge grants no classification capability unless explicitly supplied
+  ---
+  duration_ms: 84.6104
+  type: 'test'
+  ...
+# Subtest: F18 private native read classification returns metadata only
+ok 9 - F18 private native read classification returns metadata only
+  ---
+  duration_ms: 17.4957
+  type: 'test'
+  ...
+# Subtest: F18 private native write classification returns metadata only
+ok 10 - F18 private native write classification returns metadata only
+  ---
+  duration_ms: 12.3896
+  type: 'test'
+  ...
+# Subtest: F18 private classification never treats an unknown object/original as a public decision
+ok 11 - F18 private classification never treats an unknown object/original as a public decision
+  ---
+  duration_ms: 15.0562
+  type: 'test'
+  ...
+# Subtest: F18 native classifier withdrawal while a decision is pending releases no public grant
+ok 12 - F18 native classifier withdrawal while a decision is pending releases no public grant
+  ---
+  duration_ms: 21.0661
+  type: 'test'
+  ...
+# Subtest: F18 hook public reads require every explicit target to pass the current classifier
+ok 13 - F18 hook public reads require every explicit target to pass the current classifier
+  ---
+  duration_ms: 186.4534
+  type: 'test'
+  ...
+# Subtest: F18 any protected/malformed/unknown/read outage path withholds the native operation
+ok 14 - F18 any protected/malformed/unknown/read outage path withholds the native operation
+  ---
+  duration_ms: 3.6236
+  type: 'test'
+  ...
+# Subtest: F18 unknown shell/history/search scope cannot inherit a public file decision
+ok 15 - F18 unknown shell/history/search scope cannot inherit a public file decision
+  ---
+  duration_ms: 2.2764
+  type: 'test'
+  ...
+# Subtest: F18 TaskStart requires the current private session before the first model request
+ok 16 - F18 TaskStart requires the current private session before the first model request
+  ---
+  duration_ms: 9.7249
+  type: 'test'
+  ...
+# Subtest: F18 a copied hook from another workspace receives no native grant
+ok 17 - F18 a copied hook from another workspace receives no native grant
+  ---
+  duration_ms: 9.004
+  type: 'test'
+  ...
+# Subtest: F18 observed read_files.files schema normalizes owned absolute paths and nullable line bounds
+ok 18 - F18 observed read_files.files schema normalizes owned absolute paths and nullable line bounds
+  ---
+  duration_ms: 8.7628
+  type: 'test'
+  ...
+# Subtest: F18 published multi-file read with a protected target never permits the batch
+ok 19 - F18 published multi-file read with a protected target never permits the batch
+  ---
+  duration_ms: 1.0905
+  type: 'test'
+  ...
+# Subtest: F18 native absolute escapes, device/UNC/ADS/dot aliases and caller roots obtain no grant
+ok 20 - F18 native absolute escapes, device/UNC/ADS/dot aliases and caller roots obtain no grant
+  ---
+  duration_ms: 2.5394
+  type: 'test'
+  ...
+# Subtest: F18 published editor absolute path and null insert_line retain write classification
+ok 21 - F18 published editor absolute path and null insert_line retain write classification
+  ---
+  duration_ms: 0.9596
+  type: 'test'
+  ...
+# Subtest: F18 native editor cannot rewrite the managed hooks even if their text classifies public
+ok 22 - F18 native editor cannot rewrite the managed hooks even if their text classifies public
+  ---
+  duration_ms: 0.7473
+  type: 'test'
+  ...
+# Subtest: F18 published per-file authority/range/shape and batch bounds remain refused
+ok 23 - F18 published per-file authority/range/shape and batch bounds remain refused
+  ---
+  duration_ms: 1.8153
+  type: 'test'
+  ...
+1..23
+# tests 23
+# suites 0
+# pass 23
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1376.7279

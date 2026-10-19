@@ -1,0 +1,55 @@
+[
+  {
+    "term": "${env:",
+    "count": 0,
+    "excerpts": []
+  },
+  {
+    "term": "getDefaultEnvironment",
+    "count": 0,
+    "excerpts": []
+  },
+  {
+    "term": "INHERITED_ENV_VARS",
+    "count": 0,
+    "excerpts": []
+  },
+  {
+    "term": "env:{...process.env",
+    "count": 12,
+    "excerpts": [
+      {
+        "offset": 2991373,
+        "text": "veResponseFromExecutable(e){return new Promise((r,i)=>{let a=T1l.spawn(this.commandComponents[0],this.commandComponents.slice(1),{env:{...process.env,...Object.fromEntries(e)}}),o=\"\";a.stdout.on(\"data\",s=>{o+=s}),a.stderr.on(\"data\",s=>{o+=s});let n=setTimeout(()=>(a.removeAllListeners(),a.kill(),i(new Error(\"The executable failed to finish within the timeout specified.\"))),this.timeoutMillis);a.on(\"close\",s=>{if(clearTimeout(n),s===0)try{let u=JSON.parse(o),c=new xle.ExecutableResponse(u);return r(c)}catch(u){return u instanceof xle.ExecutableResponseError?i(u):i(new xle.ExecutableResponseError(`The executable returned an invalid response: ${o}`))}else return i(new p1t(o,s.toString()))})})}async retrieveCachedResponse(){if(!this.outputFile||this.outputFile.length===0)return;let e;try{e=await P6r.promises.realpath(this.outputFile)}catch{return}if(!(await P6r.promises.lstat(e)).isFile())return;let r=await P6r.promises.readFile(e,{encoding:\"utf8\"});if(r!==\"\")try{let i=JSON.parse(r);return new xle.ExecutableResponse(i)"
+      },
+      {
+        "offset": 7973223,
+        "text": "tderr=\"\",this.lastCrashHadStderr=!1,this.expectedExitSignal=void 0,this.child=(0,orn.spawn)(t.cmd,e,{stdio:[\"pipe\",\"pipe\",\"pipe\"],env:{...process.env,...this.settings.env??{},RUST_LOG:process.env.RUST_LOG||\"error\"},cwd:this.settings.cwd});let r=this.child,i=\"\";r.stderr.setEncoding(\"utf8\"),r.stderr.on(\"data\",n=>{i=(i+String(n)).slice(-4e3),this.child===r&&(this.lastStderr=i)}),r.on(\"error\",n=>{this.logger.error(`[codex-app-server] process error: ${String(n)}`);let s=String(n),u=this.withStderrTail(s,i);this.lastCrashHadStderr=u!==s,this.handleCrash(new Error(u))}),r.on(\"exit\",(n,s)=>{let u=`codex app-server exited (code=${String(n)}, signal=${String(s)})`,c=this.state===\"closed\"||s!==null&&s===this.expectedExitSignal;if(this.expectedExitSignal=void 0,c){this.logger.info(`[codex-app-server] ${u}`);return}let d=this.markCrashed();if(!d)return;let f=!1,p=()=>{if(f)return;f=!0,r.off(\"close\",p),clearTimeout(h);let m=`codex app-server exited (code=${String(n)}, signal=${String(s)})`,g=this.withStderrTail(m,i);this.child=="
+      }
+    ]
+  },
+  {
+    "term": "...process.env,...",
+    "count": 5,
+    "excerpts": [
+      {
+        "offset": 2991378,
+        "text": "ponseFromExecutable(e){return new Promise((r,i)=>{let a=T1l.spawn(this.commandComponents[0],this.commandComponents.slice(1),{env:{...process.env,...Object.fromEntries(e)}}),o=\"\";a.stdout.on(\"data\",s=>{o+=s}),a.stderr.on(\"data\",s=>{o+=s});let n=setTimeout(()=>(a.removeAllListeners(),a.kill(),i(new Error(\"The executable failed to finish within the timeout specified.\"))),this.timeoutMillis);a.on(\"close\",s=>{if(clearTimeout(n),s===0)try{let u=JSON.parse(o),c=new xle.ExecutableResponse(u);return r(c)}catch(u){return u instanceof xle.ExecutableResponseError?i(u):i(new xle.ExecutableResponseError(`The executable returned an invalid response: ${o}`))}else return i(new p1t(o,s.toString()))})})}async retrieveCachedResponse(){if(!this.outputFile||this.outputFile.length===0)return;let e;try{e=await P6r.promises.realpath(this.outputFile)}catch{return}if(!(await P6r.promises.lstat(e)).isFile())return;let r=await P6r.promises.readFile(e,{encoding:\"utf8\"});if(r!==\"\")try{let i=JSON.parse(r);return new xle.ExecutableResponse(i).isVa"
+      },
+      {
+        "offset": 7918837,
+        "text": "f);s.push(p),a.push(\"--image\",p)}catch(p){this.logger.warn(`[codex-cli] Failed to write image to temp file: ${String(p)}`)}let u={...process.env,...r.env||{},...o,RUST_LOG:process.env.RUST_LOG||\"error\"},c=r.outputLastMessageFile,d=!1;if(!c){let f=(0,Ik.mkdtempSync)((0,TB.join)((0,DBt.tmpdir)(),\"codex-cli-\"));c=(0,TB.join)(f,\"last-message.txt\"),d=!0}return a.push(\"--output-last-message\",c),s.length>0&&a.push(\"--\"),a.push(\"-\"),{cmd:i.cmd,args:a,env:u,cwd:r.cwd,lastMessagePath:c,lastMessageIsTemp:d,schemaPath:n,tempImagePaths:s.length>0?s:void 0}}applyMcpSettings(t,e){if(e.rmcpClient&&this.addConfigOverride(t,\"features.rmcp_client\",!0),!e.mcpServers)return;let r={};for(let[i,a]of Object.entries(e.mcpServers)){let o=M_e(i),n=`mcp_servers.${o}`;if(a.enabled!==void 0&&this.addConfigOverride(t,`${n}.enabled`,a.enabled),a.startupTimeoutSec!==void 0&&this.addConfigOverride(t,`${n}.startup_timeout_sec`,a.startupTimeoutSec),a.toolTimeoutSec!==void 0&&this.addConfigOverride(t,`${n}.tool_timeout_sec`,a.toolTimeoutSec),a.enabled"
+      }
+    ]
+  },
+  {
+    "term": "expandEnv",
+    "count": 0,
+    "excerpts": []
+  },
+  {
+    "term": "resolveEnvVariables",
+    "count": 0,
+    "excerpts": []
+  }
+]

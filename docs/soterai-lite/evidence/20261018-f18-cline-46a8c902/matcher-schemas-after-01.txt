@@ -1,0 +1,154 @@
+﻿TAP version 13
+# Subtest: F18 bounded multi-tool schema public request passes only its explicit profile
+ok 1 - F18 bounded multi-tool schema public request passes only its explicit profile
+  ---
+  duration_ms: 36.2064
+  type: 'test'
+  ...
+# Subtest: F18 tool metadata remains inspected for raw/encoded values and ordered splits
+ok 2 - F18 tool metadata remains inspected for raw/encoded values and ordered splits
+  ---
+  duration_ms: 41.5953
+  type: 'test'
+  ...
+# Subtest: F18 schema profile keeps generic metadata, malformed definitions and resource bounds withheld
+ok 3 - F18 schema profile keeps generic metadata, malformed definitions and resource bounds withheld
+  ---
+  duration_ms: 6.6738
+  type: 'test'
+  ...
+# Subtest: F18 metadata candidate budget is explicit; the original F07 default remains bounded
+ok 4 - F18 metadata candidate budget is explicit; the original F07 default remains bounded
+  ---
+  duration_ms: 27.8616
+  type: 'test'
+  ...
+# Subtest: F18 expanded bounded candidate inspection still detects protected spellings and ordered fragments
+ok 5 - F18 expanded bounded candidate inspection still detects protected spellings and ordered fragments
+  ---
+  duration_ms: 41.132
+  type: 'test'
+  ...
+# Subtest: F18 invalid or excessive candidate budgets never silently become an empty registry
+ok 6 - F18 invalid or excessive candidate budgets never silently become an empty registry
+  ---
+  duration_ms: 2.1372
+  type: 'test'
+  ...
+# Subtest: F16-P01 public immutable request preserves supported options
+ok 7 - F16-P01 public immutable request preserves supported options
+  ---
+  duration_ms: 15.3112
+  type: 'test'
+  ...
+# Subtest: F16-P02 registered representation refuses 34
+ok 8 - F16-P02 registered representation refuses 34
+  ---
+  duration_ms: 1.7575
+  type: 'test'
+  ...
+# Subtest: F16-P02 registered representation refuses 48
+ok 9 - F16-P02 registered representation refuses 48
+  ---
+  duration_ms: 2.3933
+  type: 'test'
+  ...
+# Subtest: F16-P02 registered representation refuses 46
+ok 10 - F16-P02 registered representation refuses 46
+  ---
+  duration_ms: 1.0054
+  type: 'test'
+  ...
+# Subtest: F16-P02 registered representation refuses 68
+ok 11 - F16-P02 registered representation refuses 68
+  ---
+  duration_ms: 0.8463
+  type: 'test'
+  ...
+# Subtest: F16-P02 registered representation refuses 34
+ok 12 - F16-P02 registered representation refuses 34
+  ---
+  duration_ms: 0.9169
+  type: 'test'
+  ...
+# Subtest: F16-P02 registered representation refuses 36
+ok 13 - F16-P02 registered representation refuses 36
+  ---
+  duration_ms: 1.0531
+  type: 'test'
+  ...
+# Subtest: F16-P03 ordered content joins detect registered fragments across roles/messages
+ok 14 - F16-P03 ordered content joins detect registered fragments across roles/messages
+  ---
+  duration_ms: 1.7629
+  type: 'test'
+  ...
+# Subtest: F16-P04 provider patterns and fixed entropy controls with public negatives
+ok 15 - F16-P04 provider patterns and fixed entropy controls with public negatives
+  ---
+  duration_ms: 11.2803
+  type: 'test'
+  ...
+# Subtest: F16-P05 unknown schemas and auth/URL overrides refuse
+ok 16 - F16-P05 unknown schemas and auth/URL overrides refuse
+  ---
+  duration_ms: 2.6698
+  type: 'test'
+  ...
+# Subtest: F16-P06 unavailable/unknown policy and invalid registry never degrade to empty
+ok 17 - F16-P06 unavailable/unknown policy and invalid registry never degrade to empty
+  ---
+  duration_ms: 4.637
+  type: 'test'
+  ...
+# Subtest: F16-P07 complete semantic/request bounds withhold
+ok 18 - F16-P07 complete semantic/request bounds withhold
+  ---
+  duration_ms: 2.4937
+  type: 'test'
+  ...
+# Subtest: F16-P08 output JSON semantics and raw boundaries withhold complete response
+ok 19 - F16-P08 output JSON semantics and raw boundaries withhold complete response
+  ---
+  duration_ms: 8.3312
+  type: 'test'
+  ...
+# Subtest: F16-P09 finite SSE output waits for complete inspected stream
+ok 20 - F16-P09 finite SSE output waits for complete inspected stream
+  ---
+  duration_ms: 4.5514
+  type: 'test'
+  ...
+# Subtest: F16-P10 malformed/control/UTF8/output budget failures release nothing
+ok 21 - F16-P10 malformed/control/UTF8/output budget failures release nothing
+  ---
+  duration_ms: 9.0969
+  type: 'test'
+  ...
+# Subtest: F16-P11 bounded seeded public/fragment controls
+ok 22 - F16-P11 bounded seeded public/fragment controls
+  ---
+  duration_ms: 53.9305
+  type: 'test'
+  ...
+# Subtest: F16-P12 errors expose no input or registry contents
+ok 23 - F16-P12 errors expose no input or registry contents
+  ---
+  duration_ms: 0.6877
+  type: 'test'
+  ...
+# Subtest: F16-P13 bounded Anthropic tool use/results preserve public data and refuse unsupported blocks
+ok 24 - F16-P13 bounded Anthropic tool use/results preserve public data and refuse unsupported blocks
+  ---
+  duration_ms: 2.9401
+  type: 'test'
+  ...
+1..24
+# tests 24
+# suites 0
+# pass 24
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2082.5905

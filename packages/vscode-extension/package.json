@@ -128,7 +128,8 @@
                 "soterai.lite.gatewayMultipartBodies",
                 "soterai.lite.gatewayBase64Bodies",
                 "soterai.lite.gatewayPolicy",
-                "soterai.lite.safeReadMcp"
+                "soterai.lite.safeReadMcp",
+                "soterai.lite.clineAdapter"
             ]
         }
     },
@@ -1228,6 +1229,21 @@
                 "title": "Complete Safe Vault Recovery",
                 "category": "SoterAI",
                 "icon": "$(history)"
+            },
+            {
+                "command": "soterai.configurePinnedCline",
+                "title": "Review Pinned Cline Setup",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.restorePinnedCline",
+                "title": "Restore Previous Cline Config",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.clineAdapterStatus",
+                "title": "Show Pinned Cline Adapter Status",
+                "category": "SoterAI"
             }
         ],
         "viewsContainers": {
@@ -1878,6 +1894,12 @@
                     "default": true,
                     "scope": "machine",
                     "description": "Offer the approved saved-file MCP reader through this editor's ephemeral private session. Every read requires native confirmation of the exact masked view; requester identity is unverified. Disabling revokes sessions and withdraws the route without releasing originals."
+                },
+                "soterai.lite.clineAdapter": {
+                    "type": "boolean",
+                    "default": true,
+                    "scope": "machine",
+                    "description": "Enable reviewed setup for the pinned Windows Cline version using an owned broker, approved safe-read MCP session and native hook. Unverified versions/configs withhold setup. Disabling invalidates managed sessions and retains saved denies; vendor hook failures/direct context remain outside this route."
                 }
             }
         },
@@ -2792,6 +2814,18 @@
                 },
                 {
                     "command": "soterai.runGatewaySelfTest",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.configurePinnedCline",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.restorePinnedCline",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.clineAdapterStatus",
                     "when": "soterai.advancedCommands"
                 }
             ]

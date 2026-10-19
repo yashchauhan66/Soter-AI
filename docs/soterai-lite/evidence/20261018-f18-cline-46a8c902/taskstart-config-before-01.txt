@@ -1,0 +1,171 @@
+﻿TAP version 13
+# Subtest: F18 review rejects non-ASCII aliases of an otherwise valid sealed ticket frame
+ok 1 - F18 review rejects non-ASCII aliases of an otherwise valid sealed ticket frame
+  ---
+  duration_ms: 6.3329
+  type: 'test'
+  ...
+# Subtest: F18 review refuses noncanonical aliases of the pinned broker URL
+ok 2 - F18 review refuses noncanonical aliases of the pinned broker URL
+  ---
+  duration_ms: 2.1832
+  type: 'test'
+  ...
+# Subtest: F18 review a ticket path inside the project cannot enter the vendor config
+ok 3 - F18 review a ticket path inside the project cannot enter the vendor config
+  ---
+  duration_ms: 0.7667
+  type: 'test'
+  ...
+# Subtest: F18 review abort promptly resolves a pending native review without writes
+ok 4 - F18 review abort promptly resolves a pending native review without writes
+  ---
+  duration_ms: 10.3608
+  type: 'test'
+  ...
+# Subtest: F18 review a withdrawn partial apply can recover untouched and written entries after owner re-enables
+ok 5 - F18 review a withdrawn partial apply can recover untouched and written entries after owner re-enables
+  ---
+  duration_ms: 4.2651
+  type: 'test'
+  ...
+# Subtest: F18 legacy generic Cline env writer cannot advertise a version-unverified routing change
+ok 6 - F18 legacy generic Cline env writer cannot advertise a version-unverified routing change
+  ---
+  duration_ms: 2.8057
+  type: 'test'
+  ...
+# Subtest: F18 artifact gate uses actual bytes and refuses version/publisher/runtime/manifest drift
+ok 7 - F18 artifact gate uses actual bytes and refuses version/publisher/runtime/manifest drift
+  ---
+  duration_ms: 20.5056
+  type: 'test'
+  ...
+# Subtest: F18 current providers/MCP/global schema preserves unrelated fields and masks the entire review
+not ok 8 - F18 current providers/MCP/global schema preserves unrelated fields and masks the entire review
+  ---
+  duration_ms: 8.9656
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\clineAdapterPolicy.test.ts:2:4591'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      [
+        'globals',
+        'hook',
+        'mcp',
+        'providers',
+    -   'taskHook'
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'globals'
+    1: 'hook'
+    2: 'mcp'
+    3: 'providers'
+    4: 'taskHook'
+  actual:
+    0: 'globals'
+    1: 'hook'
+    2: 'mcp'
+    3: 'providers'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\clineAdapterPolicy.test.ts:37:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F18 approval, backup and exact apply round trip route only the selected pinned provider
+not ok 9 - F18 approval, backup and exact apply round trip route only the selected pinned provider
+  ---
+  duration_ms: 6.8024
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\clineAdapterPolicy.test.ts:2:5062'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    4 !== 5
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 5
+  actual: 4
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\clineAdapterPolicy.test.ts:40:190)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F18 cancelled review writes nothing and creates no backup grant
+ok 10 - F18 cancelled review writes nothing and creates no backup grant
+  ---
+  duration_ms: 3.7872
+  type: 'test'
+  ...
+# Subtest: F18 unavailable encrypted backup stops all config writes without echoing its exception
+ok 11 - F18 unavailable encrypted backup stops all config writes without echoing its exception
+  ---
+  duration_ms: 2.5162
+  type: 'test'
+  ...
+# Subtest: F18 config drift while review is pending invalidates the complete planned write
+ok 12 - F18 config drift while review is pending invalidates the complete planned write
+  ---
+  duration_ms: 2.5129
+  type: 'test'
+  ...
+# Subtest: F18 owner/session/flag withdrawal after review returns no changes
+ok 13 - F18 owner/session/flag withdrawal after review returns no changes
+  ---
+  duration_ms: 3.092
+  type: 'test'
+  ...
+# Subtest: F18 a partial write failure restores only unchanged owned changes using encrypted backups
+ok 14 - F18 a partial write failure restores only unchanged owned changes using encrypted backups
+  ---
+  duration_ms: 4.5346
+  type: 'test'
+  ...
+# Subtest: F18 undo restores the exact previous private configuration without exposing it
+ok 15 - F18 undo restores the exact previous private configuration without exposing it
+  ---
+  duration_ms: 5.0966
+  type: 'test'
+  ...
+# Subtest: F18 undo refuses to overwrite a later vendor/user config edit
+ok 16 - F18 undo refuses to overwrite a later vendor/user config edit
+  ---
+  duration_ms: 2.6155
+  type: 'test'
+  ...
+# Subtest: F18 malformed/future schemas, custom modes, unowned MCP name/hook and external destinations refuse
+not ok 17 - F18 malformed/future schemas, custom modes, unowned MCP name/hook and external destinations refuse
+  ---
+  duration_ms: 3.8373
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\clineAdapterPolicy.test.ts:2:9639'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\clineAdapterPolicy.test.ts:74:355)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..17
+# tests 17
+# suites 0
+# pass 14
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 821.1043

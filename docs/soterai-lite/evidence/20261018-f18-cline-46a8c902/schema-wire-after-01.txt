@@ -1,0 +1,142 @@
+﻿TAP version 13
+# Subtest: F16-W01 public exact collector positive and controlled auth headers
+ok 1 - F16-W01 public exact collector positive and controlled auth headers
+  ---
+  duration_ms: 290.4898
+  type: 'test'
+  ...
+# Subtest: F18 actual strict broker forwards bounded public tool schemas and withholds protected metadata
+ok 2 - F18 actual strict broker forwards bounded public tool schemas and withholds protected metadata
+  ---
+  duration_ms: 267.6905
+  type: 'test'
+  ...
+# Subtest: F18 absent schema capability keeps the original bounded request refusal
+ok 3 - F18 absent schema capability keeps the original bounded request refusal
+  ---
+  duration_ms: 30.3622
+  type: 'test'
+  ...
+# Subtest: F16-W02 registered raw and encoded representations send zero provider bytes
+ok 4 - F16-W02 registered raw and encoded representations send zero provider bytes
+  ---
+  duration_ms: 55.4437
+  type: 'test'
+  ...
+# Subtest: F16-W03 split messages and metadata/tool argument secrets withhold
+ok 5 - F16-W03 split messages and metadata/tool argument secrets withhold
+  ---
+  duration_ms: 35.5387
+  type: 'test'
+  ...
+# Subtest: F16-W04 flagoff never falls back to earlier scanning
+ok 6 - F16-W04 flagoff never falls back to earlier scanning
+  ---
+  duration_ms: 18.4545
+  type: 'test'
+  ...
+# Subtest: F16-W05 unknown profile/version/query and credential overrides refuse
+ok 7 - F16-W05 unknown profile/version/query and credential overrides refuse
+  ---
+  duration_ms: 49.5927
+  type: 'test'
+  ...
+# Subtest: F16-W06 F15 gzip/framed/base64 paths enter same policy snapshot
+ok 8 - F16-W06 F15 gzip/framed/base64 paths enter same policy snapshot
+  ---
+  duration_ms: 39.8737
+  type: 'test'
+  ...
+# Subtest: F16-W07 registered provider output is blocked before body release
+ok 9 - F16-W07 registered provider output is blocked before body release
+  ---
+  duration_ms: 25.4839
+  type: 'test'
+  ...
+# Subtest: F16-W08 finite SSE registered split output withholds prefix and secret
+ok 10 - F16-W08 finite SSE registered split output withholds prefix and secret
+  ---
+  duration_ms: 29.9122
+  type: 'test'
+  ...
+# Subtest: F16-W09 public complete SSE protocol preserved
+ok 11 - F16-W09 public complete SSE protocol preserved
+  ---
+  duration_ms: 29.4984
+  type: 'test'
+  ...
+# Subtest: F16-W10 registry/guard unavailable never forwards
+ok 12 - F16-W10 registry/guard unavailable never forwards
+  ---
+  duration_ms: 29.8045
+  type: 'test'
+  ...
+# Subtest: F16-W11 audit metadata never repeats input/model/session secrets
+ok 13 - F16-W11 audit metadata never repeats input/model/session secrets
+  ---
+  duration_ms: 18.7918
+  type: 'test'
+  ...
+# Subtest: F16-W12 held early body does not forward; cancellation stays responsive
+ok 14 - F16-W12 held early body does not forward; cancellation stays responsive
+  ---
+  duration_ms: 93.5063
+  type: 'test'
+  ...
+# Subtest: F16-W13 private built-in loopback selftest requires controller
+ok 15 - F16-W13 private built-in loopback selftest requires controller
+  ---
+  duration_ms: 76.4522
+  type: 'test'
+  ...
+# Subtest: F16-W14 any canary resync invalidates old boundary until complete policy sync
+ok 16 - F16-W14 any canary resync invalidates old boundary until complete policy sync
+  ---
+  duration_ms: 67.9219
+  type: 'test'
+  ...
+# Subtest: F16-W15 prior enterprise approval and safe PII redaction remain enforced
+ok 17 - F16-W15 prior enterprise approval and safe PII redaction remain enforced
+  ---
+  duration_ms: 53.1876
+  type: 'test'
+  ...
+# Subtest: F16-W16 prior dangerous-command output warning remains visible
+ok 18 - F16-W16 prior dangerous-command output warning remains visible
+  ---
+  duration_ms: 23.9046
+  type: 'test'
+  ...
+# Subtest: F16-W17 freshness failure after provider read releases no output
+ok 19 - F16-W17 freshness failure after provider read releases no output
+  ---
+  duration_ms: 29.9265
+  type: 'test'
+  ...
+# Subtest: F16-W18 backend exception and provider error body never escape
+ok 20 - F16-W18 backend exception and provider error body never escape
+  ---
+  duration_ms: 32.6447
+  type: 'test'
+  ...
+# Subtest: F16-W19 provider output stays buffered until complete and stale policy refuses release
+ok 21 - F16-W19 provider output stays buffered until complete and stale policy refuses release
+  ---
+  duration_ms: 29.7921
+  type: 'test'
+  ...
+# Subtest: F16-W20 client cancellation after provider prefix releases no bytes
+ok 22 - F16-W20 client cancellation after provider prefix releases no bytes
+  ---
+  duration_ms: 4051.0579
+  type: 'test'
+  ...
+1..22
+# tests 22
+# suites 0
+# pass 22
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 6433.6108

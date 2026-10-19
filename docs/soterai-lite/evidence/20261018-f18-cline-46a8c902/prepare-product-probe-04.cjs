@@ -1,0 +1,13 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path');
+const read=name=>fs.readFileSync(path.join(__dirname,name),'utf8');
+const save=(name,text)=>fs.writeFileSync(path.join(__dirname,name),text,{flag:'wx'});
+let guard=read('product-test-guards-02.cjs');
+guard=guard.replace("row={closed:false,stdoutEOF:!child.stdout,stderrEOF:!child.stderr}", "row={role:argv.some(value=>typeof value==='string'&&value.endsWith('TaskStart.ps1'))?'TaskStart':argv.some(value=>typeof value==='string'&&value.endsWith('PreToolUse.ps1'))?'PreToolUse':argv.some(value=>typeof value==='string'&&value.endsWith('local-ai-broker.js'))?'broker':argv.some(value=>typeof value==='string'&&value.endsWith('soterai-mcp-server.js'))?'mcp':'ticket',closed:false,stdoutEOF:!child.stdout,stderrEOF:!child.stderr}");
+guard=guard.replace("children.push(row);child.once('close'", "children.push(row);if(['TaskStart','PreToolUse'].includes(row.role)){let size=0,chunks=[];child.stdout?.on('data',chunk=>{size+=chunk.length;if(size<=8192)chunks.push(Buffer.from(chunk));});child.stdout?.on('end',()=>{try{const reply=JSON.parse(Buffer.concat(chunks).toString('utf8'));row.hookCancel=reply.cancel;row.hookResponseValid=typeof reply.cancel==='boolean';}catch{row.hookResponseValid=false;}});}child.once('close'");
+save('product-test-guards-03.cjs',guard);
+let probe=read('product-probe-03.cjs').replaceAll('product-test-guards-02.cjs','product-test-guards-03.cjs').replace('tokenSource:\'fixture\'','tokenSource:\'migration\'');
+probe=probe.replace("if(records.providerFailure||records.requests.some(item=>item.privateOriginal))", "if(!guard.children.some(item=>item.role==='PreToolUse'&&item.hookCancel===true))throw Error('Actual native hook cancellation missing');\n   if(records.providerFailure||records.requests.some(item=>item.privateOriginal))");
+save('product-probe-04.cjs',probe);
+let launch=read('run-product-probe-04.ps1').replaceAll('product-probe-03.cjs','product-probe-04.cjs').replaceAll('product-test-guards-02.cjs','product-test-guards-03.cjs');
+save('run-product-probe-05.ps1',launch);

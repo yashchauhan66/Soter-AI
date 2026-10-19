@@ -1,0 +1,16 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path');
+const read=name=>fs.readFileSync(path.join(__dirname,name),'utf8');
+const save=(name,text)=>fs.writeFileSync(path.join(__dirname,name),text,{flag:'wx'});
+let probe=read('product-probe-07.cjs');
+probe=probe.replace("server,vendorActivation,", "server,vendorActivation,ownedCredential,");
+probe=probe.replace("records.tokenShape={", "ownedCredential=value;records.tokenShape={");
+probe=probe.replace("  const adapter=context.subscriptions.find", `  records.clientRequests=[];const parentFetch=globalThis.fetch;globalThis.fetch=async function(input,init){const url=new URL(typeof input==='string'||input instanceof URL?input:input.url);let row;if(url.pathname.startsWith('/v1/ai/openai-compatible')&&records.clientRequests.length<16){const headers=new Headers(init?.headers??input?.headers);row={path:url.pathname,authCurrent:headers.get('authorization')==='Bearer '+ownedCredential,authOriginal:headers.get('authorization')==='Bearer '+ORIGINAL};records.clientRequests.push(row);}try{const result=await parentFetch(input,init);if(row)row.status=result.status;return result;}catch(error){if(row)row.error=safeError(error);throw error;}};
+  const adapter=context.subscriptions.find`);
+probe=probe.replace("void api?.pressPrimaryButton().catch(()=>undefined);", "if(scenario==='mcp-public'&&!records.requests.some(item=>item.scenario==='mcp-public'&&item.publicSeen))void api?.pressPrimaryButton().catch(()=>undefined);");
+probe=probe.replace("await check('F18-P06',async()=>{await config.update", "await check('F18-P06',async()=>{clearInterval(approvalTimer);approvalTimer=undefined;await config.update");
+save('product-probe-08.cjs',probe);
+let build=read('build-candidate-08.ps1').replace("'typecheck-10'","'typecheck-11'").replace("'focused-06'","'focused-07'").replace("'package-04'","'package-05'").replace("'clineEditorHook'","'clineEditorHook','clineProviderHeaders'").replaceAll('f18-20261019-attempt04.vsix','f18-20261019-attempt05.vsix').replace("-InspectionName '04'","-InspectionName '05'");
+save('build-candidate-09.ps1',build);
+let launch=read('run-product-probe-10.ps1').replaceAll('product-probe-07.cjs','product-probe-08.cjs').replaceAll('vsix-inspection-04.json','vsix-inspection-05.json').replace('tokenShape,tokenFailure,directHook','tokenShape,tokenFailure,clientRequests,directHook');
+save('run-product-probe-11.ps1',launch);

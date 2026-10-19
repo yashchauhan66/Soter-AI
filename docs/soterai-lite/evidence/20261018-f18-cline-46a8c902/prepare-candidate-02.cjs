@@ -1,0 +1,13 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path');
+const read=name=>fs.readFileSync(path.join(__dirname,name),'utf8');
+const save=(name,text)=>fs.writeFileSync(path.join(__dirname,name),text,{flag:'wx'});
+let build=read('build-candidate-03.ps1').replace("'typecheck-05'","'typecheck-06'").replace("'focused-02'","'focused-03'").replace("'package-01'","'package-02'").replace("'clineAdapterAtomicIO'","'clineAdapterAtomicIO','clineAdapterLifecycle'").replace('soterai-lite-0.7.0-f18-20261018-attempt01.vsix','soterai-lite-0.7.0-f18-20261019-attempt02.vsix');
+build+=`\n$taskVsix=Join-Path $taskRepo 'packages/soterai-lite/soterai-lite-0.7.0-f18-20261019-attempt02.vsix'\n& (Join-Path $PSScriptRoot 'inspect-vsix-02.ps1') -VsixPath $taskVsix -ExpectedVsixSha256 ((Get-FileHash -LiteralPath $taskVsix -Algorithm SHA256).Hash.ToLowerInvariant()) -ExpectedBundleSha256 ((Get-FileHash -LiteralPath (Join-Path $taskRepo 'packages/soterai-lite/dist/extension.js') -Algorithm SHA256).Hash.ToLowerInvariant()) -InspectionName '02'\n`;
+save('build-candidate-04.ps1',build);
+let inspector=read('inspect-vsix-01.ps1');
+const old="@('soterai.configureCheckedGitBash','soterai.openCheckedGitBash','soterai.runCheckedGitBash','soterai.restoreCheckedGitBash','soterai.checkedGitBashStatus')";
+inspector=inspector.replaceAll(old,"@('soterai.configurePinnedCline','soterai.restorePinnedCline','soterai.clineAdapterStatus')");
+save('inspect-vsix-02.ps1',inspector);
+let launch=read('run-product-probe-03.ps1').replaceAll('vsix-inspection-01.json','vsix-inspection-02.json');
+save('run-product-probe-04.ps1',launch);

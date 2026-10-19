@@ -1,0 +1,159 @@
+﻿node.exe : node:child_process:921
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (node:child_process:921:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+    throw err;
+    ^
+
+<ref *1> Error: spawnSync git ENAMETOOLONG
+    at Object.spawnSync (node:internal/child_process:1120:20)
+    at spawnSync (node:child_process:868:24)
+    at Object.execFileSync (node:child_process:911:15)
+    at run (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261018-f16-gateway-poli
+cy-6e9a31d4\git-batch-01.cjs:4:42)
+    at git (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261018-f16-gateway-poli
+cy-6e9a31d4\git-batch-01.cjs:5:109)
+    at Object.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261018-f
+18-cline-46a8c902\prepare-acceptance-01.cjs:26:29)
+    at Module._compile (node:internal/modules/cjs/loader:1730:14)
+    at Object..js (node:internal/modules/cjs/loader:1895:10)
+    at Module.load (node:internal/modules/cjs/loader:1465:32)
+    at Function._load (node:internal/modules/cjs/loader:1282:12) {
+  errno: -4064,
+  code: 'ENAMETOOLONG',
+  syscall: 'spawnSync git',
+  path: 'git',
+  spawnargs: [
+    '-c',
+    'core.autocrlf=false',
+    'ls-files',
+    '--',
+    'apps/local-ai-broker/src/GatewayBoundary.ts',
+    'apps/local-ai-broker/src/GatewayPolicy.ts',
+    'apps/local-ai-broker/src/cli.ts',
+    'packages/core/src/RegisteredSecretMatcher.ts',
+    'packages/vscode-extension/src/__tests__/gatewayPolicyManager.test.ts',
+    'packages/vscode-extension/src/__tests__/gatewayPolicyWire.test.ts',
+    'packages/vscode-extension/src/__tests__/lite-safe-consent-commands.test.ts',
+    'packages/vscode-extension/src/__tests__/mcp-canary-boundary.test.ts',
+    'packages/vscode-extension/src/__tests__/ownedBrokerManager.test.ts',
+    'packages/vscode-extension/src/__tests__/readme-accuracy.test.ts',
+    'packages/vscode-extension/src/agent/SafeReadBridge.ts',
+    'packages/vscode-extension/src/agent/mcpServer.ts',
+    'packages/vscode-extension/src/broker/AutoSecureEngine.ts',
+    'packages/vscode-extension/src/broker/BrokerManager.ts',
+    'packages/vscode-extension/src/extension.ts',
+    'packages/vscode-extension/src/project-privacy/ProjectFileAccess.ts',
+    'packages/vscode-extension/src/project-privacy/commands.ts',
+    'packages/vscode-extension/package.json',
+    'packages/soterai-lite/package.json',
+    'packages/vscode-extension/README.md',
+    'packages/soterai-lite/README.md',
+    'docs/vscode-extension-readiness.md',
+    'docs/soterai-lite/ledger.md',
+    'docs/soterai-lite/FEATURE-QUEUE.json',
+    'docs/soterai-lite/LITE-CATALOG.json',
+    'docs/soterai-lite/evidence/20261018-f18-cline-46a8c902/evidence-lib-01.cjs',
+    'docs/soterai-lite/evidence/20261018-f16-gateway-policy-6e9a31d4/git-batch-01.cjs',
+    'packages/vscode-extension/src/__tests__/clineAdapterAtomicIO.test.ts',
+    'packages/vscode-extension/src/__tests__/clineAdapterLifecycle.test.ts',
+    'packages/vscode-extension/src/__tests__/clineAdapterPolicy.review.test.ts',
+    'packages/vscode-extension/src/__tests__/clineAdapterPolicy.test.ts',
+    'packages/vscode-extension/src/__tests__/clineEditorHook.test.ts',
+    'packages/vscode-extension/src/__tests__/clineGatewaySchemas.test.ts',
+    'packages/vscode-extension/src/__tests__/clineHookBridge.test.ts',
+    'packages/vscode-extension/src/__tests__/clineHookClient.test.ts',
+    'packages/vscode-extension/src/__tests__/clineMatcherBudget.test.ts',
+    'packages/vscode-extension/src/__tests__/clineMcpToolName.test.ts',
+    'packages/vscode-extension/src/__tests__/clineNativePaths.test.ts',
+    'packages/vscode-extension/src/__tests__/clineProviderHeaders.test.ts',
+    'packages/vscode-extension/src/__tests__/sealedBridgeTicket.test.ts',
+    'packages/vscode-extension/src/adapters/ClineAdapter.ts',
+    'packages/vscode-extension/src/adapters/ClineAdapterPolicy.ts',
+    'packages/vscode-extension/src/adapters/ClineHookProtocol.ts',
+    'packages/vscode-extension/src/agent/SealedBridgeTicket.ts',
+    'docs/soterai-lite/evidence/20261018-f17-safe-read-73bc91a2/byte-binding-preparation-03.txt',
+    'docs/soterai-lite/evidence/20261018-f17-safe-read-73bc91a2/byte-binding-preparation-03.txt.result.json',
+    'docs/soterai-lite/evidence/20261018-f17-safe-read-73bc91a2/dependency-byte-stage-02.txt',
+    'docs/soterai-lite/evidence/20261018-f17-safe-read-73bc91a2/dependency-byte-stage-02.txt.result.json',
+    'docs/soterai-lite/evidence/20261018-f17-safe-read-73bc91a2/f17-transition-byte-verification-01.json',
+    'docs/soterai-lite/evidence/20261018-f17-safe-read-73bc91a2/f17-transition-commit-01.txt',
+    'docs/soterai-lite/evidence/20261018-f17-safe-read-73bc91a2/f17-transition-commit-01.txt.result.json',
+    'docs/soterai-lite/evidence/20261018-f17-safe-read-73bc91a2/source-stage-02.txt',
+    'docs/soterai-lite/evidence/20261018-f17-safe-read-73bc91a2/source-stage-02.txt.result.json',
+    'docs/soterai-lite/evidence/20261018-f17-safe-read-73bc91a2/staged-byte-verification-02.txt',
+    'docs/soterai-lite/evidence/20261018-f17-safe-read-73bc91a2/staged-byte-verification-02.txt.result.json',
+    'docs/soterai-lite/evidence/20261018-f17-safe-read-73bc91a2/transition-byte-verification-01.txt',
+    'docs/soterai-lite/evidence/20261018-f17-safe-read-73bc91a2/transition-byte-verification-01.txt.result.json',
+    'docs/soterai-lite/evidence/20261018-f17-safe-read-73bc91a2/transition-preparation-01.txt',
+    'docs/soterai-lite/evidence/20261018-f17-safe-read-73bc91a2/transition-preparation-01.txt.result.json',
+    'docs/soterai-lite/evidence/20261018-f17-safe-read-73bc91a2/transition-stage-01.txt',
+    'docs/soterai-lite/evidence/20261018-f17-safe-read-73bc91a2/transition-stage-01.txt.result.json',
+    'docs/soterai-lite/evidence/20261018-f17-safe-read-73bc91a2/transition-staged-verification-01.txt',
+    'docs/soterai-lite/evidence/20261018-f17-safe-read-73bc91a2/transition-staged-verification-01.txt.result.json',
+    'docs/soterai-lite/evidence/20261018-f18-cline-46a8c902/affected-20261019T045613Z-245bbfc236954cdcbedfa0ffa3f11c80/
+affected-summary-01.json',
+    'docs/soterai-lite/evidence/20261018-f18-cline-46a8c902/affected-20261019T045613Z-245bbfc236954cdcbedfa0ffa3f11c80/
+freeze.json',
+    'docs/soterai-lite/evidence/20261018-f18-cline-46a8c902/affected-20261019T045613Z-245bbfc236954cdcbedfa0ffa3f11c80/
+functional/privacy-20261019T045617Z-0587a01d/freeze.json',
+    'docs/soterai-lite/evidence/20261018-f18-cline-46a8c902/affected-20261019T045613Z-245bbfc236954cdcbedfa0ffa3f11c80/
+functional/privacy-20261019T045617Z-0587a01d/functional-results.json',
+    'docs/soterai-lite/evidence/20261018-f18-cline-46a8c902/affected-20261019T045613Z-245bbfc236954cdcbedfa0ffa3f11c80/
+functional/privacy-20261019T045617Z-0587a01d/stderr.txt',
+    'docs/soterai-lite/evidence/20261018-f18-cline-46a8c902/affected-20261019T045613Z-245bbfc236954cdcbedfa0ffa3f11c80/
+functional/privacy-20261019T045617Z-0587a01d/stdout.txt',
+    'docs/soterai-lite/evidence/20261018-f18-cline-46a8c902/affected-20261019T045613Z-245bbfc236954cdcbedfa0ffa3f11c80/
+functional-launch-01.txt',
+    'docs/soterai-lite/evidence/20261018-f18-cline-46a8c902/affected-20261019T045613Z-245bbfc236954cdcbedfa0ffa3f11c80/
+functional-launch-01.txt.result.json',
+    'docs/soterai-lite/evidence/20261018-f18-cline-46a8c902/affected-20261019T045613Z-245bbfc236954cdcbedfa0ffa3f11c80/
+security/host-20261019T045645Z-3cd856dc5bea48ae833cb662529ea109/launch.json',
+    'docs/soterai-lite/evidence/20261018-f18-cline-46a8c902/affected-20261019T045613Z-245bbfc236954cdcbedfa0ffa3f11c80/
+security/host-20261019T045645Z-3cd856dc5bea48ae833cb662529ea109/live-host.json',
+    'docs/soterai-lite/evidence/20261018-f18-cline-46a8c902/affected-20261019T045613Z-245bbfc236954cdcbedfa0ffa3f11c80/
+security/host-20261019T045645Z-3cd856dc5bea48ae833cb662529ea109/live-host.json.activation.json',
+    'docs/soterai-lite/evidence/20261018-f18-cline-46a8c902/affected-20261019T045613Z-245bbfc236954cdcbedfa0ffa3f11c80/
+security/host-20261019T045645Z-3cd856dc5bea48ae833cb662529ea109/security-review-host.js',
+    'docs/soterai-lite/evidence/20261018-f18-cline-46a8c902/affected-20261019T045613Z-245bbfc236954cdcbedfa0ffa3f11c80/
+security/host-20261019T045645Z-3cd856dc5bea48ae833cb662529ea109/stderr.txt',
+    'docs/soterai-lite/evidence/20261018-f18-cline-46a8c902/affected-20261019T045613Z-245bbfc236954cdcbedfa0ffa3f11c80/
+security/host-20261019T045645Z-3cd856dc5bea48ae833cb662529ea109/stdout.txt',
+    'docs/soterai-lite/evidence/20261018-f18-cline-46a8c902/affected-20261019T045613Z-245bbfc236954cdcbedfa0ffa3f11c80/
+security-comparison-01.json',
+    'docs/soterai-lite/evidence/20261018-f18-cline-46a8c902/affected-20261019T045613Z-245bbfc236954cdcbedfa0ffa3f11c80/
+security-launch-01.txt',
+    'docs/soterai-lite/evidence/20261018-f18-cline-46a8c902/affected-20261019T045613Z-245bbfc236954cdcbedfa0ffa3f11c80/
+security-launch-01.txt.result.json',
+    'docs/soterai-lite/evidence/20261018-f18-cline-46a8c902/affected-launch-01.txt',
+    'docs/soterai-lite/evidence/20261018-f18-cline-46a8c902/affected-launch-01.txt.result.json',
+    'docs/soterai-lite/evidence/20261018-f18-cline-46a8c902/artifact-binding-01.ps1',
+    'docs/soterai-lite/evidence/20261018-f18-cline-46a8c902/atomic-before-01.txt',
+    'docs/soterai-lite/evidence/20261018-f18-cline-46a8c902/atomic-before-01.txt.result.json',
+    'docs/soterai-lite/evidence/20261018-f18-cline-46a8c902/atomic-diagnostic-01.txt',
+    'docs/soterai-lite/evidence/20261018-f18-cline-46a8c902/atomic-diagnostic-01.txt.result.json',
+    'docs/soterai-lite/evidence/20261018-f18-cline-46a8c902/broker-tests-01.txt',
+    'docs/soterai-lite/evidence/20261018-f18-cline-46a8c902/broker-tests-01.txt.result.json',
+    'docs/soterai-lite/evidence/20261018-f18-cline-46a8c902/broker-tests-02.txt',
+    'docs/soterai-lite/evidence/20261018-f18-cline-46a8c902/broker-tests-02.txt.result.json',
+    'docs/soterai-lite/evidence/20261018-f18-cline-46a8c902/broker-tests-03.txt',
+    'docs/soterai-lite/evidence/20261018-f18-cline-46a8c902/broker-tests-03.txt.result.json',
+    'docs/soterai-lite/evidence/20261018-f18-cline-46a8c902/broker-typecheck-01.txt',
+    'docs/soterai-lite/evidence/20261018-f18-cline-46a8c902/broker-typecheck-01.txt.result.json',
+    'docs/soterai-lite/evidence/20261018-f18-cline-46a8c902/broker-typecheck-02.txt',
+    ... 538 more items
+  ],
+  error: [Circular *1],
+  status: null,
+  signal: null,
+  output: null,
+  pid: 0,
+  stdout: undefined,
+  stderr: undefined
+}
+
+Node.js v22.16.0

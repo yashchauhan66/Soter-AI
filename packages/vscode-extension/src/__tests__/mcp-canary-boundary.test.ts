@@ -123,7 +123,7 @@ test("BrokerManager synchronizes canaries on owned startup and new generation af
         if (url.pathname === "/version") return Response.json({ version: EXPECTED_BROKER_VERSION });
         if (url.pathname === "/v1/safe-mode/status") return Response.json({ enabled: true, level: "strict" });
         if(url.pathname==="/v1/gateway/sync"){generation=JSON.parse(String(init?.body)).generation;return Response.json({version:1,synchronized:true,generation});}
-        if(url.pathname==="/v1/gateway/status")return Response.json({version:1,enabled:true,ready:true,generation});
+        if(url.pathname==="/v1/gateway/status")return Response.json({version:1,enabled:true,ready:true,generation,clineToolSchemas:true});
         assert.equal(url.pathname, "/v1/canaries/sync");
         assert.match(new Headers(init?.headers).get("authorization") ?? "", /^Bearer [A-Za-z0-9_-]{43}$/);
         const body = JSON.parse(String(init?.body));

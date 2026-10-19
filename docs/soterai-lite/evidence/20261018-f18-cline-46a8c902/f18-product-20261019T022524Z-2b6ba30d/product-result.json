@@ -1,0 +1,227 @@
+{
+  "scope": "ACTUAL_PACKAGED_PRODUCT_AND_PINNED_CLINE_SCRIPTED_APIS",
+  "independence": "LOW",
+  "checks": [
+    {
+      "id": "F18-P02",
+      "status": "FAIL",
+      "error": {
+        "name": "Error"
+      }
+    },
+    {
+      "id": "F18-P03",
+      "status": "FAIL",
+      "error": {
+        "name": "Error"
+      }
+    }
+  ],
+  "modals": [],
+  "requests": [],
+  "phase": "setup",
+  "deniedExternal": [],
+  "deniedSignals": [],
+  "deniedChildLaunches": [
+    {
+      "executable": "powershell",
+      "argc": 3,
+      "cwdSynthetic": false
+    },
+    {
+      "method": "exec",
+      "executable": "v MachineGuid",
+      "argc": 0
+    }
+  ],
+  "deniedFileAccess": [
+    "readdirSync"
+  ],
+  "vendorPrepared": true,
+  "brokerStages": [
+    {
+      "method": "stop",
+      "state": "stopped"
+    },
+    {
+      "method": "start",
+      "state": "healthy",
+      "running": true,
+      "urlShape": "/"
+    },
+    {
+      "method": "start",
+      "state": "healthy",
+      "running": true,
+      "urlShape": "/"
+    },
+    {
+      "method": "stop",
+      "state": "stopped"
+    }
+  ],
+  "controllerStages": [
+    {
+      "stage": "artifact",
+      "status": "RETURNED"
+    },
+    {
+      "stage": "read",
+      "file": "globalState.json",
+      "status": "RETURNED",
+      "bytes": 1202
+    },
+    {
+      "stage": "eligible",
+      "status": "RETURNED",
+      "value": true
+    },
+    {
+      "stage": "read",
+      "file": "providers.json",
+      "status": "RETURNED",
+      "bytes": 278
+    },
+    {
+      "stage": "read",
+      "file": "cline_mcp_settings.json",
+      "status": "RETURNED",
+      "bytes": 17
+    },
+    {
+      "stage": "read",
+      "file": "global-settings.json",
+      "status": "RETURNED",
+      "bytes": 50
+    },
+    {
+      "stage": "read",
+      "file": "PreToolUse.ps1",
+      "status": "RETURNED"
+    },
+    {
+      "stage": "read",
+      "file": "TaskStart.ps1",
+      "status": "RETURNED"
+    },
+    {
+      "stage": "dependencies",
+      "status": "RETURNED"
+    },
+    {
+      "stage": "artifact",
+      "status": "RETURNED"
+    },
+    {
+      "stage": "read",
+      "file": "globalState.json",
+      "status": "RETURNED",
+      "bytes": 1202
+    },
+    {
+      "stage": "eligible",
+      "status": "RETURNED",
+      "value": true
+    },
+    {
+      "stage": "read",
+      "file": "providers.json",
+      "status": "RETURNED",
+      "bytes": 278
+    },
+    {
+      "stage": "read",
+      "file": "cline_mcp_settings.json",
+      "status": "RETURNED",
+      "bytes": 17
+    },
+    {
+      "stage": "read",
+      "file": "global-settings.json",
+      "status": "RETURNED",
+      "bytes": 50
+    },
+    {
+      "stage": "read",
+      "file": "PreToolUse.ps1",
+      "status": "RETURNED"
+    },
+    {
+      "stage": "read",
+      "file": "TaskStart.ps1",
+      "status": "RETURNED"
+    },
+    {
+      "stage": "dependencies",
+      "status": "RETURNED"
+    }
+  ],
+  "providerUrl": "http://127.0.0.1:63616/v1",
+  "vendorVersion": "4.1.25",
+  "withdrawals": [
+    {
+      "state": "healthy",
+      "stack": [
+        "extension.js",
+        "task_queues",
+        "extension.js"
+      ]
+    },
+    {
+      "state": "healthy",
+      "stack": [
+        "extension.js",
+        "extension.js",
+        "extensionHostProcess.js"
+      ]
+    },
+    {
+      "state": "healthy",
+      "stack": [
+        "extension.js",
+        "task_queues",
+        "extension.js"
+      ]
+    },
+    {
+      "state": "healthy",
+      "stack": [
+        "extension.js",
+        "extension.js",
+        "extensionHostProcess.js"
+      ]
+    }
+  ],
+  "tokenShape": {
+    "type": "string",
+    "length": 43,
+    "whitespace": false
+  },
+  "cancelStatus": "UNAVAILABLE",
+  "configureStatus": "UNAVAILABLE",
+  "driverFailure": {
+    "name": "Error"
+  },
+  "children": [
+    {
+      "role": "broker",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "role": "ticket",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "role": "ticket",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    }
+  ],
+  "runtimeSha256": "bcccae76946211a9dcc4a82d1563085d290189915b2f273df3bd802a56f97cdf",
+  "status": "INCOMPLETE_PRODUCT_PROBE"
+}

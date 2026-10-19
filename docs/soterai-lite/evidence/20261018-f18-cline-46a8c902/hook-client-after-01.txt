@@ -1,0 +1,166 @@
+﻿TAP version 13
+# Subtest: F18 existing bridge grants no classification capability unless explicitly supplied
+ok 1 - F18 existing bridge grants no classification capability unless explicitly supplied
+  ---
+  duration_ms: 98.9611
+  type: 'test'
+  ...
+# Subtest: F18 private native read classification returns metadata only
+ok 2 - F18 private native read classification returns metadata only
+  ---
+  duration_ms: 24.1595
+  type: 'test'
+  ...
+# Subtest: F18 private native write classification returns metadata only
+ok 3 - F18 private native write classification returns metadata only
+  ---
+  duration_ms: 15.5798
+  type: 'test'
+  ...
+# Subtest: F18 private classification never treats an unknown object/original as a public decision
+ok 4 - F18 private classification never treats an unknown object/original as a public decision
+  ---
+  duration_ms: 15.3623
+  type: 'test'
+  ...
+# Subtest: F18 native classifier withdrawal while a decision is pending releases no public grant
+ok 5 - F18 native classifier withdrawal while a decision is pending releases no public grant
+  ---
+  duration_ms: 26.5493
+  type: 'test'
+  ...
+# Subtest: F18 hook public reads require every explicit target to pass the current classifier
+ok 6 - F18 hook public reads require every explicit target to pass the current classifier
+  ---
+  duration_ms: 262.0253
+  type: 'test'
+  ...
+# Subtest: F18 any protected/malformed/unknown/read outage path withholds the native operation
+ok 7 - F18 any protected/malformed/unknown/read outage path withholds the native operation
+  ---
+  duration_ms: 4.8626
+  type: 'test'
+  ...
+# Subtest: F18 unknown shell/history/search scope cannot inherit a public file decision
+ok 8 - F18 unknown shell/history/search scope cannot inherit a public file decision
+  ---
+  duration_ms: 4.5509
+  type: 'test'
+  ...
+# Subtest: F18 TaskStart requires the current private session before the first model request
+ok 9 - F18 TaskStart requires the current private session before the first model request
+  ---
+  duration_ms: 15.7299
+  type: 'test'
+  ...
+# Subtest: F18 a copied hook from another workspace receives no native grant
+ok 10 - F18 a copied hook from another workspace receives no native grant
+  ---
+  duration_ms: 17.8598
+  type: 'test'
+  ...
+# Subtest: F18 actual native client accepts the bounded current-session ready/read response
+ok 11 - F18 actual native client accepts the bounded current-session ready/read response
+  ---
+  duration_ms: 141.6793
+  type: 'test'
+  ...
+# Subtest: F17 aborting an active F04 review promptly withholds a late approval
+ok 12 - F17 aborting an active F04 review promptly withholds a late approval
+  ---
+  duration_ms: 38.6737
+  type: 'test'
+  ...
+# Subtest: F17 already aborted requests never capture or review content
+ok 13 - F17 already aborted requests never capture or review content
+  ---
+  duration_ms: 1.5145
+  type: 'test'
+  ...
+# Subtest: F17 safe path schema rejects caller approval, absolute paths, aliases and unsupported fields
+ok 14 - F17 safe path schema rejects caller approval, absolute paths, aliases and unsupported fields
+  ---
+  duration_ms: 11.0866
+  type: 'test'
+  ...
+# Subtest: F17 connection schema accepts only the fixed local route and private session shape
+ok 15 - F17 connection schema accepts only the fixed local route and private session shape
+  ---
+  duration_ms: 4.0071
+  type: 'test'
+  ...
+# Subtest: F17 actual HTTP bridge public control binds a server-owned recipient
+ok 16 - F17 actual HTTP bridge public control binds a server-owned recipient
+  ---
+  duration_ms: 85.2614
+  type: 'test'
+  ...
+# Subtest: F17 actual bridge reuses safe-view reader: ordinary saved deny with approval
+ok 17 - F17 actual bridge reuses safe-view reader: ordinary saved deny with approval
+  ---
+  duration_ms: 40.9173
+  type: 'test'
+  ...
+# Subtest: F17 actual bridge reuses safe-view reader: env names only
+ok 18 - F17 actual bridge reuses safe-view reader: env names only
+  ---
+  duration_ms: 17.4181
+  type: 'test'
+  ...
+# Subtest: F17 actual bridge reuses safe-view reader: marked sensitive
+ok 19 - F17 actual bridge reuses safe-view reader: marked sensitive
+  ---
+  duration_ms: 15.2331
+  type: 'test'
+  ...
+# Subtest: F17 invalid auth and session never reach the native reader
+ok 20 - F17 invalid auth and session never reach the native reader
+  ---
+  duration_ms: 24.2565
+  type: 'test'
+  ...
+# Subtest: F17 flag withdrawal while native confirmation waits releases no output
+ok 21 - F17 flag withdrawal while native confirmation waits releases no output
+  ---
+  duration_ms: 14.0306
+  type: 'test'
+  ...
+# Subtest: F17 explicit session rotation invalidates pending and prior clients
+ok 22 - F17 explicit session rotation invalidates pending and prior clients
+  ---
+  duration_ms: 19.5263
+  type: 'test'
+  ...
+# Subtest: F17 client cancellation propagates to the actual host read and withholds late data
+ok 23 - F17 client cancellation propagates to the actual host read and withholds late data
+  ---
+  duration_ms: 15.5343
+  type: 'test'
+  ...
+# Subtest: F17 actual bridge malformed/oversize/unknown fields return fixed errors with no read
+ok 24 - F17 actual bridge malformed/oversize/unknown fields return fixed errors with no read
+  ---
+  duration_ms: 22.8521
+  type: 'test'
+  ...
+# Subtest: F17 actual bridge outage has no original-file fallback
+ok 25 - F17 actual bridge outage has no original-file fallback
+  ---
+  duration_ms: 10.227
+  type: 'test'
+  ...
+# Subtest: F17 actual stdio route advertises and dispatches the safe reader
+ok 26 - F17 actual stdio route advertises and dispatches the safe reader
+  ---
+  duration_ms: 7.7691
+  type: 'test'
+  ...
+1..26
+# tests 26
+# suites 0
+# pass 26
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1949.4771

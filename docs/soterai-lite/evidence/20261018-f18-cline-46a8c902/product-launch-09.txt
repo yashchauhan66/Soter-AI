@@ -1,0 +1,854 @@
+﻿{
+    "status":  "INCOMPLETE_PRODUCT_PROBE",
+    "checks":  [
+                   {
+                       "id":  "F18-P02",
+                       "status":  "PASS"
+                   },
+                   {
+                       "id":  "F18-P03",
+                       "status":  "PASS"
+                   },
+                   {
+                       "id":  "F18-P01",
+                       "status":  "PASS"
+                   },
+                   {
+                       "id":  "F18-P04",
+                       "status":  "FAIL",
+                       "error":  {
+                                     "name":  "Error"
+                                 }
+                   },
+                   {
+                       "id":  "F18-P05",
+                       "status":  "FAIL",
+                       "error":  {
+                                     "name":  "Error"
+                                 }
+                   },
+                   {
+                       "id":  "F18-P06",
+                       "status":  "PASS"
+                   }
+               ],
+    "configureStatus":  "APPLIED",
+    "cancelStatus":  "CANCELLED",
+    "brokerStages":  [
+                         {
+                             "method":  "stop",
+                             "state":  "stopped"
+                         },
+                         {
+                             "method":  "start",
+                             "state":  "healthy",
+                             "running":  true,
+                             "urlShape":  "/"
+                         },
+                         {
+                             "method":  "start",
+                             "state":  "healthy",
+                             "running":  true,
+                             "urlShape":  "/"
+                         },
+                         {
+                             "method":  "stop",
+                             "state":  "stopped"
+                         }
+                     ],
+    "controllerStages":  [
+                             {
+                                 "stage":  "artifact",
+                                 "status":  "RETURNED"
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "globalState.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  1202
+                             },
+                             {
+                                 "stage":  "eligible",
+                                 "status":  "RETURNED",
+                                 "value":  true
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "providers.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  316
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "cline_mcp_settings.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  17
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "global-settings.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  50
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "PreToolUse.ps1",
+                                 "status":  "RETURNED"
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "TaskStart.ps1",
+                                 "status":  "RETURNED"
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "providers.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  316
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "cline_mcp_settings.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  17
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "global-settings.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  50
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "PreToolUse.ps1",
+                                 "status":  "RETURNED"
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "TaskStart.ps1",
+                                 "status":  "RETURNED"
+                             },
+                             {
+                                 "stage":  "artifact",
+                                 "status":  "RETURNED"
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "globalState.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  1202
+                             },
+                             {
+                                 "stage":  "eligible",
+                                 "status":  "RETURNED",
+                                 "value":  true
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "providers.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  316
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "cline_mcp_settings.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  17
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "global-settings.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  50
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "PreToolUse.ps1",
+                                 "status":  "RETURNED"
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "TaskStart.ps1",
+                                 "status":  "RETURNED"
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "providers.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  316
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "cline_mcp_settings.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  17
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "global-settings.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  50
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "PreToolUse.ps1",
+                                 "status":  "RETURNED"
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "TaskStart.ps1",
+                                 "status":  "RETURNED"
+                             },
+                             {
+                                 "stage":  "artifact",
+                                 "status":  "RETURNED"
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "providers.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  316
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "cline_mcp_settings.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  17
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "global-settings.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  50
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "PreToolUse.ps1",
+                                 "status":  "RETURNED"
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "TaskStart.ps1",
+                                 "status":  "RETURNED"
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "providers.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  316
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "providers.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  316
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "providers.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  316
+                             },
+                             {
+                                 "stage":  "write",
+                                 "file":  "providers.json",
+                                 "status":  "RETURNED"
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "providers.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  560
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "cline_mcp_settings.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  17
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "cline_mcp_settings.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  17
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "cline_mcp_settings.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  17
+                             },
+                             {
+                                 "stage":  "write",
+                                 "file":  "cline_mcp_settings.json",
+                                 "status":  "RETURNED"
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "cline_mcp_settings.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  615
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "global-settings.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  50
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "global-settings.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  50
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "global-settings.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  50
+                             },
+                             {
+                                 "stage":  "write",
+                                 "file":  "global-settings.json",
+                                 "status":  "RETURNED"
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "global-settings.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  60
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "PreToolUse.ps1",
+                                 "status":  "RETURNED"
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "PreToolUse.ps1",
+                                 "status":  "RETURNED"
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "PreToolUse.ps1",
+                                 "status":  "RETURNED"
+                             },
+                             {
+                                 "stage":  "write",
+                                 "file":  "PreToolUse.ps1",
+                                 "status":  "RETURNED"
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "PreToolUse.ps1",
+                                 "status":  "RETURNED",
+                                 "bytes":  3846
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "TaskStart.ps1",
+                                 "status":  "RETURNED"
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "TaskStart.ps1",
+                                 "status":  "RETURNED"
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "TaskStart.ps1",
+                                 "status":  "RETURNED"
+                             },
+                             {
+                                 "stage":  "write",
+                                 "file":  "TaskStart.ps1",
+                                 "status":  "RETURNED"
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "TaskStart.ps1",
+                                 "status":  "RETURNED",
+                                 "bytes":  3846
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "globalState.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  1202
+                             },
+                             {
+                                 "stage":  "eligible",
+                                 "status":  "RETURNED",
+                                 "value":  true
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "providers.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  560
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "cline_mcp_settings.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  615
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "global-settings.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  60
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "PreToolUse.ps1",
+                                 "status":  "RETURNED",
+                                 "bytes":  3846
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "TaskStart.ps1",
+                                 "status":  "RETURNED",
+                                 "bytes":  3846
+                             },
+                             {
+                                 "stage":  "configuredFiles",
+                                 "status":  "RETURNED",
+                                 "value":  true
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "globalState.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  1761
+                             },
+                             {
+                                 "stage":  "eligible",
+                                 "status":  "RETURNED",
+                                 "value":  true
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "providers.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  560
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "cline_mcp_settings.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  615
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "global-settings.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  60
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "PreToolUse.ps1",
+                                 "status":  "RETURNED",
+                                 "bytes":  3846
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "TaskStart.ps1",
+                                 "status":  "RETURNED",
+                                 "bytes":  3846
+                             },
+                             {
+                                 "stage":  "configuredFiles",
+                                 "status":  "RETURNED",
+                                 "value":  true
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "globalState.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  1761
+                             },
+                             {
+                                 "stage":  "eligible",
+                                 "status":  "RETURNED",
+                                 "value":  true
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "providers.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  560
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "cline_mcp_settings.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  615
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "global-settings.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  60
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "PreToolUse.ps1",
+                                 "status":  "RETURNED",
+                                 "bytes":  3846
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "TaskStart.ps1",
+                                 "status":  "RETURNED",
+                                 "bytes":  3846
+                             },
+                             {
+                                 "stage":  "configuredFiles",
+                                 "status":  "RETURNED",
+                                 "value":  true
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "globalState.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  1761
+                             },
+                             {
+                                 "stage":  "eligible",
+                                 "status":  "RETURNED",
+                                 "value":  true
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "providers.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  560
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "cline_mcp_settings.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  615
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "global-settings.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  60
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "PreToolUse.ps1",
+                                 "status":  "RETURNED",
+                                 "bytes":  3846
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "TaskStart.ps1",
+                                 "status":  "RETURNED",
+                                 "bytes":  3846
+                             },
+                             {
+                                 "stage":  "configuredFiles",
+                                 "status":  "RETURNED",
+                                 "value":  true
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "globalState.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  1761
+                             },
+                             {
+                                 "stage":  "eligible",
+                                 "status":  "RETURNED",
+                                 "value":  true
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "providers.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  560
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "cline_mcp_settings.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  615
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "global-settings.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  60
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "PreToolUse.ps1",
+                                 "status":  "RETURNED",
+                                 "bytes":  3846
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "TaskStart.ps1",
+                                 "status":  "RETURNED",
+                                 "bytes":  3846
+                             },
+                             {
+                                 "stage":  "configuredFiles",
+                                 "status":  "RETURNED",
+                                 "value":  true
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "globalState.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  1761
+                             },
+                             {
+                                 "stage":  "eligible",
+                                 "status":  "RETURNED",
+                                 "value":  true
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "providers.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  560
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "cline_mcp_settings.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  615
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "global-settings.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  60
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "PreToolUse.ps1",
+                                 "status":  "RETURNED",
+                                 "bytes":  3846
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "TaskStart.ps1",
+                                 "status":  "RETURNED",
+                                 "bytes":  3846
+                             },
+                             {
+                                 "stage":  "configuredFiles",
+                                 "status":  "RETURNED",
+                                 "value":  true
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "globalState.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  1761
+                             },
+                             {
+                                 "stage":  "eligible",
+                                 "status":  "RETURNED",
+                                 "value":  true
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "providers.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  560
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "cline_mcp_settings.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  615
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "global-settings.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  60
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "PreToolUse.ps1",
+                                 "status":  "RETURNED",
+                                 "bytes":  3846
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "TaskStart.ps1",
+                                 "status":  "RETURNED",
+                                 "bytes":  3846
+                             },
+                             {
+                                 "stage":  "configuredFiles",
+                                 "status":  "RETURNED",
+                                 "value":  true
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "globalState.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  1761
+                             },
+                             {
+                                 "stage":  "eligible",
+                                 "status":  "RETURNED",
+                                 "value":  true
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "providers.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  560
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "cline_mcp_settings.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  615
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "global-settings.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  60
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "PreToolUse.ps1",
+                                 "status":  "RETURNED",
+                                 "bytes":  3846
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "TaskStart.ps1",
+                                 "status":  "RETURNED",
+                                 "bytes":  3846
+                             },
+                             {
+                                 "stage":  "configuredFiles",
+                                 "status":  "RETURNED",
+                                 "value":  true
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "globalState.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  1761
+                             },
+                             {
+                                 "stage":  "eligible",
+                                 "status":  "RETURNED",
+                                 "value":  true
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "providers.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  560
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "cline_mcp_settings.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  615
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "global-settings.json",
+                                 "status":  "RETURNED",
+                                 "bytes":  60
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "PreToolUse.ps1",
+                                 "status":  "RETURNED",
+                                 "bytes":  3846
+                             },
+                             {
+                                 "stage":  "read",
+                                 "file":  "TaskStart.ps1",
+                                 "status":  "RETURNED",
+                                 "bytes":  3846
+                             },
+                             {
+                                 "stage":  "configuredFiles",
+                                 "status":  "RETURNED",
+                                 "value":  true
+                             }
+                         ],
+    "tokenShape":  {
+                       "type":  "string",
+                       "length":  43,
+                       "whitespace":  false
+                   },
+    "tokenFailure":  null,
+    "clientRequests":  [
+
+                       ],
+    "directHook":  {
+                       "status":  "READY",
+                       "code":  0,
+                       "errBytes":  0,
+                       "bytes":  17
+                   },
+    "withdrawals":  [
+                        {
+                            "state":  "healthy",
+                            "stack":  [
+                                          "extension.js",
+                                          "task_queues",
+                                          "extension.js"
+                                      ]
+                        },
+                        {
+                            "state":  "healthy",
+                            "stack":  [
+                                          "extension.js",
+                                          "extension.js",
+                                          "extensionHostProcess.js"
+                                      ]
+                        },
+                        {
+                            "state":  "healthy",
+                            "stack":  [
+                                          "extension.js",
+                                          "task_queues",
+                                          "extension.js"
+                                      ]
+                        },
+                        {
+                            "state":  "stopping",
+                            "stack":  [
+                                          "extension.js",
+                                          "extensionHostProcess.js",
+                                          "extensionHostProcess.js"
+                                      ]
+                        }
+                    ],
+    "driverFailure":  null,
+    "childShutdown":  null
+}
+powershell.exe : INCOMPLETE: actual product assertions did not pass
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (INCOMPLETE: act...ns did not pass:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261018-f18-cline-46a8c902\run-pr
+oduct-probe-11.ps1:111 char:387
++ ... UCT_PROBE'){throw 'INCOMPLETE: actual product assertions did not pass ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (INCOMPLETE: act...ns did not pass:String) [], RuntimeException
+    + FullyQualifiedErrorId : INCOMPLETE: actual product assertions did not pass
+ 

@@ -44,7 +44,7 @@ function fixture(jsonUnavailable = false) {
             if (route === "/v1/canaries/sync") return jsonUnavailable ? Response.json({ error: "json_unavailable" }, { status: 503 }) : Response.json({ synchronized: true, count: JSON.parse(String(init?.body)).canaries.length });
             if (route === "/v1/safe-mode/enable") { modes.push(JSON.parse(String(init?.body))); mode={enabled:true,level:JSON.parse(String(init?.body)).level}; return Response.json(mode); }
             if(route==="/v1/gateway/sync"){generation=JSON.parse(String(init?.body)).generation;return Response.json({version:1,synchronized:true,generation});}
-            if(route==="/v1/gateway/status")return Response.json({version:1,enabled:envs.at(-1)?.SOTERAI_GATEWAY_POLICY!=="0",ready:true,generation});
+            if(route==="/v1/gateway/status")return Response.json({version:1,enabled:envs.at(-1)?.SOTERAI_GATEWAY_POLICY!=="0",ready:true,generation,clineToolSchemas:envs.at(-1)?.SOTERAI_CLINE_TOOL_SCHEMAS==="1"});
             if (route === "/version") return Response.json({ version: "0.2.0" });
             if (route === "/v1/safe-mode/status") return Response.json(mode);
             return Response.json({ accepted: true });

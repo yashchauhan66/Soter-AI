@@ -1,0 +1,62 @@
+﻿TAP version 13
+# Subtest: F18 actual pinned Cline MCP tool name reaches the separate approved reader
+not ok 1 - F18 actual pinned Cline MCP tool name reaches the separate approved reader
+  ---
+  duration_ms: 9.3321
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\clineMcpToolName.test.ts:2:1194'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+    +   cancel: true,
+    +   errorMessage: 'Native operation withheld. Use the approved SoterAI safe reader for protected saved files or a SoterAI checked terminal. Direct context and vendor hook failures remain outside this route.'
+    -   cancel: false
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    cancel: false
+  actual:
+    cancel: true
+    errorMessage: 'Native operation withheld. Use the approved SoterAI safe reader for protected saved files or a SoterAI checked terminal. Direct context and vendor hook failures remain outside this route.'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\clineMcpToolName.test.ts:8:27)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F18 guessed aliases, other namespaces and caller raw authority remain withheld
+not ok 2 - F18 guessed aliases, other namespaces and caller raw authority remain withheld
+  ---
+  duration_ms: 2.6511
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\clineMcpToolName.test.ts:2:1509'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\clineMcpToolName.test.ts:11:194)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 0
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 804.698
