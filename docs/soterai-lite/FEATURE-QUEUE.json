@@ -459,13 +459,16 @@
           "components": [
             {
               "id": "F20A-MCP",
-              "status": "VERIFIED_PENDING_COMMIT",
+              "status": "DONE_SCOPED",
               "result": "PASS_SCOPED",
-              "acceptance": "docs/soterai-lite/evidence/20261019-f20-codex-cli-17b8e403/f20a-mcp-acceptance-01.json"
+              "acceptance": "docs/soterai-lite/evidence/20261019-f20-codex-cli-17b8e403/f20a-mcp-acceptance-01.json",
+              "sourceEvidenceCommit": "7defc1e755bf684f045deaa8b4083207358d680c",
+              "commitByteVerification": "docs/soterai-lite/evidence/20261019-f20-codex-cli-17b8e403/f20a-mcp-committed-byte-verification-01.json",
+              "transitionByteVerification": "docs/soterai-lite/evidence/20261019-f20-codex-cli-17b8e403/f20a-mcp-transition-byte-verification-01.json"
             },
             {
               "id": "F20A-RESPONSES",
-              "status": "PLANNED",
+              "status": "ACTIVE",
               "result": "NOT-RUN",
               "requiredBeforeNextVendor": true,
               "evidence": "docs/soterai-lite/evidence/20261019-f20-codex-cli-17b8e403/design-02-required-route-followup.md"
