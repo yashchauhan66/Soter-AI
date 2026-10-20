@@ -1,0 +1,50 @@
+{
+  "status": "INCOMPLETE",
+  "root": "D:\\SoterAI-Lite-test-profiles\\f20c-feasibility-c9abd2af-0a20-4b71-a0fd-9873d4d5f128",
+  "pin": "installed-public-inputs-01.json",
+  "scope": "Installed native CLI feasibility with JavaScript fixture guards only; not product acceptance, real provider, human, independent or OS protection",
+  "requests": [],
+  "child": {
+    "closed": true,
+    "stdoutEOF": true,
+    "stderrEOF": true,
+    "pid": 21500,
+    "code": 1,
+    "signal": null,
+    "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderrSha256": "5bdb58b9a8dbb61280c9cce0bd4b78be816cbf51bfa4d5d00fd39668de2a2bb5"
+  },
+  "deadlineExceeded": false,
+  "independence": "LOW",
+  "guard": {
+    "scope": "Fixture-only JavaScript guards, not product or OS confinement",
+    "deniedFiles": [
+      {
+        "method": "existsSync",
+        "path": "c:\\windows\\system32\\windowspowershell\\v1.0\\powershell.exe",
+        "write": false
+      },
+      {
+        "method": "realpathSync",
+        "path": "c:\\users\\user\\node_modules\\picomatch\\index.js",
+        "write": false
+      }
+    ],
+    "deniedNetwork": [
+      {
+        "method": "fetch",
+        "host": "",
+        "port": ""
+      }
+    ],
+    "deniedLaunches": [
+      "execSync"
+    ],
+    "deniedSignals": [],
+    "deniedAddons": [],
+    "requests": [],
+    "exitCode": 1,
+    "time": "2026-10-20T12:14:20.886Z"
+  },
+  "time": "2026-10-20T12:14:20.914Z"
+}

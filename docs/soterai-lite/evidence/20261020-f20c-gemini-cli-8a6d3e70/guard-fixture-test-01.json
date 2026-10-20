@@ -1,0 +1,49 @@
+{
+  "status": "PASS_SCOPED_NO_VENDOR_DIAGNOSTIC_FIXTURE",
+  "scope": "No-vendor fixture safety/diagnostic helper test only; not Gemini native route or product acceptance",
+  "root": "D:\\SoterAI-Lite-test-profiles\\f20c-feasibility-507c4591-1266-457b-bf5d-63ce21c24952",
+  "child": {
+    "closed": true,
+    "stdoutEOF": true,
+    "stderrEOF": true,
+    "pid": 21500,
+    "code": 0,
+    "signal": null
+  },
+  "requests": 1,
+  "guard": {
+    "scope": "Fixture-only JavaScript guards, not product or OS confinement",
+    "deniedFiles": [
+      {
+        "method": "readFileSync",
+        "path": "d:\\soterai_fixture_outside_never_read.txt",
+        "write": false
+      },
+      {
+        "method": "promise-readFile",
+        "path": "d:\\soterai_fixture_outside_never_read.txt",
+        "write": false
+      }
+    ],
+    "deniedNetwork": [],
+    "deniedLaunches": [],
+    "deniedSignals": [],
+    "deniedAddons": [],
+    "requests": [
+      {
+        "method": "GET",
+        "path": "/guard-public"
+      }
+    ],
+    "embeddedPublicWasmFetches": 1,
+    "exitCode": 0,
+    "time": "2026-10-20T12:38:15.088Z"
+  },
+  "trace": {
+    "bytes": 141329,
+    "records": 1025,
+    "heartbeats": 1,
+    "recursiveTraceFileCalls": 0
+  },
+  "time": "2026-10-20T12:38:15.114Z"
+}

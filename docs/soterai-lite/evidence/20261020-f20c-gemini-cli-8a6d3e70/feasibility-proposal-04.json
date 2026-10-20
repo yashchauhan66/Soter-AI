@@ -1,0 +1,47 @@
+{
+  "status": "PREPARED_NOT_RUN",
+  "round": 4,
+  "improvementRounds": 3,
+  "prior": {
+    "status": "INCOMPLETE",
+    "root": "D:\\SoterAI-Lite-test-profiles\\f20c-feasibility-8e8e8535-5c0c-4e20-b054-d4a4e4176bdb",
+    "child": {
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "pid": 18964,
+      "code": 1,
+      "signal": null,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "43524a3d2e37c8831699c114a2e95ccb176198d2f45abbfd392daffb985a4472"
+    },
+    "requests": 0,
+    "deniedNetwork": [],
+    "deniedSignals": []
+  },
+  "change": "Remove only the unsupported --ignore-env CLI option. Keep supported advanced.ignoreLocalEnv:true setting, same native pin02/public dependency/embedded WASM, guard02, all other args/settings, synthetic home, no process signals and exact loopback-only boundary. Fix report pin pointer to pin02 actually rechecked by driver03/04.",
+  "files": [
+    {
+      "name": "native-feasibility-04.cjs",
+      "bytes": 8175,
+      "sha256": "569af3ab9040b4ffd1e97bea365ae7bcea3a3d37bf6e1bf41d757b33c7a3e5f6"
+    },
+    {
+      "name": "native-guards-02.cjs",
+      "bytes": 8694,
+      "sha256": "f9f9c19a7e581b95b3284ae5c4a926e8989a9bf59799cd1386173ec19d1bfcf9"
+    },
+    {
+      "name": "installed-public-inputs-02.json",
+      "bytes": 159363,
+      "sha256": "1b536daa9e8328740ae3eab9fa8aefb2ef16b69c5fbf1ad8e28a88a50b0b5dc8"
+    },
+    {
+      "name": "env-loader-review-01.json",
+      "bytes": 4498,
+      "sha256": "2a2c41fb3a9967f9c16c1ed1d8f8a00af0d2ea2969f294f9591d111e2a572428"
+    }
+  ],
+  "roundLimit": "Third improvement after initial attempt. No further feasibility improvement execution without an explicit additional bounded-round authorization if this mandatory probe fails.",
+  "time": "2026-10-20T12:25:55.196Z"
+}

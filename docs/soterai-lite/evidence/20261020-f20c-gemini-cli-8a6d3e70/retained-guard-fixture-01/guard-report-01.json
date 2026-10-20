@@ -1,0 +1,28 @@
+{
+  "scope": "Fixture-only JavaScript guards, not product or OS confinement",
+  "deniedFiles": [
+    {
+      "method": "readFileSync",
+      "path": "d:\\soterai_fixture_outside_never_read.txt",
+      "write": false
+    },
+    {
+      "method": "promise-readFile",
+      "path": "d:\\soterai_fixture_outside_never_read.txt",
+      "write": false
+    }
+  ],
+  "deniedNetwork": [],
+  "deniedLaunches": [],
+  "deniedSignals": [],
+  "deniedAddons": [],
+  "requests": [
+    {
+      "method": "GET",
+      "path": "/guard-public"
+    }
+  ],
+  "embeddedPublicWasmFetches": 1,
+  "exitCode": 0,
+  "time": "2026-10-20T12:38:15.088Z"
+}

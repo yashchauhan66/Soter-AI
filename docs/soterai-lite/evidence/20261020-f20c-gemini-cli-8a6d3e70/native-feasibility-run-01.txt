@@ -1,0 +1,31 @@
+﻿node.exe : node:fs:1364
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (node:fs:1364:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  const result = binding.mkdir(
+                         ^
+
+Error: ENOENT: no such file or directory, mkdir 
+'D:\soterai-lite-tests\f20c-feasibility-39e06d95-da85-4e3d-a80c-6de649732da1'
+    at Object.mkdirSync (node:fs:1364:26)
+    at Object.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261020-f
+20c-gemini-cli-8a6d3e70\native-feasibility-01.cjs:6:73)
+    at Module._compile (node:internal/modules/cjs/loader:1730:14)
+    at Object..js (node:internal/modules/cjs/loader:1895:10)
+    at Module.load (node:internal/modules/cjs/loader:1465:32)
+    at Function._load (node:internal/modules/cjs/loader:1282:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49 {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'mkdir',
+  path: 'D:\\soterai-lite-tests\\f20c-feasibility-39e06d95-da85-4e3d-a80c-6de649732da1'
+}
+
+Node.js v22.16.0

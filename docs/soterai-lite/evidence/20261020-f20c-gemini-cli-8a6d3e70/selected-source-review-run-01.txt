@@ -1,0 +1,3002 @@
+﻿
+gemini-63IMHOLI.js @193263 loadSettings(
+c/commands/mcp/add.ts
+async function addMcpServer(name, commandOrUrl, args, options) {
+  const {
+    scope,
+    transport,
+    env: env2,
+    header,
+    timeout,
+    trust,
+    description,
+    includeTools,
+    excludeTools
+  } = options;
+  const settings = loadSettings(process.cwd());
+  const inHome = settings.workspace.path === settings.user.path;
+  if (scope === "project" && inHome) {
+    debugLogger.error(
+      "Error: Please use --scope user to edit settings in the home directory."
+    );
+    process.exit(1);
+  }
+  const settingsScope = scope === "user" ? "User" /* User */ : "Workspace" /* Workspace */;
+  let newServer = {};
+  const headers = header?.reduce(
+    (acc, curr) => {
+      const [key, ...valueParts] = curr.split(":");
+      const value = valueParts.join(":").trim();
+      if (key.trim() && value) {
+        acc[key.trim()] = value;
+      }
+      return acc;
+    },
+    {}
+  );
+  switch (transport) {
+    case "sse":
+      newServer = {
+        url: commandOrUrl,
+        type: "sse",
+        headers,
+        timeout,
+        trust,
+        description,
+        includeTools,
+        excludeTools
+      };
+      break;
+    case "http":
+      newServer = {
+        url: commandOrUrl,
+        type: "http",
+        headers,
+        timeout,
+        trust,
+        description,
+        includeTools,
+        excludeTools
+      };
+      break;
+    case "stdio":
+    default:
+      newServer = {
+        command: commandOrUrl,
+        args: args?.map(String),
+        env: env2?.reduce(
+          (acc, curr) => {
+            const [key, value] = curr.split("=");
+            if (key && value) {
+              acc[key] = value;
+            }
+            return acc;
+          },
+          {}
+        ),
+        timeout,
+        trust,
+        description,
+        includeTools,
+        excludeTools
+      };
+      break;
+  }
+  const existingSettings = settings.forScope(settingsScope).settings;
+  const mcpServers = existingSettings.m
+
+gemini-63IMHOLI.js @199215 loadSettings(
+    await exitCli();
+  }
+};
+
+// packages/cli/src/commands/mcp/remove.ts
+async function removeMcpServer(name, options) {
+  const { scope } = options;
+  const settingsScope = scope === "user" ? "User" /* User */ : "Workspace" /* Workspace */;
+  const settings = loadSettings();
+  const existingSettings = settings.forScope(settingsScope).settings;
+  const mcpServers = existingSettings.mcpServers || {};
+  if (!mcpServers[name]) {
+    debugLogger.log(`Server "${name}" not found in ${scope} settings.`);
+    return;
+  }
+  delete mcpServers[name];
+  settings.setValue(settingsScope, "mcpServers", mcpServers);
+  debugLogger.log(`Server "${name}" removed from ${scope} settings.`);
+}
+var removeCommand = {
+  command: "remove <name>",
+  describe: "Remove a server",
+  builder: (yargs) => yargs.usage("Usage: gemini mcp remove [options] <name>").positional("name", {
+    describe: "Name of the server",
+    type: "string",
+    demandOption: true
+  }).option("scope", {
+    alias: "s",
+    describe: "Configuration scope (user or project)",
+    type: "string",
+    default: "project",
+    choices: ["user", "project"]
+  }),
+  handler: async (argv) => {
+    await removeMcpServer(argv["name"], {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
+      scope: argv["scope"]
+    });
+    await exitCli();
+  }
+};
+
+// packages/cli/src/commands/mcp/list.ts
+var import_chalk = __toESM(require_source(), 1);
+async function getMcpServersFromConfig(settings) {
+  if (!settings) {
+    settings = loadSettings().merged;
+  }
+  const extensionManager = new ExtensionManager({
+    settings,
+    workspaceDir: process.cwd(),
+    requestConsent: requestConsentNonInteractive,
+    requestSetting: promptForSetting
+  });
+  const extensions = await extensionManager.loadExtensions();
+  const mcpServers = { ...settings.mcpServers };
+  for (const extension of extensions) {
+    Object.entries(extension.mcpServers || {}).forEach(([key, server]) => {
+      if (m
+
+gemini-63IMHOLI.js @200460 loadSettings(
+nsafe-type-assertion
+      scope: argv["scope"]
+    });
+    await exitCli();
+  }
+};
+
+// packages/cli/src/commands/mcp/list.ts
+var import_chalk = __toESM(require_source(), 1);
+async function getMcpServersFromConfig(settings) {
+  if (!settings) {
+    settings = loadSettings().merged;
+  }
+  const extensionManager = new ExtensionManager({
+    settings,
+    workspaceDir: process.cwd(),
+    requestConsent: requestConsentNonInteractive,
+    requestSetting: promptForSetting
+  });
+  const extensions = await extensionManager.loadExtensions();
+  const mcpServers = { ...settings.mcpServers };
+  for (const extension of extensions) {
+    Object.entries(extension.mcpServers || {}).forEach(([key, server]) => {
+      if (mcpServers[key]) {
+        return;
+      }
+      mcpServers[key] = {
+        // eslint-disable-next-line @typescript-eslint/no-misused-spread
+        ...server,
+        extension
+      };
+    });
+  }
+  const adminAllowlist = settings.admin?.mcp?.config;
+  const filteredResult = applyAdminAllowlist(mcpServers, adminAllowlist);
+  return filteredResult;
+}
+var MCP_LIST_DEFAULT_TIMEOUT_MSEC = 5e3;
+async function testMCPConnection(serverName, config, isTrusted, activeSettings) {
+  const isStdio = !!config.command;
+  if (isStdio && !isTrusted) {
+    return MCPServerStatus.DISCONNECTED;
+  }
+  const client = new Client({
+    name: "mcp-test-client",
+    version: "0.0.1"
+  });
+  const mcpContext = {
+    sanitizationConfig: {
+      enableEnvironmentVariableRedaction: true,
+      allowedEnvironmentVariables: [],
+      blockedEnvironmentVariables: activeSettings.advanced.excludedEnvVars
+    },
+    emitMcpDiagnostic: (severity, message, error, serverName2) => {
+      if (severity === "error") {
+        debugLogger.error(
+          import_chalk.default.red(`Error${serverName2 ? ` (${serverName2})` : ""}: ${message}`),
+          error
+        );
+      } else if (severity === "warning") {
+        debugLogger.warn(
+          import_chalk.defaul
+
+gemini-63IMHOLI.js @204028 loadSettings(
+rverStatus.DISABLED;
+  }
+  if (!isTrusted) {
+    return MCPServerStatus.DISABLED;
+  }
+  return testMCPConnection(serverName, server, isTrusted, activeSettings);
+}
+async function listMcpServers(loadedSettingsArg) {
+  const loadedSettings = loadedSettingsArg ?? loadSettings();
+  const activeSettings = loadedSettings.merged;
+  const allSettings = !loadedSettings.isTrusted ? loadedSettings.getMergedSettingsAsIfTrusted() : activeSettings;
+  const { mcpServers, blockedServerNames } = await getMcpServersFromConfig(allSettings);
+  const serverNames = Object.keys(mcpServers);
+  if (blockedServerNames.length > 0) {
+    const message = getAdminBlockedMcpServersMessage(
+      blockedServerNames,
+      void 0
+    );
+    debugLogger.log(import_chalk.default.yellow(message + "\n"));
+  }
+  if (serverNames.length === 0) {
+    if (blockedServerNames.length === 0) {
+      debugLogger.log("No MCP servers configured.");
+    }
+    return;
+  }
+  if (!loadedSettings.isTrusted) {
+    debugLogger.log(
+      import_chalk.default.yellow(
+        "Warning: MCP servers are configured but disabled because this folder is untrusted.\nUser-level servers are also suppressed in untrusted folders to prevent accidental side-effects.\n"
+      )
+    );
+  }
+  const consolidatedExcluded = loadedSettings.getConsolidatedExcludedMcpServers();
+  const consolidatedAllowed = loadedSettings.getConsolidatedAllowedMcpServers();
+  debugLogger.log("Configured MCP servers:\n");
+  for (const serverName of serverNames) {
+    const server = mcpServers[serverName];
+    const status = await getServerStatus(
+      serverName,
+      server,
+      loadedSettings.isTrusted,
+      activeSettings,
+      consolidatedExcluded,
+      consolidatedAllowed
+    );
+    let statusIndicator = "";
+    let statusText = "";
+    switch (status) {
+      case MCPServerStatus.CONNECTED:
+        statusIndicator = import_chalk.default.green("\u2713");
+        statusText = "Connected";
+        break;
+      cas
+
+gemini-63IMHOLI.js @207337 loadSettings(
+le.ts
+var GREEN = "\x1B[32m";
+var YELLOW = "\x1B[33m";
+var RED = "\x1B[31m";
+var RESET = "\x1B[0m";
+async function handleEnable(args) {
+  const manager = McpServerEnablementManager.getInstance();
+  const name = normalizeServerId(args.name);
+  const settings = loadSettings();
+  const servers = await getMcpServersFromConfig();
+  const normalizedServerNames = Object.keys(servers).map(normalizeServerId);
+  if (!normalizedServerNames.includes(name)) {
+    debugLogger.log(
+      `${RED}Error:${RESET} Server '${args.name}' not found. Use 'gemini mcp' to see available servers.`
+    );
+    return;
+  }
+  const result = await canLoadServer(name, {
+    adminMcpEnabled: settings.merged.admin?.mcp?.enabled ?? true,
+    allowedList: settings.merged.mcp?.allowed,
+    excludedList: settings.merged.mcp?.excluded
+  });
+  if (!result.allowed && (result.blockType === "allowlist" || result.blockType === "excludelist")) {
+    debugLogger.log(`${RED}Error:${RESET} ${result.reason}`);
+    return;
+  }
+  if (args.session) {
+    manager.clearSessionDisable(name);
+    debugLogger.log(`${GREEN}\u2713${RESET} Session disable cleared for '${name}'.`);
+  } else {
+    await manager.enable(name);
+    debugLogger.log(`${GREEN}\u2713${RESET} MCP server '${name}' enabled.`);
+  }
+  if (result.blockType === "admin") {
+    debugLogger.log(
+      `${YELLOW}Warning:${RESET} MCP servers are disabled by administrator.`
+    );
+  }
+}
+async function handleDisable(args) {
+  const manager = McpServerEnablementManager.getInstance();
+  const name = normalizeServerId(args.name);
+  const servers = await getMcpServersFromConfig();
+  const normalizedServerNames = Object.keys(servers).map(normalizeServerId);
+  if (!normalizedServerNames.includes(name)) {
+    debugLogger.log(
+      `${RED}Error:${RESET} Server '${args.name}' not found. Use 'gemini mcp' to see available servers.`
+    );
+    return;
+  }
+  if (args.session) {
+    manager.disableForSession(name);
+    debugLogger.log(
+   
+
+gemini-63IMHOLI.js @511501 selectedType
+dbox-exec (${process5.env["SEATBELT_PROFILE"] || "unknown"})`;
+    }
+    const modelVersion = context.agentContext.config.getModel() || "Unknown";
+    const cliVersion = await getVersion();
+    const selectedAuthType = context.settings.merged?.security?.auth?.selectedType ?? "";
+    const gcpProject = process5.env["GOOGLE_CLOUD_PROJECT"] || "";
+    const ideClient = await getIdeClientName(context);
+    const userAccountManager = new UserAccountManager();
+    const cachedAccount = userAccountManager.getCachedGoogleAccount();
+    const userEmail = cachedAccount ?? "Unknown";
+    const tier = context.agentContext.config.getUserTierName() || "Unknown";
+    const info = [
+      `- Version: ${cliVersion}`,
+      `- OS: ${osVersion}`,
+      `- Sandbox: ${sandboxEnv}`,
+      `- Model: ${modelVersion}`,
+      `- Auth Type: ${selectedAuthType}`,
+      `- GCP Project: ${gcpProject}`,
+      `- IDE Client: ${ideClient}`,
+      `- User Email: ${userEmail}`,
+      `- Tier: ${tier}`
+    ].join("\n");
+    return {
+      name: this.name,
+      data: `Gemini CLI Info:
+${info}`
+    };
+  }
+};
+async function getIdeClientName(context) {
+  if (!context.agentContext.config.getIdeMode()) {
+    return "";
+  }
+  const ideClient = await IdeClient.getInstance();
+  return ideClient?.getDetectedIdeDisplayName() ?? "";
+}
+
+// packages/cli/src/acp/commands/help.ts
+var HelpCommand = class {
+  constructor(registry) {
+    this.registry = registry;
+  }
+  name = "help";
+  description = "Show available commands";
+  async execute(_context, _args = []) {
+    const commands = this.registry.getAllCommands().sort((a, b) => a.name.localeCompare(b.name));
+    const lines = [];
+    lines.push("Gemini CLI Help:");
+    lines.push("");
+    lines.push("### Basics");
+    lines.push(
+      "- **Add context**: Use `@` to specify files for context (e.g., `@src/myFile.ts`) to target specific files or folders."
+    );
+    lines.push("");
+    lines.push("### Commands");
+    for (const 
+
+gemini-63IMHOLI.js @522100 selectedType
+houldShowPreviewModels = config.getHasAccessToPreviewModel();
+  const useGemini31 = config.getGemini31LaunchedSync?.() ?? false;
+  const useGemini3_5Flash = config.hasGemini35FlashGAAccess?.() ?? false;
+  const selectedAuthType = settings.merged.security.auth.selectedType;
+  const useCustomToolModel = useGemini31 && selectedAuthType === AuthType.USE_GEMINI;
+  if (config.getExperimentalDynamicModelConfiguration?.() === true && config.getModelConfigService) {
+    const options = config.getModelConfigService().getAvailableModelOptions({
+      useGemini3_1: useGemini31,
+      useGemini3_5Flash,
+      useCustomTools: useCustomToolModel,
+      hasAccessToPreview: shouldShowPreviewModels
+    });
+    return {
+      availableModels: options,
+      currentModelId: preferredModel
+    };
+  }
+  const mainOptions = [
+    {
+      value: GEMINI_MODEL_ALIAS_AUTO,
+      title: getDisplayString(GEMINI_MODEL_ALIAS_AUTO),
+      description: getAutoModelDescription(
+        shouldShowPreviewModels,
+        useGemini31,
+        useGemini3_5Flash
+      )
+    }
+  ];
+  const manualOptions = [
+    {
+      value: DEFAULT_GEMINI_MODEL,
+      title: getDisplayString(DEFAULT_GEMINI_MODEL)
+    },
+    {
+      value: DEFAULT_GEMINI_FLASH_MODEL,
+      title: getDisplayString(DEFAULT_GEMINI_FLASH_MODEL)
+    },
+    {
+      value: DEFAULT_GEMINI_FLASH_LITE_MODEL,
+      title: getDisplayString(DEFAULT_GEMINI_FLASH_LITE_MODEL)
+    }
+  ];
+  if (shouldShowPreviewModels) {
+    const previewProModel = useGemini31 ? PREVIEW_GEMINI_3_1_MODEL : PREVIEW_GEMINI_MODEL;
+    const previewProValue = useCustomToolModel ? PREVIEW_GEMINI_3_1_CUSTOM_TOOLS_MODEL : previewProModel;
+    const previewOptions = [
+      {
+        value: previewProValue,
+        title: getDisplayString(previewProModel)
+      },
+      {
+        value: PREVIEW_GEMINI_FLASH_MODEL,
+        title: getDisplayString(PREVIEW_GEMINI_FLASH_MODEL)
+      }
+    ];
+    if (PREVIEW_GEMINI_FLASH_LITE_MODEL !== "none") {
+ 
+
+gemini-63IMHOLI.js @568001 selectedType
+  const sessionId = randomUUID2();
+    const loadedSettings = loadSettings(cwd);
+    const config = await this.newSessionConfig(
+      sessionId,
+      cwd,
+      mcpServers,
+      loadedSettings
+    );
+    const authType = loadedSettings.merged.security.auth.selectedType || (authDetails.baseUrl || process.env["GOOGLE_GEMINI_BASE_URL"] ? AuthType.GATEWAY : AuthType.USE_GEMINI);
+    let isAuthenticated = false;
+    let authErrorMessage = "";
+    try {
+      await config.refreshAuth(
+        authType,
+        authDetails.apiKey,
+        authDetails.baseUrl,
+        authDetails.customHeaders
+      );
+      isAuthenticated = true;
+      const contentGeneratorConfig = config.getContentGeneratorConfig();
+      if (authType === AuthType.USE_GEMINI && (!contentGeneratorConfig || !contentGeneratorConfig.apiKey)) {
+        isAuthenticated = false;
+        authErrorMessage = "Gemini API key is missing or not configured.";
+      }
+    } catch (e) {
+      isAuthenticated = false;
+      authErrorMessage = getAcpErrorMessage(e);
+      debugLogger.error(
+        `Authentication failed: ${e instanceof Error ? e.stack : e}`
+      );
+    }
+    if (!isAuthenticated) {
+      throw new RequestError(
+        -32e3,
+        authErrorMessage || "Authentication required."
+      );
+    }
+    if (this.clientCapabilities?.fs) {
+      const acpFileSystemService = new AcpFileSystemService(
+        this.connection,
+        sessionId,
+        this.clientCapabilities.fs,
+        config.getFileSystemService(),
+        cwd
+      );
+      config.setFileSystemService(acpFileSystemService);
+    }
+    await config.initialize();
+    startupProfiler.flush(config);
+    startAutoMemoryIfEnabled(config);
+    const geminiClient = config.getGeminiClient();
+    const chat = await geminiClient.startChat();
+    const session = new Session(
+      sessionId,
+      chat,
+      config,
+      this.connection,
+      this.settings
+    );
+    this.sessions.set(sessionId, session);
+  
+
+gemini-63IMHOLI.js @571755 selectedType
+lMode()
+      },
+      models: {
+        availableModels,
+        currentModelId
+      }
+    };
+    return response;
+  }
+  async initializeSessionConfig(sessionId, cwd, mcpServers, authDetails) {
+    const selectedAuthType = this.settings.merged.security.auth.selectedType || (authDetails.baseUrl || process.env["GOOGLE_GEMINI_BASE_URL"] ? AuthType.GATEWAY : void 0);
+    if (!selectedAuthType) {
+      throw RequestError.authRequired();
+    }
+    const config = await this.newSessionConfig(sessionId, cwd, mcpServers);
+    try {
+      await config.refreshAuth(
+        selectedAuthType,
+        authDetails.apiKey,
+        authDetails.baseUrl,
+        authDetails.customHeaders
+      );
+    } catch (e) {
+      debugLogger.error(`Authentication failed: ${e}`);
+      throw RequestError.authRequired();
+    }
+    if (this.clientCapabilities?.fs) {
+      const acpFileSystemService = new AcpFileSystemService(
+        this.connection,
+        sessionId,
+        this.clientCapabilities.fs,
+        config.getFileSystemService(),
+        cwd
+      );
+      config.setFileSystemService(acpFileSystemService);
+    }
+    await config.initialize();
+    startupProfiler.flush(config);
+    startAutoMemoryIfEnabled(config);
+    return config;
+  }
+  async newSessionConfig(sessionId, cwd, mcpServers, loadedSettings) {
+    const currentSettings = loadedSettings || this.settings;
+    const mergedMcpServers = { ...currentSettings.merged.mcpServers };
+    for (const server of mcpServers) {
+      if ("type" in server && (server.type === "sse" || server.type === "http")) {
+        const headers = Object.fromEntries(
+          server.headers.map(({ name, value }) => [name, value])
+        );
+        mergedMcpServers[server.name] = new MCPServerConfig(
+          void 0,
+          // command
+          void 0,
+          // args
+          void 0,
+          // env
+          void 0,
+          // cwd
+          server.type === "sse" ? server.url : void 0,
+          // ur
+
+gemini-63IMHOLI.js @576280 selectedType
+   http: true,
+          sse: true
+        }
+      }
+    };
+  }
+  async authenticate(req) {
+    const { methodId } = req;
+    const method = external_exports.nativeEnum(AuthType).parse(methodId);
+    const selectedAuthType = this.settings.merged.security.auth.selectedType;
+    if (selectedAuthType && selectedAuthType !== method) {
+      await clearCachedCredentialFile();
+    }
+    const meta = hasMeta(req) ? req._meta : void 0;
+    const apiKey = typeof meta?.["api-key"] === "string" ? meta["api-key"] : void 0;
+    try {
+      if (apiKey) {
+        this.apiKey = apiKey;
+      }
+      const gatewaySchema = external_exports.object({
+        baseUrl: external_exports.string().optional(),
+        headers: external_exports.record(external_exports.string()).optional()
+      });
+      let baseUrl;
+      let headers;
+      if (meta?.["gateway"]) {
+        const result = gatewaySchema.safeParse(meta["gateway"]);
+        if (result.success) {
+          baseUrl = result.data.baseUrl;
+          headers = result.data.headers;
+        } else {
+          throw new RequestError(
+            -32602,
+            `Malformed gateway payload: ${result.error.message}`
+          );
+        }
+      }
+      this.baseUrl = baseUrl;
+      this.customHeaders = headers;
+      await this.context.config.refreshAuth(
+        method,
+        apiKey ?? this.apiKey,
+        baseUrl,
+        headers
+      );
+    } catch (e) {
+      throw new RequestError(-32e3, getAcpErrorMessage(e));
+    }
+    this.settings.setValue(
+      "User" /* User */,
+      "security.auth.selectedType",
+      method
+    );
+  }
+  getAuthDetails() {
+    return {
+      apiKey: this.apiKey,
+      baseUrl: this.baseUrl,
+      customHeaders: this.customHeaders
+    };
+  }
+  async newSession(params) {
+    return this.sessionManager.newSession(params, this.getAuthDetails());
+  }
+  async loadSession(params) {
+    return this.sessionManager.loadSession(params, this.getAuthDetails());
+  }
+  async ca
+
+gemini-63IMHOLI.js @305286 excludeTools =
+ommand;
+  const allowedTools = argv.allowedTools || settings.tools?.allowed || [];
+  const isAcpMode = !!argv.acp || !!argv.experimentalAcp;
+  const extraExcludes = [];
+  if (!interactive || isAcpMode) {
+    extraExcludes.push(ASK_USER_TOOL_NAME);
+  }
+  const excludeTools = mergeExcludeTools(settings, extraExcludes);
+  const effectiveSettings = {
+    ...settings,
+    tools: {
+      ...settings.tools,
+      allowed: allowedTools,
+      exclude: excludeTools
+    },
+    mcp: {
+      ...settings.mcp,
+      allowed: argv.allowedMcpServerNames ?? settings.mcp?.allowed
+    },
+    policyPaths: (argv.policy ?? settings.policyPaths)?.map(
+      (p) => resolvePath(p)
+    ),
+    adminPolicyPaths: (argv.adminPolicy ?? settings.adminPolicyPaths)?.map(
+      (p) => resolvePath(p)
+    )
+  };
+  const { workspacePoliciesDir, policyUpdateConfirmationRequest } = await resolveWorkspacePolicyState({
+    cwd,
+    trustedFolder,
+    interactive
+  });
+  const policyEngineConfig = await createPolicyEngineConfig2(
+    effectiveSettings,
+    approvalMode,
+    workspacePoliciesDir,
+    interactive
+  );
+  const defaultModel = GEMINI_MODEL_ALIAS_AUTO;
+  const rawModel = argv.model || process3.env["GEMINI_MODEL"] || settings.model?.name;
+  const specifiedModel = Array.isArray(rawModel) ? String(rawModel.at(-1) ?? "").trim() || "" : rawModel === void 0 ? void 0 : String(rawModel ?? "").trim() || "";
+  const resolvedModel = specifiedModel === GEMINI_MODEL_ALIAS_AUTO ? defaultModel : specifiedModel || defaultModel;
+  const sandboxConfig = await loadSandboxConfig(settings, argv);
+  if (sandboxConfig) {
+    const existingPaths = sandboxConfig.allowedPaths || [];
+    if (settings.tools.sandboxAllowedPaths?.length) {
+      sandboxConfig.allowedPaths = [
+        .../* @__PURE__ */ new Set([...existingPaths, ...settings.tools.sandboxAllowedPaths])
+      ];
+    }
+    if (settings.tools.sandboxNetworkAccess !== void 0) {
+      sandboxConfig.networkAccess = sandboxConfi
+
+gemini-63IMHOLI.js @310252 coreTools:
+IncludeDirectories || false,
+    discoveryMaxDirs: settings.context?.discoveryMaxDirs,
+    memoryBoundaryMarkers: settings.context?.memoryBoundaryMarkers,
+    importFormat: settings.context?.importFormat,
+    debugMode,
+    question,
+    worktreeSettings,
+    coreTools: settings.tools?.core || void 0,
+    experimentalContextManagementConfig: profileSelector,
+    allowedTools: allowedTools.length > 0 ? allowedTools : void 0,
+    policyEngineConfig,
+    policyUpdateConfirmationRequest,
+    excludeTools,
+    toolDiscoveryCommand: settings.tools?.discoveryCommand,
+    toolCallCommand: settings.tools?.callCommand,
+    mcpServerCommand,
+    mcpServers,
+    mcpEnablementCallbacks,
+    mcpEnabled,
+    extensionsEnabled,
+    agents: settings.agents,
+    adminSkillsEnabled,
+    allowedMcpServers: mcpEnabled ? argv.allowedMcpServerNames ?? (loadedSettings ? loadedSettings.getConsolidatedAllowedMcpServers() : settings.mcp?.allowed) : void 0,
+    blockedMcpServers: mcpEnabled ? argv.allowedMcpServerNames ? void 0 : loadedSettings ? loadedSettings.getConsolidatedExcludedMcpServers() : settings.mcp?.excluded : void 0,
+    blockedEnvironmentVariables: settings.security?.environmentVariableRedaction?.blocked,
+    allowedEnvironmentVariables: settings.security?.environmentVariableRedaction?.allowed,
+    enableEnvironmentVariableRedaction: settings.security?.environmentVariableRedaction?.enabled,
+    approvalMode,
+    disableYoloMode: settings.security?.disableYoloMode || settings.admin?.secureModeEnabled,
+    disableAlwaysAllow: settings.security?.disableAlwaysAllow || settings.admin?.secureModeEnabled,
+    showMemoryUsage: settings.ui?.showMemoryUsage || false,
+    accessibility: {
+      ...settings.ui?.accessibility,
+      screenReader
+    },
+    telemetry: telemetrySettings,
+    usageStatisticsEnabled: settings.privacy?.usageStatisticsEnabled,
+    fileFiltering,
+    checkpointing: settings.general?.checkpointing?.enabled,
+    proxy: process3
+
+gemini-63IMHOLI.js @299959 folderTrust
+treeSettings ?? await resolveWorktreeSettings(cwd);
+  if (argv.sandbox) {
+    process3.env["GEMINI_SANDBOX"] = "true";
+  }
+  const includeDirectoryTree = settings.context?.includeDirectoryTree ?? true;
+  const ideMode = settings.ide?.enabled ?? false;
+  const folderTrust = process3.env["GEMINI_CLI_INTEGRATION_TEST"] === "true" || process3.env["VITEST"] === "true" ? false : settings.security?.folderTrust?.enabled ?? false;
+  const trustedFolder = isWorkspaceTrusted(settings, cwd, {
+    prompt: argv.prompt,
+    query: argv.query
+  })?.isTrusted ?? false;
+  if (settings.context?.fileName) {
+    setGeminiMdFilename(settings.context.fileName);
+  } else {
+    resetGeminiMdFilename(DEFAULT_CONTEXT_FILENAME);
+  }
+  const fileService = new FileDiscoveryService(cwd);
+  const fileFiltering = {
+    ...DEFAULT_FILE_FILTERING_OPTIONS,
+    ...settings.context?.fileFiltering
+  };
+  const includeDirectories = (settings.context?.includeDirectories || []).map(resolvePath).concat((argv.includeDirectories || []).map(resolvePath));
+  const ideWorkspacePath = process3.env["GEMINI_CLI_IDE_WORKSPACE_PATH"];
+  if (ideWorkspacePath) {
+    const realCwd = resolveToRealPath(cwd);
+    const ideFolders = ideWorkspacePath.split(path7.delimiter).filter((p) => {
+      const trimmedPath = p.trim();
+      if (!trimmedPath) return false;
+      try {
+        return resolveToRealPath(trimmedPath) !== realCwd;
+      } catch (e) {
+        debugLogger.debug(
+          `[IDE] Skipping inaccessible workspace folder: ${trimmedPath} (${getErrorMessage(e)})`
+        );
+        return false;
+      }
+    });
+    includeDirectories.push(...ideFolders);
+  }
+  let extensionManager;
+  if (!skipExtensions) {
+    extensionManager = new ExtensionManager({
+      settings,
+      requestConsent: requestConsentNonInteractive,
+      requestSetting: promptForSetting,
+      workspaceDir: cwd,
+      enabledExtensionOverrides: argv.extensions,
+      // eslint-disable-next-line @typescript-e
+
+gemini-63IMHOLI.js @300094 folderTrust
+udeDirectoryTree = settings.context?.includeDirectoryTree ?? true;
+  const ideMode = settings.ide?.enabled ?? false;
+  const folderTrust = process3.env["GEMINI_CLI_INTEGRATION_TEST"] === "true" || process3.env["VITEST"] === "true" ? false : settings.security?.folderTrust?.enabled ?? false;
+  const trustedFolder = isWorkspaceTrusted(settings, cwd, {
+    prompt: argv.prompt,
+    query: argv.query
+  })?.isTrusted ?? false;
+  if (settings.context?.fileName) {
+    setGeminiMdFilename(settings.context.fileName);
+  } else {
+    resetGeminiMdFilename(DEFAULT_CONTEXT_FILENAME);
+  }
+  const fileService = new FileDiscoveryService(cwd);
+  const fileFiltering = {
+    ...DEFAULT_FILE_FILTERING_OPTIONS,
+    ...settings.context?.fileFiltering
+  };
+  const includeDirectories = (settings.context?.includeDirectories || []).map(resolvePath).concat((argv.includeDirectories || []).map(resolvePath));
+  const ideWorkspacePath = process3.env["GEMINI_CLI_IDE_WORKSPACE_PATH"];
+  if (ideWorkspacePath) {
+    const realCwd = resolveToRealPath(cwd);
+    const ideFolders = ideWorkspacePath.split(path7.delimiter).filter((p) => {
+      const trimmedPath = p.trim();
+      if (!trimmedPath) return false;
+      try {
+        return resolveToRealPath(trimmedPath) !== realCwd;
+      } catch (e) {
+        debugLogger.debug(
+          `[IDE] Skipping inaccessible workspace folder: ${trimmedPath} (${getErrorMessage(e)})`
+        );
+        return false;
+      }
+    });
+    includeDirectories.push(...ideFolders);
+  }
+  let extensionManager;
+  if (!skipExtensions) {
+    extensionManager = new ExtensionManager({
+      settings,
+      requestConsent: requestConsentNonInteractive,
+      requestSetting: promptForSetting,
+      workspaceDir: cwd,
+      enabledExtensionOverrides: argv.extensions,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
+      eventEmitter: coreEvents,
+      clientVersion: await getVersion()
+    });
+    await extensionManag
+
+gemini-63IMHOLI.js @313645 folderTrust
+ration,
+    noBrowser: !!process3.env["NO_BROWSER"],
+    summarizeToolOutput: settings.model?.summarizeToolOutput,
+    ideMode,
+    disableLoopDetection: settings.model?.disableLoopDetection,
+    compressionThreshold: settings.model?.compressionThreshold,
+    folderTrust,
+    interactive,
+    trustedFolder,
+    useBackgroundColor: settings.ui?.useBackgroundColor,
+    useAlternateBuffer: settings.ui?.useAlternateBuffer,
+    useTerminalBuffer: settings.ui?.terminalBuffer,
+    useRenderProcess: settings.ui?.renderProcess,
+    useRipgrep: settings.tools?.useRipgrep,
+    enableInteractiveShell: settings.tools?.shell?.enableInteractiveShell,
+    shellBackgroundCompletionBehavior: settings.tools?.shell?.backgroundCompletionBehavior,
+    shellToolInactivityTimeout: settings.tools?.shell?.inactivityTimeout,
+    enableShellOutputEfficiency: settings.tools?.shell?.enableShellOutputEfficiency ?? true,
+    // In ACP mode, always skip the next-speaker check. This check triggers
+    // recursive continuation turns inside GeminiClient.processTurn() that
+    // conflict with ACP's explicit turn management via session/prompt,
+    // causing infinite agent_thought_chunk loops.
+    skipNextSpeakerCheck: isAcpMode || settings.model?.skipNextSpeakerCheck,
+    truncateToolOutputThreshold: settings.tools?.truncateToolOutputThreshold,
+    eventEmitter: coreEvents,
+    useWriteTodos: argv.useWriteTodos ?? settings.useWriteTodos,
+    output: {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
+      format: argv.outputFormat ?? settings.output?.format
+    },
+    gemmaModelRouter: settings.experimental?.gemmaModelRouter,
+    adk: settings.experimental?.adk,
+    fakeResponses: argv.fakeResponses,
+    fakeResponsesNonStrict: argv.fakeResponsesNonStrict,
+    recordResponses: argv.recordResponses,
+    retryFetchErrors: settings.general?.retryFetchErrors,
+    billing: settings.billing,
+    vertexAiRouting: settings.billing?.vertexAi
+
+gemini-63IMHOLI.js @380425 folderTrust
+specific directory.";
+      if (path9.dirname(workspaceRealPath) === workspaceRealPath) {
+        return errorMessage;
+      }
+      return null;
+    } catch {
+      return "Could not verify the current directory due to a file system error.";
+    }
+  }
+};
+var folderTrustCheck = {
+  id: "folder-trust",
+  priority: WarningPriority.High,
+  check: async (workspaceRoot, settings) => {
+    if (!isFolderTrustEnabled(settings)) {
+      return null;
+    }
+    const { isTrusted } = isWorkspaceTrusted(settings, workspaceRoot);
+    if (isTrusted === true) {
+      return null;
+    }
+    if (isHeadlessMode()) {
+      throw new FatalUntrustedWorkspaceError(
+        "Gemini CLI is not running in a trusted directory. To proceed, either use `--skip-trust`, set the `GEMINI_CLI_TRUST_WORKSPACE=true` environment variable, or trust this directory in interactive mode. For more details, see https://geminicli.com/docs/cli/trusted-folders/#headless-and-automated-environments"
+      );
+    }
+    return null;
+  }
+};
+var WARNING_CHECKS = [
+  homeDirectoryCheck,
+  rootDirectoryCheck,
+  folderTrustCheck
+];
+async function getUserStartupWarnings(settings, workspaceRoot = process4.cwd(), options) {
+  const results = await Promise.all(
+    WARNING_CHECKS.map(async (check) => {
+      const message = await check.check(workspaceRoot, settings);
+      if (message) {
+        return {
+          id: check.id,
+          message,
+          priority: check.priority
+        };
+      }
+      return null;
+    })
+  );
+  const warnings = results.filter((w) => w !== null);
+  if (settings.ui?.showCompatibilityWarnings !== false) {
+    warnings.push(
+      ...getCompatibilityWarnings({
+        isAlternateBuffer: options?.isAlternateBuffer
+      })
+    );
+  }
+  return warnings;
+}
+
+// packages/cli/src/nonInteractiveCli.ts
+import readline3 from "node:readline";
+
+// packages/cli/src/ui/noninteractive/nonInteractiveUi.ts
+function createNonInteractiveUI() {
+  return {
+    addItem: (it
+
+gemini-63IMHOLI.js @381238 folderTrust
+or trust this directory in interactive mode. For more details, see https://geminicli.com/docs/cli/trusted-folders/#headless-and-automated-environments"
+      );
+    }
+    return null;
+  }
+};
+var WARNING_CHECKS = [
+  homeDirectoryCheck,
+  rootDirectoryCheck,
+  folderTrustCheck
+];
+async function getUserStartupWarnings(settings, workspaceRoot = process4.cwd(), options) {
+  const results = await Promise.all(
+    WARNING_CHECKS.map(async (check) => {
+      const message = await check.check(workspaceRoot, settings);
+      if (message) {
+        return {
+          id: check.id,
+          message,
+          priority: check.priority
+        };
+      }
+      return null;
+    })
+  );
+  const warnings = results.filter((w) => w !== null);
+  if (settings.ui?.showCompatibilityWarnings !== false) {
+    warnings.push(
+      ...getCompatibilityWarnings({
+        isAlternateBuffer: options?.isAlternateBuffer
+      })
+    );
+  }
+  return warnings;
+}
+
+// packages/cli/src/nonInteractiveCli.ts
+import readline3 from "node:readline";
+
+// packages/cli/src/ui/noninteractive/nonInteractiveUi.ts
+function createNonInteractiveUI() {
+  return {
+    addItem: (item, _timestamp) => {
+      if ("text" in item && item.text) {
+        if (item.type === "error") {
+          process.stderr.write(`Error: ${item.text}
+`);
+        } else if (item.type === "warning") {
+          process.stderr.write(`Warning: ${item.text}
+`);
+        } else if (item.type === "info") {
+          process.stdout.write(`${item.text}
+`);
+        }
+      }
+      return 0;
+    },
+    clear: () => {
+    },
+    setDebugMessage: (_message) => {
+    },
+    loadHistory: (_newHistory) => {
+    },
+    pendingItem: null,
+    setPendingItem: (_item) => {
+    },
+    toggleCorgiMode: () => {
+    },
+    toggleDebugProfiler: () => {
+    },
+    toggleVimEnabled: async () => false,
+    reloadCommands: () => {
+    },
+    openAgentConfigDialog: () => {
+    },
+    extensionsUpdateState: /* @__PURE__ */ new Map(
+
+chunk-32XQ54AJ.js @11332562 static getGlobalGeminiDir
+ {
+    this.targetDir = targetDir;
+    this.sessionId = sessionId;
+  }
+  setCustomPlansDir(dir) {
+    this.customPlansDir = dir;
+  }
+  setSessionId(sessionId) {
+    this.sessionId = sessionId;
+  }
+  isInitialized() {
+    return !!this.projectIdentifier;
+  }
+  static getGlobalGeminiDir() {
+    const homeDir = homedir();
+    if (!homeDir) {
+      return path4.join(os3.tmpdir(), GEMINI_DIR);
+    }
+    return path4.join(homeDir, GEMINI_DIR);
+  }
+  static getGlobalAgentsDir() {
+    const homeDir = homedir();
+    if (!homeDir) {
+      return "";
+    }
+    return path4.join(homeDir, AGENTS_DIR_NAME);
+  }
+  static getMcpOAuthTokensPath() {
+    return path4.join(_Storage.getGlobalGeminiDir(), "mcp-oauth-tokens.json");
+  }
+  static getA2AOAuthTokensPath() {
+    return path4.join(_Storage.getGlobalGeminiDir(), "a2a-oauth-tokens.json");
+  }
+  static getGlobalSettingsPath() {
+    return path4.join(_Storage.getGlobalGeminiDir(), "settings.json");
+  }
+  static getInstallationIdPath() {
+    return path4.join(_Storage.getGlobalGeminiDir(), "installation_id");
+  }
+  static getGoogleAccountsPath() {
+    return path4.join(_Storage.getGlobalGeminiDir(), GOOGLE_ACCOUNTS_FILENAME);
+  }
+  static getTrustedFoldersPath() {
+    if (process.env["GEMINI_CLI_TRUSTED_FOLDERS_PATH"]) {
+      return process.env["GEMINI_CLI_TRUSTED_FOLDERS_PATH"];
+    }
+    return path4.join(_Storage.getGlobalGeminiDir(), TRUSTED_FOLDERS_FILENAME2);
+  }
+  static getUserCommandsDir() {
+    return path4.join(_Storage.getGlobalGeminiDir(), "commands");
+  }
+  static getUserSkillsDir() {
+    return path4.join(_Storage.getGlobalGeminiDir(), "skills");
+  }
+  static getUserAgentSkillsDir() {
+    return path4.join(_Storage.getGlobalAgentsDir(), "skills");
+  }
+  static getUserPoliciesDir() {
+    return path4.join(_Storage.getGlobalGeminiDir(), "policies");
+  }
+  static getUserKeybindingsPath() {
+    return path4.join(_Storage.getGlobalGeminiDir(), "keybindings.json");
+  }
+  static getUs
+
+chunk-32XQ54AJ.js @11334612 getSystemConfigDir()
+ic getAcknowledgedAgentsPath() {
+    return path4.join(_Storage.getGlobalGeminiDir(), "acknowledgments", "agents.json");
+  }
+  static getPolicyIntegrityStoragePath() {
+    return path4.join(_Storage.getGlobalGeminiDir(), "policy_integrity.json");
+  }
+  static getSystemConfigDir() {
+    if (os3.platform() === "darwin") {
+      return "/Library/Application Support/GeminiCli";
+    } else if (os3.platform() === "win32") {
+      return "C:\\ProgramData\\gemini-cli";
+    } else {
+      return "/etc/gemini-cli";
+    }
+  }
+  static getSystemSettingsPath() {
+    if (process.env["GEMINI_CLI_SYSTEM_SETTINGS_PATH"]) {
+      return process.env["GEMINI_CLI_SYSTEM_SETTINGS_PATH"];
+    }
+    return path4.join(_Storage.getSystemConfigDir(), "settings.json");
+  }
+  static getSystemPoliciesDir() {
+    return path4.join(_Storage.getSystemConfigDir(), "policies");
+  }
+  static getGlobalTempDir() {
+    return path4.join(_Storage.getGlobalGeminiDir(), TMP_DIR_NAME);
+  }
+  static getGlobalBinDir() {
+    return path4.join(_Storage.getGlobalTempDir(), BIN_DIR_NAME);
+  }
+  getGeminiDir() {
+    return path4.join(this.targetDir, GEMINI_DIR);
+  }
+  /**
+   * Checks if the current workspace storage location is the same as the global/user storage location.
+   * This handles symlinks and platform-specific path normalization.
+   */
+  isWorkspaceHomeDir() {
+    return normalizePath(resolveToRealPath(this.targetDir)) === normalizePath(resolveToRealPath(homedir()));
+  }
+  getAgentsDir() {
+    return path4.join(this.targetDir, AGENTS_DIR_NAME);
+  }
+  getProjectTempDir() {
+    const identifier = this.getProjectIdentifier();
+    const tempDir = _Storage.getGlobalTempDir();
+    return path4.join(tempDir, identifier);
+  }
+  getWorkspacePoliciesDir() {
+    return path4.join(this.getGeminiDir(), "policies");
+  }
+  getWorkspaceAutoSavedPolicyPath() {
+    return path4.join(this.getWorkspacePoliciesDir(), AUTO_SAVED_POLICY_FILENAME);
+  }
+  getAutoSavedPolicyPath() {
+    ret
+
+chunk-32XQ54AJ.js @11335064 getSystemConfigDir()
+\gemini-cli";
+    } else {
+      return "/etc/gemini-cli";
+    }
+  }
+  static getSystemSettingsPath() {
+    if (process.env["GEMINI_CLI_SYSTEM_SETTINGS_PATH"]) {
+      return process.env["GEMINI_CLI_SYSTEM_SETTINGS_PATH"];
+    }
+    return path4.join(_Storage.getSystemConfigDir(), "settings.json");
+  }
+  static getSystemPoliciesDir() {
+    return path4.join(_Storage.getSystemConfigDir(), "policies");
+  }
+  static getGlobalTempDir() {
+    return path4.join(_Storage.getGlobalGeminiDir(), TMP_DIR_NAME);
+  }
+  static getGlobalBinDir() {
+    return path4.join(_Storage.getGlobalTempDir(), BIN_DIR_NAME);
+  }
+  getGeminiDir() {
+    return path4.join(this.targetDir, GEMINI_DIR);
+  }
+  /**
+   * Checks if the current workspace storage location is the same as the global/user storage location.
+   * This handles symlinks and platform-specific path normalization.
+   */
+  isWorkspaceHomeDir() {
+    return normalizePath(resolveToRealPath(this.targetDir)) === normalizePath(resolveToRealPath(homedir()));
+  }
+  getAgentsDir() {
+    return path4.join(this.targetDir, AGENTS_DIR_NAME);
+  }
+  getProjectTempDir() {
+    const identifier = this.getProjectIdentifier();
+    const tempDir = _Storage.getGlobalTempDir();
+    return path4.join(tempDir, identifier);
+  }
+  getWorkspacePoliciesDir() {
+    return path4.join(this.getGeminiDir(), "policies");
+  }
+  getWorkspaceAutoSavedPolicyPath() {
+    return path4.join(this.getWorkspacePoliciesDir(), AUTO_SAVED_POLICY_FILENAME);
+  }
+  getAutoSavedPolicyPath() {
+    return path4.join(_Storage.getUserPoliciesDir(), AUTO_SAVED_POLICY_FILENAME);
+  }
+  ensureProjectTempDirExists() {
+    fs6.mkdirSync(this.getProjectTempDir(), { recursive: true });
+  }
+  static getOAuthCredsPath() {
+    return path4.join(_Storage.getGlobalGeminiDir(), OAUTH_FILE);
+  }
+  getProjectRoot() {
+    return this.targetDir;
+  }
+  getFilePathHash(filePath) {
+    return crypto3.createHash("sha256").update(filePath).digest("hex");
+  }
+  getProjec
+
+chunk-32XQ54AJ.js @11335173 getSystemConfigDir()
+f (process.env["GEMINI_CLI_SYSTEM_SETTINGS_PATH"]) {
+      return process.env["GEMINI_CLI_SYSTEM_SETTINGS_PATH"];
+    }
+    return path4.join(_Storage.getSystemConfigDir(), "settings.json");
+  }
+  static getSystemPoliciesDir() {
+    return path4.join(_Storage.getSystemConfigDir(), "policies");
+  }
+  static getGlobalTempDir() {
+    return path4.join(_Storage.getGlobalGeminiDir(), TMP_DIR_NAME);
+  }
+  static getGlobalBinDir() {
+    return path4.join(_Storage.getGlobalTempDir(), BIN_DIR_NAME);
+  }
+  getGeminiDir() {
+    return path4.join(this.targetDir, GEMINI_DIR);
+  }
+  /**
+   * Checks if the current workspace storage location is the same as the global/user storage location.
+   * This handles symlinks and platform-specific path normalization.
+   */
+  isWorkspaceHomeDir() {
+    return normalizePath(resolveToRealPath(this.targetDir)) === normalizePath(resolveToRealPath(homedir()));
+  }
+  getAgentsDir() {
+    return path4.join(this.targetDir, AGENTS_DIR_NAME);
+  }
+  getProjectTempDir() {
+    const identifier = this.getProjectIdentifier();
+    const tempDir = _Storage.getGlobalTempDir();
+    return path4.join(tempDir, identifier);
+  }
+  getWorkspacePoliciesDir() {
+    return path4.join(this.getGeminiDir(), "policies");
+  }
+  getWorkspaceAutoSavedPolicyPath() {
+    return path4.join(this.getWorkspacePoliciesDir(), AUTO_SAVED_POLICY_FILENAME);
+  }
+  getAutoSavedPolicyPath() {
+    return path4.join(_Storage.getUserPoliciesDir(), AUTO_SAVED_POLICY_FILENAME);
+  }
+  ensureProjectTempDirExists() {
+    fs6.mkdirSync(this.getProjectTempDir(), { recursive: true });
+  }
+  static getOAuthCredsPath() {
+    return path4.join(_Storage.getGlobalGeminiDir(), OAUTH_FILE);
+  }
+  getProjectRoot() {
+    return this.targetDir;
+  }
+  getFilePathHash(filePath) {
+    return crypto3.createHash("sha256").update(filePath).digest("hex");
+  }
+  getProjectIdentifier() {
+    if (!this.projectIdentifier) {
+      throw new Error("Storage must be initialized before 
+
+chunk-32XQ54AJ.js @12156470 getCoreTools()
+__ */ new Date()).toISOString();
+    this.model = config2.getModel();
+    this.embedding_model = config2.getEmbeddingModel();
+    this.sandbox_enabled = typeof config2.getSandbox() === "string" || !!config2.getSandbox();
+    this.core_tools_enabled = (config2.getCoreTools() ?? []).join(",");
+    this.approval_mode = config2.getApprovalMode();
+    this.api_key_enabled = useGemini || useVertex;
+    this.vertex_ai_enabled = useVertex;
+    this.debug_enabled = config2.getDebugMode();
+    this.mcp_servers = mcpServers ? Object.keys(mcpServers).join(",") : "";
+    this.telemetry_enabled = config2.getTelemetryEnabled();
+    this.telemetry_log_user_prompts_enabled = config2.getTelemetryLogPromptsEnabled();
+    this.file_filtering_respect_git_ignore = config2.getFileFilteringRespectGitIgnore();
+    this.mcp_servers_count = mcpServers ? Object.keys(mcpServers).length : 0;
+    this.output_format = config2.getOutputFormat();
+    const extensions = config2.getExtensions();
+    this.extensions_count = extensions.length;
+    this.extensions = extensions.map((e2) => e2.name).join(",");
+    this.extension_ids = extensions.map((e2) => e2.id).join(",");
+    this.auth_type = generatorConfig?.authType;
+    this.worktree_active = !!config2.getWorktreeSettings();
+    if (toolRegistry) {
+      const mcpTools = toolRegistry.getAllTools().filter((tool) => tool instanceof DiscoveredMCPTool);
+      this.mcp_tools_count = mcpTools.length;
+      this.mcp_tools = mcpTools.map((tool) => tool.name).join(",");
+    }
+  }
+  toOpenTelemetryAttributes(config2) {
+    return {
+      ...getCommonAttributes(config2),
+      "event.name": EVENT_CLI_CONFIG,
+      "event.timestamp": this["event.timestamp"],
+      model: this.model,
+      embedding_model: this.embedding_model,
+      sandbox_enabled: this.sandbox_enabled,
+      core_tools_enabled: this.core_tools_enabled,
+      approval_mode: this.approval_mode,
+      api_key_enabled: this.api_key_enabled,
+      vertex_ai_e
+
+chunk-32XQ54AJ.js @15893676 getCoreTools()
+d === modelId);
+    if (!bucket)
+      return void 0;
+    return {
+      remainingAmount: bucket.remainingAmount ? parseInt(bucket.remainingAmount, 10) : void 0,
+      remainingFraction: bucket.remainingFraction,
+      resetTime: bucket.resetTime
+    };
+  }
+  getCoreTools() {
+    return this.coreTools;
+  }
+  getMainAgentTools() {
+    return this.mainAgentTools;
+  }
+  getAllowedTools() {
+    return this.allowedTools;
+  }
+  /**
+   * All the excluded tools from static configuration, loaded extensions, or
+   * other sources (like the Policy Engine).
+   *
+   * May change over time.
+   */
+  getExcludeTools(toolMetadata, allToolNames) {
+    const excludeToolsSet = /* @__PURE__ */ new Set([...this.excludeTools ?? []]);
+    for (const extension of this.getExtensionLoader().getExtensions()) {
+      if (!extension.isActive) {
+        continue;
+      }
+      for (const tool of extension.excludeTools || []) {
+        excludeToolsSet.add(tool);
+      }
+    }
+    const policyExclusions = this.policyEngine.getExcludedTools(toolMetadata, allToolNames);
+    for (const tool of policyExclusions) {
+      excludeToolsSet.add(tool);
+    }
+    return excludeToolsSet;
+  }
+  getToolDiscoveryCommand() {
+    return this.toolDiscoveryCommand;
+  }
+  getToolCallCommand() {
+    return this.toolCallCommand;
+  }
+  getMcpServerCommand() {
+    return this.mcpServerCommand;
+  }
+  /**
+   * The user configured MCP servers (via gemini settings files).
+   *
+   * Does NOT include mcp servers configured by extensions.
+   */
+  getMcpServers() {
+    return this.mcpServers;
+  }
+  getMcpEnabled() {
+    return this.mcpEnabled;
+  }
+  getMcpEnablementCallbacks() {
+    return this.mcpEnablementCallbacks;
+  }
+  getExtensionsEnabled() {
+    return this.extensionsEnabled;
+  }
+  getExtensionRegistryURI() {
+    return this.extensionRegistryURI;
+  }
+  getMcpClientManager() {
+    return this.mcpClientManager;
+  }
+  getA2AClientManager() {
+    return this.a2aClientManager;
+  }
+  setUs
+
+chunk-32XQ54AJ.js @15930279 getCoreTools()
+y(
+      this,
+      this.messageBus,
+      /* isMainRegistry= */
+      true
+    );
+    const maybeRegister = (toolClass, registerFn) => {
+      const className = toolClass.name;
+      const toolName = toolClass.Name || className;
+      const coreTools = this.getCoreTools();
+      const normalizedClassName = className.replace(/^_+/, "");
+      let isEnabled2 = true;
+      if (coreTools) {
+        isEnabled2 = coreTools.some((tool) => tool === toolName || tool === normalizedClassName || tool.startsWith(`${toolName}(`) || tool.startsWith(`${normalizedClassName}(`));
+      }
+      if (isEnabled2) {
+        registerFn();
+      }
+    };
+    maybeRegister(UpdateTopicTool, () => registry2.registerTool(new UpdateTopicTool(this, this.messageBus)));
+    maybeRegister(LSTool, () => registry2.registerTool(new LSTool(this, this.messageBus)));
+    maybeRegister(ReadFileTool, () => registry2.registerTool(new ReadFileTool(this, this.messageBus)));
+    if (this.getUseRipgrep()) {
+      let useRipgrep = false;
+      let errorString = void 0;
+      try {
+        useRipgrep = await this.canUseRipgrep();
+      } catch (error40) {
+        errorString = String(error40);
+      }
+      if (useRipgrep) {
+        maybeRegister(RipGrepTool, () => registry2.registerTool(new RipGrepTool(this, this.messageBus)));
+      } else {
+        debugLogger.warn(`Ripgrep is not available. Falling back to GrepTool.`);
+        logRipgrepFallback(this, new RipgrepFallbackEvent(errorString));
+        maybeRegister(GrepTool, () => registry2.registerTool(new GrepTool(this, this.messageBus)));
+      }
+    } else {
+      maybeRegister(GrepTool, () => registry2.registerTool(new GrepTool(this, this.messageBus)));
+    }
+    maybeRegister(GlobTool, () => registry2.registerTool(new GlobTool(this, this.messageBus)));
+    maybeRegister(ActivateSkillTool, () => registry2.registerTool(new ActivateSkillTool(this, this.messageBus)));
+    maybeRegister(EditTool, () => registry2.register
+
+chunk-32XQ54AJ.js @15930256 const coreTools
+stry2 = new ToolRegistry(
+      this,
+      this.messageBus,
+      /* isMainRegistry= */
+      true
+    );
+    const maybeRegister = (toolClass, registerFn) => {
+      const className = toolClass.name;
+      const toolName = toolClass.Name || className;
+      const coreTools = this.getCoreTools();
+      const normalizedClassName = className.replace(/^_+/, "");
+      let isEnabled2 = true;
+      if (coreTools) {
+        isEnabled2 = coreTools.some((tool) => tool === toolName || tool === normalizedClassName || tool.startsWith(`${toolName}(`) || tool.startsWith(`${normalizedClassName}(`));
+      }
+      if (isEnabled2) {
+        registerFn();
+      }
+    };
+    maybeRegister(UpdateTopicTool, () => registry2.registerTool(new UpdateTopicTool(this, this.messageBus)));
+    maybeRegister(LSTool, () => registry2.registerTool(new LSTool(this, this.messageBus)));
+    maybeRegister(ReadFileTool, () => registry2.registerTool(new ReadFileTool(this, this.messageBus)));
+    if (this.getUseRipgrep()) {
+      let useRipgrep = false;
+      let errorString = void 0;
+      try {
+        useRipgrep = await this.canUseRipgrep();
+      } catch (error40) {
+        errorString = String(error40);
+      }
+      if (useRipgrep) {
+        maybeRegister(RipGrepTool, () => registry2.registerTool(new RipGrepTool(this, this.messageBus)));
+      } else {
+        debugLogger.warn(`Ripgrep is not available. Falling back to GrepTool.`);
+        logRipgrepFallback(this, new RipgrepFallbackEvent(errorString));
+        maybeRegister(GrepTool, () => registry2.registerTool(new GrepTool(this, this.messageBus)));
+      }
+    } else {
+      maybeRegister(GrepTool, () => registry2.registerTool(new GrepTool(this, this.messageBus)));
+    }
+    maybeRegister(GlobTool, () => registry2.registerTool(new GlobTool(this, this.messageBus)));
+    maybeRegister(ActivateSkillTool, () => registry2.registerTool(new ActivateSkillTool(this, this.messageBus)));
+    maybeRegister(EditTool, (
+
+chunk-32XQ54AJ.js @15856951 this.coreTools
+ce(this._sandboxManager, params.targetDir);
+    } else {
+      this.fileSystemService = new StandardFileSystemService();
+    }
+    this.debugMode = params.debugMode;
+    this.question = params.question;
+    this.worktreeSettings = params.worktreeSettings;
+    this.coreTools = params.coreTools;
+    this.mainAgentTools = params.mainAgentTools;
+    this.allowedTools = params.allowedTools;
+    this.excludeTools = params.excludeTools;
+    this.toolDiscoveryCommand = params.toolDiscoveryCommand;
+    this.toolCallCommand = params.toolCallCommand;
+    this.mcpServerCommand = params.mcpServerCommand;
+    this.mcpServers = params.mcpServers;
+    this.mcpEnablementCallbacks = params.mcpEnablementCallbacks;
+    this.mcpEnabled = params.mcpEnabled ?? true;
+    this.extensionsEnabled = params.extensionsEnabled ?? true;
+    this.allowedMcpServers = params.allowedMcpServers ?? [];
+    this.blockedMcpServers = params.blockedMcpServers ?? [];
+    this.allowedEnvironmentVariables = params.allowedEnvironmentVariables ?? [];
+    this.blockedEnvironmentVariables = params.blockedEnvironmentVariables ?? [];
+    this.enableEnvironmentVariableRedaction = params.enableEnvironmentVariableRedaction ?? false;
+    this.userMemory = params.userMemory ?? "";
+    this.geminiMdFileCount = params.geminiMdFileCount ?? 0;
+    this.geminiMdFilePaths = params.geminiMdFilePaths ?? [];
+    this.showMemoryUsage = params.showMemoryUsage ?? false;
+    this.logRagSnippets = params.logRagSnippets ?? false;
+    this.accessibility = params.accessibility ?? {};
+    this.telemetrySettings = {
+      enabled: params.telemetry?.enabled ?? false,
+      traces: params.telemetry?.traces ?? false,
+      target: params.telemetry?.target ?? DEFAULT_TELEMETRY_TARGET,
+      otlpEndpoint: params.telemetry?.otlpEndpoint ?? DEFAULT_OTLP_ENDPOINT,
+      otlpProtocol: params.telemetry?.otlpProtocol,
+      logPrompts: params.telemetry?.logPrompts ?? true,
+      outfile: params.telemetry?.outfi
+
+chunk-32XQ54AJ.js @15893704 this.coreTools
+ket)
+      return void 0;
+    return {
+      remainingAmount: bucket.remainingAmount ? parseInt(bucket.remainingAmount, 10) : void 0,
+      remainingFraction: bucket.remainingFraction,
+      resetTime: bucket.resetTime
+    };
+  }
+  getCoreTools() {
+    return this.coreTools;
+  }
+  getMainAgentTools() {
+    return this.mainAgentTools;
+  }
+  getAllowedTools() {
+    return this.allowedTools;
+  }
+  /**
+   * All the excluded tools from static configuration, loaded extensions, or
+   * other sources (like the Policy Engine).
+   *
+   * May change over time.
+   */
+  getExcludeTools(toolMetadata, allToolNames) {
+    const excludeToolsSet = /* @__PURE__ */ new Set([...this.excludeTools ?? []]);
+    for (const extension of this.getExtensionLoader().getExtensions()) {
+      if (!extension.isActive) {
+        continue;
+      }
+      for (const tool of extension.excludeTools || []) {
+        excludeToolsSet.add(tool);
+      }
+    }
+    const policyExclusions = this.policyEngine.getExcludedTools(toolMetadata, allToolNames);
+    for (const tool of policyExclusions) {
+      excludeToolsSet.add(tool);
+    }
+    return excludeToolsSet;
+  }
+  getToolDiscoveryCommand() {
+    return this.toolDiscoveryCommand;
+  }
+  getToolCallCommand() {
+    return this.toolCallCommand;
+  }
+  getMcpServerCommand() {
+    return this.mcpServerCommand;
+  }
+  /**
+   * The user configured MCP servers (via gemini settings files).
+   *
+   * Does NOT include mcp servers configured by extensions.
+   */
+  getMcpServers() {
+    return this.mcpServers;
+  }
+  getMcpEnabled() {
+    return this.mcpEnabled;
+  }
+  getMcpEnablementCallbacks() {
+    return this.mcpEnablementCallbacks;
+  }
+  getExtensionsEnabled() {
+    return this.extensionsEnabled;
+  }
+  getExtensionRegistryURI() {
+    return this.extensionRegistryURI;
+  }
+  getMcpClientManager() {
+    return this.mcpClientManager;
+  }
+  getA2AClientManager() {
+    return this.a2aClientManager;
+  }
+  setUserInteractedWithMcp() {
+    
+
+chunk-32XQ54AJ.js @12028105 GEMINI_API_KEY
+lean(getEnv(env2));
+}
+function stringToBoolean(str2) {
+  if (str2 === void 0) {
+    return false;
+  }
+  return str2.toLowerCase() === "true";
+}
+function getApiKeyFromEnv() {
+  const envGoogleApiKey = getEnv("GOOGLE_API_KEY");
+  const envGeminiApiKey = getEnv("GEMINI_API_KEY");
+  if (envGoogleApiKey && envGeminiApiKey) {
+    console.warn("Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.");
+  }
+  return envGoogleApiKey || envGeminiApiKey || void 0;
+}
+
+// packages/core/dist/src/core/contentGenerator.js
+init_http_proxy_agent();
+init_https_proxy_agent();
+import * as os25 from "node:os";
+
+// packages/core/dist/src/code_assist/oauth2.js
+var import_google_auth_library3 = __toESM(require_src10(), 1);
+import * as http from "node:http";
+import url from "node:url";
+import crypto6 from "node:crypto";
+import * as net from "node:net";
+import { EventEmitter as EventEmitter2 } from "node:events";
+
+// node_modules/open/index.js
+import process6 from "node:process";
+import { Buffer as Buffer2 } from "node:buffer";
+import path19 from "node:path";
+import { fileURLToPath as fileURLToPath4 } from "node:url";
+import util3 from "node:util";
+import childProcess from "node:child_process";
+import fs21, { constants as fsConstants } from "node:fs/promises";
+
+// node_modules/is-wsl/index.js
+import process2 from "node:process";
+import os12 from "node:os";
+import fs20 from "node:fs";
+
+// node_modules/is-inside-container/index.js
+import fs19 from "node:fs";
+
+// node_modules/is-docker/index.js
+import fs18 from "node:fs";
+var isDockerCached;
+function hasDockerEnv() {
+  try {
+    fs18.statSync("/.dockerenv");
+    return true;
+  } catch {
+    return false;
+  }
+}
+function hasDockerCGroup() {
+  try {
+    return fs18.readFileSync("/proc/self/cgroup", "utf8").includes("docker");
+  } catch {
+    return false;
+  }
+}
+function isDocker() {
+  if (isDockerCached === void 0) {
+    isDockerCached = hasDockerEnv() || hasDockerCGroup();
+  }
+  return isDocker
+
+chunk-32XQ54AJ.js @12028209 GEMINI_API_KEY
+return str2.toLowerCase() === "true";
+}
+function getApiKeyFromEnv() {
+  const envGoogleApiKey = getEnv("GOOGLE_API_KEY");
+  const envGeminiApiKey = getEnv("GEMINI_API_KEY");
+  if (envGoogleApiKey && envGeminiApiKey) {
+    console.warn("Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.");
+  }
+  return envGoogleApiKey || envGeminiApiKey || void 0;
+}
+
+// packages/core/dist/src/core/contentGenerator.js
+init_http_proxy_agent();
+init_https_proxy_agent();
+import * as os25 from "node:os";
+
+// packages/core/dist/src/code_assist/oauth2.js
+var import_google_auth_library3 = __toESM(require_src10(), 1);
+import * as http from "node:http";
+import url from "node:url";
+import crypto6 from "node:crypto";
+import * as net from "node:net";
+import { EventEmitter as EventEmitter2 } from "node:events";
+
+// node_modules/open/index.js
+import process6 from "node:process";
+import { Buffer as Buffer2 } from "node:buffer";
+import path19 from "node:path";
+import { fileURLToPath as fileURLToPath4 } from "node:url";
+import util3 from "node:util";
+import childProcess from "node:child_process";
+import fs21, { constants as fsConstants } from "node:fs/promises";
+
+// node_modules/is-wsl/index.js
+import process2 from "node:process";
+import os12 from "node:os";
+import fs20 from "node:fs";
+
+// node_modules/is-inside-container/index.js
+import fs19 from "node:fs";
+
+// node_modules/is-docker/index.js
+import fs18 from "node:fs";
+var isDockerCached;
+function hasDockerEnv() {
+  try {
+    fs18.statSync("/.dockerenv");
+    return true;
+  } catch {
+    return false;
+  }
+}
+function hasDockerCGroup() {
+  try {
+    return fs18.readFileSync("/proc/self/cgroup", "utf8").includes("docker");
+  } catch {
+    return false;
+  }
+}
+function isDocker() {
+  if (isDockerCached === void 0) {
+    isDockerCached = hasDockerEnv() || hasDockerCGroup();
+  }
+  return isDockerCached;
+}
+
+// node_modules/is-inside-container/index.js
+var cachedResult;
+var hasContainerEnv = () => {
+
+
+chunk-32XQ54AJ.js @12246419 GEMINI_API_KEY
+isBrowserLaunchSuppressed()) {
+    if (!config2.isInteractive()) {
+      throw new FatalAuthenticationError("Manual authorization is required but the current session is non-interactive. Please run the Gemini CLI in an interactive terminal to log in, provide a GEMINI_API_KEY, or ensure Application Default Credentials are configured.");
+    }
+    let success2 = false;
+    const maxRetries = 2;
+    enterAlternateScreen();
+    writeToStdout("\x1B[2J\x1B[H");
+    disableMouseEvents();
+    disableKittyKeyboardProtocol();
+    enableLineWrapping();
+    try {
+      for (let i3 = 0; !success2 && i3 < maxRetries; i3++) {
+        success2 = await authWithUserCode(client);
+        if (!success2) {
+          writeToStderr("\nFailed to authenticate with user code." + (i3 === maxRetries - 1 ? "" : " Retrying...\n"));
+        }
+      }
+    } finally {
+      exitAlternateScreen();
+      coreEvents.emit(CoreEvent.ExternalEditorClosed);
+    }
+    if (!success2) {
+      writeToStderr("Failed to authenticate with user code.\n");
+      throw new FatalAuthenticationError("Failed to authenticate with user code.");
+    }
+    try {
+      await fetchAndCacheUserInfo(client);
+    } catch (error40) {
+      debugLogger.warn("Failed to retrieve Google Account ID during authentication:", getErrorMessage(error40));
+    }
+    await triggerPostAuthCallbacks(client.credentials);
+  } else {
+    if (!config2.getAcpMode()) {
+      const userConsent = await getConsentForOauth("");
+      if (!userConsent) {
+        throw new FatalCancellationError("Authentication cancelled by user.");
+      }
+    }
+    const webLogin = await authWithWeb(client);
+    coreEvents.emit(CoreEvent.UserFeedback, {
+      severity: "info",
+      message: `
+
+Attempting to open authentication page in your browser.
+Otherwise navigate to:
+
+${webLogin.authUrl}
+
+
+`
+    });
+    try {
+      const childProcess2 = await open_default(webLogin.authUrl);
+      childProcess2.on("error", (error40) => {
+     
+
+chunk-32XQ54AJ.js @13437850 GEMINI_API_KEY
+ === "true") {
+    return AuthType2.LOGIN_WITH_GOOGLE;
+  }
+  if (process.env["GOOGLE_GENAI_USE_VERTEXAI"] === "true") {
+    return AuthType2.USE_VERTEX_AI;
+  }
+  if (process.env["GOOGLE_GEMINI_BASE_URL"]) {
+    return AuthType2.GATEWAY;
+  }
+  if (process.env["GEMINI_API_KEY"]) {
+    return AuthType2.USE_GEMINI;
+  }
+  if (process.env["CLOUD_SHELL"] === "true" || process.env["GEMINI_CLI_USE_COMPUTE_ADC"] === "true") {
+    return AuthType2.COMPUTE_ADC;
+  }
+  return void 0;
+}
+var VERTEX_AI_REQUEST_TYPE_HEADER = "X-Vertex-AI-LLM-Request-Type";
+var VERTEX_AI_SHARED_REQUEST_TYPE_HEADER = "X-Vertex-AI-LLM-Shared-Request-Type";
+var VERTEX_AI_US_REP_ENDPOINT = "https://aiplatform.us.rep.googleapis.com";
+var VERTEX_AI_EU_REP_ENDPOINT = "https://aiplatform.eu.rep.googleapis.com";
+function validateBaseUrl(baseUrl) {
+  try {
+    new URL(baseUrl);
+  } catch {
+    throw new Error(`Invalid custom base URL: ${baseUrl}`);
+  }
+}
+async function createContentGeneratorConfig(config2, authType, apiKey, baseUrl, customHeaders, vertexAiRouting) {
+  const contentGeneratorConfig = {
+    authType,
+    proxy: config2?.getProxy(),
+    baseUrl,
+    customHeaders,
+    vertexAiRouting
+  };
+  const getEnv3 = (key) => {
+    if (config2?.env && config2.env[key] !== void 0) {
+      return config2.env[key];
+    }
+    return process.env[key];
+  };
+  if (authType === AuthType2.LOGIN_WITH_GOOGLE || authType === AuthType2.COMPUTE_ADC) {
+    return contentGeneratorConfig;
+  }
+  const geminiApiKey = apiKey || getEnv3("GEMINI_API_KEY") || await loadApiKey() || void 0;
+  const googleApiKey = getEnv3("GOOGLE_API_KEY") || void 0;
+  const googleCloudProject = getEnv3("GOOGLE_CLOUD_PROJECT") || getEnv3("GOOGLE_CLOUD_PROJECT_ID") || void 0;
+  const googleCloudLocation = getEnv3("GOOGLE_CLOUD_LOCATION") || void 0;
+  if (authType === AuthType2.USE_GEMINI && geminiApiKey) {
+    contentGeneratorConfig.apiKey = geminiApiKey;
+    contentGeneratorConfig.vertexai = false;
+    return co
+
+chunk-32XQ54AJ.js @13439089 GEMINI_API_KEY
+[key] !== void 0) {
+      return config2.env[key];
+    }
+    return process.env[key];
+  };
+  if (authType === AuthType2.LOGIN_WITH_GOOGLE || authType === AuthType2.COMPUTE_ADC) {
+    return contentGeneratorConfig;
+  }
+  const geminiApiKey = apiKey || getEnv3("GEMINI_API_KEY") || await loadApiKey() || void 0;
+  const googleApiKey = getEnv3("GOOGLE_API_KEY") || void 0;
+  const googleCloudProject = getEnv3("GOOGLE_CLOUD_PROJECT") || getEnv3("GOOGLE_CLOUD_PROJECT_ID") || void 0;
+  const googleCloudLocation = getEnv3("GOOGLE_CLOUD_LOCATION") || void 0;
+  if (authType === AuthType2.USE_GEMINI && geminiApiKey) {
+    contentGeneratorConfig.apiKey = geminiApiKey;
+    contentGeneratorConfig.vertexai = false;
+    return contentGeneratorConfig;
+  }
+  if (authType === AuthType2.USE_VERTEX_AI && (googleApiKey || googleCloudProject && googleCloudLocation)) {
+    contentGeneratorConfig.apiKey = googleApiKey;
+    contentGeneratorConfig.vertexai = true;
+    return contentGeneratorConfig;
+  }
+  if (authType === AuthType2.GATEWAY) {
+    contentGeneratorConfig.apiKey = apiKey || getEnv3("GEMINI_API_KEY") || "";
+    contentGeneratorConfig.vertexai = false;
+    return contentGeneratorConfig;
+  }
+  return contentGeneratorConfig;
+}
+async function createContentGenerator(config2, gcConfig, sessionId) {
+  const generator = await (async () => {
+    if (gcConfig.fakeResponsesNonStrict) {
+      const fakeGenerator = await FakeContentGenerator.fromFile(gcConfig.fakeResponsesNonStrict, { nonStrict: true });
+      return new LoggingContentGenerator(fakeGenerator, gcConfig);
+    }
+    if (gcConfig.fakeResponses) {
+      const fakeGenerator = await FakeContentGenerator.fromFile(gcConfig.fakeResponses);
+      return new LoggingContentGenerator(fakeGenerator, gcConfig);
+    }
+    const version4 = await getVersion();
+    const model = resolveModel(gcConfig.getModel(), config2.authType === AuthType2.USE_GEMINI || config2.authType === AuthType2.USE_VERTEX_AI || (awai
+
+chunk-32XQ54AJ.js @12134561 USE_GEMINI
+nse.model": event.model
+  };
+}
+function getGenAiProvider(authType) {
+  switch (authType) {
+    case AuthType2.USE_VERTEX_AI:
+    case AuthType2.COMPUTE_ADC:
+    case AuthType2.LOGIN_WITH_GOOGLE:
+      return GenAiProviderName.GCP_VERTEX_AI;
+    case AuthType2.USE_GEMINI:
+    default:
+      return GenAiProviderName.GCP_GEN_AI;
+  }
+}
+function getGenAiOperationName() {
+  return GenAiOperationName.GENERATE_CONTENT;
+}
+function initializePerformanceMonitoring(config2) {
+  const meter = getMeter();
+  if (!meter)
+    return;
+  isPerformanceMonitoringEnabled = config2.getTelemetryEnabled();
+  if (!isPerformanceMonitoringEnabled)
+    return;
+  Object.entries(PERFORMANCE_COUNTER_DEFINITIONS).forEach(([name3, { description, valueType, assign }]) => {
+    assign(meter.createCounter(name3, { description, valueType }));
+  });
+  Object.entries(PERFORMANCE_HISTOGRAM_DEFINITIONS).forEach(([name3, { description, unit, valueType, assign }]) => {
+    assign(meter.createHistogram(name3, { description, unit, valueType }));
+  });
+}
+function recordStartupPerformance(config2, durationMs, attributes) {
+  if (!startupTimeHistogram || !isPerformanceMonitoringEnabled)
+    return;
+  const metricAttributes = {
+    ...baseMetricDefinition.getCommonAttributes(config2),
+    phase: attributes.phase,
+    ...attributes.details
+  };
+  startupTimeHistogram.record(durationMs, metricAttributes);
+}
+function recordMemoryUsage(config2, bytes, attributes) {
+  if (!memoryUsageGauge || !isPerformanceMonitoringEnabled)
+    return;
+  const metricAttributes = {
+    ...baseMetricDefinition.getCommonAttributes(config2),
+    ...attributes
+  };
+  memoryUsageGauge.record(bytes, metricAttributes);
+}
+function recordCpuUsage(config2, percentage, attributes) {
+  if (!cpuUsageGauge || !isPerformanceMonitoringEnabled)
+    return;
+  const metricAttributes = {
+    ...baseMetricDefinition.getCommonAttributes(config2),
+    ...attributes
+  };
+  cpuUsageGauge.record(percentage, metricAttribute
+
+chunk-32XQ54AJ.js @12156040 USE_GEMINI
+const mcpServers = config2.getMcpClientManager()?.getMcpServers() ?? config2.getMcpServers();
+    let useGemini = false;
+    let useVertex = false;
+    if (generatorConfig && generatorConfig.authType) {
+      useGemini = generatorConfig.authType === AuthType2.USE_GEMINI;
+      useVertex = generatorConfig.authType === AuthType2.USE_VERTEX_AI;
+    }
+    this["event.name"] = "cli_config";
+    this["event.timestamp"] = (/* @__PURE__ */ new Date()).toISOString();
+    this.model = config2.getModel();
+    this.embedding_model = config2.getEmbeddingModel();
+    this.sandbox_enabled = typeof config2.getSandbox() === "string" || !!config2.getSandbox();
+    this.core_tools_enabled = (config2.getCoreTools() ?? []).join(",");
+    this.approval_mode = config2.getApprovalMode();
+    this.api_key_enabled = useGemini || useVertex;
+    this.vertex_ai_enabled = useVertex;
+    this.debug_enabled = config2.getDebugMode();
+    this.mcp_servers = mcpServers ? Object.keys(mcpServers).join(",") : "";
+    this.telemetry_enabled = config2.getTelemetryEnabled();
+    this.telemetry_log_user_prompts_enabled = config2.getTelemetryLogPromptsEnabled();
+    this.file_filtering_respect_git_ignore = config2.getFileFilteringRespectGitIgnore();
+    this.mcp_servers_count = mcpServers ? Object.keys(mcpServers).length : 0;
+    this.output_format = config2.getOutputFormat();
+    const extensions = config2.getExtensions();
+    this.extensions_count = extensions.length;
+    this.extensions = extensions.map((e2) => e2.name).join(",");
+    this.extension_ids = extensions.map((e2) => e2.id).join(",");
+    this.auth_type = generatorConfig?.authType;
+    this.worktree_active = !!config2.getWorktreeSettings();
+    if (toolRegistry) {
+      const mcpTools = toolRegistry.getAllTools().filter((tool) => tool instanceof DiscoveredMCPTool);
+      this.mcp_tools_count = mcpTools.length;
+      this.mcp_tools = mcpTools.map((tool) => tool.name).join(",");
+    }
+  }
+  toOpenTelemetryA
+
+chunk-32XQ54AJ.js @13437258 USE_GEMINI
+ appendFileSync2(this.filePath, `${safeJsonStringify(recordedResponse)}
+`);
+    return response;
+  }
+};
+
+// packages/core/dist/src/core/contentGenerator.js
+var AuthType2;
+(function(AuthType3) {
+  AuthType3["LOGIN_WITH_GOOGLE"] = "oauth-personal";
+  AuthType3["USE_GEMINI"] = "gemini-api-key";
+  AuthType3["USE_VERTEX_AI"] = "vertex-ai";
+  AuthType3["LEGACY_CLOUD_SHELL"] = "cloud-shell";
+  AuthType3["COMPUTE_ADC"] = "compute-default-credentials";
+  AuthType3["GATEWAY"] = "gateway";
+})(AuthType2 || (AuthType2 = {}));
+function getAuthTypeFromEnv() {
+  if (process.env["GOOGLE_GENAI_USE_GCA"] === "true") {
+    return AuthType2.LOGIN_WITH_GOOGLE;
+  }
+  if (process.env["GOOGLE_GENAI_USE_VERTEXAI"] === "true") {
+    return AuthType2.USE_VERTEX_AI;
+  }
+  if (process.env["GOOGLE_GEMINI_BASE_URL"]) {
+    return AuthType2.GATEWAY;
+  }
+  if (process.env["GEMINI_API_KEY"]) {
+    return AuthType2.USE_GEMINI;
+  }
+  if (process.env["CLOUD_SHELL"] === "true" || process.env["GEMINI_CLI_USE_COMPUTE_ADC"] === "true") {
+    return AuthType2.COMPUTE_ADC;
+  }
+  return void 0;
+}
+var VERTEX_AI_REQUEST_TYPE_HEADER = "X-Vertex-AI-LLM-Request-Type";
+var VERTEX_AI_SHARED_REQUEST_TYPE_HEADER = "X-Vertex-AI-LLM-Shared-Request-Type";
+var VERTEX_AI_US_REP_ENDPOINT = "https://aiplatform.us.rep.googleapis.com";
+var VERTEX_AI_EU_REP_ENDPOINT = "https://aiplatform.eu.rep.googleapis.com";
+function validateBaseUrl(baseUrl) {
+  try {
+    new URL(baseUrl);
+  } catch {
+    throw new Error(`Invalid custom base URL: ${baseUrl}`);
+  }
+}
+async function createContentGeneratorConfig(config2, authType, apiKey, baseUrl, customHeaders, vertexAiRouting) {
+  const contentGeneratorConfig = {
+    authType,
+    proxy: config2?.getProxy(),
+    baseUrl,
+    customHeaders,
+    vertexAiRouting
+  };
+  const getEnv3 = (key) => {
+    if (config2?.env && config2.env[key] !== void 0) {
+      return config2.env[key];
+    }
+    return process.env[key];
+  };
+  if (authType === AuthType2.LOGIN_WIT
+
+chunk-32XQ54AJ.js @13437891 USE_GEMINI
+_WITH_GOOGLE;
+  }
+  if (process.env["GOOGLE_GENAI_USE_VERTEXAI"] === "true") {
+    return AuthType2.USE_VERTEX_AI;
+  }
+  if (process.env["GOOGLE_GEMINI_BASE_URL"]) {
+    return AuthType2.GATEWAY;
+  }
+  if (process.env["GEMINI_API_KEY"]) {
+    return AuthType2.USE_GEMINI;
+  }
+  if (process.env["CLOUD_SHELL"] === "true" || process.env["GEMINI_CLI_USE_COMPUTE_ADC"] === "true") {
+    return AuthType2.COMPUTE_ADC;
+  }
+  return void 0;
+}
+var VERTEX_AI_REQUEST_TYPE_HEADER = "X-Vertex-AI-LLM-Request-Type";
+var VERTEX_AI_SHARED_REQUEST_TYPE_HEADER = "X-Vertex-AI-LLM-Shared-Request-Type";
+var VERTEX_AI_US_REP_ENDPOINT = "https://aiplatform.us.rep.googleapis.com";
+var VERTEX_AI_EU_REP_ENDPOINT = "https://aiplatform.eu.rep.googleapis.com";
+function validateBaseUrl(baseUrl) {
+  try {
+    new URL(baseUrl);
+  } catch {
+    throw new Error(`Invalid custom base URL: ${baseUrl}`);
+  }
+}
+async function createContentGeneratorConfig(config2, authType, apiKey, baseUrl, customHeaders, vertexAiRouting) {
+  const contentGeneratorConfig = {
+    authType,
+    proxy: config2?.getProxy(),
+    baseUrl,
+    customHeaders,
+    vertexAiRouting
+  };
+  const getEnv3 = (key) => {
+    if (config2?.env && config2.env[key] !== void 0) {
+      return config2.env[key];
+    }
+    return process.env[key];
+  };
+  if (authType === AuthType2.LOGIN_WITH_GOOGLE || authType === AuthType2.COMPUTE_ADC) {
+    return contentGeneratorConfig;
+  }
+  const geminiApiKey = apiKey || getEnv3("GEMINI_API_KEY") || await loadApiKey() || void 0;
+  const googleApiKey = getEnv3("GOOGLE_API_KEY") || void 0;
+  const googleCloudProject = getEnv3("GOOGLE_CLOUD_PROJECT") || getEnv3("GOOGLE_CLOUD_PROJECT_ID") || void 0;
+  const googleCloudLocation = getEnv3("GOOGLE_CLOUD_LOCATION") || void 0;
+  if (authType === AuthType2.USE_GEMINI && geminiApiKey) {
+    contentGeneratorConfig.apiKey = geminiApiKey;
+    contentGeneratorConfig.vertexai = false;
+    return contentGeneratorConfig;
+  }
+  if (authType 
+
+chunk-32XQ54AJ.js @13439412 USE_GEMINI
+eApiKey = getEnv3("GOOGLE_API_KEY") || void 0;
+  const googleCloudProject = getEnv3("GOOGLE_CLOUD_PROJECT") || getEnv3("GOOGLE_CLOUD_PROJECT_ID") || void 0;
+  const googleCloudLocation = getEnv3("GOOGLE_CLOUD_LOCATION") || void 0;
+  if (authType === AuthType2.USE_GEMINI && geminiApiKey) {
+    contentGeneratorConfig.apiKey = geminiApiKey;
+    contentGeneratorConfig.vertexai = false;
+    return contentGeneratorConfig;
+  }
+  if (authType === AuthType2.USE_VERTEX_AI && (googleApiKey || googleCloudProject && googleCloudLocation)) {
+    contentGeneratorConfig.apiKey = googleApiKey;
+    contentGeneratorConfig.vertexai = true;
+    return contentGeneratorConfig;
+  }
+  if (authType === AuthType2.GATEWAY) {
+    contentGeneratorConfig.apiKey = apiKey || getEnv3("GEMINI_API_KEY") || "";
+    contentGeneratorConfig.vertexai = false;
+    return contentGeneratorConfig;
+  }
+  return contentGeneratorConfig;
+}
+async function createContentGenerator(config2, gcConfig, sessionId) {
+  const generator = await (async () => {
+    if (gcConfig.fakeResponsesNonStrict) {
+      const fakeGenerator = await FakeContentGenerator.fromFile(gcConfig.fakeResponsesNonStrict, { nonStrict: true });
+      return new LoggingContentGenerator(fakeGenerator, gcConfig);
+    }
+    if (gcConfig.fakeResponses) {
+      const fakeGenerator = await FakeContentGenerator.fromFile(gcConfig.fakeResponses);
+      return new LoggingContentGenerator(fakeGenerator, gcConfig);
+    }
+    const version4 = await getVersion();
+    const model = resolveModel(gcConfig.getModel(), config2.authType === AuthType2.USE_GEMINI || config2.authType === AuthType2.USE_VERTEX_AI || (await gcConfig.getGemini31Launched?.() ?? false), false, gcConfig.getHasAccessToPreviewModel?.() ?? true, gcConfig, gcConfig.hasGemini35FlashGAAccess?.() ?? false);
+    const customHeadersEnv = process.env["GEMINI_CLI_CUSTOM_HEADERS"] || void 0;
+    const clientName = gcConfig.getClientName();
+    const surface = determineSur
+
+chunk-32XQ54AJ.js @13438513 async function createContentGenerator
+ps://aiplatform.us.rep.googleapis.com";
+var VERTEX_AI_EU_REP_ENDPOINT = "https://aiplatform.eu.rep.googleapis.com";
+function validateBaseUrl(baseUrl) {
+  try {
+    new URL(baseUrl);
+  } catch {
+    throw new Error(`Invalid custom base URL: ${baseUrl}`);
+  }
+}
+async function createContentGeneratorConfig(config2, authType, apiKey, baseUrl, customHeaders, vertexAiRouting) {
+  const contentGeneratorConfig = {
+    authType,
+    proxy: config2?.getProxy(),
+    baseUrl,
+    customHeaders,
+    vertexAiRouting
+  };
+  const getEnv3 = (key) => {
+    if (config2?.env && config2.env[key] !== void 0) {
+      return config2.env[key];
+    }
+    return process.env[key];
+  };
+  if (authType === AuthType2.LOGIN_WITH_GOOGLE || authType === AuthType2.COMPUTE_ADC) {
+    return contentGeneratorConfig;
+  }
+  const geminiApiKey = apiKey || getEnv3("GEMINI_API_KEY") || await loadApiKey() || void 0;
+  const googleApiKey = getEnv3("GOOGLE_API_KEY") || void 0;
+  const googleCloudProject = getEnv3("GOOGLE_CLOUD_PROJECT") || getEnv3("GOOGLE_CLOUD_PROJECT_ID") || void 0;
+  const googleCloudLocation = getEnv3("GOOGLE_CLOUD_LOCATION") || void 0;
+  if (authType === AuthType2.USE_GEMINI && geminiApiKey) {
+    contentGeneratorConfig.apiKey = geminiApiKey;
+    contentGeneratorConfig.vertexai = false;
+    return contentGeneratorConfig;
+  }
+  if (authType === AuthType2.USE_VERTEX_AI && (googleApiKey || googleCloudProject && googleCloudLocation)) {
+    contentGeneratorConfig.apiKey = googleApiKey;
+    contentGeneratorConfig.vertexai = true;
+    return contentGeneratorConfig;
+  }
+  if (authType === AuthType2.GATEWAY) {
+    contentGeneratorConfig.apiKey = apiKey || getEnv3("GEMINI_API_KEY") || "";
+    contentGeneratorConfig.vertexai = false;
+    return contentGeneratorConfig;
+  }
+  return contentGeneratorConfig;
+}
+async function createContentGenerator(config2, gcConfig, sessionId) {
+  const generator = await (async () => {
+    if (gcConfig.fakeResponsesNonStrict) {
+   
+
+chunk-32XQ54AJ.js @13440056 async function createContentGenerator
+tGeneratorConfig;
+  }
+  if (authType === AuthType2.GATEWAY) {
+    contentGeneratorConfig.apiKey = apiKey || getEnv3("GEMINI_API_KEY") || "";
+    contentGeneratorConfig.vertexai = false;
+    return contentGeneratorConfig;
+  }
+  return contentGeneratorConfig;
+}
+async function createContentGenerator(config2, gcConfig, sessionId) {
+  const generator = await (async () => {
+    if (gcConfig.fakeResponsesNonStrict) {
+      const fakeGenerator = await FakeContentGenerator.fromFile(gcConfig.fakeResponsesNonStrict, { nonStrict: true });
+      return new LoggingContentGenerator(fakeGenerator, gcConfig);
+    }
+    if (gcConfig.fakeResponses) {
+      const fakeGenerator = await FakeContentGenerator.fromFile(gcConfig.fakeResponses);
+      return new LoggingContentGenerator(fakeGenerator, gcConfig);
+    }
+    const version4 = await getVersion();
+    const model = resolveModel(gcConfig.getModel(), config2.authType === AuthType2.USE_GEMINI || config2.authType === AuthType2.USE_VERTEX_AI || (await gcConfig.getGemini31Launched?.() ?? false), false, gcConfig.getHasAccessToPreviewModel?.() ?? true, gcConfig, gcConfig.hasGemini35FlashGAAccess?.() ?? false);
+    const customHeadersEnv = process.env["GEMINI_CLI_CUSTOM_HEADERS"] || void 0;
+    const clientName = gcConfig.getClientName();
+    const surface = determineSurface2();
+    let userAgent;
+    if (clientName === "acp-vscode" || surface === "vscode") {
+      const osTypeMap = {
+        darwin: "macOS",
+        win32: "Windows",
+        linux: "Linux"
+      };
+      const osType2 = osTypeMap[process.platform] || process.platform;
+      const osVersion = os25.release();
+      const arch3 = process.arch;
+      const vscodeVersion = process.env["TERM_PROGRAM_VERSION"] || "unknown";
+      let hostPath = `VSCode/${vscodeVersion}`;
+      if (isCloudShell()) {
+        const cloudShellVersion = process.env["CLOUD_SHELL_VERSION"] || "unknown";
+        hostPath += ` > CloudShell/${cloudShellVersion}`;
+    
+
+chunk-32XQ54AJ.js @12026223 GOOGLE_GEMINI_BASE_URL
+ent variables.");
+        this.apiKey = void 0;
+      }
+      if (!this.location && !this.apiKey) {
+        this.location = "global";
+      }
+    }
+    const baseUrl = getBaseUrl(options.httpOptions, options.vertexai, getEnv("GOOGLE_VERTEX_BASE_URL"), getEnv("GOOGLE_GEMINI_BASE_URL"));
+    if (baseUrl) {
+      if (options.httpOptions) {
+        options.httpOptions.baseUrl = baseUrl;
+      } else {
+        options.httpOptions = { baseUrl };
+      }
+    }
+    this.apiVersion = options.apiVersion;
+    const auth2 = new NodeAuth({
+      apiKey: this.apiKey,
+      googleAuthOptions: options.googleAuthOptions
+    });
+    this.apiClient = new ApiClient({
+      auth: auth2,
+      project: this.project,
+      location: this.location,
+      apiVersion: this.apiVersion,
+      apiKey: this.apiKey,
+      vertexai: this.vertexai,
+      httpOptions: options.httpOptions,
+      userAgentExtra: LANGUAGE_LABEL_PREFIX + process.version,
+      uploader: new NodeUploader(),
+      downloader: new NodeDownloader()
+    });
+    this.models = new Models(this.apiClient);
+    this.live = new Live(this.apiClient, auth2, new NodeWebSocketFactory());
+    this.batches = new Batches(this.apiClient);
+    this.chats = new Chats(this.models, this.apiClient);
+    this.caches = new Caches(this.apiClient);
+    this.files = new Files(this.apiClient);
+    this.operations = new Operations(this.apiClient);
+    this.authTokens = new Tokens(this.apiClient);
+    this.tunings = new Tunings(this.apiClient);
+    this.fileSearchStores = new FileSearchStores(this.apiClient);
+  }
+};
+function getEnv(env2) {
+  var _a4, _b, _c;
+  return (_c = (_b = (_a4 = process === null || process === void 0 ? void 0 : process.env) === null || _a4 === void 0 ? void 0 : _a4[env2]) === null || _b === void 0 ? void 0 : _b.trim()) !== null && _c !== void 0 ? _c : void 0;
+}
+function getBooleanEnv(env2) {
+  return stringToBoolean(getEnv(env2));
+}
+function stringToBoolean(str2) {
+  if (str2 === void 0) 
+
+chunk-32XQ54AJ.js @13437769 GOOGLE_GEMINI_BASE_URL
+= {}));
+function getAuthTypeFromEnv() {
+  if (process.env["GOOGLE_GENAI_USE_GCA"] === "true") {
+    return AuthType2.LOGIN_WITH_GOOGLE;
+  }
+  if (process.env["GOOGLE_GENAI_USE_VERTEXAI"] === "true") {
+    return AuthType2.USE_VERTEX_AI;
+  }
+  if (process.env["GOOGLE_GEMINI_BASE_URL"]) {
+    return AuthType2.GATEWAY;
+  }
+  if (process.env["GEMINI_API_KEY"]) {
+    return AuthType2.USE_GEMINI;
+  }
+  if (process.env["CLOUD_SHELL"] === "true" || process.env["GEMINI_CLI_USE_COMPUTE_ADC"] === "true") {
+    return AuthType2.COMPUTE_ADC;
+  }
+  return void 0;
+}
+var VERTEX_AI_REQUEST_TYPE_HEADER = "X-Vertex-AI-LLM-Request-Type";
+var VERTEX_AI_SHARED_REQUEST_TYPE_HEADER = "X-Vertex-AI-LLM-Shared-Request-Type";
+var VERTEX_AI_US_REP_ENDPOINT = "https://aiplatform.us.rep.googleapis.com";
+var VERTEX_AI_EU_REP_ENDPOINT = "https://aiplatform.eu.rep.googleapis.com";
+function validateBaseUrl(baseUrl) {
+  try {
+    new URL(baseUrl);
+  } catch {
+    throw new Error(`Invalid custom base URL: ${baseUrl}`);
+  }
+}
+async function createContentGeneratorConfig(config2, authType, apiKey, baseUrl, customHeaders, vertexAiRouting) {
+  const contentGeneratorConfig = {
+    authType,
+    proxy: config2?.getProxy(),
+    baseUrl,
+    customHeaders,
+    vertexAiRouting
+  };
+  const getEnv3 = (key) => {
+    if (config2?.env && config2.env[key] !== void 0) {
+      return config2.env[key];
+    }
+    return process.env[key];
+  };
+  if (authType === AuthType2.LOGIN_WITH_GOOGLE || authType === AuthType2.COMPUTE_ADC) {
+    return contentGeneratorConfig;
+  }
+  const geminiApiKey = apiKey || getEnv3("GEMINI_API_KEY") || await loadApiKey() || void 0;
+  const googleApiKey = getEnv3("GOOGLE_API_KEY") || void 0;
+  const googleCloudProject = getEnv3("GOOGLE_CLOUD_PROJECT") || getEnv3("GOOGLE_CLOUD_PROJECT_ID") || void 0;
+  const googleCloudLocation = getEnv3("GOOGLE_CLOUD_LOCATION") || void 0;
+  if (authType === AuthType2.USE_GEMINI && geminiApiKey) {
+    contentGeneratorConfig.
+
+chunk-32XQ54AJ.js @13444377 GOOGLE_GEMINI_BASE_URL
+ config2.apiKey === "") {
+        headers["x-goog-api-key"] = "";
+      }
+      let baseUrl = config2.baseUrl;
+      if (!baseUrl) {
+        const envBaseUrl = config2.authType === AuthType2.USE_VERTEX_AI ? process.env["GOOGLE_VERTEX_BASE_URL"] : process.env["GOOGLE_GEMINI_BASE_URL"];
+        if (envBaseUrl) {
+          validateBaseUrl(envBaseUrl);
+          baseUrl = envBaseUrl;
+        } else if (config2.authType === AuthType2.USE_VERTEX_AI) {
+          const location = process.env["GOOGLE_CLOUD_LOCATION"];
+          if (location === "us") {
+            baseUrl = VERTEX_AI_US_REP_ENDPOINT;
+          } else if (location === "eu") {
+            baseUrl = VERTEX_AI_EU_REP_ENDPOINT;
+          }
+        }
+      } else {
+        validateBaseUrl(baseUrl);
+      }
+      const httpOptions = { headers };
+      if (baseUrl) {
+        httpOptions.baseUrl = baseUrl;
+      }
+      const proxyUrl = config2.proxy?.trim();
+      const proxyAgent = proxyUrl ? baseUrl?.startsWith("http://") ? new import_dist2.HttpProxyAgent(proxyUrl) : new import_dist.HttpsProxyAgent(proxyUrl) : void 0;
+      const useVertex = config2.vertexai ?? config2.authType === AuthType2.USE_VERTEX_AI;
+      const googleGenAI = new GoogleGenAI({
+        apiKey: config2.authType === AuthType2.GATEWAY ? config2.apiKey : config2.apiKey === "" ? void 0 : config2.apiKey,
+        vertexai: config2.vertexai ?? config2.authType === AuthType2.USE_VERTEX_AI,
+        httpOptions,
+        ...apiVersionEnv && { apiVersion: apiVersionEnv },
+        // Merge proxy and GDCH endpoint into googleAuthOptions if either exists
+        ...(proxyAgent || useVertex && baseUrl) && {
+          googleAuthOptions: {
+            clientOptions: {
+              ...proxyAgent && {
+                transporterOptions: { agent: proxyAgent }
+              },
+              ...useVertex && baseUrl && {
+                apiEndpoint: baseUrl
+              }
+            }
+          }
+        }
+      });
+      re
+
+chunk-32XQ54AJ.js @13429797 loadApiKey
+EY_ENTRY = "default-api-key";
+var storage = new HybridTokenStorage(KEYCHAIN_SERVICE_NAME2);
+var apiKeyCache = createCache({
+  storage: "map",
+  defaultTtl: 3e4
+  // 30 seconds
+});
+function resetApiKeyCacheForTesting() {
+  apiKeyCache.clear();
+}
+async function loadApiKey() {
+  return apiKeyCache.getOrCreate(DEFAULT_API_KEY_ENTRY, async () => {
+    try {
+      const credentials3 = await storage.getCredentials(DEFAULT_API_KEY_ENTRY);
+      if (credentials3?.token?.accessToken) {
+        return credentials3.token.accessToken;
+      }
+      return null;
+    } catch (error40) {
+      debugLogger.error("Failed to load API key from storage:", error40);
+      return null;
+    }
+  });
+}
+async function saveApiKey(apiKey) {
+  apiKeyCache.delete(DEFAULT_API_KEY_ENTRY);
+  if (!apiKey || apiKey.trim() === "") {
+    try {
+      await storage.deleteCredentials(DEFAULT_API_KEY_ENTRY);
+    } catch (error40) {
+      debugLogger.warn("Failed to delete API key from storage:", error40);
+    }
+    return;
+  }
+  const credentials3 = {
+    serverName: DEFAULT_API_KEY_ENTRY,
+    token: {
+      accessToken: apiKey,
+      tokenType: "ApiKey"
+    },
+    updatedAt: Date.now()
+  };
+  await storage.setCredentials(credentials3);
+}
+async function clearApiKey() {
+  apiKeyCache.delete(DEFAULT_API_KEY_ENTRY);
+  try {
+    await storage.deleteCredentials(DEFAULT_API_KEY_ENTRY);
+  } catch (error40) {
+    debugLogger.error("Failed to clear API key from storage:", error40);
+  }
+}
+
+// packages/core/dist/src/core/fakeContentGenerator.js
+import { promises as promises6 } from "node:fs";
+var FakeContentGenerator = class _FakeContentGenerator {
+  options;
+  callCounter = 0;
+  userTier;
+  userTierName;
+  paidTier;
+  responses;
+  constructor(responses, options = {}) {
+    this.options = options;
+    this.responses = structuredClone(responses);
+  }
+  static async fromFile(filePath, options = {}) {
+    const fileContent = await promises6.readFile(filePath, "utf-8");
+    const re
+
+chunk-32XQ54AJ.js @13439115 loadApiKey
+return config2.env[key];
+    }
+    return process.env[key];
+  };
+  if (authType === AuthType2.LOGIN_WITH_GOOGLE || authType === AuthType2.COMPUTE_ADC) {
+    return contentGeneratorConfig;
+  }
+  const geminiApiKey = apiKey || getEnv3("GEMINI_API_KEY") || await loadApiKey() || void 0;
+  const googleApiKey = getEnv3("GOOGLE_API_KEY") || void 0;
+  const googleCloudProject = getEnv3("GOOGLE_CLOUD_PROJECT") || getEnv3("GOOGLE_CLOUD_PROJECT_ID") || void 0;
+  const googleCloudLocation = getEnv3("GOOGLE_CLOUD_LOCATION") || void 0;
+  if (authType === AuthType2.USE_GEMINI && geminiApiKey) {
+    contentGeneratorConfig.apiKey = geminiApiKey;
+    contentGeneratorConfig.vertexai = false;
+    return contentGeneratorConfig;
+  }
+  if (authType === AuthType2.USE_VERTEX_AI && (googleApiKey || googleCloudProject && googleCloudLocation)) {
+    contentGeneratorConfig.apiKey = googleApiKey;
+    contentGeneratorConfig.vertexai = true;
+    return contentGeneratorConfig;
+  }
+  if (authType === AuthType2.GATEWAY) {
+    contentGeneratorConfig.apiKey = apiKey || getEnv3("GEMINI_API_KEY") || "";
+    contentGeneratorConfig.vertexai = false;
+    return contentGeneratorConfig;
+  }
+  return contentGeneratorConfig;
+}
+async function createContentGenerator(config2, gcConfig, sessionId) {
+  const generator = await (async () => {
+    if (gcConfig.fakeResponsesNonStrict) {
+      const fakeGenerator = await FakeContentGenerator.fromFile(gcConfig.fakeResponsesNonStrict, { nonStrict: true });
+      return new LoggingContentGenerator(fakeGenerator, gcConfig);
+    }
+    if (gcConfig.fakeResponses) {
+      const fakeGenerator = await FakeContentGenerator.fromFile(gcConfig.fakeResponses);
+      return new LoggingContentGenerator(fakeGenerator, gcConfig);
+    }
+    const version4 = await getVersion();
+    const model = resolveModel(gcConfig.getModel(), config2.authType === AuthType2.USE_GEMINI || config2.authType === AuthType2.USE_VERTEX_AI || (await gcConfig.getGemini31Laun
+
+chunk-32XQ54AJ.js @16529304 loadApiKey
+lledError,
+  IneligibleTierError,
+  resetUserDataCacheForTesting,
+  setupUser,
+  isApiError,
+  isStructuredError,
+  estimateContextBreakdown,
+  LoggingContentGenerator,
+  createCodeAssistContentGenerator,
+  getCodeAssistServer,
+  resetApiKeyCacheForTesting,
+  loadApiKey,
+  saveApiKey,
+  clearApiKey,
+  FakeContentGenerator,
+  RecordingContentGenerator,
+  AuthType2 as AuthType,
+  getAuthTypeFromEnv,
+  createContentGeneratorConfig,
+  createContentGenerator,
+  ResourceRegistry,
+  DiscoveredTool,
+  ToolRegistry,
+  DEFAULT_MEMORY_FILE_FILTERING_OPTIONS,
+  DEFAULT_FILE_FILTERING_OPTIONS,
+  GEMINI_IGNORE_FILE_NAME,
+  INTEGRITY_FILENAME,
+  INTEGRITY_KEY_FILENAME,
+  KEYCHAIN_SERVICE_NAME3 as KEYCHAIN_SERVICE_NAME,
+  SECRET_KEY_ACCOUNT,
+  LSTool,
+  GitIgnoreParser,
+  getAbsoluteGitDir,
+  isGitRepository,
+  findGitRoot,
+  FileDiscoveryService,
+  ReadFileTool,
+  glob,
+  GrepTool,
+  resolveRipgrepPath,
+  RipGrepTool,
+  sortFileEntries,
+  GlobTool,
+  getFolderStructure,
+  ActivateSkillTool,
+  getPty,
+  ColorMode,
+  serializeTerminalToObject,
+  convertColorToHex,
+  ExecutionLifecycleService,
+  GEMINI_CLI_IDENTIFICATION_ENV_VAR,
+  GEMINI_CLI_IDENTIFICATION_ENV_VAR_VALUE,
+  SCROLLBACK_LIMIT,
+  ShellExecutionService,
+  OUTPUT_UPDATE_INTERVAL_MS,
+  LIVE_OUTPUT_MAX_BUFFER_CHARS,
+  ShellToolInvocation,
+  ShellTool,
+  FetchError,
+  PrivateIpError,
+  updateGlobalFetchTimeouts,
+  sanitizeHostname,
+  isLoopbackHost,
+  isPrivateIp,
+  isAddressPrivate,
+  isPrivateIpAsync,
+  createSafeProxyAgent,
+  fetchWithTimeout,
+  setGlobalProxy,
+  normalizeUrl,
+  parsePrompt,
+  convertGithubUrlToRaw,
+  WebFetchTool,
+  WebSearchTool,
+  AskUserTool,
+  AskUserInvocation,
+  isCompletedAskUserTool,
+  StreamEventType,
+  SYNTHETIC_THOUGHT_SIGNATURE2 as SYNTHETIC_THOUGHT_SIGNATURE,
+  INTERRUPTED_RESPONSE_PLACEHOLDER,
+  isValidNonThoughtTextPart,
+  InvalidStreamError,
+  AgentExecutionStoppedError,
+  AgentExecutionBlockedError,
+  GeminiChat,
+  isSchemaDepthError,
+  isInvalidAr
+
+chunk-32XQ54AJ.js @12222592 keytar
+in !== null));
+    if (nativeKeychain) {
+      return nativeKeychain;
+    }
+    debugLogger.debug("Using FileKeychain fallback for secure storage.");
+    return new FileKeychain();
+  }
+  /**
+   * Attempts to load and verify the native keychain module (@github/keytar).
+   */
+  async getNativeKeychain() {
+    try {
+      const keychainModule = await this.loadKeychainModule();
+      if (!keychainModule) {
+        return null;
+      }
+      if (os14.platform() === "darwin" && !this.isMacOSKeychainAvailable()) {
+        debugLogger.debug("MacOS default keychain not found; skipping functional verification.");
+        return null;
+      }
+      if (await this.isKeychainFunctional(keychainModule)) {
+        return keychainModule;
+      }
+      debugLogger.debug("Keychain functional verification failed or timed out");
+      return null;
+    } catch (error40) {
+      const message = error40 instanceof Error ? error40.message : String(error40);
+      debugLogger.debug("Keychain initialization encountered an error:", message);
+      return null;
+    }
+  }
+  // Low-level dynamic loading and structural validation.
+  async loadKeychainModule() {
+    const moduleName = "@github/keytar";
+    const module2 = await import(moduleName);
+    const potential = isRecord(module2) && module2["default"] || module2;
+    const result2 = KeychainSchema.safeParse(potential);
+    if (result2.success) {
+      return potential;
+    }
+    debugLogger.debug("Keychain module failed structural validation:", result2.error.flatten().fieldErrors);
+    return null;
+  }
+  // Performs a set-get-delete cycle to verify keychain functionality.
+  // Capped with a 2s timeout so a non-responsive Secret Service (common on
+  // headless Linux: WSL/SSH/Docker without gnome-keyring or D-Bus) falls back
+  // to FileKeychain instead of hanging the CLI indefinitely.
+  async isKeychainFunctional(keychain) {
+    const testAccount = `${KEYCHAIN_TEST_PREFIX}${crypto5.randomBytes(8).toSt
+
+chunk-32XQ54AJ.js @12223513 keytar
+message : String(error40);
+      debugLogger.debug("Keychain initialization encountered an error:", message);
+      return null;
+    }
+  }
+  // Low-level dynamic loading and structural validation.
+  async loadKeychainModule() {
+    const moduleName = "@github/keytar";
+    const module2 = await import(moduleName);
+    const potential = isRecord(module2) && module2["default"] || module2;
+    const result2 = KeychainSchema.safeParse(potential);
+    if (result2.success) {
+      return potential;
+    }
+    debugLogger.debug("Keychain module failed structural validation:", result2.error.flatten().fieldErrors);
+    return null;
+  }
+  // Performs a set-get-delete cycle to verify keychain functionality.
+  // Capped with a 2s timeout so a non-responsive Secret Service (common on
+  // headless Linux: WSL/SSH/Docker without gnome-keyring or D-Bus) falls back
+  // to FileKeychain instead of hanging the CLI indefinitely.
+  async isKeychainFunctional(keychain) {
+    const testAccount = `${KEYCHAIN_TEST_PREFIX}${crypto5.randomBytes(8).toString("hex")}`;
+    const testPassword = "test";
+    const probe = async () => {
+      await keychain.setPassword(this.serviceName, testAccount, testPassword);
+      const retrieved = await keychain.getPassword(this.serviceName, testAccount);
+      const deleted = await keychain.deletePassword(this.serviceName, testAccount);
+      return deleted && retrieved === testPassword;
+    };
+    return Promise.race([
+      probe(),
+      new Promise((resolve29) => setTimeout(() => resolve29(false), 2e3).unref())
+    ]);
+  }
+  /**
+   * MacOS-specific check to detect if a default keychain is available.
+   */
+  isMacOSKeychainAvailable() {
+    const result2 = spawnSync2("security", ["default-keychain"], {
+      encoding: "utf8",
+      // We pipe stdout to read the path, but ignore stderr to suppress
+      // "keychain not found" errors from polluting the terminal.
+      stdio: ["ignore", "pipe", "ignore"]
+    });
+    if 
+
+chunk-32XQ54AJ.js @11335117 getSystemPoliciesDir
+cli";
+    }
+  }
+  static getSystemSettingsPath() {
+    if (process.env["GEMINI_CLI_SYSTEM_SETTINGS_PATH"]) {
+      return process.env["GEMINI_CLI_SYSTEM_SETTINGS_PATH"];
+    }
+    return path4.join(_Storage.getSystemConfigDir(), "settings.json");
+  }
+  static getSystemPoliciesDir() {
+    return path4.join(_Storage.getSystemConfigDir(), "policies");
+  }
+  static getGlobalTempDir() {
+    return path4.join(_Storage.getGlobalGeminiDir(), TMP_DIR_NAME);
+  }
+  static getGlobalBinDir() {
+    return path4.join(_Storage.getGlobalTempDir(), BIN_DIR_NAME);
+  }
+  getGeminiDir() {
+    return path4.join(this.targetDir, GEMINI_DIR);
+  }
+  /**
+   * Checks if the current workspace storage location is the same as the global/user storage location.
+   * This handles symlinks and platform-specific path normalization.
+   */
+  isWorkspaceHomeDir() {
+    return normalizePath(resolveToRealPath(this.targetDir)) === normalizePath(resolveToRealPath(homedir()));
+  }
+  getAgentsDir() {
+    return path4.join(this.targetDir, AGENTS_DIR_NAME);
+  }
+  getProjectTempDir() {
+    const identifier = this.getProjectIdentifier();
+    const tempDir = _Storage.getGlobalTempDir();
+    return path4.join(tempDir, identifier);
+  }
+  getWorkspacePoliciesDir() {
+    return path4.join(this.getGeminiDir(), "policies");
+  }
+  getWorkspaceAutoSavedPolicyPath() {
+    return path4.join(this.getWorkspacePoliciesDir(), AUTO_SAVED_POLICY_FILENAME);
+  }
+  getAutoSavedPolicyPath() {
+    return path4.join(_Storage.getUserPoliciesDir(), AUTO_SAVED_POLICY_FILENAME);
+  }
+  ensureProjectTempDirExists() {
+    fs6.mkdirSync(this.getProjectTempDir(), { recursive: true });
+  }
+  static getOAuthCredsPath() {
+    return path4.join(_Storage.getGlobalGeminiDir(), OAUTH_FILE);
+  }
+  getProjectRoot() {
+    return this.targetDir;
+  }
+  getFilePathHash(filePath) {
+    return crypto3.createHash("sha256").update(filePath).digest("hex");
+  }
+  getProjectIdentifier() {
+    if (!this.projectIdentifier) {
+  
+
+chunk-32XQ54AJ.js @15422184 getSystemPoliciesDir
+ion getAlwaysAllowPriorityFraction() {
+  return Math.round(ALWAYS_ALLOW_PRIORITY % 1 * 1e3);
+}
+function getPolicyDirectories(defaultPoliciesDir, policyPaths, workspacePoliciesDir, adminPolicyPaths) {
+  return [
+    // Admin tier (highest priority)
+    Storage.getSystemPoliciesDir(),
+    ...adminPolicyPaths ?? [],
+    // User tier (second highest priority)
+    ...policyPaths && policyPaths.length > 0 ? policyPaths : [Storage.getUserPoliciesDir()],
+    // Workspace Tier (third highest)
+    workspacePoliciesDir,
+    // Default tier (lowest priority)
+    defaultPoliciesDir ?? DEFAULT_CORE_POLICIES_DIR
+  ].filter((dir) => !!dir);
+}
+function getPolicyTier(dir, context2) {
+  const normalizedDir = path83.resolve(dir);
+  if (normalizedDir === context2.systemPoliciesDir) {
+    return ADMIN_POLICY_TIER;
+  }
+  if (context2.adminPolicyPaths?.has(normalizedDir)) {
+    return ADMIN_POLICY_TIER;
+  }
+  if (normalizedDir === context2.userPoliciesDir) {
+    return USER_POLICY_TIER;
+  }
+  if (context2.workspacePoliciesDir && normalizedDir === path83.resolve(context2.workspacePoliciesDir)) {
+    return WORKSPACE_POLICY_TIER;
+  }
+  if (context2.defaultPoliciesDir && normalizedDir === path83.resolve(context2.defaultPoliciesDir)) {
+    return DEFAULT_POLICY_TIER;
+  }
+  if (normalizedDir === path83.resolve(DEFAULT_CORE_POLICIES_DIR)) {
+    return DEFAULT_POLICY_TIER;
+  }
+  return DEFAULT_POLICY_TIER;
+}
+function formatPolicyError(error40) {
+  const tierLabel = error40.tier.toUpperCase();
+  const severityLabel = error40.severity === "warning" ? "warning" : "error";
+  let message = `[${tierLabel}] Policy file ${severityLabel} in ${error40.fileName}:
+`;
+  message += `  ${error40.message}`;
+  if (error40.details) {
+    message += `
+${error40.details}`;
+  }
+  if (error40.suggestion) {
+    message += `
+  Suggestion: ${error40.suggestion}`;
+  }
+  return message;
+}
+async function filterSecurePolicyDirectories(dirs, systemPoliciesDir) {
+  const results = await 
+
+chunk-32XQ54AJ.js @15425792 getSystemPoliciesDir
+(${extensionName}): `);
+    return true;
+  });
+  return { rules, checkers, errors: result2.errors };
+}
+async function createPolicyEngineConfig(settings, approvalMode, defaultPoliciesDir, interactive = true) {
+  const systemPoliciesDir = path83.resolve(Storage.getSystemPoliciesDir());
+  const userPoliciesDir = path83.resolve(Storage.getUserPoliciesDir());
+  let adminPolicyPaths = settings.adminPolicyPaths;
+  if (adminPolicyPaths?.length) {
+    try {
+      const files = await fs73.readdir(systemPoliciesDir);
+      if (files.some((f) => f.endsWith(".toml"))) {
+        const msg = `Security Warning: Ignoring --admin-policy because system policies are already defined in ${systemPoliciesDir}`;
+        emitWarningOnce(msg);
+        adminPolicyPaths = void 0;
+      }
+    } catch (e2) {
+      if (!isNodeError(e2) || e2.code !== "ENOENT") {
+        debugLogger.warn(`Failed to check system policies in ${systemPoliciesDir}`, e2);
+      }
+    }
+  }
+  const policyDirs = getPolicyDirectories(defaultPoliciesDir, settings.policyPaths, settings.workspacePoliciesDir, adminPolicyPaths);
+  const adminPolicyPathsSet = adminPolicyPaths ? new Set(adminPolicyPaths.map((p) => path83.resolve(p))) : void 0;
+  const securePolicyDirs = await filterSecurePolicyDirectories(policyDirs, systemPoliciesDir);
+  const tierContext = {
+    defaultPoliciesDir,
+    workspacePoliciesDir: settings.workspacePoliciesDir,
+    adminPolicyPaths: adminPolicyPathsSet,
+    systemPoliciesDir,
+    userPoliciesDir
+  };
+  const userProvidedPaths = settings.policyPaths ? new Set(settings.policyPaths.map((p) => path83.resolve(p))) : /* @__PURE__ */ new Set();
+  const { rules: tomlRules, checkers: tomlCheckers, errors } = await loadPoliciesFromToml(securePolicyDirs, (p) => {
+    const normalizedPath = path83.resolve(p);
+    const tier = getPolicyTier(normalizedPath, tierContext);
+    if (userProvidedPaths.has(normalizedPath) && tier !== ADMIN_POLICY_TIER) {
+      return USER_POLICY_TI
+
+chunk-32XQ54AJ.js @11889499 streamGenerateContent
+ernal(params) {
+    var _a4, _b, _c, _d;
+    let response;
+    let path113 = "";
+    let queryParams = {};
+    if (this.apiClient.isVertexAI()) {
+      const body2 = generateContentParametersToVertex(this.apiClient, params);
+      path113 = formatMap("{model}:streamGenerateContent?alt=sse", body2["_url"]);
+      queryParams = body2["_query"];
+      delete body2["_url"];
+      delete body2["_query"];
+      const apiClient = this.apiClient;
+      response = apiClient.requestStream({
+        path: path113,
+        queryParams,
+        body: JSON.stringify(body2),
+        httpMethod: "POST",
+        httpOptions: (_a4 = params.config) === null || _a4 === void 0 ? void 0 : _a4.httpOptions,
+        abortSignal: (_b = params.config) === null || _b === void 0 ? void 0 : _b.abortSignal
+      });
+      return response.then(function(apiResponse) {
+        return __asyncGenerator(this, arguments, function* () {
+          var _a5, e_2, _b2, _c2;
+          try {
+            for (var _d2 = true, apiResponse_1 = __asyncValues(apiResponse), apiResponse_1_1; apiResponse_1_1 = yield __await(apiResponse_1.next()), _a5 = apiResponse_1_1.done, !_a5; _d2 = true) {
+              _c2 = apiResponse_1_1.value;
+              _d2 = false;
+              const chunk = _c2;
+              const resp = generateContentResponseFromVertex(yield __await(chunk.json()));
+              resp["sdkHttpResponse"] = {
+                headers: chunk.headers
+              };
+              const typedResp = new GenerateContentResponse();
+              Object.assign(typedResp, resp);
+              yield yield __await(typedResp);
+            }
+          } catch (e_2_1) {
+            e_2 = { error: e_2_1 };
+          } finally {
+            try {
+              if (!_d2 && !_a5 && (_b2 = apiResponse_1.return)) yield __await(_b2.call(apiResponse_1));
+            } finally {
+              if (e_2) throw e_2.error;
+            }
+          }
+        });
+      });
+    } else {
+      c
+
+chunk-32XQ54AJ.js @11891305 streamGenerateContent
+call(apiResponse_1));
+            } finally {
+              if (e_2) throw e_2.error;
+            }
+          }
+        });
+      });
+    } else {
+      const body2 = generateContentParametersToMldev(this.apiClient, params);
+      path113 = formatMap("{model}:streamGenerateContent?alt=sse", body2["_url"]);
+      queryParams = body2["_query"];
+      delete body2["_url"];
+      delete body2["_query"];
+      const apiClient = this.apiClient;
+      response = apiClient.requestStream({
+        path: path113,
+        queryParams,
+        body: JSON.stringify(body2),
+        httpMethod: "POST",
+        httpOptions: (_c = params.config) === null || _c === void 0 ? void 0 : _c.httpOptions,
+        abortSignal: (_d = params.config) === null || _d === void 0 ? void 0 : _d.abortSignal
+      });
+      return response.then(function(apiResponse) {
+        return __asyncGenerator(this, arguments, function* () {
+          var _a5, e_3, _b2, _c2;
+          try {
+            for (var _d2 = true, apiResponse_2 = __asyncValues(apiResponse), apiResponse_2_1; apiResponse_2_1 = yield __await(apiResponse_2.next()), _a5 = apiResponse_2_1.done, !_a5; _d2 = true) {
+              _c2 = apiResponse_2_1.value;
+              _d2 = false;
+              const chunk = _c2;
+              const resp = generateContentResponseFromMldev(yield __await(chunk.json()));
+              resp["sdkHttpResponse"] = {
+                headers: chunk.headers
+              };
+              const typedResp = new GenerateContentResponse();
+              Object.assign(typedResp, resp);
+              yield yield __await(typedResp);
+            }
+          } catch (e_3_1) {
+            e_3 = { error: e_3_1 };
+          } finally {
+            try {
+              if (!_d2 && !_a5 && (_b2 = apiResponse_2.return)) yield __await(_b2.call(apiResponse_2));
+            } finally {
+              if (e_3) throw e_3.error;
+            }
+          }
+        });
+      });
+    }
+  }
+  /**
+   * Cal
+
+chunk-32XQ54AJ.js @13392444 streamGenerateContent
+onfig?.setCreditsNotificationShown(true);
+      coreEvents.emitFeedback("info", "Using AI Credits for this request.");
+    }
+    const enabledCreditTypes = shouldEnableCredits ? [G1_CREDIT_TYPE] : void 0;
+    const responses = await this.requestStreamingPost("streamGenerateContent", toGenerateContentRequest(req, userPromptId, this.projectId, this.getEffectiveSessionId(), enabledCreditTypes), req.config?.abortSignal);
+    const streamingLatency = {};
+    const start2 = Date.now();
+    let isFirst = true;
+    return async function* (server) {
+      let totalConsumed = 0;
+      let lastRemaining = 0;
+      for await (const response of responses) {
+        if (isFirst) {
+          streamingLatency.firstMessageLatency = formatProtoJsonDuration(Date.now() - start2);
+          isFirst = false;
+        }
+        streamingLatency.totalLatency = formatProtoJsonDuration(Date.now() - start2);
+        const translatedResponse = fromGenerateContentResponse(response);
+        await recordConversationOffered(server, response.traceId, translatedResponse, streamingLatency, req.config?.abortSignal, server.getEffectiveSessionId());
+        if (response.consumedCredits) {
+          for (const credit of response.consumedCredits) {
+            if (credit.creditType === G1_CREDIT_TYPE && credit.creditAmount) {
+              totalConsumed += parseInt(credit.creditAmount, 10) || 0;
+            }
+          }
+        }
+        if (response.remainingCredits) {
+          lastRemaining = response.remainingCredits.reduce((sum, credit) => {
+            if (credit.creditType === G1_CREDIT_TYPE && credit.creditAmount) {
+              return sum + (parseInt(credit.creditAmount, 10) || 0);
+            }
+            return sum;
+          }, 0);
+          server.updateCredits(response.remainingCredits);
+        }
+        yield translatedResponse;
+      }
+      if (totalConsumed > 0 && server.config) {
+        logBillingEvent(server.config, new CreditsUsedEvent(req.

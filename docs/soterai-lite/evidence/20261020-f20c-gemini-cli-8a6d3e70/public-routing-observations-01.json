@@ -1,0 +1,66 @@
+{
+  "status": "STATIC_ONLY",
+  "scope": "Exact installed0.55.1 bundle excerpts for isolation/config/provider review; current online docs do not prove older pin behavior.",
+  "observations": [
+    {
+      "relative": "bundle/gemini.js",
+      "needle": "GEMINI_CLI_HOME",
+      "offset": 1536,
+      "code": " {\n  let autoConfigureMemory = true;\n  try {\n    const { readFileSync } = await import(\"node:fs\");\n    const { join } = await import(\"node:path\");\n    const baseDir = process.env[\"GEMINI_CLI_HOME\"] || join(os.homedir(), \".gemini\");\n    const settingsPath = join(baseDir, \"settings.json\");\n    const rawSettings = readFileSync(settingsPath, \"utf8\");\n    const settings = JSON.parse(rawSettings);\n    if (settings?.advanced?.autoConfigureMemory === false) {\n      autoConfigureMemory = false;\n    }\n  } catch {\n  }\n  if (autoConfigureMemory) {\n    const totalMemoryMB = os.totalmem() / (1024 * 1024);\n    const heapStats = v8.getHeapStatistics();\n    const currentMaxOldSpaceSizeMb = Math.floor(\n      heapStats.heap_size_limit / 1024 / 1024\n    );\n    const targetMaxOldSpaceSizeInMB = Math.floor(totalMemoryMB * 0.5);\n    if (targetMaxOldSpaceSizeInMB > currentMaxOldSpaceSizeMb) "
+    },
+    {
+      "relative": "bundle/gemini-63IMHOLI.js",
+      "needle": "GOOGLE_GEMINI_BASE_URL",
+      "offset": 360181,
+      "code": "ss.env[\"GEMINI_API_KEY\"]}`);\n    }\n    if (process.env[\"GOOGLE_API_KEY\"]) {\n      args.push(\"--env\", `GOOGLE_API_KEY=${process.env[\"GOOGLE_API_KEY\"]}`);\n    }\n    if (process.env[\"GOOGLE_GEMINI_BASE_URL\"]) {\n      args.push(\n        \"--env\",\n        `GOOGLE_GEMINI_BASE_URL=${process.env[\"GOOGLE_GEMINI_BASE_URL\"]}`\n      );\n    }\n    if (process.env[\"GOOGLE_VERTEX_BASE_URL\"]) {\n      args.push(\n        \"--env\",\n        `GOOGLE_VERTEX_BASE_URL=${process.env[\"GOOGLE_VERTEX_BASE_URL\"]}`\n      );\n    }\n    if (process.env[\"GOOGLE_GENAI_USE_VERTEXAI\"]) {\n      args.push(\n        \"--env\",\n        `GOOGLE_GENAI_USE_VERTEXAI=${process.env[\"GOOGLE_GENAI_USE_VERTEXAI\"]}`\n      );\n    }\n    if (process.env[\"GOOGLE_GENAI_USE_GCA\"]) {\n      args.push(\n        \"--env\",\n        `GOOGLE_GENAI_USE_GCA=${process.env[\"GOOGLE_GENAI_USE_GCA\"]}`\n      );\n    }\n    if (process.env[\"GOOGLE_CL"
+    },
+    {
+      "relative": "bundle/gemini-63IMHOLI.js",
+      "needle": "selectedType",
+      "offset": 511501,
+      "code": "odelVersion = context.agentContext.config.getModel() || \"Unknown\";\n    const cliVersion = await getVersion();\n    const selectedAuthType = context.settings.merged?.security?.auth?.selectedType ?? \"\";\n    const gcpProject = process5.env[\"GOOGLE_CLOUD_PROJECT\"] || \"\";\n    const ideClient = await getIdeClientName(context);\n    const userAccountManager = new UserAccountManager();\n    const cachedAccount = userAccountManager.getCachedGoogleAccount();\n    const userEmail = cachedAccount ?? \"Unknown\";\n    const tier = context.agentContext.config.getUserTierName() || \"Unknown\";\n    const info = [\n      `- Version: ${cliVersion}`,\n      `- OS: ${osVersion}`,\n      `- Sandbox: ${sandboxEnv}`,\n      `- Model: ${modelVersion}`,\n      `- Auth Type: ${selectedAuthType}`,\n      `- GCP Project: ${gcpProject}`,\n      `- IDE Client: ${ideClient}`,\n      `- User Email: ${userEmail}`,\n  "
+    },
+    {
+      "relative": "bundle/gemini-63IMHOLI.js",
+      "needle": "excludeTools",
+      "offset": 193216,
+      "code": "ion addMcpServer(name, commandOrUrl, args, options) {\n  const {\n    scope,\n    transport,\n    env: env2,\n    header,\n    timeout,\n    trust,\n    description,\n    includeTools,\n    excludeTools\n  } = options;\n  const settings = loadSettings(process.cwd());\n  const inHome = settings.workspace.path === settings.user.path;\n  if (scope === \"project\" && inHome) {\n    debugLogger.error(\n      \"Error: Please use --scope user to edit settings in the home directory.\"\n    );\n    process.exit(1);\n  }\n  const settingsScope = scope === \"user\" ? \"User\" /* User */ : \"Workspace\" /* Workspace */;\n  let newServer = {};\n  const headers = header?.reduce(\n    (acc, curr) => {\n      const [key, ...valueParts] = curr.split(\":\");\n      const value = valueParts.join(\":\").trim();\n      if (key.trim() && value) {\n        acc[key.trim()] = value;\n      }\n      return acc;\n    },\n    {}\n  );\n  swi"
+    },
+    {
+      "relative": "bundle/gemini-63IMHOLI.js",
+      "needle": "coreTools",
+      "offset": 310252,
+      "code": "xDirs,\n    memoryBoundaryMarkers: settings.context?.memoryBoundaryMarkers,\n    importFormat: settings.context?.importFormat,\n    debugMode,\n    question,\n    worktreeSettings,\n    coreTools: settings.tools?.core || void 0,\n    experimentalContextManagementConfig: profileSelector,\n    allowedTools: allowedTools.length > 0 ? allowedTools : void 0,\n    policyEngineConfig,\n    policyUpdateConfirmationRequest,\n    excludeTools,\n    toolDiscoveryCommand: settings.tools?.discoveryCommand,\n    toolCallCommand: settings.tools?.callCommand,\n    mcpServerCommand,\n    mcpServers,\n    mcpEnablementCallbacks,\n    mcpEnabled,\n    extensionsEnabled,\n    agents: settings.agents,\n    adminSkillsEnabled,\n    allowedMcpServers: mcpEnabled ? argv.allowedMcpServerNames ?? (loadedSettings ? loadedSettings.getConsolidatedAllowedMcpServers() : settings.mcp?.allowed) : void 0,\n    blockedMcpSe"
+    },
+    {
+      "relative": "bundle/chunk-32XQ54AJ.js",
+      "needle": "GEMINI_CLI_HOME",
+      "offset": 11297160,
+      "code": "I_DIR = \".gemini\";\nvar GOOGLE_ACCOUNTS_FILENAME = \"google_accounts.json\";\nvar TRUSTED_FOLDERS_FILENAME = \"trustedFolders.json\";\nfunction homedir() {\n  const envHome = process.env[\"GEMINI_CLI_HOME\"];\n  if (envHome) {\n    return envHome;\n  }\n  return os.homedir();\n}\nfunction tmpdir() {\n  return os.tmpdir();\n}\nfunction tildeifyPath(path113) {\n  const homeDir = homedir();\n  if (path113.startsWith(homeDir)) {\n    return path113.replace(homeDir, \"~\");\n  }\n  return path113;\n}\nfunction shortenPath(filePath, maxLen = 35) {\n  if (filePath.length <= maxLen) {\n    return filePath;\n  }\n  const simpleTruncate = () => {\n    const keepLen = Math.floor((maxLen - 3) / 2);\n    if (keepLen <= 0) {\n      return filePath.substring(0, maxLen - 3) + \"...\";\n    }\n    const start2 = filePath.substring(0, keepLen);\n    const end = filePath.substring(filePath.length - keepLen);\n    return `${sta"
+    },
+    {
+      "relative": "bundle/chunk-32XQ54AJ.js",
+      "needle": "GOOGLE_GEMINI_BASE_URL",
+      "offset": 12026223,
+      "code": " && !this.apiKey) {\n        this.location = \"global\";\n      }\n    }\n    const baseUrl = getBaseUrl(options.httpOptions, options.vertexai, getEnv(\"GOOGLE_VERTEX_BASE_URL\"), getEnv(\"GOOGLE_GEMINI_BASE_URL\"));\n    if (baseUrl) {\n      if (options.httpOptions) {\n        options.httpOptions.baseUrl = baseUrl;\n      } else {\n        options.httpOptions = { baseUrl };\n      }\n    }\n    this.apiVersion = options.apiVersion;\n    const auth2 = new NodeAuth({\n      apiKey: this.apiKey,\n      googleAuthOptions: options.googleAuthOptions\n    });\n    this.apiClient = new ApiClient({\n      auth: auth2,\n      project: this.project,\n      location: this.location,\n      apiVersion: this.apiVersion,\n      apiKey: this.apiKey,\n      vertexai: this.vertexai,\n      httpOptions: options.httpOptions,\n      userAgentExtra: LANGUAGE_LABEL_PREFIX + process.version,\n      uploader: new NodeUploa"
+    },
+    {
+      "relative": "bundle/chunk-32XQ54AJ.js",
+      "needle": "GEMINI_CLI_SYSTEM_SETTINGS_PATH",
+      "offset": 11334929,
+      "code": "latform() === \"win32\") {\n      return \"C:\\\\ProgramData\\\\gemini-cli\";\n    } else {\n      return \"/etc/gemini-cli\";\n    }\n  }\n  static getSystemSettingsPath() {\n    if (process.env[\"GEMINI_CLI_SYSTEM_SETTINGS_PATH\"]) {\n      return process.env[\"GEMINI_CLI_SYSTEM_SETTINGS_PATH\"];\n    }\n    return path4.join(_Storage.getSystemConfigDir(), \"settings.json\");\n  }\n  static getSystemPoliciesDir() {\n    return path4.join(_Storage.getSystemConfigDir(), \"policies\");\n  }\n  static getGlobalTempDir() {\n    return path4.join(_Storage.getGlobalGeminiDir(), TMP_DIR_NAME);\n  }\n  static getGlobalBinDir() {\n    return path4.join(_Storage.getGlobalTempDir(), BIN_DIR_NAME);\n  }\n  getGeminiDir() {\n    return path4.join(this.targetDir, GEMINI_DIR);\n  }\n  /**\n   * Checks if the current workspace storage location is the same as the global/user storage location.\n   * This handles symlinks and pl"
+    },
+    {
+      "relative": "bundle/chunk-32XQ54AJ.js",
+      "needle": "excludeTools",
+      "offset": 12263781,
+      "code": " external_exports.enum([\"sse\", \"http\"]).optional(),\n  trust: external_exports.boolean().optional(),\n  includeTools: external_exports.array(external_exports.string()).optional(),\n  excludeTools: external_exports.array(external_exports.string()).optional()\n});\nvar RequiredMcpServerOAuthSchema = external_exports.object({\n  scopes: external_exports.array(external_exports.string()).optional(),\n  clientId: external_exports.string().optional(),\n  clientSecret: external_exports.string().optional()\n});\nvar RequiredMcpServerConfigSchema = external_exports.object({\n  // Connection (required for forced servers)\n  url: external_exports.string(),\n  type: external_exports.enum([\"sse\", \"http\"]),\n  // Auth\n  authProviderType: external_exports.nativeEnum(AuthProviderType).optional(),\n  oauth: RequiredMcpServerOAuthSchema.optional(),\n  targetAudience: external_exports.string().optional("
+    },
+    {
+      "relative": "bundle/chunk-32XQ54AJ.js",
+      "needle": "coreTools",
+      "offset": 12419371,
+      "code": "ptional filter to list resources from a specific server.\",\n          type: \"string\"\n        }\n      },\n      required: []\n    }\n  }\n};\n\n// packages/core/dist/src/tools/definitions/coreTools.js\nfunction getToolSet(modelId) {\n  const family = getToolFamily(modelId);\n  switch (family) {\n    case \"gemini-3\":\n      return GEMINI_3_SET;\n    case \"default-legacy\":\n    default:\n      return DEFAULT_LEGACY_SET;\n  }\n}\nvar READ_FILE_DEFINITION = {\n  get base() {\n    return DEFAULT_LEGACY_SET.read_file;\n  },\n  overrides: (modelId) => getToolSet(modelId).read_file\n};\nvar WRITE_FILE_DEFINITION = {\n  get base() {\n    return DEFAULT_LEGACY_SET.write_file;\n  },\n  overrides: (modelId) => getToolSet(modelId).write_file\n};\nvar GREP_DEFINITION = {\n  get base() {\n    return DEFAULT_LEGACY_SET.grep_search;\n  },\n  overrides: (modelId) => getToolSet(modelId).grep_search\n};\nvar RIP_GREP_DEFINI"
+    }
+  ]
+}

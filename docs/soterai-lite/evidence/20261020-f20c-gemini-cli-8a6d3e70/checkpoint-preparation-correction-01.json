@@ -1,0 +1,6 @@
+{
+  "status": "PREPARED_NOT_RUN",
+  "failure": "Checkpoint helper01 rejected the UTF8 BOM in PowerShell5.1 runner result JSON before any snapshot/queue/ledger mutation. Raw exit1 retained.",
+  "correction": "Version02 removes only a leading BOM when parsing JSON; original receipt bytes are retained and hashed without normalization. No native probe or product behavior changed.",
+  "time": "2026-10-20T12:41:22.345Z"
+}
