@@ -1,0 +1,299 @@
+{
+	"name": "chatgpt",
+	"publisher": "openai",
+	"version": "26.51007.21434",
+	"displayName": "Codex – OpenAI’s coding agent",
+	"description": "Codex is a coding agent that works with you everywhere you code — included in ChatGPT Plus, Pro, Business, Edu, and Enterprise plans.",
+	"license": "SEE LICENSE IN LICENSE.md",
+	"engines": {
+		"vscode": "^1.96.2"
+	},
+	"categories": [
+		"AI",
+		"Chat"
+	],
+	"keywords": [
+		"codex",
+		"openai",
+		"chatgpt",
+		"ai",
+		"agent",
+		"coding",
+		"code",
+		"chat"
+	],
+	"activationEvents": [
+		"onStartupFinished",
+		"onUri"
+	],
+	"main": "./out/extension.js",
+	"extensionPack": [
+		"openai.codex-audio"
+	],
+	"enabledApiProposals": [
+		"chatSessionsProvider",
+		"languageModelProxy"
+	],
+	"icon": "resources/blossom.dark.png",
+	"//": "Codex command contributions in contributes.commands/keybindings and canonical setting contributions in contributes.configuration are generated and checked in for extension dev; run the matching pnpm --dir extension ...:fix script after editing them.",
+	"contributes": {
+		"commands": [
+			{
+				"command": "chatgpt.implementTodo",
+				"title": "Implement with Codex",
+				"category": "Codex",
+				"enablement": "false"
+			},
+			{
+				"command": "chatgpt.openSidebar",
+				"title": "Open Codex Sidebar",
+				"category": "Codex",
+				"icon": {
+					"light": "resources/blossom-black.svg",
+					"dark": "resources/blossom-white.svg"
+				}
+			},
+			{
+				"command": "chatgpt.openCommandMenu",
+				"title": "Open Codex Command Menu",
+				"category": "Codex"
+			},
+			{
+				"command": "chatgpt.newCodexPanel",
+				"title": "New Codex Agent",
+				"category": "Codex",
+				"icon": "$(plus)"
+			},
+			{
+				"command": "chatgpt.addToThread",
+				"title": "Add to Codex Thread",
+				"category": "Codex"
+			},
+			{
+				"command": "chatgpt.addFileToThread",
+				"title": "Add File to Codex Thread",
+				"category": "Codex"
+			},
+			{
+				"command": "chatgpt.newChat",
+				"title": "New Chat in ChatGPT Sidebar",
+				"category": "Codex"
+			},
+			{
+				"command": "chatgpt.showLspMcpCliArgs",
+				"title": "Copy Codex CLI args for LSP MCP",
+				"category": "Codex"
+			},
+			{
+				"command": "chatgpt.dumpNuxState",
+				"title": "Debug: print NUX state to console",
+				"category": "Codex",
+				"enablement": "chatgpt.sidebarView.visible"
+			},
+			{
+				"command": "chatgpt.resetNuxState",
+				"title": "Debug: reset NUX state",
+				"category": "Codex",
+				"enablement": "chatgpt.sidebarView.visible"
+			}
+		],
+		"keybindings": [
+			{
+				"command": "chatgpt.newChat",
+				"key": "ctrl+n",
+				"mac": "cmd+n",
+				"when": "chatgpt.supportsNewChatKeyShortcut"
+			}
+		],
+		"configuration": {
+			"type": "object",
+			"title": "Codex Settings",
+			"properties": {
+				"chatgpt.commentCodeLensEnabled": {
+					"description": "Enable CodeLens above TODO comments to implement with Codex.",
+					"type": "boolean",
+					"default": true
+				},
+				"chatgpt.cliExecutable": {
+					"description": "DEVELOPMENT ONLY: Path to the Codex CLI executable. You do NOT need to set this unless you are actively developing the Codex CLI. If set this manually, parts of the extension may not work as expected.",
+					"type": [
+						"string",
+						"null"
+					],
+					"default": null,
+					"scope": "application",
+					"restricted": true
+				},
+				"chatgpt.openOnStartup": {
+					"description": "Focus the Codex sidebar when the extension finishes starting up.",
+					"type": "boolean",
+					"default": false
+				},
+				"chatgpt.followUpQueueMode": {
+					"description": "Control whether follow-up messages are queued or steer the current run. Press Cmd/Ctrl+Shift+Enter to do the opposite for a single in-progress follow-up.",
+					"type": "string",
+					"enum": [
+						"queue",
+						"steer",
+						"interrupt"
+					],
+					"default": "queue"
+				},
+				"chatgpt.composerEnterBehavior": {
+					"description": "Enter behavior for the Codex composer.",
+					"type": "string",
+					"enum": [
+						"enter",
+						"cmdIfMultiline",
+						"cmdAlways"
+					],
+					"default": "enter"
+				},
+				"chatgpt.reviewDelivery": {
+					"description": "Start /review inline in the current chat when possible or launch a separate review chat",
+					"type": "string",
+					"enum": [
+						"inline",
+						"detached"
+					],
+					"default": "inline"
+				},
+				"chatgpt.localeOverride": {
+					"description": "Preferred language for the Codex UI. Leave empty to auto detect.",
+					"type": [
+						"string",
+						"null"
+					],
+					"default": null,
+					"scope": "application"
+				},
+				"chatgpt.runCodexInWindowsSubsystemForLinux": {
+					"description": "Windows only: when Windows Subsystem for Linux (WSL) is installed, automatically run Codex inside WSL. Recommended for improved sandbox security and better performance - Agent mode on Windows currently requires WSL. Changing this setting reloads VS Code to take effect.",
+					"type": "boolean",
+					"default": false
+				}
+			}
+		},
+		"viewsContainers": {
+			"activitybar": [
+				{
+					"id": "codexViewContainer",
+					"title": "Codex",
+					"icon": "resources/blossom-white.svg",
+					"when": "chatgpt.doesNotSupportSecondarySidebar"
+				}
+			],
+			"secondarySidebar": [
+				{
+					"id": "codexSecondaryViewContainer",
+					"title": "Codex",
+					"icon": "resources/blossom-white.svg",
+					"when": "!chatgpt.doesNotSupportSecondarySidebar"
+				}
+			]
+		},
+		"views": {
+			"codexViewContainer": [
+				{
+					"id": "chatgpt.sidebarView",
+					"type": "webview",
+					"name": "Codex",
+					"when": "chatgpt.doesNotSupportSecondarySidebar"
+				}
+			],
+			"codexSecondaryViewContainer": [
+				{
+					"id": "chatgpt.sidebarSecondaryView",
+					"type": "webview",
+					"name": "Codex",
+					"when": "!chatgpt.doesNotSupportSecondarySidebar"
+				}
+			]
+		},
+		"customEditors": [
+			{
+				"viewType": "chatgpt.conversationEditor",
+				"displayName": "Codex Chat",
+				"priority": "default",
+				"selector": [
+					{
+						"filenamePattern": "openai-codex:/**/*"
+					}
+				]
+			}
+		],
+		"menus": {
+			"editor/title": [
+				{
+					"command": "chatgpt.openSidebar",
+					"group": "navigation"
+				}
+			],
+			"editor/context": [
+				{
+					"command": "chatgpt.addToThread",
+					"group": "codex",
+					"when": "resourceScheme == file"
+				}
+			],
+			"editor/title/context": [
+				{
+					"command": "chatgpt.addFileToThread",
+					"group": "2_chat",
+					"order": 2,
+					"when": "resourceScheme == file"
+				}
+			],
+			"webview/context": [
+				{
+					"command": "chatgpt.newChat",
+					"when": "(webviewId == 'chatgpt.sidebarView' || webviewId == 'chatgpt.sidebarSecondaryView') && chatgpt.supportsNewChatMenu"
+				}
+			],
+			"commandPalette": [
+				{
+					"command": "chatgpt.showLspMcpCliArgs",
+					"when": "chatgpt.lspMcpEnabled"
+				}
+			],
+			"chatSessions/newSession": [
+				{
+					"command": "chatgpt.newCodexPanel",
+					"when": "chatSessionType == openai-codex"
+				}
+			]
+		},
+		"chatSessions": [
+			{
+				"type": "openai-codex",
+				"name": "Codex",
+				"displayName": "OpenAI Codex",
+				"description": "OpenAI Codex integration for VS Code"
+			}
+		],
+		"grammars": [
+			{
+				"language": "codex-rules",
+				"scopeName": "source.codex-rules",
+				"path": "./syntaxes/starlark.tmLanguage.json"
+			}
+		],
+		"languages": [
+			{
+				"id": "codex-rules",
+				"aliases": [
+					"Codex Rules"
+				],
+				"extensions": [
+					".rules"
+				],
+				"configuration": "./syntaxes/starlark.configuration.json"
+			}
+		]
+	},
+	"__metadata": {
+		"installedTimestamp": 1791545028644,
+		"targetPlatform": "win32-x64",
+		"size": 1452151498
+	}
+}

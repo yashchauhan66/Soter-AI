@@ -1,0 +1,50 @@
+{
+  "status": "INCOMPLETE",
+  "scope": "Actual pinned IDE extension internal message-generation client and its bundled native app-server, synthetic loopback only. No SoterAI product integration or webview/human/real-provider/OS/all-descendant claim.",
+  "independence": "LOW",
+  "phase": "withdraw",
+  "requests": [],
+  "notifications": [],
+  "observations": [],
+  "native": [
+    {
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": false,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    }
+  ],
+  "deniedExternal": [],
+  "deniedSignals": [],
+  "deniedChildLaunches": [],
+  "deniedFileAccess": [],
+  "deniedDirectSpawns": [],
+  "deniedWorkerLaunches": [],
+  "configSha256": "fe2a0619f67d3a08b03a51f24efad69c814b95ce04f9502d6fb77742f3f86f02",
+  "vendorVersion": "26.51007.21434",
+  "vendorActiveBefore": false,
+  "viewCount": 0,
+  "ownerFound": false,
+  "viewFieldNames": [],
+  "driverFailure": {
+    "name": "AssertionError",
+    "code": "ERR_ASSERTION",
+    "message": "Actual IDE message-generation controller required"
+  },
+  "stdinEOFRequested": true,
+  "nativeRetainedWithoutSignal": true,
+  "children": [
+    {
+      "phase": "activate-vendor",
+      "role": "codex-cli",
+      "closed": false,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    }
+  ]
+}

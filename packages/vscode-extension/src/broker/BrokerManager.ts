@@ -16,6 +16,13 @@ export interface BrokerStatus {
     restartCount?: number; safeMode?: { enabled: boolean; level: string }; memorySessionId?: string;
 }
 interface SavedMode { enabled: boolean; level: "developer" | "strict" | "enterprise" }
+function codexAdapterFlags(): boolean[] {
+    const config = vscode.workspace.getConfiguration("soterai");
+    return ["lite.codexCliAdapter", "lite.codexIdeAdapter"].map(name => {
+        const inspected = config.inspect<boolean>(name);
+        return (inspected ? inspected.globalValue ?? inspected.defaultValue ?? true : config.get(name, true)) === true;
+    });
+}
 
 /** One window owns one private IPC child. No saved token/PID/port is adopted. */
 export class BrokerManager implements vscode.Disposable {
@@ -54,7 +61,7 @@ export class BrokerManager implements vscode.Disposable {
         // Compare public routing configuration; never serialize auth material.
         return JSON.stringify([this.enabled(), vscode.workspace.isTrusted,
             config.get("broker.openAIProviderUrl", ""), config.get("broker.anthropicProviderUrl", ""), this.jsonEnabled(), this.gzipEnabled(), this.brotliEnabled(), this.deflateEnabled(), this.chunkedEnabled(), this.framedEnabled(), this.multipartEnabled(), this.base64Enabled(),
-            this.gatewayEnabled(), this.gatewayDependencies(), this.clineSchemasEnabled(), this.claudeSchemasEnabled(), this.codexResponsesEnabled(), config.get("broker.codexResponsesProviderUrl", ""), this.savedMode(), this.gatewayLease?.available() ?? true]);
+            this.gatewayEnabled(), this.gatewayDependencies(), this.clineSchemasEnabled(), this.claudeSchemasEnabled(), codexAdapterFlags(), this.codexResponsesEnabled(), config.get("broker.codexResponsesProviderUrl", ""), this.savedMode(), this.gatewayLease?.available() ?? true]);
     }
     private clineSchemasEnabled(): boolean {
         const config = vscode.workspace.getConfiguration("soterai"), inspected = config.inspect<boolean>("lite.clineAdapter");
@@ -69,8 +76,7 @@ export class BrokerManager implements vscode.Disposable {
         return (inspected ? inspected.globalValue ?? inspected.defaultValue ?? true : config.get("lite.gatewayPolicy", true)) === true;
     }
     private codexResponsesEnabled(): boolean {
-        const config = vscode.workspace.getConfiguration("soterai"), inspected = config.inspect<boolean>("lite.codexCliAdapter");
-        return (inspected ? inspected.globalValue ?? inspected.defaultValue ?? true : config.get("lite.codexCliAdapter", true)) === true;
+        return codexAdapterFlags().some(Boolean);
     }
     private gatewayDependencies(): boolean {
         const config = vscode.workspace.getConfiguration("soterai");

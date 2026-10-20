@@ -1,0 +1,50 @@
+{
+  "status": "INCOMPLETE",
+  "scope": "Actual pinned IDE extension internal message-generation client and its bundled native app-server, synthetic loopback only. No SoterAI product integration or webview/human/real-provider/OS/all-descendant claim.",
+  "independence": "LOW",
+  "phase": "withdraw",
+  "requests": [],
+  "notifications": [],
+  "observations": [],
+  "native": [
+    {
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "code": 0,
+      "signal": null
+    }
+  ],
+  "deniedExternal": [],
+  "deniedSignals": [],
+  "deniedChildLaunches": [],
+  "deniedFileAccess": [],
+  "deniedDirectSpawns": [],
+  "deniedWorkerLaunches": [],
+  "configSha256": "f4fdfa64e83d043fa8f8a3bade65979ca3f919e2eb102c0f0858228be1650f23",
+  "vendorVersion": "26.51007.21434",
+  "vendorActiveBefore": false,
+  "vendorApiObserved": true,
+  "driverFailure": {
+    "name": "Error",
+    "message": "Synthetic IDE operation deadline"
+  },
+  "stdinEOFRequested": true,
+  "children": [
+    {
+      "phase": "activate-vendor",
+      "role": "codex-cli",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "code": 0,
+      "signal": null
+    }
+  ]
+}

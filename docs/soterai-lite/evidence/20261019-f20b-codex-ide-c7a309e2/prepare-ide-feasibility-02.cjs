@@ -1,0 +1,14 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),crypto=require('node:crypto');
+const read=name=>fs.readFileSync(path.join(__dirname,name),'utf8'),write=(name,value)=>fs.writeFileSync(path.join(__dirname,name),value,{flag:'wx'}),sha=value=>crypto.createHash('sha256').update(value).digest('hex');
+let driver=read('ide-feasibility-01.cjs');
+const before="report.vendorVersion=vendor.packageJSON.version;await deadline(vendor.activate());";
+assert(driver.includes(before));driver=driver.replace(before,"report.vendorVersion=vendor.packageJSON.version;report.vendorActiveBefore=vendor.isActive;assert.equal(vendor.isActive,false,'Vendor must activate only after isolation and client capture');write('phase-activation-02.json',JSON.stringify({phase:report.phase,vendorActiveBefore:vendor.isActive})+'\\n');await deadline(vendor.activate());");
+write('ide-feasibility-02.cjs',driver);
+let launcher=read('run-ide-feasibility-01.ps1').replaceAll('ide-feasibility-01.cjs','ide-feasibility-02.cjs');
+const manifest='$taskManifest.activationEvents=@()';assert(launcher.includes(manifest));
+launcher=launcher.replace(manifest,manifest+"\n# chatSessions implies automatic activation even when activationEvents is empty.\n# Suppress only that contribution in the isolated copy, retain original manifest.\n$taskManifest.contributes.PSObject.Properties.Remove('chatSessions')");
+launcher=launcher.replace('loaded manifest activationEvents empty, vendor JS/native bytes unchanged','loaded manifest activationEvents empty and chatSessions contribution removed to prevent implicit preactivation, vendor JS/native bytes unchanged');
+launcher=launcher.replace("@('ide-result.json','bootstrap-error.json','native-request-01.json')","@('ide-result.json','bootstrap-error.json','native-request-01.json','phase-activation-02.json')");
+write('run-ide-feasibility-02.ps1',launcher);
+write('ide-feasibility-freeze-02.json',JSON.stringify({status:'FROZEN_NOT_EXECUTED',driverSha256:sha(driver),launcherSha256:sha(launcher),guardSha256:sha(read('ide-guards-01.cjs')),reason:'Failed first run automatically activated via implicit onChatSession contribution before fixture. Assert inactive before explicit activation in second run; all vendor JS/native bytes unchanged.',scope:'Actual vendor internal IDE client feasibility only, LOW; no product integration/webview/human/provider/OS claim; stdin EOF and natural native close before closeWindow, all signals still denied.'},null,2)+'\n');

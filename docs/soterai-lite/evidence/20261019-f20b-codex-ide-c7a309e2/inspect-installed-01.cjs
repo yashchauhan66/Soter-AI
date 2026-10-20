@@ -1,0 +1,17 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto'),assert=require('node:assert/strict');
+const vendor='C:/Users/USER/.vscode/extensions/openai.chatgpt-26.51007.21434-win32-x64',repo=path.resolve(__dirname,'../../../..');
+const write=(name,value)=>fs.writeFileSync(path.join(__dirname,name),JSON.stringify(value,null,2)+'\n',{flag:'wx'});
+const sha=b=>crypto.createHash('sha256').update(b).digest('hex');
+async function fact(relative){const file=path.join(vendor,relative),before=fs.lstatSync(file);assert.ok(before.isFile()&&!before.isSymbolicLink()&&before.nlink===1);assert.equal(fs.realpathSync(file).toLowerCase(),path.resolve(file).toLowerCase());const hash=crypto.createHash('sha256');for await(const b of fs.createReadStream(file,{highWaterMark:65536}))hash.update(b);const after=fs.lstatSync(file);assert.equal(after.ino,before.ino);assert.equal(after.size,before.size);assert.equal(after.mtimeMs,before.mtimeMs);return{path:file.replaceAll('\\','/'),relative,bytes:before.size,sha256:hash.digest('hex')};}
+(async()=>{
+ const names=['package.json','out/extension.js','bin/windows-x86_64/codex-package.json','bin/windows-x86_64/codex.exe'];const files=[];for(const name of names)files.push(await fact(name));
+ const manifest=JSON.parse(fs.readFileSync(path.join(vendor,'package.json'),'utf8')),runtime=JSON.parse(fs.readFileSync(path.join(vendor,names[2]),'utf8'));
+ assert.equal(manifest.version,'26.51007.21434');assert.equal(runtime.version,'0.162.0-alpha.17.2');assert.equal(files[0].sha256,'10044df52cde43b8e7a98fd6f9c8b159db2283b3bee3a1f12ed7caf44b8d498c');assert.equal(files[2].sha256,'f2fd3028e915fc8f9e7b4ca20ef7a32898270f4c2585d98b3a8d5ba6a93bae93');
+ const code=fs.readFileSync(path.join(vendor,'out/extension.js'),'utf8');assert.ok(Buffer.byteLength(code)<=32*1024*1024);
+ const snippets=[];for(const needle of['CODEX_HOME','cliExecutable','app-server','requires_openai_auth','account/read','turn/start','thread/start','registerCommand','newChat','restartAppServer','authMode','apiKey','exports=']){let cursor=0,count=0;while(count<4){const at=code.indexOf(needle,cursor);if(at<0)break;snippets.push({needle,offset:at,code:code.slice(Math.max(0,at-180),at+420)});cursor=at+needle.length;count++;}}
+ write('installed-public-inputs-01.json',{status:'STATIC_ONLY_NOT_IDE_ROUTE_ACCEPTANCE',vendor,version:manifest.version,runtimeVersion:runtime.version,files,main:manifest.main,activationEvents:manifest.activationEvents,settings:manifest.contributes.configuration,commands:manifest.contributes.commands,scope:'Read only installed public vendor bytes; no normal profile, auth/config/session/history reads or native launch.'});
+ write('public-code-observations-01.json',{status:'STATIC_ONLY',source:files[1],snippets});
+ const checkpoint=JSON.parse(fs.readFileSync(path.join(repo,'docs/soterai-lite/evidence/20261019-f20a-responses-45ae291c/f20a-responses-transition-byte-verification-01.json'),'utf8'));assert.equal(checkpoint.status,'PASS');assert.equal(checkpoint.revision,'c0c9dce010c90c0b419c7979d65ace2677c87c8f');
+ console.log(JSON.stringify({status:'PASS_STATIC_PIN',version:manifest.version,runtime:runtime.version,files:files.map(f=>({relative:f.relative,bytes:f.bytes,sha256:f.sha256})),snippetCount:snippets.length,checkpoint:checkpoint.revision,sourceSha256:sha(Buffer.from(code))}));
+})().catch(e=>{console.error(e);process.exitCode=1;});

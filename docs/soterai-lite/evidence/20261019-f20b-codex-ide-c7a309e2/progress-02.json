@@ -1,0 +1,95 @@
+{
+  "feature": "F20B",
+  "status": "ACTIVE",
+  "result": "INCOMPLETE",
+  "commitStatus": "UNCOMMITTED_NO_COMPLETION_OR_NEXT_CARD",
+  "parent": "c0c9dce010c90c0b419c7979d65ace2677c87c8f",
+  "artifact": {
+    "status": "PACKAGED_NOT_HOST_VERIFIED",
+    "output": "packages\\soterai-lite\\soterai-lite-0.7.0-f20b-20261020-attempt03.vsix",
+    "bytes": 1467550,
+    "sha256": "a72d81daf542a0669d6a73e1c94ba47b075bb062934328befba49cad5e7d8262",
+    "runId": "2026-10-20T04-30-36-273Z-c1313b3a",
+    "extensionSha256": "415c3b4541731353f5a5a0d25575627285d7ed9d927fa7c032134b64738aa93f",
+    "stagedManifestSha256": "60ffe64858a6a2b33d5879995e5f345a3bb6789a7c34f0ebd1b83cb29ea1b4d8"
+  },
+  "controls": {
+    "baseline": {
+      "tests": 52,
+      "pass": 7,
+      "fail": 45,
+      "raw": "focused-before-02.txt"
+    },
+    "firstRestrictedBaseline": "focused-before-01.txt spawn EPERM; no behavioral result",
+    "runtimeDriftBefore": {
+      "tests": 3,
+      "pass": 0,
+      "fail": 3,
+      "raw": "runtime-drift-before-01.txt"
+    },
+    "combinedBeforeReview": {
+      "tests": 155,
+      "pass": 155,
+      "raw": "combined-after-01.txt"
+    },
+    "currentFocused": {
+      "tests": 183,
+      "pass": 183,
+      "raw": "combined-after-02.txt"
+    },
+    "firstFull": {
+      "tests": 2886,
+      "pass": 2880,
+      "fail": 2,
+      "skip": 4,
+      "raw": "full-tests-01.txt",
+      "failures": "Command SoterAI category and canonical README66/67 metadata; corrected without altering runtime assertions"
+    },
+    "broker": {
+      "tests": 144,
+      "pass": 143,
+      "skip": 1,
+      "raw": "broker-tests-01.txt"
+    },
+    "compilers": [
+      "typecheck-02.txt",
+      "broker-typecheck-01.txt"
+    ]
+  },
+  "ideRuns": [
+    {
+      "run": 1,
+      "result": "INCOMPLETE",
+      "reason": "Implicit onChatSession activation before fixture; vendor disposal signal refused by guard",
+      "withdrawal": "NO_CURRENT_OWNED_PROCESSES_OBSERVED",
+      "receipt": "f20b-feasibility-20261020T030918Z-32dcadcd/reconcile-01.json"
+    },
+    {
+      "run": 2,
+      "result": "INCOMPLETE",
+      "reason": "Per-extension API namespace missed; vendor removed close listeners. Original observations retained, not regraded.",
+      "withdrawal": "NO_CURRENT_OWNED_PROCESSES_OBSERVED",
+      "receipt": "f20b-feasibility-20261020T031542Z-e2260a35/reconcile-02.json"
+    },
+    {
+      "run": 3,
+      "result": "PASS_SCOPED_IDE_CLIENT_FEASIBILITY",
+      "reason": "Actual IDE internal client/native route, one public synthetic request6330bytes, response observed, native EOF/exit0/signalnull. Loaded vendor activation manifest modified; original JS/native unchanged.",
+      "receipt": "f20b-feasibility-20261020T031907Z-ec5fd784/ide-result.json",
+      "productAcceptance": false
+    },
+    {
+      "run": 4,
+      "result": "INCOMPLETE",
+      "reason": "Original vendor manifest/JS/native unchanged; eager fixture activation exceeded15s deadline. Actual native initialized and naturally closed exit0/EOF/signalnull, zero provider requests. Cause not established; scheduling dependency is a hypothesis, not an auth blocker.",
+      "withdrawal": "NO_CURRENT_OWNED_PROCESSES_OBSERVED",
+      "receipt": "f20b-feasibility-20261020T033216Z-984f1f0a/reconcile-04.json",
+      "productAcceptance": false
+    }
+  ],
+  "requiredGate": "Actual registered SoterAI owner + current exact VSIX + original pinned IDE/native public/registered-input/output/MCP/cancel/drift/withdrawal matrix NOT RUN. Feasibility03 is not a substitute.",
+  "roundLimit": "Original attempt01 plus improvement02/03/04 consumed three fixture improvements. No fifth IDE run. Existing IMPLEMENTATION-PLAN.md line46 requires leaving card open and reporting blocker after limit. Further IDE fixture execution needs a human decision on an additional round or human-supplied actual evidence.",
+  "pending": "full-tests-02, current previous-CLI20/retained106/functional10/security17 still running when this progress receipt is written; no IDE acceptance or completion commit",
+  "residual": "Previous F20A failed diagnostic workers11701/72516/47543 retain synthetic receiver handles without signals, historical withdrawal INCOMPLETE, F28/L6 followup.",
+  "limits": "Badge Uncovered; restricted buffered text only; code-mode preferences not confinement. No physical webview, real provider, login, human/independent/OS/all-descendant claim. F11 absent/frozen44 ungraded/nine unmanaged leaks retained; no rating; original L6 HUMAN-ACTIONS STOP not reached."
+}

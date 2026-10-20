@@ -1,0 +1,2211 @@
+{
+  "status": "PASS_SCOPED_PRODUCT_IDE_MATRIX",
+  "independence": "LOW",
+  "checks": [
+    {
+      "id": "F20B-N01",
+      "status": "PASS"
+    },
+    {
+      "id": "F20B-N02",
+      "status": "PASS"
+    },
+    {
+      "id": "F20B-N03",
+      "status": "PASS"
+    },
+    {
+      "id": "F20B-N21",
+      "status": "PASS"
+    },
+    {
+      "id": "F20B-N04",
+      "status": "PASS"
+    },
+    {
+      "id": "F20B-N05",
+      "status": "PASS"
+    },
+    {
+      "id": "F20B-N06",
+      "status": "PASS"
+    },
+    {
+      "id": "F20B-N07",
+      "status": "PASS"
+    },
+    {
+      "id": "F20B-N08",
+      "status": "PASS"
+    },
+    {
+      "id": "F20B-N09",
+      "status": "PASS"
+    },
+    {
+      "id": "F20B-N10",
+      "status": "PASS"
+    },
+    {
+      "id": "F20B-N19",
+      "status": "PASS"
+    },
+    {
+      "id": "F20B-N20",
+      "status": "PASS"
+    },
+    {
+      "id": "F20B-N11",
+      "status": "PASS"
+    },
+    {
+      "id": "F20B-N12",
+      "status": "PASS"
+    },
+    {
+      "id": "F20B-N13",
+      "status": "PASS"
+    },
+    {
+      "id": "F20B-N14",
+      "status": "PASS"
+    },
+    {
+      "id": "F20B-N15",
+      "status": "PASS"
+    },
+    {
+      "id": "F20B-N16",
+      "status": "PASS"
+    },
+    {
+      "id": "F20B-N17",
+      "status": "PASS"
+    },
+    {
+      "id": "F20B-N18",
+      "status": "PASS"
+    }
+  ],
+  "requests": [
+    {
+      "phase": "provider-public",
+      "route": "/v1/responses",
+      "bytes": 9091,
+      "publicSeen": false,
+      "maskedEnvSeen": false,
+      "privateOriginalSeen": false,
+      "toolNames": [
+        "list_mcp_resources",
+        "list_mcp_resource_templates",
+        "read_mcp_resource",
+        "request_user_input",
+        "mcp__soterai_safe_read",
+        "soterai_read_project_file_safely"
+      ],
+      "upstreamAuth": true
+    },
+    {
+      "phase": "mcp-public",
+      "route": "/v1/responses",
+      "bytes": 9091,
+      "publicSeen": false,
+      "maskedEnvSeen": false,
+      "privateOriginalSeen": false,
+      "toolNames": [
+        "list_mcp_resources",
+        "list_mcp_resource_templates",
+        "read_mcp_resource",
+        "request_user_input",
+        "mcp__soterai_safe_read",
+        "soterai_read_project_file_safely"
+      ],
+      "upstreamAuth": true
+    },
+    {
+      "phase": "mcp-public",
+      "route": "/v1/responses",
+      "bytes": 9583,
+      "publicSeen": true,
+      "maskedEnvSeen": false,
+      "privateOriginalSeen": false,
+      "toolNames": [
+        "list_mcp_resources",
+        "list_mcp_resource_templates",
+        "read_mcp_resource",
+        "request_user_input",
+        "mcp__soterai_safe_read",
+        "soterai_read_project_file_safely"
+      ],
+      "upstreamAuth": true
+    },
+    {
+      "phase": "mcp-env",
+      "route": "/v1/responses",
+      "bytes": 9091,
+      "publicSeen": false,
+      "maskedEnvSeen": false,
+      "privateOriginalSeen": false,
+      "toolNames": [
+        "list_mcp_resources",
+        "list_mcp_resource_templates",
+        "read_mcp_resource",
+        "request_user_input",
+        "mcp__soterai_safe_read",
+        "soterai_read_project_file_safely"
+      ],
+      "upstreamAuth": true
+    },
+    {
+      "phase": "mcp-env",
+      "route": "/v1/responses",
+      "bytes": 9587,
+      "publicSeen": false,
+      "maskedEnvSeen": true,
+      "privateOriginalSeen": false,
+      "toolNames": [
+        "list_mcp_resources",
+        "list_mcp_resource_templates",
+        "read_mcp_resource",
+        "request_user_input",
+        "mcp__soterai_safe_read",
+        "soterai_read_project_file_safely"
+      ],
+      "upstreamAuth": true
+    },
+    {
+      "phase": "mcp-cancel",
+      "route": "/v1/responses",
+      "bytes": 9091,
+      "publicSeen": false,
+      "maskedEnvSeen": false,
+      "privateOriginalSeen": false,
+      "toolNames": [
+        "list_mcp_resources",
+        "list_mcp_resource_templates",
+        "read_mcp_resource",
+        "request_user_input",
+        "mcp__soterai_safe_read",
+        "soterai_read_project_file_safely"
+      ],
+      "upstreamAuth": true
+    },
+    {
+      "phase": "mcp-cancel",
+      "route": "/v1/responses",
+      "bytes": 9500,
+      "publicSeen": false,
+      "maskedEnvSeen": false,
+      "privateOriginalSeen": false,
+      "toolNames": [
+        "list_mcp_resources",
+        "list_mcp_resource_templates",
+        "read_mcp_resource",
+        "request_user_input",
+        "mcp__soterai_safe_read",
+        "soterai_read_project_file_safely"
+      ],
+      "upstreamAuth": true
+    },
+    {
+      "phase": "mcp-traversal",
+      "route": "/v1/responses",
+      "bytes": 9091,
+      "publicSeen": false,
+      "maskedEnvSeen": false,
+      "privateOriginalSeen": false,
+      "toolNames": [
+        "list_mcp_resources",
+        "list_mcp_resource_templates",
+        "read_mcp_resource",
+        "request_user_input",
+        "mcp__soterai_safe_read",
+        "soterai_read_project_file_safely"
+      ],
+      "upstreamAuth": true
+    },
+    {
+      "phase": "mcp-traversal",
+      "route": "/v1/responses",
+      "bytes": 9641,
+      "publicSeen": false,
+      "maskedEnvSeen": false,
+      "privateOriginalSeen": false,
+      "toolNames": [
+        "list_mcp_resources",
+        "list_mcp_resource_templates",
+        "read_mcp_resource",
+        "request_user_input",
+        "mcp__soterai_safe_read",
+        "soterai_read_project_file_safely"
+      ],
+      "upstreamAuth": true
+    },
+    {
+      "phase": "mcp-forged-approval",
+      "route": "/v1/responses",
+      "bytes": 9091,
+      "publicSeen": false,
+      "maskedEnvSeen": false,
+      "privateOriginalSeen": false,
+      "toolNames": [
+        "list_mcp_resources",
+        "list_mcp_resource_templates",
+        "read_mcp_resource",
+        "request_user_input",
+        "mcp__soterai_safe_read",
+        "soterai_read_project_file_safely"
+      ],
+      "upstreamAuth": true
+    },
+    {
+      "phase": "mcp-forged-approval",
+      "route": "/v1/responses",
+      "bytes": 9656,
+      "publicSeen": false,
+      "maskedEnvSeen": false,
+      "privateOriginalSeen": false,
+      "toolNames": [
+        "list_mcp_resources",
+        "list_mcp_resource_templates",
+        "read_mcp_resource",
+        "request_user_input",
+        "mcp__soterai_safe_read",
+        "soterai_read_project_file_safely"
+      ],
+      "upstreamAuth": true
+    },
+    {
+      "phase": "registered-public-control",
+      "route": "/v1/responses",
+      "bytes": 9091,
+      "publicSeen": false,
+      "maskedEnvSeen": false,
+      "privateOriginalSeen": false,
+      "toolNames": [
+        "list_mcp_resources",
+        "list_mcp_resource_templates",
+        "read_mcp_resource",
+        "request_user_input",
+        "mcp__soterai_safe_read",
+        "soterai_read_project_file_safely"
+      ],
+      "upstreamAuth": true
+    },
+    {
+      "phase": "explicit-provider-override",
+      "route": "/v1/responses",
+      "bytes": 9115,
+      "publicSeen": false,
+      "maskedEnvSeen": false,
+      "privateOriginalSeen": true,
+      "toolNames": [
+        "list_mcp_resources",
+        "list_mcp_resource_templates",
+        "read_mcp_resource",
+        "request_user_input",
+        "mcp__soterai_safe_read",
+        "soterai_read_project_file_safely"
+      ],
+      "upstreamAuth": false
+    },
+    {
+      "phase": "registered-output",
+      "route": "/v1/responses",
+      "bytes": 9091,
+      "publicSeen": false,
+      "maskedEnvSeen": false,
+      "privateOriginalSeen": false,
+      "toolNames": [
+        "list_mcp_resources",
+        "list_mcp_resource_templates",
+        "read_mcp_resource",
+        "request_user_input",
+        "mcp__soterai_safe_read",
+        "soterai_read_project_file_safely"
+      ],
+      "upstreamAuth": true
+    }
+  ],
+  "mcp": [
+    {
+      "phase": "provider-public",
+      "method": "initialize",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 200
+    },
+    {
+      "phase": "provider-public",
+      "method": "notifications/initialized",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 202
+    },
+    {
+      "phase": "provider-public",
+      "method": "tools/list",
+      "argumentKeys": [],
+      "metadataKeys": [
+        "progressToken"
+      ],
+      "code": 200
+    },
+    {
+      "phase": "mcp-public",
+      "method": "initialize",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 200
+    },
+    {
+      "phase": "mcp-public",
+      "method": "notifications/initialized",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 202
+    },
+    {
+      "phase": "mcp-public",
+      "method": "tools/list",
+      "argumentKeys": [],
+      "metadataKeys": [
+        "progressToken"
+      ],
+      "code": 200
+    },
+    {
+      "phase": "mcp-public",
+      "method": "tools/call",
+      "argumentKeys": [
+        "path"
+      ],
+      "metadataKeys": [
+        "callId",
+        "x-codex-turn-metadata",
+        "threadId",
+        "sessionId",
+        "windowId",
+        "itemId",
+        "progressToken"
+      ],
+      "code": 200
+    },
+    {
+      "phase": "mcp-env",
+      "method": "initialize",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 200
+    },
+    {
+      "phase": "mcp-env",
+      "method": "notifications/initialized",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 202
+    },
+    {
+      "phase": "mcp-env",
+      "method": "tools/list",
+      "argumentKeys": [],
+      "metadataKeys": [
+        "progressToken"
+      ],
+      "code": 200
+    },
+    {
+      "phase": "mcp-env",
+      "method": "tools/call",
+      "argumentKeys": [
+        "path"
+      ],
+      "metadataKeys": [
+        "callId",
+        "x-codex-turn-metadata",
+        "threadId",
+        "sessionId",
+        "windowId",
+        "itemId",
+        "progressToken"
+      ],
+      "code": 200
+    },
+    {
+      "phase": "mcp-cancel",
+      "method": "initialize",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 200
+    },
+    {
+      "phase": "mcp-cancel",
+      "method": "notifications/initialized",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 202
+    },
+    {
+      "phase": "mcp-cancel",
+      "method": "tools/list",
+      "argumentKeys": [],
+      "metadataKeys": [
+        "progressToken"
+      ],
+      "code": 200
+    },
+    {
+      "phase": "mcp-cancel",
+      "method": "tools/call",
+      "argumentKeys": [
+        "path"
+      ],
+      "metadataKeys": [
+        "callId",
+        "x-codex-turn-metadata",
+        "threadId",
+        "sessionId",
+        "windowId",
+        "itemId",
+        "progressToken"
+      ],
+      "code": 200
+    },
+    {
+      "phase": "mcp-traversal",
+      "method": "initialize",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 200
+    },
+    {
+      "phase": "mcp-traversal",
+      "method": "notifications/initialized",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 202
+    },
+    {
+      "phase": "mcp-traversal",
+      "method": "tools/list",
+      "argumentKeys": [],
+      "metadataKeys": [
+        "progressToken"
+      ],
+      "code": 200
+    },
+    {
+      "phase": "mcp-traversal",
+      "method": "tools/call",
+      "argumentKeys": [
+        "path"
+      ],
+      "metadataKeys": [
+        "callId",
+        "x-codex-turn-metadata",
+        "threadId",
+        "sessionId",
+        "windowId",
+        "itemId",
+        "progressToken"
+      ],
+      "code": 200
+    },
+    {
+      "phase": "mcp-forged-approval",
+      "method": "initialize",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 200
+    },
+    {
+      "phase": "mcp-forged-approval",
+      "method": "notifications/initialized",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 202
+    },
+    {
+      "phase": "mcp-forged-approval",
+      "method": "tools/list",
+      "argumentKeys": [],
+      "metadataKeys": [
+        "progressToken"
+      ],
+      "code": 200
+    },
+    {
+      "phase": "mcp-forged-approval",
+      "method": "tools/call",
+      "argumentKeys": [
+        "path",
+        "approved"
+      ],
+      "metadataKeys": [
+        "callId",
+        "x-codex-turn-metadata",
+        "threadId",
+        "sessionId",
+        "windowId",
+        "itemId",
+        "progressToken"
+      ],
+      "code": 200
+    },
+    {
+      "phase": "registered-public-control",
+      "method": "initialize",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 200
+    },
+    {
+      "phase": "registered-public-control",
+      "method": "notifications/initialized",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 202
+    },
+    {
+      "phase": "registered-public-control",
+      "method": "tools/list",
+      "argumentKeys": [],
+      "metadataKeys": [
+        "progressToken"
+      ],
+      "code": 200
+    },
+    {
+      "phase": "registered-context",
+      "method": "initialize",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 200
+    },
+    {
+      "phase": "registered-context",
+      "method": "notifications/initialized",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 202
+    },
+    {
+      "phase": "registered-context",
+      "method": "tools/list",
+      "argumentKeys": [],
+      "metadataKeys": [
+        "progressToken"
+      ],
+      "code": 200
+    },
+    {
+      "phase": "explicit-provider-override",
+      "method": "initialize",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 200
+    },
+    {
+      "phase": "explicit-provider-override",
+      "method": "notifications/initialized",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 202
+    },
+    {
+      "phase": "explicit-provider-override",
+      "method": "tools/list",
+      "argumentKeys": [],
+      "metadataKeys": [
+        "progressToken"
+      ],
+      "code": 200
+    },
+    {
+      "phase": "registered-output",
+      "method": "initialize",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 200
+    },
+    {
+      "phase": "registered-output",
+      "method": "notifications/initialized",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 202
+    },
+    {
+      "phase": "registered-output",
+      "method": "tools/list",
+      "argumentKeys": [],
+      "metadataKeys": [
+        "progressToken"
+      ],
+      "code": 200
+    },
+    {
+      "phase": "config-drift",
+      "method": "initialize",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 503
+    },
+    {
+      "phase": "config-drift",
+      "method": "initialize",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 503
+    },
+    {
+      "phase": "config-drift",
+      "method": "initialize",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 503
+    },
+    {
+      "phase": "withdrawn-after-drift-review",
+      "code": 503,
+      "method": "initialize",
+      "argumentKeys": [],
+      "metadataKeys": []
+    },
+    {
+      "phase": "withdrawn-after-drift-review",
+      "code": 503,
+      "method": "initialize",
+      "argumentKeys": [],
+      "metadataKeys": []
+    },
+    {
+      "phase": "withdrawn-after-drift-review",
+      "code": 503,
+      "method": "initialize",
+      "argumentKeys": [],
+      "metadataKeys": []
+    },
+    {
+      "phase": "flag-off",
+      "code": 503,
+      "method": "initialize",
+      "argumentKeys": [],
+      "metadataKeys": []
+    },
+    {
+      "phase": "flag-off",
+      "code": 503,
+      "method": "initialize",
+      "argumentKeys": [],
+      "metadataKeys": []
+    },
+    {
+      "phase": "flag-off",
+      "code": 503,
+      "method": "initialize",
+      "argumentKeys": [],
+      "metadataKeys": []
+    },
+    {
+      "phase": "flag-reenabled-old-capability",
+      "code": 503,
+      "method": "initialize",
+      "argumentKeys": [],
+      "metadataKeys": []
+    },
+    {
+      "phase": "flag-reenabled-old-capability",
+      "code": 503,
+      "method": "initialize",
+      "argumentKeys": [],
+      "metadataKeys": []
+    },
+    {
+      "phase": "flag-reenabled-old-capability",
+      "code": 503,
+      "method": "initialize",
+      "argumentKeys": [],
+      "metadataKeys": []
+    }
+  ],
+  "modals": [
+    {
+      "phase": "setup",
+      "kind": "config",
+      "bytes": 1459,
+      "sha256": "6a394313283bd37d27a529edc5ec5a244248602eb4cc2b24fb2a12dd89ea5ad7"
+    },
+    {
+      "phase": "setup",
+      "kind": "config",
+      "bytes": 1459,
+      "sha256": "99c316cc09c9952d9dcacd0c0b5d180a7a2dae8b760f6e5cb22288c1ee7e14a5"
+    },
+    {
+      "phase": "mcp-public",
+      "kind": "safe-read",
+      "bytes": 28,
+      "sha256": "97b69a493c1127235425c12d3d5f95aaae0575cc0fe38ca9d70270372255659f"
+    },
+    {
+      "phase": "mcp-env",
+      "kind": "safe-read",
+      "bytes": 33,
+      "sha256": "16e2887b35d04405fdf12eb19f5be2d5f07af9752977cc3363d778b46913c0c4"
+    },
+    {
+      "phase": "mcp-cancel",
+      "kind": "safe-read",
+      "bytes": 33,
+      "sha256": "16e2887b35d04405fdf12eb19f5be2d5f07af9752977cc3363d778b46913c0c4"
+    },
+    {
+      "phase": "withdrawn-after-drift-review",
+      "kind": "config",
+      "bytes": 842,
+      "sha256": "64f8b499af07d6139e2a983bf30279ed5dca905333dea976610333a1cb945ecc"
+    },
+    {
+      "phase": "flag-reenabled-old-capability",
+      "kind": "config",
+      "bytes": 842,
+      "sha256": "64f8b499af07d6139e2a983bf30279ed5dca905333dea976610333a1cb945ecc"
+    }
+  ],
+  "native": [
+    {
+      "phase": "provider-public",
+      "complete": true,
+      "privateOutputSeen": false,
+      "turnStatus": "completed",
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 8448,
+      "stderrBytes": 3574,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "80e1976f6f05bc543abad4018501fab10c0815fa1dc71d7a495100b587c292f9",
+      "stderrSha256": "687f4824ab0b30526ad0fee4ef8df31cdce735ccdfac2dd56ac7923af4df4460"
+    },
+    {
+      "phase": "mcp-public",
+      "complete": true,
+      "privateOutputSeen": false,
+      "turnStatus": "completed",
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 10361,
+      "stderrBytes": 3574,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "70a3ecae004727e76398621f6245d4d07a4ddbad1975775e513c63fce9feba47",
+      "stderrSha256": "2e1aafadf08b3bf0a67f7e62c658b0a4bdf74635a23b16ef6e3dc178428861a2"
+    },
+    {
+      "phase": "mcp-env",
+      "complete": true,
+      "privateOutputSeen": false,
+      "turnStatus": "completed",
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 10360,
+      "stderrBytes": 3574,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "e8bda12a6b973c29401c03c54d3f66d71842cdfe4ef6ad9f80315b9731f27046",
+      "stderrSha256": "a69977abbdad235d72dffb9244aa0475232bac954d78f78603fb0a3414894e4b"
+    },
+    {
+      "phase": "mcp-cancel",
+      "complete": true,
+      "privateOutputSeen": false,
+      "turnStatus": "completed",
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 10272,
+      "stderrBytes": 3574,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "16f2295a891a3d7a31022956676d4d63d5703c2dc012881b5a273affe30f59dc",
+      "stderrSha256": "66aa959f98750d8baaa306562202458e6c0b00b0b41deca0a2ab1600206af041"
+    },
+    {
+      "phase": "mcp-traversal",
+      "complete": true,
+      "privateOutputSeen": false,
+      "turnStatus": "completed",
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 10352,
+      "stderrBytes": 3853,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "516545cfcb1d463b42aebb15bcd529247b40ae5810dce7df5893cf88654747d4",
+      "stderrSha256": "ef48ccc46f56be272db3d7f14eec062e051733992fa58ed660ffda65499985f5"
+    },
+    {
+      "phase": "mcp-forged-approval",
+      "complete": true,
+      "privateOutputSeen": false,
+      "turnStatus": "completed",
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 10378,
+      "stderrBytes": 3853,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "d850267cd73399099b0b9e98b3fa2e1359467995878d0bf3c9102d9ced8e1691",
+      "stderrSha256": "82d87c91f585f047d483888f18324a78c55df7f72994cd3f45a0f0576305f789"
+    },
+    {
+      "phase": "registered-public-control",
+      "complete": true,
+      "privateOutputSeen": false,
+      "turnStatus": "completed",
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 8451,
+      "stderrBytes": 3574,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "492621cc0fdf405a4afe2e4a460c644116b82cdb2ed60444cc066ea475935710",
+      "stderrSha256": "70fd45fc3ea89c5e37ae161a7b5a4d7e8e862b27af4fe3a81098fe3d88c1503c"
+    },
+    {
+      "phase": "registered-context",
+      "complete": false,
+      "privateOutputSeen": false,
+      "turnStatus": "failed",
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 7395,
+      "stderrBytes": 3574,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "087b0ed6179b40358a14cbe4881ac63147c49e4fc98283ec901d9cdda316f2a0",
+      "stderrSha256": "452c785497f069288081de3e9b7835b4108ed261d731a876e8ca693cce7a866c"
+    },
+    {
+      "phase": "explicit-provider-override",
+      "complete": true,
+      "privateOutputSeen": false,
+      "turnStatus": "completed",
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 8498,
+      "stderrBytes": 3574,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "29eedfb9897834f1755379f62d68f5711c6f49cb8b999c2b68f44c9f41f6ec03",
+      "stderrSha256": "28203ed327e83fe80cfefcb75d547242fd4eb1184033b302f31ab01624213965"
+    },
+    {
+      "phase": "registered-output",
+      "complete": false,
+      "privateOutputSeen": false,
+      "turnStatus": "failed",
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 7365,
+      "stderrBytes": 3574,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "0d5ac6277e2334ba4f19fe0384b06344766ba16c72025569c525c0f3d1c03313",
+      "stderrSha256": "03552f20084fe061fb840b6905a582e3199c1f4fd1b2061be797b46517c22d10"
+    },
+    {
+      "phase": "config-drift",
+      "complete": false,
+      "privateOutputSeen": false,
+      "nativeError": {
+        "name": "Error"
+      },
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 1651,
+      "stderrBytes": 8170,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "5e936cde20951245aff6d0158a0192c18f0d02b9b0fdf251a84ddc12e187eb34",
+      "stderrSha256": "9f142faec3b48fe2479204713c17b99b989e6c049a7f133a86cf04dcff82978c"
+    },
+    {
+      "phase": "withdrawn-after-drift-review",
+      "complete": false,
+      "privateOutputSeen": false,
+      "nativeError": {
+        "name": "Error"
+      },
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 1651,
+      "stderrBytes": 8170,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "2d859093aea20d0a93e034fad26ad6851e737a8907616acb7ef6ed282fbe1245",
+      "stderrSha256": "6a93e4d7f9e2d159b305ae627ed9eab4e65f87985d3fb5f42d34b98d8897ddbd"
+    },
+    {
+      "phase": "flag-off",
+      "complete": false,
+      "privateOutputSeen": false,
+      "nativeError": {
+        "name": "Error"
+      },
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 1651,
+      "stderrBytes": 8170,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "5a9f9921b4a818e98dfcfb6074c6c704b1fec151801185a2885bd5f94eb1011f",
+      "stderrSha256": "b2d51db376ce626793c5131bbf61d64fc673ae425819a80f45caa6a3e2a9efc7"
+    },
+    {
+      "phase": "flag-reenabled-old-capability",
+      "complete": false,
+      "privateOutputSeen": false,
+      "nativeError": {
+        "name": "Error"
+      },
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 1651,
+      "stderrBytes": 8170,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "bae85b47f6d559c45359510710e6b0281b905e9b8584079a72e5a15c3a55e196",
+      "stderrSha256": "1ff34d7e94af2785c563d693f0eecd2757e6cc4490e37956834d87d2d4401df5"
+    }
+  ],
+  "phase": "flag-reenabled-old-capability",
+  "limits": [
+    "Actual exact VSIX runtime via isolated developer bootstrap; no clean-install/human/independent claim",
+    "Actual pinned IDE26.51007.21434/internal client and bundled0.162.0-alpha.17.2; physical webview remains unverified",
+    "Restricted stateless text Responses through revocable proxy and current broker; complete output buffered; explicit provider override remains uncovered",
+    "Parent Node guards do not establish OS or all-descendant traffic isolation"
+  ],
+  "deniedExternal": [
+    "fetch",
+    "fetch"
+  ],
+  "deniedSignals": [],
+  "deniedChildLaunches": [
+    {
+      "executable": "codex.exe",
+      "argc": 4,
+      "cwdSynthetic": false
+    }
+  ],
+  "deniedFileAccess": [],
+  "deniedDirectSpawns": [],
+  "deniedWorkerLaunches": [],
+  "ideProcesses": [
+    {
+      "phase": "provider-public",
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 8448,
+      "stderrBytes": 3574,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "80e1976f6f05bc543abad4018501fab10c0815fa1dc71d7a495100b587c292f9",
+      "stderrSha256": "687f4824ab0b30526ad0fee4ef8df31cdce735ccdfac2dd56ac7923af4df4460"
+    },
+    {
+      "phase": "mcp-public",
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 10361,
+      "stderrBytes": 3574,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "70a3ecae004727e76398621f6245d4d07a4ddbad1975775e513c63fce9feba47",
+      "stderrSha256": "2e1aafadf08b3bf0a67f7e62c658b0a4bdf74635a23b16ef6e3dc178428861a2"
+    },
+    {
+      "phase": "mcp-env",
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 10360,
+      "stderrBytes": 3574,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "e8bda12a6b973c29401c03c54d3f66d71842cdfe4ef6ad9f80315b9731f27046",
+      "stderrSha256": "a69977abbdad235d72dffb9244aa0475232bac954d78f78603fb0a3414894e4b"
+    },
+    {
+      "phase": "mcp-cancel",
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 10272,
+      "stderrBytes": 3574,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "16f2295a891a3d7a31022956676d4d63d5703c2dc012881b5a273affe30f59dc",
+      "stderrSha256": "66aa959f98750d8baaa306562202458e6c0b00b0b41deca0a2ab1600206af041"
+    },
+    {
+      "phase": "mcp-traversal",
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 10352,
+      "stderrBytes": 3853,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "516545cfcb1d463b42aebb15bcd529247b40ae5810dce7df5893cf88654747d4",
+      "stderrSha256": "ef48ccc46f56be272db3d7f14eec062e051733992fa58ed660ffda65499985f5"
+    },
+    {
+      "phase": "mcp-forged-approval",
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 10378,
+      "stderrBytes": 3853,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "d850267cd73399099b0b9e98b3fa2e1359467995878d0bf3c9102d9ced8e1691",
+      "stderrSha256": "82d87c91f585f047d483888f18324a78c55df7f72994cd3f45a0f0576305f789"
+    },
+    {
+      "phase": "registered-public-control",
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 8451,
+      "stderrBytes": 3574,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "492621cc0fdf405a4afe2e4a460c644116b82cdb2ed60444cc066ea475935710",
+      "stderrSha256": "70fd45fc3ea89c5e37ae161a7b5a4d7e8e862b27af4fe3a81098fe3d88c1503c"
+    },
+    {
+      "phase": "registered-context",
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 7395,
+      "stderrBytes": 3574,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "087b0ed6179b40358a14cbe4881ac63147c49e4fc98283ec901d9cdda316f2a0",
+      "stderrSha256": "452c785497f069288081de3e9b7835b4108ed261d731a876e8ca693cce7a866c"
+    },
+    {
+      "phase": "explicit-provider-override",
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 8498,
+      "stderrBytes": 3574,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "29eedfb9897834f1755379f62d68f5711c6f49cb8b999c2b68f44c9f41f6ec03",
+      "stderrSha256": "28203ed327e83fe80cfefcb75d547242fd4eb1184033b302f31ab01624213965"
+    },
+    {
+      "phase": "registered-output",
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 7365,
+      "stderrBytes": 3574,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "0d5ac6277e2334ba4f19fe0384b06344766ba16c72025569c525c0f3d1c03313",
+      "stderrSha256": "03552f20084fe061fb840b6905a582e3199c1f4fd1b2061be797b46517c22d10"
+    },
+    {
+      "phase": "config-drift",
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 1651,
+      "stderrBytes": 8170,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "5e936cde20951245aff6d0158a0192c18f0d02b9b0fdf251a84ddc12e187eb34",
+      "stderrSha256": "9f142faec3b48fe2479204713c17b99b989e6c049a7f133a86cf04dcff82978c"
+    },
+    {
+      "phase": "withdrawn-after-drift-review",
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 1651,
+      "stderrBytes": 8170,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "2d859093aea20d0a93e034fad26ad6851e737a8907616acb7ef6ed282fbe1245",
+      "stderrSha256": "6a93e4d7f9e2d159b305ae627ed9eab4e65f87985d3fb5f42d34b98d8897ddbd"
+    },
+    {
+      "phase": "flag-off",
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 1651,
+      "stderrBytes": 8170,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "5a9f9921b4a818e98dfcfb6074c6c704b1fec151801185a2885bd5f94eb1011f",
+      "stderrSha256": "b2d51db376ce626793c5131bbf61d64fc673ae425819a80f45caa6a3e2a9efc7"
+    },
+    {
+      "phase": "flag-reenabled-old-capability",
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 1651,
+      "stderrBytes": 8170,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "bae85b47f6d559c45359510710e6b0281b905e9b8584079a72e5a15c3a55e196",
+      "stderrSha256": "1ff34d7e94af2785c563d693f0eecd2757e6cc4490e37956834d87d2d4401df5"
+    }
+  ],
+  "providerUrl": "http://127.0.0.1:49549",
+  "ownerDiagnostic": {
+    "found": true,
+    "available": true,
+    "readerEnabled": true,
+    "trusted": true,
+    "folders": 1,
+    "roamingRelative": "profile\\AppData\\Roaming",
+    "storage": {
+      "scheme": "vscode-userdata",
+      "authorityEmpty": true,
+      "absolute": true,
+      "relative": "profile\\User\\globalStorage\\soterai.soterai-ide-guard",
+      "storedReceiptPresent": false
+    }
+  },
+  "ownerStages": [
+    {
+      "method": "saved",
+      "leaf": "workspace",
+      "result": "ABSENT"
+    },
+    {
+      "method": "stamp",
+      "leaf": "package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex-package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "extension.js",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex.exe",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex-package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "package.json",
+      "result": "object"
+    },
+    {
+      "method": "bounded",
+      "leaf": "package.json",
+      "result": "BYTES_7510"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex-package.json",
+      "result": "object"
+    },
+    {
+      "method": "bounded",
+      "leaf": "codex-package.json",
+      "result": "BYTES_226"
+    },
+    {
+      "method": "stamp",
+      "leaf": "package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "extension.js",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex-package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex.exe",
+      "result": "object"
+    },
+    {
+      "method": "artifact",
+      "result": "ABSENT"
+    },
+    {
+      "method": "projectEligible",
+      "result": true
+    },
+    {
+      "method": "parent",
+      "leaf": "globalStorage",
+      "result": "ABSENT"
+    },
+    {
+      "method": "parent",
+      "leaf": "soterai.soterai-ide-guard",
+      "result": "ABSENT"
+    },
+    {
+      "method": "parent",
+      "leaf": "adapter-sessions",
+      "result": "ABSENT"
+    },
+    {
+      "method": "parent",
+      "leaf": "codex-ide-b7cbb632-94e8-4ef7-9d24-168cc7bf713b",
+      "result": "ABSENT"
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "error": {
+        "name": "Error",
+        "code": "ENOENT"
+      }
+    },
+    {
+      "method": "bounded",
+      "leaf": "config.toml",
+      "error": {
+        "name": "Error",
+        "code": "ENOENT"
+      }
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "error": {
+        "name": "Error",
+        "code": "ENOENT"
+      }
+    },
+    {
+      "method": "bounded",
+      "leaf": "config.toml",
+      "error": {
+        "name": "Error",
+        "code": "ENOENT"
+      }
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "error": {
+        "name": "Error",
+        "code": "ENOENT"
+      }
+    },
+    {
+      "method": "bounded",
+      "leaf": "config.toml",
+      "error": {
+        "name": "Error",
+        "code": "ENOENT"
+      }
+    },
+    {
+      "method": "saved",
+      "leaf": "workspace",
+      "result": "ABSENT"
+    },
+    {
+      "method": "stamp",
+      "leaf": "package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "extension.js",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex-package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex.exe",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex-package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "package.json",
+      "result": "object"
+    },
+    {
+      "method": "bounded",
+      "leaf": "package.json",
+      "result": "BYTES_7510"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex-package.json",
+      "result": "object"
+    },
+    {
+      "method": "bounded",
+      "leaf": "codex-package.json",
+      "result": "BYTES_226"
+    },
+    {
+      "method": "stamp",
+      "leaf": "package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "extension.js",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex-package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex.exe",
+      "result": "object"
+    },
+    {
+      "method": "artifact",
+      "result": "ABSENT"
+    },
+    {
+      "method": "projectEligible",
+      "result": true
+    },
+    {
+      "method": "parent",
+      "leaf": "adapter-sessions",
+      "result": "ABSENT"
+    },
+    {
+      "method": "parent",
+      "leaf": "codex-ide-578c18dc-73ce-41e8-90d6-680312400c2a",
+      "result": "ABSENT"
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "error": {
+        "name": "Error",
+        "code": "ENOENT"
+      }
+    },
+    {
+      "method": "bounded",
+      "leaf": "config.toml",
+      "error": {
+        "name": "Error",
+        "code": "ENOENT"
+      }
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "error": {
+        "name": "Error",
+        "code": "ENOENT"
+      }
+    },
+    {
+      "method": "bounded",
+      "leaf": "config.toml",
+      "error": {
+        "name": "Error",
+        "code": "ENOENT"
+      }
+    },
+    {
+      "method": "stamp",
+      "leaf": "package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "extension.js",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex-package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex.exe",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex-package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "package.json",
+      "result": "object"
+    },
+    {
+      "method": "bounded",
+      "leaf": "package.json",
+      "result": "BYTES_7510"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex-package.json",
+      "result": "object"
+    },
+    {
+      "method": "bounded",
+      "leaf": "codex-package.json",
+      "result": "BYTES_226"
+    },
+    {
+      "method": "stamp",
+      "leaf": "package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "extension.js",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex-package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex.exe",
+      "result": "object"
+    },
+    {
+      "method": "artifact",
+      "result": "ABSENT"
+    },
+    {
+      "method": "projectEligible",
+      "result": true
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "error": {
+        "name": "Error",
+        "code": "ENOENT"
+      }
+    },
+    {
+      "method": "bounded",
+      "leaf": "config.toml",
+      "error": {
+        "name": "Error",
+        "code": "ENOENT"
+      }
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "error": {
+        "name": "Error",
+        "code": "ENOENT"
+      }
+    },
+    {
+      "method": "bounded",
+      "leaf": "config.toml",
+      "error": {
+        "name": "Error",
+        "code": "ENOENT"
+      }
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "result": "object"
+    },
+    {
+      "method": "bounded",
+      "leaf": "config.toml",
+      "result": "BYTES_1700"
+    },
+    {
+      "method": "stamp",
+      "leaf": "package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "extension.js",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex-package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex.exe",
+      "result": "object"
+    },
+    {
+      "method": "projectEligible",
+      "result": true
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "result": "object"
+    },
+    {
+      "method": "bounded",
+      "leaf": "config.toml",
+      "result": "BYTES_1700"
+    },
+    {
+      "method": "stamp",
+      "leaf": "package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "extension.js",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex-package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex.exe",
+      "result": "object"
+    },
+    {
+      "method": "projectEligible",
+      "result": true
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "result": "object"
+    },
+    {
+      "method": "bounded",
+      "leaf": "config.toml",
+      "result": "BYTES_1700"
+    },
+    {
+      "method": "stamp",
+      "leaf": "package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "extension.js",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex-package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex.exe",
+      "result": "object"
+    },
+    {
+      "method": "projectEligible",
+      "result": true
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "result": "object"
+    },
+    {
+      "method": "bounded",
+      "leaf": "config.toml",
+      "result": "BYTES_1700"
+    },
+    {
+      "method": "stamp",
+      "leaf": "package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "extension.js",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex-package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex.exe",
+      "result": "object"
+    },
+    {
+      "method": "projectEligible",
+      "result": true
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "result": "object"
+    },
+    {
+      "method": "bounded",
+      "leaf": "config.toml",
+      "result": "BYTES_1700"
+    },
+    {
+      "method": "stamp",
+      "leaf": "package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "extension.js",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex-package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex.exe",
+      "result": "object"
+    },
+    {
+      "method": "projectEligible",
+      "result": true
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "result": "object"
+    },
+    {
+      "method": "bounded",
+      "leaf": "config.toml",
+      "result": "BYTES_1700"
+    },
+    {
+      "method": "stamp",
+      "leaf": "package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "extension.js",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex-package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex.exe",
+      "result": "object"
+    },
+    {
+      "method": "projectEligible",
+      "result": true
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "result": "object"
+    },
+    {
+      "method": "bounded",
+      "leaf": "config.toml",
+      "result": "BYTES_1700"
+    },
+    {
+      "method": "stamp",
+      "leaf": "package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "extension.js",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex-package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex.exe",
+      "result": "object"
+    },
+    {
+      "method": "projectEligible",
+      "result": true
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "error": {
+        "name": "Error",
+        "code": "ENOENT"
+      }
+    },
+    {
+      "method": "bounded",
+      "leaf": "config.toml",
+      "error": {
+        "name": "Error",
+        "code": "ENOENT"
+      }
+    }
+  ],
+  "actualVendorApiObserved": true,
+  "actualVendorControllerFound": true,
+  "mediatedContextControl": {
+    "status": "BLOCKED_SCOPED",
+    "covered": true,
+    "scope": "Current pinned dedicated HTTP text profile; adjacent native public control"
+  },
+  "unmediatedContextControl": {
+    "status": "LEAK_CONFIRMED",
+    "covered": false,
+    "scope": "Explicit native provider override bypasses the cooperative configured route; retained uncovered control."
+  },
+  "unownedNativeStatePreserved": true,
+  "encryptedBackups": 1,
+  "children": [
+    {
+      "phase": "setup",
+      "role": "broker",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "code": 0,
+      "signal": null
+    },
+    {
+      "phase": "provider-public",
+      "role": "codex-cli",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "code": 0,
+      "signal": null
+    },
+    {
+      "phase": "mcp-public",
+      "role": "codex-cli",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "code": 0,
+      "signal": null
+    },
+    {
+      "phase": "mcp-env",
+      "role": "codex-cli",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "code": 0,
+      "signal": null
+    },
+    {
+      "phase": "mcp-cancel",
+      "role": "codex-cli",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "code": 0,
+      "signal": null
+    },
+    {
+      "phase": "mcp-traversal",
+      "role": "codex-cli",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "code": 0,
+      "signal": null
+    },
+    {
+      "phase": "mcp-forged-approval",
+      "role": "codex-cli",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "code": 0,
+      "signal": null
+    },
+    {
+      "phase": "registered-public-control",
+      "role": "codex-cli",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "code": 0,
+      "signal": null
+    },
+    {
+      "phase": "registered-context",
+      "role": "codex-cli",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "code": 0,
+      "signal": null
+    },
+    {
+      "phase": "explicit-provider-override",
+      "role": "codex-cli",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "code": 0,
+      "signal": null
+    },
+    {
+      "phase": "registered-output",
+      "role": "codex-cli",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "code": 0,
+      "signal": null
+    },
+    {
+      "phase": "config-drift",
+      "role": "codex-cli",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "code": 0,
+      "signal": null
+    },
+    {
+      "phase": "withdrawn-after-drift-review",
+      "role": "codex-cli",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "code": 0,
+      "signal": null
+    },
+    {
+      "phase": "flag-off",
+      "role": "codex-cli",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "code": 0,
+      "signal": null
+    },
+    {
+      "phase": "flag-reenabled-old-capability",
+      "role": "codex-cli",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "code": 0,
+      "signal": null
+    }
+  ],
+  "runtimeSha256": "8940529a931a9d9d617bac3742dd0ceb26b5f0ea789bb4f616d92adfc9501ec1"
+}

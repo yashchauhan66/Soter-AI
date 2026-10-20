@@ -1,0 +1,49 @@
+{
+  "status": "PASS_SCOPED_NATIVE_INSPECTION",
+  "scope": "Pinned bundled IDE native version/help and initialized stdio EOF withdrawal only; no IDE editor/client/model/tool route evidence",
+  "runs": [
+    {
+      "name": "bundled-version-01",
+      "args": [
+        "--version"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "code": 0,
+      "signal": null,
+      "stdoutSha256": "7747b1c26798719d98cac787dfc2c425f845f347a443492894a0d739fae8ca0d",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "bundled-appserver-help-01",
+      "args": [
+        "app-server",
+        "--help"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "code": 0,
+      "signal": null,
+      "stdoutSha256": "4226dbf080b9d3a620385fba067bd3b8ac3c76654f28c3bd4d92ae20df2b03d2",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "bundled-appserver-eof-01",
+      "args": [
+        "app-server"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "initialized": true,
+      "stdinEOFRequested": true,
+      "code": 0,
+      "signal": null,
+      "stdoutSha256": "9569aaed01aa17c340b4e64f1c401a0847737b151bc74c08e3408d911263e538",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "independence": "LOW"
+}

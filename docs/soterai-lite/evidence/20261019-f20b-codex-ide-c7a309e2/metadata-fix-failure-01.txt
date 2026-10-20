@@ -1,0 +1,5 @@
+2026-10-20: fix-metadata-01.cjs exited1 at line7.
+AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  assert(/66/.test(text))
+actual:false, expected:true, operator:==
+The helper had already added SoterAI category and corrected title to both manifests. Its README count matcher was wrong for canonical prose and Lite README has no numeric claim, so the canonical count remained66. This helper failure is retained; canonical README corrected through an exact single-line patch. No runtime code changed and no failed raw full-suite result is regraded.

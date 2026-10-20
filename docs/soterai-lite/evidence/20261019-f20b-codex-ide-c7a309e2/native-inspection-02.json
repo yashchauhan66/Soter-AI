@@ -1,0 +1,68 @@
+{
+  "status": "PASS_SCOPED_NATIVE_INSPECTION",
+  "scope": "Pinned bundled IDE native version/help and initialized stdio EOF withdrawal only; no IDE editor/client/model/tool route evidence",
+  "runs": [
+    {
+      "name": "bundled-version-02",
+      "args": [
+        "--version"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "code": 0,
+      "signal": null,
+      "stdoutSha256": "7747b1c26798719d98cac787dfc2c425f845f347a443492894a0d739fae8ca0d",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "bundled-appserver-help-02",
+      "args": [
+        "app-server",
+        "--help"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "code": 0,
+      "signal": null,
+      "stdoutSha256": "4226dbf080b9d3a620385fba067bd3b8ac3c76654f28c3bd4d92ae20df2b03d2",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "bundled-protocol-02",
+      "args": [
+        "app-server",
+        "generate-ts",
+        "--out",
+        "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261019-f20b-codex-ide-c7a309e2\\native-inspect-profile-02\\protocol"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "code": 0,
+      "signal": null,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "bundled-appserver-eof-02",
+      "args": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "initialized": true,
+      "stdinEOFRequested": true,
+      "code": 0,
+      "signal": null,
+      "stdoutSha256": "d1b3e93a3818864bb60405175f4ef1e09d9682547235097cf954944988b5536c",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "independence": "LOW"
+}

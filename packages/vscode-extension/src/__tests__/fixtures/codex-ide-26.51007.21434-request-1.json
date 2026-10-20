@@ -1,0 +1,140 @@
+{
+  "model": "f20b-fixture",
+  "stream": true,
+  "input": [
+    {
+      "type": "message",
+      "id": "msg_add2add6-cd44-58a1-86ad-2f1a90489801",
+      "role": "developer",
+      "content": [
+        {
+          "type": "input_text",
+          "text": "Use only this public synthetic loopback fixture. Do not call any tool."
+        }
+      ]
+    },
+    {
+      "type": "message",
+      "id": "msg_01a15753-08ac-7832-96fd-343604957657",
+      "role": "developer",
+      "content": [
+        {
+          "type": "input_text",
+          "text": "<skills_instructions>\n## Skills\nA skill is a set of local instructions to follow that is stored in a `SKILL.md` file. Below is the list of skills that can be used. Each entry includes a name, description, and a short path that can be expanded into an absolute path using the skill roots table.\n### Skill roots\n- `r0` = `D:/SoterAI-Lite-test-profiles/f20b-feasibility-20261020T031907Z-ec5fd784/code-home/skills/.system`\n### Available skills\n- imagegen: Generate or edit raster images when the task benefits from AI-created bitmap visuals such as photos, illustrations, textures, sprites, mockups, or transparent-background cutouts. Use when Codex should create a brand-new image, transform an existing image, or derive visual variants from references, and the output should be a bitmap asset rather than repo-native code or vector. Do not use when the task is better handled by editing existing SVG/vector/code-native assets, extending an established icon or logo system, or building the visual directly in HTML/CSS/canvas. (file: r0/imagegen/SKILL.md)\n- openai-docs: Use for Codex models/pricing, scheduled tasks, skills, settings, setup, troubleshooting, customization, automations, and self-knowledge—including 'you,' 'your,' 'this app,' or 'this coding agent' when they refer to Codex—and for OpenAI APIs/products and ChatGPT Work. Also use for model choice/migration, prompting, SDKs, Responses, Realtime, agents, evals, and Chat/Work/Codex comparisons. Do not use for generic app/software tasks that merely mention Codex. (file: r0/openai-docs/SKILL.md)\n- skill-creator: Create or update a Codex skill with appropriately scoped instructions and any needed supporting resources. (file: r0/skill-creator/SKILL.md)\n- skill-installer: Install Codex skills into $CODEX_HOME/skills from a curated list or a GitHub repo path. Use when a user asks to list installable skills, install a curated skill, or install a skill from another repo (including private repos). (file: r0/skill-installer/SKILL.md)\n</skills_instructions>"
+        },
+        {
+          "type": "input_text",
+          "text": "<permissions instructions>\nFilesystem sandboxing defines which files can be read or written. `sandbox_mode` is `read-only`: The sandbox only permits reading files. Network access is restricted.\nApproval policy is currently never. Do not provide the `sandbox_permissions` for any reason, commands will be rejected.\r\n</permissions instructions>"
+        }
+      ]
+    },
+    {
+      "type": "message",
+      "id": "msg_01a15753-08ac-7832-96fd-344a4c3ca675",
+      "role": "user",
+      "content": [
+        {
+          "type": "input_text",
+          "text": "<environment_context>\n  <cwd>D:\\SoterAI-Lite-test-profiles\\f20b-feasibility-20261020T031907Z-ec5fd784\\workspace</cwd>\n  <shell>powershell</shell>\n  <current_date>2026-10-20</current_date>\n  <timezone>Asia/Calcutta</timezone>\n  <filesystem><workspace_roots><root>D:\\SoterAI-Lite-test-profiles\\f20b-feasibility-20261020T031907Z-ec5fd784\\workspace</root></workspace_roots><permission_profile type=\"managed\"><file_system type=\"restricted\"><entry access=\"read\"><special>:root</special></entry></file_system></permission_profile></filesystem>\n</environment_context>"
+        }
+      ]
+    },
+    {
+      "type": "message",
+      "id": "msg_01a15753-08ae-76b2-a73f-16943fd306cf",
+      "role": "user",
+      "content": [
+        {
+          "type": "input_text",
+          "text": "F20B_SYNTHETIC_PUBLIC. Reply only F20B_NATIVE_DONE."
+        }
+      ]
+    }
+  ],
+  "tools": [
+    {
+      "type": "function",
+      "name": "request_user_input",
+      "description": "Request user input for one to three short questions and wait for the response. This tool is only available in Plan mode.",
+      "strict": false,
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "questions": {
+            "type": "array",
+            "description": "Questions to show the user. Prefer 1 and do not exceed 3",
+            "items": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "string",
+                  "description": "Short header label shown in the UI (12 or fewer chars)."
+                },
+                "id": {
+                  "type": "string",
+                  "description": "Stable identifier for mapping answers (snake_case)."
+                },
+                "options": {
+                  "type": "array",
+                  "description": "Provide 2-3 mutually exclusive choices. Put the recommended option first and suffix its label with \"(Recommended)\". Do not include an \"Other\" option in this list; the client will add a free-form \"Other\" option automatically.",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "description": {
+                        "type": "string",
+                        "description": "One short sentence explaining impact/tradeoff if selected."
+                      },
+                      "label": {
+                        "type": "string",
+                        "description": "User-facing label (1-5 words)."
+                      }
+                    },
+                    "required": [
+                      "label",
+                      "description"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "question": {
+                  "type": "string",
+                  "description": "Single-sentence prompt shown to the user."
+                }
+              },
+              "required": [
+                "id",
+                "header",
+                "question",
+                "options"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "questions"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ],
+  "tool_choice": "auto",
+  "parallel_tool_calls": true,
+  "reasoning": {
+    "summary": "auto"
+  },
+  "store": false,
+  "include": [
+    "reasoning.encrypted_content"
+  ],
+  "prompt_cache_key": "01a15753-0813-7382-9b18-9d50230ed6ce",
+  "client_metadata": {
+    "turn_id": "01a15753-085a-7ad3-9ee7-d10c8bdc81d5",
+    "x-codex-turn-metadata": "{\"installation_id\":\"707a5ee6-385e-44fd-83fc-b88c90d0454a\",\"session_id\":\"01a15753-0813-7382-9b18-9d50230ed6ce\",\"thread_id\":\"01a15753-0813-7382-9b18-9d50230ed6ce\",\"agent_name\":\"/root\",\"turn_id\":\"01a15753-085a-7ad3-9ee7-d10c8bdc81d5\",\"window_id\":\"01a15753-0813-7382-9b18-9d50230ed6ce:0\",\"window_number\":0,\"context_window_id\":\"01a15753-081b-7c20-b7cb-f0d291c69ad4\",\"request_kind\":\"turn\",\"root_turn_id\":\"01a15753-085a-7ad3-9ee7-d10c8bdc81d5\",\"sandbox\":\"none\",\"sandbox_mode\":\"read-only\",\"auto_review_enabled\":false,\"node_repl_auto_review_required\":false,\"node_repl_disabled\":false,\"turn_started_at_unix_ms\":1792466421922,\"analytics_enabled\":false,\"model\":\"f20b-fixture\"}",
+    "x-codex-installation-id": "707a5ee6-385e-44fd-83fc-b88c90d0454a",
+    "root_turn_id": "01a15753-085a-7ad3-9ee7-d10c8bdc81d5",
+    "thread_id": "01a15753-0813-7382-9b18-9d50230ed6ce",
+    "session_id": "01a15753-0813-7382-9b18-9d50230ed6ce",
+    "x-codex-window-id": "01a15753-0813-7382-9b18-9d50230ed6ce:0"
+  }
+}

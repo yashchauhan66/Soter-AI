@@ -18,6 +18,7 @@ import { autoStartBroker, RETRY_START } from "./broker/autoStart";
 import { registerBrokerCommands } from "./broker/commands";
 import { registerClineAdapter } from "./adapters/ClineAdapter";
 import { registerClaudeAdapter } from "./adapters/ClaudeAdapter";
+import { registerCodexIdeAdapter } from "./adapters/CodexIdeAdapter";
 import { registerCodexCliAdapter } from "./adapters/CodexCliAdapter";
 import { AISentinel } from "./sentinel/AISentinel";
 import { registerSentinelCommands } from "./sentinel/commands";
@@ -208,6 +209,7 @@ export function activate(context: vscode.ExtensionContext): void {
     registerClineAdapter(context, brokerManager, managedReader);
     registerClaudeAdapter(context, brokerManager, managedReader);
     registerCodexCliAdapter(context, managedReader, brokerManager);
+    registerCodexIdeAdapter(context, managedReader, brokerManager);
     registerSentinelCommands(context, sentinel);
     registerPermissionCommands(context, permissionStore);
     registerWorkspaceGuardCommands(context, workspaceGuard);

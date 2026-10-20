@@ -1,0 +1,14 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),crypto=require('node:crypto');
+const read=name=>fs.readFileSync(path.join(__dirname,name),'utf8'),write=(name,value)=>fs.writeFileSync(path.join(__dirname,name),value,{flag:'wx'}),sha=value=>crypto.createHash('sha256').update(value).digest('hex');
+const driver=read('ide-feasibility-03.cjs');write('ide-feasibility-04.cjs',driver);
+let launcher=read('run-ide-feasibility-03.ps1').replaceAll('ide-feasibility-03.cjs','ide-feasibility-04.cjs');
+assert(launcher.includes('$taskManifest.activationEvents=@()'));
+launcher=launcher.replace('$taskManifest.activationEvents=@()','');
+launcher=launcher.replace("$taskManifest.contributes.PSObject.Properties.Remove('chatSessions')",'');
+launcher=launcher.replace('[IO.File]::WriteAllText($taskVendorManifest,($taskManifest|ConvertTo-Json -Depth 100),[Text.UTF8Encoding]::new($false))','');
+launcher=launcher.replace("activationEvents=@('onStartupFinished')","activationEvents=@('*')");
+launcher=launcher.replace("$taskSettings=@{","$taskSettings=@{'chat.disableAIFeatures'=$true;");
+launcher=launcher.replace('Explicit activate after synthetic configuration; loaded manifest activationEvents empty and chatSessions contribution removed to prevent implicit preactivation, vendor JS/native bytes unchanged','Original vendor manifest, JS and native bytes all unchanged; eager fixture with isolated chat.disableAIFeatures setting; explicit activation asserted inactive first');
+write('run-ide-feasibility-04.ps1',launcher);
+write('ide-feasibility-freeze-04.json',JSON.stringify({status:'FROZEN_NOT_EXECUTED',driverSha256:sha(driver),launcherSha256:sha(launcher),guardSha256:sha(read('ide-guards-03.cjs')),scope:'Third fixture improvement after original failure: exact ORIGINAL vendor manifest as well as JS/native. Eager fixture and isolated chat-disable setting before explicit activation. Required to preserve the product manifest pin during integration; no relaxation of vendor pin or test guards. Same actual IDE client/native route and EOF closure checks; LOW only.'},null,2)+'\n');

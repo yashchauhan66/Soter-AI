@@ -1,0 +1,225 @@
+{
+  "status": "PASS_SCOPED_IDE_CLIENT_FEASIBILITY",
+  "scope": "Actual pinned IDE extension internal message-generation client and its bundled native app-server, synthetic loopback only. No SoterAI product integration or webview/human/real-provider/OS/all-descendant claim.",
+  "independence": "LOW",
+  "phase": "withdraw",
+  "requests": [
+    {
+      "path": "/v1/responses",
+      "bytes": 6330,
+      "keys": [
+        "model",
+        "stream",
+        "input",
+        "tools",
+        "tool_choice",
+        "parallel_tool_calls",
+        "reasoning",
+        "store",
+        "include",
+        "prompt_cache_key",
+        "client_metadata"
+      ],
+      "toolNames": [
+        "request_user_input"
+      ],
+      "publicSeen": true
+    }
+  ],
+  "notifications": [
+    {
+      "method": "remoteControl/status/changed"
+    },
+    {
+      "method": "thread/started"
+    },
+    {
+      "method": "warning"
+    },
+    {
+      "method": "warning"
+    },
+    {
+      "method": "thread/status/changed"
+    },
+    {
+      "method": "turn/started"
+    },
+    {
+      "method": "item/started"
+    },
+    {
+      "method": "item/completed"
+    },
+    {
+      "method": "item/started"
+    },
+    {
+      "method": "item/agentMessage/delta"
+    },
+    {
+      "method": "item/completed"
+    },
+    {
+      "method": "thread/tokenUsage/updated"
+    },
+    {
+      "method": "account/rateLimits/updated"
+    },
+    {
+      "method": "thread/status/changed"
+    },
+    {
+      "method": "turn/completed"
+    }
+  ],
+  "observations": [],
+  "native": [
+    {
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "code": 0,
+      "signal": null
+    }
+  ],
+  "deniedExternal": [],
+  "deniedSignals": [],
+  "deniedChildLaunches": [],
+  "deniedFileAccess": [],
+  "deniedDirectSpawns": [],
+  "deniedWorkerLaunches": [],
+  "configSha256": "bd32133509d2393f96029587f110201320e7034a8f63cab2152929314a7c2d16",
+  "vendorVersion": "26.51007.21434",
+  "vendorActiveBefore": false,
+  "vendorApiObserved": true,
+  "viewCount": 2,
+  "ownerFound": true,
+  "viewFieldNames": [
+    [
+      "logger",
+      "customAvatars",
+      "computerUseSettings",
+      "worktreeComposerEducation",
+      "sidebarView",
+      "sidebarWebviewReady",
+      "editorPanels",
+      "subscriptions",
+      "pendingImplementTodo",
+      "pendingContextFiles",
+      "pendingNavigationRoutes",
+      "pendingSidebarMessages",
+      "sidebarViews",
+      "readySidebarViews",
+      "pendingMcpRequests",
+      "clientCoordinationByWebview",
+      "workerBusMessageHandler",
+      "focusedView",
+      "datadogLogger",
+      "previewLoader",
+      "fatalError",
+      "mostRecentErrorLog",
+      "diffPanel",
+      "planSummaryPanel",
+      "settingsPanel",
+      "extensionUri",
+      "codexMcpConnection",
+      "authTokenProvider",
+      "chunkedMessageSender",
+      "fetchWrapper",
+      "workspaceFileService",
+      "getLocalIdeContext",
+      "openIn",
+      "threadMetadataGeneration",
+      "settings",
+      "threadProjectAssignments",
+      "modelProxyManager",
+      "conversationSummaryProvider",
+      "chatSessionItemProvider",
+      "globalState",
+      "sharedObjectRepository",
+      "gitManager",
+      "errorReporter",
+      "ipcClient",
+      "extensionVersion",
+      "codexAppSessionId",
+      "buildFlavor",
+      "onCodexViewVisibilityChanged",
+      "appServerClient",
+      "microphoneCapture"
+    ],
+    [
+      "logger",
+      "customAvatars",
+      "computerUseSettings",
+      "worktreeComposerEducation",
+      "sidebarView",
+      "sidebarWebviewReady",
+      "editorPanels",
+      "subscriptions",
+      "pendingImplementTodo",
+      "pendingContextFiles",
+      "pendingNavigationRoutes",
+      "pendingSidebarMessages",
+      "sidebarViews",
+      "readySidebarViews",
+      "pendingMcpRequests",
+      "clientCoordinationByWebview",
+      "workerBusMessageHandler",
+      "focusedView",
+      "datadogLogger",
+      "previewLoader",
+      "fatalError",
+      "mostRecentErrorLog",
+      "diffPanel",
+      "planSummaryPanel",
+      "settingsPanel",
+      "extensionUri",
+      "codexMcpConnection",
+      "authTokenProvider",
+      "chunkedMessageSender",
+      "fetchWrapper",
+      "workspaceFileService",
+      "getLocalIdeContext",
+      "openIn",
+      "threadMetadataGeneration",
+      "settings",
+      "threadProjectAssignments",
+      "modelProxyManager",
+      "conversationSummaryProvider",
+      "chatSessionItemProvider",
+      "globalState",
+      "sharedObjectRepository",
+      "gitManager",
+      "errorReporter",
+      "ipcClient",
+      "extensionVersion",
+      "codexAppSessionId",
+      "buildFlavor",
+      "onCodexViewVisibilityChanged",
+      "appServerClient",
+      "microphoneCapture"
+    ]
+  ],
+  "nativeTextSeen": true,
+  "turnStatus": "completed",
+  "routeCompleted": true,
+  "stdinEOFRequested": true,
+  "children": [
+    {
+      "phase": "activate-vendor",
+      "role": "codex-cli",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "code": 0,
+      "signal": null
+    }
+  ]
+}

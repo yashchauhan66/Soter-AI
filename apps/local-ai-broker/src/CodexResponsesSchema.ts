@@ -52,7 +52,7 @@ function tools(value: unknown): void {
  * declaration of general Codex/Responses compatibility. */
 export function validateCodexRequest(v: Row): void {
     keys(v, ["model", "instructions", "input", "tools", "tool_choice", "parallel_tool_calls", "reasoning", "store", "stream", "include", "prompt_cache_key", "client_metadata"]);
-    if (!identifier(v.model) || !text(v.instructions) || v.store !== false || v.stream !== true
+    if (!identifier(v.model) || v.instructions !== undefined && !text(v.instructions) || v.store !== false || v.stream !== true
         || v.parallel_tool_calls !== undefined && typeof v.parallel_tool_calls !== "boolean"
         || v.tool_choice !== undefined && !oneOf(v.tool_choice, ["auto", "none"])
         || !Array.isArray(v.input) || !v.input.length || v.input.length > 128) fail();

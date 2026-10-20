@@ -1,0 +1,9 @@
+{
+  "status": "FROZEN_NOT_EXECUTED",
+  "driverSha256": "d3b0d3a15bca55b53f727e03dde5f6cdabdcf7ce90ea402cbf88bafec03b5aa5",
+  "launcherSha256": "cbabe8220a65ba448f30b4cf465610bb493cb7e9782b6132221c92f590e285d2",
+  "guardSha256": "1eea57c75694ff2f7080c38ccf5424c4f3b655f6c15f26cc2a1496be5cdf6894",
+  "reason": "VS Code exposes a separate API object per extension: observe the actual vendor require(vscode) result and forward registration unchanged. Public exact controller chain is view.fetchWrapper.extensionFetchHandler. Vendor removes ChildProcess listeners before close: observe emit transparently, without replacing process events or bypassing any signal/file/network/spawn guard.",
+  "priorRun": "02 remains INCOMPLETE; native successful exit/EOF recorded by vendor log, removed listener made original close observation incomplete, no signal sent.",
+  "scope": "Third frozen fixture; LOW actual internal IDE client + native loopback only; original vendor JS/native unchanged; no product integration/webview/human/provider/OS/all-descendant claim."
+}

@@ -1,0 +1,134 @@
+﻿{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261019-f20b-codex-ide-c7a309e2\\combined-after-02.txt",
+    "observedAt":  "2026-10-20T04:30:15.9492925Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "--import",
+                      "tsx",
+                      "--test",
+                      "--test-concurrency=1",
+                      "packages/vscode-extension/src/__tests__/codex*.test.ts",
+                      "packages/vscode-extension/src/__tests__/command-palette-hygiene.test.ts",
+                      "packages/vscode-extension/src/__tests__/readme-accuracy.test.ts",
+                      "packages/vscode-extension/src/__tests__/readiness-doc.test.ts"
+                  ],
+    "sha256":  "D193DBA90C31EA5979A0044D194C1F6E5C9D5A9594E1356A206713F9ADF5E153",
+    "file":  "node"
+}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261019-f20b-codex-ide-c7a309e2\\typecheck-02.txt",
+    "observedAt":  "2026-10-20T04:30:33.3856016Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "node_modules/typescript/bin/tsc",
+                      "--noEmit",
+                      "-p",
+                      "packages/vscode-extension/tsconfig.json"
+                  ],
+    "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+    "file":  "node"
+}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261019-f20b-codex-ide-c7a309e2\\package-03.txt",
+    "observedAt":  "2026-10-20T04:30:48.6504287Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "packages/soterai-lite/scripts/package.cjs",
+                      "soterai-lite-0.7.0-f20b-20261020-attempt03.vsix"
+                  ],
+    "sha256":  "6A2CD46537A919DFD425FA6F47B029855EBD3379552918CB46C18ACD74F9B9D9",
+    "file":  "node"
+}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261019-f20b-codex-ide-c7a309e2\\inspection-02.txt",
+    "observedAt":  "2026-10-20T04:30:58.6808124Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "-NoProfile",
+                      "-ExecutionPolicy",
+                      "Bypass",
+                      "-File",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261019-f20b-codex-ide-c7a309e2\\inspect-vsix-01.ps1",
+                      "-VsixPath",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\soterai-lite\\soterai-lite-0.7.0-f20b-20261020-attempt03.vsix",
+                      "-ExpectedVsixSha256",
+                      "a72d81daf542a0669d6a73e1c94ba47b075bb062934328befba49cad5e7d8262",
+                      "-ExpectedBundleSha256",
+                      "415c3b4541731353f5a5a0d25575627285d7ed9d927fa7c032134b64738aa93f",
+                      "-InspectionName",
+                      "02"
+                  ],
+    "sha256":  "9431496A39329A080EF5F574E04DED70EAD15D0AC8164A3A00CAABE3AD9FFB8C",
+    "file":  "powershell.exe"
+}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261019-f20b-codex-ide-c7a309e2\\full-tests-02.txt",
+    "observedAt":  "2026-10-20T04:35:30.1150667Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "--import",
+                      "tsx",
+                      "--test",
+                      "--test-concurrency=1",
+                      "../vscode-extension/src/__tests__/**/*.test.ts"
+                  ],
+    "sha256":  "F46765DAF2CEFDEFA2F035F721C580699FFF9B925CCA288AC505E4DDFCFD86E9",
+    "file":  "node"
+}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261019-f20b-codex-ide-c7a309e2\\current-affected-cli-launch-01.txt",
+    "observedAt":  "2026-10-20T04:36:25.0990267Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "-NoProfile",
+                      "-ExecutionPolicy",
+                      "Bypass",
+                      "-File",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261019-f20b-codex-ide-c7a309e2\\run-affected-cli-02.ps1"
+                  ],
+    "sha256":  "E9240F6F7A465450DB1AB1DB8E30C5933A9F9F2181A8A654F6D0D1C672F663CF",
+    "file":  "powershell.exe"
+}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261019-f20b-codex-ide-c7a309e2\\current-retained-launch-01.txt",
+    "observedAt":  "2026-10-20T04:37:47.9871880Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "-NoProfile",
+                      "-ExecutionPolicy",
+                      "Bypass",
+                      "-File",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261019-f20b-codex-ide-c7a309e2\\run-current-retained-02.ps1"
+                  ],
+    "sha256":  "69FB06890113DC20F30C1AAE4C21EAE0413EEA91D5DF66406B413DF2F6426DBC",
+    "file":  "powershell.exe"
+}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261019-f20b-codex-ide-c7a309e2\\current-affected-launch-01.txt",
+    "observedAt":  "2026-10-20T04:37:49.9240762Z",
+    "exitCode":  1,
+    "arguments":  [
+                      "-NoProfile",
+                      "-ExecutionPolicy",
+                      "Bypass",
+                      "-File",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261019-f20b-codex-ide-c7a309e2\\run-current-affected-02.ps1"
+                  ],
+    "sha256":  "BB91425CFDF2536BC9A103919BE34E6F8893538D925434A2368C1FBEDE4DDC9A",
+    "file":  "powershell.exe"
+}
+powershell.exe : Required current check incomplete: current-affected-launch-01
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Required curren...ected-launch-01:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261019-f20b-codex-ide-c7a309e2\r
+un-final-gates-01.ps1:8 char:34
++ ... exitCode -ne 0){throw ('Required current check incomplete: '+$Label)}
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (Required curren...ected-launch-01:String) [], RuntimeException
+    + FullyQualifiedErrorId : Required current check incomplete: current-affected-launch-01
+ 

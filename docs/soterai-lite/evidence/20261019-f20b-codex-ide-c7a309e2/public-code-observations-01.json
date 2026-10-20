@@ -1,0 +1,166 @@
+{
+  "status": "STATIC_ONLY",
+  "source": {
+    "path": "C:/Users/USER/.vscode/extensions/openai.chatgpt-26.51007.21434-win32-x64/out/extension.js",
+    "relative": "out/extension.js",
+    "bytes": 2539539,
+    "sha256": "a8069de80c8f8141481d033f94c3a95e1b59f399143cb2554d3f68469dfbe5b8"
+  },
+  "snippets": [
+    {
+      "needle": "CODEX_HOME",
+      "offset": 915771,
+      "code": "resolveCodexHomeFromWsl] Unable to translate Linux path\",{safe:{},sensitive:{linuxPath:e}}),D3=Date.now()+Nwe}function SCt(t){return Hwe([\"/usr/bin/env\",\"bash\",\"-lc\",'printf %s \"${CODEX_HOME:-$HOME/.codex}\"'],\"readCodexHomePathFromWslEnv\",t)}function wCt(t,e){let r=Hwe([\"wslpath\",\"-w\",t],`resolveCodexHomeFromWsl:wslpath(${t})`,e);return r?wm(r):void 0}function Hwe(t,e,r){try{let n=(0,kv.spawnSync)(\"wsl.exe\",t,{encoding:\"utf8\",env:bn(process.env),windowsHide:!0});if(n.error){r.debug(\"WSL command error\",{safe:{context:e},sensitive:{error:n.error}});return}if(n.status!==0){r.debug(\"WSL command no"
+    },
+    {
+      "needle": "CODEX_HOME",
+      "offset": 920047,
+      "code": ";function Vt({preferWsl:t=!1}={}){let e=ie();if(t&&process.platform===\"win32\"){let r=Wwe();if(r)return r;e.info(\"[resolveCodexHome] Falling back to host home directory because WSL CODEX_HOME could not be resolved\")}return process.env.CODEX_HOME??zwe.join(jwe.homedir(),\".codex\")}var jwe,zwe,zn=f(()=>{jwe=N(require(\"node:os\")),zwe=N(require(\"node:path\"));Xt();Qa()});async function _Ct(t,e,r){let n=\"withFileTypes\"in e,o=n?r:e;if(o==null)throw new Error(\"fsUtils.readdir requires an ExecutionHost\");let i=await o.readDirectory(t);return n?i:i.map(s=>s.name)}async function Vwe(t,e=Number.POSITIVE_INF"
+    },
+    {
+      "needle": "CODEX_HOME",
+      "offset": 920101,
+      "code": "cess.platform===\"win32\"){let r=Wwe();if(r)return r;e.info(\"[resolveCodexHome] Falling back to host home directory because WSL CODEX_HOME could not be resolved\")}return process.env.CODEX_HOME??zwe.join(jwe.homedir(),\".codex\")}var jwe,zwe,zn=f(()=>{jwe=N(require(\"node:os\")),zwe=N(require(\"node:path\"));Xt();Qa()});async function _Ct(t,e,r){let n=\"withFileTypes\"in e,o=n?r:e;if(o==null)throw new Error(\"fsUtils.readdir requires an ExecutionHost\");let i=await o.readDirectory(t);return n?i:i.map(s=>s.name)}async function Vwe(t,e=Number.POSITIVE_INFINITY){let r=[],n=t.getReader(),o=0;try{for(;o<e;){let"
+    },
+    {
+      "needle": "CODEX_HOME",
+      "offset": 2186571,
+      "code": "390x\":throw new Error(`unrecognized architecture: ${n}`)}return`bin/${`${e}-${r}`}`}return\"bin\"}ch();ro();np();var tze=Ee(\"spawn-codex-process\"),YKt=3e3,rze=\"__CODEX_VSCODE_REMOTE_CODEX_HOME_START__\",nze=\"__CODEX_VSCODE_REMOTE_CODEX_HOME_END__\",Eb=class extends Error{appServerCrashContext;signal;exitCode;constructor(e,{signal:r,exitCode:n}={signal:null,exitCode:null},{appServerCrashContext:o,cause:i}={}){super(`Codex process errored: ${e}`,{cause:i}),this.name=\"CodexProcessError\",this.appServerCrashContext=o??null,this.signal=r,this.exitCode=n}};function oze(t,e){let r=process.platform===\"win3"
+    },
+    {
+      "needle": "cliExecutable",
+      "offset": 2188323,
+      "code": "turn;let n=e[r+1],o=e[r+2];if(!(n==null||n.length===0||o!==nze))return n}function J6e(t){return`'${t.replace(/'/g,\"'\\\\''\")}'`}function aF(t,e){let r=void 0;if(r)return r;let n=to(\"cliExecutable\");if(n&&n.trim().length>0)return n;let o=Ib(e),i=(e??process.platform)===\"win32\"?\"codex.exe\":\"codex\";return ec.Uri.joinPath(t,`${o}/${i}`).fsPath}function n8t(t,e,r){let n=Yl();if(n==null)throw new Error(\"No eligible WSL distro found. Please install an Ubuntu-based WSL distribution and try again.\");let o=Ib(\"linux\"),i=pr(aF(t,\"linux\")),s=ec.Uri.joinPath(t,o).fsPath,a=pr(s),u=cR()[0],l=[`PATH=${a}:$PATH`"
+    },
+    {
+      "needle": "cliExecutable",
+      "offset": 2340979,
+      "code": "orkspace-directory-entries\":async()=>{throw new Error(\"workspace-directory-entries not supported in extension\")},\"has-custom-cli-executable\":async()=>({hasCustomCliExecutable:(to(\"cliExecutable\")??\"\").trim().length>0}),\"account-info\":async()=>{let e=await this.authProvider.getToken({refreshToken:!1});if(!e)return{accountId:null,userId:null,plan:null,email:null,computeResidency:null,hasChatGptToken:!1};try{let r=JSON.parse(Buffer.from(e.split(\".\")[1],\"base64url\").toString(\"utf8\")),n=r[\"https://api.openai.com/auth\"]??{},o=r[\"https://api.openai.com/profile\"]??{},i=n?.chatgpt_account_id??null,s=n?"
+    },
+    {
+      "needle": "app-server",
+      "offset": 335533,
+      "code": "OPTIONS:\"electron-saved-workspace-roots\",WORKSPACE_ROOT_LABELS:\"electron-workspace-root-labels\",LOCAL_PROJECTS:\"local-projects\",APP_SERVER_PROJECT_ID_BY_LEGACY_PROJECT_ID_BY_HOST:\"app-server-project-id-by-legacy-project-id-by-host\",APP_SERVER_PROJECTS_MIGRATION_BY_HOST:\"app-server-projects-migration-by-host\",APP_SERVER_PENDING_PROJECT_DELETIONS_BY_HOST:\"app-server-pending-project-deletions-by-host\",SELECTED_PROJECT:\"selected-project\",PROJECT_WRITABLE_ROOTS:\"project-writable-roots\",PROJECT_APPEARANCES:\"project-appearances\",PROJECT_FILES:\"project-files\",OPEN_IN_TARGET_PREFERENCES:\"open-in-target"
+    },
+    {
+      "needle": "app-server",
+      "offset": 335624,
+      "code": "els\",LOCAL_PROJECTS:\"local-projects\",APP_SERVER_PROJECT_ID_BY_LEGACY_PROJECT_ID_BY_HOST:\"app-server-project-id-by-legacy-project-id-by-host\",APP_SERVER_PROJECTS_MIGRATION_BY_HOST:\"app-server-projects-migration-by-host\",APP_SERVER_PENDING_PROJECT_DELETIONS_BY_HOST:\"app-server-pending-project-deletions-by-host\",SELECTED_PROJECT:\"selected-project\",PROJECT_WRITABLE_ROOTS:\"project-writable-roots\",PROJECT_APPEARANCES:\"project-appearances\",PROJECT_FILES:\"project-files\",OPEN_IN_TARGET_PREFERENCES:\"open-in-target-preferences\",PINNED_THREAD_IDS:\"pinned-thread-ids\",APP_SERVER_MIGRATED_PINNED_THREAD_IDS_B"
+    },
+    {
+      "needle": "app-server",
+      "offset": 335709,
+      "code": "ST:\"app-server-project-id-by-legacy-project-id-by-host\",APP_SERVER_PROJECTS_MIGRATION_BY_HOST:\"app-server-projects-migration-by-host\",APP_SERVER_PENDING_PROJECT_DELETIONS_BY_HOST:\"app-server-pending-project-deletions-by-host\",SELECTED_PROJECT:\"selected-project\",PROJECT_WRITABLE_ROOTS:\"project-writable-roots\",PROJECT_APPEARANCES:\"project-appearances\",PROJECT_FILES:\"project-files\",OPEN_IN_TARGET_PREFERENCES:\"open-in-target-preferences\",PINNED_THREAD_IDS:\"pinned-thread-ids\",APP_SERVER_MIGRATED_PINNED_THREAD_IDS_BY_HOST:\"app-server-migrated-pinned-thread-ids-by-host\",PINNED_PROJECT_IDS:\"pinned-pro"
+    },
+    {
+      "needle": "app-server",
+      "offset": 336052,
+      "code": "arances\",PROJECT_FILES:\"project-files\",OPEN_IN_TARGET_PREFERENCES:\"open-in-target-preferences\",PINNED_THREAD_IDS:\"pinned-thread-ids\",APP_SERVER_MIGRATED_PINNED_THREAD_IDS_BY_HOST:\"app-server-migrated-pinned-thread-ids-by-host\",PINNED_PROJECT_IDS:\"pinned-project-ids\",SIDEBAR_PROJECT_THREAD_ORDERS:\"sidebar-project-thread-orders\",SIDEBAR_THREAD_METADATA:\"sidebar-thread-metadata\",THREAD_PROJECT_ASSIGNMENTS:\"thread-project-assignments\",THREAD_PROJECT_MEMBERSHIP_HOST_IDS:\"thread-project-membership-host-ids\",THREAD_WRITABLE_ROOTS:\"thread-writable-roots\",THREAD_WORKSPACE_ROOT_HINTS:\"thread-workspace-r"
+    },
+    {
+      "needle": "turn/start",
+      "offset": 377270,
+      "code": "gs/update\",\"thread/start\",\"thread/startAeon\",\"thread/stop\",\"thread/items/list\",\"thread/inject_items\",\"thread/turns/list\",\"thread/unarchive\",\"turn/addUserMessage\",\"turn/interrupt\",\"turn/start\",\"turn/steer\"],Dcr=new Set(Jlt)});function _ce(t,e){return t.kind===\"chatgpt\"?e.kind===\"chatgpt\"&&t.accountId===e.accountId&&t.userId===e.userId:e.kind===\"execution-storage\"&&t.authMode===e.authMode}var Ice=f(()=>{\"use strict\"});var Ece=f(()=>{\"use strict\"});var e0=f(()=>{\"use strict\"});var Gg=f(()=>{\"use strict\"});function Yu(t,e){let r=uH(t),n=uH(e);if(r==null||n==null)return 0;let o=tct(r,n);if(o!==0)re"
+    },
+    {
+      "needle": "turn/start",
+      "offset": 499124,
+      "code": "rediction/updated\":!1,\"thread/queue/changed\":!0,\"thread/environment/connected\":!0,\"thread/environment/disconnected\":!0,\"thread/settings/updated\":!0,\"thread/tokenUsage/updated\":!0,\"turn/started\":!0,\"hook/started\":!0,\"turn/completed\":!0,\"hook/completed\":!0,\"turn/diff/updated\":!0,\"turn/plan/updated\":!0,\"item/started\":!0,\"item/autoApprovalReview/started\":!0,\"item/autoApprovalReview/completed\":!0,\"autoApprovalReview/strictReviewRequired\":!0,\"item/completed\":!0,\"rawResponseItem/completed\":!1,\"item/agentMessage/delta\":!0,\"item/plan/delta\":!0,\"command/exec/outputDelta\":!1,\"process/outputDelta\":!1,\"pro"
+    },
+    {
+      "needle": "turn/start",
+      "offset": 936432,
+      "code": "))},s),I=a.registerInternalNotificationHandler(q=>{switch(q.method){case\"error\":{let F=q.params;if(F.threadId!==r||h!=null&&F.turnId!==h)return;h=h??F.turnId,y=F.error;return}case\"turn/started\":{let F=q.params;if(F.threadId!==r)return;h=F.turn.id;return}case\"thread/tokenUsage/updated\":{let F=q.params;if(F.threadId!==r||h!=null&&F.turnId!==h)return;u?.(F.tokenUsage);return}case\"item/agentMessage/delta\":{let F=q.params;if(F.threadId!==r)return;if(F.turnId==null){if(h!=null)return}else if(h!=null&&F.turnId!==h)return;g=`${g??\"\"}${F.delta}`;return}case\"item/completed\":{let F=q.params;if(F.threadId"
+    },
+    {
+      "needle": "turn/start",
+      "offset": 973081,
+      "code": "e strict\"});function D4(t){return t===\"thread/start\"||t===\"thread/startAeon\"||t===\"thread/fork\"||t===\"thread/inject_items\"||t===\"thread/queue/add\"||t===\"turn/addUserMessage\"||t===\"turn/start\"||t===\"turn/steer\"}var zs=f(()=>{\"use strict\"});var PCe=f(()=>{\"use strict\"});var Hm=f(()=>{\"use strict\";mr();PCe()});function In(t,...e){if(process.env.NODE_ENV!==\"production\"){let r=FCe[t],n=typeof r==\"function\"?r.apply(null,e):r;throw new Error(`[Immer] ${n}`)}throw new Error(`[Immer] minified error nr: ${t}. Full error at: https://bit.ly/3cXEKWf`)}function jm(t){return!!t&&!!t[Bi]}function ld(t){return"
+    },
+    {
+      "needle": "thread/start",
+      "offset": 377102,
+      "code": "\",\"thread/realtime/appendSpeech\",\"thread/realtime/appendText\",\"thread/realtime/listVoices\",\"thread/realtime/start\",\"thread/realtime/stop\",\"thread/resume\",\"thread/settings/update\",\"thread/start\",\"thread/startAeon\",\"thread/stop\",\"thread/items/list\",\"thread/inject_items\",\"thread/turns/list\",\"thread/unarchive\",\"turn/addUserMessage\",\"turn/interrupt\",\"turn/start\",\"turn/steer\"],Dcr=new Set(Jlt)});function _ce(t,e){return t.kind===\"chatgpt\"?e.kind===\"chatgpt\"&&t.accountId===e.accountId&&t.userId===e.userId:e.kind===\"execution-storage\"&&t.authMode===e.authMode}var Ice=f(()=>{\"use strict\"});var Ece=f(()"
+    },
+    {
+      "needle": "thread/start",
+      "offset": 377117,
+      "code": "ime/appendSpeech\",\"thread/realtime/appendText\",\"thread/realtime/listVoices\",\"thread/realtime/start\",\"thread/realtime/stop\",\"thread/resume\",\"thread/settings/update\",\"thread/start\",\"thread/startAeon\",\"thread/stop\",\"thread/items/list\",\"thread/inject_items\",\"thread/turns/list\",\"thread/unarchive\",\"turn/addUserMessage\",\"turn/interrupt\",\"turn/start\",\"turn/steer\"],Dcr=new Set(Jlt)});function _ce(t,e){return t.kind===\"chatgpt\"?e.kind===\"chatgpt\"&&t.accountId===e.accountId&&t.userId===e.userId:e.kind===\"execution-storage\"&&t.authMode===e.authMode}var Ice=f(()=>{\"use strict\"});var Ece=f(()=>{\"use strict\""
+    },
+    {
+      "needle": "thread/start",
+      "offset": 498832,
+      "code": "/events/error\",\"notifications/events/event\",\"notifications/events/heartbeat\",\"notifications/events/terminated\"],fhr=c.object({httpStatusCode:c.number().nullable()}),rft={error:!0,\"thread/started\":!0,\"thread/name/updated\":!0,\"thread/attachment/updated\":!0,\"thread/project/updated\":!1,\"thread/prediction/updated\":!1,\"thread/queue/changed\":!0,\"thread/environment/connected\":!0,\"thread/environment/disconnected\":!0,\"thread/settings/updated\":!0,\"thread/tokenUsage/updated\":!0,\"turn/started\":!0,\"hook/started\":!0,\"turn/completed\":!0,\"hook/completed\":!0,\"turn/diff/updated\":!0,\"turn/plan/updated\":!0,\"item/s"
+    },
+    {
+      "needle": "thread/start",
+      "offset": 972940,
+      "code": "rationMs:e.parseDurationMs,dispatchDurationMs:e.dispatchDurationMs,queueDepth:this.lineQueue.getDepth()},sensitive:{}})}}});var Et=f(()=>{\"use strict\"});function D4(t){return t===\"thread/start\"||t===\"thread/startAeon\"||t===\"thread/fork\"||t===\"thread/inject_items\"||t===\"thread/queue/add\"||t===\"turn/addUserMessage\"||t===\"turn/start\"||t===\"turn/steer\"}var zs=f(()=>{\"use strict\"});var PCe=f(()=>{\"use strict\"});var Hm=f(()=>{\"use strict\";mr();PCe()});function In(t,...e){if(process.env.NODE_ENV!==\"production\"){let r=FCe[t],n=typeof r==\"function\"?r.apply(null,e):r;throw new Error(`[Immer] ${n}`)}thro"
+    },
+    {
+      "needle": "registerCommand",
+      "offset": 2295450,
+      "code": "Host:()=>new nh,startWorkingTreeWatch:fKe,postMessage:(F,V)=>{this.postMessageToWebview(F,V)},gitManager:this.gitManager}),this.datadogLogger=w,this.subscriptions.push(je.commands.registerCommand(\"chatgpt.implementTodo\",async({line:F,fileName:V,cwd:J,comment:X})=>{let te=Hr();await Ru();let $={fileName:te?pr(V):V,cwd:te&&J!=null?pr(J):J,line:F,comment:X};this.sidebarView&&this.sidebarWebviewReady?this.postMessageToWebview(this.sidebarView.webview,{type:\"implement-todo\",...$}):this.pendingImplementTodo=$})),this.subscriptions.push(je.workspace.onDidChangeWorkspaceFolders(()=>{this.broadcastToAl"
+    },
+    {
+      "needle": "registerCommand",
+      "offset": 2521854,
+      "code": "),e.push(Mt.window.registerCustomEditorProvider(Ch.customEditorViewType,Pe,{webviewOptions:{retainContextWhenHidden:!0},supportsMultipleEditorsPerDocument:!1})),e.push(Mt.commands.registerCommand(\"chatgpt.openSidebar\",Ru)),e.push(Mt.commands.registerCommand(\"chatgpt.openCommandMenu\",async()=>{await Mt.commands.executeCommand(\"workbench.action.showCommands\")})),e.push(Mt.commands.registerCommand(Orr,async be=>{be?.source===Lrr&&await d.update(Re.SHOW_COPILOT_LOGIN_FIRST,!0),Pe.createNewPanel()})),e.push(Mt.commands.registerCommand(\"chatgpt.addToThread\",async()=>F6e(Pe))),e.push(Mt.commands.regi"
+    },
+    {
+      "needle": "registerCommand",
+      "offset": 2521916,
+      "code": "rViewType,Pe,{webviewOptions:{retainContextWhenHidden:!0},supportsMultipleEditorsPerDocument:!1})),e.push(Mt.commands.registerCommand(\"chatgpt.openSidebar\",Ru)),e.push(Mt.commands.registerCommand(\"chatgpt.openCommandMenu\",async()=>{await Mt.commands.executeCommand(\"workbench.action.showCommands\")})),e.push(Mt.commands.registerCommand(Orr,async be=>{be?.source===Lrr&&await d.update(Re.SHOW_COPILOT_LOGIN_FIRST,!0),Pe.createNewPanel()})),e.push(Mt.commands.registerCommand(\"chatgpt.addToThread\",async()=>F6e(Pe))),e.push(Mt.commands.registerCommand(\"chatgpt.addFileToThread\",async be=>L6e(Pe,be))),e"
+    },
+    {
+      "needle": "registerCommand",
+      "offset": 2522056,
+      "code": "pt.openSidebar\",Ru)),e.push(Mt.commands.registerCommand(\"chatgpt.openCommandMenu\",async()=>{await Mt.commands.executeCommand(\"workbench.action.showCommands\")})),e.push(Mt.commands.registerCommand(Orr,async be=>{be?.source===Lrr&&await d.update(Re.SHOW_COPILOT_LOGIN_FIRST,!0),Pe.createNewPanel()})),e.push(Mt.commands.registerCommand(\"chatgpt.addToThread\",async()=>F6e(Pe))),e.push(Mt.commands.registerCommand(\"chatgpt.addFileToThread\",async be=>L6e(Pe,be))),e.push(Mt.commands.registerCommand(Nrr,async()=>{if(!s){Mt.window.showInformationMessage('LSP server is not running. Set \"chatgpt.useExperime"
+    },
+    {
+      "needle": "newChat",
+      "offset": 1421581,
+      "code": "tron:{menuTitle:\"New Chat\",menuTitleIntlId:\"codex.commandMenuTitle.newThread\",defaultKeybindings:[{key:\"CmdOrCtrl+N\"},{key:\"CmdOrCtrl+Shift+O\"}]},vscodeCommand:{commandId:\"chatgpt.newChat\",title:\"New Chat in ChatGPT Sidebar\",keybinding:{key:\"ctrl+n\",mac:\"cmd+n\",when:\"chatgpt.supportsNewChatKeyShortcut\"}}},{id:\"newProjectlessTask\",titleIntlId:\"codex.command.newProjectlessTask\",descriptionIntlId:\"codex.commandDescription.newProjectlessTask\",requiredAccess:\"codexLocal\",availableIn:[\"electron\"],commandMenuGroupKey:\"thread\",commandMenu:!0,commandMenuFeature:\"codex\",electron:{menuTitle:\"New standalo"
+    },
+    {
+      "needle": "newChat",
+      "offset": 2518688,
+      "code": "(r){return Ql({raw:r,readUri:async n=>Xi.workspace.fs.readFile(n)})}#t(r){return Ql({raw:r,readUri:async n=>(await Xi.workspace.openTextDocument(n)).getText()})}};var Drr=\"chatgpt.newChat\",Orr=\"chatgpt.newCodexPanel\",Nrr=\"chatgpt.showLspMcpCliArgs\",Frr=\"chatgpt.lspMcpEnabled\",Lrr=\"sessionsViewPromotion\",hee;async function Brr(){await hee?.(),hee=void 0}async function qrr(t){let{subscriptions:e}=t;e.push(ie()),ie().info(\"Activating Codex extension\");let r=lKe(Wb),n=(0,nQe.randomUUID)();Wb.setTag(\"sessionId\",n);let o=new mB;e.push(o);let i=to(\"useExperimentalLspMcpServer\",!1);Mt.commands.execute"
+    },
+    {
+      "needle": "authMode",
+      "offset": 377458,
+      "code": "rt\",\"turn/steer\"],Dcr=new Set(Jlt)});function _ce(t,e){return t.kind===\"chatgpt\"?e.kind===\"chatgpt\"&&t.accountId===e.accountId&&t.userId===e.userId:e.kind===\"execution-storage\"&&t.authMode===e.authMode}var Ice=f(()=>{\"use strict\"});var Ece=f(()=>{\"use strict\"});var e0=f(()=>{\"use strict\"});var Gg=f(()=>{\"use strict\"});function Yu(t,e){let r=uH(t),n=uH(e);if(r==null||n==null)return 0;let o=tct(r,n);if(o!==0)return o;let i=r.prerelease,s=n.prerelease;if(i.length===0&&s.length===0)return 0;if(i.length===0)return 1;if(s.length===0)return-1;let a=Math.max(i.length,s.length);for(let u=0;u<a;u+=1){le"
+    },
+    {
+      "needle": "authMode",
+      "offset": 377471,
+      "code": "er\"],Dcr=new Set(Jlt)});function _ce(t,e){return t.kind===\"chatgpt\"?e.kind===\"chatgpt\"&&t.accountId===e.accountId&&t.userId===e.userId:e.kind===\"execution-storage\"&&t.authMode===e.authMode}var Ice=f(()=>{\"use strict\"});var Ece=f(()=>{\"use strict\"});var e0=f(()=>{\"use strict\"});var Gg=f(()=>{\"use strict\"});function Yu(t,e){let r=uH(t),n=uH(e);if(r==null||n==null)return 0;let o=tct(r,n);if(o!==0)return o;let i=r.prerelease,s=n.prerelease;if(i.length===0&&s.length===0)return 0;if(i.length===0)return 1;if(s.length===0)return-1;let a=Math.max(i.length,s.length);for(let u=0;u<a;u+=1){let l=i[u],d=s["
+    },
+    {
+      "needle": "authMode",
+      "offset": 1394956,
+      "code": "et i=Nv(o.authToken);return i==null?null:{kind:\"chatgpt\",accountId:i.accountId,userId:i.userId}}return o.authMethod==null&&o.requiresOpenaiAuth!==!1?null:{kind:\"execution-storage\",authMode:o.authMethod??\"none\"}}finally{n()}}var xNe=f(()=>{Fv()});var RNe,Qmn,g5=f(()=>{U();RNe=c.string().trim().min(1),Qmn=c.object({extensionIds:c.tuple([RNe]).rest(RNe)})});var _Ne,INe,_Bt,Jmn,efn,tfn,rx=f(()=>{_Ne=require(\"node:child_process\"),INe=require(\"node:util\"),_Bt=N(sd());ls();Jmn=(0,INe.promisify)(_Ne.execFile),efn=1024*1024,tfn=8*1024*1024});var By=T((nfn,ENe)=>{var IBt=yA(),EBt=pV();function PBt(t,e){"
+    },
+    {
+      "needle": "exports=",
+      "offset": 345372,
+      "code": " strict\"});var Sie,PP,Mw=f(()=>{\"use strict\";Sie=[\"enter\",\"cmdIfMultiline\",\"cmdAlways\"],PP=\"in-app-browser\"});var Aie=T((Ear,wie)=>{function wet(){this.__data__=[],this.size=0}wie.exports=wet});var Dg=T((Par,Cie)=>{function Aet(t,e){return t===e||t!==t&&e!==e}Cie.exports=Aet});var Dw=T((kar,Tie)=>{var Cet=Dg();function Tet(t,e){for(var r=t.length;r--;)if(Cet(t[r][0],e))return r;return-1}Tie.exports=Tet});var Rie=T((Mar,xie)=>{var xet=Dw(),Ret=Array.prototype,_et=Ret.splice;function Iet(t){var e=this.__data__,r=xet(e,t);if(r<0)return!1;var n=e.length-1;return r==n?e.pop():_et.call(e,r,1),--this"
+    },
+    {
+      "needle": "exports=",
+      "offset": 345456,
+      "code": "s\"],PP=\"in-app-browser\"});var Aie=T((Ear,wie)=>{function wet(){this.__data__=[],this.size=0}wie.exports=wet});var Dg=T((Par,Cie)=>{function Aet(t,e){return t===e||t!==t&&e!==e}Cie.exports=Aet});var Dw=T((kar,Tie)=>{var Cet=Dg();function Tet(t,e){for(var r=t.length;r--;)if(Cet(t[r][0],e))return r;return-1}Tie.exports=Tet});var Rie=T((Mar,xie)=>{var xet=Dw(),Ret=Array.prototype,_et=Ret.splice;function Iet(t){var e=this.__data__,r=xet(e,t);if(r<0)return!1;var n=e.length-1;return r==n?e.pop():_et.call(e,r,1),--this.size,!0}xie.exports=Iet});var Iie=T((Dar,_ie)=>{var Eet=Dw();function Pet(t){var e="
+    },
+    {
+      "needle": "exports=",
+      "offset": 345586,
+      "code": "{function Aet(t,e){return t===e||t!==t&&e!==e}Cie.exports=Aet});var Dw=T((kar,Tie)=>{var Cet=Dg();function Tet(t,e){for(var r=t.length;r--;)if(Cet(t[r][0],e))return r;return-1}Tie.exports=Tet});var Rie=T((Mar,xie)=>{var xet=Dw(),Ret=Array.prototype,_et=Ret.splice;function Iet(t){var e=this.__data__,r=xet(e,t);if(r<0)return!1;var n=e.length-1;return r==n?e.pop():_et.call(e,r,1),--this.size,!0}xie.exports=Iet});var Iie=T((Dar,_ie)=>{var Eet=Dw();function Pet(t){var e=this.__data__,r=Eet(e,t);return r<0?void 0:e[r][1]}_ie.exports=Pet});var Pie=T((Oar,Eie)=>{var ket=Dw();function Met(t){return ket"
+    },
+    {
+      "needle": "exports=",
+      "offset": 345805,
+      "code": " xet=Dw(),Ret=Array.prototype,_et=Ret.splice;function Iet(t){var e=this.__data__,r=xet(e,t);if(r<0)return!1;var n=e.length-1;return r==n?e.pop():_et.call(e,r,1),--this.size,!0}xie.exports=Iet});var Iie=T((Dar,_ie)=>{var Eet=Dw();function Pet(t){var e=this.__data__,r=Eet(e,t);return r<0?void 0:e[r][1]}_ie.exports=Pet});var Pie=T((Oar,Eie)=>{var ket=Dw();function Met(t){return ket(this.__data__,t)>-1}Eie.exports=Met});var Mie=T((Nar,kie)=>{var Det=Dw();function Oet(t,e){var r=this.__data__,n=Det(r,t);return n<0?(++this.size,r.push([t,e])):r[n][1]=e,this}kie.exports=Oet});var Ow=T((Far,Die)=>{var"
+    }
+  ]
+}

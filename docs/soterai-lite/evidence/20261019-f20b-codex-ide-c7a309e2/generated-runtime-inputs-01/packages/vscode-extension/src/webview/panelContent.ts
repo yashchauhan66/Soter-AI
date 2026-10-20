@@ -1,0 +1,353 @@
+/**
+ * Plain-language content model for the SoterAI Control Panel.
+ *
+ * This module is deliberately pure — it does not import `vscode` — for the same
+ * reason ProtectionState.ts is pure: the wording a new user reads is the part
+ * most likely to be wrong, and it should be unit-testable without a VS Code
+ * host.
+ *
+ * The rule that shapes every string here: a first-time user should be able to
+ * read one line and know what a control does. The honest caveat is NOT deleted
+ * to achieve that — it moves into `detail`, which the panel renders inside a
+ * collapsed <details> block. Demoting a caveat is allowed; softening one is
+ * not. No `level` here is ever stronger than what CAPABILITY_REGISTRY permits,
+ * because every level is resolved through capabilityUiBadge().
+ */
+
+import { capabilityUiBadge, type ProtectionLevel } from "../protection/ProtectionLevel";
+import type { ProtectionStateName } from "../protection/ProtectionState";
+
+/** Runtime facts the panel has actually verified. Never secrets or content. */
+export interface PanelFacts {
+    safeMode: boolean;
+    safeModeLevel?: string;
+    protectedWorkspace: boolean;
+    liveScan: boolean;
+    sentinel: boolean;
+    mcpFirewall: boolean;
+    brokerRunning: boolean;
+    brokerStatus?: "running" | "stopped" | "unavailable";
+    trusted: boolean;
+    /** Current data-boundary settings. Optional for old hosts/test adapters. */
+    privacyMode?: string;
+    cloudEnabled?: boolean;
+    telemetryLevel?: string;
+    /**
+     * GAP 3. Controls an administrator pinned, keyed by control id, with the
+     * plain-language reason to show. Absent for every control on an unmanaged
+     * machine, which is the normal case — so the panel behaves identically for a
+     * solo developer and only changes where a policy actually applies.
+     */
+    managedReasons?: Partial<Record<ControlId, string>>;
+}
+
+export type ControlId =
+    | "safeMode"
+    | "protectedWorkspace"
+    | "liveScan"
+    | "sentinel"
+    | "mcpFirewall";
+
+export interface PlainControl {
+    id: ControlId;
+    /** What the user gets, in their words. */
+    label: string;
+    /** One short line, always visible. Must carry no internal vocabulary. */
+    summary: string;
+    /** The full honest caveat, shown when the user expands the row. */
+    detail: string;
+    on: boolean;
+    level?: ProtectionLevel;
+    /** An administrator pinned this; the panel must not offer a toggle. */
+    managed?: boolean;
+    /** Why it cannot be changed. Always present when `managed` is true. */
+    managedReason?: string;
+}
+
+export interface PanelTask {
+    /** Message type; must be a member of the provider's ALLOWED set. */
+    action: string;
+    label: string;
+    hint: string;
+    /** Inline SVG line icon (16×16 grid, currentColor) — never an emoji. */
+    icon: string;
+    /** Lower-frequency workflows stay available without crowding first use. */
+    group: "start" | "more";
+}
+
+export interface PrimaryCta {
+    action: string;
+    label: string;
+    hint: string;
+    tone: "go" | "fix" | "calm";
+}
+
+export interface PrivacyBoundaryInput {
+    privacyMode: string;
+    cloudEnabled: boolean;
+    telemetryLevel: string;
+    trusted: boolean;
+}
+
+export interface PrivacyBoundaryReceipt {
+    title: string;
+    detail: string;
+    tone: "local" | "connected" | "attention";
+}
+
+/** A short, state-derived receipt of what may cross the device boundary. */
+export function privacyBoundary(input: PrivacyBoundaryInput): PrivacyBoundaryReceipt {
+    if (!input.trusted) {
+        return {
+            title: "SoterAI cloud scanning off",
+            detail: "This workspace is not trusted, so SoterAI cloud features are disabled. Other tools have their own data access and network permissions.",
+            tone: "local",
+        };
+    }
+    if (input.privacyMode === "local" || !input.cloudEnabled) {
+        return {
+            title: "SoterAI cloud scanning off",
+            detail: "No scan content or telemetry is sent to SoterAI. Routed AI requests can still reach your configured provider; other tools are outside these checks.",
+            tone: "local",
+        };
+    }
+    if (input.telemetryLevel === "off") {
+        return {
+            title: "SoterAI cloud available on request",
+            detail: "SoterAI cloud actions run only when you start them. Automatic telemetry is off. AI provider traffic and other tools have separate boundaries.",
+            tone: "connected",
+        };
+    }
+    return {
+        title: "SoterAI metadata enabled",
+        detail: "Redacted metadata may be recorded when every privacy gate allows it; not raw prompts and not raw secrets. Cloud actions can send only the content you explicitly submit.",
+        tone: "attention",
+    };
+}
+
+/**
+ * Words that mean something inside this codebase and nothing to a new user.
+ * Enforced by test against every `summary`, `label` and task string. `detail`
+ * is exempt on purpose: that is where the precise, jargon-carrying truth lives.
+ */
+export const INTERNAL_VOCABULARY: readonly RegExp[] = [
+    /registry level/i,
+    /VISIBILITY_ONLY|DETECTION_ONLY|ADVISORY_ONLY|FULL_ENFORCEMENT|STRONG_ENFORCEMENT|PARTIAL_ENFORCEMENT|UNSUPPORTED|UNKNOWN_NOT_TESTED/,
+    /\bpipeline \d/i,
+    /\bun-?brokered\b/i,
+    /\bpreflight\b/i,
+    /\bMCP\b(?! server)/,
+    /\bsoterai\.[a-z]/i,
+    /\bwebview\b/i,
+    /\bALLOW_[A-Z_]+|\bQUARANTINE\b/,
+];
+
+/** Short, honest level word for a control that is on. */
+function levelFor(on: boolean, level: ProtectionLevel | undefined): ProtectionLevel | undefined {
+    return on ? level : undefined;
+}
+
+/**
+ * The five controls, in the order a new user benefits from them: the thing
+ * that blocks first, then the things that reduce exposure, then the things
+ * that only watch.
+ */
+export function plainControls(facts: PanelFacts): PlainControl[] {
+    const liveScanLevel = capabilityUiBadge("live-scan")?.uiLevel ?? "MONITORED";
+    const liveScanRegistry = capabilityUiBadge("live-scan")?.registryLevel ?? "VISIBILITY_ONLY";
+    const mcpLevel = capabilityUiBadge("mcp-config-scan")?.uiLevel ?? "MONITORED";
+    const mcpRegistry = capabilityUiBadge("mcp-config-scan")?.registryLevel ?? "DETECTION_ONLY";
+
+    // GAP 3: a pinned control is annotated, never re-worded. The state a user
+    // reads must stay the true state; only its editability changes.
+    const withManaged = (control: PlainControl): PlainControl => {
+        const reason = facts.managedReasons?.[control.id];
+        return reason ? { ...control, managed: true, managedReason: reason } : control;
+    };
+
+    const controls: PlainControl[] = [
+        {
+            id: "safeMode",
+            label: "Block risky AI requests",
+            summary: facts.safeMode
+                ? facts.brokerRunning
+                    ? "On — risky requests through SoterAI are blocked before they leave your machine."
+                    : "On — request blocking is unavailable until the local checker is running."
+                : "Off — SoterAI request blocking is disabled.",
+            detail: facts.safeMode
+                ? facts.brokerRunning
+                    ? `Enforced on brokered AI traffic${facts.safeModeLevel ? ` (${facts.safeModeLevel})` : ""}. Requests that bypass the broker are not covered. SoterAI cannot intercept another extension's own network calls.`
+                    : "Safe Mode is on. Without the local broker, SoterAI scans every prompt you send through SoterAI commands and warns on secrets/injection. Start the broker for full pre-send blocking on routed traffic."
+                : "AI Safe Mode request blocking is off. Local editor scans and default context exclusions have separate settings.",
+            on: facts.safeMode,
+            level: levelFor(facts.safeMode, facts.brokerRunning ? "ENFORCED" : "MONITORED"),
+        },
+        {
+            id: "protectedWorkspace",
+            label: "Keep chosen files out of AI",
+            summary: facts.protectedWorkspace
+                ? "On — listed files are excluded from SoterAI-built context."
+                : "Off — the additional protected-file list is inactive. Default and manual rules still apply.",
+            detail: facts.protectedWorkspace
+                ? "Protected files are excluded from SoterAI-built AI context. Direct reads by other extensions or tools are not intercepted."
+                : "The additional workspace list is inactive. Default sensitive paths and manual file/selection rules still apply to managed context. Other tools' direct reads are not intercepted.",
+            on: facts.protectedWorkspace,
+            level: levelFor(facts.protectedWorkspace, "REDACTED"),
+        },
+        {
+            id: "liveScan",
+            label: "Warn me about secrets as I type",
+            summary: facts.liveScan
+                ? "On — you get a warning in the editor. It warns, it does not block."
+                : "Off — no editor warnings for secrets or injected instructions.",
+            detail: `Files are scanned as you type and save (secrets, personal data, prompt injection, jailbreak wording). Registry level: ${liveScanRegistry} — diagnostics only. It does not block a send to AI and does not stop other extensions.`,
+            on: facts.liveScan,
+            level: levelFor(facts.liveScan, liveScanLevel),
+        },
+        {
+            id: "sentinel",
+            label: "Keep a record of AI activity",
+            summary: facts.sentinel
+                ? "On — a private, redacted history you can review later. Watching only."
+                : "Off — no history of what AI tools did in this project.",
+            detail: facts.sentinel
+                ? "Records a redacted timeline of observed AI activity. Observes only — it does not block, and raw secret values are never stored."
+                : "AI activity is not being recorded.",
+            on: facts.sentinel,
+            level: levelFor(facts.sentinel, "MONITORED"),
+        },
+        {
+            id: "mcpFirewall",
+            label: "Check AI agent tools strictly",
+            summary: facts.mcpFirewall
+                ? "On — risky agent tool settings get flagged for you."
+                : "Off — agent tool settings get the standard check only.",
+            detail: `MCP configs are scanned strictly and risky tools are flagged (${mcpRegistry}). The optional broker preflight is detection-only unless the calling tool respects the decision; other MCP clients stay unenforced.`,
+            on: facts.mcpFirewall,
+            level: levelFor(facts.mcpFirewall, mcpLevel),
+        },
+    ];
+
+    return controls.map(withManaged);
+}
+
+/**
+ * Things a user came here to do, named as goals rather than as the modules
+ * behind them. The first three solve the security problems users encounter
+ * immediately; specialised checks are rendered under a disclosure below them.
+ */
+export function panelTasks(): PanelTask[] {
+    return [
+        {
+            action: "action:checkBeforeAI",
+            label: "Scan before sending to AI",
+            hint: "Checks selected text or your clipboard locally and offers a safe copy.",
+            icon: `<svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="3.25" y="3" width="9.5" height="11.5" rx="1.5" stroke="currentColor" stroke-width="1.25"/><path d="M5.5 1.5h5v2.25h-5z" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round"/><path d="m5.75 9.25 1.75 1.75 2.75-3" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+            group: "start",
+        },
+        {
+            action: "action:protectSecrets",
+            label: "Review workspace secrets",
+            hint: "Finds raw secrets and, after review, replaces them with safe placeholders on disk.",
+            icon: `<svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8 1.5 13 3.5v3.75c0 3.2-1.9 5.7-5 7.25-3.1-1.55-5-4.05-5-7.25V3.5l5-2Z" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round"/><path d="m5.5 8 1.5 1.5 3.5-3.5" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+            group: "start",
+        },
+        {
+            action: "action:secureAI",
+            label: "Secure installed AI tools",
+            hint: "Finds supported AI tools, shows every proposed change, and keeps encrypted backups.",
+            icon: `<svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="2.25" y="5" width="11.5" height="8.5" rx="1.5" stroke="currentColor" stroke-width="1.25"/><path d="M5 5V3.75A3 3 0 0 1 8 1a3 3 0 0 1 3 2.75V5M5.25 9.25h.01M10.75 9.25h.01M6.5 11.25h3" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/></svg>`,
+            group: "start",
+        },
+        {
+            action: "action:controlledTerminal",
+            label: "Run a command safely",
+            hint: "Reviews a terminal command for damage before it runs.",
+            icon: `<svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5" stroke="currentColor" stroke-width="1.25"/><path d="m4.5 6.25 2.5 2.5-2.5 2.5" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.75 11.25H11.5" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/></svg>`,
+            group: "more",
+        },
+        {
+            action: "action:depGuard",
+            label: "Check a package before installing",
+            hint: "Looks for typo-squatting and known-bad packages.",
+            icon: `<svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8 1.5 13.75 4v8L8 14.5 2.25 12V4L8 1.5Z" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round"/><path d="M2.25 4 8 6.75 13.75 4M8 6.75V14.5" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round"/></svg>`,
+            group: "more",
+        },
+        {
+            action: "action:mcpPreflight",
+            label: "Check an agent tool before it runs",
+            hint: "Reviews one AI agent tool call and reports what it would do.",
+            icon: `<svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="2.75" y="5.5" width="10.5" height="7.5" rx="1.75" stroke="currentColor" stroke-width="1.25"/><path d="M8 3v2.5" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/><circle cx="4" cy="3" r="1.25" fill="currentColor"/><circle cx="12" cy="3" r="1.25" fill="currentColor"/><rect x="5.25" y="8.25" width="1.75" height="2" rx=".5" fill="currentColor"/><rect x="9" y="8.25" width="1.75" height="2" rx=".5" fill="currentColor"/></svg>`,
+            group: "more",
+        },
+    ];
+}
+
+/**
+ * The single next step, derived from the state the extension actually verified.
+ *
+ * There is exactly one primary button because a new user reading five equally
+ * weighted buttons has to make a decision they have no basis for. The old panel
+ * showed "Enable Full Protection" unconditionally — including while locked
+ * down, where it is the wrong move, and while already fully enforced, where it
+ * is a no-op that implies something is still missing.
+ */
+export function primaryCta(state: ProtectionStateName, facts: PanelFacts): PrimaryCta {
+    if (state === "LOCKDOWN") {
+        // Previously unreachable from this panel: lockdown replaced the whole
+        // body and left no way back except the command palette.
+        return {
+            action: "action:unlock",
+            label: "Unlock protection",
+            hint: "Review what happened first — unlocking restores normal AI access.",
+            tone: "fix",
+        };
+    }
+    if (!facts.trusted) {
+        return {
+            action: "action:openWalkthrough",
+            label: "Review setup requirements",
+            hint: "This workspace is untrusted. Open the setup guide before enabling protection.",
+            tone: "calm",
+        };
+    }
+    if (state === "ERROR" || state === "POLICY_UNAVAILABLE") {
+        return {
+            action: "action:openCoverage",
+            label: "See what is wrong",
+            hint: "Opens the details of which parts are working and which are not.",
+            tone: "fix",
+        };
+    }
+    if (!facts.brokerRunning) {
+        return {
+            action: "action:automaticProtection",
+            label: "Configure managed checks",
+            hint: "Review scope, enable local controls and review supported AI routing changes. Setup checks do not verify agent coverage.",
+            tone: "go",
+        };
+    }
+    const everyVisibleControlOn = facts.safeMode
+        && facts.protectedWorkspace
+        && facts.liveScan
+        && facts.sentinel
+        && facts.mcpFirewall;
+    if (state === "BYPASS_DETECTED") return {
+        action: "action:automaticProtection", label: "Fix supported AI routing",
+        hint: "Runs automatic setup and reviews routing changes for supported AI tools.", tone: "fix",
+    };
+    if (state === "FULLY_ENFORCED" || (facts.brokerRunning && everyVisibleControlOn)) {
+        return {
+            action: "action:openCoverage",
+            label: "See what is covered",
+            hint: "Every available control is on. See which paths are enforced and which remain advisory.",
+            tone: "calm",
+        };
+    }
+    return {
+        action: "action:automaticProtection",
+        label: "Complete automatic setup",
+        hint: "Reviews scope, enables local controls and checks configured managed paths. Agent routing and selected-architecture guarantees remain UNTESTED.",
+        tone: "go",
+    };
+}

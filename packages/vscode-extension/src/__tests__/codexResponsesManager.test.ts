@@ -5,7 +5,8 @@ import { EventEmitter } from "node:events";
 import { PassThrough } from "node:stream";
 import * as stub from "./phase2/vscode-stub";
 import { BrokerManager } from "../broker/BrokerManager";
-beforeEach(()=>stub.resetState("D:/SoterAI-Lite-test-profiles/f16-manager-memory-only"));
+// These original F20A controls exercise CLI-only capability ownership.
+beforeEach(()=>{stub.resetState("D:/SoterAI-Lite-test-profiles/f16-manager-memory-only");stub.state.configInspect.set("soterai.lite.codexIdeAdapter",{defaultValue:true,globalValue:false});});
 function fixture(extra:{forcedLevel?:string;wrongAck?:boolean;registryFailure?:boolean;version?:number;clineAck?:unknown;codexAck?:unknown}={}){
     const context=stub.makeExtensionContext("D:/SoterAI-Lite-test-profiles/f16-manager-memory-only/storage"),envs:NodeJS.ProcessEnv[]=[],routes:string[]=[];
     let mode={enabled:true,level:"strict"},registryAlive=true,generation="",syncCount=0;

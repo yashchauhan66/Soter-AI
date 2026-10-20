@@ -1,0 +1,11 @@
+F20B ACTIVE / INCOMPLETE, 2026-10-20.
+
+Parent source fd50edb37d0fc01c6b66aa9e467aaa9aaa289fdd and separate transition c0c9dce010c90c0b419c7979d65ace2677c87c8f completed F20A scoped. No F20B production changes yet. F20C and later cards remain pending in original order.
+
+Installed public IDE 26.51007.21434 and bundled 0.162.0-alpha.17.2 are separately pinned in installed-public-inputs-01.json. This runtime is not F20A CLI0.160.1. Native inspection01/02 proves version/help, actual generated protocol and initialize/EOF natural exit, including observed IDE app-server argv. Static source and official docs are not actual IDE route acceptance.
+
+Feasibility01 actual isolated IDE run INCOMPLETE: implicit onChatSession activation happened before fixture startup despite activationEvents=[], so view/controller capture missed; zero fixture-tracked requests/children. Original result snapshot predates disposal; exthost log proves vendor disposal attempted ChildProcess.kill and guard refused it. No signal was sent. Root f20b-feasibility-20261020T030918Z-32dcadcd retained. Restricted metadata query failed `Get-CimInstance : Access denied`, HRESULT0x80041003; its printed zero count is invalid. Authorized read-only reconciliation subsequently succeeded with NO_CURRENT_OWNED_PROCESSES_OBSERVED at 03:15:19.5954349Z. Exact logs/results/hashes in that root's reconcile-01.json; failure is not regraded.
+
+Feasibility02 frozen in ide-feasibility-freeze-02.json before launch: isolated copied manifest removes implicit chatSessions contribution, asserts vendor inactive before explicit activation after config/isolation/capture; vendor JS/native bytes unchanged. All signal APIs remain refused. Actual internal client/native loopback route remains unproven until raw result. This is scripted LOW feasibility, not SoterAI integration, physical webview, real-provider, human, independent or OS/all-descendant evidence.
+
+No catalog/rating claim. Previous three F20A failed fixture workers remain WITHDRAWAL_INCOMPLETE_NO_SIGNALS and retained for F28/L6. F11 absent, frozen44 ungraded, nine unmanaged leaks and unrelated changes retained. Original L6 HUMAN-ACTIONS and STOP; no auth/login or normal-profile actions.

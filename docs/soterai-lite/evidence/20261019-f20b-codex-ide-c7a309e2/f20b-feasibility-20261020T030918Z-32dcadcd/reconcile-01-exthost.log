@@ -1,0 +1,35 @@
+2026-10-20 08:40:55.655 [info] Extension host with pid 24164 started
+2026-10-20 08:40:55.655 [info] Skipping acquiring lock for d:\SoterAI-Lite-test-profiles\f20b-feasibility-20261020T030918Z-32dcadcd\profile\User\workspaceStorage\f6d08768490d37c35bd12de054194fc5.
+2026-10-20 08:40:55.763 [info] ExtensionService#_doActivateExtension vscode.emmet, startup: false, activationEvent: 'onLanguage'
+2026-10-20 08:40:55.881 [info] ExtensionService#_doActivateExtension openai.chatgpt, startup: false, activationEvent: 'onChatSession:openai-codex'
+2026-10-20 08:41:00.406 [info] ExtensionService#_doActivateExtension vscode.git-base, startup: true, activationEvent: '*'
+2026-10-20 08:41:00.696 [info] Eager extensions activated
+2026-10-20 08:41:00.697 [info] [node-compile-cache] extension-host: packaged cache enabled (status: enabled, configured: C:\Users\USER\AppData\Local\Programs\Microsoft VS Code\6d62b1d5da\resources\app\node-compile-cache\extension-host, active: C:\Users\USER\AppData\Local\Programs\Microsoft VS Code\6d62b1d5da\resources\app\node-compile-cache\extension-host\v24.21.0-x64-c3a7e8f2)
+2026-10-20 08:41:00.703 [info] ExtensionService#_doActivateExtension vscode.extension-editing, startup: false, activationEvent: 'onLanguage:json'
+2026-10-20 08:41:00.781 [info] ExtensionService#_doActivateExtension vscode.debug-auto-launch, startup: false, activationEvent: 'onStartupFinished'
+2026-10-20 08:41:00.796 [info] ExtensionService#_doActivateExtension vscode.merge-conflict, startup: false, activationEvent: 'onStartupFinished'
+2026-10-20 08:41:00.851 [info] ExtensionService#_doActivateExtension synthetic-local.soterai-f20b-feasibility, startup: false, activationEvent: 'onStartupFinished'
+2026-10-20 08:41:00.936 [info] Extension host terminating: received terminate message from renderer
+2026-10-20 08:41:00.942 [error] An error occurred when disposing the subscriptions for extension 'openai.chatgpt':
+2026-10-20 08:41:00.943 [error] Error: F20A test forbids process signals
+	at ChildProcess.kill (d:\SoterAI-Lite-test-profiles\f20b-feasibility-20261020T030918Z-32dcadcd\fixture\ide-guards-01.cjs:28:109)
+	at uF.teardownProcess (d:\SoterAI-Lite-test-profiles\f20b-feasibility-20261020T030918Z-32dcadcd\extensions\openai.chatgpt-26.51007.21434-win32-x64\out\extension.js:1055:236)
+	at uF.dispose (d:\SoterAI-Lite-test-profiles\f20b-feasibility-20261020T030918Z-32dcadcd\extensions\openai.chatgpt-26.51007.21434-win32-x64\out\extension.js:1056:5702)
+	at zn (file:///c:/Users/USER/AppData/Local/Programs/Microsoft%20VS%20Code/6d62b1d5da/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:9:16682)
+	at RD._fn (file:///c:/Users/USER/AppData/Local/Programs/Microsoft%20VS%20Code/6d62b1d5da/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:169:18602)
+	at RD.dispose (file:///c:/Users/USER/AppData/Local/Programs/Microsoft%20VS%20Code/6d62b1d5da/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:26:577)
+	at j_._deactivate (file:///c:/Users/USER/AppData/Local/Programs/Microsoft%20VS%20Code/6d62b1d5da/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:169:14919)
+	at file:///c:/Users/USER/AppData/Local/Programs/Microsoft%20VS%20Code/6d62b1d5da/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:169:12221
+	at Array.map (<anonymous>)
+	at j_._deactivateAll (file:///c:/Users/USER/AppData/Local/Programs/Microsoft%20VS%20Code/6d62b1d5da/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:169:12209)
+	at j_.terminate (file:///c:/Users/USER/AppData/Local/Programs/Microsoft%20VS%20Code/6d62b1d5da/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:169:12560)
+	at r.terminate (file:///c:/Users/USER/AppData/Local/Programs/Microsoft%20VS%20Code/6d62b1d5da/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:171:1076)
+	at Ga (file:///c:/Users/USER/AppData/Local/Programs/Microsoft%20VS%20Code/6d62b1d5da/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:474:11797)
+	at xm.value (file:///c:/Users/USER/AppData/Local/Programs/Microsoft%20VS%20Code/6d62b1d5da/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:474:9939)
+	at w._deliver (file:///c:/Users/USER/AppData/Local/Programs/Microsoft%20VS%20Code/6d62b1d5da/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:28:3644)
+	at w.fire (file:///c:/Users/USER/AppData/Local/Programs/Microsoft%20VS%20Code/6d62b1d5da/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:28:3962)
+	at ea.fire (file:///c:/Users/USER/AppData/Local/Programs/Microsoft%20VS%20Code/6d62b1d5da/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:30:8627)
+	at MessagePortMain.<anonymous> (file:///c:/Users/USER/AppData/Local/Programs/Microsoft%20VS%20Code/6d62b1d5da/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:474:8171)
+	at MessagePortMain.emit (node:events:514:28)
+	at Object.emit (node:electron/js2c/utility_init:2:2934)
+2026-10-20 08:41:00.944 [info] Extension host with pid 24164 exiting with code 0

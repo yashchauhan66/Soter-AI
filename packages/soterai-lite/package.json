@@ -132,7 +132,8 @@
         "soterai.lite.claudeAdapter",
         "soterai.lite.clineAdapter",
         "soterai.lite.codexCliAdapter",
-        "soterai.broker.codexResponsesProviderUrl"
+        "soterai.broker.codexResponsesProviderUrl",
+        "soterai.lite.codexIdeAdapter"
       ]
     }
   },
@@ -1277,6 +1278,21 @@
         "command": "soterai.codexCliAdapterStatus",
         "title": "Show Pinned Codex CLI Profile Status",
         "category": "SoterAI"
+      },
+      {
+        "command": "soterai.configurePinnedCodexIde",
+        "title": "Configure pinned Codex IDE profile",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.restorePinnedCodexIde",
+        "title": "Restore pinned Codex IDE profile",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.codexIdeAdapterStatus",
+        "title": "Codex IDE adapter status",
+        "category": "SoterAI"
       }
     ],
     "viewsContainers": {
@@ -1951,6 +1967,12 @@
           "default": "",
           "scope": "machine",
           "description": "Full upstream Responses endpoint for the pinned Codex CLI route. Requires the owned broker and provider key in SecretStorage; request bodies cannot choose the destination. Blank withholds provider traffic."
+        },
+        "soterai.lite.codexIdeAdapter": {
+          "type": "boolean",
+          "default": true,
+          "scope": "machine",
+          "description": "Enable reviewed pinned Codex IDE dedicated-home setup with F04 and buffered text Responses. Select this home before editor/native startup. Native tool preferences are not confinement; other profiles, overrides, unsupported context/images remain uncovered. Disabling revokes local roles and preserves configuration."
         }
       }
     },
@@ -2901,6 +2923,18 @@
         },
         {
           "command": "soterai.codexCliAdapterStatus",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.configurePinnedCodexIde",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.restorePinnedCodexIde",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.codexIdeAdapterStatus",
           "when": "soterai.advancedCommands"
         }
       ]
