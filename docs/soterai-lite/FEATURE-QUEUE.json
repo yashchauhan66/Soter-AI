@@ -11,7 +11,7 @@
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
   "scope": "F01-F10 and F12-F19 DONE for scoped exact objects and verified bytes; F11 optional unavailable/unimplemented NOT_TESTED/NOT_COVERED. F20 alone active after the separate F19 transition byte barrier.",
   "implementationConcurrency": 1,
-  "activeFeature": "F20",
+  "activeFeature": "F21",
   "prerequisiteBlock": {
     "id": "P00",
     "result": "FAIL",
@@ -439,8 +439,8 @@
     {
       "id": "F20",
       "title": "Other discovered adapters, one at a time.",
-      "status": "ACTIVE",
-      "result": "INCOMPLETE",
+      "status": "DONE",
+      "result": "PASS_SCOPED",
       "requires": [
         "F19"
       ],
@@ -518,8 +518,8 @@
         {
           "id": "F20C",
           "tool": "geminiCli",
-          "status": "VERIFYING",
-          "result": "PASS_SCOPED_PENDING_BYTE_BARRIERS",
+          "status": "DONE",
+          "result": "PASS_SCOPED",
           "pin": "Installed0.55.1 public463file bundle/Node22.16.0/picomatch4.0.2 rechecked; exact pin02",
           "progressEvidence": "docs/soterai-lite/evidence/20261020-f20c-gemini-cli-8a6d3e70/f20c-progress-04.json",
           "requiredGate": "INCOMPLETE_CURRENT_FULL_SUITE_AFFECTED_IDE_RETAINED_AND_BYTE_BARRIERS",
@@ -560,14 +560,22 @@
             "improvementRoundsUsed": 1
           },
           "acceptanceEvidence": "docs/soterai-lite/evidence/20261020-f20c-gemini-cli-8a6d3e70/f20c-acceptance-01.json",
-          "scope": "Pinned Gemini CLI0.55.1/Node22.16.0 selected manifest+complete bundle and public picomatch4.0.2. Actual registered owner native16/7current clients naturally close/EOF/signalnull, private MCP and GenerateContent roles, reviewed two-file home/settings/env with encrypted absence/durable recovery/exact partial restore, machine-only capability/base and strict owned-broker acknowledgment. Stateless text/single-safe-function F04 and complete buffered F07/F08 only. Native home dotenv selected local endpoint/key; one-attempt profile and generic nonretryable known broker denials. Explicit native provider override LEAK_CONFIRMED/uncovered, badgeUncovered. Optional native process probes refused by fixture, not product command confinement. No opaque/media/server-state/normal-profile/override/native-read/real-provider/human/independent/OS/all-descendant or general incremental gateway claim. Full03 Claude assertion and first affectedIDE failure retained; unchanged-code isolated full04/logging-only same-assertion IDE retry passed without established cause or runtime budget/source fix. Product01 and diagnostic04/05/06 plus older F20A receiver observations remain INCOMPLETE_NO_SIGNALS for F28/L6; no historical cleanup claim. Frozen44 ungraded/F11absent/nine unmanaged leaks/no rating/originalL6 HUMAN-ACTIONS STOP."
+          "scope": "Pinned Gemini CLI0.55.1/Node22.16.0 selected manifest+complete bundle/picomatch4.0.2; actual registered owner native16/7closed clients, separate local MCP/GenerateContent roles, one-attempt reviewed home/environment and buffered stateless text/F04 only. Explicit provider override leak/uncovered; badgeUncovered. Optional native probes refused by fixture, no product command-confinement/opaque/media/state/real-provider/human/independent/OS/all-descendant claim. Historical failed current-matrix/Claude timing/IDE runs and incomplete worker observations retained separately.",
+          "sourceEvidenceCommit": "199d39410ba149aa74471ed6042fc497e0359676",
+          "commitByteVerification": "docs/soterai-lite/evidence/20261020-f20c-gemini-cli-8a6d3e70/f20c-committed-byte-verification-01.json",
+          "transitionByteVerification": "docs/soterai-lite/evidence/20261020-f20c-gemini-cli-8a6d3e70/f20c-transition-byte-verification-01.json"
         }
-      ]
+      ],
+      "sourceEvidenceCommit": "199d39410ba149aa74471ed6042fc497e0359676",
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261020-f20c-gemini-cli-8a6d3e70/f20c-acceptance-01.json",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261020-f20c-gemini-cli-8a6d3e70/f20c-committed-byte-verification-01.json",
+      "transitionByteVerification": "docs/soterai-lite/evidence/20261020-f20c-gemini-cli-8a6d3e70/f20c-transition-byte-verification-01.json",
+      "scope": "Enumerated installed supported Codex CLI, Codex IDE and Gemini CLI subcards complete for their separate pinned text/F04 routes. No generic support inference; unsupported/native bypass routes remain named uncovered."
     },
     {
       "id": "F21",
       "title": "Secrets hygiene and exposure ledger.",
-      "status": "PLANNED",
+      "status": "ACTIVE",
       "result": "NOT-RUN",
       "requires": [
         "F20"
