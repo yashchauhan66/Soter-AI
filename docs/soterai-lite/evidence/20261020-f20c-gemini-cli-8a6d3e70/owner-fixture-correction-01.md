@@ -1,0 +1,1 @@
+Registration fixture corrected to the established soterai.advancedCommands menu gate after inspecting both current manifests. Original missing-owner/manifest baseline14FAIL remains unchanged. New restore regression covers a resolving partial write retaining recovery receipt. Manager tests reuse only synthetic IPC plumbing; no native protection claim.

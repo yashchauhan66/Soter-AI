@@ -1,0 +1,60 @@
+Warning: 256-color support not detected. Using a terminal with at least 256-color support is recommended for a better visual experience.
+Ignore file not found: D:\SoterAI-Lite-test-profiles\f20c-feasibility-85e139f2-033e-4652-aa93-77dbee7a3c69\workspace\.geminiignore, continue without it.
+Rename failed with EPERM, retrying in 50ms (attempt 1/5)...
+Experiments loaded {
+  experimentIds: [],
+  flags: []
+}
+Ignore file not found: D:\SoterAI-Lite-test-profiles\f20c-feasibility-85e139f2-033e-4652-aa93-77dbee7a3c69\workspace\.geminiignore, continue without it.
+Experiments loaded {
+  experimentIds: [],
+  flags: []
+}
+[AgentRegistry] User policy exists for 'codebase_investigator', skipping dynamic registration.
+[AgentRegistry] User policy exists for 'cli_help', skipping dynamic registration.
+Using FileKeychain fallback for secure storage.
+Registering notification handlers for server 'soterai_safe_read'. Capabilities: { tools: {} }
+Server 'soterai_safe_read' has tools but did not declare 'listChanged' capability. Listening anyway for robustness...
+Scheduling MCP context refresh...
+Executing MCP context refresh...
+MCP context refresh complete.
+[DEBUG] [MemoryDiscovery] Loading environment memory for trusted root: D:/SoterAI-Lite-test-profiles/f20c-feasibility-85e139f2-033e-4652-aa93-77dbee7a3c69/workspace (Stopping at trusted root: D:/SoterAI-Lite-test-profiles/f20c-feasibility-85e139f2-033e-4652-aa93-77dbee7a3c69/workspace — no git root found)
+[DEBUG] [MemoryDiscovery] Starting upward search from D:/SoterAI-Lite-test-profiles/f20c-feasibility-85e139f2-033e-4652-aa93-77dbee7a3c69/workspace stopping at D:/SoterAI-Lite-test-profiles/f20c-feasibility-85e139f2-033e-4652-aa93-77dbee7a3c69/workspace
+[STARTUP] StartupProfiler.flush() called with 9 phases
+[STARTUP] Recording metric for phase: cli_startup duration: 245.32590000000005
+[STARTUP] Recording metric for phase: load_settings duration: 25.23090000000002
+[STARTUP] Recording metric for phase: cleanup_ops duration: 187.9380000000001
+[STARTUP] Recording metric for phase: parse_arguments duration: 43.26379999999995
+[STARTUP] Recording metric for phase: load_cli_config duration: 28.40729999999985
+[STARTUP] Recording metric for phase: setup_terminal duration: 0.6918000000000575
+[STARTUP] Recording metric for phase: initialize_app duration: 1.557399999999916
+[STARTUP] Recording metric for phase: authenticate duration: 0.48939999999993233
+[STARTUP] Recording metric for phase: discover_tools duration: 8.83990000000017
+Experiments loaded {
+  experimentIds: [],
+  flags: []
+}
+Session ID: 5198922b-c61f-4fb2-9d93-dea90d886a70
+[Routing] Selected model: gemini-3.5-flash (Source: agent-router/override, Latency: 1ms)
+	[Routing] Reasoning: Routing bypassed by forced model directive. Using: gemini-2.5-flash
+Error when talking to Gemini API Full report available at: D:\SoterAI-Lite-test-profiles\f20c-feasibility-85e139f2-033e-4652-aa93-77dbee7a3c69\temp\gemini-client-error-Turn.run-sendMessageStream-2026-10-20T12-58-28-941Z.json _ApiError: {"error":{"message":"","code":400,"status":"Bad Request"}}
+    at throwErrorIfNotOK (file:///C:/Users/USER/AppData/Roaming/npm/node_modules/@google/gemini-cli/bundle/chunk-32XQ54AJ.js:267240:24)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///C:/Users/USER/AppData/Roaming/npm/node_modules/@google/gemini-cli/bundle/chunk-32XQ54AJ.js:267003:7
+    at async Models.generateContentStream (file:///C:/Users/USER/AppData/Roaming/npm/node_modules/@google/gemini-cli/bundle/chunk-32XQ54AJ.js:268099:16)
+    at async file:///C:/Users/USER/AppData/Roaming/npm/node_modules/@google/gemini-cli/bundle/chunk-32XQ54AJ.js:310397:19
+    at async file:///C:/Users/USER/AppData/Roaming/npm/node_modules/@google/gemini-cli/bundle/chunk-32XQ54AJ.js:287277:23
+    at async retryWithBackoff (file:///C:/Users/USER/AppData/Roaming/npm/node_modules/@google/gemini-cli/bundle/chunk-32XQ54AJ.js:307272:23)
+    at async GeminiChat.makeApiCallAndProcessStream (file:///C:/Users/USER/AppData/Roaming/npm/node_modules/@google/gemini-cli/bundle/chunk-32XQ54AJ.js:330898:28)
+    at async GeminiChat.streamWithRetries (file:///C:/Users/USER/AppData/Roaming/npm/node_modules/@google/gemini-cli/bundle/chunk-32XQ54AJ.js:330671:29)
+    at async Turn.run (file:///C:/Users/USER/AppData/Roaming/npm/node_modules/@google/gemini-cli/bundle/chunk-32XQ54AJ.js:331556:24) {
+  status: 400
+}
+{
+  "session_id": "5198922b-c61f-4fb2-9d93-dea90d886a70",
+  "error": {
+    "type": "Error",
+    "message": "{\"error\":{\"message\":\"\",\"code\":400,\"status\":\"Bad Request\"}}",
+    "code": 400
+  }
+}

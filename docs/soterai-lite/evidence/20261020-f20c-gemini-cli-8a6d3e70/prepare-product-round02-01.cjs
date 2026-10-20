@@ -1,0 +1,12 @@
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),crypto=require('node:crypto');
+const write=(name,text)=>fs.writeFileSync(path.join(__dirname,name),text,{flag:'wx'});
+let driver=fs.readFileSync(path.join(__dirname,'gemini-product-matrix-01.cjs'),'utf8');
+const old='assert.equal(row.guard.deniedLaunches.length,0);';assert(driver.includes(old));
+driver=driver.replace(old,'assert(Array.isArray(row.guard.deniedLaunches));row.alternateLaunchesRefusedByFixture=row.guard.deniedLaunches.length;');
+driver=driver.replace("'No real provider, clean-install, human, independent or all-descendant network claim'","'Native optional process probes are refused by the fixture; those attempted probes are recorded, never certified as product command confinement','No real provider, clean-install, human, independent or all-descendant network claim'");
+// Keep evidence during a deadline even when a native SDK retry remains active.
+driver=driver.replace("const row={phase:name,closed:false", "const row={phase:name,closed:false");
+write('gemini-product-matrix-02.cjs',driver);
+let launcher=fs.readFileSync(path.join(__dirname,'run-gemini-product-matrix-01.ps1'),'utf8').replaceAll('gemini-product-matrix-01.cjs','gemini-product-matrix-02.cjs').replaceAll('vsix-inspection-01.json','vsix-inspection-02.json');
+write('run-gemini-product-matrix-02.ps1',launcher);
+write('product-round02-proposal-01.json',JSON.stringify({status:'PREPARED_NOT_RUN',improvementRound:1,reason:'Original candidate01 public/MCP-public/MCP-env responses completed naturally but overly strict zero-refused-launch assertion failed on3guard-refused optional probes. None of those probes executed; retain original failure. MCP cancel native history uses exact paired response.error; output-only schema refused and child retried beyond60s. New strict one-of output/error string schema inspected by same F07, no authority expansion. Original retained native/editor remain untouched INCOMPLETE_NO_SIGNALS; do not regrade.',files:['gemini-product-matrix-02.cjs','run-gemini-product-matrix-02.ps1','gemini-product-parent-guards-01.cjs','gemini-product-child-guards-01.cjs'].map(file=>({file,sha256:crypto.createHash('sha256').update(fs.readFileSync(path.join(__dirname,file))).digest('hex')})),scope:'Same original pins/synthetic homes/loopback-only ports/no signals/no native addons/alternate launch refusal/exact empty-lock archive. Fresh candidate02 required. Refused optional probes remain fixture-only, not product command confinement.'},null,2)+'\n');

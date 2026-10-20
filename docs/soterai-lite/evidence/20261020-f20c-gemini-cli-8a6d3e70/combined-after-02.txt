@@ -1,0 +1,2098 @@
+﻿TAP version 13
+# Subtest: F19 default machine flag binds the owned child schema capability
+ok 1 - F19 default machine flag binds the owned child schema capability
+  ---
+  duration_ms: 83.6728
+  type: 'test'
+  ...
+# Subtest: F19 machine disable ignores repository enabling override
+ok 2 - F19 machine disable ignores repository enabling override
+  ---
+  duration_ms: 23.8095
+  type: 'test'
+  ...
+# Subtest: F19 wrong or absent owner schema acknowledgment is unavailable false
+ok 3 - F19 wrong or absent owner schema acknowledgment is unavailable false
+  ---
+  duration_ms: 14.9417
+  type: 'test'
+  ...
+# Subtest: F19 wrong or absent owner schema acknowledgment is unavailable true
+ok 4 - F19 wrong or absent owner schema acknowledgment is unavailable true
+  ---
+  duration_ms: 14.8714
+  type: 'test'
+  ...
+# Subtest: F19 wrong or absent owner schema acknowledgment is unavailable undefined
+ok 5 - F19 wrong or absent owner schema acknowledgment is unavailable undefined
+  ---
+  duration_ms: 18.6085
+  type: 'test'
+  ...
+# Subtest: F19 current machine flag drift revokes an established policy lease
+ok 6 - F19 current machine flag drift revokes an established policy lease
+  ---
+  duration_ms: 16.6536
+  type: 'test'
+  ...
+# Subtest: F20A-C01 constructor/status never read native config or launch a process
+ok 7 - F20A-C01 constructor/status never read native config or launch a process
+  ---
+  duration_ms: 291.04
+  type: 'test'
+  ...
+# Subtest: F20A-C02 cancel leaves native configuration absent and grants no read
+ok 8 - F20A-C02 cancel leaves native configuration absent and grants no read
+  ---
+  duration_ms: 56.9683
+  type: 'test'
+  ...
+# Subtest: F20A-C03 reviewed setup/restore own one dedicated config with encrypted recovery
+ok 9 - F20A-C03 reviewed setup/restore own one dedicated config with encrypted recovery
+  ---
+  duration_ms: 77.6031
+  type: 'test'
+  ...
+# Subtest: F20A-C04 prior receipt blocks duplicate setup
+ok 10 - F20A-C04 prior receipt blocks duplicate setup
+  ---
+  duration_ms: 39.8945
+  type: 'test'
+  ...
+# Subtest: F20A-C05 project override refuses before creating profile
+ok 11 - F20A-C05 project override refuses before creating profile
+  ---
+  duration_ms: 7.6147
+  type: 'test'
+  ...
+# Subtest: F20A-C06 durable recovery write failure creates no vendor config
+ok 12 - F20A-C06 durable recovery write failure creates no vendor config
+  ---
+  duration_ms: 26.6516
+  type: 'test'
+  ...
+# Subtest: F20A-C07 memento failure retains durable recovery and withdraws session
+ok 13 - F20A-C07 memento failure retains durable recovery and withdraws session
+  ---
+  duration_ms: 74.103
+  type: 'test'
+  ...
+# Subtest: F20A-C08 withdrawal preserves restrictive profile bytes and ends capability
+ok 14 - F20A-C08 withdrawal preserves restrictive profile bytes and ends capability
+  ---
+  duration_ms: 47.1336
+  type: 'test'
+  ...
+# Subtest: F20A-P01 new profile disables native commands/images and exposes only F04 MCP
+ok 15 - F20A-P01 new profile disables native commands/images and exposes only F04 MCP
+  ---
+  duration_ms: 53.3975
+  type: 'test'
+  ...
+# Subtest: F20A-P02 refuses existing config instead of silently merging unknown routes
+ok 16 - F20A-P02 refuses existing config instead of silently merging unknown routes
+  ---
+  duration_ms: 3.1793
+  type: 'test'
+  ...
+# Subtest: F20A-P03 rejects malformed connections and profile injection
+ok 17 - F20A-P03 rejects malformed connections and profile injection
+  ---
+  duration_ms: 4.8156
+  type: 'test'
+  ...
+# Subtest: F20A-P04 review is value-free and plan is single use
+ok 18 - F20A-P04 review is value-free and plan is single use
+  ---
+  duration_ms: 3.5006
+  type: 'test'
+  ...
+# Subtest: F20A-P05 no write on cancel
+ok 19 - F20A-P05 no write on cancel
+  ---
+  duration_ms: 2.7348
+  type: 'test'
+  ...
+# Subtest: F20A-P05 no write on disabled
+ok 20 - F20A-P05 no write on disabled
+  ---
+  duration_ms: 3.0639
+  type: 'test'
+  ...
+# Subtest: F20A-P05 no write on owner-drift
+ok 21 - F20A-P05 no write on owner-drift
+  ---
+  duration_ms: 4.6746
+  type: 'test'
+  ...
+# Subtest: F20A-P05 no write on file-drift
+ok 22 - F20A-P05 no write on file-drift
+  ---
+  duration_ms: 9.0916
+  type: 'test'
+  ...
+# Subtest: F20A-P05 no write on aborted
+ok 23 - F20A-P05 no write on aborted
+  ---
+  duration_ms: 5.4849
+  type: 'test'
+  ...
+# Subtest: F20A-P06 backup failure precedes writes
+ok 24 - F20A-P06 backup failure precedes writes
+  ---
+  duration_ms: 6.9353
+  type: 'test'
+  ...
+# Subtest: F20A-P06 durable-receipt failure precedes writes
+ok 25 - F20A-P06 durable-receipt failure precedes writes
+  ---
+  duration_ms: 7.5345
+  type: 'test'
+  ...
+# Subtest: F20A-P07 write-then-throw rolls back only exact owned bytes
+ok 26 - F20A-P07 write-then-throw rolls back only exact owned bytes
+  ---
+  duration_ms: 4.1211
+  type: 'test'
+  ...
+# Subtest: F20A-P08 post-write unowned changes are retained with INCOMPLETE recovery
+ok 27 - F20A-P08 post-write unowned changes are retained with INCOMPLETE recovery
+  ---
+  duration_ms: 3.626
+  type: 'test'
+  ...
+# Subtest: F20A-P09 explicit reviewed restore removes owned config and retains backup
+ok 28 - F20A-P09 explicit reviewed restore removes owned config and retains backup
+  ---
+  duration_ms: 4.7356
+  type: 'test'
+  ...
+# Subtest: F20A-P10 restore withholds on cancel
+ok 29 - F20A-P10 restore withholds on cancel
+  ---
+  duration_ms: 2.4014
+  type: 'test'
+  ...
+# Subtest: F20A-P10 restore withholds on config-drift
+ok 30 - F20A-P10 restore withholds on config-drift
+  ---
+  duration_ms: 2.4734
+  type: 'test'
+  ...
+# Subtest: F20A-P10 restore withholds on corrupt-backup
+ok 31 - F20A-P10 restore withholds on corrupt-backup
+  ---
+  duration_ms: 1.6929
+  type: 'test'
+  ...
+# Subtest: F20A-P10 restore withholds on owner-drift
+ok 32 - F20A-P10 restore withholds on owner-drift
+  ---
+  duration_ms: 2.3142
+  type: 'test'
+  ...
+# Subtest: F20A-P10 restore withholds on bad-receipt
+ok 33 - F20A-P10 restore withholds on bad-receipt
+  ---
+  duration_ms: 2.3867
+  type: 'test'
+  ...
+# Subtest: F20A-P11 drift during restore review cannot delete unowned config
+ok 34 - F20A-P11 drift during restore review cannot delete unowned config
+  ---
+  duration_ms: 3.7011
+  type: 'test'
+  ...
+# Subtest: F20A-P12 current profile authority is withdrawn on owner, feature or byte drift
+ok 35 - F20A-P12 current profile authority is withdrawn on owner, feature or byte drift
+  ---
+  duration_ms: 5.7238
+  type: 'test'
+  ...
+# Subtest: F20A-M01 vscode-extension machine/restricted flag and owner commands
+ok 36 - F20A-M01 vscode-extension machine/restricted flag and owner commands
+  ---
+  duration_ms: 3.7239
+  type: 'test'
+  ...
+# Subtest: F20A-M01 soterai-lite machine/restricted flag and owner commands
+ok 37 - F20A-M01 soterai-lite machine/restricted flag and owner commands
+  ---
+  duration_ms: 1.8221
+  type: 'test'
+  ...
+# Subtest: F20A-M02 activation passes the private reader without auto-native launch
+ok 38 - F20A-M02 activation passes the private reader without auto-native launch
+  ---
+  duration_ms: 1.385
+  type: 'test'
+  ...
+# Subtest: F20A-R02 retained restored receipt cannot block setup for a different project
+ok 39 - F20A-R02 retained restored receipt cannot block setup for a different project
+  ---
+  duration_ms: 484.408
+  type: 'test'
+  ...
+# Subtest: F20A-R03 restart has no implicit live route, keeps receipt and allows reviewed restore
+ok 40 - F20A-R03 restart has no implicit live route, keeps receipt and allows reviewed restore
+  ---
+  duration_ms: 50.0732
+  type: 'test'
+  ...
+# Subtest: F20A-R04 workspace drift during review creates no native config
+ok 41 - F20A-R04 workspace drift during review creates no native config
+  ---
+  duration_ms: 12.3904
+  type: 'test'
+  ...
+# Subtest: F20A-R05 storage inside project is refused
+ok 42 - F20A-R05 storage inside project is refused
+  ---
+  duration_ms: 4.2382
+  type: 'test'
+  ...
+# Subtest: F20A-R06 forged saved profile path cannot delete another local file
+ok 43 - F20A-R06 forged saved profile path cannot delete another local file
+  ---
+  duration_ms: 48.4976
+  type: 'test'
+  ...
+# Subtest: F20A-R11 config change after policy check but before writer must survive restore
+ok 44 - F20A-R11 config change after policy check but before writer must survive restore
+  ---
+  duration_ms: 496.6557
+  type: 'test'
+  ...
+# Subtest: F20A-R12 owned file removal rejects a mismatched expected current digest
+ok 45 - F20A-R12 owned file removal rejects a mismatched expected current digest
+  ---
+  duration_ms: 50.7341
+  type: 'test'
+  ...
+# Subtest: F20A-B01 real loopback initialization/discovery and masked path-only read
+ok 46 - F20A-B01 real loopback initialization/discovery and masked path-only read
+  ---
+  duration_ms: 89.1767
+  type: 'test'
+  ...
+# Subtest: F20A-B02 auth, aliases, origin, media and nonPOST refuse before reader
+ok 47 - F20A-B02 auth, aliases, origin, media and nonPOST refuse before reader
+  ---
+  duration_ms: 23.9295
+  type: 'test'
+  ...
+# Subtest: F20A-B03 malformed, oversized, duplicate JSON and authority injection withhold
+ok 48 - F20A-B03 malformed, oversized, duplicate JSON and authority injection withhold
+  ---
+  duration_ms: 23.8176
+  type: 'test'
+  ...
+# Subtest: F20A-B04 only bounded native metadata is ignored, never passed to authorizer
+ok 49 - F20A-B04 only bounded native metadata is ignored, never passed to authorizer
+  ---
+  duration_ms: 27.9804
+  type: 'test'
+  ...
+# Subtest: F20A-B05 owner unready before/after read cannot return late content
+ok 50 - F20A-B05 owner unready before/after read cannot return late content
+  ---
+  duration_ms: 11.7345
+  type: 'test'
+  ...
+# Subtest: F20A-B06 session rotation aborts pending approvals and rejects stale credentials
+ok 51 - F20A-B06 session rotation aborts pending approvals and rejects stale credentials
+  ---
+  duration_ms: 25.7388
+  type: 'test'
+  ...
+# Subtest: F20A-B07 busy admission withholds another request and flag withdrawal returns no data
+ok 52 - F20A-B07 busy admission withholds another request and flag withdrawal returns no data
+  ---
+  duration_ms: 15.2062
+  type: 'test'
+  ...
+# Subtest: F20A-R01 rotation settles HTTP while asynchronous owner readiness remains pending
+ok 53 - F20A-R01 rotation settles HTTP while asynchronous owner readiness remains pending
+  ---
+  duration_ms: 88.0521
+  type: 'test'
+  ...
+# Subtest: F20B-C01 constructor/status never read native config or launch a process
+ok 54 - F20B-C01 constructor/status never read native config or launch a process
+  ---
+  duration_ms: 716.9749
+  type: 'test'
+  ...
+# Subtest: F20B-C02 cancel leaves native configuration absent and grants no read
+ok 55 - F20B-C02 cancel leaves native configuration absent and grants no read
+  ---
+  duration_ms: 86.3602
+  type: 'test'
+  ...
+# Subtest: F20B-C03 reviewed setup/restore own one dedicated config with encrypted recovery
+ok 56 - F20B-C03 reviewed setup/restore own one dedicated config with encrypted recovery
+  ---
+  duration_ms: 91.8823
+  type: 'test'
+  ...
+# Subtest: F20B-C04 prior receipt blocks duplicate setup
+ok 57 - F20B-C04 prior receipt blocks duplicate setup
+  ---
+  duration_ms: 37.662
+  type: 'test'
+  ...
+# Subtest: F20B-C05 project override refuses before creating profile
+ok 58 - F20B-C05 project override refuses before creating profile
+  ---
+  duration_ms: 6.7171
+  type: 'test'
+  ...
+# Subtest: F20B-C06 durable recovery write failure creates no vendor config
+ok 59 - F20B-C06 durable recovery write failure creates no vendor config
+  ---
+  duration_ms: 18.5454
+  type: 'test'
+  ...
+# Subtest: F20B-C07 memento failure retains durable recovery and withdraws session
+ok 60 - F20B-C07 memento failure retains durable recovery and withdraws session
+  ---
+  duration_ms: 63.8488
+  type: 'test'
+  ...
+# Subtest: F20B-C08 withdrawal preserves restrictive profile bytes and ends capability
+ok 61 - F20B-C08 withdrawal preserves restrictive profile bytes and ends capability
+  ---
+  duration_ms: 37.2742
+  type: 'test'
+  ...
+# Subtest: F20B-P01 new profile requests disabled native preferences and binds F04 plus inspected text Responses
+ok 62 - F20B-P01 new profile requests disabled native preferences and binds F04 plus inspected text Responses
+  ---
+  duration_ms: 45.3704
+  type: 'test'
+  ...
+# Subtest: F20B-P02 refuses existing config instead of silently merging unknown routes
+ok 63 - F20B-P02 refuses existing config instead of silently merging unknown routes
+  ---
+  duration_ms: 4.0378
+  type: 'test'
+  ...
+# Subtest: F20B-P03 rejects malformed connections and profile injection
+ok 64 - F20B-P03 rejects malformed connections and profile injection
+  ---
+  duration_ms: 3.7182
+  type: 'test'
+  ...
+# Subtest: F20B-P04 review is value-free and plan is single use
+ok 65 - F20B-P04 review is value-free and plan is single use
+  ---
+  duration_ms: 2.8756
+  type: 'test'
+  ...
+# Subtest: F20B-P05 no write on cancel
+ok 66 - F20B-P05 no write on cancel
+  ---
+  duration_ms: 8.0822
+  type: 'test'
+  ...
+# Subtest: F20B-P05 no write on disabled
+ok 67 - F20B-P05 no write on disabled
+  ---
+  duration_ms: 2.8932
+  type: 'test'
+  ...
+# Subtest: F20B-P05 no write on owner-drift
+ok 68 - F20B-P05 no write on owner-drift
+  ---
+  duration_ms: 5.0322
+  type: 'test'
+  ...
+# Subtest: F20B-P05 no write on file-drift
+ok 69 - F20B-P05 no write on file-drift
+  ---
+  duration_ms: 2.7951
+  type: 'test'
+  ...
+# Subtest: F20B-P05 no write on aborted
+ok 70 - F20B-P05 no write on aborted
+  ---
+  duration_ms: 2.826
+  type: 'test'
+  ...
+# Subtest: F20B-P06 backup failure precedes writes
+ok 71 - F20B-P06 backup failure precedes writes
+  ---
+  duration_ms: 2.8095
+  type: 'test'
+  ...
+# Subtest: F20B-P06 durable-receipt failure precedes writes
+ok 72 - F20B-P06 durable-receipt failure precedes writes
+  ---
+  duration_ms: 2.7651
+  type: 'test'
+  ...
+# Subtest: F20B-P07 write-then-throw rolls back only exact owned bytes
+ok 73 - F20B-P07 write-then-throw rolls back only exact owned bytes
+  ---
+  duration_ms: 2.5782
+  type: 'test'
+  ...
+# Subtest: F20B-P08 post-write unowned changes are retained with INCOMPLETE recovery
+ok 74 - F20B-P08 post-write unowned changes are retained with INCOMPLETE recovery
+  ---
+  duration_ms: 3.5711
+  type: 'test'
+  ...
+# Subtest: F20B-P09 explicit reviewed restore removes owned config and retains backup
+ok 75 - F20B-P09 explicit reviewed restore removes owned config and retains backup
+  ---
+  duration_ms: 3.4331
+  type: 'test'
+  ...
+# Subtest: F20B-P10 restore withholds on cancel
+ok 76 - F20B-P10 restore withholds on cancel
+  ---
+  duration_ms: 4.6205
+  type: 'test'
+  ...
+# Subtest: F20B-P10 restore withholds on config-drift
+ok 77 - F20B-P10 restore withholds on config-drift
+  ---
+  duration_ms: 2.4589
+  type: 'test'
+  ...
+# Subtest: F20B-P10 restore withholds on corrupt-backup
+ok 78 - F20B-P10 restore withholds on corrupt-backup
+  ---
+  duration_ms: 1.8847
+  type: 'test'
+  ...
+# Subtest: F20B-P10 restore withholds on owner-drift
+ok 79 - F20B-P10 restore withholds on owner-drift
+  ---
+  duration_ms: 1.9979
+  type: 'test'
+  ...
+# Subtest: F20B-P10 restore withholds on bad-receipt
+ok 80 - F20B-P10 restore withholds on bad-receipt
+  ---
+  duration_ms: 2.224
+  type: 'test'
+  ...
+# Subtest: F20B-P11 drift during restore review cannot delete unowned config
+ok 81 - F20B-P11 drift during restore review cannot delete unowned config
+  ---
+  duration_ms: 2.2075
+  type: 'test'
+  ...
+# Subtest: F20B-P12 current profile authority is withdrawn on owner, feature or byte drift
+ok 82 - F20B-P12 current profile authority is withdrawn on owner, feature or byte drift
+  ---
+  duration_ms: 7.3123
+  type: 'test'
+  ...
+# Subtest: F20B-M01 vscode-extension machine/restricted flag and owner commands
+ok 83 - F20B-M01 vscode-extension machine/restricted flag and owner commands
+  ---
+  duration_ms: 5.2798
+  type: 'test'
+  ...
+# Subtest: F20B-M01 soterai-lite machine/restricted flag and owner commands
+ok 84 - F20B-M01 soterai-lite machine/restricted flag and owner commands
+  ---
+  duration_ms: 2.4789
+  type: 'test'
+  ...
+# Subtest: F20B-M02 activation passes the private reader without auto-native launch
+ok 85 - F20B-M02 activation passes the private reader without auto-native launch
+  ---
+  duration_ms: 1.316
+  type: 'test'
+  ...
+# Subtest: F20B exact distinct IDE manifest/runtime/native pin accepted
+ok 86 - F20B exact distinct IDE manifest/runtime/native pin accepted
+  ---
+  duration_ms: 36.6495
+  type: 'test'
+  ...
+# Subtest: F20B independent pin component drift refused manifest
+ok 87 - F20B independent pin component drift refused manifest
+  ---
+  duration_ms: 4.8308
+  type: 'test'
+  ...
+# Subtest: F20B independent pin component drift refused javascript
+ok 88 - F20B independent pin component drift refused javascript
+  ---
+  duration_ms: 5.0276
+  type: 'test'
+  ...
+# Subtest: F20B independent pin component drift refused runtime-package
+ok 89 - F20B independent pin component drift refused runtime-package
+  ---
+  duration_ms: 3.4697
+  type: 'test'
+  ...
+# Subtest: F20B independent pin component drift refused native
+ok 90 - F20B independent pin component drift refused native
+  ---
+  duration_ms: 5.1509
+  type: 'test'
+  ...
+# Subtest: F20B shared Responses capability follows independently enabled machine adapters: false/false
+ok 91 - F20B shared Responses capability follows independently enabled machine adapters: false/false
+  ---
+  duration_ms: 3.1746
+  type: 'test'
+  ...
+# Subtest: F20B shared Responses capability follows independently enabled machine adapters: false/true
+ok 92 - F20B shared Responses capability follows independently enabled machine adapters: false/true
+  ---
+  duration_ms: 0.2642
+  type: 'test'
+  ...
+# Subtest: F20B shared Responses capability follows independently enabled machine adapters: true/false
+ok 93 - F20B shared Responses capability follows independently enabled machine adapters: true/false
+  ---
+  duration_ms: 0.1816
+  type: 'test'
+  ...
+# Subtest: F20B shared Responses capability follows independently enabled machine adapters: true/true
+ok 94 - F20B shared Responses capability follows independently enabled machine adapters: true/true
+  ---
+  duration_ms: 0.1549
+  type: 'test'
+  ...
+# Subtest: F20B individual adapter drift changes broker binding while the other remains enabled: lite.codexCliAdapter
+ok 95 - F20B individual adapter drift changes broker binding while the other remains enabled: lite.codexCliAdapter
+  ---
+  duration_ms: 2.9054
+  type: 'test'
+  ...
+# Subtest: F20B individual adapter drift changes broker binding while the other remains enabled: lite.codexIdeAdapter
+ok 96 - F20B individual adapter drift changes broker binding while the other remains enabled: lite.codexIdeAdapter
+  ---
+  duration_ms: 0.6555
+  type: 'test'
+  ...
+# Subtest: F20B owner renderer routes the new dedicated home through its exact local Responses capability
+ok 97 - F20B owner renderer routes the new dedicated home through its exact local Responses capability
+  ---
+  duration_ms: 1.9488
+  type: 'test'
+  ...
+# Subtest: F20B owner renderer rejects remote/malformed provider capabilities
+ok 98 - F20B owner renderer rejects remote/malformed provider capabilities
+  ---
+  duration_ms: 0.6863
+  type: 'test'
+  ...
+# Subtest: F20B owner configure requires exact current broker capability and masks both credentials
+ok 99 - F20B owner configure requires exact current broker capability and masks both credentials
+  ---
+  duration_ms: 118.8314
+  type: 'test'
+  ...
+# Subtest: F20B owner unavailable broker/schema refuses configuration false/true
+ok 100 - F20B owner unavailable broker/schema refuses configuration false/true
+  ---
+  duration_ms: 10.4394
+  type: 'test'
+  ...
+# Subtest: F20B owner unavailable broker/schema refuses configuration true/false
+ok 101 - F20B owner unavailable broker/schema refuses configuration true/false
+  ---
+  duration_ms: 9.5173
+  type: 'test'
+  ...
+# Subtest: F20B owner broker replacement withdraws live profile without deleting it
+ok 102 - F20B owner broker replacement withdraws live profile without deleting it
+  ---
+  duration_ms: 57.9337
+  type: 'test'
+  ...
+# Subtest: F20B actual IDE request has no top-level instructions; preserve body exactly
+ok 103 - F20B actual IDE request has no top-level instructions; preserve body exactly
+  ---
+  duration_ms: 78.7878
+  type: 'test'
+  ...
+# Subtest: F20B malformed present instructions refused null
+ok 104 - F20B malformed present instructions refused null
+  ---
+  duration_ms: 3.2131
+  type: 'test'
+  ...
+# Subtest: F20B malformed present instructions refused 42
+ok 105 - F20B malformed present instructions refused 42
+  ---
+  duration_ms: 2.387
+  type: 'test'
+  ...
+# Subtest: F20B malformed present instructions refused {}
+ok 106 - F20B malformed present instructions refused {}
+  ---
+  duration_ms: 2.7699
+  type: 'test'
+  ...
+# Subtest: F20B malformed present instructions refused []
+ok 107 - F20B malformed present instructions refused []
+  ---
+  duration_ms: 2.126
+  type: 'test'
+  ...
+# Subtest: F20B actual IDE registered carrier withheld text
+ok 108 - F20B actual IDE registered carrier withheld text
+  ---
+  duration_ms: 27.7062
+  type: 'test'
+  ...
+# Subtest: F20B actual IDE registered carrier withheld metadata
+ok 109 - F20B actual IDE registered carrier withheld metadata
+  ---
+  duration_ms: 23.1527
+  type: 'test'
+  ...
+# Subtest: F20B actual IDE registered carrier withheld schema
+ok 110 - F20B actual IDE registered carrier withheld schema
+  ---
+  duration_ms: 24.8226
+  type: 'test'
+  ...
+# Subtest: F20B actual IDE registered carrier withheld cache
+ok 111 - F20B actual IDE registered carrier withheld cache
+  ---
+  duration_ms: 23.725
+  type: 'test'
+  ...
+# Subtest: F20B actual IDE registered carrier withheld instructions
+ok 112 - F20B actual IDE registered carrier withheld instructions
+  ---
+  duration_ms: 23.0623
+  type: 'test'
+  ...
+# Subtest: F20B actual IDE registered carrier withheld encoded
+ok 113 - F20B actual IDE registered carrier withheld encoded
+  ---
+  duration_ms: 21.2136
+  type: 'test'
+  ...
+# Subtest: F20B actual IDE registered carrier withheld ordered
+ok 114 - F20B actual IDE registered carrier withheld ordered
+  ---
+  duration_ms: 63.9836
+  type: 'test'
+  ...
+# Subtest: F20B absent instructions does not admit unknown or server-side carriers
+ok 115 - F20B absent instructions does not admit unknown or server-side carriers
+  ---
+  duration_ms: 9.7199
+  type: 'test'
+  ...
+# Subtest: F20B IDE traffic still requires the explicit Responses capability
+ok 116 - F20B IDE traffic still requires the explicit Responses capability
+  ---
+  duration_ms: 2.0287
+  type: 'test'
+  ...
+# Subtest: F20B runtime preference drift immediately withdraws authority: cliExecutable
+ok 117 - F20B runtime preference drift immediately withdraws authority: cliExecutable
+  ---
+  duration_ms: 97.4035
+  type: 'test'
+  ...
+# Subtest: F20B runtime preference drift immediately withdraws authority: runCodexInWindowsSubsystemForLinux
+ok 118 - F20B runtime preference drift immediately withdraws authority: runCodexInWindowsSubsystemForLinux
+  ---
+  duration_ms: 52.9233
+  type: 'test'
+  ...
+# Subtest: F20B runtime preference drift immediately withdraws authority: useExperimentalLspMcpServer
+ok 119 - F20B runtime preference drift immediately withdraws authority: useExperimentalLspMcpServer
+  ---
+  duration_ms: 43.7597
+  type: 'test'
+  ...
+# Subtest: F20A-R07 observed native turn metadata is ignored and cannot approve denied read
+ok 120 - F20A-R07 observed native turn metadata is ignored and cannot approve denied read
+  ---
+  duration_ms: 139.4536
+  type: 'test'
+  ...
+# Subtest: F20A-R08 wrong turn-metadata fields/types/bounds refuse before authorizer
+ok 121 - F20A-R08 wrong turn-metadata fields/types/bounds refuse before authorizer
+  ---
+  duration_ms: 58.7987
+  type: 'test'
+  ...
+# Subtest: F20A Responses bridge sends only current owned broker credential and no native credential upstream
+ok 122 - F20A Responses bridge sends only current owned broker credential and no native credential upstream
+  ---
+  duration_ms: 165.1123
+  type: 'test'
+  ...
+# Subtest: F20A Responses bridge rejects invalid local target or session before binding
+ok 123 - F20A Responses bridge rejects invalid local target or session before binding
+  ---
+  duration_ms: 4.3474
+  type: 'test'
+  ...
+# Subtest: F20A Responses bridge wrong capability, origin, media and oversized input never forward
+ok 124 - F20A Responses bridge wrong capability, origin, media and oversized input never forward
+  ---
+  duration_ms: 56.4288
+  type: 'test'
+  ...
+# Subtest: F20A Responses bridge query/alternate routes never forward
+ok 125 - F20A Responses bridge query/alternate routes never forward
+  ---
+  duration_ms: 20.24
+  type: 'test'
+  ...
+# Subtest: F20A Responses bridge stale owner and rotated old capability never forward
+ok 126 - F20A Responses bridge stale owner and rotated old capability never forward
+  ---
+  duration_ms: 45.8408
+  type: 'test'
+  ...
+# Subtest: F20A Responses bridge withdrawal aborts in-flight broker work and releases no partial output
+ok 127 - F20A Responses bridge withdrawal aborts in-flight broker work and releases no partial output
+  ---
+  duration_ms: 15.5523
+  type: 'test'
+  ...
+# Subtest: F20A Responses bridge rechecks owner after complete broker output
+ok 128 - F20A Responses bridge rechecks owner after complete broker output
+  ---
+  duration_ms: 15.1663
+  type: 'test'
+  ...
+# Subtest: F20A Responses bridge pending readiness is cancellable
+ok 129 - F20A Responses bridge pending readiness is cancellable
+  ---
+  duration_ms: 12.8524
+  type: 'test'
+  ...
+# Subtest: F20A default machine flag binds the owned child schema capability
+ok 130 - F20A default machine flag binds the owned child schema capability
+  ---
+  duration_ms: 85.5228
+  type: 'test'
+  ...
+# Subtest: F20A machine disable ignores repository enabling override
+ok 131 - F20A machine disable ignores repository enabling override
+  ---
+  duration_ms: 22.1433
+  type: 'test'
+  ...
+# Subtest: F20A wrong or absent owner schema acknowledgment is unavailable false
+ok 132 - F20A wrong or absent owner schema acknowledgment is unavailable false
+  ---
+  duration_ms: 12.5325
+  type: 'test'
+  ...
+# Subtest: F20A wrong or absent owner schema acknowledgment is unavailable true
+ok 133 - F20A wrong or absent owner schema acknowledgment is unavailable true
+  ---
+  duration_ms: 13.3897
+  type: 'test'
+  ...
+# Subtest: F20A wrong or absent owner schema acknowledgment is unavailable undefined
+ok 134 - F20A wrong or absent owner schema acknowledgment is unavailable undefined
+  ---
+  duration_ms: 11.2275
+  type: 'test'
+  ...
+# Subtest: F20A current machine flag drift revokes an established policy lease
+ok 135 - F20A current machine flag drift revokes an established policy lease
+  ---
+  duration_ms: 11.2328
+  type: 'test'
+  ...
+# Subtest: F20A owner renderer routes the new dedicated home through its exact local Responses capability
+ok 136 - F20A owner renderer routes the new dedicated home through its exact local Responses capability
+  ---
+  duration_ms: 2.0213
+  type: 'test'
+  ...
+# Subtest: F20A owner renderer rejects remote/malformed provider capabilities
+ok 137 - F20A owner renderer rejects remote/malformed provider capabilities
+  ---
+  duration_ms: 0.7159
+  type: 'test'
+  ...
+# Subtest: F20A owner configure requires exact current broker capability and masks both credentials
+ok 138 - F20A owner configure requires exact current broker capability and masks both credentials
+  ---
+  duration_ms: 105.0996
+  type: 'test'
+  ...
+# Subtest: F20A owner unavailable broker/schema refuses configuration false/true
+ok 139 - F20A owner unavailable broker/schema refuses configuration false/true
+  ---
+  duration_ms: 9.9063
+  type: 'test'
+  ...
+# Subtest: F20A owner unavailable broker/schema refuses configuration true/false
+ok 140 - F20A owner unavailable broker/schema refuses configuration true/false
+  ---
+  duration_ms: 8.2717
+  type: 'test'
+  ...
+# Subtest: F20A owner broker replacement withdraws live profile without deleting it
+ok 141 - F20A owner broker replacement withdraws live profile without deleting it
+  ---
+  duration_ms: 47.6127
+  type: 'test'
+  ...
+# Subtest: F20A Responses accepts actual pinned public request and replayed MCP result without changing body
+ok 142 - F20A Responses accepts actual pinned public request and replayed MCP result without changing body
+  ---
+  duration_ms: 365.6765
+  type: 'test'
+  ...
+# Subtest: F20A Responses remains capability-scoped and does not relax chat schemas
+ok 143 - F20A Responses remains capability-scoped and does not relax chat schemas
+  ---
+  duration_ms: 5.4313
+  type: 'test'
+  ...
+# Subtest: F20A Responses registered original withheld in instructions
+ok 144 - F20A Responses registered original withheld in instructions
+  ---
+  duration_ms: 29.3521
+  type: 'test'
+  ...
+# Subtest: F20A Responses registered original withheld in text
+ok 145 - F20A Responses registered original withheld in text
+  ---
+  duration_ms: 65.4088
+  type: 'test'
+  ...
+# Subtest: F20A Responses registered original withheld in arguments
+ok 146 - F20A Responses registered original withheld in arguments
+  ---
+  duration_ms: 82.1594
+  type: 'test'
+  ...
+# Subtest: F20A Responses registered original withheld in output
+ok 147 - F20A Responses registered original withheld in output
+  ---
+  duration_ms: 84.1769
+  type: 'test'
+  ...
+# Subtest: F20A Responses registered original withheld in metadata
+ok 148 - F20A Responses registered original withheld in metadata
+  ---
+  duration_ms: 85.3025
+  type: 'test'
+  ...
+# Subtest: F20A Responses registered original withheld in tool-description
+ok 149 - F20A Responses registered original withheld in tool-description
+  ---
+  duration_ms: 81.9601
+  type: 'test'
+  ...
+# Subtest: F20A Responses registered original withheld in tool-parameters
+ok 150 - F20A Responses registered original withheld in tool-parameters
+  ---
+  duration_ms: 85.3357
+  type: 'test'
+  ...
+# Subtest: F20A Responses registered original withheld in cache-key
+ok 151 - F20A Responses registered original withheld in cache-key
+  ---
+  duration_ms: 76.5402
+  type: 'test'
+  ...
+# Subtest: F20A Responses encoded and ordered split carriers are withheld
+ok 152 - F20A Responses encoded and ordered split carriers are withheld
+  ---
+  duration_ms: 462.2547
+  type: 'test'
+  ...
+# Subtest: F20A Responses unknown routes, server state, images, encrypted replay and tools are refused
+ok 153 - F20A Responses unknown routes, server state, images, encrypted replay and tools are refused
+  ---
+  duration_ms: 27.0099
+  type: 'test'
+  ...
+# Subtest: F20A Responses original numerical byte/string/content/tool limits remain bounded
+ok 154 - F20A Responses original numerical byte/string/content/tool limits remain bounded
+  ---
+  duration_ms: 8.4497
+  type: 'test'
+  ...
+# Subtest: F20A Responses accepts actual namespaced function call and completed text SSE
+ok 155 - F20A Responses accepts actual namespaced function call and completed text SSE
+  ---
+  duration_ms: 29.436
+  type: 'test'
+  ...
+# Subtest: F20A Responses output originals, escaped values and split deltas are withheld before release
+ok 156 - F20A Responses output originals, escaped values and split deltas are withheld before release
+  ---
+  duration_ms: 37.623
+  type: 'test'
+  ...
+# Subtest: F20A Responses missing completion, failure, trailing event, mismatched framing and unknown item are withheld
+ok 157 - F20A Responses missing completion, failure, trailing event, mismatched framing and unknown item are withheld
+  ---
+  duration_ms: 33.4843
+  type: 'test'
+  ...
+# Subtest: F20A Responses revocation withholds both input and output
+ok 158 - F20A Responses revocation withholds both input and output
+  ---
+  duration_ms: 1.6154
+  type: 'test'
+  ...
+# Subtest: F20A Responses exact owned capability acknowledgment
+ok 159 - F20A Responses exact owned capability acknowledgment
+  ---
+  duration_ms: 123.3556
+  type: 'test'
+  ...
+# Subtest: F20A Responses adjacent public request reaches only configured target with upstream-only auth
+ok 160 - F20A Responses adjacent public request reaches only configured target with upstream-only auth
+  ---
+  duration_ms: 652.3178
+  type: 'test'
+  ...
+# Subtest: F20A Responses registered context and encoded tool output send zero provider requests
+ok 161 - F20A Responses registered context and encoded tool output send zero provider requests
+  ---
+  duration_ms: 285.5944
+  type: 'test'
+  ...
+# Subtest: F20A Responses protected provider output is withheld completely
+ok 162 - F20A Responses protected provider output is withheld completely
+  ---
+  duration_ms: 652.6693
+  type: 'test'
+  ...
+# Subtest: F20A Responses query/unknown route/invalid auth never forward
+ok 163 - F20A Responses query/unknown route/invalid auth never forward
+  ---
+  duration_ms: 33.3707
+  type: 'test'
+  ...
+# Subtest: F20A Responses disabled adapter never forwards
+ok 164 - F20A Responses disabled adapter never forwards
+  ---
+  duration_ms: 9.9002
+  type: 'test'
+  ...
+# Subtest: F20A-R09 actual local vscode-userdata storage scheme accepts reviewed dedicated profile
+ok 165 - F20A-R09 actual local vscode-userdata storage scheme accepts reviewed dedicated profile
+  ---
+  duration_ms: 395.1164
+  type: 'test'
+  ...
+# Subtest: F20A-R10 storage refuses unsupported scheme
+ok 166 - F20A-R10 storage refuses unsupported scheme
+  ---
+  duration_ms: 7.3967
+  type: 'test'
+  ...
+# Subtest: F20A-R10 storage refuses authority
+ok 167 - F20A-R10 storage refuses authority
+  ---
+  duration_ms: 5.0106
+  type: 'test'
+  ...
+# Subtest: F20A-R10 storage refuses query
+ok 168 - F20A-R10 storage refuses query
+  ---
+  duration_ms: 4.8336
+  type: 'test'
+  ...
+# Subtest: F20A-R10 storage refuses fragment
+ok 169 - F20A-R10 storage refuses fragment
+  ---
+  duration_ms: 5.85
+  type: 'test'
+  ...
+# Subtest: F20A-R10 storage refuses mismatched physical path
+ok 170 - F20A-R10 storage refuses mismatched physical path
+  ---
+  duration_ms: 5.4686
+  type: 'test'
+  ...
+# Subtest: Command Palette hygiene
+    # Subtest: has commands to check
+    ok 1 - has commands to check
+      ---
+      duration_ms: 1.5443
+      type: 'test'
+      ...
+    # Subtest: never renders the SoterAI prefix twice
+    ok 2 - never renders the SoterAI prefix twice
+      ---
+      duration_ms: 1.2978
+      type: 'test'
+      ...
+    # Subtest: gives every command the SoterAI category so it is findable by typing 'soterai'
+    ok 3 - gives every command the SoterAI category so it is findable by typing 'soterai'
+      ---
+      duration_ms: 0.3616
+      type: 'test'
+      ...
+    # Subtest: gives no two commands the same palette text
+    ok 4 - gives no two commands the same palette text
+      ---
+      duration_ms: 0.7765
+      type: 'test'
+      ...
+    # Subtest: keeps every title free of leading/trailing whitespace and empty titles
+    ok 5 - keeps every title free of leading/trailing whitespace and empty titles
+      ---
+      duration_ms: 0.4944
+      type: 'test'
+      ...
+    # Subtest: declares every command in contributes.commands exactly once
+    ok 6 - declares every command in contributes.commands exactly once
+      ---
+      duration_ms: 0.4123
+      type: 'test'
+      ...
+    1..6
+ok 171 - Command Palette hygiene
+  ---
+  duration_ms: 6.7926
+  type: 'suite'
+  ...
+# Subtest: activationEvents stay minimal
+    # Subtest: lists no onCommand: events, because VS Code generates them
+    ok 1 - lists no onCommand: events, because VS Code generates them
+      ---
+      duration_ms: 0.5135
+      type: 'test'
+      ...
+    # Subtest: keeps the events that are NOT generated
+    ok 2 - keeps the events that are NOT generated
+      ---
+      duration_ms: 0.4408
+      type: 'test'
+      ...
+    # Subtest: still activates eagerly, because a lazily-activated security guard protects nothing
+    ok 3 - still activates eagerly, because a lazily-activated security guard protects nothing
+      ---
+      duration_ms: 0.3093
+      type: 'test'
+      ...
+    1..3
+ok 172 - activationEvents stay minimal
+  ---
+  duration_ms: 1.866
+  type: 'suite'
+  ...
+# Subtest: F16-M01 valid but wrong enterprise startup policy cannot be healthy
+ok 173 - F16-M01 valid but wrong enterprise startup policy cannot be healthy
+  ---
+  duration_ms: 68.3006
+  type: 'test'
+  ...
+# Subtest: F16-M02 valid runtime policy downgrade withdraws owner
+ok 174 - F16-M02 valid runtime policy downgrade withdraws owner
+  ---
+  duration_ms: 32.6331
+  type: 'test'
+  ...
+# Subtest: F16-M03 saved mode drift revokes prior generation
+ok 175 - F16-M03 saved mode drift revokes prior generation
+  ---
+  duration_ms: 12.5453
+  type: 'test'
+  ...
+# Subtest: F16-M04 wrong mode enable acknowledgment is not ignored
+ok 176 - F16-M04 wrong mode enable acknowledgment is not ignored
+  ---
+  duration_ms: 9.5952
+  type: 'test'
+  ...
+# Subtest: F16-M05 default machine flag reaches child and complete registry sync
+ok 177 - F16-M05 default machine flag reaches child and complete registry sync
+  ---
+  duration_ms: 12.4163
+  type: 'test'
+  ...
+# Subtest: F16-M06 unavailable private registry fails before child launch
+ok 178 - F16-M06 unavailable private registry fails before child launch
+  ---
+  duration_ms: 0.9085
+  type: 'test'
+  ...
+# Subtest: F16-M07 stale registry source cannot retain request authority
+ok 179 - F16-M07 stale registry source cannot retain request authority
+  ---
+  duration_ms: 13.9779
+  type: 'test'
+  ...
+# Subtest: F16-M08 unknown gateway policy version never becomes healthy
+ok 180 - F16-M08 unknown gateway policy version never becomes healthy
+  ---
+  duration_ms: 14.2385
+  type: 'test'
+  ...
+# Subtest: F16-M09 machine disable ignores repository override
+ok 181 - F16-M09 machine disable ignores repository override
+  ---
+  duration_ms: 13.3244
+  type: 'test'
+  ...
+# Subtest: F18 rich tool-schema profile is bound to the owned child and machine setting
+ok 182 - F18 rich tool-schema profile is bound to the owned child and machine setting
+  ---
+  duration_ms: 16.0441
+  type: 'test'
+  ...
+# Subtest: F18 disabling the machine adapter withdraws the schema profile despite a workspace override
+ok 183 - F18 disabling the machine adapter withdraws the schema profile despite a workspace override
+  ---
+  duration_ms: 13.853
+  type: 'test'
+  ...
+# Subtest: F18 missing or mismatched schema capability acknowledgment is unavailable false
+ok 184 - F18 missing or mismatched schema capability acknowledgment is unavailable false
+  ---
+  duration_ms: 10.8244
+  type: 'test'
+  ...
+# Subtest: F18 missing or mismatched schema capability acknowledgment is unavailable true
+ok 185 - F18 missing or mismatched schema capability acknowledgment is unavailable true
+  ---
+  duration_ms: 10.5004
+  type: 'test'
+  ...
+# Subtest: F20C constructor/status never reads normal Gemini home or launches native
+ok 186 - F20C constructor/status never reads normal Gemini home or launches native
+  ---
+  duration_ms: 307.2063
+  type: 'test'
+  ...
+# Subtest: F20C configure cancellation creates neither native settings nor environment
+ok 187 - F20C configure cancellation creates neither native settings nor environment
+  ---
+  duration_ms: 71.8677
+  type: 'test'
+  ...
+# Subtest: F20C reviewed setup creates two owned files, encrypted absence and value-free recovery; restore preserves unrelated state
+ok 188 - F20C reviewed setup creates two owned files, encrypted absence and value-free recovery; restore preserves unrelated state
+  ---
+  duration_ms: 97.3322
+  type: 'test'
+  ...
+# Subtest: F20C prior receipt and project override refuse before duplicate configuration
+ok 189 - F20C prior receipt and project override refuse before duplicate configuration
+  ---
+  duration_ms: 63.5568
+  type: 'test'
+  ...
+# Subtest: F20C recovery write failure never creates native files
+ok 190 - F20C recovery write failure never creates native files
+  ---
+  duration_ms: 25.3539
+  type: 'test'
+  ...
+# Subtest: F20C second-file failure rolls back only settings created by the operation
+ok 191 - F20C second-file failure rolls back only settings created by the operation
+  ---
+  duration_ms: 57.5903
+  type: 'test'
+  ...
+# Subtest: F20C memento failure leaves durable recovery and revokes both capabilities
+ok 192 - F20C memento failure leaves durable recovery and revokes both capabilities
+  ---
+  duration_ms: 84.2544
+  type: 'test'
+  ...
+# Subtest: F20C withdrawal preserves stronger profile bytes and refuses old HTTP capabilities
+ok 193 - F20C withdrawal preserves stronger profile bytes and refuses old HTTP capabilities
+  ---
+  duration_ms: 130.6822
+  type: 'test'
+  ...
+# Subtest: F20C restore can resume after one exact owned file is already absent
+ok 194 - F20C restore can resume after one exact owned file is already absent
+  ---
+  duration_ms: 80.9391
+  type: 'test'
+  ...
+# Subtest: F20C changed foreign environment refuses whole restoration and preserves settings
+ok 195 - F20C changed foreign environment refuses whole restoration and preserves settings
+  ---
+  duration_ms: 63.1572
+  type: 'test'
+  ...
+# Subtest: F20C recovery can restore owned files when machine adapter flag is disabled
+ok 196 - F20C recovery can restore owned files when machine adapter flag is disabled
+  ---
+  duration_ms: 73.6191
+  type: 'test'
+  ...
+# Subtest: F20C dedicated profile renders only pinned controls and separate local roles, with value-free preview
+ok 197 - F20C dedicated profile renders only pinned controls and separate local roles, with value-free preview
+  ---
+  duration_ms: 57.8278
+  type: 'test'
+  ...
+# Subtest: F20C reviewed creation persists encrypted absence and value-free recovery before two-file write
+ok 198 - F20C reviewed creation persists encrypted absence and value-free recovery before two-file write
+  ---
+  duration_ms: 4.665
+  type: 'test'
+  ...
+# Subtest: F20C cancel, disabled flag and changed owner never create settings or env
+ok 199 - F20C cancel, disabled flag and changed owner never create settings or env
+  ---
+  duration_ms: 4.5098
+  type: 'test'
+  ...
+# Subtest: F20C existing or concurrently created native files are never overwritten
+ok 200 - F20C existing or concurrently created native files are never overwritten
+  ---
+  duration_ms: 2.4003
+  type: 'test'
+  ...
+# Subtest: F20C malformed endpoints, shared/swapped tokens and nonloopback routes refuse before plan
+ok 201 - F20C malformed endpoints, shared/swapped tokens and nonloopback routes refuse before plan
+  ---
+  duration_ms: 2.6976
+  type: 'test'
+  ...
+# Subtest: F20C write/backup/prepare failures cannot report protection; partial files remain recoverable
+ok 202 - F20C write/backup/prepare failures cannot report protection; partial files remain recoverable
+  ---
+  duration_ms: 6.2094
+  type: 'test'
+  ...
+# Subtest: F20C exact reviewed restore removes only owned members and resumes partial restoration
+ok 203 - F20C exact reviewed restore removes only owned members and resumes partial restoration
+  ---
+  duration_ms: 5.3888
+  type: 'test'
+  ...
+# Subtest: F20C foreign changed remaining file and unavailable backup withhold all restoration
+ok 204 - F20C foreign changed remaining file and unavailable backup withhold all restoration
+  ---
+  duration_ms: 5.6952
+  type: 'test'
+  ...
+# Subtest: F20C cancellation while native confirmation is pending releases no profile
+ok 205 - F20C cancellation while native confirmation is pending releases no profile
+  ---
+  duration_ms: 1.8469
+  type: 'test'
+  ...
+# Subtest: F20C partial restore that resolves without removing every file retains its receipt
+ok 206 - F20C partial restore that resolves without removing every file retains its receipt
+  ---
+  duration_ms: 3.0174
+  type: 'test'
+  ...
+# Subtest: F20C vscode-extension machine/restricted Gemini flag/upstream and advanced owner commands
+ok 207 - F20C vscode-extension machine/restricted Gemini flag/upstream and advanced owner commands
+  ---
+  duration_ms: 3.2171
+  type: 'test'
+  ...
+# Subtest: F20C soterai-lite machine/restricted Gemini flag/upstream and advanced owner commands
+ok 208 - F20C soterai-lite machine/restricted Gemini flag/upstream and advanced owner commands
+  ---
+  duration_ms: 1.5435
+  type: 'test'
+  ...
+# Subtest: F20C activation passes private reader and owned broker without launching Gemini
+ok 209 - F20C activation passes private reader and owned broker without launching Gemini
+  ---
+  duration_ms: 0.8236
+  type: 'test'
+  ...
+# Subtest: F20C public runtime pin matches exact bytes and metadata stamps
+ok 210 - F20C public runtime pin matches exact bytes and metadata stamps
+  ---
+  duration_ms: 42.3586
+  type: 'test'
+  ...
+# Subtest: F20C extra public file, missing file and directory substitution refuse
+ok 211 - F20C extra public file, missing file and directory substitution refuse
+  ---
+  duration_ms: 24.7983
+  type: 'test'
+  ...
+# Subtest: F20C malformed pin paths and duplicate entries refuse without traversal
+ok 212 - F20C malformed pin paths and duplicate entries refuse without traversal
+  ---
+  duration_ms: 5.1594
+  type: 'test'
+  ...
+# Subtest: F20C shipped exact Gemini pin contains relative public names only
+ok 213 - F20C shipped exact Gemini pin contains relative public names only
+  ---
+  duration_ms: 5.4292
+  type: 'test'
+  ...
+# Subtest: F20C installed package layout pins manifest plus complete bundle while leaving optional native packages outside verified route
+ok 214 - F20C installed package layout pins manifest plus complete bundle while leaving optional native packages outside verified route
+  ---
+  duration_ms: 24.497
+  type: 'test'
+  ...
+# Subtest: F20C machine default binds Gemini capability and ignores repository upstream
+ok 215 - F20C machine default binds Gemini capability and ignores repository upstream
+  ---
+  duration_ms: 87.5348
+  type: 'test'
+  ...
+# Subtest: F20C machine disable ignores repository enabling
+ok 216 - F20C machine disable ignores repository enabling
+  ---
+  duration_ms: 22.3388
+  type: 'test'
+  ...
+# Subtest: F20C absent/wrong Gemini acknowledgment withholds false
+ok 217 - F20C absent/wrong Gemini acknowledgment withholds false
+  ---
+  duration_ms: 12.0238
+  type: 'test'
+  ...
+# Subtest: F20C absent/wrong Gemini acknowledgment withholds true
+ok 218 - F20C absent/wrong Gemini acknowledgment withholds true
+  ---
+  duration_ms: 12.6698
+  type: 'test'
+  ...
+# Subtest: F20C absent/wrong Gemini acknowledgment withholds undefined
+ok 219 - F20C absent/wrong Gemini acknowledgment withholds undefined
+  ---
+  duration_ms: 15.0165
+  type: 'test'
+  ...
+# Subtest: F20C flag drift revokes current broker lease
+ok 220 - F20C flag drift revokes current broker lease
+  ---
+  duration_ms: 20.2276
+  type: 'test'
+  ...
+# Subtest: F20C base drift revokes current broker lease
+ok 221 - F20C base drift revokes current broker lease
+  ---
+  duration_ms: 16.5457
+  type: 'test'
+  ...
+# Subtest: F20C native provider role forwards validated envelope using only private broker credential
+ok 222 - F20C native provider role forwards validated envelope using only private broker credential
+  ---
+  duration_ms: 164.4656
+  type: 'test'
+  ...
+# Subtest: F20C native provider role rejects forged key, other role, origin, media and malformed body before broker
+ok 223 - F20C native provider role rejects forged key, other role, origin, media and malformed body before broker
+  ---
+  duration_ms: 71.9989
+  type: 'test'
+  ...
+# Subtest: F20C provider alternate operation/query/model/path never forwards
+ok 224 - F20C provider alternate operation/query/model/path never forwards
+  ---
+  duration_ms: 33.0203
+  type: 'test'
+  ...
+# Subtest: F20C provider capability rotation aborts pending broker work and releases no prefix
+ok 225 - F20C provider capability rotation aborts pending broker work and releases no prefix
+  ---
+  duration_ms: 13.9818
+  type: 'test'
+  ...
+# Subtest: F20C provider rechecks owner after complete broker output
+ok 226 - F20C provider rechecks owner after complete broker output
+  ---
+  duration_ms: 14.5689
+  type: 'test'
+  ...
+# Subtest: F20C provider target/session validation precedes binding
+ok 227 - F20C provider target/session validation precedes binding
+  ---
+  duration_ms: 3.6614
+  type: 'test'
+  ...
+# Subtest: F20C native GenerateContent public and actual paired MCP request bodies retain exact canonical content
+ok 228 - F20C native GenerateContent public and actual paired MCP request bodies retain exact canonical content
+  ---
+  duration_ms: 553.6851
+  type: 'test'
+  ...
+# Subtest: F20C observed native denied safe-read result can complete as paired inspected error text
+ok 229 - F20C observed native denied safe-read result can complete as paired inspected error text
+  ---
+  duration_ms: 347.2565
+  type: 'test'
+  ...
+# Subtest: F20C Gemini capability mutation refuses while earlier provider schemas remain strict
+ok 230 - F20C Gemini capability mutation refuses while earlier provider schemas remain strict
+  ---
+  duration_ms: 5.1454
+  type: 'test'
+  ...
+# Subtest: F20C registered original withheld in system
+ok 231 - F20C registered original withheld in system
+  ---
+  duration_ms: 9.2963
+  type: 'test'
+  ...
+# Subtest: F20C registered original withheld in text
+ok 232 - F20C registered original withheld in text
+  ---
+  duration_ms: 83.1078
+  type: 'test'
+  ...
+# Subtest: F20C registered original withheld in arguments
+ok 233 - F20C registered original withheld in arguments
+  ---
+  duration_ms: 78.2418
+  type: 'test'
+  ...
+# Subtest: F20C registered original withheld in result
+ok 234 - F20C registered original withheld in result
+  ---
+  duration_ms: 91.5314
+  type: 'test'
+  ...
+# Subtest: F20C registered original withheld in description
+ok 235 - F20C registered original withheld in description
+  ---
+  duration_ms: 88.0164
+  type: 'test'
+  ...
+# Subtest: F20C registered original withheld in schema-description
+ok 236 - F20C registered original withheld in schema-description
+  ---
+  duration_ms: 62.711
+  type: 'test'
+  ...
+# Subtest: F20C registered encoded and ordered split text carriers are withheld
+ok 237 - F20C registered encoded and ordered split text carriers are withheld
+  ---
+  duration_ms: 364.5518
+  type: 'test'
+  ...
+# Subtest: F20C unsupported request withheld: image
+ok 238 - F20C unsupported request withheld: image
+  ---
+  duration_ms: 2.2629
+  type: 'test'
+  ...
+# Subtest: F20C unsupported request withheld: file
+ok 239 - F20C unsupported request withheld: file
+  ---
+  duration_ms: 2.0769
+  type: 'test'
+  ...
+# Subtest: F20C unsupported request withheld: opaque signature
+ok 240 - F20C unsupported request withheld: opaque signature
+  ---
+  duration_ms: 2.1928
+  type: 'test'
+  ...
+# Subtest: F20C unsupported request withheld: unknown part
+ok 241 - F20C unsupported request withheld: unknown part
+  ---
+  duration_ms: 1.9984
+  type: 'test'
+  ...
+# Subtest: F20C unsupported request withheld: server cache
+ok 242 - F20C unsupported request withheld: server cache
+  ---
+  duration_ms: 2.8515
+  type: 'test'
+  ...
+# Subtest: F20C unsupported request withheld: alternate tool
+ok 243 - F20C unsupported request withheld: alternate tool
+  ---
+  duration_ms: 2.8803
+  type: 'test'
+  ...
+# Subtest: F20C unsupported request withheld: unknown arguments
+ok 244 - F20C unsupported request withheld: unknown arguments
+  ---
+  duration_ms: 1.853
+  type: 'test'
+  ...
+# Subtest: F20C unsupported request withheld: orphan response
+ok 245 - F20C unsupported request withheld: orphan response
+  ---
+  duration_ms: 1.8025
+  type: 'test'
+  ...
+# Subtest: F20C unsupported request withheld: duplicate call
+ok 246 - F20C unsupported request withheld: duplicate call
+  ---
+  duration_ms: 2.3835
+  type: 'test'
+  ...
+# Subtest: F20C unsupported request withheld: unsupported result
+ok 247 - F20C unsupported request withheld: unsupported result
+  ---
+  duration_ms: 1.9041
+  type: 'test'
+  ...
+# Subtest: F20C unsupported request withheld: missing stream
+ok 248 - F20C unsupported request withheld: missing stream
+  ---
+  duration_ms: 2.5942
+  type: 'test'
+  ...
+# Subtest: F20C unsupported request withheld: wrong model
+ok 249 - F20C unsupported request withheld: wrong model
+  ---
+  duration_ms: 2.9295
+  type: 'test'
+  ...
+# Subtest: F20C unsupported request withheld: unknown generation
+ok 250 - F20C unsupported request withheld: unknown generation
+  ---
+  duration_ms: 2.4594
+  type: 'test'
+  ...
+# Subtest: F20C unsupported request withheld: nonfinite number
+ok 251 - F20C unsupported request withheld: nonfinite number
+  ---
+  duration_ms: 1.9698
+  type: 'test'
+  ...
+# Subtest: F20C text budget remains32 while typed protocol/tool metadata remains separately bounded
+ok 252 - F20C text budget remains32 while typed protocol/tool metadata remains separately bounded
+  ---
+  duration_ms: 2.3183
+  type: 'test'
+  ...
+# Subtest: F20C completed public text and safe-function SSE are accepted, complete-buffered
+ok 253 - F20C completed public text and safe-function SSE are accepted, complete-buffered
+  ---
+  duration_ms: 17.3927
+  type: 'test'
+  ...
+# Subtest: F20C output withheld before any release: text
+ok 254 - F20C output withheld before any release: text
+  ---
+  duration_ms: 3.8293
+  type: 'test'
+  ...
+# Subtest: F20C output withheld before any release: function-arguments
+ok 255 - F20C output withheld before any release: function-arguments
+  ---
+  duration_ms: 4.2236
+  type: 'test'
+  ...
+# Subtest: F20C output withheld before any release: metadata
+ok 256 - F20C output withheld before any release: metadata
+  ---
+  duration_ms: 2.2648
+  type: 'test'
+  ...
+# Subtest: F20C output withheld before any release: encoded
+ok 257 - F20C output withheld before any release: encoded
+  ---
+  duration_ms: 2.2863
+  type: 'test'
+  ...
+# Subtest: F20C output withheld before any release: split-deltas
+ok 258 - F20C output withheld before any release: split-deltas
+  ---
+  duration_ms: 5.6871
+  type: 'test'
+  ...
+# Subtest: F20C incomplete, error, unknown, opaque or trailing SSE is withheld
+ok 259 - F20C incomplete, error, unknown, opaque or trailing SSE is withheld
+  ---
+  duration_ms: 23.7412
+  type: 'test'
+  ...
+# Subtest: F20C gateway revocation withholds current Gemini input/output
+ok 260 - F20C gateway revocation withholds current Gemini input/output
+  ---
+  duration_ms: 1.5494
+  type: 'test'
+  ...
+# Subtest: F20C dangling event metadata after a complete Gemini or Codex stream is withheld
+ok 261 - F20C dangling event metadata after a complete Gemini or Codex stream is withheld
+  ---
+  duration_ms: 10.6327
+  type: 'test'
+  ...
+# Subtest: F20C Gemini owned capability status is explicit
+ok 262 - F20C Gemini owned capability status is explicit
+  ---
+  duration_ms: 119.8846
+  type: 'test'
+  ...
+# Subtest: F20C Gemini configured target gets native body and only upstream Google credential
+ok 263 - F20C Gemini configured target gets native body and only upstream Google credential
+  ---
+  duration_ms: 658.9368
+  type: 'test'
+  ...
+# Subtest: F20C Gemini original and encoded masked-result substitutions send zero collector requests
+ok 264 - F20C Gemini original and encoded masked-result substitutions send zero collector requests
+  ---
+  duration_ms: 295.1866
+  type: 'test'
+  ...
+# Subtest: F20C Gemini registered output is completely withheld
+ok 265 - F20C Gemini registered output is completely withheld
+  ---
+  duration_ms: 430.005
+  type: 'test'
+  ...
+# Subtest: F20C Gemini invalid model, query, state and native alternate endpoints never forward
+ok 266 - F20C Gemini invalid model, query, state and native alternate endpoints never forward
+  ---
+  duration_ms: 81.2568
+  type: 'test'
+  ...
+# Subtest: F20C Gemini disabled capability never forwards
+ok 267 - F20C Gemini disabled capability never forwards
+  ---
+  duration_ms: 9.4258
+  type: 'test'
+  ...
+# Subtest: F20C Gemini rejects unsafe or ambiguous upstream base before binding
+ok 268 - F20C Gemini rejects unsafe or ambiguous upstream base before binding
+  ---
+  duration_ms: 1.2035
+  type: 'test'
+  ...
+# Subtest: F20C native MCP initialization, discovery, UUID progress and masked path-only release
+ok 269 - F20C native MCP initialization, discovery, UUID progress and masked path-only release
+  ---
+  duration_ms: 144.4777
+  type: 'test'
+  ...
+# Subtest: F20C authenticated stateless optional GET returns405 without dropping MCP or invoking reader
+ok 270 - F20C authenticated stateless optional GET returns405 without dropping MCP or invoking reader
+  ---
+  duration_ms: 27.4864
+  type: 'test'
+  ...
+# Subtest: F20C MCP forged authority, native metadata carriers and path traversal never reach F04
+ok 271 - F20C MCP forged authority, native metadata carriers and path traversal never reach F04
+  ---
+  duration_ms: 79.465
+  type: 'test'
+  ...
+# Subtest: F20C MCP wrong capability, browser origin, media and alternate role fail before reader
+ok 272 - F20C MCP wrong capability, browser origin, media and alternate role fail before reader
+  ---
+  duration_ms: 37.3865
+  type: 'test'
+  ...
+# Subtest: F20C MCP pending authorizer is cancelled by rotation and cannot return late content
+ok 273 - F20C MCP pending authorizer is cancelled by rotation and cannot return late content
+  ---
+  duration_ms: 17.1784
+  type: 'test'
+  ...
+# Subtest: F20C MCP rechecks owner after a completed safe-read result
+ok 274 - F20C MCP rechecks owner after a completed safe-read result
+  ---
+  duration_ms: 12.9855
+  type: 'test'
+  ...
+# Subtest: stored MCP deny-list blocks SoterAI preflight before broker contact
+ok 275 - stored MCP deny-list blocks SoterAI preflight before broker contact
+  ---
+  duration_ms: 33.0091
+  type: 'test'
+  ...
+# Subtest: strict policy is passed to preflight and runtime tool name is distinct from server
+ok 276 - strict policy is passed to preflight and runtime tool name is distinct from server
+  ---
+  duration_ms: 19.5465
+  type: 'test'
+  ...
+# Subtest: JSON primitives and arrays never reach MCP preflight as argument objects
+ok 277 - JSON primitives and arrays never reach MCP preflight as argument objects
+  ---
+  duration_ms: 22.5938
+  type: 'test'
+  ...
+# Subtest: concurrent canary creation retains every token and rotation publishes complete state
+ok 278 - concurrent canary creation retains every token and rotation publishes complete state
+  ---
+  duration_ms: 17.5817
+  type: 'test'
+  ...
+# Subtest: corrupt canary storage does not silently become an empty monitoring registry
+ok 279 - corrupt canary storage does not silently become an empty monitoring registry
+  ---
+  duration_ms: 7.7995
+  type: 'test'
+  ...
+# Subtest: BrokerManager synchronizes canaries on owned startup and new generation after registry changes
+ok 280 - BrokerManager synchronizes canaries on owned startup and new generation after registry changes
+  ---
+  duration_ms: 103.6292
+  type: 'test'
+  ...
+# Subtest: F15e-M01 default chunked flag reaches owned child
+ok 281 - F15e-M01 default chunked flag reaches owned child
+  ---
+  duration_ms: 77.0472
+  type: 'test'
+  ...
+# Subtest: F15e-M02 machine chunked disable survives workspace override and keeps encoding startup
+ok 282 - F15e-M02 machine chunked disable survives workspace override and keeps encoding startup
+  ---
+  duration_ms: 19.2877
+  type: 'test'
+  ...
+# Subtest: F15e-M03 chunked flag drift invalidates old routing authority
+ok 283 - F15e-M03 chunked flag drift invalidates old routing authority
+  ---
+  duration_ms: 13.529
+  type: 'test'
+  ...
+# Subtest: F15d-M01 default deflate flag reaches owned child
+ok 284 - F15d-M01 default deflate flag reaches owned child
+  ---
+  duration_ms: 12.3433
+  type: 'test'
+  ...
+# Subtest: F15d-M02 machine deflate disable survives workspace override and keeps existing formats
+ok 285 - F15d-M02 machine deflate disable survives workspace override and keeps existing formats
+  ---
+  duration_ms: 10.3612
+  type: 'test'
+  ...
+# Subtest: F15d-M03 deflate flag drift invalidates old routing authority
+ok 286 - F15d-M03 deflate flag drift invalidates old routing authority
+  ---
+  duration_ms: 12.5037
+  type: 'test'
+  ...
+# Subtest: F15c-M01 default Brotli flag reaches owned child
+ok 287 - F15c-M01 default Brotli flag reaches owned child
+  ---
+  duration_ms: 16.7014
+  type: 'test'
+  ...
+# Subtest: F15c-M02 machine Brotli disable survives workspace override and preserves JSON/gzip startup
+ok 288 - F15c-M02 machine Brotli disable survives workspace override and preserves JSON/gzip startup
+  ---
+  duration_ms: 10.3475
+  type: 'test'
+  ...
+# Subtest: F15c-M03 Brotli flag drift invalidates old routing authority
+ok 289 - F15c-M03 Brotli flag drift invalidates old routing authority
+  ---
+  duration_ms: 16.0912
+  type: 'test'
+  ...
+# Subtest: F15b-M01 default gzip flag reaches owned child
+ok 290 - F15b-M01 default gzip flag reaches owned child
+  ---
+  duration_ms: 12.034
+  type: 'test'
+  ...
+# Subtest: F15b-M02 machine gzip disable survives workspace override while JSON startup remains available
+ok 291 - F15b-M02 machine gzip disable survives workspace override while JSON startup remains available
+  ---
+  duration_ms: 10.5802
+  type: 'test'
+  ...
+# Subtest: F15b-M03 gzip flag drift invalidates old routing authority
+ok 292 - F15b-M03 gzip flag drift invalidates old routing authority
+  ---
+  duration_ms: 12.0339
+  type: 'test'
+  ...
+# Subtest: F15a-M01 default JSON flag reaches the private owned child
+ok 293 - F15a-M01 default JSON flag reaches the private owned child
+  ---
+  duration_ms: 9.231
+  type: 'test'
+  ...
+# Subtest: F15a-M02 machine JSON disable survives workspace override and failed initialization
+ok 294 - F15a-M02 machine JSON disable survives workspace override and failed initialization
+  ---
+  duration_ms: 8.7304
+  type: 'test'
+  ...
+# Subtest: F15a-M03 changed JSON flag invalidates existing owned routing authority
+ok 295 - F15a-M03 changed JSON flag invalidates existing owned routing authority
+  ---
+  duration_ms: 9.7266
+  type: 'test'
+  ...
+# Subtest: F14-M01 machine flag disable refuses without launch or legacy attach
+ok 296 - F14-M01 machine flag disable refuses without launch or legacy attach
+  ---
+  duration_ms: 0.5388
+  type: 'test'
+  ...
+# Subtest: F14-M02 workspace flag cannot override machine disable
+ok 297 - F14-M02 workspace flag cannot override machine disable
+  ---
+  duration_ms: 0.3899
+  type: 'test'
+  ...
+# Subtest: F14-M03 startup restores strict policy and complete canaries before healthy
+ok 298 - F14-M03 startup restores strict policy and complete canaries before healthy
+  ---
+  duration_ms: 10.6636
+  type: 'test'
+  ...
+# Subtest: F14-M04 malformed saved safe mode fails before child launch
+ok 299 - F14-M04 malformed saved safe mode fails before child launch
+  ---
+  duration_ms: 0.7998
+  type: 'test'
+  ...
+# Subtest: F14-M05 saved enterprise policy survives stop and new generation
+ok 300 - F14-M05 saved enterprise policy survives stop and new generation
+  ---
+  duration_ms: 19.4809
+  type: 'test'
+  ...
+# Subtest: F14-M06 old shared auth and memory records never attach
+ok 301 - F14-M06 old shared auth and memory records never attach
+  ---
+  duration_ms: 16.8083
+  type: 'test'
+  ...
+# Subtest: F14-M07 restricted workspace never starts provider-bearing child
+ok 302 - F14-M07 restricted workspace never starts provider-bearing child
+  ---
+  duration_ms: 0.812
+  type: 'test'
+  ...
+# Subtest: F14-M08 lockdown refuses child creation
+ok 303 - F14-M08 lockdown refuses child creation
+  ---
+  duration_ms: 0.3624
+  type: 'test'
+  ...
+# Subtest: F14-M09 stale configured port does not determine actual owned endpoint
+ok 304 - F14-M09 stale configured port does not determine actual owned endpoint
+  ---
+  duration_ms: 13.8098
+  type: 'test'
+  ...
+# Subtest: F14-M10 provider/config drift withholds rather than falling back to old listener
+ok 305 - F14-M10 provider/config drift withholds rather than falling back to old listener
+  ---
+  duration_ms: 11.8623
+  type: 'test'
+  ...
+# Subtest: F14-M11 shutdown never disables stored policy or deletes another window auth
+ok 306 - F14-M11 shutdown never disables stored policy or deletes another window auth
+  ---
+  duration_ms: 12.6015
+  type: 'test'
+  ...
+# Subtest: F14-M12 unavailable status never probes configured fixed port
+ok 307 - F14-M12 unavailable status never probes configured fixed port
+  ---
+  duration_ms: 0.6909
+  type: 'test'
+  ...
+# Subtest: F14-M13 another window's canary SecretStorage change withdraws this owned broker
+ok 308 - F14-M13 another window's canary SecretStorage change withdraws this owned broker
+  ---
+  duration_ms: 17.5376
+  type: 'test'
+  ...
+# Subtest: F14-M14 provider SecretStorage change withdraws but unrelated secret event keeps ownership
+ok 309 - F14-M14 provider SecretStorage change withdraws but unrelated secret event keeps ownership
+  ---
+  duration_ms: 14.1445
+  type: 'test'
+  ...
+# Subtest: F15f-M01 default framed flag reaches owned child
+ok 310 - F15f-M01 default framed flag reaches owned child
+  ---
+  duration_ms: 8.4187
+  type: 'test'
+  ...
+# Subtest: F15f-M02 machine framed disable survives workspace override and keeps encoding startup
+ok 311 - F15f-M02 machine framed disable survives workspace override and keeps encoding startup
+  ---
+  duration_ms: 12.0491
+  type: 'test'
+  ...
+# Subtest: F15f-M03 framed flag drift invalidates old routing authority
+ok 312 - F15f-M03 framed flag drift invalidates old routing authority
+  ---
+  duration_ms: 14.2278
+  type: 'test'
+  ...
+# Subtest: F15g-M01 default multipart flag reaches owned child
+ok 313 - F15g-M01 default multipart flag reaches owned child
+  ---
+  duration_ms: 12.526
+  type: 'test'
+  ...
+# Subtest: F15g-M02 machine multipart disable survives workspace override and keeps encoding startup
+ok 314 - F15g-M02 machine multipart disable survives workspace override and keeps encoding startup
+  ---
+  duration_ms: 10.3792
+  type: 'test'
+  ...
+# Subtest: F15g-M03 multipart flag drift invalidates old routing authority
+ok 315 - F15g-M03 multipart flag drift invalidates old routing authority
+  ---
+  duration_ms: 9.6143
+  type: 'test'
+  ...
+# Subtest: F15h-M01 default base64 flag reaches owned child
+ok 316 - F15h-M01 default base64 flag reaches owned child
+  ---
+  duration_ms: 8.0842
+  type: 'test'
+  ...
+# Subtest: F15h-M02 machine base64 disable survives workspace override and keeps encoding startup
+ok 317 - F15h-M02 machine base64 disable survives workspace override and keeps encoding startup
+  ---
+  duration_ms: 7.6822
+  type: 'test'
+  ...
+# Subtest: F15h-M03 base64 flag drift invalidates old routing authority
+ok 318 - F15h-M03 base64 flag drift invalidates old routing authority
+  ---
+  duration_ms: 8.421
+  type: 'test'
+  ...
+# Subtest: the canonical readiness doc is generated, not maintained
+    # Subtest: exists
+    ok 1 - exists
+      ---
+      duration_ms: 1.2407
+      type: 'test'
+      ...
+    # Subtest: matches what the generator produces from source right now
+    ok 2 - matches what the generator produces from source right now
+      ---
+      duration_ms: 120.2862
+      type: 'test'
+      ...
+    # Subtest: says out loud that it is generated
+    ok 3 - says out loud that it is generated
+      ---
+      duration_ms: 0.674
+      type: 'test'
+      ...
+    1..3
+ok 319 - the canonical readiness doc is generated, not maintained
+  ---
+  duration_ms: 123.896
+  type: 'suite'
+  ...
+# Subtest: the readiness doc states the real, current numbers
+    # Subtest: names the version being published
+    ok 1 - names the version being published
+      ---
+      duration_ms: 0.6082
+      type: 'test'
+      ...
+    # Subtest: names the license that actually ships
+    ok 2 - names the license that actually ships
+      ---
+      duration_ms: 0.5013
+      type: 'test'
+      ...
+    # Subtest: states the command count the manifest actually declares
+    ok 3 - states the command count the manifest actually declares
+      ---
+      duration_ms: 0.3875
+      type: 'test'
+      ...
+    # Subtest: states the setting and policy counts the manifest actually declares
+    ok 4 - states the setting and policy counts the manifest actually declares
+      ---
+      duration_ms: 0.4116
+      type: 'test'
+      ...
+    # Subtest: claims no ML in the packaged extension
+    ok 5 - claims no ML in the packaged extension
+      ---
+      duration_ms: 0.6129
+      type: 'test'
+      ...
+    # Subtest: keeps the permanent limitations in the document, not just in the code
+    ok 6 - keeps the permanent limitations in the document, not just in the code
+      ---
+      duration_ms: 0.5405
+      type: 'test'
+      ...
+    1..6
+ok 320 - the readiness doc states the real, current numbers
+  ---
+  duration_ms: 4.2505
+  type: 'suite'
+  ...
+# Subtest: stale documents do not contradict the shipped product
+    # Subtest: vscode-extension-marketplace-readiness.md no longer states a contradicted number
+    ok 1 - vscode-extension-marketplace-readiness.md no longer states a contradicted number
+      ---
+      duration_ms: 0.7007
+      type: 'test'
+      ...
+    # Subtest: no extension-facing document advertises a detection-rule count the source does not back
+    ok 2 - no extension-facing document advertises a detection-rule count the source does not back
+      ---
+      duration_ms: 3.6272
+      type: 'test'
+      ...
+    1..2
+ok 321 - stale documents do not contradict the shipped product
+  ---
+  duration_ms: 4.7064
+  type: 'suite'
+  ...
+# Subtest: README accuracy
+    # Subtest: names only commands that exist
+    ok 1 - names only commands that exist
+      ---
+      duration_ms: 2.4627
+      type: 'test'
+      ...
+    # Subtest: names only settings that exist, with the manifest's real defaults
+    ok 2 - names only settings that exist, with the manifest's real defaults
+      ---
+      duration_ms: 0.7069
+      type: 'test'
+      ...
+    # Subtest: does not advertise a version other than the one being published
+    ok 3 - does not advertise a version other than the one being published
+      ---
+      duration_ms: 0.5349
+      type: 'test'
+      ...
+    # Subtest: points at a license file that ships in the VSIX
+    ok 4 - points at a license file that ships in the VSIX
+      ---
+      duration_ms: 1.7533
+      type: 'test'
+      ...
+    # Subtest: states the real count of machine-scoped settings
+    ok 5 - states the real count of machine-scoped settings
+      ---
+      duration_ms: 0.4081
+      type: 'test'
+      ...
+    1..5
+ok 322 - README accuracy
+  ---
+  duration_ms: 7.6589
+  type: 'suite'
+  ...
+1..322
+# tests 341
+# suites 6
+# pass 341
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 38450.0693

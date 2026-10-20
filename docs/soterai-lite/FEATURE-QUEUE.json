@@ -447,7 +447,7 @@
       "childCards": "One per additional supported tool/version; enumerate at P03 before frozen applicability",
       "completionRule": "No supported additional adapter bypasses actual-tool acceptance",
       "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
-      "progressEvidence": "docs/soterai-lite/evidence/20261019-f20b-codex-ide-c7a309e2/f20b-acceptance-01.json",
+      "progressEvidence": "docs/soterai-lite/evidence/20261020-f20c-gemini-cli-8a6d3e70/f20c-acceptance-01.json",
       "orderedSubcards": [
         {
           "id": "F20A",
@@ -518,11 +518,11 @@
         {
           "id": "F20C",
           "tool": "geminiCli",
-          "status": "ACTIVE",
-          "result": "INCOMPLETE",
+          "status": "VERIFYING",
+          "result": "PASS_SCOPED_PENDING_BYTE_BARRIERS",
           "pin": "Installed0.55.1 public463file bundle/Node22.16.0/picomatch4.0.2 rechecked; exact pin02",
-          "progressEvidence": "docs/soterai-lite/evidence/20261020-f20c-gemini-cli-8a6d3e70/f20c-progress-01.json",
-          "requiredGate": "INCOMPLETE_ACTUAL_CLI_PRODUCT_ROUTE",
+          "progressEvidence": "docs/soterai-lite/evidence/20261020-f20c-gemini-cli-8a6d3e70/f20c-progress-04.json",
+          "requiredGate": "INCOMPLETE_CURRENT_FULL_SUITE_AFFECTED_IDE_RETAINED_AND_BYTE_BARRIERS",
           "fixtureImprovementRounds": 3,
           "additionalFixtureRound": {
             "authorized": true,
@@ -530,7 +530,37 @@
             "run": 5,
             "result": "INCOMPLETE_NO_SIGNALS"
           },
-          "nextDiagnosticProposal": "docs/soterai-lite/evidence/20261020-f20c-gemini-cli-8a6d3e70/feasibility-proposal-06.json"
+          "nextDiagnosticProposal": "docs/soterai-lite/evidence/20261020-f20c-gemini-cli-8a6d3e70/feasibility-proposal-06.json",
+          "publicNativeFeasibility": "PASS_SCOPED_NATIVE_PUBLIC_FEASIBILITY",
+          "mcpNativeFeasibility": "PASS_SCOPED_NATIVE_MCP_FEASIBILITY",
+          "additionalFixtureRounds": [
+            {
+              "run": 5,
+              "result": "INCOMPLETE_NO_SIGNALS",
+              "authorization": "user-round-authorization-01.json"
+            },
+            {
+              "run": 6,
+              "result": "INCOMPLETE_NO_SIGNALS",
+              "authorization": "user-round-authorization-02.json"
+            },
+            {
+              "run": 7,
+              "result": "PASS_SCOPED_NATIVE_PUBLIC_FEASIBILITY",
+              "authorization": "user-round-authorization-03.json"
+            }
+          ],
+          "mcpFixtureImprovementRounds": 3,
+          "nextDiagnosticProposalStatus": "HISTORICAL_CONSUMED_BY_APPROVED_NATIVE06",
+          "currentProductMatrix": {
+            "run": 2,
+            "driver": "gemini-product-matrix-03.cjs",
+            "result": "PASS_SCOPED_PRODUCT_GEMINI_MATRIX",
+            "evidence": "docs/soterai-lite/evidence/20261020-f20c-gemini-cli-8a6d3e70/f20c-product-20261020T142131Z-3dfc1593/product-result.json",
+            "improvementRoundsUsed": 1
+          },
+          "acceptanceEvidence": "docs/soterai-lite/evidence/20261020-f20c-gemini-cli-8a6d3e70/f20c-acceptance-01.json",
+          "scope": "Pinned Gemini CLI0.55.1/Node22.16.0 selected manifest+complete bundle and public picomatch4.0.2. Actual registered owner native16/7current clients naturally close/EOF/signalnull, private MCP and GenerateContent roles, reviewed two-file home/settings/env with encrypted absence/durable recovery/exact partial restore, machine-only capability/base and strict owned-broker acknowledgment. Stateless text/single-safe-function F04 and complete buffered F07/F08 only. Native home dotenv selected local endpoint/key; one-attempt profile and generic nonretryable known broker denials. Explicit native provider override LEAK_CONFIRMED/uncovered, badgeUncovered. Optional native process probes refused by fixture, not product command confinement. No opaque/media/server-state/normal-profile/override/native-read/real-provider/human/independent/OS/all-descendant or general incremental gateway claim. Full03 Claude assertion and first affectedIDE failure retained; unchanged-code isolated full04/logging-only same-assertion IDE retry passed without established cause or runtime budget/source fix. Product01 and diagnostic04/05/06 plus older F20A receiver observations remain INCOMPLETE_NO_SIGNALS for F28/L6; no historical cleanup claim. Frozen44 ungraded/F11absent/nine unmanaged leaks/no rating/originalL6 HUMAN-ACTIONS STOP."
         }
       ]
     },

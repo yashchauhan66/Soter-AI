@@ -21,7 +21,7 @@ function fixture(extra:{forcedLevel?:string;wrongAck?:boolean;registryFailure?:b
         if(route==="/v1/safe-mode/disable"){mode={...mode,enabled:false};return Response.json(mode);}
         if(route==="/v1/safe-mode/status")return Response.json({...mode,...(extra.forcedLevel?{level:extra.forcedLevel}:{})});
         if(route==="/v1/gateway/sync"){generation=body.generation;syncCount++;return Response.json({version:1,synchronized:true,generation});}
-        if(route==="/v1/gateway/status")return Response.json({version:extra.version??1,enabled:envs.at(-1)?.SOTERAI_GATEWAY_POLICY!=="0",ready:true,generation,codexResponses:envs.at(-1)?.SOTERAI_CODEX_RESPONSES==="1",claudeToolSchemas:Object.hasOwn(extra,"claudeAck")?extra.claudeAck:envs.at(-1)?.SOTERAI_CLAUDE_TOOL_SCHEMAS==="1",clineToolSchemas:Object.hasOwn(extra,"clineAck")?extra.clineAck:envs.at(-1)?.SOTERAI_CLINE_TOOL_SCHEMAS==="1"});
+        if(route==="/v1/gateway/status")return Response.json({version:extra.version??1,enabled:envs.at(-1)?.SOTERAI_GATEWAY_POLICY!=="0",ready:true,generation,geminiGenerateContent:envs.at(-1)?.SOTERAI_GEMINI_GENERATE_CONTENT==="1",codexResponses:envs.at(-1)?.SOTERAI_CODEX_RESPONSES==="1",claudeToolSchemas:Object.hasOwn(extra,"claudeAck")?extra.claudeAck:envs.at(-1)?.SOTERAI_CLAUDE_TOOL_SCHEMAS==="1",clineToolSchemas:Object.hasOwn(extra,"clineAck")?extra.clineAck:envs.at(-1)?.SOTERAI_CLINE_TOOL_SCHEMAS==="1"});
         return Response.json({version:"0.2.0"});
     }};
     const manager=new BrokerManager(context as never,transport as never,source as never);

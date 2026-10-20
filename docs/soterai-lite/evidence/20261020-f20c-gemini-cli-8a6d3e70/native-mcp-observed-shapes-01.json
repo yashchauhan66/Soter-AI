@@ -1,0 +1,240 @@
+{
+  "status": "NATIVE_MCP_FEASIBILITY_PASS_FIXTURES_FROZEN_NOT_PRODUCT_ACCEPTANCE",
+  "publicRun": "native-feasibility-07.json",
+  "mcpRun": "native-mcp-feasibility-04.json",
+  "mcp": [
+    {
+      "number": 1,
+      "method": "initialize",
+      "params": {
+        "protocolVersion": "2025-06-18",
+        "capabilities": {
+          "roots": {
+            "listChanged": true
+          }
+        },
+        "clientInfo": {
+          "name": "gemini-cli-mcp-client",
+          "version": "0.55.1"
+        }
+      }
+    },
+    {
+      "number": 2,
+      "method": "notifications/initialized"
+    },
+    {
+      "method": "HTTP_GET",
+      "status": 405
+    },
+    {
+      "number": 4,
+      "method": "tools/list",
+      "params": {}
+    },
+    {
+      "number": 5,
+      "method": "tools/call",
+      "params": {
+        "name": "soterai_read_project_file_safely",
+        "arguments": {
+          "path": ".env"
+        },
+        "_meta": {
+          "progressToken": "e0a2562c-412d-4007-8083-083a1dbc82e6"
+        }
+      }
+    }
+  ],
+  "files": [
+    {
+      "path": "packages/vscode-extension/src/__tests__/fixtures/gemini-cli-0.55.1-request-1.json",
+      "bytes": 28491,
+      "sha256": "5d7b08a80896344407e25f1e90bc69b4454624cf4ae479239288df4900c5a9a3",
+      "source": {
+        "path": "D:\\SoterAI-Lite-test-profiles\\f20c-feasibility-410e5f89-605f-452f-8be9-c6b7a24a8df0\\request-1.json",
+        "bytes": 29204,
+        "sha256": "1e35589d2dfc6c6124dc028c241a333871e8be8564d958ad9c2d17927da097d5"
+      },
+      "scope": "Exact parsed native request body, pretty-printed without value/path rewriting; synthetic profile paths/public vendor prompt only."
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/fixtures/gemini-cli-0.55.1-request-2.json",
+      "bytes": 29409,
+      "sha256": "b4a703e0c16e99c35f7b2bb70866d0c1a8bd3cb906f6aba6ce36c750f2243198",
+      "source": {
+        "path": "D:\\SoterAI-Lite-test-profiles\\f20c-feasibility-410e5f89-605f-452f-8be9-c6b7a24a8df0\\request-2.json",
+        "bytes": 30180,
+        "sha256": "14d1c7003d8a00d17e01987f539f71c4971f4f71cdc8cf6773ccc4e41ce055ae"
+      },
+      "scope": "Exact parsed native request body, pretty-printed without value/path rewriting; synthetic profile paths/public vendor prompt only."
+    }
+  ],
+  "shapes": [
+    {
+      "number": 1,
+      "path": "/v1beta/models/gemini-3.5-flash:streamGenerateContent?alt=sse",
+      "bodyKeys": [
+        "contents",
+        "systemInstruction",
+        "tools",
+        "generationConfig"
+      ],
+      "contents": [
+        {
+          "role": "user",
+          "parts": [
+            {
+              "keys": [
+                "text"
+              ],
+              "textBytes": 372
+            },
+            {
+              "keys": [
+                "text"
+              ],
+              "textBytes": 49
+            }
+          ]
+        }
+      ],
+      "tools": [
+        {
+          "functionDeclarations": [
+            {
+              "name": "mcp_soterai_safe_read_soterai_read_project_file_safely",
+              "description": "Read a synthetic project path through an approved masked safe-read fixture.",
+              "parametersJsonSchema": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "wait_for_previous": {
+                    "type": "boolean",
+                    "description": "Set to true to wait for all previously requested tools in this turn to complete before starting. Set to false (or omit) to run in parallel. Use true when this tool depends on the output of previous tools."
+                  }
+                },
+                "required": [
+                  "path"
+                ],
+                "additionalProperties": false
+              }
+            }
+          ]
+        }
+      ],
+      "generationConfig": {
+        "temperature": 1,
+        "topP": 0.95,
+        "topK": 64,
+        "thinkingConfig": {
+          "includeThoughts": true,
+          "thinkingLevel": "HIGH"
+        }
+      }
+    },
+    {
+      "number": 2,
+      "path": "/v1beta/models/gemini-3.5-flash:streamGenerateContent?alt=sse",
+      "bodyKeys": [
+        "contents",
+        "systemInstruction",
+        "tools",
+        "generationConfig"
+      ],
+      "contents": [
+        {
+          "role": "user",
+          "parts": [
+            {
+              "keys": [
+                "text"
+              ],
+              "textBytes": 372
+            },
+            {
+              "keys": [
+                "text"
+              ],
+              "textBytes": 49
+            }
+          ]
+        },
+        {
+          "role": "model",
+          "parts": [
+            {
+              "keys": [
+                "functionCall",
+                "thoughtSignature"
+              ],
+              "functionCall": {
+                "id": "mcp_soterai_safe_read_soterai_read_project_file_safely_1792501335661_0",
+                "args": {
+                  "path": ".env"
+                },
+                "name": "mcp_soterai_safe_read_soterai_read_project_file_safely"
+              }
+            }
+          ]
+        },
+        {
+          "role": "user",
+          "parts": [
+            {
+              "keys": [
+                "functionResponse"
+              ],
+              "functionResponse": {
+                "name": "mcp_soterai_safe_read_soterai_read_project_file_safely",
+                "response": {
+                  "output": "<untrusted_context>\n{\"status\":\"ALLOWED_ONCE\",\"kind\":\"environment-schema\",\"text\":\"TEST_KEY=[MASKED]\"}\n</untrusted_context>"
+                },
+                "id": "mcp_soterai_safe_read_soterai_read_project_file_safely_1792501335661_0"
+              }
+            }
+          ]
+        }
+      ],
+      "tools": [
+        {
+          "functionDeclarations": [
+            {
+              "name": "mcp_soterai_safe_read_soterai_read_project_file_safely",
+              "description": "Read a synthetic project path through an approved masked safe-read fixture.",
+              "parametersJsonSchema": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "wait_for_previous": {
+                    "type": "boolean",
+                    "description": "Set to true to wait for all previously requested tools in this turn to complete before starting. Set to false (or omit) to run in parallel. Use true when this tool depends on the output of previous tools."
+                  }
+                },
+                "required": [
+                  "path"
+                ],
+                "additionalProperties": false
+              }
+            }
+          ]
+        }
+      ],
+      "generationConfig": {
+        "temperature": 1,
+        "topP": 0.95,
+        "topK": 64,
+        "thinkingConfig": {
+          "includeThoughts": true,
+          "thinkingLevel": "HIGH"
+        }
+      }
+    }
+  ],
+  "limits": "No normal profile/auth/real secret read; provider requests synthetic/loopback only. All failed attempts unchanged; diagnostic04/05/06 receiver closure remains INCOMPLETE_NO_SIGNALS. Not SoterAI registered owner/new VSIX/real provider/human/independent/OS coverage.",
+  "time": "2026-10-20T13:02:48.711Z"
+}

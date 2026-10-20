@@ -1,0 +1,550 @@
+﻿TAP version 13
+# Subtest: F19 actual default26 Claude tools and manual text controls pass only their declared protocol profile
+ok 1 - F19 actual default26 Claude tools and manual text controls pass only their declared protocol profile
+  ---
+  duration_ms: 901.2016
+  type: 'test'
+  ...
+# Subtest: F19 registered originals and encodings in native schema metadata are withheld
+ok 2 - F19 registered originals and encodings in native schema metadata are withheld
+  ---
+  duration_ms: 1177.9192
+  type: 'test'
+  ...
+# Subtest: F19 ordinary metadata remains inspected and bounded
+ok 3 - F19 ordinary metadata remains inspected and bounded
+  ---
+  duration_ms: 385.4326
+  type: 'test'
+  ...
+# Subtest: F19 unsupported model controls, tool definitions, images and resource overflow remain withheld
+ok 4 - F19 unsupported model controls, tool definitions, images and resource overflow remain withheld
+  ---
+  duration_ms: 85.0049
+  type: 'test'
+  ...
+# Subtest: F19 profile supports empty/ordinary Anthropic tool lists without relaxing the OpenAI profile
+ok 5 - F19 profile supports empty/ordinary Anthropic tool lists without relaxing the OpenAI profile
+  ---
+  duration_ms: 6.6475
+  type: 'test'
+  ...
+# Subtest: F19 owned broker acknowledges its exact declared Claude capability
+ok 6 - F19 owned broker acknowledges its exact declared Claude capability
+  ---
+  duration_ms: 171.7984
+  type: 'test'
+  ...
+# Subtest: F19 exact native SDK alias and beta marker forward only current controlled provider auth/body
+ok 7 - F19 exact native SDK alias and beta marker forward only current controlled provider auth/body
+  ---
+  duration_ms: 318.6084
+  type: 'test'
+  ...
+# Subtest: F19 native protected input and encoded schema metadata send zero provider bytes
+ok 8 - F19 native protected input and encoded schema metadata send zero provider bytes
+  ---
+  duration_ms: 75.776
+  type: 'test'
+  ...
+# Subtest: F19 unknown/duplicate beta parameters and unknown native routes never forward
+ok 9 - F19 unknown/duplicate beta parameters and unknown native routes never forward
+  ---
+  duration_ms: 59.2049
+  type: 'test'
+  ...
+# Subtest: F19 flagoff preserves original alias/query/unknown-control refusal
+ok 10 - F19 flagoff preserves original alias/query/unknown-control refusal
+  ---
+  duration_ms: 36.6412
+  type: 'test'
+  ...
+# Subtest: F18 enabled schema profile preserves ordinary public requests and an empty tool list
+ok 11 - F18 enabled schema profile preserves ordinary public requests and an empty tool list
+  ---
+  duration_ms: 38.5425
+  type: 'test'
+  ...
+# Subtest: F18 bounded multi-tool schema public request passes only its explicit profile
+ok 12 - F18 bounded multi-tool schema public request passes only its explicit profile
+  ---
+  duration_ms: 43.7117
+  type: 'test'
+  ...
+# Subtest: F18 tool metadata remains inspected for raw/encoded values and ordered splits
+ok 13 - F18 tool metadata remains inspected for raw/encoded values and ordered splits
+  ---
+  duration_ms: 88.9792
+  type: 'test'
+  ...
+# Subtest: F18 schema profile keeps generic metadata, malformed definitions and resource bounds withheld
+ok 14 - F18 schema profile keeps generic metadata, malformed definitions and resource bounds withheld
+  ---
+  duration_ms: 25.9195
+  type: 'test'
+  ...
+# Subtest: F20B actual IDE request has no top-level instructions; preserve body exactly
+ok 15 - F20B actual IDE request has no top-level instructions; preserve body exactly
+  ---
+  duration_ms: 130.8355
+  type: 'test'
+  ...
+# Subtest: F20B malformed present instructions refused null
+ok 16 - F20B malformed present instructions refused null
+  ---
+  duration_ms: 7.057
+  type: 'test'
+  ...
+# Subtest: F20B malformed present instructions refused 42
+ok 17 - F20B malformed present instructions refused 42
+  ---
+  duration_ms: 4.4433
+  type: 'test'
+  ...
+# Subtest: F20B malformed present instructions refused {}
+ok 18 - F20B malformed present instructions refused {}
+  ---
+  duration_ms: 3.5144
+  type: 'test'
+  ...
+# Subtest: F20B malformed present instructions refused []
+ok 19 - F20B malformed present instructions refused []
+  ---
+  duration_ms: 2.8245
+  type: 'test'
+  ...
+# Subtest: F20B actual IDE registered carrier withheld text
+ok 20 - F20B actual IDE registered carrier withheld text
+  ---
+  duration_ms: 37.0421
+  type: 'test'
+  ...
+# Subtest: F20B actual IDE registered carrier withheld metadata
+ok 21 - F20B actual IDE registered carrier withheld metadata
+  ---
+  duration_ms: 37.5987
+  type: 'test'
+  ...
+# Subtest: F20B actual IDE registered carrier withheld schema
+ok 22 - F20B actual IDE registered carrier withheld schema
+  ---
+  duration_ms: 37.211
+  type: 'test'
+  ...
+# Subtest: F20B actual IDE registered carrier withheld cache
+ok 23 - F20B actual IDE registered carrier withheld cache
+  ---
+  duration_ms: 43.0518
+  type: 'test'
+  ...
+# Subtest: F20B actual IDE registered carrier withheld instructions
+ok 24 - F20B actual IDE registered carrier withheld instructions
+  ---
+  duration_ms: 38.8066
+  type: 'test'
+  ...
+# Subtest: F20B actual IDE registered carrier withheld encoded
+ok 25 - F20B actual IDE registered carrier withheld encoded
+  ---
+  duration_ms: 35.3515
+  type: 'test'
+  ...
+# Subtest: F20B actual IDE registered carrier withheld ordered
+ok 26 - F20B actual IDE registered carrier withheld ordered
+  ---
+  duration_ms: 77.033
+  type: 'test'
+  ...
+# Subtest: F20B absent instructions does not admit unknown or server-side carriers
+ok 27 - F20B absent instructions does not admit unknown or server-side carriers
+  ---
+  duration_ms: 10.1078
+  type: 'test'
+  ...
+# Subtest: F20B IDE traffic still requires the explicit Responses capability
+ok 28 - F20B IDE traffic still requires the explicit Responses capability
+  ---
+  duration_ms: 2.048
+  type: 'test'
+  ...
+# Subtest: F20A Responses accepts actual pinned public request and replayed MCP result without changing body
+ok 29 - F20A Responses accepts actual pinned public request and replayed MCP result without changing body
+  ---
+  duration_ms: 1002.1976
+  type: 'test'
+  ...
+# Subtest: F20A Responses remains capability-scoped and does not relax chat schemas
+ok 30 - F20A Responses remains capability-scoped and does not relax chat schemas
+  ---
+  duration_ms: 14.2637
+  type: 'test'
+  ...
+# Subtest: F20A Responses registered original withheld in instructions
+ok 31 - F20A Responses registered original withheld in instructions
+  ---
+  duration_ms: 95.9504
+  type: 'test'
+  ...
+# Subtest: F20A Responses registered original withheld in text
+ok 32 - F20A Responses registered original withheld in text
+  ---
+  duration_ms: 145.0648
+  type: 'test'
+  ...
+# Subtest: F20A Responses registered original withheld in arguments
+ok 33 - F20A Responses registered original withheld in arguments
+  ---
+  duration_ms: 157.8449
+  type: 'test'
+  ...
+# Subtest: F20A Responses registered original withheld in output
+ok 34 - F20A Responses registered original withheld in output
+  ---
+  duration_ms: 137.8687
+  type: 'test'
+  ...
+# Subtest: F20A Responses registered original withheld in metadata
+ok 35 - F20A Responses registered original withheld in metadata
+  ---
+  duration_ms: 140.0645
+  type: 'test'
+  ...
+# Subtest: F20A Responses registered original withheld in tool-description
+ok 36 - F20A Responses registered original withheld in tool-description
+  ---
+  duration_ms: 113.1999
+  type: 'test'
+  ...
+# Subtest: F20A Responses registered original withheld in tool-parameters
+ok 37 - F20A Responses registered original withheld in tool-parameters
+  ---
+  duration_ms: 140.8078
+  type: 'test'
+  ...
+# Subtest: F20A Responses registered original withheld in cache-key
+ok 38 - F20A Responses registered original withheld in cache-key
+  ---
+  duration_ms: 141.0632
+  type: 'test'
+  ...
+# Subtest: F20A Responses encoded and ordered split carriers are withheld
+ok 39 - F20A Responses encoded and ordered split carriers are withheld
+  ---
+  duration_ms: 625.8061
+  type: 'test'
+  ...
+# Subtest: F20A Responses unknown routes, server state, images, encrypted replay and tools are refused
+ok 40 - F20A Responses unknown routes, server state, images, encrypted replay and tools are refused
+  ---
+  duration_ms: 28.3617
+  type: 'test'
+  ...
+# Subtest: F20A Responses original numerical byte/string/content/tool limits remain bounded
+ok 41 - F20A Responses original numerical byte/string/content/tool limits remain bounded
+  ---
+  duration_ms: 8.5893
+  type: 'test'
+  ...
+# Subtest: F20A Responses accepts actual namespaced function call and completed text SSE
+ok 42 - F20A Responses accepts actual namespaced function call and completed text SSE
+  ---
+  duration_ms: 26.307
+  type: 'test'
+  ...
+# Subtest: F20A Responses output originals, escaped values and split deltas are withheld before release
+ok 43 - F20A Responses output originals, escaped values and split deltas are withheld before release
+  ---
+  duration_ms: 39.4551
+  type: 'test'
+  ...
+# Subtest: F20A Responses missing completion, failure, trailing event, mismatched framing and unknown item are withheld
+ok 44 - F20A Responses missing completion, failure, trailing event, mismatched framing and unknown item are withheld
+  ---
+  duration_ms: 29.7733
+  type: 'test'
+  ...
+# Subtest: F20A Responses revocation withholds both input and output
+ok 45 - F20A Responses revocation withholds both input and output
+  ---
+  duration_ms: 1.1306
+  type: 'test'
+  ...
+# Subtest: F20A Responses exact owned capability acknowledgment
+ok 46 - F20A Responses exact owned capability acknowledgment
+  ---
+  duration_ms: 181.9929
+  type: 'test'
+  ...
+# Subtest: F20A Responses adjacent public request reaches only configured target with upstream-only auth
+ok 47 - F20A Responses adjacent public request reaches only configured target with upstream-only auth
+  ---
+  duration_ms: 1079.1748
+  type: 'test'
+  ...
+# Subtest: F20A Responses registered context and encoded tool output send zero provider requests
+ok 48 - F20A Responses registered context and encoded tool output send zero provider requests
+  ---
+  duration_ms: 326.741
+  type: 'test'
+  ...
+# Subtest: F20A Responses protected provider output is withheld completely
+ok 49 - F20A Responses protected provider output is withheld completely
+  ---
+  duration_ms: 588.1482
+  type: 'test'
+  ...
+# Subtest: F20A Responses query/unknown route/invalid auth never forward
+ok 50 - F20A Responses query/unknown route/invalid auth never forward
+  ---
+  duration_ms: 37.0691
+  type: 'test'
+  ...
+# Subtest: F20A Responses disabled adapter never forwards
+ok 51 - F20A Responses disabled adapter never forwards
+  ---
+  duration_ms: 9.1689
+  type: 'test'
+  ...
+# Subtest: F20C native GenerateContent public and actual paired MCP request bodies retain exact canonical content
+ok 52 - F20C native GenerateContent public and actual paired MCP request bodies retain exact canonical content
+  ---
+  duration_ms: 888.2534
+  type: 'test'
+  ...
+# Subtest: F20C Gemini capability mutation refuses while earlier provider schemas remain strict
+ok 53 - F20C Gemini capability mutation refuses while earlier provider schemas remain strict
+  ---
+  duration_ms: 9.4075
+  type: 'test'
+  ...
+# Subtest: F20C registered original withheld in system
+ok 54 - F20C registered original withheld in system
+  ---
+  duration_ms: 12.2659
+  type: 'test'
+  ...
+# Subtest: F20C registered original withheld in text
+ok 55 - F20C registered original withheld in text
+  ---
+  duration_ms: 231.8988
+  type: 'test'
+  ...
+# Subtest: F20C registered original withheld in arguments
+ok 56 - F20C registered original withheld in arguments
+  ---
+  duration_ms: 159.2726
+  type: 'test'
+  ...
+# Subtest: F20C registered original withheld in result
+ok 57 - F20C registered original withheld in result
+  ---
+  duration_ms: 151.5092
+  type: 'test'
+  ...
+# Subtest: F20C registered original withheld in description
+ok 58 - F20C registered original withheld in description
+  ---
+  duration_ms: 102.3597
+  type: 'test'
+  ...
+# Subtest: F20C registered original withheld in schema-description
+ok 59 - F20C registered original withheld in schema-description
+  ---
+  duration_ms: 107.6389
+  type: 'test'
+  ...
+# Subtest: F20C registered encoded and ordered split text carriers are withheld
+ok 60 - F20C registered encoded and ordered split text carriers are withheld
+  ---
+  duration_ms: 601.7095
+  type: 'test'
+  ...
+# Subtest: F20C unsupported request withheld: image
+ok 61 - F20C unsupported request withheld: image
+  ---
+  duration_ms: 3.0268
+  type: 'test'
+  ...
+# Subtest: F20C unsupported request withheld: file
+ok 62 - F20C unsupported request withheld: file
+  ---
+  duration_ms: 2.4163
+  type: 'test'
+  ...
+# Subtest: F20C unsupported request withheld: opaque signature
+ok 63 - F20C unsupported request withheld: opaque signature
+  ---
+  duration_ms: 2.3399
+  type: 'test'
+  ...
+# Subtest: F20C unsupported request withheld: unknown part
+ok 64 - F20C unsupported request withheld: unknown part
+  ---
+  duration_ms: 2.9709
+  type: 'test'
+  ...
+# Subtest: F20C unsupported request withheld: server cache
+ok 65 - F20C unsupported request withheld: server cache
+  ---
+  duration_ms: 3.6762
+  type: 'test'
+  ...
+# Subtest: F20C unsupported request withheld: alternate tool
+ok 66 - F20C unsupported request withheld: alternate tool
+  ---
+  duration_ms: 3.7663
+  type: 'test'
+  ...
+# Subtest: F20C unsupported request withheld: unknown arguments
+ok 67 - F20C unsupported request withheld: unknown arguments
+  ---
+  duration_ms: 3.0608
+  type: 'test'
+  ...
+# Subtest: F20C unsupported request withheld: orphan response
+ok 68 - F20C unsupported request withheld: orphan response
+  ---
+  duration_ms: 2.4325
+  type: 'test'
+  ...
+# Subtest: F20C unsupported request withheld: duplicate call
+ok 69 - F20C unsupported request withheld: duplicate call
+  ---
+  duration_ms: 2.1721
+  type: 'test'
+  ...
+# Subtest: F20C unsupported request withheld: unsupported result
+ok 70 - F20C unsupported request withheld: unsupported result
+  ---
+  duration_ms: 2.1494
+  type: 'test'
+  ...
+# Subtest: F20C unsupported request withheld: missing stream
+ok 71 - F20C unsupported request withheld: missing stream
+  ---
+  duration_ms: 3.0419
+  type: 'test'
+  ...
+# Subtest: F20C unsupported request withheld: wrong model
+ok 72 - F20C unsupported request withheld: wrong model
+  ---
+  duration_ms: 3.2763
+  type: 'test'
+  ...
+# Subtest: F20C unsupported request withheld: unknown generation
+ok 73 - F20C unsupported request withheld: unknown generation
+  ---
+  duration_ms: 3.2531
+  type: 'test'
+  ...
+# Subtest: F20C unsupported request withheld: nonfinite number
+ok 74 - F20C unsupported request withheld: nonfinite number
+  ---
+  duration_ms: 2.2046
+  type: 'test'
+  ...
+# Subtest: F20C text budget remains32 while typed protocol/tool metadata remains separately bounded
+ok 75 - F20C text budget remains32 while typed protocol/tool metadata remains separately bounded
+  ---
+  duration_ms: 4.2312
+  type: 'test'
+  ...
+# Subtest: F20C completed public text and safe-function SSE are accepted, complete-buffered
+ok 76 - F20C completed public text and safe-function SSE are accepted, complete-buffered
+  ---
+  duration_ms: 15.0409
+  type: 'test'
+  ...
+# Subtest: F20C output withheld before any release: text
+ok 77 - F20C output withheld before any release: text
+  ---
+  duration_ms: 3.417
+  type: 'test'
+  ...
+# Subtest: F20C output withheld before any release: function-arguments
+ok 78 - F20C output withheld before any release: function-arguments
+  ---
+  duration_ms: 3.5827
+  type: 'test'
+  ...
+# Subtest: F20C output withheld before any release: metadata
+ok 79 - F20C output withheld before any release: metadata
+  ---
+  duration_ms: 3.0532
+  type: 'test'
+  ...
+# Subtest: F20C output withheld before any release: encoded
+ok 80 - F20C output withheld before any release: encoded
+  ---
+  duration_ms: 2.793
+  type: 'test'
+  ...
+# Subtest: F20C output withheld before any release: split-deltas
+ok 81 - F20C output withheld before any release: split-deltas
+  ---
+  duration_ms: 4.9233
+  type: 'test'
+  ...
+# Subtest: F20C incomplete, error, unknown, opaque or trailing SSE is withheld
+ok 82 - F20C incomplete, error, unknown, opaque or trailing SSE is withheld
+  ---
+  duration_ms: 17.9873
+  type: 'test'
+  ...
+# Subtest: F20C gateway revocation withholds current Gemini input/output
+ok 83 - F20C gateway revocation withholds current Gemini input/output
+  ---
+  duration_ms: 1.1566
+  type: 'test'
+  ...
+# Subtest: F20C Gemini owned capability status is explicit
+ok 84 - F20C Gemini owned capability status is explicit
+  ---
+  duration_ms: 137.6118
+  type: 'test'
+  ...
+# Subtest: F20C Gemini configured target gets native body and only upstream Google credential
+ok 85 - F20C Gemini configured target gets native body and only upstream Google credential
+  ---
+  duration_ms: 851.3394
+  type: 'test'
+  ...
+# Subtest: F20C Gemini original and encoded masked-result substitutions send zero collector requests
+ok 86 - F20C Gemini original and encoded masked-result substitutions send zero collector requests
+  ---
+  duration_ms: 196.9392
+  type: 'test'
+  ...
+# Subtest: F20C Gemini registered output is completely withheld
+ok 87 - F20C Gemini registered output is completely withheld
+  ---
+  duration_ms: 382.3734
+  type: 'test'
+  ...
+# Subtest: F20C Gemini invalid model, query, state and native alternate endpoints never forward
+ok 88 - F20C Gemini invalid model, query, state and native alternate endpoints never forward
+  ---
+  duration_ms: 55.8753
+  type: 'test'
+  ...
+# Subtest: F20C Gemini disabled capability never forwards
+ok 89 - F20C Gemini disabled capability never forwards
+  ---
+  duration_ms: 7.4431
+  type: 'test'
+  ...
+# Subtest: F20C Gemini rejects unsafe or ambiguous upstream base before binding
+ok 90 - F20C Gemini rejects unsafe or ambiguous upstream base before binding
+  ---
+  duration_ms: 0.9462
+  type: 'test'
+  ...
+1..90
+# tests 90
+# suites 0
+# pass 90
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4252.7301

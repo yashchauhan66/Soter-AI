@@ -1,0 +1,1359 @@
+{
+  "status": "INCOMPLETE_PRODUCT_MATRIX",
+  "independence": "LOW",
+  "checks": [
+    {
+      "id": "G01-cancel-setup",
+      "status": "PASS"
+    },
+    {
+      "id": "G02-reviewed-owner-configure",
+      "status": "PASS"
+    },
+    {
+      "id": "G03-public-native",
+      "status": "FAIL",
+      "error": {
+        "name": "AssertionError",
+        "code": "ERR_ASSERTION",
+        "message": "Expected values to be strictly equal:\n\n3 !== 0\n"
+      }
+    },
+    {
+      "id": "G04-native-mcp-public",
+      "status": "FAIL",
+      "error": {
+        "name": "AssertionError",
+        "code": "ERR_ASSERTION",
+        "message": "Expected values to be strictly equal:\n\n3 !== 0\n"
+      }
+    },
+    {
+      "id": "G05-native-mcp-environment-masked",
+      "status": "FAIL",
+      "error": {
+        "name": "AssertionError",
+        "code": "ERR_ASSERTION",
+        "message": "Expected values to be strictly equal:\n\n3 !== 0\n"
+      }
+    },
+    {
+      "id": "G06-native-owner-cancel",
+      "status": "FAIL",
+      "error": {
+        "name": "Error",
+        "message": "Native deadline; retained with no signal"
+      }
+    }
+  ],
+  "native": [
+    {
+      "phase": "public",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "pid": 20280,
+      "code": 0,
+      "signal": null,
+      "stdoutSha256": "88beb79c083e189dfeea95f23e62bce228e5902364a7dc2c544641302c84879e",
+      "stderrSha256": "b4ab89e3f60e344b6519990ec361c0ff5dbc375445d2cf100b5ec3d442e7f4dc",
+      "privateOutputSeen": false,
+      "done": true,
+      "guard": {
+        "scope": "Fixture-only JavaScript guards, not product or OS confinement",
+        "deniedFiles": [
+          {
+            "method": "existsSync",
+            "path": "c:\\windows\\system32\\windowspowershell\\v1.0\\powershell.exe",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\soterai-lite-test-profiles\\.gemini\\.env",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\soterai-lite-test-profiles\\.env",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\.gemini\\.env",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\.env",
+            "write": false
+          },
+          {
+            "method": "readdirSync",
+            "path": "d:\\soterai-lite-test-profiles",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\windows\\system32\\git.exe",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\windows\\system32\\git.cmd",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\windows\\system32\\git.bat",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\windows\\system32\\git.com",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\program files\\nodejs\\git.exe",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\program files\\nodejs\\git.cmd",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\program files\\nodejs\\git.bat",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\program files\\nodejs\\git.com",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\windows\\system32\\git",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\windows\\system32\\git",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\program files\\nodejs\\git",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\program files\\nodejs\\git",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\soterai-lite-test-profiles\\.git",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\.git",
+            "write": false
+          },
+          {
+            "method": "promise-stat",
+            "path": "c:\\programdata\\gemini-cli\\policies",
+            "write": false
+          },
+          {
+            "method": "promise-stat",
+            "path": "c:\\programdata\\gemini-cli\\policies",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\soterai-lite-test-profiles\\.gemini\\.env",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\soterai-lite-test-profiles\\.env",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\.gemini\\.env",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\.env",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\windows\\system32\\git.exe",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\windows\\system32\\git.cmd",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\windows\\system32\\git.bat",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\windows\\system32\\git.com",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\program files\\nodejs\\git.exe",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\program files\\nodejs\\git.cmd",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\program files\\nodejs\\git.bat",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\program files\\nodejs\\git.com",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\windows\\system32\\git",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\windows\\system32\\git",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\program files\\nodejs\\git",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\program files\\nodejs\\git",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\soterai-lite-test-profiles\\.git",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\.git",
+            "write": false
+          },
+          {
+            "method": "promise-stat",
+            "path": "c:\\programdata\\gemini-cli\\policies",
+            "write": false
+          },
+          {
+            "method": "promise-stat",
+            "path": "c:\\programdata\\gemini-cli\\policies",
+            "write": false
+          },
+          {
+            "method": "promise-rm",
+            "path": "d:\\soterai-lite-test-profiles\\f20c-product-20261020t135931z-199bc64e\\profile\\user\\globalstorage\\soterai.soterai-ide-guard\\adapter-sessions\\gemini-cli-7ad932ab-1b4b-40fd-ba00-257f9b294d00\\.gemini\\tmp\\workspace\\checkpoints",
+            "write": true
+          },
+          {
+            "method": "promise-access",
+            "path": "d:\\soterai-lite-test-profiles\\.git",
+            "write": false
+          },
+          {
+            "method": "promise-access",
+            "path": "d:\\.git",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\soterai-lite-test-profiles\\.git",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\.git",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\.dockerenv",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\.dockerenv",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\soterai-lite-test-profiles\\.gemini\\.env",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\soterai-lite-test-profiles\\.env",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\.gemini\\.env",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\.env",
+            "write": false
+          }
+        ],
+        "deniedNetwork": [],
+        "deniedLaunches": [
+          "execSync",
+          "spawn",
+          "spawn"
+        ],
+        "deniedSignals": [],
+        "deniedAddons": [],
+        "requests": [
+          {
+            "method": "POST",
+            "path": "/gemini/mcp"
+          },
+          {
+            "method": "POST",
+            "path": "/gemini/mcp"
+          },
+          {
+            "method": "GET",
+            "path": "/gemini/mcp"
+          },
+          {
+            "method": "POST",
+            "path": "/gemini/mcp"
+          },
+          {
+            "method": "POST",
+            "path": "/gemini/v1beta/models/gemini-3.5-flash:streamGenerateContent"
+          }
+        ],
+        "archivedEphemeralLocks": [
+          {
+            "method": "RENAME_EMPTY_EPHEMERAL_LOCK_NO_DELETE",
+            "source": "d:\\SoterAI-Lite-test-profiles\\f20c-product-20261020T135931Z-199bc64e\\profile\\User\\globalStorage\\soterai.soterai-ide-guard\\adapter-sessions\\gemini-cli-7ad932ab-1b4b-40fd-ba00-257f9b294d00\\.gemini\\projects.json.lock",
+            "destination": "D:\\SoterAI-Lite-test-profiles\\f20c-product-20261020T135931Z-199bc64e\\native-public\\retained-empty-project-locks\\001-c6afcb82-92c2-4e0a-86ce-67f34894368d.lock"
+          },
+          {
+            "method": "RENAME_EMPTY_EPHEMERAL_LOCK_NO_DELETE",
+            "source": "d:\\SoterAI-Lite-test-profiles\\f20c-product-20261020T135931Z-199bc64e\\profile\\User\\globalStorage\\soterai.soterai-ide-guard\\adapter-sessions\\gemini-cli-7ad932ab-1b4b-40fd-ba00-257f9b294d00\\.gemini\\projects.json.lock",
+            "destination": "D:\\SoterAI-Lite-test-profiles\\f20c-product-20261020T135931Z-199bc64e\\native-public\\retained-empty-project-locks\\002-a98d0415-625a-4b57-8997-5ab956e183aa.lock"
+          },
+          {
+            "method": "RENAME_EMPTY_EPHEMERAL_LOCK_NO_DELETE",
+            "source": "d:\\SoterAI-Lite-test-profiles\\f20c-product-20261020T135931Z-199bc64e\\profile\\User\\globalStorage\\soterai.soterai-ide-guard\\adapter-sessions\\gemini-cli-7ad932ab-1b4b-40fd-ba00-257f9b294d00\\.gemini\\projects.json.lock",
+            "destination": "D:\\SoterAI-Lite-test-profiles\\f20c-product-20261020T135931Z-199bc64e\\native-public\\retained-empty-project-locks\\003-3888be00-25c8-45be-868c-c56cf3328233.lock"
+          }
+        ],
+        "embeddedPublicWasmFetches": 1,
+        "exitCode": 0,
+        "time": "2026-10-20T14:00:17.335Z"
+      }
+    },
+    {
+      "phase": "mcp-public",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "pid": 19872,
+      "code": 0,
+      "signal": null,
+      "stdoutSha256": "2b81c71cf6078280389bd0b9839329a4f809e55c57f9b3e7ca393ca60971599c",
+      "stderrSha256": "b4ab89e3f60e344b6519990ec361c0ff5dbc375445d2cf100b5ec3d442e7f4dc",
+      "privateOutputSeen": false,
+      "done": true,
+      "guard": {
+        "scope": "Fixture-only JavaScript guards, not product or OS confinement",
+        "deniedFiles": [
+          {
+            "method": "existsSync",
+            "path": "c:\\windows\\system32\\windowspowershell\\v1.0\\powershell.exe",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\soterai-lite-test-profiles\\.gemini\\.env",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\soterai-lite-test-profiles\\.env",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\.gemini\\.env",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\.env",
+            "write": false
+          },
+          {
+            "method": "readdirSync",
+            "path": "d:\\soterai-lite-test-profiles",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\windows\\system32\\git.exe",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\windows\\system32\\git.cmd",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\windows\\system32\\git.bat",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\windows\\system32\\git.com",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\program files\\nodejs\\git.exe",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\program files\\nodejs\\git.cmd",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\program files\\nodejs\\git.bat",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\program files\\nodejs\\git.com",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\windows\\system32\\git",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\windows\\system32\\git",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\program files\\nodejs\\git",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\program files\\nodejs\\git",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\soterai-lite-test-profiles\\.git",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\.git",
+            "write": false
+          },
+          {
+            "method": "promise-stat",
+            "path": "c:\\programdata\\gemini-cli\\policies",
+            "write": false
+          },
+          {
+            "method": "promise-stat",
+            "path": "c:\\programdata\\gemini-cli\\policies",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\soterai-lite-test-profiles\\.gemini\\.env",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\soterai-lite-test-profiles\\.env",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\.gemini\\.env",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\.env",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\windows\\system32\\git.exe",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\windows\\system32\\git.cmd",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\windows\\system32\\git.bat",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\windows\\system32\\git.com",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\program files\\nodejs\\git.exe",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\program files\\nodejs\\git.cmd",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\program files\\nodejs\\git.bat",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\program files\\nodejs\\git.com",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\windows\\system32\\git",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\windows\\system32\\git",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\program files\\nodejs\\git",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\program files\\nodejs\\git",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\soterai-lite-test-profiles\\.git",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\.git",
+            "write": false
+          },
+          {
+            "method": "promise-stat",
+            "path": "c:\\programdata\\gemini-cli\\policies",
+            "write": false
+          },
+          {
+            "method": "promise-stat",
+            "path": "c:\\programdata\\gemini-cli\\policies",
+            "write": false
+          },
+          {
+            "method": "promise-rm",
+            "path": "d:\\soterai-lite-test-profiles\\f20c-product-20261020t135931z-199bc64e\\profile\\user\\globalstorage\\soterai.soterai-ide-guard\\adapter-sessions\\gemini-cli-7ad932ab-1b4b-40fd-ba00-257f9b294d00\\.gemini\\tmp\\workspace\\checkpoints",
+            "write": true
+          },
+          {
+            "method": "promise-access",
+            "path": "d:\\soterai-lite-test-profiles\\.git",
+            "write": false
+          },
+          {
+            "method": "promise-access",
+            "path": "d:\\.git",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\soterai-lite-test-profiles\\.git",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\.git",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\.dockerenv",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\.dockerenv",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\soterai-lite-test-profiles\\.gemini\\.env",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\soterai-lite-test-profiles\\.env",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\.gemini\\.env",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\.env",
+            "write": false
+          }
+        ],
+        "deniedNetwork": [],
+        "deniedLaunches": [
+          "execSync",
+          "spawn",
+          "spawn"
+        ],
+        "deniedSignals": [],
+        "deniedAddons": [],
+        "requests": [
+          {
+            "method": "POST",
+            "path": "/gemini/mcp"
+          },
+          {
+            "method": "POST",
+            "path": "/gemini/mcp"
+          },
+          {
+            "method": "GET",
+            "path": "/gemini/mcp"
+          },
+          {
+            "method": "POST",
+            "path": "/gemini/mcp"
+          },
+          {
+            "method": "POST",
+            "path": "/gemini/v1beta/models/gemini-3.5-flash:streamGenerateContent"
+          },
+          {
+            "method": "POST",
+            "path": "/gemini/mcp"
+          },
+          {
+            "method": "POST",
+            "path": "/gemini/v1beta/models/gemini-3.5-flash:streamGenerateContent"
+          }
+        ],
+        "archivedEphemeralLocks": [
+          {
+            "method": "RENAME_EMPTY_EPHEMERAL_LOCK_NO_DELETE",
+            "source": "d:\\SoterAI-Lite-test-profiles\\f20c-product-20261020T135931Z-199bc64e\\profile\\User\\globalStorage\\soterai.soterai-ide-guard\\adapter-sessions\\gemini-cli-7ad932ab-1b4b-40fd-ba00-257f9b294d00\\.gemini\\projects.json.lock",
+            "destination": "D:\\SoterAI-Lite-test-profiles\\f20c-product-20261020T135931Z-199bc64e\\native-mcp-public\\retained-empty-project-locks\\001-e29fc17a-eb49-419b-aad4-9bc5df67f627.lock"
+          },
+          {
+            "method": "RENAME_EMPTY_EPHEMERAL_LOCK_NO_DELETE",
+            "source": "d:\\SoterAI-Lite-test-profiles\\f20c-product-20261020T135931Z-199bc64e\\profile\\User\\globalStorage\\soterai.soterai-ide-guard\\adapter-sessions\\gemini-cli-7ad932ab-1b4b-40fd-ba00-257f9b294d00\\.gemini\\projects.json.lock",
+            "destination": "D:\\SoterAI-Lite-test-profiles\\f20c-product-20261020T135931Z-199bc64e\\native-mcp-public\\retained-empty-project-locks\\002-cbc27f06-cd7c-4d4f-a000-e1205d629c65.lock"
+          },
+          {
+            "method": "RENAME_EMPTY_EPHEMERAL_LOCK_NO_DELETE",
+            "source": "d:\\SoterAI-Lite-test-profiles\\f20c-product-20261020T135931Z-199bc64e\\profile\\User\\globalStorage\\soterai.soterai-ide-guard\\adapter-sessions\\gemini-cli-7ad932ab-1b4b-40fd-ba00-257f9b294d00\\.gemini\\projects.json.lock",
+            "destination": "D:\\SoterAI-Lite-test-profiles\\f20c-product-20261020T135931Z-199bc64e\\native-mcp-public\\retained-empty-project-locks\\003-3cc6a2dd-5c1c-46b6-8438-acf36d0e3d06.lock"
+          }
+        ],
+        "embeddedPublicWasmFetches": 1,
+        "exitCode": 0,
+        "time": "2026-10-20T14:00:25.284Z"
+      }
+    },
+    {
+      "phase": "mcp-env",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "pid": 15576,
+      "code": 0,
+      "signal": null,
+      "stdoutSha256": "f3ab97c2e27213cdcf73c10a5682b41a23380a65db146a9c5ad5896cf60ae0ec",
+      "stderrSha256": "b4ab89e3f60e344b6519990ec361c0ff5dbc375445d2cf100b5ec3d442e7f4dc",
+      "privateOutputSeen": false,
+      "done": true,
+      "guard": {
+        "scope": "Fixture-only JavaScript guards, not product or OS confinement",
+        "deniedFiles": [
+          {
+            "method": "existsSync",
+            "path": "c:\\windows\\system32\\windowspowershell\\v1.0\\powershell.exe",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\soterai-lite-test-profiles\\.gemini\\.env",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\soterai-lite-test-profiles\\.env",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\.gemini\\.env",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\.env",
+            "write": false
+          },
+          {
+            "method": "readdirSync",
+            "path": "d:\\soterai-lite-test-profiles",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\windows\\system32\\git.exe",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\windows\\system32\\git.cmd",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\windows\\system32\\git.bat",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\windows\\system32\\git.com",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\program files\\nodejs\\git.exe",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\program files\\nodejs\\git.cmd",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\program files\\nodejs\\git.bat",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\program files\\nodejs\\git.com",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\windows\\system32\\git",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\windows\\system32\\git",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\program files\\nodejs\\git",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\program files\\nodejs\\git",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\soterai-lite-test-profiles\\.git",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\.git",
+            "write": false
+          },
+          {
+            "method": "promise-stat",
+            "path": "c:\\programdata\\gemini-cli\\policies",
+            "write": false
+          },
+          {
+            "method": "promise-stat",
+            "path": "c:\\programdata\\gemini-cli\\policies",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\soterai-lite-test-profiles\\.gemini\\.env",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\soterai-lite-test-profiles\\.env",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\.gemini\\.env",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\.env",
+            "write": false
+          },
+          {
+            "method": "promise-rm",
+            "path": "d:\\soterai-lite-test-profiles\\f20c-product-20261020t135931z-199bc64e\\profile\\user\\globalstorage\\soterai.soterai-ide-guard\\adapter-sessions\\gemini-cli-7ad932ab-1b4b-40fd-ba00-257f9b294d00\\.gemini\\tmp\\workspace\\checkpoints",
+            "write": true
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\windows\\system32\\git.exe",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\windows\\system32\\git.cmd",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\windows\\system32\\git.bat",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\windows\\system32\\git.com",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\program files\\nodejs\\git.exe",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\program files\\nodejs\\git.cmd",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\program files\\nodejs\\git.bat",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\program files\\nodejs\\git.com",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\windows\\system32\\git",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\windows\\system32\\git",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\program files\\nodejs\\git",
+            "write": false
+          },
+          {
+            "method": "statSync",
+            "path": "c:\\program files\\nodejs\\git",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\soterai-lite-test-profiles\\.git",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\.git",
+            "write": false
+          },
+          {
+            "method": "promise-stat",
+            "path": "c:\\programdata\\gemini-cli\\policies",
+            "write": false
+          },
+          {
+            "method": "promise-stat",
+            "path": "c:\\programdata\\gemini-cli\\policies",
+            "write": false
+          },
+          {
+            "method": "promise-access",
+            "path": "d:\\soterai-lite-test-profiles\\.git",
+            "write": false
+          },
+          {
+            "method": "promise-access",
+            "path": "d:\\.git",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\soterai-lite-test-profiles\\.git",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\.git",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\.dockerenv",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\.dockerenv",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\soterai-lite-test-profiles\\.gemini\\.env",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\soterai-lite-test-profiles\\.env",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\.gemini\\.env",
+            "write": false
+          },
+          {
+            "method": "existsSync",
+            "path": "d:\\.env",
+            "write": false
+          }
+        ],
+        "deniedNetwork": [],
+        "deniedLaunches": [
+          "execSync",
+          "spawn",
+          "spawn"
+        ],
+        "deniedSignals": [],
+        "deniedAddons": [],
+        "requests": [
+          {
+            "method": "POST",
+            "path": "/gemini/mcp"
+          },
+          {
+            "method": "POST",
+            "path": "/gemini/mcp"
+          },
+          {
+            "method": "GET",
+            "path": "/gemini/mcp"
+          },
+          {
+            "method": "POST",
+            "path": "/gemini/mcp"
+          },
+          {
+            "method": "POST",
+            "path": "/gemini/v1beta/models/gemini-3.5-flash:streamGenerateContent"
+          },
+          {
+            "method": "POST",
+            "path": "/gemini/mcp"
+          },
+          {
+            "method": "POST",
+            "path": "/gemini/v1beta/models/gemini-3.5-flash:streamGenerateContent"
+          }
+        ],
+        "archivedEphemeralLocks": [
+          {
+            "method": "RENAME_EMPTY_EPHEMERAL_LOCK_NO_DELETE",
+            "source": "d:\\SoterAI-Lite-test-profiles\\f20c-product-20261020T135931Z-199bc64e\\profile\\User\\globalStorage\\soterai.soterai-ide-guard\\adapter-sessions\\gemini-cli-7ad932ab-1b4b-40fd-ba00-257f9b294d00\\.gemini\\projects.json.lock",
+            "destination": "D:\\SoterAI-Lite-test-profiles\\f20c-product-20261020T135931Z-199bc64e\\native-mcp-env\\retained-empty-project-locks\\001-42304689-fba6-4c7c-89f9-0e51a9c1bf83.lock"
+          },
+          {
+            "method": "RENAME_EMPTY_EPHEMERAL_LOCK_NO_DELETE",
+            "source": "d:\\SoterAI-Lite-test-profiles\\f20c-product-20261020T135931Z-199bc64e\\profile\\User\\globalStorage\\soterai.soterai-ide-guard\\adapter-sessions\\gemini-cli-7ad932ab-1b4b-40fd-ba00-257f9b294d00\\.gemini\\projects.json.lock",
+            "destination": "D:\\SoterAI-Lite-test-profiles\\f20c-product-20261020T135931Z-199bc64e\\native-mcp-env\\retained-empty-project-locks\\002-b3bd4b5e-6dcf-48d4-9362-4610791f5fb8.lock"
+          },
+          {
+            "method": "RENAME_EMPTY_EPHEMERAL_LOCK_NO_DELETE",
+            "source": "d:\\SoterAI-Lite-test-profiles\\f20c-product-20261020T135931Z-199bc64e\\profile\\User\\globalStorage\\soterai.soterai-ide-guard\\adapter-sessions\\gemini-cli-7ad932ab-1b4b-40fd-ba00-257f9b294d00\\.gemini\\projects.json.lock",
+            "destination": "D:\\SoterAI-Lite-test-profiles\\f20c-product-20261020T135931Z-199bc64e\\native-mcp-env\\retained-empty-project-locks\\003-5daa3d7d-9748-4a7f-960f-ec167dd41a73.lock"
+          }
+        ],
+        "embeddedPublicWasmFetches": 1,
+        "exitCode": 0,
+        "time": "2026-10-20T14:00:33.054Z"
+      }
+    },
+    {
+      "phase": "mcp-cancel",
+      "closed": false,
+      "stdoutEOF": false,
+      "stderrEOF": false,
+      "pid": 22252,
+      "deadline": true
+    }
+  ],
+  "requests": [
+    {
+      "phase": "public",
+      "route": "/v1beta/models/gemini-3.5-flash:streamGenerateContent?alt=sse",
+      "bytes": 28737,
+      "publicSeen": false,
+      "maskedSeen": false,
+      "privateSeen": false,
+      "upstreamAuth": true
+    },
+    {
+      "phase": "mcp-public",
+      "route": "/v1beta/models/gemini-3.5-flash:streamGenerateContent?alt=sse",
+      "bytes": 28737,
+      "publicSeen": false,
+      "maskedSeen": false,
+      "privateSeen": false,
+      "upstreamAuth": true
+    },
+    {
+      "phase": "mcp-public",
+      "route": "/v1beta/models/gemini-3.5-flash:streamGenerateContent?alt=sse",
+      "bytes": 29367,
+      "publicSeen": true,
+      "maskedSeen": false,
+      "privateSeen": false,
+      "upstreamAuth": true
+    },
+    {
+      "phase": "mcp-env",
+      "route": "/v1beta/models/gemini-3.5-flash:streamGenerateContent?alt=sse",
+      "bytes": 28737,
+      "publicSeen": false,
+      "maskedSeen": false,
+      "privateSeen": false,
+      "upstreamAuth": true
+    },
+    {
+      "phase": "mcp-env",
+      "route": "/v1beta/models/gemini-3.5-flash:streamGenerateContent?alt=sse",
+      "bytes": 29371,
+      "publicSeen": false,
+      "maskedSeen": true,
+      "privateSeen": false,
+      "upstreamAuth": true
+    },
+    {
+      "phase": "mcp-cancel",
+      "route": "/v1beta/models/gemini-3.5-flash:streamGenerateContent?alt=sse",
+      "bytes": 28737,
+      "publicSeen": false,
+      "maskedSeen": false,
+      "privateSeen": false,
+      "upstreamAuth": true
+    }
+  ],
+  "mcp": [
+    {
+      "phase": "public",
+      "method": "initialize",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 200
+    },
+    {
+      "phase": "public",
+      "method": "notifications/initialized",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 202
+    },
+    {
+      "phase": "public",
+      "code": 405,
+      "nonJson": true
+    },
+    {
+      "phase": "public",
+      "method": "tools/list",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 200
+    },
+    {
+      "phase": "mcp-public",
+      "method": "initialize",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 200
+    },
+    {
+      "phase": "mcp-public",
+      "method": "notifications/initialized",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 202
+    },
+    {
+      "phase": "mcp-public",
+      "code": 405,
+      "nonJson": true
+    },
+    {
+      "phase": "mcp-public",
+      "method": "tools/list",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 200
+    },
+    {
+      "phase": "mcp-public",
+      "method": "tools/call",
+      "argumentKeys": [
+        "path"
+      ],
+      "metadataKeys": [
+        "progressToken"
+      ],
+      "code": 200
+    },
+    {
+      "phase": "mcp-env",
+      "method": "initialize",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 200
+    },
+    {
+      "phase": "mcp-env",
+      "method": "notifications/initialized",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 202
+    },
+    {
+      "phase": "mcp-env",
+      "code": 405,
+      "nonJson": true
+    },
+    {
+      "phase": "mcp-env",
+      "method": "tools/list",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 200
+    },
+    {
+      "phase": "mcp-env",
+      "method": "tools/call",
+      "argumentKeys": [
+        "path"
+      ],
+      "metadataKeys": [
+        "progressToken"
+      ],
+      "code": 200
+    },
+    {
+      "phase": "mcp-cancel",
+      "method": "initialize",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 200
+    },
+    {
+      "phase": "mcp-cancel",
+      "method": "notifications/initialized",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 202
+    },
+    {
+      "phase": "mcp-cancel",
+      "code": 405,
+      "nonJson": true
+    },
+    {
+      "phase": "mcp-cancel",
+      "method": "tools/list",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 200
+    },
+    {
+      "phase": "mcp-cancel",
+      "method": "tools/call",
+      "argumentKeys": [
+        "path"
+      ],
+      "metadataKeys": [
+        "progressToken"
+      ],
+      "code": 200
+    }
+  ],
+  "modals": [
+    {
+      "phase": "setup",
+      "kind": "config",
+      "bytes": 1226,
+      "sha256": "2b372572deffaa74635518e77625c9dcf37f58f96bbc8b9b0d86be3477de5c18"
+    },
+    {
+      "phase": "setup",
+      "kind": "config",
+      "bytes": 1226,
+      "sha256": "99fe44fd4a71c5dfec1fc88f49504461dd64dea36a5eabd3a5f6ae2d820ce2f6"
+    },
+    {
+      "phase": "mcp-public",
+      "kind": "safe-read",
+      "bytes": 28,
+      "sha256": "0901b5d87fe1c324dc15e267a6eb96995b4abe2d405b205590ab6a11eebcf135"
+    },
+    {
+      "phase": "mcp-env",
+      "kind": "safe-read",
+      "bytes": 33,
+      "sha256": "b10e9f7a40940dfa94e17eaf81c84d2b0cca0815a6b37341353aed5a3582c99f"
+    },
+    {
+      "phase": "mcp-cancel",
+      "kind": "safe-read",
+      "bytes": 33,
+      "sha256": "b10e9f7a40940dfa94e17eaf81c84d2b0cca0815a6b37341353aed5a3582c99f"
+    }
+  ],
+  "limits": [
+    "Exact packaged runtime via isolated developer bootstrap; scripted decisions are LOW independence",
+    "Pinned native Gemini JavaScript with selected public dependency/Node; optional native addons refused by fixture, not product OS confinement",
+    "Stateless text/safe-read route with complete buffered output; overrides/native reads/media/opaque/state remain uncovered",
+    "No real provider, clean-install, human, independent or all-descendant network claim"
+  ],
+  "deniedExternal": [],
+  "deniedSignals": [],
+  "deniedChildLaunches": [],
+  "deniedFileAccess": [],
+  "deniedDirectSpawns": [],
+  "deniedWorkerLaunches": [],
+  "providerUrl": "http://127.0.0.1:52247",
+  "configureStatus": "APPLIED",
+  "phase": "mcp-cancel",
+  "nativeRetained": true,
+  "driverFailure": {
+    "name": "Error",
+    "message": "Native deadline; retained with no signal"
+  },
+  "children": [
+    {
+      "role": "broker",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "phase": "public",
+      "role": "gemini-cli",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "phase": "mcp-public",
+      "role": "gemini-cli",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "phase": "mcp-env",
+      "role": "gemini-cli",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true
+    },
+    {
+      "phase": "mcp-cancel",
+      "role": "gemini-cli",
+      "closed": false,
+      "stdoutEOF": false,
+      "stderrEOF": false
+    }
+  ],
+  "childShutdown": "UNCONFIRMED",
+  "time": "2026-10-20T14:01:33.161Z"
+}

@@ -1,0 +1,76 @@
+{
+  "general": {
+    "enableAutoUpdate": false,
+    "enableAutoUpdateNotification": false,
+    "enablePromptCompletion": false
+  },
+  "security": {
+    "auth": {
+      "selectedType": "gemini-api-key"
+    },
+    "folderTrust": {
+      "enabled": false
+    },
+    "enablePermanentToolApproval": false
+  },
+  "advanced": {
+    "ignoreLocalEnv": true,
+    "autoConfigureMemory": false
+  },
+  "telemetry": {
+    "enabled": false,
+    "logPrompts": false
+  },
+  "privacy": {
+    "usageStatisticsEnabled": false
+  },
+  "ide": {
+    "enabled": false
+  },
+  "admin": {
+    "extensions": {
+      "enabled": false
+    },
+    "skills": {
+      "enabled": false
+    },
+    "mcp": {
+      "enabled": true
+    }
+  },
+  "hooksConfig": {
+    "enabled": false
+  },
+  "context": {
+    "includeDirectoryTree": false,
+    "fileName": [],
+    "loadMemoryFromIncludeDirectories": false
+  },
+  "tools": {
+    "core": [],
+    "exclude": [],
+    "useRipgrep": false
+  },
+  "experimental": {
+    "enableAgents": false,
+    "worktrees": false,
+    "enableAutomaticModelUpdates": false
+  },
+  "model": {
+    "name": "gemini-2.5-flash",
+    "maxSessionTurns": 4
+  },
+  "mcpServers": {
+    "soterai_safe_read": {
+      "httpUrl": "http://127.0.0.1:60027/mcp",
+      "headers": {
+        "Authorization": "Bearer TEST_ONLY_F20C_MCP_TRANSPORT"
+      },
+      "trust": true,
+      "timeout": 70000,
+      "includeTools": [
+        "soterai_read_project_file_safely"
+      ]
+    }
+  }
+}

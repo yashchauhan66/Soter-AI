@@ -1,0 +1,28 @@
+{
+  "status": "PREPARED_NOT_RUN",
+  "scenario": "Distinct native MCP transport/tool-result feasibility",
+  "improvementRound": 1,
+  "previous": {
+    "status": "INCOMPLETE",
+    "root": "D:\\SoterAI-Lite-test-profiles\\f20c-feasibility-93d67660-789d-4a6b-be1e-5f6dbbc9a4f3",
+    "child": {
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "pid": 22284,
+      "code": 400,
+      "signal": null,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "78f2bc1ab4bcc646ca51cbec477328c43aae24d895f456913566d1228022119a"
+    },
+    "mcp": [
+      "initialize",
+      "notifications/initialized",
+      "tools/list"
+    ],
+    "receiverError": "AssertionError [ERR_ASSERTION]: Native MCP tool declaration missing"
+  },
+  "change": "Add only documented --debug flag to expose the native MCP discovery issue. Same pin02/guard05/config/handler/strict assertions/synthetic data/loopback/no-signals. No product changes or weakened acceptance; required tools/call plus masked followup and natural close remain.",
+  "driverSha256": "47c40f7f8d0fc2ae9e69167d32f7ba45f734e63252133fb03507a1a02e4b4b68",
+  "time": "2026-10-20T12:57:27.546Z"
+}

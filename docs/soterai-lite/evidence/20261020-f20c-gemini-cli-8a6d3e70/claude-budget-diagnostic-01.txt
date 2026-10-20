@@ -1,0 +1,50 @@
+﻿TAP version 13
+# F20C_DIAGNOSTIC {"provider":"anthropic","result":"allowed","elapsedMs":406.76149999999996}
+# F20C_DIAGNOSTIC {"provider":"anthropic","result":"gateway_sensitive","elapsedMs":189.6857000000001}
+# F20C_DIAGNOSTIC {"provider":"anthropic","result":"gateway_sensitive","elapsedMs":210.44690000000014}
+# F20C_DIAGNOSTIC {"provider":"anthropic","result":"gateway_sensitive","elapsedMs":380.86400000000003}
+# F20C_DIAGNOSTIC {"provider":"anthropic","result":"gateway_limit","elapsedMs":0.4229000000000269}
+# F20C_DIAGNOSTIC {"provider":"anthropic","result":"allowed","elapsedMs":11.854699999999866}
+# F20C_DIAGNOSTIC {"provider":"anthropic","result":"gateway_limit","elapsedMs":1.386700000000019}
+# F20C_DIAGNOSTIC {"provider":"anthropic","result":"gateway_schema_unsupported","elapsedMs":0.17870000000016262}
+# F20C_DIAGNOSTIC {"provider":"openai","result":"gateway_limit","elapsedMs":0.5294000000001233}
+# F20C_DIAGNOSTIC {"provider":"anthropic","result":"gateway_limit","elapsedMs":0.3967000000000098}
+# Subtest: F19-GT01 observed 30-to-39 string public native tool conversation remains inspected and usable
+ok 1 - F19-GT01 observed 30-to-39 string public native tool conversation remains inspected and usable
+  ---
+  duration_ms: 420.4608
+  type: 'test'
+  ...
+# Subtest: F19-GT02 native tool result, tool identifier and split public-text carriers retain exact matching
+ok 2 - F19-GT02 native tool result, tool identifier and split public-text carriers retain exact matching
+  ---
+  duration_ms: 783.9065
+  type: 'test'
+  ...
+# Subtest: F19-GT03 33 ordinary content strings still exceed the original content budget
+ok 3 - F19-GT03 33 ordinary content strings still exceed the original content budget
+  ---
+  duration_ms: 1.2789
+  type: 'test'
+  ...
+# Subtest: F19-GT04 only fixed validated protocol literals receive their separate bounded count
+ok 4 - F19-GT04 only fixed validated protocol literals receive their separate bounded count
+  ---
+  duration_ms: 14.9218
+  type: 'test'
+  ...
+# Subtest: F19-GT05 ordinary F16/F18 and disabled-Claude limits do not gain protocol-literal allowances
+ok 5 - F19-GT05 ordinary F16/F18 and disabled-Claude limits do not gain protocol-literal allowances
+  ---
+  duration_ms: 2.2605
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1850.2856

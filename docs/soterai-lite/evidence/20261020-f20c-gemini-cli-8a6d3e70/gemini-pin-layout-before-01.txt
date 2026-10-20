@@ -1,0 +1,49 @@
+﻿TAP version 13
+# Subtest: F20C public runtime pin matches exact bytes and metadata stamps
+ok 1 - F20C public runtime pin matches exact bytes and metadata stamps
+  ---
+  duration_ms: 30.3095
+  type: 'test'
+  ...
+# Subtest: F20C extra public file, missing file and directory substitution refuse
+ok 2 - F20C extra public file, missing file and directory substitution refuse
+  ---
+  duration_ms: 16.5173
+  type: 'test'
+  ...
+# Subtest: F20C malformed pin paths and duplicate entries refuse without traversal
+ok 3 - F20C malformed pin paths and duplicate entries refuse without traversal
+  ---
+  duration_ms: 3.615
+  type: 'test'
+  ...
+# Subtest: F20C shipped exact Gemini pin contains relative public names only
+ok 4 - F20C shipped exact Gemini pin contains relative public names only
+  ---
+  duration_ms: 3.4613
+  type: 'test'
+  ...
+# Subtest: F20C installed package layout pins manifest plus complete bundle while leaving optional native packages outside verified route
+not ok 5 - F20C installed package layout pins manifest plus complete bundle while leaving optional native packages outside verified route
+  ---
+  duration_ms: 7.9279
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\geminiCliRuntimePin.test.ts:2:3767'
+  failureType: 'testCodeFailure'
+  error: 'f.module.verifyGeminiPackage is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\geminiCliRuntimePin.test.ts:18:35)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 4
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 538.0798

@@ -1,0 +1,16 @@
+﻿node.exe : Error: Gemini pin unavailable
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Error: Gemini pin unavailable:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+    at walk (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\adapters\GeminiCliRun
+timePin.ts:46:55)
+    at async verifyGeminiTree (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\ada
+pters\GeminiCliRuntimePin.ts:49:5)
+    at async verifyInstalledGeminiCli (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension
+\src\adapters\GeminiCliRuntimePin.ts:57:20)
+    at async main (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261020-f20c-gemi
+ni-cli-8a6d3e70\inspect-installed-pin-01.ts:3:40)

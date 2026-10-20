@@ -1,0 +1,1850 @@
+{
+  "status": "INCOMPLETE_PRODUCT_MATRIX",
+  "independence": "LOW",
+  "checks": [
+    {
+      "id": "F20B-N01",
+      "status": "PASS"
+    },
+    {
+      "id": "F20B-N02",
+      "status": "PASS"
+    },
+    {
+      "id": "F20B-N03",
+      "status": "FAIL",
+      "error": {
+        "name": "AssertionError",
+        "code": "ERR_ASSERTION"
+      }
+    },
+    {
+      "id": "F20B-N21",
+      "status": "FAIL",
+      "error": {
+        "name": "AssertionError",
+        "code": "ERR_ASSERTION"
+      }
+    },
+    {
+      "id": "F20B-N04",
+      "status": "FAIL",
+      "error": {
+        "name": "AssertionError",
+        "code": "ERR_ASSERTION"
+      }
+    },
+    {
+      "id": "F20B-N05",
+      "status": "FAIL",
+      "error": {
+        "name": "AssertionError",
+        "code": "ERR_ASSERTION"
+      }
+    },
+    {
+      "id": "F20B-N06",
+      "status": "FAIL",
+      "error": {
+        "name": "AssertionError",
+        "code": "ERR_ASSERTION"
+      }
+    },
+    {
+      "id": "F20B-N07",
+      "status": "FAIL",
+      "error": {
+        "name": "AssertionError",
+        "code": "ERR_ASSERTION"
+      }
+    },
+    {
+      "id": "F20B-N08",
+      "status": "FAIL",
+      "error": {
+        "name": "AssertionError",
+        "code": "ERR_ASSERTION"
+      }
+    },
+    {
+      "id": "F20B-N09",
+      "status": "FAIL",
+      "error": {
+        "name": "AssertionError",
+        "code": "ERR_ASSERTION"
+      }
+    },
+    {
+      "id": "F20B-N10",
+      "status": "FAIL",
+      "error": {
+        "name": "AssertionError",
+        "code": "ERR_ASSERTION"
+      }
+    },
+    {
+      "id": "F20B-N19",
+      "status": "PASS"
+    },
+    {
+      "id": "F20B-N20",
+      "status": "FAIL",
+      "error": {
+        "name": "AssertionError",
+        "code": "ERR_ASSERTION"
+      }
+    },
+    {
+      "id": "F20B-N11",
+      "status": "PASS"
+    },
+    {
+      "id": "F20B-N12",
+      "status": "PASS"
+    },
+    {
+      "id": "F20B-N13",
+      "status": "PASS"
+    },
+    {
+      "id": "F20B-N14",
+      "status": "PASS"
+    },
+    {
+      "id": "F20B-N15",
+      "status": "PASS"
+    },
+    {
+      "id": "F20B-N16",
+      "status": "PASS"
+    },
+    {
+      "id": "F20B-N17",
+      "status": "PASS"
+    },
+    {
+      "id": "F20B-N18",
+      "status": "PASS"
+    }
+  ],
+  "requests": [
+    {
+      "phase": "explicit-provider-override",
+      "route": "/v1/responses",
+      "bytes": 9115,
+      "publicSeen": false,
+      "maskedEnvSeen": false,
+      "privateOriginalSeen": true,
+      "toolNames": [
+        "list_mcp_resources",
+        "list_mcp_resource_templates",
+        "read_mcp_resource",
+        "request_user_input",
+        "mcp__soterai_safe_read",
+        "soterai_read_project_file_safely"
+      ],
+      "upstreamAuth": false
+    }
+  ],
+  "mcp": [
+    {
+      "phase": "provider-public",
+      "method": "initialize",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 200
+    },
+    {
+      "phase": "provider-public",
+      "method": "notifications/initialized",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 202
+    },
+    {
+      "phase": "provider-public",
+      "method": "tools/list",
+      "argumentKeys": [],
+      "metadataKeys": [
+        "progressToken"
+      ],
+      "code": 200
+    },
+    {
+      "phase": "mcp-public",
+      "method": "initialize",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 200
+    },
+    {
+      "phase": "mcp-public",
+      "method": "notifications/initialized",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 202
+    },
+    {
+      "phase": "mcp-public",
+      "method": "tools/list",
+      "argumentKeys": [],
+      "metadataKeys": [
+        "progressToken"
+      ],
+      "code": 200
+    },
+    {
+      "phase": "mcp-env",
+      "method": "initialize",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 200
+    },
+    {
+      "phase": "mcp-env",
+      "method": "notifications/initialized",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 202
+    },
+    {
+      "phase": "mcp-env",
+      "method": "tools/list",
+      "argumentKeys": [],
+      "metadataKeys": [
+        "progressToken"
+      ],
+      "code": 200
+    },
+    {
+      "phase": "mcp-cancel",
+      "method": "initialize",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 200
+    },
+    {
+      "phase": "mcp-cancel",
+      "method": "notifications/initialized",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 202
+    },
+    {
+      "phase": "mcp-cancel",
+      "method": "tools/list",
+      "argumentKeys": [],
+      "metadataKeys": [
+        "progressToken"
+      ],
+      "code": 200
+    },
+    {
+      "phase": "mcp-traversal",
+      "method": "initialize",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 200
+    },
+    {
+      "phase": "mcp-traversal",
+      "method": "notifications/initialized",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 202
+    },
+    {
+      "phase": "mcp-traversal",
+      "method": "tools/list",
+      "argumentKeys": [],
+      "metadataKeys": [
+        "progressToken"
+      ],
+      "code": 200
+    },
+    {
+      "phase": "mcp-forged-approval",
+      "method": "initialize",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 200
+    },
+    {
+      "phase": "mcp-forged-approval",
+      "method": "notifications/initialized",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 202
+    },
+    {
+      "phase": "mcp-forged-approval",
+      "method": "tools/list",
+      "argumentKeys": [],
+      "metadataKeys": [
+        "progressToken"
+      ],
+      "code": 200
+    },
+    {
+      "phase": "registered-public-control",
+      "method": "initialize",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 200
+    },
+    {
+      "phase": "registered-public-control",
+      "method": "notifications/initialized",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 202
+    },
+    {
+      "phase": "registered-public-control",
+      "method": "tools/list",
+      "argumentKeys": [],
+      "metadataKeys": [
+        "progressToken"
+      ],
+      "code": 200
+    },
+    {
+      "phase": "explicit-provider-override",
+      "method": "initialize",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 200
+    },
+    {
+      "phase": "explicit-provider-override",
+      "method": "notifications/initialized",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 202
+    },
+    {
+      "phase": "explicit-provider-override",
+      "method": "tools/list",
+      "argumentKeys": [],
+      "metadataKeys": [
+        "progressToken"
+      ],
+      "code": 200
+    },
+    {
+      "phase": "registered-output",
+      "method": "initialize",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 200
+    },
+    {
+      "phase": "registered-output",
+      "method": "notifications/initialized",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 202
+    },
+    {
+      "phase": "registered-output",
+      "method": "tools/list",
+      "argumentKeys": [],
+      "metadataKeys": [
+        "progressToken"
+      ],
+      "code": 200
+    },
+    {
+      "phase": "config-drift",
+      "method": "initialize",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 503
+    },
+    {
+      "phase": "config-drift",
+      "method": "initialize",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 503
+    },
+    {
+      "phase": "config-drift",
+      "method": "initialize",
+      "argumentKeys": [],
+      "metadataKeys": [],
+      "code": 503
+    },
+    {
+      "phase": "withdrawn-after-drift-review",
+      "code": 503,
+      "method": "initialize",
+      "argumentKeys": [],
+      "metadataKeys": []
+    },
+    {
+      "phase": "withdrawn-after-drift-review",
+      "code": 503,
+      "method": "initialize",
+      "argumentKeys": [],
+      "metadataKeys": []
+    },
+    {
+      "phase": "withdrawn-after-drift-review",
+      "code": 503,
+      "method": "initialize",
+      "argumentKeys": [],
+      "metadataKeys": []
+    },
+    {
+      "phase": "flag-off",
+      "code": 503,
+      "method": "initialize",
+      "argumentKeys": [],
+      "metadataKeys": []
+    },
+    {
+      "phase": "flag-off",
+      "code": 503,
+      "method": "initialize",
+      "argumentKeys": [],
+      "metadataKeys": []
+    },
+    {
+      "phase": "flag-off",
+      "code": 503,
+      "method": "initialize",
+      "argumentKeys": [],
+      "metadataKeys": []
+    },
+    {
+      "phase": "flag-reenabled-old-capability",
+      "code": 503,
+      "method": "initialize",
+      "argumentKeys": [],
+      "metadataKeys": []
+    },
+    {
+      "phase": "flag-reenabled-old-capability",
+      "code": 503,
+      "method": "initialize",
+      "argumentKeys": [],
+      "metadataKeys": []
+    },
+    {
+      "phase": "flag-reenabled-old-capability",
+      "code": 503,
+      "method": "initialize",
+      "argumentKeys": [],
+      "metadataKeys": []
+    }
+  ],
+  "modals": [
+    {
+      "phase": "setup",
+      "kind": "config",
+      "bytes": 1459,
+      "sha256": "a53bf1a2548e8c1332f331b96dc3650e850df31bef95b44b99070121d689f4ed"
+    },
+    {
+      "phase": "setup",
+      "kind": "config",
+      "bytes": 1459,
+      "sha256": "1077a44b884a50f2c80608b35891326ea631f3a3dcb3042c5977d3b688c30172"
+    },
+    {
+      "phase": "withdrawn-after-drift-review",
+      "kind": "config",
+      "bytes": 842,
+      "sha256": "fe44ede47da9a958444f98966d8bfb9baf54d6215daeb1a9cb1dd0c998914d9a"
+    },
+    {
+      "phase": "flag-reenabled-old-capability",
+      "kind": "config",
+      "bytes": 842,
+      "sha256": "fe44ede47da9a958444f98966d8bfb9baf54d6215daeb1a9cb1dd0c998914d9a"
+    }
+  ],
+  "native": [
+    {
+      "phase": "provider-public",
+      "complete": false,
+      "privateOutputSeen": false,
+      "turnStatus": "failed",
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 7362,
+      "stderrBytes": 3574,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "4ae70dee3122cef8133737f9d4f99aebadf9b605ea2819b547f9db96d3ce8420",
+      "stderrSha256": "7c4cc5db418f8d3b46c95adaf19931b6b6fe705466421c7bed9115d961fc7662"
+    },
+    {
+      "phase": "mcp-public",
+      "complete": false,
+      "privateOutputSeen": false,
+      "turnStatus": "failed",
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 7362,
+      "stderrBytes": 3574,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "b0f565adbaf5e1c2787bca88dbe682e11700f756228d5af3170c123f30703e30",
+      "stderrSha256": "717ce781d77995797f6d6a370e7813c93f1ead6663861d20af63e32debddee9d"
+    },
+    {
+      "phase": "mcp-env",
+      "complete": false,
+      "privateOutputSeen": false,
+      "turnStatus": "failed",
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 7363,
+      "stderrBytes": 3574,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "ce4fda83a50a0906b28023b60263b19fd2ea60a56e8de6d7baec37fbb7ce014c",
+      "stderrSha256": "88d23f0016f894f0cd91df450136a751dfa0a146814dc0c17b170429ff04eae1"
+    },
+    {
+      "phase": "mcp-cancel",
+      "complete": false,
+      "privateOutputSeen": false,
+      "turnStatus": "failed",
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 7365,
+      "stderrBytes": 3574,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "b7cd989b1513cfe36088da5990fcf36c881010fa302d2af61f35770586cb9090",
+      "stderrSha256": "df1eb3d9c714c169c2a739c2918f2f832de48b7146c09348a874cf1b232c011e"
+    },
+    {
+      "phase": "mcp-traversal",
+      "complete": false,
+      "privateOutputSeen": false,
+      "turnStatus": "failed",
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 7365,
+      "stderrBytes": 3574,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "1fd4e00ace5266d7367ce524e28e8e90ccab15a0c060468612680c68b208d460",
+      "stderrSha256": "9dc914357b62f2b9afce6399ae708d409a4fe824e4b385629fdb3d87dd9194aa"
+    },
+    {
+      "phase": "mcp-forged-approval",
+      "complete": false,
+      "privateOutputSeen": false,
+      "turnStatus": "failed",
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 7365,
+      "stderrBytes": 3574,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "d55880d4fc1783b73e2a6f6bef2cb168aba2f07fab4e8aa47b20096af6c28c15",
+      "stderrSha256": "9ccafd3d194341c7a0b9b65ef9febfc87139c6759205adb070f4a43ce2fbdad9"
+    },
+    {
+      "phase": "registered-public-control",
+      "complete": false,
+      "privateOutputSeen": false,
+      "turnStatus": "failed",
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 7365,
+      "stderrBytes": 3574,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "ab1fabfc6a89fe33fc60cfb1df43a5a605aec01261d6c7febd7fa4c030df5b23",
+      "stderrSha256": "f2379e55d56be2697e0bc178e1f7fd3f46d2612f623fe0d98b41456847a9e67b"
+    },
+    {
+      "phase": "explicit-provider-override",
+      "complete": true,
+      "privateOutputSeen": false,
+      "turnStatus": "completed",
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 8497,
+      "stderrBytes": 3574,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "c1844ff47f85bac36a5831036f13a5cee07ada3947ba87a06899c48ca05096fb",
+      "stderrSha256": "ee3b315f03a6e8c2d730a4c47c34f81b483ffc4cd2904939c006a8f0aa6cf896"
+    },
+    {
+      "phase": "registered-output",
+      "complete": false,
+      "privateOutputSeen": false,
+      "turnStatus": "failed",
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 7365,
+      "stderrBytes": 3574,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "247cdaaeebb036c25aa8534f47f318826e36b3698231cb281fce11c9417b3506",
+      "stderrSha256": "31224c467b12cad2bffdc360b59db84fe7b46a9bbe4d3a843b8d243cf6a7a438"
+    },
+    {
+      "phase": "config-drift",
+      "complete": false,
+      "privateOutputSeen": false,
+      "nativeError": {
+        "name": "Error"
+      },
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 1651,
+      "stderrBytes": 8170,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "c879aaa7e3e53f7368c7044118e0efa49b9d0a9d7070c4de41bed61c7e2319ea",
+      "stderrSha256": "fb9adbf6d030ecbe19f97fb2b332c6c4cfe3d207eb8f01e7f6f271952e780f62"
+    },
+    {
+      "phase": "withdrawn-after-drift-review",
+      "complete": false,
+      "privateOutputSeen": false,
+      "nativeError": {
+        "name": "Error"
+      },
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 1651,
+      "stderrBytes": 8170,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "3d6be28fe40864af870bd50572b10eed4630803446da8158af7da7f71d982236",
+      "stderrSha256": "7e92b94a136e588fe2a7487988c46e31eba3babf28f4a8415664a5ce8a62d1da"
+    },
+    {
+      "phase": "flag-off",
+      "complete": false,
+      "privateOutputSeen": false,
+      "nativeError": {
+        "name": "Error"
+      },
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 1651,
+      "stderrBytes": 8170,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "764265aff12e619646747e610d6efa5fdfa4ed74975fbe3668e3af344b456e23",
+      "stderrSha256": "65fdcbecda5ab91ba3f9f9d1b9edd85a1fa65e06df8b7478e06678584c4323bb"
+    },
+    {
+      "phase": "flag-reenabled-old-capability",
+      "complete": false,
+      "privateOutputSeen": false,
+      "nativeError": {
+        "name": "Error"
+      },
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 1651,
+      "stderrBytes": 8170,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "c266a8dbe235c8ce6528a6472b9fad4e4d5ba74451022b58df7ded3ba68ad812",
+      "stderrSha256": "2bd854d5c0d1108ffa3eff9a1997fe2fb54115f80c9a53e4b342746f2510c91e"
+    }
+  ],
+  "phase": "flag-reenabled-old-capability",
+  "limits": [
+    "Actual exact VSIX runtime via isolated developer bootstrap; no clean-install/human/independent claim",
+    "Actual pinned IDE26.51007.21434/internal client and bundled0.162.0-alpha.17.2; physical webview remains unverified",
+    "Restricted stateless text Responses through revocable proxy and current broker; complete output buffered; explicit provider override remains uncovered",
+    "Parent Node guards do not establish OS or all-descendant traffic isolation"
+  ],
+  "deniedExternal": [
+    "fetch",
+    "fetch"
+  ],
+  "deniedSignals": [],
+  "deniedChildLaunches": [
+    {
+      "executable": "codex.exe",
+      "argc": 4,
+      "cwdSynthetic": false
+    }
+  ],
+  "deniedFileAccess": [],
+  "deniedDirectSpawns": [],
+  "deniedWorkerLaunches": [],
+  "ideProcesses": [
+    {
+      "phase": "provider-public",
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 7362,
+      "stderrBytes": 3574,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "4ae70dee3122cef8133737f9d4f99aebadf9b605ea2819b547f9db96d3ce8420",
+      "stderrSha256": "7c4cc5db418f8d3b46c95adaf19931b6b6fe705466421c7bed9115d961fc7662"
+    },
+    {
+      "phase": "mcp-public",
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 7362,
+      "stderrBytes": 3574,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "b0f565adbaf5e1c2787bca88dbe682e11700f756228d5af3170c123f30703e30",
+      "stderrSha256": "717ce781d77995797f6d6a370e7813c93f1ead6663861d20af63e32debddee9d"
+    },
+    {
+      "phase": "mcp-env",
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 7363,
+      "stderrBytes": 3574,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "ce4fda83a50a0906b28023b60263b19fd2ea60a56e8de6d7baec37fbb7ce014c",
+      "stderrSha256": "88d23f0016f894f0cd91df450136a751dfa0a146814dc0c17b170429ff04eae1"
+    },
+    {
+      "phase": "mcp-cancel",
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 7365,
+      "stderrBytes": 3574,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "b7cd989b1513cfe36088da5990fcf36c881010fa302d2af61f35770586cb9090",
+      "stderrSha256": "df1eb3d9c714c169c2a739c2918f2f832de48b7146c09348a874cf1b232c011e"
+    },
+    {
+      "phase": "mcp-traversal",
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 7365,
+      "stderrBytes": 3574,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "1fd4e00ace5266d7367ce524e28e8e90ccab15a0c060468612680c68b208d460",
+      "stderrSha256": "9dc914357b62f2b9afce6399ae708d409a4fe824e4b385629fdb3d87dd9194aa"
+    },
+    {
+      "phase": "mcp-forged-approval",
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 7365,
+      "stderrBytes": 3574,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "d55880d4fc1783b73e2a6f6bef2cb168aba2f07fab4e8aa47b20096af6c28c15",
+      "stderrSha256": "9ccafd3d194341c7a0b9b65ef9febfc87139c6759205adb070f4a43ce2fbdad9"
+    },
+    {
+      "phase": "registered-public-control",
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 7365,
+      "stderrBytes": 3574,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "ab1fabfc6a89fe33fc60cfb1df43a5a605aec01261d6c7febd7fa4c030df5b23",
+      "stderrSha256": "f2379e55d56be2697e0bc178e1f7fd3f46d2612f623fe0d98b41456847a9e67b"
+    },
+    {
+      "phase": "explicit-provider-override",
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 8497,
+      "stderrBytes": 3574,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "c1844ff47f85bac36a5831036f13a5cee07ada3947ba87a06899c48ca05096fb",
+      "stderrSha256": "ee3b315f03a6e8c2d730a4c47c34f81b483ffc4cd2904939c006a8f0aa6cf896"
+    },
+    {
+      "phase": "registered-output",
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 7365,
+      "stderrBytes": 3574,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "247cdaaeebb036c25aa8534f47f318826e36b3698231cb281fce11c9417b3506",
+      "stderrSha256": "31224c467b12cad2bffdc360b59db84fe7b46a9bbe4d3a843b8d243cf6a7a438"
+    },
+    {
+      "phase": "config-drift",
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 1651,
+      "stderrBytes": 8170,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "c879aaa7e3e53f7368c7044118e0efa49b9d0a9d7070c4de41bed61c7e2319ea",
+      "stderrSha256": "fb9adbf6d030ecbe19f97fb2b332c6c4cfe3d207eb8f01e7f6f271952e780f62"
+    },
+    {
+      "phase": "withdrawn-after-drift-review",
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 1651,
+      "stderrBytes": 8170,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "3d6be28fe40864af870bd50572b10eed4630803446da8158af7da7f71d982236",
+      "stderrSha256": "7e92b94a136e588fe2a7487988c46e31eba3babf28f4a8415664a5ce8a62d1da"
+    },
+    {
+      "phase": "flag-off",
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 1651,
+      "stderrBytes": 8170,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "764265aff12e619646747e610d6efa5fdfa4ed74975fbe3668e3af344b456e23",
+      "stderrSha256": "65fdcbecda5ab91ba3f9f9d1b9edd85a1fa65e06df8b7478e06678584c4323bb"
+    },
+    {
+      "phase": "flag-reenabled-old-capability",
+      "argv": [
+        "-c",
+        "features.code_mode_host=true",
+        "app-server",
+        "--analytics-default-enabled"
+      ],
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 1651,
+      "stderrBytes": 8170,
+      "exitCode": 0,
+      "signal": null,
+      "stdoutSha256": "c266a8dbe235c8ce6528a6472b9fad4e4d5ba74451022b58df7ded3ba68ad812",
+      "stderrSha256": "2bd854d5c0d1108ffa3eff9a1997fe2fb54115f80c9a53e4b342746f2510c91e"
+    }
+  ],
+  "providerUrl": "http://127.0.0.1:58180",
+  "ownerDiagnostic": {
+    "found": true,
+    "available": true,
+    "readerEnabled": true,
+    "trusted": true,
+    "folders": 1,
+    "roamingRelative": "profile\\AppData\\Roaming",
+    "storage": {
+      "scheme": "vscode-userdata",
+      "authorityEmpty": true,
+      "absolute": true,
+      "relative": "profile\\User\\globalStorage\\soterai.soterai-ide-guard",
+      "storedReceiptPresent": false
+    }
+  },
+  "ownerStages": [
+    {
+      "method": "saved",
+      "leaf": "workspace",
+      "result": "ABSENT"
+    },
+    {
+      "method": "stamp",
+      "leaf": "package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex-package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "extension.js",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex.exe",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex-package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex-package.json",
+      "result": "object"
+    },
+    {
+      "method": "bounded",
+      "leaf": "codex-package.json",
+      "result": "BYTES_226"
+    },
+    {
+      "method": "stamp",
+      "leaf": "package.json",
+      "result": "object"
+    },
+    {
+      "method": "bounded",
+      "leaf": "package.json",
+      "result": "BYTES_7510"
+    },
+    {
+      "method": "stamp",
+      "leaf": "package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "extension.js",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex-package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex.exe",
+      "result": "object"
+    },
+    {
+      "method": "artifact",
+      "result": "ABSENT"
+    },
+    {
+      "method": "projectEligible",
+      "result": true
+    },
+    {
+      "method": "parent",
+      "leaf": "globalStorage",
+      "result": "ABSENT"
+    },
+    {
+      "method": "parent",
+      "leaf": "soterai.soterai-ide-guard",
+      "result": "ABSENT"
+    },
+    {
+      "method": "parent",
+      "leaf": "adapter-sessions",
+      "result": "ABSENT"
+    },
+    {
+      "method": "parent",
+      "leaf": "codex-ide-b71967ab-3438-4660-b016-18c3bfc1f5c7",
+      "result": "ABSENT"
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "error": {
+        "name": "Error",
+        "code": "ENOENT"
+      }
+    },
+    {
+      "method": "bounded",
+      "leaf": "config.toml",
+      "error": {
+        "name": "Error",
+        "code": "ENOENT"
+      }
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "error": {
+        "name": "Error",
+        "code": "ENOENT"
+      }
+    },
+    {
+      "method": "bounded",
+      "leaf": "config.toml",
+      "error": {
+        "name": "Error",
+        "code": "ENOENT"
+      }
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "error": {
+        "name": "Error",
+        "code": "ENOENT"
+      }
+    },
+    {
+      "method": "bounded",
+      "leaf": "config.toml",
+      "error": {
+        "name": "Error",
+        "code": "ENOENT"
+      }
+    },
+    {
+      "method": "saved",
+      "leaf": "workspace",
+      "result": "ABSENT"
+    },
+    {
+      "method": "stamp",
+      "leaf": "package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "extension.js",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex-package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex.exe",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex-package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "package.json",
+      "result": "object"
+    },
+    {
+      "method": "bounded",
+      "leaf": "package.json",
+      "result": "BYTES_7510"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex-package.json",
+      "result": "object"
+    },
+    {
+      "method": "bounded",
+      "leaf": "codex-package.json",
+      "result": "BYTES_226"
+    },
+    {
+      "method": "stamp",
+      "leaf": "package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "extension.js",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex-package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex.exe",
+      "result": "object"
+    },
+    {
+      "method": "artifact",
+      "result": "ABSENT"
+    },
+    {
+      "method": "projectEligible",
+      "result": true
+    },
+    {
+      "method": "parent",
+      "leaf": "adapter-sessions",
+      "result": "ABSENT"
+    },
+    {
+      "method": "parent",
+      "leaf": "codex-ide-2e58e679-5b46-42c7-83b2-a39055971030",
+      "result": "ABSENT"
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "error": {
+        "name": "Error",
+        "code": "ENOENT"
+      }
+    },
+    {
+      "method": "bounded",
+      "leaf": "config.toml",
+      "error": {
+        "name": "Error",
+        "code": "ENOENT"
+      }
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "error": {
+        "name": "Error",
+        "code": "ENOENT"
+      }
+    },
+    {
+      "method": "bounded",
+      "leaf": "config.toml",
+      "error": {
+        "name": "Error",
+        "code": "ENOENT"
+      }
+    },
+    {
+      "method": "stamp",
+      "leaf": "package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex-package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex.exe",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "extension.js",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex-package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "package.json",
+      "result": "object"
+    },
+    {
+      "method": "bounded",
+      "leaf": "package.json",
+      "result": "BYTES_7510"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex-package.json",
+      "result": "object"
+    },
+    {
+      "method": "bounded",
+      "leaf": "codex-package.json",
+      "result": "BYTES_226"
+    },
+    {
+      "method": "stamp",
+      "leaf": "package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "extension.js",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex-package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex.exe",
+      "result": "object"
+    },
+    {
+      "method": "artifact",
+      "result": "ABSENT"
+    },
+    {
+      "method": "projectEligible",
+      "result": true
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "error": {
+        "name": "Error",
+        "code": "ENOENT"
+      }
+    },
+    {
+      "method": "bounded",
+      "leaf": "config.toml",
+      "error": {
+        "name": "Error",
+        "code": "ENOENT"
+      }
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "error": {
+        "name": "Error",
+        "code": "ENOENT"
+      }
+    },
+    {
+      "method": "bounded",
+      "leaf": "config.toml",
+      "error": {
+        "name": "Error",
+        "code": "ENOENT"
+      }
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "result": "object"
+    },
+    {
+      "method": "bounded",
+      "leaf": "config.toml",
+      "result": "BYTES_1700"
+    },
+    {
+      "method": "stamp",
+      "leaf": "package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "extension.js",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex-package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex.exe",
+      "result": "object"
+    },
+    {
+      "method": "projectEligible",
+      "result": true
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "result": "object"
+    },
+    {
+      "method": "bounded",
+      "leaf": "config.toml",
+      "result": "BYTES_1700"
+    },
+    {
+      "method": "stamp",
+      "leaf": "package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "extension.js",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex-package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex.exe",
+      "result": "object"
+    },
+    {
+      "method": "projectEligible",
+      "result": true
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "result": "object"
+    },
+    {
+      "method": "bounded",
+      "leaf": "config.toml",
+      "result": "BYTES_1700"
+    },
+    {
+      "method": "stamp",
+      "leaf": "package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "extension.js",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex-package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex.exe",
+      "result": "object"
+    },
+    {
+      "method": "projectEligible",
+      "result": true
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "result": "object"
+    },
+    {
+      "method": "bounded",
+      "leaf": "config.toml",
+      "result": "BYTES_1700"
+    },
+    {
+      "method": "stamp",
+      "leaf": "package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "extension.js",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex-package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex.exe",
+      "result": "object"
+    },
+    {
+      "method": "projectEligible",
+      "result": true
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "result": "object"
+    },
+    {
+      "method": "bounded",
+      "leaf": "config.toml",
+      "result": "BYTES_1700"
+    },
+    {
+      "method": "stamp",
+      "leaf": "package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "extension.js",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex-package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex.exe",
+      "result": "object"
+    },
+    {
+      "method": "projectEligible",
+      "result": true
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "result": "object"
+    },
+    {
+      "method": "bounded",
+      "leaf": "config.toml",
+      "result": "BYTES_1700"
+    },
+    {
+      "method": "stamp",
+      "leaf": "package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "extension.js",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex-package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex.exe",
+      "result": "object"
+    },
+    {
+      "method": "projectEligible",
+      "result": true
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "result": "object"
+    },
+    {
+      "method": "bounded",
+      "leaf": "config.toml",
+      "result": "BYTES_1700"
+    },
+    {
+      "method": "stamp",
+      "leaf": "package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "extension.js",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex-package.json",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "codex.exe",
+      "result": "object"
+    },
+    {
+      "method": "projectEligible",
+      "result": true
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "result": "object"
+    },
+    {
+      "method": "stamp",
+      "leaf": "config.toml",
+      "error": {
+        "name": "Error",
+        "code": "ENOENT"
+      }
+    },
+    {
+      "method": "bounded",
+      "leaf": "config.toml",
+      "error": {
+        "name": "Error",
+        "code": "ENOENT"
+      }
+    }
+  ],
+  "actualVendorApiObserved": true,
+  "actualVendorControllerFound": true,
+  "unmediatedContextControl": {
+    "status": "LEAK_CONFIRMED",
+    "covered": false,
+    "scope": "Explicit native provider override bypasses the cooperative configured route; retained uncovered control."
+  },
+  "unownedNativeStatePreserved": true,
+  "encryptedBackups": 1,
+  "children": [
+    {
+      "phase": "setup",
+      "role": "broker",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "code": 0,
+      "signal": null
+    },
+    {
+      "phase": "provider-public",
+      "role": "codex-cli",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "code": 0,
+      "signal": null
+    },
+    {
+      "phase": "mcp-public",
+      "role": "codex-cli",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "code": 0,
+      "signal": null
+    },
+    {
+      "phase": "mcp-env",
+      "role": "codex-cli",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "code": 0,
+      "signal": null
+    },
+    {
+      "phase": "mcp-cancel",
+      "role": "codex-cli",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "code": 0,
+      "signal": null
+    },
+    {
+      "phase": "mcp-traversal",
+      "role": "codex-cli",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "code": 0,
+      "signal": null
+    },
+    {
+      "phase": "mcp-forged-approval",
+      "role": "codex-cli",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "code": 0,
+      "signal": null
+    },
+    {
+      "phase": "registered-public-control",
+      "role": "codex-cli",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "code": 0,
+      "signal": null
+    },
+    {
+      "phase": "explicit-provider-override",
+      "role": "codex-cli",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "code": 0,
+      "signal": null
+    },
+    {
+      "phase": "registered-output",
+      "role": "codex-cli",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "code": 0,
+      "signal": null
+    },
+    {
+      "phase": "config-drift",
+      "role": "codex-cli",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "code": 0,
+      "signal": null
+    },
+    {
+      "phase": "withdrawn-after-drift-review",
+      "role": "codex-cli",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "code": 0,
+      "signal": null
+    },
+    {
+      "phase": "flag-off",
+      "role": "codex-cli",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "code": 0,
+      "signal": null
+    },
+    {
+      "phase": "flag-reenabled-old-capability",
+      "role": "codex-cli",
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "code": 0,
+      "signal": null
+    }
+  ],
+  "runtimeSha256": "320833dc5539d9bdcef5c662876217e090105c4193d014ce54a96eeac063a14e"
+}

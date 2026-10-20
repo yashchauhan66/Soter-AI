@@ -1,0 +1,55 @@
+{
+  "scope": "Fixture-only JavaScript guards, not product or OS confinement",
+  "deniedFiles": [
+    {
+      "method": "existsSync",
+      "path": "c:\\windows\\system32\\windowspowershell\\v1.0\\powershell.exe",
+      "write": false
+    },
+    {
+      "method": "existsSync",
+      "path": "d:\\soterai-lite-test-profiles\\.gemini\\.env",
+      "write": false
+    },
+    {
+      "method": "existsSync",
+      "path": "d:\\soterai-lite-test-profiles\\.env",
+      "write": false
+    },
+    {
+      "method": "existsSync",
+      "path": "d:\\.gemini\\.env",
+      "write": false
+    },
+    {
+      "method": "existsSync",
+      "path": "d:\\.env",
+      "write": false
+    },
+    {
+      "method": "statSync",
+      "path": "c:\\users\\user\\appdata\\roaming\\npm",
+      "write": false
+    },
+    {
+      "method": "statSync",
+      "path": "c:\\users\\user\\appdata\\roaming\\npm\\node_modules\\@google\\locales\\en.json",
+      "write": false
+    },
+    {
+      "method": "readFileSync",
+      "path": "c:\\users\\user\\appdata\\roaming\\npm\\node_modules\\@google\\locales\\en.json",
+      "write": false
+    }
+  ],
+  "deniedNetwork": [],
+  "deniedLaunches": [
+    "execSync"
+  ],
+  "deniedSignals": [],
+  "deniedAddons": [],
+  "requests": [],
+  "embeddedPublicWasmFetches": 1,
+  "exitCode": 1,
+  "time": "2026-10-20T12:24:51.653Z"
+}

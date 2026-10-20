@@ -1,0 +1,23 @@
+Warning: 256-color support not detected. Using a terminal with at least 256-color support is recommended for a better visual experience.
+MCP issues detected. Run /mcp list for status.
+Error when talking to Gemini API Full report available at: D:\SoterAI-Lite-test-profiles\f20c-feasibility-93d67660-789d-4a6b-be1e-5f6dbbc9a4f3\temp\gemini-client-error-Turn.run-sendMessageStream-2026-10-20T12-55-03-562Z.json _ApiError: {"error":{"message":"","code":400,"status":"Bad Request"}}
+    at throwErrorIfNotOK (file:///C:/Users/USER/AppData/Roaming/npm/node_modules/@google/gemini-cli/bundle/chunk-32XQ54AJ.js:267240:24)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///C:/Users/USER/AppData/Roaming/npm/node_modules/@google/gemini-cli/bundle/chunk-32XQ54AJ.js:267003:7
+    at async Models.generateContentStream (file:///C:/Users/USER/AppData/Roaming/npm/node_modules/@google/gemini-cli/bundle/chunk-32XQ54AJ.js:268099:16)
+    at async file:///C:/Users/USER/AppData/Roaming/npm/node_modules/@google/gemini-cli/bundle/chunk-32XQ54AJ.js:310397:19
+    at async file:///C:/Users/USER/AppData/Roaming/npm/node_modules/@google/gemini-cli/bundle/chunk-32XQ54AJ.js:287277:23
+    at async retryWithBackoff (file:///C:/Users/USER/AppData/Roaming/npm/node_modules/@google/gemini-cli/bundle/chunk-32XQ54AJ.js:307272:23)
+    at async GeminiChat.makeApiCallAndProcessStream (file:///C:/Users/USER/AppData/Roaming/npm/node_modules/@google/gemini-cli/bundle/chunk-32XQ54AJ.js:330898:28)
+    at async GeminiChat.streamWithRetries (file:///C:/Users/USER/AppData/Roaming/npm/node_modules/@google/gemini-cli/bundle/chunk-32XQ54AJ.js:330671:29)
+    at async Turn.run (file:///C:/Users/USER/AppData/Roaming/npm/node_modules/@google/gemini-cli/bundle/chunk-32XQ54AJ.js:331556:24) {
+  status: 400
+}
+{
+  "session_id": "ef844580-b45e-4860-a302-192d2b483ddd",
+  "error": {
+    "type": "Error",
+    "message": "{\"error\":{\"message\":\"\",\"code\":400,\"status\":\"Bad Request\"}}",
+    "code": 400
+  }
+}

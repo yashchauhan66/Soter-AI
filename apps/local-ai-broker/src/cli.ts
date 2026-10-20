@@ -12,6 +12,8 @@ async function main(): Promise<void> {
     if (claudeSchemaFlag !== undefined && !["0", "1"].includes(claudeSchemaFlag)) throw new Error("Gateway tool-schema profile unavailable");
     const codexFlag = process.env.SOTERAI_CODEX_RESPONSES;
     if (codexFlag !== undefined && !["0", "1"].includes(codexFlag)) throw new Error("Gateway Responses profile unavailable");
+    const geminiFlag = process.env.SOTERAI_GEMINI_GENERATE_CONTENT;
+    if (geminiFlag !== undefined && !["0", "1"].includes(geminiFlag)) throw new Error("Gateway Gemini profile unavailable");
     const ownerSession = process.env.SOTERAI_BROKER_SESSION;
     if (ownerSession !== undefined && (!/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/.test(ownerSession)
         || !process.send || !process.connected || process.env.SOTERAI_BROKER_PORT !== "0"
@@ -40,6 +42,8 @@ async function main(): Promise<void> {
         claudeToolSchemas: claudeSchemaFlag === "1",
         codexResponses: codexFlag === "1",
         codexResponsesProviderUrl: process.env.SOTERAI_CODEX_RESPONSES_PROVIDER_URL,
+        geminiGenerateContent: geminiFlag === "1",
+        geminiProviderUrl: process.env.SOTERAI_GEMINI_PROVIDER_URL,
         requireGatewaySync: process.env.SOTERAI_REQUIRE_GATEWAY_SYNC === "1",
         gatewayGuard: ownerSession ? createGatewayParentGuard(ownerSession) : undefined,
         jsonBodies: process.env.SOTERAI_GATEWAY_JSON_BODIES !== "0",

@@ -20,6 +20,7 @@ import { registerClineAdapter } from "./adapters/ClineAdapter";
 import { registerClaudeAdapter } from "./adapters/ClaudeAdapter";
 import { registerCodexIdeAdapter } from "./adapters/CodexIdeAdapter";
 import { registerCodexCliAdapter } from "./adapters/CodexCliAdapter";
+import { registerGeminiCliAdapter } from "./adapters/GeminiCliAdapter";
 import { AISentinel } from "./sentinel/AISentinel";
 import { registerSentinelCommands } from "./sentinel/commands";
 import { PermissionStore } from "./permissions/PermissionStore";
@@ -210,6 +211,7 @@ export function activate(context: vscode.ExtensionContext): void {
     registerClaudeAdapter(context, brokerManager, managedReader);
     registerCodexCliAdapter(context, managedReader, brokerManager);
     registerCodexIdeAdapter(context, managedReader, brokerManager);
+    registerGeminiCliAdapter(context, managedReader, brokerManager);
     registerSentinelCommands(context, sentinel);
     registerPermissionCommands(context, permissionStore);
     registerWorkspaceGuardCommands(context, workspaceGuard);

@@ -133,7 +133,9 @@
                 "soterai.lite.clineAdapter",
                 "soterai.lite.codexCliAdapter",
                 "soterai.broker.codexResponsesProviderUrl",
-                "soterai.lite.codexIdeAdapter"
+                "soterai.lite.codexIdeAdapter",
+                "soterai.lite.geminiCliAdapter",
+                "soterai.broker.geminiProviderUrl"
             ]
         }
     },
@@ -1293,6 +1295,21 @@
                 "command": "soterai.codexIdeAdapterStatus",
                 "title": "Codex IDE adapter status",
                 "category": "SoterAI"
+            },
+            {
+                "command": "soterai.configurePinnedGeminiCli",
+                "title": "Review Pinned Gemini CLI Safe-Read Profile",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.restorePinnedGeminiCli",
+                "title": "Restore Pinned Gemini CLI Profile Config",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.geminiCliAdapterStatus",
+                "title": "Pinned Gemini CLI Adapter Status",
+                "category": "SoterAI"
             }
         ],
         "viewsContainers": {
@@ -1973,6 +1990,18 @@
                     "default": true,
                     "scope": "machine",
                     "description": "Enable reviewed pinned Codex IDE dedicated-home setup with F04 and buffered text Responses. Select this home before editor/native startup. Native tool preferences are not confinement; other profiles, overrides, unsupported context/images remain uncovered. Disabling revokes local roles and preserves configuration."
+                },
+                "soterai.lite.geminiCliAdapter": {
+                    "type": "boolean",
+                    "default": true,
+                    "scope": "machine",
+                    "description": "Enable reviewed pinned Gemini CLI dedicated text/safe-read profile. Explicit curated launch variables and actual route verification are required. Disabling revokes local capabilities and preserves restrictive profile files."
+                },
+                "soterai.broker.geminiProviderUrl": {
+                    "type": "string",
+                    "default": "",
+                    "scope": "machine",
+                    "description": "Reviewed Gemini provider base URL for the owned broker; no path/query/credential. HTTPS or explicit synthetic loopback HTTP only. Blank withholds Gemini traffic."
                 }
             }
         },
@@ -2935,6 +2964,18 @@
                 },
                 {
                     "command": "soterai.codexIdeAdapterStatus",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.configurePinnedGeminiCli",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.restorePinnedGeminiCli",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.geminiCliAdapterStatus",
                     "when": "soterai.advancedCommands"
                 }
             ]

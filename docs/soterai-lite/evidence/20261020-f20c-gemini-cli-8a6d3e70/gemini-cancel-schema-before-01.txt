@@ -1,0 +1,229 @@
+﻿TAP version 13
+# Subtest: F20C native GenerateContent public and actual paired MCP request bodies retain exact canonical content
+ok 1 - F20C native GenerateContent public and actual paired MCP request bodies retain exact canonical content
+  ---
+  duration_ms: 346.7607
+  type: 'test'
+  ...
+# Subtest: F20C observed native denied safe-read result can complete as paired inspected error text
+not ok 2 - F20C observed native denied safe-read result can complete as paired inspected error text
+  ---
+  duration_ms: 2.6868
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\geminiGenerateContentSchema.test.ts:2:2446'
+  failureType: 'testCodeFailure'
+  error: 'Gateway policy withheld protected data'
+  code: 'gateway_schema_unsupported'
+  stack: |-
+    fail (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\apps\local-ai-broker\src\GeminiGenerateContentSchema.ts:5:32)
+    keys (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\apps\local-ai-broker\src\GeminiGenerateContentSchema.ts:8:75)
+    part (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\apps\local-ai-broker\src\GeminiGenerateContentSchema.ts:35:5)
+    validateGeminiRequest (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\apps\local-ai-broker\src\GeminiGenerateContentSchema.ts:76:26)
+    GatewayBoundary.prepareRequest (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\apps\local-ai-broker\src\GatewayBoundary.ts:166:17)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\geminiGenerateContentSchema.test.ts:23:44)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+  ...
+# Subtest: F20C Gemini capability mutation refuses while earlier provider schemas remain strict
+ok 3 - F20C Gemini capability mutation refuses while earlier provider schemas remain strict
+  ---
+  duration_ms: 4.4295
+  type: 'test'
+  ...
+# Subtest: F20C registered original withheld in system
+ok 4 - F20C registered original withheld in system
+  ---
+  duration_ms: 4.8226
+  type: 'test'
+  ...
+# Subtest: F20C registered original withheld in text
+ok 5 - F20C registered original withheld in text
+  ---
+  duration_ms: 51.9503
+  type: 'test'
+  ...
+# Subtest: F20C registered original withheld in arguments
+ok 6 - F20C registered original withheld in arguments
+  ---
+  duration_ms: 61.3859
+  type: 'test'
+  ...
+# Subtest: F20C registered original withheld in result
+ok 7 - F20C registered original withheld in result
+  ---
+  duration_ms: 52.3564
+  type: 'test'
+  ...
+# Subtest: F20C registered original withheld in description
+ok 8 - F20C registered original withheld in description
+  ---
+  duration_ms: 69.0192
+  type: 'test'
+  ...
+# Subtest: F20C registered original withheld in schema-description
+ok 9 - F20C registered original withheld in schema-description
+  ---
+  duration_ms: 68.5017
+  type: 'test'
+  ...
+# Subtest: F20C registered encoded and ordered split text carriers are withheld
+ok 10 - F20C registered encoded and ordered split text carriers are withheld
+  ---
+  duration_ms: 316.2141
+  type: 'test'
+  ...
+# Subtest: F20C unsupported request withheld: image
+ok 11 - F20C unsupported request withheld: image
+  ---
+  duration_ms: 2.2273
+  type: 'test'
+  ...
+# Subtest: F20C unsupported request withheld: file
+ok 12 - F20C unsupported request withheld: file
+  ---
+  duration_ms: 1.8704
+  type: 'test'
+  ...
+# Subtest: F20C unsupported request withheld: opaque signature
+ok 13 - F20C unsupported request withheld: opaque signature
+  ---
+  duration_ms: 2.0193
+  type: 'test'
+  ...
+# Subtest: F20C unsupported request withheld: unknown part
+ok 14 - F20C unsupported request withheld: unknown part
+  ---
+  duration_ms: 2.3986
+  type: 'test'
+  ...
+# Subtest: F20C unsupported request withheld: server cache
+ok 15 - F20C unsupported request withheld: server cache
+  ---
+  duration_ms: 1.5198
+  type: 'test'
+  ...
+# Subtest: F20C unsupported request withheld: alternate tool
+ok 16 - F20C unsupported request withheld: alternate tool
+  ---
+  duration_ms: 1.7516
+  type: 'test'
+  ...
+# Subtest: F20C unsupported request withheld: unknown arguments
+ok 17 - F20C unsupported request withheld: unknown arguments
+  ---
+  duration_ms: 1.622
+  type: 'test'
+  ...
+# Subtest: F20C unsupported request withheld: orphan response
+ok 18 - F20C unsupported request withheld: orphan response
+  ---
+  duration_ms: 1.5217
+  type: 'test'
+  ...
+# Subtest: F20C unsupported request withheld: duplicate call
+ok 19 - F20C unsupported request withheld: duplicate call
+  ---
+  duration_ms: 1.455
+  type: 'test'
+  ...
+# Subtest: F20C unsupported request withheld: unsupported result
+ok 20 - F20C unsupported request withheld: unsupported result
+  ---
+  duration_ms: 1.3977
+  type: 'test'
+  ...
+# Subtest: F20C unsupported request withheld: missing stream
+ok 21 - F20C unsupported request withheld: missing stream
+  ---
+  duration_ms: 1.4037
+  type: 'test'
+  ...
+# Subtest: F20C unsupported request withheld: wrong model
+ok 22 - F20C unsupported request withheld: wrong model
+  ---
+  duration_ms: 1.5704
+  type: 'test'
+  ...
+# Subtest: F20C unsupported request withheld: unknown generation
+ok 23 - F20C unsupported request withheld: unknown generation
+  ---
+  duration_ms: 1.6051
+  type: 'test'
+  ...
+# Subtest: F20C unsupported request withheld: nonfinite number
+ok 24 - F20C unsupported request withheld: nonfinite number
+  ---
+  duration_ms: 1.7157
+  type: 'test'
+  ...
+# Subtest: F20C text budget remains32 while typed protocol/tool metadata remains separately bounded
+ok 25 - F20C text budget remains32 while typed protocol/tool metadata remains separately bounded
+  ---
+  duration_ms: 1.8041
+  type: 'test'
+  ...
+# Subtest: F20C completed public text and safe-function SSE are accepted, complete-buffered
+ok 26 - F20C completed public text and safe-function SSE are accepted, complete-buffered
+  ---
+  duration_ms: 9.1722
+  type: 'test'
+  ...
+# Subtest: F20C output withheld before any release: text
+ok 27 - F20C output withheld before any release: text
+  ---
+  duration_ms: 1.5128
+  type: 'test'
+  ...
+# Subtest: F20C output withheld before any release: function-arguments
+ok 28 - F20C output withheld before any release: function-arguments
+  ---
+  duration_ms: 1.3899
+  type: 'test'
+  ...
+# Subtest: F20C output withheld before any release: metadata
+ok 29 - F20C output withheld before any release: metadata
+  ---
+  duration_ms: 1.8071
+  type: 'test'
+  ...
+# Subtest: F20C output withheld before any release: encoded
+ok 30 - F20C output withheld before any release: encoded
+  ---
+  duration_ms: 1.6772
+  type: 'test'
+  ...
+# Subtest: F20C output withheld before any release: split-deltas
+ok 31 - F20C output withheld before any release: split-deltas
+  ---
+  duration_ms: 3.7649
+  type: 'test'
+  ...
+# Subtest: F20C incomplete, error, unknown, opaque or trailing SSE is withheld
+ok 32 - F20C incomplete, error, unknown, opaque or trailing SSE is withheld
+  ---
+  duration_ms: 16.6052
+  type: 'test'
+  ...
+# Subtest: F20C gateway revocation withholds current Gemini input/output
+ok 33 - F20C gateway revocation withholds current Gemini input/output
+  ---
+  duration_ms: 1.3935
+  type: 'test'
+  ...
+# Subtest: F20C dangling event metadata after a complete Gemini or Codex stream is withheld
+ok 34 - F20C dangling event metadata after a complete Gemini or Codex stream is withheld
+  ---
+  duration_ms: 11.7481
+  type: 'test'
+  ...
+1..34
+# tests 34
+# suites 0
+# pass 33
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1571.7169

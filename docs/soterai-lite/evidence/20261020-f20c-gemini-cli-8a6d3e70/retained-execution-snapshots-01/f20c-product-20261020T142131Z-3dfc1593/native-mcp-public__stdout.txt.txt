@@ -1,0 +1,71 @@
+{
+  "session_id": "b124363a-37b2-4d86-8bbb-a826677471b1",
+  "response": "F20C_NATIVE_COMPLETE",
+  "stats": {
+    "models": {
+      "gemini-3.5-flash": {
+        "api": {
+          "totalRequests": 2,
+          "totalErrors": 0,
+          "totalLatencyMs": 2453,
+          "errorsByType": {}
+        },
+        "tokens": {
+          "input": 2,
+          "prompt": 2,
+          "candidates": 2,
+          "total": 4,
+          "cached": 0,
+          "thoughts": 0,
+          "tool": 0
+        },
+        "roles": {
+          "main": {
+            "totalRequests": 2,
+            "totalErrors": 0,
+            "totalLatencyMs": 2453,
+            "tokens": {
+              "input": 2,
+              "prompt": 2,
+              "candidates": 2,
+              "total": 4,
+              "cached": 0,
+              "thoughts": 0,
+              "tool": 0
+            }
+          }
+        }
+      }
+    },
+    "tools": {
+      "totalCalls": 1,
+      "totalSuccess": 1,
+      "totalFail": 0,
+      "totalDurationMs": 2186,
+      "totalDecisions": {
+        "accept": 1,
+        "reject": 0,
+        "modify": 0,
+        "auto_accept": 0
+      },
+      "byName": {
+        "mcp_soterai_safe_read_soterai_read_project_file_safely": {
+          "count": 1,
+          "success": 1,
+          "fail": 0,
+          "durationMs": 2186,
+          "decisions": {
+            "accept": 1,
+            "reject": 0,
+            "modify": 0,
+            "auto_accept": 0
+          }
+        }
+      }
+    },
+    "files": {
+      "totalLinesAdded": 0,
+      "totalLinesRemoved": 0
+    }
+  }
+}

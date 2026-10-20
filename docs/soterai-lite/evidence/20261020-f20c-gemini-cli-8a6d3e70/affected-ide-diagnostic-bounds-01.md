@@ -1,0 +1,1 @@
+Pre-execution review narrows diagnostic: the first failing public provider route stops dependent native steps after normal cleanup; all21 original assertions still required for a PASS. Driver03/launcher04 remain NOT_RUN; driver04/launcher05 are the same first diagnostic improvement execution. No production/artifact/pin/guard/permission/assertion changes.

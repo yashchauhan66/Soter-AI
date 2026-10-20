@@ -1,0 +1,224 @@
+﻿TAP version 13
+# Subtest: F20C dedicated profile renders only pinned controls and separate local roles, with value-free preview
+ok 1 - F20C dedicated profile renders only pinned controls and separate local roles, with value-free preview
+  ---
+  duration_ms: 54.2577
+  type: 'test'
+  ...
+# Subtest: F20C reviewed creation persists encrypted absence and value-free recovery before two-file write
+ok 2 - F20C reviewed creation persists encrypted absence and value-free recovery before two-file write
+  ---
+  duration_ms: 4.0504
+  type: 'test'
+  ...
+# Subtest: F20C cancel, disabled flag and changed owner never create settings or env
+ok 3 - F20C cancel, disabled flag and changed owner never create settings or env
+  ---
+  duration_ms: 4.931
+  type: 'test'
+  ...
+# Subtest: F20C existing or concurrently created native files are never overwritten
+ok 4 - F20C existing or concurrently created native files are never overwritten
+  ---
+  duration_ms: 2.8467
+  type: 'test'
+  ...
+# Subtest: F20C malformed endpoints, shared/swapped tokens and nonloopback routes refuse before plan
+ok 5 - F20C malformed endpoints, shared/swapped tokens and nonloopback routes refuse before plan
+  ---
+  duration_ms: 2.4969
+  type: 'test'
+  ...
+# Subtest: F20C write/backup/prepare failures cannot report protection; partial files remain recoverable
+ok 6 - F20C write/backup/prepare failures cannot report protection; partial files remain recoverable
+  ---
+  duration_ms: 6.0961
+  type: 'test'
+  ...
+# Subtest: F20C exact reviewed restore removes only owned members and resumes partial restoration
+ok 7 - F20C exact reviewed restore removes only owned members and resumes partial restoration
+  ---
+  duration_ms: 6.2376
+  type: 'test'
+  ...
+# Subtest: F20C foreign changed remaining file and unavailable backup withhold all restoration
+ok 8 - F20C foreign changed remaining file and unavailable backup withhold all restoration
+  ---
+  duration_ms: 7.1866
+  type: 'test'
+  ...
+# Subtest: F20C cancellation while native confirmation is pending releases no profile
+ok 9 - F20C cancellation while native confirmation is pending releases no profile
+  ---
+  duration_ms: 2.5138
+  type: 'test'
+  ...
+# Subtest: F20C partial restore that resolves without removing every file retains its receipt
+not ok 10 - F20C partial restore that resolves without removing every file retains its receipt
+  ---
+  duration_ms: 7.3358
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\geminiCliAdapterPolicy.test.ts:2:8398'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + undefined
+    - {
+    -   afterDigest: '37cfa26878e2844d70b733469d4b92042a31e24470b086cbcf1137847e5a0335',
+    -   backup: 'backup',
+    -   beforeDigest: '398b676e47d03a29016ee92fe378b8b4f1b3e965390c4c64ce78d27f79df74d1',
+    -   environmentDigest: '470f2da351179010cc1c101ba7619f7014061bb0d6c6b1d208cacc5639bcd71e',
+    -   owner: 'public-owner',
+    -   settingsDigest: 'bb21621c472a9b45b05e78cf63976652d9d77480b833935ee129189c4e3c6fcf',
+    -   version: 1
+    - }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    version: 1
+    owner: 'public-owner'
+    backup: 'backup'
+    beforeDigest: '398b676e47d03a29016ee92fe378b8b4f1b3e965390c4c64ce78d27f79df74d1'
+    afterDigest: '37cfa26878e2844d70b733469d4b92042a31e24470b086cbcf1137847e5a0335'
+    settingsDigest: 'bb21621c472a9b45b05e78cf63976652d9d77480b833935ee129189c4e3c6fcf'
+    environmentDigest: '470f2da351179010cc1c101ba7619f7014061bb0d6c6b1d208cacc5639bcd71e'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\geminiCliAdapterPolicy.test.ts:70:55)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F20C machine default binds Gemini capability and ignores repository upstream
+not ok 11 - F20C machine default binds Gemini capability and ignores repository upstream
+  ---
+  duration_ms: 54.8254
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\geminiGatewayManager.test.ts:2:4276'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    undefined !== '1'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '1'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\geminiGatewayManager.test.ts:31:309)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F20C machine disable ignores repository enabling
+not ok 12 - F20C machine disable ignores repository enabling
+  ---
+  duration_ms: 16.1789
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\geminiGatewayManager.test.ts:2:4799'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    undefined !== '0'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '0'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\geminiGatewayManager.test.ts:32:240)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F20C absent/wrong Gemini acknowledgment withholds false
+not ok 13 - F20C absent/wrong Gemini acknowledgment withholds false
+  ---
+  duration_ms: 47.9856
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\geminiGatewayManager.test.ts:2:5205'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  operator: 'rejects'
+  stack: |-
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\geminiGatewayManager.test.ts:33:168)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F20C absent/wrong Gemini acknowledgment withholds true
+not ok 14 - F20C absent/wrong Gemini acknowledgment withholds true
+  ---
+  duration_ms: 22.7775
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\geminiGatewayManager.test.ts:2:5205'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  operator: 'rejects'
+  stack: |-
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\geminiGatewayManager.test.ts:33:168)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F20C absent/wrong Gemini acknowledgment withholds undefined
+not ok 15 - F20C absent/wrong Gemini acknowledgment withholds undefined
+  ---
+  duration_ms: 18.8479
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\geminiGatewayManager.test.ts:2:5205'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  operator: 'rejects'
+  stack: |-
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\geminiGatewayManager.test.ts:33:168)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F20C flag drift revokes current broker lease
+not ok 16 - F20C flag drift revokes current broker lease
+  ---
+  duration_ms: 11.6708
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\geminiGatewayManager.test.ts:2:5544'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  operator: 'rejects'
+  stack: |-
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\geminiGatewayManager.test.ts:34:398)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F20C base drift revokes current broker lease
+not ok 17 - F20C base drift revokes current broker lease
+  ---
+  duration_ms: 9.5929
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\geminiGatewayManager.test.ts:2:5544'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  operator: 'rejects'
+  stack: |-
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\geminiGatewayManager.test.ts:34:398)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..17
+# tests 17
+# suites 0
+# pass 9
+# fail 8
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1053.9716

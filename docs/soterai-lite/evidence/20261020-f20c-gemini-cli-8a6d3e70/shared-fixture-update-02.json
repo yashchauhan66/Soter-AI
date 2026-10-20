@@ -1,0 +1,30 @@
+{
+  "reason": "Helper01 updated Claude then stopped at a differently ordered Codex fixture anchor; incomplete synthetic update retained. Helper02 validates all exact response anchors before writing; strict production acknowledgment unchanged. Pin test now counts file stamps separately from directory stamps, which intentionally detect new entries.",
+  "changed": [
+    {
+      "file": "packages/vscode-extension/src/__tests__/claudeGatewayManager.test.ts",
+      "status": "ALREADY_UPDATED_BY_HELPER01",
+      "beforeSha256": "42d574933769226da87df68bc66bace5b52238dc8151fad907f8309640f7461a"
+    },
+    {
+      "file": "packages/vscode-extension/src/__tests__/codexResponsesManager.test.ts",
+      "beforeSha256": "c9f6f48267a43c4663d80d4cb2576f6b8615c78733282a4ae10820980f864ab0",
+      "afterSha256": "ece994ac5c58af6c1eaad076b937faddb23335e311b28d8bbe91600c9cf38704"
+    },
+    {
+      "file": "packages/vscode-extension/src/__tests__/gatewayPolicyManager.test.ts",
+      "beforeSha256": "e571702ae9fe0c35e9a4c8ab6e80c4c5732c359eb40539a576324646be6f86fa",
+      "afterSha256": "375d9c796c9bc691ea97ab4a80137641bfac4c4296b296cb037c92a0b761a361"
+    },
+    {
+      "file": "packages/vscode-extension/src/__tests__/ownedBrokerManager.test.ts",
+      "beforeSha256": "069b4ac1e0d01c270de01d156c797a0c98ab696bcf8b5c36ed4cd58245fe2d74",
+      "afterSha256": "5d4314f92e41856fb32f99c8325a767018c08000b20d67d14df2f088acff0743"
+    },
+    {
+      "file": "packages/vscode-extension/src/__tests__/mcp-canary-boundary.test.ts",
+      "beforeSha256": "c6fafdcf73142d9b93bc555f2481654626705ad98a2cbfdb95714bfba5126df6",
+      "afterSha256": "55ecdea73ded1b5c2d4fc6a1dee05a603fd93e7b0d43c783ca14eaa9198c9bc9"
+    }
+  ]
+}

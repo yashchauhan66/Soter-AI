@@ -1,0 +1,28 @@
+{
+  "status": "PREPARED_NOT_EXECUTED_REQUIRES_ADDITIONAL_ROUND_AUTHORIZATION",
+  "card": "F20C",
+  "proposedRound": 7,
+  "priorNative06": {
+    "root": "D:\\SoterAI-Lite-test-profiles\\f20c-feasibility-3215b0f8-2450-420b-9a6a-94cae9e1b0f4",
+    "pid": 14088,
+    "status": "INCOMPLETE_NO_SIGNALS",
+    "receiverRequestsObserved": 0,
+    "withdrawal": "INCOMPLETE_NO_SIGNALS"
+  },
+  "finding": "Pinned ProjectRegistry.getShortId acquires proper-lockfile and releases in finally. Fixture04 blanket rmdir denial prevents release of this synthetic empty lock. Trace shows subsequent EEXIST acquisition retries. This identifies a fixture conflict, not a vendor security defect or a tested provider route.",
+  "change": "Only the exact empty home/.gemini/projects.json.lock may be exclusively archived into a unique retained directory inside the same synthetic root, bounded32, with canonical containment/regular-directory/no-link/empty checks. No file/directory deletion. Other rmdir/rm/unlink refusals, vendor pin02, args/settings/synthetic key, loopback-only/no-signals/no-addon/no-child/no-worker guards remain. Previously executed helpers/attempts are not modified or regraded.",
+  "requiredBeforeApproval": "Separate no-vendor before/after fixture must show old guard refusing and new guard permitting repeated callback/sync/promise empty-lock release, preserving all archived empty directories and refusing nonempty/arbitrary/outside paths. Native07 still NOT_RUN.",
+  "files": [
+    {
+      "name": "native-guards-05.cjs",
+      "bytes": 13661,
+      "sha256": "242f9478dde29963aad6177cfad3b0db1e532babef9d0d795fa64fdb09549d1e"
+    },
+    {
+      "name": "native-feasibility-07.cjs",
+      "bytes": 8417,
+      "sha256": "7c1eeceb150866a91efa65661e0211ae41830bb0daf3ded885b58c8c80a5e9e9"
+    }
+  ],
+  "time": "2026-10-20T12:47:59.488Z"
+}

@@ -1,0 +1,64 @@
+﻿TAP version 13
+# Subtest: F20C dedicated profile renders only pinned controls and separate local roles, with value-free preview
+ok 1 - F20C dedicated profile renders only pinned controls and separate local roles, with value-free preview
+  ---
+  duration_ms: 123.4386
+  type: 'test'
+  ...
+# Subtest: F20C reviewed creation persists encrypted absence and value-free recovery before two-file write
+ok 2 - F20C reviewed creation persists encrypted absence and value-free recovery before two-file write
+  ---
+  duration_ms: 3.746
+  type: 'test'
+  ...
+# Subtest: F20C cancel, disabled flag and changed owner never create settings or env
+ok 3 - F20C cancel, disabled flag and changed owner never create settings or env
+  ---
+  duration_ms: 4.0394
+  type: 'test'
+  ...
+# Subtest: F20C existing or concurrently created native files are never overwritten
+ok 4 - F20C existing or concurrently created native files are never overwritten
+  ---
+  duration_ms: 2.1311
+  type: 'test'
+  ...
+# Subtest: F20C malformed endpoints, shared/swapped tokens and nonloopback routes refuse before plan
+ok 5 - F20C malformed endpoints, shared/swapped tokens and nonloopback routes refuse before plan
+  ---
+  duration_ms: 1.4352
+  type: 'test'
+  ...
+# Subtest: F20C write/backup/prepare failures cannot report protection; partial files remain recoverable
+ok 6 - F20C write/backup/prepare failures cannot report protection; partial files remain recoverable
+  ---
+  duration_ms: 4.4769
+  type: 'test'
+  ...
+# Subtest: F20C exact reviewed restore removes only owned members and resumes partial restoration
+ok 7 - F20C exact reviewed restore removes only owned members and resumes partial restoration
+  ---
+  duration_ms: 4.8326
+  type: 'test'
+  ...
+# Subtest: F20C foreign changed remaining file and unavailable backup withhold all restoration
+ok 8 - F20C foreign changed remaining file and unavailable backup withhold all restoration
+  ---
+  duration_ms: 4.5489
+  type: 'test'
+  ...
+# Subtest: F20C cancellation while native confirmation is pending releases no profile
+ok 9 - F20C cancellation while native confirmation is pending releases no profile
+  ---
+  duration_ms: 1.8633
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 513.5547

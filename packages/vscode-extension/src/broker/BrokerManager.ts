@@ -61,7 +61,7 @@ export class BrokerManager implements vscode.Disposable {
         // Compare public routing configuration; never serialize auth material.
         return JSON.stringify([this.enabled(), vscode.workspace.isTrusted,
             config.get("broker.openAIProviderUrl", ""), config.get("broker.anthropicProviderUrl", ""), this.jsonEnabled(), this.gzipEnabled(), this.brotliEnabled(), this.deflateEnabled(), this.chunkedEnabled(), this.framedEnabled(), this.multipartEnabled(), this.base64Enabled(),
-            this.gatewayEnabled(), this.gatewayDependencies(), this.clineSchemasEnabled(), this.claudeSchemasEnabled(), codexAdapterFlags(), this.codexResponsesEnabled(), config.get("broker.codexResponsesProviderUrl", ""), this.savedMode(), this.gatewayLease?.available() ?? true]);
+            this.gatewayEnabled(), this.gatewayDependencies(), this.clineSchemasEnabled(), this.claudeSchemasEnabled(), codexAdapterFlags(), this.codexResponsesEnabled(), config.get("broker.codexResponsesProviderUrl", ""), this.geminiEnabled(), this.geminiBase(), this.savedMode(), this.gatewayLease?.available() ?? true]);
     }
     private clineSchemasEnabled(): boolean {
         const config = vscode.workspace.getConfiguration("soterai"), inspected = config.inspect<boolean>("lite.clineAdapter");
@@ -77,6 +77,15 @@ export class BrokerManager implements vscode.Disposable {
     }
     private codexResponsesEnabled(): boolean {
         return codexAdapterFlags().some(Boolean);
+    }
+    private geminiEnabled(): boolean {
+        const config = vscode.workspace.getConfiguration("soterai"), inspected = config.inspect<boolean>("lite.geminiCliAdapter");
+        return (inspected ? inspected.globalValue ?? inspected.defaultValue ?? true : config.get("lite.geminiCliAdapter", true)) === true;
+    }
+    private geminiBase(): string {
+        const config = vscode.workspace.getConfiguration("soterai"), inspected = config.inspect<string>("broker.geminiProviderUrl");
+        const value = inspected ? inspected.globalValue ?? inspected.defaultValue ?? "" : config.get("broker.geminiProviderUrl", "");
+        if (typeof value !== "string") throw Error("Gemini provider unavailable"); return value;
     }
     private gatewayDependencies(): boolean {
         const config = vscode.workspace.getConfiguration("soterai");
@@ -139,6 +148,7 @@ export class BrokerManager implements vscode.Disposable {
         const providerKey = vscode.workspace.isTrusted ? await this.context.secrets.get("soterai.providerApiKey") : undefined;
         if (!this.enabled()) throw new Error("Broker unavailable");
         return { ...brokerChildEnvironment(process.env), SOTERAI_OPENAI_PROVIDER_URL: config.get<string>("broker.openAIProviderUrl", ""),
+            SOTERAI_GEMINI_GENERATE_CONTENT: this.geminiEnabled() ? "1" : "0", SOTERAI_GEMINI_PROVIDER_URL: this.geminiBase(),
             SOTERAI_CODEX_RESPONSES_PROVIDER_URL: config.get<string>("broker.codexResponsesProviderUrl", ""), SOTERAI_CODEX_RESPONSES: this.codexResponsesEnabled() ? "1" : "0",
             SOTERAI_ANTHROPIC_PROVIDER_URL: config.get<string>("broker.anthropicProviderUrl", ""), SOTERAI_PROVIDER_API_KEY: providerKey, SOTERAI_GATEWAY_JSON_BODIES: this.jsonEnabled() ? "1" : "0", SOTERAI_GATEWAY_GZIP_BODIES: this.gzipEnabled() ? "1" : "0", SOTERAI_GATEWAY_BROTLI_BODIES: this.brotliEnabled() ? "1" : "0", SOTERAI_GATEWAY_DEFLATE_BODIES: this.deflateEnabled() ? "1" : "0", SOTERAI_GATEWAY_CHUNKED_BODIES: this.chunkedEnabled() ? "1" : "0", SOTERAI_GATEWAY_FRAMED_BODIES: this.framedEnabled() ? "1" : "0", SOTERAI_GATEWAY_MULTIPART_BODIES: this.multipartEnabled() ? "1" : "0", SOTERAI_GATEWAY_BASE64_BODIES: this.base64Enabled() ? "1" : "0", SOTERAI_GATEWAY_POLICY: this.gatewayEnabled() ? "1" : "0", SOTERAI_CLINE_TOOL_SCHEMAS: this.clineSchemasEnabled() ? "1" : "0", SOTERAI_CLAUDE_TOOL_SCHEMAS: this.claudeSchemasEnabled() ? "1" : "0", SOTERAI_REQUIRE_GATEWAY_SYNC: "1" };
     }
@@ -185,8 +195,8 @@ export class BrokerManager implements vscode.Disposable {
             const safeMode = await this.lifecycle.request<{ enabled: boolean; level: string }>("/v1/safe-mode/status");
             if (typeof safeMode.enabled !== "boolean" || !["developer", "strict", "enterprise"].includes(safeMode.level)) throw new Error("Policy unavailable");
             if (JSON.stringify({ enabled: safeMode.enabled, level: safeMode.level }) !== JSON.stringify(this.savedMode())) throw new Error("Policy mismatch");
-            const gateway = await this.lifecycle.request<{ version: number; enabled: boolean; ready: boolean; generation?: string; clineToolSchemas?: boolean; claudeToolSchemas?: boolean; codexResponses?: boolean }>("/v1/gateway/status");
-            if (gateway.version !== 1 || gateway.enabled !== this.gatewayEnabled() || gateway.clineToolSchemas !== this.clineSchemasEnabled() || gateway.claudeToolSchemas !== this.claudeSchemasEnabled() || gateway.codexResponses !== this.codexResponsesEnabled() || this.gatewayEnabled() && (!gateway.ready || gateway.generation !== this.gatewayGeneration || !this.gatewayCurrent(this.gatewayGeneration))) throw new Error("Gateway unavailable");
+            const gateway = await this.lifecycle.request<{ version: number; enabled: boolean; ready: boolean; generation?: string; clineToolSchemas?: boolean; claudeToolSchemas?: boolean; codexResponses?: boolean; geminiGenerateContent?: boolean }>("/v1/gateway/status");
+            if (gateway.version !== 1 || gateway.enabled !== this.gatewayEnabled() || gateway.clineToolSchemas !== this.clineSchemasEnabled() || gateway.claudeToolSchemas !== this.claudeSchemasEnabled() || gateway.codexResponses !== this.codexResponsesEnabled() || gateway.geminiGenerateContent !== this.geminiEnabled() || this.gatewayEnabled() && (!gateway.ready || gateway.generation !== this.gatewayGeneration || !this.gatewayCurrent(this.gatewayGeneration))) throw new Error("Gateway unavailable");
             return { ...base(), running: true, state: "healthy", version: EXPECTED_BROKER_VERSION, safeMode, memorySessionId: this.memorySessionId };
         } catch { this.withdraw(); snapshot = this.lifecycle.snapshot(); return { ...base(), lastError: "Owned broker health unavailable; requests withheld." }; }
     }

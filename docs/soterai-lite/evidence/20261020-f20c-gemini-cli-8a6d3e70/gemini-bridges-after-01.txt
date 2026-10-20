@@ -1,0 +1,172 @@
+﻿TAP version 13
+# Subtest: F20A-B01 real loopback initialization/discovery and masked path-only read
+ok 1 - F20A-B01 real loopback initialization/discovery and masked path-only read
+  ---
+  duration_ms: 125.7026
+  type: 'test'
+  ...
+# Subtest: F20A-B02 auth, aliases, origin, media and nonPOST refuse before reader
+ok 2 - F20A-B02 auth, aliases, origin, media and nonPOST refuse before reader
+  ---
+  duration_ms: 46.5249
+  type: 'test'
+  ...
+# Subtest: F20A-B03 malformed, oversized, duplicate JSON and authority injection withhold
+ok 3 - F20A-B03 malformed, oversized, duplicate JSON and authority injection withhold
+  ---
+  duration_ms: 38.3914
+  type: 'test'
+  ...
+# Subtest: F20A-B04 only bounded native metadata is ignored, never passed to authorizer
+ok 4 - F20A-B04 only bounded native metadata is ignored, never passed to authorizer
+  ---
+  duration_ms: 47.5646
+  type: 'test'
+  ...
+# Subtest: F20A-B05 owner unready before/after read cannot return late content
+ok 5 - F20A-B05 owner unready before/after read cannot return late content
+  ---
+  duration_ms: 19.4291
+  type: 'test'
+  ...
+# Subtest: F20A-B06 session rotation aborts pending approvals and rejects stale credentials
+ok 6 - F20A-B06 session rotation aborts pending approvals and rejects stale credentials
+  ---
+  duration_ms: 31.9425
+  type: 'test'
+  ...
+# Subtest: F20A-B07 busy admission withholds another request and flag withdrawal returns no data
+ok 7 - F20A-B07 busy admission withholds another request and flag withdrawal returns no data
+  ---
+  duration_ms: 30.5158
+  type: 'test'
+  ...
+# Subtest: F20A Responses bridge sends only current owned broker credential and no native credential upstream
+ok 8 - F20A Responses bridge sends only current owned broker credential and no native credential upstream
+  ---
+  duration_ms: 203.7248
+  type: 'test'
+  ...
+# Subtest: F20A Responses bridge rejects invalid local target or session before binding
+ok 9 - F20A Responses bridge rejects invalid local target or session before binding
+  ---
+  duration_ms: 7.4083
+  type: 'test'
+  ...
+# Subtest: F20A Responses bridge wrong capability, origin, media and oversized input never forward
+ok 10 - F20A Responses bridge wrong capability, origin, media and oversized input never forward
+  ---
+  duration_ms: 58.6792
+  type: 'test'
+  ...
+# Subtest: F20A Responses bridge query/alternate routes never forward
+ok 11 - F20A Responses bridge query/alternate routes never forward
+  ---
+  duration_ms: 23.5924
+  type: 'test'
+  ...
+# Subtest: F20A Responses bridge stale owner and rotated old capability never forward
+ok 12 - F20A Responses bridge stale owner and rotated old capability never forward
+  ---
+  duration_ms: 32.2793
+  type: 'test'
+  ...
+# Subtest: F20A Responses bridge withdrawal aborts in-flight broker work and releases no partial output
+ok 13 - F20A Responses bridge withdrawal aborts in-flight broker work and releases no partial output
+  ---
+  duration_ms: 14.2592
+  type: 'test'
+  ...
+# Subtest: F20A Responses bridge rechecks owner after complete broker output
+ok 14 - F20A Responses bridge rechecks owner after complete broker output
+  ---
+  duration_ms: 19.1953
+  type: 'test'
+  ...
+# Subtest: F20A Responses bridge pending readiness is cancellable
+ok 15 - F20A Responses bridge pending readiness is cancellable
+  ---
+  duration_ms: 14.4913
+  type: 'test'
+  ...
+# Subtest: F20C native provider role forwards validated envelope using only private broker credential
+ok 16 - F20C native provider role forwards validated envelope using only private broker credential
+  ---
+  duration_ms: 492.3562
+  type: 'test'
+  ...
+# Subtest: F20C native provider role rejects forged key, other role, origin, media and malformed body before broker
+ok 17 - F20C native provider role rejects forged key, other role, origin, media and malformed body before broker
+  ---
+  duration_ms: 103.3675
+  type: 'test'
+  ...
+# Subtest: F20C provider alternate operation/query/model/path never forwards
+ok 18 - F20C provider alternate operation/query/model/path never forwards
+  ---
+  duration_ms: 34.8142
+  type: 'test'
+  ...
+# Subtest: F20C provider capability rotation aborts pending broker work and releases no prefix
+ok 19 - F20C provider capability rotation aborts pending broker work and releases no prefix
+  ---
+  duration_ms: 10.329
+  type: 'test'
+  ...
+# Subtest: F20C provider rechecks owner after complete broker output
+ok 20 - F20C provider rechecks owner after complete broker output
+  ---
+  duration_ms: 10.8623
+  type: 'test'
+  ...
+# Subtest: F20C provider target/session validation precedes binding
+ok 21 - F20C provider target/session validation precedes binding
+  ---
+  duration_ms: 2.1445
+  type: 'test'
+  ...
+# Subtest: F20C native MCP initialization, discovery, UUID progress and masked path-only release
+ok 22 - F20C native MCP initialization, discovery, UUID progress and masked path-only release
+  ---
+  duration_ms: 408.8722
+  type: 'test'
+  ...
+# Subtest: F20C authenticated stateless optional GET returns405 without dropping MCP or invoking reader
+ok 23 - F20C authenticated stateless optional GET returns405 without dropping MCP or invoking reader
+  ---
+  duration_ms: 57.3946
+  type: 'test'
+  ...
+# Subtest: F20C MCP forged authority, native metadata carriers and path traversal never reach F04
+ok 24 - F20C MCP forged authority, native metadata carriers and path traversal never reach F04
+  ---
+  duration_ms: 72.404
+  type: 'test'
+  ...
+# Subtest: F20C MCP wrong capability, browser origin, media and alternate role fail before reader
+ok 25 - F20C MCP wrong capability, browser origin, media and alternate role fail before reader
+  ---
+  duration_ms: 24.2361
+  type: 'test'
+  ...
+# Subtest: F20C MCP pending authorizer is cancelled by rotation and cannot return late content
+ok 26 - F20C MCP pending authorizer is cancelled by rotation and cannot return late content
+  ---
+  duration_ms: 14.6977
+  type: 'test'
+  ...
+# Subtest: F20C MCP rechecks owner after a completed safe-read result
+ok 27 - F20C MCP rechecks owner after a completed safe-read result
+  ---
+  duration_ms: 13.0358
+  type: 'test'
+  ...
+1..27
+# tests 27
+# suites 0
+# pass 27
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1369.5509

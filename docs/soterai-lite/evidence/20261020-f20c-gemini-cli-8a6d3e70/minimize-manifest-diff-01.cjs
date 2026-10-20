@@ -1,0 +1,2 @@
+const fs=require('node:fs'),path=require('node:path');const file='packages/vscode-extension/package.json',before=fs.readFileSync(file);fs.writeFileSync(path.join(__dirname,'canonical-manifest-attempt01.json'),before,{flag:'wx'});fs.writeFileSync(file,JSON.stringify(JSON.parse(before),null,4)+'\n');
+console.log('Restored canonical four-space JSON format; same properties/values. New uniquely named artifact required; candidate01 evidence retained.');

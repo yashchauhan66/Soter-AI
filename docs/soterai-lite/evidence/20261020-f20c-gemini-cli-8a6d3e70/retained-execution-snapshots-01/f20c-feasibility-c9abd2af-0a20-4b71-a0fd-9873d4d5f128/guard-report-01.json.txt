@@ -1,0 +1,30 @@
+{
+  "scope": "Fixture-only JavaScript guards, not product or OS confinement",
+  "deniedFiles": [
+    {
+      "method": "existsSync",
+      "path": "c:\\windows\\system32\\windowspowershell\\v1.0\\powershell.exe",
+      "write": false
+    },
+    {
+      "method": "realpathSync",
+      "path": "c:\\users\\user\\node_modules\\picomatch\\index.js",
+      "write": false
+    }
+  ],
+  "deniedNetwork": [
+    {
+      "method": "fetch",
+      "host": "",
+      "port": ""
+    }
+  ],
+  "deniedLaunches": [
+    "execSync"
+  ],
+  "deniedSignals": [],
+  "deniedAddons": [],
+  "requests": [],
+  "exitCode": 1,
+  "time": "2026-10-20T12:14:20.886Z"
+}

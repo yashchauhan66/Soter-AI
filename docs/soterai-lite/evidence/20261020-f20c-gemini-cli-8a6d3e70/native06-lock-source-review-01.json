@@ -1,0 +1,143 @@
+{
+  "status": "STATIC_ONLY_WITH_OBSERVED_FIXTURE_DENIAL",
+  "path": "bundle/chunk-32XQ54AJ.js",
+  "sha256": "828f2cce501464143917b69efc786c24507011212994bcb32ca811a6682ece52",
+  "removeLock": {
+    "offset": 129432,
+    "excerpt": "function removeLock(file2, options, callback) {\n      options.fs.rmdir(getLockFile(file2, options), (err2) => {\n        if (err2 && err2.code !== \"ENOENT\") {\n          return callback(err2);\n        }\n        callback();\n      });\n    }\n    function updateLock(file2, options) {\n      const lock4 = locks[file2];\n      if (lock4.updateTimeout) {\n        return;\n      }\n      lock4.updateDelay = lock"
+  },
+  "registry": {
+    "offset": 11325214,
+    "excerpt": "const release3 = await (0, import_proper_lockfile.lock)(this.registryPath, {\n      retries: {\n        retries: Math.floor(LOCK_TIMEOUT_MS / LOCK_RETRY_DELAY_MS),\n        minTimeout: LOCK_RETRY_DELAY_MS\n      }\n    });\n    try {\n      const currentData = await this.loadData();\n      this.data = currentData;\n      let shortId = currentData.projects[normalizedPath];\n      if (shortId) {\n        if (await this.verifySlugOwnership(shortId, normalizedPath)) {\n          await this.ensureOwnershipMarkers(shortId, normalizedPath);\n          return shortId;\n        }\n        delete currentData.projects[normalizedPath];\n      }\n      shortId = await this.findExistingSlugForPath(normalizedPath);\n      if (!shortId) {\n        shortId = await this.claimNewSlug(normalizedPath, currentData.projects);\n      }\n      currentData.projects[normalizedPath] = shortId;\n      await this.save(currentData);\n      return shortId;\n    } finally {\n      try {\n        await release3();\n      } catch (e2) {\n        debugLogger.error(\"Failed to release project registry lock:\", e2);\n      }\n    }\n  }\n  async verifySlugOwnership(slug, projectPath) {\n    if (this.baseDirs.length === 0) {\n      return true;\n    }\n    for (const baseDir of this.baseDirs) {\n      const markerPath = path2.join(baseDir, slug, PROJECT_ROOT_FILE);\n      try {\n        const owner = (await fs4.promises.readFile(markerPath, \"utf8\")).trim();\n        if (this.normalizePath(owner) !== this.normalizePath(projectPath)) {\n          return false;\n        }\n      } catch (e2) {\n        if (isNodeError(e2) && e2.code === \"ENOENT\") {\n          continue;\n        }\n        debugLogger.debug(`Failed to read ownership marker ${markerPath}:`, e2);\n"
+  },
+  "observed": {
+    "root": "D:\\SoterAI-Lite-test-profiles\\f20c-feasibility-3215b0f8-2450-420b-9a6a-94cae9e1b0f4",
+    "pid": 14088,
+    "traceSha256": "18c037e472b8fe8b02562ba68f6cf7de2bdb0a9fef321d4dc06d489d061bd815",
+    "deniedEmptyLockRelease": [
+      {
+        "time": "2026-10-20T12:44:31.232Z",
+        "kind": "report-deniedFiles",
+        "items": [
+          {
+            "method": "rmdir",
+            "path": "d:\\soterai-lite-test-profiles\\f20c-feasibility-3215b0f8-2450-420b-9a6a-94cae9e1b0f4\\home\\.gemini\\projects.json.lock",
+            "write": true
+          }
+        ]
+      },
+      {
+        "time": "2026-10-20T12:44:44.013Z",
+        "kind": "report-deniedFiles",
+        "items": [
+          {
+            "method": "rmdir",
+            "path": "d:\\soterai-lite-test-profiles\\f20c-feasibility-3215b0f8-2450-420b-9a6a-94cae9e1b0f4\\home\\.gemini\\projects.json.lock",
+            "write": true
+          }
+        ]
+      },
+      {
+        "time": "2026-10-20T12:44:44.122Z",
+        "kind": "report-deniedFiles",
+        "items": [
+          {
+            "method": "rmdir",
+            "path": "d:\\soterai-lite-test-profiles\\f20c-feasibility-3215b0f8-2450-420b-9a6a-94cae9e1b0f4\\home\\.gemini\\projects.json.lock",
+            "write": true
+          }
+        ]
+      },
+      {
+        "time": "2026-10-20T12:44:56.816Z",
+        "kind": "report-deniedFiles",
+        "items": [
+          {
+            "method": "rmdir",
+            "path": "d:\\soterai-lite-test-profiles\\f20c-feasibility-3215b0f8-2450-420b-9a6a-94cae9e1b0f4\\home\\.gemini\\projects.json.lock",
+            "write": true
+          }
+        ]
+      },
+      {
+        "time": "2026-10-20T12:44:56.926Z",
+        "kind": "report-deniedFiles",
+        "items": [
+          {
+            "method": "rmdir",
+            "path": "d:\\soterai-lite-test-profiles\\f20c-feasibility-3215b0f8-2450-420b-9a6a-94cae9e1b0f4\\home\\.gemini\\projects.json.lock",
+            "write": true
+          }
+        ]
+      },
+      {
+        "time": "2026-10-20T12:45:22.420Z",
+        "kind": "report-deniedFiles",
+        "items": [
+          {
+            "method": "rmdir",
+            "path": "d:\\soterai-lite-test-profiles\\f20c-feasibility-3215b0f8-2450-420b-9a6a-94cae9e1b0f4\\home\\.gemini\\projects.json.lock",
+            "write": true
+          }
+        ]
+      },
+      {
+        "time": "2026-10-20T12:45:22.530Z",
+        "kind": "report-deniedFiles",
+        "items": [
+          {
+            "method": "rmdir",
+            "path": "d:\\soterai-lite-test-profiles\\f20c-feasibility-3215b0f8-2450-420b-9a6a-94cae9e1b0f4\\home\\.gemini\\projects.json.lock",
+            "write": true
+          }
+        ]
+      },
+      {
+        "time": "2026-10-20T12:46:13.623Z",
+        "kind": "report-deniedFiles",
+        "items": [
+          {
+            "method": "rmdir",
+            "path": "d:\\soterai-lite-test-profiles\\f20c-feasibility-3215b0f8-2450-420b-9a6a-94cae9e1b0f4\\home\\.gemini\\projects.json.lock",
+            "write": true
+          }
+        ]
+      },
+      {
+        "time": "2026-10-20T12:46:13.746Z",
+        "kind": "report-deniedFiles",
+        "items": [
+          {
+            "method": "rmdir",
+            "path": "d:\\soterai-lite-test-profiles\\f20c-feasibility-3215b0f8-2450-420b-9a6a-94cae9e1b0f4\\home\\.gemini\\projects.json.lock",
+            "write": true
+          }
+        ]
+      },
+      {
+        "time": "2026-10-20T12:47:56.028Z",
+        "kind": "report-deniedFiles",
+        "items": [
+          {
+            "method": "rmdir",
+            "path": "d:\\soterai-lite-test-profiles\\f20c-feasibility-3215b0f8-2450-420b-9a6a-94cae9e1b0f4\\home\\.gemini\\projects.json.lock",
+            "write": true
+          }
+        ]
+      },
+      {
+        "time": "2026-10-20T12:47:56.153Z",
+        "kind": "report-deniedFiles",
+        "items": [
+          {
+            "method": "rmdir",
+            "path": "d:\\soterai-lite-test-profiles\\f20c-feasibility-3215b0f8-2450-420b-9a6a-94cae9e1b0f4\\home\\.gemini\\projects.json.lock",
+            "write": true
+          }
+        ]
+      }
+    ],
+    "lockAcquireExistsCallbacks": 24
+  },
+  "finding": "Pinned ProjectRegistry.getShortId acquires proper-lockfile and releases in finally. Fixture04 blanket rmdir denial prevents release of this synthetic empty lock. Trace shows subsequent EEXIST acquisition retries. This identifies a fixture conflict, not a vendor security defect or a tested provider route."
+}

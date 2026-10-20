@@ -1,0 +1,215 @@
+{
+  "status": "INCOMPLETE",
+  "card": "F20C",
+  "requiredGate": "INCOMPLETE_REGISTERED_OWNER_EXACT_VSIX_NATIVE_PRODUCT_ROUTE",
+  "publicFeasibility": {
+    "path": "native-feasibility-07.json",
+    "root": "D:\\SoterAI-Lite-test-profiles\\f20c-feasibility-54a57094-438e-4cff-95ab-f7417b8a0173",
+    "status": "PASS_SCOPED_NATIVE_PUBLIC_FEASIBILITY",
+    "child": {
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "pid": 19040,
+      "code": 0,
+      "signal": null,
+      "stdoutSha256": "a28c8233b4835f7e3429446937e1741a1e07698eff2abf0880f9ad8a9cae9df7",
+      "stderrSha256": "f15fcdc4d7de2dc6e2c53406b647e8ecab63fc8aec420eb3803aeaa0b30006d0"
+    }
+  },
+  "mcpFeasibility": {
+    "path": "native-mcp-feasibility-04.json",
+    "root": "D:\\SoterAI-Lite-test-profiles\\f20c-feasibility-410e5f89-605f-452f-8be9-c6b7a24a8df0",
+    "status": "PASS_SCOPED_NATIVE_MCP_FEASIBILITY",
+    "child": {
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "pid": 6152,
+      "code": 0,
+      "signal": null,
+      "stdoutSha256": "ba5e73ca1599302f2889323eb15a0a86b33ad5ad6625fc69bc0d725681cb8b23",
+      "stderrSha256": "6f1e99c81e862f7f17653f1e864a0fe1f05c6bd3fd23718b0f9d5f24ac856733"
+    },
+    "methods": [
+      "initialize",
+      "notifications/initialized",
+      "HTTP_GET",
+      "tools/list",
+      "tools/call"
+    ]
+  },
+  "checks": [
+    {
+      "name": "gemini-schema-before-01.txt",
+      "exitCode": 1,
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f20c-gemini-cli-8a6d3e70/gemini-schema-before-01.txt",
+        "bytes": 29577,
+        "sha256": "436d32304b14725682787d66540a37d4aca9d3350b9e1ba8a7d6a91cf894b15e"
+      },
+      "tests": 32,
+      "pass": 8,
+      "fail": 24,
+      "skipped": 0
+    },
+    {
+      "name": "gemini-schema-after-01.txt",
+      "exitCode": 0,
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f20c-gemini-cli-8a6d3e70/gemini-schema-after-01.txt",
+        "bytes": 6077,
+        "sha256": "c0fc99c07d2f0d32e5a1451d56c5e486bd11c431907571d41f8feafc7ded3bbb"
+      },
+      "tests": 32,
+      "pass": 32,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "name": "gemini-wire-before-01.txt",
+      "exitCode": 1,
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f20c-gemini-cli-8a6d3e70/gemini-wire-before-01.txt",
+        "bytes": 6312,
+        "sha256": "cb291694905ef63a217a833afa8136902e655f8297aaccaddd501fd8041125b3"
+      },
+      "tests": 7,
+      "pass": 2,
+      "fail": 5,
+      "skipped": 0
+    },
+    {
+      "name": "gemini-wire-after-01.txt",
+      "exitCode": 0,
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f20c-gemini-cli-8a6d3e70/gemini-wire-after-01.txt",
+        "bytes": 7551,
+        "sha256": "f4895bb40e5e30a7f9630690d0e9e1e100a3bdab76e03a1932710b333f60617e"
+      },
+      "tests": 39,
+      "pass": 39,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "name": "gemini-schema-review-before-02.txt",
+      "exitCode": 1,
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f20c-gemini-cli-8a6d3e70/gemini-schema-review-before-02.txt",
+        "bytes": 7159,
+        "sha256": "d3f2e8f303da40e1608c08b7fabbbf7df555aebcdc9ed98cd73421871b1396ce"
+      },
+      "tests": 33,
+      "pass": 32,
+      "fail": 1,
+      "skipped": 0
+    },
+    {
+      "name": "shared-gateway-focused-01.txt",
+      "exitCode": 0,
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f20c-gemini-cli-8a6d3e70/shared-gateway-focused-01.txt",
+        "bytes": 18438,
+        "sha256": "6040a15c93a46fdeb5ef71f99e29fb47571fc9451a16bbccf25d3cd2ba09ca02"
+      },
+      "tests": 90,
+      "pass": 90,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "name": "shared-gateway-focused-02.txt",
+      "exitCode": 0,
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f20c-gemini-cli-8a6d3e70/shared-gateway-focused-02.txt",
+        "bytes": 18672,
+        "sha256": "35f9063de5d29cc5e90d9cdc20862e0039f903a23356f2b5206b60c25ff6e27f"
+      },
+      "tests": 91,
+      "pass": 91,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "name": "backend-typecheck-01.txt",
+      "exitCode": 2,
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f20c-gemini-cli-8a6d3e70/backend-typecheck-01.txt",
+        "bytes": 248,
+        "sha256": "224bead6aefc3f6b444e537b62b77340cddda8f3f923067831aef9b9838b3ba0"
+      }
+    },
+    {
+      "name": "backend-typecheck-02.txt",
+      "exitCode": 0,
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f20c-gemini-cli-8a6d3e70/backend-typecheck-02.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "source": [
+    {
+      "path": "apps/local-ai-broker/src/GeminiGenerateContentSchema.ts",
+      "bytes": 8737,
+      "sha256": "c358d13b71ff53e2647a0d4d629d4be8dab4e1dbb6ae9a680d05ec1aa6f1eb28"
+    },
+    {
+      "path": "apps/local-ai-broker/src/GeminiProviderTarget.ts",
+      "bytes": 833,
+      "sha256": "c42f8eaf63d91ba159f297f3416ae882bc51904cdd6f2840112eabc86082831f"
+    },
+    {
+      "path": "apps/local-ai-broker/src/GatewayBoundary.ts",
+      "bytes": 21304,
+      "sha256": "8475f04f546d68ff90788a3e5043ce37818babd71e58aaab5f49aaf6f6df197b"
+    },
+    {
+      "path": "apps/local-ai-broker/src/GatewayPolicy.ts",
+      "bytes": 13460,
+      "sha256": "787376949d1f43a7daf54ef612ec182e620018f3542515f3de23a1a521d78ec5"
+    },
+    {
+      "path": "apps/local-ai-broker/src/BrokerServer.ts",
+      "bytes": 77037,
+      "sha256": "3a98820eacea3e4e802f6c2443acdf79ca398734c86b127dd1756bee70e26d96"
+    },
+    {
+      "path": "apps/local-ai-broker/src/cli.ts",
+      "bytes": 6062,
+      "sha256": "2c84f7b8604edcd2e792720ca400d6828ff0efbf6610a57e07cdeebf3dbc546e"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/geminiGenerateContentSchema.test.ts",
+      "bytes": 8115,
+      "sha256": "16fefd2f8593c3d36eb4c3afb01c42e6a75dfe52ab7d06ce30da24f5830d226b"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/geminiGenerateContentWire.test.ts",
+      "bytes": 5728,
+      "sha256": "45136bf5dfd993481f52c3d00e9b89cc38de622c78f0e785215c72906d99b805"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/fixtures/gemini-cli-0.55.1-request-1.json",
+      "bytes": 28491,
+      "sha256": "5d7b08a80896344407e25f1e90bc69b4454624cf4ae479239288df4900c5a9a3"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/fixtures/gemini-cli-0.55.1-request-2.json",
+      "bytes": 29409,
+      "sha256": "b4a703e0c16e99c35f7b2bb70866d0c1a8bd3cb906f6aba6ce36c750f2243198"
+    }
+  ],
+  "implemented": "Backend capability-scoped native Gemini stateless text/single-safe-function request/output schema and configured-base/Google-key broker forwarding. Shared trailing SSE event label regression fixed; source test before/after retained.",
+  "pending": [
+    "Frontend Gemini private MCP/GenerateContent bridges",
+    "Reviewed dedicated profile/installed pin/ownership/recovery/registration/flags/manifest/manager/UI documentation",
+    "Combined/full suites/compilers/new exact VSIX/content identity",
+    "Actual registered owner native Gemini product matrix/current withdrawal and affected earlier native/tool checks",
+    "Scoped local source+transition exhaustive byte barriers before F21"
+  ],
+  "residual": "Earlier diagnostic04/05/06 workers/receivers remain INCOMPLETE_NO_SIGNALS. Native public/MCP feasibility is not SoterAI product acceptance. Opaque thought signatures/images/state/real-provider/human/independent/OS/all-descendant behavior unverified or withheld. No catalog grade or rating.",
+  "time": "2026-10-20T13:26:17.650Z"
+}

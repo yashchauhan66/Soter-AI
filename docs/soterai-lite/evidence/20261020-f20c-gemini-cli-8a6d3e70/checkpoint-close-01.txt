@@ -1,0 +1,39 @@
+﻿{
+    "output":  "docs/soterai-lite/evidence/20261020-f20c-gemini-cli-8a6d3e70/checkpoint-stage-01.txt",
+    "observedAt":  "2026-10-20T12:41:35.5758744Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "-c",
+                      "core.autocrlf=false",
+                      "add",
+                      "--pathspec-from-file=docs/soterai-lite/evidence/20261020-f20c-gemini-cli-8a6d3e70/checkpoint-allowlist-01.nul",
+                      "--pathspec-file-nul"
+                  ],
+    "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+    "file":  "git"
+}
+{
+    "output":  "docs/soterai-lite/evidence/20261020-f20c-gemini-cli-8a6d3e70/checkpoint-staged-verification-01.txt",
+    "observedAt":  "2026-10-20T12:41:35.8570740Z",
+    "exitCode":  1,
+    "arguments":  [
+                      "docs/soterai-lite/evidence/20261020-f20c-gemini-cli-8a6d3e70/verify-checkpoint-01.cjs --staged"
+                  ],
+    "sha256":  "B9A6A7A78D2BA91FDCECBCDB01EC6546A28F8105CA10D3F9FF43006C5AB59FD5",
+    "file":  "node"
+}
+powershell.exe : Staged checkpoint bytes failed
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Staged checkpoint bytes failed:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261020-f20c-gemini-cli-8a6d3e70\
+close-checkpoint-01.ps1:10 char:142
++ ... From-Json).exitCode -ne 0) { throw 'Staged checkpoint bytes failed' }
++                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (Staged checkpoint bytes failed:String) [], RuntimeException
+    + FullyQualifiedErrorId : Staged checkpoint bytes failed
+ 

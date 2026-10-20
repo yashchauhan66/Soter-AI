@@ -1,0 +1,43 @@
+﻿{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261020-f20c-gemini-cli-8a6d3e70\\current-affected-cli-launch-01.txt",
+    "observedAt":  "2026-10-20T14:25:22.7675231Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "-NoProfile",
+                      "-ExecutionPolicy",
+                      "Bypass",
+                      "-File",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261020-f20c-gemini-cli-8a6d3e70\\run-affected-cli-04.ps1"
+                  ],
+    "sha256":  "E9240F6F7A465450DB1AB1DB8E30C5933A9F9F2181A8A654F6D0D1C672F663CF",
+    "file":  "powershell.exe"
+}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261020-f20c-gemini-cli-8a6d3e70\\current-affected-ide-launch-01.txt",
+    "observedAt":  "2026-10-20T14:27:05.1966842Z",
+    "exitCode":  1,
+    "arguments":  [
+                      "-NoProfile",
+                      "-ExecutionPolicy",
+                      "Bypass",
+                      "-File",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261020-f20c-gemini-cli-8a6d3e70\\run-ide-product-matrix-03.ps1"
+                  ],
+    "sha256":  "ED5A2EE8D84AFFD969FD96753CEDDB4C367619D735CAD0024288BEB58232B39A",
+    "file":  "powershell.exe"
+}
+powershell.exe : Current affected gate incomplete: current-affected-ide-launch-01
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Current affecte...d-ide-launch-01:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261020-f20c-gemini-cli-8a6d3e70\
+run-current-affected-sequential-01.ps1:8 char:34
++ ... t.exitCode -ne 0){throw ('Current affected gate incomplete: '+$Name)}
++                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (Current affecte...d-ide-launch-01:String) [], RuntimeException
+    + FullyQualifiedErrorId : Current affected gate incomplete: current-affected-ide-launch-01
+ 

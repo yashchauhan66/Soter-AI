@@ -1,0 +1,10 @@
+{
+  "status": "PREPARED_NOT_RUN",
+  "scenario": "Native MCP transport/tool-result feasibility",
+  "improvementRound": 3,
+  "change": "tools.core is also a policy allowlist for every tool, including MCP. Empty core[] installs a wildcard deny at priorityUSER+.24; MCP trust allows atUSER+.2, so the safe tool is excluded even though discovery succeeds. Add only the exact generated MCP safe-read name to core; no built-in tool class matches it. No arbitrary/native tool becomes allowed.",
+  "prior": "D:\\SoterAI-Lite-test-profiles\\f20c-feasibility-85e139f2-033e-4652-aa93-77dbee7a3c69",
+  "driverSha256": "12145eca7414fc0f0618036a2f53dd758dedefe1486b96f3e54fb23d556ee5e3",
+  "scope": "Final ordinary improvement of this distinct MCP scenario. Same pin02/guard05/debug/GET405/loopback/no-signals and strict native tool-call/masked-followup/EOF assertions. No retry beyond this ordinary limit without explicit decision.",
+  "time": "2026-10-20T13:02:08.916Z"
+}

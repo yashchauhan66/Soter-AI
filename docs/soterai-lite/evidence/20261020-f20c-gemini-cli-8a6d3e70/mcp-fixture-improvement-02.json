@@ -1,0 +1,22 @@
+{
+  "status": "PREPARED_NOT_RUN",
+  "scenario": "Native MCP transport/tool-result feasibility",
+  "improvementRound": 2,
+  "previous": {
+    "root": "D:\\SoterAI-Lite-test-profiles\\f20c-feasibility-96593b0c-6a62-448f-8310-c2c70141923f",
+    "child": {
+      "closed": true,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "pid": 22140,
+      "code": 400,
+      "signal": null,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "9bf19f4d856c5d5ff469637d1c19ee24e3fe808d563516511d337ae179170c45"
+    },
+    "receiverError": "AssertionError [ERR_ASSERTION]: Native MCP tool declaration missing"
+  },
+  "change": "Stateless MCP endpoint returns405 AllowPOST for optional GET/DELETE instead of trying to JSON-parse an empty HTTP body and emitting400. Pinned SDK explicitly treats405 GET as supported absence of an SSE notification stream. Native tool declaration/call/masked-followup/EOF assertions and pin02/guard05/no-signals/loopback unchanged.",
+  "driverSha256": "fb9cfaa1b4c2a68b07ccd8d70318ca98ff9c508de6fed06899dbb95cfc22cf85",
+  "time": "2026-10-20T12:58:20.215Z"
+}

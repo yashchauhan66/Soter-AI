@@ -1,6 +1,7 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { GatewayBoundary, GatewayPolicyError, GATEWAY_LIMITS, type GatewayProvider } from "./GatewayBoundary";
 import { validateProviderTarget } from "./ProviderTarget";
+import { geminiProviderTarget } from "./GeminiProviderTarget";
 type Mode = { enabled: boolean; level: string };
 interface GatewayChecks {
     canaries?(): readonly string[];
@@ -13,6 +14,8 @@ export interface GatewayOptions {
     claudeToolSchemas?: boolean;
     codexResponses?: boolean;
     codexResponsesProviderUrl?: string;
+    geminiGenerateContent?: boolean;
+    geminiProviderUrl?: string;
     requireGatewaySync?: boolean;
     registeredValues?: readonly string[];
     gatewayGuard?: (generation: string) => Promise<boolean>;
@@ -45,10 +48,10 @@ export class GatewayPolicy {
         if (options.gatewayPolicy !== false && !options.requireGatewaySync) this.#boundary = options.gatewayBoundary ?? this.compile(options.registeredValues ?? []);
     }
     private compile(values: readonly string[]): GatewayBoundary {
-        return new GatewayBoundary({ version: 1, clineToolSchemas: this.options.clineToolSchemas === true, claudeToolSchemas: this.options.claudeToolSchemas === true, codexResponses: this.options.codexResponses === true, values: [...values, ...[this.options.token, this.options.controlToken, this.options.providerApiKey].filter((v): v is string => !!v), ...(this.checks.canaries?.() ?? (this.options.canaries ?? []).map(c => c.token))] });
+        return new GatewayBoundary({ version: 1, clineToolSchemas: this.options.clineToolSchemas === true, claudeToolSchemas: this.options.claudeToolSchemas === true, codexResponses: this.options.codexResponses === true, geminiGenerateContent: this.options.geminiGenerateContent === true, values: [...values, ...[this.options.token, this.options.controlToken, this.options.providerApiKey].filter((v): v is string => !!v), ...(this.checks.canaries?.() ?? (this.options.canaries ?? []).map(c => c.token))] });
     }
-    status(): { version: number; enabled: boolean; ready: boolean; generation: string; clineToolSchemas: boolean; claudeToolSchemas: boolean; codexResponses: boolean } {
-        return { version: 1, enabled: this.options.gatewayPolicy !== false, ready: !this.#closed && this.#boundary?.available() === true && (!this.#mode || JSON.stringify(this.#mode) === JSON.stringify(this.mode())), generation: this.#generation, clineToolSchemas: this.options.clineToolSchemas === true, claudeToolSchemas: this.options.claudeToolSchemas === true, codexResponses: this.options.codexResponses === true };
+    status(): { version: number; enabled: boolean; ready: boolean; generation: string; clineToolSchemas: boolean; claudeToolSchemas: boolean; codexResponses: boolean; geminiGenerateContent: boolean } {
+        return { version: 1, enabled: this.options.gatewayPolicy !== false, ready: !this.#closed && this.#boundary?.available() === true && (!this.#mode || JSON.stringify(this.#mode) === JSON.stringify(this.mode())), generation: this.#generation, clineToolSchemas: this.options.clineToolSchemas === true, claudeToolSchemas: this.options.claudeToolSchemas === true, codexResponses: this.options.codexResponses === true, geminiGenerateContent: this.options.geminiGenerateContent === true };
     }
     synchronize(value: Record<string, unknown>): { version: number; synchronized: boolean; generation: string } {
         this.invalidate();
@@ -85,7 +88,7 @@ export class GatewayPolicy {
         let deadline: ReturnType<typeof setTimeout> | undefined;
         try {
             await this.fresh(boundary);if (!boundary) return fail("gateway_unavailable");
-            const route = new URL(req.url ?? "/", "http://127.0.0.1"), profile = provider === "codex" ? "openai-responses" : provider + "-compatible";
+            const route = new URL(req.url ?? "/", "http://127.0.0.1"), profile = provider === "codex" ? "openai-responses" : provider === "gemini" ? "gemini-generate-content" : provider + "-compatible";
             const nativeClaude = provider === "anthropic" && this.options.claudeToolSchemas === true && route.pathname === "/v1/ai/anthropic-compatible/v1/messages";
             if (route.search && !(nativeClaude && route.search === "?beta=true") || route.hash || req.headers["x-soterai-provider-key"] !== undefined || req.headers["anthropic-version"] !== undefined && req.headers["anthropic-version"] !== "2023-06-01") return fail("gateway_schema_unsupported");
             for (const name of ["x-soterai-tool", "x-soterai-policy-version"]) {
@@ -96,18 +99,21 @@ export class GatewayPolicy {
             const original = boundary.prepareRequest(provider, body), assessed = await this.checks.request?.(original.body, provider, typeof req.headers["x-soterai-session-id"] === "string" ? req.headers["x-soterai-session-id"] : undefined);
             if (assessed?.decision === "approval_required") return fail("gateway_approval_required");
             if (assessed?.decision === "block") return fail("gateway_sensitive");
-            const inspected = assessed ? boundary.prepareRequest(provider, assessed.body) : original, target = provider === "codex" ? this.options.codexResponsesProviderUrl : provider === "openai" ? this.options.openAIProviderUrl : this.options.anthropicProviderUrl;
+            const inspected = assessed ? boundary.prepareRequest(provider, assessed.body) : original, target = provider === "codex" ? this.options.codexResponsesProviderUrl : provider === "gemini" ? this.options.geminiProviderUrl : provider === "openai" ? this.options.openAIProviderUrl : this.options.anthropicProviderUrl;
             if (!target || !this.options.providerApiKey) return fail("gateway_unavailable");
-            const url = new URL(validateProviderTarget(target));if (url.search) return fail("gateway_policy_unknown");
+            const url = new URL(provider === "gemini" ? geminiProviderTarget(target, inspected.body.model) : validateProviderTarget(target));if (provider !== "gemini" && url.search) return fail("gateway_policy_unknown");
             const streaming = inspected.body.stream === true, headers: Record<string, string> = { "content-type": "application/json", accept: streaming ? "text/event-stream" : "application/json" };
             if (provider === "openai" || provider === "codex") headers.authorization = "Bearer " + this.options.providerApiKey;
+            else if (provider === "gemini") headers["x-goog-api-key"] = this.options.providerApiKey;
             else { headers["x-api-key"] = this.options.providerApiKey;headers["anthropic-version"] = "2023-06-01";if(nativeClaude)headers["anthropic-beta"] = CLAUDE_BETAS; }
             await this.fresh(boundary);
             if (req.aborted || req.destroyed && !req.complete || res.destroyed) return fail("gateway_unavailable");
             req.once("aborted", cancelled);res.once("close", cancelled);this.#active.add(controller);
             deadline = setTimeout(() => controller.abort(), Math.min(30000, Math.max(1, this.options.requestTimeoutMs ?? 30000)));
             this.audit("request_allowed");
-            const response = await (this.options.fetchImpl ?? fetch)(url.href, { method: "POST", headers, body: inspected.canonical, redirect: "error", signal: controller.signal });
+            let providerBody = inspected.canonical;
+            if (provider === "gemini") { const native = { ...inspected.body }; delete native.model; delete native.stream; providerBody = JSON.stringify(native); }
+            const response = await (this.options.fetchImpl ?? fetch)(url.href, { method: "POST", headers, body: providerBody, redirect: "error", signal: controller.signal });
             const media = response.headers.get("content-type") ?? "";
             if (!response.ok || !response.body || !(streaming ? /^text\/event-stream(?:[ \t]*;[ \t]*charset=utf-8)?$/i : /^application\/json(?:[ \t]*;[ \t]*charset=utf-8)?$/i).test(media)) { await response.body?.cancel();return fail("gateway_provider_error"); }
             reader = response.body.getReader();const chunks: Uint8Array[] = [];let bytes = 0;

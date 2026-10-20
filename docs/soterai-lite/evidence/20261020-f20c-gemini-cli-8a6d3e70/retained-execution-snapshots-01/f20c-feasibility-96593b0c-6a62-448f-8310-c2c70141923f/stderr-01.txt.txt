@@ -1,0 +1,72 @@
+Warning: 256-color support not detected. Using a terminal with at least 256-color support is recommended for a better visual experience.
+Ignore file not found: D:\SoterAI-Lite-test-profiles\f20c-feasibility-96593b0c-6a62-448f-8310-c2c70141923f\workspace\.geminiignore, continue without it.
+Rename failed with EPERM, retrying in 50ms (attempt 1/5)...
+Experiments loaded {
+  experimentIds: [],
+  flags: []
+}
+Ignore file not found: D:\SoterAI-Lite-test-profiles\f20c-feasibility-96593b0c-6a62-448f-8310-c2c70141923f\workspace\.geminiignore, continue without it.
+Experiments loaded {
+  experimentIds: [],
+  flags: []
+}
+[AgentRegistry] User policy exists for 'codebase_investigator', skipping dynamic registration.
+[AgentRegistry] User policy exists for 'cli_help', skipping dynamic registration.
+Using FileKeychain fallback for secure storage.
+Registering notification handlers for server 'soterai_safe_read'. Capabilities: { tools: {} }
+Server 'soterai_safe_read' has tools but did not declare 'listChanged' capability. Listening anyway for robustness...
+[MCP error] MCP ERROR (soterai_safe_read) StreamableHTTPError: Streamable HTTP error: Failed to open SSE stream: Bad Request
+    at StreamableHTTPClientTransport._startOrAuthSse (file:///C:/Users/USER/AppData/Roaming/npm/node_modules/@google/gemini-cli/bundle/chunk-32XQ54AJ.js:304885:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: 400
+}
+MCP issues detected. Run /mcp list for status.
+[MCP error] Error during discovery for MCP server 'soterai_safe_read': Client is not connected, must connect before interacting with the server. Current state is disconnected Error: Client is not connected, must connect before interacting with the server. Current state is disconnected
+    at McpClient.assertConnected (file:///C:/Users/USER/AppData/Roaming/npm/node_modules/@google/gemini-cli/bundle/chunk-32XQ54AJ.js:366792:13)
+    at McpClient.discoverResources (file:///C:/Users/USER/AppData/Roaming/npm/node_modules/@google/gemini-cli/bundle/chunk-32XQ54AJ.js:366809:10)
+    at McpClient.discoverInto (file:///C:/Users/USER/AppData/Roaming/npm/node_modules/@google/gemini-cli/bundle/chunk-32XQ54AJ.js:366728:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///C:/Users/USER/AppData/Roaming/npm/node_modules/@google/gemini-cli/bundle/chunk-32XQ54AJ.js:368147:15
+Scheduling MCP context refresh...
+Executing MCP context refresh...
+MCP context refresh complete.
+[DEBUG] [MemoryDiscovery] Loading environment memory for trusted root: D:/SoterAI-Lite-test-profiles/f20c-feasibility-96593b0c-6a62-448f-8310-c2c70141923f/workspace (Stopping at trusted root: D:/SoterAI-Lite-test-profiles/f20c-feasibility-96593b0c-6a62-448f-8310-c2c70141923f/workspace — no git root found)
+[DEBUG] [MemoryDiscovery] Starting upward search from D:/SoterAI-Lite-test-profiles/f20c-feasibility-96593b0c-6a62-448f-8310-c2c70141923f/workspace stopping at D:/SoterAI-Lite-test-profiles/f20c-feasibility-96593b0c-6a62-448f-8310-c2c70141923f/workspace
+[STARTUP] StartupProfiler.flush() called with 9 phases
+[STARTUP] Recording metric for phase: cli_startup duration: 212.8511000000001
+[STARTUP] Recording metric for phase: load_settings duration: 28.34680000000003
+[STARTUP] Recording metric for phase: cleanup_ops duration: 151.68409999999994
+[STARTUP] Recording metric for phase: parse_arguments duration: 31.409000000000106
+[STARTUP] Recording metric for phase: load_cli_config duration: 28.388599999999997
+[STARTUP] Recording metric for phase: setup_terminal duration: 0.6911000000000058
+[STARTUP] Recording metric for phase: initialize_app duration: 1.7553000000000338
+[STARTUP] Recording metric for phase: authenticate duration: 0.6060999999999694
+[STARTUP] Recording metric for phase: discover_tools duration: 9.451300000000174
+Experiments loaded {
+  experimentIds: [],
+  flags: []
+}
+Session ID: 0bb3d926-2ba4-4e60-8811-17c326f10ea9
+[Routing] Selected model: gemini-3.5-flash (Source: agent-router/override, Latency: 0ms)
+	[Routing] Reasoning: Routing bypassed by forced model directive. Using: gemini-2.5-flash
+Error when talking to Gemini API Full report available at: D:\SoterAI-Lite-test-profiles\f20c-feasibility-96593b0c-6a62-448f-8310-c2c70141923f\temp\gemini-client-error-Turn.run-sendMessageStream-2026-10-20T12-57-33-665Z.json _ApiError: {"error":{"message":"","code":400,"status":"Bad Request"}}
+    at throwErrorIfNotOK (file:///C:/Users/USER/AppData/Roaming/npm/node_modules/@google/gemini-cli/bundle/chunk-32XQ54AJ.js:267240:24)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///C:/Users/USER/AppData/Roaming/npm/node_modules/@google/gemini-cli/bundle/chunk-32XQ54AJ.js:267003:7
+    at async Models.generateContentStream (file:///C:/Users/USER/AppData/Roaming/npm/node_modules/@google/gemini-cli/bundle/chunk-32XQ54AJ.js:268099:16)
+    at async file:///C:/Users/USER/AppData/Roaming/npm/node_modules/@google/gemini-cli/bundle/chunk-32XQ54AJ.js:310397:19
+    at async file:///C:/Users/USER/AppData/Roaming/npm/node_modules/@google/gemini-cli/bundle/chunk-32XQ54AJ.js:287277:23
+    at async retryWithBackoff (file:///C:/Users/USER/AppData/Roaming/npm/node_modules/@google/gemini-cli/bundle/chunk-32XQ54AJ.js:307272:23)
+    at async GeminiChat.makeApiCallAndProcessStream (file:///C:/Users/USER/AppData/Roaming/npm/node_modules/@google/gemini-cli/bundle/chunk-32XQ54AJ.js:330898:28)
+    at async GeminiChat.streamWithRetries (file:///C:/Users/USER/AppData/Roaming/npm/node_modules/@google/gemini-cli/bundle/chunk-32XQ54AJ.js:330671:29)
+    at async Turn.run (file:///C:/Users/USER/AppData/Roaming/npm/node_modules/@google/gemini-cli/bundle/chunk-32XQ54AJ.js:331556:24) {
+  status: 400
+}
+{
+  "session_id": "0bb3d926-2ba4-4e60-8811-17c326f10ea9",
+  "error": {
+    "type": "Error",
+    "message": "{\"error\":{\"message\":\"\",\"code\":400,\"status\":\"Bad Request\"}}",
+    "code": 400
+  }
+}
