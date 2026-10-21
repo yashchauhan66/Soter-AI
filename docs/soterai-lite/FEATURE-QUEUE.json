@@ -9,7 +9,7 @@
   "planVersion": 1,
   "clientDate": "2026-10-13",
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
-  "scope": "F01-F10/F12-F21/F22a-b scoped DONE; F11 optional absent NOT_TESTED/NOT_COVERED. F22c Terraform/tfvars active; remaining subcards/features/verification gates pending.",
+  "scope": "F01-F10/F12-F21/F22a-c scoped DONE after current byte barriers; F11 optional absent NOT_TESTED/NOT_COVERED. ParentF22 incomplete; F22d npm/pypi registry configs prepared ACTIVE, no production before transition proof. Remaining subcards/features/verification gates pending.",
   "implementationConcurrency": 1,
   "activeFeature": "F22",
   "prerequisiteBlock": {
@@ -640,8 +640,8 @@
         {
           "id": "F22c",
           "title": "Terraform/tfvars",
-          "status": "VERIFYING",
-          "result": "PASS_SCOPED_PENDING_BYTE_BARRIERS",
+          "status": "DONE",
+          "result": "PASS_SCOPED",
           "requires": [
             "F22b"
           ],
@@ -653,12 +653,15 @@
             "F22b": "PASS_CURRENT_EXACT_OBJECT"
           },
           "acceptanceEvidence": "docs/soterai-lite/evidence/20261021-f22c-terraform-79d3c2a1/f22c-acceptance-01.json",
-          "scope": "F22c finite saved static Terraform/tfvars native HCL and strict duplicate-aware JSON only: quoted/heredoc strings, actual comments, named credential/default/output fields and nested literals. Dynamic templates/functions/operators/comprehensions/unsupported syntax withhold; no Terraform execution, plan/provider/schema validity or full-HCL claim. Strict machine family flag, owner-native file/finding selection, F21 HMAC possible-exposure metadata and canonical encrypted F06 checkpoint-only migration/exact whole-file disclosure with saved denies. Generic per-entry restoration refuses these records. No new dependency, value-bearing env file, live validity, AI-access observation, OS boundary, human or independent verification claim. Current affected container/source/hygiene/vault/reader/gateway verified; backend/MCP production unchanged. Actual vendor executables not rerun; final exact-object V01 route gates remain pending."
+          "scope": "F22c finite saved static Terraform/tfvars native HCL and strict duplicate-aware JSON only: quoted/heredoc strings, actual comments, named credential/default/output fields and nested literals. Dynamic templates/functions/operators/comprehensions/unsupported syntax withhold; no Terraform execution, plan/provider/schema validity or full-HCL claim. Strict machine family flag, owner-native file/finding selection, F21 HMAC possible-exposure metadata and canonical encrypted F06 checkpoint-only migration/exact whole-file disclosure with saved denies. Generic per-entry restoration refuses these records. No new dependency, value-bearing env file, live validity, AI-access observation, OS boundary, human or independent verification claim. Current affected container/source/hygiene/vault/reader/gateway verified; backend/MCP production unchanged. Actual vendor executables not rerun; final exact-object V01 route gates remain pending.",
+          "sourceEvidenceCommit": "47417e2699d91402d686318b481dbb7a09a28cae",
+          "commitByteVerification": "docs/soterai-lite/evidence/20261021-f22c-terraform-79d3c2a1/f22c-committed-byte-verification-01.json",
+          "transitionByteVerification": "docs/soterai-lite/evidence/20261021-f22c-terraform-79d3c2a1/f22c-transition-byte-verification-01.json"
         },
         {
           "id": "F22d",
           "title": "npm/pypi registry configs",
-          "status": "PLANNED",
+          "status": "ACTIVE",
           "result": "NOT-RUN",
           "requires": [
             "F22c"
@@ -703,8 +706,8 @@
       ],
       "completionRule": "All required subcards pass individually before parent DONE",
       "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
-      "activeSubcard": "F22c",
-      "progressEvidence": "docs/soterai-lite/evidence/20261021-f22c-terraform-79d3c2a1/f22c-progress-02.json"
+      "activeSubcard": "F22d",
+      "progressEvidence": "docs/soterai-lite/evidence/20261021-f22c-terraform-79d3c2a1/f22c-transition-byte-verification-01.json"
     },
     {
       "id": "F23",
