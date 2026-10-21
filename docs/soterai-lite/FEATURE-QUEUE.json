@@ -9,7 +9,7 @@
   "planVersion": 1,
   "clientDate": "2026-10-13",
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
-  "scope": "F01-F10/F12-F21/F22a-c scoped DONE after byte barriers; F11 optional absent NOT_TESTED/NOT_COVERED. F22d registry configs active; parent and remaining stages incomplete.",
+  "scope": "F01-F10/F12-F21/F22a-d scoped DONE after current byte barriers; F11 optional absent NOT_TESTED/NOT_COVERED. ParentF22 incomplete; F22e service-account JSON prepared ACTIVE, no production before transition proof. Remaining subcards/features/verification gates pending.",
   "implementationConcurrency": 1,
   "activeFeature": "F22",
   "prerequisiteBlock": {
@@ -661,8 +661,8 @@
         {
           "id": "F22d",
           "title": "npm/pypi registry configs",
-          "status": "VERIFYING",
-          "result": "PASS_SCOPED_PENDING_BYTE_BARRIERS",
+          "status": "DONE",
+          "result": "PASS_SCOPED",
           "requires": [
             "F22c"
           ],
@@ -675,12 +675,15 @@
             "F22c": "PASS_CURRENT_EXACT_OBJECT"
           },
           "acceptanceEvidence": "docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/f22d-acceptance-01.json",
-          "scope": "F22d finite static saved project .npmrc/.pypirc credential fields/URL userinfo/canonical UTF8 base64 and supported comments/multiline only. Known public registry/schema controls retained; unsupported/malformed/dynamic inputs and external references withhold. Strict machine family flag and native owner selection, F21 keyed possible-exposure metadata, canonical F06 encrypted whole-file checkpoint migration/exact disclosure with saved denies; generic per-entry restoration refuses. No new dependency/INI library, home/global config loading, package client, registry request, upload, login, value-bearing env file, credential-validity/AI-access observation/OS/human/independent claim. Composite auth fragments/other client-specific semantics/prior copies/unmanaged reads remain limited. Affected shared native workflows verified; backend/MCP production unchanged; actual vendor executables not rerun and final exact-object V01 route gates remain pending."
+          "scope": "F22d finite static saved project .npmrc/.pypirc credential fields/URL userinfo/canonical UTF8 base64 and supported comments/multiline only. Known public registry/schema controls retained; unsupported/malformed/dynamic inputs and external references withhold. Strict machine family flag and native owner selection, F21 keyed possible-exposure metadata, canonical F06 encrypted whole-file checkpoint migration/exact disclosure with saved denies; generic per-entry restoration refuses. No new dependency/INI library, home/global config loading, package client, registry request, upload, login, value-bearing env file, credential-validity/AI-access observation/OS/human/independent claim. Composite auth fragments/other client-specific semantics/prior copies/unmanaged reads remain limited. Affected shared native workflows verified; backend/MCP production unchanged; actual vendor executables not rerun and final exact-object V01 route gates remain pending.",
+          "sourceEvidenceCommit": "b0f450dd72babae0cb056459bc682312134790eb",
+          "commitByteVerification": "docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/f22d-committed-byte-verification-01.json",
+          "transitionByteVerification": "docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/f22d-transition-byte-verification-01.json"
         },
         {
           "id": "F22e",
           "title": "service-account JSON",
-          "status": "PLANNED",
+          "status": "ACTIVE",
           "result": "NOT-RUN",
           "requires": [
             "F22d"
@@ -716,8 +719,8 @@
       ],
       "completionRule": "All required subcards pass individually before parent DONE",
       "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
-      "activeSubcard": "F22d",
-      "progressEvidence": "docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/f22d-progress-05.json"
+      "activeSubcard": "F22e",
+      "progressEvidence": "docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/f22d-transition-byte-verification-01.json"
     },
     {
       "id": "F23",

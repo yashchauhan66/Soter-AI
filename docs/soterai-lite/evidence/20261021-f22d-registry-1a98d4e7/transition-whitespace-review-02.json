@@ -1,0 +1,22 @@
+{
+  "status": "PASS_ARCHIVAL_RAW_ONLY",
+  "sourceCommitLog": {
+    "path": "docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/f22d-source-commit-01.txt",
+    "bytes": 90791,
+    "sha256": "ef6723cdec2bf588a71973c5313f34db282e5fb9c317b6fa3186c6414148f8a6"
+  },
+  "failedGate": {
+    "log": {
+      "path": "docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/transition-staged-whitespace-01.txt",
+      "bytes": 117,
+      "sha256": "3e611fb13ba1de57d42694edf6ccd37f71334e816fc5a9b874bdb9a314e53dc4"
+    },
+    "receipt": {
+      "path": "docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/transition-staged-whitespace-01.txt.result.json",
+      "bytes": 805,
+      "sha256": "f3e379afc81aaa948cde207052de5ad7e1a315e88b4ac695adaaac3cb8f69f80"
+    }
+  },
+  "line": 8,
+  "reason": "Only raw successful Git commit output has an existing blank-space line. Preserve exact raw bytes; authored transition metadata/helpers must pass formatting. Source byte proof991entries/627paths remains PASS; no product, test, artifact or raw modification."
+}
