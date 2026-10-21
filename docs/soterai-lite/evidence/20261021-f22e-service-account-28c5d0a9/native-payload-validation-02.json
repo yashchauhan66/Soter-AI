@@ -1,0 +1,21 @@
+{
+  "status": "PASS_PRELAUNCH_COMPONENT_PAYLOADS_ONLY",
+  "source": {
+    "path": "packages/vscode-extension/src/__tests__/host/liteServiceAccountScanner.host.ts",
+    "bytes": 22152,
+    "sha256": "773387af527ab134502761effef1fe65e00f7888d7aceb8b646596d5b75b8884"
+  },
+  "files": 5,
+  "findings": 4,
+  "publicControls": 2,
+  "scopes": [
+    "escaped multiline private key and credential URL",
+    "authorized-user refresh token",
+    "nested password/public project",
+    "uppercase public key identifier/endpoint",
+    "private public grouping"
+  ],
+  "nativeBehaviorVerified": false,
+  "authenticationRequests": 0,
+  "independence": "LOW"
+}

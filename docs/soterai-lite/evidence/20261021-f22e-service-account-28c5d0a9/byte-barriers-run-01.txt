@@ -1,0 +1,35 @@
+﻿{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22e-service-account-28c5d0a9\\snapshot-execution-run-01.txt",
+    "observedAt":  "2026-10-21T12:21:27.1633840Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22e-service-account-28c5d0a9\\snapshot-execution-01.cjs"
+                  ],
+    "sha256":  "64AAB16AB16D778C63D90B6BC20FD8078A700ED8499DC61ACF536B27F2498650",
+    "file":  "node"
+}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22e-service-account-28c5d0a9\\prepare-acceptance-run-01.txt",
+    "observedAt":  "2026-10-21T12:21:28.2259598Z",
+    "exitCode":  1,
+    "arguments":  [
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22e-service-account-28c5d0a9\\prepare-acceptance-04.cjs"
+                  ],
+    "sha256":  "071A75A1485A992676F4466B664018A54B70131C6C4101F3DB519C62B2321C03",
+    "file":  "node"
+}
+powershell.exe : Gate failed; raw evidence retained: prepare-acceptance-run-01
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Gate failed; ra...ceptance-run-01:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261021-f22e-service-account-28c5
+d0a9\complete-byte-barriers-04.ps1:8 char:34
++ ... exitCode -ne 0){throw ('Gate failed; raw evidence retained: '+$Name)}
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (Gate failed; ra...ceptance-run-01:String) [], RuntimeException
+    + FullyQualifiedErrorId : Gate failed; raw evidence retained: prepare-acceptance-run-01
+ 

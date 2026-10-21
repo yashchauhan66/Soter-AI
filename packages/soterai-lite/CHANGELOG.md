@@ -1,5 +1,7 @@
 # Changelog
 
+- Add owner-reviewed strict service-account/key JSON scanning with multiline private material, public-field controls, machine withdrawal, private metadata and guarded encrypted checkpoint-only migration/disclosure. Unsupported or duplicate JSON/external credential sources withhold. No auth client/config execution/token request/new dependency.
+
 - Add owner-reviewed project .npmrc/.pypirc credential scanning with strict machine withdrawal, private metadata, encoded/URL-safe markers and canonical encrypted checkpoint-only disclosure recovery. Preserve public registry controls; malformed/dynamic/unsupported inputs withhold. No home config, package client, registry request, external file read or new dependency.
 
 - Add owner-reviewed bounded static Terraform/tfvars native and strict JSON scanning, native file/finding selection and strict machine withdrawal. Quoted/heredoc literals and comments use canonical encrypted vault migration with checkpoint-only exact disclosure restore. Dynamic templates/functions/unsupported syntax withhold analysis; no Terraform execution, plan, provider validation or value-bearing env generation.

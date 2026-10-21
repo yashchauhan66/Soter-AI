@@ -140,7 +140,8 @@
         "soterai.lite.configScanner.source",
         "soterai.lite.configScanner.dockerKubernetes",
         "soterai.lite.configScanner.terraform",
-        "soterai.lite.configScanner.registry"
+        "soterai.lite.configScanner.registry",
+        "soterai.lite.configScanner.serviceAccount"
       ]
     }
   },
@@ -1460,6 +1461,31 @@
         "command": "soterai.registrySecretScannerStatus",
         "title": "npm/PyPI Registry Secret Scanner Status",
         "category": "SoterAI"
+      },
+      {
+        "command": "soterai.reviewWorkspaceServiceAccountSecrets",
+        "title": "Review Workspace Service-account JSON Secrets",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.reviewServiceAccountSecrets",
+        "title": "Review Selected Service-account JSON Secrets",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.reviewServiceAccountSecretVault",
+        "title": "Review Service-account JSON Vault Migration",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.restoreServiceAccountSecretVault",
+        "title": "Restore Reviewed Service-account JSON Values (Disclosure)",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.serviceAccountSecretScannerStatus",
+        "title": "Service-account JSON Secret Scanner Status",
+        "category": "SoterAI"
       }
     ],
     "viewsContainers": {
@@ -2182,6 +2208,12 @@
           "default": true,
           "scope": "machine",
           "description": "Enable owner-reviewed static project .npmrc/.pypirc credential review with canonical encrypted vault migration. Disclosure restores the entire encrypted original checkpoint; unsupported syntax, external references and dynamic expressions withhold analysis. No home scan, package client or registry request."
+        },
+        "soterai.lite.configScanner.serviceAccount": {
+          "type": "boolean",
+          "default": true,
+          "scope": "machine",
+          "description": "Enable owner-reviewed saved service-account/key JSON review and canonical encrypted checkpoint migration. Public schema controls remain useful; malformed/duplicate/unsupported external credential sources withhold. No authentication, config execution or token request."
         }
       }
     },
@@ -3272,6 +3304,26 @@
         },
         {
           "command": "soterai.registrySecretScannerStatus",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.reviewWorkspaceServiceAccountSecrets",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.reviewServiceAccountSecrets",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.reviewServiceAccountSecretVault",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.restoreServiceAccountSecretVault",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.serviceAccountSecretScannerStatus",
           "when": "soterai.advancedCommands"
         }
       ]

@@ -19,13 +19,15 @@ import { terraformFormatForPath, TERRAFORM_WORKSPACE_GLOBS } from "../config-sca
 import { terraformScannerEnabled } from "../config-scanners/TerraformScannerFlags";
 import { registryFormatForPath, REGISTRY_WORKSPACE_GLOBS } from "../config-scanners/RegistrySecretPlan";
 import { registryScannerEnabled } from "../config-scanners/RegistryScannerFlags";
+import { serviceAccountFormatForPath, SERVICE_ACCOUNT_WORKSPACE_GLOBS } from "../config-scanners/ServiceAccountSecretPlan";
+import { serviceAccountScannerEnabled } from "../config-scanners/ServiceAccountScannerFlags";
 type Analyzer = Awaited<ReturnType<HygieneExposureLedger["createAnalyzer"]>>;
 interface Binding { uri: vscode.Uri; environment: boolean; identity: string; policy: string; analysis: Readonly<HygieneAnalysis>; findings: readonly HygieneFinding[]; safeLabels: boolean; vaulted: boolean; checkpoint: boolean }
 class Changed extends Error {}
 export class HygieneController implements vscode.Disposable {
     #vault: VaultManager; #ledger: HygieneExposureLedger; #bindings = new Map<string, Binding>(); #busy = false; #disposed = false; #epoch = 0;
     #analyzer?: Analyzer; #listeners: vscode.Disposable[];
-    constructor(private readonly context: vscode.ExtensionContext, private readonly options: { now?: () => number; family?: "source" | "dockerKubernetes" | "terraform" | "registry" } = {}) {
+    constructor(private readonly context: vscode.ExtensionContext, private readonly options: { now?: () => number; family?: "source" | "dockerKubernetes" | "terraform" | "registry" | "serviceAccount" } = {}) {
         this.#vault = new VaultManager(context); this.#ledger = new HygieneExposureLedger(context.globalState, context.secrets);
         this.#listeners = [vscode.workspace.onDidChangeConfiguration(e => { if (e.affectsConfiguration("soterai")) this.withdraw(); }),
             vscode.workspace.onDidChangeWorkspaceFolders(() => this.withdraw()), context.secrets.onDidChange(e => {
@@ -38,12 +40,13 @@ export class HygieneController implements vscode.Disposable {
         const uri = folders[0].uri; if (uri.scheme !== "file" || uri.authority || uri.query || uri.fragment) throw Error(); return uri;
     }
     #available(): boolean { try { this.#root(); return !this.#disposed && process.platform === "win32" && hygieneAssistantEnabled() && vaultModeEnabled() && (this.options.family !== "source" || sourceScannerEnabled())
-        && (this.options.family !== "dockerKubernetes" || containerScannerEnabled()) && (this.options.family !== "terraform" || terraformScannerEnabled()) && (this.options.family !== "registry" || registryScannerEnabled()); } catch { return false; } }
+        && (this.options.family !== "dockerKubernetes" || containerScannerEnabled()) && (this.options.family !== "terraform" || terraformScannerEnabled()) && (this.options.family !== "registry" || registryScannerEnabled()) && (this.options.family !== "serviceAccount" || serviceAccountScannerEnabled()); } catch { return false; } }
     status(): object { return { status: this.#available() ? "OWNER_REVIEW_REQUIRED" : "UNAVAILABLE", busy: this.#busy, scope: this.options.family === "source"
         ? "Saved JS/JSX/TS/TSX/MJS/CJS static strings only. Dynamic credentials and unsupported syntax withhold analysis. Heuristic possible-exposure metadata; no credential validity or AI-access verification."
         : this.options.family === "dockerKubernetes" ? "Saved static Docker ENV/ARG and Compose/Kubernetes YAML only. Unsupported syntax/expressions withhold analysis; no config execution, build, deployment, credential-validity or AI-access verification. YAML restoration uses the reviewed encrypted whole-file checkpoint."
         : this.options.family === "terraform" ? "Saved static Terraform/tfvars literals and strict JSON only. Unsupported templates/expressions withhold analysis; no config execution, Terraform plan, provider/schema or AI-access verification. Restoration uses the reviewed encrypted whole-file checkpoint."
         : this.options.family === "registry" ? "Saved project .npmrc/.pypirc static credential fields only. Unsupported syntax/expressions withhold analysis; no config execution, home scan, package client or registry request. Restoration uses the reviewed encrypted whole-file checkpoint; account validity and AI access are unverified."
+        : this.options.family === "serviceAccount" ? "Saved project strict service-account/key JSON only; no config execution, external credential sources, authentication or token request. Unsupported syntax withholds. Restoration uses the reviewed encrypted whole-file checkpoint; credential validity and AI access are unverified."
         : "Local heuristic findings and possible-exposure metadata; AI access, key validity and manual rotation are unverified." }; }
     withdraw(): void { this.#epoch++; this.#analyzer?.dispose(); this.#analyzer = undefined; this.#bindings.clear(); this.#vault.withdrawHygiene(); }
     dispose(): void { this.#disposed = true; this.withdraw(); this.#listeners.forEach(d => d.dispose()); }
@@ -66,10 +69,10 @@ export class HygieneController implements vscode.Disposable {
         await assertWorkspaceFileUri(uri); const s = await lstat(uri.fsPath); if (!s.isFile() || s.isSymbolicLink() || s.nlink !== 1) throw Error(); return { identity: fileIdentity(s), size: s.size };
     }
     #snapshot(uri: vscode.Uri, s: Readonly<VaultHygieneSnapshot>, analyzer: Analyzer): Binding {
-        const sourceMode = this.options.family === "source", containerMode = this.options.family === "dockerKubernetes", terraformMode = this.options.family === "terraform", registryMode = this.options.family === "registry", environment = !sourceMode && !containerMode && !terraformMode && !registryMode && /^\.env(?:\..*)?$/i.test(path.basename(uri.fsPath)), source = path.relative(this.#root().fsPath, uri.fsPath).replaceAll("\\", "/");
-        const syntax = sourceMode ? sourceSyntaxForPath(source) : containerMode ? containerFormatForPath(source) : terraformMode ? terraformFormatForPath(source) : registryMode ? registryFormatForPath(source) : undefined;
-        if ((sourceMode || containerMode || terraformMode || registryMode) && !syntax) throw Error();
-        const input = { source, text: s.text, environment }, analysis = sourceMode ? analyzer.analyzeSource(input) : containerMode ? analyzer.analyzeContainer(input) : terraformMode ? analyzer.analyzeTerraform(input) : registryMode ? analyzer.analyzeRegistry(input) : analyzer.analyze(input), plan = createVaultMigrationPlan(s.text, environment, randomUUID(), syntax);
+        const sourceMode = this.options.family === "source", containerMode = this.options.family === "dockerKubernetes", terraformMode = this.options.family === "terraform", registryMode = this.options.family === "registry", serviceAccountMode = this.options.family === "serviceAccount", environment = !sourceMode && !containerMode && !terraformMode && !registryMode && !serviceAccountMode && /^\.env(?:\..*)?$/i.test(path.basename(uri.fsPath)), source = path.relative(this.#root().fsPath, uri.fsPath).replaceAll("\\", "/");
+        const syntax = sourceMode ? sourceSyntaxForPath(source) : containerMode ? containerFormatForPath(source) : terraformMode ? terraformFormatForPath(source) : registryMode ? registryFormatForPath(source) : serviceAccountMode ? serviceAccountFormatForPath(source) : undefined;
+        if ((sourceMode || containerMode || terraformMode || registryMode || serviceAccountMode) && !syntax) throw Error();
+        const input = { source, text: s.text, environment }, analysis = sourceMode ? analyzer.analyzeSource(input) : containerMode ? analyzer.analyzeContainer(input) : terraformMode ? analyzer.analyzeTerraform(input) : registryMode ? analyzer.analyzeRegistry(input) : serviceAccountMode ? analyzer.analyzeServiceAccount(input) : analyzer.analyze(input), plan = createVaultMigrationPlan(s.text, environment, randomUUID(), syntax);
         const matcher = new RegisteredSecretMatcher(plan.candidates.map(c => c.rawValue));
         return { uri, environment, identity: s.identity, policy: s.policy, analysis, findings: analysis.findings,
             safeLabels: matcher.inspectRequest([s.source, uri.fsPath]).status === "CLEAN", vaulted: false, checkpoint: plan.restoreMode === "checkpoint" };
@@ -81,7 +84,7 @@ export class HygieneController implements vscode.Disposable {
     reviewFile(uri: vscode.Uri): Promise<any> { return this.#review(uri); }
     reviewWorkspace(): Promise<any> { return this.#review(); }
     async #discover(root: vscode.Uri, valid: () => boolean): Promise<{ files: vscode.Uri[]; capped: boolean }> {
-        const patterns = this.options.family === "dockerKubernetes" ? CONTAINER_WORKSPACE_GLOBS : this.options.family === "terraform" ? TERRAFORM_WORKSPACE_GLOBS : this.options.family === "registry" ? REGISTRY_WORKSPACE_GLOBS : [this.options.family === "source"
+        const patterns = this.options.family === "dockerKubernetes" ? CONTAINER_WORKSPACE_GLOBS : this.options.family === "terraform" ? TERRAFORM_WORKSPACE_GLOBS : this.options.family === "registry" ? REGISTRY_WORKSPACE_GLOBS : this.options.family === "serviceAccount" ? SERVICE_ACCOUNT_WORKSPACE_GLOBS : [this.options.family === "source"
             ? "**/*.{[jJ][sS],[jJ][sS][xX],[tT][sS],[tT][sS][xX],[mM][jJ][sS],[cC][jJ][sS]}" : "**/*"];
         const found = new Map<string, vscode.Uri>(); let capped = false;
         for (const pattern of patterns) {
@@ -99,23 +102,24 @@ export class HygieneController implements vscode.Disposable {
             // policy basis. It reads policy sources, never candidate originals.
             // Later owner/source changes still invalidate this exact review.
             await BoundarySnapshot.load(); if (!valid()) throw Error();
-            const sourceMode = this.options.family === "source", containerMode = this.options.family === "dockerKubernetes", terraformMode = this.options.family === "terraform", registryMode = this.options.family === "registry", syntaxOf = (uri: vscode.Uri) => {
-                const relative = path.relative(root.fsPath, uri.fsPath).replaceAll("\\", "/"); return containerMode ? containerFormatForPath(relative) : terraformMode ? terraformFormatForPath(relative) : registryMode ? registryFormatForPath(relative) : sourceSyntaxForPath(relative);
+            const sourceMode = this.options.family === "source", containerMode = this.options.family === "dockerKubernetes", terraformMode = this.options.family === "terraform", registryMode = this.options.family === "registry", serviceAccountMode = this.options.family === "serviceAccount", syntaxOf = (uri: vscode.Uri) => {
+                const relative = path.relative(root.fsPath, uri.fsPath).replaceAll("\\", "/"); return containerMode ? containerFormatForPath(relative) : terraformMode ? terraformFormatForPath(relative) : registryMode ? registryFormatForPath(relative) : serviceAccountMode ? serviceAccountFormatForPath(relative) : sourceSyntaxForPath(relative);
             };
-            if ((sourceMode || containerMode || terraformMode || registryMode) && selected && !syntaxOf(selected)) return { status: containerMode ? "UNSUPPORTED_CONTAINER_CONFIG" : terraformMode ? "UNSUPPORTED_TERRAFORM_CONFIG" : registryMode ? "UNSUPPORTED_REGISTRY_CONFIG" : "UNSUPPORTED_SOURCE" };
+            if ((sourceMode || containerMode || terraformMode || registryMode || serviceAccountMode) && selected && !syntaxOf(selected)) return { status: containerMode ? "UNSUPPORTED_CONTAINER_CONFIG" : terraformMode ? "UNSUPPORTED_TERRAFORM_CONFIG" : registryMode ? "UNSUPPORTED_REGISTRY_CONFIG" : serviceAccountMode ? "UNSUPPORTED_SERVICE_ACCOUNT_CONFIG" : "UNSUPPORTED_SOURCE" };
             const discovery = selected ? { files: [selected], capped: false } : await this.#discover(root, valid);
             let files = discovery.files; const discoveryCapped = discovery.capped; let unsupportedFormats = 0;
-            if (sourceMode || containerMode || terraformMode || registryMode) { const admitted = files.filter(uri => !!syntaxOf(uri));
+            if (sourceMode || containerMode || terraformMode || registryMode || serviceAccountMode) { const admitted = files.filter(uri => !!syntaxOf(uri));
                 // Dockerfile.* discovery deliberately includes ambiguous suffixes;
                 // report those omissions. The source glob declares exact suffixes.
-                if (containerMode || terraformMode || registryMode) unsupportedFormats = files.length - admitted.length; files = admitted; }
+                if (containerMode || terraformMode || registryMode || serviceAccountMode) unsupportedFormats = files.length - admitted.length; files = admitted; }
             files = [...new Map(files.map(uri => [uri.toString(), uri])).values()]; const capped = discoveryCapped || files.length > 128; files = files.slice(0, 128);
             const stamps = await Promise.all(files.map(uri => this.#stamp(uri))), policy = await ownerPolicyRevision(root.toString()); if (!valid()) throw Error();
-            const accepted = await this.#confirm(sourceMode ? "Analyze saved source files locally?" : containerMode ? "Analyze saved Docker/Kubernetes configs locally?" : terraformMode ? "Analyze saved Terraform/tfvars configs locally?" : registryMode ? "Analyze saved project registry configs locally?" : "Analyze saved project files locally?", "Analyze saved project files", sourceMode
+            const accepted = await this.#confirm(sourceMode ? "Analyze saved source files locally?" : containerMode ? "Analyze saved Docker/Kubernetes configs locally?" : terraformMode ? "Analyze saved Terraform/tfvars configs locally?" : registryMode ? "Analyze saved project registry configs locally?" : serviceAccountMode ? "Analyze saved service-account/key JSON locally?" : "Analyze saved project files locally?", "Analyze saved project files", sourceMode
                 ? "Review up to128 saved JS/JSX/TS/TSX/MJS/CJS files/64KiB each/1MiB analyzed text. Static strings only; dynamic credentials and unsupported syntax withhold analysis. Local processing, no execution or provider request. A reviewed vault fix replaces values with placeholders; configure application env or owner secret storage manually before applying. No code or imports are rewritten automatically."
                 : containerMode ? "Review up to128 saved Docker/Compose/Kubernetes files/64KiB each/1MiB analyzed text. Static declared grammar only; unsupported inputs withhold analysis. No config execution, build, deployment or provider request. A separate reviewed vault migration replaces values; configure application secret loading manually. YAML disclosure restores the whole encrypted original checkpoint and keeps saved denies. No value-bearing env file is generated."
                 : terraformMode ? "Review up to128 saved .tf/.tfvars/.tf.json/.tfvars.json files/64KiB each/1MiB analyzed text. Static declared grammar only; dynamic templates, function calls and unsupported syntax withhold analysis. No Terraform execution, plan, provider request or schema validation. A separate reviewed vault migration replaces values; configure application secret loading manually. Disclosure restores the entire encrypted original checkpoint and keeps saved denies. No value-bearing env file is generated."
                 : registryMode ? "Review up to128 saved project .npmrc/.pypirc files/64KiB each/1MiB analyzed text. Static declared grammar only; unsupported fields, references and expressions withhold analysis. No home config, external file, package client or registry request is used. A separate reviewed vault migration replaces credentials and may interrupt package authentication until you configure secret loading manually. Disclosure restores the entire encrypted original checkpoint and keeps saved denies. No value-bearing env file is generated."
+                : serviceAccountMode ? "Review up to128 saved project JSON files/64KiB each/1MiB analyzed text. Strict duplicate-aware JSON only; comments, malformed and unsupported external credential sources withhold. No config execution, authentication, referenced file or token request. A separate reviewed vault migration replaces credentials and may interrupt application authentication until you configure secret loading manually. Disclosure restores the entire encrypted original checkpoint and keeps saved denies. No value-bearing env file is generated."
                 : "Review up to128 saved files/64KiB each/1MiB analyzed text. Values stay in bounded local processing. Findings are heuristic metadata; no AI-read or credential-validity verification. No provider request is sent.", valid);
             if (!accepted) return { status: valid() ? "CANCELLED" : "UNAVAILABLE" };
             if (await ownerPolicyRevision(root.toString()) !== policy) throw new Changed();
@@ -145,7 +149,7 @@ export class HygieneController implements vscode.Disposable {
                     if (!await this.#confirm("Create a safe environment example?", "Write empty example values", "The canonical vault writer creates only parsed names and empty values. A conflicting existing example is preserved. No source editor is opened.", valid)) return { status: valid() ? "CANCELLED" : "UNAVAILABLE" };
                     await this.#vault.writeEnvExample(binding.uri, valid); committed = true;
                 } else {
-                    if (operation === "vault") count = this.options.family === "source" ? await this.#vault.migrateSource(binding.uri, valid) : this.options.family === "dockerKubernetes" ? await this.#vault.migrateContainer(binding.uri, valid) : this.options.family === "terraform" ? await this.#vault.migrateTerraform(binding.uri, valid) : this.options.family === "registry" ? await this.#vault.migrateRegistry(binding.uri, valid) : await this.#vault.migrate(binding.uri, valid);
+                    if (operation === "vault") count = this.options.family === "source" ? await this.#vault.migrateSource(binding.uri, valid) : this.options.family === "dockerKubernetes" ? await this.#vault.migrateContainer(binding.uri, valid) : this.options.family === "terraform" ? await this.#vault.migrateTerraform(binding.uri, valid) : this.options.family === "registry" ? await this.#vault.migrateRegistry(binding.uri, valid) : this.options.family === "serviceAccount" ? await this.#vault.migrateServiceAccount(binding.uri, valid) : await this.#vault.migrate(binding.uri, valid);
                     else count = binding.checkpoint ? await this.#vault.restoreFromBackup(binding.uri, valid) ? binding.findings.length : 0 : await this.#vault.restore(binding.uri, valid);
                     committed = count > 0; if (!valid()) throw Error(); if (!count) return { status: "CANCELLED" };
                 }

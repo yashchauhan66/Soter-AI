@@ -24,6 +24,8 @@ import { terraformScannerEnabled } from "../config-scanners/TerraformScannerFlag
 import { terraformFormatForPath } from "../config-scanners/TerraformSecretPlan";
 import { registryScannerEnabled } from "../config-scanners/RegistryScannerFlags";
 import { registryFormatForPath } from "../config-scanners/RegistrySecretPlan";
+import { serviceAccountScannerEnabled } from "../config-scanners/ServiceAccountScannerFlags";
+import { serviceAccountFormatForPath } from "../config-scanners/ServiceAccountSecretPlan";
 import { sourceSyntaxForPath } from "../config-scanners/SourceSecretPlan";
 import { containerFormatForPath } from "../config-scanners/ContainerSecretPlan";
 import { containerScannerEnabled } from "../config-scanners/ContainerScannerFlags";
@@ -425,17 +427,21 @@ export class VaultManager {
     async migrateRegistry(uri: vscode.Uri, enabled: () => boolean): Promise<number> {
         return this.migrateSelected(uri, () => registryScannerEnabled() && hygieneAssistantEnabled() && enabled() === true, false, false, false, true);
     }
-    private async migrateSelected(uri: vscode.Uri, enabled: (() => boolean) | undefined, sourceMode: boolean, containerMode = false, terraformMode = false, registryMode = false): Promise<number> {
+    async migrateServiceAccount(uri: vscode.Uri, enabled: () => boolean): Promise<number> {
+        return this.migrateSelected(uri, () => serviceAccountScannerEnabled() && hygieneAssistantEnabled() && enabled() === true, false, false, false, false, true);
+    }
+    private async migrateSelected(uri: vscode.Uri, enabled: (() => boolean) | undefined, sourceMode: boolean, containerMode = false, terraformMode = false, registryMode = false, serviceAccountMode = false): Promise<number> {
         return this.mutation(async () => {
             let basis = await this.capture(uri); await this.noPending();
             const relative = path.relative(vscode.Uri.parse(basis.root).fsPath, uri.fsPath).replaceAll("\\", "/");
-            if ([sourceMode, containerMode, terraformMode, registryMode].filter(Boolean).length > 1) return vaultUnavailable();
-            const syntax = sourceMode ? sourceSyntaxForPath(relative) : containerMode ? containerFormatForPath(relative) : terraformMode ? terraformFormatForPath(relative) : registryMode ? registryFormatForPath(relative) : undefined; if ((sourceMode || containerMode || terraformMode || registryMode) && !syntax) return vaultUnavailable();
-            const id = randomUUID(), plan = createVaultMigrationPlan(basis.text, !sourceMode && !containerMode && !terraformMode && !registryMode && /^\.env(?:\..*)?$/i.test(path.basename(uri.fsPath)), id, syntax);
+            if ([sourceMode, containerMode, terraformMode, registryMode, serviceAccountMode].filter(Boolean).length > 1) return vaultUnavailable();
+            const syntax = sourceMode ? sourceSyntaxForPath(relative) : containerMode ? containerFormatForPath(relative) : terraformMode ? terraformFormatForPath(relative) : registryMode ? registryFormatForPath(relative) : serviceAccountMode ? serviceAccountFormatForPath(relative) : undefined; if ((sourceMode || containerMode || terraformMode || registryMode || serviceAccountMode) && !syntax) return vaultUnavailable();
+            const id = randomUUID(), plan = createVaultMigrationPlan(basis.text, !sourceMode && !containerMode && !terraformMode && !registryMode && !serviceAccountMode && /^\.env(?:\..*)?$/i.test(path.basename(uri.fsPath)), id, syntax);
             // Source identifiers are not public labels or runtime env bindings.
             if (sourceMode) plan.candidates.forEach((candidate, ordinal) => { candidate.key = "SOURCE_VALUE_" + (ordinal + 1); });
             if (containerMode) plan.candidates.forEach((candidate, ordinal) => { candidate.key = "CONTAINER_VALUE_" + (ordinal + 1); });
             if (terraformMode) plan.candidates.forEach((candidate, ordinal) => { candidate.key = "TERRAFORM_VALUE_" + (ordinal + 1); });
+            if (serviceAccountMode) plan.candidates.forEach((candidate, ordinal) => { candidate.key = "SERVICE_ACCOUNT_VALUE_" + (ordinal + 1); });
             if (registryMode) plan.candidates.forEach((candidate, ordinal) => { candidate.key = "REGISTRY_VALUE_" + (ordinal + 1); });
             if (!plan.candidates.length) return 0; await this.checkExample(uri, plan.exampleText);
             const detail = JSON.stringify({ file: vscode.workspace.asRelativePath(uri), count: plan.candidates.length, values: MASKED,

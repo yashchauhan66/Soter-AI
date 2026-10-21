@@ -59,6 +59,7 @@ import { registerSourceScanner } from "./config-scanners/commands";
 import { registerContainerScanner } from "./config-scanners/containerCommands";
 import { registerTerraformScanner } from "./config-scanners/terraformCommands";
 import { registerRegistryScanner } from "./config-scanners/registryCommands";
+import { registerServiceAccountScanner } from "./config-scanners/serviceAccountCommands";
 
 // Single consolidated status-bar item. It replaces the earlier six separate
 // items (main, firewall, broker, safe mode, memory, runtime) — those states now
@@ -215,6 +216,7 @@ export function activate(context: vscode.ExtensionContext): void {
     registerContainerScanner(context);
     registerTerraformScanner(context);
     registerRegistryScanner(context);
+    registerServiceAccountScanner(context);
     registerScannerCommands(context, async () => (await protectionState?.refresh())?.descriptor);
     registerBrokerCommands(context, brokerManager, refreshViews);
     registerClineAdapter(context, brokerManager, managedReader);

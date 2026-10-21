@@ -1,0 +1,138 @@
+{
+  "schemaVersion": 1,
+  "phase": "restart",
+  "syntheticOnly": true,
+  "hostVersion": "1.142.0",
+  "extensionBundleSha256": "84c2331610c74bf348a4c97b34ad723a0b20e7c5c3cdef2d4b7aab7157e88cc5",
+  "currentDeveloperBundleSha256": "84c2331610c74bf348a4c97b34ad723a0b20e7c5c3cdef2d4b7aab7157e88cc5",
+  "hostProbeSha256": "0d974e3a88871ba9615c7f41c564937a1d8759b98f51b347ff25fbfdb3446177",
+  "observations": [
+    {
+      "id": "F22E-N01",
+      "scope": "Restart reuses keys/ledger and keeps exact masked source without startup read",
+      "status": "PASS"
+    },
+    {
+      "id": "F22E-N02",
+      "scope": "No stale family finding authority survives restart",
+      "status": "PASS"
+    },
+    {
+      "id": "F22E-N03",
+      "scope": "Actual canonical encrypted backup command recovers ServiceAccount after restart disclosure",
+      "status": "PASS"
+    },
+    {
+      "id": "F22E-N04",
+      "scope": "Fresh native review reestablishes two metadata findings after explicit recovery",
+      "status": "PASS"
+    }
+  ],
+  "passed": 4,
+  "failed": 0,
+  "notRun": 0,
+  "sourceDocumentCalls": 0,
+  "sourceDocumentEvents": 0,
+  "secretStorageStores": 0,
+  "reviews": [
+    {
+      "action": "Restore raw values",
+      "safe": true
+    },
+    {
+      "action": "Analyze saved project files",
+      "safe": true
+    }
+  ],
+  "metadataDocuments": 2,
+  "trace": [
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 194.1621
+    },
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 199.78819999999996
+    },
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 210.36390000000029
+    },
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 215.35899999999992
+    },
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 715.8045999999999
+    },
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 809.1703000000002
+    },
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 1117.4978999999998
+    },
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 1420.6386000000002
+    },
+    {
+      "event": "command-start-serviceAccountSecretScannerStatus",
+      "milliseconds": 1714.4705
+    },
+    {
+      "event": "command-end-serviceAccountSecretScannerStatus",
+      "milliseconds": 1718.1552000000001,
+      "status": "OWNER_REVIEW_REQUIRED"
+    },
+    {
+      "event": "command-start-reviewServiceAccountSecretVault",
+      "milliseconds": 1721.6088
+    },
+    {
+      "event": "command-end-reviewServiceAccountSecretVault",
+      "milliseconds": 1724.1460000000002,
+      "status": "REVIEW_FILES_FIRST"
+    },
+    {
+      "event": "command-start-restoreFileFromBackup",
+      "milliseconds": 1724.4669
+    },
+    {
+      "event": "command-end-restoreFileFromBackup",
+      "milliseconds": 2221.6736,
+      "status": "VOID"
+    },
+    {
+      "event": "command-start-reviewServiceAccountSecrets",
+      "milliseconds": 2225.2637999999997
+    },
+    {
+      "event": "command-end-reviewServiceAccountSecrets",
+      "milliseconds": 2744.3495000000003,
+      "status": "ANALYZED",
+      "files": 1,
+      "findings": 2
+    },
+    {
+      "event": "command-start-openHygieneExposureLedger",
+      "milliseconds": 2744.4314999999997
+    },
+    {
+      "event": "command-end-openHygieneExposureLedger",
+      "milliseconds": 3132.3687,
+      "status": "METADATA"
+    }
+  ],
+  "independence": "LOW",
+  "ownerPresence": "SCRIPTED_NATIVE_API_DECISIONS_NOT_HUMAN_REVIEW",
+  "notTested": [
+    "Authentication/provider requests/key validity",
+    "Unsupported JSONC/external credential sources/home profiles",
+    "Human usability/accessibility",
+    "Live credentials or provider rotation",
+    "OS custody/unmanaged native reads/uploads"
+  ]
+}

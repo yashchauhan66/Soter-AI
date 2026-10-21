@@ -1,0 +1,169 @@
+﻿node.exe : node:child_process:921
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (node:child_process:921:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+    throw err;
+    ^
+
+<ref *1> Error: spawnSync git ENAMETOOLONG
+    at Object.spawnSync (node:internal/child_process:1120:20)
+    at spawnSync (node:child_process:868:24)
+    at Object.execFileSync (node:child_process:911:15)
+    at run (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261018-f16-gateway-poli
+cy-6e9a31d4\git-batch-01.cjs:4:42)
+    at git (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261018-f16-gateway-poli
+cy-6e9a31d4\git-batch-01.cjs:5:109)
+    at Object.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261021-f
+22e-service-account-28c5d0a9\verify-authored-whitespace-01.cjs:5:185)
+    at Module._compile (node:internal/modules/cjs/loader:1730:14)
+    at Object..js (node:internal/modules/cjs/loader:1895:10)
+    at Module.load (node:internal/modules/cjs/loader:1465:32)
+    at Function._load (node:internal/modules/cjs/loader:1282:12) {
+  errno: -4064,
+  code: 'ENAMETOOLONG',
+  syscall: 'spawnSync git',
+  path: 'git',
+  spawnargs: [
+    '-c',
+    'core.autocrlf=false',
+    '-c',
+    'core.autocrlf=false',
+    '-c',
+    'core.whitespace=cr-at-eol',
+    'diff',
+    '--cached',
+    '--check',
+    '--',
+    'docs/soterai-lite/FEATURE-QUEUE.json',
+    'docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/f22d-transition-byte-verification-01.json',
+    'docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/f22d-transition-commit-01.txt',
+    'docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/f22d-transition-commit-01.txt.result.json',
+    'docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/prepare-transition-recovery-run-02.txt',
+    'docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/prepare-transition-recovery-run-02.txt.result.json',
+    'docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/stage-transition-run-02.txt',
+    'docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/stage-transition-run-02.txt.result.json',
+    'docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/transition-byte-verification-01.txt',
+    'docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/transition-byte-verification-01.txt.result.json',
+    'docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/transition-recovery-run-02.txt',
+    'docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/transition-recovery-run-02.txt.result.json',
+    'docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/transition-staged-byte-verification-02.txt',
+    
+'docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/transition-staged-byte-verification-02.txt.result.json',
+    'docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/transition-staged-whitespace-02.txt',
+    'docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/transition-staged-whitespace-02.txt.result.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/affected-20261021T115841Z-3f27a42718ae450c95faef
+860be9ce81/affected-summary-01.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/affected-20261021T115841Z-3f27a42718ae450c95faef
+860be9ce81/freeze.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/affected-20261021T115841Z-3f27a42718ae450c95faef
+860be9ce81/functional-launch-01.txt.result.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/affected-20261021T115841Z-3f27a42718ae450c95faef
+860be9ce81/functional/privacy-20261021T115845Z-8b75bdd4/freeze.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/affected-20261021T115841Z-3f27a42718ae450c95faef
+860be9ce81/functional/privacy-20261021T115845Z-8b75bdd4/functional-results.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/affected-20261021T115841Z-3f27a42718ae450c95faef
+860be9ce81/security-comparison-01.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/affected-20261021T115841Z-3f27a42718ae450c95faef
+860be9ce81/security-launch-01.txt.result.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/affected-20261021T115841Z-3f27a42718ae450c95faef
+860be9ce81/security/host-20261021T115859Z-8c7061c0405d459bb919928d9a41430d/launch.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/affected-20261021T115841Z-3f27a42718ae450c95faef
+860be9ce81/security/host-20261021T115859Z-8c7061c0405d459bb919928d9a41430d/live-host.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/affected-20261021T115841Z-3f27a42718ae450c95faef
+860be9ce81/security/host-20261021T115859Z-8c7061c0405d459bb919928d9a41430d/live-host.json.activation.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/affected-20261021T115841Z-3f27a42718ae450c95faef
+860be9ce81/security/host-20261021T115859Z-8c7061c0405d459bb919928d9a41430d/security-review-host.js',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/affected-20261021T122006Z-33611f916c6149f483f144
+acb8182e34/affected-summary-01.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/affected-20261021T122006Z-33611f916c6149f483f144
+acb8182e34/freeze.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/affected-20261021T122006Z-33611f916c6149f483f144
+acb8182e34/functional-launch-01.txt.result.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/affected-20261021T122006Z-33611f916c6149f483f144
+acb8182e34/functional/privacy-20261021T122009Z-b21db85a/freeze.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/affected-20261021T122006Z-33611f916c6149f483f144
+acb8182e34/functional/privacy-20261021T122009Z-b21db85a/functional-results.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/affected-20261021T122006Z-33611f916c6149f483f144
+acb8182e34/security-comparison-01.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/affected-20261021T122006Z-33611f916c6149f483f144
+acb8182e34/security-launch-01.txt.result.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/affected-20261021T122006Z-33611f916c6149f483f144
+acb8182e34/security/host-20261021T122023Z-7966d952c678420fb002a08c11a9cd02/launch.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/affected-20261021T122006Z-33611f916c6149f483f144
+acb8182e34/security/host-20261021T122023Z-7966d952c678420fb002a08c11a9cd02/live-host.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/affected-20261021T122006Z-33611f916c6149f483f144
+acb8182e34/security/host-20261021T122023Z-7966d952c678420fb002a08c11a9cd02/live-host.json.activation.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/affected-20261021T122006Z-33611f916c6149f483f144
+acb8182e34/security/host-20261021T122023Z-7966d952c678420fb002a08c11a9cd02/security-review-host.js',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/affected-container-run-01.txt.result.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/affected-container-run-02.txt.result.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/affected-hosts-run-01.txt.result.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/affected-hosts-run-02.txt.result.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/affected-hygiene-run-01.txt.result.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/affected-hygiene-run-02.txt.result.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/affected-registry-run-01.txt.result.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/affected-registry-run-02.txt.result.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/affected-source-run-01.txt.result.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/affected-source-run-02.txt.result.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/affected-suite-summary-01.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/affected-suite-summary-02.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/affected-terraform-run-01.txt.result.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/affected-terraform-run-02.txt.result.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/affected-vault-run-01.txt.result.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/affected-vault-run-02.txt.result.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/apply-decoded-residual-02.cjs',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/apply-decoded-residual-run-02.txt.result.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/artifact-binding-03.ps1',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/backend-run02-input-witness-01.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/backend-runner-recovery-03.md',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/backend-tests-01.txt.result.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/backend-tests-02.txt.result.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/backend-tests-03.txt.result.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/backend-typecheck-01.txt.result.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/backend-typecheck-02.txt.result.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/build-native-hosts-01.cjs',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/build-native-hosts-run-01.txt.result.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/build-native-hosts-run-02.txt.result.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/byte-barriers-run-01.txt.result.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/byte-tool-preparation-01.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/candidate01-gates-run-01.txt.result.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/candidate02-gates-run-01.txt.result.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/complete-byte-barriers-01.ps1',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/complete-byte-barriers-02.ps1',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/complete-byte-barriers-03.ps1',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/complete-byte-barriers-04.ps1',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/complete-byte-barriers-05.ps1',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/complete-candidate01-01.ps1',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/complete-candidate02-01.ps1',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/current-affected-suite-run-01.txt.result.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/current-affected-suite-run-02.txt.result.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/decoded-residual-input-witness-02.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/design-01.md',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/design-02-decoded-residual.md',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/evidence-lib-01.cjs',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/execution-snapshot-index-01.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/f22e-acceptance-01.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/f22e-affected-container-20261021T115533Z-d099ac5
+6/freeze.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/f22e-affected-container-20261021T115533Z-d099ac5
+6/original-manifest.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/f22e-affected-container-20261021T115533Z-d099ac5
+6/primary-owned-editor-close.json',
+    'docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/f22e-affected-container-20261021T115533Z-d099ac5
+6/primary-results.json',
+    ... 253 more items
+  ],
+  error: [Circular *1],
+  status: null,
+  signal: null,
+  output: null,
+  pid: 0,
+  stdout: undefined,
+  stderr: undefined
+}
+
+Node.js v22.16.0

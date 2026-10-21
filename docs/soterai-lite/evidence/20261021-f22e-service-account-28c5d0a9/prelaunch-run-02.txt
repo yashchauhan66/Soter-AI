@@ -1,0 +1,50 @@
+﻿{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22e-service-account-28c5d0a9\\apply-decoded-residual-run-02.txt",
+    "observedAt":  "2026-10-21T12:00:09.5522850Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22e-service-account-28c5d0a9\\apply-decoded-residual-02.cjs"
+                  ],
+    "sha256":  "A177C03513AF49D5457D978461A55084C5483F08D27AF3C0F8B9B7CAB47918C3",
+    "file":  "node"
+}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22e-service-account-28c5d0a9\\review-escaped-residual-after-02.txt",
+    "observedAt":  "2026-10-21T12:00:10.2579809Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "--import",
+                      "tsx",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22e-service-account-28c5d0a9\\review-escaped-residual-01.cjs"
+                  ],
+    "sha256":  "75BC894DC8769CBE84DC640EBD4F7DFCEA814B409F9F4BD2E7A238A2372EA258",
+    "file":  "node"
+}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22e-service-account-28c5d0a9\\service-account-plan-after-03.txt",
+    "observedAt":  "2026-10-21T12:00:11.1569462Z",
+    "exitCode":  1,
+    "arguments":  [
+                      "--import",
+                      "tsx",
+                      "--test",
+                      "packages/vscode-extension/src/__tests__/serviceAccountSecretPlan.test.ts"
+                  ],
+    "sha256":  "7401EEAA933DD7E37A63E36BC002581C28896A7A8CADC98FBC60FEA88E5DFD37",
+    "file":  "node"
+}
+powershell.exe : Correction/prelaunch stopped; raw retained: service-account-plan-after-03
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Correction/prel...t-plan-after-03:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261021-f22e-service-account-28c5
+d0a9\run-correction-prelaunch-02.ps1:7 char:34
++ ... Code -ne 0){throw ('Correction/prelaunch stopped; raw retained: '+$Na ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (Correction/prel...t-plan-after-03:String) [], RuntimeException
+    + FullyQualifiedErrorId : Correction/prelaunch stopped; raw retained: service-account-plan-after-03
+ 
