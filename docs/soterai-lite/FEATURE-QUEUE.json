@@ -9,7 +9,7 @@
   "planVersion": 1,
   "clientDate": "2026-10-13",
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
-  "scope": "F01-F10 and F12-F21 scoped DONE with exact local byte barriers; F11 optional absent/unimplemented NOT_TESTED/NOT_COVERED. F22 active, F22a source alone in progress; F22b-h and later gates not started.",
+  "scope": "F01-F10 and F12-F21 scoped DONE; F11 optional absent/unimplemented NOT_TESTED/NOT_COVERED. F22 parent active; F22a scoped DONE only after its transition byte barrier; F22b prepared ACTIVE with no production before that proof. Remaining subcards/gates pending.",
   "implementationConcurrency": 1,
   "activeFeature": "F22",
   "prerequisiteBlock": {
@@ -600,19 +600,22 @@
         {
           "id": "F22a",
           "title": "source",
-          "status": "VERIFYING",
-          "result": "PASS_SCOPED_PENDING_BYTE_BARRIERS",
+          "status": "DONE",
+          "result": "PASS_SCOPED",
           "requires": [
             "parent prerequisites"
           ],
           "progressEvidence": "docs/soterai-lite/evidence/20261021-f22a-source-6c4d81f2/f22a-progress-03.json",
           "acceptanceEvidence": "docs/soterai-lite/evidence/20261021-f22a-source-6c4d81f2/f22a-acceptance-01.json",
-          "scope": "F22a saved JS/JSX/TS/TSX/MJS/CJS static credential strings and canonical comment candidates only, parse-only installed Babel7.29.7 with fixed grammar. Owner consent, F21 keyed possible-exposure metadata, canonical F06 whole-file encrypted vault, exact escaped disclosure restore and saved denies; strict machine source flag and private native file/finding selection. Other languages/dynamic assembly/type-only declarations/import specifiers/regex bodies are unverified. No execution/config loading/automatic code-import rewrite/value-bearing env file/live validity/actual AI access/OS confinement/human/independent/universal scanner claim. Current affected hygiene/vault/reader/gateway/functional/security verified; adapter/backend/MCP production unchanged, actual vendor executables not rerun for this subcard and final exact-object V01 route gates remain pending."
+          "scope": "F22a saved JS/JSX/TS/TSX/MJS/CJS static credential strings and canonical comment candidates only, parse-only installed Babel7.29.7 with fixed grammar. Owner consent, F21 keyed possible-exposure metadata, canonical F06 whole-file encrypted vault, exact escaped disclosure restore and saved denies; strict machine source flag and private native file/finding selection. Other languages/dynamic assembly/type-only declarations/import specifiers/regex bodies are unverified. No execution/config loading/automatic code-import rewrite/value-bearing env file/live validity/actual AI access/OS confinement/human/independent/universal scanner claim. Current affected hygiene/vault/reader/gateway/functional/security verified; adapter/backend/MCP production unchanged, actual vendor executables not rerun for this subcard and final exact-object V01 route gates remain pending.",
+          "sourceEvidenceCommit": "c36328d3acfdb084ebfd863a17124f75f92ba0bd",
+          "commitByteVerification": "docs/soterai-lite/evidence/20261021-f22a-source-6c4d81f2/f22a-committed-byte-verification-01.json",
+          "transitionByteVerification": "docs/soterai-lite/evidence/20261021-f22a-source-6c4d81f2/f22a-transition-byte-verification-01.json"
         },
         {
           "id": "F22b",
           "title": "Docker/Kubernetes",
-          "status": "PLANNED",
+          "status": "ACTIVE",
           "result": "NOT-RUN",
           "requires": [
             "F22a"
@@ -675,8 +678,8 @@
       ],
       "completionRule": "All required subcards pass individually before parent DONE",
       "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
-      "activeSubcard": "F22a",
-      "progressEvidence": "docs/soterai-lite/evidence/20261021-f22a-source-6c4d81f2/f22a-progress-03.json"
+      "activeSubcard": "F22b",
+      "progressEvidence": "docs/soterai-lite/evidence/20261021-f22a-source-6c4d81f2/f22a-transition-byte-verification-01.json"
     },
     {
       "id": "F23",
