@@ -1,0 +1,58 @@
+{
+  "status": "PREPARED_NOT_EXECUTED",
+  "records": [
+    {
+      "source": "evidence-lib-01.cjs",
+      "path": "evidence-lib-01.cjs",
+      "bytes": 2119,
+      "sha256": "9b65cc03f8430289fd21e242c5df23e4d104163aa6df735c425d7cf6220dca4f"
+    },
+    {
+      "source": "verify-source-01.cjs",
+      "path": "verify-source-01.cjs",
+      "bytes": 2328,
+      "sha256": "94e4a4cbd993b1b75092aff336694b1bb99f59c93fd84614b12c087bbcfa67b9"
+    },
+    {
+      "source": "verify-transition-01.cjs",
+      "path": "verify-transition-01.cjs",
+      "bytes": 1685,
+      "sha256": "53fecf07a03cda85d071479930b261af459486535760611c25f15eb10729a4c0"
+    },
+    {
+      "source": "prepare-index-01.cjs",
+      "path": "prepare-index-01.cjs",
+      "bytes": 7822,
+      "sha256": "2656e015def3cb8ea30e2e793f74c3d6c2ce28c6b45c2793c9f9fc071db31e5b"
+    },
+    {
+      "source": "snapshot-execution-01.cjs",
+      "path": "snapshot-execution-01.cjs",
+      "bytes": 2639,
+      "sha256": "e4caa54e8b0ce08fa6cd5bf37f17afc86cc6eabf091db57e64d21126146114c7"
+    }
+  ],
+  "ownSources": [
+    "packages/vscode-extension/src/config-scanners/TerraformSecretPlan.ts",
+    "packages/vscode-extension/src/config-scanners/TerraformScannerFlags.ts",
+    "packages/vscode-extension/src/config-scanners/terraformCommands.ts",
+    "packages/vscode-extension/src/__tests__/terraformSecretPlan.test.ts",
+    "packages/vscode-extension/src/__tests__/terraformScanner.test.ts",
+    "packages/vscode-extension/src/__tests__/terraformScannerCommands.test.ts",
+    "packages/vscode-extension/src/__tests__/host/liteTerraformScanner.host.ts",
+    "packages/vscode-extension/src/firewall/VaultManager.ts",
+    "packages/vscode-extension/src/firewall/VaultMigrationPlan.ts",
+    "packages/vscode-extension/src/hygiene/HygieneAnalysis.ts",
+    "packages/vscode-extension/src/hygiene/HygieneController.ts",
+    "packages/vscode-extension/src/hygiene/HygieneExposureLedger.ts",
+    "packages/vscode-extension/src/extension.ts",
+    "packages/vscode-extension/package.json",
+    "packages/soterai-lite/package.json",
+    "packages/vscode-extension/README.md",
+    "packages/soterai-lite/README.md",
+    "packages/soterai-lite/CHANGELOG.md",
+    "docs/vscode-extension-readiness.md",
+    "docs/soterai-lite/FEATURE-QUEUE.json"
+  ],
+  "scope": "Current Terraform object only. Existing evidence library/exhaustive byte barriers and explicit owned execution snapshots reused; next transition is F22d. No Git mutation at this preparation step."
+}

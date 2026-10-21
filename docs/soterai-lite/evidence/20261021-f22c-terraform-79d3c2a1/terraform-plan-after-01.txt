@@ -1,0 +1,82 @@
+﻿TAP version 13
+# Subtest: F22c maps only saved Terraform/tfvars native and JSON paths with bounded canonical relatives
+ok 1 - F22c maps only saved Terraform/tfvars native and JSON paths with bounded canonical relatives
+  ---
+  duration_ms: 301.2981
+  type: 'test'
+  ...
+# Subtest: F22c provider and nested resource literal credentials preserve public schema without executing it
+ok 2 - F22c provider and nested resource literal credentials preserve public schema without executing it
+  ---
+  duration_ms: 8.936
+  type: 'test'
+  ...
+# Subtest: F22c declared variable defaults and output values inherit credential ownership; nested lists and maps are static
+ok 3 - F22c declared variable defaults and output values inherit credential ownership; nested lists and maps are static
+  ---
+  duration_ms: 2.2187
+  type: 'test'
+  ...
+# Subtest: F22c static and indented heredocs plus actual comments are logical privately and restore through exact checkpoint
+ok 4 - F22c static and indented heredocs plus actual comments are logical privately and restore through exact checkpoint
+  ---
+  duration_ms: 9.9986
+  type: 'test'
+  ...
+# Subtest: F22c quoted HCL escapes differ from JSON and Unicode code points are decoded without templates
+ok 5 - F22c quoted HCL escapes differ from JSON and Unicode code points are decoded without templates
+  ---
+  duration_ms: 4.7624
+  type: 'test'
+  ...
+# Subtest: F22c interpolation, fallback literals, directives, calls and operators withhold without evaluation or partial output
+ok 6 - F22c interpolation, fallback literals, directives, calls and operators withhold without evaluation or partial output
+  ---
+  duration_ms: 15.9334
+  type: 'test'
+  ...
+# Subtest: F22c strict Terraform JSON and tfvars JSON retain structure, public values and canonical markers
+ok 7 - F22c strict Terraform JSON and tfvars JSON retain structure, public values and canonical markers
+  ---
+  duration_ms: 3.2267
+  type: 'test'
+  ...
+# Subtest: F22c duplicate keys, malformed native/JSON, foreign top blocks and invalid heredocs withhold
+ok 8 - F22c duplicate keys, malformed native/JSON, foreign top blocks and invalid heredocs withhold
+  ---
+  duration_ms: 10.5234
+  type: 'test'
+  ...
+# Subtest: F22c protected placeholders, public near-matches and declared secret-store references remain useful
+ok 9 - F22c protected placeholders, public near-matches and declared secret-store references remain useful
+  ---
+  duration_ms: 1.5393
+  type: 'test'
+  ...
+# Subtest: F22c candidate, text, nesting, UTF8 and generation limits withhold with value-free errors
+ok 10 - F22c candidate, text, nesting, UTF8 and generation limits withhold with value-free errors
+  ---
+  duration_ms: 12.104
+  type: 'test'
+  ...
+# Subtest: F22c residual original copies, credential numeric ambiguity and known-shaped labels withhold
+ok 11 - F22c residual original copies, credential numeric ambiguity and known-shaped labels withhold
+  ---
+  duration_ms: 5.4424
+  type: 'test'
+  ...
+# Subtest: F22c masked output reparses idempotently and never invokes a function or config loader
+ok 12 - F22c masked output reparses idempotently and never invokes a function or config loader
+  ---
+  duration_ms: 5.453
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 753.839

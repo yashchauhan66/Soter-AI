@@ -138,7 +138,8 @@
         "soterai.broker.geminiProviderUrl",
         "soterai.lite.hygieneAssistant",
         "soterai.lite.configScanner.source",
-        "soterai.lite.configScanner.dockerKubernetes"
+        "soterai.lite.configScanner.dockerKubernetes",
+        "soterai.lite.configScanner.terraform"
       ]
     }
   },
@@ -1408,6 +1409,31 @@
         "command": "soterai.containerSecretScannerStatus",
         "title": "Docker/Kubernetes Secret Scanner Status",
         "category": "SoterAI"
+      },
+      {
+        "command": "soterai.reviewWorkspaceTerraformSecrets",
+        "title": "Review Workspace Terraform/tfvars Secrets",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.reviewTerraformSecrets",
+        "title": "Review Selected Terraform/tfvars Secrets",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.reviewTerraformSecretVault",
+        "title": "Review Terraform/tfvars Vault Migration",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.restoreTerraformSecretVault",
+        "title": "Restore Reviewed Terraform/tfvars Values (Disclosure)",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.terraformSecretScannerStatus",
+        "title": "Terraform/tfvars Secret Scanner Status",
+        "category": "SoterAI"
       }
     ],
     "viewsContainers": {
@@ -2118,6 +2144,12 @@
           "default": true,
           "scope": "machine",
           "description": "Enable owner-reviewed static Docker ENV/ARG and Compose/Kubernetes YAML secret review with canonical encrypted vault migration. YAML disclosure restores the entire original checkpoint; unsupported inputs withhold analysis. No config execution, build or deployment."
+        },
+        "soterai.lite.configScanner.terraform": {
+          "type": "boolean",
+          "default": true,
+          "scope": "machine",
+          "description": "Enable owner-reviewed static Terraform/tfvars native and strict JSON secret review with canonical encrypted vault migration. Disclosure restores the entire encrypted original checkpoint. Dynamic templates/expressions and unsupported syntax withhold analysis; no Terraform execution, plan or provider/schema validation."
         }
       }
     },
@@ -3168,6 +3200,26 @@
         },
         {
           "command": "soterai.containerSecretScannerStatus",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.reviewWorkspaceTerraformSecrets",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.reviewTerraformSecrets",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.reviewTerraformSecretVault",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.restoreTerraformSecretVault",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.terraformSecretScannerStatus",
           "when": "soterai.advancedCommands"
         }
       ]

@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "phase": "restart",
+  "syntheticOnly": true,
+  "hostVersion": "1.142.0",
+  "extensionBundleSha256": "d7750794b3121e26ec6a0fc3abd38ef05da561b98f9a313e85a5879478939a11",
+  "currentDeveloperBundleSha256": "d7750794b3121e26ec6a0fc3abd38ef05da561b98f9a313e85a5879478939a11",
+  "hostProbeSha256": "ce2e25225165ad53f524f4a02048560014a3ac79190b87a58c541249e6a2f16a",
+  "observations": [
+    {
+      "id": "F21-N01",
+      "scope": "Restart reads existing ledger/key without startup original documents",
+      "status": "PASS"
+    },
+    {
+      "id": "F21-N02",
+      "scope": "Restart ledger export view matches accepted metadata",
+      "status": "PASS"
+    },
+    {
+      "id": "F21-N03",
+      "scope": "No stale finding authority survives restart",
+      "status": "PASS"
+    }
+  ],
+  "passed": 3,
+  "failed": 0,
+  "notRun": 0,
+  "sourceDocumentCalls": 0,
+  "sourceDocumentEvents": 0,
+  "secretStorageStores": 0,
+  "reviews": [],
+  "metadataDocuments": 1,
+  "trace": [
+    {
+      "event": "command-start-hygieneStatus",
+      "milliseconds": 1684.1082
+    },
+    {
+      "event": "command-end-hygieneStatus",
+      "milliseconds": 1687.8183999999999,
+      "status": "OWNER_REVIEW_REQUIRED"
+    },
+    {
+      "event": "command-start-openHygieneExposureLedger",
+      "milliseconds": 1690.1705
+    },
+    {
+      "event": "command-end-openHygieneExposureLedger",
+      "milliseconds": 2099.8131999999996,
+      "status": "UNEXPECTED"
+    },
+    {
+      "event": "command-start-reviewHygieneVault",
+      "milliseconds": 2194.8592
+    },
+    {
+      "event": "command-end-reviewHygieneVault",
+      "milliseconds": 2196.616,
+      "status": "REVIEW_FILES_FIRST"
+    }
+  ],
+  "independence": "LOW",
+  "ownerPresence": "SCRIPTED_NATIVE_API_DECISIONS_NOT_HUMAN_REVIEW",
+  "notTested": [
+    "Human accessibility/usability",
+    "Live credential validity or account rotation",
+    "OS credential custody certification",
+    "Same-user native reads or independent uploads"
+  ]
+}

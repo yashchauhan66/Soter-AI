@@ -1,0 +1,377 @@
+{
+  "feature": "F22",
+  "activeSubcard": "F22c",
+  "status": "INCOMPLETE",
+  "parent": "418f268e94a9f5052235bd6274f2457b3fb422ab",
+  "previous": "docs/soterai-lite/evidence/20261021-f22c-terraform-79d3c2a1/f22c-progress-01.json",
+  "commands": [
+    {
+      "name": "terraform-plan-before-01",
+      "exitCode": 1,
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261021-f22c-terraform-79d3c2a1/terraform-plan-before-01.txt",
+        "bytes": 20310,
+        "sha256": "4a79519c8d91348b8dfc800645c5eb0676306ccd5618bbb3b4d3a65c832723ea"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261021-f22c-terraform-79d3c2a1/terraform-plan-before-01.txt.result.json",
+        "bytes": 529,
+        "sha256": "5884949bd12e6397492ab3ef5d647d0a3f7b603992c078716d6c8735c2b5fbef"
+      }
+    },
+    {
+      "name": "terraform-plan-after-01",
+      "exitCode": 0,
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261021-f22c-terraform-79d3c2a1/terraform-plan-after-01.txt",
+        "bytes": 3393,
+        "sha256": "4d7dbc98e009f606973a8e9b077055e9328cbf9bdffc2142e0559b6f62510e85"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261021-f22c-terraform-79d3c2a1/terraform-plan-after-01.txt.result.json",
+        "bytes": 528,
+        "sha256": "6e09c430e94fb8047864e931444036b2f256c28c714121e23f53fcb1c0602aed"
+      }
+    },
+    {
+      "name": "terraform-integration-before-01",
+      "exitCode": 1,
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261021-f22c-terraform-79d3c2a1/terraform-integration-before-01.txt",
+        "bytes": 23874,
+        "sha256": "64bd4e93111050719812d8c1ec4332022dd9ed80b62512a147ea24ec73238787"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261021-f22c-terraform-79d3c2a1/terraform-integration-before-01.txt.result.json",
+        "bytes": 632,
+        "sha256": "f49d58fc2c1272c280b5788e53c1e1f01793f8f3088bb6b1c347c4b9b8f1e065"
+      }
+    },
+    {
+      "name": "terraform-combined-01",
+      "exitCode": 0,
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261021-f22c-terraform-79d3c2a1/terraform-combined-01.txt",
+        "bytes": 56258,
+        "sha256": "7fdee2b236ea3a4b6447b817e394d6bcedb6751f6bfe6404255a03fe3bad112d"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261021-f22c-terraform-79d3c2a1/terraform-combined-01.txt.result.json",
+        "bytes": 1921,
+        "sha256": "672eb1fe6b43809fdad52c8880f3ad06b369fde5d3ff1fece9d792ce707d3451"
+      }
+    },
+    {
+      "name": "typecheck-01",
+      "exitCode": 0,
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261021-f22c-terraform-79d3c2a1/typecheck-01.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261021-f22c-terraform-79d3c2a1/typecheck-01.txt.result.json",
+        "bytes": 513,
+        "sha256": "54ac572cb9179846fffd760e708afcdae166bcfe34c8d86eea838e0eb4aac6c3"
+      }
+    },
+    {
+      "name": "prepare-integration-tests-run-01",
+      "exitCode": 0,
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261021-f22c-terraform-79d3c2a1/prepare-integration-tests-run-01.txt",
+        "bytes": 103,
+        "sha256": "4d9b76e438e9df3085a21fbb99f6c20c03e5a5ad62c39fffb3dbcc3779d0de71"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261021-f22c-terraform-79d3c2a1/prepare-integration-tests-run-01.txt.result.json",
+        "bytes": 464,
+        "sha256": "0a52dae7b0190a93e308aaf4817043525595a69fe110c46c34d47b99768d54c7"
+      }
+    },
+    {
+      "name": "wire-commands-manifests-run-01",
+      "exitCode": 0,
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261021-f22c-terraform-79d3c2a1/wire-commands-manifests-run-01.txt",
+        "bytes": 117,
+        "sha256": "5fff2fb0d7b4ca8d765d81301dd24079651c80fa95c52fbb784f52829d94c1c7"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261021-f22c-terraform-79d3c2a1/wire-commands-manifests-run-01.txt.result.json",
+        "bytes": 460,
+        "sha256": "5fd99a2bc02cad573425cadbd1cba83b254d2d0298c1194fe84cc7bf315268a9"
+      }
+    }
+  ],
+  "sources": [
+    {
+      "path": "packages/vscode-extension/src/config-scanners/TerraformSecretPlan.ts",
+      "bytes": 13255,
+      "sha256": "19a0e7e019b89fbe4b3ff20a5eefcbafb4886b5c782673ddfab0173d97f07e67"
+    },
+    {
+      "path": "packages/vscode-extension/src/config-scanners/TerraformScannerFlags.ts",
+      "bytes": 474,
+      "sha256": "9006e2a94db5b00aba2e010203a81ac20c7431b24f5a69415c97a2cac8f69c5d"
+    },
+    {
+      "path": "packages/vscode-extension/src/config-scanners/terraformCommands.ts",
+      "bytes": 3041,
+      "sha256": "d4bb12db89bcee7de6104a42792d8941937eeede142b5e287c49e05601dd9ad8"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/terraformSecretPlan.test.ts",
+      "bytes": 8798,
+      "sha256": "283b8480e96a5fdb57047822aabb5c1a2d9df60545b30bf4b83729c22c0ecc6d"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/terraformScanner.test.ts",
+      "bytes": 15056,
+      "sha256": "d314f9e1f78fbbccd0f197242bc28f41145da40c263e52804f23841f8598a502"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/terraformScannerCommands.test.ts",
+      "bytes": 6679,
+      "sha256": "1cc83e1a546b7098f72ff9dcffeb350ad187a50f3cbfb3f07c6e29e7f61b7297"
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/VaultMigrationPlan.ts",
+      "bytes": 4402,
+      "sha256": "72c102719a2595691a3c3dda35c11e3ede841312804a317a2845384039c4213d"
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/VaultManager.ts",
+      "bytes": 47554,
+      "sha256": "e076b777f281dcb0a03393783fff128e8925ded872a7ac47cfa3ca402458485f"
+    },
+    {
+      "path": "packages/vscode-extension/src/hygiene/HygieneAnalysis.ts",
+      "bytes": 6771,
+      "sha256": "bcd908c27f2d900eefe4de7b1797782a2787189a1e24e5e11e78a6a67b5eaf41"
+    },
+    {
+      "path": "packages/vscode-extension/src/hygiene/HygieneExposureLedger.ts",
+      "bytes": 9902,
+      "sha256": "e8d805a36490d62d1827da97c0ae8d7b048e7acd90e105334ea523da224162ba"
+    },
+    {
+      "path": "packages/vscode-extension/src/hygiene/HygieneController.ts",
+      "bytes": 20743,
+      "sha256": "61d8c47e25c0548346bbdc364960c9e11cf5e1ba6f56676efb0c5dd3243e39fe"
+    },
+    {
+      "path": "packages/vscode-extension/src/extension.ts",
+      "bytes": 34249,
+      "sha256": "e37250c7bbf924e50e593e4c745e1289d9efa2e90836925ccbff62c7f30a5b46"
+    },
+    {
+      "path": "packages/vscode-extension/package.json",
+      "bytes": 115014,
+      "sha256": "d6f61b697df196c14aeff335a0ce35e7184d87d559370cb9bd983b4e7be1e0c5"
+    },
+    {
+      "path": "packages/soterai-lite/package.json",
+      "bytes": 114599,
+      "sha256": "f1b62e61f9f026a7743de6b08bf3d43e5851159d36797a72be8c3a480f0d0ac6"
+    }
+  ],
+  "snapshots": [
+    {
+      "original": {
+        "path": "packages/vscode-extension/src/config-scanners/TerraformSecretPlan.ts",
+        "bytes": 13255,
+        "sha256": "19a0e7e019b89fbe4b3ff20a5eefcbafb4886b5c782673ddfab0173d97f07e67"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261021-f22c-terraform-79d3c2a1/focused01-inputs-01/packages__vscode-extension__src__config-scanners__TerraformSecretPlan.ts.txt",
+        "bytes": 13255,
+        "sha256": "19a0e7e019b89fbe4b3ff20a5eefcbafb4886b5c782673ddfab0173d97f07e67"
+      }
+    },
+    {
+      "original": {
+        "path": "packages/vscode-extension/src/config-scanners/TerraformScannerFlags.ts",
+        "bytes": 474,
+        "sha256": "9006e2a94db5b00aba2e010203a81ac20c7431b24f5a69415c97a2cac8f69c5d"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261021-f22c-terraform-79d3c2a1/focused01-inputs-01/packages__vscode-extension__src__config-scanners__TerraformScannerFlags.ts.txt",
+        "bytes": 474,
+        "sha256": "9006e2a94db5b00aba2e010203a81ac20c7431b24f5a69415c97a2cac8f69c5d"
+      }
+    },
+    {
+      "original": {
+        "path": "packages/vscode-extension/src/config-scanners/terraformCommands.ts",
+        "bytes": 3041,
+        "sha256": "d4bb12db89bcee7de6104a42792d8941937eeede142b5e287c49e05601dd9ad8"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261021-f22c-terraform-79d3c2a1/focused01-inputs-01/packages__vscode-extension__src__config-scanners__terraformCommands.ts.txt",
+        "bytes": 3041,
+        "sha256": "d4bb12db89bcee7de6104a42792d8941937eeede142b5e287c49e05601dd9ad8"
+      }
+    },
+    {
+      "original": {
+        "path": "packages/vscode-extension/src/__tests__/terraformSecretPlan.test.ts",
+        "bytes": 8798,
+        "sha256": "283b8480e96a5fdb57047822aabb5c1a2d9df60545b30bf4b83729c22c0ecc6d"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261021-f22c-terraform-79d3c2a1/focused01-inputs-01/packages__vscode-extension__src____tests____terraformSecretPlan.test.ts.txt",
+        "bytes": 8798,
+        "sha256": "283b8480e96a5fdb57047822aabb5c1a2d9df60545b30bf4b83729c22c0ecc6d"
+      }
+    },
+    {
+      "original": {
+        "path": "packages/vscode-extension/src/__tests__/terraformScanner.test.ts",
+        "bytes": 15056,
+        "sha256": "d314f9e1f78fbbccd0f197242bc28f41145da40c263e52804f23841f8598a502"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261021-f22c-terraform-79d3c2a1/focused01-inputs-01/packages__vscode-extension__src____tests____terraformScanner.test.ts.txt",
+        "bytes": 15056,
+        "sha256": "d314f9e1f78fbbccd0f197242bc28f41145da40c263e52804f23841f8598a502"
+      }
+    },
+    {
+      "original": {
+        "path": "packages/vscode-extension/src/__tests__/terraformScannerCommands.test.ts",
+        "bytes": 6679,
+        "sha256": "1cc83e1a546b7098f72ff9dcffeb350ad187a50f3cbfb3f07c6e29e7f61b7297"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261021-f22c-terraform-79d3c2a1/focused01-inputs-01/packages__vscode-extension__src____tests____terraformScannerCommands.test.ts.txt",
+        "bytes": 6679,
+        "sha256": "1cc83e1a546b7098f72ff9dcffeb350ad187a50f3cbfb3f07c6e29e7f61b7297"
+      }
+    },
+    {
+      "original": {
+        "path": "packages/vscode-extension/src/firewall/VaultMigrationPlan.ts",
+        "bytes": 4402,
+        "sha256": "72c102719a2595691a3c3dda35c11e3ede841312804a317a2845384039c4213d"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261021-f22c-terraform-79d3c2a1/focused01-inputs-01/packages__vscode-extension__src__firewall__VaultMigrationPlan.ts.txt",
+        "bytes": 4402,
+        "sha256": "72c102719a2595691a3c3dda35c11e3ede841312804a317a2845384039c4213d"
+      }
+    },
+    {
+      "original": {
+        "path": "packages/vscode-extension/src/firewall/VaultManager.ts",
+        "bytes": 47554,
+        "sha256": "e076b777f281dcb0a03393783fff128e8925ded872a7ac47cfa3ca402458485f"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261021-f22c-terraform-79d3c2a1/focused01-inputs-01/packages__vscode-extension__src__firewall__VaultManager.ts.txt",
+        "bytes": 47554,
+        "sha256": "e076b777f281dcb0a03393783fff128e8925ded872a7ac47cfa3ca402458485f"
+      }
+    },
+    {
+      "original": {
+        "path": "packages/vscode-extension/src/hygiene/HygieneAnalysis.ts",
+        "bytes": 6771,
+        "sha256": "bcd908c27f2d900eefe4de7b1797782a2787189a1e24e5e11e78a6a67b5eaf41"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261021-f22c-terraform-79d3c2a1/focused01-inputs-01/packages__vscode-extension__src__hygiene__HygieneAnalysis.ts.txt",
+        "bytes": 6771,
+        "sha256": "bcd908c27f2d900eefe4de7b1797782a2787189a1e24e5e11e78a6a67b5eaf41"
+      }
+    },
+    {
+      "original": {
+        "path": "packages/vscode-extension/src/hygiene/HygieneExposureLedger.ts",
+        "bytes": 9902,
+        "sha256": "e8d805a36490d62d1827da97c0ae8d7b048e7acd90e105334ea523da224162ba"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261021-f22c-terraform-79d3c2a1/focused01-inputs-01/packages__vscode-extension__src__hygiene__HygieneExposureLedger.ts.txt",
+        "bytes": 9902,
+        "sha256": "e8d805a36490d62d1827da97c0ae8d7b048e7acd90e105334ea523da224162ba"
+      }
+    },
+    {
+      "original": {
+        "path": "packages/vscode-extension/src/hygiene/HygieneController.ts",
+        "bytes": 20743,
+        "sha256": "61d8c47e25c0548346bbdc364960c9e11cf5e1ba6f56676efb0c5dd3243e39fe"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261021-f22c-terraform-79d3c2a1/focused01-inputs-01/packages__vscode-extension__src__hygiene__HygieneController.ts.txt",
+        "bytes": 20743,
+        "sha256": "61d8c47e25c0548346bbdc364960c9e11cf5e1ba6f56676efb0c5dd3243e39fe"
+      }
+    },
+    {
+      "original": {
+        "path": "packages/vscode-extension/src/extension.ts",
+        "bytes": 34249,
+        "sha256": "e37250c7bbf924e50e593e4c745e1289d9efa2e90836925ccbff62c7f30a5b46"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261021-f22c-terraform-79d3c2a1/focused01-inputs-01/packages__vscode-extension__src__extension.ts.txt",
+        "bytes": 34249,
+        "sha256": "e37250c7bbf924e50e593e4c745e1289d9efa2e90836925ccbff62c7f30a5b46"
+      }
+    },
+    {
+      "original": {
+        "path": "packages/vscode-extension/package.json",
+        "bytes": 115014,
+        "sha256": "d6f61b697df196c14aeff335a0ce35e7184d87d559370cb9bd983b4e7be1e0c5"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261021-f22c-terraform-79d3c2a1/focused01-inputs-01/packages__vscode-extension__package.json.txt",
+        "bytes": 115014,
+        "sha256": "d6f61b697df196c14aeff335a0ce35e7184d87d559370cb9bd983b4e7be1e0c5"
+      }
+    },
+    {
+      "original": {
+        "path": "packages/soterai-lite/package.json",
+        "bytes": 114599,
+        "sha256": "f1b62e61f9f026a7743de6b08bf3d43e5851159d36797a72be8c3a480f0d0ac6"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261021-f22c-terraform-79d3c2a1/focused01-inputs-01/packages__soterai-lite__package.json.txt",
+        "bytes": 114599,
+        "sha256": "f1b62e61f9f026a7743de6b08bf3d43e5851159d36797a72be8c3a480f0d0ac6"
+      }
+    }
+  ],
+  "focused": {
+    "tests": 211,
+    "pass": 211,
+    "fail": 0,
+    "skipped": 0
+  },
+  "testFirst": {
+    "planner": "0PASS12FAIL missing module then12PASS",
+    "integration": "2PASS19FAIL before wiring then current211PASS combined",
+    "sandbox": "record-start-run01 spawnSync git EPERM retained; escalated run02 PASS"
+  },
+  "machineSettings": 73,
+  "implementation": "Finite static HCL/strict duplicate-aware JSON private planner; strict Terraform family flag; canonical vault checkpoint-only disclosure; F21 HMAC analyzer/controller;2bounded discovery queries;5native owner-only commands/manifest registration. No new dependency/config execution.",
+  "reopensAffected": [
+    "F06",
+    "F21",
+    "F22a",
+    "F22b"
+  ],
+  "pending": [
+    "Review/static grammar controls and docs/readiness",
+    "Actual Terraform native fixture/compilation/prelaunch",
+    "Fresh full suite/backend checks/new exact VSIX/content/current Terraform and affected native container/source/hygiene/vault/retained/functional/security",
+    "Safe closures/execution snapshots/acceptance/ledger/scoped source+transition commits/exhaustive bytes before F22d"
+  ],
+  "artifact": "NONE_FOR_F22c",
+  "rating": "PENDING",
+  "time": "2026-10-21T10:04:01.817Z"
+}

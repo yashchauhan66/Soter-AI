@@ -2,6 +2,7 @@ import { createHmac } from "node:crypto";
 import { createVaultMigrationPlan } from "../firewall/VaultMigrationPlan";
 import { sourceSyntaxForPath } from "../config-scanners/SourceSecretPlan";
 import { containerFormatForPath } from "../config-scanners/ContainerSecretPlan";
+import { terraformFormatForPath } from "../config-scanners/TerraformSecretPlan";
 import { isHygieneCandidate, normalizeHygieneName } from "./HygieneCandidatePolicy";
 export const HYGIENE_PROVIDERS = ["openai", "anthropic", "google", "aws", "github", "stripe", "unknown"] as const;
 export const HYGIENE_KINDS = ["api-key", "cloud-access", "private-key", "connection-string", "password", "token", "secret"] as const;
@@ -42,7 +43,10 @@ export function analyzeSourceText(input: HygieneInput, key: Buffer): Readonly<Hy
 export function analyzeContainerText(input: HygieneInput, key: Buffer): Readonly<HygieneAnalysis> {
     return analyze(input, key, "container");
 }
-function analyze(input: HygieneInput, key: Buffer, family: "hygiene" | "source" | "container"): Readonly<HygieneAnalysis> {
+export function analyzeTerraformText(input: HygieneInput, key: Buffer): Readonly<HygieneAnalysis> {
+    return analyze(input, key, "terraform");
+}
+function analyze(input: HygieneInput, key: Buffer, family: "hygiene" | "source" | "container" | "terraform"): Readonly<HygieneAnalysis> {
     try {
         if (!input || Object.getPrototypeOf(input) !== Object.prototype || Object.keys(input).sort().join(",") !== "environment,source,text"
             || Object.values(Object.getOwnPropertyDescriptors(input)).some(p => p.get || p.set)
@@ -50,7 +54,7 @@ function analyze(input: HygieneInput, key: Buffer, family: "hygiene" | "source" 
             || input.source.startsWith("/") || input.source.split("/").some(p => !p || p === "." || p === "..") || typeof input.environment !== "boolean"
             || typeof input.text !== "string" || Buffer.byteLength(input.text) > 65536 || input.text.includes("\0") || Buffer.from(input.text, "utf8").toString("utf8") !== input.text) return hygieneUnavailable();
         const fileRef = hygieneReference(key, "file", input.source), revision = hygieneReference(key, "revision", input.text);
-        const syntax = family === "source" ? sourceSyntaxForPath(input.source) : family === "container" ? containerFormatForPath(input.source) : undefined;
+        const syntax = family === "source" ? sourceSyntaxForPath(input.source) : family === "container" ? containerFormatForPath(input.source) : family === "terraform" ? terraformFormatForPath(input.source) : undefined;
         if (family !== "hygiene" && (!syntax || input.environment)) return hygieneUnavailable();
         const plan = createVaultMigrationPlan(input.text, input.environment, "10000000-0000-4000-8000-000000000021", syntax);
         const findings: HygieneFinding[] = [], values: string[] = [];

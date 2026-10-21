@@ -1,0 +1,86 @@
+﻿{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22c-terraform-79d3c2a1\\terraform-combined-02.txt",
+    "observedAt":  "2026-10-21T10:13:13.8162314Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "--import",
+                      "tsx",
+                      "--test",
+                      "packages/vscode-extension/src/__tests__/terraformSecretPlan.test.ts",
+                      "packages/vscode-extension/src/__tests__/terraformScanner.test.ts",
+                      "packages/vscode-extension/src/__tests__/terraformScannerCommands.test.ts",
+                      "packages/vscode-extension/src/__tests__/containerSecretPlan.test.ts",
+                      "packages/vscode-extension/src/__tests__/containerScanner.test.ts",
+                      "packages/vscode-extension/src/__tests__/containerScannerCommands.test.ts",
+                      "packages/vscode-extension/src/__tests__/sourceSecretPlan.test.ts",
+                      "packages/vscode-extension/src/__tests__/sourceScanner.test.ts",
+                      "packages/vscode-extension/src/__tests__/sourceScannerCommands.test.ts",
+                      "packages/vscode-extension/src/__tests__/hygieneAnalysis.test.ts",
+                      "packages/vscode-extension/src/__tests__/hygieneController.test.ts",
+                      "packages/vscode-extension/src/__tests__/hygieneCommands.test.ts",
+                      "packages/vscode-extension/src/__tests__/hygieneExposureLedger.test.ts",
+                      "packages/vscode-extension/src/__tests__/hygieneVaultSnapshot.test.ts",
+                      "packages/vscode-extension/src/__tests__/lite-vault-plan.test.ts",
+                      "packages/vscode-extension/src/__tests__/lite-vault-manager.test.ts"
+                  ],
+    "sha256":  "AF558265C934DC629E6B8CA457CAC04E369AAD60E01716EB0D293B7433E1D8AF",
+    "file":  "node"
+}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22c-terraform-79d3c2a1\\full-tests-01.txt",
+    "observedAt":  "2026-10-21T10:18:47.2905961Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "--import",
+                      "tsx",
+                      "--test",
+                      "--test-concurrency=1",
+                      "../vscode-extension/src/__tests__/**/*.test.ts"
+                  ],
+    "sha256":  "3F9D3BBE2FD2D1656C09E5131B86764B77F19A631EEE06EB91CBC1BCE8028A2A",
+    "file":  "node"
+}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22c-terraform-79d3c2a1\\backend-typecheck-01.txt",
+    "observedAt":  "2026-10-21T10:18:51.2038960Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "node_modules/typescript/bin/tsc",
+                      "--noEmit",
+                      "-p",
+                      "apps/local-ai-broker/tsconfig.json"
+                  ],
+    "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+    "file":  "node"
+}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22c-terraform-79d3c2a1\\backend-tests-01.txt",
+    "observedAt":  "2026-10-21T10:18:57.1910715Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "--import",
+                      "tsx",
+                      "--test",
+                      "apps/local-ai-broker/src/__tests__/*.test.ts"
+                  ],
+    "sha256":  "00FD4C1DCE2B79058662CC268B430226204D06B933D192B91812F8BB6B27600B",
+    "file":  "node"
+}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22c-terraform-79d3c2a1\\candidate01-gates-run-01.txt",
+    "observedAt":  "2026-10-21T10:24:07.2537614Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "-NoProfile",
+                      "-ExecutionPolicy",
+                      "Bypass",
+                      "-File",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22c-terraform-79d3c2a1\\complete-candidate01-01.ps1"
+                  ],
+    "sha256":  "2D20D34175220F23060551C5DFE07AF20100C75BBFB3AB04E56EC69FDBD359F4",
+    "file":  "powershell"
+}
+{
+    "status":  "PASS_CURRENT_F22C_REGRESSION_AND_EXACT_CANDIDATE_GATES",
+    "scope":  "Scoped static grammar and scripted synthetic native workflows only; evidence/byte barriers still pending."
+}
