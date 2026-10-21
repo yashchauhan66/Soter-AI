@@ -1,0 +1,193 @@
+﻿TAP version 13
+# Subtest: F22a canonical source planner is explicit and legacy callers do not silently change syntax
+ok 1 - F22a canonical source planner is explicit and legacy callers do not silently change syntax
+  ---
+  duration_ms: 67.4095
+  type: 'test'
+  ...
+# Subtest: F22a source analysis uses only HMAC metadata and rejects unsupported formats or environment mode
+ok 2 - F22a source analysis uses only HMAC metadata and rejects unsupported formats or environment mode
+  ---
+  duration_ms: 40.2369
+  type: 'test'
+  ...
+# Subtest: F22a source registration/controller has no startup read or key and cancellation precedes private capture
+ok 3 - F22a source registration/controller has no startup read or key and cancellation precedes private capture
+  ---
+  duration_ms: 72.8112
+  type: 'test'
+  ...
+# Subtest: F22a source scan, reviewed vault and exact escaped disclosure restore preserve saved deny without env output
+ok 4 - F22a source scan, reviewed vault and exact escaped disclosure restore preserve saved deny without env output
+  ---
+  duration_ms: 1661.679
+  type: 'test'
+  ...
+# Subtest: F22a source flag obeys strict machine authority and dependencies, ignoring workspace enable
+ok 5 - F22a source flag obeys strict machine authority and dependencies, ignoring workspace enable
+  ---
+  duration_ms: 6.2593
+  type: 'test'
+  ...
+# Subtest: F22a unsupported selected format, malformed and dynamic source do not produce a clean result
+ok 6 - F22a unsupported selected format, malformed and dynamic source do not produce a clean result
+  ---
+  duration_ms: 200.8708
+  type: 'test'
+  ...
+# Subtest: F22a workspace discovery is source-specific and public source is useful without evaluation
+ok 7 - F22a workspace discovery is source-specific and public source is useful without evaluation
+  ---
+  duration_ms: 405.9727
+  type: 'test'
+  ...
+# Subtest: F22a source or owner policy drift while consent is pending refuses without records
+ok 8 - F22a source or owner policy drift while consent is pending refuses without records
+  ---
+  duration_ms: 37.3119
+  type: 'test'
+  ...
+# Subtest: F22a source flag withdrawal and operation expiry during vault review prevent late writes
+ok 9 - F22a source flag withdrawal and operation expiry during vault review prevent late writes
+  ---
+  duration_ms: 312.2887
+  type: 'test'
+  ...
+# Subtest: F22a safe source exposure export and metadata failure retain no originals in results
+ok 10 - F22a safe source exposure export and metadata failure retain no originals in results
+  ---
+  duration_ms: 1110.5094
+  type: 'test'
+  ...
+# Subtest: F22a source syntax remains bound for source filenames beginning with dotenv-like prefixes
+not ok 11 - F22a source syntax remains bound for source filenames beginning with dotenv-like prefixes
+  ---
+  duration_ms: 96.3105
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\sourceScanner.test.ts:2:11708'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'UNAVAILABLE'
+    - 'ANALYZED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'ANALYZED'
+  actual: 'UNAVAILABLE'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\sourceScanner.test.ts:82:104)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F22a syntax mapping admits only declared local relative source formats
+ok 12 - F22a syntax mapping admits only declared local relative source formats
+  ---
+  duration_ms: 296.4781
+  type: 'test'
+  ...
+# Subtest: F22a parses literal declarations/properties/member assignments and preserves public code
+ok 13 - F22a parses literal declarations/properties/member assignments and preserves public code
+  ---
+  duration_ms: 34.9637
+  type: 'test'
+  ...
+# Subtest: F22a TS annotations and JSX attribute literals use the matching fixed parser syntax
+ok 14 - F22a TS annotations and JSX attribute literals use the matching fixed parser syntax
+  ---
+  duration_ms: 27.8511
+  type: 'test'
+  ...
+# Subtest: F22a standalone provider strings are detected while imports, regex literals and public templates remain
+ok 15 - F22a standalone provider strings are detected while imports, regex literals and public templates remain
+  ---
+  duration_ms: 5.8852
+  type: 'test'
+  ...
+# Subtest: F22a decoded escaped logical values preserve exact source representation for disclosure restore
+ok 16 - F22a decoded escaped logical values preserve exact source representation for disclosure restore
+  ---
+  duration_ms: 5.1012
+  type: 'test'
+  ...
+# Subtest: F22a no-substitution multiline templates and canonical comment candidates round trip
+ok 17 - F22a no-substitution multiline templates and canonical comment candidates round trip
+  ---
+  duration_ms: 31.1831
+  type: 'test'
+  ...
+# Subtest: F22a malformed and secret-bearing interpolated source refuses with generic errors and no execution
+ok 18 - F22a malformed and secret-bearing interpolated source refuses with generic errors and no execution
+  ---
+  duration_ms: 8.7667
+  type: 'test'
+  ...
+# Subtest: F22a bounded input, syntax/generation, candidate and AST work budgets refuse safely
+ok 19 - F22a bounded input, syntax/generation, candidate and AST work budgets refuse safely
+  ---
+  duration_ms: 27.1559
+  type: 'test'
+  ...
+# Subtest: F22a a remaining original in an unselected source span withholds migration
+ok 20 - F22a a remaining original in an unselected source span withholds migration
+  ---
+  duration_ms: 5.9933
+  type: 'test'
+  ...
+# Subtest: F22a source ownership handles transparent TS wrappers and fallback literals without borrowing unrelated names
+ok 21 - F22a source ownership handles transparent TS wrappers and fallback literals without borrowing unrelated names
+  ---
+  duration_ms: 7.1952
+  type: 'test'
+  ...
+# Subtest: F22a unsupported computed credentials and invalid cooked strings withhold with no raw error
+ok 22 - F22a unsupported computed credentials and invalid cooked strings withhold with no raw error
+  ---
+  duration_ms: 10.8186
+  type: 'test'
+  ...
+# Subtest: F22a comments and repeated selected values retain independent exact source positions
+ok 23 - F22a comments and repeated selected values retain independent exact source positions
+  ---
+  duration_ms: 4.9694
+  type: 'test'
+  ...
+# Subtest: F22a masked source is valid and idempotent, exact original returns only through private restore plan
+ok 24 - F22a masked source is valid and idempotent, exact original returns only through private restore plan
+  ---
+  duration_ms: 7.4975
+  type: 'test'
+  ...
+# Subtest: F22a standalone credentials inside tagged templates are explicitly unsupported
+not ok 25 - F22a standalone credentials inside tagged templates are explicitly unsupported
+  ---
+  duration_ms: 9.9846
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\sourceSecretPlan.test.ts:2:9868'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection (safeError).'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\sourceSecretPlan.test.ts:69:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F22a AST budget and non-source relative paths refuse without parser diagnostics
+ok 26 - F22a AST budget and non-source relative paths refuse without parser diagnostics
+  ---
+  duration_ms: 268.6188
+  type: 'test'
+  ...
+1..26
+# tests 26
+# suites 0
+# pass 24
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5711.5375

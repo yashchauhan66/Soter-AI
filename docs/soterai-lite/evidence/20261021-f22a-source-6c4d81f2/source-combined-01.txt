@@ -1,0 +1,484 @@
+﻿TAP version 13
+# Subtest: F21 analysis has only keyed references/fixed labels and bounded locations, no names/path/value/fragments
+ok 1 - F21 analysis has only keyed references/fixed labels and bounded locations, no names/path/value/fragments
+  ---
+  duration_ms: 944.3541
+  type: 'test'
+  ...
+# Subtest: F21 separate HMAC domains and profile keys prevent plain-value/file hashes and cross-profile correlation
+ok 2 - F21 separate HMAC domains and profile keys prevent plain-value/file hashes and cross-profile correlation
+  ---
+  duration_ms: 41.8897
+  type: 'test'
+  ...
+# Subtest: F21 public near-matches, empty fields, protected placeholders and explicit templates are not reported as live credentials
+ok 3 - F21 public near-matches, empty fields, protected placeholders and explicit templates are not reported as live credentials
+  ---
+  duration_ms: 9.2477
+  type: 'test'
+  ...
+# Subtest: F21 pinned supported dotenv provider hints stay heuristic and unknown provider stays unknown
+ok 4 - F21 pinned supported dotenv provider hints stay heuristic and unknown provider stays unknown
+  ---
+  duration_ms: 73.7011
+  type: 'test'
+  ...
+# Subtest: F21 multiline quoted dotenv and supported JSON candidates reuse canonical vault parsing
+ok 5 - F21 multiline quoted dotenv and supported JSON candidates reuse canonical vault parsing
+  ---
+  duration_ms: 26.1517
+  type: 'test'
+  ...
+# Subtest: F21 repeat values get one value reference while separate file/occurrence identities remain distinct
+ok 6 - F21 repeat values get one value reference while separate file/occurrence identities remain distinct
+  ---
+  duration_ms: 17.8462
+  type: 'test'
+  ...
+# Subtest: F21 malformed paths, binary/invalid UTF8, oversize work and short/malformed hash keys refuse without value-bearing exceptions
+ok 7 - F21 malformed paths, binary/invalid UTF8, oversize work and short/malformed hash keys refuse without value-bearing exceptions
+  ---
+  duration_ms: 238.5056
+  type: 'test'
+  ...
+# Subtest: F21 static metadata/value collision withholds instead of returning an original in a label
+ok 8 - F21 static metadata/value collision withholds instead of returning an original in a label
+  ---
+  duration_ms: 24.643
+  type: 'test'
+  ...
+# Subtest: F21 synthetic bounded corpus never serializes its candidate values
+ok 9 - F21 synthetic bounded corpus never serializes its candidate values
+  ---
+  duration_ms: 181.5165
+  type: 'test'
+  ...
+# Subtest: F21 controller constructor/status never scans or creates a key
+ok 10 - F21 controller constructor/status never scans or creates a key
+  ---
+  duration_ms: 111.7502
+  type: 'test'
+  ...
+# Subtest: F21 owner cancellation precedes original reads/ledger key creation
+ok 11 - F21 owner cancellation precedes original reads/ledger key creation
+  ---
+  duration_ms: 104.6443
+  type: 'test'
+  ...
+# Subtest: F21 reviewed local file analysis returns only safe findings and possible-exposure metadata
+ok 12 - F21 reviewed local file analysis returns only safe findings and possible-exposure metadata
+  ---
+  duration_ms: 425.9001
+  type: 'test'
+  ...
+# Subtest: F21 bounded workspace discovery has public control and excludes source originals from command results
+ok 13 - F21 bounded workspace discovery has public control and excludes source originals from command results
+  ---
+  duration_ms: 525.7482
+  type: 'test'
+  ...
+# Subtest: F21 source changed while owner consent is pending is withheld before findings persist
+ok 14 - F21 source changed while owner consent is pending is withheld before findings persist
+  ---
+  duration_ms: 67.1416
+  type: 'test'
+  ...
+# Subtest: F21 machine disabled ignores repository enabling and releases no findings
+ok 15 - F21 machine disabled ignores repository enabling and releases no findings
+  ---
+  duration_ms: 17.6511
+  type: 'test'
+  ...
+# Subtest: F21 vault fix and explicit disclosure undo use canonical recovery while saved denies remain
+ok 16 - F21 vault fix and explicit disclosure undo use canonical recovery while saved denies remain
+  ---
+  duration_ms: 1960.7175
+  type: 'test'
+  ...
+# Subtest: F21 cancelled vault review and conflicting example preserve source and existing files
+ok 17 - F21 cancelled vault review and conflicting example preserve source and existing files
+  ---
+  duration_ms: 579.2453
+  type: 'test'
+  ...
+# Subtest: F21 withdrawal prevents late vault confirmation from changing source
+ok 18 - F21 withdrawal prevents late vault confirmation from changing source
+  ---
+  duration_ms: 434.9752
+  type: 'test'
+  ...
+# Subtest: F21 expiry before approval, changed key and failed persistence never report success
+ok 19 - F21 expiry before approval, changed key and failed persistence never report success
+  ---
+  duration_ms: 587.9424
+  type: 'test'
+  ...
+# Subtest: F21 reviewed metadata export is a new file and contains neither source paths nor values
+ok 20 - F21 reviewed metadata export is a new file and contains neither source paths nor values
+  ---
+  duration_ms: 315.2514
+  type: 'test'
+  ...
+# Subtest: F21 candidate embedded in filename can be analyzed privately but cannot enter vault review labels
+ok 21 - F21 candidate embedded in filename can be analyzed privately but cannot enter vault review labels
+  ---
+  duration_ms: 231.1644
+  type: 'test'
+  ...
+# Subtest: F21 delayed notification for the same current key does not revoke a valid local scan
+ok 22 - F21 delayed notification for the same current key does not revoke a valid local scan
+  ---
+  duration_ms: 301.9811
+  type: 'test'
+  ...
+# Subtest: F21 key replacement during export review refuses stale metadata before creating a file
+ok 23 - F21 key replacement during export review refuses stale metadata before creating a file
+  ---
+  duration_ms: 208.9546
+  type: 'test'
+  ...
+# Subtest: F21 workspace analysis caps discovery at128 and admits at most1MiB of saved text
+ok 24 - F21 workspace analysis caps discovery at128 and admits at most1MiB of saved text
+  ---
+  duration_ms: 3249.2743
+  type: 'test'
+  ...
+# Subtest: F21 binary/oversized saved-file outcomes never release partial secret findings
+ok 25 - F21 binary/oversized saved-file outcomes never release partial secret findings
+  ---
+  duration_ms: 121.6763
+  type: 'test'
+  ...
+# Subtest: F21 cancel never enters the original-content snapshot even with multiple discovered files
+ok 26 - F21 cancel never enters the original-content snapshot even with multiple discovered files
+  ---
+  duration_ms: 41.4698
+  type: 'test'
+  ...
+# Subtest: F21 post-migration metadata failure is INCOMPLETE and retains placeholders/recovery rather than restoring originals
+ok 27 - F21 post-migration metadata failure is INCOMPLETE and retains placeholders/recovery rather than restoring originals
+  ---
+  duration_ms: 1018.63
+  type: 'test'
+  ...
+# Subtest: F21 lease expiry during canonical vault review prevents source mutation without waiting for a timer callback
+ok 28 - F21 lease expiry during canonical vault review prevents source mutation without waiting for a timer callback
+  ---
+  duration_ms: 317.7084
+  type: 'test'
+  ...
+# Subtest: F21 first owner analysis enrolls canonical additive policy before capturing its review basis
+ok 29 - F21 first owner analysis enrolls canonical additive policy before capturing its review basis
+  ---
+  duration_ms: 198.7326
+  type: 'test'
+  ...
+# Subtest: F21 actual owner-policy change during review still invalidates approval after initial enrollment
+ok 30 - F21 actual owner-policy change during review still invalidates approval after initial enrollment
+  ---
+  duration_ms: 33.1076
+  type: 'test'
+  ...
+# Subtest: F06-P01 secret-ish environment keys migrate short private values with generation and field-position placeholders
+ok 31 - F06-P01 secret-ish environment keys migrate short private values with generation and field-position placeholders
+  ---
+  duration_ms: 55.2406
+  type: 'test'
+  ...
+# Subtest: F06-P02 useful ordinary environment values and empty secret values remain unchanged
+ok 32 - F06-P02 useful ordinary environment values and empty secret values remain unchanged
+  ---
+  duration_ms: 3.6484
+  type: 'test'
+  ...
+# Subtest: F06-P03 formatting, BOM, CRLF, export spacing and unrelated comments survive selected value replacement
+ok 33 - F06-P03 formatting, BOM, CRLF, export spacing and unrelated comments survive selected value replacement
+  ---
+  duration_ms: 2.4336
+  type: 'test'
+  ...
+# Subtest: F06-P04 '-quoted multiline private values migrate atomically without inventing assignment fields
+ok 34 - F06-P04 '-quoted multiline private values migrate atomically without inventing assignment fields
+  ---
+  duration_ms: 2.1056
+  type: 'test'
+  ...
+# Subtest: F06-P04 "-quoted multiline private values migrate atomically without inventing assignment fields
+ok 35 - F06-P04 "-quoted multiline private values migrate atomically without inventing assignment fields
+  ---
+  duration_ms: 1.524
+  type: 'test'
+  ...
+# Subtest: F06-P04 `-quoted multiline private values migrate atomically without inventing assignment fields
+ok 36 - F06-P04 `-quoted multiline private values migrate atomically without inventing assignment fields
+  ---
+  duration_ms: 1.3552
+  type: 'test'
+  ...
+# Subtest: F06-P05 duplicate assignment names preserve each distinct private value and field-position placeholder
+ok 37 - F06-P05 duplicate assignment names preserve each distinct private value and field-position placeholder
+  ---
+  duration_ms: 1.9815
+  type: 'test'
+  ...
+# Subtest: F06-P06 double-quoted newline escapes yield logical private candidate values and no serialized value remnants
+ok 38 - F06-P06 double-quoted newline escapes yield logical private candidate values and no serialized value remnants
+  ---
+  duration_ms: 1.4371
+  type: 'test'
+  ...
+# Subtest: F06-P07 identical private values in different generations produce independent placeholders
+ok 39 - F06-P07 identical private values in different generations produce independent placeholders
+  ---
+  duration_ms: 1.8881
+  type: 'test'
+  ...
+# Subtest: F06-P08 exact legacy and generation placeholders are skipped while later field ordinals remain stable
+ok 40 - F06-P08 exact legacy and generation placeholders are skipped while later field ordinals remain stable
+  ---
+  duration_ms: 2.4885
+  type: 'test'
+  ...
+# Subtest: F06-P09 an accidental or malformed placeholder prefix is migrated rather than mistaken for protection (SOTERAI_PROTECTED_TOKEN)
+ok 41 - F06-P09 an accidental or malformed placeholder prefix is migrated rather than mistaken for protection (SOTERAI_PROTECTED_TOKEN)
+  ---
+  duration_ms: 2.1874
+  type: 'test'
+  ...
+# Subtest: F06-P09 an accidental or malformed placeholder prefix is migrated rather than mistaken for protection (before_SOTERAI_PROTECTED_TOKEN_after)
+ok 42 - F06-P09 an accidental or malformed placeholder prefix is migrated rather than mistaken for protection (before_SOTERAI_PROTECTED_TOKEN_after)
+  ---
+  duration_ms: 0.5808
+  type: 'test'
+  ...
+# Subtest: F06-P09 an accidental or malformed placeholder prefix is migrated rather than mistaken for protection ([SOTERAI_PROTECTED_TOKEN]suffix)
+ok 43 - F06-P09 an accidental or malformed placeholder prefix is migrated rather than mistaken for protection ([SOTERAI_PROTECTED_TOKEN]suffix)
+  ---
+  duration_ms: 0.8217
+  type: 'test'
+  ...
+# Subtest: F06-P09 an accidental or malformed placeholder prefix is migrated rather than mistaken for protection ([SOTERAI_PROTECTED_token])
+ok 44 - F06-P09 an accidental or malformed placeholder prefix is migrated rather than mistaken for protection ([SOTERAI_PROTECTED_token])
+  ---
+  duration_ms: 0.5887
+  type: 'test'
+  ...
+# Subtest: F06-P10 comments containing a migrated candidate value fail closed instead of retaining or rewriting it
+ok 45 - F06-P10 comments containing a migrated candidate value fail closed instead of retaining or rewriting it
+  ---
+  duration_ms: 1.7468
+  type: 'test'
+  ...
+# Subtest: F06-P11 examples include unique empty names only and never comments, multiline suffixes or public values
+ok 46 - F06-P11 examples include unique empty names only and never comments, multiline suffixes or public values
+  ---
+  duration_ms: 1.1353
+  type: 'test'
+  ...
+# Subtest: F06-P12 a repeated plan of already protected environment text is idempotent
+ok 47 - F06-P12 a repeated plan of already protected environment text is idempotent
+  ---
+  duration_ms: 1.0707
+  type: 'test'
+  ...
+# Subtest: F06-P13 non-environment standalone detector offsets preserve Unicode and unrelated JSON text
+ok 48 - F06-P13 non-environment standalone detector offsets preserve Unicode and unrelated JSON text
+  ---
+  duration_ms: 15.5128
+  type: 'test'
+  ...
+# Subtest: F06-P14 multiple standalone credentials use distinct ordered offsets and replace independently
+ok 49 - F06-P14 multiple standalone credentials use distinct ordered offsets and replace independently
+  ---
+  duration_ms: 1.4142
+  type: 'test'
+  ...
+# Subtest: F06-P15 unsupported environment syntax is unavailable rather than partially migrated or copied into examples
+ok 50 - F06-P15 unsupported environment syntax is unavailable rather than partially migrated or copied into examples
+  ---
+  duration_ms: 1.0307
+  type: 'test'
+  ...
+# Subtest: F06-P16 binary, control and oversized UTF-8 input are rejected in both document modes
+ok 51 - F06-P16 binary, control and oversized UTF-8 input are rejected in both document modes
+  ---
+  duration_ms: 1.2699
+  type: 'test'
+  ...
+# Subtest: F06-P17 the environment field budget fails closed above 256 even when values look harmless
+ok 52 - F06-P17 the environment field budget fails closed above 256 even when values look harmless
+  ---
+  duration_ms: 1.7648
+  type: 'test'
+  ...
+# Subtest: F06-P18 placeholder expansion cannot create a masked document above the supported byte budget
+ok 53 - F06-P18 placeholder expansion cannot create a masked document above the supported byte budget
+  ---
+  duration_ms: 4.0732
+  type: 'test'
+  ...
+# Subtest: F06-P19 only an actual UUID generation and boolean environment mode are accepted
+ok 54 - F06-P19 only an actual UUID generation and boolean environment mode are accepted
+  ---
+  duration_ms: 1.0879
+  type: 'test'
+  ...
+# Subtest: F06-P20 case-normalized generation metadata produces the same deterministic private plan
+ok 55 - F06-P20 case-normalized generation metadata produces the same deterministic private plan
+  ---
+  duration_ms: 0.9943
+  type: 'test'
+  ...
+# Subtest: F06-P21 empty supported input produces an empty useful plan in both modes
+ok 56 - F06-P21 empty supported input produces an empty useful plan in both modes
+  ---
+  duration_ms: 0.7587
+  type: 'test'
+  ...
+# Subtest: F22a canonical source planner is explicit and legacy callers do not silently change syntax
+ok 57 - F22a canonical source planner is explicit and legacy callers do not silently change syntax
+  ---
+  duration_ms: 82.2078
+  type: 'test'
+  ...
+# Subtest: F22a source analysis uses only HMAC metadata and rejects unsupported formats or environment mode
+ok 58 - F22a source analysis uses only HMAC metadata and rejects unsupported formats or environment mode
+  ---
+  duration_ms: 35.2879
+  type: 'test'
+  ...
+# Subtest: F22a source registration/controller has no startup read or key and cancellation precedes private capture
+ok 59 - F22a source registration/controller has no startup read or key and cancellation precedes private capture
+  ---
+  duration_ms: 97.6286
+  type: 'test'
+  ...
+# Subtest: F22a source scan, reviewed vault and exact escaped disclosure restore preserve saved deny without env output
+ok 60 - F22a source scan, reviewed vault and exact escaped disclosure restore preserve saved deny without env output
+  ---
+  duration_ms: 2006.2952
+  type: 'test'
+  ...
+# Subtest: F22a source flag obeys strict machine authority and dependencies, ignoring workspace enable
+ok 61 - F22a source flag obeys strict machine authority and dependencies, ignoring workspace enable
+  ---
+  duration_ms: 5.4792
+  type: 'test'
+  ...
+# Subtest: F22a unsupported selected format, malformed and dynamic source do not produce a clean result
+ok 62 - F22a unsupported selected format, malformed and dynamic source do not produce a clean result
+  ---
+  duration_ms: 296.3881
+  type: 'test'
+  ...
+# Subtest: F22a workspace discovery is source-specific and public source is useful without evaluation
+ok 63 - F22a workspace discovery is source-specific and public source is useful without evaluation
+  ---
+  duration_ms: 544.9302
+  type: 'test'
+  ...
+# Subtest: F22a source or owner policy drift while consent is pending refuses without records
+ok 64 - F22a source or owner policy drift while consent is pending refuses without records
+  ---
+  duration_ms: 42.348
+  type: 'test'
+  ...
+# Subtest: F22a source flag withdrawal and operation expiry during vault review prevent late writes
+ok 65 - F22a source flag withdrawal and operation expiry during vault review prevent late writes
+  ---
+  duration_ms: 435.0139
+  type: 'test'
+  ...
+# Subtest: F22a safe source exposure export and metadata failure retain no originals in results
+ok 66 - F22a safe source exposure export and metadata failure retain no originals in results
+  ---
+  duration_ms: 1264.82
+  type: 'test'
+  ...
+# Subtest: F22a syntax mapping admits only declared local relative source formats
+ok 67 - F22a syntax mapping admits only declared local relative source formats
+  ---
+  duration_ms: 463.3661
+  type: 'test'
+  ...
+# Subtest: F22a parses literal declarations/properties/member assignments and preserves public code
+ok 68 - F22a parses literal declarations/properties/member assignments and preserves public code
+  ---
+  duration_ms: 54.6626
+  type: 'test'
+  ...
+# Subtest: F22a TS annotations and JSX attribute literals use the matching fixed parser syntax
+ok 69 - F22a TS annotations and JSX attribute literals use the matching fixed parser syntax
+  ---
+  duration_ms: 55.8051
+  type: 'test'
+  ...
+# Subtest: F22a standalone provider strings are detected while imports, regex literals and public templates remain
+ok 70 - F22a standalone provider strings are detected while imports, regex literals and public templates remain
+  ---
+  duration_ms: 16.1595
+  type: 'test'
+  ...
+# Subtest: F22a decoded escaped logical values preserve exact source representation for disclosure restore
+ok 71 - F22a decoded escaped logical values preserve exact source representation for disclosure restore
+  ---
+  duration_ms: 10.4398
+  type: 'test'
+  ...
+# Subtest: F22a no-substitution multiline templates and canonical comment candidates round trip
+ok 72 - F22a no-substitution multiline templates and canonical comment candidates round trip
+  ---
+  duration_ms: 43.5414
+  type: 'test'
+  ...
+# Subtest: F22a malformed and secret-bearing interpolated source refuses with generic errors and no execution
+ok 73 - F22a malformed and secret-bearing interpolated source refuses with generic errors and no execution
+  ---
+  duration_ms: 36.8544
+  type: 'test'
+  ...
+# Subtest: F22a bounded input, syntax/generation, candidate and AST work budgets refuse safely
+ok 74 - F22a bounded input, syntax/generation, candidate and AST work budgets refuse safely
+  ---
+  duration_ms: 75.3437
+  type: 'test'
+  ...
+# Subtest: F22a a remaining original in an unselected source span withholds migration
+ok 75 - F22a a remaining original in an unselected source span withholds migration
+  ---
+  duration_ms: 21.0643
+  type: 'test'
+  ...
+# Subtest: F22a source ownership handles transparent TS wrappers and fallback literals without borrowing unrelated names
+ok 76 - F22a source ownership handles transparent TS wrappers and fallback literals without borrowing unrelated names
+  ---
+  duration_ms: 11.2986
+  type: 'test'
+  ...
+# Subtest: F22a unsupported computed credentials and invalid cooked strings withhold with no raw error
+ok 77 - F22a unsupported computed credentials and invalid cooked strings withhold with no raw error
+  ---
+  duration_ms: 33.4207
+  type: 'test'
+  ...
+# Subtest: F22a comments and repeated selected values retain independent exact source positions
+ok 78 - F22a comments and repeated selected values retain independent exact source positions
+  ---
+  duration_ms: 9.9149
+  type: 'test'
+  ...
+# Subtest: F22a masked source is valid and idempotent, exact original returns only through private restore plan
+ok 79 - F22a masked source is valid and idempotent, exact original returns only through private restore plan
+  ---
+  duration_ms: 11.2477
+  type: 'test'
+  ...
+1..79
+# tests 79
+# suites 0
+# pass 79
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 13314.921

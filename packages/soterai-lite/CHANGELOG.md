@@ -1,5 +1,7 @@
 # Changelog
 
+- Add consent-driven static string and canonical comment scanning for saved JS/JSX/TS/TSX/MJS/CJS source with fixed parse-only grammar, metadata findings and reviewed canonical vault migration. Explicit disclosure restores exact original escapes while retaining saved denies. The machine source scanner flag withdraws pending work; unsupported/dynamic inputs stay unverified. No source execution, automatic code rewrite or value-bearing env output.
+
 - Add owner-reviewed local hygiene findings, canonical vault migration/example/disclosure recovery and keyed possible-exposure metadata with reviewed export. Add manual provider checklists; no key validity, actual AI access or performed rotation is implied. The machine setting `soterai.lite.hygieneAssistant` withdraws pending work while preserving saved protection and recovery.
 
 - Add completion-buffered UTF-8 stdout/stderr filtering with separate decoder/control states, supported ANSI/OSC removal, cross-chunk recognition, bounded final flush and safe withdrawal through `soterai.lite.outputRedactor`.

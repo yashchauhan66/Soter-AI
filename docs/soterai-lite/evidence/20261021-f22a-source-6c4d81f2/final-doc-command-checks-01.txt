@@ -1,0 +1,175 @@
+﻿TAP version 13
+# Subtest: F21 native command registration does no startup scan or key creation
+ok 1 - F21 native command registration does no startup scan or key creation
+  ---
+  duration_ms: 28.9743
+  type: 'test'
+  ...
+# Subtest: F21 selected-file command ignores caller URI/content/approval and uses the actual picker
+ok 2 - F21 selected-file command ignores caller URI/content/approval and uses the actual picker
+  ---
+  duration_ms: 12.6449
+  type: 'test'
+  ...
+# Subtest: F21 file-picker cancellation grants no content-read authority
+ok 3 - F21 file-picker cancellation grants no content-read authority
+  ---
+  duration_ms: 5.6352
+  type: 'test'
+  ...
+# Subtest: F21 action selection uses only an actual current native ordinal item
+ok 4 - F21 action selection uses only an actual current native ordinal item
+  ---
+  duration_ms: 5.4872
+  type: 'test'
+  ...
+# Subtest: F21 one pending native flow and flag withdrawal invalidate a late picker
+ok 5 - F21 one pending native flow and flag withdrawal invalidate a late picker
+  ---
+  duration_ms: 5.1247
+  type: 'test'
+  ...
+# Subtest: F21 ledger and manual checklist documents use safe in-memory content; caller labels cannot select providers
+ok 6 - F21 ledger and manual checklist documents use safe in-memory content; caller labels cannot select providers
+  ---
+  duration_ms: 6.5527
+  type: 'test'
+  ...
+# Subtest: F21 hygiene setting is default-on machine/restricted and every advanced command is contributed and activated
+ok 7 - F21 hygiene setting is default-on machine/restricted and every advanced command is contributed and activated
+  ---
+  duration_ms: 9.1169
+  type: 'test'
+  ...
+# Subtest: the canonical readiness doc is generated, not maintained
+    # Subtest: exists
+    ok 1 - exists
+      ---
+      duration_ms: 1.644
+      type: 'test'
+      ...
+    # Subtest: matches what the generator produces from source right now
+    ok 2 - matches what the generator produces from source right now
+      ---
+      duration_ms: 157.255
+      type: 'test'
+      ...
+    # Subtest: says out loud that it is generated
+    ok 3 - says out loud that it is generated
+      ---
+      duration_ms: 0.7023
+      type: 'test'
+      ...
+    1..3
+ok 8 - the canonical readiness doc is generated, not maintained
+  ---
+  duration_ms: 162.2947
+  type: 'suite'
+  ...
+# Subtest: the readiness doc states the real, current numbers
+    # Subtest: names the version being published
+    ok 1 - names the version being published
+      ---
+      duration_ms: 0.5207
+      type: 'test'
+      ...
+    # Subtest: names the license that actually ships
+    ok 2 - names the license that actually ships
+      ---
+      duration_ms: 0.4172
+      type: 'test'
+      ...
+    # Subtest: states the command count the manifest actually declares
+    ok 3 - states the command count the manifest actually declares
+      ---
+      duration_ms: 0.3775
+      type: 'test'
+      ...
+    # Subtest: states the setting and policy counts the manifest actually declares
+    ok 4 - states the setting and policy counts the manifest actually declares
+      ---
+      duration_ms: 0.3651
+      type: 'test'
+      ...
+    # Subtest: claims no ML in the packaged extension
+    ok 5 - claims no ML in the packaged extension
+      ---
+      duration_ms: 0.5643
+      type: 'test'
+      ...
+    # Subtest: keeps the permanent limitations in the document, not just in the code
+    ok 6 - keeps the permanent limitations in the document, not just in the code
+      ---
+      duration_ms: 0.4154
+      type: 'test'
+      ...
+    1..6
+ok 9 - the readiness doc states the real, current numbers
+  ---
+  duration_ms: 3.6947
+  type: 'suite'
+  ...
+# Subtest: stale documents do not contradict the shipped product
+    # Subtest: vscode-extension-marketplace-readiness.md no longer states a contradicted number
+    ok 1 - vscode-extension-marketplace-readiness.md no longer states a contradicted number
+      ---
+      duration_ms: 1.9088
+      type: 'test'
+      ...
+    # Subtest: no extension-facing document advertises a detection-rule count the source does not back
+    ok 2 - no extension-facing document advertises a detection-rule count the source does not back
+      ---
+      duration_ms: 2.691
+      type: 'test'
+      ...
+    1..2
+ok 10 - stale documents do not contradict the shipped product
+  ---
+  duration_ms: 4.8358
+  type: 'suite'
+  ...
+# Subtest: F22a source commands register with no scan, key or caller authority
+ok 11 - F22a source commands register with no scan, key or caller authority
+  ---
+  duration_ms: 30.0076
+  type: 'test'
+  ...
+# Subtest: F22a source command selects actual native file and ignores URI/content/approval carriers
+ok 12 - F22a source command selects actual native file and ignores URI/content/approval carriers
+  ---
+  duration_ms: 8.6348
+  type: 'test'
+  ...
+# Subtest: F22a source picker cancellation and forged finding item grant nothing
+ok 13 - F22a source picker cancellation and forged finding item grant nothing
+  ---
+  duration_ms: 7.1024
+  type: 'test'
+  ...
+# Subtest: F22a source action uses only selected current ordinal and restoration has separate action
+ok 14 - F22a source action uses only selected current ordinal and restoration has separate action
+  ---
+  duration_ms: 5.9808
+  type: 'test'
+  ...
+# Subtest: F22a pending source picker cannot overlap or survive machine flag withdrawal
+ok 15 - F22a pending source picker cannot overlap or survive machine flag withdrawal
+  ---
+  duration_ms: 6.4082
+  type: 'test'
+  ...
+# Subtest: F22a manifest contributes machine/restricted flag and advanced commands with activation registration
+ok 16 - F22a manifest contributes machine/restricted flag and advanced commands with activation registration
+  ---
+  duration_ms: 6.5494
+  type: 'test'
+  ...
+1..16
+# tests 24
+# suites 3
+# pass 24
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1153.2

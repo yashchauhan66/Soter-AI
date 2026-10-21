@@ -11,13 +11,15 @@ import { BoundarySnapshot, ownerPolicyRevision } from "../ai-boundary/BoundarySn
 import { hygieneAssistantEnabled } from "./HygieneFlags";
 import { HygieneExposureLedger, HYGIENE_LEDGER_KEY } from "./HygieneExposureLedger";
 import { type HygieneAnalysis, type HygieneFinding } from "./HygieneAnalysis";
+import { sourceSyntaxForPath } from "../config-scanners/SourceSecretPlan";
+import { sourceScannerEnabled } from "../config-scanners/SourceScannerFlags";
 type Analyzer = Awaited<ReturnType<HygieneExposureLedger["createAnalyzer"]>>;
 interface Binding { uri: vscode.Uri; environment: boolean; identity: string; policy: string; analysis: Readonly<HygieneAnalysis>; findings: readonly HygieneFinding[]; safeLabels: boolean; vaulted: boolean }
 class Changed extends Error {}
 export class HygieneController implements vscode.Disposable {
     #vault: VaultManager; #ledger: HygieneExposureLedger; #bindings = new Map<string, Binding>(); #busy = false; #disposed = false; #epoch = 0;
     #analyzer?: Analyzer; #listeners: vscode.Disposable[];
-    constructor(private readonly context: vscode.ExtensionContext, private readonly options: { now?: () => number } = {}) {
+    constructor(private readonly context: vscode.ExtensionContext, private readonly options: { now?: () => number; family?: "source" } = {}) {
         this.#vault = new VaultManager(context); this.#ledger = new HygieneExposureLedger(context.globalState, context.secrets);
         this.#listeners = [vscode.workspace.onDidChangeConfiguration(e => { if (e.affectsConfiguration("soterai")) this.withdraw(); }),
             vscode.workspace.onDidChangeWorkspaceFolders(() => this.withdraw()), context.secrets.onDidChange(e => {
@@ -29,8 +31,10 @@ export class HygieneController implements vscode.Disposable {
         const folders = vscode.workspace.workspaceFolders; if (!vscode.workspace.isTrusted || vscode.env.remoteName || folders?.length !== 1) throw Error();
         const uri = folders[0].uri; if (uri.scheme !== "file" || uri.authority || uri.query || uri.fragment) throw Error(); return uri;
     }
-    #available(): boolean { try { this.#root(); return !this.#disposed && process.platform === "win32" && hygieneAssistantEnabled() && vaultModeEnabled(); } catch { return false; } }
-    status(): object { return { status: this.#available() ? "OWNER_REVIEW_REQUIRED" : "UNAVAILABLE", busy: this.#busy, scope: "Local heuristic findings and possible-exposure metadata; AI access, key validity and manual rotation are unverified." }; }
+    #available(): boolean { try { this.#root(); return !this.#disposed && process.platform === "win32" && hygieneAssistantEnabled() && vaultModeEnabled() && (this.options.family !== "source" || sourceScannerEnabled()); } catch { return false; } }
+    status(): object { return { status: this.#available() ? "OWNER_REVIEW_REQUIRED" : "UNAVAILABLE", busy: this.#busy, scope: this.options.family === "source"
+        ? "Saved JS/JSX/TS/TSX/MJS/CJS static strings only. Dynamic credentials and unsupported syntax withhold analysis. Heuristic possible-exposure metadata; no credential validity or AI-access verification."
+        : "Local heuristic findings and possible-exposure metadata; AI access, key validity and manual rotation are unverified." }; }
     withdraw(): void { this.#epoch++; this.#analyzer?.dispose(); this.#analyzer = undefined; this.#bindings.clear(); this.#vault.withdrawHygiene(); }
     dispose(): void { this.#disposed = true; this.withdraw(); this.#listeners.forEach(d => d.dispose()); }
     async #run(operation: (valid: () => boolean, root: vscode.Uri) => Promise<any>): Promise<any> {
@@ -52,8 +56,10 @@ export class HygieneController implements vscode.Disposable {
         await assertWorkspaceFileUri(uri); const s = await lstat(uri.fsPath); if (!s.isFile() || s.isSymbolicLink() || s.nlink !== 1) throw Error(); return { identity: fileIdentity(s), size: s.size };
     }
     #snapshot(uri: vscode.Uri, s: Readonly<VaultHygieneSnapshot>, analyzer: Analyzer): Binding {
-        const environment = /^\.env(?:\..*)?$/i.test(path.basename(uri.fsPath)), source = path.relative(this.#root().fsPath, uri.fsPath).replaceAll("\\", "/");
-        const analysis = analyzer.analyze({ source, text: s.text, environment }), plan = createVaultMigrationPlan(s.text, environment, randomUUID());
+        const sourceMode = this.options.family === "source", environment = !sourceMode && /^\.env(?:\..*)?$/i.test(path.basename(uri.fsPath)), source = path.relative(this.#root().fsPath, uri.fsPath).replaceAll("\\", "/");
+        const syntax = sourceMode ? sourceSyntaxForPath(source) : undefined;
+        if (sourceMode && !syntax) throw Error();
+        const input = { source, text: s.text, environment }, analysis = sourceMode ? analyzer.analyzeSource(input) : analyzer.analyze(input), plan = createVaultMigrationPlan(s.text, environment, randomUUID(), syntax);
         const matcher = new RegisteredSecretMatcher(plan.candidates.map(c => c.rawValue));
         return { uri, environment, identity: s.identity, policy: s.policy, analysis, findings: analysis.findings,
             safeLabels: matcher.inspectRequest([s.source, uri.fsPath]).status === "CLEAN", vaulted: false };
@@ -70,10 +76,16 @@ export class HygieneController implements vscode.Disposable {
             // policy basis. It reads policy sources, never candidate originals.
             // Later owner/source changes still invalidate this exact review.
             await BoundarySnapshot.load(); if (!valid()) throw Error();
-            let files = selected ? [selected] : await vscode.workspace.findFiles(new vscode.RelativePattern(root.fsPath, "**/*"), "**/{.git,node_modules,dist,build,coverage}/**", 129);
+            const sourceMode = this.options.family === "source", syntaxOf = (uri: vscode.Uri) => sourceSyntaxForPath(path.relative(root.fsPath, uri.fsPath).replaceAll("\\", "/"));
+            if (sourceMode && selected && !syntaxOf(selected)) return { status: "UNSUPPORTED_SOURCE" };
+            const glob = sourceMode ? "**/*.{[jJ][sS],[jJ][sS][xX],[tT][sS],[tT][sS][xX],[mM][jJ][sS],[cC][jJ][sS]}" : "**/*";
+            let files = selected ? [selected] : await vscode.workspace.findFiles(new vscode.RelativePattern(root.fsPath, glob), "**/{.git,node_modules,dist,build,coverage}/**", 129);
+            if (sourceMode) files = files.filter(uri => !!syntaxOf(uri));
             files = [...new Map(files.map(uri => [uri.toString(), uri])).values()]; const capped = files.length > 128; files = files.slice(0, 128);
             const stamps = await Promise.all(files.map(uri => this.#stamp(uri))), policy = await ownerPolicyRevision(root.toString()); if (!valid()) throw Error();
-            const accepted = await this.#confirm("Analyze saved project files locally?", "Analyze saved project files", "Review up to128 saved files/64KiB each/1MiB analyzed text. Values stay in bounded local processing. Findings are heuristic metadata; no AI-read or credential-validity verification. No provider request is sent.", valid);
+            const accepted = await this.#confirm(sourceMode ? "Analyze saved source files locally?" : "Analyze saved project files locally?", "Analyze saved project files", sourceMode
+                ? "Review up to128 saved JS/JSX/TS/TSX/MJS/CJS files/64KiB each/1MiB analyzed text. Static strings only; dynamic credentials and unsupported syntax withhold analysis. Local processing, no execution or provider request. A reviewed vault fix replaces values with placeholders; configure application env or owner secret storage manually before applying. No code or imports are rewritten automatically."
+                : "Review up to128 saved files/64KiB each/1MiB analyzed text. Values stay in bounded local processing. Findings are heuristic metadata; no AI-read or credential-validity verification. No provider request is sent.", valid);
             if (!accepted) return { status: valid() ? "CANCELLED" : "UNAVAILABLE" };
             if (await ownerPolicyRevision(root.toString()) !== policy) throw new Changed();
             for (let n = 0; n < files.length; n++) if ((await this.#stamp(files[n])).identity !== stamps[n].identity) throw new Changed();
@@ -102,7 +114,7 @@ export class HygieneController implements vscode.Disposable {
                     if (!await this.#confirm("Create a safe environment example?", "Write empty example values", "The canonical vault writer creates only parsed names and empty values. A conflicting existing example is preserved. No source editor is opened.", valid)) return { status: valid() ? "CANCELLED" : "UNAVAILABLE" };
                     await this.#vault.writeEnvExample(binding.uri, valid); committed = true;
                 } else {
-                    count = operation === "vault" ? await this.#vault.migrate(binding.uri, valid) : await this.#vault.restore(binding.uri, valid);
+                    count = operation === "vault" ? this.options.family === "source" ? await this.#vault.migrateSource(binding.uri, valid) : await this.#vault.migrate(binding.uri, valid) : await this.#vault.restore(binding.uri, valid);
                     committed = count > 0; if (!valid()) throw Error(); if (!count) return { status: "CANCELLED" };
                 }
                 if (!valid() || !await analyzer.current()) throw Error(); const fresh = await this.#read(binding.uri, analyzer, valid);

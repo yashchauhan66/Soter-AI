@@ -1,0 +1,91 @@
+{
+  "feature": "F22",
+  "activeSubcard": "F22a",
+  "status": "INCOMPLETE",
+  "parent": "499ca1142f5b9b9f5cb21948530868c4440053e0",
+  "design": "docs/soterai-lite/evidence/20261021-f22a-source-6c4d81f2/design-01.md",
+  "previous": {
+    "source": "43c1d114f816c97de17907e433a5581f0943222a",
+    "transition": "499ca1142f5b9b9f5cb21948530868c4440053e0",
+    "indexed": 884,
+    "paths": 552,
+    "snapshots": 195,
+    "transitionPaths": 9,
+    "artifact": {
+      "path": "packages/soterai-lite/soterai-lite-0.7.0-f21-20261020-attempt02.vsix",
+      "bytes": 1517690,
+      "sha256": "29c338bff19b75b22bb9c812228f70d7cf56737df3f858ff1fdcbb9b6742e12c",
+      "recheck": "PASS"
+    }
+  },
+  "inputs": [
+    {
+      "path": "docs/soterai-lite/LITE-CATALOG.json",
+      "bytes": 160265,
+      "sha256": "1ce46192e9f315b5f2142c9f61542f1d513143dc2e19d4def6d95cea38c73ed4"
+    },
+    {
+      "path": "docs/soterai-lite/MASTER-PROMPT-20261016.txt",
+      "bytes": 15864,
+      "sha256": "2ea0c90b1fe3bdd591e5ae24470dcd8804abfff7a75741ec1f5a1aae7e4679ae"
+    },
+    {
+      "path": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
+      "bytes": 39112,
+      "sha256": "2ba3a2e93019861c6c509457d0fcf3f55e509d39bdecd9f8a9323f1eabab2c67"
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/VaultManager.ts",
+      "bytes": 44195,
+      "sha256": "397f41e2c589b85a7b8e8872630c6b4617ea087c8a3b0cc99649a539cdc8b2e6"
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/VaultMigrationPlan.ts",
+      "bytes": 3501,
+      "sha256": "dbe3b45646d3751c927680ca31001897faa3885aca23c9ef84695f114ed94505"
+    },
+    {
+      "path": "packages/vscode-extension/src/hygiene/HygieneAnalysis.ts",
+      "bytes": 6006,
+      "sha256": "6a13b0a22273165aeca07256881030f4850176b4de31f6250b963100464d1817"
+    },
+    {
+      "path": "packages/vscode-extension/src/hygiene/HygieneController.ts",
+      "bytes": 14029,
+      "sha256": "cb51b97fd72bdad422dd3619b7df3b36df820399863cdee2ac782c860a8dd6c2"
+    },
+    {
+      "path": "packages/vscode-extension/src/hygiene/HygieneExposureLedger.ts",
+      "bytes": 9353,
+      "sha256": "ceed85f8e5f5a8a13068ddba9030626041dd230b1bf687cb1a3f8112e03eaa27"
+    },
+    {
+      "path": "packages/vscode-extension/src/hygiene/commands.ts",
+      "bytes": 4487,
+      "sha256": "7529ce4ce86a1cf9db51c5c9bb6bf3abacf31c79c3849855cac90ad574639488"
+    },
+    {
+      "path": "node_modules/@babel/parser/package.json",
+      "bytes": 1382,
+      "sha256": "808c30900ff9e55aafff6361e55c21a39556bdcd2d349e0474fde1e985d855af"
+    },
+    {
+      "path": "node_modules/@babel/parser/lib/index.js",
+      "bytes": 512666,
+      "sha256": "201724d1415df7749087d9d6e88af50f2bcafe2eb68dfbe9347f49d3361ff426"
+    },
+    {
+      "path": "node_modules/@babel/parser/LICENSE",
+      "bytes": 1086,
+      "sha256": "2e97627cb278aa7556fb9e8817368302301a595b6c7582512b8d74c57b773652"
+    }
+  ],
+  "implemented": "None. Parser/library/policy/vault/hygiene source inspected, declared grammar and flags frozen for test-first F22a. No real workspace secret scan.",
+  "pending": [
+    "Authored literal/private-plan failing baseline before implementation",
+    "Private parser and canonical source migration/controller/owner UI integration",
+    "Per-card full/current artifact/native/affected/withdrawal/commit byte gates before next family"
+  ],
+  "limits": "Scoped JS/TS/JSX literal grammar; other source languages and dynamic semantics unsupported, not graded. No download/login/signals/publish/rating; originalL6 HUMAN-ACTIONS STOP.",
+  "time": "2026-10-21T03:25:11.871Z"
+}

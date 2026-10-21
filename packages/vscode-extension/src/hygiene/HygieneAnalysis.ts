@@ -1,6 +1,7 @@
 import { createHmac } from "node:crypto";
-import { containsRawSecret } from "@soterai/guard-core";
 import { createVaultMigrationPlan } from "../firewall/VaultMigrationPlan";
+import { sourceSyntaxForPath } from "../config-scanners/SourceSecretPlan";
+import { isHygieneCandidate, normalizeHygieneName } from "./HygieneCandidatePolicy";
 export const HYGIENE_PROVIDERS = ["openai", "anthropic", "google", "aws", "github", "stripe", "unknown"] as const;
 export const HYGIENE_KINDS = ["api-key", "cloud-access", "private-key", "connection-string", "password", "token", "secret"] as const;
 export type HygieneProvider = typeof HYGIENE_PROVIDERS[number];
@@ -15,8 +16,6 @@ export function hygieneReference(key: Buffer, domain: string, value: string): st
     if (!Buffer.isBuffer(key) || key.length !== 32) return hygieneUnavailable();
     return createHmac("sha256", key).update(domain + "\0").update(value, "utf8").digest("hex");
 }
-const template = (value: string) => /^(?:\$\{[A-Za-z_][A-Za-z0-9_]*\}|YOUR_[A-Z0-9_]+|REPLACE_ME|\[MASKED\]|<[^<>\r\n]{1,128}>)$/i.test(value)
-    || value.includes("[SOTERAI_PROTECTED_") || /^(?:ssh-(?:rsa|ed25519) |-----BEGIN (?:RSA )?PUBLIC KEY-----)/.test(value);
 function provider(name: string, value: string): HygieneProvider {
     if (/ANTHROPIC|CLAUDE/.test(name) || /^sk-ant-/.test(value)) return "anthropic";
     if (/OPENAI/.test(name) || /^sk-(?:proj|svcacct)-/.test(value)) return "openai";
@@ -33,6 +32,13 @@ function kind(type: string): HygieneKind {
 /** Private local processing only. Findings never include names, paths, values,
  * snippets or reversible value hashes. A candidate is not live validation. */
 export function analyzeHygieneText(input: HygieneInput, key: Buffer): Readonly<HygieneAnalysis> {
+    return analyze(input, key, false);
+}
+/** Fixed source-family parser; only trusted internal callers select this mode. */
+export function analyzeSourceText(input: HygieneInput, key: Buffer): Readonly<HygieneAnalysis> {
+    return analyze(input, key, true);
+}
+function analyze(input: HygieneInput, key: Buffer, sourceMode: boolean): Readonly<HygieneAnalysis> {
     try {
         if (!input || Object.getPrototypeOf(input) !== Object.prototype || Object.keys(input).sort().join(",") !== "environment,source,text"
             || Object.values(Object.getOwnPropertyDescriptors(input)).some(p => p.get || p.set)
@@ -40,13 +46,13 @@ export function analyzeHygieneText(input: HygieneInput, key: Buffer): Readonly<H
             || input.source.startsWith("/") || input.source.split("/").some(p => !p || p === "." || p === "..") || typeof input.environment !== "boolean"
             || typeof input.text !== "string" || Buffer.byteLength(input.text) > 65536 || input.text.includes("\0") || Buffer.from(input.text, "utf8").toString("utf8") !== input.text) return hygieneUnavailable();
         const fileRef = hygieneReference(key, "file", input.source), revision = hygieneReference(key, "revision", input.text);
-        const plan = createVaultMigrationPlan(input.text, input.environment, "10000000-0000-4000-8000-000000000021");
+        const syntax = sourceMode ? sourceSyntaxForPath(input.source) : undefined;
+        if (sourceMode && (!syntax || input.environment)) return hygieneUnavailable();
+        const plan = createVaultMigrationPlan(input.text, input.environment, "10000000-0000-4000-8000-000000000021", syntax);
         const findings: HygieneFinding[] = [], values: string[] = [];
         for (const candidate of plan.candidates) {
-            const name = candidate.key.replace(/([a-z])([A-Z])/g, "$1_$2").replace(/[^A-Za-z0-9]+/g, "_").toUpperCase();
-            const stripePublishable = /(?:^|_)STRIPE(?:_|$)/.test(name) && /(?:^|_)(?:PUBLISHABLE|PUBLIC)(?:_|$)/.test(name)
-                && /^pk_(?:test|live)_[A-Za-z0-9]+$/.test(candidate.rawValue);
-            if (template(candidate.rawValue) || stripePublishable || !/(?:^|_)(?:API|KEY|SECRET|TOKEN|PASSWORD|PASSWD|PWD|CREDENTIALS?|AUTH|PRIVATE|DATABASE_URL|DB_URL|CONNECTION_STRING|DSN)(?:_|$)/.test(name) && !containsRawSecret(candidate.rawValue)) continue;
+            const name = normalizeHygieneName(candidate.key);
+            if (!isHygieneCandidate(candidate.key, candidate.rawValue)) continue;
             if (findings.length >= 128) return hygieneUnavailable();
             const valueRef = hygieneReference(key, "value", candidate.rawValue), id = hygieneReference(key, "finding", JSON.stringify([fileRef, candidate.start, valueRef]));
             const suggestions = Object.freeze(["review-vault", "move-to-owner-secret-store", ...(input.environment ? ["env-example"] : []), "rotation-checklist"]);

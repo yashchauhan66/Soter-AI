@@ -1,0 +1,88 @@
+﻿TAP version 13
+# Subtest: F22a syntax mapping admits only declared local relative source formats
+ok 1 - F22a syntax mapping admits only declared local relative source formats
+  ---
+  duration_ms: 429.907
+  type: 'test'
+  ...
+# Subtest: F22a parses literal declarations/properties/member assignments and preserves public code
+ok 2 - F22a parses literal declarations/properties/member assignments and preserves public code
+  ---
+  duration_ms: 23.6746
+  type: 'test'
+  ...
+# Subtest: F22a TS annotations and JSX attribute literals use the matching fixed parser syntax
+ok 3 - F22a TS annotations and JSX attribute literals use the matching fixed parser syntax
+  ---
+  duration_ms: 20.9137
+  type: 'test'
+  ...
+# Subtest: F22a standalone provider strings are detected while imports, regex literals and public templates remain
+ok 4 - F22a standalone provider strings are detected while imports, regex literals and public templates remain
+  ---
+  duration_ms: 4.6646
+  type: 'test'
+  ...
+# Subtest: F22a decoded escaped logical values preserve exact source representation for disclosure restore
+ok 5 - F22a decoded escaped logical values preserve exact source representation for disclosure restore
+  ---
+  duration_ms: 3.3863
+  type: 'test'
+  ...
+# Subtest: F22a no-substitution multiline templates and canonical comment candidates round trip
+ok 6 - F22a no-substitution multiline templates and canonical comment candidates round trip
+  ---
+  duration_ms: 16.6167
+  type: 'test'
+  ...
+# Subtest: F22a malformed and secret-bearing interpolated source refuses with generic errors and no execution
+ok 7 - F22a malformed and secret-bearing interpolated source refuses with generic errors and no execution
+  ---
+  duration_ms: 5.3641
+  type: 'test'
+  ...
+# Subtest: F22a bounded input, syntax/generation, candidate and AST work budgets refuse safely
+ok 8 - F22a bounded input, syntax/generation, candidate and AST work budgets refuse safely
+  ---
+  duration_ms: 18.8785
+  type: 'test'
+  ...
+# Subtest: F22a a remaining original in an unselected source span withholds migration
+ok 9 - F22a a remaining original in an unselected source span withholds migration
+  ---
+  duration_ms: 3.1176
+  type: 'test'
+  ...
+# Subtest: F22a source ownership handles transparent TS wrappers and fallback literals without borrowing unrelated names
+ok 10 - F22a source ownership handles transparent TS wrappers and fallback literals without borrowing unrelated names
+  ---
+  duration_ms: 7.6704
+  type: 'test'
+  ...
+# Subtest: F22a unsupported computed credentials and invalid cooked strings withhold with no raw error
+ok 11 - F22a unsupported computed credentials and invalid cooked strings withhold with no raw error
+  ---
+  duration_ms: 9.4917
+  type: 'test'
+  ...
+# Subtest: F22a comments and repeated selected values retain independent exact source positions
+ok 12 - F22a comments and repeated selected values retain independent exact source positions
+  ---
+  duration_ms: 3.9057
+  type: 'test'
+  ...
+# Subtest: F22a masked source is valid and idempotent, exact original returns only through private restore plan
+ok 13 - F22a masked source is valid and idempotent, exact original returns only through private restore plan
+  ---
+  duration_ms: 5.0323
+  type: 'test'
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 13
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1123.2177

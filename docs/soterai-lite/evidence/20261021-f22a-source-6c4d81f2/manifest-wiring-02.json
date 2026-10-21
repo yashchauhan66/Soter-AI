@@ -1,0 +1,40 @@
+{
+  "status": "WIRED_NOT_NATIVE_VERIFIED",
+  "flag": "soterai.lite.configScanner.source",
+  "commands": [
+    "soterai.reviewWorkspaceSourceSecrets",
+    "soterai.reviewSourceSecrets",
+    "soterai.reviewSourceSecretVault",
+    "soterai.restoreSourceSecretVault",
+    "soterai.sourceSecretScannerStatus"
+  ],
+  "changes": [
+    {
+      "path": "packages/vscode-extension/package.json",
+      "before": "feac1e47cf7ed27882d168a1b3e1d48e719af235e55b101d77a9a2efa622f690",
+      "after": "2d3a957352b6d04960a20d59d59fa49e4214c1135836808159bccb3675de1b06",
+      "bytes": 137346,
+      "exactAllowedSemanticChange": true
+    },
+    {
+      "path": "packages/soterai-lite/package.json",
+      "before": "88dc2f8e6fbddb47403531c3a360ec9940447253776e47dd9ab0bf13899ef7ce",
+      "after": "aa088858f3f5ccbc554e0015db2c60874b98b0140c3c4ba9388a078d652ab20b",
+      "bytes": 110593,
+      "exactAllowedSemanticChange": true
+    },
+    {
+      "path": "package-lock.json",
+      "before": "376215d3e146cbd3041a499460a4bfc138c43ceefaefa21b8664d171a1c30f34",
+      "after": "4d6c5125d6a5af171a51d1713d1ec1646220bc4643acb408af88bbb9fbc09f9a",
+      "bytes": 540995,
+      "exactAllowedSemanticChange": true
+    }
+  ],
+  "previousFailure": "helper01 compared JSON property insertion order after both manifest writes, before any lock write. Deep strict equality now validates only the allowed semantic changes.",
+  "parser": {
+    "version": "7.29.7",
+    "installedOnly": true,
+    "downloads": 0
+  }
+}

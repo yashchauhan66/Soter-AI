@@ -1,0 +1,850 @@
+﻿TAP version 13
+# Subtest: F21 analysis has only keyed references/fixed labels and bounded locations, no names/path/value/fragments
+ok 1 - F21 analysis has only keyed references/fixed labels and bounded locations, no names/path/value/fragments
+  ---
+  duration_ms: 1134.7277
+  type: 'test'
+  ...
+# Subtest: F21 separate HMAC domains and profile keys prevent plain-value/file hashes and cross-profile correlation
+ok 2 - F21 separate HMAC domains and profile keys prevent plain-value/file hashes and cross-profile correlation
+  ---
+  duration_ms: 32.5786
+  type: 'test'
+  ...
+# Subtest: F21 public near-matches, empty fields, protected placeholders and explicit templates are not reported as live credentials
+ok 3 - F21 public near-matches, empty fields, protected placeholders and explicit templates are not reported as live credentials
+  ---
+  duration_ms: 22.9134
+  type: 'test'
+  ...
+# Subtest: F21 pinned supported dotenv provider hints stay heuristic and unknown provider stays unknown
+ok 4 - F21 pinned supported dotenv provider hints stay heuristic and unknown provider stays unknown
+  ---
+  duration_ms: 58.8374
+  type: 'test'
+  ...
+# Subtest: F21 multiline quoted dotenv and supported JSON candidates reuse canonical vault parsing
+ok 5 - F21 multiline quoted dotenv and supported JSON candidates reuse canonical vault parsing
+  ---
+  duration_ms: 69.6747
+  type: 'test'
+  ...
+# Subtest: F21 repeat values get one value reference while separate file/occurrence identities remain distinct
+ok 6 - F21 repeat values get one value reference while separate file/occurrence identities remain distinct
+  ---
+  duration_ms: 19.341
+  type: 'test'
+  ...
+# Subtest: F21 malformed paths, binary/invalid UTF8, oversize work and short/malformed hash keys refuse without value-bearing exceptions
+ok 7 - F21 malformed paths, binary/invalid UTF8, oversize work and short/malformed hash keys refuse without value-bearing exceptions
+  ---
+  duration_ms: 241.1948
+  type: 'test'
+  ...
+# Subtest: F21 static metadata/value collision withholds instead of returning an original in a label
+ok 8 - F21 static metadata/value collision withholds instead of returning an original in a label
+  ---
+  duration_ms: 21.38
+  type: 'test'
+  ...
+# Subtest: F21 synthetic bounded corpus never serializes its candidate values
+ok 9 - F21 synthetic bounded corpus never serializes its candidate values
+  ---
+  duration_ms: 372.3292
+  type: 'test'
+  ...
+# Subtest: F21 native command registration does no startup scan or key creation
+ok 10 - F21 native command registration does no startup scan or key creation
+  ---
+  duration_ms: 89.4878
+  type: 'test'
+  ...
+# Subtest: F21 selected-file command ignores caller URI/content/approval and uses the actual picker
+ok 11 - F21 selected-file command ignores caller URI/content/approval and uses the actual picker
+  ---
+  duration_ms: 14.3761
+  type: 'test'
+  ...
+# Subtest: F21 file-picker cancellation grants no content-read authority
+ok 12 - F21 file-picker cancellation grants no content-read authority
+  ---
+  duration_ms: 23.9885
+  type: 'test'
+  ...
+# Subtest: F21 action selection uses only an actual current native ordinal item
+ok 13 - F21 action selection uses only an actual current native ordinal item
+  ---
+  duration_ms: 12.9408
+  type: 'test'
+  ...
+# Subtest: F21 one pending native flow and flag withdrawal invalidate a late picker
+ok 14 - F21 one pending native flow and flag withdrawal invalidate a late picker
+  ---
+  duration_ms: 14.5596
+  type: 'test'
+  ...
+# Subtest: F21 ledger and manual checklist documents use safe in-memory content; caller labels cannot select providers
+ok 15 - F21 ledger and manual checklist documents use safe in-memory content; caller labels cannot select providers
+  ---
+  duration_ms: 32.0133
+  type: 'test'
+  ...
+# Subtest: F21 hygiene setting is default-on machine/restricted and every advanced command is contributed and activated
+ok 16 - F21 hygiene setting is default-on machine/restricted and every advanced command is contributed and activated
+  ---
+  duration_ms: 18.711
+  type: 'test'
+  ...
+# Subtest: F21 controller constructor/status never scans or creates a key
+ok 17 - F21 controller constructor/status never scans or creates a key
+  ---
+  duration_ms: 189.2114
+  type: 'test'
+  ...
+# Subtest: F21 owner cancellation precedes original reads/ledger key creation
+ok 18 - F21 owner cancellation precedes original reads/ledger key creation
+  ---
+  duration_ms: 143.7446
+  type: 'test'
+  ...
+# Subtest: F21 reviewed local file analysis returns only safe findings and possible-exposure metadata
+ok 19 - F21 reviewed local file analysis returns only safe findings and possible-exposure metadata
+  ---
+  duration_ms: 846.4004
+  type: 'test'
+  ...
+# Subtest: F21 bounded workspace discovery has public control and excludes source originals from command results
+ok 20 - F21 bounded workspace discovery has public control and excludes source originals from command results
+  ---
+  duration_ms: 1130.811
+  type: 'test'
+  ...
+# Subtest: F21 source changed while owner consent is pending is withheld before findings persist
+ok 21 - F21 source changed while owner consent is pending is withheld before findings persist
+  ---
+  duration_ms: 122.1865
+  type: 'test'
+  ...
+# Subtest: F21 machine disabled ignores repository enabling and releases no findings
+ok 22 - F21 machine disabled ignores repository enabling and releases no findings
+  ---
+  duration_ms: 44.9458
+  type: 'test'
+  ...
+# Subtest: F21 vault fix and explicit disclosure undo use canonical recovery while saved denies remain
+ok 23 - F21 vault fix and explicit disclosure undo use canonical recovery while saved denies remain
+  ---
+  duration_ms: 2784.908
+  type: 'test'
+  ...
+# Subtest: F21 cancelled vault review and conflicting example preserve source and existing files
+ok 24 - F21 cancelled vault review and conflicting example preserve source and existing files
+  ---
+  duration_ms: 639.1005
+  type: 'test'
+  ...
+# Subtest: F21 withdrawal prevents late vault confirmation from changing source
+ok 25 - F21 withdrawal prevents late vault confirmation from changing source
+  ---
+  duration_ms: 546.7922
+  type: 'test'
+  ...
+# Subtest: F21 expiry before approval, changed key and failed persistence never report success
+ok 26 - F21 expiry before approval, changed key and failed persistence never report success
+  ---
+  duration_ms: 696.4615
+  type: 'test'
+  ...
+# Subtest: F21 reviewed metadata export is a new file and contains neither source paths nor values
+ok 27 - F21 reviewed metadata export is a new file and contains neither source paths nor values
+  ---
+  duration_ms: 399.5736
+  type: 'test'
+  ...
+# Subtest: F21 candidate embedded in filename can be analyzed privately but cannot enter vault review labels
+ok 28 - F21 candidate embedded in filename can be analyzed privately but cannot enter vault review labels
+  ---
+  duration_ms: 358.4157
+  type: 'test'
+  ...
+# Subtest: F21 delayed notification for the same current key does not revoke a valid local scan
+ok 29 - F21 delayed notification for the same current key does not revoke a valid local scan
+  ---
+  duration_ms: 340.3196
+  type: 'test'
+  ...
+# Subtest: F21 key replacement during export review refuses stale metadata before creating a file
+ok 30 - F21 key replacement during export review refuses stale metadata before creating a file
+  ---
+  duration_ms: 343.1056
+  type: 'test'
+  ...
+# Subtest: F21 workspace analysis caps discovery at128 and admits at most1MiB of saved text
+ok 31 - F21 workspace analysis caps discovery at128 and admits at most1MiB of saved text
+  ---
+  duration_ms: 3800.7644
+  type: 'test'
+  ...
+# Subtest: F21 binary/oversized saved-file outcomes never release partial secret findings
+ok 32 - F21 binary/oversized saved-file outcomes never release partial secret findings
+  ---
+  duration_ms: 143.6804
+  type: 'test'
+  ...
+# Subtest: F21 cancel never enters the original-content snapshot even with multiple discovered files
+ok 33 - F21 cancel never enters the original-content snapshot even with multiple discovered files
+  ---
+  duration_ms: 46.6621
+  type: 'test'
+  ...
+# Subtest: F21 post-migration metadata failure is INCOMPLETE and retains placeholders/recovery rather than restoring originals
+ok 34 - F21 post-migration metadata failure is INCOMPLETE and retains placeholders/recovery rather than restoring originals
+  ---
+  duration_ms: 2105.7197
+  type: 'test'
+  ...
+# Subtest: F21 lease expiry during canonical vault review prevents source mutation without waiting for a timer callback
+ok 35 - F21 lease expiry during canonical vault review prevents source mutation without waiting for a timer callback
+  ---
+  duration_ms: 511.0717
+  type: 'test'
+  ...
+# Subtest: F21 first owner analysis enrolls canonical additive policy before capturing its review basis
+ok 36 - F21 first owner analysis enrolls canonical additive policy before capturing its review basis
+  ---
+  duration_ms: 278.5975
+  type: 'test'
+  ...
+# Subtest: F21 actual owner-policy change during review still invalidates approval after initial enrollment
+ok 37 - F21 actual owner-policy change during review still invalidates approval after initial enrollment
+  ---
+  duration_ms: 51.7672
+  type: 'test'
+  ...
+# Subtest: F21 no IO/key creation in constructor or empty read, no original/root/path in stored/exported metadata
+ok 38 - F21 no IO/key creation in constructor or empty read, no original/root/path in stored/exported metadata
+  ---
+  duration_ms: 1260.8782
+  type: 'test'
+  ...
+# Subtest: F21 repeated observations deduplicate, root scope isolates and distinct owner reports never become confirmed AI reads
+ok 39 - F21 repeated observations deduplicate, root scope isolates and distinct owner reports never become confirmed AI reads
+  ---
+  duration_ms: 30.6819
+  type: 'test'
+  ...
+# Subtest: F21 corrupt state, unknown fields and lost/replaced key preserve prior bytes and refuse
+ok 40 - F21 corrupt state, unknown fields and lost/replaced key preserve prior bytes and refuse
+  ---
+  duration_ms: 36.6437
+  type: 'test'
+  ...
+# Subtest: F21 capacity is bounded256 without truncation or partial persistence
+ok 41 - F21 capacity is bounded256 without truncation or partial persistence
+  ---
+  duration_ms: 303.6529
+  type: 'test'
+  ...
+# Subtest: F21 concurrent owner observations serialize without losing existing metadata
+ok 42 - F21 concurrent owner observations serialize without losing existing metadata
+  ---
+  duration_ms: 16.2019
+  type: 'test'
+  ...
+# Subtest: F21 key/state persistence failure releases no raw exception and never overwrites existing ledger
+ok 43 - F21 key/state persistence failure releases no raw exception and never overwrites existing ledger
+  ---
+  duration_ms: 6.4945
+  type: 'test'
+  ...
+# Subtest: F21 backwards clock refuses an update without corrupting preserved chronological metadata
+ok 44 - F21 backwards clock refuses an update without corrupting preserved chronological metadata
+  ---
+  duration_ms: 7.4167
+  type: 'test'
+  ...
+# Subtest: F21 private synchronous analysis lease revokes on key drift/disposal without exposing its key
+ok 45 - F21 private synchronous analysis lease revokes on key drift/disposal without exposing its key
+  ---
+  duration_ms: 11.84
+  type: 'test'
+  ...
+# Subtest: F21 trusted snapshot reuses vault containment/identity/policy and never opens a source TextDocument or creates a key
+ok 46 - F21 trusted snapshot reuses vault containment/identity/policy and never opens a source TextDocument or creates a key
+  ---
+  duration_ms: 371.1607
+  type: 'test'
+  ...
+# Subtest: F21 disabled snapshot never invokes the private consumer
+ok 47 - F21 disabled snapshot never invokes the private consumer
+  ---
+  duration_ms: 43.464
+  type: 'test'
+  ...
+# Subtest: F21 machine disable defeats a workspace enabling override at the private snapshot boundary
+ok 48 - F21 machine disable defeats a workspace enabling override at the private snapshot boundary
+  ---
+  duration_ms: 51.9171
+  type: 'test'
+  ...
+# Subtest: F21 synchronous consumer source drift, callback errors and async callbacks withhold results
+ok 49 - F21 synchronous consumer source drift, callback errors and async callbacks withhold results
+  ---
+  duration_ms: 790.8405
+  type: 'test'
+  ...
+# Subtest: F21 snapshot lease drift/instance withdrawal inside consumer cannot release its result
+ok 50 - F21 snapshot lease drift/instance withdrawal inside consumer cannot release its result
+  ---
+  duration_ms: 439.7822
+  type: 'test'
+  ...
+# Subtest: F21 hardlinked synthetic source refuses before any raw callback
+ok 51 - F21 hardlinked synthetic source refuses before any raw callback
+  ---
+  duration_ms: 68.2651
+  type: 'test'
+  ...
+# Subtest: F21 withdrawing its vault instance prevents late migration approval but preserves another instance
+ok 52 - F21 withdrawing its vault instance prevents late migration approval but preserves another instance
+  ---
+  duration_ms: 404.4932
+  type: 'test'
+  ...
+# Subtest: F21 a hygiene migration queued behind another owner review rechecks its own admission before reading
+ok 53 - F21 a hygiene migration queued behind another owner review rechecks its own admission before reading
+  ---
+  duration_ms: 228.2568
+  type: 'test'
+  ...
+# Subtest: F06-V01 preview uses a constant mask with no value fragments, lengths or hashes
+ok 54 - F06-V01 preview uses a constant mask with no value fragments, lengths or hashes
+  ---
+  duration_ms: 248.7962
+  type: 'test'
+  ...
+# Subtest: F06-V02 reviewed migration handles duplicate/multiline fields, writes blank examples and keeps recovery encrypted outside the project
+ok 55 - F06-V02 reviewed migration handles duplicate/multiline fields, writes blank examples and keeps recovery encrypted outside the project
+  ---
+  duration_ms: 2410.1315
+  type: 'test'
+  ...
+# Subtest: F06-V03 declining manager-owned native migration writes nothing
+ok 56 - F06-V03 declining manager-owned native migration writes nothing
+  ---
+  duration_ms: 108.6993
+  type: 'test'
+  ...
+# Subtest: F06-V04 SecretStorage store failure or failed readback never removes original values
+ok 57 - F06-V04 SecretStorage store failure or failed readback never removes original values
+  ---
+  duration_ms: 463.1538
+  type: 'test'
+  ...
+# Subtest: F06-V05 source drift while native migration review is held cannot overwrite the newer file
+ok 58 - F06-V05 source drift while native migration review is held cannot overwrite the newer file
+  ---
+  duration_ms: 156.7159
+  type: 'test'
+  ...
+# Subtest: F06-V06 source drift while verified key storage is held cannot remove newer source data
+ok 59 - F06-V06 source drift while verified key storage is held cannot remove newer source data
+  ---
+  duration_ms: 273.6278
+  type: 'test'
+  ...
+# Subtest: F06-V07 machine withdrawal, untrusted or nonlocal resources withhold all mutation entry points
+ok 60 - F06-V07 machine withdrawal, untrusted or nonlocal resources withhold all mutation entry points
+  ---
+  duration_ms: 34.6531
+  type: 'test'
+  ...
+# Subtest: F06-V08 flag withdrawal while native confirmation is pending leaves source and vault untouched
+ok 61 - F06-V08 flag withdrawal while native confirmation is pending leaves source and vault untouched
+  ---
+  duration_ms: 91.6697
+  type: 'test'
+  ...
+# Subtest: F06-V09 dirty and stale existing source buffers are rejected before writes and no original TextDocument is created
+ok 62 - F06-V09 dirty and stale existing source buffers are rejected before writes and no original TextDocument is created
+  ---
+  duration_ms: 204.6598
+  type: 'test'
+  ...
+# Subtest: F06-V10 an existing corrupt encrypted vault is preserved and never reinterpreted as empty
+ok 63 - F06-V10 an existing corrupt encrypted vault is preserved and never reinterpreted as empty
+  ---
+  duration_ms: 253.3277
+  type: 'test'
+  ...
+# Subtest: F06-V11 an existing encrypted vault whose key disappeared cannot be replaced by a newly created vault
+ok 64 - F06-V11 an existing encrypted vault whose key disappeared cannot be replaced by a newly created vault
+  ---
+  duration_ms: 1253.3494
+  type: 'test'
+  ...
+# Subtest: F06-V12 conflicting example files are not overwritten and migration removes no original values
+ok 65 - F06-V12 conflicting example files are not overwritten and migration removes no original values
+  ---
+  duration_ms: 75.9082
+  type: 'test'
+  ...
+# Subtest: F06-V13 explicit example generation contains blank unique names only and refuses a conflicting existing example
+ok 66 - F06-V13 explicit example generation contains blank unique names only and refuses a conflicting existing example
+  ---
+  duration_ms: 368.5245
+  type: 'test'
+  ...
+# Subtest: F06-V14 failed source write preserves encrypted recovery; a new manager completes the masked outcome idempotently
+ok 67 - F06-V14 failed source write preserves encrypted recovery; a new manager completes the masked outcome idempotently
+  ---
+  duration_ms: 1582.5946
+  type: 'test'
+  ...
+# Subtest: F06-V15 tampered issued checkpoint recovery is withheld without silently restoring or rewriting originals
+ok 68 - F06-V15 tampered issued checkpoint recovery is withheld without silently restoring or rewriting originals
+  ---
+  duration_ms: 811.4669
+  type: 'test'
+  ...
+# Subtest: F06-V16 raw restoration requires its own disclosure approval and retained placeholders remain until accepted
+ok 69 - F06-V16 raw restoration requires its own disclosure approval and retained placeholders remain until accepted
+  ---
+  duration_ms: 1203.619
+  type: 'test'
+  ...
+# Subtest: F06-V17 equal relative paths in different projects cannot restore another root's vault entries or swapped backup
+ok 70 - F06-V17 equal relative paths in different projects cannot restore another root's vault entries or swapped backup
+  ---
+  duration_ms: 891.4676
+  type: 'test'
+  ...
+# Subtest: F06-V18 static mutation serialization preserves both files' distinct encrypted entries
+ok 71 - F06-V18 static mutation serialization preserves both files' distinct encrypted entries
+  ---
+  duration_ms: 1702.1039
+  type: 'test'
+  ...
+# Subtest: F06-V19 compatible encrypted legacy entries survive a new migration while legacy relative restoration stays withheld
+ok 72 - F06-V19 compatible encrypted legacy entries survive a new migration while legacy relative restoration stays withheld
+  ---
+  duration_ms: 1563.6658
+  type: 'test'
+  ...
+# Subtest: F06-V20 a pending whole-vault checkpoint withholds another file until safe recovery completes
+ok 73 - F06-V20 a pending whole-vault checkpoint withholds another file until safe recovery completes
+  ---
+  duration_ms: 2171.9844
+  type: 'test'
+  ...
+# Subtest: F06-V21 explicit restore preserves exact quoted escapes, multiline and duplicate source bytes
+ok 74 - F06-V21 explicit restore preserves exact quoted escapes, multiline and duplicate source bytes
+  ---
+  duration_ms: 827.0074
+  type: 'test'
+  ...
+# Subtest: F06-V22 damaged partial bytes withhold safe completion but authenticated separately approved original recovery remains reachable
+ok 75 - F06-V22 damaged partial bytes withhold safe completion but authenticated separately approved original recovery remains reachable
+  ---
+  duration_ms: 732.389
+  type: 'test'
+  ...
+# Subtest: F06-V23 status metadata withholds hash-bearing legacy identifiers and direct value fingerprints
+ok 76 - F06-V23 status metadata withholds hash-bearing legacy identifiers and direct value fingerprints
+  ---
+  duration_ms: 597.8658
+  type: 'test'
+  ...
+# Subtest: F06-V24 existing pristine owner TextDocument saves placeholders without creating a new original document
+ok 77 - F06-V24 existing pristine owner TextDocument saves placeholders without creating a new original document
+  ---
+  duration_ms: 621.3264
+  type: 'test'
+  ...
+# Subtest: F06-V25 policy drift inside an approved raw write prevents a stale success acknowledgement
+ok 78 - F06-V25 policy drift inside an approved raw write prevents a stale success acknowledgement
+  ---
+  duration_ms: 918.1587
+  type: 'test'
+  ...
+# Subtest: F06-V26 missing or replaced key during backup disclosure withholds originals before disk mutation
+ok 79 - F06-V26 missing or replaced key during backup disclosure withholds originals before disk mutation
+  ---
+  duration_ms: 1002.2368
+  type: 'test'
+  ...
+# Subtest: F06-V27 key loss immediately after encrypted vault commit preserves originals and checkpoint for later reviewed recovery
+ok 80 - F06-V27 key loss immediately after encrypted vault commit preserves originals and checkpoint for later reviewed recovery
+  ---
+  duration_ms: 1221.4439
+  type: 'test'
+  ...
+# Subtest: F06-V28 native local vscode-userdata global storage maps to its canonical physical path without changing namespace
+ok 81 - F06-V28 native local vscode-userdata global storage maps to its canonical physical path without changing namespace
+  ---
+  duration_ms: 810.6229
+  type: 'test'
+  ...
+# Subtest: F06-V29 unknown global-storage providers cannot write a vault or change source bytes
+ok 82 - F06-V29 unknown global-storage providers cannot write a vault or change source bytes
+  ---
+  duration_ms: 18.391
+  type: 'test'
+  ...
+# Subtest: F06-P01 secret-ish environment keys migrate short private values with generation and field-position placeholders
+ok 83 - F06-P01 secret-ish environment keys migrate short private values with generation and field-position placeholders
+  ---
+  duration_ms: 34.2128
+  type: 'test'
+  ...
+# Subtest: F06-P02 useful ordinary environment values and empty secret values remain unchanged
+ok 84 - F06-P02 useful ordinary environment values and empty secret values remain unchanged
+  ---
+  duration_ms: 2.4395
+  type: 'test'
+  ...
+# Subtest: F06-P03 formatting, BOM, CRLF, export spacing and unrelated comments survive selected value replacement
+ok 85 - F06-P03 formatting, BOM, CRLF, export spacing and unrelated comments survive selected value replacement
+  ---
+  duration_ms: 2.609
+  type: 'test'
+  ...
+# Subtest: F06-P04 '-quoted multiline private values migrate atomically without inventing assignment fields
+ok 86 - F06-P04 '-quoted multiline private values migrate atomically without inventing assignment fields
+  ---
+  duration_ms: 1.5385
+  type: 'test'
+  ...
+# Subtest: F06-P04 "-quoted multiline private values migrate atomically without inventing assignment fields
+ok 87 - F06-P04 "-quoted multiline private values migrate atomically without inventing assignment fields
+  ---
+  duration_ms: 1.1925
+  type: 'test'
+  ...
+# Subtest: F06-P04 `-quoted multiline private values migrate atomically without inventing assignment fields
+ok 88 - F06-P04 `-quoted multiline private values migrate atomically without inventing assignment fields
+  ---
+  duration_ms: 1.2628
+  type: 'test'
+  ...
+# Subtest: F06-P05 duplicate assignment names preserve each distinct private value and field-position placeholder
+ok 89 - F06-P05 duplicate assignment names preserve each distinct private value and field-position placeholder
+  ---
+  duration_ms: 2.3466
+  type: 'test'
+  ...
+# Subtest: F06-P06 double-quoted newline escapes yield logical private candidate values and no serialized value remnants
+ok 90 - F06-P06 double-quoted newline escapes yield logical private candidate values and no serialized value remnants
+  ---
+  duration_ms: 0.9973
+  type: 'test'
+  ...
+# Subtest: F06-P07 identical private values in different generations produce independent placeholders
+ok 91 - F06-P07 identical private values in different generations produce independent placeholders
+  ---
+  duration_ms: 1.6196
+  type: 'test'
+  ...
+# Subtest: F06-P08 exact legacy and generation placeholders are skipped while later field ordinals remain stable
+ok 92 - F06-P08 exact legacy and generation placeholders are skipped while later field ordinals remain stable
+  ---
+  duration_ms: 1.8359
+  type: 'test'
+  ...
+# Subtest: F06-P09 an accidental or malformed placeholder prefix is migrated rather than mistaken for protection (SOTERAI_PROTECTED_TOKEN)
+ok 93 - F06-P09 an accidental or malformed placeholder prefix is migrated rather than mistaken for protection (SOTERAI_PROTECTED_TOKEN)
+  ---
+  duration_ms: 0.7577
+  type: 'test'
+  ...
+# Subtest: F06-P09 an accidental or malformed placeholder prefix is migrated rather than mistaken for protection (before_SOTERAI_PROTECTED_TOKEN_after)
+ok 94 - F06-P09 an accidental or malformed placeholder prefix is migrated rather than mistaken for protection (before_SOTERAI_PROTECTED_TOKEN_after)
+  ---
+  duration_ms: 0.4662
+  type: 'test'
+  ...
+# Subtest: F06-P09 an accidental or malformed placeholder prefix is migrated rather than mistaken for protection ([SOTERAI_PROTECTED_TOKEN]suffix)
+ok 95 - F06-P09 an accidental or malformed placeholder prefix is migrated rather than mistaken for protection ([SOTERAI_PROTECTED_TOKEN]suffix)
+  ---
+  duration_ms: 0.464
+  type: 'test'
+  ...
+# Subtest: F06-P09 an accidental or malformed placeholder prefix is migrated rather than mistaken for protection ([SOTERAI_PROTECTED_token])
+ok 96 - F06-P09 an accidental or malformed placeholder prefix is migrated rather than mistaken for protection ([SOTERAI_PROTECTED_token])
+  ---
+  duration_ms: 0.5267
+  type: 'test'
+  ...
+# Subtest: F06-P10 comments containing a migrated candidate value fail closed instead of retaining or rewriting it
+ok 97 - F06-P10 comments containing a migrated candidate value fail closed instead of retaining or rewriting it
+  ---
+  duration_ms: 1.638
+  type: 'test'
+  ...
+# Subtest: F06-P11 examples include unique empty names only and never comments, multiline suffixes or public values
+ok 98 - F06-P11 examples include unique empty names only and never comments, multiline suffixes or public values
+  ---
+  duration_ms: 1.1453
+  type: 'test'
+  ...
+# Subtest: F06-P12 a repeated plan of already protected environment text is idempotent
+ok 99 - F06-P12 a repeated plan of already protected environment text is idempotent
+  ---
+  duration_ms: 1.0621
+  type: 'test'
+  ...
+# Subtest: F06-P13 non-environment standalone detector offsets preserve Unicode and unrelated JSON text
+ok 100 - F06-P13 non-environment standalone detector offsets preserve Unicode and unrelated JSON text
+  ---
+  duration_ms: 21.4503
+  type: 'test'
+  ...
+# Subtest: F06-P14 multiple standalone credentials use distinct ordered offsets and replace independently
+ok 101 - F06-P14 multiple standalone credentials use distinct ordered offsets and replace independently
+  ---
+  duration_ms: 1.184
+  type: 'test'
+  ...
+# Subtest: F06-P15 unsupported environment syntax is unavailable rather than partially migrated or copied into examples
+ok 102 - F06-P15 unsupported environment syntax is unavailable rather than partially migrated or copied into examples
+  ---
+  duration_ms: 0.8462
+  type: 'test'
+  ...
+# Subtest: F06-P16 binary, control and oversized UTF-8 input are rejected in both document modes
+ok 103 - F06-P16 binary, control and oversized UTF-8 input are rejected in both document modes
+  ---
+  duration_ms: 1.075
+  type: 'test'
+  ...
+# Subtest: F06-P17 the environment field budget fails closed above 256 even when values look harmless
+ok 104 - F06-P17 the environment field budget fails closed above 256 even when values look harmless
+  ---
+  duration_ms: 1.4952
+  type: 'test'
+  ...
+# Subtest: F06-P18 placeholder expansion cannot create a masked document above the supported byte budget
+ok 105 - F06-P18 placeholder expansion cannot create a masked document above the supported byte budget
+  ---
+  duration_ms: 1.342
+  type: 'test'
+  ...
+# Subtest: F06-P19 only an actual UUID generation and boolean environment mode are accepted
+ok 106 - F06-P19 only an actual UUID generation and boolean environment mode are accepted
+  ---
+  duration_ms: 0.9777
+  type: 'test'
+  ...
+# Subtest: F06-P20 case-normalized generation metadata produces the same deterministic private plan
+ok 107 - F06-P20 case-normalized generation metadata produces the same deterministic private plan
+  ---
+  duration_ms: 0.8425
+  type: 'test'
+  ...
+# Subtest: F06-P21 empty supported input produces an empty useful plan in both modes
+ok 108 - F06-P21 empty supported input produces an empty useful plan in both modes
+  ---
+  duration_ms: 0.6953
+  type: 'test'
+  ...
+# Subtest: F22a canonical source planner is explicit and legacy callers do not silently change syntax
+ok 109 - F22a canonical source planner is explicit and legacy callers do not silently change syntax
+  ---
+  duration_ms: 84.3069
+  type: 'test'
+  ...
+# Subtest: F22a source analysis uses only HMAC metadata and rejects unsupported formats or environment mode
+ok 110 - F22a source analysis uses only HMAC metadata and rejects unsupported formats or environment mode
+  ---
+  duration_ms: 35.1725
+  type: 'test'
+  ...
+# Subtest: F22a source registration/controller has no startup read or key and cancellation precedes private capture
+ok 111 - F22a source registration/controller has no startup read or key and cancellation precedes private capture
+  ---
+  duration_ms: 105.9323
+  type: 'test'
+  ...
+# Subtest: F22a source scan, reviewed vault and exact escaped disclosure restore preserve saved deny without env output
+ok 112 - F22a source scan, reviewed vault and exact escaped disclosure restore preserve saved deny without env output
+  ---
+  duration_ms: 2860.5797
+  type: 'test'
+  ...
+# Subtest: F22a source flag obeys strict machine authority and dependencies, ignoring workspace enable
+ok 113 - F22a source flag obeys strict machine authority and dependencies, ignoring workspace enable
+  ---
+  duration_ms: 5.8224
+  type: 'test'
+  ...
+# Subtest: F22a unsupported selected format, malformed and dynamic source do not produce a clean result
+ok 114 - F22a unsupported selected format, malformed and dynamic source do not produce a clean result
+  ---
+  duration_ms: 272.1125
+  type: 'test'
+  ...
+# Subtest: F22a workspace discovery is source-specific and public source is useful without evaluation
+ok 115 - F22a workspace discovery is source-specific and public source is useful without evaluation
+  ---
+  duration_ms: 583.3431
+  type: 'test'
+  ...
+# Subtest: F22a source or owner policy drift while consent is pending refuses without records
+ok 116 - F22a source or owner policy drift while consent is pending refuses without records
+  ---
+  duration_ms: 53.9277
+  type: 'test'
+  ...
+# Subtest: F22a source flag withdrawal and operation expiry during vault review prevent late writes
+ok 117 - F22a source flag withdrawal and operation expiry during vault review prevent late writes
+  ---
+  duration_ms: 508.3482
+  type: 'test'
+  ...
+# Subtest: F22a safe source exposure export and metadata failure retain no originals in results
+ok 118 - F22a safe source exposure export and metadata failure retain no originals in results
+  ---
+  duration_ms: 1571.3105
+  type: 'test'
+  ...
+# Subtest: F22a source syntax remains bound for source filenames beginning with dotenv-like prefixes
+ok 119 - F22a source syntax remains bound for source filenames beginning with dotenv-like prefixes
+  ---
+  duration_ms: 321.4127
+  type: 'test'
+  ...
+# Subtest: F22a source commands register with no scan, key or caller authority
+ok 120 - F22a source commands register with no scan, key or caller authority
+  ---
+  duration_ms: 47.9019
+  type: 'test'
+  ...
+# Subtest: F22a source command selects actual native file and ignores URI/content/approval carriers
+ok 121 - F22a source command selects actual native file and ignores URI/content/approval carriers
+  ---
+  duration_ms: 15.9939
+  type: 'test'
+  ...
+# Subtest: F22a source picker cancellation and forged finding item grant nothing
+ok 122 - F22a source picker cancellation and forged finding item grant nothing
+  ---
+  duration_ms: 17.4495
+  type: 'test'
+  ...
+# Subtest: F22a source action uses only selected current ordinal and restoration has separate action
+ok 123 - F22a source action uses only selected current ordinal and restoration has separate action
+  ---
+  duration_ms: 10.1222
+  type: 'test'
+  ...
+# Subtest: F22a pending source picker cannot overlap or survive machine flag withdrawal
+ok 124 - F22a pending source picker cannot overlap or survive machine flag withdrawal
+  ---
+  duration_ms: 18.7314
+  type: 'test'
+  ...
+# Subtest: F22a manifest contributes machine/restricted flag and advanced commands with activation registration
+ok 125 - F22a manifest contributes machine/restricted flag and advanced commands with activation registration
+  ---
+  duration_ms: 10.8397
+  type: 'test'
+  ...
+# Subtest: F22a syntax mapping admits only declared local relative source formats
+ok 126 - F22a syntax mapping admits only declared local relative source formats
+  ---
+  duration_ms: 585.6173
+  type: 'test'
+  ...
+# Subtest: F22a parses literal declarations/properties/member assignments and preserves public code
+ok 127 - F22a parses literal declarations/properties/member assignments and preserves public code
+  ---
+  duration_ms: 55.4434
+  type: 'test'
+  ...
+# Subtest: F22a TS annotations and JSX attribute literals use the matching fixed parser syntax
+ok 128 - F22a TS annotations and JSX attribute literals use the matching fixed parser syntax
+  ---
+  duration_ms: 60.314
+  type: 'test'
+  ...
+# Subtest: F22a standalone provider strings are detected while imports, regex literals and public templates remain
+ok 129 - F22a standalone provider strings are detected while imports, regex literals and public templates remain
+  ---
+  duration_ms: 12.7308
+  type: 'test'
+  ...
+# Subtest: F22a decoded escaped logical values preserve exact source representation for disclosure restore
+ok 130 - F22a decoded escaped logical values preserve exact source representation for disclosure restore
+  ---
+  duration_ms: 8.8665
+  type: 'test'
+  ...
+# Subtest: F22a no-substitution multiline templates and canonical comment candidates round trip
+ok 131 - F22a no-substitution multiline templates and canonical comment candidates round trip
+  ---
+  duration_ms: 34.1762
+  type: 'test'
+  ...
+# Subtest: F22a malformed and secret-bearing interpolated source refuses with generic errors and no execution
+ok 132 - F22a malformed and secret-bearing interpolated source refuses with generic errors and no execution
+  ---
+  duration_ms: 21.5145
+  type: 'test'
+  ...
+# Subtest: F22a bounded input, syntax/generation, candidate and AST work budgets refuse safely
+ok 133 - F22a bounded input, syntax/generation, candidate and AST work budgets refuse safely
+  ---
+  duration_ms: 57.0286
+  type: 'test'
+  ...
+# Subtest: F22a a remaining original in an unselected source span withholds migration
+ok 134 - F22a a remaining original in an unselected source span withholds migration
+  ---
+  duration_ms: 9.4491
+  type: 'test'
+  ...
+# Subtest: F22a source ownership handles transparent TS wrappers and fallback literals without borrowing unrelated names
+ok 135 - F22a source ownership handles transparent TS wrappers and fallback literals without borrowing unrelated names
+  ---
+  duration_ms: 18.9168
+  type: 'test'
+  ...
+# Subtest: F22a unsupported computed credentials and invalid cooked strings withhold with no raw error
+ok 136 - F22a unsupported computed credentials and invalid cooked strings withhold with no raw error
+  ---
+  duration_ms: 36.9039
+  type: 'test'
+  ...
+# Subtest: F22a comments and repeated selected values retain independent exact source positions
+ok 137 - F22a comments and repeated selected values retain independent exact source positions
+  ---
+  duration_ms: 15.0793
+  type: 'test'
+  ...
+# Subtest: F22a masked source is valid and idempotent, exact original returns only through private restore plan
+ok 138 - F22a masked source is valid and idempotent, exact original returns only through private restore plan
+  ---
+  duration_ms: 8.3933
+  type: 'test'
+  ...
+# Subtest: F22a standalone credentials inside tagged templates are explicitly unsupported
+ok 139 - F22a standalone credentials inside tagged templates are explicitly unsupported
+  ---
+  duration_ms: 12.8914
+  type: 'test'
+  ...
+# Subtest: F22a AST budget and non-source relative paths refuse without parser diagnostics
+ok 140 - F22a AST budget and non-source relative paths refuse without parser diagnostics
+  ---
+  duration_ms: 400.5138
+  type: 'test'
+  ...
+1..140
+# tests 140
+# suites 0
+# pass 140
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 25945.8149

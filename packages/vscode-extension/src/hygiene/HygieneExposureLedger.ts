@@ -1,4 +1,5 @@
 import { createHmac, randomBytes } from "node:crypto";
+import { analyzeSourceText } from "./HygieneAnalysis";
 import { analyzeHygieneText, hygieneReference, hygieneUnavailable, HYGIENE_KINDS, HYGIENE_PROVIDERS, HYGIENE_EXPOSURE_ACTIONS, HYGIENE_LEDGER_ASSESSMENT, type HygieneInput, type HygieneFinding, type HygieneKind, type HygieneProvider } from "./HygieneAnalysis";
 interface Storage { get<T>(key: string): T | undefined; update(key: string, value: unknown): PromiseLike<void> }
 interface Secrets { get(key: string): PromiseLike<string | undefined>; store(key: string, value: string): PromiseLike<void> }
@@ -63,6 +64,7 @@ export class HygieneExposureLedger {
             const dispose = () => { alive = false; encoded = undefined; scopedKey.fill(0); };
             return Object.freeze({
                 analyze: (input: HygieneInput) => { if (!alive) return hygieneUnavailable(); return analyzeHygieneText(input, scopedKey); },
+                analyzeSource: (input: HygieneInput) => { if (!alive) return hygieneUnavailable(); return analyzeSourceText(input, scopedKey); },
                 current: async () => { try { if (!alive || !encoded || await this.secrets.get(HYGIENE_LEDGER_KEY) !== encoded) { dispose(); return false; } return true; } catch { dispose(); return false; } },
                 dispose,
             });

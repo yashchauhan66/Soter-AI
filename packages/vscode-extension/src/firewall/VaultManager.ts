@@ -19,6 +19,8 @@ import { managedRootIdentity, managedPolicyBinding, managedEmptyStoreIdentity } 
 import { isPathWithin } from "../../../core/src/pathContainment";
 import { GatewayRegistryLease } from "../broker/GatewayRegistryLease";
 import { hygieneAssistantEnabled } from "../hygiene/HygieneFlags";
+import { sourceScannerEnabled } from "../config-scanners/SourceScannerFlags";
+import { sourceSyntaxForPath } from "../config-scanners/SourceSecretPlan";
 
 const KEY_ID = "soterai.vaultKey", PENDING = "vault-pending.json", VAULT = "soterai-vault.enc";
 const UUID = /^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/i;
@@ -400,9 +402,21 @@ export class VaultManager {
         } catch { return vaultUnavailable(); }
     }
     async migrate(uri: vscode.Uri, enabled?: () => boolean): Promise<number> {
+        return this.migrateSelected(uri, enabled, false);
+    }
+    /** Internal source-family capability. Syntax is derived from captured URI;
+     * no registered command accepts a planner, original or approval carrier. */
+    async migrateSource(uri: vscode.Uri, enabled: () => boolean): Promise<number> {
+        return this.migrateSelected(uri, () => sourceScannerEnabled() && hygieneAssistantEnabled() && enabled() === true, true);
+    }
+    private async migrateSelected(uri: vscode.Uri, enabled: (() => boolean) | undefined, sourceMode: boolean): Promise<number> {
         return this.mutation(async () => {
             let basis = await this.capture(uri); await this.noPending();
-            const id = randomUUID(), plan = createVaultMigrationPlan(basis.text, /^\.env(?:\..*)?$/i.test(path.basename(uri.fsPath)), id);
+            const relative = path.relative(vscode.Uri.parse(basis.root).fsPath, uri.fsPath).replaceAll("\\", "/");
+            const syntax = sourceMode ? sourceSyntaxForPath(relative) : undefined; if (sourceMode && !syntax) return vaultUnavailable();
+            const id = randomUUID(), plan = createVaultMigrationPlan(basis.text, !sourceMode && /^\.env(?:\..*)?$/i.test(path.basename(uri.fsPath)), id, syntax);
+            // Source identifiers are not public labels or runtime env bindings.
+            if (sourceMode) plan.candidates.forEach((candidate, ordinal) => { candidate.key = "SOURCE_VALUE_" + (ordinal + 1); });
             if (!plan.candidates.length) return 0; await this.checkExample(uri, plan.exampleText);
             const detail = JSON.stringify({ file: vscode.workspace.asRelativePath(uri), count: plan.candidates.length, values: MASKED,
                 keys: plan.candidates.map(candidate => candidate.key), protection: "Add a permanent sensitive deny", example: "Unique names and empty values only",

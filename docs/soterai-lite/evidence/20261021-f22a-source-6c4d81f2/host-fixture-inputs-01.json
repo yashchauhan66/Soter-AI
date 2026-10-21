@@ -1,0 +1,76 @@
+{
+  "status": "PREPARED_NOT_EXECUTED",
+  "records": [
+    {
+      "source": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/run-hygiene-native-02.ps1",
+      "originalSha256": "266ae74585306b1bf2a0e0ab9709b3778cc2dc83c19177688b92983e01cb4a30",
+      "path": "run-source-native-01.ps1",
+      "bytes": 16439,
+      "sha256": "9ad24a0e22bce8a61164b160a134838b52f8b4f4b7fa5bc5350c118b3f341a64"
+    },
+    {
+      "source": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/run-hygiene-native-02.ps1",
+      "originalSha256": "266ae74585306b1bf2a0e0ab9709b3778cc2dc83c19177688b92983e01cb4a30",
+      "path": "run-affected-hygiene-01.ps1",
+      "bytes": 16442,
+      "sha256": "6ab28374b45309528101bcdae0181d8d9399e848d381b121a122dc3817dc3d46"
+    },
+    {
+      "source": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/run-affected-vault-02.ps1",
+      "originalSha256": "24211af45b2290a23a029660e6743da0381c9813285070a3d790f30ae3de376d",
+      "path": "run-affected-vault-01.ps1",
+      "bytes": 16466,
+      "sha256": "35702d585620e4300d45c480d1843a6c182550590abccccdd354e83a21495041"
+    },
+    {
+      "source": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/run-retained-native-02.ps1",
+      "originalSha256": "fbc1a9ea3e4aaa267f67f818d4e81a3489776641c296f886fe1d83cf8c1e852a",
+      "path": "run-retained-native-01.ps1",
+      "bytes": 16480,
+      "sha256": "2c190effced63a4013d972a5fab64ab7eb5c24987198625a8c250fbdb6aa56f5"
+    },
+    {
+      "source": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/inspect-vsix-01.ps1",
+      "originalSha256": "421d99cc072d70620debeb62d44cefde74620e7c78598ed16c1e3ac31fcb3432",
+      "path": "inspect-vsix-01.ps1",
+      "bytes": 18031,
+      "sha256": "33beba5f03b3e1ed0317b61c0d0df63b1b81dfd8df8d951535892dd263f93f64"
+    },
+    {
+      "source": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/artifact-binding-03.ps1",
+      "originalSha256": "e0fa4ca3d2cecf3dfe1d19d7c853ba35239a32ffe6ccab5d84f62884a08d235a",
+      "path": "artifact-binding-03.ps1",
+      "bytes": 3401,
+      "sha256": "fcf445ac11725aec8e039cf8cee4eaa04f0bbe3e1eb6f5b1192969578a5cf248"
+    },
+    {
+      "source": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/run-affected-hosts-03.ps1",
+      "originalSha256": "496c13b4232f27bc7dd8de11fe8c58c46096ac3ac58a07b321c9bab76bcca487",
+      "path": "run-affected-hosts-03.ps1",
+      "bytes": 9015,
+      "sha256": "496c13b4232f27bc7dd8de11fe8c58c46096ac3ac58a07b321c9bab76bcca487"
+    },
+    {
+      "source": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/run-functional-03.ps1",
+      "originalSha256": "4999a32cb8535e8ea2a1fd1c019045221584a1324a028606d393c3e58fb09703",
+      "path": "run-functional-03.ps1",
+      "bytes": 8711,
+      "sha256": "4999a32cb8535e8ea2a1fd1c019045221584a1324a028606d393c3e58fb09703"
+    },
+    {
+      "source": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/run-security-03.ps1",
+      "originalSha256": "c0ce739c4239c3819f9e5c60f0dc923c6d34fec83a7abdb94352aa2e8b58b56a",
+      "path": "run-security-03.ps1",
+      "bytes": 9697,
+      "sha256": "c0ce739c4239c3819f9e5c60f0dc923c6d34fec83a7abdb94352aa2e8b58b56a"
+    },
+    {
+      "path": "build-native-hosts-01.cjs",
+      "bytes": 1572,
+      "sha256": "d600933a837a188df80e92da066f4b17379bab084d66d367abb77056dbedc6a7",
+      "originalSha256": "07f0bfdf163b1f6749e80e99dabd9f186d023c174bc2888038acc82d215f157a"
+    }
+  ],
+  "currentNative": "source18+restart3; affected hygiene18+restart3/vault6+restart4/retained103+restart3/functional10/security17 unchanged",
+  "safety": "Exact VSIX/three-runtime/Code bindings, isolated D profiles, bounded owned close/EOF, no signals/download/login retained from originals."
+}

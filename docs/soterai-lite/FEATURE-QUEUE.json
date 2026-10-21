@@ -9,7 +9,7 @@
   "planVersion": 1,
   "clientDate": "2026-10-13",
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
-  "scope": "F01-F10 and F12-F19 DONE for scoped exact objects and verified bytes; F11 optional unavailable/unimplemented NOT_TESTED/NOT_COVERED. F20 alone active after the separate F19 transition byte barrier.",
+  "scope": "F01-F10 and F12-F21 scoped DONE with exact local byte barriers; F11 optional absent/unimplemented NOT_TESTED/NOT_COVERED. F22 active, F22a source alone in progress; F22b-h and later gates not started.",
   "implementationConcurrency": 1,
   "activeFeature": "F22",
   "prerequisiteBlock": {
@@ -592,7 +592,7 @@
       "id": "F22",
       "title": "Source/config scanner families.",
       "status": "ACTIVE",
-      "result": "NOT-RUN",
+      "result": "INCOMPLETE",
       "requires": [
         "F21"
       ],
@@ -600,11 +600,14 @@
         {
           "id": "F22a",
           "title": "source",
-          "status": "PLANNED",
-          "result": "NOT-RUN",
+          "status": "VERIFYING",
+          "result": "PASS_SCOPED_PENDING_BYTE_BARRIERS",
           "requires": [
             "parent prerequisites"
-          ]
+          ],
+          "progressEvidence": "docs/soterai-lite/evidence/20261021-f22a-source-6c4d81f2/f22a-progress-03.json",
+          "acceptanceEvidence": "docs/soterai-lite/evidence/20261021-f22a-source-6c4d81f2/f22a-acceptance-01.json",
+          "scope": "F22a saved JS/JSX/TS/TSX/MJS/CJS static credential strings and canonical comment candidates only, parse-only installed Babel7.29.7 with fixed grammar. Owner consent, F21 keyed possible-exposure metadata, canonical F06 whole-file encrypted vault, exact escaped disclosure restore and saved denies; strict machine source flag and private native file/finding selection. Other languages/dynamic assembly/type-only declarations/import specifiers/regex bodies are unverified. No execution/config loading/automatic code-import rewrite/value-bearing env file/live validity/actual AI access/OS confinement/human/independent/universal scanner claim. Current affected hygiene/vault/reader/gateway/functional/security verified; adapter/backend/MCP production unchanged, actual vendor executables not rerun for this subcard and final exact-object V01 route gates remain pending."
         },
         {
           "id": "F22b",
@@ -671,7 +674,9 @@
         }
       ],
       "completionRule": "All required subcards pass individually before parent DONE",
-      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "activeSubcard": "F22a",
+      "progressEvidence": "docs/soterai-lite/evidence/20261021-f22a-source-6c4d81f2/f22a-progress-03.json"
     },
     {
       "id": "F23",

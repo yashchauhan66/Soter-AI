@@ -1,0 +1,67 @@
+{
+  "status": "PREPARED_NOT_RUN",
+  "ownSources": [
+    "packages/vscode-extension/src/config-scanners/SourceSecretPlan.ts",
+    "packages/vscode-extension/src/config-scanners/SourceScannerFlags.ts",
+    "packages/vscode-extension/src/config-scanners/commands.ts",
+    "packages/vscode-extension/src/hygiene/HygieneCandidatePolicy.ts",
+    "packages/vscode-extension/src/hygiene/HygieneAnalysis.ts",
+    "packages/vscode-extension/src/hygiene/HygieneController.ts",
+    "packages/vscode-extension/src/hygiene/HygieneExposureLedger.ts",
+    "packages/vscode-extension/src/firewall/VaultMigrationPlan.ts",
+    "packages/vscode-extension/src/firewall/VaultManager.ts",
+    "packages/vscode-extension/src/extension.ts",
+    "packages/vscode-extension/src/__tests__/sourceSecretPlan.test.ts",
+    "packages/vscode-extension/src/__tests__/sourceScanner.test.ts",
+    "packages/vscode-extension/src/__tests__/sourceScannerCommands.test.ts",
+    "packages/vscode-extension/src/__tests__/host/liteSourceScanner.host.ts",
+    "packages/vscode-extension/package.json",
+    "packages/soterai-lite/package.json",
+    "package-lock.json",
+    "packages/vscode-extension/README.md",
+    "packages/soterai-lite/README.md",
+    "packages/vscode-extension/LICENSE.md",
+    "packages/soterai-lite/LICENSE.md",
+    "packages/soterai-lite/CHANGELOG.md",
+    "docs/vscode-extension-readiness.md",
+    "docs/soterai-lite/FEATURE-QUEUE.json"
+  ],
+  "records": [
+    {
+      "source": "evidence-lib-01.cjs",
+      "originalSha256": "9b65cc03f8430289fd21e242c5df23e4d104163aa6df735c425d7cf6220dca4f",
+      "output": "evidence-lib-01.cjs",
+      "bytes": 2119,
+      "sha256": "9b65cc03f8430289fd21e242c5df23e4d104163aa6df735c425d7cf6220dca4f"
+    },
+    {
+      "source": "verify-source-01.cjs",
+      "originalSha256": "e6f35bda41349a0dc1277e2c6750a6731426b15fe55d1985af06abb6c4a35fa0",
+      "output": "verify-source-01.cjs",
+      "bytes": 2328,
+      "sha256": "d4ebb1246a415de9ac69d1376d187add039a92f209740860efcfcc09012a25f0"
+    },
+    {
+      "source": "verify-transition-01.cjs",
+      "originalSha256": "0f41aa7d769e86530508e3edd1dd2fa1dc48390686dbc8380db15055ab62e83b",
+      "output": "verify-transition-01.cjs",
+      "bytes": 1685,
+      "sha256": "1f47aac91c16fbdc55e6e8e4e8ba5a0ff5c6c8884705b156e744b03521dcf15f"
+    },
+    {
+      "source": "prepare-index-02.cjs",
+      "originalSha256": "2fb178feebd603618fdfdc6d70af492c1d67260f7b3a134ee122951a71540075",
+      "output": "prepare-index-01.cjs",
+      "bytes": 7921,
+      "sha256": "76dfc17afbb81d6ddada618c4047db15248d87dcdf5c10faf04d45405452e43e"
+    },
+    {
+      "source": "snapshot-execution-01.cjs",
+      "originalSha256": "3a461640246865984fed0f575272a747ece372bcae143aabe8681a893fc89e27",
+      "output": "snapshot-execution-01.cjs",
+      "bytes": 2527,
+      "sha256": "3ff367a928cf9e2ef847e743bc3f6a2c5b163679c67c4810477e586cc3d6e199"
+    }
+  ],
+  "scope": "Exact explicit source allowlist; current source/native/evidence bytes and parser/runtime dependency snapshots. Existing F21 closure receipts retained. No unrelated work or node_modules staging."
+}

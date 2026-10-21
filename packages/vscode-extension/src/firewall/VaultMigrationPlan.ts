@@ -1,5 +1,6 @@
 import { applyPlaceholders, classifySecretType, containsRawSecret, extractVaultCandidates, type VaultCandidate } from "@soterai/guard-core";
 import { SecureEditorModel } from "../project-privacy/SecureEditorModel";
+import { createSourceSecretPlan, type SourceSyntax } from "../config-scanners/SourceSecretPlan";
 
 export interface PrivateVaultCandidate extends VaultCandidate { replacementText: string }
 export interface PrivateVaultPlan { maskedText: string; exampleText: string; candidates: PrivateVaultCandidate[] }
@@ -8,8 +9,12 @@ const EXISTING = /^\[SOTERAI_PROTECTED_[A-Z0-9_]+\]$/;
 const fail = (): never => { throw new Error("Vault migration syntax or size is unsupported."); };
 
 /** Private plan: no raw values or original representation are a UI/tool receipt. */
-export function createVaultMigrationPlan(text: string, environment: boolean, generation: string): PrivateVaultPlan {
+export function createVaultMigrationPlan(text: string, environment: boolean, generation: string, sourceSyntax?: SourceSyntax): PrivateVaultPlan {
     if (typeof generation !== "string" || !UUID.test(generation) || typeof environment !== "boolean") return fail();
+    if (sourceSyntax !== undefined) {
+        if (environment) return fail();
+        return createSourceSecretPlan(text, sourceSyntax, generation);
+    }
     const model = new SecureEditorModel(text, environment), candidates: PrivateVaultCandidate[] = [];
     const placeholder = (ordinal: number) => `[SOTERAI_PROTECTED_${generation.replace(/-/g, "").toUpperCase()}_${ordinal}]`;
     let exampleText = "";

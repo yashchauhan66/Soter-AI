@@ -1,0 +1,9 @@
+# F22a declared grammar clarification
+
+This clarifies design01; the ordered workcard, frozen catalog and controls are unchanged. The static source-value grammar covers credential-named direct variable/property/member/class/JSX string values, fixed transparent TS wrappers, process.env fallback literals, standalone known provider strings, no-substitution templates and canonical comment candidates. Restore retains the exact inner source representation. Quoted placeholders preserve valid syntax but deliberately change application behavior until the owner configures secret loading.
+
+Type-only declarations, import/export module specifiers and regex literal bodies are not credential-value coverage. Other source languages, dynamic assembly/evaluation, opaque computed credential expressions, tagged secret templates and unsupported proposals are unverified. A credential-bearing unsupported expression or parse error withholds the entire report. Public code may contain dynamic expressions; an ANALYZED heuristic result does not certify those expressions or that a file is secret-free. Source text and project configuration are never evaluated or loaded.
+
+Source filenames beginning with `.env.` still use the fixed source grammar derived from the last declared extension; the source family never creates env examples. Native review labels and persisted source vault keys use fixed ordinals, avoiding source identifier previews. Root/source/policy/key/flag/lease and canonical F06 write guards remain the only authority. F21 default planner behavior stays separate and its affected regression/actual-native gates remain mandatory.
+
+Retained review baseline24PASS2FAIL reproduced standalone provider tokens inside tagged templates and `.env.production.ts` being treated as dotenv. Both corrected before current combined140PASS and exact packaging. No clean/universal parser, execution boundary or live-credential claim follows from these tests.

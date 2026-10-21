@@ -136,7 +136,8 @@
         "soterai.lite.codexIdeAdapter",
         "soterai.lite.geminiCliAdapter",
         "soterai.broker.geminiProviderUrl",
-        "soterai.lite.hygieneAssistant"
+        "soterai.lite.hygieneAssistant",
+        "soterai.lite.configScanner.source"
       ]
     }
   },
@@ -1356,6 +1357,31 @@
         "command": "soterai.hygieneStatus",
         "title": "Secret Hygiene Status",
         "category": "SoterAI"
+      },
+      {
+        "command": "soterai.reviewWorkspaceSourceSecrets",
+        "title": "Review Workspace Source Secrets",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.reviewSourceSecrets",
+        "title": "Review Selected Source Secrets",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.reviewSourceSecretVault",
+        "title": "Review Source Vault Migration",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.restoreSourceSecretVault",
+        "title": "Restore Reviewed Source Values (Disclosure)",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.sourceSecretScannerStatus",
+        "title": "Source Secret Scanner Status",
+        "category": "SoterAI"
       }
     ],
     "viewsContainers": {
@@ -2054,6 +2080,12 @@
           "default": true,
           "scope": "machine",
           "description": "Enable owner-reviewed local secret hygiene, canonical vault actions and possible-exposure metadata. Manual provider checklists do not rotate credentials."
+        },
+        "soterai.lite.configScanner.source": {
+          "type": "boolean",
+          "default": true,
+          "scope": "machine",
+          "description": "Enable owner-reviewed static string scanning in saved JS/JSX/TS/TSX/MJS/CJS source, with canonical encrypted vault migration and exact disclosure restore. Dynamic or unsupported source withholds analysis; configure application secret loading manually."
         }
       }
     },
@@ -3065,6 +3097,26 @@
         {
           "command": "soterai.hygieneStatus",
           "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.reviewWorkspaceSourceSecrets",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.reviewSourceSecrets",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.reviewSourceSecretVault",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.restoreSourceSecretVault",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.sourceSecretScannerStatus",
+          "when": "soterai.advancedCommands"
         }
       ]
     },
@@ -3137,6 +3189,7 @@
     "vscode:package": "npm run package"
   },
   "devDependencies": {
+    "@babel/parser": "7.29.7",
     "@soterai/detectors": "file:../detectors",
     "@soterai/guard-core": "file:../guard-core",
     "@types/node": "22.10.2",
