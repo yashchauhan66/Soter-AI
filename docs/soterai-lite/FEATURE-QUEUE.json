@@ -11,7 +11,7 @@
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
   "scope": "F01-F10 and F12-F19 DONE for scoped exact objects and verified bytes; F11 optional unavailable/unimplemented NOT_TESTED/NOT_COVERED. F20 alone active after the separate F19 transition byte barrier.",
   "implementationConcurrency": 1,
-  "activeFeature": "F21",
+  "activeFeature": "F22",
   "prerequisiteBlock": {
     "id": "P00",
     "result": "FAIL",
@@ -575,20 +575,23 @@
     {
       "id": "F21",
       "title": "Secrets hygiene and exposure ledger.",
-      "status": "VERIFYING",
-      "result": "PASS_SCOPED_PENDING_BYTE_BARRIERS",
+      "status": "DONE",
+      "result": "PASS_SCOPED",
       "requires": [
         "F20"
       ],
       "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
       "progressEvidence": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/f21-progress-06.json",
       "acceptanceEvidence": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/f21-acceptance-01.json",
-      "scope": "Owner-reviewed Windows trusted single local saved-file/workspace heuristic hygiene. Canonical F02 additive enrollment precedes consent basis; candidate originals stay in bounded private F06 snapshots after consent. Real isolated SecretStorage API, canonical whole-file vault/example/disclosure restore with saved denies, keyed possible-exposure view/export, manual NOT_PERFORMED provider checklists. No actual AI access/key validity/rotation/OS custody/human/independent/hostile-same-user or universal scanner guarantee. Current affected F06 vault/F04 reader/gateway lifecycle and functional/security checks; adapter/server production code unchanged, actual vendor executables not rerun for F21 and final exact-object V01 route gates remain pending."
+      "scope": "Owner-reviewed Windows trusted single local saved-file/workspace heuristic hygiene. Canonical F02 additive enrollment precedes consent basis; candidate originals stay in bounded private F06 snapshots after consent. Real isolated SecretStorage API, canonical whole-file vault/example/disclosure restore with saved denies, keyed possible-exposure view/export, manual NOT_PERFORMED provider checklists. No actual AI access/key validity/rotation/OS custody/human/independent/hostile-same-user or universal scanner guarantee. Current affected F06 vault/F04 reader/gateway lifecycle and functional/security checks; adapter/server production code unchanged, actual vendor executables not rerun for F21 and final exact-object V01 route gates remain pending.",
+      "sourceEvidenceCommit": "43c1d114f816c97de17907e433a5581f0943222a",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/f21-committed-byte-verification-01.json",
+      "transitionByteVerification": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/f21-transition-byte-verification-01.json"
     },
     {
       "id": "F22",
       "title": "Source/config scanner families.",
-      "status": "PLANNED",
+      "status": "ACTIVE",
       "result": "NOT-RUN",
       "requires": [
         "F21"
