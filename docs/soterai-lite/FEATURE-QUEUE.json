@@ -9,7 +9,7 @@
   "planVersion": 1,
   "clientDate": "2026-10-13",
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
-  "scope": "F01-F10/F12-F21/F22a-e scoped DONE after byte barriers; F11 optional absent NOT_TESTED/NOT_COVERED. F22f saved CI YAML active; parent and remaining stages incomplete.",
+  "scope": "F01-F10/F12-F21/F22a-f scoped DONE after current byte barriers; F11 optional absent NOT_TESTED/NOT_COVERED. ParentF22 incomplete; F22g launch/tasks/settings prepared ACTIVE, no production before transition proof. Remaining subcards/features/verification gates pending.",
   "implementationConcurrency": 1,
   "activeFeature": "F22",
   "prerequisiteBlock": {
@@ -706,8 +706,8 @@
         {
           "id": "F22f",
           "title": "CI",
-          "status": "VERIFYING",
-          "result": "PASS_SCOPED_PENDING_BYTE_BARRIERS",
+          "status": "DONE",
+          "result": "PASS_SCOPED",
           "requires": [
             "F22e"
           ],
@@ -722,12 +722,15 @@
             "F22e": "PASS_CURRENT_EXACT_OBJECT"
           },
           "acceptanceEvidence": "docs/soterai-lite/evidence/20261021-f22f-ci-46f38b2d/f22f-acceptance-01.json",
-          "scope": "F22f finite saved static GitHub/GitLab CI YAML only: actual literal credential fields, GitLab variable value/options, multiline material/comments, whole command/URL scalars and known shapes. Public commands/permissions/labels/exact references retained; malformed/duplicate/alias/tag/directive/mixed expressions/unsupported inputs and decoded known-value residuals withhold. No include/config resolution, CI/client/shell execution, build/deployment, new dependency or full schema/credential validity/AI-access claim. Strict machine family flag, native owner selection, F21 HMAC metadata and canonical F06 encrypted checkpoint-only migration/exact disclosure with permanent saved denies; per-entry restore refuses. Current affected shared workflows verified. Other CI providers/languages, compound fragments, unknown transformations/prior copies/unmanaged reads remain limited. Backend/MCP production unchanged, actual vendor tools not rerun; V01/human/independent evidence pending."
+          "scope": "F22f finite saved static GitHub/GitLab CI YAML only: actual literal credential fields, GitLab variable value/options, multiline material/comments, whole command/URL scalars and known shapes. Public commands/permissions/labels/exact references retained; malformed/duplicate/alias/tag/directive/mixed expressions/unsupported inputs and decoded known-value residuals withhold. No include/config resolution, CI/client/shell execution, build/deployment, new dependency or full schema/credential validity/AI-access claim. Strict machine family flag, native owner selection, F21 HMAC metadata and canonical F06 encrypted checkpoint-only migration/exact disclosure with permanent saved denies; per-entry restore refuses. Current affected shared workflows verified. Other CI providers/languages, compound fragments, unknown transformations/prior copies/unmanaged reads remain limited. Backend/MCP production unchanged, actual vendor tools not rerun; V01/human/independent evidence pending.",
+          "sourceEvidenceCommit": "23d4e773a563d3e68ad49e1d3997b096a456a70a",
+          "commitByteVerification": "docs/soterai-lite/evidence/20261021-f22f-ci-46f38b2d/f22f-committed-byte-verification-01.json",
+          "transitionByteVerification": "docs/soterai-lite/evidence/20261021-f22f-ci-46f38b2d/f22f-transition-byte-verification-01.json"
         },
         {
           "id": "F22g",
           "title": "launch/tasks/settings",
-          "status": "PLANNED",
+          "status": "ACTIVE",
           "result": "NOT-RUN",
           "requires": [
             "F22f"
@@ -745,8 +748,8 @@
       ],
       "completionRule": "All required subcards pass individually before parent DONE",
       "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
-      "activeSubcard": "F22f",
-      "progressEvidence": "docs/soterai-lite/evidence/20261021-f22f-ci-46f38b2d/f22f-progress-04.json"
+      "activeSubcard": "F22g",
+      "progressEvidence": "docs/soterai-lite/evidence/20261021-f22f-ci-46f38b2d/f22f-transition-byte-verification-01.json"
     },
     {
       "id": "F23",
