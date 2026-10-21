@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "phase": "restart",
+  "syntheticOnly": true,
+  "hostVersion": "1.142.0",
+  "extensionBundleSha256": "267e0839a8de623da1f6eca3b0fa8fdea71ebeb49868382c83f7f747119e323b",
+  "currentDeveloperBundleSha256": "267e0839a8de623da1f6eca3b0fa8fdea71ebeb49868382c83f7f747119e323b",
+  "hostProbeSha256": "c7b475a18a921ffeebc0a2f315b14cdee92b9a06264c79ec23229b794794415d",
+  "observations": [
+    {
+      "id": "F22B-N01",
+      "scope": "Restart reuses keys/ledger and keeps exact masked source without startup read",
+      "status": "PASS"
+    },
+    {
+      "id": "F22B-N02",
+      "scope": "No stale family finding authority survives restart",
+      "status": "PASS"
+    },
+    {
+      "id": "F22B-N03",
+      "scope": "Actual canonical encrypted backup command recovers YAML after restart disclosure",
+      "status": "PASS"
+    },
+    {
+      "id": "F22B-N04",
+      "scope": "Fresh native review reestablishes two metadata findings after explicit recovery",
+      "status": "PASS"
+    }
+  ],
+  "passed": 4,
+  "failed": 0,
+  "notRun": 0,
+  "sourceDocumentCalls": 0,
+  "sourceDocumentEvents": 0,
+  "secretStorageStores": 0,
+  "reviews": [
+    {
+      "action": "Restore raw values",
+      "safe": true
+    },
+    {
+      "action": "Analyze saved project files",
+      "safe": true
+    }
+  ],
+  "metadataDocuments": 2,
+  "trace": [
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 534.6248
+    },
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 625.2601999999997
+    },
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 898.5261
+    },
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 1589.9469999999997
+    },
+    {
+      "event": "command-start-containerSecretScannerStatus",
+      "milliseconds": 1696.0364999999997
+    },
+    {
+      "event": "command-end-containerSecretScannerStatus",
+      "milliseconds": 1698.2916999999998,
+      "status": "OWNER_REVIEW_REQUIRED"
+    },
+    {
+      "event": "command-start-reviewContainerSecretVault",
+      "milliseconds": 1701.4674999999997
+    },
+    {
+      "event": "command-end-reviewContainerSecretVault",
+      "milliseconds": 1703.0776999999998,
+      "status": "REVIEW_FILES_FIRST"
+    },
+    {
+      "event": "command-start-restoreFileFromBackup",
+      "milliseconds": 1703.2833
+    },
+    {
+      "event": "command-end-restoreFileFromBackup",
+      "milliseconds": 2059.5335,
+      "status": "VOID"
+    },
+    {
+      "event": "command-start-reviewContainerSecrets",
+      "milliseconds": 2063.6497999999997
+    },
+    {
+      "event": "command-end-reviewContainerSecrets",
+      "milliseconds": 2589.9967999999994,
+      "status": "ANALYZED",
+      "files": 1,
+      "findings": 2
+    },
+    {
+      "event": "command-start-openHygieneExposureLedger",
+      "milliseconds": 2590.0499999999997
+    },
+    {
+      "event": "command-end-openHygieneExposureLedger",
+      "milliseconds": 3136.1919999999996,
+      "status": "METADATA"
+    }
+  ],
+  "independence": "LOW",
+  "ownerPresence": "SCRIPTED_NATIVE_API_DECISIONS_NOT_HUMAN_REVIEW",
+  "notTested": [
+    "Docker build or Kubernetes deployment/schema validation",
+    "Other YAML families/dynamic/unsupported source",
+    "Human usability/accessibility",
+    "Live credentials or provider rotation",
+    "OS custody/unmanaged native reads/uploads"
+  ]
+}

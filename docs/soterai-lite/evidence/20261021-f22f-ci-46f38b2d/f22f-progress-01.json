@@ -1,0 +1,86 @@
+{
+  "feature": "F22",
+  "activeSubcard": "F22f",
+  "status": "INCOMPLETE",
+  "parent": "a7abcdb64e600ec7e346d7d2a9880501aaa3bbd6",
+  "previous": {
+    "source": {
+      "path": "docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/f22e-committed-byte-verification-01.json",
+      "bytes": 1291,
+      "sha256": "8244581ff90853ca0017ab9ea3ccce8f367047fd08708cf769fb172af26391d5"
+    },
+    "transition": {
+      "path": "docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/f22e-transition-byte-verification-01.json",
+      "bytes": 1276,
+      "sha256": "2f03f875ef8bd447d6af9c708b08110e319f285a3107bd4bcf8d9a16c16263bf"
+    }
+  },
+  "design": {
+    "path": "docs/soterai-lite/evidence/20261021-f22f-ci-46f38b2d/design-01.md",
+    "bytes": 4403,
+    "sha256": "688d8406cf0443a814725f06075077bf69c426df3541d2c1b4e6e83a71c4c5a6"
+  },
+  "catalog": {
+    "path": "docs/soterai-lite/LITE-CATALOG.json",
+    "bytes": 160265,
+    "sha256": "1ce46192e9f315b5f2142c9f61542f1d513143dc2e19d4def6d95cea38c73ed4"
+  },
+  "sources": [
+    {
+      "path": "packages/vscode-extension/src/firewall/VaultMigrationPlan.ts",
+      "bytes": 4922,
+      "sha256": "abf3e64dcfb848d20fa8a52c3d939e7eb51b2b6219d53b219119d5a701e6fb84"
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/VaultManager.ts",
+      "bytes": 48962,
+      "sha256": "a01499c780fa9fad341b8ac7914b7371777a39daf5ef782eb1edb1024c9e9c42"
+    },
+    {
+      "path": "packages/vscode-extension/src/hygiene/HygieneAnalysis.ts",
+      "bytes": 7407,
+      "sha256": "1041bd5e2bc9d026422937b78e33f3467cdc8e1753c338c64e6571ec43296a17"
+    },
+    {
+      "path": "packages/vscode-extension/src/hygiene/HygieneController.ts",
+      "bytes": 24450,
+      "sha256": "13f3f057d92509edb5a0d99153109e88d9dd0ebf40598c09f975f59eb50c9387"
+    },
+    {
+      "path": "packages/vscode-extension/src/hygiene/HygieneExposureLedger.ts",
+      "bytes": 10262,
+      "sha256": "8570fcfae4869719395c35605367eed524ca4e551a995e0a07b8afbcf15f9add"
+    },
+    {
+      "path": "packages/vscode-extension/src/config-scanners/serviceAccountCommands.ts",
+      "bytes": 3065,
+      "sha256": "c205b502009af0323c62c57452b77e93b22ea983bd8d81b00f75942ed7958876"
+    },
+    {
+      "path": "packages/vscode-extension/src/config-scanners/ServiceAccountScannerFlags.ts",
+      "bytes": 489,
+      "sha256": "a83013c546ac5e63630ec01df0b44f05a8096deced65236287efd69f7b955e50"
+    },
+    {
+      "path": "packages/vscode-extension/src/config-scanners/ContainerSecretPlan.ts",
+      "bytes": 15679,
+      "sha256": "c1eebddad9afd0c6c3bf227a844e07ff9ff0a070ecd4616ea93a8cfd7612c649"
+    },
+    {
+      "path": "packages/vscode-extension/src/extension.ts",
+      "bytes": 34499,
+      "sha256": "64e45d551822c919352afa45fcf3f702c9bbf896e84c581f289f425241712b4f"
+    }
+  ],
+  "test": {
+    "path": "packages/vscode-extension/src/__tests__/ciSecretPlan.test.ts",
+    "bytes": 7637,
+    "sha256": "9ece24a55269634bd326a6cc44c8389d7314819c078000412621a6fa29151b91"
+  },
+  "flag": "soterai.lite.configScanner.ci",
+  "frozenCheck": "LS-38",
+  "implementation": "NOT_RUN",
+  "pending": "Test-first finite CI YAML/integration/current full/backend/exact new VSIX/native+affected/closures/evidence/scoped commits+bytes before F22g.",
+  "rating": "PENDING",
+  "time": "2026-10-21T13:06:44.515Z"
+}

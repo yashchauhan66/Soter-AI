@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "phase": "restart",
+  "syntheticOnly": true,
+  "hostVersion": "1.142.0",
+  "extensionBundleSha256": "267e0839a8de623da1f6eca3b0fa8fdea71ebeb49868382c83f7f747119e323b",
+  "currentDeveloperBundleSha256": "267e0839a8de623da1f6eca3b0fa8fdea71ebeb49868382c83f7f747119e323b",
+  "hostProbeSha256": "05f022d000f2842765e7791a6ce72ea055c11c4324a90d4d8336bd2b0db3972b",
+  "observations": [
+    {
+      "id": "F22A-N01",
+      "scope": "Restart reuses profile key/ledger with no startup source read",
+      "status": "PASS"
+    },
+    {
+      "id": "F22A-N02",
+      "scope": "Restart source ledger and exact saved original match prior receipt",
+      "status": "PASS"
+    },
+    {
+      "id": "F22A-N03",
+      "scope": "Stale source finding authority never survives restart",
+      "status": "PASS"
+    }
+  ],
+  "passed": 3,
+  "failed": 0,
+  "notRun": 0,
+  "sourceDocumentCalls": 0,
+  "sourceDocumentEvents": 0,
+  "secretStorageStores": 0,
+  "reviews": [],
+  "metadataDocuments": 1,
+  "trace": [
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 231.87029999999982
+    },
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 488.8562999999997
+    },
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 499.39769999999976
+    },
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 794.1141
+    },
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 808.9232
+    },
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 1041.2456999999997
+    },
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 1222.4358999999997
+    },
+    {
+      "event": "command-start-sourceSecretScannerStatus",
+      "milliseconds": 1744.3630999999998
+    },
+    {
+      "event": "command-end-sourceSecretScannerStatus",
+      "milliseconds": 1746.7232999999999,
+      "status": "OWNER_REVIEW_REQUIRED"
+    },
+    {
+      "event": "command-start-openHygieneExposureLedger",
+      "milliseconds": 1747.9019
+    },
+    {
+      "event": "command-end-openHygieneExposureLedger",
+      "milliseconds": 2240.4421,
+      "status": "UNEXPECTED"
+    },
+    {
+      "event": "command-start-reviewSourceSecretVault",
+      "milliseconds": 2314.4653
+    },
+    {
+      "event": "command-end-reviewSourceSecretVault",
+      "milliseconds": 2316.5254999999997,
+      "status": "REVIEW_FILES_FIRST"
+    }
+  ],
+  "independence": "LOW",
+  "ownerPresence": "SCRIPTED_NATIVE_API_DECISIONS_NOT_HUMAN_REVIEW",
+  "notTested": [
+    "Other languages, dynamic assembly and unsupported proposals",
+    "Human usability/accessibility",
+    "Live credentials or provider rotation",
+    "OS custody or unmanaged native reads/uploads"
+  ]
+}

@@ -141,7 +141,8 @@
         "soterai.lite.configScanner.dockerKubernetes",
         "soterai.lite.configScanner.terraform",
         "soterai.lite.configScanner.registry",
-        "soterai.lite.configScanner.serviceAccount"
+        "soterai.lite.configScanner.serviceAccount",
+        "soterai.lite.configScanner.ci"
       ]
     }
   },
@@ -1486,6 +1487,31 @@
         "command": "soterai.serviceAccountSecretScannerStatus",
         "title": "Service-account JSON Secret Scanner Status",
         "category": "SoterAI"
+      },
+      {
+        "command": "soterai.reviewWorkspaceCiSecrets",
+        "title": "Review Workspace CI YAML Secrets",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.reviewCiSecrets",
+        "title": "Review Selected CI YAML Secrets",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.reviewCiSecretVault",
+        "title": "Review CI YAML Vault Migration",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.restoreCiSecretVault",
+        "title": "Restore Reviewed CI YAML Values (Disclosure)",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.ciSecretScannerStatus",
+        "title": "CI YAML Secret Scanner Status",
+        "category": "SoterAI"
       }
     ],
     "viewsContainers": {
@@ -2214,6 +2240,12 @@
           "default": true,
           "scope": "machine",
           "description": "Enable owner-reviewed saved service-account/key JSON review and canonical encrypted checkpoint migration. Public schema controls remain useful; malformed/duplicate/unsupported external credential sources withhold. No authentication, config execution or token request."
+        },
+        "soterai.lite.configScanner.ci": {
+          "type": "boolean",
+          "default": true,
+          "scope": "machine",
+          "description": "Enable owner-reviewed finite saved GitHub/GitLab CI YAML credential review and canonical encrypted checkpoint migration. Public controls remain useful; malformed/unsupported/dynamic inputs withhold. No config/include resolution, CI/client/shell execution, build or deployment."
         }
       }
     },
@@ -3324,6 +3356,26 @@
         },
         {
           "command": "soterai.serviceAccountSecretScannerStatus",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.reviewWorkspaceCiSecrets",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.reviewCiSecrets",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.reviewCiSecretVault",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.restoreCiSecretVault",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.ciSecretScannerStatus",
           "when": "soterai.advancedCommands"
         }
       ]

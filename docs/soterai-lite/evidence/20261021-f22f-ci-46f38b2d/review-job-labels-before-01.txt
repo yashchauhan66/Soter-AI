@@ -1,0 +1,33 @@
+﻿{"status":"FAIL","source":{"path":"packages/vscode-extension/src/config-scanners/CiSecretPlan.ts","bytes":9412,"sha256":"6c975d596aa532c829d98ce99f29130702c6aa8517915bf8358a423a289e51db"},"rows":[{"id":"public-job-API_KEY","expected":"PUBLIC_AVAILABLE","pass":false},{"id":"public-job-TOKEN","expected":"PUBLIC_AVAILABLE","pass":false},{"id":"public-job-PRIVATE","expected":"PUBLIC_AVAILABLE","pass":false},{"id":"real-env-credential-collection","expected":"WITHHELD","pass":true}],"scope":"Read-only pure synthetic review; no source/test edits, project scan, CI execution or editor launch."}
+node.exe : node:internal/modules/run_main:123
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (node:internal/modules/run_main:123:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Public job labels must be distinct from actual credential fields
+    at Object.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261021-f
+22f-ci-46f38b2d\review-job-labels-01.cjs:2:849)
+    at Module._compile (node:internal/modules/cjs/loader:1730:14)
+    at Object.transformer 
+(C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\node_modules\tsx\dist\register-BOkp8V6j.cjs:9:3176)
+    at Module.load (node:internal/modules/cjs/loader:1465:32)
+    at Function._load (node:internal/modules/cjs/loader:1282:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at cjsLoader (node:internal/modules/esm/translators:266:5)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/translators:200:7)
+    at ModuleJob.run (node:internal/modules/esm/module_job:274:25) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '=='
+}
+
+Node.js v22.16.0

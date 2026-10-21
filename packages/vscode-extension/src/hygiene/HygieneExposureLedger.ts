@@ -1,5 +1,5 @@
 import { createHmac, randomBytes } from "node:crypto";
-import { analyzeSourceText, analyzeContainerText, analyzeTerraformText, analyzeRegistryText, analyzeServiceAccountText } from "./HygieneAnalysis";
+import { analyzeSourceText, analyzeContainerText, analyzeTerraformText, analyzeRegistryText, analyzeServiceAccountText, analyzeCiText } from "./HygieneAnalysis";
 import { analyzeHygieneText, hygieneReference, hygieneUnavailable, HYGIENE_KINDS, HYGIENE_PROVIDERS, HYGIENE_EXPOSURE_ACTIONS, HYGIENE_LEDGER_ASSESSMENT, type HygieneInput, type HygieneFinding, type HygieneKind, type HygieneProvider } from "./HygieneAnalysis";
 interface Storage { get<T>(key: string): T | undefined; update(key: string, value: unknown): PromiseLike<void> }
 interface Secrets { get(key: string): PromiseLike<string | undefined>; store(key: string, value: string): PromiseLike<void> }
@@ -67,6 +67,7 @@ export class HygieneExposureLedger {
                 analyzeSource: (input: HygieneInput) => { if (!alive) return hygieneUnavailable(); return analyzeSourceText(input, scopedKey); },
                 analyzeContainer: (input: HygieneInput) => { if (!alive) return hygieneUnavailable(); return analyzeContainerText(input, scopedKey); },
                 analyzeTerraform: (input: HygieneInput) => { if (!alive) return hygieneUnavailable(); return analyzeTerraformText(input, scopedKey); },
+                analyzeCi: (input: HygieneInput) => { if (!alive) return hygieneUnavailable(); return analyzeCiText(input, scopedKey); },
                 analyzeServiceAccount: (input: HygieneInput) => { if (!alive) return hygieneUnavailable(); return analyzeServiceAccountText(input, scopedKey); },
                 analyzeRegistry: (input: HygieneInput) => { if (!alive) return hygieneUnavailable(); return analyzeRegistryText(input, scopedKey); },
                 current: async () => { try { if (!alive || !encoded || await this.secrets.get(HYGIENE_LEDGER_KEY) !== encoded) { dispose(); return false; } return true; } catch { dispose(); return false; } },

@@ -9,7 +9,7 @@
   "planVersion": 1,
   "clientDate": "2026-10-13",
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
-  "scope": "F01-F10/F12-F21/F22a-e scoped DONE after current byte barriers; F11 optional absent NOT_TESTED/NOT_COVERED. ParentF22 incomplete; F22f CI configs prepared ACTIVE, no production before transition proof. Remaining subcards/features/verification gates pending.",
+  "scope": "F01-F10/F12-F21/F22a-e scoped DONE after byte barriers; F11 optional absent NOT_TESTED/NOT_COVERED. F22f saved CI YAML active; parent and remaining stages incomplete.",
   "implementationConcurrency": 1,
   "activeFeature": "F22",
   "prerequisiteBlock": {
@@ -706,11 +706,23 @@
         {
           "id": "F22f",
           "title": "CI",
-          "status": "ACTIVE",
-          "result": "NOT-RUN",
+          "status": "VERIFYING",
+          "result": "PASS_SCOPED_PENDING_BYTE_BARRIERS",
           "requires": [
             "F22e"
-          ]
+          ],
+          "progressEvidence": "docs/soterai-lite/evidence/20261021-f22f-ci-46f38b2d/f22f-progress-04.json",
+          "currentAffectedVerification": {
+            "F06": "PASS_CURRENT_EXACT_OBJECT",
+            "F21": "PASS_CURRENT_EXACT_OBJECT",
+            "F22a": "PASS_CURRENT_EXACT_OBJECT",
+            "F22b": "PASS_CURRENT_EXACT_OBJECT",
+            "F22c": "PASS_CURRENT_EXACT_OBJECT",
+            "F22d": "PASS_CURRENT_EXACT_OBJECT",
+            "F22e": "PASS_CURRENT_EXACT_OBJECT"
+          },
+          "acceptanceEvidence": "docs/soterai-lite/evidence/20261021-f22f-ci-46f38b2d/f22f-acceptance-01.json",
+          "scope": "F22f finite saved static GitHub/GitLab CI YAML only: actual literal credential fields, GitLab variable value/options, multiline material/comments, whole command/URL scalars and known shapes. Public commands/permissions/labels/exact references retained; malformed/duplicate/alias/tag/directive/mixed expressions/unsupported inputs and decoded known-value residuals withhold. No include/config resolution, CI/client/shell execution, build/deployment, new dependency or full schema/credential validity/AI-access claim. Strict machine family flag, native owner selection, F21 HMAC metadata and canonical F06 encrypted checkpoint-only migration/exact disclosure with permanent saved denies; per-entry restore refuses. Current affected shared workflows verified. Other CI providers/languages, compound fragments, unknown transformations/prior copies/unmanaged reads remain limited. Backend/MCP production unchanged, actual vendor tools not rerun; V01/human/independent evidence pending."
         },
         {
           "id": "F22g",
@@ -734,7 +746,7 @@
       "completionRule": "All required subcards pass individually before parent DONE",
       "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
       "activeSubcard": "F22f",
-      "progressEvidence": "docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/f22e-transition-byte-verification-01.json"
+      "progressEvidence": "docs/soterai-lite/evidence/20261021-f22f-ci-46f38b2d/f22f-progress-04.json"
     },
     {
       "id": "F23",

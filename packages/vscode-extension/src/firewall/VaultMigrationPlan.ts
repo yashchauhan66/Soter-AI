@@ -5,6 +5,7 @@ import { createContainerSecretPlan, type ContainerFormat } from "../config-scann
 import { createTerraformSecretPlan, type TerraformFormat } from "../config-scanners/TerraformSecretPlan";
 import { createRegistrySecretPlan, type RegistryFormat } from "../config-scanners/RegistrySecretPlan";
 import { createServiceAccountSecretPlan, type ServiceAccountFormat } from "../config-scanners/ServiceAccountSecretPlan";
+import { createCiSecretPlan, type CiFormat } from "../config-scanners/CiSecretPlan";
 
 export interface PrivateVaultCandidate extends VaultCandidate { replacementText: string }
 export interface PrivateVaultPlan { maskedText: string; exampleText: string; candidates: PrivateVaultCandidate[]; restoreMode?: "checkpoint" }
@@ -13,12 +14,13 @@ const EXISTING = /^\[SOTERAI_PROTECTED_[A-Z0-9_]+\]$/;
 const fail = (): never => { throw new Error("Vault migration syntax or size is unsupported."); };
 
 /** Private plan: no raw values or original representation are a UI/tool receipt. */
-export function createVaultMigrationPlan(text: string, environment: boolean, generation: string, sourceSyntax?: SourceSyntax | ContainerFormat | TerraformFormat | RegistryFormat | ServiceAccountFormat): PrivateVaultPlan {
+export function createVaultMigrationPlan(text: string, environment: boolean, generation: string, sourceSyntax?: SourceSyntax | ContainerFormat | TerraformFormat | RegistryFormat | ServiceAccountFormat | CiFormat): PrivateVaultPlan {
     if (typeof generation !== "string" || !UUID.test(generation) || typeof environment !== "boolean") return fail();
     if (sourceSyntax !== undefined) {
         if (environment) return fail();
         if (sourceSyntax === "yaml" || sourceSyntax === "dockerfile") return createContainerSecretPlan(text, sourceSyntax, generation);
         if (sourceSyntax === "terraform" || sourceSyntax === "tfvars" || sourceSyntax === "terraform-json" || sourceSyntax === "tfvars-json") return createTerraformSecretPlan(text, sourceSyntax, generation);
+        if (sourceSyntax === "ci-yaml") return createCiSecretPlan(text, sourceSyntax, generation);
         if (sourceSyntax === "service-account-json") return createServiceAccountSecretPlan(text, sourceSyntax, generation);
         if (sourceSyntax === "npmrc" || sourceSyntax === "pypirc") return createRegistrySecretPlan(text, sourceSyntax, generation);
         return createSourceSecretPlan(text, sourceSyntax, generation);

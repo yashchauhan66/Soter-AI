@@ -1,0 +1,59 @@
+﻿{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22f-ci-46f38b2d\\full-tests-01.txt",
+    "observedAt":  "2026-10-21T13:39:50.1056784Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "--import",
+                      "tsx",
+                      "--test",
+                      "--test-concurrency=1",
+                      "../vscode-extension/src/__tests__/**/*.test.ts"
+                  ],
+    "sha256":  "DD0754E764C02F670B7C1E07BC19BEF27E453BB9FAAD061CD20F94A09F2245A1",
+    "file":  "node"
+}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22f-ci-46f38b2d\\backend-typecheck-01.txt",
+    "observedAt":  "2026-10-21T13:39:53.8428936Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "node_modules/typescript/bin/tsc",
+                      "--noEmit",
+                      "-p",
+                      "apps/local-ai-broker/tsconfig.json"
+                  ],
+    "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+    "file":  "node"
+}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22f-ci-46f38b2d\\backend-tests-01.txt",
+    "observedAt":  "2026-10-21T13:40:06.0399871Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "--import",
+                      "tsx",
+                      "--test",
+                      "--test-concurrency=1",
+                      "apps/local-ai-broker/src/__tests__/*.test.ts"
+                  ],
+    "sha256":  "978D0AE8289DF40C8034FF67D7CB96A3052A0D9435F77F0CEE134E1ABE946937",
+    "file":  "node"
+}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22f-ci-46f38b2d\\candidate01-gates-run-01.txt",
+    "observedAt":  "2026-10-21T13:48:09.7330189Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "-NoProfile",
+                      "-ExecutionPolicy",
+                      "Bypass",
+                      "-File",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22f-ci-46f38b2d\\complete-candidate01-01.ps1"
+                  ],
+    "sha256":  "A7900DA5054BEBFB847D1F70E4C354AF53890E282572D9F487E46F8CE0D81B47",
+    "file":  "powershell"
+}
+{
+    "status":  "PASS_CURRENT_F22F_REGRESSION_AND_EXACT_CANDIDATE_GATES",
+    "scope":  "Scoped static grammar and scripted synthetic native workflows only; evidence/byte barriers still pending."
+}
