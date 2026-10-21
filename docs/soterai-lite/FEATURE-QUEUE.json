@@ -9,7 +9,7 @@
   "planVersion": 1,
   "clientDate": "2026-10-13",
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
-  "scope": "F01-F10/F12-F21 and F22a scoped DONE with exact byte barriers; F11 optional absent/unimplemented NOT_TESTED/NOT_COVERED. F22 parent active; F22b Docker/Kubernetes alone active, F22c-h and later gates pending.",
+  "scope": "F01-F10/F12-F21/F22a scoped DONE; F11 optional absent/unimplemented NOT_TESTED/NOT_COVERED. F22 parent active; F22b scoped DONE only after its transition byte barrier; F22c prepared ACTIVE with no production before that proof. Remaining subcards/gates pending.",
   "implementationConcurrency": 1,
   "activeFeature": "F22",
   "prerequisiteBlock": {
@@ -615,8 +615,8 @@
         {
           "id": "F22b",
           "title": "Docker/Kubernetes",
-          "status": "VERIFYING",
-          "result": "PASS_SCOPED_PENDING_BYTE_BARRIERS",
+          "status": "DONE",
+          "result": "PASS_SCOPED",
           "requires": [
             "F22a"
           ],
@@ -627,12 +627,15 @@
             "F22a": "CURRENT_UNIT_SUBSET_PASS_FULL_NATIVE_PENDING"
           },
           "acceptanceEvidence": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/f22b-acceptance-01.json",
-          "scope": "F22b bounded saved Dockerfile ENV/ARG and declared Compose/Kubernetes static YAML grammar only, fixed parse-only YAML2.9.0 ISC; strict family flag, owner consent, F21 HMAC metadata and canonical F06 encrypted migration. YAML uses guarded exact whole-file checkpoint disclosure; generic per-entry recovery refuses checkpoint-only entries including encoded Secret data. Docker/source per-entry behavior retained. Unsupported/dynamic/alias/tag/foreign/malformed input withholds. No config execution, build/deployment, value-bearing env file, live validity, actual AI-access observation, OS boundary, human or independent verification claim. Backend/MCP production unchanged; actual vendor executables not rerun for this subcard; final exact-object V01 route gates remain pending."
+          "scope": "F22b bounded saved Dockerfile ENV/ARG and declared Compose/Kubernetes static YAML grammar only, fixed parse-only YAML2.9.0 ISC; strict family flag, owner consent, F21 HMAC metadata and canonical F06 encrypted migration. YAML uses guarded exact whole-file checkpoint disclosure; generic per-entry recovery refuses checkpoint-only entries including encoded Secret data. Docker/source per-entry behavior retained. Unsupported/dynamic/alias/tag/foreign/malformed input withholds. No config execution, build/deployment, value-bearing env file, live validity, actual AI-access observation, OS boundary, human or independent verification claim. Backend/MCP production unchanged; actual vendor executables not rerun for this subcard; final exact-object V01 route gates remain pending.",
+          "sourceEvidenceCommit": "f1d67891e7a27e2adf9fadadfd70cfa48c7c3de3",
+          "commitByteVerification": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/f22b-committed-byte-verification-01.json",
+          "transitionByteVerification": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/f22b-transition-byte-verification-01.json"
         },
         {
           "id": "F22c",
           "title": "Terraform/tfvars",
-          "status": "PLANNED",
+          "status": "ACTIVE",
           "result": "NOT-RUN",
           "requires": [
             "F22b"
@@ -686,8 +689,8 @@
       ],
       "completionRule": "All required subcards pass individually before parent DONE",
       "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
-      "activeSubcard": "F22b",
-      "progressEvidence": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/f22b-progress-07.json"
+      "activeSubcard": "F22c",
+      "progressEvidence": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/f22b-transition-byte-verification-01.json"
     },
     {
       "id": "F23",
