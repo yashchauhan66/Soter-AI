@@ -22,6 +22,8 @@ import { hygieneAssistantEnabled } from "../hygiene/HygieneFlags";
 import { sourceScannerEnabled } from "../config-scanners/SourceScannerFlags";
 import { terraformScannerEnabled } from "../config-scanners/TerraformScannerFlags";
 import { terraformFormatForPath } from "../config-scanners/TerraformSecretPlan";
+import { registryScannerEnabled } from "../config-scanners/RegistryScannerFlags";
+import { registryFormatForPath } from "../config-scanners/RegistrySecretPlan";
 import { sourceSyntaxForPath } from "../config-scanners/SourceSecretPlan";
 import { containerFormatForPath } from "../config-scanners/ContainerSecretPlan";
 import { containerScannerEnabled } from "../config-scanners/ContainerScannerFlags";
@@ -420,17 +422,21 @@ export class VaultManager {
     async migrateTerraform(uri: vscode.Uri, enabled: () => boolean): Promise<number> {
         return this.migrateSelected(uri, () => terraformScannerEnabled() && hygieneAssistantEnabled() && enabled() === true, false, false, true);
     }
-    private async migrateSelected(uri: vscode.Uri, enabled: (() => boolean) | undefined, sourceMode: boolean, containerMode = false, terraformMode = false): Promise<number> {
+    async migrateRegistry(uri: vscode.Uri, enabled: () => boolean): Promise<number> {
+        return this.migrateSelected(uri, () => registryScannerEnabled() && hygieneAssistantEnabled() && enabled() === true, false, false, false, true);
+    }
+    private async migrateSelected(uri: vscode.Uri, enabled: (() => boolean) | undefined, sourceMode: boolean, containerMode = false, terraformMode = false, registryMode = false): Promise<number> {
         return this.mutation(async () => {
             let basis = await this.capture(uri); await this.noPending();
             const relative = path.relative(vscode.Uri.parse(basis.root).fsPath, uri.fsPath).replaceAll("\\", "/");
-            if ([sourceMode, containerMode, terraformMode].filter(Boolean).length > 1) return vaultUnavailable();
-            const syntax = sourceMode ? sourceSyntaxForPath(relative) : containerMode ? containerFormatForPath(relative) : terraformMode ? terraformFormatForPath(relative) : undefined; if ((sourceMode || containerMode || terraformMode) && !syntax) return vaultUnavailable();
-            const id = randomUUID(), plan = createVaultMigrationPlan(basis.text, !sourceMode && !containerMode && !terraformMode && /^\.env(?:\..*)?$/i.test(path.basename(uri.fsPath)), id, syntax);
+            if ([sourceMode, containerMode, terraformMode, registryMode].filter(Boolean).length > 1) return vaultUnavailable();
+            const syntax = sourceMode ? sourceSyntaxForPath(relative) : containerMode ? containerFormatForPath(relative) : terraformMode ? terraformFormatForPath(relative) : registryMode ? registryFormatForPath(relative) : undefined; if ((sourceMode || containerMode || terraformMode || registryMode) && !syntax) return vaultUnavailable();
+            const id = randomUUID(), plan = createVaultMigrationPlan(basis.text, !sourceMode && !containerMode && !terraformMode && !registryMode && /^\.env(?:\..*)?$/i.test(path.basename(uri.fsPath)), id, syntax);
             // Source identifiers are not public labels or runtime env bindings.
             if (sourceMode) plan.candidates.forEach((candidate, ordinal) => { candidate.key = "SOURCE_VALUE_" + (ordinal + 1); });
             if (containerMode) plan.candidates.forEach((candidate, ordinal) => { candidate.key = "CONTAINER_VALUE_" + (ordinal + 1); });
             if (terraformMode) plan.candidates.forEach((candidate, ordinal) => { candidate.key = "TERRAFORM_VALUE_" + (ordinal + 1); });
+            if (registryMode) plan.candidates.forEach((candidate, ordinal) => { candidate.key = "REGISTRY_VALUE_" + (ordinal + 1); });
             if (!plan.candidates.length) return 0; await this.checkExample(uri, plan.exampleText);
             const detail = JSON.stringify({ file: vscode.workspace.asRelativePath(uri), count: plan.candidates.length, values: MASKED,
                 keys: plan.candidates.map(candidate => candidate.key), protection: "Add a permanent sensitive deny", example: "Unique names and empty values only",

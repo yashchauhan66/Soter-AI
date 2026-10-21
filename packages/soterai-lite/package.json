@@ -139,7 +139,8 @@
         "soterai.lite.hygieneAssistant",
         "soterai.lite.configScanner.source",
         "soterai.lite.configScanner.dockerKubernetes",
-        "soterai.lite.configScanner.terraform"
+        "soterai.lite.configScanner.terraform",
+        "soterai.lite.configScanner.registry"
       ]
     }
   },
@@ -1434,6 +1435,31 @@
         "command": "soterai.terraformSecretScannerStatus",
         "title": "Terraform/tfvars Secret Scanner Status",
         "category": "SoterAI"
+      },
+      {
+        "command": "soterai.reviewWorkspaceRegistrySecrets",
+        "title": "Review Workspace npm/PyPI Registry Secrets",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.reviewRegistrySecrets",
+        "title": "Review Selected npm/PyPI Registry Secrets",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.reviewRegistrySecretVault",
+        "title": "Review npm/PyPI Registry Vault Migration",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.restoreRegistrySecretVault",
+        "title": "Restore Reviewed npm/PyPI Registry Values (Disclosure)",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.registrySecretScannerStatus",
+        "title": "npm/PyPI Registry Secret Scanner Status",
+        "category": "SoterAI"
       }
     ],
     "viewsContainers": {
@@ -2150,6 +2176,12 @@
           "default": true,
           "scope": "machine",
           "description": "Enable owner-reviewed static Terraform/tfvars native and strict JSON secret review with canonical encrypted vault migration. Disclosure restores the entire encrypted original checkpoint. Dynamic templates/expressions and unsupported syntax withhold analysis; no Terraform execution, plan or provider/schema validation."
+        },
+        "soterai.lite.configScanner.registry": {
+          "type": "boolean",
+          "default": true,
+          "scope": "machine",
+          "description": "Enable owner-reviewed static project .npmrc/.pypirc credential review with canonical encrypted vault migration. Disclosure restores the entire encrypted original checkpoint; unsupported syntax, external references and dynamic expressions withhold analysis. No home scan, package client or registry request."
         }
       }
     },
@@ -3220,6 +3252,26 @@
         },
         {
           "command": "soterai.terraformSecretScannerStatus",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.reviewWorkspaceRegistrySecrets",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.reviewRegistrySecrets",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.reviewRegistrySecretVault",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.restoreRegistrySecretVault",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.registrySecretScannerStatus",
           "when": "soterai.advancedCommands"
         }
       ]

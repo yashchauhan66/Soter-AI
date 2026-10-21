@@ -1,0 +1,571 @@
+import * as vscode from "vscode";
+import * as path from "node:path";
+import { open } from "node:fs/promises";
+import { createHash, randomUUID } from "node:crypto";
+import { buildVaultMetadata, generateVaultKey, encryptVault, decryptVault, type VaultEntryMetadata } from "@soterai/guard-core";
+import { assertWorkspaceFileUri, assertWorkspaceOutputUri } from "../security/WorkspacePathGuard";
+import { BoundarySnapshot, updateRules } from "../ai-boundary/BoundarySnapshot";
+import { withPendingRestriction, restrictionSaveEnabled } from "../ai-boundary/RestrictionOperation";
+import { MASKED } from "../project-privacy/SafeFileView";
+import { createVaultMigrationPlan } from "./VaultMigrationPlan";
+import { VaultStorage, VAULT_LIMIT, readVaultFile, samePath, vaultJson, vaultObject, vaultUnavailable, missing } from "./VaultStorage";
+import { parseVaultAppDescriptor, vaultEnvironmentNameAllowed, type VaultAppDescriptor } from "../../../core/src/VaultAppDescriptor";
+import { RegisteredSecretMatcher } from "../../../core/src/RegisteredSecretMatcher";
+import { SecureEditorModel } from "../project-privacy/SecureEditorModel";
+import { runtimeBinding, runtimeStoreUnchanged, runtimePolicyBinding } from "../vault-runtime/RuntimeBinding";
+import { onDidChangeBoundaryRules, onDidChangeOwnerPolicySession, exportRootPolicy } from "../ai-boundary/BoundarySnapshot";
+import { ManagedOutputFilter } from "../terminal/ManagedOutputFilter";
+import { managedRootIdentity, managedPolicyBinding, managedEmptyStoreIdentity } from "../terminal/ManagedOutputBinding";
+import { isPathWithin } from "../../../core/src/pathContainment";
+import { GatewayRegistryLease } from "../broker/GatewayRegistryLease";
+import { hygieneAssistantEnabled } from "../hygiene/HygieneFlags";
+import { sourceScannerEnabled } from "../config-scanners/SourceScannerFlags";
+import { terraformScannerEnabled } from "../config-scanners/TerraformScannerFlags";
+import { terraformFormatForPath } from "../config-scanners/TerraformSecretPlan";
+import { registryScannerEnabled } from "../config-scanners/RegistryScannerFlags";
+import { registryFormatForPath } from "../config-scanners/RegistrySecretPlan";
+import { sourceSyntaxForPath } from "../config-scanners/SourceSecretPlan";
+import { containerFormatForPath } from "../config-scanners/ContainerSecretPlan";
+import { containerScannerEnabled } from "../config-scanners/ContainerScannerFlags";
+
+const KEY_ID = "soterai.vaultKey", PENDING = "vault-pending.json", VAULT = "soterai-vault.enc";
+const UUID = /^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/i;
+const digest = (text: string) => createHash("sha256").update(text).digest("hex");
+interface StoredEntry extends VaultEntryMetadata { rawValue: string; source?: string; root?: string; replacementText?: string; restoreMode?: "checkpoint" }
+interface VaultFile { version: 1 | 2; entries: StoredEntry[] }
+interface Basis { source: string; root: string; text: string; identity: string; policy: string; epoch: number; ownerDamagedRecovery: boolean }
+interface Issued { schemaVersion: 1; id: string; source: string; root: string; digest: string }
+interface Checkpoint { schemaVersion: 1; id: string; source: string; root: string; original: string; masked: string; example: string;
+    identity: string; vaultBefore: string | null; vaultAfter: string; count: number }
+export interface VaultStatus { exists: boolean; location: string; entryCount: number; entries: Array<Omit<VaultEntryMetadata, "hash" | "id">> }
+export interface MigrationPreview { file: string; candidates: Array<{ key: string; type: string; placeholder: string; redactedPreview: string }> }
+export interface VaultHygieneSnapshot { readonly source: string; readonly root: string; readonly text: string; readonly identity: string; readonly policy: string }
+
+export function vaultModeEnabled(): boolean {
+    try {
+        const config = vscode.workspace.getConfiguration("soterai"), inspected = config.inspect<boolean>("lite.vaultMode");
+        return vscode.workspace.isTrusted && (inspected ? inspected.globalValue ?? inspected.defaultValue ?? true : config.get("lite.vaultMode", true)) === true;
+    } catch { return false; }
+}
+export function vaultRuntimeEnabled(): boolean {
+    try {
+        const config = vscode.workspace.getConfiguration("soterai");
+        return vaultModeEnabled() && !vscode.env.remoteName && ["lite.vaultRuntime", "lite.secretMatching", "lite.outputRedactor"].every(name => {
+            const inspected = config.inspect<boolean>(name);
+            return (inspected ? inspected.globalValue ?? inspected.defaultValue ?? true : config.get(name, true)) === true;
+        });
+    } catch { return false; }
+}
+export function managedPowerShellOutputEnabled(route: "ps51" | "cmd" | "gitBash" = "ps51"): boolean {
+    try {
+        const flag = route === "ps51" ? "lite.ps51Terminal" : route === "cmd" ? "lite.cmdTerminal" : route === "gitBash" ? "lite.gitBashTerminal" : undefined;
+        if (!flag) return false;
+        const config = vscode.workspace.getConfiguration("soterai");
+        return vaultModeEnabled() && !vscode.env.remoteName && [flag, "lite.secretMatching", "lite.outputRedactor"].every(name => {
+            const inspected = config.inspect<boolean>(name);
+            return (inspected ? inspected.globalValue ?? inspected.defaultValue ?? true : config.get(name, true)) === true;
+        });
+    } catch { return false; }
+}
+function keyValid(key: unknown): key is string {
+    return typeof key === "string" && /^[A-Za-z0-9+/]{43}=$/.test(key) && Buffer.from(key, "base64").length === 32 && Buffer.from(key, "base64").toString("base64") === key;
+}
+function parseVault(text: string): VaultFile {
+    const value = vaultObject(vaultJson(text), ["version", "entries"]);
+    if (![1, 2].includes(value.version as number) || !Array.isArray(value.entries) || value.entries.length > 4096) return vaultUnavailable();
+    const entries = value.entries.map(entry => {
+        const data = vaultObject(entry, ["id", "key", "type", "originalFile", "placeholder", "createdAt", "hash", "rawValue", "source", "root", "replacementText", "restoreMode"],
+            ["id", "key", "type", "originalFile", "placeholder", "createdAt", "hash", "rawValue"]);
+        for (const field of Object.keys(data)) if (typeof data[field] !== "string" || Buffer.byteLength(data[field] as string, "utf8") > 65536) return vaultUnavailable();
+        if (!/^[a-f0-9]{64}$/i.test(data.hash as string) || !/^\[SOTERAI_PROTECTED_[A-Z0-9_]+\]$/.test(data.placeholder as string)
+            || !data.id || !data.key || !data.type || !data.originalFile || !Number.isFinite(Date.parse(data.createdAt as string))) return vaultUnavailable();
+        if (data.source !== undefined && (typeof data.root !== "string" || typeof data.replacementText !== "string")) return vaultUnavailable();
+        if (data.restoreMode !== undefined && (data.restoreMode !== "checkpoint" || typeof data.source !== "string" || typeof data.root !== "string" || typeof data.replacementText !== "string")) return vaultUnavailable();
+        return data as unknown as StoredEntry;
+    });
+    return { version: value.version as 1 | 2, entries };
+}
+
+/** Optional owner-reviewed migration. SecretStorage API availability is not OS
+ * custody certification or isolation from other same-user software. */
+export class VaultManager {
+    private static mutationQueue: Promise<void> = Promise.resolve();
+    private readonly storage: VaultStorage;
+    private epoch = 0;
+    private runtimeEpoch = 0;
+    private mutationGuard?: () => boolean;
+    constructor(private readonly context: vscode.ExtensionContext) {
+        // Desktop VS Code exposes profile global storage as vscode-userdata;
+        // its native storage implementation maps that trusted URI to file.
+        this.storage = new VaultStorage(context.globalStorageUri.with({ scheme: "file" }).fsPath);
+        context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(event => { if (event.affectsConfiguration("soterai")) this.epoch++; }));
+        context.subscriptions.push(vscode.workspace.onDidChangeWorkspaceFolders(() => { this.epoch++; }));
+        context.subscriptions.push(onDidChangeBoundaryRules(() => { this.runtimeEpoch++; }), onDidChangeOwnerPolicySession(() => { this.runtimeEpoch++; }));
+        context.subscriptions.push(context.secrets.onDidChange(event => { if (event.key === KEY_ID) this.runtimeEpoch++; }));
+    }
+    private alive(epoch?: number): void {
+        const storage = this.context.globalStorageUri;
+        if (this.mutationGuard && this.mutationGuard() !== true || !vaultModeEnabled() || !["file", "vscode-userdata"].includes(storage.scheme) || storage.scheme === "vscode-userdata" && !!vscode.env.remoteName || storage.authority
+            || this.context.globalStorageUri.query || this.context.globalStorageUri.fragment || epoch !== undefined && epoch !== this.epoch) return vaultUnavailable();
+    }
+    private async capture(uri: vscode.Uri, ownerDamagedRecovery = false): Promise<Basis> {
+        this.alive();
+        if (!(uri instanceof vscode.Uri) || uri.scheme !== "file" || uri.authority || uri.query || uri.fragment) return vaultUnavailable();
+        const folder = vscode.workspace.getWorkspaceFolder(uri); if (!folder || folder.uri.scheme !== "file") return vaultUnavailable();
+        const root = folder.uri.toString(), epoch = this.epoch;
+        if (!samePath(await assertWorkspaceFileUri(uri), uri.fsPath)) return vaultUnavailable();
+        const policy = (await BoundarySnapshot.load()).accessRevision(uri); if (!policy) return vaultUnavailable();
+        const result = await readVaultFile(uri.fsPath, 65536, ownerDamagedRecovery);
+        if (!samePath(await assertWorkspaceFileUri(uri), uri.fsPath) || (await BoundarySnapshot.load()).accessRevision(uri) !== policy
+            || vscode.workspace.getWorkspaceFolder(uri)?.uri.toString() !== root) return vaultUnavailable();
+        this.alive(epoch);
+        if (ownerDamagedRecovery) {
+            // Refuse existing source editors during damaged-byte disclosure;
+            // never introduce a raw TextDocument to recover an original.
+            if (vscode.workspace.textDocuments.some(document => document.uri.toString() === uri.toString())) return vaultUnavailable();
+        } else this.assertDocumentReady(uri, result.text);
+        return { source: uri.toString(), root, ...result, policy, epoch, ownerDamagedRecovery };
+    }
+    private async fresh(uri: vscode.Uri, basis: Basis, expected = basis.text): Promise<Basis> {
+        this.alive(basis.epoch); const current = await this.capture(uri, basis.ownerDamagedRecovery);
+        if (current.source !== basis.source || current.root !== basis.root || current.policy !== basis.policy || current.text !== expected
+            || expected === basis.text && current.identity !== basis.identity) return vaultUnavailable();
+        return current;
+    }
+    private async key(create: boolean): Promise<string> {
+        let key = await this.context.secrets.get(KEY_ID);
+        if (!key && create) {
+            if (await this.storage.read(VAULT) !== undefined || await this.storage.read(PENDING, 16384) !== undefined || await this.storage.hasGenerations()) return vaultUnavailable();
+            key = generateVaultKey(); await this.context.secrets.store(KEY_ID, key);
+        }
+        if (!keyValid(key) || await this.context.secrets.get(KEY_ID) !== key) return vaultUnavailable();
+        return key;
+    }
+    private async vault(key?: string): Promise<{ text: string | null; data: VaultFile }> {
+        const text = await this.storage.read(VAULT); if (text === undefined) return { text: null, data: { version: 2, entries: [] } };
+        return { text, data: parseVault(await decryptVault(text, key ?? await this.key(false))) };
+    }
+    private pointer(uri: vscode.Uri): string { return "vault-source-" + digest(uri.toString()).slice(0, 32) + ".json"; }
+    private issued(text: string): Issued {
+        const data = vaultObject(vaultJson(text), ["schemaVersion", "id", "source", "root", "digest"]);
+        if (data.schemaVersion !== 1 || typeof data.id !== "string" || !UUID.test(data.id) || typeof data.source !== "string"
+            || typeof data.root !== "string" || typeof data.digest !== "string" || !/^[a-f0-9]{64}$/.test(data.digest)) return vaultUnavailable();
+        return data as unknown as Issued;
+    }
+    private async checkpoint(uri: vscode.Uri, root: string, pointer: string): Promise<Checkpoint> {
+        const record = this.issued(pointer); if (record.source !== uri.toString() || record.root !== root) return vaultUnavailable();
+        const cipher = await this.storage.read("vault-generation-" + record.id + ".enc");
+        if (!cipher || digest(cipher) !== record.digest) return vaultUnavailable();
+        const value = vaultObject(vaultJson(await decryptVault(cipher, await this.key(false))),
+            ["schemaVersion", "id", "source", "root", "original", "masked", "example", "identity", "vaultBefore", "vaultAfter", "count"]);
+        if (value.schemaVersion !== 1 || value.id !== record.id || value.source !== record.source || value.root !== record.root
+            || !Number.isSafeInteger(value.count) || (value.count as number) < 1 || (value.count as number) > 256
+            || value.vaultBefore !== null && typeof value.vaultBefore !== "string" || typeof value.vaultAfter !== "string") return vaultUnavailable();
+        for (const field of ["original", "masked", "example", "identity"]) if (typeof value[field] !== "string" || Buffer.byteLength(value[field] as string, "utf8") > 65536) return vaultUnavailable();
+        if ((value.example as string).split("\n").some(line => line && !/^[A-Za-z_][A-Za-z0-9_]{0,127}=$/.test(line))) return vaultUnavailable();
+        parseVault(await decryptVault(value.vaultAfter as string, await this.key(false)));
+        return value as unknown as Checkpoint;
+    }
+    private async noPending(): Promise<void> { if (await this.storage.read(PENDING, 16384) !== undefined) return vaultUnavailable(); }
+    private async protect(uri: vscode.Uri, basis: Basis): Promise<Basis> {
+        if (!restrictionSaveEnabled()) return vaultUnavailable();
+        const folder = vscode.workspace.getWorkspaceFolder(uri); if (!folder || folder.uri.toString() !== basis.root) return vaultUnavailable();
+        const pattern = path.relative(folder.uri.fsPath, uri.fsPath).replace(/\\/g, "/").normalize("NFC");
+        await updateRules(basis.root, rules => ({ ...rules, paths: [...rules.paths, { kind: "file", pattern, sensitive: true }] }));
+        const current = await this.capture(uri); this.alive(basis.epoch);
+        if (current.source !== basis.source || current.root !== basis.root || current.text !== basis.text || current.identity !== basis.identity) return vaultUnavailable();
+        return current;
+    }
+    private exampleUri(uri: vscode.Uri): vscode.Uri { return vscode.Uri.joinPath(uri, "..", ".env.example"); }
+    private async checkExample(uri: vscode.Uri, expected: string): Promise<void> {
+        if (!expected) return;
+        const example = this.exampleUri(uri); if (example.toString() === uri.toString()) return vaultUnavailable();
+        await assertWorkspaceOutputUri(example);
+        try { if ((await readVaultFile(example.fsPath)).text !== expected) return vaultUnavailable(); }
+        catch (error) { if (!missing(error)) throw error; }
+    }
+    private async writeExample(uri: vscode.Uri, text: string, key: string): Promise<void> {
+        if (!text) return; await this.checkExample(uri, text); const target = this.exampleUri(uri);
+        try { const existing = await readVaultFile(target.fsPath); if (existing.text === text) return; return vaultUnavailable(); }
+        catch (error) { if (!missing(error)) throw error; }
+        await assertWorkspaceOutputUri(target); if (await this.key(false) !== key) return vaultUnavailable(); this.alive();
+        const handle = await open(target.fsPath, "wx", 0o600);
+        try { await handle.writeFile(text, "utf8"); await handle.sync(); } finally { await handle.close(); }
+        if ((await readVaultFile(target.fsPath)).text !== text) return vaultUnavailable();
+    }
+    private async writeSource(uri: vscode.Uri, basis: Basis, next: string, key: string): Promise<void> {
+        await this.fresh(uri, basis);
+        if (await this.key(false) !== key) return vaultUnavailable(); this.alive(basis.epoch);
+        // Never create an original TextDocument. Existing pristine buffers must
+        // refresh from disk; dirty/stale buffers are withheld before every write.
+        const document = vscode.workspace.textDocuments.find(document => document.uri.toString() === uri.toString());
+        if (document) {
+            const edit = new vscode.WorkspaceEdit(), version = document.version;
+            edit.replace(uri, new vscode.Range(document.positionAt(0), document.positionAt(basis.text.length)), next);
+            if (!await vscode.workspace.applyEdit(edit) || document.getText() !== next || document.version !== version + 1) return vaultUnavailable();
+            this.alive(basis.epoch);
+            const disk = await readVaultFile(uri.fsPath);
+            if (disk.identity !== basis.identity || disk.text !== basis.text || vscode.workspace.getWorkspaceFolder(uri)?.uri.toString() !== basis.root
+                || (await BoundarySnapshot.load()).accessRevision(uri) !== basis.policy) return vaultUnavailable();
+            if (await this.key(false) !== key) return vaultUnavailable();
+            this.alive(basis.epoch); if (document.getText() !== next || !await document.save()) return vaultUnavailable();
+        } else await vscode.workspace.fs.writeFile(uri, Buffer.from(next, "utf8"));
+        const handle = await open(uri.fsPath, "r+"); try { await handle.sync(); } finally { await handle.close(); }
+        this.alive(basis.epoch);
+        if (!samePath(await assertWorkspaceFileUri(uri), uri.fsPath) || (await readVaultFile(uri.fsPath)).text !== next
+            || vscode.workspace.getWorkspaceFolder(uri)?.uri.toString() !== basis.root || (await BoundarySnapshot.load()).accessRevision(uri) !== basis.policy) return vaultUnavailable();
+    }
+    async preview(uri: vscode.Uri): Promise<MigrationPreview> {
+        const basis = await this.capture(uri), plan = createVaultMigrationPlan(basis.text, /^\.env(?:\..*)?$/i.test(path.basename(uri.fsPath)), randomUUID());
+        return { file: vscode.workspace.asRelativePath(uri), candidates: plan.candidates.map(({ key, type, placeholder }) => ({ key, type, placeholder, redactedPreview: MASKED })) };
+    }
+    /** Trusted local hygiene callback only, after its native owner consent.
+     * Uses the same guarded saved-file capture as migration, without opening a
+     * source TextDocument, making a key or returning an original via commands. */
+    async withHygieneSnapshot<T>(uri: vscode.Uri, use: (snapshot: Readonly<VaultHygieneSnapshot>) => T, enabled: () => boolean): Promise<T> {
+        try {
+            const allowed = () => hygieneAssistantEnabled() && enabled() === true;
+            if (!allowed()) return vaultUnavailable(); const basis = await this.capture(uri);
+            await this.noPending(); await this.fresh(uri, basis); if (!allowed()) return vaultUnavailable();
+            const result = use(Object.freeze({ source: basis.source, root: basis.root, text: basis.text, identity: basis.identity, policy: basis.policy }));
+            if (result && typeof (result as { then?: unknown }).then === "function") return vaultUnavailable();
+            await this.fresh(uri, basis); if (!allowed()) return vaultUnavailable(); return result;
+        } catch { return vaultUnavailable(); }
+    }
+    /** Revokes only this instance's pending captures/mutations. Hygiene owns its
+     * own instance, so cancelling it does not withdraw unrelated terminal jobs. */
+    withdrawHygiene(): void { this.epoch++; }
+    async status(): Promise<VaultStatus> {
+        const vault = await this.vault(), roots = new Set((vscode.workspace.workspaceFolders ?? []).map(folder => folder.uri.toString()));
+        const entries = vault.data.entries.filter(entry => !entry.root || roots.has(entry.root)).map(entry => ({ key: entry.key, type: entry.type,
+            originalFile: entry.originalFile, placeholder: entry.placeholder, createdAt: entry.createdAt }));
+        return { exists: vault.text !== null, location: path.join(this.storage.directory, VAULT), entryCount: entries.length, entries };
+    }
+    async knownPlaceholders(): Promise<string[]> { return [...new Set((await this.vault()).data.entries.map(entry => entry.placeholder))]; }
+    /** Metadata only. Never enumerate unbound legacy or ambiguous env records. */
+    async runtimeSelections(uri: vscode.Uri): Promise<readonly Readonly<{ name: string; placeholder: string }>[]> {
+        try {
+            if (!vaultRuntimeEnabled() || !/^\.env(?:\..*)?$/i.test(path.basename(uri.fsPath))) return vaultUnavailable();
+            const basis = await this.capture(uri); await this.noPending(); const key = await this.key(false), vault = await this.vault(key);
+            await this.fresh(uri, basis); await this.noPending(); if (await this.key(false) !== key || !vaultRuntimeEnabled()) return vaultUnavailable();
+            const selected = this.runtimeRecords(basis, vault.data);
+            return Object.freeze(selected.map(({ key: name, placeholder }) => Object.freeze({ name, placeholder })));
+        } catch { return vaultUnavailable(); }
+    }
+    private runtimeRecords(basis: Basis, vault: VaultFile): StoredEntry[] {
+        const model = new SecureEditorModel(basis.text, true), fields = model.metadata().fields, names = new Set<string>(), entries: StoredEntry[] = [];
+        for (const field of fields) {
+            if (!field.editable || names.has(field.name.toUpperCase())) return vaultUnavailable(); names.add(field.name.toUpperCase());
+            const placeholder = model.readOwnerValue(field.id);
+            if (!/^\[SOTERAI_PROTECTED_[A-F0-9]{32}_(?:0|[1-9]\d{0,2})\]$/.test(placeholder)) continue;
+            if (!vaultEnvironmentNameAllowed(field.name)) continue;
+            const matches = vault.entries.filter(entry => entry.source === basis.source && entry.root === basis.root
+                && entry.key === field.name && entry.placeholder === placeholder && typeof entry.replacementText === "string");
+            if (matches.length !== 1) return vaultUnavailable(); entries.push(matches[0]);
+        }
+        return entries;
+    }
+    /** Internal trusted callback only. Registered commands never return values.
+     * No key creation, original-file fallback, mutation or asynchronous work in
+     * the callback is required to begin the owned job. */
+    async withRuntimeValues<T>(input: VaultAppDescriptor, use: (values: Readonly<Record<string, string>>, guard: () => boolean) => T,
+        enabled: () => boolean): Promise<T> {
+        try {
+            const descriptor = parseVaultAppDescriptor(input); if (!descriptor || !vaultRuntimeEnabled() || enabled() !== true
+                || !/^\.env(?:\..*)?$/i.test(path.basename(descriptor.source))) return vaultUnavailable();
+            const uri = vscode.Uri.file(descriptor.source), basis = await this.capture(uri), runtimeEpoch = this.runtimeEpoch;
+            if (!samePath(vscode.Uri.parse(basis.root).fsPath, descriptor.root)) return vaultUnavailable();
+            const binding = runtimeBinding(descriptor), bindingText = JSON.stringify(binding);
+            const policyBinding = runtimePolicyBinding(descriptor.root), savedPolicy = JSON.stringify(exportRootPolicy(basis.root));
+            if (binding.source !== basis.text || binding.identity !== basis.identity) return vaultUnavailable();
+            await this.noPending(); const cipher = await this.storage.read(VAULT); if (!cipher) return vaultUnavailable();
+            const guard = (): boolean => {
+                try {
+                    this.alive(basis.epoch);
+                    return runtimeEpoch === this.runtimeEpoch && vaultRuntimeEnabled() && enabled() === true
+                        && vscode.workspace.getWorkspaceFolder(uri)?.uri.toString() === basis.root
+                        && runtimeStoreUnchanged(this.storage.directory, cipher)
+                        && runtimePolicyBinding(descriptor.root) === policyBinding && JSON.stringify(exportRootPolicy(basis.root)) === savedPolicy
+                        && JSON.stringify(runtimeBinding(descriptor)) === bindingText;
+                } catch { return false; }
+            };
+            if (!guard()) return vaultUnavailable();
+            const detail = JSON.stringify({ program: descriptor.program, cwd: descriptor.cwd, arguments: descriptor.args,
+                selectedNames: descriptor.selections.map(s => s.name), output: "Completed output is bounded and filtered; overflow is withheld",
+                warning: "Selected app code and its dependencies can inspect, write, print or upload injected values. This is cooperative local tooling, not app confinement." }, null, 2);
+            if (await vscode.window.showWarningMessage("Run this app with the selected vault variables?", { modal: true, detail }, "Run selected app") !== "Run selected app" || !guard()) return vaultUnavailable();
+            await this.fresh(uri, basis); await this.noPending(); if (!guard()) return vaultUnavailable();
+            const key = await this.key(false); if (!guard()) return vaultUnavailable();
+            const current = await this.vault(key); if (current.text !== cipher || !guard()) return vaultUnavailable();
+            const records = this.runtimeRecords(basis, current.data), values: Record<string, string> = {};
+            for (const selection of descriptor.selections) {
+                const matches = records.filter(entry => entry.key === selection.name && entry.placeholder === selection.placeholder);
+                if (matches.length !== 1) return vaultUnavailable();
+                Object.defineProperty(values, selection.name, { value: matches[0].rawValue, enumerable: true });
+            }
+            if (new RegisteredSecretMatcher(Object.values(values)).inspectRequest([]).status !== "CLEAN") return vaultUnavailable();
+            await this.fresh(uri, basis); await this.noPending(); if (!guard()) return vaultUnavailable();
+            if (await this.storage.read(VAULT) !== cipher || !guard() || await this.key(false) !== key || !guard()) return vaultUnavailable();
+            return use(Object.freeze(values), guard);
+        } catch { return vaultUnavailable(); }
+    }
+    /** Internal filter capability only: no plaintext values, original files,
+     * recovery-source fallback, key generation or value-bearing public result. */
+    async createManagedOutputFilter(root: vscode.Uri, enabled: () => boolean, route: "ps51" | "cmd" | "gitBash" = "ps51"): Promise<ManagedOutputFilter> {
+        try {
+            const epoch = this.epoch, runtimeEpoch = this.runtimeEpoch;
+            this.alive(epoch);
+            if (!managedPowerShellOutputEnabled(route) || enabled() !== true) return vaultUnavailable();
+            const rootIdentity = managedRootIdentity(root);
+            await BoundarySnapshot.load();
+            const policy = managedPolicyBinding(root);
+            await this.noPending(); const cipher = await this.storage.read(VAULT);
+            let emptyStore: string | undefined;
+            if (cipher === undefined) {
+                if (await this.storage.hasRecoveryRecords()) return vaultUnavailable();
+                emptyStore = managedEmptyStoreIdentity(this.storage.directory);
+            }
+            const guard = (): boolean => {
+                try {
+                    this.alive(epoch);
+                    return runtimeEpoch === this.runtimeEpoch && managedPowerShellOutputEnabled(route) && enabled() === true
+                        && managedRootIdentity(root) === rootIdentity && managedPolicyBinding(root) === policy
+                        && (cipher === undefined ? managedEmptyStoreIdentity(this.storage.directory) === emptyStore : runtimeStoreUnchanged(this.storage.directory, cipher));
+                } catch { return false; }
+            };
+            if (!guard()) return vaultUnavailable();
+            const values: string[] = [];
+            if (cipher !== undefined) {
+                const key = await this.key(false); if (!guard()) return vaultUnavailable();
+                const data = parseVault(await decryptVault(cipher, key));
+                for (const entry of data.entries) {
+                    if ((entry.source === undefined) !== (entry.root === undefined)) return vaultUnavailable();
+                    if (entry.root !== undefined) {
+                        const boundRoot = vscode.Uri.parse(entry.root), source = vscode.Uri.parse(entry.source!);
+                        for (const uri of [boundRoot, source]) {
+                            if (uri.scheme !== "file" || uri.authority || uri.query || uri.fragment || !path.isAbsolute(uri.fsPath)
+                                || /[\x00-\x1f\x7f-\x9f]/u.test(uri.fsPath) || vscode.Uri.file(uri.fsPath).toString() !== uri.toString()) return vaultUnavailable();
+                        }
+                        if (!isPathWithin(boundRoot.fsPath, source.fsPath) || samePath(boundRoot.fsPath, source.fsPath)) return vaultUnavailable();
+                    }
+                    if (entry.root === undefined || entry.root === root.toString()) values.push(entry.rawValue);
+                }
+                if (await this.key(false) !== key || !guard()) return vaultUnavailable();
+            }
+            const filter = new ManagedOutputFilter(values, guard);
+            if (!filter.available()) { filter.dispose(); return vaultUnavailable(); }
+            return filter;
+        } catch { return vaultUnavailable(); }
+    }
+    /** Complete current-window registry lease for the private owned gateway.
+     * No source reads, recovery fallback, key creation or public value result. */
+    async createGatewayRegistry(enabled: () => boolean): Promise<GatewayRegistryLease> {
+        try {
+            const epoch = this.epoch;
+            this.alive(epoch);
+            const flags = () => {
+                const config = vscode.workspace.getConfiguration("soterai");
+                return vaultModeEnabled() && !vscode.env.remoteName && enabled() === true && ["lite.secretMatching", "lite.outputRedactor"].every(name => {
+                    const inspected = config.inspect<boolean>(name);
+                    return (inspected ? inspected.globalValue ?? inspected.defaultValue ?? true : config.get(name, true)) === true;
+                });
+            };
+            if (!flags()) return vaultUnavailable();
+            const roots = (vscode.workspace.workspaceFolders ?? []).map(folder => folder.uri);
+            if (!roots.length || roots.length > 16) return vaultUnavailable();
+            const identities = roots.map(root => managedRootIdentity(root));await BoundarySnapshot.load();
+            const runtimeEpoch = this.runtimeEpoch;
+            const policies = roots.map(root => managedPolicyBinding(root));
+            await this.noPending();const cipher = await this.storage.read(VAULT);
+            let emptyStore: string | undefined;
+            if (cipher === undefined) { if (await this.storage.hasRecoveryRecords()) return vaultUnavailable();emptyStore = managedEmptyStoreIdentity(this.storage.directory); }
+            const guard = () => {
+                try {
+                    this.alive(epoch);
+                    return flags() && runtimeEpoch === this.runtimeEpoch
+                        && JSON.stringify((vscode.workspace.workspaceFolders ?? []).map(folder => folder.uri.toString())) === JSON.stringify(roots.map(root => root.toString()))
+                        && roots.every((root, i) => managedRootIdentity(root) === identities[i] && managedPolicyBinding(root) === policies[i])
+                        && (cipher === undefined ? managedEmptyStoreIdentity(this.storage.directory) === emptyStore : runtimeStoreUnchanged(this.storage.directory, cipher));
+                } catch { return false; }
+            };
+            if (!guard()) return vaultUnavailable();
+            const values: string[] = [];
+            if (cipher !== undefined) {
+                const key = await this.key(false);if (!guard()) return vaultUnavailable();
+                const data = parseVault(await decryptVault(cipher, key));
+                for (const entry of data.entries) {
+                    if ((entry.source === undefined) !== (entry.root === undefined)) return vaultUnavailable();
+                    if (entry.root !== undefined) {
+                        const boundRoot = vscode.Uri.parse(entry.root), source = vscode.Uri.parse(entry.source!);
+                        for (const uri of [boundRoot, source]) if (uri.scheme !== "file" || uri.authority || uri.query || uri.fragment || !path.isAbsolute(uri.fsPath)
+                            || /[\x00-\x1f\x7f-\x9f]/u.test(uri.fsPath) || vscode.Uri.file(uri.fsPath).toString() !== uri.toString()) return vaultUnavailable();
+                        if (!isPathWithin(boundRoot.fsPath, source.fsPath) || samePath(boundRoot.fsPath, source.fsPath)) return vaultUnavailable();
+                    }
+                    if (entry.root === undefined || roots.some(root => root.toString() === entry.root)) values.push(entry.rawValue);
+                }
+                if (await this.key(false) !== key || !guard()) return vaultUnavailable();
+            }
+            return new GatewayRegistryLease(values, guard);
+        } catch { return vaultUnavailable(); }
+    }
+    async migrate(uri: vscode.Uri, enabled?: () => boolean): Promise<number> {
+        return this.migrateSelected(uri, enabled, false);
+    }
+    /** Internal source-family capability. Syntax is derived from captured URI;
+     * no registered command accepts a planner, original or approval carrier. */
+    async migrateSource(uri: vscode.Uri, enabled: () => boolean): Promise<number> {
+        return this.migrateSelected(uri, () => sourceScannerEnabled() && hygieneAssistantEnabled() && enabled() === true, true);
+    }
+    async migrateContainer(uri: vscode.Uri, enabled: () => boolean): Promise<number> {
+        return this.migrateSelected(uri, () => containerScannerEnabled() && hygieneAssistantEnabled() && enabled() === true, false, true);
+    }
+    async migrateTerraform(uri: vscode.Uri, enabled: () => boolean): Promise<number> {
+        return this.migrateSelected(uri, () => terraformScannerEnabled() && hygieneAssistantEnabled() && enabled() === true, false, false, true);
+    }
+    async migrateRegistry(uri: vscode.Uri, enabled: () => boolean): Promise<number> {
+        return this.migrateSelected(uri, () => registryScannerEnabled() && hygieneAssistantEnabled() && enabled() === true, false, false, false, true);
+    }
+    private async migrateSelected(uri: vscode.Uri, enabled: (() => boolean) | undefined, sourceMode: boolean, containerMode = false, terraformMode = false, registryMode = false): Promise<number> {
+        return this.mutation(async () => {
+            let basis = await this.capture(uri); await this.noPending();
+            const relative = path.relative(vscode.Uri.parse(basis.root).fsPath, uri.fsPath).replaceAll("\\", "/");
+            if ([sourceMode, containerMode, terraformMode, registryMode].filter(Boolean).length > 1) return vaultUnavailable();
+            const syntax = sourceMode ? sourceSyntaxForPath(relative) : containerMode ? containerFormatForPath(relative) : terraformMode ? terraformFormatForPath(relative) : registryMode ? registryFormatForPath(relative) : undefined; if ((sourceMode || containerMode || terraformMode || registryMode) && !syntax) return vaultUnavailable();
+            const id = randomUUID(), plan = createVaultMigrationPlan(basis.text, !sourceMode && !containerMode && !terraformMode && !registryMode && /^\.env(?:\..*)?$/i.test(path.basename(uri.fsPath)), id, syntax);
+            // Source identifiers are not public labels or runtime env bindings.
+            if (sourceMode) plan.candidates.forEach((candidate, ordinal) => { candidate.key = "SOURCE_VALUE_" + (ordinal + 1); });
+            if (containerMode) plan.candidates.forEach((candidate, ordinal) => { candidate.key = "CONTAINER_VALUE_" + (ordinal + 1); });
+            if (terraformMode) plan.candidates.forEach((candidate, ordinal) => { candidate.key = "TERRAFORM_VALUE_" + (ordinal + 1); });
+            if (registryMode) plan.candidates.forEach((candidate, ordinal) => { candidate.key = "REGISTRY_VALUE_" + (ordinal + 1); });
+            if (!plan.candidates.length) return 0; await this.checkExample(uri, plan.exampleText);
+            const detail = JSON.stringify({ file: vscode.workspace.asRelativePath(uri), count: plan.candidates.length, values: MASKED,
+                keys: plan.candidates.map(candidate => candidate.key), protection: "Add a permanent sensitive deny", example: "Unique names and empty values only",
+                recovery: "Encrypted outside this project", appBehavior: "Applications reading this file receive placeholders; review application secret setup before migrating",
+                limitations: "Other copies, history and same-user access remain outside migration" }, null, 2);
+            if (await vscode.window.showWarningMessage("Move these values into the encrypted vault and replace them with placeholders?", { modal: true, detail }, "Migrate securely") !== "Migrate securely") return 0;
+            await this.fresh(uri, basis); await this.checkExample(uri, plan.exampleText);
+            return this.storage.lock(async () => {
+                await this.noPending(); const key = await this.key(true); await this.fresh(uri, basis);
+                const prior = await this.vault(key); await this.fresh(uri, basis);
+                const entries = [...prior.data.entries];
+                for (const candidate of plan.candidates) entries.push({ ...await buildVaultMetadata(candidate, vscode.workspace.asRelativePath(uri)),
+                    rawValue: candidate.rawValue, replacementText: candidate.replacementText, source: basis.source, root: basis.root,
+                    ...(plan.restoreMode === "checkpoint" ? { restoreMode: "checkpoint" as const } : {}) });
+                if (entries.length > 4096) return vaultUnavailable();
+                const vaultAfter = await encryptVault(JSON.stringify({ version: 2, entries }), key); if (Buffer.byteLength(vaultAfter) > VAULT_LIMIT / 2) return vaultUnavailable();
+                await this.fresh(uri, basis); await this.checkExample(uri, plan.exampleText); basis = await this.protect(uri, basis);
+                return withPendingRestriction(basis.root, async () => {
+                    const checkpoint: Checkpoint = { schemaVersion: 1, id, source: basis.source, root: basis.root, original: basis.text, masked: plan.maskedText,
+                        example: plan.exampleText, identity: basis.identity, vaultBefore: prior.text, vaultAfter, count: plan.candidates.length };
+                    const encrypted = await encryptVault(JSON.stringify(checkpoint), key);
+                    await this.fresh(uri, basis); if (await this.context.secrets.get(KEY_ID) !== key) return vaultUnavailable();
+                    await this.storage.write("vault-generation-" + id + ".enc", encrypted, true);
+                    const record: Issued = { schemaVersion: 1, id, source: basis.source, root: basis.root, digest: digest(encrypted) }, pointer = JSON.stringify(record);
+                    await this.fresh(uri, basis); await this.storage.write(PENDING, pointer, true);
+                    await this.complete(uri, basis, checkpoint, pointer, key); return plan.candidates.length;
+                });
+            });
+        }, enabled);
+    }
+    private async complete(uri: vscode.Uri, basis: Basis, checkpoint: Checkpoint, pointer: string, key: string): Promise<void> {
+        await this.checkExample(uri, checkpoint.example); const current = await this.capture(uri); this.alive(basis.epoch);
+        if (current.source !== checkpoint.source || current.root !== checkpoint.root || current.policy !== basis.policy
+            || ![checkpoint.original, checkpoint.masked].includes(current.text)
+            || current.text === checkpoint.original && current.identity !== checkpoint.identity) return vaultUnavailable();
+        const vault = await this.storage.read(VAULT) ?? null;
+        if (vault !== checkpoint.vaultBefore && vault !== checkpoint.vaultAfter || await this.context.secrets.get(KEY_ID) !== key) return vaultUnavailable();
+        await this.fresh(uri, current);
+        if (vault !== checkpoint.vaultAfter) { await this.storage.write(VAULT, checkpoint.vaultAfter); await this.fresh(uri, current); }
+        if (current.text !== checkpoint.masked) await this.writeSource(uri, current, checkpoint.masked, key);
+        this.alive(basis.epoch);
+        const masked = await this.capture(uri); if (masked.text !== checkpoint.masked || masked.root !== basis.root || masked.policy !== basis.policy) return vaultUnavailable();
+        await this.writeExample(uri, checkpoint.example, key); await this.fresh(uri, masked);
+        if (await this.storage.read(VAULT) !== checkpoint.vaultAfter || await this.context.secrets.get(KEY_ID) !== key) return vaultUnavailable();
+        await this.storage.write(this.pointer(uri), pointer); await this.fresh(uri, masked); await this.storage.remove(PENDING, pointer);
+    }
+    async recoverMigration(uri: vscode.Uri): Promise<boolean> {
+        return this.mutation(async () => {
+            let basis = await this.capture(uri); const pointer = await this.storage.read(PENDING, 16384); if (!pointer) return false;
+            const checkpoint = await this.checkpoint(uri, basis.root, pointer);
+            if (![checkpoint.original, checkpoint.masked].includes(basis.text)) return vaultUnavailable();
+            if (await vscode.window.showWarningMessage("Complete this interrupted migration with masked placeholders and a safe example? Original values stay encrypted.",
+                { modal: true, detail: JSON.stringify({ file: vscode.workspace.asRelativePath(uri), count: checkpoint.count, values: MASKED }) }, "Complete safe recovery") !== "Complete safe recovery") return false;
+            await this.fresh(uri, basis);
+            return this.storage.lock(async () => {
+                if (await this.storage.read(PENDING, 16384) !== pointer) return vaultUnavailable();
+                const key = await this.key(false); await this.fresh(uri, basis); basis = await this.protect(uri, basis);
+                await withPendingRestriction(basis.root, () => this.complete(uri, basis, checkpoint, pointer, key)); return true;
+            });
+        });
+    }
+    async restore(uri: vscode.Uri, enabled?: () => boolean): Promise<number> {
+        return this.mutation(async () => {
+            const basis = await this.capture(uri); await this.noPending(); const vault = await this.vault();
+            const sourceEntries = vault.data.entries.filter(entry => entry.source === basis.source && entry.root === basis.root);
+            // Quoted or encoded YAML replacements must use the encrypted whole
+            // file checkpoint. Marker substitution cannot restore their syntax.
+            if (sourceEntries.some(entry => entry.restoreMode === "checkpoint")) return vaultUnavailable();
+            const entries = sourceEntries.filter(entry => basis.text.includes(entry.placeholder));
+            if (!entries.length) return 0; if (!await this.disclosure(uri)) return 0; await this.fresh(uri, basis);
+            return this.storage.lock(async () => {
+                await this.noPending(); await this.fresh(uri, basis); const key = await this.key(false);
+                if ((await this.vault(key)).text !== vault.text) return vaultUnavailable();
+                let next = basis.text; for (const entry of entries) next = next.split(entry.placeholder).join(entry.replacementText!);
+                if (Buffer.byteLength(next, "utf8") > 65536) return vaultUnavailable();
+                await withPendingRestriction(basis.root, () => this.writeSource(uri, basis, next, key)); return entries.length;
+            });
+        }, enabled);
+    }
+    async restoreFromBackup(uri: vscode.Uri, enabled?: () => boolean): Promise<boolean> {
+        try {
+            return await this.mutation(async () => {
+                const basis = await this.capture(uri, true), pending = await this.storage.read(PENDING, 16384);
+                const pointer = pending ?? await this.storage.read(this.pointer(uri), 16384); if (!pointer) return false;
+                const checkpoint = await this.checkpoint(uri, basis.root, pointer);
+                if (!await this.disclosure(uri)) return false; await this.fresh(uri, basis);
+                return this.storage.lock(async () => {
+                    const key = await this.key(false); await this.checkpoint(uri, basis.root, pointer);
+                    if (pending) {
+                        if (await this.storage.read(PENDING, 16384) !== pointer) return vaultUnavailable();
+                        const vault = await this.storage.read(VAULT) ?? null;
+                        if (vault !== checkpoint.vaultBefore && vault !== checkpoint.vaultAfter) return vaultUnavailable();
+                    } else { await this.noPending(); if (await this.storage.read(this.pointer(uri), 16384) !== pointer) return vaultUnavailable(); }
+                    await withPendingRestriction(basis.root, () => this.writeSource(uri, basis, checkpoint.original, key));
+                    if (pending) {
+                        const vault = await this.storage.read(VAULT) ?? null;
+                        if (vault !== checkpoint.vaultBefore && vault !== checkpoint.vaultAfter) return vaultUnavailable();
+                        await this.key(false); await this.storage.write(this.pointer(uri), pointer); await this.storage.remove(PENDING, pointer);
+                    }
+                    return true;
+                });
+            }, enabled);
+        } catch { return false; }
+    }
+    private async disclosure(uri: vscode.Uri): Promise<boolean> {
+        return await vscode.window.showWarningMessage("Restore raw values into this project file? AI tools and other same-user software may read them. Saved restrictions remain; this disclosure cannot recall other copies.",
+            { modal: true, detail: JSON.stringify({ file: vscode.workspace.asRelativePath(uri), values: MASKED }) }, "Restore raw values") === "Restore raw values";
+    }
+    async writeEnvExample(uri: vscode.Uri, enabled?: () => boolean): Promise<vscode.Uri> {
+        return this.mutation(async () => {
+            const basis = await this.capture(uri); await this.noPending(); const plan = createVaultMigrationPlan(basis.text, true, randomUUID());
+            await this.checkExample(uri, plan.exampleText); await this.fresh(uri, basis);
+            return this.storage.lock(async () => {
+                await this.noPending(); const key = await this.key(true); await this.fresh(uri, basis);
+                await this.writeExample(uri, plan.exampleText, key); await this.fresh(uri, basis); return this.exampleUri(uri);
+            });
+        }, enabled);
+    }
+    private async mutation<T>(operation: () => Promise<T>, enabled?: () => boolean): Promise<T> {
+        const result = VaultManager.mutationQueue.then(async () => {
+            this.alive(); if (enabled && enabled() !== true) return vaultUnavailable();
+            this.mutationGuard = enabled;
+            try { return await operation(); } finally { this.mutationGuard = undefined; }
+        });
+        VaultManager.mutationQueue = result.then(() => undefined, () => undefined);
+        try { return await result; } catch { return vaultUnavailable(); }
+    }
+    private assertDocumentReady(uri: vscode.Uri, text: string): void {
+        const document = vscode.workspace.textDocuments.find(document => document.uri.toString() === uri.toString());
+        if (document && (document.isDirty || document.getText() !== text)) return vaultUnavailable();
+    }
+}

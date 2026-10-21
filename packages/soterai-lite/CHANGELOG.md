@@ -1,5 +1,7 @@
 # Changelog
 
+- Add owner-reviewed project .npmrc/.pypirc credential scanning with strict machine withdrawal, private metadata, encoded/URL-safe markers and canonical encrypted checkpoint-only disclosure recovery. Preserve public registry controls; malformed/dynamic/unsupported inputs withhold. No home config, package client, registry request, external file read or new dependency.
+
 - Add owner-reviewed bounded static Terraform/tfvars native and strict JSON scanning, native file/finding selection and strict machine withdrawal. Quoted/heredoc literals and comments use canonical encrypted vault migration with checkpoint-only exact disclosure restore. Dynamic templates/functions/unsupported syntax withhold analysis; no Terraform execution, plan, provider validation or value-bearing env generation.
 
 - Add bounded owner-reviewed Docker/Compose/Kubernetes static credential scanning and strict source-family withdrawal. YAML migration uses syntactically valid quoted/base64 markers and checkpoint-only exact disclosure restore; generic per-entry restore refuses those records. Thread the trusted admission/late guard through canonical backup restoration. No configuration execution, build, deployment or value-bearing env generation.

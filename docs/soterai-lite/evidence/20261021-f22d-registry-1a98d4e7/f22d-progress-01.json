@@ -1,0 +1,86 @@
+{
+  "feature": "F22",
+  "activeSubcard": "F22d",
+  "status": "INCOMPLETE",
+  "parent": "bdafe93367801501c919f703adc7c99d86f07794",
+  "previous": {
+    "source": {
+      "path": "docs/soterai-lite/evidence/20261021-f22c-terraform-79d3c2a1/f22c-committed-byte-verification-01.json",
+      "bytes": 1271,
+      "sha256": "de98fd67eb409787bc93a38e7ad96f7b5388a1acfe6538de47663593ee02f518"
+    },
+    "transition": {
+      "path": "docs/soterai-lite/evidence/20261021-f22c-terraform-79d3c2a1/f22c-transition-byte-verification-01.json",
+      "bytes": 1255,
+      "sha256": "47891e0ab1abf3dbf34eaa391b16ec7cc4774461a8ecbcc5c7e1edc1d575efc3"
+    }
+  },
+  "design": {
+    "path": "docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/design-01.md",
+    "bytes": 4985,
+    "sha256": "cb0bc5a414020d1bfb1daa73d5b9a28f5af3dd894999ccfe52a9ba29071b04cf"
+  },
+  "catalog": {
+    "path": "docs/soterai-lite/LITE-CATALOG.json",
+    "bytes": 160265,
+    "sha256": "1ce46192e9f315b5f2142c9f61542f1d513143dc2e19d4def6d95cea38c73ed4"
+  },
+  "sources": [
+    {
+      "path": "packages/vscode-extension/src/firewall/VaultMigrationPlan.ts",
+      "bytes": 4402,
+      "sha256": "72c102719a2595691a3c3dda35c11e3ede841312804a317a2845384039c4213d"
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/VaultManager.ts",
+      "bytes": 47554,
+      "sha256": "e076b777f281dcb0a03393783fff128e8925ded872a7ac47cfa3ca402458485f"
+    },
+    {
+      "path": "packages/vscode-extension/src/hygiene/HygieneAnalysis.ts",
+      "bytes": 6771,
+      "sha256": "bcd908c27f2d900eefe4de7b1797782a2787189a1e24e5e11e78a6a67b5eaf41"
+    },
+    {
+      "path": "packages/vscode-extension/src/hygiene/HygieneController.ts",
+      "bytes": 20743,
+      "sha256": "61d8c47e25c0548346bbdc364960c9e11cf5e1ba6f56676efb0c5dd3243e39fe"
+    },
+    {
+      "path": "packages/vscode-extension/src/hygiene/HygieneExposureLedger.ts",
+      "bytes": 9902,
+      "sha256": "e8d805a36490d62d1827da97c0ae8d7b048e7acd90e105334ea523da224162ba"
+    },
+    {
+      "path": "packages/vscode-extension/src/config-scanners/terraformCommands.ts",
+      "bytes": 3041,
+      "sha256": "d4bb12db89bcee7de6104a42792d8941937eeede142b5e287c49e05601dd9ad8"
+    },
+    {
+      "path": "packages/vscode-extension/src/config-scanners/TerraformScannerFlags.ts",
+      "bytes": 474,
+      "sha256": "9006e2a94db5b00aba2e010203a81ac20c7431b24f5a69415c97a2cac8f69c5d"
+    },
+    {
+      "path": "packages/vscode-extension/src/extension.ts",
+      "bytes": 34249,
+      "sha256": "e37250c7bbf924e50e593e4c745e1289d9efa2e90836925ccbff62c7f30a5b46"
+    },
+    {
+      "path": "packages/vscode-extension/package.json",
+      "bytes": 115014,
+      "sha256": "d6f61b697df196c14aeff335a0ce35e7184d87d559370cb9bd983b4e7be1e0c5"
+    },
+    {
+      "path": "packages/soterai-lite/package.json",
+      "bytes": 114599,
+      "sha256": "f1b62e61f9f026a7743de6b08bf3d43e5851159d36797a72be8c3a480f0d0ac6"
+    }
+  ],
+  "flag": "soterai.lite.configScanner.registry",
+  "frozenCheck": "LS-36",
+  "implementation": "NOT_RUN",
+  "pending": "Test-first grammar, integration, current full/exact new VSIX/native+affected/closures/evidence/scoped commits/exhaustive bytes before F22e.",
+  "rating": "PENDING",
+  "time": "2026-10-21T10:45:53.848Z"
+}

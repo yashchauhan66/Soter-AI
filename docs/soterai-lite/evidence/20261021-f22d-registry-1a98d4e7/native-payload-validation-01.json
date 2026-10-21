@@ -1,0 +1,21 @@
+{
+  "status": "PASS_PRELAUNCH_COMPONENT_PAYLOADS_ONLY",
+  "source": {
+    "path": "packages/vscode-extension/src/__tests__/host/liteRegistryScanner.host.ts",
+    "bytes": 21652,
+    "sha256": "2b5ce5f4c66f123767e1fb72f9c67e2eabe4fe0441d882103165f59d97295b6a"
+  },
+  "files": 5,
+  "findings": 4,
+  "publicControls": 2,
+  "scopes": [
+    "token and credentialed URL",
+    "canonical encoded password",
+    "pypirc multiline password/public username",
+    "uppercase/npm scope public control",
+    "private pypirc section public control"
+  ],
+  "nativeBehaviorVerified": false,
+  "registryRequests": 0,
+  "independence": "LOW"
+}

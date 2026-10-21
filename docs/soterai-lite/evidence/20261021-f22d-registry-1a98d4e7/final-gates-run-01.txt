@@ -1,0 +1,89 @@
+﻿{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22d-registry-1a98d4e7\\registry-combined-02.txt",
+    "observedAt":  "2026-10-21T11:11:56.2721838Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "--import",
+                      "tsx",
+                      "--test",
+                      "packages/vscode-extension/src/__tests__/registrySecretPlan.test.ts",
+                      "packages/vscode-extension/src/__tests__/registryScanner.test.ts",
+                      "packages/vscode-extension/src/__tests__/registryScannerCommands.test.ts",
+                      "packages/vscode-extension/src/__tests__/terraformSecretPlan.test.ts",
+                      "packages/vscode-extension/src/__tests__/terraformScanner.test.ts",
+                      "packages/vscode-extension/src/__tests__/terraformScannerCommands.test.ts",
+                      "packages/vscode-extension/src/__tests__/containerSecretPlan.test.ts",
+                      "packages/vscode-extension/src/__tests__/containerScanner.test.ts",
+                      "packages/vscode-extension/src/__tests__/containerScannerCommands.test.ts",
+                      "packages/vscode-extension/src/__tests__/sourceSecretPlan.test.ts",
+                      "packages/vscode-extension/src/__tests__/sourceScanner.test.ts",
+                      "packages/vscode-extension/src/__tests__/sourceScannerCommands.test.ts",
+                      "packages/vscode-extension/src/__tests__/hygieneAnalysis.test.ts",
+                      "packages/vscode-extension/src/__tests__/hygieneController.test.ts",
+                      "packages/vscode-extension/src/__tests__/hygieneCommands.test.ts",
+                      "packages/vscode-extension/src/__tests__/hygieneExposureLedger.test.ts",
+                      "packages/vscode-extension/src/__tests__/hygieneVaultSnapshot.test.ts",
+                      "packages/vscode-extension/src/__tests__/lite-vault-plan.test.ts",
+                      "packages/vscode-extension/src/__tests__/lite-vault-manager.test.ts"
+                  ],
+    "sha256":  "A8778D82B55929766A8DA6D9FE3DE8303280B57FD4A14EDBB23582970B451100",
+    "file":  "node"
+}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22d-registry-1a98d4e7\\full-tests-01.txt",
+    "observedAt":  "2026-10-21T11:17:44.8372150Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "--import",
+                      "tsx",
+                      "--test",
+                      "--test-concurrency=1",
+                      "../vscode-extension/src/__tests__/**/*.test.ts"
+                  ],
+    "sha256":  "B19D8E3B896588DC4470B98A2B09D4DD7BE4C2432E249826325F532630A67DB6",
+    "file":  "node"
+}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22d-registry-1a98d4e7\\backend-typecheck-01.txt",
+    "observedAt":  "2026-10-21T11:17:48.8095734Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "node_modules/typescript/bin/tsc",
+                      "--noEmit",
+                      "-p",
+                      "apps/local-ai-broker/tsconfig.json"
+                  ],
+    "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+    "file":  "node"
+}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22d-registry-1a98d4e7\\backend-tests-01.txt",
+    "observedAt":  "2026-10-21T11:17:54.8820388Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "--import",
+                      "tsx",
+                      "--test",
+                      "apps/local-ai-broker/src/__tests__/*.test.ts"
+                  ],
+    "sha256":  "6CBF2630FC3FBE97C67E9B9EACB7411F666800E3F357D67F2129E5E5C47A119D",
+    "file":  "node"
+}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22d-registry-1a98d4e7\\candidate01-gates-run-01.txt",
+    "observedAt":  "2026-10-21T11:23:34.3502142Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "-NoProfile",
+                      "-ExecutionPolicy",
+                      "Bypass",
+                      "-File",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22d-registry-1a98d4e7\\complete-candidate01-01.ps1"
+                  ],
+    "sha256":  "EB81BB0E9CA82C25B3DA842B78CEAE663C64AF7A7EA1DBC6C5AB7E28ECA13C77",
+    "file":  "powershell"
+}
+{
+    "status":  "PASS_CURRENT_F22D_REGRESSION_AND_EXACT_CANDIDATE_GATES",
+    "scope":  "Scoped static grammar and scripted synthetic native workflows only; evidence/byte barriers still pending."
+}

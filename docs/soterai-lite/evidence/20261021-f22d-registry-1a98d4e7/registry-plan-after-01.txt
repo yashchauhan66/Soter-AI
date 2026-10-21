@@ -1,0 +1,98 @@
+﻿TAP version 13
+# Subtest: F22d maps only exact project npmrc/pypirc basenames with bounded canonical relative paths
+ok 1 - F22d maps only exact project npmrc/pypirc basenames with bounded canonical relative paths
+  ---
+  duration_ms: 267.4384
+  type: 'test'
+  ...
+# Subtest: F22d scoped npm tokens and quoted credentials preserve public registry settings and harmless arrays
+ok 2 - F22d scoped npm tokens and quoted credentials preserve public registry settings and harmless arrays
+  ---
+  duration_ms: 8.4877
+  type: 'test'
+  ...
+# Subtest: F22d credentialed URLs remove original userinfo while retaining public origin/path and exact private representation
+ok 3 - F22d credentialed URLs remove original userinfo while retaining public origin/path and exact private representation
+  ---
+  duration_ms: 2.0852
+  type: 'test'
+  ...
+# Subtest: F22d npm base64 password and composite Basic auth decode privately and replace with canonical encoded markers
+ok 4 - F22d npm base64 password and composite Basic auth decode privately and replace with canonical encoded markers
+  ---
+  duration_ms: 3.8665
+  type: 'test'
+  ...
+# Subtest: F22d pypirc sections/multiline credentials preserve index names and the public token username convention
+not ok 5 - F22d pypirc sections/multiline credentials preserve index names and the public token username convention
+  ---
+  duration_ms: 5.3473
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\registrySecretPlan.test.ts:3:2634'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    4 !== 3
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 3
+  actual: 4
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\registrySecretPlan.test.ts:31:55)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F22d actual npm/pypirc comments and npm escapes are handled without treating URLs as comments
+ok 6 - F22d actual npm/pypirc comments and npm escapes are handled without treating URLs as comments
+  ---
+  duration_ms: 13.1972
+  type: 'test'
+  ...
+# Subtest: F22d bare env references/protected markers remain controls while mixed fallback/interpolation/external references withhold
+ok 7 - F22d bare env references/protected markers remain controls while mixed fallback/interpolation/external references withhold
+  ---
+  duration_ms: 7.2507
+  type: 'test'
+  ...
+# Subtest: F22d duplicate fields/sections, malformed syntax, npm sections and credential arrays withhold
+ok 8 - F22d duplicate fields/sections, malformed syntax, npm sections and credential arrays withhold
+  ---
+  duration_ms: 13.8799
+  type: 'test'
+  ...
+# Subtest: F22d noncanonical/binary Basic auth, ambiguous URL credentials and unsupported schemes withhold
+ok 9 - F22d noncanonical/binary Basic auth, ambiguous URL credentials and unsupported schemes withhold
+  ---
+  duration_ms: 8.3544
+  type: 'test'
+  ...
+# Subtest: F22d text/candidate/line/UTF8/generation limits fail without value-bearing diagnostics
+ok 10 - F22d text/candidate/line/UTF8/generation limits fail without value-bearing diagnostics
+  ---
+  duration_ms: 10.8162
+  type: 'test'
+  ...
+# Subtest: F22d residual originals refuse before writes and CRLF original spans remain exact
+ok 11 - F22d residual originals refuse before writes and CRLF original spans remain exact
+  ---
+  duration_ms: 4.6707
+  type: 'test'
+  ...
+# Subtest: F22d deterministic static npm corpus keeps public settings and makes every replacement idempotent
+ok 12 - F22d deterministic static npm corpus keeps public settings and makes every replacement idempotent
+  ---
+  duration_ms: 78.6148
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 11
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 837.3719

@@ -1,0 +1,345 @@
+{
+  "feature": "F22",
+  "activeSubcard": "F22d",
+  "status": "INCOMPLETE",
+  "parent": "bdafe93367801501c919f703adc7c99d86f07794",
+  "previous": "docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/f22d-progress-02.json",
+  "commands": [
+    {
+      "name": "registry-integration-before-01",
+      "exitCode": 1,
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/registry-integration-before-01.txt",
+        "bytes": 22839,
+        "sha256": "fa51e519a5a7393804987c875c9e7e442a45cc3dcdcb3e5a8a7ae7c27820eb4e"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/registry-integration-before-01.txt.result.json",
+        "bytes": 628,
+        "sha256": "7d5dd7169da0db737712b387189d479d90c9df2508063a17619384c72786ab85"
+      }
+    },
+    {
+      "name": "registry-combined-01",
+      "exitCode": 0,
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/registry-combined-01.txt",
+        "bytes": 66108,
+        "sha256": "cc80e21cb247e237ef34b22026eb5cb7f0f0afdb78e817e84baa279af503814e"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/registry-combined-01.txt.result.json",
+        "bytes": 2200,
+        "sha256": "9a5a37a2b2460ea1d4ea43a277d5c1560fda92bb455135d551217b9a06af2121"
+      }
+    },
+    {
+      "name": "typecheck-02",
+      "exitCode": 0,
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/typecheck-02.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/typecheck-02.txt.result.json",
+        "bytes": 512,
+        "sha256": "481e9d98298b8dc91afa677dfa30540ee95e63d74b6350e37950b9f933317251"
+      }
+    },
+    {
+      "name": "prepare-integration-tests-run-01",
+      "exitCode": 0,
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/prepare-integration-tests-run-01.txt",
+        "bytes": 72,
+        "sha256": "b288f562b21092c286e1bca034d4f8ec1f52074309a8eba2fc57c57b423256fd"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/prepare-integration-tests-run-01.txt.result.json",
+        "bytes": 462,
+        "sha256": "e5db2f37f770a9bc8dcc50f2c88ba8f93dd2a0e58e07d33c578f5ee328417eec"
+      }
+    },
+    {
+      "name": "wire-commands-manifests-run-01",
+      "exitCode": 0,
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/wire-commands-manifests-run-01.txt",
+        "bytes": 135,
+        "sha256": "7ac94973d9484c6d8311a2aa897359bc52d92c54b4a0ebd2b12dc935cd5ba8bd"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/wire-commands-manifests-run-01.txt.result.json",
+        "bytes": 458,
+        "sha256": "20e7150a767b5486a430c4d578d1d94f8cfe9036870eae965803ff133fa49da7"
+      }
+    }
+  ],
+  "sources": [
+    {
+      "path": "packages/vscode-extension/src/config-scanners/RegistrySecretPlan.ts",
+      "bytes": 11565,
+      "sha256": "bd1ce8cccad6a59d1d2d3784d95ba789428dcdf625219c4c1de46dffeb24597c"
+    },
+    {
+      "path": "packages/vscode-extension/src/config-scanners/RegistryScannerFlags.ts",
+      "bytes": 471,
+      "sha256": "9f4cc83d849652a1b6fe9b3c1af289d1cba762b714426e20e28e13e0cc1c8c11"
+    },
+    {
+      "path": "packages/vscode-extension/src/config-scanners/registryCommands.ts",
+      "bytes": 3030,
+      "sha256": "22487931c814d877fb34a720a05f8b572ab5258382dbd39a92571c3984328fb7"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/registrySecretPlan.test.ts",
+      "bytes": 9977,
+      "sha256": "4c0c92eebb7ed0320c81230ba52d57c6acb0f8a3544809f7be20cc302aa64f0d"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/registryScanner.test.ts",
+      "bytes": 15176,
+      "sha256": "9bc52ea93e5d02520c9cb27b91ede667dba167d1e21ea398fc4501a7954f63ec"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/registryScannerCommands.test.ts",
+      "bytes": 6652,
+      "sha256": "174d13588e47cec6df3bfa5f4d89718dbf51275a08e60017ef8ebeef7756b98f"
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/VaultMigrationPlan.ts",
+      "bytes": 4654,
+      "sha256": "9d0da2a19564972a203b681bf235b2168dcf2c7f15c2d67ce7da1ca1b05a3864"
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/VaultManager.ts",
+      "bytes": 48212,
+      "sha256": "d69611cc1b67c54c96c9ff8108878b01e5e62c517a5121f97b4d59d338e87c28"
+    },
+    {
+      "path": "packages/vscode-extension/src/hygiene/HygieneAnalysis.ts",
+      "bytes": 7070,
+      "sha256": "e8ff12fa6c0cf55f7dc117403019ed7ad02d4fcf1ca6d898a5b92334355f854c"
+    },
+    {
+      "path": "packages/vscode-extension/src/hygiene/HygieneExposureLedger.ts",
+      "bytes": 10073,
+      "sha256": "2f45edd92c570b4713a945fb611ec07c61d97449669fcf7a51b72c53e26ee7ec"
+    },
+    {
+      "path": "packages/vscode-extension/src/hygiene/HygieneController.ts",
+      "bytes": 22503,
+      "sha256": "d8c80ac3a5ff41c28a24517d8bf1ffbb9e9a9d0e9700c537e37032b4c1c6f5a2"
+    },
+    {
+      "path": "packages/vscode-extension/src/extension.ts",
+      "bytes": 34365,
+      "sha256": "e4f26b8fec3e7d90bd254214af994797f7bab7f40de6e7ad307b05b344a73cca"
+    },
+    {
+      "path": "packages/vscode-extension/package.json",
+      "bytes": 117005,
+      "sha256": "b39e56835e5b47a6c7fafc5b3f8d84861abd18c6d138e31b8f963ab32d6ec66b"
+    },
+    {
+      "path": "packages/soterai-lite/package.json",
+      "bytes": 116590,
+      "sha256": "90ea110744de9150d25006b753845376c3049d07a9222237f7a8c194250d836c"
+    }
+  ],
+  "snapshots": [
+    {
+      "original": {
+        "path": "packages/vscode-extension/src/config-scanners/RegistrySecretPlan.ts",
+        "bytes": 11565,
+        "sha256": "bd1ce8cccad6a59d1d2d3784d95ba789428dcdf625219c4c1de46dffeb24597c"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/focused01-inputs-01/packages__vscode-extension__src__config-scanners__RegistrySecretPlan.ts.txt",
+        "bytes": 11565,
+        "sha256": "bd1ce8cccad6a59d1d2d3784d95ba789428dcdf625219c4c1de46dffeb24597c"
+      }
+    },
+    {
+      "original": {
+        "path": "packages/vscode-extension/src/config-scanners/RegistryScannerFlags.ts",
+        "bytes": 471,
+        "sha256": "9f4cc83d849652a1b6fe9b3c1af289d1cba762b714426e20e28e13e0cc1c8c11"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/focused01-inputs-01/packages__vscode-extension__src__config-scanners__RegistryScannerFlags.ts.txt",
+        "bytes": 471,
+        "sha256": "9f4cc83d849652a1b6fe9b3c1af289d1cba762b714426e20e28e13e0cc1c8c11"
+      }
+    },
+    {
+      "original": {
+        "path": "packages/vscode-extension/src/config-scanners/registryCommands.ts",
+        "bytes": 3030,
+        "sha256": "22487931c814d877fb34a720a05f8b572ab5258382dbd39a92571c3984328fb7"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/focused01-inputs-01/packages__vscode-extension__src__config-scanners__registryCommands.ts.txt",
+        "bytes": 3030,
+        "sha256": "22487931c814d877fb34a720a05f8b572ab5258382dbd39a92571c3984328fb7"
+      }
+    },
+    {
+      "original": {
+        "path": "packages/vscode-extension/src/__tests__/registrySecretPlan.test.ts",
+        "bytes": 9977,
+        "sha256": "4c0c92eebb7ed0320c81230ba52d57c6acb0f8a3544809f7be20cc302aa64f0d"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/focused01-inputs-01/packages__vscode-extension__src____tests____registrySecretPlan.test.ts.txt",
+        "bytes": 9977,
+        "sha256": "4c0c92eebb7ed0320c81230ba52d57c6acb0f8a3544809f7be20cc302aa64f0d"
+      }
+    },
+    {
+      "original": {
+        "path": "packages/vscode-extension/src/__tests__/registryScanner.test.ts",
+        "bytes": 15176,
+        "sha256": "9bc52ea93e5d02520c9cb27b91ede667dba167d1e21ea398fc4501a7954f63ec"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/focused01-inputs-01/packages__vscode-extension__src____tests____registryScanner.test.ts.txt",
+        "bytes": 15176,
+        "sha256": "9bc52ea93e5d02520c9cb27b91ede667dba167d1e21ea398fc4501a7954f63ec"
+      }
+    },
+    {
+      "original": {
+        "path": "packages/vscode-extension/src/__tests__/registryScannerCommands.test.ts",
+        "bytes": 6652,
+        "sha256": "174d13588e47cec6df3bfa5f4d89718dbf51275a08e60017ef8ebeef7756b98f"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/focused01-inputs-01/packages__vscode-extension__src____tests____registryScannerCommands.test.ts.txt",
+        "bytes": 6652,
+        "sha256": "174d13588e47cec6df3bfa5f4d89718dbf51275a08e60017ef8ebeef7756b98f"
+      }
+    },
+    {
+      "original": {
+        "path": "packages/vscode-extension/src/firewall/VaultMigrationPlan.ts",
+        "bytes": 4654,
+        "sha256": "9d0da2a19564972a203b681bf235b2168dcf2c7f15c2d67ce7da1ca1b05a3864"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/focused01-inputs-01/packages__vscode-extension__src__firewall__VaultMigrationPlan.ts.txt",
+        "bytes": 4654,
+        "sha256": "9d0da2a19564972a203b681bf235b2168dcf2c7f15c2d67ce7da1ca1b05a3864"
+      }
+    },
+    {
+      "original": {
+        "path": "packages/vscode-extension/src/firewall/VaultManager.ts",
+        "bytes": 48212,
+        "sha256": "d69611cc1b67c54c96c9ff8108878b01e5e62c517a5121f97b4d59d338e87c28"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/focused01-inputs-01/packages__vscode-extension__src__firewall__VaultManager.ts.txt",
+        "bytes": 48212,
+        "sha256": "d69611cc1b67c54c96c9ff8108878b01e5e62c517a5121f97b4d59d338e87c28"
+      }
+    },
+    {
+      "original": {
+        "path": "packages/vscode-extension/src/hygiene/HygieneAnalysis.ts",
+        "bytes": 7070,
+        "sha256": "e8ff12fa6c0cf55f7dc117403019ed7ad02d4fcf1ca6d898a5b92334355f854c"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/focused01-inputs-01/packages__vscode-extension__src__hygiene__HygieneAnalysis.ts.txt",
+        "bytes": 7070,
+        "sha256": "e8ff12fa6c0cf55f7dc117403019ed7ad02d4fcf1ca6d898a5b92334355f854c"
+      }
+    },
+    {
+      "original": {
+        "path": "packages/vscode-extension/src/hygiene/HygieneExposureLedger.ts",
+        "bytes": 10073,
+        "sha256": "2f45edd92c570b4713a945fb611ec07c61d97449669fcf7a51b72c53e26ee7ec"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/focused01-inputs-01/packages__vscode-extension__src__hygiene__HygieneExposureLedger.ts.txt",
+        "bytes": 10073,
+        "sha256": "2f45edd92c570b4713a945fb611ec07c61d97449669fcf7a51b72c53e26ee7ec"
+      }
+    },
+    {
+      "original": {
+        "path": "packages/vscode-extension/src/hygiene/HygieneController.ts",
+        "bytes": 22503,
+        "sha256": "d8c80ac3a5ff41c28a24517d8bf1ffbb9e9a9d0e9700c537e37032b4c1c6f5a2"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/focused01-inputs-01/packages__vscode-extension__src__hygiene__HygieneController.ts.txt",
+        "bytes": 22503,
+        "sha256": "d8c80ac3a5ff41c28a24517d8bf1ffbb9e9a9d0e9700c537e37032b4c1c6f5a2"
+      }
+    },
+    {
+      "original": {
+        "path": "packages/vscode-extension/src/extension.ts",
+        "bytes": 34365,
+        "sha256": "e4f26b8fec3e7d90bd254214af994797f7bab7f40de6e7ad307b05b344a73cca"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/focused01-inputs-01/packages__vscode-extension__src__extension.ts.txt",
+        "bytes": 34365,
+        "sha256": "e4f26b8fec3e7d90bd254214af994797f7bab7f40de6e7ad307b05b344a73cca"
+      }
+    },
+    {
+      "original": {
+        "path": "packages/vscode-extension/package.json",
+        "bytes": 117005,
+        "sha256": "b39e56835e5b47a6c7fafc5b3f8d84861abd18c6d138e31b8f963ab32d6ec66b"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/focused01-inputs-01/packages__vscode-extension__package.json.txt",
+        "bytes": 117005,
+        "sha256": "b39e56835e5b47a6c7fafc5b3f8d84861abd18c6d138e31b8f963ab32d6ec66b"
+      }
+    },
+    {
+      "original": {
+        "path": "packages/soterai-lite/package.json",
+        "bytes": 116590,
+        "sha256": "90ea110744de9150d25006b753845376c3049d07a9222237f7a8c194250d836c"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/focused01-inputs-01/packages__soterai-lite__package.json.txt",
+        "bytes": 116590,
+        "sha256": "90ea110744de9150d25006b753845376c3049d07a9222237f7a8c194250d836c"
+      }
+    }
+  ],
+  "focused": {
+    "tests": 247,
+    "pass": 247,
+    "fail": 0
+  },
+  "testFirst": "Registry controller/commands before3PASS18FAIL; current247PASS = registry34 plus affectedTerraform/container/source/hygiene/vault213.",
+  "compiler": "Current typecheck02 PASS after field-label correction and integration.",
+  "machineSettings": 74,
+  "implementation": "Strict registry flag and private native file/finding commands; F21 HMAC/authority/controller and F06 guarded checkpoint-only encrypted migration/disclosure; two bounded discovery patterns; no new dependency.",
+  "reopensAffected": [
+    "F06",
+    "F21",
+    "F22a",
+    "F22b",
+    "F22c"
+  ],
+  "pending": [
+    "Registry actual native fixture/docs/readiness/current fixture compiler/prelaunch",
+    "Current serial full/backend/new exact VSIX/content/registry native plus affectedTerraform/container/source/hygiene/vault/retained/functional/security",
+    "Owned safe closures/execution snapshots/acceptance/ledger/scoped source+transition commits/exhaustive bytes before F22e"
+  ],
+  "artifact": "NONE_FOR_F22d",
+  "rating": "PENDING",
+  "time": "2026-10-21T11:02:50.808Z"
+}

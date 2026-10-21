@@ -1,0 +1,100 @@
+import { classifySecretType, extractVaultCandidates } from "@soterai/guard-core";
+import { SecureEditorModel } from "../project-privacy/SecureEditorModel";
+import { hygieneCredentialName, isHygieneCandidate } from "../hygiene/HygieneCandidatePolicy";
+import type { PrivateVaultCandidate, PrivateVaultPlan } from "../firewall/VaultMigrationPlan";
+
+export type RegistryFormat = "npmrc" | "pypirc";
+export const REGISTRY_WORKSPACE_GLOBS = Object.freeze(["**/.[nN][pP][mM][rR][cC]", "**/.[pP][yY][pP][iI][rR][cC]"]);
+const UUID = /^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/i, PROTECTED = /^\[SOTERAI_PROTECTED_[A-Z0-9_]+\]$/;
+const fail = (): never => { throw Error("Registry static syntax, expression or size is unsupported; existing files are preserved."); };
+interface Pending extends PrivateVaultCandidate { mask: (marker: string) => string }
+interface Line { body: string; start: number; end: number }
+export function registryFormatForPath(relative: string): RegistryFormat | undefined {
+    if (typeof relative !== "string" || !relative || relative.length > 2048 || /[\\:\x00-\x1f\x7f]/.test(relative) || relative.startsWith("/") || relative.split("/").some(p => !p || p === "." || p === "..")) return fail();
+    const name = relative.split("/").at(-1)!.toLowerCase(); return name === ".npmrc" ? "npmrc" : name === ".pypirc" ? "pypirc" : undefined;
+}
+function lines(text: string): Line[] {
+    const result: Line[] = []; let cursor = 0;
+    while (cursor < text.length) { if (result.length >= 4096) return fail(); const next = text.indexOf("\n", cursor), end = next < 0 ? text.length : next, body = text.slice(cursor, end).replace(/\r$/, ""); result.push({ body, start: cursor, end: cursor + body.length }); cursor = end + 1; }
+    return result;
+}
+function canonicalBase64(value: string): string {
+    if (!/^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/.test(value) || !value) return fail();
+    const bytes = Buffer.from(value, "base64"), decoded = bytes.toString("utf8"); if (bytes.toString("base64") !== value || !bytes.equals(Buffer.from(decoded, "utf8"))) return fail(); new SecureEditorModel(decoded, false); return decoded;
+}
+function parseStatic(text: string, format: RegistryFormat, add: (key: string, raw: string, start: number, end: number, mask: (marker: string) => string) => void): void {
+    const all = lines(text), sections = new Set<string>(), fields = new Set<string>(); let section: string | undefined;
+    const process = (key: string, raw: string, start: number, end: number, wrap: (value: string) => string, leaf = key) => {
+        new SecureEditorModel(raw, false); if (!raw) return; const normalized = leaf.toLowerCase();
+        if (["keyfile", "certfile", "cafile"].includes(normalized)) return fail();
+        if (PROTECTED.test(raw)) return; if (raw.includes("[SOTERAI_PROTECTED_")) return fail();
+        if (/^\$\{[A-Za-z_][A-Za-z0-9_]*\??\}$/.test(raw)) return;
+        if (raw.includes("${") || /%\([^)]*\)[A-Za-z]|%\{/.test(raw)) return fail();
+        if (normalized === "username" && raw === "__token__") return;
+        if (normalized === "always-auth") { if (!/^(?:true|false)$/.test(raw)) return fail(); return; }
+        if (format === "npmrc" && ["_password", "_auth"].includes(normalized)) {
+            const decoded = canonicalBase64(raw); if (PROTECTED.test(decoded)) return; if (decoded.includes("[SOTERAI_PROTECTED_") || normalized === "_auth" && !decoded.includes(":")) return fail();
+            add(leaf, decoded, start, end, marker => wrap(Buffer.from(marker, "utf8").toString("base64"))); return;
+        }
+        if (/^[A-Za-z][A-Za-z0-9+.-]*:\/\//.test(raw)) {
+            const url = new URL(raw); if (!["http:", "https:"].includes(url.protocol) || !url.hostname || url.search || url.hash) return fail();
+            const user = decodeURIComponent(url.username), password = decodeURIComponent(url.password); new SecureEditorModel(user, false); new SecureEditorModel(password, false);
+            if (PROTECTED.test(user) && !password) return; if (user.includes("[SOTERAI_PROTECTED_") || password.includes("[SOTERAI_PROTECTED_")) return fail();
+            if (user || password) { const secret = password || user; add("REGISTRY_AUTH_URL", secret, start, end, marker => { const masked = new URL(url.href); masked.username = marker; masked.password = ""; return wrap(masked.href); }); return; }
+        } else if (normalized === "repository" || /(?:^|:)registry$/.test(normalized)) return fail();
+        // Repository section names, URI hosts and npm scopes identify a
+        // location; credential ownership comes from the actual field name.
+        add(normalized === "username" ? "REGISTRY_AUTH_USERNAME" : leaf, raw, start, end, marker => wrap(marker));
+    };
+    const comments = (body: string, offset: number) => {
+        for (const candidate of extractVaultCandidates(body)) process(candidate.key, candidate.rawValue, offset + candidate.start, offset + candidate.end, v => v);
+        for (const match of body.matchAll(/https?:\/\/[^\s'"<>]+/gi)) process("REGISTRY_COMMENT_URL", match[0], offset + match.index!, offset + match.index! + match[0].length, v => v);
+    };
+    for (let i = 0; i < all.length; i++) {
+        const line = all[i], trimmed = line.body.trim(); if (!trimmed) continue; const leading = line.body.length - line.body.trimStart().length;
+        if (/^[#;]/.test(trimmed)) { comments(trimmed.slice(1), line.start + leading + 1); continue; }
+        if (trimmed.startsWith("[")) {
+            if (format !== "pypirc") return fail(); const match = /^\[([A-Za-z0-9_.-]{1,128})\]$/.exec(trimmed); if (!match || match[1].toLowerCase() === "default" || sections.has(match[1].toLowerCase()) || isHygieneCandidate("", match[1])) return fail(); section = match[1]; sections.add(section.toLowerCase()); continue;
+        }
+        if (format === "pypirc") {
+            if (!section) return fail(); const match = /^([ \t]*)([A-Za-z_][A-Za-z0-9_-]{0,127})[ \t]*[=:][ \t]*(.*)$/.exec(line.body); if (!match) return fail(); const key = match[2], identity = section.toLowerCase() + "\0" + key.toLowerCase(); if (fields.has(identity)) return fail(); fields.add(identity);
+            const parts = [match[3].trim()], start = line.start + line.body.length - match[3].length; let end = line.end;
+            while (i + 1 < all.length) { const next = all[i + 1], body = next.body.trim(), indent = next.body.length - next.body.trimStart().length; if (!body || /^[#;]/.test(body) || indent <= match[1].length) break; if (body.startsWith("[")) return fail(); parts.push(body); end = next.end; i++; }
+            const raw = parts.join("\n").trim(); if (section.toLowerCase() === "distutils" && key.toLowerCase() === "index-servers") { if (raw && raw.split(/\s+/).some(name => !/^[A-Za-z0-9_.-]{1,128}$/.test(name) || isHygieneCandidate("", name))) return fail(); continue; }
+            process(key, raw, start, end, value => value, key); continue;
+        }
+        const assign = line.body.indexOf("="); if (assign < 0) return fail(); const key = line.body.slice(0, assign).trim(), array = key.endsWith("[]"), baseKey = array ? key.slice(0, -2) : key;
+        if (!baseKey || baseKey.length > 2048 || !/^[A-Za-z0-9_@./:[\]-]+$/.test(baseKey) || isHygieneCandidate("", baseKey)) return fail();
+        let leaf = baseKey;
+        if (baseKey.startsWith("//")) { const colon = baseKey.lastIndexOf(":"); if (colon < 3) return fail(); const scope = baseKey.slice(0, colon), suffix = baseKey.slice(colon + 1); if (!scope.endsWith("/") || !/^[A-Za-z_][A-Za-z0-9_-]*$/.test(suffix)) return fail(); const uri = new URL("https:" + scope); if (!uri.hostname || uri.username || uri.password || uri.search || uri.hash) return fail(); leaf = suffix; }
+        else if (/^@[A-Za-z0-9_.-]+:registry$/i.test(baseKey)) leaf = "registry";
+        const identity = baseKey.toLowerCase(); if (fields.has(identity) && !array || array && hygieneCredentialName(leaf)) return fail(); fields.add(identity);
+        let at = assign + 1; while (/[ \t]/.test(line.body[at] ?? "") && at < line.body.length) at++; const start = line.start + at; let end = line.end, raw = "", wrap: (value: string) => string = v => v;
+        if (line.body[at] === '"' || line.body[at] === "'") {
+            const quote = line.body[at], begin = at++; let escaped = false, found = false;
+            while (at < line.body.length) { const c = line.body[at++]; if (!escaped && c === quote) { found = true; break; } if (quote === '"' && !escaped && c === "\\") escaped = true; else escaped = false; }
+            if (!found) return fail(); const source = line.body.slice(begin, at); raw = quote === '"' ? JSON.parse(source) : source.slice(1, -1); if (typeof raw !== "string" || quote === "'" && /[\\"]/.test(raw)) return fail(); wrap = v => JSON.stringify(v); end = line.start + at;
+            while (/[ \t]/.test(line.body[at] ?? "") && at < line.body.length) at++; if (at < line.body.length) { if (!/[#;]/.test(line.body[at])) return fail(); comments(line.body.slice(at + 1), line.start + at + 1); }
+        } else {
+            let stop = line.body.length;
+            for (; at < line.body.length; at++) { const c = line.body[at]; if (c === "#" || c === ";") { stop = at; comments(line.body.slice(at + 1), line.start + at + 1); break; } if (c === "\\" && at + 1 < line.body.length && "\\;#".includes(line.body[at + 1])) raw += line.body[++at]; else raw += c; }
+            while (stop > start - line.start && /[ \t]/.test(line.body[stop - 1])) stop--; end = line.start + stop; raw = raw.trim();
+        }
+        process(key, raw, start, end, wrap, leaf);
+    }
+}
+/** No client/config loading or network. All values and representations stay private. */
+export function createRegistrySecretPlan(text: string, format: RegistryFormat, generation: string): PrivateVaultPlan {
+    try {
+        if (format !== "npmrc" && format !== "pypirc" || typeof generation !== "string" || !UUID.test(generation)) return fail(); new SecureEditorModel(text, false); const pending: Pending[] = [];
+        parseStatic(text, format, (key, rawValue, start, end, mask) => {
+            new SecureEditorModel(rawValue, false); if (!isHygieneCandidate(key, rawValue)) return; const same = pending.find(c => c.start === start && c.end === end); if (same) { if (same.rawValue !== rawValue) return fail(); return; }
+            if (pending.length >= 128 || !Number.isInteger(start) || !Number.isInteger(end) || start < 0 || end <= start || end > text.length) return fail(); pending.push({ key, rawValue, start, end, replacementText: text.slice(start, end), placeholder: "", type: classifySecretType(key, rawValue), mask });
+        });
+        pending.sort((a, b) => a.start - b.start); let maskedText = text;
+        for (let i = 0; i < pending.length; i++) { const c = pending[i]; if (i && c.start < pending[i - 1].end) return fail(); c.placeholder = `[SOTERAI_PROTECTED_${generation.replace(/-/g, "").toUpperCase()}_${i}]`; if (text.includes(c.placeholder)) return fail(); }
+        for (const c of [...pending].reverse()) maskedText = maskedText.slice(0, c.start) + c.mask(c.placeholder) + maskedText.slice(c.end);
+        if (pending.some(c => maskedText.includes(c.rawValue) || maskedText.includes(c.replacementText))) return fail(); new SecureEditorModel(maskedText, false); parseStatic(maskedText, format, () => undefined);
+        return { maskedText, exampleText: "", restoreMode: "checkpoint", candidates: pending.map(({ mask: _privateMask, ...candidate }) => candidate) };
+    } catch { return fail(); }
+}

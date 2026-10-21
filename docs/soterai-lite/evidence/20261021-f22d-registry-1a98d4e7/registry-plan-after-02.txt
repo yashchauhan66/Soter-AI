@@ -1,0 +1,88 @@
+﻿TAP version 13
+# Subtest: F22d maps only exact project npmrc/pypirc basenames with bounded canonical relative paths
+ok 1 - F22d maps only exact project npmrc/pypirc basenames with bounded canonical relative paths
+  ---
+  duration_ms: 318.9176
+  type: 'test'
+  ...
+# Subtest: F22d scoped npm tokens and quoted credentials preserve public registry settings and harmless arrays
+ok 2 - F22d scoped npm tokens and quoted credentials preserve public registry settings and harmless arrays
+  ---
+  duration_ms: 17.5233
+  type: 'test'
+  ...
+# Subtest: F22d credentialed URLs remove original userinfo while retaining public origin/path and exact private representation
+ok 3 - F22d credentialed URLs remove original userinfo while retaining public origin/path and exact private representation
+  ---
+  duration_ms: 3.6018
+  type: 'test'
+  ...
+# Subtest: F22d npm base64 password and composite Basic auth decode privately and replace with canonical encoded markers
+ok 4 - F22d npm base64 password and composite Basic auth decode privately and replace with canonical encoded markers
+  ---
+  duration_ms: 6.6347
+  type: 'test'
+  ...
+# Subtest: F22d pypirc sections/multiline credentials preserve index names and the public token username convention
+ok 5 - F22d pypirc sections/multiline credentials preserve index names and the public token username convention
+  ---
+  duration_ms: 5.1547
+  type: 'test'
+  ...
+# Subtest: F22d actual npm/pypirc comments and npm escapes are handled without treating URLs as comments
+ok 6 - F22d actual npm/pypirc comments and npm escapes are handled without treating URLs as comments
+  ---
+  duration_ms: 23.1569
+  type: 'test'
+  ...
+# Subtest: F22d bare env references/protected markers remain controls while mixed fallback/interpolation/external references withhold
+ok 7 - F22d bare env references/protected markers remain controls while mixed fallback/interpolation/external references withhold
+  ---
+  duration_ms: 8.5568
+  type: 'test'
+  ...
+# Subtest: F22d duplicate fields/sections, malformed syntax, npm sections and credential arrays withhold
+ok 8 - F22d duplicate fields/sections, malformed syntax, npm sections and credential arrays withhold
+  ---
+  duration_ms: 10.2558
+  type: 'test'
+  ...
+# Subtest: F22d noncanonical/binary Basic auth, ambiguous URL credentials and unsupported schemes withhold
+ok 9 - F22d noncanonical/binary Basic auth, ambiguous URL credentials and unsupported schemes withhold
+  ---
+  duration_ms: 13.0509
+  type: 'test'
+  ...
+# Subtest: F22d text/candidate/line/UTF8/generation limits fail without value-bearing diagnostics
+ok 10 - F22d text/candidate/line/UTF8/generation limits fail without value-bearing diagnostics
+  ---
+  duration_ms: 16.5066
+  type: 'test'
+  ...
+# Subtest: F22d residual originals refuse before writes and CRLF original spans remain exact
+ok 11 - F22d residual originals refuse before writes and CRLF original spans remain exact
+  ---
+  duration_ms: 3.33
+  type: 'test'
+  ...
+# Subtest: F22d deterministic static npm corpus keeps public settings and makes every replacement idempotent
+ok 12 - F22d deterministic static npm corpus keeps public settings and makes every replacement idempotent
+  ---
+  duration_ms: 90.9833
+  type: 'test'
+  ...
+# Subtest: F22d public registry scopes/host labels never turn ordinary settings into credential values
+ok 13 - F22d public registry scopes/host labels never turn ordinary settings into credential values
+  ---
+  duration_ms: 2.7379
+  type: 'test'
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 13
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 944.3048
