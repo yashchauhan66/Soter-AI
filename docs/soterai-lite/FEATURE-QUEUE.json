@@ -9,7 +9,7 @@
   "planVersion": 1,
   "clientDate": "2026-10-13",
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
-  "scope": "F01-F10/F12-F21/F22a-d scoped DONE after byte barriers; F11 optional absent NOT_TESTED/NOT_COVERED. F22e saved service-account JSON active; parent and remaining stages incomplete.",
+  "scope": "F01-F10/F12-F21/F22a-e scoped DONE after current byte barriers; F11 optional absent NOT_TESTED/NOT_COVERED. ParentF22 incomplete; F22f CI configs prepared ACTIVE, no production before transition proof. Remaining subcards/features/verification gates pending.",
   "implementationConcurrency": 1,
   "activeFeature": "F22",
   "prerequisiteBlock": {
@@ -683,8 +683,8 @@
         {
           "id": "F22e",
           "title": "service-account JSON",
-          "status": "VERIFYING",
-          "result": "PASS_SCOPED_PENDING_BYTE_BARRIERS",
+          "status": "DONE",
+          "result": "PASS_SCOPED",
           "requires": [
             "F22d"
           ],
@@ -698,12 +698,15 @@
             "F22d": "PASS_CURRENT_EXACT_OBJECT"
           },
           "acceptanceEvidence": "docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/f22e-acceptance-01.json",
-          "scope": "F22e finite saved strict service-account/key JSON objects only: escaped multiline private material, actual credential fields, recognized secret-shaped values, whole credential URL scalars and nested public controls. Duplicate decoded names, malformed/JSONC syntax, invalid controls and unsupported external credential sources withhold. Strict machine family flag and native owner selection, F21 HMAC possible-exposure metadata and canonical F06 encrypted whole-file checkpoint migration/exact disclosure with saved denies; generic per-entry restoration refuses. No new dependency/auth client, config execution, authentication, credential-source read, token request, value-bearing env file, key validity/AI-access/OS/human/independent claim. Composite fragments, unknown secrets/prior copies/unmanaged reads remain limited. Current affected shared workflows verified; backend/MCP production unchanged, actual vendor executables not rerun and final exact-object V01 routes pending."
+          "scope": "F22e finite saved strict service-account/key JSON objects only: escaped multiline private material, actual credential fields, recognized secret-shaped values, whole credential URL scalars and nested public controls. Duplicate decoded names, malformed/JSONC syntax, invalid controls and unsupported external credential sources withhold. Strict machine family flag and native owner selection, F21 HMAC possible-exposure metadata and canonical F06 encrypted whole-file checkpoint migration/exact disclosure with saved denies; generic per-entry restoration refuses. No new dependency/auth client, config execution, authentication, credential-source read, token request, value-bearing env file, key validity/AI-access/OS/human/independent claim. Composite fragments, unknown secrets/prior copies/unmanaged reads remain limited. Current affected shared workflows verified; backend/MCP production unchanged, actual vendor executables not rerun and final exact-object V01 routes pending.",
+          "sourceEvidenceCommit": "8539c3217949f2c0740f466dd318b08c276e069a",
+          "commitByteVerification": "docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/f22e-committed-byte-verification-01.json",
+          "transitionByteVerification": "docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/f22e-transition-byte-verification-01.json"
         },
         {
           "id": "F22f",
           "title": "CI",
-          "status": "PLANNED",
+          "status": "ACTIVE",
           "result": "NOT-RUN",
           "requires": [
             "F22e"
@@ -730,8 +733,8 @@
       ],
       "completionRule": "All required subcards pass individually before parent DONE",
       "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
-      "activeSubcard": "F22e",
-      "progressEvidence": "docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/f22e-progress-04.json"
+      "activeSubcard": "F22f",
+      "progressEvidence": "docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/f22e-transition-byte-verification-01.json"
     },
     {
       "id": "F23",
