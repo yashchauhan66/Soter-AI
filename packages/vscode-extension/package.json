@@ -135,7 +135,8 @@
                 "soterai.broker.codexResponsesProviderUrl",
                 "soterai.lite.codexIdeAdapter",
                 "soterai.lite.geminiCliAdapter",
-                "soterai.broker.geminiProviderUrl"
+                "soterai.broker.geminiProviderUrl",
+                "soterai.lite.hygieneAssistant"
             ]
         }
     },
@@ -1310,6 +1311,51 @@
                 "command": "soterai.geminiCliAdapterStatus",
                 "title": "Pinned Gemini CLI Adapter Status",
                 "category": "SoterAI"
+            },
+            {
+                "command": "soterai.reviewWorkspaceHygiene",
+                "title": "Review Workspace Secret Hygiene",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.reviewSelectedFileHygiene",
+                "title": "Review Saved File Secret Hygiene",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.reviewHygieneVault",
+                "title": "Review Hygiene Vault Migration",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.generateHygieneEnvExample",
+                "title": "Generate Hygiene Environment Example",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.restoreHygieneVault",
+                "title": "Review Hygiene Vault Disclosure Restore",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.openHygieneExposureLedger",
+                "title": "Open Possible-Exposure Ledger",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.exportHygieneExposureLedger",
+                "title": "Export Possible-Exposure Metadata",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.openHygieneRotationChecklist",
+                "title": "Open Manual Credential Rotation Checklist",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.hygieneStatus",
+                "title": "Secret Hygiene Status",
+                "category": "SoterAI"
             }
         ],
         "viewsContainers": {
@@ -2002,6 +2048,12 @@
                     "default": "",
                     "scope": "machine",
                     "description": "Reviewed Gemini provider base URL for the owned broker; no path/query/credential. HTTPS or explicit synthetic loopback HTTP only. Blank withholds Gemini traffic."
+                },
+                "soterai.lite.hygieneAssistant": {
+                    "type": "boolean",
+                    "default": true,
+                    "scope": "machine",
+                    "description": "Enable owner-reviewed local secret hygiene, canonical vault actions and possible-exposure metadata. Manual provider checklists do not rotate credentials."
                 }
             }
         },
@@ -2976,6 +3028,42 @@
                 },
                 {
                     "command": "soterai.geminiCliAdapterStatus",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.reviewWorkspaceHygiene",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.reviewSelectedFileHygiene",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.reviewHygieneVault",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.generateHygieneEnvExample",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.restoreHygieneVault",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.openHygieneExposureLedger",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.exportHygieneExposureLedger",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.openHygieneRotationChecklist",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.hygieneStatus",
                     "when": "soterai.advancedCommands"
                 }
             ]

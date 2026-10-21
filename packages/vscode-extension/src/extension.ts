@@ -54,6 +54,7 @@ import { registerAIBoundaryCommands } from "./ai-boundary/commands";
 import { registerProjectPrivacyCommands } from "./project-privacy/commands";
 import { registerPublicWorkspaceCommands } from "./project-privacy/publication/commands";
 import { registerSyntheticPreviewCommands } from "./project-privacy/SyntheticPreview";
+import { registerHygieneAssistant } from "./hygiene/commands";
 
 // Single consolidated status-bar item. It replaces the earlier six separate
 // items (main, firewall, broker, safe mode, memory, runtime) — those states now
@@ -205,6 +206,7 @@ export function activate(context: vscode.ExtensionContext): void {
     registerSyntheticPreviewCommands(context);
     registerCommands(context, refreshViews);
     registerFirewallCommands(context, refreshViews, managedReader);
+    registerHygieneAssistant(context);
     registerScannerCommands(context, async () => (await protectionState?.refresh())?.descriptor);
     registerBrokerCommands(context, brokerManager, refreshViews);
     registerClineAdapter(context, brokerManager, managedReader);

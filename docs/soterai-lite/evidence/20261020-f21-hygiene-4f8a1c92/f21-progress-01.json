@@ -1,0 +1,113 @@
+{
+  "card": "F21",
+  "status": "INCOMPLETE",
+  "parent": "af17da62e89fd72077c8bb06b937d302daefba58",
+  "design": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/design-01.md",
+  "checks": [
+    {
+      "name": "hygiene-core-before-01",
+      "exitCode": 1,
+      "rawSha256": "84ff48d92d1262d8358936695ae202c7bdaaa02f0c139f76d3042cabb3d6f26f",
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "packages/vscode-extension/src/__tests__/hygieneAnalysis.test.ts",
+        "packages/vscode-extension/src/__tests__/hygieneExposureLedger.test.ts"
+      ],
+      "tests": 15,
+      "pass": 2,
+      "fail": 13,
+      "skipped": 0
+    },
+    {
+      "name": "hygiene-core-after-01",
+      "exitCode": 0,
+      "rawSha256": "5990ac73f59dd8bdb498080d0c0d65fc681be4fe12869f0b01c5a0437d1ea6d9",
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "packages/vscode-extension/src/__tests__/hygieneAnalysis.test.ts",
+        "packages/vscode-extension/src/__tests__/hygieneExposureLedger.test.ts"
+      ],
+      "tests": 15,
+      "pass": 15,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "name": "hygiene-core-review-before-01",
+      "exitCode": 1,
+      "rawSha256": "c8f508cb142e3d888e9208ba00caf5e55601ce1b9ba647da50741c2af3453d13",
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "packages/vscode-extension/src/__tests__/hygieneAnalysis.test.ts",
+        "packages/vscode-extension/src/__tests__/hygieneExposureLedger.test.ts"
+      ],
+      "tests": 16,
+      "pass": 14,
+      "fail": 2,
+      "skipped": 0
+    },
+    {
+      "name": "hygiene-core-review-after-01",
+      "exitCode": 0,
+      "rawSha256": "7b7b43bafdf5852a9cf0225d26f8ff03ee29c006523f5ec2954e19fe4d686cc9",
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "packages/vscode-extension/src/__tests__/hygieneAnalysis.test.ts",
+        "packages/vscode-extension/src/__tests__/hygieneExposureLedger.test.ts"
+      ],
+      "tests": 16,
+      "pass": 16,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "name": "frontend-typecheck-01",
+      "exitCode": 0,
+      "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "arguments": [
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "-p",
+        "packages/vscode-extension/tsconfig.json"
+      ]
+    }
+  ],
+  "source": [
+    {
+      "path": "packages/vscode-extension/src/hygiene/HygieneAnalysis.ts",
+      "bytes": 5781,
+      "sha256": "90dcca96846da93b52ff5cfc9887a537dda2112f80950acacbff09f7c5f89806"
+    },
+    {
+      "path": "packages/vscode-extension/src/hygiene/HygieneExposureLedger.ts",
+      "bytes": 8269,
+      "sha256": "beedfe571af87ff701415f8ab1ab869391bcd192618ba011b5743f81c8d4b60f"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/hygieneAnalysis.test.ts",
+      "bytes": 5027,
+      "sha256": "0a3a749a3ae4a072f520df64323fc237a156f0464ce0795106aae431832910c4"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/hygieneExposureLedger.test.ts",
+      "bytes": 5866,
+      "sha256": "c49f97373622cdfd15a47c2f36df2d087a972815912516490ed6446571b3277c"
+    }
+  ],
+  "implemented": "Private pure bounded canonical-vault analysis and strict keyed exposure metadata ledger only. HMAC refs, root isolation, dedup, capacity/corrupt/lost-key/persistence refusal; raw/path/name-free outputs. Review paired failures fixed static metadata collision and backwards clock metadata corruption.",
+  "pending": [
+    "Trusted hygiene snapshot/withdrawal bridge using existing VaultManager capture/fresh guards; tests before API change",
+    "Owner consent/discovery/controller/actions/export/rotation checklists; machine/restricted flag and native command registration",
+    "Focused/full/type/native exact-new-VSIX and affected gates, safe withdrawal, scoped local commits/all-byte verification before F22"
+  ],
+  "limits": "Core modules are not yet wired into product commands. No F21 VSIX, native acceptance or completion claimed. F20C scoped DONE byte proofs/source199d394/transition2b0b973/metadataaf17da6 remain; earlier failures/unclosed observations retained. No real-secret workspace scan, login/rotation/download/signals/OS change, rating/catalog grade; originalL6 HUMAN-ACTIONS STOP.",
+  "time": "2026-10-20T15:10:00.864Z"
+}

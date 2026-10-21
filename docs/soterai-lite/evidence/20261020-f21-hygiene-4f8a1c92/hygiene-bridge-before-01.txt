@@ -1,0 +1,157 @@
+﻿TAP version 13
+# Subtest: F21 no IO/key creation in constructor or empty read, no original/root/path in stored/exported metadata
+ok 1 - F21 no IO/key creation in constructor or empty read, no original/root/path in stored/exported metadata
+  ---
+  duration_ms: 354.6765
+  type: 'test'
+  ...
+# Subtest: F21 repeated observations deduplicate, root scope isolates and distinct owner reports never become confirmed AI reads
+ok 2 - F21 repeated observations deduplicate, root scope isolates and distinct owner reports never become confirmed AI reads
+  ---
+  duration_ms: 12.2887
+  type: 'test'
+  ...
+# Subtest: F21 corrupt state, unknown fields and lost/replaced key preserve prior bytes and refuse
+ok 3 - F21 corrupt state, unknown fields and lost/replaced key preserve prior bytes and refuse
+  ---
+  duration_ms: 12.9724
+  type: 'test'
+  ...
+# Subtest: F21 capacity is bounded256 without truncation or partial persistence
+ok 4 - F21 capacity is bounded256 without truncation or partial persistence
+  ---
+  duration_ms: 197.1547
+  type: 'test'
+  ...
+# Subtest: F21 concurrent owner observations serialize without losing existing metadata
+ok 5 - F21 concurrent owner observations serialize without losing existing metadata
+  ---
+  duration_ms: 13.1771
+  type: 'test'
+  ...
+# Subtest: F21 key/state persistence failure releases no raw exception and never overwrites existing ledger
+ok 6 - F21 key/state persistence failure releases no raw exception and never overwrites existing ledger
+  ---
+  duration_ms: 16.1523
+  type: 'test'
+  ...
+# Subtest: F21 backwards clock refuses an update without corrupting preserved chronological metadata
+ok 7 - F21 backwards clock refuses an update without corrupting preserved chronological metadata
+  ---
+  duration_ms: 10.8299
+  type: 'test'
+  ...
+# Subtest: F21 private synchronous analysis lease revokes on key drift/disposal without exposing its key
+not ok 8 - F21 private synchronous analysis lease revokes on key drift/disposal without exposing its key
+  ---
+  duration_ms: 3.4825
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\hygieneExposureLedger.test.ts:2:6790'
+  failureType: 'testCodeFailure'
+  error: 'f.ledger.createAnalyzer is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\hygieneExposureLedger.test.ts:53:55)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F21 trusted snapshot reuses vault containment/identity/policy and never opens a source TextDocument or creates a key
+not ok 9 - F21 trusted snapshot reuses vault containment/identity/policy and never opens a source TextDocument or creates a key
+  ---
+  duration_ms: 60.4977
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\hygieneVaultSnapshot.test.ts:2:2323'
+  failureType: 'testCodeFailure'
+  error: 'f.manager.withHygieneSnapshot is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\hygieneVaultSnapshot.test.ts:19:36)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F21 disabled snapshot never invokes the private consumer
+not ok 10 - F21 disabled snapshot never invokes the private consumer
+  ---
+  duration_ms: 39.5166
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\hygieneVaultSnapshot.test.ts:2:3192'
+  failureType: 'testCodeFailure'
+  error: 'f.manager.withHygieneSnapshot is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\hygieneVaultSnapshot.test.ts:23:80)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F21 synchronous consumer source drift, callback errors and async callbacks withhold results
+not ok 11 - F21 synchronous consumer source drift, callback errors and async callbacks withhold results
+  ---
+  duration_ms: 25.7304
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\hygieneVaultSnapshot.test.ts:2:3462'
+  failureType: 'testCodeFailure'
+  error: 'f.manager.withHygieneSnapshot is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\hygieneVaultSnapshot.test.ts:26:118)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F21 snapshot lease drift/instance withdrawal inside consumer cannot release its result
+not ok 12 - F21 snapshot lease drift/instance withdrawal inside consumer cannot release its result
+  ---
+  duration_ms: 22.8204
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\hygieneVaultSnapshot.test.ts:2:3977'
+  failureType: 'testCodeFailure'
+  error: 'f.manager.withHygieneSnapshot is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\hygieneVaultSnapshot.test.ts:31:127)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F21 hardlinked synthetic source refuses before any raw callback
+not ok 13 - F21 hardlinked synthetic source refuses before any raw callback
+  ---
+  duration_ms: 24.12
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\hygieneVaultSnapshot.test.ts:2:4364'
+  failureType: 'testCodeFailure'
+  error: 'f.manager.withHygieneSnapshot is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\hygieneVaultSnapshot.test.ts:34:144)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F21 withdrawing its vault instance prevents late migration approval but preserves another instance
+not ok 14 - F21 withdrawing its vault instance prevents late migration approval but preserves another instance
+  ---
+  duration_ms: 75.4292
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\hygieneVaultSnapshot.test.ts:2:4741'
+  failureType: 'testCodeFailure'
+  error: 'f.manager.withdrawHygiene is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\hygieneVaultSnapshot.test.ts:39:72)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 7
+# fail 7
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2368.7169

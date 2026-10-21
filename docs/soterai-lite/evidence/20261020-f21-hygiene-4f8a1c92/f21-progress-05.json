@@ -1,0 +1,1175 @@
+{
+  "card": "F21",
+  "status": "INCOMPLETE",
+  "time": "2026-10-20T16:13:34.646Z",
+  "parent": "af17da62e89fd72077c8bb06b937d302daefba58",
+  "checks": [
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/backend-tests-01.txt",
+      "observedAt": "2026-10-20T16:01:38.1808261Z",
+      "exitCode": 0,
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "apps/local-ai-broker/src/__tests__/*.test.ts"
+      ],
+      "sha256": "13852B9EF8C00D7CF0FB94945BAB4AF093FFD777B15FB6AA4855F2AA052F8026",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/backend-tests-01.txt",
+        "bytes": 34902,
+        "sha256": "13852b9ef8c00d7cf0fb94945bab4af093ffd777b15fb6aa4855f2aa052f8026"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/backend-typecheck-01.txt",
+      "observedAt": "2026-10-20T16:01:24.2407860Z",
+      "exitCode": 0,
+      "arguments": [
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "-p",
+        "apps/local-ai-broker/tsconfig.json"
+      ],
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/backend-typecheck-01.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/build-native-hosts-run-01.txt",
+      "observedAt": "2026-10-20T15:54:54.2750283Z",
+      "exitCode": 0,
+      "arguments": [
+        "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/build-native-hosts-01.cjs"
+      ],
+      "sha256": "8E436FF29D2AEABA8A520E51B33906C04BB843B6E70D4B8941067C6DE1FAD3AE",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/build-native-hosts-run-01.txt",
+        "bytes": 236,
+        "sha256": "8e436ff29d2aeaba8a520e51b33906c04bb843b6e70d4b8941067c6de1fad3ae"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/build-native-hosts-run-02.txt",
+      "observedAt": "2026-10-20T16:05:12.7889553Z",
+      "exitCode": 0,
+      "arguments": [
+        "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/build-native-hosts-01.cjs",
+        "prebuilt-native-hosts-02"
+      ],
+      "sha256": "C4CE5D703A3FF554D94C9F33A4A386360840CB9DDAF0A3913EF1EBE520086AA8",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/build-native-hosts-run-02.txt",
+        "bytes": 236,
+        "sha256": "c4ce5d703a3ff554d94c9f33a4a386360840cb9ddaf0a3913ef1ebe520086aa8"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/build-native-hosts-run-03.txt",
+      "observedAt": "2026-10-20T16:08:22.5551225Z",
+      "exitCode": 0,
+      "arguments": [
+        "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/build-native-hosts-01.cjs",
+        "prebuilt-native-hosts-03"
+      ],
+      "sha256": "67C0D37F6E4560471F8DE8FE1888F93FEEB1D97F910C24749ADBF94B0227292A",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/build-native-hosts-run-03.txt",
+        "bytes": 236,
+        "sha256": "67c0d37f6e4560471f8de8fe1888f93feeb1d97f910c24749adbf94b0227292a"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/frontend-typecheck-01.txt",
+      "observedAt": "2026-10-20T15:09:28.4205754Z",
+      "exitCode": 0,
+      "arguments": [
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "-p",
+        "packages/vscode-extension/tsconfig.json"
+      ],
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/frontend-typecheck-01.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/frontend-typecheck-02.txt",
+      "observedAt": "2026-10-20T15:17:34.6260338Z",
+      "exitCode": 0,
+      "arguments": [
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "-p",
+        "packages/vscode-extension/tsconfig.json"
+      ],
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/frontend-typecheck-02.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/frontend-typecheck-03.txt",
+      "observedAt": "2026-10-20T15:43:54.4318350Z",
+      "exitCode": 2,
+      "arguments": [
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "-p",
+        "packages/vscode-extension/tsconfig.json"
+      ],
+      "sha256": "C5D4B267742DC367C47C69C20890CD49805AFAF2069C4FA46C8507C62602AD72",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/frontend-typecheck-03.txt",
+        "bytes": 7472,
+        "sha256": "c5d4b267742dc367c47c69c20890cd49805afaf2069c4fa46c8507c62602ad72"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/frontend-typecheck-04.txt",
+      "observedAt": "2026-10-20T15:44:52.5460432Z",
+      "exitCode": 0,
+      "arguments": [
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "-p",
+        "packages/vscode-extension/tsconfig.json"
+      ],
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/frontend-typecheck-04.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/frontend-typecheck-05.txt",
+      "observedAt": "2026-10-20T16:01:15.4008291Z",
+      "exitCode": 0,
+      "arguments": [
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "-p",
+        "packages/vscode-extension/tsconfig.json"
+      ],
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/frontend-typecheck-05.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "output": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261020-f21-hygiene-4f8a1c92\\full-tests-01.txt",
+      "observedAt": "2026-10-20T15:53:25.7742202Z",
+      "exitCode": 1,
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "../vscode-extension/src/__tests__/**/*.test.ts"
+      ],
+      "sha256": "071B39318CD6BE6716B75CB5CE73B43BFD67904FEF950C7D4F1564AD61C7F6CF",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/full-tests-01.txt",
+        "bytes": 739133,
+        "sha256": "071b39318cd6be6716b75cb5ce73b43bfd67904fef950c7d4f1564ad61c7f6cf"
+      }
+    },
+    {
+      "output": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261020-f21-hygiene-4f8a1c92\\full-tests-02.txt",
+      "observedAt": "2026-10-20T16:00:39.2477984Z",
+      "exitCode": 0,
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "../vscode-extension/src/__tests__/**/*.test.ts"
+      ],
+      "sha256": "F1651773F26BF02741069FCD8C52F543679C5B2FB5F1F9BAA7655B6BD9BF0C98",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/full-tests-02.txt",
+        "bytes": 713601,
+        "sha256": "f1651773f26bf02741069fcd8c52f543679c5b2fb5f1f9baa7655b6bd9bf0c98"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/generate-readiness-01.txt",
+      "observedAt": "2026-10-20T15:54:31.8516397Z",
+      "exitCode": 0,
+      "arguments": [
+        "packages/vscode-extension/scripts/generate-readiness.mjs"
+      ],
+      "sha256": "B6D9F2D83B0CDF237D087269167E179C1057AF8DDE4312E59B137F0DF729E65F",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/generate-readiness-01.txt",
+        "bytes": 100,
+        "sha256": "b6d9f2d83b0cdf237d087269167e179c1057af8dde4312e59b137f0df729e65f"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-bridge-after-01.txt",
+      "observedAt": "2026-10-20T15:13:44.2488868Z",
+      "exitCode": 0,
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "packages/vscode-extension/src/__tests__/hygiene*.test.ts",
+        "packages/vscode-extension/src/__tests__/lite-vault-manager.test.ts",
+        "packages/vscode-extension/src/__tests__/lite-vault-plan.test.ts",
+        "packages/vscode-extension/src/__tests__/gatewayVaultRegistry.test.ts"
+      ],
+      "sha256": "67E60FBEF372BE38D9B7A4D751D419849AAAC53C3090E2A6CC872603D7F7B3C0",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-bridge-after-01.txt",
+        "bytes": 23987,
+        "sha256": "67e60fbef372be38d9b7a4d751d419849aaac53c3090e2a6cc872603d7f7b3c0"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-bridge-before-01.txt",
+      "observedAt": "2026-10-20T15:12:00.5024520Z",
+      "exitCode": 1,
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "packages/vscode-extension/src/__tests__/hygieneExposureLedger.test.ts",
+        "packages/vscode-extension/src/__tests__/hygieneVaultSnapshot.test.ts"
+      ],
+      "sha256": "CFB01AF3DDD2A29EBF106722C947C809FF6A2335A819E448434FB3F5CAFB67E2",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-bridge-before-01.txt",
+        "bytes": 7979,
+        "sha256": "cfb01af3ddd2a29ebf106722c947c809ff6a2335a819e448434fb3f5cafb67e2"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-bridge-before-02.txt",
+      "observedAt": "2026-10-20T15:12:57.8473225Z",
+      "exitCode": 1,
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "packages/vscode-extension/src/__tests__/hygieneExposureLedger.test.ts",
+        "packages/vscode-extension/src/__tests__/hygieneVaultSnapshot.test.ts"
+      ],
+      "sha256": "6070BFF121ACFFF5DC352F4DDEB504929F956A522926A891313839005E89797B",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-bridge-before-02.txt",
+        "bytes": 8846,
+        "sha256": "6070bff121acfff5dc352f4ddeb504929f956a522926a891313839005e89797b"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-combined-01.txt",
+      "observedAt": "2026-10-20T15:45:49.3525411Z",
+      "exitCode": 0,
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "packages/vscode-extension/src/__tests__/hygiene*.test.ts",
+        "packages/vscode-extension/src/__tests__/lite-vault-manager.test.ts",
+        "packages/vscode-extension/src/__tests__/lite-vault-plan.test.ts",
+        "packages/vscode-extension/src/__tests__/gatewayVaultRegistry.test.ts"
+      ],
+      "sha256": "0672425F47A63187EA5A5F5B1DD296658F5F8827F7861095753AB1BA8A76A9F6",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-combined-01.txt",
+        "bytes": 31178,
+        "sha256": "0672425f47a63187ea5a5f5b1dd296658f5f8827f7861095753ab1ba8a76a9f6"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-combined-02.txt",
+      "observedAt": "2026-10-20T15:47:25.2434502Z",
+      "exitCode": 0,
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "packages/vscode-extension/src/__tests__/hygiene*.test.ts",
+        "packages/vscode-extension/src/__tests__/lite-vault-manager.test.ts",
+        "packages/vscode-extension/src/__tests__/lite-vault-plan.test.ts",
+        "packages/vscode-extension/src/__tests__/gatewayVaultRegistry.test.ts"
+      ],
+      "sha256": "942DB582FE7CB39D07DB01B332DE5B5ACD90067546D0F4F1EC4A85CB3401BF33",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-combined-02.txt",
+        "bytes": 31469,
+        "sha256": "942db582fe7cb39d07db01b332de5b5acd90067546d0f4f1ec4a85cb3401bf33"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-combined-03.txt",
+      "observedAt": "2026-10-20T16:11:33.2892468Z",
+      "exitCode": 0,
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "packages/vscode-extension/src/__tests__/hygiene*.test.ts",
+        "packages/vscode-extension/src/__tests__/lite-vault-manager.test.ts",
+        "packages/vscode-extension/src/__tests__/lite-vault-plan.test.ts",
+        "packages/vscode-extension/src/__tests__/gatewayVaultRegistry.test.ts"
+      ],
+      "sha256": "5531808E14DC69F59415169B0AA9DFCC6E8D5702BDC013B5278F4FF09B8894C1",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-combined-03.txt",
+        "bytes": 31990,
+        "sha256": "5531808e14dc69f59415169b0aa9dfcc6e8d5702bdc013b5278f4ff09b8894c1"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-commands-after-01.txt",
+      "observedAt": "2026-10-20T15:43:33.0924801Z",
+      "exitCode": 0,
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "packages/vscode-extension/src/__tests__/hygieneCommands.test.ts"
+      ],
+      "sha256": "A84C32887BA651CD0AADB0565AEA5DB349B1DE66F57964A340FC8108E7CA071D",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-commands-after-01.txt",
+        "bytes": 1801,
+        "sha256": "a84c32887ba651cd0aadb0565aea5db349b1de66f57964a340fc8108e7ca071d"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-commands-before-01.txt",
+      "observedAt": "2026-10-20T15:42:29.3826112Z",
+      "exitCode": 1,
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "packages/vscode-extension/src/__tests__/hygieneCommands.test.ts"
+      ],
+      "sha256": "13DC1168EDAD34B7E3DD1889A00AAAA79F2B59D97D366BDA2BE05B1E98C3B213",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-commands-before-01.txt",
+        "bytes": 11529,
+        "sha256": "13dc1168edad34b7e3dd1889a00aaaa79f2b59d97d366bda2be05b1e98c3b213"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-controller-after-01.txt",
+      "observedAt": "2026-10-20T15:31:43.0574176Z",
+      "exitCode": 0,
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "packages/vscode-extension/src/__tests__/hygieneController.test.ts"
+      ],
+      "sha256": "0DB31EBEEC3281DBAC226F5726CDB3C01E67196F6393167284B857D35697B561",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-controller-after-01.txt",
+        "bytes": 3029,
+        "sha256": "0db31ebeec3281dbac226f5726cdb3c01e67196f6393167284b857d35697b561"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-controller-before-01.txt",
+      "observedAt": "2026-10-20T15:24:01.3027636Z",
+      "exitCode": 1,
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "packages/vscode-extension/src/__tests__/hygieneController.test.ts"
+      ],
+      "sha256": "F1CB4F2A4631848213CBB5AD9771A057DFCDBCCC35319DCD90517BD24BFC3AD8",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-controller-before-01.txt",
+        "bytes": 19730,
+        "sha256": "f1cb4f2a4631848213cbb5ad9771a057dfcdbccc35319dcd90517bd24bfc3ad8"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-controller-review-after-01.txt",
+      "observedAt": "2026-10-20T15:34:17.9404124Z",
+      "exitCode": 0,
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "packages/vscode-extension/src/__tests__/hygieneController.test.ts"
+      ],
+      "sha256": "3CE95D12A6FFFF01FFA9F6130D17AE8A74FAFB3F4E5D63A572F23224E3886FF0",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-controller-review-after-01.txt",
+        "bytes": 3528,
+        "sha256": "3ce95d12a6ffff01ffa9f6130d17ae8a74fafb3f4e5d63a572f23224e3886ff0"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-controller-review-before-01.txt",
+      "observedAt": "2026-10-20T15:33:46.9087316Z",
+      "exitCode": 1,
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "packages/vscode-extension/src/__tests__/hygieneController.test.ts"
+      ],
+      "sha256": "6EDA634D1F7D20C7B8E9E57FAE92B51A8A0AC7BA680A84F6CF5278C7BA323921",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-controller-review-before-01.txt",
+        "bytes": 5049,
+        "sha256": "6eda634d1f7d20c7b8e9e57fae92b51a8a0ac7ba680a84f6cf5278c7ba323921"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-core-after-01.txt",
+      "observedAt": "2026-10-20T15:06:34.1018406Z",
+      "exitCode": 0,
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "packages/vscode-extension/src/__tests__/hygieneAnalysis.test.ts",
+        "packages/vscode-extension/src/__tests__/hygieneExposureLedger.test.ts"
+      ],
+      "sha256": "5990AC73F59DD8BDB498080D0C0D65FC681BE4FE12869F0B01C5A0437D1EA6D9",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-core-after-01.txt",
+        "bytes": 4139,
+        "sha256": "5990ac73f59dd8bdb498080d0c0d65fc681be4fe12869f0b01c5a0437d1ea6d9"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-core-before-01.txt",
+      "observedAt": "2026-10-20T15:03:09.7242777Z",
+      "exitCode": 1,
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "packages/vscode-extension/src/__tests__/hygieneAnalysis.test.ts",
+        "packages/vscode-extension/src/__tests__/hygieneExposureLedger.test.ts"
+      ],
+      "sha256": "84FF48D92D1262D8358936695AE202C7BDAAA02F0C139F76D3042CABB3D6F26F",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-core-before-01.txt",
+        "bytes": 22311,
+        "sha256": "84ff48d92d1262d8358936695ae202c7bdaaa02f0c139f76d3042cabb3d6f26f"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-core-review-after-01.txt",
+      "observedAt": "2026-10-20T15:09:13.3554205Z",
+      "exitCode": 0,
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "packages/vscode-extension/src/__tests__/hygieneAnalysis.test.ts",
+        "packages/vscode-extension/src/__tests__/hygieneExposureLedger.test.ts"
+      ],
+      "sha256": "7B7B43BAFDF5852A9CF0225D26F8FF03EE29C006523F5EC2954E19FE4D686CC9",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-core-review-after-01.txt",
+        "bytes": 4398,
+        "sha256": "7b7b43bafdf5852a9cf0225d26f8ff03ee29c006523f5ec2954e19fe4d686cc9"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-core-review-before-01.txt",
+      "observedAt": "2026-10-20T15:08:19.7332879Z",
+      "exitCode": 1,
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "packages/vscode-extension/src/__tests__/hygieneAnalysis.test.ts",
+        "packages/vscode-extension/src/__tests__/hygieneExposureLedger.test.ts"
+      ],
+      "sha256": "C8F508CB142E3D888E9208BA00CAF5E55601CE1B9BA647DA50741C2AF3453D13",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-core-review-before-01.txt",
+        "bytes": 5642,
+        "sha256": "c8f508cb142e3d888e9208ba00caf5e55601ce1b9ba647da50741c2af3453d13"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-enrollment-before-01.txt",
+      "observedAt": "2026-10-20T16:11:01.3942007Z",
+      "exitCode": 1,
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "packages/vscode-extension/src/__tests__/hygieneController.test.ts"
+      ],
+      "sha256": "1CB134E68C857C7B3BF6E70424A27E12C8D548CFEF28CC22AE78DBDCB06F9B49",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-enrollment-before-01.txt",
+        "bytes": 6140,
+        "sha256": "1cb134e68c857c7b3bf6e70424a27e12c8d548cfef28cc22ae78dbdcb06f9b49"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-manifest-review-01.txt",
+      "observedAt": "2026-10-20T15:55:29.8699180Z",
+      "exitCode": 0,
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "packages/vscode-extension/src/__tests__/extension.test.ts",
+        "packages/vscode-extension/src/__tests__/readiness-doc.test.ts",
+        "packages/vscode-extension/src/__tests__/hygieneCommands.test.ts"
+      ],
+      "sha256": "C5270D8BAA5A8AD35C7092427C82EE7D77F7F31731F2BF8C4635227D8BC8964F",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-manifest-review-01.txt",
+        "bytes": 25271,
+        "sha256": "c5270d8baa5a8ad35c7092427c82ee7d77f7f31731f2bf8c4635227d8bc8964f"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-mutation-expiry-before-01.txt",
+      "observedAt": "2026-10-20T15:46:25.3220151Z",
+      "exitCode": 1,
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "packages/vscode-extension/src/__tests__/hygieneController.test.ts"
+      ],
+      "sha256": "71AA77510DF7742367D6CB8C05418F5F6508127CAF5FD6F934520E66A4838C69",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-mutation-expiry-before-01.txt",
+        "bytes": 5896,
+        "sha256": "71aa77510df7742367d6cb8c05418f5f6508127caf5fd6f934520e66a4838c69"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-native-run-01.txt",
+      "observedAt": "2026-10-20T16:03:31.3551994Z",
+      "exitCode": 1,
+      "arguments": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/run-hygiene-native-02.ps1",
+        "-CodePath",
+        "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe",
+        "-HostTestsPath",
+        "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/prebuilt-native-hosts-01/lite-hygiene-host.js",
+        "-ExtensionRoot",
+        "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/vsix-extracted-01/extension",
+        "-VsixPath",
+        "packages/soterai-lite/soterai-lite-0.7.0-f21-20261020-attempt01.vsix",
+        "-ExpectedVsixSha256",
+        "eb89717c70c9bc0eaa786e880c50145424b9915b33304f6caefd02ac5892f147",
+        "-ExpectedBundleSha256",
+        "4c6d583575f9c09231d528cc07f44cfebbe1e09ff91b2c695b9a307ffbad4edb"
+      ],
+      "sha256": "C16A1EABF0BF5F13A2437E9EA30DD96AF9D2C50B6E6EF9D930BB8FF65A0A505A",
+      "file": "powershell",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-native-run-01.txt",
+        "bytes": 1011,
+        "sha256": "c16a1eabf0bf5f13a2437e9ea30dd96af9d2c50b6e6ef9d930bb8ff65a0a505a"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-native-run-02.txt",
+      "observedAt": "2026-10-20T16:06:02.6451342Z",
+      "exitCode": 1,
+      "arguments": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/run-hygiene-native-02.ps1",
+        "-CodePath",
+        "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe",
+        "-HostTestsPath",
+        "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/prebuilt-native-hosts-02/lite-hygiene-host.js",
+        "-ExtensionRoot",
+        "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/vsix-extracted-01/extension",
+        "-VsixPath",
+        "packages/soterai-lite/soterai-lite-0.7.0-f21-20261020-attempt01.vsix",
+        "-ExpectedVsixSha256",
+        "eb89717c70c9bc0eaa786e880c50145424b9915b33304f6caefd02ac5892f147",
+        "-ExpectedBundleSha256",
+        "4c6d583575f9c09231d528cc07f44cfebbe1e09ff91b2c695b9a307ffbad4edb"
+      ],
+      "sha256": "C16A1EABF0BF5F13A2437E9EA30DD96AF9D2C50B6E6EF9D930BB8FF65A0A505A",
+      "file": "powershell",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-native-run-02.txt",
+        "bytes": 1011,
+        "sha256": "c16a1eabf0bf5f13a2437e9ea30dd96af9d2c50b6e6ef9d930bb8ff65a0a505a"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-native-run-03.txt",
+      "observedAt": "2026-10-20T16:09:03.1621000Z",
+      "exitCode": 1,
+      "arguments": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/run-hygiene-native-02.ps1",
+        "-CodePath",
+        "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe",
+        "-HostTestsPath",
+        "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/prebuilt-native-hosts-03/lite-hygiene-host.js",
+        "-ExtensionRoot",
+        "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/vsix-extracted-01/extension",
+        "-VsixPath",
+        "packages/soterai-lite/soterai-lite-0.7.0-f21-20261020-attempt01.vsix",
+        "-ExpectedVsixSha256",
+        "eb89717c70c9bc0eaa786e880c50145424b9915b33304f6caefd02ac5892f147",
+        "-ExpectedBundleSha256",
+        "4c6d583575f9c09231d528cc07f44cfebbe1e09ff91b2c695b9a307ffbad4edb"
+      ],
+      "sha256": "C16A1EABF0BF5F13A2437E9EA30DD96AF9D2C50B6E6EF9D930BB8FF65A0A505A",
+      "file": "powershell",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-native-run-03.txt",
+        "bytes": 1011,
+        "sha256": "c16a1eabf0bf5f13a2437e9ea30dd96af9d2c50b6e6ef9d930bb8ff65a0a505a"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-public-key-before-01.txt",
+      "observedAt": "2026-10-20T15:36:14.4021157Z",
+      "exitCode": 1,
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "packages/vscode-extension/src/__tests__/hygieneAnalysis.test.ts"
+      ],
+      "sha256": "B947692F9B92AA4A8677AC704F0BC0CB69FC7BC40941BDE4BBA2CF9485EAA6E2",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-public-key-before-01.txt",
+        "bytes": 3265,
+        "sha256": "b947692f9b92aa4a8677ac704f0bc0cb69fc7bc40941bde4bba2cf9485eaa6e2"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-public-rotation-after-01.txt",
+      "observedAt": "2026-10-20T15:40:23.9562663Z",
+      "exitCode": 0,
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "packages/vscode-extension/src/__tests__/hygieneAnalysis.test.ts",
+        "packages/vscode-extension/src/__tests__/hygieneRotation.test.ts"
+      ],
+      "sha256": "EFA797AF29BA6BAB2A8B9BB26AC28ED4EDCA28F12B8025AA18D7B841E13DBC6E",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-public-rotation-after-01.txt",
+        "bytes": 3358,
+        "sha256": "efa797af29ba6bab2a8b9bb26ac28ed4edca28f12b8025aa18d7b841e13dbc6e"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-queued-admission-after-01.txt",
+      "observedAt": "2026-10-20T15:27:19.5270437Z",
+      "exitCode": 0,
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "packages/vscode-extension/src/__tests__/hygieneVaultSnapshot.test.ts",
+        "packages/vscode-extension/src/__tests__/lite-vault-manager.test.ts"
+      ],
+      "sha256": "0FE89F1F123D96E5FA4345E516808413CDCD170DF6B749CC930BFEC8D11CC39B",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-queued-admission-after-01.txt",
+        "bytes": 10180,
+        "sha256": "0fe89f1f123d96e5fa4345e516808413cdcd170df6b749cc930bfec8d11cc39b"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-queued-admission-before-01.txt",
+      "observedAt": "2026-10-20T15:26:29.3230443Z",
+      "exitCode": 1,
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "packages/vscode-extension/src/__tests__/hygieneVaultSnapshot.test.ts"
+      ],
+      "sha256": "197B6B07447575A090E094C946783400EBAB1BBE046F7BC439FA0201D28A8DF2",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-queued-admission-before-01.txt",
+        "bytes": 2769,
+        "sha256": "197b6b07447575a090e094c946783400ebab1bbe046f7bc439fa0201d28a8df2"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-readme-review-01.txt",
+      "observedAt": "2026-10-20T15:55:57.5377609Z",
+      "exitCode": 0,
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "packages/vscode-extension/src/__tests__/readme-accuracy.test.ts"
+      ],
+      "sha256": "DC83818F1258CD80CC70B29AAA1532A84CD6B32B37C3623864D90E09DB5CF0FC",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-readme-review-01.txt",
+        "bytes": 1248,
+        "sha256": "dc83818f1258cd80cc70b29aaa1532a84cd6b32b37c3623864d90e09db5cf0fc"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-rotation-before-01.txt",
+      "observedAt": "2026-10-20T15:18:28.4009337Z",
+      "exitCode": 1,
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "packages/vscode-extension/src/__tests__/hygieneRotation.test.ts"
+      ],
+      "sha256": "C0C3CE7040D508B6910DBD934995775280E013666DC1B7B4558A10A909DCD93F",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-rotation-before-01.txt",
+        "bytes": 5062,
+        "sha256": "c0c3ce7040d508b6910dbd934995775280e013666dc1b7b4558a10a909dcd93f"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/inspect-vsix-run-01.txt",
+      "observedAt": "2026-10-20T16:02:51.9121505Z",
+      "exitCode": 0,
+      "arguments": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/inspect-vsix-01.ps1",
+        "-VsixPath",
+        "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\soterai-lite\\soterai-lite-0.7.0-f21-20261020-attempt01.vsix",
+        "-ExpectedVsixSha256",
+        "eb89717c70c9bc0eaa786e880c50145424b9915b33304f6caefd02ac5892f147",
+        "-ExpectedBundleSha256",
+        "4c6d583575f9c09231d528cc07f44cfebbe1e09ff91b2c695b9a307ffbad4edb"
+      ],
+      "sha256": "7940E1182B0E1D4A61A196723C1F472C61C66525B5BED3FE026A988767EBFF7B",
+      "file": "powershell",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/inspect-vsix-run-01.txt",
+        "bytes": 1928,
+        "sha256": "7940e1182b0e1d4a61a196723c1f472c61c66525b5bed3fe026a988767ebff7b"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/package-01.txt",
+      "observedAt": "2026-10-20T16:02:32.6227977Z",
+      "exitCode": 0,
+      "arguments": [
+        "packages/soterai-lite/scripts/package.cjs",
+        "soterai-lite-0.7.0-f21-20261020-attempt01.vsix"
+      ],
+      "sha256": "91F65C703C0F0422FC5CB8E1137CFD5BB4869C882E383E845D1A0CAF8446B2E4",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/package-01.txt",
+        "bytes": 1775,
+        "sha256": "91f65c703c0f0422fc5cb8e1137cfd5bb4869c882e383e845d1a0caf8446b2e4"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/prepare-byte-helpers-run-01.txt",
+      "observedAt": "2026-10-20T15:57:57.8908945Z",
+      "exitCode": 0,
+      "arguments": [
+        "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/prepare-byte-helpers-01.cjs"
+      ],
+      "sha256": "836A5E2B200974CBEDCD82F22BFCB6CD66BDF72CFECFEC73F3E9D8E289B8C243",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/prepare-byte-helpers-run-01.txt",
+        "bytes": 193,
+        "sha256": "836a5e2b200974cbedcd82f22bfcb6cd66bdf72cfecfec73f3e9d8e289b8c243"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/prepare-host-helpers-run-01.txt",
+      "observedAt": "2026-10-20T15:50:16.4865732Z",
+      "exitCode": 0,
+      "arguments": [
+        "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/prepare-host-helpers-01.cjs"
+      ],
+      "sha256": "CB8E0D64D7CB96E9E68D96CEE87F8478B24A8FDB803054208A9D3F964184FB59",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/prepare-host-helpers-run-01.txt",
+        "bytes": 197,
+        "sha256": "cb8e0d64d7cb96e9e68d96cee87f8478b24a8fdb803054208a9d3f964184fb59"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/prepare-manifest-run-01.txt",
+      "observedAt": "2026-10-20T15:43:22.3707205Z",
+      "exitCode": 0,
+      "arguments": [
+        "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/prepare-manifest-01.cjs"
+      ],
+      "sha256": "E459625BE1D5A53D65CEB74CA923ED2BB169F800644F4017976DC31BB5B88E68",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/prepare-manifest-run-01.txt",
+        "bytes": 100,
+        "sha256": "e459625be1d5a53d65ceb74ca923ed2bb169f800644f4017976dc31bb5b88e68"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/prepare-native-closure-run-01.txt",
+      "observedAt": "2026-10-20T15:59:14.3437237Z",
+      "exitCode": 0,
+      "arguments": [
+        "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/prepare-native-closure-01.cjs"
+      ],
+      "sha256": "300FDE938D2647AF2CD428B1EEF86D0874726A5785C2FBCB7F1CB0F27210AEB3",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/prepare-native-closure-run-01.txt",
+        "bytes": 119,
+        "sha256": "300fde938d2647af2cd428b1eef86d0874726a5785c2fbcb7f1cb0f27210aeb3"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/prepare-vault-helper-run-01.txt",
+      "observedAt": "2026-10-20T15:51:31.5038256Z",
+      "exitCode": 0,
+      "arguments": [
+        "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/prepare-vault-helper-01.cjs"
+      ],
+      "sha256": "2F5BBE2A34BFE9BA68DA8EF4B4FE43711DDCD0ADF2C402C2917AF5BA0B8200A3",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/prepare-vault-helper-run-01.txt",
+        "bytes": 70,
+        "sha256": "2f5bbe2a34bfe9ba68da8ef4b4fe43711ddcd0adf2c402c2917af5ba0b8200a3"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/record-progress-run-01.txt",
+      "observedAt": "2026-10-20T15:10:01.8968763Z",
+      "exitCode": 0,
+      "arguments": [
+        "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/record-progress-01.cjs"
+      ],
+      "sha256": "05748AD8810F2B825AA605C31B697289017C667E8CF047A93B9B6713584DFCB0",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/record-progress-run-01.txt",
+        "bytes": 1677,
+        "sha256": "05748ad8810f2b825aa605c31b697289017c667e8cf047a93b9b6713584dfcb0"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/record-progress-run-02.txt",
+      "observedAt": "2026-10-20T15:41:32.5973801Z",
+      "exitCode": 0,
+      "arguments": [
+        "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/record-progress-02.cjs"
+      ],
+      "sha256": "F1E7A06CCCB70DDE2F936CE041D285F8BBE688E4D8494E98CAAFB1B49B627ACF",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/record-progress-run-02.txt",
+        "bytes": 52,
+        "sha256": "f1e7a06cccb70dde2f936ce041d285f8bbe688e4d8494e98caafb1b49b627acf"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/record-progress-run-03.txt",
+      "observedAt": "2026-10-20T15:54:18.2549751Z",
+      "exitCode": 0,
+      "arguments": [
+        "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/record-progress-03.cjs"
+      ],
+      "sha256": "39D21AC822A187B9F95F47B409153DF0F77EC855F55747DF39B38AC7D4E0478A",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/record-progress-run-03.txt",
+        "bytes": 52,
+        "sha256": "39d21ac822a187b9f95f47b409153df0f77ec855f55747df39b38ac7d4e0478a"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/record-progress-run-04.txt",
+      "observedAt": "2026-10-20T16:06:35.6510623Z",
+      "exitCode": 0,
+      "arguments": [
+        "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/record-progress-04.cjs"
+      ],
+      "sha256": "065D835BAFE2F4F1AE14AE5FE7298AEA6E3E75554FA0094695B381818F07D404",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/record-progress-run-04.txt",
+        "bytes": 171,
+        "sha256": "065d835bafe2f4f1ae14ae5fe7298aea6e3e75554fa0094695b381818f07d404"
+      }
+    },
+    {
+      "output": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/verify-fixture-metadata-run-01.txt",
+      "observedAt": "2026-10-20T16:05:27.4092837Z",
+      "exitCode": 0,
+      "arguments": [
+        "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/verify-fixture-metadata-01.cjs"
+      ],
+      "sha256": "F59E1627E02A76098D0D6BAF7FC349E57EFBE39735A9C607BA01688342CEFB2C",
+      "file": "node",
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/verify-fixture-metadata-run-01.txt",
+        "bytes": 448,
+        "sha256": "f59e1627e02a76098d0d6baf7fc349e57efbe39735a9c607ba01688342cefb2c"
+      }
+    }
+  ],
+  "source": [
+    {
+      "path": "packages/vscode-extension/src/firewall/VaultManager.ts",
+      "bytes": 44195,
+      "sha256": "397f41e2c589b85a7b8e8872630c6b4617ea087c8a3b0cc99649a539cdc8b2e6"
+    },
+    {
+      "path": "packages/vscode-extension/src/extension.ts",
+      "bytes": 33903,
+      "sha256": "241cf7ba32a4eacf844316f1b5e1d025fae0f4b77dba329d3cdbaa1d2e15ecce"
+    },
+    {
+      "path": "packages/vscode-extension/package.json",
+      "bytes": 135030,
+      "sha256": "feac1e47cf7ed27882d168a1b3e1d48e719af235e55b101d77a9a2efa622f690"
+    },
+    {
+      "path": "packages/soterai-lite/package.json",
+      "bytes": 108705,
+      "sha256": "88dc2f8e6fbddb47403531c3a360ec9940447253776e47dd9ab0bf13899ef7ce"
+    },
+    {
+      "path": "packages/soterai-lite/README.md",
+      "bytes": 36439,
+      "sha256": "31afbb1b347843a86191852e0dae5cf41e6d0861fc72a90b35ace1f0934a486d"
+    },
+    {
+      "path": "packages/soterai-lite/CHANGELOG.md",
+      "bytes": 4216,
+      "sha256": "3a2e3251649604f3a794811f057707ed82847b0bef10285b64aef2d26ad7cf98"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/host/liteHygiene.host.ts",
+      "bytes": 16468,
+      "sha256": "c1fcd85a6d47b75e43bcb091b74fbb09838c82e16605b6fc5d4ae068f2b79207"
+    },
+    {
+      "path": "packages/vscode-extension/src/hygiene/commands.ts",
+      "bytes": 4487,
+      "sha256": "7529ce4ce86a1cf9db51c5c9bb6bf3abacf31c79c3849855cac90ad574639488"
+    },
+    {
+      "path": "packages/vscode-extension/src/hygiene/HygieneAnalysis.ts",
+      "bytes": 6006,
+      "sha256": "6a13b0a22273165aeca07256881030f4850176b4de31f6250b963100464d1817"
+    },
+    {
+      "path": "packages/vscode-extension/src/hygiene/HygieneController.ts",
+      "bytes": 14029,
+      "sha256": "cb51b97fd72bdad422dd3619b7df3b36df820399863cdee2ac782c860a8dd6c2"
+    },
+    {
+      "path": "packages/vscode-extension/src/hygiene/HygieneExposureLedger.ts",
+      "bytes": 9353,
+      "sha256": "ceed85f8e5f5a8a13068ddba9030626041dd230b1bf687cb1a3f8112e03eaa27"
+    },
+    {
+      "path": "packages/vscode-extension/src/hygiene/HygieneFlags.ts",
+      "bytes": 452,
+      "sha256": "4e46104cb785d7c4e460a9be128e20715ad6c2343103e1731420c9c543a7e902"
+    },
+    {
+      "path": "packages/vscode-extension/src/hygiene/HygieneRotation.ts",
+      "bytes": 5108,
+      "sha256": "3b01e932b6768f8cd1b414691f559a68e13b5f3a34731fa9665e93b5ffb32080"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/hygieneAnalysis.test.ts",
+      "bytes": 5088,
+      "sha256": "62c6d7a523d7f162c0d6367b109a7b518a847a1af60573076883859f3ab75b82"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/hygieneCommands.test.ts",
+      "bytes": 7097,
+      "sha256": "3a590d742f15aa124100e6c86f4a7cfdfe9f3a658b0878313cd4322f7ca0b37b"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/hygieneController.test.ts",
+      "bytes": 14894,
+      "sha256": "63fb4bb06b444d171abead7710bda3ec93d3e495b0e87f2d6d3d80cddbc2700e"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/hygieneExposureLedger.test.ts",
+      "bytes": 6848,
+      "sha256": "c8c1f6b41fb256145ecd00beaef009f2a6317e5b8fe65eb32842ea4cea560025"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/hygieneRotation.test.ts",
+      "bytes": 2065,
+      "sha256": "db72d499103897c7d74c6dfcf1ad312d9c971514f563bb85b97b8a91caa21d09"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/hygieneVaultSnapshot.test.ts",
+      "bytes": 5614,
+      "sha256": "ca255ff1d58543bfc7d6c308be7e115629c4ff0009a99b70fdbdd401d6cbd09e"
+    }
+  ],
+  "implemented": "First-use enrollment regression21tests20PASS1FAIL reproduced CHANGED when canonical defaults enroll after hygiene review policy capture. Controller now loads canonical additive policy before capturing the consent basis, inside its60s lease. Genuine owner-policy change during consent still refuses; current combined123PASS.",
+  "pending": [
+    "Current full03 running; frontend compiler06 and a NEW candidate02/content inspection required after production fix",
+    "Native hygiene fourth run (third permitted improvement) not run; current affected F06 vault10/retained106/functional10/security17 not run",
+    "Snapshots/acceptance/scoped source and transition byte barriers before F22"
+  ],
+  "scope": "Candidate01/full02 remain earlier evidence. Native01 fixture absent-ledger TypeError reproduced/fixed with unchanged private-value rejection; native02+03 primary17PASS1FAILfirst-analysis each, diagnostic03CHANGED/workspaceANALYZED, originals absent from document API/events. All3 editors exit0/EOF/no signals. See design03 for canonical policy-source reads versus consent-gated candidate originals. F21 ACTIVE/INCOMPLETE; no F22/rating or real-account/OS/human/independent/catalog claims.",
+  "artifact": {
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-f21-20261020-attempt01.vsix",
+    "bytes": 1517690,
+    "sha256": "eb89717c70c9bc0eaa786e880c50145424b9915b33304f6caefd02ac5892f147"
+  },
+  "inspection": {
+    "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/vsix-inspection-01.json",
+    "bytes": 373182,
+    "sha256": "af348931220474b267f367948144f05d26e021d323bad02ab309a48689842a70"
+  },
+  "nativeFirst": {
+    "record": {
+      "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/f21-hygiene-native-20261020T160307Z-8d3e8f8e/primary-results.json",
+      "bytes": 4148,
+      "sha256": "7cc01acf1f9b5c1ce59ae504699e4c58d2efd79b1b32f47e5ee9d896d8dbbf95"
+    },
+    "pass": 16,
+    "fail": 2,
+    "closure": {
+      "stderrEOF": true,
+      "exitCode": 0,
+      "observedExit": true,
+      "stdoutEOF": true,
+      "signalsRequested": 0,
+      "ownedWindowClose": "workbench.action.closeWindow"
+    },
+    "cause": "Fixture-only noValues(undefined) called .includes on undefined for the initially absent ledger. Original TS/native bundle/results retained. VM evaluation of actual compiled before/after reproduces TypeError and verifies private-value assertions still reject. Native fixture compiler02 changes null handling only; exact product VSIX unchanged."
+  },
+  "native": [
+    {
+      "record": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/f21-hygiene-native-20261020T160307Z-8d3e8f8e/primary-results.json",
+        "bytes": 4148,
+        "sha256": "7cc01acf1f9b5c1ce59ae504699e4c58d2efd79b1b32f47e5ee9d896d8dbbf95"
+      },
+      "pass": 16,
+      "fail": 2,
+      "closure": {
+        "stderrEOF": true,
+        "exitCode": 0,
+        "observedExit": true,
+        "stdoutEOF": true,
+        "signalsRequested": 0,
+        "ownedWindowClose": "workbench.action.closeWindow"
+      }
+    },
+    {
+      "record": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/f21-hygiene-native-20261020T160542Z-820fd4e5/primary-results.json",
+        "bytes": 4121,
+        "sha256": "72220adb251333f47b788f94f47d273c8ae388c7d07e4cb35c54b5bab0a12af3"
+      },
+      "pass": 17,
+      "fail": 1,
+      "closure": {
+        "stderrEOF": true,
+        "exitCode": 0,
+        "observedExit": true,
+        "stdoutEOF": true,
+        "signalsRequested": 0,
+        "ownedWindowClose": "workbench.action.closeWindow"
+      }
+    },
+    {
+      "record": {
+        "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/f21-hygiene-native-20261020T160843Z-406f672f/primary-results.json",
+        "bytes": 8939,
+        "sha256": "0a1f6ef572617d229c58b7f33ea178e85bca46e0c5adb7c055a9c2fbe38f13ba"
+      },
+      "pass": 17,
+      "fail": 1,
+      "closure": {
+        "stderrEOF": true,
+        "exitCode": 0,
+        "observedExit": true,
+        "stdoutEOF": true,
+        "signalsRequested": 0,
+        "ownedWindowClose": "workbench.action.closeWindow"
+      }
+    }
+  ]
+}

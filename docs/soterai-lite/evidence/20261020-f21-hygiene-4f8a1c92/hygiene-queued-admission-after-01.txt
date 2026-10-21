@@ -1,0 +1,232 @@
+﻿TAP version 13
+# Subtest: F21 trusted snapshot reuses vault containment/identity/policy and never opens a source TextDocument or creates a key
+ok 1 - F21 trusted snapshot reuses vault containment/identity/policy and never opens a source TextDocument or creates a key
+  ---
+  duration_ms: 198.9534
+  type: 'test'
+  ...
+# Subtest: F21 disabled snapshot never invokes the private consumer
+ok 2 - F21 disabled snapshot never invokes the private consumer
+  ---
+  duration_ms: 15.1199
+  type: 'test'
+  ...
+# Subtest: F21 machine disable defeats a workspace enabling override at the private snapshot boundary
+ok 3 - F21 machine disable defeats a workspace enabling override at the private snapshot boundary
+  ---
+  duration_ms: 14.6784
+  type: 'test'
+  ...
+# Subtest: F21 synchronous consumer source drift, callback errors and async callbacks withhold results
+ok 4 - F21 synchronous consumer source drift, callback errors and async callbacks withhold results
+  ---
+  duration_ms: 250.4832
+  type: 'test'
+  ...
+# Subtest: F21 snapshot lease drift/instance withdrawal inside consumer cannot release its result
+ok 5 - F21 snapshot lease drift/instance withdrawal inside consumer cannot release its result
+  ---
+  duration_ms: 154.1912
+  type: 'test'
+  ...
+# Subtest: F21 hardlinked synthetic source refuses before any raw callback
+ok 6 - F21 hardlinked synthetic source refuses before any raw callback
+  ---
+  duration_ms: 26.5524
+  type: 'test'
+  ...
+# Subtest: F21 withdrawing its vault instance prevents late migration approval but preserves another instance
+ok 7 - F21 withdrawing its vault instance prevents late migration approval but preserves another instance
+  ---
+  duration_ms: 125.9775
+  type: 'test'
+  ...
+# Subtest: F21 a hygiene migration queued behind another owner review rechecks its own admission before reading
+ok 8 - F21 a hygiene migration queued behind another owner review rechecks its own admission before reading
+  ---
+  duration_ms: 49.8049
+  type: 'test'
+  ...
+# Subtest: F06-V01 preview uses a constant mask with no value fragments, lengths or hashes
+ok 9 - F06-V01 preview uses a constant mask with no value fragments, lengths or hashes
+  ---
+  duration_ms: 138.9147
+  type: 'test'
+  ...
+# Subtest: F06-V02 reviewed migration handles duplicate/multiline fields, writes blank examples and keeps recovery encrypted outside the project
+ok 10 - F06-V02 reviewed migration handles duplicate/multiline fields, writes blank examples and keeps recovery encrypted outside the project
+  ---
+  duration_ms: 766.8482
+  type: 'test'
+  ...
+# Subtest: F06-V03 declining manager-owned native migration writes nothing
+ok 11 - F06-V03 declining manager-owned native migration writes nothing
+  ---
+  duration_ms: 46.2668
+  type: 'test'
+  ...
+# Subtest: F06-V04 SecretStorage store failure or failed readback never removes original values
+ok 12 - F06-V04 SecretStorage store failure or failed readback never removes original values
+  ---
+  duration_ms: 206.6684
+  type: 'test'
+  ...
+# Subtest: F06-V05 source drift while native migration review is held cannot overwrite the newer file
+ok 13 - F06-V05 source drift while native migration review is held cannot overwrite the newer file
+  ---
+  duration_ms: 88.8972
+  type: 'test'
+  ...
+# Subtest: F06-V06 source drift while verified key storage is held cannot remove newer source data
+ok 14 - F06-V06 source drift while verified key storage is held cannot remove newer source data
+  ---
+  duration_ms: 134.5442
+  type: 'test'
+  ...
+# Subtest: F06-V07 machine withdrawal, untrusted or nonlocal resources withhold all mutation entry points
+ok 15 - F06-V07 machine withdrawal, untrusted or nonlocal resources withhold all mutation entry points
+  ---
+  duration_ms: 13.052
+  type: 'test'
+  ...
+# Subtest: F06-V08 flag withdrawal while native confirmation is pending leaves source and vault untouched
+ok 16 - F06-V08 flag withdrawal while native confirmation is pending leaves source and vault untouched
+  ---
+  duration_ms: 53.072
+  type: 'test'
+  ...
+# Subtest: F06-V09 dirty and stale existing source buffers are rejected before writes and no original TextDocument is created
+ok 17 - F06-V09 dirty and stale existing source buffers are rejected before writes and no original TextDocument is created
+  ---
+  duration_ms: 50.3436
+  type: 'test'
+  ...
+# Subtest: F06-V10 an existing corrupt encrypted vault is preserved and never reinterpreted as empty
+ok 18 - F06-V10 an existing corrupt encrypted vault is preserved and never reinterpreted as empty
+  ---
+  duration_ms: 129.6576
+  type: 'test'
+  ...
+# Subtest: F06-V11 an existing encrypted vault whose key disappeared cannot be replaced by a newly created vault
+ok 19 - F06-V11 an existing encrypted vault whose key disappeared cannot be replaced by a newly created vault
+  ---
+  duration_ms: 616.0653
+  type: 'test'
+  ...
+# Subtest: F06-V12 conflicting example files are not overwritten and migration removes no original values
+ok 20 - F06-V12 conflicting example files are not overwritten and migration removes no original values
+  ---
+  duration_ms: 46.4577
+  type: 'test'
+  ...
+# Subtest: F06-V13 explicit example generation contains blank unique names only and refuses a conflicting existing example
+ok 21 - F06-V13 explicit example generation contains blank unique names only and refuses a conflicting existing example
+  ---
+  duration_ms: 204.3099
+  type: 'test'
+  ...
+# Subtest: F06-V14 failed source write preserves encrypted recovery; a new manager completes the masked outcome idempotently
+ok 22 - F06-V14 failed source write preserves encrypted recovery; a new manager completes the masked outcome idempotently
+  ---
+  duration_ms: 820.4621
+  type: 'test'
+  ...
+# Subtest: F06-V15 tampered issued checkpoint recovery is withheld without silently restoring or rewriting originals
+ok 23 - F06-V15 tampered issued checkpoint recovery is withheld without silently restoring or rewriting originals
+  ---
+  duration_ms: 409.149
+  type: 'test'
+  ...
+# Subtest: F06-V16 raw restoration requires its own disclosure approval and retained placeholders remain until accepted
+ok 24 - F06-V16 raw restoration requires its own disclosure approval and retained placeholders remain until accepted
+  ---
+  duration_ms: 715.5189
+  type: 'test'
+  ...
+# Subtest: F06-V17 equal relative paths in different projects cannot restore another root's vault entries or swapped backup
+ok 25 - F06-V17 equal relative paths in different projects cannot restore another root's vault entries or swapped backup
+  ---
+  duration_ms: 580.6875
+  type: 'test'
+  ...
+# Subtest: F06-V18 static mutation serialization preserves both files' distinct encrypted entries
+ok 26 - F06-V18 static mutation serialization preserves both files' distinct encrypted entries
+  ---
+  duration_ms: 1010.0919
+  type: 'test'
+  ...
+# Subtest: F06-V19 compatible encrypted legacy entries survive a new migration while legacy relative restoration stays withheld
+ok 27 - F06-V19 compatible encrypted legacy entries survive a new migration while legacy relative restoration stays withheld
+  ---
+  duration_ms: 609.651
+  type: 'test'
+  ...
+# Subtest: F06-V20 a pending whole-vault checkpoint withholds another file until safe recovery completes
+ok 28 - F06-V20 a pending whole-vault checkpoint withholds another file until safe recovery completes
+  ---
+  duration_ms: 1370.5099
+  type: 'test'
+  ...
+# Subtest: F06-V21 explicit restore preserves exact quoted escapes, multiline and duplicate source bytes
+ok 29 - F06-V21 explicit restore preserves exact quoted escapes, multiline and duplicate source bytes
+  ---
+  duration_ms: 657.6598
+  type: 'test'
+  ...
+# Subtest: F06-V22 damaged partial bytes withhold safe completion but authenticated separately approved original recovery remains reachable
+ok 30 - F06-V22 damaged partial bytes withhold safe completion but authenticated separately approved original recovery remains reachable
+  ---
+  duration_ms: 650.8622
+  type: 'test'
+  ...
+# Subtest: F06-V23 status metadata withholds hash-bearing legacy identifiers and direct value fingerprints
+ok 31 - F06-V23 status metadata withholds hash-bearing legacy identifiers and direct value fingerprints
+  ---
+  duration_ms: 534.1221
+  type: 'test'
+  ...
+# Subtest: F06-V24 existing pristine owner TextDocument saves placeholders without creating a new original document
+ok 32 - F06-V24 existing pristine owner TextDocument saves placeholders without creating a new original document
+  ---
+  duration_ms: 474.2997
+  type: 'test'
+  ...
+# Subtest: F06-V25 policy drift inside an approved raw write prevents a stale success acknowledgement
+ok 33 - F06-V25 policy drift inside an approved raw write prevents a stale success acknowledgement
+  ---
+  duration_ms: 650.9019
+  type: 'test'
+  ...
+# Subtest: F06-V26 missing or replaced key during backup disclosure withholds originals before disk mutation
+ok 34 - F06-V26 missing or replaced key during backup disclosure withholds originals before disk mutation
+  ---
+  duration_ms: 679.0622
+  type: 'test'
+  ...
+# Subtest: F06-V27 key loss immediately after encrypted vault commit preserves originals and checkpoint for later reviewed recovery
+ok 35 - F06-V27 key loss immediately after encrypted vault commit preserves originals and checkpoint for later reviewed recovery
+  ---
+  duration_ms: 698.6292
+  type: 'test'
+  ...
+# Subtest: F06-V28 native local vscode-userdata global storage maps to its canonical physical path without changing namespace
+ok 36 - F06-V28 native local vscode-userdata global storage maps to its canonical physical path without changing namespace
+  ---
+  duration_ms: 635.8365
+  type: 'test'
+  ...
+# Subtest: F06-V29 unknown global-storage providers cannot write a vault or change source bytes
+ok 37 - F06-V29 unknown global-storage providers cannot write a vault or change source bytes
+  ---
+  duration_ms: 15.6908
+  type: 'test'
+  ...
+1..37
+# tests 37
+# suites 0
+# pass 37
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 14413.987

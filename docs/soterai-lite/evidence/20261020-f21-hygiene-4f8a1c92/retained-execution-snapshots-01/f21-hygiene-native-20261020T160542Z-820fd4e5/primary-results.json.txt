@@ -1,0 +1,163 @@
+{
+  "schemaVersion": 1,
+  "phase": "primary",
+  "syntheticOnly": true,
+  "hostVersion": "1.142.0",
+  "extensionBundleSha256": "4c6d583575f9c09231d528cc07f44cfebbe1e09ff91b2c695b9a307ffbad4edb",
+  "currentDeveloperBundleSha256": "4c6d583575f9c09231d528cc07f44cfebbe1e09ff91b2c695b9a307ffbad4edb",
+  "hostProbeSha256": "d3278700d888a7e907d18b13972a6e2005c386fd6bf8145c0b3daa6606d0aef3",
+  "observations": [
+    {
+      "id": "F21-N01",
+      "scope": "Exact runtime, registration and no startup scan/key",
+      "status": "PASS"
+    },
+    {
+      "id": "F21-N02",
+      "scope": "File picker cancellation before originals/key",
+      "status": "PASS"
+    },
+    {
+      "id": "F21-N03",
+      "scope": "Actual selected saved file, safe metadata and real profile key",
+      "status": "FAIL",
+      "errorName": "AssertionError"
+    },
+    {
+      "id": "F21-N04",
+      "scope": "Workspace public control and bounded metadata report",
+      "status": "PASS"
+    },
+    {
+      "id": "F21-N05",
+      "scope": "Possible-exposure ledger has keyed refs without source/value/name",
+      "status": "PASS"
+    },
+    {
+      "id": "F21-N06",
+      "scope": "Canonical empty example keeps original source",
+      "status": "PASS"
+    },
+    {
+      "id": "F21-N07",
+      "scope": "Vault cancellation preserves source",
+      "status": "PASS"
+    },
+    {
+      "id": "F21-N08",
+      "scope": "Approved canonical migration, placeholders and real SecretStorage",
+      "status": "PASS"
+    },
+    {
+      "id": "F21-N09",
+      "scope": "Vault action remains possible-exposure metadata",
+      "status": "PASS"
+    },
+    {
+      "id": "F21-N10",
+      "scope": "Disclosure cancellation withholds originals",
+      "status": "PASS"
+    },
+    {
+      "id": "F21-N11",
+      "scope": "Explicit disclosure restores source and retains saved deny",
+      "status": "PASS"
+    },
+    {
+      "id": "F21-N12",
+      "scope": "Source drift during approval withholds current report",
+      "status": "PASS"
+    },
+    {
+      "id": "F21-N13",
+      "scope": "Export cancellation creates no metadata file",
+      "status": "PASS"
+    },
+    {
+      "id": "F21-N14",
+      "scope": "Reviewed exclusive metadata export is value/path free",
+      "status": "PASS"
+    },
+    {
+      "id": "F21-N15",
+      "scope": "Native manual checklist ignores caller credentials and performs no rotation",
+      "status": "PASS"
+    },
+    {
+      "id": "F21-N16",
+      "scope": "Flag withdrawal invalidates a pending actual content review",
+      "status": "PASS"
+    },
+    {
+      "id": "F21-N17",
+      "scope": "Disabled route preserves source, ledger and saved denies",
+      "status": "PASS"
+    },
+    {
+      "id": "F21-N18",
+      "scope": "Reenable and preserve restart binding; all original documents absent",
+      "status": "PASS"
+    }
+  ],
+  "passed": 17,
+  "failed": 1,
+  "notRun": 0,
+  "sourceDocumentCalls": 0,
+  "sourceDocumentEvents": 0,
+  "secretStorageStores": 2,
+  "reviews": [
+    {
+      "action": "Analyze saved project files",
+      "safe": true
+    },
+    {
+      "action": "Analyze saved project files",
+      "safe": true
+    },
+    {
+      "action": "Write empty example values",
+      "safe": true
+    },
+    {
+      "action": "Migrate securely",
+      "safe": true
+    },
+    {
+      "action": "Migrate securely",
+      "safe": true
+    },
+    {
+      "action": "Restore raw values",
+      "safe": true
+    },
+    {
+      "action": "Restore raw values",
+      "safe": true
+    },
+    {
+      "action": "Analyze saved project files",
+      "safe": true
+    },
+    {
+      "action": "Create metadata export",
+      "safe": true
+    },
+    {
+      "action": "Create metadata export",
+      "safe": true
+    },
+    {
+      "action": "Analyze saved project files",
+      "safe": true
+    }
+  ],
+  "metadataDocuments": 6,
+  "independence": "LOW",
+  "ownerPresence": "SCRIPTED_NATIVE_API_DECISIONS_NOT_HUMAN_REVIEW",
+  "notTested": [
+    "Human accessibility/usability",
+    "Live credential validity or account rotation",
+    "OS credential custody certification",
+    "Same-user native reads or independent uploads"
+  ]
+}

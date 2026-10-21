@@ -1,0 +1,40 @@
+﻿TAP version 13
+# Subtest: Native peer fixture waits for a completed JSON receipt rather than file existence
+not ok 1 - Native peer fixture waits for a completed JSON receipt rather than file existence
+  ---
+  duration_ms: 272.8551
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261020-f21-hygiene-4f8a1c92\\native-receipt-fixture.test.ts:2:1079'
+  failureType: 'testCodeFailure'
+  error: 'host.readNativePeerReceipt is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261020-f21-hygiene-4f8a1c92\native-receipt-fixture.test.ts:8:29)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: Native peer receipt fixture refuses invalid/non-object JSON without changing it
+not ok 2 - Native peer receipt fixture refuses invalid/non-object JSON without changing it
+  ---
+  duration_ms: 10.866
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261020-f21-hygiene-4f8a1c92\\native-receipt-fixture.test.ts:2:2115'
+  failureType: 'testCodeFailure'
+  error: 'host.readNativePeerReceipt is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261020-f21-hygiene-4f8a1c92\native-receipt-fixture.test.ts:13:112)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 0
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 899.5124

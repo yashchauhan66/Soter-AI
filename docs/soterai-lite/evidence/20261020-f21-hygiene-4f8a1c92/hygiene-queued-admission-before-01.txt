@@ -1,0 +1,68 @@
+﻿TAP version 13
+# Subtest: F21 trusted snapshot reuses vault containment/identity/policy and never opens a source TextDocument or creates a key
+ok 1 - F21 trusted snapshot reuses vault containment/identity/policy and never opens a source TextDocument or creates a key
+  ---
+  duration_ms: 159.6781
+  type: 'test'
+  ...
+# Subtest: F21 disabled snapshot never invokes the private consumer
+ok 2 - F21 disabled snapshot never invokes the private consumer
+  ---
+  duration_ms: 15.9526
+  type: 'test'
+  ...
+# Subtest: F21 machine disable defeats a workspace enabling override at the private snapshot boundary
+ok 3 - F21 machine disable defeats a workspace enabling override at the private snapshot boundary
+  ---
+  duration_ms: 16.6486
+  type: 'test'
+  ...
+# Subtest: F21 synchronous consumer source drift, callback errors and async callbacks withhold results
+ok 4 - F21 synchronous consumer source drift, callback errors and async callbacks withhold results
+  ---
+  duration_ms: 264.4976
+  type: 'test'
+  ...
+# Subtest: F21 snapshot lease drift/instance withdrawal inside consumer cannot release its result
+ok 5 - F21 snapshot lease drift/instance withdrawal inside consumer cannot release its result
+  ---
+  duration_ms: 137.3154
+  type: 'test'
+  ...
+# Subtest: F21 hardlinked synthetic source refuses before any raw callback
+ok 6 - F21 hardlinked synthetic source refuses before any raw callback
+  ---
+  duration_ms: 23.7296
+  type: 'test'
+  ...
+# Subtest: F21 withdrawing its vault instance prevents late migration approval but preserves another instance
+ok 7 - F21 withdrawing its vault instance prevents late migration approval but preserves another instance
+  ---
+  duration_ms: 122.5412
+  type: 'test'
+  ...
+# Subtest: F21 a hygiene migration queued behind another owner review rechecks its own admission before reading
+not ok 8 - F21 a hygiene migration queued behind another owner review rechecks its own admission before reading
+  ---
+  duration_ms: 621.9923
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\hygieneVaultSnapshot.test.ts:2:5913'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  operator: 'rejects'
+  stack: |-
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\hygieneVaultSnapshot.test.ts:52:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 7
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2476.8853

@@ -1,0 +1,52 @@
+﻿TAP version 13
+# Subtest: F21 native command registration does no startup scan or key creation
+ok 1 - F21 native command registration does no startup scan or key creation
+  ---
+  duration_ms: 139.3544
+  type: 'test'
+  ...
+# Subtest: F21 selected-file command ignores caller URI/content/approval and uses the actual picker
+ok 2 - F21 selected-file command ignores caller URI/content/approval and uses the actual picker
+  ---
+  duration_ms: 7.5526
+  type: 'test'
+  ...
+# Subtest: F21 file-picker cancellation grants no content-read authority
+ok 3 - F21 file-picker cancellation grants no content-read authority
+  ---
+  duration_ms: 4.7177
+  type: 'test'
+  ...
+# Subtest: F21 action selection uses only an actual current native ordinal item
+ok 4 - F21 action selection uses only an actual current native ordinal item
+  ---
+  duration_ms: 3.8898
+  type: 'test'
+  ...
+# Subtest: F21 one pending native flow and flag withdrawal invalidate a late picker
+ok 5 - F21 one pending native flow and flag withdrawal invalidate a late picker
+  ---
+  duration_ms: 4.5492
+  type: 'test'
+  ...
+# Subtest: F21 ledger and manual checklist documents use safe in-memory content; caller labels cannot select providers
+ok 6 - F21 ledger and manual checklist documents use safe in-memory content; caller labels cannot select providers
+  ---
+  duration_ms: 5.4783
+  type: 'test'
+  ...
+# Subtest: F21 hygiene setting is default-on machine/restricted and every advanced command is contributed and activated
+ok 7 - F21 hygiene setting is default-on machine/restricted and every advanced command is contributed and activated
+  ---
+  duration_ms: 5.9289
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 987.0768

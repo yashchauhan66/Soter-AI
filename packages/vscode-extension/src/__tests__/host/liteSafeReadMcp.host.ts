@@ -46,6 +46,10 @@ async function peer(context: vscode.ExtensionContext, root: string): Promise<voi
     finally { await stopped(current); }
     await writeFile(join(root, "peer-closed.json"), JSON.stringify({ status: "PASS", closed: runs.every(row => row.closed && row.out && row.err), hostVersion: vscode.version }) + "\n", { flag: "wx" });
 }
+/** A CreateNew receipt can exist before its asynchronous write completes. */
+export async function readNativePeerReceipt(file: string): Promise<Record<string, unknown> | undefined> {
+    try { const value: unknown = JSON.parse(await readFile(file, "utf8")); return value && typeof value === "object" && !Array.isArray(value) ? value as Record<string, unknown> : undefined; } catch { return undefined; }
+}
 async function concurrentPeer(context: vscode.ExtensionContext, current: BrokerManager, root: string): Promise<void> {
     const profile = join(root, "peer-profile"), extensions = join(root, "peer-extensions"), workspace = vscode.workspace.workspaceFolders![0].uri.fsPath;
     await mkdir(join(profile, "User"), { recursive: true }); await mkdir(join(profile, "Temp")); await mkdir(extensions);
@@ -60,14 +64,16 @@ async function concurrentPeer(context: vscode.ExtensionContext, current: BrokerM
     child.stdout?.on("data", () => undefined); child.stderr?.on("data", () => undefined);
     let closed = false; child.once("close", () => { closed = true; });
     try {
-        await until(async () => { try { await readFile(join(root, "peer-ready.json")); return true; } catch { return false; } }, 30000);
-        const remote = JSON.parse(await readFile(join(root, "peer-ready.json"), "utf8"));
+        let remote: Record<string, unknown> | undefined;
+        await until(async () => { remote = await readNativePeerReceipt(join(root, "peer-ready.json")); return remote !== undefined; }, 30000);
+        assert.ok(remote); assert.equal(typeof remote.url, "string"); assert.equal(typeof remote.session, "string");
         assert.notEqual(remote.url, current.url); assert.notEqual(remote.session, current.ownedSnapshot().session);
-        assert.equal((await http(runs.at(-1)!, remote.url, "/version")).status, 401);
+        assert.equal((await http(runs.at(-1)!, remote.url as string, "/version")).status, 401);
         assert.equal((await current.status()).running, true);
     } finally { await writeFile(join(root, "peer-stop.json"), "{}\n", { flag: "wx" }); }
-    await until(async () => { try { await readFile(join(root, "peer-closed.json")); return closed; } catch { return false; } }, 20000);
-    assert.equal(JSON.parse(await readFile(join(root, "peer-closed.json"), "utf8")).closed, true);
+    let ended: Record<string, unknown> | undefined;
+    await until(async () => { ended = await readNativePeerReceipt(join(root, "peer-closed.json")); return closed && ended !== undefined; }, 20000);
+    assert.equal(ended!.closed, true);
 }
 
 export async function run(context: vscode.ExtensionContext): Promise<void> {

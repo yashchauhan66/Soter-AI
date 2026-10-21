@@ -1,0 +1,82 @@
+﻿TAP version 13
+# Subtest: F21 analysis has only keyed references/fixed labels and bounded locations, no names/path/value/fragments
+ok 1 - F21 analysis has only keyed references/fixed labels and bounded locations, no names/path/value/fragments
+  ---
+  duration_ms: 398.0364
+  type: 'test'
+  ...
+# Subtest: F21 separate HMAC domains and profile keys prevent plain-value/file hashes and cross-profile correlation
+ok 2 - F21 separate HMAC domains and profile keys prevent plain-value/file hashes and cross-profile correlation
+  ---
+  duration_ms: 12.1709
+  type: 'test'
+  ...
+# Subtest: F21 public near-matches, empty fields, protected placeholders and explicit templates are not reported as live credentials
+ok 3 - F21 public near-matches, empty fields, protected placeholders and explicit templates are not reported as live credentials
+  ---
+  duration_ms: 7.5923
+  type: 'test'
+  ...
+# Subtest: F21 pinned supported dotenv provider hints stay heuristic and unknown provider stays unknown
+ok 4 - F21 pinned supported dotenv provider hints stay heuristic and unknown provider stays unknown
+  ---
+  duration_ms: 15.3051
+  type: 'test'
+  ...
+# Subtest: F21 multiline quoted dotenv and supported JSON candidates reuse canonical vault parsing
+ok 5 - F21 multiline quoted dotenv and supported JSON candidates reuse canonical vault parsing
+  ---
+  duration_ms: 16.5468
+  type: 'test'
+  ...
+# Subtest: F21 repeat values get one value reference while separate file/occurrence identities remain distinct
+ok 6 - F21 repeat values get one value reference while separate file/occurrence identities remain distinct
+  ---
+  duration_ms: 7.8726
+  type: 'test'
+  ...
+# Subtest: F21 malformed paths, binary/invalid UTF8, oversize work and short/malformed hash keys refuse without value-bearing exceptions
+ok 7 - F21 malformed paths, binary/invalid UTF8, oversize work and short/malformed hash keys refuse without value-bearing exceptions
+  ---
+  duration_ms: 73.4636
+  type: 'test'
+  ...
+# Subtest: F21 static metadata/value collision withholds instead of returning an original in a label
+ok 8 - F21 static metadata/value collision withholds instead of returning an original in a label
+  ---
+  duration_ms: 3.3268
+  type: 'test'
+  ...
+# Subtest: F21 synthetic bounded corpus never serializes its candidate values
+ok 9 - F21 synthetic bounded corpus never serializes its candidate values
+  ---
+  duration_ms: 59.3006
+  type: 'test'
+  ...
+# Subtest: F21 provider checklists stay manual/unverified and contain only fixed official links
+ok 10 - F21 provider checklists stay manual/unverified and contain only fixed official links
+  ---
+  duration_ms: 380.2323
+  type: 'test'
+  ...
+# Subtest: F21 suspected-exposure checklist distinguishes urgent provider action from routine replacement
+ok 11 - F21 suspected-exposure checklist distinguishes urgent provider action from routine replacement
+  ---
+  duration_ms: 6.2936
+  type: 'test'
+  ...
+# Subtest: F21 checklist rejects untrusted labels/modes and accepts no credential or authority carrier
+ok 12 - F21 checklist rejects untrusted labels/modes and accepts no credential or authority carrier
+  ---
+  duration_ms: 4.2431
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1173.3153

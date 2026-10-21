@@ -1,5 +1,7 @@
 # Changelog
 
+- Add owner-reviewed local hygiene findings, canonical vault migration/example/disclosure recovery and keyed possible-exposure metadata with reviewed export. Add manual provider checklists; no key validity, actual AI access or performed rotation is implied. The machine setting `soterai.lite.hygieneAssistant` withdraws pending work while preserving saved protection and recovery.
+
 - Add completion-buffered UTF-8 stdout/stderr filtering with separate decoder/control states, supported ANSI/OSC removal, cross-chunk recognition, bounded final flush and safe withdrawal through `soterai.lite.outputRedactor`.
 - Extend synthetic Test Protection with ten output-pipeline checks. No live interactive terminal or independent-upload guarantee is implied.
 

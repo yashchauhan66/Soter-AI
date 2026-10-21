@@ -1,0 +1,353 @@
+{
+  "card": "F21",
+  "status": "INCOMPLETE",
+  "parent": "af17da62e89fd72077c8bb06b937d302daefba58",
+  "time": "2026-10-20T15:41:31.865Z",
+  "checks": [
+    {
+      "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/frontend-typecheck-01.txt",
+      "exitCode": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "arguments": [
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "-p",
+        "packages/vscode-extension/tsconfig.json"
+      ]
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/frontend-typecheck-02.txt",
+      "exitCode": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "arguments": [
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "-p",
+        "packages/vscode-extension/tsconfig.json"
+      ]
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-bridge-after-01.txt",
+      "exitCode": 0,
+      "sha256": "67e60fbef372be38d9b7a4d751d419849aaac53c3090e2a6cc872603d7f7b3c0",
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "packages/vscode-extension/src/__tests__/hygiene*.test.ts",
+        "packages/vscode-extension/src/__tests__/lite-vault-manager.test.ts",
+        "packages/vscode-extension/src/__tests__/lite-vault-plan.test.ts",
+        "packages/vscode-extension/src/__tests__/gatewayVaultRegistry.test.ts"
+      ],
+      "tests": 91,
+      "pass": 91,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-bridge-before-01.txt",
+      "exitCode": 1,
+      "sha256": "cfb01af3ddd2a29ebf106722c947c809ff6a2335a819e448434fb3f5cafb67e2",
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "packages/vscode-extension/src/__tests__/hygieneExposureLedger.test.ts",
+        "packages/vscode-extension/src/__tests__/hygieneVaultSnapshot.test.ts"
+      ],
+      "tests": 14,
+      "pass": 7,
+      "fail": 7,
+      "skipped": 0
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-bridge-before-02.txt",
+      "exitCode": 1,
+      "sha256": "6070bff121acfff5dc352f4ddeb504929f956a522926a891313839005e89797b",
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "packages/vscode-extension/src/__tests__/hygieneExposureLedger.test.ts",
+        "packages/vscode-extension/src/__tests__/hygieneVaultSnapshot.test.ts"
+      ],
+      "tests": 15,
+      "pass": 7,
+      "fail": 8,
+      "skipped": 0
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-controller-after-01.txt",
+      "exitCode": 0,
+      "sha256": "0db31ebeec3281dbac226f5726cdb3c01e67196f6393167284b857d35697b561",
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "packages/vscode-extension/src/__tests__/hygieneController.test.ts"
+      ],
+      "tests": 12,
+      "pass": 12,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-controller-before-01.txt",
+      "exitCode": 1,
+      "sha256": "f1cb4f2a4631848213cbb5ad9771a057dfcdbccc35319dcd90517bd24bfc3ad8",
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "packages/vscode-extension/src/__tests__/hygieneController.test.ts"
+      ],
+      "tests": 12,
+      "pass": 0,
+      "fail": 12,
+      "skipped": 0
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-controller-review-after-01.txt",
+      "exitCode": 0,
+      "sha256": "3ce95d12a6ffff01ffa9f6130d17ae8a74fafb3f4e5d63a572f23224e3886ff0",
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "packages/vscode-extension/src/__tests__/hygieneController.test.ts"
+      ],
+      "tests": 14,
+      "pass": 14,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-controller-review-before-01.txt",
+      "exitCode": 1,
+      "sha256": "6eda634d1f7d20c7b8e9e57fae92b51a8a0ac7ba680a84f6cf5278c7ba323921",
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "packages/vscode-extension/src/__tests__/hygieneController.test.ts"
+      ],
+      "tests": 14,
+      "pass": 12,
+      "fail": 2,
+      "skipped": 0
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-core-after-01.txt",
+      "exitCode": 0,
+      "sha256": "5990ac73f59dd8bdb498080d0c0d65fc681be4fe12869f0b01c5a0437d1ea6d9",
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "packages/vscode-extension/src/__tests__/hygieneAnalysis.test.ts",
+        "packages/vscode-extension/src/__tests__/hygieneExposureLedger.test.ts"
+      ],
+      "tests": 15,
+      "pass": 15,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-core-before-01.txt",
+      "exitCode": 1,
+      "sha256": "84ff48d92d1262d8358936695ae202c7bdaaa02f0c139f76d3042cabb3d6f26f",
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "packages/vscode-extension/src/__tests__/hygieneAnalysis.test.ts",
+        "packages/vscode-extension/src/__tests__/hygieneExposureLedger.test.ts"
+      ],
+      "tests": 15,
+      "pass": 2,
+      "fail": 13,
+      "skipped": 0
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-core-review-after-01.txt",
+      "exitCode": 0,
+      "sha256": "7b7b43bafdf5852a9cf0225d26f8ff03ee29c006523f5ec2954e19fe4d686cc9",
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "packages/vscode-extension/src/__tests__/hygieneAnalysis.test.ts",
+        "packages/vscode-extension/src/__tests__/hygieneExposureLedger.test.ts"
+      ],
+      "tests": 16,
+      "pass": 16,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-core-review-before-01.txt",
+      "exitCode": 1,
+      "sha256": "c8f508cb142e3d888e9208ba00caf5e55601ce1b9ba647da50741c2af3453d13",
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "packages/vscode-extension/src/__tests__/hygieneAnalysis.test.ts",
+        "packages/vscode-extension/src/__tests__/hygieneExposureLedger.test.ts"
+      ],
+      "tests": 16,
+      "pass": 14,
+      "fail": 2,
+      "skipped": 0
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-public-key-before-01.txt",
+      "exitCode": 1,
+      "sha256": "b947692f9b92aa4a8677ac704f0bc0cb69fc7bc40941bde4bba2cf9485eaa6e2",
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "packages/vscode-extension/src/__tests__/hygieneAnalysis.test.ts"
+      ],
+      "tests": 9,
+      "pass": 8,
+      "fail": 1,
+      "skipped": 0
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-public-rotation-after-01.txt",
+      "exitCode": 0,
+      "sha256": "efa797af29ba6bab2a8b9bb26ac28ed4edca28f12b8025aa18d7b841e13dbc6e",
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "packages/vscode-extension/src/__tests__/hygieneAnalysis.test.ts",
+        "packages/vscode-extension/src/__tests__/hygieneRotation.test.ts"
+      ],
+      "tests": 12,
+      "pass": 12,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-queued-admission-after-01.txt",
+      "exitCode": 0,
+      "sha256": "0fe89f1f123d96e5fa4345e516808413cdcd170df6b749cc930bfec8d11cc39b",
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "packages/vscode-extension/src/__tests__/hygieneVaultSnapshot.test.ts",
+        "packages/vscode-extension/src/__tests__/lite-vault-manager.test.ts"
+      ],
+      "tests": 37,
+      "pass": 37,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-queued-admission-before-01.txt",
+      "exitCode": 1,
+      "sha256": "197b6b07447575a090e094c946783400ebab1bbe046f7bc439fa0201d28a8df2",
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "packages/vscode-extension/src/__tests__/hygieneVaultSnapshot.test.ts"
+      ],
+      "tests": 8,
+      "pass": 7,
+      "fail": 1,
+      "skipped": 0
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/hygiene-rotation-before-01.txt",
+      "exitCode": 1,
+      "sha256": "c0c3ce7040d508b6910dbd934995775280e013666dc1b7b4558a10a909dcd93f",
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "packages/vscode-extension/src/__tests__/hygieneRotation.test.ts"
+      ],
+      "tests": 3,
+      "pass": 0,
+      "fail": 3,
+      "skipped": 0
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/record-progress-run-01.txt",
+      "exitCode": 0,
+      "sha256": "05748ad8810f2b825aa605c31b697289017c667e8cf047a93b9b6713584dfcb0",
+      "arguments": [
+        "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/record-progress-01.cjs"
+      ]
+    }
+  ],
+  "source": [
+    {
+      "path": "packages/vscode-extension/src/hygiene/HygieneAnalysis.ts",
+      "bytes": 6006,
+      "sha256": "6a13b0a22273165aeca07256881030f4850176b4de31f6250b963100464d1817"
+    },
+    {
+      "path": "packages/vscode-extension/src/hygiene/HygieneController.ts",
+      "bytes": 13697,
+      "sha256": "d987939e4e5184e781c4a4fe364be57d18f0f44f0b46b18bf85fddc9a008e8ed"
+    },
+    {
+      "path": "packages/vscode-extension/src/hygiene/HygieneExposureLedger.ts",
+      "bytes": 9353,
+      "sha256": "ceed85f8e5f5a8a13068ddba9030626041dd230b1bf687cb1a3f8112e03eaa27"
+    },
+    {
+      "path": "packages/vscode-extension/src/hygiene/HygieneFlags.ts",
+      "bytes": 452,
+      "sha256": "4e46104cb785d7c4e460a9be128e20715ad6c2343103e1731420c9c543a7e902"
+    },
+    {
+      "path": "packages/vscode-extension/src/hygiene/HygieneRotation.ts",
+      "bytes": 5108,
+      "sha256": "3b01e932b6768f8cd1b414691f559a68e13b5f3a34731fa9665e93b5ffb32080"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/hygieneAnalysis.test.ts",
+      "bytes": 5088,
+      "sha256": "62c6d7a523d7f162c0d6367b109a7b518a847a1af60573076883859f3ab75b82"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/hygieneController.test.ts",
+      "bytes": 10528,
+      "sha256": "d1bc71fd9677e5a6c07d4a4a3f2bb6a2f19c25a954ab308dd82cbeea2f2fae5e"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/hygieneExposureLedger.test.ts",
+      "bytes": 6848,
+      "sha256": "c8c1f6b41fb256145ecd00beaef009f2a6317e5b8fe65eb32842ea4cea560025"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/hygieneRotation.test.ts",
+      "bytes": 2065,
+      "sha256": "db72d499103897c7d74c6dfcf1ad312d9c971514f563bb85b97b8a91caa21d09"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/hygieneVaultSnapshot.test.ts",
+      "bytes": 5614,
+      "sha256": "ca255ff1d58543bfc7d6c308be7e115629c4ff0009a99b70fdbdd401d6cbd09e"
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/VaultManager.ts",
+      "bytes": 43965,
+      "sha256": "80294f8bfff986806deaae54eb17e11db1b6a258efe9ec580ebb2a80cd8dca33"
+    }
+  ],
+  "implemented": "Private snapshot/analyzer lease, canonical queued mutation admission and withdrawal, consent-driven bounded controller, vault/example/disclosure restore, keyed exposure view/export, static manual provider guidance. Controller14PASS; affected snapshot/vault37PASS; earlier bridge91PASS; analysis+manual guidance12PASS. All failures retained, including metadata collision/clock/queued guard/same-key notification/export key drift/public Stripe key.",
+  "pending": [
+    "Native commands/activation/manifest machine flag and current typecheck",
+    "Final combined/full/current exact VSIX/content/native hygiene and affected native/tool checks",
+    "Ledger scoped commits/exhaustive byte verification before F22"
+  ],
+  "limits": "No F21 product native/artifact acceptance yet. Tests synthetic only. See design02 for analyzed-text versus freshness IO budgets, unsupported-parser withholding, postcommit metadata INCOMPLETE, manual-only provider guidance. Frozen catalog ungraded; F11 absent/nine unmanaged leaks/historical residual workers preserved. OriginalL6 HUMAN-ACTIONS STOP; no rating."
+}

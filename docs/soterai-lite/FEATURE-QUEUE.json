@@ -575,12 +575,15 @@
     {
       "id": "F21",
       "title": "Secrets hygiene and exposure ledger.",
-      "status": "ACTIVE",
-      "result": "NOT-RUN",
+      "status": "VERIFYING",
+      "result": "PASS_SCOPED_PENDING_BYTE_BARRIERS",
       "requires": [
         "F20"
       ],
-      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "progressEvidence": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/f21-progress-06.json",
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/f21-acceptance-01.json",
+      "scope": "Owner-reviewed Windows trusted single local saved-file/workspace heuristic hygiene. Canonical F02 additive enrollment precedes consent basis; candidate originals stay in bounded private F06 snapshots after consent. Real isolated SecretStorage API, canonical whole-file vault/example/disclosure restore with saved denies, keyed possible-exposure view/export, manual NOT_PERFORMED provider checklists. No actual AI access/key validity/rotation/OS custody/human/independent/hostile-same-user or universal scanner guarantee. Current affected F06 vault/F04 reader/gateway lifecycle and functional/security checks; adapter/server production code unchanged, actual vendor executables not rerun for F21 and final exact-object V01 route gates remain pending."
     },
     {
       "id": "F22",

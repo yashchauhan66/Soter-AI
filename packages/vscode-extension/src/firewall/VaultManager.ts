@@ -18,6 +18,7 @@ import { ManagedOutputFilter } from "../terminal/ManagedOutputFilter";
 import { managedRootIdentity, managedPolicyBinding, managedEmptyStoreIdentity } from "../terminal/ManagedOutputBinding";
 import { isPathWithin } from "../../../core/src/pathContainment";
 import { GatewayRegistryLease } from "../broker/GatewayRegistryLease";
+import { hygieneAssistantEnabled } from "../hygiene/HygieneFlags";
 
 const KEY_ID = "soterai.vaultKey", PENDING = "vault-pending.json", VAULT = "soterai-vault.enc";
 const UUID = /^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/i;
@@ -30,6 +31,7 @@ interface Checkpoint { schemaVersion: 1; id: string; source: string; root: strin
     identity: string; vaultBefore: string | null; vaultAfter: string; count: number }
 export interface VaultStatus { exists: boolean; location: string; entryCount: number; entries: Array<Omit<VaultEntryMetadata, "hash" | "id">> }
 export interface MigrationPreview { file: string; candidates: Array<{ key: string; type: string; placeholder: string; redactedPreview: string }> }
+export interface VaultHygieneSnapshot { readonly source: string; readonly root: string; readonly text: string; readonly identity: string; readonly policy: string }
 
 export function vaultModeEnabled(): boolean {
     try {
@@ -82,6 +84,7 @@ export class VaultManager {
     private readonly storage: VaultStorage;
     private epoch = 0;
     private runtimeEpoch = 0;
+    private mutationGuard?: () => boolean;
     constructor(private readonly context: vscode.ExtensionContext) {
         // Desktop VS Code exposes profile global storage as vscode-userdata;
         // its native storage implementation maps that trusted URI to file.
@@ -93,7 +96,7 @@ export class VaultManager {
     }
     private alive(epoch?: number): void {
         const storage = this.context.globalStorageUri;
-        if (!vaultModeEnabled() || !["file", "vscode-userdata"].includes(storage.scheme) || storage.scheme === "vscode-userdata" && !!vscode.env.remoteName || storage.authority
+        if (this.mutationGuard && this.mutationGuard() !== true || !vaultModeEnabled() || !["file", "vscode-userdata"].includes(storage.scheme) || storage.scheme === "vscode-userdata" && !!vscode.env.remoteName || storage.authority
             || this.context.globalStorageUri.query || this.context.globalStorageUri.fragment || epoch !== undefined && epoch !== this.epoch) return vaultUnavailable();
     }
     private async capture(uri: vscode.Uri, ownerDamagedRecovery = false): Promise<Basis> {
@@ -207,6 +210,22 @@ export class VaultManager {
         const basis = await this.capture(uri), plan = createVaultMigrationPlan(basis.text, /^\.env(?:\..*)?$/i.test(path.basename(uri.fsPath)), randomUUID());
         return { file: vscode.workspace.asRelativePath(uri), candidates: plan.candidates.map(({ key, type, placeholder }) => ({ key, type, placeholder, redactedPreview: MASKED })) };
     }
+    /** Trusted local hygiene callback only, after its native owner consent.
+     * Uses the same guarded saved-file capture as migration, without opening a
+     * source TextDocument, making a key or returning an original via commands. */
+    async withHygieneSnapshot<T>(uri: vscode.Uri, use: (snapshot: Readonly<VaultHygieneSnapshot>) => T, enabled: () => boolean): Promise<T> {
+        try {
+            const allowed = () => hygieneAssistantEnabled() && enabled() === true;
+            if (!allowed()) return vaultUnavailable(); const basis = await this.capture(uri);
+            await this.noPending(); await this.fresh(uri, basis); if (!allowed()) return vaultUnavailable();
+            const result = use(Object.freeze({ source: basis.source, root: basis.root, text: basis.text, identity: basis.identity, policy: basis.policy }));
+            if (result && typeof (result as { then?: unknown }).then === "function") return vaultUnavailable();
+            await this.fresh(uri, basis); if (!allowed()) return vaultUnavailable(); return result;
+        } catch { return vaultUnavailable(); }
+    }
+    /** Revokes only this instance's pending captures/mutations. Hygiene owns its
+     * own instance, so cancelling it does not withdraw unrelated terminal jobs. */
+    withdrawHygiene(): void { this.epoch++; }
     async status(): Promise<VaultStatus> {
         const vault = await this.vault(), roots = new Set((vscode.workspace.workspaceFolders ?? []).map(folder => folder.uri.toString()));
         const entries = vault.data.entries.filter(entry => !entry.root || roots.has(entry.root)).map(entry => ({ key: entry.key, type: entry.type,
@@ -380,7 +399,7 @@ export class VaultManager {
             return new GatewayRegistryLease(values, guard);
         } catch { return vaultUnavailable(); }
     }
-    async migrate(uri: vscode.Uri): Promise<number> {
+    async migrate(uri: vscode.Uri, enabled?: () => boolean): Promise<number> {
         return this.mutation(async () => {
             let basis = await this.capture(uri); await this.noPending();
             const id = randomUUID(), plan = createVaultMigrationPlan(basis.text, /^\.env(?:\..*)?$/i.test(path.basename(uri.fsPath)), id);
@@ -411,7 +430,7 @@ export class VaultManager {
                     await this.complete(uri, basis, checkpoint, pointer, key); return plan.candidates.length;
                 });
             });
-        });
+        }, enabled);
     }
     private async complete(uri: vscode.Uri, basis: Basis, checkpoint: Checkpoint, pointer: string, key: string): Promise<void> {
         await this.checkExample(uri, checkpoint.example); const current = await this.capture(uri); this.alive(basis.epoch);
@@ -444,7 +463,7 @@ export class VaultManager {
             });
         });
     }
-    async restore(uri: vscode.Uri): Promise<number> {
+    async restore(uri: vscode.Uri, enabled?: () => boolean): Promise<number> {
         return this.mutation(async () => {
             const basis = await this.capture(uri); await this.noPending(); const vault = await this.vault();
             const entries = vault.data.entries.filter(entry => entry.source === basis.source && entry.root === basis.root && basis.text.includes(entry.placeholder));
@@ -456,7 +475,7 @@ export class VaultManager {
                 if (Buffer.byteLength(next, "utf8") > 65536) return vaultUnavailable();
                 await withPendingRestriction(basis.root, () => this.writeSource(uri, basis, next, key)); return entries.length;
             });
-        });
+        }, enabled);
     }
     async restoreFromBackup(uri: vscode.Uri): Promise<boolean> {
         try {
@@ -487,7 +506,7 @@ export class VaultManager {
         return await vscode.window.showWarningMessage("Restore raw values into this project file? AI tools and other same-user software may read them. Saved restrictions remain; this disclosure cannot recall other copies.",
             { modal: true, detail: JSON.stringify({ file: vscode.workspace.asRelativePath(uri), values: MASKED }) }, "Restore raw values") === "Restore raw values";
     }
-    async writeEnvExample(uri: vscode.Uri): Promise<vscode.Uri> {
+    async writeEnvExample(uri: vscode.Uri, enabled?: () => boolean): Promise<vscode.Uri> {
         return this.mutation(async () => {
             const basis = await this.capture(uri); await this.noPending(); const plan = createVaultMigrationPlan(basis.text, true, randomUUID());
             await this.checkExample(uri, plan.exampleText); await this.fresh(uri, basis);
@@ -495,10 +514,14 @@ export class VaultManager {
                 await this.noPending(); const key = await this.key(true); await this.fresh(uri, basis);
                 await this.writeExample(uri, plan.exampleText, key); await this.fresh(uri, basis); return this.exampleUri(uri);
             });
-        });
+        }, enabled);
     }
-    private async mutation<T>(operation: () => Promise<T>): Promise<T> {
-        const result = VaultManager.mutationQueue.then(async () => { this.alive(); return operation(); });
+    private async mutation<T>(operation: () => Promise<T>, enabled?: () => boolean): Promise<T> {
+        const result = VaultManager.mutationQueue.then(async () => {
+            this.alive(); if (enabled && enabled() !== true) return vaultUnavailable();
+            this.mutationGuard = enabled;
+            try { return await operation(); } finally { this.mutationGuard = undefined; }
+        });
         VaultManager.mutationQueue = result.then(() => undefined, () => undefined);
         try { return await result; } catch { return vaultUnavailable(); }
     }

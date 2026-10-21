@@ -1,0 +1,148 @@
+﻿TAP version 13
+# Subtest: F21 controller constructor/status never scans or creates a key
+ok 1 - F21 controller constructor/status never scans or creates a key
+  ---
+  duration_ms: 53.4798
+  type: 'test'
+  ...
+# Subtest: F21 owner cancellation precedes original reads/ledger key creation
+ok 2 - F21 owner cancellation precedes original reads/ledger key creation
+  ---
+  duration_ms: 33.748
+  type: 'test'
+  ...
+# Subtest: F21 reviewed local file analysis returns only safe findings and possible-exposure metadata
+ok 3 - F21 reviewed local file analysis returns only safe findings and possible-exposure metadata
+  ---
+  duration_ms: 247.021
+  type: 'test'
+  ...
+# Subtest: F21 bounded workspace discovery has public control and excludes source originals from command results
+ok 4 - F21 bounded workspace discovery has public control and excludes source originals from command results
+  ---
+  duration_ms: 451.5392
+  type: 'test'
+  ...
+# Subtest: F21 source changed while owner consent is pending is withheld before findings persist
+ok 5 - F21 source changed while owner consent is pending is withheld before findings persist
+  ---
+  duration_ms: 42.4303
+  type: 'test'
+  ...
+# Subtest: F21 machine disabled ignores repository enabling and releases no findings
+ok 6 - F21 machine disabled ignores repository enabling and releases no findings
+  ---
+  duration_ms: 15.041
+  type: 'test'
+  ...
+# Subtest: F21 vault fix and explicit disclosure undo use canonical recovery while saved denies remain
+ok 7 - F21 vault fix and explicit disclosure undo use canonical recovery while saved denies remain
+  ---
+  duration_ms: 1293.3794
+  type: 'test'
+  ...
+# Subtest: F21 cancelled vault review and conflicting example preserve source and existing files
+ok 8 - F21 cancelled vault review and conflicting example preserve source and existing files
+  ---
+  duration_ms: 341.1507
+  type: 'test'
+  ...
+# Subtest: F21 withdrawal prevents late vault confirmation from changing source
+ok 9 - F21 withdrawal prevents late vault confirmation from changing source
+  ---
+  duration_ms: 253.8609
+  type: 'test'
+  ...
+# Subtest: F21 expiry before approval, changed key and failed persistence never report success
+ok 10 - F21 expiry before approval, changed key and failed persistence never report success
+  ---
+  duration_ms: 378.8601
+  type: 'test'
+  ...
+# Subtest: F21 reviewed metadata export is a new file and contains neither source paths nor values
+ok 11 - F21 reviewed metadata export is a new file and contains neither source paths nor values
+  ---
+  duration_ms: 180.6232
+  type: 'test'
+  ...
+# Subtest: F21 candidate embedded in filename can be analyzed privately but cannot enter vault review labels
+ok 12 - F21 candidate embedded in filename can be analyzed privately but cannot enter vault review labels
+  ---
+  duration_ms: 161.7157
+  type: 'test'
+  ...
+# Subtest: F21 delayed notification for the same current key does not revoke a valid local scan
+ok 13 - F21 delayed notification for the same current key does not revoke a valid local scan
+  ---
+  duration_ms: 160.3403
+  type: 'test'
+  ...
+# Subtest: F21 key replacement during export review refuses stale metadata before creating a file
+ok 14 - F21 key replacement during export review refuses stale metadata before creating a file
+  ---
+  duration_ms: 174.0073
+  type: 'test'
+  ...
+# Subtest: F21 workspace analysis caps discovery at128 and admits at most1MiB of saved text
+ok 15 - F21 workspace analysis caps discovery at128 and admits at most1MiB of saved text
+  ---
+  duration_ms: 2320.1713
+  type: 'test'
+  ...
+# Subtest: F21 binary/oversized saved-file outcomes never release partial secret findings
+ok 16 - F21 binary/oversized saved-file outcomes never release partial secret findings
+  ---
+  duration_ms: 130.4613
+  type: 'test'
+  ...
+# Subtest: F21 cancel never enters the original-content snapshot even with multiple discovered files
+ok 17 - F21 cancel never enters the original-content snapshot even with multiple discovered files
+  ---
+  duration_ms: 231.4356
+  type: 'test'
+  ...
+# Subtest: F21 post-migration metadata failure is INCOMPLETE and retains placeholders/recovery rather than restoring originals
+ok 18 - F21 post-migration metadata failure is INCOMPLETE and retains placeholders/recovery rather than restoring originals
+  ---
+  duration_ms: 979.1583
+  type: 'test'
+  ...
+# Subtest: F21 lease expiry during canonical vault review prevents source mutation without waiting for a timer callback
+not ok 19 - F21 lease expiry during canonical vault review prevents source mutation without waiting for a timer callback
+  ---
+  duration_ms: 906.1382
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\hygieneController.test.ts:2:15261'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'API_KEY=[SOTERAI_PROTECTED_696CE94B77484350B58336F51F794E43_0]\nPORT=3000\n'
+    - 'API_KEY=TEST_ONLY_F21_PRIVATE_CONTROLLER_VALUE_73ef83c1\nPORT=3000\n'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: |-
+    API_KEY=TEST_ONLY_F21_PRIVATE_CONTROLLER_VALUE_73ef83c1
+    PORT=3000
+    
+  actual: |-
+    API_KEY=[SOTERAI_PROTECTED_696CE94B77484350B58336F51F794E43_0]
+    PORT=3000
+    
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\hygieneController.test.ts:112:103)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..19
+# tests 19
+# suites 0
+# pass 18
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 9626.6955

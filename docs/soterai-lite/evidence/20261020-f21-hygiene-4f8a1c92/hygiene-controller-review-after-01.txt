@@ -1,0 +1,94 @@
+﻿TAP version 13
+# Subtest: F21 controller constructor/status never scans or creates a key
+ok 1 - F21 controller constructor/status never scans or creates a key
+  ---
+  duration_ms: 208.7792
+  type: 'test'
+  ...
+# Subtest: F21 owner cancellation precedes original reads/ledger key creation
+ok 2 - F21 owner cancellation precedes original reads/ledger key creation
+  ---
+  duration_ms: 29.7342
+  type: 'test'
+  ...
+# Subtest: F21 reviewed local file analysis returns only safe findings and possible-exposure metadata
+ok 3 - F21 reviewed local file analysis returns only safe findings and possible-exposure metadata
+  ---
+  duration_ms: 191.035
+  type: 'test'
+  ...
+# Subtest: F21 bounded workspace discovery has public control and excludes source originals from command results
+ok 4 - F21 bounded workspace discovery has public control and excludes source originals from command results
+  ---
+  duration_ms: 304.2373
+  type: 'test'
+  ...
+# Subtest: F21 source changed while owner consent is pending is withheld before findings persist
+ok 5 - F21 source changed while owner consent is pending is withheld before findings persist
+  ---
+  duration_ms: 28.4623
+  type: 'test'
+  ...
+# Subtest: F21 machine disabled ignores repository enabling and releases no findings
+ok 6 - F21 machine disabled ignores repository enabling and releases no findings
+  ---
+  duration_ms: 9.8965
+  type: 'test'
+  ...
+# Subtest: F21 vault fix and explicit disclosure undo use canonical recovery while saved denies remain
+ok 7 - F21 vault fix and explicit disclosure undo use canonical recovery while saved denies remain
+  ---
+  duration_ms: 1263.254
+  type: 'test'
+  ...
+# Subtest: F21 cancelled vault review and conflicting example preserve source and existing files
+ok 8 - F21 cancelled vault review and conflicting example preserve source and existing files
+  ---
+  duration_ms: 333.1517
+  type: 'test'
+  ...
+# Subtest: F21 withdrawal prevents late vault confirmation from changing source
+ok 9 - F21 withdrawal prevents late vault confirmation from changing source
+  ---
+  duration_ms: 238.0944
+  type: 'test'
+  ...
+# Subtest: F21 expiry before approval, changed key and failed persistence never report success
+ok 10 - F21 expiry before approval, changed key and failed persistence never report success
+  ---
+  duration_ms: 320.1136
+  type: 'test'
+  ...
+# Subtest: F21 reviewed metadata export is a new file and contains neither source paths nor values
+ok 11 - F21 reviewed metadata export is a new file and contains neither source paths nor values
+  ---
+  duration_ms: 162.4334
+  type: 'test'
+  ...
+# Subtest: F21 candidate embedded in filename can be analyzed privately but cannot enter vault review labels
+ok 12 - F21 candidate embedded in filename can be analyzed privately but cannot enter vault review labels
+  ---
+  duration_ms: 155.4296
+  type: 'test'
+  ...
+# Subtest: F21 delayed notification for the same current key does not revoke a valid local scan
+ok 13 - F21 delayed notification for the same current key does not revoke a valid local scan
+  ---
+  duration_ms: 147.1561
+  type: 'test'
+  ...
+# Subtest: F21 key replacement during export review refuses stale metadata before creating a file
+ok 14 - F21 key replacement during export review refuses stale metadata before creating a file
+  ---
+  duration_ms: 147.2999
+  type: 'test'
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 14
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4321.5325
