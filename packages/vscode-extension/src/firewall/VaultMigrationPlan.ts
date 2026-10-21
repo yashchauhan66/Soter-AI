@@ -1,18 +1,20 @@
 import { applyPlaceholders, classifySecretType, containsRawSecret, extractVaultCandidates, type VaultCandidate } from "@soterai/guard-core";
 import { SecureEditorModel } from "../project-privacy/SecureEditorModel";
 import { createSourceSecretPlan, type SourceSyntax } from "../config-scanners/SourceSecretPlan";
+import { createContainerSecretPlan, type ContainerFormat } from "../config-scanners/ContainerSecretPlan";
 
 export interface PrivateVaultCandidate extends VaultCandidate { replacementText: string }
-export interface PrivateVaultPlan { maskedText: string; exampleText: string; candidates: PrivateVaultCandidate[] }
+export interface PrivateVaultPlan { maskedText: string; exampleText: string; candidates: PrivateVaultCandidate[]; restoreMode?: "checkpoint" }
 const UUID = /^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/i;
 const EXISTING = /^\[SOTERAI_PROTECTED_[A-Z0-9_]+\]$/;
 const fail = (): never => { throw new Error("Vault migration syntax or size is unsupported."); };
 
 /** Private plan: no raw values or original representation are a UI/tool receipt. */
-export function createVaultMigrationPlan(text: string, environment: boolean, generation: string, sourceSyntax?: SourceSyntax): PrivateVaultPlan {
+export function createVaultMigrationPlan(text: string, environment: boolean, generation: string, sourceSyntax?: SourceSyntax | ContainerFormat): PrivateVaultPlan {
     if (typeof generation !== "string" || !UUID.test(generation) || typeof environment !== "boolean") return fail();
     if (sourceSyntax !== undefined) {
         if (environment) return fail();
+        if (sourceSyntax === "yaml" || sourceSyntax === "dockerfile") return createContainerSecretPlan(text, sourceSyntax, generation);
         return createSourceSecretPlan(text, sourceSyntax, generation);
     }
     const model = new SecureEditorModel(text, environment), candidates: PrivateVaultCandidate[] = [];

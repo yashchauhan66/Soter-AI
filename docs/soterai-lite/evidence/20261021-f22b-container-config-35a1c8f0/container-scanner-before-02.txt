@@ -1,0 +1,247 @@
+﻿TAP version 13
+# Subtest: F22b canonical container planner is explicitly selected and YAML records require checkpoint restoration
+not ok 1 - F22b canonical container planner is explicitly selected and YAML records require checkpoint restoration
+  ---
+  duration_ms: 10.3192
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\containerScanner.test.ts:2:3290'
+  failureType: 'testCodeFailure'
+  error: 'Source syntax, expression or size is unsupported; existing files are preserved.'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    fail (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\config-scanners\SourceSecretPlan.ts:10:35)
+    createSourceSecretPlan (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\config-scanners\SourceSecretPlan.ts:114:22)
+    createVaultMigrationPlan (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\firewall\VaultMigrationPlan.ts:16:16)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\containerScanner.test.ts:27:21)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F22b container analysis exposes only keyed metadata and rejects other declared families
+not ok 2 - F22b container analysis exposes only keyed metadata and rejects other declared families
+  ---
+  duration_ms: 11.1614
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\containerScanner.test.ts:2:4047'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'undefined'
+    - 'function'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'function'
+  actual: 'undefined'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\containerScanner.test.ts:31:109)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F22b cancellation precedes canonical source capture/key creation and no original document is opened
+ok 3 - F22b cancellation precedes canonical source capture/key creation and no original document is opened
+  ---
+  duration_ms: 27.325
+  type: 'test'
+  ...
+# Subtest: F22b reviewed YAML migration and checkpoint disclosure restore exact bytes without invalid per-entry fallback
+not ok 4 - F22b reviewed YAML migration and checkpoint disclosure restore exact bytes without invalid per-entry fallback
+  ---
+  duration_ms: 186.2449
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\containerScanner.test.ts:2:5557'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    1 !== 2
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 2
+  actual: 1
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\containerScanner.test.ts:40:142)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F22b Secret base64 marker is valid after vaulting and original scalar formatting returns only via disclosure checkpoint
+not ok 5 - F22b Secret base64 marker is valid after vaulting and original scalar formatting returns only via disclosure checkpoint
+  ---
+  duration_ms: 141.3648
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\containerScanner.test.ts:2:6968'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\containerScanner.test.ts:47:63)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F22b Dockerfile static assignments retain compatible exact per-entry restore
+ok 6 - F22b Dockerfile static assignments retain compatible exact per-entry restore
+  ---
+  duration_ms: 900.126
+  type: 'test'
+  ...
+# Subtest: F22b strict family machine flag/dependencies withdraw while repository enable grants no authority
+not ok 7 - F22b strict family machine flag/dependencies withdraw while repository enable grants no authority
+  ---
+  duration_ms: 146.1771
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\containerScanner.test.ts:2:8926'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'ANALYZED'
+    - 'UNAVAILABLE'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'UNAVAILABLE'
+  actual: 'ANALYZED'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\containerScanner.test.ts:55:233)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F22b family discovery admits public Kubernetes controls and does not evaluate config commands
+not ok 8 - F22b family discovery admits public Kubernetes controls and does not evaluate config commands
+  ---
+  duration_ms: 11.4
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\containerScanner.test.ts:2:9720'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'UNAVAILABLE'
+    - 'ANALYZED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'ANALYZED'
+  actual: 'UNAVAILABLE'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\containerScanner.test.ts:61:65)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F22b unsupported/malformed input withholds complete findings and metadata export stays value-free
+not ok 9 - F22b unsupported/malformed input withholds complete findings and metadata export stays value-free
+  ---
+  duration_ms: 125.477
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\containerScanner.test.ts:2:10568'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'ANALYZED'
+    - 'UNSUPPORTED_CONTAINER_CONFIG'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'UNSUPPORTED_CONTAINER_CONFIG'
+  actual: 'ANALYZED'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\containerScanner.test.ts:64:134)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F22b YAML disclosure guard is checked at admission and after a late owner decision
+not ok 10 - F22b YAML disclosure guard is checked at admission and after a late owner decision
+  ---
+  duration_ms: 544.2578
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\containerScanner.test.ts:2:11643'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\containerScanner.test.ts:75:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F22b guarded container migration API refuses disabled family before creating a vault key
+not ok 11 - F22b guarded container migration API refuses disabled family before creating a vault key
+  ---
+  duration_ms: 3.9032
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\containerScanner.test.ts:2:12889'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'undefined'
+    - 'function'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'function'
+  actual: 'undefined'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\containerScanner.test.ts:81:87)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F22b late flag withdrawal/lease expiry prevents migration and checkpoint disclosure writes
+not ok 12 - F22b late flag withdrawal/lease expiry prevents migration and checkpoint disclosure writes
+  ---
+  duration_ms: 128.6687
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\containerScanner.test.ts:2:13533'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    1 !== 2
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 2
+  actual: 1
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\containerScanner.test.ts:85:136)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 2
+# fail 10
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3063.0969

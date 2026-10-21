@@ -1,0 +1,49 @@
+{
+  "status": "PASS_EXACT_CANDIDATE01_INPUT_BYTES",
+  "artifact": {
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-f22b-20261021-attempt01.vsix",
+    "bytes": 1642908,
+    "sha256": "29d644624db46eddbd72f09959a0e76b3f2d585af5c3322e7b1340d18b2d0c12"
+  },
+  "files": [
+    {
+      "original": {
+        "runtime": "extension.js",
+        "path": "packages/vscode-extension/src/hygiene/HygieneController.ts",
+        "sha256": "8fd62b750ead62d928cb6aa6c45e041d9519c846ec76f24a53774b5efb7fe05b",
+        "bytes": 18238
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/candidate01-source-inputs-01/HygieneController.ts.txt",
+        "bytes": 18238,
+        "sha256": "8fd62b750ead62d928cb6aa6c45e041d9519c846ec76f24a53774b5efb7fe05b"
+      }
+    },
+    {
+      "original": {
+        "runtime": "extension.js",
+        "path": "packages/vscode-extension/src/config-scanners/ContainerSecretPlan.ts",
+        "sha256": "fe4c409966d59067e651b4c66c6ebe2c460f9b77aa716c3760bbd51a55b681df",
+        "bytes": 15576
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/candidate01-source-inputs-01/ContainerSecretPlan.ts.txt",
+        "bytes": 15576,
+        "sha256": "fe4c409966d59067e651b4c66c6ebe2c460f9b77aa716c3760bbd51a55b681df"
+      }
+    },
+    {
+      "original": {
+        "path": "packages/vscode-extension/src/__tests__/containerScanner.test.ts",
+        "bytes": 17355,
+        "sha256": "a3230b6ce4cc34f55e2372d160041f74f15c5773b6f0dfc0fe82dabcef6d8761"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/candidate01-source-inputs-01/containerScanner.test.ts.txt",
+        "bytes": 17355,
+        "sha256": "a3230b6ce4cc34f55e2372d160041f74f15c5773b6f0dfc0fe82dabcef6d8761"
+      }
+    }
+  ],
+  "reason": "Preserve original product/fixture inputs before discovery implementation improvement. Actual native01 19PASS2FAIL with workspace discovery0files is retained and not regraded. Product source facts match candidate01 provenance; test source matches progress05."
+}

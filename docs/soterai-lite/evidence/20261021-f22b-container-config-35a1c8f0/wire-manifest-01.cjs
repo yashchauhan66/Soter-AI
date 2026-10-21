@@ -1,0 +1,20 @@
+const fs = require('node:fs'), path = require('node:path'), crypto = require('node:crypto'), assert = require('node:assert/strict');
+const repo = path.resolve(__dirname, '../../../..'), out = path.join(__dirname, 'manifest-wiring-01.json'), sha = b => crypto.createHash('sha256').update(b).digest('hex'); if (fs.existsSync(out)) throw Error('Evidence overwrite refused');
+const flag = 'soterai.lite.configScanner.dockerKubernetes', changes = [], commands = [
+ ['reviewWorkspaceContainerSecrets', 'Review Workspace Docker/Kubernetes Secrets'], ['reviewContainerSecrets', 'Review Selected Docker/Kubernetes Secrets'],
+ ['reviewContainerSecretVault', 'Review Docker/Kubernetes Vault Migration'], ['restoreContainerSecretVault', 'Restore Reviewed Docker/Kubernetes Values (Disclosure)'], ['containerSecretScannerStatus', 'Docker/Kubernetes Secret Scanner Status']
+];
+for (const file of ['packages/vscode-extension/package.json', 'packages/soterai-lite/package.json']) {
+ const absolute = path.join(repo, file), before = fs.readFileSync(absolute), original = before.toString('utf8'), manifest = JSON.parse(original); assert.equal(manifest.contributes.configuration.properties[flag], undefined); assert.equal(manifest.devDependencies.yaml, undefined);
+ manifest.devDependencies.yaml = '2.9.0'; manifest.contributes.configuration.properties[flag] = { type: 'boolean', default: true, scope: 'machine', description: 'Enable owner-reviewed static Docker ENV/ARG and Compose/Kubernetes YAML secret review with canonical encrypted vault migration. YAML disclosure restores the entire original checkpoint; unsupported inputs withhold analysis. No config execution, build or deployment.' };
+ manifest.capabilities.untrustedWorkspaces.restrictedConfigurations.push(flag);
+ for (const [name, title] of commands) { const command = 'soterai.' + name; assert(!manifest.contributes.commands.some(c => c.command === command)); manifest.contributes.commands.push({ command, title, category: 'SoterAI' }); manifest.contributes.menus.commandPalette.push({ command, when: 'soterai.advancedCommands' }); }
+ const newline = original.includes('\r\n') ? '\r\n' : '\n', after = Buffer.from((JSON.stringify(manifest, null, file.includes('vscode-extension') ? 4 : 2) + '\n').replace(/\n/g, newline)); changes.push({ path: file, absolute, before, after });
+}
+const file = 'package-lock.json', absolute = path.join(repo, file), before = fs.readFileSync(absolute), original = before.toString('utf8'), expected = JSON.parse(original); assert.equal(expected.packages['node_modules/yaml'].version, '2.9.0'); assert.equal(expected.packages['packages/soterai-lite'].devDependencies.yaml, undefined);
+const start = original.indexOf('"packages/soterai-lite": {'); assert(start >= 0); const deps = original.indexOf('"devDependencies": {', start), insertion = deps + '"devDependencies": {'.length; assert(deps > start);
+const newline = original.includes('\r\n') ? '\r\n' : '\n', after = Buffer.from(original.slice(0, insertion) + newline + '        "yaml": "2.9.0",' + original.slice(insertion)); expected.packages['packages/soterai-lite'].devDependencies.yaml = '2.9.0'; assert.deepStrictEqual(JSON.parse(after), expected); changes.push({ path: file, absolute, before, after });
+const installed = JSON.parse(fs.readFileSync(path.join(repo, 'node_modules/yaml/package.json'), 'utf8')); assert.equal(installed.version, '2.9.0'); assert.equal(installed.license, 'ISC');
+for (const row of changes) assert.equal(sha(fs.readFileSync(row.absolute)), sha(row.before), 'Pre-write source drift');
+for (const row of changes) fs.writeFileSync(row.absolute, row.after);
+fs.writeFileSync(out, JSON.stringify({ status: 'WIRED_NOT_NATIVE_VERIFIED', flag, commands: commands.map(([n]) => 'soterai.' + n), changes: changes.map(r => ({ path: r.path, before: sha(r.before), after: sha(r.after), bytes: r.after.length })), parser: { version: installed.version, license: installed.license, installedOnly: true, downloads: 0 } }, null, 2) + '\n', { flag: 'wx' }); console.log(JSON.stringify({ status: 'WIRED_NOT_NATIVE_VERIFIED', paths: changes.length, commands: commands.length }));

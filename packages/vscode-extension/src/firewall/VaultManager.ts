@@ -21,11 +21,13 @@ import { GatewayRegistryLease } from "../broker/GatewayRegistryLease";
 import { hygieneAssistantEnabled } from "../hygiene/HygieneFlags";
 import { sourceScannerEnabled } from "../config-scanners/SourceScannerFlags";
 import { sourceSyntaxForPath } from "../config-scanners/SourceSecretPlan";
+import { containerFormatForPath } from "../config-scanners/ContainerSecretPlan";
+import { containerScannerEnabled } from "../config-scanners/ContainerScannerFlags";
 
 const KEY_ID = "soterai.vaultKey", PENDING = "vault-pending.json", VAULT = "soterai-vault.enc";
 const UUID = /^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/i;
 const digest = (text: string) => createHash("sha256").update(text).digest("hex");
-interface StoredEntry extends VaultEntryMetadata { rawValue: string; source?: string; root?: string; replacementText?: string }
+interface StoredEntry extends VaultEntryMetadata { rawValue: string; source?: string; root?: string; replacementText?: string; restoreMode?: "checkpoint" }
 interface VaultFile { version: 1 | 2; entries: StoredEntry[] }
 interface Basis { source: string; root: string; text: string; identity: string; policy: string; epoch: number; ownerDamagedRecovery: boolean }
 interface Issued { schemaVersion: 1; id: string; source: string; root: string; digest: string }
@@ -68,12 +70,13 @@ function parseVault(text: string): VaultFile {
     const value = vaultObject(vaultJson(text), ["version", "entries"]);
     if (![1, 2].includes(value.version as number) || !Array.isArray(value.entries) || value.entries.length > 4096) return vaultUnavailable();
     const entries = value.entries.map(entry => {
-        const data = vaultObject(entry, ["id", "key", "type", "originalFile", "placeholder", "createdAt", "hash", "rawValue", "source", "root", "replacementText"],
+        const data = vaultObject(entry, ["id", "key", "type", "originalFile", "placeholder", "createdAt", "hash", "rawValue", "source", "root", "replacementText", "restoreMode"],
             ["id", "key", "type", "originalFile", "placeholder", "createdAt", "hash", "rawValue"]);
         for (const field of Object.keys(data)) if (typeof data[field] !== "string" || Buffer.byteLength(data[field] as string, "utf8") > 65536) return vaultUnavailable();
         if (!/^[a-f0-9]{64}$/i.test(data.hash as string) || !/^\[SOTERAI_PROTECTED_[A-Z0-9_]+\]$/.test(data.placeholder as string)
             || !data.id || !data.key || !data.type || !data.originalFile || !Number.isFinite(Date.parse(data.createdAt as string))) return vaultUnavailable();
         if (data.source !== undefined && (typeof data.root !== "string" || typeof data.replacementText !== "string")) return vaultUnavailable();
+        if (data.restoreMode !== undefined && (data.restoreMode !== "checkpoint" || typeof data.source !== "string" || typeof data.root !== "string" || typeof data.replacementText !== "string")) return vaultUnavailable();
         return data as unknown as StoredEntry;
     });
     return { version: value.version as 1 | 2, entries };
@@ -409,14 +412,19 @@ export class VaultManager {
     async migrateSource(uri: vscode.Uri, enabled: () => boolean): Promise<number> {
         return this.migrateSelected(uri, () => sourceScannerEnabled() && hygieneAssistantEnabled() && enabled() === true, true);
     }
-    private async migrateSelected(uri: vscode.Uri, enabled: (() => boolean) | undefined, sourceMode: boolean): Promise<number> {
+    async migrateContainer(uri: vscode.Uri, enabled: () => boolean): Promise<number> {
+        return this.migrateSelected(uri, () => containerScannerEnabled() && hygieneAssistantEnabled() && enabled() === true, false, true);
+    }
+    private async migrateSelected(uri: vscode.Uri, enabled: (() => boolean) | undefined, sourceMode: boolean, containerMode = false): Promise<number> {
         return this.mutation(async () => {
             let basis = await this.capture(uri); await this.noPending();
             const relative = path.relative(vscode.Uri.parse(basis.root).fsPath, uri.fsPath).replaceAll("\\", "/");
-            const syntax = sourceMode ? sourceSyntaxForPath(relative) : undefined; if (sourceMode && !syntax) return vaultUnavailable();
-            const id = randomUUID(), plan = createVaultMigrationPlan(basis.text, !sourceMode && /^\.env(?:\..*)?$/i.test(path.basename(uri.fsPath)), id, syntax);
+            if (sourceMode && containerMode) return vaultUnavailable();
+            const syntax = sourceMode ? sourceSyntaxForPath(relative) : containerMode ? containerFormatForPath(relative) : undefined; if ((sourceMode || containerMode) && !syntax) return vaultUnavailable();
+            const id = randomUUID(), plan = createVaultMigrationPlan(basis.text, !sourceMode && !containerMode && /^\.env(?:\..*)?$/i.test(path.basename(uri.fsPath)), id, syntax);
             // Source identifiers are not public labels or runtime env bindings.
             if (sourceMode) plan.candidates.forEach((candidate, ordinal) => { candidate.key = "SOURCE_VALUE_" + (ordinal + 1); });
+            if (containerMode) plan.candidates.forEach((candidate, ordinal) => { candidate.key = "CONTAINER_VALUE_" + (ordinal + 1); });
             if (!plan.candidates.length) return 0; await this.checkExample(uri, plan.exampleText);
             const detail = JSON.stringify({ file: vscode.workspace.asRelativePath(uri), count: plan.candidates.length, values: MASKED,
                 keys: plan.candidates.map(candidate => candidate.key), protection: "Add a permanent sensitive deny", example: "Unique names and empty values only",
@@ -429,7 +437,8 @@ export class VaultManager {
                 const prior = await this.vault(key); await this.fresh(uri, basis);
                 const entries = [...prior.data.entries];
                 for (const candidate of plan.candidates) entries.push({ ...await buildVaultMetadata(candidate, vscode.workspace.asRelativePath(uri)),
-                    rawValue: candidate.rawValue, replacementText: candidate.replacementText, source: basis.source, root: basis.root });
+                    rawValue: candidate.rawValue, replacementText: candidate.replacementText, source: basis.source, root: basis.root,
+                    ...(plan.restoreMode === "checkpoint" ? { restoreMode: "checkpoint" as const } : {}) });
                 if (entries.length > 4096) return vaultUnavailable();
                 const vaultAfter = await encryptVault(JSON.stringify({ version: 2, entries }), key); if (Buffer.byteLength(vaultAfter) > VAULT_LIMIT / 2) return vaultUnavailable();
                 await this.fresh(uri, basis); await this.checkExample(uri, plan.exampleText); basis = await this.protect(uri, basis);
@@ -480,7 +489,11 @@ export class VaultManager {
     async restore(uri: vscode.Uri, enabled?: () => boolean): Promise<number> {
         return this.mutation(async () => {
             const basis = await this.capture(uri); await this.noPending(); const vault = await this.vault();
-            const entries = vault.data.entries.filter(entry => entry.source === basis.source && entry.root === basis.root && basis.text.includes(entry.placeholder));
+            const sourceEntries = vault.data.entries.filter(entry => entry.source === basis.source && entry.root === basis.root);
+            // Quoted or encoded YAML replacements must use the encrypted whole
+            // file checkpoint. Marker substitution cannot restore their syntax.
+            if (sourceEntries.some(entry => entry.restoreMode === "checkpoint")) return vaultUnavailable();
+            const entries = sourceEntries.filter(entry => basis.text.includes(entry.placeholder));
             if (!entries.length) return 0; if (!await this.disclosure(uri)) return 0; await this.fresh(uri, basis);
             return this.storage.lock(async () => {
                 await this.noPending(); await this.fresh(uri, basis); const key = await this.key(false);
@@ -491,7 +504,7 @@ export class VaultManager {
             });
         }, enabled);
     }
-    async restoreFromBackup(uri: vscode.Uri): Promise<boolean> {
+    async restoreFromBackup(uri: vscode.Uri, enabled?: () => boolean): Promise<boolean> {
         try {
             return await this.mutation(async () => {
                 const basis = await this.capture(uri, true), pending = await this.storage.read(PENDING, 16384);
@@ -513,7 +526,7 @@ export class VaultManager {
                     }
                     return true;
                 });
-            });
+            }, enabled);
         } catch { return false; }
     }
     private async disclosure(uri: vscode.Uri): Promise<boolean> {

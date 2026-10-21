@@ -1,0 +1,66 @@
+{
+  "status": "PREPARED_NOT_RUN",
+  "ownSources": [
+    "packages/vscode-extension/src/config-scanners/ContainerSecretPlan.ts",
+    "packages/vscode-extension/src/config-scanners/ContainerScannerFlags.ts",
+    "packages/vscode-extension/src/config-scanners/containerCommands.ts",
+    "packages/vscode-extension/src/__tests__/containerSecretPlan.test.ts",
+    "packages/vscode-extension/src/__tests__/containerScanner.test.ts",
+    "packages/vscode-extension/src/__tests__/containerScannerCommands.test.ts",
+    "packages/vscode-extension/src/__tests__/host/liteContainerScanner.host.ts",
+    "packages/vscode-extension/src/firewall/VaultManager.ts",
+    "packages/vscode-extension/src/firewall/VaultMigrationPlan.ts",
+    "packages/vscode-extension/src/hygiene/HygieneAnalysis.ts",
+    "packages/vscode-extension/src/hygiene/HygieneController.ts",
+    "packages/vscode-extension/src/hygiene/HygieneExposureLedger.ts",
+    "packages/vscode-extension/src/extension.ts",
+    "packages/vscode-extension/package.json",
+    "packages/soterai-lite/package.json",
+    "package-lock.json",
+    "packages/vscode-extension/README.md",
+    "packages/soterai-lite/README.md",
+    "packages/vscode-extension/LICENSE.md",
+    "packages/soterai-lite/LICENSE.md",
+    "packages/soterai-lite/CHANGELOG.md",
+    "docs/vscode-extension-readiness.md",
+    "docs/soterai-lite/FEATURE-QUEUE.json"
+  ],
+  "records": [
+    {
+      "source": "evidence-lib-01.cjs",
+      "originalSha256": "9b65cc03f8430289fd21e242c5df23e4d104163aa6df735c425d7cf6220dca4f",
+      "path": "evidence-lib-01.cjs",
+      "bytes": 2119,
+      "sha256": "9b65cc03f8430289fd21e242c5df23e4d104163aa6df735c425d7cf6220dca4f"
+    },
+    {
+      "source": "verify-source-02.cjs",
+      "originalSha256": "7d28588aac3ceacfc32751d7d1e58b848fac2334a5617ef42ddaf1bc7aea5b0a",
+      "path": "verify-source-01.cjs",
+      "bytes": 2328,
+      "sha256": "ecc49ff6dd7a46be67ea6b04dc126855f4e14d2345fdb967275767e15512b4c9"
+    },
+    {
+      "source": "verify-transition-01.cjs",
+      "originalSha256": "1f47aac91c16fbdc55e6e8e4e8ba5a0ff5c6c8884705b156e744b03521dcf15f",
+      "path": "verify-transition-01.cjs",
+      "bytes": 1685,
+      "sha256": "6660c19e2a472a7ee0945cf40f67e0ee1e1e852ec2a8a73959521c5c42a6ee56"
+    },
+    {
+      "source": "prepare-index-01.cjs",
+      "originalSha256": "76dfc17afbb81d6ddada618c4047db15248d87dcdf5c10faf04d45405452e43e",
+      "path": "prepare-index-01.cjs",
+      "bytes": 7892,
+      "sha256": "c01539c54efa214e5477435dfc90977895ef5d8ee2911855492372c2940e7589"
+    },
+    {
+      "source": "snapshot-execution-01.cjs",
+      "originalSha256": "3ff367a928cf9e2ef847e743bc3f6a2c5b163679c67c4810477e586cc3d6e199",
+      "path": "snapshot-execution-01.cjs",
+      "bytes": 2583,
+      "sha256": "ec5140ef172a51b6c113406377dfd340b29ca57293a5b15c9f65ca45436bde72"
+    }
+  ],
+  "scope": "Explicit F22b source/evidence allowlist, old F22a post-commit closure receipts retained, exact core/Babel/YAML runtime and public dependency source snapshots. No unrelated staging or real node_modules staging."
+}

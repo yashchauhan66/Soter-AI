@@ -1,0 +1,192 @@
+{
+  "feature": "F22",
+  "activeSubcard": "F22b",
+  "status": "INCOMPLETE",
+  "parent": "c518999f00241559077b4ba6bf51f4658161b410",
+  "previous": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/f22b-progress-05.json",
+  "commands": [
+    {
+      "name": "full-tests-02",
+      "exitCode": 0,
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/full-tests-02.txt",
+        "bytes": 732297,
+        "sha256": "7ded286408f8535acd8dd42f0c5842e5dde2ef891ab4bdfcfab0782efcd631bd"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/full-tests-02.txt.result.json",
+        "bytes": 606,
+        "sha256": "2280a87bf334d245cb8d73c56beadc4fc7285690cc38b50d02b762a616e5d51b"
+      }
+    },
+    {
+      "name": "package-01",
+      "exitCode": 0,
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/package-01.txt",
+        "bytes": 1778,
+        "sha256": "f02e7952106f95ed29e643fdeb5f52b63de5d0faa4a3a10268cfd42a16f82d2d"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/package-01.txt.result.json",
+        "bytes": 472,
+        "sha256": "710542aafe0b890a5f19cc4a500c3b3922e98988b2fcfeb7a326889cf48135c8"
+      }
+    },
+    {
+      "name": "inspect-vsix-run-01",
+      "exitCode": 0,
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/inspect-vsix-run-01.txt",
+        "bytes": 1928,
+        "sha256": "8559f123ed192b0ce4ba1f3ce4cbd904eee26a457bedea273ca74d36033b199c"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/inspect-vsix-run-01.txt.result.json",
+        "bytes": 1082,
+        "sha256": "4b322a734bffd4650321c0c0715b37e497e4ba05ecd9052a146d14211af735b1"
+      }
+    },
+    {
+      "name": "container-native-run-01",
+      "exitCode": 1,
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/container-native-run-01.txt",
+        "bytes": 1023,
+        "sha256": "ae79b5e519635cac3c4b1b4349acf75d7bba58177dcd556c0ce66b4348c6be1c"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/container-native-run-01.txt.result.json",
+        "bytes": 1493,
+        "sha256": "275330cbd7788150d413402aea58393431785417d2f975f953d0a9f3d613c85d"
+      }
+    },
+    {
+      "name": "discovery-queries-before-01",
+      "exitCode": 1,
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/discovery-queries-before-01.txt",
+        "bytes": 5633,
+        "sha256": "94cdd8b1b6273d93a175b0404eff7077661a760e9d905fc84fd75f4a279d08e9"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/discovery-queries-before-01.txt.result.json",
+        "bytes": 536,
+        "sha256": "d91a12799c9923c7e6fbb32a602f382da858919581ca77eb1532d462a1ccedc7"
+      }
+    },
+    {
+      "name": "container-combined-06",
+      "exitCode": 0,
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/container-combined-06.txt",
+        "bytes": 47291,
+        "sha256": "2ea15e3fdc92686fb4062b418a25c0a27545f6e8b9cf59a4dfc0456f549feac4"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/container-combined-06.txt.result.json",
+        "bytes": 1644,
+        "sha256": "b931260cf8a2a23f5bd8c22b9fd9798a12f6a9e57868153094fe2e570e44662f"
+      }
+    }
+  ],
+  "sources": [
+    {
+      "path": "packages/vscode-extension/src/config-scanners/ContainerSecretPlan.ts",
+      "bytes": 15679,
+      "sha256": "c1eebddad9afd0c6c3bf227a844e07ff9ff0a070ecd4616ea93a8cfd7612c649"
+    },
+    {
+      "path": "packages/vscode-extension/src/config-scanners/ContainerScannerFlags.ts",
+      "bytes": 488,
+      "sha256": "0b8047837176c8945e1a9010ffb30da96bca53d87c60f0c71115ea3adde5602e"
+    },
+    {
+      "path": "packages/vscode-extension/src/config-scanners/containerCommands.ts",
+      "bytes": 3059,
+      "sha256": "00d19b38b82fada143c631b43cfea5be76677843c07d0f1cfe1b30fb911980fe"
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/VaultManager.ts",
+      "bytes": 46862,
+      "sha256": "1ce43ccd1fdcca7e87df2d9741e556e79f746de6d003018a44df9ccc40c70096"
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/VaultMigrationPlan.ts",
+      "bytes": 4070,
+      "sha256": "8840b2675761531332b5fc8b530be0b240104c93b14321bf60cfa2e50507ec61"
+    },
+    {
+      "path": "packages/vscode-extension/src/hygiene/HygieneController.ts",
+      "bytes": 19010,
+      "sha256": "b103af7e1fa4e51a8b0aa944702da0074bd9b09afe6331dae7b5587861cfe993"
+    },
+    {
+      "path": "packages/vscode-extension/src/hygiene/HygieneAnalysis.ts",
+      "bytes": 6465,
+      "sha256": "b2bf7a8cd851e0a9d8c19f9b10f23d808f7fd61de4290c290434096b6f4b7e22"
+    },
+    {
+      "path": "packages/vscode-extension/src/hygiene/HygieneExposureLedger.ts",
+      "bytes": 9728,
+      "sha256": "def771053fb0a0c6c65f6615a0202571c03b564dac6a68d976393a304149f19e"
+    },
+    {
+      "path": "packages/vscode-extension/src/extension.ts",
+      "bytes": 34130,
+      "sha256": "ae2e7b06fb3d62302d48b0401de55df404958353f3ccfa1b954f58f281343b8e"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/containerSecretPlan.test.ts",
+      "bytes": 9756,
+      "sha256": "22fb072b28e970cf5be253c9c208c00b79f665b010dcc1ef8a0b5b2db488a3a5"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/containerScanner.test.ts",
+      "bytes": 18270,
+      "sha256": "7dd826f8e01268f471ca9e4a661fa689f05b2f19d5853f4e1df9ea9ff8ba0a0a"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/containerScannerCommands.test.ts",
+      "bytes": 6740,
+      "sha256": "13eb8b8cae8c10e309c749080c05432c0bc8dfc1f9341017c04ddeb0b68807d6"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/host/liteContainerScanner.host.ts",
+      "bytes": 20990,
+      "sha256": "72d9dd446b6b297cdb1f5cb911a4209e709fc000294ae9f04171e871f043f9b8"
+    }
+  ],
+  "focused": {
+    "pass": 178,
+    "fail": 0
+  },
+  "artifact01": {
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-f22b-20261021-attempt01.vsix",
+    "bytes": 1642908,
+    "sha256": "29d644624db46eddbd72f09959a0e76b3f2d585af5c3322e7b1340d18b2d0c12"
+  },
+  "firstNative": {
+    "status": "FAIL",
+    "primaryPass": 19,
+    "primaryFail": 2,
+    "restart": "NOT_RUN",
+    "run": "f22b-container-native-20261021T064829Z-b054493e",
+    "cause": "Actual old nested discovery expression returned0; broader platform syntax cause not established. First product improvement uses8 fixed flat family queries with bounded union/dedup and freshness checks. Current focused178PASS is not actual native proof.",
+    "closure": "Owned editor exit0/stdoutEOF/stderrEOF/signals0"
+  },
+  "improvement": {
+    "round": 1,
+    "contentLimits": "128files/64KiB each/1MiB analyzed/128 findings/60s unchanged",
+    "metadataQueries": "At most8 fixed queries, each max129, distinct union stops at129; no arbitrary workspace scan",
+    "fixture": "Private payload/assertions preserved; added nested public k8s directory control;21primary4restart unchanged"
+  },
+  "pending": [
+    "Full suite completion/backend checks",
+    "New exact VSIX/content inspection",
+    "Actual container25 and affectedsource21/hygiene21/vault10/retained106/functional10/security17 with owned closure",
+    "Snapshots/acceptance/scoped local source+transition commits/exhaustive bytes"
+  ],
+  "rating": "PENDING",
+  "createdAt": "2026-10-21T08:00:00.899Z"
+}

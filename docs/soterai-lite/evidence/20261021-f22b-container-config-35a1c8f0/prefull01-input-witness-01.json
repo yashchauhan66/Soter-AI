@@ -1,0 +1,64 @@
+{
+  "status": "PASS_HASH_BOUND_RECONSTRUCTION",
+  "basis": {
+    "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/f22b-progress-04.json",
+    "bytes": 10210,
+    "sha256": "47b731bf41310c47576a0363d1abd6663b242d9ab3770db296c6ef4662143848"
+  },
+  "full": {
+    "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/full-tests-01.txt",
+    "bytes": 731360,
+    "sha256": "a3bec4d5d4eb9fa505a4a7af9f02aa422934caf024110220b24402a8c6cbef56"
+  },
+  "files": [
+    {
+      "original": {
+        "path": "packages/vscode-extension/src/config-scanners/ContainerSecretPlan.ts",
+        "bytes": 15228,
+        "sha256": "b78a8d43f4562182e2d324ec40785637da79f6bb322ebad97564d277312a0954"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/prefull01-inputs-01/ContainerSecretPlan.ts.txt",
+        "bytes": 15228,
+        "sha256": "b78a8d43f4562182e2d324ec40785637da79f6bb322ebad97564d277312a0954"
+      }
+    },
+    {
+      "original": {
+        "path": "packages/vscode-extension/src/hygiene/HygieneController.ts",
+        "bytes": 17831,
+        "sha256": "b7a35b5ad910ef6a268d48f387c7ae1b1df835776266344253fc03baf685ac2d"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/prefull01-inputs-01/HygieneController.ts.txt",
+        "bytes": 17831,
+        "sha256": "b7a35b5ad910ef6a268d48f387c7ae1b1df835776266344253fc03baf685ac2d"
+      }
+    },
+    {
+      "original": {
+        "path": "packages/vscode-extension/src/__tests__/containerSecretPlan.test.ts",
+        "bytes": 9366,
+        "sha256": "14ab8673083b09349ed3425c788c0998dcbff39919e0958ac995859cc048cfcd"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/prefull01-inputs-01/containerSecretPlan.test.ts.txt",
+        "bytes": 9366,
+        "sha256": "14ab8673083b09349ed3425c788c0998dcbff39919e0958ac995859cc048cfcd"
+      }
+    },
+    {
+      "original": {
+        "path": "packages/vscode-extension/src/__tests__/containerScanner.test.ts",
+        "bytes": 15830,
+        "sha256": "db0f385e2f317271184b15a59eed4fd42a390484a3e013066235f4aaad1baed1"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/prefull01-inputs-01/containerScanner.test.ts.txt",
+        "bytes": 15830,
+        "sha256": "db0f385e2f317271184b15a59eed4fd42a390484a3e013066235f4aaad1baed1"
+      }
+    }
+  ],
+  "scope": "Reconstructed only the four changed pre-full01 inputs by reversing known later edits; every byte length/SHA exactly matches progress04 facts captured during that run. No rerun, regrade or claim that full01 verifies current code."
+}

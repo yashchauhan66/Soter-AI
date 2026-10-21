@@ -1,0 +1,83 @@
+{
+  "status": "PREPARED_NOT_EXECUTED",
+  "records": [
+    {
+      "source": "docs/soterai-lite/evidence/20261021-f22a-source-6c4d81f2/run-source-native-01.ps1",
+      "originalSha256": "9ad24a0e22bce8a61164b160a134838b52f8b4f4b7fa5bc5350c118b3f341a64",
+      "path": "run-container-native-01.ps1",
+      "bytes": 16437,
+      "sha256": "ee335550087cefe4e22270a9ec275310cb8dd3766ddcf33058c0eb36ea3ca42e"
+    },
+    {
+      "source": "docs/soterai-lite/evidence/20261021-f22a-source-6c4d81f2/run-source-native-01.ps1",
+      "originalSha256": "9ad24a0e22bce8a61164b160a134838b52f8b4f4b7fa5bc5350c118b3f341a64",
+      "path": "run-affected-source-01.ps1",
+      "bytes": 16441,
+      "sha256": "b752429dbe617f4ab68d02ca4c0be9a07f2ebdcef9226dc15c057eb991a0f8e0"
+    },
+    {
+      "source": "docs/soterai-lite/evidence/20261021-f22a-source-6c4d81f2/run-affected-hygiene-01.ps1",
+      "originalSha256": "6ab28374b45309528101bcdae0181d8d9399e848d381b121a122dc3817dc3d46",
+      "path": "run-affected-hygiene-01.ps1",
+      "bytes": 16442,
+      "sha256": "b2a2c5dd5c505bb58a73e879989048060b8e0b4da9950155fd7e409bc6ac60a2"
+    },
+    {
+      "source": "docs/soterai-lite/evidence/20261021-f22a-source-6c4d81f2/run-affected-vault-01.ps1",
+      "originalSha256": "35702d585620e4300d45c480d1843a6c182550590abccccdd354e83a21495041",
+      "path": "run-affected-vault-01.ps1",
+      "bytes": 16466,
+      "sha256": "ee22dedfccafe966e8b88cae7086883a4d8b950ca484378f6a758bedfefa1f9f"
+    },
+    {
+      "source": "docs/soterai-lite/evidence/20261021-f22a-source-6c4d81f2/run-retained-native-01.ps1",
+      "originalSha256": "2c190effced63a4013d972a5fab64ab7eb5c24987198625a8c250fbdb6aa56f5",
+      "path": "run-retained-native-01.ps1",
+      "bytes": 16480,
+      "sha256": "8bf23390622f78814780138c07a707e7338b14ed5c375d6af0e306f646d0ebd6"
+    },
+    {
+      "source": "docs/soterai-lite/evidence/20261021-f22a-source-6c4d81f2/inspect-vsix-02.ps1",
+      "originalSha256": "c360adc2cf2a1b1a45bb3ac6857277f2e410b5f1961aaaa44f493d97f315bb5d",
+      "path": "inspect-vsix-01.ps1",
+      "bytes": 20489,
+      "sha256": "43ae299e7fccba3cfeabcabf533e61a6674d0ea493a2affc19c95910c2feccb1"
+    },
+    {
+      "source": "docs/soterai-lite/evidence/20261021-f22a-source-6c4d81f2/artifact-binding-03.ps1",
+      "originalSha256": "fcf445ac11725aec8e039cf8cee4eaa04f0bbe3e1eb6f5b1192969578a5cf248",
+      "path": "artifact-binding-03.ps1",
+      "bytes": 3401,
+      "sha256": "3dc524c607d6e792a107b40202f9f896b21663908bb82102d28611fff09f2243"
+    },
+    {
+      "source": "docs/soterai-lite/evidence/20261021-f22a-source-6c4d81f2/run-affected-hosts-03.ps1",
+      "originalSha256": "496c13b4232f27bc7dd8de11fe8c58c46096ac3ac58a07b321c9bab76bcca487",
+      "path": "run-affected-hosts-03.ps1",
+      "bytes": 9015,
+      "sha256": "496c13b4232f27bc7dd8de11fe8c58c46096ac3ac58a07b321c9bab76bcca487"
+    },
+    {
+      "source": "docs/soterai-lite/evidence/20261021-f22a-source-6c4d81f2/run-functional-03.ps1",
+      "originalSha256": "4999a32cb8535e8ea2a1fd1c019045221584a1324a028606d393c3e58fb09703",
+      "path": "run-functional-03.ps1",
+      "bytes": 8711,
+      "sha256": "4999a32cb8535e8ea2a1fd1c019045221584a1324a028606d393c3e58fb09703"
+    },
+    {
+      "source": "docs/soterai-lite/evidence/20261021-f22a-source-6c4d81f2/run-security-03.ps1",
+      "originalSha256": "c0ce739c4239c3819f9e5c60f0dc923c6d34fec83a7abdb94352aa2e8b58b56a",
+      "path": "run-security-03.ps1",
+      "bytes": 9697,
+      "sha256": "c0ce739c4239c3819f9e5c60f0dc923c6d34fec83a7abdb94352aa2e8b58b56a"
+    },
+    {
+      "path": "build-native-hosts-01.cjs",
+      "bytes": 1686,
+      "sha256": "523ef70507b334345ce78790705a6567e17c696575e7a445cd09404223c5d09a",
+      "originalSha256": "d600933a837a188df80e92da066f4b17379bab084d66d367abb77056dbedc6a7"
+    }
+  ],
+  "currentNative": "container21primary+4restart; affectedsource18+3/hygiene18+3/vault6+4/retained103+3/functional10/security17 unchanged",
+  "safety": "Exact VSIX/3runtimes/Code bindings, fresh isolated D profiles, owned bounded close/EOF and no signals inherited. Native decisions scripted, LOW independence; no build/deployment/real credential or independent evidence."
+}

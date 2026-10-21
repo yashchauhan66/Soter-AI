@@ -1,6 +1,7 @@
 import { createHmac } from "node:crypto";
 import { createVaultMigrationPlan } from "../firewall/VaultMigrationPlan";
 import { sourceSyntaxForPath } from "../config-scanners/SourceSecretPlan";
+import { containerFormatForPath } from "../config-scanners/ContainerSecretPlan";
 import { isHygieneCandidate, normalizeHygieneName } from "./HygieneCandidatePolicy";
 export const HYGIENE_PROVIDERS = ["openai", "anthropic", "google", "aws", "github", "stripe", "unknown"] as const;
 export const HYGIENE_KINDS = ["api-key", "cloud-access", "private-key", "connection-string", "password", "token", "secret"] as const;
@@ -32,13 +33,16 @@ function kind(type: string): HygieneKind {
 /** Private local processing only. Findings never include names, paths, values,
  * snippets or reversible value hashes. A candidate is not live validation. */
 export function analyzeHygieneText(input: HygieneInput, key: Buffer): Readonly<HygieneAnalysis> {
-    return analyze(input, key, false);
+    return analyze(input, key, "hygiene");
 }
 /** Fixed source-family parser; only trusted internal callers select this mode. */
 export function analyzeSourceText(input: HygieneInput, key: Buffer): Readonly<HygieneAnalysis> {
-    return analyze(input, key, true);
+    return analyze(input, key, "source");
 }
-function analyze(input: HygieneInput, key: Buffer, sourceMode: boolean): Readonly<HygieneAnalysis> {
+export function analyzeContainerText(input: HygieneInput, key: Buffer): Readonly<HygieneAnalysis> {
+    return analyze(input, key, "container");
+}
+function analyze(input: HygieneInput, key: Buffer, family: "hygiene" | "source" | "container"): Readonly<HygieneAnalysis> {
     try {
         if (!input || Object.getPrototypeOf(input) !== Object.prototype || Object.keys(input).sort().join(",") !== "environment,source,text"
             || Object.values(Object.getOwnPropertyDescriptors(input)).some(p => p.get || p.set)
@@ -46,13 +50,15 @@ function analyze(input: HygieneInput, key: Buffer, sourceMode: boolean): Readonl
             || input.source.startsWith("/") || input.source.split("/").some(p => !p || p === "." || p === "..") || typeof input.environment !== "boolean"
             || typeof input.text !== "string" || Buffer.byteLength(input.text) > 65536 || input.text.includes("\0") || Buffer.from(input.text, "utf8").toString("utf8") !== input.text) return hygieneUnavailable();
         const fileRef = hygieneReference(key, "file", input.source), revision = hygieneReference(key, "revision", input.text);
-        const syntax = sourceMode ? sourceSyntaxForPath(input.source) : undefined;
-        if (sourceMode && (!syntax || input.environment)) return hygieneUnavailable();
+        const syntax = family === "source" ? sourceSyntaxForPath(input.source) : family === "container" ? containerFormatForPath(input.source) : undefined;
+        if (family !== "hygiene" && (!syntax || input.environment)) return hygieneUnavailable();
         const plan = createVaultMigrationPlan(input.text, input.environment, "10000000-0000-4000-8000-000000000021", syntax);
         const findings: HygieneFinding[] = [], values: string[] = [];
         for (const candidate of plan.candidates) {
             const name = normalizeHygieneName(candidate.key);
-            if (!isHygieneCandidate(candidate.key, candidate.rawValue)) continue;
+            // The container plan also admits arbitrary Secret.data/stringData
+            // keys. That fixed parser already applies template/public controls.
+            if (family !== "container" && !isHygieneCandidate(candidate.key, candidate.rawValue)) continue;
             if (findings.length >= 128) return hygieneUnavailable();
             const valueRef = hygieneReference(key, "value", candidate.rawValue), id = hygieneReference(key, "finding", JSON.stringify([fileRef, candidate.start, valueRef]));
             const suggestions = Object.freeze(["review-vault", "move-to-owner-secret-store", ...(input.environment ? ["env-example"] : []), "rotation-checklist"]);

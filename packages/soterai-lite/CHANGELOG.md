@@ -1,5 +1,7 @@
 # Changelog
 
+- Add bounded owner-reviewed Docker/Compose/Kubernetes static credential scanning and strict source-family withdrawal. YAML migration uses syntactically valid quoted/base64 markers and checkpoint-only exact disclosure restore; generic per-entry restore refuses those records. Thread the trusted admission/late guard through canonical backup restoration. No configuration execution, build, deployment or value-bearing env generation.
+
 - Add consent-driven static string and canonical comment scanning for saved JS/JSX/TS/TSX/MJS/CJS source with fixed parse-only grammar, metadata findings and reviewed canonical vault migration. Explicit disclosure restores exact original escapes while retaining saved denies. The machine source scanner flag withdraws pending work; unsupported/dynamic inputs stay unverified. No source execution, automatic code rewrite or value-bearing env output.
 
 - Add owner-reviewed local hygiene findings, canonical vault migration/example/disclosure recovery and keyed possible-exposure metadata with reviewed export. Add manual provider checklists; no key validity, actual AI access or performed rotation is implied. The machine setting `soterai.lite.hygieneAssistant` withdraws pending work while preserving saved protection and recovery.
@@ -36,4 +38,3 @@
 - Optional native-reviewed vault migration now uses constant masked previews, verified SecretStorage, unique placeholders, safe blank environment examples and additive sensitive restrictions.
 - Encrypted issued checkpoints support reviewed safe completion after restart. Separately approved original restoration can recover damaged source bytes without automatic plaintext rollback. Existing conflicting examples, missing keys, aliases and unrelated pending migrations are withheld.
 - `soterai.lite.vaultMode` withdraws vault operations while retaining ciphertext and saved protection. Same-user software, history and other copies remain outside this migration.
-

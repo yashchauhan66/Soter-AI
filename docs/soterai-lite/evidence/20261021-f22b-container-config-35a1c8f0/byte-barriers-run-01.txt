@@ -1,0 +1,90 @@
+﻿{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22b-container-config-35a1c8f0\\snapshot-execution-run-01.txt",
+    "observedAt":  "2026-10-21T08:21:00.3950441Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22b-container-config-35a1c8f0\\snapshot-execution-01.cjs"
+                  ],
+    "sha256":  "A199F3825AA7899CE788DB8AB54C87BA9318E8EBE417EFE74B420DBB1447A041",
+    "file":  "node"
+}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22b-container-config-35a1c8f0\\prepare-acceptance-run-01.txt",
+    "observedAt":  "2026-10-21T08:21:01.5141015Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22b-container-config-35a1c8f0\\prepare-acceptance-01.cjs"
+                  ],
+    "sha256":  "3E58993A2A224E4B3F2EB41F38CB6CF912F42087C9FF58E92C2E98D372051C85",
+    "file":  "node"
+}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22b-container-config-35a1c8f0\\prepare-index-run-01.txt",
+    "observedAt":  "2026-10-21T08:21:11.0335305Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22b-container-config-35a1c8f0\\prepare-index-01.cjs"
+                  ],
+    "sha256":  "94F79D3D30E2010ADA3DA0D579066DD2B12D11A614F0DB63C125DB3369D7D367",
+    "file":  "node"
+}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22b-container-config-35a1c8f0\\stage-source-run-01.txt",
+    "observedAt":  "2026-10-21T08:21:13.5809869Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "-c",
+                      "core.autocrlf=false",
+                      "-c",
+                      "core.hooksPath=docs/soterai-lite/evidence/20261013-l0-disk-gate-51f892d0/offline-hooks",
+                      "add",
+                      "-f",
+                      "--pathspec-from-file=C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22b-container-config-35a1c8f0\\f22b-commit-allowlist-01.txt"
+                  ],
+    "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+    "file":  "git"
+}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22b-container-config-35a1c8f0\\source-staged-byte-verification-01.txt",
+    "observedAt":  "2026-10-21T08:21:15.3861465Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22b-container-config-35a1c8f0\\verify-source-01.cjs",
+                      "--staged"
+                  ],
+    "sha256":  "8CF3D178BF231A2817869F703827A5FABE4EEEBD45639CFAD7C0E4BD1749FD6D",
+    "file":  "node"
+}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22b-container-config-35a1c8f0\\source-staged-whitespace-01.txt",
+    "observedAt":  "2026-10-21T08:21:15.9122737Z",
+    "exitCode":  2,
+    "arguments":  [
+                      "-c",
+                      "core.autocrlf=false",
+                      "-c",
+                      "core.hooksPath=docs/soterai-lite/evidence/20261013-l0-disk-gate-51f892d0/offline-hooks",
+                      "-c",
+                      "core.whitespace=cr-at-eol",
+                      "diff",
+                      "--cached",
+                      "--check"
+                  ],
+    "sha256":  "6F982BCF015F209C02B908B82B2D06C08CD671D9A6C9FC7A6120269F73925A5C",
+    "file":  "git"
+}
+powershell.exe : Gate failed; raw evidence retained: source-staged-whitespace-01
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Gate failed; ra...d-whitespace-01:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261021-f22b-container-config-35a
+1c8f0\complete-byte-barriers-01.ps1:8 char:34
++ ... exitCode -ne 0){throw ('Gate failed; raw evidence retained: '+$Name)}
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (Gate failed; ra...d-whitespace-01:String) [], RuntimeException
+    + FullyQualifiedErrorId : Gate failed; raw evidence retained: source-staged-whitespace-01
+ 

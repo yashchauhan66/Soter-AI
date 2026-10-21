@@ -137,7 +137,8 @@
         "soterai.lite.geminiCliAdapter",
         "soterai.broker.geminiProviderUrl",
         "soterai.lite.hygieneAssistant",
-        "soterai.lite.configScanner.source"
+        "soterai.lite.configScanner.source",
+        "soterai.lite.configScanner.dockerKubernetes"
       ]
     }
   },
@@ -1382,6 +1383,31 @@
         "command": "soterai.sourceSecretScannerStatus",
         "title": "Source Secret Scanner Status",
         "category": "SoterAI"
+      },
+      {
+        "command": "soterai.reviewWorkspaceContainerSecrets",
+        "title": "Review Workspace Docker/Kubernetes Secrets",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.reviewContainerSecrets",
+        "title": "Review Selected Docker/Kubernetes Secrets",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.reviewContainerSecretVault",
+        "title": "Review Docker/Kubernetes Vault Migration",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.restoreContainerSecretVault",
+        "title": "Restore Reviewed Docker/Kubernetes Values (Disclosure)",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.containerSecretScannerStatus",
+        "title": "Docker/Kubernetes Secret Scanner Status",
+        "category": "SoterAI"
       }
     ],
     "viewsContainers": {
@@ -2086,6 +2112,12 @@
           "default": true,
           "scope": "machine",
           "description": "Enable owner-reviewed static string scanning in saved JS/JSX/TS/TSX/MJS/CJS source, with canonical encrypted vault migration and exact disclosure restore. Dynamic or unsupported source withholds analysis; configure application secret loading manually."
+        },
+        "soterai.lite.configScanner.dockerKubernetes": {
+          "type": "boolean",
+          "default": true,
+          "scope": "machine",
+          "description": "Enable owner-reviewed static Docker ENV/ARG and Compose/Kubernetes YAML secret review with canonical encrypted vault migration. YAML disclosure restores the entire original checkpoint; unsupported inputs withhold analysis. No config execution, build or deployment."
         }
       }
     },
@@ -3117,6 +3149,26 @@
         {
           "command": "soterai.sourceSecretScannerStatus",
           "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.reviewWorkspaceContainerSecrets",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.reviewContainerSecrets",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.reviewContainerSecretVault",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.restoreContainerSecretVault",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.containerSecretScannerStatus",
+          "when": "soterai.advancedCommands"
         }
       ]
     },
@@ -3199,7 +3251,8 @@
     "esbuild": "^0.28.1",
     "ovsx": "^0.10.12",
     "tsx": "^4.19.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "yaml": "2.9.0"
   },
   "files": [
     "dist/extension.js",

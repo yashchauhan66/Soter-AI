@@ -1,0 +1,37 @@
+{
+  "status": "WIRED_NOT_NATIVE_VERIFIED",
+  "flag": "soterai.lite.configScanner.dockerKubernetes",
+  "commands": [
+    "soterai.reviewWorkspaceContainerSecrets",
+    "soterai.reviewContainerSecrets",
+    "soterai.reviewContainerSecretVault",
+    "soterai.restoreContainerSecretVault",
+    "soterai.containerSecretScannerStatus"
+  ],
+  "changes": [
+    {
+      "path": "packages/vscode-extension/package.json",
+      "before": "2d3a957352b6d04960a20d59d59fa49e4214c1135836808159bccb3675de1b06",
+      "after": "d7309cc225b8d30205d54bacf930f376a2468f9d0298af83dfbee3c016c4060c",
+      "bytes": 139770
+    },
+    {
+      "path": "packages/soterai-lite/package.json",
+      "before": "aa088858f3f5ccbc554e0015db2c60874b98b0140c3c4ba9388a078d652ab20b",
+      "after": "82e3d96a67a6498dad4cae3a4f6ffa76ea7e01ab8f1eef6190699bd5439009c2",
+      "bytes": 112589
+    },
+    {
+      "path": "package-lock.json",
+      "before": "4d6c5125d6a5af171a51d1713d1ec1646220bc4643acb408af88bbb9fbc09f9a",
+      "after": "982bd45186c15994063ab6c94f1f6a2526ad3f4341f5e1f04abb4f4cb563a94d",
+      "bytes": 541020
+    }
+  ],
+  "parser": {
+    "version": "2.9.0",
+    "license": "ISC",
+    "installedOnly": true,
+    "downloads": 0
+  }
+}

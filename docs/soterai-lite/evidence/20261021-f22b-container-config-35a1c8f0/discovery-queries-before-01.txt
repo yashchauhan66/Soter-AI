@@ -1,0 +1,130 @@
+﻿TAP version 13
+# Subtest: F22b canonical container planner is explicitly selected and YAML records require checkpoint restoration
+ok 1 - F22b canonical container planner is explicitly selected and YAML records require checkpoint restoration
+  ---
+  duration_ms: 30.9111
+  type: 'test'
+  ...
+# Subtest: F22b container analysis exposes only keyed metadata and rejects other declared families
+ok 2 - F22b container analysis exposes only keyed metadata and rejects other declared families
+  ---
+  duration_ms: 14.3827
+  type: 'test'
+  ...
+# Subtest: F22b cancellation precedes canonical source capture/key creation and no original document is opened
+ok 3 - F22b cancellation precedes canonical source capture/key creation and no original document is opened
+  ---
+  duration_ms: 38.5764
+  type: 'test'
+  ...
+# Subtest: F22b reviewed YAML migration and checkpoint disclosure restore exact bytes without invalid per-entry fallback
+ok 4 - F22b reviewed YAML migration and checkpoint disclosure restore exact bytes without invalid per-entry fallback
+  ---
+  duration_ms: 1104.0561
+  type: 'test'
+  ...
+# Subtest: F22b Secret base64 marker is valid after vaulting and original scalar formatting returns only via disclosure checkpoint
+ok 5 - F22b Secret base64 marker is valid after vaulting and original scalar formatting returns only via disclosure checkpoint
+  ---
+  duration_ms: 1029.2124
+  type: 'test'
+  ...
+# Subtest: F22b Dockerfile static assignments retain compatible exact per-entry restore
+ok 6 - F22b Dockerfile static assignments retain compatible exact per-entry restore
+  ---
+  duration_ms: 983.7167
+  type: 'test'
+  ...
+# Subtest: F22b strict family machine flag/dependencies withdraw while repository enable grants no authority
+ok 7 - F22b strict family machine flag/dependencies withdraw while repository enable grants no authority
+  ---
+  duration_ms: 9.7905
+  type: 'test'
+  ...
+# Subtest: F22b family discovery admits public Kubernetes controls and does not evaluate config commands
+ok 8 - F22b family discovery admits public Kubernetes controls and does not evaluate config commands
+  ---
+  duration_ms: 254.8287
+  type: 'test'
+  ...
+# Subtest: F22b unsupported/malformed input withholds complete findings and metadata export stays value-free
+ok 9 - F22b unsupported/malformed input withholds complete findings and metadata export stays value-free
+  ---
+  duration_ms: 221.8824
+  type: 'test'
+  ...
+# Subtest: F22b YAML disclosure guard is checked at admission and after a late owner decision
+ok 10 - F22b YAML disclosure guard is checked at admission and after a late owner decision
+  ---
+  duration_ms: 473.3339
+  type: 'test'
+  ...
+# Subtest: F22b guarded container migration API refuses disabled family before creating a vault key
+ok 11 - F22b guarded container migration API refuses disabled family before creating a vault key
+  ---
+  duration_ms: 9.3603
+  type: 'test'
+  ...
+# Subtest: F22b late flag withdrawal/lease expiry prevents migration and checkpoint disclosure writes
+ok 12 - F22b late flag withdrawal/lease expiry prevents migration and checkpoint disclosure writes
+  ---
+  duration_ms: 814.6312
+  type: 'test'
+  ...
+# Subtest: F22b post-migration metadata failure retains valid masked YAML and encrypted recovery without plaintext rollback
+ok 13 - F22b post-migration metadata failure retains valid masked YAML and encrypted recovery without plaintext rollback
+  ---
+  duration_ms: 839.3665
+  type: 'test'
+  ...
+# Subtest: F22b interrupted YAML write remains incomplete and canonical safe recovery finishes quoted placeholders
+ok 14 - F22b interrupted YAML write remains incomplete and canonical safe recovery finishes quoted placeholders
+  ---
+  duration_ms: 957.1919
+  type: 'test'
+  ...
+# Subtest: F22b unknown encrypted entry restore modes fail closed before any per-entry mutation
+ok 15 - F22b unknown encrypted entry restore modes fail closed before any per-entry mutation
+  ---
+  duration_ms: 681.2948
+  type: 'test'
+  ...
+# Subtest: F22b discovery cap stays partial when ambiguous filename matches are filtered before analysis
+ok 16 - F22b discovery cap stays partial when ambiguous filename matches are filtered before analysis
+  ---
+  duration_ms: 113.7907
+  type: 'test'
+  ...
+# Subtest: F22b metadata failure after approved YAML disclosure reports INCOMPLETE without claiming plaintext stayed masked
+ok 17 - F22b metadata failure after approved YAML disclosure reports INCOMPLETE without claiming plaintext stayed masked
+  ---
+  duration_ms: 924.4434
+  type: 'test'
+  ...
+# Subtest: F22b bounded discovery combines separate family query results and deduplicates repeated matches
+not ok 18 - F22b bounded discovery combines separate family query results and deduplicates repeated matches
+  ---
+  duration_ms: 531.3237
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\containerScanner.test.ts:2:19837'
+  failureType: 'testCodeFailure'
+  error: 'false == true'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\containerScanner.test.ts:125:58)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..18
+# tests 18
+# suites 0
+# pass 17
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 11370.4726

@@ -1,0 +1,333 @@
+{
+  "status": "INCOMPLETE",
+  "feature": "F22",
+  "activeSubcard": "F22b",
+  "parent": "c518999f00241559077b4ba6bf51f4658161b410",
+  "previous": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/f22b-progress-06.json",
+  "artifact": {
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-f22b-20261021-attempt02.vsix",
+    "bytes": 1643025,
+    "sha256": "118851f64769c0033344bd2a76b05f574133750cca8e4664797646e9e1248778"
+  },
+  "inspection": {
+    "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/vsix-inspection-02.json",
+    "bytes": 446724,
+    "sha256": "0a25cdc2a7818c300d32b5e39f3bf2608b44f8fd58fce02a496bd71345e49a4d"
+  },
+  "extensionSha256": "8e19b41e8e6bfb4dde0ebd51b725234117cd1e14e5140cbb26582720accafae3",
+  "focused": {
+    "tests": 178,
+    "pass": 178,
+    "fail": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "todo": 0
+  },
+  "full": {
+    "tests": 3108,
+    "pass": 3104,
+    "fail": 0,
+    "skipped": 4,
+    "cancelled": 0,
+    "todo": 0
+  },
+  "sources": [
+    {
+      "path": "packages/vscode-extension/src/config-scanners/ContainerSecretPlan.ts",
+      "bytes": 15679,
+      "sha256": "c1eebddad9afd0c6c3bf227a844e07ff9ff0a070ecd4616ea93a8cfd7612c649"
+    },
+    {
+      "path": "packages/vscode-extension/src/config-scanners/ContainerScannerFlags.ts",
+      "bytes": 488,
+      "sha256": "0b8047837176c8945e1a9010ffb30da96bca53d87c60f0c71115ea3adde5602e"
+    },
+    {
+      "path": "packages/vscode-extension/src/config-scanners/containerCommands.ts",
+      "bytes": 3059,
+      "sha256": "00d19b38b82fada143c631b43cfea5be76677843c07d0f1cfe1b30fb911980fe"
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/VaultManager.ts",
+      "bytes": 46862,
+      "sha256": "1ce43ccd1fdcca7e87df2d9741e556e79f746de6d003018a44df9ccc40c70096"
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/VaultMigrationPlan.ts",
+      "bytes": 4070,
+      "sha256": "8840b2675761531332b5fc8b530be0b240104c93b14321bf60cfa2e50507ec61"
+    },
+    {
+      "path": "packages/vscode-extension/src/hygiene/HygieneController.ts",
+      "bytes": 19010,
+      "sha256": "b103af7e1fa4e51a8b0aa944702da0074bd9b09afe6331dae7b5587861cfe993"
+    },
+    {
+      "path": "packages/vscode-extension/src/hygiene/HygieneAnalysis.ts",
+      "bytes": 6465,
+      "sha256": "b2bf7a8cd851e0a9d8c19f9b10f23d808f7fd61de4290c290434096b6f4b7e22"
+    },
+    {
+      "path": "packages/vscode-extension/src/hygiene/HygieneExposureLedger.ts",
+      "bytes": 9728,
+      "sha256": "def771053fb0a0c6c65f6615a0202571c03b564dac6a68d976393a304149f19e"
+    },
+    {
+      "path": "packages/vscode-extension/src/extension.ts",
+      "bytes": 34130,
+      "sha256": "ae2e7b06fb3d62302d48b0401de55df404958353f3ccfa1b954f58f281343b8e"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/containerSecretPlan.test.ts",
+      "bytes": 9756,
+      "sha256": "22fb072b28e970cf5be253c9c208c00b79f665b010dcc1ef8a0b5b2db488a3a5"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/containerScanner.test.ts",
+      "bytes": 18270,
+      "sha256": "7dd826f8e01268f471ca9e4a661fa689f05b2f19d5853f4e1df9ea9ff8ba0a0a"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/containerScannerCommands.test.ts",
+      "bytes": 6740,
+      "sha256": "13eb8b8cae8c10e309c749080c05432c0bc8dfc1f9341017c04ddeb0b68807d6"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/host/liteContainerScanner.host.ts",
+      "bytes": 20990,
+      "sha256": "72d9dd446b6b297cdb1f5cb911a4209e709fc000294ae9f04171e871f043f9b8"
+    }
+  ],
+  "commands": [
+    {
+      "name": "container-combined-06",
+      "output": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/container-combined-06.txt",
+      "observedAt": "2026-10-21T07:54:40.2244217Z",
+      "exitCode": 0,
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "packages/vscode-extension/src/__tests__/containerSecretPlan.test.ts",
+        "packages/vscode-extension/src/__tests__/containerScanner.test.ts",
+        "packages/vscode-extension/src/__tests__/containerScannerCommands.test.ts",
+        "packages/vscode-extension/src/__tests__/sourceSecretPlan.test.ts",
+        "packages/vscode-extension/src/__tests__/sourceScanner.test.ts",
+        "packages/vscode-extension/src/__tests__/sourceScannerCommands.test.ts",
+        "packages/vscode-extension/src/__tests__/hygieneAnalysis.test.ts",
+        "packages/vscode-extension/src/__tests__/hygieneController.test.ts",
+        "packages/vscode-extension/src/__tests__/hygieneCommands.test.ts",
+        "packages/vscode-extension/src/__tests__/hygieneExposureLedger.test.ts",
+        "packages/vscode-extension/src/__tests__/hygieneVaultSnapshot.test.ts",
+        "packages/vscode-extension/src/__tests__/lite-vault-plan.test.ts",
+        "packages/vscode-extension/src/__tests__/lite-vault-manager.test.ts"
+      ],
+      "sha256": "2EA15E3FDC92686FB4062B418A25C0A27545F6E8B9CF59A4DFC0456F549FEAC4",
+      "file": "node",
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/container-combined-06.txt",
+        "bytes": 47291,
+        "sha256": "2ea15e3fdc92686fb4062b418a25c0a27545f6e8b9cf59a4dfc0456f549feac4"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/container-combined-06.txt.result.json",
+        "bytes": 1644,
+        "sha256": "b931260cf8a2a23f5bd8c22b9fd9798a12f6a9e57868153094fe2e570e44662f"
+      }
+    },
+    {
+      "name": "full-tests-03",
+      "output": "C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/full-tests-03.txt",
+      "observedAt": "2026-10-21T08:08:35.3148399Z",
+      "exitCode": 0,
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "../vscode-extension/src/__tests__/**/*.test.ts"
+      ],
+      "sha256": "40BD1316F8A837EDE89EACF45CCDDDD99CCC878E3B8768933DEEDF7DF17F1D6C",
+      "file": "node",
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/full-tests-03.txt",
+        "bytes": 732747,
+        "sha256": "40bd1316f8a837ede89eacf45ccdddd99ccc878e3b8768933deedf7df17f1d6c"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/full-tests-03.txt.result.json",
+        "bytes": 606,
+        "sha256": "8585e4a9fb1c30c8de16e3a6f494360ca9a231a3c6aa68fe32a3284f5c90c010"
+      }
+    },
+    {
+      "name": "build-native-hosts-run-02",
+      "output": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/build-native-hosts-run-02.txt",
+      "observedAt": "2026-10-21T08:01:09.8178571Z",
+      "exitCode": 0,
+      "arguments": [
+        "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/build-native-hosts-01.cjs",
+        "prebuilt-native-hosts-02"
+      ],
+      "sha256": "F83EE263BDE0F4DE26E0449D33A7E24D1A042243DFBD89928B118952252738A0",
+      "file": "node",
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/build-native-hosts-run-02.txt",
+        "bytes": 246,
+        "sha256": "f83ee263bde0f4de26e0449d33a7e24d1a042243dfbd89928b118952252738a0"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/build-native-hosts-run-02.txt.result.json",
+        "bytes": 515,
+        "sha256": "40be1d6177da99cd737719dc7fed4e21c1009ee129fbcbf0b8526a165db4f02f"
+      }
+    },
+    {
+      "name": "validate-host-fixtures-run-02",
+      "output": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/validate-host-fixtures-run-02.txt",
+      "observedAt": "2026-10-21T08:01:31.5474336Z",
+      "exitCode": 0,
+      "arguments": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/validate-host-fixtures-02.ps1"
+      ],
+      "sha256": "D8E4311C5245BBC2383687DCF9CFC1C2E25289C8D06C6E4690FEFD5F6E2D6598",
+      "file": "powershell",
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/validate-host-fixtures-run-02.txt",
+        "bytes": 4707,
+        "sha256": "d8e4311c5245bbc2383687dcf9cfc1c2e25289c8d06c6e4690fefd5f6e2d6598"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/validate-host-fixtures-run-02.txt.result.json",
+        "bytes": 623,
+        "sha256": "28b77c21bff1d476b9e55521fe2206b4a4b31093891704957bda0606e14b2ee6"
+      }
+    },
+    {
+      "name": "package-02",
+      "output": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22b-container-config-35a1c8f0\\package-02.txt",
+      "observedAt": "2026-10-21T08:13:02.4203250Z",
+      "exitCode": 0,
+      "arguments": [
+        "packages/soterai-lite/scripts/package.cjs",
+        "soterai-lite-0.7.0-f22b-20261021-attempt02.vsix"
+      ],
+      "sha256": "222C76F62465EBE4815E959B813E72EF13E11D2E8A697E5384BD1946C3F4CD1C",
+      "file": "node",
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/package-02.txt",
+        "bytes": 1778,
+        "sha256": "222c76f62465ebe4815e959b813e72ef13e11d2e8a697e5384bd1946c3f4cd1c"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/package-02.txt.result.json",
+        "bytes": 537,
+        "sha256": "4d252ec1168fe1e432519d273b115e68b208c1f202766cb1e9bd9d9d3b17f7e8"
+      }
+    },
+    {
+      "name": "inspect-vsix-run-02",
+      "output": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22b-container-config-35a1c8f0\\inspect-vsix-run-02.txt",
+      "observedAt": "2026-10-21T08:13:10.7670333Z",
+      "exitCode": 0,
+      "arguments": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22b-container-config-35a1c8f0\\inspect-vsix-01.ps1",
+        "-VsixPath",
+        "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\soterai-lite\\soterai-lite-0.7.0-f22b-20261021-attempt02.vsix",
+        "-ExpectedVsixSha256",
+        "118851f64769c0033344bd2a76b05f574133750cca8e4664797646e9e1248778",
+        "-ExpectedBundleSha256",
+        "8e19b41e8e6bfb4dde0ebd51b725234117cd1e14e5140cbb26582720accafae3",
+        "-InspectionName",
+        "02"
+      ],
+      "sha256": "24E5FF86A08336B4AE325DF1B0357AFDAF63B3E7DC525B88C729DCF21D869AC1",
+      "file": "powershell",
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/inspect-vsix-run-02.txt",
+        "bytes": 1928,
+        "sha256": "24e5ff86a08336b4ae325df1b0357afdaf63b3e7dc525b88c729dcf21d869ac1"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/inspect-vsix-run-02.txt.result.json",
+        "bytes": 1275,
+        "sha256": "d0f95408fcb260e43db6fe2edf48b653d5ef349cf1525befdc4d5d3f42534d26"
+      }
+    },
+    {
+      "name": "container-native-run-02",
+      "output": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22b-container-config-35a1c8f0\\container-native-run-02.txt",
+      "observedAt": "2026-10-21T08:13:48.1931159Z",
+      "exitCode": 0,
+      "arguments": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22b-container-config-35a1c8f0\\run-container-native-01.ps1",
+        "-CodePath",
+        "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe",
+        "-HostTestsPath",
+        "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22b-container-config-35a1c8f0\\prebuilt-native-hosts-02\\lite-container-host.js",
+        "-ExtensionRoot",
+        "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22b-container-config-35a1c8f0\\vsix-extracted-02\\extension",
+        "-VsixPath",
+        "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\soterai-lite\\soterai-lite-0.7.0-f22b-20261021-attempt02.vsix",
+        "-ExpectedVsixSha256",
+        "118851f64769c0033344bd2a76b05f574133750cca8e4664797646e9e1248778",
+        "-ExpectedBundleSha256",
+        "8e19b41e8e6bfb4dde0ebd51b725234117cd1e14e5140cbb26582720accafae3"
+      ],
+      "sha256": "28A3646119718243218452D8D1BA5A165757195EBDF44237BACBB3F3A8DF5955",
+      "file": "powershell",
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/container-native-run-02.txt",
+        "bytes": 207,
+        "sha256": "28a3646119718243218452d8d1ba5a165757195ebdf44237bacbb3f3a8df5955"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/container-native-run-02.txt.result.json",
+        "bytes": 1825,
+        "sha256": "35ae659dab11e1ef52d8edc2b0c4ab353f37e4f6b48d93f841bc781431817127"
+      }
+    }
+  ],
+  "native": {
+    "status": "PASS_SCOPED",
+    "run": "f22b-container-native-20261021T081311Z-3a615c16",
+    "primary": 21,
+    "restart": 4,
+    "sourceDocumentCalls": 0,
+    "sourceDocumentEvents": 0,
+    "signalsRequested": 0,
+    "summary": {
+      "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/f22b-container-native-20261021T081311Z-3a615c16/summary.json",
+      "bytes": 1128,
+      "sha256": "11482b00d4994f4c4d8f61e8aba45efed6a2d827775832d9b1eed581b82d5cb6"
+    }
+  },
+  "pending": [
+    "Current exact-object affected source21/hygiene21/vault10/retained106/functional10/security17 running sequentially",
+    "Execution snapshots/acceptance/ledger/scoped source+transition commits/exhaustive byte proofs"
+  ],
+  "earlier": {
+    "status": "FAIL",
+    "primaryPass": 19,
+    "primaryFail": 2,
+    "restart": "NOT_RUN",
+    "run": "f22b-container-native-20261021T064829Z-b054493e",
+    "cause": "Actual old nested discovery expression returned0; broader platform syntax cause not established. First product improvement uses8 fixed flat family queries with bounded union/dedup and freshness checks. Current focused178PASS is not actual native proof.",
+    "closure": "Owned editor exit0/stdoutEOF/stderrEOF/signals0"
+  },
+  "scope": "Declared static grammar only, first bounded discovery improvement, no regrade of failed candidate01; vendor final V01/human/independent evidence remain pending.",
+  "rating": "PENDING",
+  "time": "2026-10-21T08:14:33.494Z"
+}

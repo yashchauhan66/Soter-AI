@@ -1,0 +1,121 @@
+{
+  "feature": "F22",
+  "activeSubcard": "F22b",
+  "status": "INCOMPLETE",
+  "parent": "c518999f00241559077b4ba6bf51f4658161b410",
+  "previous": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/f22b-progress-01.json",
+  "implemented": "Private bounded YAML AST/CST and finite Docker ENV/ARG planner only, not registered or connected to vault/controller.",
+  "focused": {
+    "container": 13,
+    "combinedWithSource": 28,
+    "pass": 28,
+    "fail": 0
+  },
+  "commands": [
+    {
+      "name": "container-plan-before-01",
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/container-plan-before-01.txt",
+        "bytes": 21971,
+        "sha256": "cbb4da209018e38d76d3b2602beef6a5ec773d3672fa66a29097fa49ac3bd9a8"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/container-plan-before-01.txt.result.json",
+        "bytes": 536,
+        "sha256": "80b88d69e07e0c2dbfe735b8dfa1841593629d32e92a074f285957ba6165ea5a"
+      },
+      "exitCode": 1
+    },
+    {
+      "name": "container-plan-after-01",
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/container-plan-after-01.txt",
+        "bytes": 6945,
+        "sha256": "cf01788707c66efcb7dc11961b82ecc990ebc38e2785d0c2ee46720b1df597dd"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/container-plan-after-01.txt.result.json",
+        "bytes": 535,
+        "sha256": "375be0c003dc0a31363f91445c82cfffb23d3beb274031b7d38d75b97e54b7fd"
+      },
+      "exitCode": 1
+    },
+    {
+      "name": "container-plan-after-02",
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/container-plan-after-02.txt",
+        "bytes": 3643,
+        "sha256": "0363deabb0b282d6b01008c7ffa6cc02a9024943c19a40a17f6dc397ee492c43"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/container-plan-after-02.txt.result.json",
+        "bytes": 535,
+        "sha256": "f8b76a9480e145657de5c985aa51fda1a068853edb8797d7bb7416b33377c887"
+      },
+      "exitCode": 0
+    },
+    {
+      "name": "typecheck-01",
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/typecheck-01.txt",
+        "bytes": 208,
+        "sha256": "71e719e3b7a72791324e3827dc8b9b0af13a827b0a6bb8eeed35ac7779a8e29a"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/typecheck-01.txt.result.json",
+        "bytes": 520,
+        "sha256": "d40574f52917367644aa39d100a4d2ca5c0ed1d168ab6d6663689445c030b0b2"
+      },
+      "exitCode": 2
+    },
+    {
+      "name": "typecheck-02",
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/typecheck-02.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/typecheck-02.txt.result.json",
+        "bytes": 520,
+        "sha256": "d6913bd31a4f4346d156eb9213925e7dae46ace5fde7f7a926fe98c9924810bb"
+      },
+      "exitCode": 0
+    },
+    {
+      "name": "private-plans-combined-01",
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/private-plans-combined-01.txt",
+        "bytes": 7432,
+        "sha256": "09e18a765b9667b48a8bf0afc9efe2cc96b19e2f0c8780d36f81805abea5f135"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/private-plans-combined-01.txt.result.json",
+        "bytes": 628,
+        "sha256": "dbc1c6ef5db80fcbdbc2e2052d2628046ca7f1cac85c3591a0e7661665e7a57b"
+      },
+      "exitCode": 0
+    }
+  ],
+  "sources": [
+    {
+      "path": "packages/vscode-extension/src/config-scanners/ContainerSecretPlan.ts",
+      "bytes": 14774,
+      "sha256": "2040b179e9b6e3876be0f53266bf12105fcd140c6f5708801eea0fc29c1794ac"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/containerSecretPlan.test.ts",
+      "bytes": 9366,
+      "sha256": "14ab8673083b09349ed3425c788c0998dcbff39919e0958ac995859cc048cfcd"
+    }
+  ],
+  "retainedFailures": "Before01 missing-module baseline0PASS13FAIL. After01 10PASS3FAIL: API token heuristic selected public Kubernetes apiVersion, invalidating masked family identity. Fixed exact validated top-level Kubernetes apiVersion/kind metadata exclusion; credential data subkeys still scanned. after02 13PASS. typecheck01 TS2367 on yaml map generic accessor; typed pair-node lookup correction, typecheck02 PASS. combined28PASS after that correction. No shared production authority changes yet.",
+  "pending": [
+    "Test-first canonical checkpoint-only restoration/guard",
+    "Planner/analyzer/controller/family native command registration and strict machine flag",
+    "Exact new VSIX/content/current full/compilers/backend/current native/affected routes",
+    "Withdrawal/receipts/scoped local source+transition commits/all-byte verification"
+  ],
+  "scope": "Static declared Docker/Compose/Kubernetes grammar only; no build/deployment/config execution, credential validity, clean/universal scan or rating.",
+  "createdAt": "2026-10-21T05:42:38.091Z"
+}

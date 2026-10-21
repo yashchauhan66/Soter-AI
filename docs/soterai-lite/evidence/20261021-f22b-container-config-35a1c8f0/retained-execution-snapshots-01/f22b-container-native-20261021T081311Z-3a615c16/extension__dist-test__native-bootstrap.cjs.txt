@@ -1,0 +1,13 @@
+const vscode = require('vscode');
+const fs = require('node:fs/promises');
+const actual = require('../dist/extension.js');
+const driver = require('./host/index.js');
+const failure = async (stage,error) => fs.writeFile(process.env.SOTERAI_LITE_F17_EVIDENCE+'.driver-error.json',
+ JSON.stringify({status:'FAIL',stage,errorName:error instanceof Error?error.name:'UnknownFailure',setup:typeof driver.setupDiagnostic==='function'?driver.setupDiagnostic():undefined})+'\n',{flag:'wx'});
+exports.activate = async function(context) {
+ try { if (typeof driver.beforeActivate === 'function') await driver.beforeActivate(context); await actual.activate(context); }
+ catch(error) { try { await failure('activate',error); } finally { await vscode.commands.executeCommand('workbench.action.closeWindow'); } return; }
+ setTimeout(async()=>{try { await driver.run(context); } catch(error) { await failure('run',error); }
+ finally { await vscode.commands.executeCommand('workbench.action.closeWindow'); }},1500);
+};
+exports.deactivate = actual.deactivate;
