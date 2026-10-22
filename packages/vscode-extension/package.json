@@ -142,7 +142,8 @@
         "soterai.lite.configScanner.terraform",
         "soterai.lite.configScanner.registry",
         "soterai.lite.configScanner.serviceAccount",
-        "soterai.lite.configScanner.ci"
+        "soterai.lite.configScanner.ci",
+        "soterai.lite.configScanner.editor"
       ]
     }
   },
@@ -1512,6 +1513,31 @@
         "command": "soterai.ciSecretScannerStatus",
         "title": "CI YAML Secret Scanner Status",
         "category": "SoterAI"
+      },
+      {
+        "command": "soterai.reviewWorkspaceEditorSecrets",
+        "title": "Review Workspace Editor JSONC Secrets",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.reviewEditorSecrets",
+        "title": "Review Selected Editor JSONC Secrets",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.reviewEditorSecretVault",
+        "title": "Review Editor JSONC Vault Migration",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.restoreEditorSecretVault",
+        "title": "Restore Reviewed Editor JSONC Values (Disclosure)",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.editorSecretScannerStatus",
+        "title": "Editor JSONC Secret Scanner Status",
+        "category": "SoterAI"
       }
     ],
     "viewsContainers": {
@@ -2246,6 +2272,12 @@
           "default": true,
           "scope": "machine",
           "description": "Enable owner-reviewed finite saved GitHub/GitLab CI YAML credential review and canonical encrypted checkpoint migration. Public controls remain useful; malformed/unsupported/dynamic inputs withhold. No config/include resolution, CI/client/shell execution, build or deployment."
+        },
+        "soterai.lite.configScanner.editor": {
+          "type": "boolean",
+          "default": true,
+          "scope": "machine",
+          "description": "Enable owner-reviewed finite saved project launch/tasks/settings JSONC credential review and canonical encrypted checkpoint migration. No config application, variable resolution or task/debug/shell execution. Repository settings cannot relax machine safety policy; unsupported inputs withhold."
         }
       }
     },
@@ -3377,6 +3409,26 @@
         {
           "command": "soterai.ciSecretScannerStatus",
           "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.reviewWorkspaceEditorSecrets",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.reviewEditorSecrets",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.reviewEditorSecretVault",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.restoreEditorSecretVault",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.editorSecretScannerStatus",
+          "when": "soterai.advancedCommands"
         }
       ]
     },
@@ -3469,6 +3521,7 @@
     "ovsx": "^0.10.12",
     "tsx": "^4.19.0",
     "typescript": "^5.9.3",
-    "yaml": "2.9.0"
+    "yaml": "2.9.0",
+    "jsonc-parser": "3.3.1"
   }
 }

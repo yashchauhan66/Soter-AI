@@ -1,0 +1,5204 @@
+{
+  "status": "BUILT_NOT_RUN_ESM_PARSER_INLINED",
+  "inputs": {
+    "packages/vscode-extension/src/__tests__/host/liteSafeReadMcpChecks.host.ts": {
+      "bytes": 13497,
+      "imports": [
+        {
+          "path": "vscode",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:assert/strict",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:child_process",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:fs/promises",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:path",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "packages/guard-core/dist/types.js": {
+      "bytes": 298,
+      "imports": [],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/detectors/utils.js": {
+      "bytes": 3561,
+      "imports": [],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/detectors/SecretDetector.js": {
+      "bytes": 31753,
+      "imports": [
+        {
+          "path": "packages/guard-core/dist/detectors/utils.js",
+          "kind": "require-call",
+          "original": "./utils"
+        }
+      ],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/detectors/EncodedSecretDetector.js": {
+      "bytes": 6588,
+      "imports": [
+        {
+          "path": "packages/guard-core/dist/detectors/SecretDetector.js",
+          "kind": "require-call",
+          "original": "./SecretDetector"
+        }
+      ],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/detectors/EnvFileDetector.js": {
+      "bytes": 1831,
+      "imports": [
+        {
+          "path": "packages/guard-core/dist/detectors/utils.js",
+          "kind": "require-call",
+          "original": "./utils"
+        }
+      ],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/detectors/PIIDetector.js": {
+      "bytes": 3004,
+      "imports": [
+        {
+          "path": "packages/guard-core/dist/detectors/utils.js",
+          "kind": "require-call",
+          "original": "./utils"
+        }
+      ],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/detectors/IndiaPIIDetector.js": {
+      "bytes": 3177,
+      "imports": [
+        {
+          "path": "packages/guard-core/dist/detectors/utils.js",
+          "kind": "require-call",
+          "original": "./utils"
+        }
+      ],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/detectors/PromptInjectionLiteDetector.js": {
+      "bytes": 17029,
+      "imports": [],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/detectors/JailbreakLiteDetector.js": {
+      "bytes": 10741,
+      "imports": [],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/detectors/FileContextRiskDetector.js": {
+      "bytes": 4248,
+      "imports": [],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/detectors/TerminalCommandRiskDetector.js": {
+      "bytes": 6710,
+      "imports": [],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/detectors/RepoInstructionPoisoningDetector.js": {
+      "bytes": 4295,
+      "imports": [],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/detectors/MCPConfigRiskDetector.js": {
+      "bytes": 2807,
+      "imports": [],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/detectors/AIGeneratedCodeRiskDetector.js": {
+      "bytes": 4872,
+      "imports": [],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/detectors/OutputExfiltrationDetector.js": {
+      "bytes": 4020,
+      "imports": [],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/detectors/index.js": {
+      "bytes": 6993,
+      "imports": [
+        {
+          "path": "packages/guard-core/dist/detectors/SecretDetector.js",
+          "kind": "require-call",
+          "original": "./SecretDetector"
+        },
+        {
+          "path": "packages/guard-core/dist/detectors/EncodedSecretDetector.js",
+          "kind": "require-call",
+          "original": "./EncodedSecretDetector"
+        },
+        {
+          "path": "packages/guard-core/dist/detectors/EnvFileDetector.js",
+          "kind": "require-call",
+          "original": "./EnvFileDetector"
+        },
+        {
+          "path": "packages/guard-core/dist/detectors/PIIDetector.js",
+          "kind": "require-call",
+          "original": "./PIIDetector"
+        },
+        {
+          "path": "packages/guard-core/dist/detectors/IndiaPIIDetector.js",
+          "kind": "require-call",
+          "original": "./IndiaPIIDetector"
+        },
+        {
+          "path": "packages/guard-core/dist/detectors/PromptInjectionLiteDetector.js",
+          "kind": "require-call",
+          "original": "./PromptInjectionLiteDetector"
+        },
+        {
+          "path": "packages/guard-core/dist/detectors/JailbreakLiteDetector.js",
+          "kind": "require-call",
+          "original": "./JailbreakLiteDetector"
+        },
+        {
+          "path": "packages/guard-core/dist/detectors/FileContextRiskDetector.js",
+          "kind": "require-call",
+          "original": "./FileContextRiskDetector"
+        },
+        {
+          "path": "packages/guard-core/dist/detectors/TerminalCommandRiskDetector.js",
+          "kind": "require-call",
+          "original": "./TerminalCommandRiskDetector"
+        },
+        {
+          "path": "packages/guard-core/dist/detectors/RepoInstructionPoisoningDetector.js",
+          "kind": "require-call",
+          "original": "./RepoInstructionPoisoningDetector"
+        },
+        {
+          "path": "packages/guard-core/dist/detectors/MCPConfigRiskDetector.js",
+          "kind": "require-call",
+          "original": "./MCPConfigRiskDetector"
+        },
+        {
+          "path": "packages/guard-core/dist/detectors/AIGeneratedCodeRiskDetector.js",
+          "kind": "require-call",
+          "original": "./AIGeneratedCodeRiskDetector"
+        },
+        {
+          "path": "packages/guard-core/dist/detectors/OutputExfiltrationDetector.js",
+          "kind": "require-call",
+          "original": "./OutputExfiltrationDetector"
+        },
+        {
+          "path": "packages/guard-core/dist/detectors/utils.js",
+          "kind": "require-call",
+          "original": "./utils"
+        }
+      ],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/Redactor.js": {
+      "bytes": 15935,
+      "imports": [
+        {
+          "path": "packages/guard-core/dist/detectors/SecretDetector.js",
+          "kind": "require-call",
+          "original": "./detectors/SecretDetector"
+        }
+      ],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/ContextRedactor.js": {
+      "bytes": 3052,
+      "imports": [
+        {
+          "path": "packages/guard-core/dist/Redactor.js",
+          "kind": "require-call",
+          "original": "./Redactor"
+        }
+      ],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/PolicyEvaluator.js": {
+      "bytes": 3720,
+      "imports": [],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/HashCache.js": {
+      "bytes": 7809,
+      "imports": [
+        {
+          "path": "packages/guard-core/dist/Redactor.js",
+          "kind": "require-call",
+          "original": "./Redactor"
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        }
+      ],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/EvidenceMinimizer.js": {
+      "bytes": 1473,
+      "imports": [
+        {
+          "path": "packages/guard-core/dist/Redactor.js",
+          "kind": "require-call",
+          "original": "./Redactor"
+        }
+      ],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/DecisionEngine.js": {
+      "bytes": 10593,
+      "imports": [
+        {
+          "path": "packages/guard-core/dist/detectors/index.js",
+          "kind": "require-call",
+          "original": "./detectors"
+        },
+        {
+          "path": "packages/guard-core/dist/EvidenceMinimizer.js",
+          "kind": "require-call",
+          "original": "./EvidenceMinimizer"
+        },
+        {
+          "path": "packages/guard-core/dist/Redactor.js",
+          "kind": "require-call",
+          "original": "./Redactor"
+        },
+        {
+          "path": "packages/guard-core/dist/PolicyEvaluator.js",
+          "kind": "require-call",
+          "original": "./PolicyEvaluator"
+        },
+        {
+          "path": "packages/guard-core/dist/HashCache.js",
+          "kind": "require-call",
+          "original": "./HashCache"
+        }
+      ],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/ProjectPolicy.js": {
+      "bytes": 7843,
+      "imports": [],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/Vault.js": {
+      "bytes": 9393,
+      "imports": [
+        {
+          "path": "packages/guard-core/dist/HashCache.js",
+          "kind": "require-call",
+          "original": "./HashCache"
+        },
+        {
+          "path": "packages/guard-core/dist/Redactor.js",
+          "kind": "require-call",
+          "original": "./Redactor"
+        },
+        {
+          "path": "packages/guard-core/dist/detectors/SecretDetector.js",
+          "kind": "require-call",
+          "original": "./detectors/SecretDetector"
+        }
+      ],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/VaultCrypto.js": {
+      "bytes": 3334,
+      "imports": [],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/Canary.js": {
+      "bytes": 4691,
+      "imports": [
+        {
+          "path": "packages/guard-core/dist/HashCache.js",
+          "kind": "require-call",
+          "original": "./HashCache"
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        }
+      ],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/OutputLeakScanner.js": {
+      "bytes": 3287,
+      "imports": [
+        {
+          "path": "packages/guard-core/dist/detectors/SecretDetector.js",
+          "kind": "require-call",
+          "original": "./detectors/SecretDetector"
+        },
+        {
+          "path": "packages/guard-core/dist/detectors/OutputExfiltrationDetector.js",
+          "kind": "require-call",
+          "original": "./detectors/OutputExfiltrationDetector"
+        },
+        {
+          "path": "packages/guard-core/dist/detectors/utils.js",
+          "kind": "require-call",
+          "original": "./detectors/utils"
+        },
+        {
+          "path": "packages/guard-core/dist/EvidenceMinimizer.js",
+          "kind": "require-call",
+          "original": "./EvidenceMinimizer"
+        },
+        {
+          "path": "packages/guard-core/dist/Canary.js",
+          "kind": "require-call",
+          "original": "./Canary"
+        },
+        {
+          "path": "packages/guard-core/dist/Vault.js",
+          "kind": "require-call",
+          "original": "./Vault"
+        }
+      ],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/SafeContextBuilder.js": {
+      "bytes": 9620,
+      "imports": [
+        {
+          "path": "packages/guard-core/dist/ProjectPolicy.js",
+          "kind": "require-call",
+          "original": "./ProjectPolicy"
+        },
+        {
+          "path": "packages/guard-core/dist/Redactor.js",
+          "kind": "require-call",
+          "original": "./Redactor"
+        },
+        {
+          "path": "packages/guard-core/dist/ContextRedactor.js",
+          "kind": "require-call",
+          "original": "./ContextRedactor"
+        },
+        {
+          "path": "packages/guard-core/dist/detectors/RepoInstructionPoisoningDetector.js",
+          "kind": "require-call",
+          "original": "./detectors/RepoInstructionPoisoningDetector"
+        },
+        {
+          "path": "packages/guard-core/dist/detectors/OutputExfiltrationDetector.js",
+          "kind": "require-call",
+          "original": "./detectors/OutputExfiltrationDetector"
+        }
+      ],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/Ledger.js": {
+      "bytes": 8790,
+      "imports": [
+        {
+          "path": "packages/guard-core/dist/Redactor.js",
+          "kind": "require-call",
+          "original": "./Redactor"
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        }
+      ],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/ExtensionRiskScanner.js": {
+      "bytes": 6546,
+      "imports": [],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/MCPPolicyAnalyzer.js": {
+      "bytes": 10043,
+      "imports": [
+        {
+          "path": "packages/guard-core/dist/detectors/index.js",
+          "kind": "require-call",
+          "original": "./detectors"
+        }
+      ],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/MCPCredentialBoundary.js": {
+      "bytes": 3665,
+      "imports": [],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/CoverageMatrix.js": {
+      "bytes": 4668,
+      "imports": [],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/CapabilityRegistry.js": {
+      "bytes": 34683,
+      "imports": [],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/SafeMode.js": {
+      "bytes": 8126,
+      "imports": [
+        {
+          "path": "packages/guard-core/dist/ProjectPolicy.js",
+          "kind": "require-call",
+          "original": "./ProjectPolicy"
+        }
+      ],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/ApprovalToken.js": {
+      "bytes": 6779,
+      "imports": [
+        {
+          "path": "packages/guard-core/dist/HashCache.js",
+          "kind": "require-call",
+          "original": "./HashCache"
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        }
+      ],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/BrokerScanner.js": {
+      "bytes": 6274,
+      "imports": [
+        {
+          "path": "packages/guard-core/dist/DecisionEngine.js",
+          "kind": "require-call",
+          "original": "./DecisionEngine"
+        },
+        {
+          "path": "packages/guard-core/dist/Redactor.js",
+          "kind": "require-call",
+          "original": "./Redactor"
+        },
+        {
+          "path": "packages/guard-core/dist/OutputLeakScanner.js",
+          "kind": "require-call",
+          "original": "./OutputLeakScanner"
+        },
+        {
+          "path": "packages/guard-core/dist/SafeMode.js",
+          "kind": "require-call",
+          "original": "./SafeMode"
+        },
+        {
+          "path": "packages/guard-core/dist/Canary.js",
+          "kind": "require-call",
+          "original": "./Canary"
+        },
+        {
+          "path": "packages/guard-core/dist/detectors/TerminalCommandRiskDetector.js",
+          "kind": "require-call",
+          "original": "./detectors/TerminalCommandRiskDetector"
+        },
+        {
+          "path": "packages/guard-core/dist/detectors/AIGeneratedCodeRiskDetector.js",
+          "kind": "require-call",
+          "original": "./detectors/AIGeneratedCodeRiskDetector"
+        },
+        {
+          "path": "packages/guard-core/dist/HashCache.js",
+          "kind": "require-call",
+          "original": "./HashCache"
+        }
+      ],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/MemorySession.js": {
+      "bytes": 4817,
+      "imports": [
+        {
+          "path": "packages/guard-core/dist/Redactor.js",
+          "kind": "require-call",
+          "original": "./Redactor"
+        }
+      ],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/RuntimePolicyEngine.js": {
+      "bytes": 8640,
+      "imports": [],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/ControlledTerminal.js": {
+      "bytes": 5402,
+      "imports": [
+        {
+          "path": "packages/guard-core/dist/detectors/index.js",
+          "kind": "require-call",
+          "original": "./detectors"
+        },
+        {
+          "path": "packages/guard-core/dist/RuntimePolicyEngine.js",
+          "kind": "require-call",
+          "original": "./RuntimePolicyEngine"
+        }
+      ],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/RuntimeDiscovery.js": {
+      "bytes": 5072,
+      "imports": [],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/FileOperationFirewall.js": {
+      "bytes": 5709,
+      "imports": [
+        {
+          "path": "packages/guard-core/dist/ProjectPolicy.js",
+          "kind": "require-call",
+          "original": "./ProjectPolicy"
+        },
+        {
+          "path": "packages/guard-core/dist/RuntimePolicyEngine.js",
+          "kind": "require-call",
+          "original": "./RuntimePolicyEngine"
+        },
+        {
+          "path": "packages/guard-core/dist/Redactor.js",
+          "kind": "require-call",
+          "original": "./Redactor"
+        }
+      ],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/NetworkEgressPolicy.js": {
+      "bytes": 7031,
+      "imports": [
+        {
+          "path": "packages/guard-core/dist/RuntimePolicyEngine.js",
+          "kind": "require-call",
+          "original": "./RuntimePolicyEngine"
+        },
+        {
+          "path": "packages/guard-core/dist/Redactor.js",
+          "kind": "require-call",
+          "original": "./Redactor"
+        }
+      ],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/TaintEngine.js": {
+      "bytes": 2761,
+      "imports": [
+        {
+          "path": "packages/guard-core/dist/RuntimePolicyEngine.js",
+          "kind": "require-call",
+          "original": "./RuntimePolicyEngine"
+        }
+      ],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/MCPGateway.js": {
+      "bytes": 4908,
+      "imports": [
+        {
+          "path": "packages/guard-core/dist/MCPPolicyAnalyzer.js",
+          "kind": "require-call",
+          "original": "./MCPPolicyAnalyzer"
+        },
+        {
+          "path": "packages/guard-core/dist/RuntimePolicyEngine.js",
+          "kind": "require-call",
+          "original": "./RuntimePolicyEngine"
+        },
+        {
+          "path": "packages/guard-core/dist/Redactor.js",
+          "kind": "require-call",
+          "original": "./Redactor"
+        },
+        {
+          "path": "packages/guard-core/dist/ContextRedactor.js",
+          "kind": "require-call",
+          "original": "./ContextRedactor"
+        },
+        {
+          "path": "packages/guard-core/dist/detectors/EncodedSecretDetector.js",
+          "kind": "require-call",
+          "original": "./detectors/EncodedSecretDetector"
+        },
+        {
+          "path": "packages/guard-core/dist/TaintEngine.js",
+          "kind": "require-call",
+          "original": "./TaintEngine"
+        }
+      ],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/CheckpointRollback.js": {
+      "bytes": 10691,
+      "imports": [
+        {
+          "path": "packages/guard-core/dist/Redactor.js",
+          "kind": "require-call",
+          "original": "./Redactor"
+        }
+      ],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/GovernancePolicy.js": {
+      "bytes": 3033,
+      "imports": [],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/ProcessSandboxPolicy.js": {
+      "bytes": 5662,
+      "imports": [
+        {
+          "path": "packages/guard-core/dist/detectors/index.js",
+          "kind": "require-call",
+          "original": "./detectors"
+        },
+        {
+          "path": "packages/guard-core/dist/RuntimePolicyEngine.js",
+          "kind": "require-call",
+          "original": "./RuntimePolicyEngine"
+        }
+      ],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/ExtensionIsolationPolicy.js": {
+      "bytes": 4472,
+      "imports": [],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/sensitiveFiles.js": {
+      "bytes": 8275,
+      "imports": [],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/LitePolicyCatalog.js": {
+      "bytes": 10382,
+      "imports": [
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "packages/guard-core/dist/sensitiveFiles.js",
+          "kind": "require-call",
+          "original": "./sensitiveFiles"
+        }
+      ],
+      "format": "cjs"
+    },
+    "packages/guard-core/dist/index.js": {
+      "bytes": 2896,
+      "imports": [
+        {
+          "path": "packages/guard-core/dist/types.js",
+          "kind": "require-call",
+          "original": "./types"
+        },
+        {
+          "path": "packages/guard-core/dist/detectors/index.js",
+          "kind": "require-call",
+          "original": "./detectors"
+        },
+        {
+          "path": "packages/guard-core/dist/Redactor.js",
+          "kind": "require-call",
+          "original": "./Redactor"
+        },
+        {
+          "path": "packages/guard-core/dist/ContextRedactor.js",
+          "kind": "require-call",
+          "original": "./ContextRedactor"
+        },
+        {
+          "path": "packages/guard-core/dist/PolicyEvaluator.js",
+          "kind": "require-call",
+          "original": "./PolicyEvaluator"
+        },
+        {
+          "path": "packages/guard-core/dist/HashCache.js",
+          "kind": "require-call",
+          "original": "./HashCache"
+        },
+        {
+          "path": "packages/guard-core/dist/EvidenceMinimizer.js",
+          "kind": "require-call",
+          "original": "./EvidenceMinimizer"
+        },
+        {
+          "path": "packages/guard-core/dist/DecisionEngine.js",
+          "kind": "require-call",
+          "original": "./DecisionEngine"
+        },
+        {
+          "path": "packages/guard-core/dist/ProjectPolicy.js",
+          "kind": "require-call",
+          "original": "./ProjectPolicy"
+        },
+        {
+          "path": "packages/guard-core/dist/Vault.js",
+          "kind": "require-call",
+          "original": "./Vault"
+        },
+        {
+          "path": "packages/guard-core/dist/VaultCrypto.js",
+          "kind": "require-call",
+          "original": "./VaultCrypto"
+        },
+        {
+          "path": "packages/guard-core/dist/Canary.js",
+          "kind": "require-call",
+          "original": "./Canary"
+        },
+        {
+          "path": "packages/guard-core/dist/OutputLeakScanner.js",
+          "kind": "require-call",
+          "original": "./OutputLeakScanner"
+        },
+        {
+          "path": "packages/guard-core/dist/SafeContextBuilder.js",
+          "kind": "require-call",
+          "original": "./SafeContextBuilder"
+        },
+        {
+          "path": "packages/guard-core/dist/Ledger.js",
+          "kind": "require-call",
+          "original": "./Ledger"
+        },
+        {
+          "path": "packages/guard-core/dist/ExtensionRiskScanner.js",
+          "kind": "require-call",
+          "original": "./ExtensionRiskScanner"
+        },
+        {
+          "path": "packages/guard-core/dist/MCPPolicyAnalyzer.js",
+          "kind": "require-call",
+          "original": "./MCPPolicyAnalyzer"
+        },
+        {
+          "path": "packages/guard-core/dist/MCPCredentialBoundary.js",
+          "kind": "require-call",
+          "original": "./MCPCredentialBoundary"
+        },
+        {
+          "path": "packages/guard-core/dist/CoverageMatrix.js",
+          "kind": "require-call",
+          "original": "./CoverageMatrix"
+        },
+        {
+          "path": "packages/guard-core/dist/CapabilityRegistry.js",
+          "kind": "require-call",
+          "original": "./CapabilityRegistry"
+        },
+        {
+          "path": "packages/guard-core/dist/SafeMode.js",
+          "kind": "require-call",
+          "original": "./SafeMode"
+        },
+        {
+          "path": "packages/guard-core/dist/ApprovalToken.js",
+          "kind": "require-call",
+          "original": "./ApprovalToken"
+        },
+        {
+          "path": "packages/guard-core/dist/BrokerScanner.js",
+          "kind": "require-call",
+          "original": "./BrokerScanner"
+        },
+        {
+          "path": "packages/guard-core/dist/MemorySession.js",
+          "kind": "require-call",
+          "original": "./MemorySession"
+        },
+        {
+          "path": "packages/guard-core/dist/RuntimePolicyEngine.js",
+          "kind": "require-call",
+          "original": "./RuntimePolicyEngine"
+        },
+        {
+          "path": "packages/guard-core/dist/ControlledTerminal.js",
+          "kind": "require-call",
+          "original": "./ControlledTerminal"
+        },
+        {
+          "path": "packages/guard-core/dist/RuntimeDiscovery.js",
+          "kind": "require-call",
+          "original": "./RuntimeDiscovery"
+        },
+        {
+          "path": "packages/guard-core/dist/FileOperationFirewall.js",
+          "kind": "require-call",
+          "original": "./FileOperationFirewall"
+        },
+        {
+          "path": "packages/guard-core/dist/NetworkEgressPolicy.js",
+          "kind": "require-call",
+          "original": "./NetworkEgressPolicy"
+        },
+        {
+          "path": "packages/guard-core/dist/TaintEngine.js",
+          "kind": "require-call",
+          "original": "./TaintEngine"
+        },
+        {
+          "path": "packages/guard-core/dist/MCPGateway.js",
+          "kind": "require-call",
+          "original": "./MCPGateway"
+        },
+        {
+          "path": "packages/guard-core/dist/CheckpointRollback.js",
+          "kind": "require-call",
+          "original": "./CheckpointRollback"
+        },
+        {
+          "path": "packages/guard-core/dist/GovernancePolicy.js",
+          "kind": "require-call",
+          "original": "./GovernancePolicy"
+        },
+        {
+          "path": "packages/guard-core/dist/ProcessSandboxPolicy.js",
+          "kind": "require-call",
+          "original": "./ProcessSandboxPolicy"
+        },
+        {
+          "path": "packages/guard-core/dist/ExtensionIsolationPolicy.js",
+          "kind": "require-call",
+          "original": "./ExtensionIsolationPolicy"
+        },
+        {
+          "path": "packages/guard-core/dist/sensitiveFiles.js",
+          "kind": "require-call",
+          "original": "./sensitiveFiles"
+        },
+        {
+          "path": "packages/guard-core/dist/LitePolicyCatalog.js",
+          "kind": "require-call",
+          "original": "./LitePolicyCatalog"
+        }
+      ],
+      "format": "cjs"
+    },
+    "packages/vscode-extension/src/__tests__/host/liteGatewayPolicyChecks.host.ts": {
+      "bytes": 9985,
+      "imports": [
+        {
+          "path": "vscode",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:assert/strict",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:http",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:fs/promises",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:path",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "packages/guard-core/dist/index.js",
+          "kind": "import-statement",
+          "original": "@soterai/guard-core"
+        }
+      ],
+      "format": "esm"
+    },
+    "packages/vscode-extension/src/__tests__/host/liteSafeReadMcp.host.ts": {
+      "bytes": 69938,
+      "imports": [
+        {
+          "path": "packages/vscode-extension/src/__tests__/host/liteSafeReadMcpChecks.host.ts",
+          "kind": "import-statement",
+          "original": "./liteSafeReadMcpChecks.host"
+        },
+        {
+          "path": "packages/vscode-extension/src/__tests__/host/liteGatewayPolicyChecks.host.ts",
+          "kind": "import-statement",
+          "original": "./liteGatewayPolicyChecks.host"
+        },
+        {
+          "path": "vscode",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:assert/strict",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:child_process",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:zlib",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:net",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:http",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:fs/promises",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:path",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:child_process",
+          "kind": "require-call",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "packages/vscode-extension/src/__tests__/host/liteHygiene.host.ts": {
+      "bytes": 16468,
+      "imports": [
+        {
+          "path": "vscode",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:assert/strict",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:fs/promises",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:path",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "packages/vscode-extension/src/__tests__/host/liteVault.host.ts": {
+      "bytes": 27114,
+      "imports": [
+        {
+          "path": "vscode",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:assert/strict",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:fs",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:fs/promises",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:path",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "packages/vscode-extension/src/__tests__/host/liteSourceScanner.host.ts": {
+      "bytes": 17252,
+      "imports": [
+        {
+          "path": "vscode",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:assert/strict",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:fs/promises",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:path",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/yaml/dist/nodes/identity.js": {
+      "bytes": 1794,
+      "imports": [],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/visit.js": {
+      "bytes": 9253,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/nodes/identity.js",
+          "kind": "require-call",
+          "original": "./nodes/identity.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/doc/directives.js": {
+      "bytes": 6237,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/nodes/identity.js",
+          "kind": "require-call",
+          "original": "../nodes/identity.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/visit.js",
+          "kind": "require-call",
+          "original": "../visit.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/doc/anchors.js": {
+      "bytes": 2386,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/nodes/identity.js",
+          "kind": "require-call",
+          "original": "../nodes/identity.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/visit.js",
+          "kind": "require-call",
+          "original": "../visit.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/doc/applyReviver.js": {
+      "bytes": 1950,
+      "imports": [],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/nodes/toJS.js": {
+      "bytes": 1292,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/nodes/identity.js",
+          "kind": "require-call",
+          "original": "./identity.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/nodes/Node.js": {
+      "bytes": 1382,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/doc/applyReviver.js",
+          "kind": "require-call",
+          "original": "../doc/applyReviver.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/identity.js",
+          "kind": "require-call",
+          "original": "./identity.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/toJS.js",
+          "kind": "require-call",
+          "original": "./toJS.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/nodes/Alias.js": {
+      "bytes": 3901,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/doc/anchors.js",
+          "kind": "require-call",
+          "original": "../doc/anchors.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/visit.js",
+          "kind": "require-call",
+          "original": "../visit.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/identity.js",
+          "kind": "require-call",
+          "original": "./identity.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/Node.js",
+          "kind": "require-call",
+          "original": "./Node.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/toJS.js",
+          "kind": "require-call",
+          "original": "./toJS.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/nodes/Scalar.js": {
+      "bytes": 759,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/nodes/identity.js",
+          "kind": "require-call",
+          "original": "./identity.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/Node.js",
+          "kind": "require-call",
+          "original": "./Node.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/toJS.js",
+          "kind": "require-call",
+          "original": "./toJS.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/doc/createNode.js": {
+      "bytes": 3138,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/nodes/Alias.js",
+          "kind": "require-call",
+          "original": "../nodes/Alias.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/identity.js",
+          "kind": "require-call",
+          "original": "../nodes/identity.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/Scalar.js",
+          "kind": "require-call",
+          "original": "../nodes/Scalar.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/nodes/Collection.js": {
+      "bytes": 5221,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/doc/createNode.js",
+          "kind": "require-call",
+          "original": "../doc/createNode.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/identity.js",
+          "kind": "require-call",
+          "original": "./identity.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/Node.js",
+          "kind": "require-call",
+          "original": "./Node.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/stringify/stringifyComment.js": {
+      "bytes": 801,
+      "imports": [],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/stringify/foldFlowLines.js": {
+      "bytes": 4885,
+      "imports": [],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/stringify/stringifyString.js": {
+      "bytes": 13345,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/nodes/Scalar.js",
+          "kind": "require-call",
+          "original": "../nodes/Scalar.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/stringify/foldFlowLines.js",
+          "kind": "require-call",
+          "original": "./foldFlowLines.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/stringify/stringify.js": {
+      "bytes": 4534,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/doc/anchors.js",
+          "kind": "require-call",
+          "original": "../doc/anchors.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/identity.js",
+          "kind": "require-call",
+          "original": "../nodes/identity.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/stringify/stringifyComment.js",
+          "kind": "require-call",
+          "original": "./stringifyComment.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/stringify/stringifyString.js",
+          "kind": "require-call",
+          "original": "./stringifyString.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/stringify/stringifyPair.js": {
+      "bytes": 5470,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/nodes/identity.js",
+          "kind": "require-call",
+          "original": "../nodes/identity.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/Scalar.js",
+          "kind": "require-call",
+          "original": "../nodes/Scalar.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/stringify/stringify.js",
+          "kind": "require-call",
+          "original": "./stringify.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/stringify/stringifyComment.js",
+          "kind": "require-call",
+          "original": "./stringifyComment.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/log.js": {
+      "bytes": 459,
+      "imports": [
+        {
+          "path": "process",
+          "kind": "require-call",
+          "external": true
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/schema/yaml-1.1/merge.js": {
+      "bytes": 2616,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/nodes/identity.js",
+          "kind": "require-call",
+          "original": "../../nodes/identity.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/Scalar.js",
+          "kind": "require-call",
+          "original": "../../nodes/Scalar.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/nodes/addPairToJSMap.js": {
+      "bytes": 2338,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/log.js",
+          "kind": "require-call",
+          "original": "../log.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/schema/yaml-1.1/merge.js",
+          "kind": "require-call",
+          "original": "../schema/yaml-1.1/merge.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/stringify/stringify.js",
+          "kind": "require-call",
+          "original": "../stringify/stringify.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/identity.js",
+          "kind": "require-call",
+          "original": "./identity.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/toJS.js",
+          "kind": "require-call",
+          "original": "./toJS.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/nodes/Pair.js": {
+      "bytes": 1232,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/doc/createNode.js",
+          "kind": "require-call",
+          "original": "../doc/createNode.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/stringify/stringifyPair.js",
+          "kind": "require-call",
+          "original": "../stringify/stringifyPair.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/addPairToJSMap.js",
+          "kind": "require-call",
+          "original": "./addPairToJSMap.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/identity.js",
+          "kind": "require-call",
+          "original": "./identity.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/stringify/stringifyCollection.js": {
+      "bytes": 5718,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/nodes/identity.js",
+          "kind": "require-call",
+          "original": "../nodes/identity.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/stringify/stringify.js",
+          "kind": "require-call",
+          "original": "./stringify.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/stringify/stringifyComment.js",
+          "kind": "require-call",
+          "original": "./stringifyComment.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/nodes/YAMLMap.js": {
+      "bytes": 5105,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/stringify/stringifyCollection.js",
+          "kind": "require-call",
+          "original": "../stringify/stringifyCollection.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/addPairToJSMap.js",
+          "kind": "require-call",
+          "original": "./addPairToJSMap.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/Collection.js",
+          "kind": "require-call",
+          "original": "./Collection.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/identity.js",
+          "kind": "require-call",
+          "original": "./identity.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/Pair.js",
+          "kind": "require-call",
+          "original": "./Pair.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/Scalar.js",
+          "kind": "require-call",
+          "original": "./Scalar.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/schema/common/map.js": {
+      "bytes": 483,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/nodes/identity.js",
+          "kind": "require-call",
+          "original": "../../nodes/identity.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/YAMLMap.js",
+          "kind": "require-call",
+          "original": "../../nodes/YAMLMap.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/nodes/YAMLSeq.js": {
+      "bytes": 3667,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/doc/createNode.js",
+          "kind": "require-call",
+          "original": "../doc/createNode.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/stringify/stringifyCollection.js",
+          "kind": "require-call",
+          "original": "../stringify/stringifyCollection.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/Collection.js",
+          "kind": "require-call",
+          "original": "./Collection.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/identity.js",
+          "kind": "require-call",
+          "original": "./identity.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/Scalar.js",
+          "kind": "require-call",
+          "original": "./Scalar.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/toJS.js",
+          "kind": "require-call",
+          "original": "./toJS.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/schema/common/seq.js": {
+      "bytes": 484,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/nodes/identity.js",
+          "kind": "require-call",
+          "original": "../../nodes/identity.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/YAMLSeq.js",
+          "kind": "require-call",
+          "original": "../../nodes/YAMLSeq.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/schema/common/string.js": {
+      "bytes": 457,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/stringify/stringifyString.js",
+          "kind": "require-call",
+          "original": "../../stringify/stringifyString.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/schema/common/null.js": {
+      "bytes": 469,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/nodes/Scalar.js",
+          "kind": "require-call",
+          "original": "../../nodes/Scalar.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/schema/core/bool.js": {
+      "bytes": 635,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/nodes/Scalar.js",
+          "kind": "require-call",
+          "original": "../../nodes/Scalar.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/stringify/stringifyNumber.js": {
+      "bytes": 808,
+      "imports": [],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/schema/core/float.js": {
+      "bytes": 1510,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/nodes/Scalar.js",
+          "kind": "require-call",
+          "original": "../../nodes/Scalar.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/stringify/stringifyNumber.js",
+          "kind": "require-call",
+          "original": "../../stringify/stringifyNumber.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/schema/core/int.js": {
+      "bytes": 1407,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/stringify/stringifyNumber.js",
+          "kind": "require-call",
+          "original": "../../stringify/stringifyNumber.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/schema/core/schema.js": {
+      "bytes": 509,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/schema/common/map.js",
+          "kind": "require-call",
+          "original": "../common/map.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/schema/common/null.js",
+          "kind": "require-call",
+          "original": "../common/null.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/schema/common/seq.js",
+          "kind": "require-call",
+          "original": "../common/seq.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/schema/common/string.js",
+          "kind": "require-call",
+          "original": "../common/string.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/schema/core/bool.js",
+          "kind": "require-call",
+          "original": "./bool.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/schema/core/float.js",
+          "kind": "require-call",
+          "original": "./float.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/schema/core/int.js",
+          "kind": "require-call",
+          "original": "./int.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/schema/json/schema.js": {
+      "bytes": 1900,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/nodes/Scalar.js",
+          "kind": "require-call",
+          "original": "../../nodes/Scalar.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/schema/common/map.js",
+          "kind": "require-call",
+          "original": "../common/map.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/schema/common/seq.js",
+          "kind": "require-call",
+          "original": "../common/seq.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/schema/yaml-1.1/binary.js": {
+      "bytes": 2800,
+      "imports": [
+        {
+          "path": "buffer",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/Scalar.js",
+          "kind": "require-call",
+          "original": "../../nodes/Scalar.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/stringify/stringifyString.js",
+          "kind": "require-call",
+          "original": "../../stringify/stringifyString.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/schema/yaml-1.1/pairs.js": {
+      "bytes": 2854,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/nodes/identity.js",
+          "kind": "require-call",
+          "original": "../../nodes/identity.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/Pair.js",
+          "kind": "require-call",
+          "original": "../../nodes/Pair.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/Scalar.js",
+          "kind": "require-call",
+          "original": "../../nodes/Scalar.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/YAMLSeq.js",
+          "kind": "require-call",
+          "original": "../../nodes/YAMLSeq.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/schema/yaml-1.1/omap.js": {
+      "bytes": 2581,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/nodes/identity.js",
+          "kind": "require-call",
+          "original": "../../nodes/identity.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/toJS.js",
+          "kind": "require-call",
+          "original": "../../nodes/toJS.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/YAMLMap.js",
+          "kind": "require-call",
+          "original": "../../nodes/YAMLMap.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/YAMLSeq.js",
+          "kind": "require-call",
+          "original": "../../nodes/YAMLSeq.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/schema/yaml-1.1/pairs.js",
+          "kind": "require-call",
+          "original": "./pairs.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/schema/yaml-1.1/bool.js": {
+      "bytes": 841,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/nodes/Scalar.js",
+          "kind": "require-call",
+          "original": "../../nodes/Scalar.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/schema/yaml-1.1/float.js": {
+      "bytes": 1626,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/nodes/Scalar.js",
+          "kind": "require-call",
+          "original": "../../nodes/Scalar.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/stringify/stringifyNumber.js",
+          "kind": "require-call",
+          "original": "../../stringify/stringifyNumber.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/schema/yaml-1.1/int.js": {
+      "bytes": 2232,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/stringify/stringifyNumber.js",
+          "kind": "require-call",
+          "original": "../../stringify/stringifyNumber.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/schema/yaml-1.1/set.js": {
+      "bytes": 3114,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/nodes/identity.js",
+          "kind": "require-call",
+          "original": "../../nodes/identity.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/Pair.js",
+          "kind": "require-call",
+          "original": "../../nodes/Pair.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/YAMLMap.js",
+          "kind": "require-call",
+          "original": "../../nodes/YAMLMap.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/schema/yaml-1.1/timestamp.js": {
+      "bytes": 3775,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/stringify/stringifyNumber.js",
+          "kind": "require-call",
+          "original": "../../stringify/stringifyNumber.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/schema/yaml-1.1/schema.js": {
+      "bytes": 912,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/schema/common/map.js",
+          "kind": "require-call",
+          "original": "../common/map.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/schema/common/null.js",
+          "kind": "require-call",
+          "original": "../common/null.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/schema/common/seq.js",
+          "kind": "require-call",
+          "original": "../common/seq.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/schema/common/string.js",
+          "kind": "require-call",
+          "original": "../common/string.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/schema/yaml-1.1/binary.js",
+          "kind": "require-call",
+          "original": "./binary.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/schema/yaml-1.1/bool.js",
+          "kind": "require-call",
+          "original": "./bool.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/schema/yaml-1.1/float.js",
+          "kind": "require-call",
+          "original": "./float.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/schema/yaml-1.1/int.js",
+          "kind": "require-call",
+          "original": "./int.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/schema/yaml-1.1/merge.js",
+          "kind": "require-call",
+          "original": "./merge.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/schema/yaml-1.1/omap.js",
+          "kind": "require-call",
+          "original": "./omap.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/schema/yaml-1.1/pairs.js",
+          "kind": "require-call",
+          "original": "./pairs.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/schema/yaml-1.1/set.js",
+          "kind": "require-call",
+          "original": "./set.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/schema/yaml-1.1/timestamp.js",
+          "kind": "require-call",
+          "original": "./timestamp.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/schema/tags.js": {
+      "bytes": 3239,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/schema/common/map.js",
+          "kind": "require-call",
+          "original": "./common/map.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/schema/common/null.js",
+          "kind": "require-call",
+          "original": "./common/null.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/schema/common/seq.js",
+          "kind": "require-call",
+          "original": "./common/seq.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/schema/common/string.js",
+          "kind": "require-call",
+          "original": "./common/string.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/schema/core/bool.js",
+          "kind": "require-call",
+          "original": "./core/bool.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/schema/core/float.js",
+          "kind": "require-call",
+          "original": "./core/float.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/schema/core/int.js",
+          "kind": "require-call",
+          "original": "./core/int.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/schema/core/schema.js",
+          "kind": "require-call",
+          "original": "./core/schema.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/schema/json/schema.js",
+          "kind": "require-call",
+          "original": "./json/schema.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/schema/yaml-1.1/binary.js",
+          "kind": "require-call",
+          "original": "./yaml-1.1/binary.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/schema/yaml-1.1/merge.js",
+          "kind": "require-call",
+          "original": "./yaml-1.1/merge.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/schema/yaml-1.1/omap.js",
+          "kind": "require-call",
+          "original": "./yaml-1.1/omap.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/schema/yaml-1.1/pairs.js",
+          "kind": "require-call",
+          "original": "./yaml-1.1/pairs.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/schema/yaml-1.1/schema.js",
+          "kind": "require-call",
+          "original": "./yaml-1.1/schema.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/schema/yaml-1.1/set.js",
+          "kind": "require-call",
+          "original": "./yaml-1.1/set.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/schema/yaml-1.1/timestamp.js",
+          "kind": "require-call",
+          "original": "./yaml-1.1/timestamp.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/schema/Schema.js": {
+      "bytes": 1547,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/nodes/identity.js",
+          "kind": "require-call",
+          "original": "../nodes/identity.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/schema/common/map.js",
+          "kind": "require-call",
+          "original": "./common/map.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/schema/common/seq.js",
+          "kind": "require-call",
+          "original": "./common/seq.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/schema/common/string.js",
+          "kind": "require-call",
+          "original": "./common/string.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/schema/tags.js",
+          "kind": "require-call",
+          "original": "./tags.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/stringify/stringifyDocument.js": {
+      "bytes": 3104,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/nodes/identity.js",
+          "kind": "require-call",
+          "original": "../nodes/identity.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/stringify/stringify.js",
+          "kind": "require-call",
+          "original": "./stringify.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/stringify/stringifyComment.js",
+          "kind": "require-call",
+          "original": "./stringifyComment.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/doc/Document.js": {
+      "bytes": 13114,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/nodes/Alias.js",
+          "kind": "require-call",
+          "original": "../nodes/Alias.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/Collection.js",
+          "kind": "require-call",
+          "original": "../nodes/Collection.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/identity.js",
+          "kind": "require-call",
+          "original": "../nodes/identity.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/Pair.js",
+          "kind": "require-call",
+          "original": "../nodes/Pair.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/toJS.js",
+          "kind": "require-call",
+          "original": "../nodes/toJS.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/schema/Schema.js",
+          "kind": "require-call",
+          "original": "../schema/Schema.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/stringify/stringifyDocument.js",
+          "kind": "require-call",
+          "original": "../stringify/stringifyDocument.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/doc/anchors.js",
+          "kind": "require-call",
+          "original": "./anchors.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/doc/applyReviver.js",
+          "kind": "require-call",
+          "original": "./applyReviver.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/doc/createNode.js",
+          "kind": "require-call",
+          "original": "./createNode.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/doc/directives.js",
+          "kind": "require-call",
+          "original": "./directives.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/errors.js": {
+      "bytes": 2118,
+      "imports": [],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/compose/resolve-props.js": {
+      "bytes": 5579,
+      "imports": [],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/compose/util-contains-newline.js": {
+      "bytes": 1081,
+      "imports": [],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/compose/util-flow-indent-check.js": {
+      "bytes": 547,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/compose/util-contains-newline.js",
+          "kind": "require-call",
+          "original": "./util-contains-newline.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/compose/util-map-includes.js": {
+      "bytes": 471,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/nodes/identity.js",
+          "kind": "require-call",
+          "original": "../nodes/identity.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/compose/resolve-block-map.js": {
+      "bytes": 5071,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/nodes/Pair.js",
+          "kind": "require-call",
+          "original": "../nodes/Pair.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/YAMLMap.js",
+          "kind": "require-call",
+          "original": "../nodes/YAMLMap.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/compose/resolve-props.js",
+          "kind": "require-call",
+          "original": "./resolve-props.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/compose/util-contains-newline.js",
+          "kind": "require-call",
+          "original": "./util-contains-newline.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/compose/util-flow-indent-check.js",
+          "kind": "require-call",
+          "original": "./util-flow-indent-check.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/compose/util-map-includes.js",
+          "kind": "require-call",
+          "original": "./util-map-includes.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/compose/resolve-block-seq.js": {
+      "bytes": 1812,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/nodes/YAMLSeq.js",
+          "kind": "require-call",
+          "original": "../nodes/YAMLSeq.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/compose/resolve-props.js",
+          "kind": "require-call",
+          "original": "./resolve-props.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/compose/util-flow-indent-check.js",
+          "kind": "require-call",
+          "original": "./util-flow-indent-check.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/compose/resolve-end.js": {
+      "bytes": 1264,
+      "imports": [],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/compose/resolve-flow-collection.js": {
+      "bytes": 8927,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/nodes/identity.js",
+          "kind": "require-call",
+          "original": "../nodes/identity.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/Pair.js",
+          "kind": "require-call",
+          "original": "../nodes/Pair.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/YAMLMap.js",
+          "kind": "require-call",
+          "original": "../nodes/YAMLMap.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/YAMLSeq.js",
+          "kind": "require-call",
+          "original": "../nodes/YAMLSeq.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/compose/resolve-end.js",
+          "kind": "require-call",
+          "original": "./resolve-end.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/compose/resolve-props.js",
+          "kind": "require-call",
+          "original": "./resolve-props.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/compose/util-contains-newline.js",
+          "kind": "require-call",
+          "original": "./util-contains-newline.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/compose/util-map-includes.js",
+          "kind": "require-call",
+          "original": "./util-map-includes.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/compose/compose-collection.js": {
+      "bytes": 3613,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/nodes/identity.js",
+          "kind": "require-call",
+          "original": "../nodes/identity.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/Scalar.js",
+          "kind": "require-call",
+          "original": "../nodes/Scalar.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/YAMLMap.js",
+          "kind": "require-call",
+          "original": "../nodes/YAMLMap.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/YAMLSeq.js",
+          "kind": "require-call",
+          "original": "../nodes/YAMLSeq.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/compose/resolve-block-map.js",
+          "kind": "require-call",
+          "original": "./resolve-block-map.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/compose/resolve-block-seq.js",
+          "kind": "require-call",
+          "original": "./resolve-block-seq.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/compose/resolve-flow-collection.js",
+          "kind": "require-call",
+          "original": "./resolve-flow-collection.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/compose/resolve-block-scalar.js": {
+      "bytes": 7500,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/nodes/Scalar.js",
+          "kind": "require-call",
+          "original": "../nodes/Scalar.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/compose/resolve-flow-scalar.js": {
+      "bytes": 7386,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/nodes/Scalar.js",
+          "kind": "require-call",
+          "original": "../nodes/Scalar.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/compose/resolve-end.js",
+          "kind": "require-call",
+          "original": "./resolve-end.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/compose/compose-scalar.js": {
+      "bytes": 3446,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/nodes/identity.js",
+          "kind": "require-call",
+          "original": "../nodes/identity.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/Scalar.js",
+          "kind": "require-call",
+          "original": "../nodes/Scalar.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/compose/resolve-block-scalar.js",
+          "kind": "require-call",
+          "original": "./resolve-block-scalar.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/compose/resolve-flow-scalar.js",
+          "kind": "require-call",
+          "original": "./resolve-flow-scalar.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/compose/util-empty-scalar-position.js": {
+      "bytes": 850,
+      "imports": [],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/compose/compose-node.js": {
+      "bytes": 4269,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/nodes/Alias.js",
+          "kind": "require-call",
+          "original": "../nodes/Alias.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/identity.js",
+          "kind": "require-call",
+          "original": "../nodes/identity.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/compose/compose-collection.js",
+          "kind": "require-call",
+          "original": "./compose-collection.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/compose/compose-scalar.js",
+          "kind": "require-call",
+          "original": "./compose-scalar.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/compose/resolve-end.js",
+          "kind": "require-call",
+          "original": "./resolve-end.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/compose/util-empty-scalar-position.js",
+          "kind": "require-call",
+          "original": "./util-empty-scalar-position.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/compose/compose-doc.js": {
+      "bytes": 1615,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/doc/Document.js",
+          "kind": "require-call",
+          "original": "../doc/Document.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/compose/compose-node.js",
+          "kind": "require-call",
+          "original": "./compose-node.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/compose/resolve-end.js",
+          "kind": "require-call",
+          "original": "./resolve-end.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/compose/resolve-props.js",
+          "kind": "require-call",
+          "original": "./resolve-props.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/compose/composer.js": {
+      "bytes": 8692,
+      "imports": [
+        {
+          "path": "process",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node_modules/yaml/dist/doc/directives.js",
+          "kind": "require-call",
+          "original": "../doc/directives.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/doc/Document.js",
+          "kind": "require-call",
+          "original": "../doc/Document.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/errors.js",
+          "kind": "require-call",
+          "original": "../errors.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/identity.js",
+          "kind": "require-call",
+          "original": "../nodes/identity.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/compose/compose-doc.js",
+          "kind": "require-call",
+          "original": "./compose-doc.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/compose/resolve-end.js",
+          "kind": "require-call",
+          "original": "./resolve-end.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/parse/cst-scalar.js": {
+      "bytes": 9382,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/compose/resolve-block-scalar.js",
+          "kind": "require-call",
+          "original": "../compose/resolve-block-scalar.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/compose/resolve-flow-scalar.js",
+          "kind": "require-call",
+          "original": "../compose/resolve-flow-scalar.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/errors.js",
+          "kind": "require-call",
+          "original": "../errors.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/stringify/stringifyString.js",
+          "kind": "require-call",
+          "original": "../stringify/stringifyString.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/parse/cst-stringify.js": {
+      "bytes": 1799,
+      "imports": [],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/parse/cst-visit.js": {
+      "bytes": 3986,
+      "imports": [],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/parse/cst.js": {
+      "bytes": 3242,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/parse/cst-scalar.js",
+          "kind": "require-call",
+          "original": "./cst-scalar.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/parse/cst-stringify.js",
+          "kind": "require-call",
+          "original": "./cst-stringify.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/parse/cst-visit.js",
+          "kind": "require-call",
+          "original": "./cst-visit.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/parse/lexer.js": {
+      "bytes": 24149,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/parse/cst.js",
+          "kind": "require-call",
+          "original": "./cst.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/parse/line-counter.js": {
+      "bytes": 1445,
+      "imports": [],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/parse/parser.js": {
+      "bytes": 35551,
+      "imports": [
+        {
+          "path": "process",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node_modules/yaml/dist/parse/cst.js",
+          "kind": "require-call",
+          "original": "./cst.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/parse/lexer.js",
+          "kind": "require-call",
+          "original": "./lexer.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/public-api.js": {
+      "bytes": 4187,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/compose/composer.js",
+          "kind": "require-call",
+          "original": "./compose/composer.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/doc/Document.js",
+          "kind": "require-call",
+          "original": "./doc/Document.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/errors.js",
+          "kind": "require-call",
+          "original": "./errors.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/log.js",
+          "kind": "require-call",
+          "original": "./log.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/identity.js",
+          "kind": "require-call",
+          "original": "./nodes/identity.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/parse/line-counter.js",
+          "kind": "require-call",
+          "original": "./parse/line-counter.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/parse/parser.js",
+          "kind": "require-call",
+          "original": "./parse/parser.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/yaml/dist/index.js": {
+      "bytes": 1769,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/compose/composer.js",
+          "kind": "require-call",
+          "original": "./compose/composer.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/doc/Document.js",
+          "kind": "require-call",
+          "original": "./doc/Document.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/schema/Schema.js",
+          "kind": "require-call",
+          "original": "./schema/Schema.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/errors.js",
+          "kind": "require-call",
+          "original": "./errors.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/Alias.js",
+          "kind": "require-call",
+          "original": "./nodes/Alias.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/identity.js",
+          "kind": "require-call",
+          "original": "./nodes/identity.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/Pair.js",
+          "kind": "require-call",
+          "original": "./nodes/Pair.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/Scalar.js",
+          "kind": "require-call",
+          "original": "./nodes/Scalar.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/YAMLMap.js",
+          "kind": "require-call",
+          "original": "./nodes/YAMLMap.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/nodes/YAMLSeq.js",
+          "kind": "require-call",
+          "original": "./nodes/YAMLSeq.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/parse/cst.js",
+          "kind": "require-call",
+          "original": "./parse/cst.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/parse/lexer.js",
+          "kind": "require-call",
+          "original": "./parse/lexer.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/parse/line-counter.js",
+          "kind": "require-call",
+          "original": "./parse/line-counter.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/parse/parser.js",
+          "kind": "require-call",
+          "original": "./parse/parser.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/public-api.js",
+          "kind": "require-call",
+          "original": "./public-api.js"
+        },
+        {
+          "path": "node_modules/yaml/dist/visit.js",
+          "kind": "require-call",
+          "original": "./visit.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    "packages/vscode-extension/src/__tests__/host/liteContainerScanner.host.ts": {
+      "bytes": 20990,
+      "imports": [
+        {
+          "path": "vscode",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:assert/strict",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:fs/promises",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:path",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node_modules/yaml/dist/index.js",
+          "kind": "import-statement",
+          "original": "yaml"
+        }
+      ],
+      "format": "esm"
+    },
+    "packages/vscode-extension/src/project-privacy/SecureEditorModel.ts": {
+      "bytes": 5095,
+      "imports": [],
+      "format": "esm"
+    },
+    "packages/vscode-extension/src/hygiene/HygieneCandidatePolicy.ts": {
+      "bytes": 1219,
+      "imports": [
+        {
+          "path": "packages/guard-core/dist/index.js",
+          "kind": "import-statement",
+          "original": "@soterai/guard-core"
+        }
+      ],
+      "format": "esm"
+    },
+    "packages/vscode-extension/src/config-scanners/TerraformSecretPlan.ts": {
+      "bytes": 13255,
+      "imports": [
+        {
+          "path": "packages/guard-core/dist/index.js",
+          "kind": "import-statement",
+          "original": "@soterai/guard-core"
+        },
+        {
+          "path": "packages/vscode-extension/src/project-privacy/SecureEditorModel.ts",
+          "kind": "import-statement",
+          "original": "../project-privacy/SecureEditorModel"
+        },
+        {
+          "path": "packages/vscode-extension/src/hygiene/HygieneCandidatePolicy.ts",
+          "kind": "import-statement",
+          "original": "../hygiene/HygieneCandidatePolicy"
+        }
+      ],
+      "format": "esm"
+    },
+    "packages/vscode-extension/src/__tests__/host/liteTerraformScanner.host.ts": {
+      "bytes": 21278,
+      "imports": [
+        {
+          "path": "vscode",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:assert/strict",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:fs/promises",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:path",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "packages/vscode-extension/src/config-scanners/TerraformSecretPlan.ts",
+          "kind": "import-statement",
+          "original": "../../config-scanners/TerraformSecretPlan"
+        }
+      ],
+      "format": "esm"
+    },
+    "packages/vscode-extension/src/config-scanners/RegistrySecretPlan.ts": {
+      "bytes": 11565,
+      "imports": [
+        {
+          "path": "packages/guard-core/dist/index.js",
+          "kind": "import-statement",
+          "original": "@soterai/guard-core"
+        },
+        {
+          "path": "packages/vscode-extension/src/project-privacy/SecureEditorModel.ts",
+          "kind": "import-statement",
+          "original": "../project-privacy/SecureEditorModel"
+        },
+        {
+          "path": "packages/vscode-extension/src/hygiene/HygieneCandidatePolicy.ts",
+          "kind": "import-statement",
+          "original": "../hygiene/HygieneCandidatePolicy"
+        }
+      ],
+      "format": "esm"
+    },
+    "packages/vscode-extension/src/__tests__/host/liteRegistryScanner.host.ts": {
+      "bytes": 21652,
+      "imports": [
+        {
+          "path": "vscode",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:assert/strict",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:fs/promises",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:path",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "packages/vscode-extension/src/config-scanners/RegistrySecretPlan.ts",
+          "kind": "import-statement",
+          "original": "../../config-scanners/RegistrySecretPlan"
+        }
+      ],
+      "format": "esm"
+    },
+    "packages/vscode-extension/src/config-scanners/ServiceAccountSecretPlan.ts": {
+      "bytes": 7113,
+      "imports": [
+        {
+          "path": "packages/guard-core/dist/index.js",
+          "kind": "import-statement",
+          "original": "@soterai/guard-core"
+        },
+        {
+          "path": "packages/vscode-extension/src/project-privacy/SecureEditorModel.ts",
+          "kind": "import-statement",
+          "original": "../project-privacy/SecureEditorModel"
+        },
+        {
+          "path": "packages/vscode-extension/src/hygiene/HygieneCandidatePolicy.ts",
+          "kind": "import-statement",
+          "original": "../hygiene/HygieneCandidatePolicy"
+        }
+      ],
+      "format": "esm"
+    },
+    "packages/vscode-extension/src/__tests__/host/liteServiceAccountScanner.host.ts": {
+      "bytes": 22152,
+      "imports": [
+        {
+          "path": "vscode",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:assert/strict",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:fs/promises",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:path",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "packages/vscode-extension/src/config-scanners/ServiceAccountSecretPlan.ts",
+          "kind": "import-statement",
+          "original": "../../config-scanners/ServiceAccountSecretPlan"
+        }
+      ],
+      "format": "esm"
+    },
+    "packages/vscode-extension/src/config-scanners/CiSecretPlan.ts": {
+      "bytes": 9507,
+      "imports": [
+        {
+          "path": "node_modules/yaml/dist/index.js",
+          "kind": "import-statement",
+          "original": "yaml"
+        },
+        {
+          "path": "packages/guard-core/dist/index.js",
+          "kind": "import-statement",
+          "original": "@soterai/guard-core"
+        },
+        {
+          "path": "packages/vscode-extension/src/project-privacy/SecureEditorModel.ts",
+          "kind": "import-statement",
+          "original": "../project-privacy/SecureEditorModel"
+        },
+        {
+          "path": "packages/vscode-extension/src/hygiene/HygieneCandidatePolicy.ts",
+          "kind": "import-statement",
+          "original": "../hygiene/HygieneCandidatePolicy"
+        }
+      ],
+      "format": "esm"
+    },
+    "packages/vscode-extension/src/__tests__/host/liteCiScanner.host.ts": {
+      "bytes": 21464,
+      "imports": [
+        {
+          "path": "vscode",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:assert/strict",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:fs/promises",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:path",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "packages/vscode-extension/src/config-scanners/CiSecretPlan.ts",
+          "kind": "import-statement",
+          "original": "../../config-scanners/CiSecretPlan"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/jsonc-parser/lib/esm/impl/scanner.js": {
+      "bytes": 19188,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/jsonc-parser/lib/esm/impl/string-intern.js": {
+      "bytes": 1034,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/jsonc-parser/lib/esm/impl/format.js": {
+      "bytes": 11098,
+      "imports": [
+        {
+          "path": "node_modules/jsonc-parser/lib/esm/impl/scanner.js",
+          "kind": "import-statement",
+          "original": "./scanner"
+        },
+        {
+          "path": "node_modules/jsonc-parser/lib/esm/impl/string-intern.js",
+          "kind": "import-statement",
+          "original": "./string-intern"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/jsonc-parser/lib/esm/impl/parser.js": {
+      "bytes": 25765,
+      "imports": [
+        {
+          "path": "node_modules/jsonc-parser/lib/esm/impl/scanner.js",
+          "kind": "import-statement",
+          "original": "./scanner"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/jsonc-parser/lib/esm/impl/edit.js": {
+      "bytes": 8613,
+      "imports": [
+        {
+          "path": "node_modules/jsonc-parser/lib/esm/impl/format.js",
+          "kind": "import-statement",
+          "original": "./format"
+        },
+        {
+          "path": "node_modules/jsonc-parser/lib/esm/impl/parser.js",
+          "kind": "import-statement",
+          "original": "./parser"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/jsonc-parser/lib/esm/main.js": {
+      "bytes": 9363,
+      "imports": [
+        {
+          "path": "node_modules/jsonc-parser/lib/esm/impl/format.js",
+          "kind": "import-statement",
+          "original": "./impl/format"
+        },
+        {
+          "path": "node_modules/jsonc-parser/lib/esm/impl/edit.js",
+          "kind": "import-statement",
+          "original": "./impl/edit"
+        },
+        {
+          "path": "node_modules/jsonc-parser/lib/esm/impl/scanner.js",
+          "kind": "import-statement",
+          "original": "./impl/scanner"
+        },
+        {
+          "path": "node_modules/jsonc-parser/lib/esm/impl/parser.js",
+          "kind": "import-statement",
+          "original": "./impl/parser"
+        }
+      ],
+      "format": "esm"
+    },
+    "packages/vscode-extension/src/config-scanners/EditorSecretPlan.ts": {
+      "bytes": 9945,
+      "imports": [
+        {
+          "path": "node_modules/jsonc-parser/lib/esm/main.js",
+          "kind": "import-statement",
+          "original": "jsonc-parser"
+        },
+        {
+          "path": "packages/guard-core/dist/index.js",
+          "kind": "import-statement",
+          "original": "@soterai/guard-core"
+        },
+        {
+          "path": "packages/vscode-extension/src/project-privacy/SecureEditorModel.ts",
+          "kind": "import-statement",
+          "original": "../project-privacy/SecureEditorModel"
+        },
+        {
+          "path": "packages/vscode-extension/src/hygiene/HygieneCandidatePolicy.ts",
+          "kind": "import-statement",
+          "original": "../hygiene/HygieneCandidatePolicy"
+        }
+      ],
+      "format": "esm"
+    },
+    "packages/vscode-extension/src/__tests__/host/liteEditorScanner.host.ts": {
+      "bytes": 22839,
+      "imports": [
+        {
+          "path": "vscode",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:assert/strict",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:fs/promises",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:path",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "packages/vscode-extension/src/config-scanners/EditorSecretPlan.ts",
+          "kind": "import-statement",
+          "original": "../../config-scanners/EditorSecretPlan"
+        }
+      ],
+      "format": "esm"
+    }
+  },
+  "outputs": {
+    "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/prebuilt-native-hosts-03/lite-broker-host.js": {
+      "imports": [
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "vscode",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:assert/strict",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:child_process",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:fs/promises",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:path",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "vscode",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:assert/strict",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:http",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:fs/promises",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:path",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "vscode",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:assert/strict",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:child_process",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:zlib",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:net",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:http",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:fs/promises",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:path",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:child_process",
+          "kind": "require-call",
+          "external": true
+        }
+      ],
+      "exports": [],
+      "entryPoint": "packages/vscode-extension/src/__tests__/host/liteSafeReadMcp.host.ts",
+      "inputs": {
+        "packages/guard-core/dist/types.js": {
+          "bytesInOutput": 177
+        },
+        "packages/guard-core/dist/detectors/utils.js": {
+          "bytesInOutput": 2910
+        },
+        "packages/guard-core/dist/detectors/SecretDetector.js": {
+          "bytesInOutput": 23519
+        },
+        "packages/guard-core/dist/detectors/EncodedSecretDetector.js": {
+          "bytesInOutput": 3650
+        },
+        "packages/guard-core/dist/detectors/EnvFileDetector.js": {
+          "bytesInOutput": 1961
+        },
+        "packages/guard-core/dist/detectors/PIIDetector.js": {
+          "bytesInOutput": 3149
+        },
+        "packages/guard-core/dist/detectors/IndiaPIIDetector.js": {
+          "bytesInOutput": 3544
+        },
+        "packages/guard-core/dist/detectors/PromptInjectionLiteDetector.js": {
+          "bytesInOutput": 16597
+        },
+        "packages/guard-core/dist/detectors/JailbreakLiteDetector.js": {
+          "bytesInOutput": 9962
+        },
+        "packages/guard-core/dist/detectors/FileContextRiskDetector.js": {
+          "bytesInOutput": 4228
+        },
+        "packages/guard-core/dist/detectors/TerminalCommandRiskDetector.js": {
+          "bytesInOutput": 6858
+        },
+        "packages/guard-core/dist/detectors/RepoInstructionPoisoningDetector.js": {
+          "bytesInOutput": 4162
+        },
+        "packages/guard-core/dist/detectors/MCPConfigRiskDetector.js": {
+          "bytesInOutput": 2990
+        },
+        "packages/guard-core/dist/detectors/AIGeneratedCodeRiskDetector.js": {
+          "bytesInOutput": 5101
+        },
+        "packages/guard-core/dist/detectors/OutputExfiltrationDetector.js": {
+          "bytesInOutput": 3835
+        },
+        "packages/guard-core/dist/detectors/index.js": {
+          "bytesInOutput": 7557
+        },
+        "packages/guard-core/dist/Redactor.js": {
+          "bytesInOutput": 11379
+        },
+        "packages/guard-core/dist/ContextRedactor.js": {
+          "bytesInOutput": 2327
+        },
+        "packages/guard-core/dist/PolicyEvaluator.js": {
+          "bytesInOutput": 3898
+        },
+        "packages/guard-core/dist/HashCache.js": {
+          "bytesInOutput": 6283
+        },
+        "packages/guard-core/dist/EvidenceMinimizer.js": {
+          "bytesInOutput": 1391
+        },
+        "packages/guard-core/dist/DecisionEngine.js": {
+          "bytesInOutput": 9417
+        },
+        "packages/guard-core/dist/ProjectPolicy.js": {
+          "bytesInOutput": 5916
+        },
+        "packages/guard-core/dist/Vault.js": {
+          "bytesInOutput": 7019
+        },
+        "packages/guard-core/dist/VaultCrypto.js": {
+          "bytesInOutput": 2665
+        },
+        "packages/guard-core/dist/Canary.js": {
+          "bytesInOutput": 4003
+        },
+        "packages/guard-core/dist/OutputLeakScanner.js": {
+          "bytesInOutput": 3053
+        },
+        "packages/guard-core/dist/SafeContextBuilder.js": {
+          "bytesInOutput": 8483
+        },
+        "packages/guard-core/dist/Ledger.js": {
+          "bytesInOutput": 6766
+        },
+        "packages/guard-core/dist/ExtensionRiskScanner.js": {
+          "bytesInOutput": 5376
+        },
+        "packages/guard-core/dist/MCPPolicyAnalyzer.js": {
+          "bytesInOutput": 8603
+        },
+        "packages/guard-core/dist/MCPCredentialBoundary.js": {
+          "bytesInOutput": 2545
+        },
+        "packages/guard-core/dist/CoverageMatrix.js": {
+          "bytesInOutput": 3625
+        },
+        "packages/guard-core/dist/CapabilityRegistry.js": {
+          "bytesInOutput": 32497
+        },
+        "packages/guard-core/dist/SafeMode.js": {
+          "bytesInOutput": 7849
+        },
+        "packages/guard-core/dist/ApprovalToken.js": {
+          "bytesInOutput": 6500
+        },
+        "packages/guard-core/dist/BrokerScanner.js": {
+          "bytesInOutput": 5245
+        },
+        "packages/guard-core/dist/MemorySession.js": {
+          "bytesInOutput": 4583
+        },
+        "packages/guard-core/dist/RuntimePolicyEngine.js": {
+          "bytesInOutput": 8757
+        },
+        "packages/guard-core/dist/ControlledTerminal.js": {
+          "bytesInOutput": 5417
+        },
+        "packages/guard-core/dist/RuntimeDiscovery.js": {
+          "bytesInOutput": 5198
+        },
+        "packages/guard-core/dist/FileOperationFirewall.js": {
+          "bytesInOutput": 5911
+        },
+        "packages/guard-core/dist/NetworkEgressPolicy.js": {
+          "bytesInOutput": 7200
+        },
+        "packages/guard-core/dist/TaintEngine.js": {
+          "bytesInOutput": 2880
+        },
+        "packages/guard-core/dist/MCPGateway.js": {
+          "bytesInOutput": 4161
+        },
+        "packages/guard-core/dist/CheckpointRollback.js": {
+          "bytesInOutput": 9335
+        },
+        "packages/guard-core/dist/GovernancePolicy.js": {
+          "bytesInOutput": 3193
+        },
+        "packages/guard-core/dist/ProcessSandboxPolicy.js": {
+          "bytesInOutput": 5878
+        },
+        "packages/guard-core/dist/ExtensionIsolationPolicy.js": {
+          "bytesInOutput": 4602
+        },
+        "packages/guard-core/dist/sensitiveFiles.js": {
+          "bytesInOutput": 5150
+        },
+        "packages/guard-core/dist/LitePolicyCatalog.js": {
+          "bytesInOutput": 10319
+        },
+        "packages/guard-core/dist/index.js": {
+          "bytesInOutput": 3119
+        },
+        "packages/vscode-extension/src/__tests__/host/liteSafeReadMcp.host.ts": {
+          "bytesInOutput": 94131
+        },
+        "packages/vscode-extension/src/__tests__/host/liteSafeReadMcpChecks.host.ts": {
+          "bytesInOutput": 13941
+        },
+        "packages/vscode-extension/src/__tests__/host/liteGatewayPolicyChecks.host.ts": {
+          "bytesInOutput": 12107
+        }
+      },
+      "bytes": 455674
+    },
+    "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/prebuilt-native-hosts-03/lite-hygiene-host.js": {
+      "imports": [
+        {
+          "path": "vscode",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:assert/strict",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:fs/promises",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:path",
+          "kind": "require-call",
+          "external": true
+        }
+      ],
+      "exports": [],
+      "entryPoint": "packages/vscode-extension/src/__tests__/host/liteHygiene.host.ts",
+      "inputs": {
+        "packages/vscode-extension/src/__tests__/host/liteHygiene.host.ts": {
+          "bytesInOutput": 18571
+        }
+      },
+      "bytes": 20170
+    },
+    "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/prebuilt-native-hosts-03/lite-vault-host.js": {
+      "imports": [
+        {
+          "path": "vscode",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:assert/strict",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:fs",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:fs/promises",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:path",
+          "kind": "require-call",
+          "external": true
+        }
+      ],
+      "exports": [],
+      "entryPoint": "packages/vscode-extension/src/__tests__/host/liteVault.host.ts",
+      "inputs": {
+        "packages/vscode-extension/src/__tests__/host/liteVault.host.ts": {
+          "bytesInOutput": 28331
+        }
+      },
+      "bytes": 29928
+    },
+    "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/prebuilt-native-hosts-03/lite-source-host.js": {
+      "imports": [
+        {
+          "path": "vscode",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:assert/strict",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:fs/promises",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:path",
+          "kind": "require-call",
+          "external": true
+        }
+      ],
+      "exports": [],
+      "entryPoint": "packages/vscode-extension/src/__tests__/host/liteSourceScanner.host.ts",
+      "inputs": {
+        "packages/vscode-extension/src/__tests__/host/liteSourceScanner.host.ts": {
+          "bytesInOutput": 19494
+        }
+      },
+      "bytes": 21099
+    },
+    "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/prebuilt-native-hosts-03/lite-container-host.js": {
+      "imports": [
+        {
+          "path": "process",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "buffer",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "process",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "process",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "vscode",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:assert/strict",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:fs/promises",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:path",
+          "kind": "require-call",
+          "external": true
+        }
+      ],
+      "exports": [],
+      "entryPoint": "packages/vscode-extension/src/__tests__/host/liteContainerScanner.host.ts",
+      "inputs": {
+        "node_modules/yaml/dist/nodes/identity.js": {
+          "bytesInOutput": 2121
+        },
+        "node_modules/yaml/dist/visit.js": {
+          "bytesInOutput": 5525
+        },
+        "node_modules/yaml/dist/doc/directives.js": {
+          "bytesInOutput": 5906
+        },
+        "node_modules/yaml/dist/doc/anchors.js": {
+          "bytesInOutput": 2304
+        },
+        "node_modules/yaml/dist/doc/applyReviver.js": {
+          "bytesInOutput": 1556
+        },
+        "node_modules/yaml/dist/nodes/toJS.js": {
+          "bytesInOutput": 891
+        },
+        "node_modules/yaml/dist/nodes/Node.js": {
+          "bytesInOutput": 1478
+        },
+        "node_modules/yaml/dist/nodes/Alias.js": {
+          "bytesInOutput": 3841
+        },
+        "node_modules/yaml/dist/nodes/Scalar.js": {
+          "bytesInOutput": 908
+        },
+        "node_modules/yaml/dist/doc/createNode.js": {
+          "bytesInOutput": 2782
+        },
+        "node_modules/yaml/dist/nodes/Collection.js": {
+          "bytesInOutput": 5099
+        },
+        "node_modules/yaml/dist/stringify/stringifyComment.js": {
+          "bytesInOutput": 748
+        },
+        "node_modules/yaml/dist/stringify/foldFlowLines.js": {
+          "bytesInOutput": 4053
+        },
+        "node_modules/yaml/dist/stringify/stringifyString.js": {
+          "bytesInOutput": 10935
+        },
+        "node_modules/yaml/dist/stringify/stringify.js": {
+          "bytesInOutput": 4560
+        },
+        "node_modules/yaml/dist/stringify/stringifyPair.js": {
+          "bytesInOutput": 5234
+        },
+        "node_modules/yaml/dist/log.js": {
+          "bytesInOutput": 577
+        },
+        "node_modules/yaml/dist/schema/yaml-1.1/merge.js": {
+          "bytesInOutput": 2206
+        },
+        "node_modules/yaml/dist/nodes/addPairToJSMap.js": {
+          "bytesInOutput": 2259
+        },
+        "node_modules/yaml/dist/nodes/Pair.js": {
+          "bytesInOutput": 1346
+        },
+        "node_modules/yaml/dist/stringify/stringifyCollection.js": {
+          "bytesInOutput": 5606
+        },
+        "node_modules/yaml/dist/nodes/YAMLMap.js": {
+          "bytesInOutput": 5037
+        },
+        "node_modules/yaml/dist/schema/common/map.js": {
+          "bytesInOutput": 585
+        },
+        "node_modules/yaml/dist/nodes/YAMLSeq.js": {
+          "bytesInOutput": 3777
+        },
+        "node_modules/yaml/dist/schema/common/seq.js": {
+          "bytesInOutput": 586
+        },
+        "node_modules/yaml/dist/schema/common/string.js": {
+          "bytesInOutput": 574
+        },
+        "node_modules/yaml/dist/schema/common/null.js": {
+          "bytesInOutput": 582
+        },
+        "node_modules/yaml/dist/schema/core/bool.js": {
+          "bytesInOutput": 758
+        },
+        "node_modules/yaml/dist/stringify/stringifyNumber.js": {
+          "bytesInOutput": 918
+        },
+        "node_modules/yaml/dist/schema/core/float.js": {
+          "bytesInOutput": 1627
+        },
+        "node_modules/yaml/dist/schema/core/int.js": {
+          "bytesInOutput": 1586
+        },
+        "node_modules/yaml/dist/schema/core/schema.js": {
+          "bytesInOutput": 600
+        },
+        "node_modules/yaml/dist/schema/json/schema.js": {
+          "bytesInOutput": 2048
+        },
+        "node_modules/yaml/dist/schema/yaml-1.1/binary.js": {
+          "bytesInOutput": 2701
+        },
+        "node_modules/yaml/dist/schema/yaml-1.1/pairs.js": {
+          "bytesInOutput": 2679
+        },
+        "node_modules/yaml/dist/schema/yaml-1.1/omap.js": {
+          "bytesInOutput": 2650
+        },
+        "node_modules/yaml/dist/schema/yaml-1.1/bool.js": {
+          "bytesInOutput": 1010
+        },
+        "node_modules/yaml/dist/schema/yaml-1.1/float.js": {
+          "bytesInOutput": 1738
+        },
+        "node_modules/yaml/dist/schema/yaml-1.1/int.js": {
+          "bytesInOutput": 2436
+        },
+        "node_modules/yaml/dist/schema/yaml-1.1/set.js": {
+          "bytesInOutput": 3110
+        },
+        "node_modules/yaml/dist/schema/yaml-1.1/timestamp.js": {
+          "bytesInOutput": 3471
+        },
+        "node_modules/yaml/dist/schema/yaml-1.1/schema.js": {
+          "bytesInOutput": 1019
+        },
+        "node_modules/yaml/dist/schema/tags.js": {
+          "bytesInOutput": 3203
+        },
+        "node_modules/yaml/dist/schema/Schema.js": {
+          "bytesInOutput": 1474
+        },
+        "node_modules/yaml/dist/stringify/stringifyDocument.js": {
+          "bytesInOutput": 2922
+        },
+        "node_modules/yaml/dist/doc/Document.js": {
+          "bytesInOutput": 12219
+        },
+        "node_modules/yaml/dist/errors.js": {
+          "bytesInOutput": 2123
+        },
+        "node_modules/yaml/dist/compose/resolve-props.js": {
+          "bytesInOutput": 4944
+        },
+        "node_modules/yaml/dist/compose/util-contains-newline.js": {
+          "bytesInOutput": 1169
+        },
+        "node_modules/yaml/dist/compose/util-flow-indent-check.js": {
+          "bytesInOutput": 666
+        },
+        "node_modules/yaml/dist/compose/util-map-includes.js": {
+          "bytesInOutput": 589
+        },
+        "node_modules/yaml/dist/compose/resolve-block-map.js": {
+          "bytesInOutput": 4781
+        },
+        "node_modules/yaml/dist/compose/resolve-block-seq.js": {
+          "bytesInOutput": 1860
+        },
+        "node_modules/yaml/dist/compose/resolve-end.js": {
+          "bytesInOutput": 1276
+        },
+        "node_modules/yaml/dist/compose/resolve-flow-collection.js": {
+          "bytesInOutput": 8112
+        },
+        "node_modules/yaml/dist/compose/compose-collection.js": {
+          "bytesInOutput": 3239
+        },
+        "node_modules/yaml/dist/compose/resolve-block-scalar.js": {
+          "bytesInOutput": 6948
+        },
+        "node_modules/yaml/dist/compose/resolve-flow-scalar.js": {
+          "bytesInOutput": 6978
+        },
+        "node_modules/yaml/dist/compose/compose-scalar.js": {
+          "bytesInOutput": 3428
+        },
+        "node_modules/yaml/dist/compose/util-empty-scalar-position.js": {
+          "bytesInOutput": 804
+        },
+        "node_modules/yaml/dist/compose/compose-node.js": {
+          "bytesInOutput": 4184
+        },
+        "node_modules/yaml/dist/compose/compose-doc.js": {
+          "bytesInOutput": 1643
+        },
+        "node_modules/yaml/dist/compose/composer.js": {
+          "bytesInOutput": 7891
+        },
+        "node_modules/yaml/dist/parse/cst-scalar.js": {
+          "bytesInOutput": 7042
+        },
+        "node_modules/yaml/dist/parse/cst-stringify.js": {
+          "bytesInOutput": 1696
+        },
+        "node_modules/yaml/dist/parse/cst-visit.js": {
+          "bytesInOutput": 2038
+        },
+        "node_modules/yaml/dist/parse/cst.js": {
+          "bytesInOutput": 2859
+        },
+        "node_modules/yaml/dist/parse/lexer.js": {
+          "bytesInOutput": 18969
+        },
+        "node_modules/yaml/dist/parse/line-counter.js": {
+          "bytesInOutput": 921
+        },
+        "node_modules/yaml/dist/parse/parser.js": {
+          "bytesInOutput": 29459
+        },
+        "node_modules/yaml/dist/public-api.js": {
+          "bytesInOutput": 3913
+        },
+        "node_modules/yaml/dist/index.js": {
+          "bytesInOutput": 1891
+        },
+        "packages/vscode-extension/src/__tests__/host/liteContainerScanner.host.ts": {
+          "bytesInOutput": 24100
+        }
+      },
+      "bytes": 288133
+    },
+    "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/prebuilt-native-hosts-03/lite-terraform-host.js": {
+      "imports": [
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "vscode",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:assert/strict",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:fs/promises",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:path",
+          "kind": "require-call",
+          "external": true
+        }
+      ],
+      "exports": [],
+      "entryPoint": "packages/vscode-extension/src/__tests__/host/liteTerraformScanner.host.ts",
+      "inputs": {
+        "packages/guard-core/dist/types.js": {
+          "bytesInOutput": 177
+        },
+        "packages/guard-core/dist/detectors/utils.js": {
+          "bytesInOutput": 2910
+        },
+        "packages/guard-core/dist/detectors/SecretDetector.js": {
+          "bytesInOutput": 23519
+        },
+        "packages/guard-core/dist/detectors/EncodedSecretDetector.js": {
+          "bytesInOutput": 3650
+        },
+        "packages/guard-core/dist/detectors/EnvFileDetector.js": {
+          "bytesInOutput": 1961
+        },
+        "packages/guard-core/dist/detectors/PIIDetector.js": {
+          "bytesInOutput": 3149
+        },
+        "packages/guard-core/dist/detectors/IndiaPIIDetector.js": {
+          "bytesInOutput": 3544
+        },
+        "packages/guard-core/dist/detectors/PromptInjectionLiteDetector.js": {
+          "bytesInOutput": 16597
+        },
+        "packages/guard-core/dist/detectors/JailbreakLiteDetector.js": {
+          "bytesInOutput": 9962
+        },
+        "packages/guard-core/dist/detectors/FileContextRiskDetector.js": {
+          "bytesInOutput": 4228
+        },
+        "packages/guard-core/dist/detectors/TerminalCommandRiskDetector.js": {
+          "bytesInOutput": 6858
+        },
+        "packages/guard-core/dist/detectors/RepoInstructionPoisoningDetector.js": {
+          "bytesInOutput": 4162
+        },
+        "packages/guard-core/dist/detectors/MCPConfigRiskDetector.js": {
+          "bytesInOutput": 2990
+        },
+        "packages/guard-core/dist/detectors/AIGeneratedCodeRiskDetector.js": {
+          "bytesInOutput": 5101
+        },
+        "packages/guard-core/dist/detectors/OutputExfiltrationDetector.js": {
+          "bytesInOutput": 3835
+        },
+        "packages/guard-core/dist/detectors/index.js": {
+          "bytesInOutput": 7557
+        },
+        "packages/guard-core/dist/Redactor.js": {
+          "bytesInOutput": 11382
+        },
+        "packages/guard-core/dist/ContextRedactor.js": {
+          "bytesInOutput": 2327
+        },
+        "packages/guard-core/dist/PolicyEvaluator.js": {
+          "bytesInOutput": 3898
+        },
+        "packages/guard-core/dist/HashCache.js": {
+          "bytesInOutput": 6283
+        },
+        "packages/guard-core/dist/EvidenceMinimizer.js": {
+          "bytesInOutput": 1391
+        },
+        "packages/guard-core/dist/DecisionEngine.js": {
+          "bytesInOutput": 9419
+        },
+        "packages/guard-core/dist/ProjectPolicy.js": {
+          "bytesInOutput": 5916
+        },
+        "packages/guard-core/dist/Vault.js": {
+          "bytesInOutput": 7025
+        },
+        "packages/guard-core/dist/VaultCrypto.js": {
+          "bytesInOutput": 2663
+        },
+        "packages/guard-core/dist/Canary.js": {
+          "bytesInOutput": 4003
+        },
+        "packages/guard-core/dist/OutputLeakScanner.js": {
+          "bytesInOutput": 3053
+        },
+        "packages/guard-core/dist/SafeContextBuilder.js": {
+          "bytesInOutput": 8483
+        },
+        "packages/guard-core/dist/Ledger.js": {
+          "bytesInOutput": 6766
+        },
+        "packages/guard-core/dist/ExtensionRiskScanner.js": {
+          "bytesInOutput": 5376
+        },
+        "packages/guard-core/dist/MCPPolicyAnalyzer.js": {
+          "bytesInOutput": 8603
+        },
+        "packages/guard-core/dist/MCPCredentialBoundary.js": {
+          "bytesInOutput": 2545
+        },
+        "packages/guard-core/dist/CoverageMatrix.js": {
+          "bytesInOutput": 3625
+        },
+        "packages/guard-core/dist/CapabilityRegistry.js": {
+          "bytesInOutput": 32497
+        },
+        "packages/guard-core/dist/SafeMode.js": {
+          "bytesInOutput": 7849
+        },
+        "packages/guard-core/dist/ApprovalToken.js": {
+          "bytesInOutput": 6500
+        },
+        "packages/guard-core/dist/BrokerScanner.js": {
+          "bytesInOutput": 5245
+        },
+        "packages/guard-core/dist/MemorySession.js": {
+          "bytesInOutput": 4583
+        },
+        "packages/guard-core/dist/RuntimePolicyEngine.js": {
+          "bytesInOutput": 8757
+        },
+        "packages/guard-core/dist/ControlledTerminal.js": {
+          "bytesInOutput": 5417
+        },
+        "packages/guard-core/dist/RuntimeDiscovery.js": {
+          "bytesInOutput": 5206
+        },
+        "packages/guard-core/dist/FileOperationFirewall.js": {
+          "bytesInOutput": 5918
+        },
+        "packages/guard-core/dist/NetworkEgressPolicy.js": {
+          "bytesInOutput": 7200
+        },
+        "packages/guard-core/dist/TaintEngine.js": {
+          "bytesInOutput": 2895
+        },
+        "packages/guard-core/dist/MCPGateway.js": {
+          "bytesInOutput": 4161
+        },
+        "packages/guard-core/dist/CheckpointRollback.js": {
+          "bytesInOutput": 9335
+        },
+        "packages/guard-core/dist/GovernancePolicy.js": {
+          "bytesInOutput": 3193
+        },
+        "packages/guard-core/dist/ProcessSandboxPolicy.js": {
+          "bytesInOutput": 5878
+        },
+        "packages/guard-core/dist/ExtensionIsolationPolicy.js": {
+          "bytesInOutput": 4602
+        },
+        "packages/guard-core/dist/sensitiveFiles.js": {
+          "bytesInOutput": 5150
+        },
+        "packages/guard-core/dist/LitePolicyCatalog.js": {
+          "bytesInOutput": 10319
+        },
+        "packages/guard-core/dist/index.js": {
+          "bytesInOutput": 3119
+        },
+        "packages/vscode-extension/src/__tests__/host/liteTerraformScanner.host.ts": {
+          "bytesInOutput": 24335
+        },
+        "packages/vscode-extension/src/config-scanners/TerraformSecretPlan.ts": {
+          "bytesInOutput": 12151
+        },
+        "packages/vscode-extension/src/project-privacy/SecureEditorModel.ts": {
+          "bytesInOutput": 4325
+        },
+        "packages/vscode-extension/src/hygiene/HygieneCandidatePolicy.ts": {
+          "bytesInOutput": 1043
+        }
+      },
+      "bytes": 377504
+    },
+    "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/prebuilt-native-hosts-03/lite-registry-host.js": {
+      "imports": [
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "vscode",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:assert/strict",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:fs/promises",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:path",
+          "kind": "require-call",
+          "external": true
+        }
+      ],
+      "exports": [],
+      "entryPoint": "packages/vscode-extension/src/__tests__/host/liteRegistryScanner.host.ts",
+      "inputs": {
+        "packages/guard-core/dist/types.js": {
+          "bytesInOutput": 177
+        },
+        "packages/guard-core/dist/detectors/utils.js": {
+          "bytesInOutput": 2910
+        },
+        "packages/guard-core/dist/detectors/SecretDetector.js": {
+          "bytesInOutput": 23519
+        },
+        "packages/guard-core/dist/detectors/EncodedSecretDetector.js": {
+          "bytesInOutput": 3650
+        },
+        "packages/guard-core/dist/detectors/EnvFileDetector.js": {
+          "bytesInOutput": 1961
+        },
+        "packages/guard-core/dist/detectors/PIIDetector.js": {
+          "bytesInOutput": 3149
+        },
+        "packages/guard-core/dist/detectors/IndiaPIIDetector.js": {
+          "bytesInOutput": 3544
+        },
+        "packages/guard-core/dist/detectors/PromptInjectionLiteDetector.js": {
+          "bytesInOutput": 16597
+        },
+        "packages/guard-core/dist/detectors/JailbreakLiteDetector.js": {
+          "bytesInOutput": 9962
+        },
+        "packages/guard-core/dist/detectors/FileContextRiskDetector.js": {
+          "bytesInOutput": 4228
+        },
+        "packages/guard-core/dist/detectors/TerminalCommandRiskDetector.js": {
+          "bytesInOutput": 6858
+        },
+        "packages/guard-core/dist/detectors/RepoInstructionPoisoningDetector.js": {
+          "bytesInOutput": 4162
+        },
+        "packages/guard-core/dist/detectors/MCPConfigRiskDetector.js": {
+          "bytesInOutput": 2990
+        },
+        "packages/guard-core/dist/detectors/AIGeneratedCodeRiskDetector.js": {
+          "bytesInOutput": 5101
+        },
+        "packages/guard-core/dist/detectors/OutputExfiltrationDetector.js": {
+          "bytesInOutput": 3835
+        },
+        "packages/guard-core/dist/detectors/index.js": {
+          "bytesInOutput": 7557
+        },
+        "packages/guard-core/dist/Redactor.js": {
+          "bytesInOutput": 11382
+        },
+        "packages/guard-core/dist/ContextRedactor.js": {
+          "bytesInOutput": 2327
+        },
+        "packages/guard-core/dist/PolicyEvaluator.js": {
+          "bytesInOutput": 3898
+        },
+        "packages/guard-core/dist/HashCache.js": {
+          "bytesInOutput": 6283
+        },
+        "packages/guard-core/dist/EvidenceMinimizer.js": {
+          "bytesInOutput": 1391
+        },
+        "packages/guard-core/dist/DecisionEngine.js": {
+          "bytesInOutput": 9419
+        },
+        "packages/guard-core/dist/ProjectPolicy.js": {
+          "bytesInOutput": 5916
+        },
+        "packages/guard-core/dist/Vault.js": {
+          "bytesInOutput": 7030
+        },
+        "packages/guard-core/dist/VaultCrypto.js": {
+          "bytesInOutput": 2663
+        },
+        "packages/guard-core/dist/Canary.js": {
+          "bytesInOutput": 4003
+        },
+        "packages/guard-core/dist/OutputLeakScanner.js": {
+          "bytesInOutput": 3053
+        },
+        "packages/guard-core/dist/SafeContextBuilder.js": {
+          "bytesInOutput": 8483
+        },
+        "packages/guard-core/dist/Ledger.js": {
+          "bytesInOutput": 6766
+        },
+        "packages/guard-core/dist/ExtensionRiskScanner.js": {
+          "bytesInOutput": 5376
+        },
+        "packages/guard-core/dist/MCPPolicyAnalyzer.js": {
+          "bytesInOutput": 8603
+        },
+        "packages/guard-core/dist/MCPCredentialBoundary.js": {
+          "bytesInOutput": 2545
+        },
+        "packages/guard-core/dist/CoverageMatrix.js": {
+          "bytesInOutput": 3625
+        },
+        "packages/guard-core/dist/CapabilityRegistry.js": {
+          "bytesInOutput": 32497
+        },
+        "packages/guard-core/dist/SafeMode.js": {
+          "bytesInOutput": 7849
+        },
+        "packages/guard-core/dist/ApprovalToken.js": {
+          "bytesInOutput": 6500
+        },
+        "packages/guard-core/dist/BrokerScanner.js": {
+          "bytesInOutput": 5245
+        },
+        "packages/guard-core/dist/MemorySession.js": {
+          "bytesInOutput": 4583
+        },
+        "packages/guard-core/dist/RuntimePolicyEngine.js": {
+          "bytesInOutput": 8757
+        },
+        "packages/guard-core/dist/ControlledTerminal.js": {
+          "bytesInOutput": 5417
+        },
+        "packages/guard-core/dist/RuntimeDiscovery.js": {
+          "bytesInOutput": 5206
+        },
+        "packages/guard-core/dist/FileOperationFirewall.js": {
+          "bytesInOutput": 5918
+        },
+        "packages/guard-core/dist/NetworkEgressPolicy.js": {
+          "bytesInOutput": 7200
+        },
+        "packages/guard-core/dist/TaintEngine.js": {
+          "bytesInOutput": 2895
+        },
+        "packages/guard-core/dist/MCPGateway.js": {
+          "bytesInOutput": 4161
+        },
+        "packages/guard-core/dist/CheckpointRollback.js": {
+          "bytesInOutput": 9335
+        },
+        "packages/guard-core/dist/GovernancePolicy.js": {
+          "bytesInOutput": 3193
+        },
+        "packages/guard-core/dist/ProcessSandboxPolicy.js": {
+          "bytesInOutput": 5878
+        },
+        "packages/guard-core/dist/ExtensionIsolationPolicy.js": {
+          "bytesInOutput": 4602
+        },
+        "packages/guard-core/dist/sensitiveFiles.js": {
+          "bytesInOutput": 5150
+        },
+        "packages/guard-core/dist/LitePolicyCatalog.js": {
+          "bytesInOutput": 10319
+        },
+        "packages/guard-core/dist/index.js": {
+          "bytesInOutput": 3119
+        },
+        "packages/vscode-extension/src/__tests__/host/liteRegistryScanner.host.ts": {
+          "bytesInOutput": 24896
+        },
+        "packages/vscode-extension/src/config-scanners/RegistrySecretPlan.ts": {
+          "bytesInOutput": 10556
+        },
+        "packages/vscode-extension/src/project-privacy/SecureEditorModel.ts": {
+          "bytesInOutput": 4325
+        },
+        "packages/vscode-extension/src/hygiene/HygieneCandidatePolicy.ts": {
+          "bytesInOutput": 1043
+        }
+      },
+      "bytes": 376471
+    },
+    "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/prebuilt-native-hosts-03/lite-service-account-host.js": {
+      "imports": [
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "vscode",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:assert/strict",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:fs/promises",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:path",
+          "kind": "require-call",
+          "external": true
+        }
+      ],
+      "exports": [],
+      "entryPoint": "packages/vscode-extension/src/__tests__/host/liteServiceAccountScanner.host.ts",
+      "inputs": {
+        "packages/guard-core/dist/types.js": {
+          "bytesInOutput": 177
+        },
+        "packages/guard-core/dist/detectors/utils.js": {
+          "bytesInOutput": 2910
+        },
+        "packages/guard-core/dist/detectors/SecretDetector.js": {
+          "bytesInOutput": 23519
+        },
+        "packages/guard-core/dist/detectors/EncodedSecretDetector.js": {
+          "bytesInOutput": 3650
+        },
+        "packages/guard-core/dist/detectors/EnvFileDetector.js": {
+          "bytesInOutput": 1961
+        },
+        "packages/guard-core/dist/detectors/PIIDetector.js": {
+          "bytesInOutput": 3149
+        },
+        "packages/guard-core/dist/detectors/IndiaPIIDetector.js": {
+          "bytesInOutput": 3544
+        },
+        "packages/guard-core/dist/detectors/PromptInjectionLiteDetector.js": {
+          "bytesInOutput": 16597
+        },
+        "packages/guard-core/dist/detectors/JailbreakLiteDetector.js": {
+          "bytesInOutput": 9962
+        },
+        "packages/guard-core/dist/detectors/FileContextRiskDetector.js": {
+          "bytesInOutput": 4228
+        },
+        "packages/guard-core/dist/detectors/TerminalCommandRiskDetector.js": {
+          "bytesInOutput": 6858
+        },
+        "packages/guard-core/dist/detectors/RepoInstructionPoisoningDetector.js": {
+          "bytesInOutput": 4162
+        },
+        "packages/guard-core/dist/detectors/MCPConfigRiskDetector.js": {
+          "bytesInOutput": 2990
+        },
+        "packages/guard-core/dist/detectors/AIGeneratedCodeRiskDetector.js": {
+          "bytesInOutput": 5101
+        },
+        "packages/guard-core/dist/detectors/OutputExfiltrationDetector.js": {
+          "bytesInOutput": 3835
+        },
+        "packages/guard-core/dist/detectors/index.js": {
+          "bytesInOutput": 7557
+        },
+        "packages/guard-core/dist/Redactor.js": {
+          "bytesInOutput": 11382
+        },
+        "packages/guard-core/dist/ContextRedactor.js": {
+          "bytesInOutput": 2327
+        },
+        "packages/guard-core/dist/PolicyEvaluator.js": {
+          "bytesInOutput": 3898
+        },
+        "packages/guard-core/dist/HashCache.js": {
+          "bytesInOutput": 6283
+        },
+        "packages/guard-core/dist/EvidenceMinimizer.js": {
+          "bytesInOutput": 1391
+        },
+        "packages/guard-core/dist/DecisionEngine.js": {
+          "bytesInOutput": 9419
+        },
+        "packages/guard-core/dist/ProjectPolicy.js": {
+          "bytesInOutput": 5916
+        },
+        "packages/guard-core/dist/Vault.js": {
+          "bytesInOutput": 7023
+        },
+        "packages/guard-core/dist/VaultCrypto.js": {
+          "bytesInOutput": 2663
+        },
+        "packages/guard-core/dist/Canary.js": {
+          "bytesInOutput": 4003
+        },
+        "packages/guard-core/dist/OutputLeakScanner.js": {
+          "bytesInOutput": 3053
+        },
+        "packages/guard-core/dist/SafeContextBuilder.js": {
+          "bytesInOutput": 8483
+        },
+        "packages/guard-core/dist/Ledger.js": {
+          "bytesInOutput": 6766
+        },
+        "packages/guard-core/dist/ExtensionRiskScanner.js": {
+          "bytesInOutput": 5376
+        },
+        "packages/guard-core/dist/MCPPolicyAnalyzer.js": {
+          "bytesInOutput": 8603
+        },
+        "packages/guard-core/dist/MCPCredentialBoundary.js": {
+          "bytesInOutput": 2545
+        },
+        "packages/guard-core/dist/CoverageMatrix.js": {
+          "bytesInOutput": 3625
+        },
+        "packages/guard-core/dist/CapabilityRegistry.js": {
+          "bytesInOutput": 32497
+        },
+        "packages/guard-core/dist/SafeMode.js": {
+          "bytesInOutput": 7849
+        },
+        "packages/guard-core/dist/ApprovalToken.js": {
+          "bytesInOutput": 6500
+        },
+        "packages/guard-core/dist/BrokerScanner.js": {
+          "bytesInOutput": 5245
+        },
+        "packages/guard-core/dist/MemorySession.js": {
+          "bytesInOutput": 4583
+        },
+        "packages/guard-core/dist/RuntimePolicyEngine.js": {
+          "bytesInOutput": 8757
+        },
+        "packages/guard-core/dist/ControlledTerminal.js": {
+          "bytesInOutput": 5417
+        },
+        "packages/guard-core/dist/RuntimeDiscovery.js": {
+          "bytesInOutput": 5206
+        },
+        "packages/guard-core/dist/FileOperationFirewall.js": {
+          "bytesInOutput": 5918
+        },
+        "packages/guard-core/dist/NetworkEgressPolicy.js": {
+          "bytesInOutput": 7200
+        },
+        "packages/guard-core/dist/TaintEngine.js": {
+          "bytesInOutput": 2895
+        },
+        "packages/guard-core/dist/MCPGateway.js": {
+          "bytesInOutput": 4161
+        },
+        "packages/guard-core/dist/CheckpointRollback.js": {
+          "bytesInOutput": 9335
+        },
+        "packages/guard-core/dist/GovernancePolicy.js": {
+          "bytesInOutput": 3193
+        },
+        "packages/guard-core/dist/ProcessSandboxPolicy.js": {
+          "bytesInOutput": 5878
+        },
+        "packages/guard-core/dist/ExtensionIsolationPolicy.js": {
+          "bytesInOutput": 4602
+        },
+        "packages/guard-core/dist/sensitiveFiles.js": {
+          "bytesInOutput": 5150
+        },
+        "packages/guard-core/dist/LitePolicyCatalog.js": {
+          "bytesInOutput": 10319
+        },
+        "packages/guard-core/dist/index.js": {
+          "bytesInOutput": 3119
+        },
+        "packages/vscode-extension/src/__tests__/host/liteServiceAccountScanner.host.ts": {
+          "bytesInOutput": 25382
+        },
+        "packages/vscode-extension/src/config-scanners/ServiceAccountSecretPlan.ts": {
+          "bytesInOutput": 6127
+        },
+        "packages/vscode-extension/src/project-privacy/SecureEditorModel.ts": {
+          "bytesInOutput": 4325
+        },
+        "packages/vscode-extension/src/hygiene/HygieneCandidatePolicy.ts": {
+          "bytesInOutput": 1043
+        }
+      },
+      "bytes": 372545
+    },
+    "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/prebuilt-native-hosts-03/lite-ci-host.js": {
+      "imports": [
+        {
+          "path": "process",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "buffer",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "process",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "process",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "vscode",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:assert/strict",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:fs/promises",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:path",
+          "kind": "require-call",
+          "external": true
+        }
+      ],
+      "exports": [],
+      "entryPoint": "packages/vscode-extension/src/__tests__/host/liteCiScanner.host.ts",
+      "inputs": {
+        "node_modules/yaml/dist/nodes/identity.js": {
+          "bytesInOutput": 2130
+        },
+        "node_modules/yaml/dist/visit.js": {
+          "bytesInOutput": 5525
+        },
+        "node_modules/yaml/dist/doc/directives.js": {
+          "bytesInOutput": 5906
+        },
+        "node_modules/yaml/dist/doc/anchors.js": {
+          "bytesInOutput": 2304
+        },
+        "node_modules/yaml/dist/doc/applyReviver.js": {
+          "bytesInOutput": 1556
+        },
+        "node_modules/yaml/dist/nodes/toJS.js": {
+          "bytesInOutput": 891
+        },
+        "node_modules/yaml/dist/nodes/Node.js": {
+          "bytesInOutput": 1478
+        },
+        "node_modules/yaml/dist/nodes/Alias.js": {
+          "bytesInOutput": 3841
+        },
+        "node_modules/yaml/dist/nodes/Scalar.js": {
+          "bytesInOutput": 908
+        },
+        "node_modules/yaml/dist/doc/createNode.js": {
+          "bytesInOutput": 2782
+        },
+        "node_modules/yaml/dist/nodes/Collection.js": {
+          "bytesInOutput": 5099
+        },
+        "node_modules/yaml/dist/stringify/stringifyComment.js": {
+          "bytesInOutput": 748
+        },
+        "node_modules/yaml/dist/stringify/foldFlowLines.js": {
+          "bytesInOutput": 4053
+        },
+        "node_modules/yaml/dist/stringify/stringifyString.js": {
+          "bytesInOutput": 10935
+        },
+        "node_modules/yaml/dist/stringify/stringify.js": {
+          "bytesInOutput": 4560
+        },
+        "node_modules/yaml/dist/stringify/stringifyPair.js": {
+          "bytesInOutput": 5234
+        },
+        "node_modules/yaml/dist/log.js": {
+          "bytesInOutput": 577
+        },
+        "node_modules/yaml/dist/schema/yaml-1.1/merge.js": {
+          "bytesInOutput": 2206
+        },
+        "node_modules/yaml/dist/nodes/addPairToJSMap.js": {
+          "bytesInOutput": 2259
+        },
+        "node_modules/yaml/dist/nodes/Pair.js": {
+          "bytesInOutput": 1346
+        },
+        "node_modules/yaml/dist/stringify/stringifyCollection.js": {
+          "bytesInOutput": 5606
+        },
+        "node_modules/yaml/dist/nodes/YAMLMap.js": {
+          "bytesInOutput": 5037
+        },
+        "node_modules/yaml/dist/schema/common/map.js": {
+          "bytesInOutput": 585
+        },
+        "node_modules/yaml/dist/nodes/YAMLSeq.js": {
+          "bytesInOutput": 3777
+        },
+        "node_modules/yaml/dist/schema/common/seq.js": {
+          "bytesInOutput": 586
+        },
+        "node_modules/yaml/dist/schema/common/string.js": {
+          "bytesInOutput": 574
+        },
+        "node_modules/yaml/dist/schema/common/null.js": {
+          "bytesInOutput": 582
+        },
+        "node_modules/yaml/dist/schema/core/bool.js": {
+          "bytesInOutput": 758
+        },
+        "node_modules/yaml/dist/stringify/stringifyNumber.js": {
+          "bytesInOutput": 918
+        },
+        "node_modules/yaml/dist/schema/core/float.js": {
+          "bytesInOutput": 1627
+        },
+        "node_modules/yaml/dist/schema/core/int.js": {
+          "bytesInOutput": 1586
+        },
+        "node_modules/yaml/dist/schema/core/schema.js": {
+          "bytesInOutput": 600
+        },
+        "node_modules/yaml/dist/schema/json/schema.js": {
+          "bytesInOutput": 2048
+        },
+        "node_modules/yaml/dist/schema/yaml-1.1/binary.js": {
+          "bytesInOutput": 2701
+        },
+        "node_modules/yaml/dist/schema/yaml-1.1/pairs.js": {
+          "bytesInOutput": 2679
+        },
+        "node_modules/yaml/dist/schema/yaml-1.1/omap.js": {
+          "bytesInOutput": 2650
+        },
+        "node_modules/yaml/dist/schema/yaml-1.1/bool.js": {
+          "bytesInOutput": 1010
+        },
+        "node_modules/yaml/dist/schema/yaml-1.1/float.js": {
+          "bytesInOutput": 1738
+        },
+        "node_modules/yaml/dist/schema/yaml-1.1/int.js": {
+          "bytesInOutput": 2436
+        },
+        "node_modules/yaml/dist/schema/yaml-1.1/set.js": {
+          "bytesInOutput": 3110
+        },
+        "node_modules/yaml/dist/schema/yaml-1.1/timestamp.js": {
+          "bytesInOutput": 3471
+        },
+        "node_modules/yaml/dist/schema/yaml-1.1/schema.js": {
+          "bytesInOutput": 1019
+        },
+        "node_modules/yaml/dist/schema/tags.js": {
+          "bytesInOutput": 3203
+        },
+        "node_modules/yaml/dist/schema/Schema.js": {
+          "bytesInOutput": 1474
+        },
+        "node_modules/yaml/dist/stringify/stringifyDocument.js": {
+          "bytesInOutput": 2922
+        },
+        "node_modules/yaml/dist/doc/Document.js": {
+          "bytesInOutput": 12219
+        },
+        "node_modules/yaml/dist/errors.js": {
+          "bytesInOutput": 2123
+        },
+        "node_modules/yaml/dist/compose/resolve-props.js": {
+          "bytesInOutput": 4944
+        },
+        "node_modules/yaml/dist/compose/util-contains-newline.js": {
+          "bytesInOutput": 1169
+        },
+        "node_modules/yaml/dist/compose/util-flow-indent-check.js": {
+          "bytesInOutput": 666
+        },
+        "node_modules/yaml/dist/compose/util-map-includes.js": {
+          "bytesInOutput": 589
+        },
+        "node_modules/yaml/dist/compose/resolve-block-map.js": {
+          "bytesInOutput": 4781
+        },
+        "node_modules/yaml/dist/compose/resolve-block-seq.js": {
+          "bytesInOutput": 1860
+        },
+        "node_modules/yaml/dist/compose/resolve-end.js": {
+          "bytesInOutput": 1276
+        },
+        "node_modules/yaml/dist/compose/resolve-flow-collection.js": {
+          "bytesInOutput": 8120
+        },
+        "node_modules/yaml/dist/compose/compose-collection.js": {
+          "bytesInOutput": 3239
+        },
+        "node_modules/yaml/dist/compose/resolve-block-scalar.js": {
+          "bytesInOutput": 6948
+        },
+        "node_modules/yaml/dist/compose/resolve-flow-scalar.js": {
+          "bytesInOutput": 6978
+        },
+        "node_modules/yaml/dist/compose/compose-scalar.js": {
+          "bytesInOutput": 3428
+        },
+        "node_modules/yaml/dist/compose/util-empty-scalar-position.js": {
+          "bytesInOutput": 804
+        },
+        "node_modules/yaml/dist/compose/compose-node.js": {
+          "bytesInOutput": 4184
+        },
+        "node_modules/yaml/dist/compose/compose-doc.js": {
+          "bytesInOutput": 1643
+        },
+        "node_modules/yaml/dist/compose/composer.js": {
+          "bytesInOutput": 7893
+        },
+        "node_modules/yaml/dist/parse/cst-scalar.js": {
+          "bytesInOutput": 7042
+        },
+        "node_modules/yaml/dist/parse/cst-stringify.js": {
+          "bytesInOutput": 1696
+        },
+        "node_modules/yaml/dist/parse/cst-visit.js": {
+          "bytesInOutput": 2038
+        },
+        "node_modules/yaml/dist/parse/cst.js": {
+          "bytesInOutput": 2861
+        },
+        "node_modules/yaml/dist/parse/lexer.js": {
+          "bytesInOutput": 18969
+        },
+        "node_modules/yaml/dist/parse/line-counter.js": {
+          "bytesInOutput": 921
+        },
+        "node_modules/yaml/dist/parse/parser.js": {
+          "bytesInOutput": 29461
+        },
+        "node_modules/yaml/dist/public-api.js": {
+          "bytesInOutput": 3911
+        },
+        "node_modules/yaml/dist/index.js": {
+          "bytesInOutput": 1891
+        },
+        "packages/guard-core/dist/types.js": {
+          "bytesInOutput": 177
+        },
+        "packages/guard-core/dist/detectors/utils.js": {
+          "bytesInOutput": 2910
+        },
+        "packages/guard-core/dist/detectors/SecretDetector.js": {
+          "bytesInOutput": 23519
+        },
+        "packages/guard-core/dist/detectors/EncodedSecretDetector.js": {
+          "bytesInOutput": 3650
+        },
+        "packages/guard-core/dist/detectors/EnvFileDetector.js": {
+          "bytesInOutput": 1961
+        },
+        "packages/guard-core/dist/detectors/PIIDetector.js": {
+          "bytesInOutput": 3149
+        },
+        "packages/guard-core/dist/detectors/IndiaPIIDetector.js": {
+          "bytesInOutput": 3544
+        },
+        "packages/guard-core/dist/detectors/PromptInjectionLiteDetector.js": {
+          "bytesInOutput": 16597
+        },
+        "packages/guard-core/dist/detectors/JailbreakLiteDetector.js": {
+          "bytesInOutput": 9962
+        },
+        "packages/guard-core/dist/detectors/FileContextRiskDetector.js": {
+          "bytesInOutput": 4228
+        },
+        "packages/guard-core/dist/detectors/TerminalCommandRiskDetector.js": {
+          "bytesInOutput": 6858
+        },
+        "packages/guard-core/dist/detectors/RepoInstructionPoisoningDetector.js": {
+          "bytesInOutput": 4162
+        },
+        "packages/guard-core/dist/detectors/MCPConfigRiskDetector.js": {
+          "bytesInOutput": 2990
+        },
+        "packages/guard-core/dist/detectors/AIGeneratedCodeRiskDetector.js": {
+          "bytesInOutput": 5101
+        },
+        "packages/guard-core/dist/detectors/OutputExfiltrationDetector.js": {
+          "bytesInOutput": 3835
+        },
+        "packages/guard-core/dist/detectors/index.js": {
+          "bytesInOutput": 7557
+        },
+        "packages/guard-core/dist/Redactor.js": {
+          "bytesInOutput": 11382
+        },
+        "packages/guard-core/dist/ContextRedactor.js": {
+          "bytesInOutput": 2327
+        },
+        "packages/guard-core/dist/PolicyEvaluator.js": {
+          "bytesInOutput": 3898
+        },
+        "packages/guard-core/dist/HashCache.js": {
+          "bytesInOutput": 6283
+        },
+        "packages/guard-core/dist/EvidenceMinimizer.js": {
+          "bytesInOutput": 1391
+        },
+        "packages/guard-core/dist/DecisionEngine.js": {
+          "bytesInOutput": 9419
+        },
+        "packages/guard-core/dist/ProjectPolicy.js": {
+          "bytesInOutput": 5916
+        },
+        "packages/guard-core/dist/Vault.js": {
+          "bytesInOutput": 7025
+        },
+        "packages/guard-core/dist/VaultCrypto.js": {
+          "bytesInOutput": 2663
+        },
+        "packages/guard-core/dist/Canary.js": {
+          "bytesInOutput": 4003
+        },
+        "packages/guard-core/dist/OutputLeakScanner.js": {
+          "bytesInOutput": 3053
+        },
+        "packages/guard-core/dist/SafeContextBuilder.js": {
+          "bytesInOutput": 8483
+        },
+        "packages/guard-core/dist/Ledger.js": {
+          "bytesInOutput": 6766
+        },
+        "packages/guard-core/dist/ExtensionRiskScanner.js": {
+          "bytesInOutput": 5376
+        },
+        "packages/guard-core/dist/MCPPolicyAnalyzer.js": {
+          "bytesInOutput": 8603
+        },
+        "packages/guard-core/dist/MCPCredentialBoundary.js": {
+          "bytesInOutput": 2545
+        },
+        "packages/guard-core/dist/CoverageMatrix.js": {
+          "bytesInOutput": 3625
+        },
+        "packages/guard-core/dist/CapabilityRegistry.js": {
+          "bytesInOutput": 32497
+        },
+        "packages/guard-core/dist/SafeMode.js": {
+          "bytesInOutput": 7849
+        },
+        "packages/guard-core/dist/ApprovalToken.js": {
+          "bytesInOutput": 6500
+        },
+        "packages/guard-core/dist/BrokerScanner.js": {
+          "bytesInOutput": 5245
+        },
+        "packages/guard-core/dist/MemorySession.js": {
+          "bytesInOutput": 4583
+        },
+        "packages/guard-core/dist/RuntimePolicyEngine.js": {
+          "bytesInOutput": 8757
+        },
+        "packages/guard-core/dist/ControlledTerminal.js": {
+          "bytesInOutput": 5417
+        },
+        "packages/guard-core/dist/RuntimeDiscovery.js": {
+          "bytesInOutput": 5206
+        },
+        "packages/guard-core/dist/FileOperationFirewall.js": {
+          "bytesInOutput": 5918
+        },
+        "packages/guard-core/dist/NetworkEgressPolicy.js": {
+          "bytesInOutput": 7200
+        },
+        "packages/guard-core/dist/TaintEngine.js": {
+          "bytesInOutput": 2895
+        },
+        "packages/guard-core/dist/MCPGateway.js": {
+          "bytesInOutput": 4161
+        },
+        "packages/guard-core/dist/CheckpointRollback.js": {
+          "bytesInOutput": 9335
+        },
+        "packages/guard-core/dist/GovernancePolicy.js": {
+          "bytesInOutput": 3193
+        },
+        "packages/guard-core/dist/ProcessSandboxPolicy.js": {
+          "bytesInOutput": 5878
+        },
+        "packages/guard-core/dist/ExtensionIsolationPolicy.js": {
+          "bytesInOutput": 4602
+        },
+        "packages/guard-core/dist/sensitiveFiles.js": {
+          "bytesInOutput": 5150
+        },
+        "packages/guard-core/dist/LitePolicyCatalog.js": {
+          "bytesInOutput": 10319
+        },
+        "packages/guard-core/dist/index.js": {
+          "bytesInOutput": 3120
+        },
+        "packages/vscode-extension/src/__tests__/host/liteCiScanner.host.ts": {
+          "bytesInOutput": 24781
+        },
+        "packages/vscode-extension/src/config-scanners/CiSecretPlan.ts": {
+          "bytesInOutput": 8092
+        },
+        "packages/vscode-extension/src/project-privacy/SecureEditorModel.ts": {
+          "bytesInOutput": 4325
+        },
+        "packages/vscode-extension/src/hygiene/HygieneCandidatePolicy.ts": {
+          "bytesInOutput": 1044
+        }
+      },
+      "bytes": 636095
+    },
+    "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/prebuilt-native-hosts-03/lite-editor-host.js": {
+      "imports": [
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "vscode",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:assert/strict",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:fs/promises",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:path",
+          "kind": "require-call",
+          "external": true
+        }
+      ],
+      "exports": [],
+      "entryPoint": "packages/vscode-extension/src/__tests__/host/liteEditorScanner.host.ts",
+      "inputs": {
+        "packages/guard-core/dist/types.js": {
+          "bytesInOutput": 177
+        },
+        "packages/guard-core/dist/detectors/utils.js": {
+          "bytesInOutput": 2910
+        },
+        "packages/guard-core/dist/detectors/SecretDetector.js": {
+          "bytesInOutput": 23519
+        },
+        "packages/guard-core/dist/detectors/EncodedSecretDetector.js": {
+          "bytesInOutput": 3650
+        },
+        "packages/guard-core/dist/detectors/EnvFileDetector.js": {
+          "bytesInOutput": 1961
+        },
+        "packages/guard-core/dist/detectors/PIIDetector.js": {
+          "bytesInOutput": 3149
+        },
+        "packages/guard-core/dist/detectors/IndiaPIIDetector.js": {
+          "bytesInOutput": 3544
+        },
+        "packages/guard-core/dist/detectors/PromptInjectionLiteDetector.js": {
+          "bytesInOutput": 16597
+        },
+        "packages/guard-core/dist/detectors/JailbreakLiteDetector.js": {
+          "bytesInOutput": 9962
+        },
+        "packages/guard-core/dist/detectors/FileContextRiskDetector.js": {
+          "bytesInOutput": 4228
+        },
+        "packages/guard-core/dist/detectors/TerminalCommandRiskDetector.js": {
+          "bytesInOutput": 6858
+        },
+        "packages/guard-core/dist/detectors/RepoInstructionPoisoningDetector.js": {
+          "bytesInOutput": 4162
+        },
+        "packages/guard-core/dist/detectors/MCPConfigRiskDetector.js": {
+          "bytesInOutput": 2990
+        },
+        "packages/guard-core/dist/detectors/AIGeneratedCodeRiskDetector.js": {
+          "bytesInOutput": 5101
+        },
+        "packages/guard-core/dist/detectors/OutputExfiltrationDetector.js": {
+          "bytesInOutput": 3835
+        },
+        "packages/guard-core/dist/detectors/index.js": {
+          "bytesInOutput": 7557
+        },
+        "packages/guard-core/dist/Redactor.js": {
+          "bytesInOutput": 11382
+        },
+        "packages/guard-core/dist/ContextRedactor.js": {
+          "bytesInOutput": 2327
+        },
+        "packages/guard-core/dist/PolicyEvaluator.js": {
+          "bytesInOutput": 3898
+        },
+        "packages/guard-core/dist/HashCache.js": {
+          "bytesInOutput": 6283
+        },
+        "packages/guard-core/dist/EvidenceMinimizer.js": {
+          "bytesInOutput": 1391
+        },
+        "packages/guard-core/dist/DecisionEngine.js": {
+          "bytesInOutput": 9419
+        },
+        "packages/guard-core/dist/ProjectPolicy.js": {
+          "bytesInOutput": 5916
+        },
+        "packages/guard-core/dist/Vault.js": {
+          "bytesInOutput": 7025
+        },
+        "packages/guard-core/dist/VaultCrypto.js": {
+          "bytesInOutput": 2663
+        },
+        "packages/guard-core/dist/Canary.js": {
+          "bytesInOutput": 4003
+        },
+        "packages/guard-core/dist/OutputLeakScanner.js": {
+          "bytesInOutput": 3053
+        },
+        "packages/guard-core/dist/SafeContextBuilder.js": {
+          "bytesInOutput": 8483
+        },
+        "packages/guard-core/dist/Ledger.js": {
+          "bytesInOutput": 6766
+        },
+        "packages/guard-core/dist/ExtensionRiskScanner.js": {
+          "bytesInOutput": 5376
+        },
+        "packages/guard-core/dist/MCPPolicyAnalyzer.js": {
+          "bytesInOutput": 8603
+        },
+        "packages/guard-core/dist/MCPCredentialBoundary.js": {
+          "bytesInOutput": 2545
+        },
+        "packages/guard-core/dist/CoverageMatrix.js": {
+          "bytesInOutput": 3625
+        },
+        "packages/guard-core/dist/CapabilityRegistry.js": {
+          "bytesInOutput": 32497
+        },
+        "packages/guard-core/dist/SafeMode.js": {
+          "bytesInOutput": 7849
+        },
+        "packages/guard-core/dist/ApprovalToken.js": {
+          "bytesInOutput": 6500
+        },
+        "packages/guard-core/dist/BrokerScanner.js": {
+          "bytesInOutput": 5245
+        },
+        "packages/guard-core/dist/MemorySession.js": {
+          "bytesInOutput": 4583
+        },
+        "packages/guard-core/dist/RuntimePolicyEngine.js": {
+          "bytesInOutput": 8757
+        },
+        "packages/guard-core/dist/ControlledTerminal.js": {
+          "bytesInOutput": 5417
+        },
+        "packages/guard-core/dist/RuntimeDiscovery.js": {
+          "bytesInOutput": 5206
+        },
+        "packages/guard-core/dist/FileOperationFirewall.js": {
+          "bytesInOutput": 5918
+        },
+        "packages/guard-core/dist/NetworkEgressPolicy.js": {
+          "bytesInOutput": 7200
+        },
+        "packages/guard-core/dist/TaintEngine.js": {
+          "bytesInOutput": 2895
+        },
+        "packages/guard-core/dist/MCPGateway.js": {
+          "bytesInOutput": 4161
+        },
+        "packages/guard-core/dist/CheckpointRollback.js": {
+          "bytesInOutput": 9335
+        },
+        "packages/guard-core/dist/GovernancePolicy.js": {
+          "bytesInOutput": 3193
+        },
+        "packages/guard-core/dist/ProcessSandboxPolicy.js": {
+          "bytesInOutput": 5878
+        },
+        "packages/guard-core/dist/ExtensionIsolationPolicy.js": {
+          "bytesInOutput": 4602
+        },
+        "packages/guard-core/dist/sensitiveFiles.js": {
+          "bytesInOutput": 5150
+        },
+        "packages/guard-core/dist/LitePolicyCatalog.js": {
+          "bytesInOutput": 10319
+        },
+        "packages/guard-core/dist/index.js": {
+          "bytesInOutput": 3119
+        },
+        "packages/vscode-extension/src/__tests__/host/liteEditorScanner.host.ts": {
+          "bytesInOutput": 26090
+        },
+        "node_modules/jsonc-parser/lib/esm/impl/scanner.js": {
+          "bytesInOutput": 12941
+        },
+        "node_modules/jsonc-parser/lib/esm/impl/string-intern.js": {
+          "bytesInOutput": 863
+        },
+        "node_modules/jsonc-parser/lib/esm/impl/parser.js": {
+          "bytesInOutput": 11107
+        },
+        "node_modules/jsonc-parser/lib/esm/main.js": {
+          "bytesInOutput": 3299
+        },
+        "packages/vscode-extension/src/config-scanners/EditorSecretPlan.ts": {
+          "bytesInOutput": 8373
+        },
+        "packages/vscode-extension/src/project-privacy/SecureEditorModel.ts": {
+          "bytesInOutput": 4325
+        },
+        "packages/vscode-extension/src/hygiene/HygieneCandidatePolicy.ts": {
+          "bytesInOutput": 1043
+        }
+      },
+      "bytes": 403892
+    }
+  }
+}

@@ -1,0 +1,3 @@
+name: public
+permissions: {id-token: write, contents: read}
+jobs: {TOKEN: {steps: [{run: npm test}]}}

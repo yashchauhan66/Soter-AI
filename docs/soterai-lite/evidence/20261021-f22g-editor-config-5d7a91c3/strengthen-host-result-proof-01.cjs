@@ -1,0 +1,6 @@
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),put=(a,b,f)=>fs.writeFileSync(path.join(__dirname,b),f(fs.readFileSync(path.join(__dirname,a),'utf8')),{flag:'wx'});
+put('native-evidence-validation-02.cjs','native-evidence-validation-03.cjs',s=>{const marker='assert.equal(result.phase,phase);';assert.equal(s.split(marker).length,2);return s.replace(marker,marker+"assert.equal(result.hostVersion,'1.143.0');")});
+put('prepare-acceptance-04.cjs','prepare-acceptance-05.cjs',s=>s.replaceAll('native-evidence-validation-02.cjs','native-evidence-validation-03.cjs').replace("feature:'F22g',parent,artifact","feature:'F22g',parent,hostVersion:'1.143.0',hostReview:fact(own('host-version-review-01.json')),artifact"));
+put('complete-byte-barriers-04.ps1','complete-byte-barriers-05.ps1',s=>s.replaceAll('prepare-acceptance-04.cjs','prepare-acceptance-05.cjs'));
+put('run-byte-entry-04.ps1','run-byte-entry-05.ps1',s=>s.replaceAll('complete-byte-barriers-04.ps1','complete-byte-barriers-05.ps1'));
+console.log(JSON.stringify({status:'PREPARED_NOT_EXECUTED',scope:'Strengthen acceptance to check each actual result.hostVersion1.143.0 in addition to freeze/executable/application binding. No product/test/payload/host changes.'}));

@@ -1,0 +1,7 @@
+'use strict';
+const h=require('./evidence-lib-01.cjs'),{fs,path,repo,read,own,write,receipt,tap,assert}=h;
+const command=receipt('full-tests-06.txt'),counts=tap('full-tests-06.txt');assert.equal(counts.tests,3294);assert.equal(counts.pass,3290);assert.equal(counts.skipped,4);
+for(const row of read(own('f22g-progress-05.json')).records)h.current(row);
+write('full06-current-result-01.json',{status:'PASS_FULL_COMPONENT_NOT_NATIVE_OR_FEATURE_ACCEPTANCE',command,counts,currentAuthoredInputs:25,scope:'Fresh unchanged-product serial full06. Four existing skips retained; full05 remains INCOMPLETE with no raw/exit receipt. Backend/new artifact/current+affected native/natural withdrawal/byte barriers still require actual receipts.'});
+fs.appendFileSync(path.join(repo,'docs/soterai-lite/ledger.md'),'\n\n## STEP RECEIPT F22g-FULL06 / fresh serial full PASS\n\nfull-tests06 actual exit0, raw'+command.log.sha256+';3294tests3290PASS0FAIL4SKIP0cancelled0todo. All25 progress05 authored bytes stillcurrent. full06-current-result01 binds exact command/raw/receipt/counts; original full05 lost-session INCOMPLETE remains unchanged. Backend03/candidate03/exact editor04+affected03/native natural withdrawal/byte08/source+transition commit proofs remain pending. Durable runner20540 must be absent with stable streams before indexing. No product/test changes, next feature, rating or unrelated staging.\n');
+console.log(JSON.stringify({status:'PASS_FULL_COMPONENT',counts,raw:command.log.sha256}));

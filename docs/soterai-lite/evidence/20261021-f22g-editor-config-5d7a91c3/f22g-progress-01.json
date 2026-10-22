@@ -1,0 +1,176 @@
+{
+  "status": "PASS_FOCUSED_AND_PRELAUNCH_NOT_FULL_OR_NATIVE",
+  "parent": "91f5820f337f00ad4da89ab9b8dcc9975f8a13a8",
+  "gates": {
+    "pure": {
+      "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/editor-plan-01.txt",
+      "bytes": 3709,
+      "sha256": "81b9b95e2299562e5894b3708f9507f71c7bbabc79f8583b89a28dfbd7596ab0",
+      "passed": 15
+    },
+    "integration": {
+      "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/editor-integration-01.txt",
+      "bytes": 6235,
+      "sha256": "9a2c366535af882472a345b53256baa8e455fbf3ab5ab407b608159a95d46d5f",
+      "passed": 23
+    },
+    "focused": {
+      "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/editor-combined-02.txt",
+      "bytes": 94717,
+      "sha256": "6b1deb9e5db44398163df45993a76bcfd554a977c803d5b47b585e92c47b1156",
+      "passed": 358
+    }
+  },
+  "prelaunch": {
+    "scripts": 18,
+    "drivers": 10,
+    "checks": 25,
+    "files": 5,
+    "findings": 4,
+    "publicControls": 2,
+    "launchedHosts": 0
+  },
+  "records": [
+    {
+      "path": "packages/vscode-extension/src/firewall/VaultMigrationPlan.ts",
+      "snapshot": "current-inputs-01/01-VaultMigrationPlan.ts.txt",
+      "bytes": 5338,
+      "sha256": "355858da100ef9e2e034a1675a101d0c254be8e099b5fd16cb79f29e4e39b17c"
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/VaultManager.ts",
+      "snapshot": "current-inputs-01/02-VaultManager.ts.txt",
+      "bytes": 50201,
+      "sha256": "06e44cd4099dd6e1f1c905ad2b7a16e1e444806476a7fc9ee7fff43b4b1cff3b"
+    },
+    {
+      "path": "packages/vscode-extension/src/hygiene/HygieneAnalysis.ts",
+      "snapshot": "current-inputs-01/03-HygieneAnalysis.ts.txt",
+      "bytes": 7941,
+      "sha256": "0cf3fa7007cc2be183bc3d1a4caf0fea8a8aa6462a41d81f686aaa56813436d7"
+    },
+    {
+      "path": "packages/vscode-extension/src/hygiene/HygieneExposureLedger.ts",
+      "snapshot": "current-inputs-01/04-HygieneExposureLedger.ts.txt",
+      "bytes": 10580,
+      "sha256": "e4e0a987c7c28971e3d8319684ee2b5ffc954e99e607cf9ab688dcc7f2cbe80b"
+    },
+    {
+      "path": "packages/vscode-extension/src/hygiene/HygieneController.ts",
+      "snapshot": "current-inputs-01/05-HygieneController.ts.txt",
+      "bytes": 27807,
+      "sha256": "0838c5021fdf5285ae168bd5eaa48b15b925f23ee3935c279eae0a9dce0b588a"
+    },
+    {
+      "path": "packages/vscode-extension/src/extension.ts",
+      "snapshot": "current-inputs-01/06-extension.ts.txt",
+      "bytes": 34707,
+      "sha256": "2973c692f657acd61c33ae1c2e87ab0db6da8c01fe29e9fab359fb770b663aea"
+    },
+    {
+      "path": "packages/vscode-extension/package.json",
+      "snapshot": "current-inputs-01/07-package.json.txt",
+      "bytes": 122841,
+      "sha256": "4752cbdfa84adccf6703db4ed9c38681098576d555e98a5366d64d45d48d8265"
+    },
+    {
+      "path": "packages/soterai-lite/package.json",
+      "snapshot": "current-inputs-01/08-package.json.txt",
+      "bytes": 122426,
+      "sha256": "3ed5801084726cf2295becf9e88b40cb763e1d8d4fa8e9435fdd8c8aa75feafa"
+    },
+    {
+      "path": "package-lock.json",
+      "snapshot": "current-inputs-01/09-package-lock.json.txt",
+      "bytes": 541053,
+      "sha256": "e45a8f58c764558828693ed8f12078e9a536627515552f5c2e6fc19cfe829a1d"
+    },
+    {
+      "path": "packages/vscode-extension/README.md",
+      "snapshot": "current-inputs-01/10-README.md.txt",
+      "bytes": 55618,
+      "sha256": "65b92f319798e3e1a483f2e933b4f7b1a0b783b7bb1aa8360305c247c77b1f37"
+    },
+    {
+      "path": "packages/soterai-lite/README.md",
+      "snapshot": "current-inputs-01/11-README.md.txt",
+      "bytes": 49476,
+      "sha256": "4bf085f692b5d122e3d0ffe70c8b958dcbbc256babed510d6ce780b9303dd509"
+    },
+    {
+      "path": "packages/soterai-lite/CHANGELOG.md",
+      "snapshot": "current-inputs-01/12-CHANGELOG.md.txt",
+      "bytes": 6867,
+      "sha256": "4603e85e76b8c033dfc1e49964117ef192e6d262cd676ba5b6a478203918e4b4"
+    },
+    {
+      "path": "packages/vscode-extension/src/config-scanners/EditorSecretPlan.ts",
+      "snapshot": "current-inputs-01/13-EditorSecretPlan.ts.txt",
+      "bytes": 8952,
+      "sha256": "25c73d51995a04118144429091cd50375fa764652989098a3c2fcc191245d439"
+    },
+    {
+      "path": "packages/vscode-extension/src/config-scanners/EditorScannerFlags.ts",
+      "snapshot": "current-inputs-01/14-EditorScannerFlags.ts.txt",
+      "bytes": 465,
+      "sha256": "6cc0b19222aaa49bb17ffdc9dabe780981d48c4cb18ec7999248a96f1077f94e"
+    },
+    {
+      "path": "packages/vscode-extension/src/config-scanners/editorCommands.ts",
+      "snapshot": "current-inputs-01/15-editorCommands.ts.txt",
+      "bytes": 2977,
+      "sha256": "bdaab6494a407e4c79cafbb8322d588b110609d826c13389c31ab0306f7b834a"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/editorSecretPlan.test.ts",
+      "snapshot": "current-inputs-01/16-editorSecretPlan.test.ts.txt",
+      "bytes": 7271,
+      "sha256": "766eeb7e748254d40387187c24317d42e6d7a0e7011283a781e0ee8152c3b367"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/editorScanner.test.ts",
+      "snapshot": "current-inputs-01/17-editorScanner.test.ts.txt",
+      "bytes": 16408,
+      "sha256": "5547f8d7de88b9441deaa1c4c78281d254ed78c95d5e9317a1c8b544275a8adb"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/editorScannerCommands.test.ts",
+      "snapshot": "current-inputs-01/18-editorScannerCommands.test.ts.txt",
+      "bytes": 7249,
+      "sha256": "76b9d4d8b2de6b6757f690a5f823fec671ebe412e681ab7dd3820dadf4c1351c"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/host/liteEditorScanner.host.ts",
+      "snapshot": "current-inputs-01/19-liteEditorScanner.host.ts.txt",
+      "bytes": 22597,
+      "sha256": "3e72973c4636d116cd81621be158e07aa38b131a2393cb6de83c25b8ce1026a7"
+    },
+    {
+      "path": "docs/vscode-extension-readiness.md",
+      "snapshot": "current-inputs-01/20-vscode-extension-readiness.md.txt",
+      "bytes": 3792,
+      "sha256": "23a71ddb22d46846185bcc5193a0001c01394756307a2ec44aefaea2b53887bc"
+    }
+  ],
+  "failuresRetained": [
+    {
+      "file": "editor-plan-baseline-01.txt",
+      "scope": "Launcher comma-separated argv error, exit9; not a product execution."
+    },
+    {
+      "file": "editor-plan-baseline-02.txt",
+      "result": "0PASS15FAIL missing implementation, expected tests-first baseline."
+    },
+    {
+      "file": "editor-integration-baseline-01.txt",
+      "result": "3PASS20FAIL before canonical/commands wiring."
+    },
+    {
+      "file": "run-combined-01.ps1",
+      "scope": "Preflight refused nonexistent guessed vaultMigrationPlan.test.ts before launching Node; console error retained in chat. Correct explicit existing predecessor receipt list used in run-combined-02. No assertion weakening."
+    }
+  ],
+  "review": "Before native execution, report runtimeFlag metadata corrected from copied CI family to editor in inspector02; original prepared helpers/input01 retained. Unexecuted combined02 declaration typo corrected before run. No parser/product improvement rounds consumed; current pure15/integration23/focused358/compiler/prelaunch PASS.",
+  "scope": "Finite project launch/tasks/settings JSONC; exact checkpoint-only disclosure. No config/variable/input/task/debug execution, settings application, request, download, normal profile or original TextDocument. Catalog remains ungraded; no actual AI/human/independent evidence.",
+  "remaining": "Fresh serial full/backend/package/content/new editor and all affected native/safe withdrawal/ledger/source+transition byte barriers; parentF22/F22h and later gates pending."
+}

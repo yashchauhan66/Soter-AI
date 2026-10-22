@@ -1,0 +1,70 @@
+﻿{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22g-editor-config-5d7a91c3\\full-tests-04.txt",
+    "observedAt":  "2026-10-21T16:28:58.4330933Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "--import",
+                      "tsx",
+                      "--test",
+                      "--test-concurrency=1",
+                      "../vscode-extension/src/__tests__/**/*.test.ts"
+                  ],
+    "sha256":  "D07A7BE7EAFAF9076CF2F17D6CE2673164180CB82205F10F5ECC68599B479699",
+    "file":  "node"
+}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22g-editor-config-5d7a91c3\\backend-typecheck-02.txt",
+    "observedAt":  "2026-10-21T16:29:04.1567941Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "node_modules/typescript/bin/tsc",
+                      "--noEmit",
+                      "-p",
+                      "apps/local-ai-broker/tsconfig.json"
+                  ],
+    "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+    "file":  "node"
+}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22g-editor-config-5d7a91c3\\backend-tests-02.txt",
+    "observedAt":  "2026-10-21T16:29:20.8850230Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "--import",
+                      "tsx",
+                      "--test",
+                      "--test-concurrency=1",
+                      "apps/local-ai-broker/src/__tests__/*.test.ts"
+                  ],
+    "sha256":  "BB4A24572858993DB773744071AF066E15B560D905AD9FAB858BD0868FCBFE51",
+    "file":  "node"
+}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22g-editor-config-5d7a91c3\\candidate02-gates-run-01.txt",
+    "observedAt":  "2026-10-22T03:29:18.3992404Z",
+    "exitCode":  1,
+    "arguments":  [
+                      "-NoProfile",
+                      "-ExecutionPolicy",
+                      "Bypass",
+                      "-File",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22g-editor-config-5d7a91c3\\complete-candidate02-01.ps1"
+                  ],
+    "sha256":  "4AEF3498E6C77552BA001877F8455210F034B2D8344DE8FF7E43FB7C2CF63D8B",
+    "file":  "powershell"
+}
+powershell.exe : Gate failed; raw evidence retained: candidate02-gates-run-01
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Gate failed; ra...02-gates-run-01:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261021-f22g-editor-config-5d7a91
+c3\run-final-gates-05.ps1:8 char:34
++ ... exitCode -ne 0){throw ('Gate failed; raw evidence retained: '+$Name)}
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (Gate failed; ra...02-gates-run-01:String) [], RuntimeException
+    + FullyQualifiedErrorId : Gate failed; raw evidence retained: candidate02-gates-run-01
+ 

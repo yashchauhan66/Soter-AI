@@ -1,0 +1,85 @@
+{
+  "status": "PREPARED_NOT_EXECUTED",
+  "records": [
+    {
+      "source": "verify-source-01.cjs",
+      "path": "verify-source-01.cjs",
+      "bytes": 2328,
+      "originalSha256": "684d69e1b7994087fde5be1be625cdc176620a42cc49158acde7ed0e51ddb901",
+      "sha256": "031be417d66c6cd991703d95d3be9ffa89b78ad96d08d6535f4c8720c401d6da"
+    },
+    {
+      "source": "verify-transition-01.cjs",
+      "path": "verify-transition-01.cjs",
+      "bytes": 1685,
+      "originalSha256": "d574584ee25726cf075db789f5e1f57377c687d211eb0afd1aed5c6e0cdbf1b8",
+      "sha256": "91886e41b9fc6cbfff9727949743398ce8da1362094dba809d3d172fce75dd5c"
+    },
+    {
+      "source": "verify-transition-whitespace-01.cjs",
+      "path": "verify-transition-whitespace-01.cjs",
+      "bytes": 815,
+      "originalSha256": "adcb83dd45c3d11a24833ecb1e832355bd7fead33c22916cec8e5a685c77fff4",
+      "sha256": "375bd0aa0f01b4f3fc0dd8694439c5600a18f26d83537200c265e379318c994b"
+    },
+    {
+      "source": "verify-authored-whitespace-01.cjs",
+      "path": "verify-authored-whitespace-01.cjs",
+      "bytes": 1802,
+      "originalSha256": "8f546af800c10dda87891d88c831319588be2f135cfc5bcc1d64533f21d2b8a8",
+      "sha256": "a1a8f94f7e03a6aba0581aeec95114b0dad9678086aa5bddfbc2eb6e4314ab42"
+    },
+    {
+      "source": "prepare-index-01.cjs",
+      "path": "prepare-index-01.cjs",
+      "bytes": 7951,
+      "originalSha256": "b8f61faa10d38851b530bbc711d14fc3bee67c61c71ad1bfba3f3cd849eee0ff",
+      "sha256": "9d85aeab8bd81923c1f48c573d92183ba00e13c6ac0b5742dd4cf4d44f1d36b4"
+    },
+    {
+      "source": "snapshot-execution-01.cjs",
+      "path": "snapshot-execution-02.cjs",
+      "bytes": 2848,
+      "originalSha256": "862639404e758aba13761566744811e806ccd82b56c088760683f8524fa3cbb6",
+      "sha256": "7642d9dd7b464f729da3b061c7405a467da7eec112592a3797ca97fb25d3e67e"
+    },
+    {
+      "source": "prepare-transition-02.cjs",
+      "path": "prepare-transition-01.cjs",
+      "bytes": 4525,
+      "originalSha256": "3a9edb4021eb4139747454c2f50311b65c67dc6895b0877defb9524e8317a49f",
+      "sha256": "450078812af2f957ea6ac86100e1a878956c0cab7f5bc127b2a8a03c8c0a2bb7"
+    },
+    {
+      "source": "complete-byte-barriers-02.ps1",
+      "path": "complete-byte-barriers-01.ps1",
+      "bytes": 2991,
+      "originalSha256": "1954b64becdcab5154d27d102424672e4dff501b9104c92349f2d4e76fcb455a",
+      "sha256": "d7c15bdbf174406c0fa79a581b64b7e9a447ebc607ce61bf1c54f2ebb8445039"
+    }
+  ],
+  "ownSources": [
+    "packages/vscode-extension/src/firewall/VaultMigrationPlan.ts",
+    "packages/vscode-extension/src/firewall/VaultManager.ts",
+    "packages/vscode-extension/src/hygiene/HygieneAnalysis.ts",
+    "packages/vscode-extension/src/hygiene/HygieneExposureLedger.ts",
+    "packages/vscode-extension/src/hygiene/HygieneController.ts",
+    "packages/vscode-extension/src/extension.ts",
+    "packages/vscode-extension/package.json",
+    "packages/soterai-lite/package.json",
+    "package-lock.json",
+    "packages/vscode-extension/README.md",
+    "packages/soterai-lite/README.md",
+    "packages/soterai-lite/CHANGELOG.md",
+    "packages/vscode-extension/src/config-scanners/EditorSecretPlan.ts",
+    "packages/vscode-extension/src/config-scanners/EditorScannerFlags.ts",
+    "packages/vscode-extension/src/config-scanners/editorCommands.ts",
+    "packages/vscode-extension/src/__tests__/editorSecretPlan.test.ts",
+    "packages/vscode-extension/src/__tests__/editorScanner.test.ts",
+    "packages/vscode-extension/src/__tests__/editorScannerCommands.test.ts",
+    "packages/vscode-extension/src/__tests__/host/liteEditorScanner.host.ts",
+    "docs/vscode-extension-readiness.md",
+    "docs/soterai-lite/FEATURE-QUEUE.json"
+  ],
+  "scope": "Current F22g exact object and archived input bytes; source/transition barrier patterns reused. Source whitespace batched4096chars; immutable raw logs/snapshots preserve original bytes. No Git mutation in preparation; F22h only after both proofs."
+}

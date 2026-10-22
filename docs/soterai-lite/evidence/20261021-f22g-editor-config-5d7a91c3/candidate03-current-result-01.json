@@ -1,0 +1,217 @@
+{
+  "status": "PASS_EDITOR_NATIVE_COMPONENT_NOT_FEATURE_ACCEPTANCE",
+  "artifact": {
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-f22g-20261021-attempt03.vsix",
+    "bytes": 1660193,
+    "sha256": "f27ecdf71536d8ce6cf50b97d3824e8178c2c19e5ca640fd378331788c15b500"
+  },
+  "frontendSha256": "624cc55f795e533c2d31233a65713fbcdd458d3602fa43fe0afb4feae4d5d044",
+  "inspection": {
+    "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/vsix-inspection-03.json",
+    "bytes": 468155,
+    "sha256": "58b18a500511c0dfbc3b8f41f49dbb13e8581925b93bf222901c771fe80025f7"
+  },
+  "backend": {
+    "tests": 144,
+    "pass": 143,
+    "fail": 0,
+    "skipped": 1,
+    "cancelled": 0,
+    "todo": 0
+  },
+  "editor": {
+    "directory": "f22g-editor-native-20261022T064827Z-17747528",
+    "count": 25,
+    "records": [
+      {
+        "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/f22g-editor-native-20261022T064827Z-17747528/primary-results.json",
+        "bytes": 16745,
+        "sha256": "d37bce950dc442c6a32e1bc75323219f84fcd1579e9612e829ac932ba2f150fc"
+      },
+      {
+        "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/f22g-editor-native-20261022T064827Z-17747528/restart-results.json",
+        "bytes": 3415,
+        "sha256": "9dec5ac97bc251238c90d1ba9375af9349d5d1e6a1ef4d92d5ccf0c4f048b590"
+      }
+    ],
+    "summary": {
+      "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/f22g-editor-native-20261022T064827Z-17747528/summary.json",
+      "bytes": 1122,
+      "sha256": "319fe86b0d0bd2a8307db764d12938f5cae79e9069650f34529a6a296d4e5237"
+    },
+    "freeze": {
+      "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/f22g-editor-native-20261022T064827Z-17747528/freeze.json",
+      "bytes": 4078,
+      "sha256": "8004cafa283bb50dd95236e30dcf55eba4be2d58409f23a002f860100f62b223"
+    }
+  },
+  "commands": [
+    {
+      "name": "full-tests-06",
+      "output": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22g-editor-config-5d7a91c3\\full-tests-06.txt",
+      "observedAt": "2026-10-22T06:47:02.8715787Z",
+      "exitCode": 0,
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "../vscode-extension/src/__tests__/**/*.test.ts"
+      ],
+      "sha256": "6DCE74A12F3ABAF4EF6590ADB5E290968243F5FD891936F68629BB3373678E6A",
+      "file": "node",
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/full-tests-06.txt",
+        "bytes": 782194,
+        "sha256": "6dce74a12f3abaf4ef6590adb5e290968243f5fd891936f68629bb3373678e6a"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/full-tests-06.txt.result.json",
+        "bytes": 613,
+        "sha256": "4cbad38dd66951f620505eba9629d16dae9c4239ff3a352e1db1a03f5fbd2820"
+      }
+    },
+    {
+      "name": "backend-typecheck-03",
+      "output": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22g-editor-config-5d7a91c3\\backend-typecheck-03.txt",
+      "observedAt": "2026-10-22T06:47:11.4920966Z",
+      "exitCode": 0,
+      "arguments": [
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "-p",
+        "apps/local-ai-broker/tsconfig.json"
+      ],
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+      "file": "node",
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/backend-typecheck-03.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/backend-typecheck-03.txt.result.json",
+        "bytes": 585,
+        "sha256": "1ed1965322596b93c5e5bcb229244287abc118149f9306a61cfee56ab550074a"
+      }
+    },
+    {
+      "name": "backend-tests-03",
+      "output": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22g-editor-config-5d7a91c3\\backend-tests-03.txt",
+      "observedAt": "2026-10-22T06:47:28.0113067Z",
+      "exitCode": 0,
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "apps/local-ai-broker/src/__tests__/*.test.ts"
+      ],
+      "sha256": "32EF7126B6A23C23D2D052267CFFF6066A38B30EF763330523E97E3466E486C0",
+      "file": "node",
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/backend-tests-03.txt",
+        "bytes": 34876,
+        "sha256": "32ef7126b6a23c23d2d052267cfff6066a38b30ef763330523e97e3466e486c0"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/backend-tests-03.txt.result.json",
+        "bytes": 614,
+        "sha256": "fda4e06df3c1838d0e1fbc7c395ac8324a59b7d4f2e7e7d0b05f769745b54de1"
+      }
+    },
+    {
+      "name": "package-03",
+      "output": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22g-editor-config-5d7a91c3\\package-03.txt",
+      "observedAt": "2026-10-22T06:48:12.2372140Z",
+      "exitCode": 0,
+      "arguments": [
+        "packages/soterai-lite/scripts/package.cjs",
+        "soterai-lite-0.7.0-f22g-20261021-attempt03.vsix"
+      ],
+      "sha256": "0A2D729D0FD097430EB9E882D831CABCC2563F02F9D6DDAD68D38EE127DA646E",
+      "file": "node",
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/package-03.txt",
+        "bytes": 1895,
+        "sha256": "0a2d729d0fd097430eb9e882d831cabcc2563f02f9d6ddad68d38ee127da646e"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/package-03.txt.result.json",
+        "bytes": 534,
+        "sha256": "2213007b317d2cdd1e2a7da9d84464948c4102a8f8166fcd3ecad60c0d32562f"
+      }
+    },
+    {
+      "name": "inspect-vsix-run-03",
+      "output": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22g-editor-config-5d7a91c3\\inspect-vsix-run-03.txt",
+      "observedAt": "2026-10-22T06:48:24.6038629Z",
+      "exitCode": 0,
+      "arguments": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22g-editor-config-5d7a91c3\\inspect-vsix-03.ps1",
+        "-VsixPath",
+        "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\soterai-lite\\soterai-lite-0.7.0-f22g-20261021-attempt03.vsix",
+        "-ExpectedVsixSha256",
+        "f27ecdf71536d8ce6cf50b97d3824e8178c2c19e5ca640fd378331788c15b500",
+        "-ExpectedBundleSha256",
+        "624cc55f795e533c2d31233a65713fbcdd458d3602fa43fe0afb4feae4d5d044",
+        "-InspectionName",
+        "03"
+      ],
+      "sha256": "D24283B0FBFABE75169247A022FF451E56D9AADAD07789F4F45B39E41C753E2D",
+      "file": "powershell",
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/inspect-vsix-run-03.txt",
+        "bytes": 1928,
+        "sha256": "d24283b0fbfabe75169247a022ff451e56d9aadad07789f4f45b39e41c753e2d"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/inspect-vsix-run-03.txt.result.json",
+        "bytes": 1269,
+        "sha256": "76197af8f5d4018976225305b2bda2d15b6c0cb9c38d3d394edf91b92e69449e"
+      }
+    },
+    {
+      "name": "editor-native-run-04",
+      "output": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22g-editor-config-5d7a91c3\\editor-native-run-04.txt",
+      "observedAt": "2026-10-22T06:49:21.4353398Z",
+      "exitCode": 0,
+      "arguments": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22g-editor-config-5d7a91c3\\run-editor-native-02.ps1",
+        "-CodePath",
+        "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe",
+        "-HostTestsPath",
+        "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22g-editor-config-5d7a91c3\\prebuilt-native-hosts-03\\lite-editor-host.js",
+        "-ExtensionRoot",
+        "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22g-editor-config-5d7a91c3\\vsix-extracted-03\\extension",
+        "-VsixPath",
+        "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\soterai-lite\\soterai-lite-0.7.0-f22g-20261021-attempt03.vsix",
+        "-ExpectedVsixSha256",
+        "f27ecdf71536d8ce6cf50b97d3824e8178c2c19e5ca640fd378331788c15b500",
+        "-ExpectedBundleSha256",
+        "624cc55f795e533c2d31233a65713fbcdd458d3602fa43fe0afb4feae4d5d044"
+      ],
+      "sha256": "34ABC56E65FBACEA53058FE8162903B7ECCA20DB154033F58DEE876427C487A4",
+      "file": "powershell",
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/editor-native-run-04.txt",
+        "bytes": 198,
+        "sha256": "34abc56e65fbacea53058fe8162903b7ecca20db154033f58dee876427c487a4"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/editor-native-run-04.txt.result.json",
+        "bytes": 1804,
+        "sha256": "3713740aa6cb1eecb741e174c5cfa4ebe737565257ee95d8d72d3973dfd02224"
+      }
+    }
+  ],
+  "scope": "Exact candidate03 current editor25 native checks, host1.143.0, zero source DocumentAPI and actual phase exit0/bothEOF/signals0 verified. Affected03/retained/functional/security/runner stability/source+transition byte barriers remain mandatory. Old candidate02 module failure and full05 interruption remain unchanged history."
+}

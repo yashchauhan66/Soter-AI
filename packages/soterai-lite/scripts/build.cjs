@@ -6,6 +6,7 @@ const esbuild = require('esbuild');
 const extensionRoot = path.resolve(__dirname, '..');
 const repo = path.resolve(extensionRoot, '../..');
 const legacy = path.join(repo, 'packages/vscode-extension');
+const { parserBundleOptions } = require(path.join(legacy, 'scripts/parserBundleOptions.cjs'));
 const sha = data => crypto.createHash('sha256').update(data).digest('hex');
 async function atomicWrite(file, data) {
   const staged = path.join(path.dirname(file), '.tmp-' + path.basename(file) + '-' + crypto.randomBytes(6).toString('hex'));
@@ -25,7 +26,7 @@ async function main() {
   const forbidden = ['apps/privacy-controller/', 'project-privacy/capabilities/', 'tier2-lite/'];
   const inventory = [];
   for (const [name, entry, external] of specs) {
-    const result = await esbuild.build({ absWorkingDir: repo, entryPoints: [entry], bundle: true,
+    const result = await esbuild.build({ ...parserBundleOptions(repo), absWorkingDir: repo, entryPoints: [entry], bundle: true,
       outfile: path.join(attempt, 'dist', name), platform: 'node', format: 'cjs', target: 'node18',
       tsconfig: path.join(legacy, 'tsconfig.json'), external, minify: true, sourcemap: false,
       metafile: true, logLevel: 'warning', legalComments: 'eof' });

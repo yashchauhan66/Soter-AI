@@ -1,0 +1,134 @@
+﻿{
+    "originalStart":  {
+                          "path":  "durable-final-start-01.json",
+                          "bytes":  1124,
+                          "sha256":  "184691db5bc1fa477c8b938541bbd5c65985428544f9ce0ecf0a8310eb0673df"
+                      },
+    "retainedFailures":  [
+                             {
+                                 "name":  "final-gates-run-07",
+                                 "exitCode":  1,
+                                 "log":  {
+                                             "path":  "final-gates-run-07.txt",
+                                             "bytes":  3551,
+                                             "sha256":  "52c848c6b176a44dd8417a44a9784ed7f5c80816e7a3c2e74d25619f5c4e0e56"
+                                         },
+                                 "receipt":  {
+                                                 "path":  "final-gates-run-07.txt.result.json",
+                                                 "bytes":  729,
+                                                 "sha256":  "9f7a6d85912f17cc110fa8d1443f337e0aebf24af46fd8dcc5ef85c251e0764a"
+                                             }
+                             },
+                             {
+                                 "name":  "candidate03-gates-run-02",
+                                 "exitCode":  1,
+                                 "log":  {
+                                             "path":  "candidate03-gates-run-02.txt",
+                                             "bytes":  5843,
+                                             "sha256":  "3cd1965251be51920fa9d084c2915534fa74c830053e2c3e390277b0bb7efae4"
+                                         },
+                                 "receipt":  {
+                                                 "path":  "candidate03-gates-run-02.txt.result.json",
+                                                 "bytes":  740,
+                                                 "sha256":  "594e36b9287c552deb60f59958ae528ffd2e65608dc7faa487af55ad936d01a6"
+                                             }
+                             },
+                             {
+                                 "name":  "affected-ci-run-03",
+                                 "exitCode":  1,
+                                 "log":  {
+                                             "path":  "affected-ci-run-03.txt",
+                                             "bytes":  1015,
+                                             "sha256":  "ec4e8e65ed50847e55ef3ee1f5c180e7abb243bbef17ce485c64939bd7084d4e"
+                                         },
+                                 "receipt":  {
+                                                 "path":  "affected-ci-run-03.txt.result.json",
+                                                 "bytes":  1796,
+                                                 "sha256":  "16244555523edf9851559754a1b7022940575b14efb9fd3d0491fcd5da6a63d2"
+                                             }
+                             },
+                             {
+                                 "name":  "current-affected-suite-run-04",
+                                 "exitCode":  1,
+                                 "log":  {
+                                             "path":  "current-affected-suite-run-04.txt",
+                                             "bytes":  2831,
+                                             "sha256":  "188dada3465b501a13ace685b00dfe384e4ef878904ba0505a2bc2b3cb27441c"
+                                         },
+                                 "receipt":  {
+                                                 "path":  "current-affected-suite-run-04.txt.result.json",
+                                                 "bytes":  1222,
+                                                 "sha256":  "852395472e33b31e770a986e315002cb18c6d3d5cfe4733156505570914b6cfd"
+                                             }
+                             },
+                             {
+                                 "name":  "affected-ci-run-04",
+                                 "exitCode":  1,
+                                 "log":  {
+                                             "path":  "affected-ci-run-04.txt",
+                                             "bytes":  1010,
+                                             "sha256":  "97d29a6b1c27d0e4a9d822bc49f24223f106318396ef99b1cc0ad6addc562424"
+                                         },
+                                 "receipt":  {
+                                                 "path":  "affected-ci-run-04.txt.result.json",
+                                                 "bytes":  1796,
+                                                 "sha256":  "52c6e8e25151ade0044f65aa7900c0977397bfc592f12c1dc0290eeb5484c120"
+                                             }
+                             }
+                         ],
+    "originalRunnerAbsent":  true,
+    "observations":  2,
+    "scope":  "Actual failed recovery inner receipt1, original final07/candidate03 aggregate/affectedCI03 receipt1 and absent exact original/recovery durable runners plus four stable output streams authorize ACTIVE checkpoint indexing only; feature acceptance remainsINCOMPLETE. Original rendererOOM failure/profile and all prior failures remain retained; no wrapper exit code is inferred and no failure is regraded. Each current native host closure remains separately required.",
+    "recovery":  {
+                     "name":  "recovery-candidate03-run-01",
+                     "exitCode":  1,
+                     "log":  {
+                                 "path":  "recovery-candidate03-run-01.txt",
+                                 "bytes":  2253,
+                                 "sha256":  "7b3b91d008cb23dab721b0ded36cfaacd4e65fe28a80f799d720a28e98d3cc5e"
+                             },
+                     "receipt":  {
+                                     "path":  "recovery-candidate03-run-01.txt.result.json",
+                                     "bytes":  741,
+                                     "sha256":  "01c87137e8a6a6c627a6c4e3d04960749315a72dedd0e4a809b1166bf77434a5"
+                                 }
+                 },
+    "checkedAt":  "2026-10-22T07:12:41.1701884Z",
+    "recoveryRunnerAbsent":  true,
+    "wrapperExitCodeObserved":  null,
+    "originalWrapperExitCodeObserved":  null,
+    "originalFinalExitCode":  1,
+    "recoveryRunnerId":  19816,
+    "signalsRequested":  0,
+    "innerRecoveryExitCode":  1,
+    "originalRunnerId":  20540,
+    "observationGapMs":  500,
+    "recoveryStart":  {
+                          "path":  "durable-affected-start-01.json",
+                          "bytes":  1087,
+                          "sha256":  "c55f7ae084bf0ec16d22ee3c4617f433bdbaf032eb2e58762a5ff2888dd0fac7"
+                      },
+    "status":  "INCOMPLETE_CURRENT_NATIVE_FAILED_STABLE",
+    "streams":  [
+                    {
+                        "path":  "durable-final-01.stdout.txt",
+                        "bytes":  726,
+                        "sha256":  "7cd82cf4376a2c16267ec8e9b93421b865712c34f96f2feee732932c0870e9bf"
+                    },
+                    {
+                        "path":  "durable-final-01.stderr.txt",
+                        "bytes":  0,
+                        "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                    },
+                    {
+                        "path":  "durable-affected-01.stdout.txt",
+                        "bytes":  738,
+                        "sha256":  "9dc0ef92329aa84358379fc1e2a77eb41e677fb0ac0d14421dfc9b605b097fb4"
+                    },
+                    {
+                        "path":  "durable-affected-01.stderr.txt",
+                        "bytes":  0,
+                        "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                    }
+                ]
+}

@@ -1,0 +1,29 @@
+﻿{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22g-editor-config-5d7a91c3\\full-tests-01.txt",
+    "observedAt":  "2026-10-21T14:53:11.2732756Z",
+    "exitCode":  1,
+    "arguments":  [
+                      "--import",
+                      "tsx",
+                      "--test",
+                      "--test-concurrency=1",
+                      "../vscode-extension/src/__tests__/**/*.test.ts"
+                  ],
+    "sha256":  "8A31DA9F86DB369042C2CBEE3C6D63AF2E64D5892C0B8288BB369CDB1BC80182",
+    "file":  "node"
+}
+powershell.exe : Gate failed; raw evidence retained: full-tests-01
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Gate failed; ra...: full-tests-01:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261021-f22g-editor-config-5d7a91
+c3\run-final-gates-02.ps1:8 char:34
++ ... exitCode -ne 0){throw ('Gate failed; raw evidence retained: '+$Name)}
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (Gate failed; ra...: full-tests-01:String) [], RuntimeException
+    + FullyQualifiedErrorId : Gate failed; raw evidence retained: full-tests-01
+ 

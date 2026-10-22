@@ -1,5 +1,6 @@
 # Changelog
 
+- Add owner-reviewed project launch/tasks/settings JSONC scanning, bounded duplicate-aware parse-only grammar, secret args/env/URL review and guarded encrypted checkpoint disclosure. Machine withdrawal remains strict; no config application, resolution or task/debug execution.
 - Add owner-reviewed finite GitHub/GitLab CI YAML credential scanning with private metadata, strict machine withdrawal, whole-scalar fixes and guarded encrypted checkpoint-only disclosure. Public references/permissions remain useful; malformed/unsupported input withholds. No config/include/client/shell execution, build, deployment or new dependency.
 
 - Add owner-reviewed strict service-account/key JSON scanning with multiline private material, public-field controls, machine withdrawal, private metadata and guarded encrypted checkpoint-only migration/disclosure. Unsupported or duplicate JSON/external credential sources withhold. No auth client/config execution/token request/new dependency.

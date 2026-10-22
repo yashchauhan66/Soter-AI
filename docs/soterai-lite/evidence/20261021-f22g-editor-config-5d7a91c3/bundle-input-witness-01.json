@@ -1,0 +1,24 @@
+{
+  "status": "BEFORE_BOUNDED_BUNDLE_CORRECTION",
+  "records": [
+    {
+      "path": "packages/soterai-lite/scripts/build.cjs",
+      "bytes": 4605,
+      "sha256": "4c93829fa36d95d1cc1b24868144bce88899f390324ab023dff1f74c3fc73d98",
+      "snapshot": "bundle-before-01/1-build.cjs.txt"
+    },
+    {
+      "path": "packages/vscode-extension/esbuild.js",
+      "bytes": 3590,
+      "sha256": "b37a0835f765c9735503cc6c656ac4b000f8008e3bde60ccafd3783b6ed0ee85",
+      "snapshot": "bundle-before-01/2-esbuild.js.txt"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/build-native-hosts-01.cjs",
+      "bytes": 2245,
+      "sha256": "3f62a88d039cd787523f10d443cbd41f532da2ab66e02cee2157f2dbc56f735b",
+      "snapshot": "bundle-before-01/3-build-native-hosts-01.cjs.txt"
+    }
+  ],
+  "knownFailure": "Actual Code1.143.0 exthost log Cannot find module './impl/format' in candidate02 bundle before bootstrap activation handler. Native result absent, owned closure/EOF UNCONFIRMED/signals0; original outer pipeline has no completion receipts."
+}

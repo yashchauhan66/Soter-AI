@@ -1,0 +1,293 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS_EXACT_BOUNDED_EVIDENCE_CAPTURE",
+  "time": "2026-10-22T06:59:17.843Z",
+  "syntheticOnly": true,
+  "run": "f22g-affected-ci-20261022T064930Z-9ab5c335",
+  "executionRoot": "D:\\SoterAI-Lite-test-profiles\\f22g-affected-ci-20261022T064930Z-9ab5c335",
+  "scope": "Only three explicit owned profile logs and six explicit synthetic CI fixture files; original bytes retained. No broad scans, normal profile, secret database, host launch, tests, signals, cleanup or product mutation.",
+  "files": [
+    {
+      "kind": "owned-log",
+      "relative": "main.log",
+      "source": "D:\\SoterAI-Lite-test-profiles\\f22g-affected-ci-20261022T064930Z-9ab5c335\\profile\\logs\\20261022T121936\\main.log",
+      "knownSha256": "9137aedd242fb84e50b8ad1a61d4d91137e60649dbdff18cb8b11cd307cc949c",
+      "before": {
+        "bytes": 1728,
+        "createdAt": "2026-10-22T06:49:37.557Z",
+        "modifiedAt": "2026-10-22T06:50:17.398Z",
+        "modifiedMilliseconds": 1792651817398.2383
+      },
+      "sha256": "9137aedd242fb84e50b8ad1a61d4d91137e60649dbdff18cb8b11cd307cc949c",
+      "snapshot": "ci-oom-owned-snapshots-01/owned-log__main.log.txt",
+      "after": {
+        "bytes": 1728,
+        "createdAt": "2026-10-22T06:49:37.557Z",
+        "modifiedAt": "2026-10-22T06:50:17.398Z",
+        "modifiedMilliseconds": 1792651817398.2383
+      },
+      "afterSha256": "9137aedd242fb84e50b8ad1a61d4d91137e60649dbdff18cb8b11cd307cc949c",
+      "changedDuringCapture": false,
+      "knownHashMatches": true
+    },
+    {
+      "kind": "owned-log",
+      "relative": "window1/exthost/exthost.log",
+      "source": "D:\\SoterAI-Lite-test-profiles\\f22g-affected-ci-20261022T064930Z-9ab5c335\\profile\\logs\\20261022T121936\\window1\\exthost\\exthost.log",
+      "knownSha256": "212129de6fbc96954ba32711c6f3069f7276b3a6ad68b37dc23d63bbaa12df4e",
+      "before": {
+        "bytes": 3882,
+        "createdAt": "2026-10-22T06:49:43.587Z",
+        "modifiedAt": "2026-10-22T06:49:48.725Z",
+        "modifiedMilliseconds": 1792651788725.121
+      },
+      "sha256": "212129de6fbc96954ba32711c6f3069f7276b3a6ad68b37dc23d63bbaa12df4e",
+      "snapshot": "ci-oom-owned-snapshots-01/owned-log__window1__exthost__exthost.log.txt",
+      "after": {
+        "bytes": 3882,
+        "createdAt": "2026-10-22T06:49:43.587Z",
+        "modifiedAt": "2026-10-22T06:49:48.725Z",
+        "modifiedMilliseconds": 1792651788725.121
+      },
+      "afterSha256": "212129de6fbc96954ba32711c6f3069f7276b3a6ad68b37dc23d63bbaa12df4e",
+      "changedDuringCapture": false,
+      "knownHashMatches": true
+    },
+    {
+      "kind": "owned-log",
+      "relative": "window2/exthost/exthost.log",
+      "source": "D:\\SoterAI-Lite-test-profiles\\f22g-affected-ci-20261022T064930Z-9ab5c335\\profile\\logs\\20261022T121936\\window2\\exthost\\exthost.log",
+      "knownSha256": "e1c6606641705555f67edcce684c3658925a0e6277ada4dd6c896b68b56f1e37",
+      "before": {
+        "bytes": 2663,
+        "createdAt": "2026-10-22T06:50:13.698Z",
+        "modifiedAt": "2026-10-22T06:50:17.397Z",
+        "modifiedMilliseconds": 1792651817397.2378
+      },
+      "sha256": "e1c6606641705555f67edcce684c3658925a0e6277ada4dd6c896b68b56f1e37",
+      "snapshot": "ci-oom-owned-snapshots-01/owned-log__window2__exthost__exthost.log.txt",
+      "after": {
+        "bytes": 2663,
+        "createdAt": "2026-10-22T06:50:13.698Z",
+        "modifiedAt": "2026-10-22T06:50:17.397Z",
+        "modifiedMilliseconds": 1792651817397.2378
+      },
+      "afterSha256": "e1c6606641705555f67edcce684c3658925a0e6277ada4dd6c896b68b56f1e37",
+      "changedDuringCapture": false,
+      "knownHashMatches": true
+    },
+    {
+      "kind": "synthetic-ci-fixture",
+      "relative": ".github/workflows/secret.yml",
+      "source": "D:\\SoterAI-Lite-test-profiles\\f22g-affected-ci-20261022T064930Z-9ab5c335\\workspace\\.github\\workflows\\secret.yml",
+      "before": {
+        "bytes": 28,
+        "createdAt": "2026-10-22T06:49:47.400Z",
+        "modifiedAt": "2026-10-22T06:49:48.712Z",
+        "modifiedMilliseconds": 1792651788712.4338
+      },
+      "sha256": "142db14c30d39c4ac21a74d348be37b77921a9af6196a5119669db52f9cbc57c",
+      "snapshot": "ci-oom-owned-snapshots-01/synthetic-ci-fixture__.github__workflows__secret.yml.txt",
+      "after": {
+        "bytes": 28,
+        "createdAt": "2026-10-22T06:49:47.400Z",
+        "modifiedAt": "2026-10-22T06:49:48.712Z",
+        "modifiedMilliseconds": 1792651788712.4338
+      },
+      "afterSha256": "142db14c30d39c4ac21a74d348be37b77921a9af6196a5119669db52f9cbc57c",
+      "changedDuringCapture": false
+    },
+    {
+      "kind": "synthetic-ci-fixture",
+      "relative": ".gitlab-ci.yml",
+      "source": "D:\\SoterAI-Lite-test-profiles\\f22g-affected-ci-20261022T064930Z-9ab5c335\\workspace\\.gitlab-ci.yml",
+      "before": {
+        "bytes": 93,
+        "createdAt": "2026-10-22T06:49:47.407Z",
+        "modifiedAt": "2026-10-22T06:49:47.408Z",
+        "modifiedMilliseconds": 1792651787407.7378
+      },
+      "sha256": "682be2a1343011d59642af822139f0fa5fa2ff875ddac6d4de2c28cd6af3f07f",
+      "snapshot": "ci-oom-owned-snapshots-01/synthetic-ci-fixture__.gitlab-ci.yml.txt",
+      "after": {
+        "bytes": 93,
+        "createdAt": "2026-10-22T06:49:47.407Z",
+        "modifiedAt": "2026-10-22T06:49:47.408Z",
+        "modifiedMilliseconds": 1792651787407.7378
+      },
+      "afterSha256": "682be2a1343011d59642af822139f0fa5fa2ff875ddac6d4de2c28cd6af3f07f",
+      "changedDuringCapture": false
+    },
+    {
+      "kind": "synthetic-ci-fixture",
+      "relative": ".gitlab/nested.yml",
+      "source": "D:\\SoterAI-Lite-test-profiles\\f22g-affected-ci-20261022T064930Z-9ab5c335\\workspace\\.gitlab\\nested.yml",
+      "before": {
+        "bytes": 128,
+        "createdAt": "2026-10-22T06:49:47.413Z",
+        "modifiedAt": "2026-10-22T06:49:47.426Z",
+        "modifiedMilliseconds": 1792651787426.338
+      },
+      "sha256": "fdc964ab59e035d8ef0e0a4bc979de563ab858c37e6502753d4bbcf34e975194",
+      "snapshot": "ci-oom-owned-snapshots-01/synthetic-ci-fixture__.gitlab__nested.yml.txt",
+      "after": {
+        "bytes": 128,
+        "createdAt": "2026-10-22T06:49:47.413Z",
+        "modifiedAt": "2026-10-22T06:49:47.426Z",
+        "modifiedMilliseconds": 1792651787426.338
+      },
+      "afterSha256": "fdc964ab59e035d8ef0e0a4bc979de563ab858c37e6502753d4bbcf34e975194",
+      "changedDuringCapture": false
+    },
+    {
+      "kind": "synthetic-ci-fixture",
+      "relative": ".github/workflows/PUBLIC.YAML",
+      "source": "D:\\SoterAI-Lite-test-profiles\\f22g-affected-ci-20261022T064930Z-9ab5c335\\workspace\\.github\\workflows\\PUBLIC.YAML",
+      "before": {
+        "bytes": 102,
+        "createdAt": "2026-10-22T06:49:47.427Z",
+        "modifiedAt": "2026-10-22T06:49:47.428Z",
+        "modifiedMilliseconds": 1792651787428.4216
+      },
+      "sha256": "54fccb3db32ea1df65b2e7486f5d9f44d6ce3253c627d508f98442cd86d00e53",
+      "snapshot": "ci-oom-owned-snapshots-01/synthetic-ci-fixture__.github__workflows__PUBLIC.YAML.txt",
+      "after": {
+        "bytes": 102,
+        "createdAt": "2026-10-22T06:49:47.427Z",
+        "modifiedAt": "2026-10-22T06:49:47.428Z",
+        "modifiedMilliseconds": 1792651787428.4216
+      },
+      "afterSha256": "54fccb3db32ea1df65b2e7486f5d9f44d6ce3253c627d508f98442cd86d00e53",
+      "changedDuringCapture": false
+    },
+    {
+      "kind": "synthetic-ci-fixture",
+      "relative": ".gitlab/public.yaml",
+      "source": "D:\\SoterAI-Lite-test-profiles\\f22g-affected-ci-20261022T064930Z-9ab5c335\\workspace\\.gitlab\\public.yaml",
+      "before": {
+        "bytes": 67,
+        "createdAt": "2026-10-22T06:49:47.431Z",
+        "modifiedAt": "2026-10-22T06:49:47.432Z",
+        "modifiedMilliseconds": 1792651787432.4883
+      },
+      "sha256": "94e3c86f7220afdae9eb0d6d5555c2a9fc79232713e4634d4d8a1405dd380d5e",
+      "snapshot": "ci-oom-owned-snapshots-01/synthetic-ci-fixture__.gitlab__public.yaml.txt",
+      "after": {
+        "bytes": 67,
+        "createdAt": "2026-10-22T06:49:47.431Z",
+        "modifiedAt": "2026-10-22T06:49:47.432Z",
+        "modifiedMilliseconds": 1792651787432.4883
+      },
+      "afterSha256": "94e3c86f7220afdae9eb0d6d5555c2a9fc79232713e4634d4d8a1405dd380d5e",
+      "changedDuringCapture": false
+    },
+    {
+      "kind": "synthetic-ci-fixture",
+      "relative": "unsupported.txt",
+      "source": "D:\\SoterAI-Lite-test-profiles\\f22g-affected-ci-20261022T064930Z-9ab5c335\\workspace\\unsupported.txt",
+      "before": {
+        "bytes": 10,
+        "createdAt": "2026-10-22T06:49:47.433Z",
+        "modifiedAt": "2026-10-22T06:49:47.434Z",
+        "modifiedMilliseconds": 1792651787434.498
+      },
+      "sha256": "97fbfbc6ba76b530dbbd25096d61fb361ec99d4d308b32fda3509441db316385",
+      "snapshot": "ci-oom-owned-snapshots-01/synthetic-ci-fixture__unsupported.txt.txt",
+      "after": {
+        "bytes": 10,
+        "createdAt": "2026-10-22T06:49:47.433Z",
+        "modifiedAt": "2026-10-22T06:49:47.434Z",
+        "modifiedMilliseconds": 1792651787434.498
+      },
+      "afterSha256": "97fbfbc6ba76b530dbbd25096d61fb361ec99d4d308b32fda3509441db316385",
+      "changedDuringCapture": false
+    }
+  ],
+  "knownLogsMatch": true,
+  "allCapturedSourcesStable": true,
+  "evidence": {
+    "freeze": {
+      "path": "f22g-affected-ci-20261022T064930Z-9ab5c335/freeze.json",
+      "bytes": 4060,
+      "sha256": "b92c2b5c91faad997e9fcfef584b75268ad553871526bbf7437fbfe27272a439"
+    },
+    "result": {
+      "path": "f22g-affected-ci-20261022T064930Z-9ab5c335/primary-results.json",
+      "bytes": 1136,
+      "sha256": "306a8bcb04b5c26108956578cadc4a4df2fea229ce1d7eaa684d1757813de983"
+    },
+    "close": {
+      "path": "f22g-affected-ci-20261022T064930Z-9ab5c335/primary-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    "driverSource": {
+      "path": "../../../../packages/vscode-extension/src/__tests__/host/liteCiScanner.host.ts",
+      "bytes": 21464,
+      "sha256": "e40d63fac136cdcffe362d9a17e6e716d12e639576dc8a3a95bae78d569ea4d0"
+    }
+  },
+  "observed": {
+    "rendererGone": {
+      "line": 12,
+      "text": "2026-10-22 12:19:48.920 [error] CodeWindow: renderer process gone (reason: oom, code: -536870904)",
+      "log": "owned-log__main.log.txt",
+      "localTime": "2026-10-22T12:19:48.920+05:30",
+      "utcTime": "2026-10-22T06:49:48.920Z",
+      "loggedReason": "oom",
+      "loggedCode": -536870904
+    },
+    "activations": [
+      {
+        "line": 12,
+        "text": "2026-10-22 12:19:44.282 [info] ExtensionService#_doActivateExtension soterai.soterai-ide-guard, startup: false, activationEvent: 'onStartupFinished'",
+        "log": "owned-log__window1__exthost__exthost.log.txt",
+        "utcTime": "2026-10-22T06:49:44.282Z"
+      },
+      {
+        "line": 12,
+        "text": "2026-10-22 12:20:14.513 [info] ExtensionService#_doActivateExtension soterai.soterai-ide-guard, startup: false, activationEvent: 'onStartupFinished'",
+        "log": "owned-log__window2__exthost__exthost.log.txt",
+        "utcTime": "2026-10-22T06:50:14.513Z"
+      }
+    ],
+    "firstHostTermination": {
+      "line": 23,
+      "text": "2026-10-22 12:19:48.685 [info] Extension host terminating: renderer closed the MessagePort"
+    },
+    "secondHostTermination": {
+      "line": 17,
+      "text": "2026-10-22 12:20:17.366 [info] Extension host terminating: received terminate message from renderer"
+    },
+    "allSixSyntheticFilesPresent": true,
+    "allSixCreatedBetweenFirstActivationAndLoggedRendererGone": true,
+    "currentSecretEqualsKnownFirstMalformedTestValue": true,
+    "firstActivationObservationCount": "UNKNOWN_NOT_RETAINED_AFTER_RENDERER_FAILURE",
+    "secondRetainedObservationCount": 0,
+    "secondRetainedDriverFailure": "NativeCiDriverFailure",
+    "primaryClose": {
+      "stderrEOF": true,
+      "exitCode": 0,
+      "observedExit": true,
+      "stdoutEOF": true,
+      "signalsRequested": 0,
+      "ownedWindowClose": "workbench.action.closeWindow"
+    },
+    "hostVersion": "1.143.0",
+    "vsixSha256": "f27ecdf71536d8ce6cf50b97d3824e8178c2c19e5ca640fd378331788c15b500",
+    "extensionBundleSha256": "624cc55f795e533c2d31233a65713fbcdd458d3602fa43fe0afb4feae4d5d044"
+  },
+  "inference": {
+    "secondRunMayHaveHitExclusiveFixtureCreation": "INFERENCE_NOT_ESTABLISHED",
+    "basis": "The driver creates all six files with flag wx before its first check; all six remain present. The retained generic NativeCiDriverFailure has no error code or exception stack.",
+    "rootCauseBeyondLoggedRendererReason": "UNESTABLISHED"
+  },
+  "claims": {
+    "nativeCi25Pass": false,
+    "zeroAssertionsExecutedAcrossBothActivations": false,
+    "firstActivationResultsRecovered": false,
+    "failedRunRegraded": false,
+    "processSignalsRequested": 0,
+    "independence": "LOW"
+  }
+}

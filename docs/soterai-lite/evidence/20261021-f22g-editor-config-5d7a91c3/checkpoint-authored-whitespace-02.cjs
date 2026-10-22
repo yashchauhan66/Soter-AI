@@ -1,0 +1,9 @@
+'use strict';
+const h=require('./evidence-lib-01.cjs'),{assert,base,read,own,current,git,lines}=h,index=read(own('checkpoint-evidence-index-02.json')),records=read(own('host-fixture-inputs-02.json')).records,excluded=new Set();
+for(const row of index.entries)if(row.path.startsWith(base+'/')&&/\.(?:txt|jsonl|log)$/.test(row.path)){current(row);excluded.add(row.path);}
+for(const mapping of index.generatedInputSnapshots){current(mapping.snapshot);assert.equal(mapping.snapshot.sha256,mapping.original.sha256);excluded.add(mapping.snapshot.path);}
+for(const name of ['run-affected-hosts-03.ps1','run-functional-03.ps1','run-security-03.ps1']){const row=records.find(input=>input.path===name),file=index.entries.find(input=>input.path===base+'/'+name);assert(row&&file);current(file);assert.equal(file.sha256,row.sha256);assert.equal(file.bytes,row.bytes);excluded.add(file.path);}
+const names=lines(git('diff','--cached','--name-only'));assert.deepEqual(names.slice().sort(),index.expectedCommitPaths.slice().sort());const checked=names.filter(name=>!excluded.has(name));let chunk=[],size=0,batches=0;
+function flush(){if(!chunk.length)return;git('-c','core.autocrlf=false','-c','core.whitespace=cr-at-eol','diff','--cached','--check','--',...chunk);batches++;chunk=[];size=0;}
+for(const name of checked){if(size+name.length+4>4096)flush();chunk.push(name);size+=name.length+4;}flush();
+console.log(JSON.stringify({status:'PASS_CHECKPOINT_AUTHORED_STAGED_WHITESPACE_ONLY',checked:checked.length,archivalExceptions:names.filter(name=>excluded.has(name)).length,batches,maximumArgumentCharacters:4096,featureStatus:'ACTIVE',acceptance:'NOT_GRANTED',scope:'Authored code/docs/helpers checked. Immutable raw TXT/JSONL/LOG and original-byte generated/EOL snapshots plus three exact inherited harness EOF exceptions retain original bytes; exhaustive staged/committed proof covers all archives too.'}));

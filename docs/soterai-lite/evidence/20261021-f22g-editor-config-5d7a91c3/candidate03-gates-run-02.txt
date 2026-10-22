@@ -1,0 +1,94 @@
+﻿{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22g-editor-config-5d7a91c3\\package-03.txt",
+    "observedAt":  "2026-10-22T06:48:12.2372140Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "packages/soterai-lite/scripts/package.cjs",
+                      "soterai-lite-0.7.0-f22g-20261021-attempt03.vsix"
+                  ],
+    "sha256":  "0A2D729D0FD097430EB9E882D831CABCC2563F02F9D6DDAD68D38EE127DA646E",
+    "file":  "node"
+}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22g-editor-config-5d7a91c3\\inspect-vsix-run-03.txt",
+    "observedAt":  "2026-10-22T06:48:24.6038629Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "-NoProfile",
+                      "-ExecutionPolicy",
+                      "Bypass",
+                      "-File",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22g-editor-config-5d7a91c3\\inspect-vsix-03.ps1",
+                      "-VsixPath",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\soterai-lite\\soterai-lite-0.7.0-f22g-20261021-attempt03.vsix",
+                      "-ExpectedVsixSha256",
+                      "f27ecdf71536d8ce6cf50b97d3824e8178c2c19e5ca640fd378331788c15b500",
+                      "-ExpectedBundleSha256",
+                      "624cc55f795e533c2d31233a65713fbcdd458d3602fa43fe0afb4feae4d5d044",
+                      "-InspectionName",
+                      "03"
+                  ],
+    "sha256":  "D24283B0FBFABE75169247A022FF451E56D9AADAD07789F4F45B39E41C753E2D",
+    "file":  "powershell"
+}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22g-editor-config-5d7a91c3\\editor-native-run-04.txt",
+    "observedAt":  "2026-10-22T06:49:21.4353398Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "-NoProfile",
+                      "-ExecutionPolicy",
+                      "Bypass",
+                      "-File",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22g-editor-config-5d7a91c3\\run-editor-native-02.ps1",
+                      "-CodePath",
+                      "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe",
+                      "-HostTestsPath",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22g-editor-config-5d7a91c3\\prebuilt-native-hosts-03\\lite-editor-host.js",
+                      "-ExtensionRoot",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22g-editor-config-5d7a91c3\\vsix-extracted-03\\extension",
+                      "-VsixPath",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\soterai-lite\\soterai-lite-0.7.0-f22g-20261021-attempt03.vsix",
+                      "-ExpectedVsixSha256",
+                      "f27ecdf71536d8ce6cf50b97d3824e8178c2c19e5ca640fd378331788c15b500",
+                      "-ExpectedBundleSha256",
+                      "624cc55f795e533c2d31233a65713fbcdd458d3602fa43fe0afb4feae4d5d044"
+                  ],
+    "sha256":  "34ABC56E65FBACEA53058FE8162903B7ECCA20DB154033F58DEE876427C487A4",
+    "file":  "powershell"
+}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22g-editor-config-5d7a91c3\\current-affected-suite-run-03.txt",
+    "observedAt":  "2026-10-22T06:50:18.7077348Z",
+    "exitCode":  1,
+    "arguments":  [
+                      "-NoProfile",
+                      "-ExecutionPolicy",
+                      "Bypass",
+                      "-File",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22g-editor-config-5d7a91c3\\run-current-affected-suite-03.ps1",
+                      "-VsixPath",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\soterai-lite\\soterai-lite-0.7.0-f22g-20261021-attempt03.vsix",
+                      "-ExpectedVsixSha256",
+                      "f27ecdf71536d8ce6cf50b97d3824e8178c2c19e5ca640fd378331788c15b500",
+                      "-ExpectedBundleSha256",
+                      "624cc55f795e533c2d31233a65713fbcdd458d3602fa43fe0afb4feae4d5d044"
+                  ],
+    "sha256":  "21BE21666F7CC213BD35FF5F7FC835E5BE90D79F3894F2299A7E66049436227F",
+    "file":  "powershell"
+}
+powershell.exe : Gate failed; raw evidence retained: current-affected-suite-run-03
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Gate failed; ra...ed-suite-run-03:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261021-f22g-editor-config-5d7a91
+c3\complete-candidate03-02.ps1:8 char:34
++ ... exitCode -ne 0){throw ('Gate failed; raw evidence retained: '+$Name)}
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (Gate failed; ra...ed-suite-run-03:String) [], RuntimeException
+    + FullyQualifiedErrorId : Gate failed; raw evidence retained: current-affected-suite-run-03
+ 

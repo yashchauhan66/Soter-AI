@@ -6,6 +6,7 @@ const path = require("path");
 
 const extensionRoot = __dirname;
 const repoRoot = path.resolve(extensionRoot, "..", "..");
+const { parserBundleOptions } = require("./scripts/parserBundleOptions.cjs");
 
 const production = process.argv.includes("--production");
 const watch = process.argv.includes("--watch");
@@ -16,6 +17,7 @@ fs.rmSync(path.join(extensionRoot, "dist"), { recursive: true, force: true });
 
 /** @type {import('esbuild').BuildOptions} */
 const options = {
+    ...parserBundleOptions(repoRoot),
     absWorkingDir: extensionRoot,
     entryPoints: [path.join(extensionRoot, "src", "extension.ts")],
     bundle: true,
@@ -34,6 +36,7 @@ const options = {
 
 /** Standalone broker entry bundled into the VSIX; no runtime node_modules needed. */
 const brokerOptions = {
+    ...parserBundleOptions(repoRoot),
     absWorkingDir: repoRoot,
     entryPoints: [path.join(repoRoot, "apps", "local-ai-broker", "src", "cli.ts")],
     bundle: true,
@@ -59,6 +62,7 @@ const brokerOptions = {
  * imports, so guard-core must be inlined.
  */
 const mcpServerOptions = {
+    ...parserBundleOptions(repoRoot),
     absWorkingDir: extensionRoot,
     entryPoints: [path.join(extensionRoot, "src", "agent", "mcpServer.ts")],
     bundle: true,

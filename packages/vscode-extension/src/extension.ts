@@ -60,6 +60,7 @@ import { registerContainerScanner } from "./config-scanners/containerCommands";
 import { registerTerraformScanner } from "./config-scanners/terraformCommands";
 import { registerRegistryScanner } from "./config-scanners/registryCommands";
 import { registerServiceAccountScanner } from "./config-scanners/serviceAccountCommands";
+import { registerEditorScanner } from "./config-scanners/editorCommands";
 import { registerCiScanner } from "./config-scanners/ciCommands";
 
 // Single consolidated status-bar item. It replaces the earlier six separate
@@ -219,6 +220,7 @@ export function activate(context: vscode.ExtensionContext): void {
     registerRegistryScanner(context);
     registerServiceAccountScanner(context);
     registerCiScanner(context);
+    registerEditorScanner(context);
     registerScannerCommands(context, async () => (await protectionState?.refresh())?.descriptor);
     registerBrokerCommands(context, brokerManager, refreshViews);
     registerClineAdapter(context, brokerManager, managedReader);

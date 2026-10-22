@@ -1,0 +1,47 @@
+{
+  "status": "INCOMPLETE_CURRENT_NATIVE_FAILED_STABLE",
+  "feature": "F22g",
+  "featureState": "ACTIVE",
+  "currentInputCount": 25,
+  "stableFailure": {
+    "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/checkpoint-failure-stability-01.json",
+    "bytes": 8070,
+    "sha256": "cff6a8c06defe6206bc33ba4c81f4f95f7e611f2f187cfc4667e6a4db2d5963b"
+  },
+  "latestFailure": {
+    "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/ci-latest-failure-diagnostics-01.json",
+    "bytes": 10018,
+    "sha256": "db8b78fd4ae63e7dfa87d404250bf96c7281ed6d7e578c355156266fc1f52495"
+  },
+  "earlierOom": {
+    "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/ci-oom-diagnostics-01.json",
+    "bytes": 12891,
+    "sha256": "690fc1dc823b5bfbaa7a74d5e24ccce0cfe52a2e9973a6124f368b0d1795b33d"
+  },
+  "currentComponentSuccess": {
+    "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/candidate03-current-result-01.json",
+    "bytes": 10088,
+    "sha256": "0de105b5b06a539404d1ca94afe8ed370e872b2b610c45cd94ced542cb09a8c2"
+  },
+  "full": {
+    "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/full06-current-result-01.json",
+    "bytes": 1444,
+    "sha256": "8a5fd46018de19f2c06ccb50645ee20602afea5d49dfd3ece90ea0ce27dfe8a9"
+  },
+  "userResourceReply": "Abhi resource change possible nahi",
+  "noFurtherNativeRetry": true,
+  "remaining": [
+    "Current affected CI25",
+    "ServiceAccount25",
+    "Registry25",
+    "Terraform25",
+    "Container25",
+    "Source21",
+    "Hygiene21",
+    "Vault10",
+    "Retained106",
+    "Functional10/security17 comparison",
+    "F22g final scoped acceptance/source+transition byte barriers"
+  ],
+  "scope": "Partial implemented source and evidence may be checkpointed without promoting F22g/DONE or starting F22h. Original plans/catalog unchanged. RendererOOM is logged for firstCI attempt; latest startup exit code cause remains unestablished. Aggregate memory observation does not prove cause. Further host retry awaits external-state improvement; no OS/normalprofile/process change authorized."
+}

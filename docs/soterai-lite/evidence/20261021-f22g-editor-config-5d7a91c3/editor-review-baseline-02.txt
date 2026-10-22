@@ -1,0 +1,96 @@
+﻿TAP version 13
+# Subtest: F22g review canonical credential comments remain safe and idempotent across repeated planning
+not ok 1 - F22g review canonical credential comments remain safe and idempotent across repeated planning
+  ---
+  duration_ms: 340.1166
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\editorSecretPlanReview.test.ts:2:1486'
+  failureType: 'testCodeFailure'
+  error: 'Editor config syntax, expression or size is unsupported; existing files are preserved.'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    fail (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\config-scanners\EditorSecretPlan.ts:10:35)
+    Object.createEditorSecretPlan (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\config-scanners\EditorSecretPlan.ts:74:22)
+    plan (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\editorSecretPlanReview.test.ts:9:19)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\editorSecretPlanReview.test.ts:20:20)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F22g review actual Authorization fields mask whole values while labels and exact references remain useful
+not ok 2 - F22g review actual Authorization fields mask whole values while labels and exact references remain useful
+  ---
+  duration_ms: 18.979
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\editorSecretPlanReview.test.ts:2:2447'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 2
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 2
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\editorSecretPlanReview.test.ts:39:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F22g review exact root public token-color maps stay useful without exempting their secret children or env collections
+not ok 3 - F22g review exact root public token-color maps stay useful without exempting their secret children or env collections
+  ---
+  duration_ms: 3.6426
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\editorSecretPlanReview.test.ts:2:3704'
+  failureType: 'testCodeFailure'
+  error: 'Editor config syntax, expression or size is unsupported; existing files are preserved.'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    fail (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\config-scanners\EditorSecretPlan.ts:10:35)
+    Object.createEditorSecretPlan (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\config-scanners\EditorSecretPlan.ts:74:22)
+    plan (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\editorSecretPlanReview.test.ts:9:19)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\editorSecretPlanReview.test.ts:63:24)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F22g review every nonstring adjacent credential argument withholds while ordinary null properties remain useful
+not ok 4 - F22g review every nonstring adjacent credential argument withholds while ordinary null properties remain useful
+  ---
+  duration_ms: 5.5698
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\editorSecretPlanReview.test.ts:2:4797'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection (safeError).'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\editorSecretPlanReview.test.ts:78:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F22g review a canonical comment never hides a separate unsupported credential argument
+not ok 5 - F22g review a canonical comment never hides a separate unsupported credential argument
+  ---
+  duration_ms: 3.7433
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\editorSecretPlanReview.test.ts:2:5428'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection (safeError).'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\editorSecretPlanReview.test.ts:86:105)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 0
+# fail 5
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1058.0137

@@ -1,0 +1,158 @@
+{
+  "status": "PASS_CURRENT_FULL_BACKEND_CONTENT_NATIVE_PENDING",
+  "artifact": {
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-f22g-20261021-attempt02.vsix",
+    "bytes": 1657626,
+    "sha256": "98994f9cfa2b0fab026bfc7944282f2841b8cf99673ba8a3a1a17d59704db21d"
+  },
+  "extensionSha256": "3b9c75addd0736ab8ab82f219b79c4a52241ff14268d6c0d9f64e6400de2a7d1",
+  "build": "2026-10-21T16-29-31-562Z-f9c5c88d",
+  "full": {
+    "tests": 3293,
+    "pass": 3289,
+    "fail": 0,
+    "skipped": 4,
+    "cancelled": 0,
+    "todo": 0
+  },
+  "backend": {
+    "tests": 144,
+    "pass": 143,
+    "fail": 0,
+    "skipped": 1,
+    "cancelled": 0,
+    "todo": 0
+  },
+  "commands": [
+    {
+      "name": "full-tests-04",
+      "output": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22g-editor-config-5d7a91c3\\full-tests-04.txt",
+      "observedAt": "2026-10-21T16:28:58.4330933Z",
+      "exitCode": 0,
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "../vscode-extension/src/__tests__/**/*.test.ts"
+      ],
+      "sha256": "D07A7BE7EAFAF9076CF2F17D6CE2673164180CB82205F10F5ECC68599B479699",
+      "file": "node",
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/full-tests-04.txt",
+        "bytes": 781903,
+        "sha256": "d07a7be7eafaf9076cf2f17d6ce2673164180cb82205f10f5ecc68599b479699"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/full-tests-04.txt.result.json",
+        "bytes": 613,
+        "sha256": "9941b002b2784ae152378ca85651c77bd62ad46ebb118901e7f7f34843730702"
+      }
+    },
+    {
+      "name": "backend-typecheck-02",
+      "output": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22g-editor-config-5d7a91c3\\backend-typecheck-02.txt",
+      "observedAt": "2026-10-21T16:29:04.1567941Z",
+      "exitCode": 0,
+      "arguments": [
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "-p",
+        "apps/local-ai-broker/tsconfig.json"
+      ],
+      "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+      "file": "node",
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/backend-typecheck-02.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/backend-typecheck-02.txt.result.json",
+        "bytes": 585,
+        "sha256": "2c54b35e2d1f596bd0ee5c471e1e333854cf165cb079b72ce66d3e4e4fa132d6"
+      }
+    },
+    {
+      "name": "backend-tests-02",
+      "output": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22g-editor-config-5d7a91c3\\backend-tests-02.txt",
+      "observedAt": "2026-10-21T16:29:20.8850230Z",
+      "exitCode": 0,
+      "arguments": [
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "apps/local-ai-broker/src/__tests__/*.test.ts"
+      ],
+      "sha256": "BB4A24572858993DB773744071AF066E15B560D905AD9FAB858BD0868FCBFE51",
+      "file": "node",
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/backend-tests-02.txt",
+        "bytes": 34863,
+        "sha256": "bb4a24572858993db773744071af066e15b560d905ad9fab858bd0868fcbfe51"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/backend-tests-02.txt.result.json",
+        "bytes": 614,
+        "sha256": "12302d52eb8b6fbe23cde0e64c13d16fe5c58a4ce8ae50ed12926531147fa4fd"
+      }
+    },
+    {
+      "name": "package-02",
+      "output": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22g-editor-config-5d7a91c3\\package-02.txt",
+      "observedAt": "2026-10-21T16:29:44.7193833Z",
+      "exitCode": 0,
+      "arguments": [
+        "packages/soterai-lite/scripts/package.cjs",
+        "soterai-lite-0.7.0-f22g-20261021-attempt02.vsix"
+      ],
+      "sha256": "0D363F09C460B8070EE95F36FD8A41AF5CC4738A22AFFB63C72433220883D79F",
+      "file": "node",
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/package-02.txt",
+        "bytes": 1778,
+        "sha256": "0d363f09c460b8070ee95f36fd8a41af5cc4738a22affb63c72433220883d79f"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/package-02.txt.result.json",
+        "bytes": 534,
+        "sha256": "8f9e99a72fe081422f5141dd3a2fbd210c703725d37a1d3a9d1d2c37e0c6f91f"
+      }
+    },
+    {
+      "name": "inspect-vsix-run-02",
+      "output": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22g-editor-config-5d7a91c3\\inspect-vsix-run-02.txt",
+      "observedAt": "2026-10-21T16:29:56.3833286Z",
+      "exitCode": 0,
+      "arguments": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22g-editor-config-5d7a91c3\\inspect-vsix-02.ps1",
+        "-VsixPath",
+        "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\soterai-lite\\soterai-lite-0.7.0-f22g-20261021-attempt02.vsix",
+        "-ExpectedVsixSha256",
+        "98994f9cfa2b0fab026bfc7944282f2841b8cf99673ba8a3a1a17d59704db21d",
+        "-ExpectedBundleSha256",
+        "3b9c75addd0736ab8ab82f219b79c4a52241ff14268d6c0d9f64e6400de2a7d1",
+        "-InspectionName",
+        "02"
+      ],
+      "sha256": "3812C0412BAB4FBD8834FAC32932E872FE6ED7122C9CE6F77960693922099EF1",
+      "file": "powershell",
+      "log": {
+        "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/inspect-vsix-run-02.txt",
+        "bytes": 1928,
+        "sha256": "3812c0412bab4fbd8834fac32932e872fe6ed7122c9ce6f77960693922099ef1"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/inspect-vsix-run-02.txt.result.json",
+        "bytes": 1269,
+        "sha256": "7e5b43ef890e90d4e642f60f96044bf4f025112036b2a779935151c7fbfcf643"
+      }
+    }
+  ],
+  "scope": "Current corrected grammar and21frozen authored inputs; actual Code1.143.0 family/affected tests and source+transition byte barriers still required. No rating or native promotion."
+}

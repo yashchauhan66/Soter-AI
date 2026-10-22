@@ -1,0 +1,74 @@
+﻿{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22g-editor-config-5d7a91c3\\package-01.txt",
+    "observedAt":  "2026-10-21T15:35:29.1894476Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "packages/soterai-lite/scripts/package.cjs",
+                      "soterai-lite-0.7.0-f22g-20261021-attempt01.vsix"
+                  ],
+    "sha256":  "8817B2C1B517C55AEC97307713C9A234049F85D7DFDE0231A2030C4758C74070",
+    "file":  "node"
+}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22g-editor-config-5d7a91c3\\inspect-vsix-run-01.txt",
+    "observedAt":  "2026-10-21T15:35:40.4369435Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "-NoProfile",
+                      "-ExecutionPolicy",
+                      "Bypass",
+                      "-File",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22g-editor-config-5d7a91c3\\inspect-vsix-02.ps1",
+                      "-VsixPath",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\soterai-lite\\soterai-lite-0.7.0-f22g-20261021-attempt01.vsix",
+                      "-ExpectedVsixSha256",
+                      "ab0efa333a2fb47a602eb1d9f5e7a2ac7e2245c96e9ea954e9f577f57a111d11",
+                      "-ExpectedBundleSha256",
+                      "516620c7d122237f478db2df589901f2369918d89ada163a885dfdb7305001b3",
+                      "-InspectionName",
+                      "01"
+                  ],
+    "sha256":  "A21F195DC54B8202E51B78859E0F3B361CF69B9DC6E1E875523A3F2A64896A71",
+    "file":  "powershell"
+}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22g-editor-config-5d7a91c3\\editor-native-run-01.txt",
+    "observedAt":  "2026-10-21T15:36:19.5403130Z",
+    "exitCode":  1,
+    "arguments":  [
+                      "-NoProfile",
+                      "-ExecutionPolicy",
+                      "Bypass",
+                      "-File",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22g-editor-config-5d7a91c3\\run-editor-native-01.ps1",
+                      "-CodePath",
+                      "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe",
+                      "-HostTestsPath",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22g-editor-config-5d7a91c3\\prebuilt-native-hosts-01\\lite-editor-host.js",
+                      "-ExtensionRoot",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22g-editor-config-5d7a91c3\\vsix-extracted-01\\extension",
+                      "-VsixPath",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\soterai-lite\\soterai-lite-0.7.0-f22g-20261021-attempt01.vsix",
+                      "-ExpectedVsixSha256",
+                      "ab0efa333a2fb47a602eb1d9f5e7a2ac7e2245c96e9ea954e9f577f57a111d11",
+                      "-ExpectedBundleSha256",
+                      "516620c7d122237f478db2df589901f2369918d89ada163a885dfdb7305001b3"
+                  ],
+    "sha256":  "98830FAE757049CDEA45CC3444E330BEC1B4D2F3456F957F8CF73F1BB5BB4F2C",
+    "file":  "powershell"
+}
+powershell.exe : Gate failed; raw evidence retained: editor-native-run-01
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Gate failed; ra...r-native-run-01:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261021-f22g-editor-config-5d7a91
+c3\complete-candidate01-04.ps1:8 char:34
++ ... exitCode -ne 0){throw ('Gate failed; raw evidence retained: '+$Name)}
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (Gate failed; ra...r-native-run-01:String) [], RuntimeException
+    + FullyQualifiedErrorId : Gate failed; raw evidence retained: editor-native-run-01
+ 

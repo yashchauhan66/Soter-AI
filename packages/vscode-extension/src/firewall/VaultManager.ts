@@ -27,6 +27,8 @@ import { registryFormatForPath } from "../config-scanners/RegistrySecretPlan";
 import { serviceAccountScannerEnabled } from "../config-scanners/ServiceAccountScannerFlags";
 import { serviceAccountFormatForPath } from "../config-scanners/ServiceAccountSecretPlan";
 import { ciScannerEnabled } from "../config-scanners/CiScannerFlags";
+import { editorFormatForPath } from "../config-scanners/EditorSecretPlan";
+import { editorScannerEnabled } from "../config-scanners/EditorScannerFlags";
 import { ciFormatForPath } from "../config-scanners/CiSecretPlan";
 import { sourceSyntaxForPath } from "../config-scanners/SourceSecretPlan";
 import { containerFormatForPath } from "../config-scanners/ContainerSecretPlan";
@@ -435,17 +437,21 @@ export class VaultManager {
     async migrateCi(uri: vscode.Uri, enabled: () => boolean): Promise<number> {
         return this.migrateSelected(uri, () => ciScannerEnabled() && hygieneAssistantEnabled() && enabled() === true, false, false, false, false, false, true);
     }
-    private async migrateSelected(uri: vscode.Uri, enabled: (() => boolean) | undefined, sourceMode: boolean, containerMode = false, terraformMode = false, registryMode = false, serviceAccountMode = false, ciMode = false): Promise<number> {
+    async migrateEditor(uri: vscode.Uri, enabled: () => boolean): Promise<number> {
+        return this.migrateSelected(uri, () => editorScannerEnabled() && hygieneAssistantEnabled() && enabled() === true, false, false, false, false, false, false, true);
+    }
+    private async migrateSelected(uri: vscode.Uri, enabled: (() => boolean) | undefined, sourceMode: boolean, containerMode = false, terraformMode = false, registryMode = false, serviceAccountMode = false, ciMode = false, editorMode = false): Promise<number> {
         return this.mutation(async () => {
             let basis = await this.capture(uri); await this.noPending();
             const relative = path.relative(vscode.Uri.parse(basis.root).fsPath, uri.fsPath).replaceAll("\\", "/");
-            if ([sourceMode, containerMode, terraformMode, registryMode, serviceAccountMode, ciMode].filter(Boolean).length > 1) return vaultUnavailable();
-            const syntax = sourceMode ? sourceSyntaxForPath(relative) : containerMode ? containerFormatForPath(relative) : terraformMode ? terraformFormatForPath(relative) : registryMode ? registryFormatForPath(relative) : serviceAccountMode ? serviceAccountFormatForPath(relative) : ciMode ? ciFormatForPath(relative) : undefined; if ((sourceMode || containerMode || terraformMode || registryMode || serviceAccountMode || ciMode) && !syntax) return vaultUnavailable();
-            const id = randomUUID(), plan = createVaultMigrationPlan(basis.text, !sourceMode && !containerMode && !terraformMode && !registryMode && !serviceAccountMode && !ciMode && /^\.env(?:\..*)?$/i.test(path.basename(uri.fsPath)), id, syntax);
+            if ([sourceMode, containerMode, terraformMode, registryMode, serviceAccountMode, ciMode, editorMode].filter(Boolean).length > 1) return vaultUnavailable();
+            const syntax = sourceMode ? sourceSyntaxForPath(relative) : containerMode ? containerFormatForPath(relative) : terraformMode ? terraformFormatForPath(relative) : registryMode ? registryFormatForPath(relative) : serviceAccountMode ? serviceAccountFormatForPath(relative) : editorMode ? editorFormatForPath(relative) : ciMode ? ciFormatForPath(relative) : undefined; if ((sourceMode || containerMode || terraformMode || registryMode || serviceAccountMode || ciMode || editorMode) && !syntax) return vaultUnavailable();
+            const id = randomUUID(), plan = createVaultMigrationPlan(basis.text, !sourceMode && !containerMode && !terraformMode && !registryMode && !serviceAccountMode && !ciMode && !editorMode && /^\.env(?:\..*)?$/i.test(path.basename(uri.fsPath)), id, syntax);
             // Source identifiers are not public labels or runtime env bindings.
             if (sourceMode) plan.candidates.forEach((candidate, ordinal) => { candidate.key = "SOURCE_VALUE_" + (ordinal + 1); });
             if (containerMode) plan.candidates.forEach((candidate, ordinal) => { candidate.key = "CONTAINER_VALUE_" + (ordinal + 1); });
             if (terraformMode) plan.candidates.forEach((candidate, ordinal) => { candidate.key = "TERRAFORM_VALUE_" + (ordinal + 1); });
+            if (editorMode) plan.candidates.forEach((candidate, ordinal) => { candidate.key = "EDITOR_VALUE_" + (ordinal + 1); });
             if (ciMode) plan.candidates.forEach((candidate, ordinal) => { candidate.key = "CI_VALUE_" + (ordinal + 1); });
             if (serviceAccountMode) plan.candidates.forEach((candidate, ordinal) => { candidate.key = "SERVICE_ACCOUNT_VALUE_" + (ordinal + 1); });
             if (registryMode) plan.candidates.forEach((candidate, ordinal) => { candidate.key = "REGISTRY_VALUE_" + (ordinal + 1); });

@@ -1,0 +1,41 @@
+﻿{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22g-editor-config-5d7a91c3\\affected-ci-run-04.txt",
+    "observedAt":  "2026-10-22T07:07:48.7316297Z",
+    "exitCode":  1,
+    "arguments":  [
+                      "-NoProfile",
+                      "-ExecutionPolicy",
+                      "Bypass",
+                      "-File",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22g-editor-config-5d7a91c3\\run-affected-ci-02.ps1",
+                      "-CodePath",
+                      "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe",
+                      "-VsixPath",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\soterai-lite\\soterai-lite-0.7.0-f22g-20261021-attempt03.vsix",
+                      "-ExpectedVsixSha256",
+                      "f27ecdf71536d8ce6cf50b97d3824e8178c2c19e5ca640fd378331788c15b500",
+                      "-ExpectedBundleSha256",
+                      "624cc55f795e533c2d31233a65713fbcdd458d3602fa43fe0afb4feae4d5d044",
+                      "-HostTestsPath",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22g-editor-config-5d7a91c3\\prebuilt-native-hosts-03\\lite-ci-host.js",
+                      "-ExtensionRoot",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261021-f22g-editor-config-5d7a91c3\\vsix-extracted-03\\extension"
+                  ],
+    "sha256":  "97D29A6B1C27D0E4A9D822BC49F24223F106318396EF99B1CC0AD6ADDC562424",
+    "file":  "powershell"
+}
+powershell.exe : Affected suite stopped; retained raw evidence: affected-ci-run-04
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Affected suite ...ected-ci-run-04:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261021-f22g-editor-config-5d7a91
+c3\run-current-affected-suite-04.ps1:36 char:34
++ ... Code -ne 0){throw ('Affected suite stopped; retained raw evidence: '+ ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (Affected suite ...ected-ci-run-04:String) [], RuntimeException
+    + FullyQualifiedErrorId : Affected suite stopped; retained raw evidence: affected-ci-run-04
+ 

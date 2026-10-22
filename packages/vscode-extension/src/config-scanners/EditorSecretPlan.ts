@@ -1,0 +1,84 @@
+import { createScanner, parseTree, SyntaxKind, ScanError, type Node, type ParseError } from "jsonc-parser";
+import { classifySecretType, extractVaultCandidates } from "@soterai/guard-core";
+import { SecureEditorModel } from "../project-privacy/SecureEditorModel";
+import { hygieneCredentialName, isHygieneCandidate } from "../hygiene/HygieneCandidatePolicy";
+import type { PrivateVaultCandidate, PrivateVaultPlan } from "../firewall/VaultMigrationPlan";
+
+export type EditorFormat = "editor-jsonc";
+export const EDITOR_WORKSPACE_GLOBS = Object.freeze(["**/.[vV][sS][cC][oO][dD][eE]/{[lL][aA][uU][nN][cC][hH],[tT][aA][sS][kK][sS],[sS][eE][tT][tT][iI][nN][gG][sS]}.[jJ][sS][oO][nN]"]);
+const UUID = /^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/i;
+const fail = (): never => { throw Error("Editor config syntax, expression or size is unsupported; existing files are preserved."); };
+export function editorFormatForPath(relative: string): EditorFormat | undefined {
+    if (typeof relative !== "string" || !relative || relative.length > 2048 || /[\\:\x00-\x1f\x7f]/.test(relative) || relative.startsWith("/") || relative.split("/").some(p => !p || p === "." || p === "..")) return fail();
+    return /(?:^|\/)\.vscode\/(?:launch|tasks|settings)\.json$/i.test(relative) ? "editor-jsonc" : undefined;
+}
+interface TextScalar { key: string; rawValue: string; start: number; end: number }
+interface Comment { text: string; offset: number }
+const argumentName = (text: string) => /^--(?:api[-_]key|access[-_]token|token|password|passwd|secret|credentials?)$/i.test(text);
+const credentialName = (name: string) => hygieneCredentialName(name) || /^(?:Authorization|Proxy-Authorization|http\.proxyAuthorization)$/i.test(name);
+const publicRootMaps = new Set(["editor.tokenColorCustomizations", "editor.semanticTokenColorCustomizations"]);
+function hasCommentCredential(text: string): boolean {
+    // Only exact whole-line protected assignments/markers are comment controls.
+    // Other lines are checked even when a supported candidate was also present.
+    const control = /^\s*(?:(?:export\s+)?[A-Za-z_][A-Za-z0-9_]*\s*=\s*)?(?:"\[SOTERAI_PROTECTED_[A-Z0-9_]+\]"|'\[SOTERAI_PROTECTED_[A-Z0-9_]+\]'|\[SOTERAI_PROTECTED_[A-Z0-9_]+\])\s*$/;
+    return hasCredential("", text.split(/\r?\n/).filter(line => !control.test(line)).join("\n"));
+}
+function hasCredential(key: string, raw: string): boolean {
+    if (raw.includes("[SOTERAI_PROTECTED_")) { if (!/^\[SOTERAI_PROTECTED_[A-Z0-9_]+\]$/.test(raw)) return fail(); return false; }
+    if (raw.includes("${")) { if (!/^\$\{(?:(?:env):[A-Za-z_][A-Za-z0-9_]*|(?:config|command|input):[A-Za-z0-9_.-]+|workspaceFolder(?::[A-Za-z0-9_. -]+)?|file|fileBasename|fileBasenameNoExtension|fileDirname|fileExtname|relativeFile|relativeFileDirname|cwd|userHome|pathSeparator|execPath)\}$/.test(raw)) return fail(); return false; }
+    if (/^[A-Za-z][A-Za-z0-9+.-]*:\/\//.test(raw)) { let url: URL; try { url = new URL(raw); } catch { return fail(); } if (url.username || url.password || [...url.searchParams.keys()].some(name => hygieneCredentialName(name))) return true; }
+    if (isHygieneCandidate("", raw)) return true;
+    const compound = /(?:--(?:api[-_]key|access[-_]token|token|password|passwd|secret|credentials?)(?:[= \t])|\b(?:Authorization|Bearer)[ \t:]+|\b(?:[A-Za-z_][A-Za-z0-9_]*_)?(?:API_KEY|TOKEN|PASSWORD|SECRET)[ \t]*=)/i.test(raw)
+        || extractVaultCandidates(raw).some(candidate => isHygieneCandidate(candidate.key, candidate.rawValue));
+    if (compound && /[$`]/.test(raw)) return fail();
+    return compound || isHygieneCandidate(credentialName(key) ? "EDITOR_SECRET" : key, raw);
+}
+/** Bound scanner work/depth BEFORE the fixed parser's recursive descent. Never evaluate config. */
+function parseJsonc(text: string): { scalars: TextScalar[]; names: string[]; comments: Comment[] } {
+    const scanner = createScanner(text, false), comments: Comment[] = []; let depth = 0, work = 0;
+    for (;;) {
+        const token = scanner.scan(); if (++work > 32768 || scanner.getTokenError() !== ScanError.None || token === SyntaxKind.Unknown) return fail();
+        if (token === SyntaxKind.OpenBraceToken || token === SyntaxKind.OpenBracketToken) { if (++depth > 64) return fail(); }
+        if (token === SyntaxKind.CloseBraceToken || token === SyntaxKind.CloseBracketToken) { if (--depth < 0) return fail(); }
+        if (token === SyntaxKind.LineCommentTrivia || token === SyntaxKind.BlockCommentTrivia) { const start = scanner.getTokenOffset(), length = scanner.getTokenLength(); comments.push({ text: text.slice(start + 2, start + length - (token === SyntaxKind.BlockCommentTrivia ? 2 : 0)), offset: start + 2 }); }
+        if (token === SyntaxKind.EOF) break;
+    }
+    if (depth) return fail(); const errors: ParseError[] = [], root = parseTree(text, errors, { disallowComments: false, allowTrailingComma: true, allowEmptyContent: false });
+    if (errors.length || !root || root.type !== "object") return fail();
+    const scalars: TextScalar[] = [], names: string[] = [], stack: Array<{ node: Node; key: string; depth: number }> = [{ node: root, key: "", depth: 0 }]; work = 0;
+    while (stack.length) {
+        const frame = stack.pop()!, n = frame.node; if (++work > 16384 || frame.depth > 64) return fail();
+        if (n.type === "object") {
+            if (credentialName(frame.key) && !(frame.depth === 1 && publicRootMaps.has(frame.key))) return fail(); const seen = new Set<string>();
+            for (const property of n.children ?? []) {
+                if (property.type !== "property" || property.children?.length !== 2) return fail(); const [name, value] = property.children;
+                if (name.type !== "string" || typeof name.value !== "string" || !name.value || name.value.length > 1024 || seen.has(name.value)) return fail();
+                new SecureEditorModel(name.value, false); if (hasCredential("", name.value)) return fail(); seen.add(name.value); names.push(name.value); stack.push({ node: value, key: name.value, depth: frame.depth + 1 });
+            }
+        } else if (n.type === "array") {
+            if (credentialName(frame.key)) return fail(); const items = n.children ?? [];
+            for (let i = 0; i < items.length; i++) { const previous = items[i - 1], argument = /^(?:args|arguments)$/i.test(frame.key) && previous?.type === "string" && argumentName(previous.value);
+                if (argument && items[i].type !== "string") return fail();
+                if (/^(?:args|arguments)$/i.test(frame.key) && items[i].type === "string" && argumentName(items[i].value) && i + 1 === items.length) return fail();
+                stack.push({ node: items[i], key: argument ? "EDITOR_SECRET" : "", depth: frame.depth + 1 });
+            }
+        } else if (n.type === "string") { if (typeof n.value !== "string") return fail(); new SecureEditorModel(n.value, false); scalars.push({ key: frame.key, rawValue: n.value, start: n.offset, end: n.offset + n.length }); }
+        else if (credentialName(frame.key) && n.type !== "null") return fail();
+    }
+    return { scalars, names, comments };
+}
+/** Private complete-string plan. Explicit encrypted whole-file recovery only. */
+export function createEditorSecretPlan(text: string, format: EditorFormat, generation: string): PrivateVaultPlan {
+    try {
+        if (format !== "editor-jsonc" || typeof generation !== "string" || !UUID.test(generation)) return fail(); new SecureEditorModel(text, false); const parsed = parseJsonc(text), recognized = new Set(parsed.scalars.filter(s => hasCredential(s.key, s.rawValue)).map(s => s.rawValue));
+        const pending: Array<PrivateVaultCandidate & { mask: (marker: string) => string }> = [];
+        const add = (rawValue: string, start: number, end: number, mask: (marker: string) => string) => { new SecureEditorModel(rawValue, false); if (pending.length >= 128 || !Number.isInteger(start) || !Number.isInteger(end) || start < 0 || end <= start || end > text.length) return fail(); const key = /PRIVATE KEY-----/.test(rawValue) ? "EDITOR_PRIVATE_KEY" : "EDITOR_SECRET"; pending.push({ key, rawValue, start, end, placeholder: "", replacementText: text.slice(start, end), type: classifySecretType(key, rawValue), mask }); };
+        for (const s of parsed.scalars) if (recognized.has(s.rawValue)) add(s.rawValue, s.start, s.end, JSON.stringify);
+        for (const comment of parsed.comments) { const candidates = extractVaultCandidates(comment.text).filter(c => isHygieneCandidate(c.key, c.rawValue)); if (!candidates.length && hasCommentCredential(comment.text)) return fail(); for (const c of candidates) add(c.rawValue, comment.offset + c.start, comment.offset + c.end, marker => marker); }
+        pending.sort((a, b) => a.start - b.start); for (let i = 0; i < pending.length; i++) { const c = pending[i]; if (i && c.start < pending[i - 1].end) return fail(); c.placeholder = `[SOTERAI_PROTECTED_${generation.replace(/-/g, "").toUpperCase()}_${i}]`; if (text.includes(c.placeholder)) return fail(); }
+        let maskedText = text; for (const c of [...pending].reverse()) maskedText = maskedText.slice(0, c.start) + c.mask(c.placeholder) + maskedText.slice(c.end);
+        if (pending.some(c => maskedText.includes(c.rawValue) || maskedText.includes(c.replacementText))) return fail(); new SecureEditorModel(maskedText, false); const checked = parseJsonc(maskedText);
+        if (checked.scalars.some(s => hasCredential(s.key, s.rawValue)) || checked.comments.some(comment => hasCommentCredential(comment.text)) || pending.some(c => checked.names.some(name => name.includes(c.rawValue)) || checked.scalars.some(s => s.rawValue.includes(c.rawValue)) || checked.comments.some(comment => comment.text.includes(c.rawValue)))) return fail();
+        return { maskedText, exampleText: "", restoreMode: "checkpoint", candidates: pending.map(({ mask: _privateMask, ...candidate }) => candidate) };
+    } catch { return fail(); }
+}
