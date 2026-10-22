@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 2,
+  "status": "PASS_CHECKPOINT_BYTES_ONLY",
+  "feature": "F22g",
+  "featureStatus": "ACTIVE",
+  "completion": "INCOMPLETE",
+  "acceptance": "NOT_GRANTED",
+  "nextFeature": "NOT_STARTED",
+  "revision": "4fc240fa304f1326f0aa39973d1aef03d9afc288",
+  "parent": "91f5820f337f00ad4da89ab9b8dcc9975f8a13a8",
+  "indexedEntries": 1263,
+  "generatedRuntimeSnapshots": 282,
+  "executionSnapshots": 22,
+  "committedPaths": 877,
+  "mismatches": [],
+  "unexpectedPaths": 0,
+  "artifact": {
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-f22g-20261021-attempt03.vsix",
+    "bytes": 1660193,
+    "sha256": "f27ecdf71536d8ce6cf50b97d3824e8178c2c19e5ca640fd378331788c15b500",
+    "recheck": "PASS"
+  },
+  "checkpoint": {
+    "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/checkpoint-receipt-02.json",
+    "bytes": 118696,
+    "sha256": "67d3a9e09de674552e01cde8ddc46788815940f8ab9f44778325c3375554f658"
+  },
+  "index": {
+    "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/checkpoint-evidence-index-02.json",
+    "bytes": 576718,
+    "sha256": "d03e296f95d2afcd25fa778e942a83eb03dd79511aa99b3db43bc7eaf02357a9"
+  },
+  "executionIndex": {
+    "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/execution-snapshot-index-02.json",
+    "bytes": 14030,
+    "sha256": "de974289d78858ea45d5f56bb3d99b193df5cc0f848356c1440a37afb2a61880"
+  },
+  "failureStability": {
+    "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/checkpoint-failure-stability-01.json",
+    "bytes": 8070,
+    "sha256": "cff6a8c06defe6206bc33ba4c81f4f95f7e611f2f187cfc4667e6a4db2d5963b"
+  },
+  "commitOutput": {
+    "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/checkpoint-local-commit-02.txt",
+    "bytes": 120719,
+    "sha256": "ee798607b2b3d60486d332ec3e30e11ade157d34b754af3b3f610ea7fa2d82e8"
+  },
+  "commitReceipt": {
+    "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/checkpoint-local-commit-02.txt.result.json",
+    "bytes": 786,
+    "sha256": "1e2309dc58e66434ad04b7a06c6c2a28b56d1268130eb2ae63e1857045dd2e38"
+  },
+  "componentEvidence": {
+    "full": {
+      "tests": 3294,
+      "pass": 3290,
+      "fail": 0,
+      "skipped": 4,
+      "cancelled": 0,
+      "todo": 0
+    },
+    "backend": {
+      "tests": 144,
+      "pass": 143,
+      "fail": 0,
+      "skipped": 1,
+      "cancelled": 0,
+      "todo": 0
+    },
+    "focused": {
+      "tests": 364,
+      "pass": 364,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "todo": 0
+    },
+    "editor": {
+      "directory": "f22g-editor-native-20261022T064827Z-17747528",
+      "count": 25,
+      "records": [
+        {
+          "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/f22g-editor-native-20261022T064827Z-17747528/primary-results.json",
+          "bytes": 16745,
+          "sha256": "d37bce950dc442c6a32e1bc75323219f84fcd1579e9612e829ac932ba2f150fc"
+        },
+        {
+          "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/f22g-editor-native-20261022T064827Z-17747528/restart-results.json",
+          "bytes": 3415,
+          "sha256": "9dec5ac97bc251238c90d1ba9375af9349d5d1e6a1ef4d92d5ccf0c4f048b590"
+        }
+      ],
+      "summary": {
+        "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/f22g-editor-native-20261022T064827Z-17747528/summary.json",
+        "bytes": 1122,
+        "sha256": "319fe86b0d0bd2a8307db764d12938f5cae79e9069650f34529a6a296d4e5237"
+      },
+      "freeze": {
+        "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/f22g-editor-native-20261022T064827Z-17747528/freeze.json",
+        "bytes": 4078,
+        "sha256": "8004cafa283bb50dd95236e30dcf55eba4be2d58409f23a002f860100f62b223"
+      }
+    }
+  },
+  "native": "EDITOR25_PASS_CI03_RENDERER_OOM_CI04_STARTUP_NONZERO_OTHERS_NOT_RUN",
+  "affected": "INCOMPLETE_CURRENT_EXACT_ARTIFACT",
+  "safeWithdrawal": "NOT_ESTABLISHED_FOR_COMPLETE_CURRENT_AFFECTED_SET",
+  "resume": {
+    "oldParent": "91f5820f337f00ad4da89ab9b8dcc9975f8a13a8",
+    "newParent": "4fc240fa304f1326f0aa39973d1aef03d9afc288",
+    "oldNormalParentBoundToolsStale": true,
+    "rebaseRequiredBeforeEventualFinalAcceptance": true,
+    "queueRemains": "F22g ACTIVE / F22h NOT_STARTED",
+    "noFurtherHostRetryAuthorizedByCheckpoint": true,
+    "readLedgerFirst": true
+  },
+  "scope": "Exhaustive committed object/index/working bytes and exact scoped changed paths agree, including retained failures and original-byte runtime/test/native execution snapshots. This proves custody of unfinished F22g only. The post-commit proof and verification/commit logs are late evidence outside this commit, retained for a later scoped custody commit; no normal source-acceptance or feature-transition operation ran.",
+  "independence": "LOW",
+  "rating": "PENDING",
+  "time": "2026-10-22T07:24:18.070Z"
+}

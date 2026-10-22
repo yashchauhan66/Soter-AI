@@ -1,0 +1,27 @@
+{
+  "status": "FAILED_AUXILIARY_PREFLIGHTS_NO_MUTATION",
+  "provenance": "Transcription of tool diagnostics, not original captured stdout.",
+  "events": [
+    {
+      "exitCode": 1,
+      "message": "Unexpected reviewed-file drift: ",
+      "scope": "Expected one changed metadata file; actual changed list was empty, so existing ready01 already matched all seven files. No target was written."
+    },
+    {
+      "exitCode": 1,
+      "message": "Cannot find module record-checkpoint-review-ready-02.cjs",
+      "scope": "First preflight had refused before creating that optional script; no second readiness record ran."
+    }
+  ],
+  "actualReadiness": {
+    "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/checkpoint-review-ready-01.json",
+    "bytes": 2591,
+    "sha256": "85775c53ab2a19213d18e96c018d574e1c35bb8e6a680c9d3ba7fd3a1eb0d8bc"
+  },
+  "actualCheckpointProof": {
+    "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/checkpoint-committed-byte-verification-02.json",
+    "bytes": 4948,
+    "sha256": "3056bdf14cd902c08cfcc4005b5d27558d5d22f84a197cf3e7323fd49eafa825"
+  },
+  "scope": "Both failed auxiliary probes are retained. Original current readiness and all actual checkpoint gates independently passed. No product/source/test mutation, host retry or failure regrade."
+}
