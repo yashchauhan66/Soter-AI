@@ -45,15 +45,15 @@ function validateToken(token: string): void {
 /** No-follow, bounded read. Corruption and permission errors never rotate auth silently. */
 async function readToken(tokenPath: string, permissions: TokenPermissions): Promise<string> {
     const before = await lstat(tokenPath, { bigint: true });
-    if (!before.isFile() || before.isSymbolicLink() || before.nlink !== 1n) throw new Error("Unsafe broker token file");
+    if (!before.isFile() || before.isSymbolicLink() || before.nlink !== BigInt(1)) throw new Error("Unsafe broker token file");
     if (process.platform === "win32") await permissions.validate(tokenPath);
     const file = await open(tokenPath, constants.O_RDONLY | (constants.O_NOFOLLOW ?? 0));
     try {
         const info = await file.stat({ bigint: true });
         // Windows lstat can report dev=0 while fstat reports the actual volume ID.
-        const deviceChanged = info.dev !== before.dev && !(process.platform === "win32" && before.dev === 0n);
-        if (!info.isFile() || info.nlink !== 1n || info.ino !== before.ino || deviceChanged || info.size > 512n) throw new Error("Unsafe broker token file");
-        if (process.platform !== "win32" && ((info.mode & 0o077n) !== 0n || info.uid !== BigInt(process.getuid!()))) throw new Error("Broker token file must be private");
+        const deviceChanged = info.dev !== before.dev && !(process.platform === "win32" && before.dev === BigInt(0));
+        if (!info.isFile() || info.nlink !== BigInt(1) || info.ino !== before.ino || deviceChanged || info.size > BigInt(512)) throw new Error("Unsafe broker token file");
+        if (process.platform !== "win32" && ((info.mode & BigInt(0o077)) !== BigInt(0) || info.uid !== BigInt(process.getuid!()))) throw new Error("Broker token file must be private");
         if (process.platform === "win32") await permissions.validate(tokenPath);
         const buffer = Buffer.alloc(513);
         const { bytesRead } = await file.read(buffer, 0, buffer.length, 0);

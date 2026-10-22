@@ -12,6 +12,10 @@ export interface RedisLike {
   set(key: string, value: string | number, opts?: { ex?: number }): Promise<unknown>;
   ttl(key: string): Promise<number>;
   del(...keys: string[]): Promise<unknown>;
+  lpush?(key: string, ...elements: string[]): Promise<number>;
+  rpop?(key: string, count?: number): Promise<string[] | null>;
+  llen?(key: string): Promise<number>;
+  ltrim?(key: string, start: number, stop: number): Promise<unknown>;
 }
 
 let warned = false;

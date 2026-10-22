@@ -14,3 +14,7 @@ tests
 # render marketing copy import from components/marketing, not this dir), and
 # locally they carry ~226MB of rendered mp4s into the context for nothing.
 marketing
+
+# Exclude all ML models except v14 from Docker build context
+models/*
+!models/ml-classifier-v14

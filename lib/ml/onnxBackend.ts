@@ -311,6 +311,8 @@ export class ONNXClassifierBackend implements ModelBackend {
           .filter(Boolean),
       slidingWindow:
         options?.slidingWindow ?? envFlag(process.env.ML_ONNX_SLIDING_WINDOW) ?? false,
+      dynamicPadding:
+        options?.dynamicPadding ?? (process.env.ML_ONNX_DYNAMIC_PADDING !== "off"),
       windowSize: options?.windowSize ?? envPositiveInt(process.env.ML_ONNX_WINDOW_SIZE, 94),
       windowOverlap: Math.max(
         0,
@@ -479,7 +481,10 @@ export class ONNXClassifierBackend implements ModelBackend {
     const contentIds = tokenizer.encodeContentIds(text);
     const modelWindow = tokenizer.windowBudget;
     if (!this.options.slidingWindow || contentIds.length <= modelWindow) {
-      const probabilities = await this.forward(tokenizer.tokenize(text));
+      const tokens = this.options.dynamicPadding
+        ? tokenizer.encodeWindow(contentIds.slice(0, modelWindow))
+        : tokenizer.tokenize(text);
+      const probabilities = await this.forward(tokens);
       return this.decide(probabilities, {
         windows: 1,
         windowIndex: 0,

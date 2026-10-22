@@ -64,8 +64,8 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 # Copy Prisma schema + migrations for runtime
 COPY --from=builder /app/prisma ./prisma
 
-# Copy ML models for ONNX runtime inference (90MB+ LFS files)
-COPY --from=builder /app/models ./models
+# Copy ONLY v14 ML model for ONNX runtime inference (no other models)
+COPY --from=builder /app/models/ml-classifier-v14 ./models/ml-classifier-v14
 
 # Copy security artifacts (model trust store, capability registry)
 COPY --from=builder /app/artifacts/security ./artifacts/security
