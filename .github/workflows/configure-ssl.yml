@@ -6,6 +6,7 @@ on:
     branches: [main]
     paths:
       - .github/workflows/configure-ssl.yml
+      - .github/workflows/ci-cd.yml
 
 permissions:
   contents: read
@@ -24,6 +25,47 @@ jobs:
           printf '%s\n' "${{ secrets.EC2_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H "${{ secrets.EC2_HOST }}" >> ~/.ssh/known_hosts 2>/dev/null
+
+      - name: Restart Docker app if stopped
+        shell: bash
+        run: |
+          ssh "${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}" 'bash -s' <<'RESTART_SCRIPT'
+            set -euo pipefail
+            export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$PATH"
+
+            echo "=== Docker container status ==="
+            docker ps -a --format 'table {{.Names}}\t{{.Status}}\t{{.Ports}}' 2>/dev/null || echo "Docker not running"
+
+            # Ensure docker socket is accessible
+            [ -S /var/run/docker.sock ] && sudo chmod 666 /var/run/docker.sock 2>/dev/null || true
+
+            # Restart any stopped soter containers
+            for cname in soter-app soter-redis soter-qdrant; do
+              STATUS=$(docker inspect --format='{{.State.Status}}' "$cname" 2>/dev/null || echo "missing")
+              echo "  $cname: $STATUS"
+              if [ "$STATUS" = "exited" ] || [ "$STATUS" = "created" ]; then
+                echo "  Restarting $cname..."
+                docker start "$cname" || true
+              fi
+            done
+
+            # Wait and verify app is responding
+            for i in $(seq 1 12); do
+              sleep 5
+              HTTP=$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:3000/api/health 2>/dev/null || echo "000")
+              if [ "$HTTP" = "200" ]; then
+                echo "  ✅ App responding on port 3000 (attempt $i)"
+                break
+              fi
+              echo "  Attempt $i: HTTP $HTTP, waiting..."
+            done
+
+            HTTP=$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:3000/api/health 2>/dev/null || echo "000")
+            if [ "$HTTP" != "200" ]; then
+              echo "  ⚠️  App not responding on port 3000 — SSL will configure but proxy may not work"
+              echo "     Run CI/CD pipeline to redeploy the container"
+            fi
+          RESTART_SCRIPT
 
       - name: Install certificate and configure Nginx
         shell: bash
@@ -75,17 +117,32 @@ jobs:
             sudo systemctl enable --now nginx
             sudo systemctl reload nginx
 
+            # Try with email first, fall back to no-email if not set
+            CERTBOT_EMAIL="admin@soterai.in"
+            sudo certbot --nginx \
+              --domains soterai.in,www.soterai.in,api.soterai.in \
+              --expand \
+              --non-interactive \
+              --agree-tos \
+              --email "$CERTBOT_EMAIL" \
+              --redirect \
+              --keep-until-expiring 2>/dev/null || \
             sudo certbot --nginx \
               --domains soterai.in,www.soterai.in,api.soterai.in \
               --expand \
               --non-interactive \
               --agree-tos \
               --register-unsafely-without-email \
-              --redirect
+              --redirect \
+              --keep-until-expiring
 
             sudo nginx -t
             sudo systemctl reload nginx
             sudo certbot renew --dry-run
+
+            echo ""
+            echo "=== Current certificate info ==="
+            sudo certbot certificates 2>/dev/null || true
           SSL_SCRIPT
 
       - name: Verify HTTPS
