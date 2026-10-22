@@ -1,0 +1,126 @@
+{
+  "runId": "host-20261022T075002Z-e081357c350649b7a0c60a17d8af1828",
+  "observedAt": "2026-10-22T07:50:16.892Z",
+  "exactOsBuild": "26300.8935",
+  "host": "1.143.0",
+  "extension": "0.7.0",
+  "extensionBundleSha256": "624cc55f795e533c2d31233a65713fbcdd458d3602fa43fe0afb4feae4d5d044",
+  "hostProbeSha256": "de3e734ece51d89adaa58caec792c5d39b142d9e88cd17b2cda312099d0d38c9",
+  "extensionActive": true,
+  "protectedWorkspaceEnabled": true,
+  "syntheticOnly": true,
+  "liveModelContacted": false,
+  "repositoryDenyControls": {
+    "publicBeforeEnrollment": true,
+    "deniedAfterEnrollment": true,
+    "retainedAfterRemoval": true
+  },
+  "results": [
+    {
+      "attack": ".env redacted preview",
+      "status": "BLOCKED_SCOPED",
+      "boundary": "actual SoterAI preview",
+      "canarySha256": "9b7af0dfd8625501f04bd19963618858f16dcbe454b0c0897e1cc4ee43be57ad"
+    },
+    {
+      "attack": ".env direct filesystem read",
+      "status": "LEAK_CONFIRMED",
+      "boundary": "Node fs in actual extension host",
+      "canarySha256": "9b7af0dfd8625501f04bd19963618858f16dcbe454b0c0897e1cc4ee43be57ad"
+    },
+    {
+      "attack": "nested/private.txt redacted preview",
+      "status": "BLOCKED_SCOPED",
+      "boundary": "actual SoterAI preview",
+      "canarySha256": "4cc6ec789ab62d5d509427dd98d2c5f91bb853401043120596d6226bd0c7e25b"
+    },
+    {
+      "attack": "nested/private.txt direct filesystem read",
+      "status": "LEAK_CONFIRMED",
+      "boundary": "Node fs in actual extension host",
+      "canarySha256": "4cc6ec789ab62d5d509427dd98d2c5f91bb853401043120596d6226bd0c7e25b"
+    },
+    {
+      "attack": "private.pem redacted preview",
+      "status": "BLOCKED_SCOPED",
+      "boundary": "actual SoterAI preview",
+      "canarySha256": "9044514d0d205aab55eaa7e9ccb0f4fb932d49d415baca00c9cab5499c6de3d5"
+    },
+    {
+      "attack": "private.pem direct filesystem read",
+      "status": "LEAK_CONFIRMED",
+      "boundary": "Node fs in actual extension host",
+      "canarySha256": "9044514d0d205aab55eaa7e9ccb0f4fb932d49d415baca00c9cab5499c6de3d5"
+    },
+    {
+      "attack": "selected.txt redacted preview",
+      "status": "BLOCKED_SCOPED",
+      "boundary": "actual SoterAI preview",
+      "canarySha256": "11bc462b693bbd4e2dc8c79794218dca1b4c69580e7a8582e7e79afa0415f3da"
+    },
+    {
+      "attack": "selected.txt direct filesystem read",
+      "status": "LEAK_CONFIRMED",
+      "boundary": "Node fs in actual extension host",
+      "canarySha256": "11bc462b693bbd4e2dc8c79794218dca1b4c69580e7a8582e7e79afa0415f3da"
+    },
+    {
+      "attack": "hardlink direct read",
+      "status": "LEAK_CONFIRMED",
+      "boundary": "unmanaged filesystem alias",
+      "canarySha256": "9b7af0dfd8625501f04bd19963618858f16dcbe454b0c0897e1cc4ee43be57ad"
+    },
+    {
+      "attack": "hardlink redacted preview",
+      "status": "BLOCKED_SCOPED",
+      "boundary": "SoterAI path validation",
+      "canarySha256": "9b7af0dfd8625501f04bd19963618858f16dcbe454b0c0897e1cc4ee43be57ad"
+    },
+    {
+      "attack": "junction direct read",
+      "status": "LEAK_CONFIRMED",
+      "boundary": "unmanaged filesystem alias",
+      "canarySha256": "4cc6ec789ab62d5d509427dd98d2c5f91bb853401043120596d6226bd0c7e25b"
+    },
+    {
+      "attack": "junction redacted preview",
+      "status": "BLOCKED_SCOPED",
+      "boundary": "SoterAI path validation",
+      "canarySha256": "4cc6ec789ab62d5d509427dd98d2c5f91bb853401043120596d6226bd0c7e25b"
+    },
+    {
+      "attack": "repository deny rule",
+      "status": "BLOCKED_SCOPED",
+      "boundary": "SoterAI preview",
+      "canarySha256": "2af2ee9dbd260e33b35d5ef3dcc74305cac465aedc9fddfe18c98a697c41febf"
+    },
+    {
+      "attack": "agent edits repository deny policy",
+      "status": "BLOCKED_SCOPED",
+      "boundary": "writable .aiignore; retained accepted deny",
+      "canarySha256": "2af2ee9dbd260e33b35d5ef3dcc74305cac465aedc9fddfe18c98a697c41febf"
+    },
+    {
+      "attack": "runtime environment and command output",
+      "status": "LEAK_CONFIRMED",
+      "boundary": "synthetic injected child environment; not the broker child",
+      "canarySha256": "9b7af0dfd8625501f04bd19963618858f16dcbe454b0c0897e1cc4ee43be57ad"
+    },
+    {
+      "attack": "Git object after working-tree replacement",
+      "status": "LEAK_CONFIRMED",
+      "boundary": "unmanaged git show",
+      "canarySha256": "2af2ee9dbd260e33b35d5ef3dcc74305cac465aedc9fddfe18c98a697c41febf"
+    },
+    {
+      "attack": "encoded chunked exfiltration",
+      "status": "LEAK_CONFIRMED",
+      "boundary": "independent HTTP to local synthetic receiver only",
+      "canarySha256": "9b7af0dfd8625501f04bd19963618858f16dcbe454b0c0897e1cc4ee43be57ad"
+    }
+  ],
+  "limitations": [
+    "No third-party assistant or remote provider was invoked",
+    "File symlinks, screenshots, clipboard races, live disablement, /proc and privileged OS isolation not tested"
+  ]
+}

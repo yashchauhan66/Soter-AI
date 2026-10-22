@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "phase": "restart",
+  "syntheticOnly": true,
+  "hostVersion": "1.143.0",
+  "extensionBundleSha256": "624cc55f795e533c2d31233a65713fbcdd458d3602fa43fe0afb4feae4d5d044",
+  "currentDeveloperBundleSha256": "624cc55f795e533c2d31233a65713fbcdd458d3602fa43fe0afb4feae4d5d044",
+  "hostProbeSha256": "05f022d000f2842765e7791a6ce72ea055c11c4324a90d4d8336bd2b0db3972b",
+  "observations": [
+    {
+      "id": "F22A-N01",
+      "scope": "Restart reuses profile key/ledger with no startup source read",
+      "status": "PASS"
+    },
+    {
+      "id": "F22A-N02",
+      "scope": "Restart source ledger and exact saved original match prior receipt",
+      "status": "PASS"
+    },
+    {
+      "id": "F22A-N03",
+      "scope": "Stale source finding authority never survives restart",
+      "status": "PASS"
+    }
+  ],
+  "passed": 3,
+  "failed": 0,
+  "notRun": 0,
+  "sourceDocumentCalls": 0,
+  "sourceDocumentEvents": 0,
+  "secretStorageStores": 0,
+  "reviews": [],
+  "metadataDocuments": 1,
+  "trace": [
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 574.1532
+    },
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 744.2137999999998
+    },
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 885.5409999999999
+    },
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 1026.9583999999998
+    },
+    {
+      "event": "command-start-sourceSecretScannerStatus",
+      "milliseconds": 1745.6600999999998
+    },
+    {
+      "event": "command-end-sourceSecretScannerStatus",
+      "milliseconds": 1747.9732999999999,
+      "status": "OWNER_REVIEW_REQUIRED"
+    },
+    {
+      "event": "command-start-openHygieneExposureLedger",
+      "milliseconds": 1749.0759
+    },
+    {
+      "event": "command-end-openHygieneExposureLedger",
+      "milliseconds": 2087.2290000000003,
+      "status": "UNEXPECTED"
+    },
+    {
+      "event": "command-start-reviewSourceSecretVault",
+      "milliseconds": 2137.9822000000004
+    },
+    {
+      "event": "command-end-reviewSourceSecretVault",
+      "milliseconds": 2141.6727,
+      "status": "REVIEW_FILES_FIRST"
+    }
+  ],
+  "independence": "LOW",
+  "ownerPresence": "SCRIPTED_NATIVE_API_DECISIONS_NOT_HUMAN_REVIEW",
+  "notTested": [
+    "Other languages, dynamic assembly and unsupported proposals",
+    "Human usability/accessibility",
+    "Live credentials or provider rotation",
+    "OS custody or unmanaged native reads/uploads"
+  ]
+}

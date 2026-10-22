@@ -1,0 +1,418 @@
+{
+  "schemaVersion": 1,
+  "phase": "primary",
+  "syntheticOnly": true,
+  "hostVersion": "1.143.0",
+  "extensionBundleSha256": "624cc55f795e533c2d31233a65713fbcdd458d3602fa43fe0afb4feae4d5d044",
+  "currentDeveloperBundleSha256": "624cc55f795e533c2d31233a65713fbcdd458d3602fa43fe0afb4feae4d5d044",
+  "hostProbeSha256": "05f022d000f2842765e7791a6ce72ea055c11c4324a90d4d8336bd2b0db3972b",
+  "observations": [
+    {
+      "id": "F22A-N01",
+      "scope": "Exact runtime, source registration and no startup read/key",
+      "status": "PASS"
+    },
+    {
+      "id": "F22A-N02",
+      "scope": "File picker cancellation ignores caller file and approval",
+      "status": "PASS"
+    },
+    {
+      "id": "F22A-N03",
+      "scope": "Native content-review cancellation precedes key and originals",
+      "status": "PASS"
+    },
+    {
+      "id": "F22A-N04",
+      "scope": "Selected escaped TypeScript source and metadata-only report",
+      "status": "PASS"
+    },
+    {
+      "id": "F22A-N05",
+      "scope": "Source-specific workspace discovery with public JSX control",
+      "status": "PASS"
+    },
+    {
+      "id": "F22A-N06",
+      "scope": "Shared possible-exposure ledger has keyed references only",
+      "status": "PASS"
+    },
+    {
+      "id": "F22A-N07",
+      "scope": "Unsupported language remains explicitly unsupported",
+      "status": "PASS"
+    },
+    {
+      "id": "F22A-N08",
+      "scope": "Malformed source withholds rather than reporting a clean scan",
+      "status": "PASS"
+    },
+    {
+      "id": "F22A-N09",
+      "scope": "Native vault cancellation preserves exact original source",
+      "status": "PASS"
+    },
+    {
+      "id": "F22A-N10",
+      "scope": "Reviewed canonical vault replaces literals with no env-file output",
+      "status": "PASS"
+    },
+    {
+      "id": "F22A-N11",
+      "scope": "Vault action records only possible-exposure metadata",
+      "status": "PASS"
+    },
+    {
+      "id": "F22A-N12",
+      "scope": "Disclosure cancellation keeps source masked",
+      "status": "PASS"
+    },
+    {
+      "id": "F22A-N13",
+      "scope": "Explicit disclosure restores exact escapes and retains saved deny",
+      "status": "PASS"
+    },
+    {
+      "id": "F22A-N14",
+      "scope": "Source drift invalidates pending native consent",
+      "status": "PASS"
+    },
+    {
+      "id": "F22A-N15",
+      "scope": "Metadata export cancellation creates no file",
+      "status": "PASS"
+    },
+    {
+      "id": "F22A-N16",
+      "scope": "Reviewed source exposure export contains no values or source names",
+      "status": "PASS"
+    },
+    {
+      "id": "F22A-N17",
+      "scope": "Source flag withdrawal invalidates pending content review",
+      "status": "PASS"
+    },
+    {
+      "id": "F22A-N18",
+      "scope": "Disabled source route preserves records; reenable and retain restart basis",
+      "status": "PASS"
+    }
+  ],
+  "passed": 18,
+  "failed": 0,
+  "notRun": 0,
+  "sourceDocumentCalls": 0,
+  "sourceDocumentEvents": 0,
+  "secretStorageStores": 2,
+  "reviews": [
+    {
+      "action": "Analyze saved project files",
+      "safe": true
+    },
+    {
+      "action": "Analyze saved project files",
+      "safe": true
+    },
+    {
+      "action": "Analyze saved project files",
+      "safe": true
+    },
+    {
+      "action": "Analyze saved project files",
+      "safe": true
+    },
+    {
+      "action": "Analyze saved project files",
+      "safe": true
+    },
+    {
+      "action": "Migrate securely",
+      "safe": true
+    },
+    {
+      "action": "Migrate securely",
+      "safe": true
+    },
+    {
+      "action": "Restore raw values",
+      "safe": true
+    },
+    {
+      "action": "Restore raw values",
+      "safe": true
+    },
+    {
+      "action": "Analyze saved project files",
+      "safe": true
+    },
+    {
+      "action": "Create metadata export",
+      "safe": true
+    },
+    {
+      "action": "Create metadata export",
+      "safe": true
+    },
+    {
+      "action": "Analyze saved project files",
+      "safe": true
+    }
+  ],
+  "metadataDocuments": 9,
+  "trace": [
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 713.239
+    },
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 1347.9385000000002
+    },
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 1362.2133
+    },
+    {
+      "event": "command-start-sourceSecretScannerStatus",
+      "milliseconds": 1672.3164000000002
+    },
+    {
+      "event": "command-end-sourceSecretScannerStatus",
+      "milliseconds": 1674.8986,
+      "status": "OWNER_REVIEW_REQUIRED"
+    },
+    {
+      "event": "command-start-reviewSourceSecrets",
+      "milliseconds": 1680.2981000000004
+    },
+    {
+      "event": "command-end-reviewSourceSecrets",
+      "milliseconds": 1682.7738000000004,
+      "status": "CANCELLED"
+    },
+    {
+      "event": "command-start-reviewSourceSecrets",
+      "milliseconds": 1684.4262000000003
+    },
+    {
+      "event": "saved-policy-update-start",
+      "milliseconds": 1694.3471999999997
+    },
+    {
+      "event": "saved-policy-update-end",
+      "milliseconds": 1697.5921999999996
+    },
+    {
+      "event": "command-end-reviewSourceSecrets",
+      "milliseconds": 1838.3704000000002,
+      "status": "CANCELLED"
+    },
+    {
+      "event": "command-start-reviewSourceSecrets",
+      "milliseconds": 1948.0826000000002
+    },
+    {
+      "event": "hygiene-key-event",
+      "milliseconds": 2085.8938000000003
+    },
+    {
+      "event": "command-end-reviewSourceSecrets",
+      "milliseconds": 2360.8987,
+      "status": "ANALYZED",
+      "files": 1,
+      "findings": 1
+    },
+    {
+      "event": "command-start-reviewWorkspaceSourceSecrets",
+      "milliseconds": 2436.1802000000002
+    },
+    {
+      "event": "drift-baseline-update-start",
+      "milliseconds": 2709.9369
+    },
+    {
+      "event": "drift-baseline-update-end",
+      "milliseconds": 2713.2558000000004
+    },
+    {
+      "event": "command-end-reviewWorkspaceSourceSecrets",
+      "milliseconds": 2823.3479,
+      "status": "ANALYZED",
+      "files": 2,
+      "findings": 1
+    },
+    {
+      "event": "command-start-openHygieneExposureLedger",
+      "milliseconds": 2823.5463999999997
+    },
+    {
+      "event": "command-end-openHygieneExposureLedger",
+      "milliseconds": 2935.0411,
+      "status": "UNEXPECTED"
+    },
+    {
+      "event": "command-start-reviewSourceSecrets",
+      "milliseconds": 2935.5130999999997
+    },
+    {
+      "event": "command-end-reviewSourceSecrets",
+      "milliseconds": 3045.9334999999996,
+      "status": "UNSUPPORTED_SOURCE"
+    },
+    {
+      "event": "command-start-reviewSourceSecrets",
+      "milliseconds": 3047.2224
+    },
+    {
+      "event": "command-end-reviewSourceSecrets",
+      "milliseconds": 3202.1209000000003,
+      "status": "UNAVAILABLE"
+    },
+    {
+      "event": "command-start-reviewSourceSecrets",
+      "milliseconds": 3203.0332999999996
+    },
+    {
+      "event": "command-end-reviewSourceSecrets",
+      "milliseconds": 3440.3354999999997,
+      "status": "ANALYZED",
+      "files": 1,
+      "findings": 1
+    },
+    {
+      "event": "command-start-reviewSourceSecretVault",
+      "milliseconds": 3440.9226999999996
+    },
+    {
+      "event": "command-end-reviewSourceSecretVault",
+      "milliseconds": 3618.0246,
+      "status": "CANCELLED"
+    },
+    {
+      "event": "command-start-reviewSourceSecretVault",
+      "milliseconds": 3619.1648
+    },
+    {
+      "event": "vault-key-event",
+      "milliseconds": 3762.3957000000005
+    },
+    {
+      "event": "saved-policy-update-start",
+      "milliseconds": 3810.2765999999997
+    },
+    {
+      "event": "saved-policy-update-end",
+      "milliseconds": 3819.1749999999997
+    },
+    {
+      "event": "command-end-reviewSourceSecretVault",
+      "milliseconds": 4286.165499999999,
+      "status": "APPLIED"
+    },
+    {
+      "event": "command-start-openHygieneExposureLedger",
+      "milliseconds": 4291.6464
+    },
+    {
+      "event": "command-end-openHygieneExposureLedger",
+      "milliseconds": 4364.276900000001,
+      "status": "UNEXPECTED"
+    },
+    {
+      "event": "command-start-restoreSourceSecretVault",
+      "milliseconds": 4364.419099999999
+    },
+    {
+      "event": "command-end-restoreSourceSecretVault",
+      "milliseconds": 4642.1414,
+      "status": "CANCELLED"
+    },
+    {
+      "event": "command-start-restoreSourceSecretVault",
+      "milliseconds": 4643.5461
+    },
+    {
+      "event": "command-end-restoreSourceSecretVault",
+      "milliseconds": 4936.2731,
+      "status": "RESTORED"
+    },
+    {
+      "event": "command-start-reviewSourceSecrets",
+      "milliseconds": 4937.662700000001
+    },
+    {
+      "event": "command-end-reviewSourceSecrets",
+      "milliseconds": 5012.852199999999,
+      "status": "CHANGED"
+    },
+    {
+      "event": "command-start-exportHygieneExposureLedger",
+      "milliseconds": 5013.8236
+    },
+    {
+      "event": "command-end-exportHygieneExposureLedger",
+      "milliseconds": 5015.684300000001,
+      "status": "CANCELLED"
+    },
+    {
+      "event": "command-start-exportHygieneExposureLedger",
+      "milliseconds": 5016.1666000000005
+    },
+    {
+      "event": "command-end-exportHygieneExposureLedger",
+      "milliseconds": 5183.7636999999995,
+      "status": "EXPORTED"
+    },
+    {
+      "event": "command-start-reviewSourceSecrets",
+      "milliseconds": 5186.1275000000005
+    },
+    {
+      "event": "soterai-configuration-event",
+      "milliseconds": 5302.2037
+    },
+    {
+      "event": "command-end-reviewSourceSecrets",
+      "milliseconds": 5309.2263,
+      "status": "UNAVAILABLE"
+    },
+    {
+      "event": "command-start-reviewSourceSecrets",
+      "milliseconds": 5312.879800000001
+    },
+    {
+      "event": "command-end-reviewSourceSecrets",
+      "milliseconds": 5313.6811,
+      "status": "UNAVAILABLE"
+    },
+    {
+      "event": "soterai-configuration-event",
+      "milliseconds": 5368.8649000000005
+    },
+    {
+      "event": "command-start-sourceSecretScannerStatus",
+      "milliseconds": 5373.0704000000005
+    },
+    {
+      "event": "command-end-sourceSecretScannerStatus",
+      "milliseconds": 5373.8366000000005,
+      "status": "OWNER_REVIEW_REQUIRED"
+    },
+    {
+      "event": "soterai-configuration-event",
+      "milliseconds": 5426.7752
+    },
+    {
+      "event": "drift-baseline-update-start",
+      "milliseconds": 6449.9992
+    }
+  ],
+  "independence": "LOW",
+  "ownerPresence": "SCRIPTED_NATIVE_API_DECISIONS_NOT_HUMAN_REVIEW",
+  "notTested": [
+    "Other languages, dynamic assembly and unsupported proposals",
+    "Human usability/accessibility",
+    "Live credentials or provider rotation",
+    "OS custody or unmanaged native reads/uploads"
+  ]
+}

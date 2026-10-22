@@ -1,0 +1,168 @@
+﻿
+[main 2026-10-22T07:50:05.100Z] [node-compile-cache] main: packaged cache enabled (status: enabled, configured: C:\Users\USER\AppData\Local\Programs\Microsoft VS Code\2d0b7506a3\resources\app\node-compile-cache\main, active: C:\Users\USER\AppData\Local\Programs\Microsoft VS Code\2d0b7506a3\resources\app\node-compile-cache\main\v24.21.0-x64-c3a7e8f2)
+[main 2026-10-22T07:50:05.231Z] StorageMainService: creating application shared storage
+[main 2026-10-22T07:50:05.307Z] [shared storage] Creating shared storage database at ':memory:' (wasCreated: true)
+[main 2026-10-22T07:50:05.307Z] [shared storage] Initializing fallback application storage (path: in-memory)
+[main 2026-10-22T07:50:05.402Z] [shared storage] Fallback application storage initialized with 3 items
+[main 2026-10-22T07:50:05.402Z] update#setState disabled
+[main 2026-10-22T07:50:05.402Z] update#ctor - updates are disabled by the environment
+[RemoteAgentHost] Reconciling: desired=[], current=[]
+Started local extension host with pid 14232.
+Started initializing default profile extensions in extensions installation folder. file:///d%3A/SoterAI-Lite-test-profiles/soterai-security-review-46b19de2417d4bacad0b5fc139f63da9/extensions
+[AccountPolicyGate] apply: state=inactive, reason=undefined, isRestricted=false
+Completed initializing default profile extensions in extensions installation folder. file:///d%3A/SoterAI-Lite-test-profiles/soterai-security-review-46b19de2417d4bacad0b5fc139f63da9/extensions
+Loading development extension at c:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261021-f22g-editor-config-5d7a91c3\vsix-extracted-03\extension
+[RemoteAgentHost] Reconciling: desired=[], current=[]
+Settings Sync: Account status changed from uninitialized to unavailable
+[AccountPolicyGate] apply: state=inactive, reason=undefined, isRestricted=false
+{"syntheticReview":"completed","scopedBlocks":8,"confirmedLeaks":9}
+[main 2026-10-22T07:50:16.986Z] Extension host with pid 14232 exited with code: 0, signal: unknown.
+
+[main 2026-10-22T07:50:05.309Z] Error: Error mutex already exists
+    at Xs.installMutex (file:///C:/Users/USER/AppData/Local/Programs/Microsoft%20VS%20Code/2d0b7506a3/resources/app/out/mainImpl.js:161:30373)
+Via 'product.json#extensionEnabledApiProposals' extension 'github.vscode-pull-request-github' wants API proposal 'agentsWindowActivation' but that proposal DOES NOT EXIST. Likely, the proposal has been finalized (check 'vscode.d.ts') or was abandoned.
+[main 2026-10-22T07:50:07.810Z] updateWindowsJumpList#setJumpList unexpected result: error
+Extension 'github.copilot-chat' appears in product.json but enables LESS API proposals than the extension wants.
+package.json (LOSES): agentSessionsWorkspace
+speech
+agentsWindowConfiguration
+chatDebug
+chatHooks
+envIsConnectionMetered
+extensionsAny
+newSymbolNamesProvider
+interactive
+codeActionAI
+activeComment
+commentReveal
+contribCommentThreadAdditionalMenu
+contribCommentsViewThreadMenus
+contribChatEditorInlineGutterMenu
+documentFiltersExclusive
+embeddings
+findTextInFiles
+findTextInFiles2
+languageModelToolSupportsModel
+findFiles2
+textSearchProvider
+terminalDataWriteEvent
+terminalExecuteCommandEvent
+terminalSelection
+terminalQuickFixProvider
+mappedEditsProvider
+aiRelatedInformation
+aiSettingsSearch
+chatParticipantAdditions
+defaultChatParticipant
+contribSourceControlInputBoxMenu
+authLearnMore
+authIssuers
+testObserver
+aiTextSearchProvider
+chatParticipantPrivate
+chatProvider
+contribDebugCreateConfiguration
+chatReferenceDiagnostic
+textSearchProvider2
+chatReferenceBinaryData
+languageModelSystem
+languageModelCapabilities
+languageModelPricing
+languageModelRateLimit
+inlineCompletionsAdditions
+chatStatusItem
+chatInputNotification
+taskProblemMatcherStatus
+contribLanguageModelToolSets
+textDocumentChangeReason
+resolvers
+taskExecutionTerminal
+dataChannels
+languageModelThinkingPart
+chatSessionsProvider
+devDeviceId
+contribEditorContentMenu
+chatPromptFiles
+mcpServerDefinitions
+tabInputMultiDiff
+workspaceTrust
+environmentPower
+terminalTitle
+toolInvocationApproveCombination
+chatSessionCustomizationProvider
+product.json (WINS): agentSessionsWorkspace
+agentsWindowConfiguration
+interactive
+terminalDataWriteEvent
+terminalExecuteCommandEvent
+terminalSelection
+terminalQuickFixProvider
+chatParticipantAdditions
+defaultChatParticipant
+embeddings
+chatProvider
+mappedEditsProvider
+aiRelatedInformation
+aiSettingsSearch
+codeActionAI
+findTextInFiles
+findTextInFiles2
+textSearchProvider
+textSearchProvider2
+activeComment
+commentReveal
+contribSourceControlInputBoxMenu
+contribCommentEditorActionsMenu
+contribCommentThreadAdditionalMenu
+contribCommentsViewThreadMenus
+contribChatEditorInlineGutterMenu
+extensionAffinity
+newSymbolNamesProvider
+findFiles2
+chatReferenceDiagnostic
+extensionsAny
+authLearnMore
+testObserver
+aiTextSearchProvider
+documentFiltersExclusive
+chatParticipantPrivate
+contribDebugCreateConfiguration
+inlineCompletionsAdditions
+chatReferenceBinaryData
+languageModelSystem
+languageModelCapabilities
+languageModelThinkingPart
+languageModelToolSupportsModel
+chatStatusItem
+taskProblemMatcherStatus
+contribLanguageModelToolSets
+textDocumentChangeReason
+resolvers
+taskExecutionTerminal
+dataChannels
+chatSessionsProvider
+chatSessionCustomizationProvider
+devDeviceId
+contribEditorContentMenu
+tokenInformation
+toolInvocationApproveCombination
+chatPromptFiles
+mcpServerDefinitions
+tabInputMultiDiff
+workspaceTrust
+chatHooks
+chatDebug
+envIsConnectionMetered
+environmentPower
+terminalTitle
+languageModelPricing
+chatInputNotification
+speech
+DELTA: authIssuers
+languageModelRateLimit
+Proceeding with EXTRA proposals (authIssuers, languageModelRateLimit) because extension is in development mode. Still, this EXTENSION WILL BE BROKEN unless product.json is updated.
+(node:14232) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+(Use `Code --trace-deprecation ...` to show where the warning was created)
+
+Per-run evidence at C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261021-f22g-editor-config-5d7a91c3\affected-20261022T074947Z-2b55634aeb204c22a45317ab8dc3e6d2\security\host-20261022T075002Z-e081357c350649b7a0c60a17d8af1828
+Synthetic lab retained at D:\SoterAI-Lite-test-profiles\soterai-security-review-46b19de2417d4bacad0b5fc139f63da9

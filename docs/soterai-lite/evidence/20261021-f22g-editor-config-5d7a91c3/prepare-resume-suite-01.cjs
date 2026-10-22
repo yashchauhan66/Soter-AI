@@ -1,0 +1,9 @@
+'use strict';
+const h=require('./evidence-lib-01.cjs'),{fs,own,assert}=h;
+let suite=fs.readFileSync(own('run-current-affected-suite-04.ps1'),'utf8');assert.equal(suite.split('-run-04').length-1,10);suite=suite.replaceAll('-run-04','-run-05').replace('affected-suite-summary-04.json','affected-suite-summary-05.json');fs.writeFileSync(own('run-current-affected-suite-05.ps1'),suite,{flag:'wx'});
+let gates=fs.readFileSync(own('run-recovery-gates-01.ps1'),'utf8');for(const [a,b] of [['host-fixture-validation-run-05','host-fixture-validation-run-06'],['run-current-affected-suite-04.ps1','run-current-affected-suite-05.ps1'],['current-affected-suite-run-04','current-affected-suite-run-05']]){assert(gates.includes(a));gates=gates.replaceAll(a,b);}
+const marker="$taskInspection=Get-Content";assert.equal(gates.split(marker).length-1,1);
+gates=gates.replace(marker,"$taskInputsRaw=Join-Path $PSScriptRoot 'resume-input-verification-run-01.txt'\n& $taskRunner -FilePath 'node' -ArgumentList @((Join-Path $PSScriptRoot 'resume-inputs-01.cjs'),'--verify') -OutputFile $taskInputsRaw -WorkingDirectory $taskRepo\n$taskInputsReceipt=Get-Content -LiteralPath ($taskInputsRaw+'.result.json') -Raw -Encoding UTF8|ConvertFrom-Json\nif($taskInputsReceipt.exitCode -ne 0){throw 'Current checkpoint bytes changed; native resume refused.'}\n"+marker);
+fs.writeFileSync(own('run-resume-gates-01.ps1'),gates,{flag:'wx'});
+const entry=fs.readFileSync(own('run-recovery-entry-01.ps1'),'utf8').replaceAll('run-recovery-gates-01.ps1','run-resume-gates-01.ps1').replaceAll('recovery-candidate03-run-01','resumed-candidate03-run-01');fs.writeFileSync(own('run-resume-entry-01.ps1'),entry,{flag:'wx'});
+console.log(JSON.stringify({status:'PREPARED_NOT_EXECUTED',suite:'05',sourceChanges:0,testChanges:0,assertionChanges:0,timingChanges:0}));

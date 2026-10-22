@@ -1,0 +1,45 @@
+{
+  "status": "PASS_ACTIVE_CHECKPOINT_RECEIPT_AND_SOURCE_BYTES",
+  "revision": "a7292856b599e5243fdb8f74569823fe840e7fe7",
+  "parent": "4fc240fa304f1326f0aa39973d1aef03d9afc288",
+  "feature": "F22g",
+  "featureState": "ACTIVE",
+  "completion": "INCOMPLETE",
+  "acceptance": "NOT_GRANTED",
+  "nextFeature": "F22h_PLANNED",
+  "sourceIndexedRecords": 1263,
+  "sourceCommittedPaths": 877,
+  "receiptIndexedRecords": 20,
+  "receiptCommittedPaths": 21,
+  "mismatches": [],
+  "unexpectedPaths": 0,
+  "sourceProof": {
+    "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/checkpoint-committed-byte-verification-02.json",
+    "bytes": 4948,
+    "sha256": "3056bdf14cd902c08cfcc4005b5d27558d5d22f84a197cf3e7323fd49eafa825"
+  },
+  "receiptIndex": {
+    "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/checkpoint-receipt-index-01.json",
+    "bytes": 7451,
+    "sha256": "53b79c669c520ffceb9767dde20c48a3c5ee0f05495c64e6b8f94dab58605b70"
+  },
+  "artifact": {
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-f22g-20261021-attempt03.vsix",
+    "bytes": 1660193,
+    "sha256": "f27ecdf71536d8ce6cf50b97d3824e8178c2c19e5ca640fd378331788c15b500",
+    "recheck": "PASS"
+  },
+  "commitOutput": {
+    "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/checkpoint-receipt-commit-run-01.txt",
+    "bytes": 2589,
+    "sha256": "bfe7ef528b7497f8dac5acfa0af0e68aea5263f641351ea7f595c9227b5fee6f"
+  },
+  "commitReceipt": {
+    "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/checkpoint-receipt-commit-run-01.txt.result.json",
+    "bytes": 786,
+    "sha256": "1afa9dfa981dc345da67cedb4bff76471c1436d27ef96243451b42be978a8e1f"
+  },
+  "scope": "All original checkpoint indexed bytes still match current files except the single explicitly updated ledger receipt, which is bound by this second commit. Original Git objects, runtime originals, new receipt bytes and exact changed paths verified. Final proof itself is late evidence. Native affected acceptance remains blocked; old normal parent-bound helpers require new reviewed finalHEAD binding.",
+  "independence": "LOW",
+  "time": "2026-10-22T07:29:39.701Z"
+}
