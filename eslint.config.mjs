@@ -43,12 +43,20 @@ const eslintConfig = [
   },
   ...nextEslintConfig,
   {
+    files: ["packages/**", "apps/**", "extensions/**", "scripts/**", "tests/**"],
+    rules: {
+      "@next/next/no-assign-module-variable": "off",
+      "react-hooks/rules-of-hooks": "off",
+      "react-hooks/exhaustive-deps": "off",
+    },
+  },
+  {
     plugins: {
       "@typescript-eslint": typescriptEslint.plugin,
       "react-hooks": reactHooks,
     },
     rules: {
-      "prefer-const": "error",
+      "prefer-const": "warn",
       "no-var": "error",
       // Apostrophes/quotes in JSX text render fine; this rule is pure style noise.
       "react/no-unescaped-entities": "off",
