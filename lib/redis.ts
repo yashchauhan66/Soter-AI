@@ -79,8 +79,56 @@ class MemoryRedis implements RedisLike {
     return "OK";
   }
 
+  private lists = new Map<string, string[]>();
+
+  async lpush(key: string, ...elements: string[]): Promise<number> {
+    let list = this.lists.get(key);
+    if (!list) {
+      list = [];
+      this.lists.set(key, list);
+    }
+    list.unshift(...elements);
+    return list.length;
+  }
+
+  async rpop(key: string, count?: number): Promise<any> {
+    const list = this.lists.get(key);
+    if (!list || list.length === 0) return count !== undefined ? [] : null;
+    if (count === undefined) {
+      return list.pop() ?? null;
+    }
+    const popped: string[] = [];
+    for (let i = 0; i < count && list.length > 0; i++) {
+      const item = list.pop();
+      if (item !== undefined) popped.push(item);
+    }
+    return popped;
+  }
+
+  async llen(key: string): Promise<number> {
+    const list = this.lists.get(key);
+    return list ? list.length : 0;
+  }
+
+  async ltrim(key: string, start: number, stop: number): Promise<unknown> {
+    const list = this.lists.get(key);
+    if (!list) return "OK";
+    const len = list.length;
+    const actualStart = start < 0 ? Math.max(len + start, 0) : start;
+    const actualStop = stop < 0 ? Math.max(len + stop, 0) : Math.min(stop, len - 1);
+    if (actualStart > actualStop || actualStart >= len) {
+      this.lists.set(key, []);
+    } else {
+      this.lists.set(key, list.slice(actualStart, actualStop + 1));
+    }
+    return "OK";
+  }
+
   async del(...keys: string[]) {
-    for (const key of keys) this.store.delete(key);
+    for (const key of keys) {
+      this.store.delete(key);
+      this.lists.delete(key);
+    }
     return keys.length;
   }
 }

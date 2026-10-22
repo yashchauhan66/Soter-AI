@@ -263,7 +263,9 @@ const LABEL_TO_RISK: Record<Exclude<ModelLabel, "SAFE">, RiskType> = {
   MEMORY_POISONING: "MEMORY_POISONING",
 };
 
-const PROTECTIVE_ACTIONS = new Set(["BLOCK", "HUMAN_REVIEW", "REWRITE", "ALLOW_WITH_REDACTION"]);
+export const PROTECTIVE_ACTIONS = new Set(["BLOCK", "HUMAN_REVIEW", "REWRITE", "ALLOW_WITH_REDACTION"]);
+export const PROTECTIVE_GUARD_ACTIONS = PROTECTIVE_ACTIONS;
+
 
 export function resolveMlAugmentMode(): MlAugmentMode {
   const raw = (process.env.SOTERAI_ML_AUGMENT ?? "off").toLowerCase();
