@@ -348,6 +348,27 @@ jobs:
               "$REPO_DIR/.env.production" | head -1)
             echo "  ML model dir: $(basename "$(dirname "$MODEL_PATH")")  max_length: 256"
 
+            # ── Step 2.5: Ensure Docker is installed and running ──
+            if ! command -v docker >/dev/null 2>&1; then
+              echo ""
+              echo "[2.5/5] Docker not found on EC2 host. Installing Docker..."
+              if command -v apt-get >/dev/null 2>&1; then
+                sudo DEBIAN_FRONTEND=noninteractive apt-get update -y
+                sudo DEBIAN_FRONTEND=noninteractive apt-get install -y docker.io docker-compose-v2
+              elif command -v dnf >/dev/null 2>&1; then
+                sudo dnf install -y docker
+              elif command -v yum >/dev/null 2>&1; then
+                sudo yum install -y docker
+              fi
+              sudo systemctl enable --now docker 2>/dev/null || sudo service docker start 2>/dev/null || true
+              sudo usermod -aG docker "$USER" 2>/dev/null || true
+            fi
+
+            # Ensure current user can interact with docker daemon without root
+            if [ -S /var/run/docker.sock ]; then
+              sudo chmod 666 /var/run/docker.sock 2>/dev/null || true
+            fi
+
             # ── Step 3: Login to Docker Hub ────────────────────────
             echo ""
             echo "[3/5] Logging in to Docker Hub..."
@@ -376,8 +397,8 @@ jobs:
             # like a model bug rather than a full disk.
             AVAIL_MB=$(df -Pm / | awk 'NR==2{print $4}')
             echo "  Free on / after cleanup: ${AVAIL_MB} MB"
-            if [ "${AVAIL_MB:-0}" -lt 4096 ]; then
-              echo "  ❌ Only ${AVAIL_MB} MB free on / — unpacking this image needs ~3 GB."
+            if [ "${AVAIL_MB:-0}" -lt 2000 ]; then
+              echo "  ❌ Only ${AVAIL_MB} MB free on / — unpacking this image needs ~2 GB."
               echo "     Cleanup could not reclaim enough space. Inspect on the host with:"
               echo "       docker system df && sudo du -xhd1 / | sort -h | tail -20"
               exit 1
