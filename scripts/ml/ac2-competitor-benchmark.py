@@ -51,12 +51,17 @@ IN_SCOPE_ATTACK_LABELS = {"PROMPT_INJECTION", "JAILBREAK", "SYSTEM_PROMPT_LEAK_A
 
 # The four the goal spec names. AC2 cannot pass while any of these is unscored,
 # whatever other arms happen to run.
+NEMO_ARM = "NVIDIA NeMo Guardrails (model-based jailbreak rail)"
 NAMED_COMPETITORS = (
     "Meta PromptGuard 2 (86M)",
     "Lakera Guard",
     "Azure AI Prompt Shields",
-    "NVIDIA NeMo Guardrails",
+    NEMO_ARM,
 )
+# A jailbreak detector judged on prompt-injection and prompt-leak rows is judged
+# outside its stated scope. Every arm is also scored on JAILBREAK attacks alone, so
+# NemoGuard can be compared on its home turf.
+JAILBREAK_ONLY = {"JAILBREAK"}
 
 
 @dataclass
@@ -166,15 +171,33 @@ def main() -> int:
         (r["label"] == "SAFE") or (r["label"] in IN_SCOPE_ATTACK_LABELS)
         for r in rows
     ]
+    jb_only = [(r["label"] == "SAFE") or (r["label"] in JAILBREAK_ONLY) for r in rows]
 
     arms: list[ArmResult] = []
-    soter_scores = [p["soterScore"] for p in per_row]
-    if any(s is None for s in soter_scores):
+    # The EXACT score is the comparison arm. The production-reported score is rounded
+    # to 4 decimals (onnxBackend.ts:673); SoterAI's 1%-FPR threshold sits at 0.9995,
+    # inside the band that rounding collapses, so a low-FPR comparison on it measures
+    # the quantisation rather than the model. An export without exact scores predates
+    # that finding and is refused rather than silently used.
+    if any("soterScoreExact" not in p for p in per_row):
+        print("[FATAL] SoterAI dump has no soterScoreExact (it predates the 4-decimal rounding",
+              file=sys.stderr)
+        print("        finding). Re-run: npx tsx scripts/ml/export-soterai-scores.ts. Refusing.",
+              file=sys.stderr)
+        return 2
+    soter_exact = [p["soterScoreExact"] for p in per_row]
+    soter_rounded = [p["soterScore"] for p in per_row]
+    if any(s is None for s in soter_exact) or any(s is None for s in soter_rounded):
         print("[FATAL] SoterAI dump contains null scores. Refusing.", file=sys.stderr)
         return 2
     arms.append(ArmResult("SoterAI v17-multilingual (ML score)", "MEASURED",
-                          scores=[float(s) for s in soter_scores],
-                          notes="raw P(attack) from the production ONNX backend"))
+                          scores=[float(s) for s in soter_exact],
+                          notes="exact P(attack) from production's own decide(), pre-rounding"))
+    # Diagnostic only: never gates the verdict (beats_soter compares against the arm
+    # above, which is found first), and is excluded from the loss lists by name.
+    arms.append(ArmResult("SoterAI v17-multilingual (rounded, as reported)", "MEASURED",
+                          scores=[float(s) for s in soter_rounded],
+                          notes="DIAGNOSTIC: production's 4-decimal score; shows the quantisation cost"))
 
     print("\nAC2 head-to-head — scoring arms on the identical battery\n")
     arms.append(load_arm("protectai", "ProtectAI deberta-v3-base-prompt-injection-v2", len(rows)))
@@ -184,8 +207,11 @@ def main() -> int:
     arms.append(blocked("Lakera Guard", "set LAKERA_API_KEY (commercial API)"))
     arms.append(blocked("Azure AI Prompt Shields",
                         "set AZURE_CONTENT_SAFETY_ENDPOINT and AZURE_CONTENT_SAFETY_KEY"))
-    arms.append(blocked("NVIDIA NeMo Guardrails",
-                        "pip install nemoguardrails and supply a rails config"))
+    # NeMo Guardrails is a framework; its model-based jailbreak rail is the
+    # NemoGuard-JailbreakDetect model, replicated from NVIDIA's own source. The arm
+    # is named for exactly what it is -- not "NeMo Guardrails" in every configuration
+    # (an LLM self-check rail would be a different arm).
+    arms.append(load_arm("nemoguard", NEMO_ARM, len(rows)))
 
     # SoterAI's DEPLOYED operating point, for the iso-FPR comparison target.
     soter_fpr = sum(1 for p in per_row if not p["isAttack"] and p["soterFlagged"]) / \
@@ -230,6 +256,12 @@ def main() -> int:
 
     print(f"\n  SoterAI deployed operating point: FPR {soter_fpr*100:.2f}%  recall {soter_recall*100:.2f}%")
     print(f"  (iso-FPR comparisons below use FPR <= {soter_fpr*100:.2f}%)\n")
+    common_untrunc = [True] * len(rows)
+    for _a in arms:
+        if _a.status == "MEASURED" and _a.truncated:
+            common_untrunc = [u and not t for u, t in zip(common_untrunc, _a.truncated)]
+    n_common_dropped = sum(1 for u in common_untrunc if not u)
+    print(f"  common untruncated subset: {len(rows) - n_common_dropped}/{len(rows)} rows\n")
     print(f"  {'arm':52s} {'scope':17s} {'AUC':>7s} {'rec@isoFPR':>11s} {'rec@1%FPR':>10s}")
 
     measured = 0
@@ -249,15 +281,26 @@ def main() -> int:
         # unfair; hiding the limit would be dishonest. So both numbers are printed.
         n_trunc = sum(arm.truncated) if arm.truncated else 0
         entry["truncatedRows"] = n_trunc
-        untrunc = [not t for t in arm.truncated] if arm.truncated else [True] * len(rows)
+        # COMMON untruncated mask across every MEASURED arm, computed below the loop
+        # body's reach via `common_untrunc`. Scoring each arm's untruncated figure on
+        # its OWN subset is apples-to-oranges: SoterAI records no truncation, so its
+        # subset would be all 4000 rows while ProtectAI's is 186 smaller, and the two
+        # numbers would not be comparable. The first version did exactly that and
+        # printed a SoterAI "untruncated" AUC identical to its in-scope AUC -- the
+        # tell that the mask never reached it.
         entry["full"] = evaluate(arm, [True] * len(rows))
         entry["inScope"] = evaluate(arm, in_scope)
         entry["inScopeUntruncated"] = evaluate(
-            arm, [a and b for a, b in zip(in_scope, untrunc)]
+            arm, [a and b for a, b in zip(in_scope, common_untrunc)]
         )
+        entry["inScopeUntruncatedNote"] = (
+            f"common subset across all measured arms; {n_common_dropped} rows excluded"
+        )
+        entry["jailbreakOnly"] = evaluate(arm, jb_only)
         report["arms"].append(entry)
         for scope_name, key in (("FULL", "full"), ("IN-SCOPE", "inScope"),
-                                ("IN-SCOPE/UNTRUNC", "inScopeUntruncated")):
+                                ("IN-SCOPE/UNTRUNC", "inScopeUntruncated"),
+                                ("JAILBREAK-ONLY", "jailbreakOnly")):
             m = entry[key]
             if m:
                 print(f"  {arm.name:52s} {scope_name:17s} {m['auc']:7.4f} "

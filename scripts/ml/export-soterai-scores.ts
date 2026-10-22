@@ -67,6 +67,39 @@ async function main(): Promise<void> {
     process.exit(2);
   }
 
+  // 🪤 PRODUCTION ROUNDS THE SCORE TO 4 DECIMALS (onnxBackend.ts:673,
+  // `attackProbability: Number(atkProb.toFixed(4))`), and so does every other
+  // field in `raw`. Harmless for the live gate, which compares against 0.85. Fatal
+  // for a low-FPR benchmark: SoterAI's 1%-FPR threshold sits at 0.9995, inside the
+  // band the rounding collapses -- the first export had only 903 distinct scores
+  // across 4000 rows and 32 benign rows tied at or above the 20th-highest, so the
+  // threshold could not be placed between them. ProtectAI's unrounded scores had
+  // 3304 distinct values. The comparison was measuring this export's quantisation
+  // as much as either model.
+  //
+  // Production code is NOT changed to win a benchmark. Instead this instance's
+  // decide() -- which every non-trivial infer() path calls with the UNROUNDED
+  // softmax (single window and every sliding window) -- is wrapped, and the exact
+  // value rides out on the decision object production itself selects. It is
+  // computed with production's own attackProbability(), not a replica, and is
+  // checked below to round back to exactly what production reported.
+  const { attackProbability } = (await import(mod("lib/ml/calibration.ts"))) as {
+    attackProbability: (p: number[], safeIndex?: number) => number;
+  };
+  type Exact = { atk: number; pSafe: number };
+  const EXACT = Symbol("exact");
+  const b = backend as unknown as {
+    decide: (p: number[], span: unknown) => Record<PropertyKey, unknown>;
+    safeIndex: number;
+  };
+  const origDecide = b.decide.bind(backend);
+  b.decide = (probabilities: number[], span: unknown) => {
+    const d = origDecide(probabilities, span);
+    const exact: Exact = { atk: attackProbability(probabilities, b.safeIndex), pSafe: probabilities[b.safeIndex] };
+    Object.defineProperty(d, EXACT, { value: exact, enumerable: false });
+    return d;
+  };
+
   const rows: Row[] = readFileSync(path.resolve(process.cwd(), FILE), "utf8")
     .split(/\r?\n/)
     .filter(Boolean)
@@ -74,10 +107,11 @@ async function main(): Promise<void> {
 
   const out: {
     i: number; isAttack: boolean; label: string; language?: string; category?: string;
-    rulesFlagged: boolean; soterScore: number | null; soterAction: string; soterFlagged: boolean;
+    rulesFlagged: boolean; soterScore: number | null; soterScoreExact: number | null;
+    soterPSafeExact: number | null; soterAction: string; soterFlagged: boolean;
   }[] = [];
 
-  let escalations = 0, missingScore = 0;
+  let escalations = 0, missingScore = 0, exactMismatch = 0, tooShort = 0;
   for (let i = 0; i < rows.length; i++) {
     const r = rows[i];
     const before = analyzeText(r.text, "INPUT");
@@ -87,6 +121,20 @@ async function main(): Promise<void> {
     const inf = await backend.infer(r.text, "INPUT");
     const ap = inf.raw?.attackProbability;
     if (typeof ap !== "number" || Number.isNaN(ap)) missingScore++;
+
+    // The too-short path (infer() returns before decide() for < 3 chars) carries
+    // no exact value; production reports 0 there, so the exact score is 0 too.
+    const ex = (inf as unknown as Record<PropertyKey, unknown>)[EXACT] as Exact | undefined;
+    let atkExact: number | null = null, pSafeExact: number | null = null;
+    if (ex) {
+      atkExact = ex.atk;
+      pSafeExact = ex.pSafe;
+      if (typeof ap === "number" && Number(ex.atk.toFixed(4)) !== ap) exactMismatch++;
+    } else if (ap === 0) {
+      tooShort++;
+      atkExact = 0;
+      pSafeExact = 1;
+    }
     out.push({
       i,
       isAttack: r.label !== "SAFE",
@@ -95,9 +143,27 @@ async function main(): Promise<void> {
       category: r.category,
       rulesFlagged,
       soterScore: typeof ap === "number" && !Number.isNaN(ap) ? ap : null,
+      soterScoreExact: atkExact,
+      soterPSafeExact: pSafeExact,
       soterAction: after.action ?? "?",
       soterFlagged: flagged(after),
     });
+  }
+
+  // The exact value must round back to EXACTLY what production reported, for every
+  // row. Anything else means the wrapper captured a different window or a different
+  // computation than the one production used, and the "exact" scores would describe
+  // a lookalike -- the failure that got two in-repo ranking documents withdrawn.
+  if (exactMismatch > 0) {
+    console.error(`[FATAL] ${exactMismatch} row(s): exact score does not round to production's`);
+    console.error("        reported attackProbability. The wrapper is not capturing production's");
+    console.error("        own value. Refusing to write a score file that would mislabel itself.");
+    process.exit(2);
+  }
+  const missingExact = out.filter((o) => o.soterScoreExact === null).length;
+  if (missingExact > 0) {
+    console.error(`[FATAL] ${missingExact} row(s) carry no exact score and are not the too-short path. Refusing.`);
+    process.exit(2);
   }
 
   if (escalations === 0) {
@@ -123,9 +189,17 @@ async function main(): Promise<void> {
         benign: out.filter((r) => !r.isAttack).length,
         mlEscalations: escalations,
         rowsMissingScore: missingScore,
+        rowsTooShort: tooShort,
+        exactRoundsToReportedOnEveryRow: true,
+        distinctReportedScores: new Set(out.map((o) => o.soterScore)).size,
+        distinctExactScores: new Set(out.map((o) => o.soterScoreExact)).size,
         note:
-          "soterScore is raw P(attack) from the production backend; soterAction is the real " +
-          "two-tier decision. Row order matches the battery file exactly, so `i` is the join key.",
+          "soterScore is P(attack) AS PRODUCTION REPORTS IT, rounded to 4 decimals " +
+          "(onnxBackend.ts:673). soterScoreExact is the same value before rounding, captured " +
+          "from production's own decide()/attackProbability() for the window production " +
+          "selected, and verified to round back to soterScore on every row. Use the exact score " +
+          "for any low-FPR comparison. soterAction is the real two-tier decision. Row order " +
+          "matches the battery file exactly, so `i` is the join key.",
         perRow: out,
       },
       null,

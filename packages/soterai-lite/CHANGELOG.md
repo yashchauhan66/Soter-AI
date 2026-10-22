@@ -1,5 +1,7 @@
 # Changelog
 
+- Add owner-reviewed project MCP JSONC/finite TOML secret scanning, strict machine withdrawal, keyed findings and canonical encrypted checkpoint-only migration/disclosure. Preserve exact reference controls; duplicate/unsupported syntax withholds. No config application, variable resolution, MCP client/server execution, global profile scan or new dependency.
+
 - Add owner-reviewed project launch/tasks/settings JSONC scanning, bounded duplicate-aware parse-only grammar, secret args/env/URL review and guarded encrypted checkpoint disclosure. Machine withdrawal remains strict; no config application, resolution or task/debug execution.
 - Add owner-reviewed finite GitHub/GitLab CI YAML credential scanning with private metadata, strict machine withdrawal, whole-scalar fixes and guarded encrypted checkpoint-only disclosure. Public references/permissions remain useful; malformed/unsupported input withholds. No config/include/client/shell execution, build, deployment or new dependency.
 

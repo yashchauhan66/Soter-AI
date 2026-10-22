@@ -9,6 +9,8 @@ import { createCiSecretPlan, type CiFormat } from "../config-scanners/CiSecretPl
 
 import { createEditorSecretPlan, type EditorFormat } from "../config-scanners/EditorSecretPlan";
 
+import { createMcpSecretPlan, type McpFormat } from "../config-scanners/McpSecretPlan";
+
 export interface PrivateVaultCandidate extends VaultCandidate { replacementText: string }
 export interface PrivateVaultPlan { maskedText: string; exampleText: string; candidates: PrivateVaultCandidate[]; restoreMode?: "checkpoint" }
 const UUID = /^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/i;
@@ -16,12 +18,13 @@ const EXISTING = /^\[SOTERAI_PROTECTED_[A-Z0-9_]+\]$/;
 const fail = (): never => { throw new Error("Vault migration syntax or size is unsupported."); };
 
 /** Private plan: no raw values or original representation are a UI/tool receipt. */
-export function createVaultMigrationPlan(text: string, environment: boolean, generation: string, sourceSyntax?: SourceSyntax | ContainerFormat | TerraformFormat | RegistryFormat | ServiceAccountFormat | CiFormat | EditorFormat): PrivateVaultPlan {
+export function createVaultMigrationPlan(text: string, environment: boolean, generation: string, sourceSyntax?: SourceSyntax | ContainerFormat | TerraformFormat | RegistryFormat | ServiceAccountFormat | CiFormat | EditorFormat | McpFormat): PrivateVaultPlan {
     if (typeof generation !== "string" || !UUID.test(generation) || typeof environment !== "boolean") return fail();
     if (sourceSyntax !== undefined) {
         if (environment) return fail();
         if (sourceSyntax === "yaml" || sourceSyntax === "dockerfile") return createContainerSecretPlan(text, sourceSyntax, generation);
         if (sourceSyntax === "terraform" || sourceSyntax === "tfvars" || sourceSyntax === "terraform-json" || sourceSyntax === "tfvars-json") return createTerraformSecretPlan(text, sourceSyntax, generation);
+        if (sourceSyntax === "mcp-jsonc" || sourceSyntax === "mcp-toml") return createMcpSecretPlan(text, sourceSyntax, generation);
         if (sourceSyntax === "editor-jsonc") return createEditorSecretPlan(text, sourceSyntax, generation);
         if (sourceSyntax === "ci-yaml") return createCiSecretPlan(text, sourceSyntax, generation);
         if (sourceSyntax === "service-account-json") return createServiceAccountSecretPlan(text, sourceSyntax, generation);

@@ -1,3 +1,4 @@
+import { mcpFormatForPath } from "../config-scanners/McpSecretPlan";
 import { createHmac } from "node:crypto";
 import { createVaultMigrationPlan } from "../firewall/VaultMigrationPlan";
 import { sourceSyntaxForPath } from "../config-scanners/SourceSecretPlan";
@@ -56,7 +57,8 @@ export function analyzeRegistryText(input: HygieneInput, key: Buffer): Readonly<
 export function analyzeServiceAccountText(input: HygieneInput, key: Buffer): Readonly<HygieneAnalysis> { return analyze(input, key, "serviceAccount"); }
 export function analyzeCiText(input: HygieneInput, key: Buffer): Readonly<HygieneAnalysis> { return analyze(input, key, "ci"); }
 export function analyzeEditorText(input: HygieneInput, key: Buffer): Readonly<HygieneAnalysis> { return analyze(input, key, "editor"); }
-function analyze(input: HygieneInput, key: Buffer, family: "hygiene" | "source" | "container" | "terraform" | "registry" | "serviceAccount" | "ci" | "editor"): Readonly<HygieneAnalysis> {
+export function analyzeMcpText(input: HygieneInput, key: Buffer): Readonly<HygieneAnalysis> { return analyze(input, key, "mcp"); }
+function analyze(input: HygieneInput, key: Buffer, family: "hygiene" | "source" | "container" | "terraform" | "registry" | "serviceAccount" | "ci" | "editor" | "mcp"): Readonly<HygieneAnalysis> {
     try {
         if (!input || Object.getPrototypeOf(input) !== Object.prototype || Object.keys(input).sort().join(",") !== "environment,source,text"
             || Object.values(Object.getOwnPropertyDescriptors(input)).some(p => p.get || p.set)
@@ -64,7 +66,7 @@ function analyze(input: HygieneInput, key: Buffer, family: "hygiene" | "source" 
             || input.source.startsWith("/") || input.source.split("/").some(p => !p || p === "." || p === "..") || typeof input.environment !== "boolean"
             || typeof input.text !== "string" || Buffer.byteLength(input.text) > 65536 || input.text.includes("\0") || Buffer.from(input.text, "utf8").toString("utf8") !== input.text) return hygieneUnavailable();
         const fileRef = hygieneReference(key, "file", input.source), revision = hygieneReference(key, "revision", input.text);
-        const syntax = family === "source" ? sourceSyntaxForPath(input.source) : family === "container" ? containerFormatForPath(input.source) : family === "terraform" ? terraformFormatForPath(input.source) : family === "registry" ? registryFormatForPath(input.source) : family === "serviceAccount" ? serviceAccountFormatForPath(input.source) : family === "editor" ? editorFormatForPath(input.source) : family === "ci" ? ciFormatForPath(input.source) : undefined;
+        const syntax = family === "source" ? sourceSyntaxForPath(input.source) : family === "container" ? containerFormatForPath(input.source) : family === "terraform" ? terraformFormatForPath(input.source) : family === "registry" ? registryFormatForPath(input.source) : family === "serviceAccount" ? serviceAccountFormatForPath(input.source) : family === "mcp" ? mcpFormatForPath(input.source) : family === "editor" ? editorFormatForPath(input.source) : family === "ci" ? ciFormatForPath(input.source) : undefined;
         if (family !== "hygiene" && (!syntax || input.environment)) return hygieneUnavailable();
         const plan = createVaultMigrationPlan(input.text, input.environment, "10000000-0000-4000-8000-000000000021", syntax);
         const findings: HygieneFinding[] = [], values: string[] = [];

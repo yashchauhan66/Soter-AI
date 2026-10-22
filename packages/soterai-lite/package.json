@@ -143,7 +143,8 @@
         "soterai.lite.configScanner.registry",
         "soterai.lite.configScanner.serviceAccount",
         "soterai.lite.configScanner.ci",
-        "soterai.lite.configScanner.editor"
+        "soterai.lite.configScanner.editor",
+        "soterai.lite.configScanner.mcp"
       ]
     }
   },
@@ -1538,6 +1539,31 @@
         "command": "soterai.editorSecretScannerStatus",
         "title": "Editor JSONC Secret Scanner Status",
         "category": "SoterAI"
+      },
+      {
+        "command": "soterai.reviewWorkspaceMcpSecrets",
+        "title": "Review Workspace MCP JSONC/TOML Secrets",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.reviewMcpSecrets",
+        "title": "Review Selected MCP JSONC/TOML Secrets",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.reviewMcpSecretVault",
+        "title": "Review MCP JSONC/TOML Vault Migration",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.restoreMcpSecretVault",
+        "title": "Restore Reviewed MCP JSONC/TOML Values (Disclosure)",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.mcpSecretScannerStatus",
+        "title": "MCP JSONC/TOML Secret Scanner Status",
+        "category": "SoterAI"
       }
     ],
     "viewsContainers": {
@@ -2278,6 +2304,12 @@
           "default": true,
           "scope": "machine",
           "description": "Enable owner-reviewed finite saved project launch/tasks/settings JSONC credential review and canonical encrypted checkpoint migration. No config application, variable resolution or task/debug/shell execution. Repository settings cannot relax machine safety policy; unsupported inputs withhold."
+        },
+        "soterai.lite.configScanner.mcp": {
+          "type": "boolean",
+          "default": true,
+          "scope": "machine",
+          "description": "Review finite saved project MCP JSONC/TOML copies with native owner consent and encrypted checkpoint-only recovery. No config application, variable resolution or client execution. Repository values cannot enable an owner-disabled scanner."
         }
       }
     },
@@ -3428,6 +3460,26 @@
         },
         {
           "command": "soterai.editorSecretScannerStatus",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.reviewWorkspaceMcpSecrets",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.reviewMcpSecrets",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.reviewMcpSecretVault",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.restoreMcpSecretVault",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.mcpSecretScannerStatus",
           "when": "soterai.advancedCommands"
         }
       ]
