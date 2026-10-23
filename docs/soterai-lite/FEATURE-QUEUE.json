@@ -9,9 +9,9 @@
   "planVersion": 1,
   "clientDate": "2026-10-13",
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
-  "scope": "F01-F10/F12-F22 scoped DONE after current byte barriers; F11 optional absent NOT_TESTED/NOT_COVERED. F22a-h complete for finite scoped contracts. F23 active only after transition proof; F24-F32/V01-V05 pending. No final rating/human/independent claim.",
+  "scope": "F01-F10/F12-F23 scoped DONE after byte barriers; F11 optional absent NOT_TESTED/NOT_COVERED. F24 active only after transition byte proof; F25-F32/V01-V05 pending. No final rating/human/independent claim.",
   "implementationConcurrency": 1,
-  "activeFeature": "F23",
+  "activeFeature": "F24",
   "prerequisiteBlock": {
     "id": "P00",
     "result": "FAIL",
@@ -787,19 +787,25 @@
     {
       "id": "F23",
       "title": "Read-only Git history scanner.",
-      "status": "VERIFYING",
-      "result": "NOT-RUN",
+      "status": "DONE",
+      "result": "PASS_SCOPED",
       "requires": [
         "F22"
       ],
       "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
       "progressEvidence": "docs/soterai-lite/evidence/20261023-f23-history-62d09fb1/progress-07.json",
-      "acceptanceEvidence": "docs/soterai-lite/evidence/20261023-f23-history-62d09fb1/f23-acceptance-03.json"
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261023-f23-history-62d09fb1/f23-acceptance-03.json",
+      "sourceEvidenceCommit": "76e0bd5458fa2876d60ee0b370bd0bbc384bc1b0",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261023-f23-history-62d09fb1/f23-source-byte-verification-01.json",
+      "transitionByteVerification": "docs/soterai-lite/evidence/20261023-f23-history-62d09fb1/f23-transition-byte-verification-01.json",
+      "scope": "Bounded owner-reviewed reachable local Git history only. Strict machine flag; keyed metadata with independent history-v1 domain; no raw values, rewrite, remote read, startup history, vault authority or OS boundary. Caps/binary/unsupported histories remain PARTIAL or withheld. Current exact-package actual native and affected flows PASS; old failures retained; LOW independence. Actual vendor executables not rerun for this scanner card; final exact-object V01 routes remain pending.",
+      "sourceCommit": "76e0bd5458fa2876d60ee0b370bd0bbc384bc1b0",
+      "byteVerification": "docs/soterai-lite/evidence/20261023-f23-history-62d09fb1/f23-source-byte-verification-01.json"
     },
     {
       "id": "F24",
       "title": "Build/artifact/source-map scanning.",
-      "status": "PLANNED",
+      "status": "ACTIVE",
       "result": "NOT-RUN",
       "requires": [
         "F23"
