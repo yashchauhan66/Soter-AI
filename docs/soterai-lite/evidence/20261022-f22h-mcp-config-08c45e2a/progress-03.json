@@ -1,0 +1,76 @@
+{
+  "status": "F22H_ACTIVE_CORRECTED_PREFLIGHT_PASS_CURRENT_SERIAL03_STARTED",
+  "inputs": {
+    "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/source-inputs-02.json",
+    "bytes": 128899,
+    "sha256": "8fa734fb63e2fd62183c2ae42de6e637c3dc3568dcec408e1b2ce1ee4a9e6bae"
+  },
+  "inputCount": 662,
+  "preflight": {
+    "output": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/retry-preflight-after-01.txt",
+    "observedAt": "2026-10-22T18:20:13.4763095Z",
+    "exitCode": 0,
+    "arguments": [
+      "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/check-frozen-membership-03.cjs"
+    ],
+    "sha256": "342979FF4501A756A6DC370F93747D638D1145ED6A6225237A3C91583226AB9A",
+    "file": "node",
+    "log": {
+      "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/retry-preflight-after-01.txt",
+      "bytes": 107,
+      "sha256": "342979ff4501a756a6dc370f93747d638d1145ed6a6225237a3c91583226ab9a"
+    },
+    "receipt": {
+      "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/retry-preflight-after-01.txt.result.json",
+      "bytes": 456,
+      "sha256": "f6e10cd031f8746ac17621ac4b8c7db745088ba49d695e211b66ebd033b4ca02"
+    }
+  },
+  "correction": {
+    "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/retry-preflight-correction-01.json",
+    "bytes": 1682,
+    "sha256": "f09f9540e7bff0c7ad1400b74854e2e770dc14e60f6c4216cc919552e81543e5"
+  },
+  "failedPreflight": {
+    "raw": {
+      "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/serial-gates-run-02.txt",
+      "bytes": 16984,
+      "sha256": "1c68c5d2522d98a58e5a88e7e68bfb0c76acac92d6ec0099df29d4ff1c633bce"
+    },
+    "receipt": {
+      "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/serial-gates-run-02.txt.result.json",
+      "bytes": 759,
+      "sha256": "f2cb410890184b98433ca93edf7a831fb1c6c665f23570c7ee2206afef7ba3fc"
+    },
+    "innerExitCode": 1,
+    "testsLaunched": false,
+    "full02Launched": false,
+    "ownedRunnerAbsent": {
+      "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/durable-serial-02-observation-01.json",
+      "bytes": 268,
+      "sha256": "69d40ffde5b74c6c8ea65c992b665c19826101b44072f3d31b59c8cf84b3b7e8"
+    }
+  },
+  "currentRunner": {
+    "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/durable-serial-03.json",
+    "bytes": 782,
+    "sha256": "3d7b0bac3c8109c8c157cbd3b81ae9090a10d009424159c9aad1a73781e4e95d"
+  },
+  "previousProgress": {
+    "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/progress-02.json",
+    "bytes": 6809,
+    "sha256": "679985d1e26dccfd5fd016d5f666b5410bd1ca7477f9901a247ac7f75d97df4d"
+  },
+  "authoritativeHelpers": {
+    "checker": "check-frozen-membership-03.cjs",
+    "serialEntry": "run-serial-entry-03.ps1",
+    "serialRaw": "serial-gates-run-03.txt",
+    "currentFullRaw": "full-tests-02.txt",
+    "serialClosure": "confirm-owned-runner-exit-03.ps1 -Kind serial -> durable-serial-exit-03.json",
+    "nativeLauncher": "start-durable-native-03.ps1",
+    "nativeEntry": "run-native-gates-03.ps1",
+    "nativeClosure": "confirm-owned-runner-exit-03.ps1 -Kind native -> durable-native-exit-01.json",
+    "acceptance": "prepare-acceptance-03.cjs (unexecuted)"
+  },
+  "scope": "Expected/actual membership both compare source extensions only; all662byte checks still include2JSONfixtures, attributes and212unchanged rebuilt outputs. Original360inputs/419focused/compiler03/backend143PASS1SKIP/docs16 unchanged. Originalfull01FAIL3343PASS2FAIL4SKIP remains retained. Preflight02guard failed before targeted controls or full02 execution; fixed helper03 standalonePASS335sourcefiles/662total, current owned runner9112 started. No new product/test/pin/budget change or native launch. Infrastructure round2/one product correction round; no completion/ratings/human/independent claim."
+}

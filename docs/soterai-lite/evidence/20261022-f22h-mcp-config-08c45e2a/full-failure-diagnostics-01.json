@@ -1,0 +1,4139 @@
+{
+  "status": "PASS_READ_ONLY_DIAGNOSIS_NO_REPAIR_YET",
+  "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+  "fixtures": [
+    {
+      "original": {
+        "path": "packages/vscode-extension/src/__tests__/fixtures/codex-ide-26.51007.21434-manifest.json",
+        "bytes": 7808,
+        "sha256": "ce1e0d5cda96c1c60e0d9191ac46900cb3c3fb0d81a76d11740a97372b0e681d"
+      },
+      "committed": {
+        "path": "packages/vscode-extension/src/__tests__/fixtures/codex-ide-26.51007.21434-manifest.json",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 7510,
+        "sha256": "10044df52cde43b8e7a98fd6f9c8b159db2283b3bee3a1f12ed7caf44b8d498c"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true,
+      "observedSnapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/full-failure-before-01/codex-ide-26.51007.21434-manifest.json.observed.txt",
+        "bytes": 7808,
+        "sha256": "ce1e0d5cda96c1c60e0d9191ac46900cb3c3fb0d81a76d11740a97372b0e681d"
+      },
+      "committedSnapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/full-failure-before-01/codex-ide-26.51007.21434-manifest.json.committed.txt",
+        "bytes": 7510,
+        "sha256": "10044df52cde43b8e7a98fd6f9c8b159db2283b3bee3a1f12ed7caf44b8d498c"
+      }
+    },
+    {
+      "original": {
+        "path": "packages/vscode-extension/src/__tests__/fixtures/codex-ide-26.51007.21434-runtime-package.json",
+        "bytes": 226,
+        "sha256": "f2fd3028e915fc8f9e7b4ca20ef7a32898270f4c2585d98b3a8d5ba6a93bae93"
+      },
+      "committed": {
+        "path": "packages/vscode-extension/src/__tests__/fixtures/codex-ide-26.51007.21434-runtime-package.json",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 226,
+        "sha256": "f2fd3028e915fc8f9e7b4ca20ef7a32898270f4c2585d98b3a8d5ba6a93bae93"
+      },
+      "byteEqual": true,
+      "onlyLineEndingsDiffer": true,
+      "observedSnapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/full-failure-before-01/codex-ide-26.51007.21434-runtime-package.json.observed.txt",
+        "bytes": 226,
+        "sha256": "f2fd3028e915fc8f9e7b4ca20ef7a32898270f4c2585d98b3a8d5ba6a93bae93"
+      },
+      "committedSnapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/full-failure-before-01/codex-ide-26.51007.21434-runtime-package.json.committed.txt",
+        "bytes": 226,
+        "sha256": "f2fd3028e915fc8f9e7b4ca20ef7a32898270f4c2585d98b3a8d5ba6a93bae93"
+      }
+    }
+  ],
+  "guardCoreSource": [
+    {
+      "original": {
+        "path": "packages/guard-core/src/ApprovalToken.ts",
+        "bytes": 7460,
+        "sha256": "f477a4a0f31f5dccda064bdc3e6cfe7da8bc3d78695d71057eca99042c4ed10e"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/ApprovalToken.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 7254,
+        "sha256": "3b650d768266ed4e2e90ebf99cedab7020cb5e78891355184d724fd7400cc72d"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/BrokerScanner.ts",
+        "bytes": 8197,
+        "sha256": "55e5050ba0a9798cdef18e54d66dc7ac0a6a2f4ec5e9da2d57680319519a1342"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/BrokerScanner.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 8197,
+        "sha256": "55e5050ba0a9798cdef18e54d66dc7ac0a6a2f4ec5e9da2d57680319519a1342"
+      },
+      "byteEqual": true,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/Canary.ts",
+        "bytes": 3737,
+        "sha256": "fc3552b8d5c70bc1ff0f683814d644b175c664527d7d30420366b5e5cecc2f4c"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/Canary.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 3632,
+        "sha256": "67a83c1e3fcfb0ce8cf588455657294de6be1124567b442f9927cfac3deaafc6"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/CapabilityRegistry.ts",
+        "bytes": 37352,
+        "sha256": "bfa665050d6c84a6f58cec268fff9af38304a2a69b9bf044bac2983dc03d195a"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/CapabilityRegistry.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 36604,
+        "sha256": "4957f3f64b0c1373b4cde3a766531ba5e6c7845724eb9289b9f8681a7be29a43"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/CheckpointRollback.ts",
+        "bytes": 15197,
+        "sha256": "dbe9fb7327d3164bde7486f09620b34ac29cffd727289a7ada31109dc8a794f9"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/CheckpointRollback.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 14835,
+        "sha256": "4637a9978cfce4b31a0c86af65c54abc274d721f391a3ff5848c1a0bd3622714"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/ContextRedactor.ts",
+        "bytes": 2895,
+        "sha256": "438d6ae62d12d1259dbe0c52e1ef9cdbd064a0c3c88454c03a059ba2401ef304"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/ContextRedactor.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 2847,
+        "sha256": "318fba66c200f6a4df3264f94f1acaeb6f085d4aca09970982e6f9bc330d4664"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/ControlledTerminal.ts",
+        "bytes": 6060,
+        "sha256": "7cf813cc1b53ac6b5affc1272b1a0e8d386166a03f051cf8506913bb8ca3fa90"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/ControlledTerminal.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 5923,
+        "sha256": "0d862dbd7894fc4e53c66b62364082e9641927d8fdbf24f35a7974b8471ab8a4"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/CoverageMatrix.ts",
+        "bytes": 5471,
+        "sha256": "d85f5ddbf7d4dcb301a4bfaa0b1c920ba73db76a1d107efecff2306890e48b1b"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/CoverageMatrix.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 5339,
+        "sha256": "ad038a0de83850ffc8b3b470f5ac1bf5e8f790a68f479c364cceaec9d16689e8"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/DecisionEngine.ts",
+        "bytes": 11876,
+        "sha256": "e7134c03e60470d7845ba2d08e64935ef954f71bcb7a72f8187681875c86944b"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/DecisionEngine.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 11623,
+        "sha256": "223fc1c7614ccc6c53d74ed870407d671e9857b49ca6fefd27ce6ccf8c8bbe60"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/detectors/AIGeneratedCodeRiskDetector.ts",
+        "bytes": 4802,
+        "sha256": "094023452cde43ec846be4fcd69bf08a7fd68efc1e18d8a46d4044dbc0ad1438"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/detectors/AIGeneratedCodeRiskDetector.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 4748,
+        "sha256": "945503f658b73e5340e361fe708fe4c8828afd065980571ad7dbad9f301d3c55"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/detectors/EncodedSecretDetector.ts",
+        "bytes": 6707,
+        "sha256": "020d43b0cc184290dc5c4a0415cf20740b5c16a87c152afab9c5f6fc6ded8eaa"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/detectors/EncodedSecretDetector.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 6544,
+        "sha256": "20bbc8bed6931e80282d977924116bee07e93b975798852019dfb9a92087a790"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/detectors/EnvFileDetector.ts",
+        "bytes": 1794,
+        "sha256": "e46ae316fbf215abe143d5c666dd9a8ebaf301cecbb044fce5ca75a7b0082a40"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/detectors/EnvFileDetector.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 1743,
+        "sha256": "98994205026bcdc75b867baa2b1c09301b47cfb9e4446bca5740a6d9028e2e2e"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/detectors/FileContextRiskDetector.ts",
+        "bytes": 4413,
+        "sha256": "ead94fd4fbf5d156c2f70d85daaad1490950a33932a7d65416555b5decaeb448"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/detectors/FileContextRiskDetector.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 4342,
+        "sha256": "5ba9c069c3e15fc3ecdcaaa1804a62c395d41d9aad6379d51186d8174b8e3a5e"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/detectors/index.ts",
+        "bytes": 1385,
+        "sha256": "bf5e509ee535ef64df546be6d473c412f886b570521e68c0004bd7533a5c9d67"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/detectors/index.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 1371,
+        "sha256": "4ce736ba14c17e1ca5db41dea9a0e43126fd9d712b328e0fa389467df1d2ea5b"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/detectors/IndiaPIIDetector.ts",
+        "bytes": 3146,
+        "sha256": "96ddcb4ffdab86b47bee629025d19f84ca37cb58eaa00668c61877ee118922ee"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/detectors/IndiaPIIDetector.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 3053,
+        "sha256": "8d77a543ea03fe09c5c2fce8dd6c1cbe05422752747ab78c616cf1b0ef74618f"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/detectors/JailbreakLiteDetector.ts",
+        "bytes": 10815,
+        "sha256": "e169531253b26bb292826c440a48b93c3c3c0c0cebb955905762c6dab0abbab7"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/detectors/JailbreakLiteDetector.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 10694,
+        "sha256": "7f493ccab7275dbc76a6b8b2847678b205197a42837c62d58e90eb22eadc3001"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/detectors/MCPConfigRiskDetector.ts",
+        "bytes": 2747,
+        "sha256": "fb55f00f76288558450f4608cccf3c4e9e71a36b76bf35185ea498b017112938"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/detectors/MCPConfigRiskDetector.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 2709,
+        "sha256": "803391a27fe325efae00079b02b084ec33d78604d6dc642d13a11ae10c6a1deb"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/detectors/OutputExfiltrationDetector.ts",
+        "bytes": 3968,
+        "sha256": "693e41ba3e0b36730abb2b5a6bda9f02368ea0a90306d8bddb3cb887ceba8692"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/detectors/OutputExfiltrationDetector.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 3892,
+        "sha256": "9d62e40bfd154c2f14e6f6673fcdfb16bb97da7b3bfb24da51d9c95219e2356f"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/detectors/PIIDetector.ts",
+        "bytes": 3027,
+        "sha256": "9a35491ac4fbadee0cd1cd4c4d88e4e8d367b13c8697d6e448636b5441246f1b"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/detectors/PIIDetector.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 2927,
+        "sha256": "ea91a3672939903d7b47cca1fa6b307423afad6de052f1f119402a658f5d3e40"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/detectors/PromptInjectionLiteDetector.ts",
+        "bytes": 17096,
+        "sha256": "ae097d19dbb832478a0a367aba71c002df9191424ed0f16715d661530af5a1e3"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/detectors/PromptInjectionLiteDetector.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 16957,
+        "sha256": "374f35841c28c3bbc0c46d73a229190ae9ec30367f6e78e9cce73e5c80ee1928"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/detectors/RepoInstructionPoisoningDetector.ts",
+        "bytes": 4193,
+        "sha256": "3cc2e6fd14727f252a8a95d860ad425952b0016848bfdb2eec875acbc5ee7a5e"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/detectors/RepoInstructionPoisoningDetector.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 4138,
+        "sha256": "3ac1f2fc9b73964de57cddcaf8426e7437157d23179dd24579c943f132c99a64"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/detectors/SecretDetector.ts",
+        "bytes": 32428,
+        "sha256": "8dfdd6f4931660c638be246f9e25e239c38908a9f4136c3d45960a3d8da9078b"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/detectors/SecretDetector.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 32428,
+        "sha256": "8dfdd6f4931660c638be246f9e25e239c38908a9f4136c3d45960a3d8da9078b"
+      },
+      "byteEqual": true,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/detectors/TerminalCommandRiskDetector.ts",
+        "bytes": 6836,
+        "sha256": "ddd66efc537ea992d0025f7dc740e7f09e9079533afe5f660daaf47194791d35"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/detectors/TerminalCommandRiskDetector.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 6756,
+        "sha256": "768d24a46d72464c66eafd6c6fd28f1c6491636c449e7abcd0666f664f6bac94"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/detectors/utils.ts",
+        "bytes": 3666,
+        "sha256": "b0a660d0bb8e38b448caadbd1b44a52f542c4669368870211e86472871d7a2c8"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/detectors/utils.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 3562,
+        "sha256": "ee03ab86dffcaa24c140d74d1721ad1a17abc1fbe3f6c2dbed339a8b1c83748e"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/EvidenceMinimizer.ts",
+        "bytes": 1507,
+        "sha256": "939796dfd089374959aa7082210feee1a690b94071f6767138e7c020e5f8770a"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/EvidenceMinimizer.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 1468,
+        "sha256": "9293ff16225e6c0474d55c2fd61c0970fff30d2ae39544b2fb28488392094364"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/ExtensionIsolationPolicy.ts",
+        "bytes": 5710,
+        "sha256": "544387d5e13a285a918b1d338e8ba5244a08e024131237ab24b643fee16852cd"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/ExtensionIsolationPolicy.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 5589,
+        "sha256": "8fb75fa5a6f02880cea6724dc7e3b2c1d1428e881af961c455c60d2593b0c32f"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/ExtensionRiskScanner.ts",
+        "bytes": 8185,
+        "sha256": "693094cb8ce88a0784a5bf816d00be15093dfa0a287cf1d6d1e17fd681f6b3b5"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/ExtensionRiskScanner.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 8185,
+        "sha256": "693094cb8ce88a0784a5bf816d00be15093dfa0a287cf1d6d1e17fd681f6b3b5"
+      },
+      "byteEqual": true,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/FileOperationFirewall.ts",
+        "bytes": 6724,
+        "sha256": "ea98d9f30eb6f6ee542fd9d8ce9856721bfc4fba70bd4e53e25df2228cc6300e"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/FileOperationFirewall.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 6557,
+        "sha256": "0583a407b61d3aa047e701db15b7676e2bcf92f415bd39db4ccd55fc506945d4"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/GovernancePolicy.ts",
+        "bytes": 4028,
+        "sha256": "507ad667be470fe31b939f6017cfcaf0b89e6803aa12233fa7851cf5804c3f5f"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/GovernancePolicy.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 3943,
+        "sha256": "d27ab256086312d129862754cee5ed88445f708db7729823dba001fb8c02f698"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/HashCache.ts",
+        "bytes": 6702,
+        "sha256": "1dcb8d57fdee9232bfc7f56a0270fc52891bf1d0c2a48a0a8639ff281ad262fa"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/HashCache.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 6534,
+        "sha256": "47b6777881471069adb3f946e2577bd83cf7e040a36ecaefea961c44e4dfe9da"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/index.ts",
+        "bytes": 1323,
+        "sha256": "06487c1a975151277e2b61802b832d6d8b4141fe779bb77a456b1d182d9e7843"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/index.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 1323,
+        "sha256": "06487c1a975151277e2b61802b832d6d8b4141fe779bb77a456b1d182d9e7843"
+      },
+      "byteEqual": true,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/Ledger.ts",
+        "bytes": 11087,
+        "sha256": "2962dfe8ac04867ca1acb279b13a56c9853f0b08763aa27cf36a5e7084524a7c"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/Ledger.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 10825,
+        "sha256": "f107c5d80d9ad4563cf34f9bfab868067086ecebddf5b7e9f8835cafe1a910db"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/LitePolicyCatalog.ts",
+        "bytes": 10256,
+        "sha256": "fc34ba81f5218afdb144e9c88ad4ece36f6c8af00fd9d9eb4d80fcdb2ebe04fb"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/LitePolicyCatalog.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 10215,
+        "sha256": "2b596a8117de698377b3d6503766630406adeee5910309a5a22539c21f18bd1e"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/MCPCredentialBoundary.ts",
+        "bytes": 4803,
+        "sha256": "a0362012678f6a42bc71299713a45ba9cc6bb244de4457ba08b37e4132325d65"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/MCPCredentialBoundary.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 4803,
+        "sha256": "a0362012678f6a42bc71299713a45ba9cc6bb244de4457ba08b37e4132325d65"
+      },
+      "byteEqual": true,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/MCPGateway.ts",
+        "bytes": 5895,
+        "sha256": "6dfaa74eedbeff86556e4a052cc3ab6b2e8ed9d7683e492fc7648918c4980bfd"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/MCPGateway.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 5763,
+        "sha256": "76cd88966999982a86ffca9bea7214b92362c58ba02a110683f2ed1b610e9ae0"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/MCPPolicyAnalyzer.ts",
+        "bytes": 11910,
+        "sha256": "442815e1fb475ab55e9b9fb67c80db19e4ffbbb0502128eba5c1f3387327ea3e"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/MCPPolicyAnalyzer.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 11628,
+        "sha256": "ffe4fbac340f810ff907b2ecc9b4ded151eb1ffda085fd4a5ce63b8c8d470544"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/MemorySession.ts",
+        "bytes": 7372,
+        "sha256": "76c2b8525b3ed312b0539a95ffefa624a8c1be7727e542cae91bd02e7f946870"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/MemorySession.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 7372,
+        "sha256": "76c2b8525b3ed312b0539a95ffefa624a8c1be7727e542cae91bd02e7f946870"
+      },
+      "byteEqual": true,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/NetworkEgressPolicy.ts",
+        "bytes": 8104,
+        "sha256": "187f617fe15cd6a67f54b874329ba95cb64420d81ef23eb8bd471b0dc6e168ff"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/NetworkEgressPolicy.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 7932,
+        "sha256": "79e19aaf20d1c888c2adfc87cf46b11d3f21021a5922695654e7470d93fc5fd6"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/OutputLeakScanner.ts",
+        "bytes": 4255,
+        "sha256": "d58aadfdaf51716061d12cfe4bad2f1c241440766777be61dc9532a52e59824c"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/OutputLeakScanner.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 4255,
+        "sha256": "d58aadfdaf51716061d12cfe4bad2f1c241440766777be61dc9532a52e59824c"
+      },
+      "byteEqual": true,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/PolicyEvaluator.ts",
+        "bytes": 4084,
+        "sha256": "803ba2f5da3093533fe0f81921dbfadb3728929c1f8bce0ccc05fa52d6d624c3"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/PolicyEvaluator.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 3982,
+        "sha256": "64ab2196fc97954e019de6553e9a03cc9b71a028e5962b369c55d08ef78f25fe"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/ProcessSandboxPolicy.ts",
+        "bytes": 7564,
+        "sha256": "3b922649175a037702aaab67dea9f72feaf05eac3f6966e64ce0cc37df8f275f"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/ProcessSandboxPolicy.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 7419,
+        "sha256": "b7c2e148c2d5d2c9287b3da6e25fb1295e0dd6e40d1548293f23082acd780365"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/ProjectPolicy.ts",
+        "bytes": 9317,
+        "sha256": "00bc7ed55f2c0eeb1ecb9d72c0d890d5c45c080bbe68ddd224beae1d65fb0290"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/ProjectPolicy.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 9079,
+        "sha256": "9fc46fd4dd423f10edf8558b9f9b088109a63f55dafbf8feb5ad305a139903d3"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/Redactor.ts",
+        "bytes": 16200,
+        "sha256": "b3c854e5e7cfa215a38e19ec372f99090bde41bb9d9df392444486af9dc92a19"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/Redactor.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 15921,
+        "sha256": "874fc41d84dc98e2855f3e10e7e41a84c62883281e323fac151320b33a90a80d"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/RuntimeDiscovery.ts",
+        "bytes": 6632,
+        "sha256": "39819e137c06657d545b766317938611a96be97dfa37e7ca55a55b8499bf4131"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/RuntimeDiscovery.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 6523,
+        "sha256": "06a40cba7f0ef3a54ee4b1e5c1966d95f9c4f7fd8da92585bedd4aa76b36645d"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/RuntimePolicyEngine.ts",
+        "bytes": 11799,
+        "sha256": "57d6679fd18bca9ffa6c95936f285ab2fa395614363821a10ee145b792c9f8ec"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/RuntimePolicyEngine.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 11521,
+        "sha256": "0406fc4361511efe0144ddeeef3c2a8ad46a365200989f31786f6d8645967837"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/SafeContextBuilder.ts",
+        "bytes": 12363,
+        "sha256": "f3b708ab938a2c960c1669d9fd703650bbeaa842c0805bd7ffdd6e6702c2c169"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/SafeContextBuilder.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 12067,
+        "sha256": "449a8292a13f2d9af5470cbe9278d01a083eea3d534cdd50ad25c77ed4b971e8"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/SafeMode.ts",
+        "bytes": 10586,
+        "sha256": "1f5d05a6e07a3078d475cde8e83dc99771737b383b3b467718be52f85eee5da3"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/SafeMode.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 10586,
+        "sha256": "1f5d05a6e07a3078d475cde8e83dc99771737b383b3b467718be52f85eee5da3"
+      },
+      "byteEqual": true,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/sensitiveFiles.ts",
+        "bytes": 8267,
+        "sha256": "e58fe3900c94f65a8396223852cc88e232edb846f774378f2ef0316cfdac1a4f"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/sensitiveFiles.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 8098,
+        "sha256": "123cfb784a258413acf68963dc1d6b1ca46f1f9ef64ff10a35abab20bbf16c9a"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/TaintEngine.ts",
+        "bytes": 3803,
+        "sha256": "4f2f83fab99b208215b30315f56f81a2d326051ac8ff1a82fee1ebd331d3e7e9"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/TaintEngine.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 3718,
+        "sha256": "b9e79dbd05a0ececd1aa27f8aaa4962fda1608a31586bae2e137c95aed9795b9"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/types.ts",
+        "bytes": 5838,
+        "sha256": "2fa25db278a68b7f3054acca3e3fa4e75f5457001379471046676eb3d4c21311"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/types.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 5647,
+        "sha256": "58462d437b1a12da6da013710bd6e1a1f917e550663c46baeec7b60cd23dcb00"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/Vault.ts",
+        "bytes": 10347,
+        "sha256": "6097f15c9ff7cf5dfa169ced77d8d1810cb022386da3a6bce129ea96e8afc0e9"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/Vault.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 10093,
+        "sha256": "1f8ac44b0380c6514fd0814bea1e0b3af4a95bd4081dbb8bf8e18a9b63ee1bee"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/VaultCrypto.ts",
+        "bytes": 3268,
+        "sha256": "98f89de3026da5ed7f02fbda7962f1af1031e0c66878ccacae7dd4ecb3a39d53"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/VaultCrypto.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 3268,
+        "sha256": "98f89de3026da5ed7f02fbda7962f1af1031e0c66878ccacae7dd4ecb3a39d53"
+      },
+      "byteEqual": true,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/__tests__/approval.test.ts",
+        "bytes": 4266,
+        "sha256": "6dcc4729ba317bc5fca60a556c7fb9429f156c44912fbf7cfde968cf81568e74"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/__tests__/approval.test.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 4266,
+        "sha256": "6dcc4729ba317bc5fca60a556c7fb9429f156c44912fbf7cfde968cf81568e74"
+      },
+      "byteEqual": true,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/__tests__/attack-harness.test.ts",
+        "bytes": 11109,
+        "sha256": "80b45ee032ce060d2509fb0f5ccfee3c6691231961c4963b8e6952d027a788f8"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/__tests__/attack-harness.test.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 10867,
+        "sha256": "4145066f71111762f20d597765144da80134c1b1b36ec566f8457845732b4237"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/__tests__/brokerscanner.test.ts",
+        "bytes": 5123,
+        "sha256": "45208b2a5d5aaf8c1ccbc3671ae79ad40873079dcf96ba11a26d23a2214c93ef"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/__tests__/brokerscanner.test.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 5123,
+        "sha256": "45208b2a5d5aaf8c1ccbc3671ae79ad40873079dcf96ba11a26d23a2214c93ef"
+      },
+      "byteEqual": true,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/__tests__/canary.test.ts",
+        "bytes": 1964,
+        "sha256": "6c28d59a1be6cff90913d734961f37c21337447ec736574fe72d143d9c2e385c"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/__tests__/canary.test.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 1964,
+        "sha256": "6c28d59a1be6cff90913d734961f37c21337447ec736574fe72d143d9c2e385c"
+      },
+      "byteEqual": true,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/__tests__/capability-registry.test.ts",
+        "bytes": 4595,
+        "sha256": "fb5c9cdfbb6b02cece27a73c84bf903818f651f3e232565744a1b37b7d3de4f8"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/__tests__/capability-registry.test.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 4530,
+        "sha256": "af9209618793f62ce162a6e4d85793bcf124fd3875857d52a23afbf3b0b9dfa6"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/__tests__/checkpoint-claim.test.ts",
+        "bytes": 7081,
+        "sha256": "3f2ec20d6d9d4647f5a9c8fdaeec837a0ae668c98981ecd8ade7115c144d3cd2"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/__tests__/checkpoint-claim.test.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 7081,
+        "sha256": "3f2ec20d6d9d4647f5a9c8fdaeec837a0ae668c98981ecd8ade7115c144d3cd2"
+      },
+      "byteEqual": true,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/__tests__/context-redactor.test.ts",
+        "bytes": 2405,
+        "sha256": "8f84c7e40af455143832a3dba26644ed38cd9f54e4ccf7077df1f5ef1c948f2b"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/__tests__/context-redactor.test.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 2359,
+        "sha256": "7067ad8389469c731023863108acab130f38063625da2617eb4a0b2af6231264"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/__tests__/controlled-terminal.test.ts",
+        "bytes": 3903,
+        "sha256": "be4f442d3109cd19689081aed78af85aa5ba073808dfd858452e92b4cd2ecefc"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/__tests__/controlled-terminal.test.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 3816,
+        "sha256": "561bfbea554bf8a0bbbc2138bb3fa818bc766ac57f1d7fdc6fa289ea0f97d6ba"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/__tests__/coverage-mcp-boundary.test.ts",
+        "bytes": 4509,
+        "sha256": "8a35735ab216d25f8cda8416308215bf2181a6bd8f9d1a08c72b931588c92419"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/__tests__/coverage-mcp-boundary.test.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 4413,
+        "sha256": "ba7849b3b830c996090b33a490cd6cd8ce941d471ad8e77b3ac35556ac64442b"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/__tests__/decision-boundary.test.ts",
+        "bytes": 3163,
+        "sha256": "77da2be49fdc8bc6d6e7ff8de6ffa517a550df4bd1a979508218083774ef7325"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/__tests__/decision-boundary.test.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 3109,
+        "sha256": "353a68346503b1c8d9f7725650146d38e35ea8e271782b70a1c576a533621bc8"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/__tests__/decision.test.ts",
+        "bytes": 3057,
+        "sha256": "816d2596e39170c8efcc5dd8a7c2ed6245a20806673b6de1159018bdb727d9ea"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/__tests__/decision.test.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 2994,
+        "sha256": "4103ccd50883ce2d442c828031cda1530af4f3d8c4124dbc138f82f41f4d5557"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/__tests__/detectors.test.ts",
+        "bytes": 4753,
+        "sha256": "6cf56eca4635a0efb7f4df1ea3acb3206fd983b1ed49e41dfede275fff3f1fe1"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/__tests__/detectors.test.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 4666,
+        "sha256": "a427ad1867353419e183872dcafe75f5a2926b1e4a7a7d4f7c3befb3db4549a4"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/__tests__/extensionrisk.test.ts",
+        "bytes": 2817,
+        "sha256": "502a49d4f10056a355f91a2668707fd8bcb6d899fc002e5afc3ffc756dd4fc6f"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/__tests__/extensionrisk.test.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 2817,
+        "sha256": "502a49d4f10056a355f91a2668707fd8bcb6d899fc002e5afc3ffc756dd4fc6f"
+      },
+      "byteEqual": true,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/__tests__/jailbreak.test.ts",
+        "bytes": 21649,
+        "sha256": "74365100a71bcde880779b13b5d9cd0e4eaac5f1acb1bfb22fd494f5db19949b"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/__tests__/jailbreak.test.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 21222,
+        "sha256": "d6d6ead84662f8c568324b0beaf3881317995b67537a7a81844cddca0ccd3417"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/__tests__/ledger.test.ts",
+        "bytes": 9106,
+        "sha256": "c304b69b8c38af9afbc01e2dd9567f201fd8f7351db87809d2e973435cb8423b"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/__tests__/ledger.test.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 8904,
+        "sha256": "4aa5aaaec986bddf0e45d876f7dbb7a23d98d3528338c1f959f45643d802c218"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/__tests__/live-scan-parity.test.ts",
+        "bytes": 9780,
+        "sha256": "9a757dcb94646719662cbeb15d9149a326936ad2bcb82f83239848f70404d501"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/__tests__/live-scan-parity.test.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 9557,
+        "sha256": "4854d148379f7f00b1f8d0b02a700dc30ce3c08760747a39e6d4c32f5131d20a"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/__tests__/mcp.test.ts",
+        "bytes": 4842,
+        "sha256": "8b4152194c6cf988cead56c3245cbeb259f80d7eb79a754d2715f7730c2b7972"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/__tests__/mcp.test.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 4737,
+        "sha256": "829996fc8a18da231fe941f5a57006f9196115cfe94dab716b018482e33c02c0"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/__tests__/memory.test.ts",
+        "bytes": 3508,
+        "sha256": "1f65bce3ddb2ac6334819b35839e349a86ef5cec2502f2958247fe6f267a0423"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/__tests__/memory.test.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 3508,
+        "sha256": "1f65bce3ddb2ac6334819b35839e349a86ef5cec2502f2958247fe6f267a0423"
+      },
+      "byteEqual": true,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/__tests__/outputleak.test.ts",
+        "bytes": 3062,
+        "sha256": "2dddc588518391acb203921983cc3030b4f2bd0378938d96ddf168259e7e2bd7"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/__tests__/outputleak.test.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 3000,
+        "sha256": "d0a4fd2261fbe4f509b762d9a55cf41d12a03e00c561c61284b7acee21f2592a"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/__tests__/phase-controls.test.ts",
+        "bytes": 9035,
+        "sha256": "8464839c852cbee50ce368151c42dfc70b088be11e2f14d265d649a8d27d44a9"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/__tests__/phase-controls.test.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 8822,
+        "sha256": "5df2e01c844f03b6268c3522e5f9b640ba84847e42515000778ffea42aa8c754"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/__tests__/phase5-validity.test.ts",
+        "bytes": 3339,
+        "sha256": "efec50120782c95fa285f11e1a2e7d64ee715e07e7da173e53b9c54991acfb45"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/__tests__/phase5-validity.test.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 3293,
+        "sha256": "ee1d85479bed56cb1c1c4f28c68613700889d43b934293479cbc34db93f31e6e"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/__tests__/policy.test.ts",
+        "bytes": 2130,
+        "sha256": "ebe0b056d29ff9c9819bcd1cd10db8995468790cc84b975cc95503f94b08d3f6"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/__tests__/policy.test.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 2130,
+        "sha256": "ebe0b056d29ff9c9819bcd1cd10db8995468790cc84b975cc95503f94b08d3f6"
+      },
+      "byteEqual": true,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/__tests__/projectpolicy.test.ts",
+        "bytes": 4282,
+        "sha256": "a59dda82f83ab3943a832113f41aaba347a269020ef7f20cf1af7762d40eb537"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/__tests__/projectpolicy.test.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 4282,
+        "sha256": "a59dda82f83ab3943a832113f41aaba347a269020ef7f20cf1af7762d40eb537"
+      },
+      "byteEqual": true,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/__tests__/prompt-injection.test.ts",
+        "bytes": 52080,
+        "sha256": "951fdf2a33a7fad2ddfdd5085f5756953df05d60e24889c42b5b68d39c56ae63"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/__tests__/prompt-injection.test.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 51067,
+        "sha256": "af38deb44e813da55a0f8c927fb405f85f39730c7fad7db43dde78ad576f0db1"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/__tests__/redaction.test.ts",
+        "bytes": 8472,
+        "sha256": "37006768c8d012edd6cc565a5ee7b0507b084083b28fe5caf2ef758548a7cf9e"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/__tests__/redaction.test.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 8301,
+        "sha256": "4839a50762e5c34b8560d19aef1ea4df36aa66e42978e9e4db6ae3b07f98f1ed"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/__tests__/runtime-policy.test.ts",
+        "bytes": 4469,
+        "sha256": "fd4d1e303d7841f1eab2143fde1d5582b73709316001cb9fa02435adc27b73c8"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/__tests__/runtime-policy.test.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 4352,
+        "sha256": "e9886d1e2c21c36024dbda91d0736e7b2406522834bdbac9224a6192b163852d"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/__tests__/safecontext.test.ts",
+        "bytes": 7952,
+        "sha256": "06cdd1ab80988afea94ef9f357f15b8e303af2747dca7af120b405731c7677a1"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/__tests__/safecontext.test.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 7797,
+        "sha256": "a3c8674806c1904ea0170df6be1e24ae26066043124e0f92d41dabffefc642c0"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/__tests__/safemode.test.ts",
+        "bytes": 4837,
+        "sha256": "b5d60806cd4ff3ad634b53d633e22a63448801486aa7a0377843ac375fe82045"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/__tests__/safemode.test.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 4837,
+        "sha256": "b5d60806cd4ff3ad634b53d633e22a63448801486aa7a0377843ac375fe82045"
+      },
+      "byteEqual": true,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/__tests__/secret-class-coverage.test.ts",
+        "bytes": 5239,
+        "sha256": "11ade5a79c8a17e6f1dbbb48275cf401af3a810fc30c600c0e23a8c769ddff63"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/__tests__/secret-class-coverage.test.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 5134,
+        "sha256": "763c208a578bbf4d64e48d6daa270fe4916457d75640c94348209afc66749426"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/__tests__/secret-expansion.test.ts",
+        "bytes": 5476,
+        "sha256": "5f4eb3de418b80d2cb36222fae3213ecdd177afa99bc30db1c3c0c4555bc933c"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/__tests__/secret-expansion.test.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 5350,
+        "sha256": "c0d7666d9df8ffc81045da4141cb252367badb76a5e8f60d186205cee1dbcbde"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/__tests__/sensitive-files.test.ts",
+        "bytes": 3586,
+        "sha256": "c767de7f4d4210608479670ed7c6b42e90e6f68b63814b682930b54b15b7d6d9"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/__tests__/sensitive-files.test.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 3498,
+        "sha256": "df488d3f4862acae17334d6d25bcd9a058ddf32f6fae0ad90ace9e489a31dc51"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/__tests__/vault.test.ts",
+        "bytes": 6179,
+        "sha256": "db4f001c8fd9fbd9ab65df608a3c905e55b47bfdd974dda5b5bd9ef9a13e0ff7"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/__tests__/vault.test.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 6041,
+        "sha256": "a7ab4a80c7754b75937c8e7e2d777b583ee57aa4328a38e023ed2aedfdff8180"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/src/__tests__/w8_benchmark.ts",
+        "bytes": 5511,
+        "sha256": "33ae69f6b47fc8656f4987dc5796eb7546819162f7779bcefe88d40f642feb13"
+      },
+      "committed": {
+        "path": "packages/guard-core/src/__tests__/w8_benchmark.ts",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 5423,
+        "sha256": "04bc5ce51d55ee61dd0478a5989a2094db5527bde0112ff5a5b5f2359f420259"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/tsconfig.json",
+        "bytes": 829,
+        "sha256": "723402d965470ef9ae20132ba6537189414c2eff91b661a4d8ebfd4bade47af0"
+      },
+      "committed": {
+        "path": "packages/guard-core/tsconfig.json",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 797,
+        "sha256": "4f2f857c0c89e8473f28b24fef559c832b48a35a95fa454e3c13a300a81e6a27"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/package.json",
+        "bytes": 960,
+        "sha256": "a8da119fbfafa81fe4c64a7f93502e0c582c16ebe989a5db96d75bdc52b07e7d"
+      },
+      "committed": {
+        "path": "packages/guard-core/package.json",
+        "revision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+        "bytes": 925,
+        "sha256": "4a01cd851205dc594511b6e54d2cb440cb33be498f36a8e6bbb8efb9972b6e39"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    }
+  ],
+  "guardCoreDist": [
+    {
+      "original": {
+        "path": "packages/guard-core/dist/ApprovalToken.d.ts",
+        "bytes": 3218,
+        "sha256": "57cb19025ad5fc2d6b2b1a7d235480b8e3b491ca63b94e5d222424c8fb55768f"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/ApprovalToken.d.ts",
+        "bytes": 3218,
+        "sha256": "57cb19025ad5fc2d6b2b1a7d235480b8e3b491ca63b94e5d222424c8fb55768f"
+      },
+      "mtimeMs": 1791903658436.572
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/ApprovalToken.d.ts.map",
+        "bytes": 1892,
+        "sha256": "adaedf80f5c1b237d7abcdaba27c1000982bec1476d99ac1b4eef08b811f5522"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/ApprovalToken.d.ts.map",
+        "bytes": 1892,
+        "sha256": "adaedf80f5c1b237d7abcdaba27c1000982bec1476d99ac1b4eef08b811f5522"
+      },
+      "mtimeMs": 1791903658435.5696
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/ApprovalToken.js",
+        "bytes": 6779,
+        "sha256": "b041cd14995f6b5158553107531576852ba760ba3b5f8f60525c399c1d20fead"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/ApprovalToken.js",
+        "bytes": 6779,
+        "sha256": "b041cd14995f6b5158553107531576852ba760ba3b5f8f60525c399c1d20fead"
+      },
+      "mtimeMs": 1791903658416.5486
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/ApprovalToken.js.map",
+        "bytes": 5003,
+        "sha256": "c1bce3449625978dcd02790737ecee81d9a2be10bdf633b716354758c79f760d"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/ApprovalToken.js.map",
+        "bytes": 5003,
+        "sha256": "c1bce3449625978dcd02790737ecee81d9a2be10bdf633b716354758c79f760d"
+      },
+      "mtimeMs": 1791903658414.5352
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/BrokerScanner.d.ts",
+        "bytes": 2873,
+        "sha256": "d491052215cf90fba390ac7be9d591efc3d96ed0fd8fdab1939b2e89ff3de992"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/BrokerScanner.d.ts",
+        "bytes": 2873,
+        "sha256": "d491052215cf90fba390ac7be9d591efc3d96ed0fd8fdab1939b2e89ff3de992"
+      },
+      "mtimeMs": 1791903659009.2646
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/BrokerScanner.d.ts.map",
+        "bytes": 1888,
+        "sha256": "ad5b1b1eda6d8f11d26e24f16eb80983a6be4a0deb0839e069d770dea6697890"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/BrokerScanner.d.ts.map",
+        "bytes": 1888,
+        "sha256": "ad5b1b1eda6d8f11d26e24f16eb80983a6be4a0deb0839e069d770dea6697890"
+      },
+      "mtimeMs": 1791903659008.2637
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/BrokerScanner.js",
+        "bytes": 6274,
+        "sha256": "6b4dfc94d52e657bb586e2e632d7c1facce024b9d1b8fb3ddefcbd072ab8cd38"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/BrokerScanner.js",
+        "bytes": 6274,
+        "sha256": "6b4dfc94d52e657bb586e2e632d7c1facce024b9d1b8fb3ddefcbd072ab8cd38"
+      },
+      "mtimeMs": 1791903659000.7156
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/BrokerScanner.js.map",
+        "bytes": 4685,
+        "sha256": "2bd8e957c763b0cf276d75c89e979ac9a1c90222b6838627452de52f959a64d0"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/BrokerScanner.js.map",
+        "bytes": 4685,
+        "sha256": "2bd8e957c763b0cf276d75c89e979ac9a1c90222b6838627452de52f959a64d0"
+      },
+      "mtimeMs": 1791903658999.191
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/Canary.d.ts",
+        "bytes": 2024,
+        "sha256": "558f746bddbcf104da7d9ec4c96ad6f24e9af18ccf9381d6458eeb750a1f31a1"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/Canary.d.ts",
+        "bytes": 2024,
+        "sha256": "558f746bddbcf104da7d9ec4c96ad6f24e9af18ccf9381d6458eeb750a1f31a1"
+      },
+      "mtimeMs": 1791903658826.6504
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/Canary.d.ts.map",
+        "bytes": 1031,
+        "sha256": "adfaade3e04c21cee10adf9d3e264701f51c070ac3a79a9ecd87697ad2acbdb9"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/Canary.d.ts.map",
+        "bytes": 1031,
+        "sha256": "adfaade3e04c21cee10adf9d3e264701f51c070ac3a79a9ecd87697ad2acbdb9"
+      },
+      "mtimeMs": 1791903658825.651
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/Canary.js",
+        "bytes": 4691,
+        "sha256": "b5131fd65e8affe0abb69a273d97a9068b3229b97861d4ecd08e0be5489fc57e"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/Canary.js",
+        "bytes": 4691,
+        "sha256": "b5131fd65e8affe0abb69a273d97a9068b3229b97861d4ecd08e0be5489fc57e"
+      },
+      "mtimeMs": 1791903658821.1233
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/Canary.js.map",
+        "bytes": 2490,
+        "sha256": "f6c63a6c065492ec57cb06260064fe2a020810a09db4c60030abe62f77db4b8f"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/Canary.js.map",
+        "bytes": 2490,
+        "sha256": "f6c63a6c065492ec57cb06260064fe2a020810a09db4c60030abe62f77db4b8f"
+      },
+      "mtimeMs": 1791903658820.1243
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/CapabilityRegistry.d.ts",
+        "bytes": 3424,
+        "sha256": "cb5884017296057f1f5772527017268030383f69748140f3c79b91cc67b4de7c"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/CapabilityRegistry.d.ts",
+        "bytes": 3424,
+        "sha256": "cb5884017296057f1f5772527017268030383f69748140f3c79b91cc67b4de7c"
+      },
+      "mtimeMs": 1791903659040.5652
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/CapabilityRegistry.d.ts.map",
+        "bytes": 1648,
+        "sha256": "919d1891900931a257cd9636cf25a2321acc4b27576593f8d7654ecffeb1ca24"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/CapabilityRegistry.d.ts.map",
+        "bytes": 1648,
+        "sha256": "919d1891900931a257cd9636cf25a2321acc4b27576593f8d7654ecffeb1ca24"
+      },
+      "mtimeMs": 1791903659039.569
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/CapabilityRegistry.js",
+        "bytes": 34683,
+        "sha256": "e8f00efe304242d57cf28c4bce9a5e4e8ce81178d13abad64fd18e528452d44a"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/CapabilityRegistry.js",
+        "bytes": 34683,
+        "sha256": "e8f00efe304242d57cf28c4bce9a5e4e8ce81178d13abad64fd18e528452d44a"
+      },
+      "mtimeMs": 1791903659034.0188
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/CapabilityRegistry.js.map",
+        "bytes": 13470,
+        "sha256": "008954f261236a27d39767e38289aa34efd6803c967aec0f3b3890a78f8d0069"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/CapabilityRegistry.js.map",
+        "bytes": 13470,
+        "sha256": "008954f261236a27d39767e38289aa34efd6803c967aec0f3b3890a78f8d0069"
+      },
+      "mtimeMs": 1791903659031.9607
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/CheckpointRollback.d.ts",
+        "bytes": 5967,
+        "sha256": "4dda12ca33b9a7d68f4ec0f18a1d34bd5186a1aa6d78538425ac01ef6178862e"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/CheckpointRollback.d.ts",
+        "bytes": 5967,
+        "sha256": "4dda12ca33b9a7d68f4ec0f18a1d34bd5186a1aa6d78538425ac01ef6178862e"
+      },
+      "mtimeMs": 1791903659091.2644
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/CheckpointRollback.d.ts.map",
+        "bytes": 3985,
+        "sha256": "494368fb27998e11b52396dc24f1b87306ae4d38b4096f5b2bf6bd764459f17f"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/CheckpointRollback.d.ts.map",
+        "bytes": 3985,
+        "sha256": "494368fb27998e11b52396dc24f1b87306ae4d38b4096f5b2bf6bd764459f17f"
+      },
+      "mtimeMs": 1791903659090.2637
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/CheckpointRollback.js",
+        "bytes": 10691,
+        "sha256": "c8e81273794a1710a3e9890d7517c8d60d874baef6f521005c9830ce30044ae6"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/CheckpointRollback.js",
+        "bytes": 10691,
+        "sha256": "c8e81273794a1710a3e9890d7517c8d60d874baef6f521005c9830ce30044ae6"
+      },
+      "mtimeMs": 1791903659077.7075
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/CheckpointRollback.js.map",
+        "bytes": 9089,
+        "sha256": "ca50dd687103bd2a018457e2409239d68c88851e0e37e35d358b96269375da71"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/CheckpointRollback.js.map",
+        "bytes": 9089,
+        "sha256": "ca50dd687103bd2a018457e2409239d68c88851e0e37e35d358b96269375da71"
+      },
+      "mtimeMs": 1791903659076.197
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/ContextRedactor.d.ts",
+        "bytes": 506,
+        "sha256": "b6efce600a4de2934fdd7d87474f656bfb756a1d64d6e21c268911cd4270084e"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/ContextRedactor.d.ts",
+        "bytes": 506,
+        "sha256": "b6efce600a4de2934fdd7d87474f656bfb756a1d64d6e21c268911cd4270084e"
+      },
+      "mtimeMs": 1791903659114.4434
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/ContextRedactor.d.ts.map",
+        "bytes": 192,
+        "sha256": "cfa161acbb2a2de054ca25adf10076684a4af3844424ef838eb61999a28d5830"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/ContextRedactor.d.ts.map",
+        "bytes": 192,
+        "sha256": "cfa161acbb2a2de054ca25adf10076684a4af3844424ef838eb61999a28d5830"
+      },
+      "mtimeMs": 1791903659112.91
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/ContextRedactor.js",
+        "bytes": 3052,
+        "sha256": "9fc8cbc0fcabea2a84e563cf442b82e297e80ba1dd20c963cd6936ba836a4f39"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/ContextRedactor.js",
+        "bytes": 3052,
+        "sha256": "9fc8cbc0fcabea2a84e563cf442b82e297e80ba1dd20c963cd6936ba836a4f39"
+      },
+      "mtimeMs": 1791903659110.8887
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/ContextRedactor.js.map",
+        "bytes": 2353,
+        "sha256": "7b104393cb1742009d9e5adf00f69d42eff2a33a43ccf378492cb416c94864a5"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/ContextRedactor.js.map",
+        "bytes": 2353,
+        "sha256": "7b104393cb1742009d9e5adf00f69d42eff2a33a43ccf378492cb416c94864a5"
+      },
+      "mtimeMs": 1791903659109.8748
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/ControlledTerminal.d.ts",
+        "bytes": 788,
+        "sha256": "a5b46c507c1bac36fc4cbe8932f6c169a4c8d0ae01ecf5a857c77b88730660f9"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/ControlledTerminal.d.ts",
+        "bytes": 788,
+        "sha256": "a5b46c507c1bac36fc4cbe8932f6c169a4c8d0ae01ecf5a857c77b88730660f9"
+      },
+      "mtimeMs": 1791903659165.152
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/ControlledTerminal.d.ts.map",
+        "bytes": 716,
+        "sha256": "ab7758b18d539161298a303861a6952b73003c9bc0e33768baa04f13094ed5ce"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/ControlledTerminal.d.ts.map",
+        "bytes": 716,
+        "sha256": "ab7758b18d539161298a303861a6952b73003c9bc0e33768baa04f13094ed5ce"
+      },
+      "mtimeMs": 1791903659162.623
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/ControlledTerminal.js",
+        "bytes": 5402,
+        "sha256": "9e0b79f1567c48bb38bc56db8a6146a37d228eb410d5c922bc9d40ce9b410535"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/ControlledTerminal.js",
+        "bytes": 5402,
+        "sha256": "9e0b79f1567c48bb38bc56db8a6146a37d228eb410d5c922bc9d40ce9b410535"
+      },
+      "mtimeMs": 1791903659160.6099
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/ControlledTerminal.js.map",
+        "bytes": 5728,
+        "sha256": "c0ecbdf5070353a9da402daae93fa1c9aa909abd056e0e9ced27a343d37b5895"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/ControlledTerminal.js.map",
+        "bytes": 5728,
+        "sha256": "c0ecbdf5070353a9da402daae93fa1c9aa909abd056e0e9ced27a343d37b5895"
+      },
+      "mtimeMs": 1791903659159.097
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/CoverageMatrix.d.ts",
+        "bytes": 1543,
+        "sha256": "f89d46d1f142e1410a4511dfc82889b7cadb30f96d8c7fbce5d1add53ed95175"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/CoverageMatrix.d.ts",
+        "bytes": 1543,
+        "sha256": "f89d46d1f142e1410a4511dfc82889b7cadb30f96d8c7fbce5d1add53ed95175"
+      },
+      "mtimeMs": 1791903659184.2246
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/CoverageMatrix.d.ts.map",
+        "bytes": 672,
+        "sha256": "4b4b55f5d7cf9ede1e0ac38720b67f3cad5909f9de155693321bdacc0c4ab624"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/CoverageMatrix.d.ts.map",
+        "bytes": 672,
+        "sha256": "4b4b55f5d7cf9ede1e0ac38720b67f3cad5909f9de155693321bdacc0c4ab624"
+      },
+      "mtimeMs": 1791903659183.2234
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/CoverageMatrix.js",
+        "bytes": 4668,
+        "sha256": "947804c40f3ea5da93cd25a281c3109fa8c342ecd40b9fbb0085b509660f6199"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/CoverageMatrix.js",
+        "bytes": 4668,
+        "sha256": "947804c40f3ea5da93cd25a281c3109fa8c342ecd40b9fbb0085b509660f6199"
+      },
+      "mtimeMs": 1791903659176.2114
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/CoverageMatrix.js.map",
+        "bytes": 1935,
+        "sha256": "027858bcc3ffb8ba3c786e77b156b3a03ea5db4516a11ebd78d48648cdf48be0"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/CoverageMatrix.js.map",
+        "bytes": 1935,
+        "sha256": "027858bcc3ffb8ba3c786e77b156b3a03ea5db4516a11ebd78d48648cdf48be0"
+      },
+      "mtimeMs": 1791903659171.683
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/DecisionEngine.d.ts",
+        "bytes": 1261,
+        "sha256": "646b2eda19766c9a6fde37ab6c10d73ce6348b4fbcfb5bed10bce7e6c6380bb1"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/DecisionEngine.d.ts",
+        "bytes": 1261,
+        "sha256": "646b2eda19766c9a6fde37ab6c10d73ce6348b4fbcfb5bed10bce7e6c6380bb1"
+      },
+      "mtimeMs": 1791903658810.5154
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/DecisionEngine.d.ts.map",
+        "bytes": 846,
+        "sha256": "03ba992eeabde9ccebd0e60a97cfb55cb45b415e52011331cdaa6e00e5a1ce02"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/DecisionEngine.d.ts.map",
+        "bytes": 846,
+        "sha256": "03ba992eeabde9ccebd0e60a97cfb55cb45b415e52011331cdaa6e00e5a1ce02"
+      },
+      "mtimeMs": 1791903658809.0024
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/DecisionEngine.js",
+        "bytes": 10593,
+        "sha256": "2c45dd65a2b6c708e418c6c42cce6c434d2e071eb61845c73581d52fc084d7e1"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/DecisionEngine.js",
+        "bytes": 10593,
+        "sha256": "2c45dd65a2b6c708e418c6c42cce6c434d2e071eb61845c73581d52fc084d7e1"
+      },
+      "mtimeMs": 1791903658802.464
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/DecisionEngine.js.map",
+        "bytes": 7137,
+        "sha256": "08076cdd2773e2b679d73a89fa13ca503ef4d5a9292cdb52dc49fa8f54b3e26d"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/DecisionEngine.js.map",
+        "bytes": 7137,
+        "sha256": "08076cdd2773e2b679d73a89fa13ca503ef4d5a9292cdb52dc49fa8f54b3e26d"
+      },
+      "mtimeMs": 1791903658800.4634
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/AIGeneratedCodeRiskDetector.d.ts",
+        "bytes": 248,
+        "sha256": "a35b4206f6009b2b22e1e6bf7d910cf486ca2cb5abd02900acdf579cf3ebd8e1"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/AIGeneratedCodeRiskDetector.d.ts",
+        "bytes": 248,
+        "sha256": "a35b4206f6009b2b22e1e6bf7d910cf486ca2cb5abd02900acdf579cf3ebd8e1"
+      },
+      "mtimeMs": 1791903658692.469
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/AIGeneratedCodeRiskDetector.d.ts.map",
+        "bytes": 297,
+        "sha256": "64424b5acd00e3d92ab3862b9b48f0ef662bf8eceb51781940495d8958a56891"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/AIGeneratedCodeRiskDetector.d.ts.map",
+        "bytes": 297,
+        "sha256": "64424b5acd00e3d92ab3862b9b48f0ef662bf8eceb51781940495d8958a56891"
+      },
+      "mtimeMs": 1791903658692.469
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/AIGeneratedCodeRiskDetector.js",
+        "bytes": 4872,
+        "sha256": "e7ee298fa854ac851c4e52e5671a204b540c39e8536ee8d51ef31acc111fc44b"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/AIGeneratedCodeRiskDetector.js",
+        "bytes": 4872,
+        "sha256": "e7ee298fa854ac851c4e52e5671a204b540c39e8536ee8d51ef31acc111fc44b"
+      },
+      "mtimeMs": 1791903658688.942
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/AIGeneratedCodeRiskDetector.js.map",
+        "bytes": 3729,
+        "sha256": "27dfa453205459e3f3d1cb0392a409122b2d5d8b088fb853ac8c85b9ad5d552d"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/AIGeneratedCodeRiskDetector.js.map",
+        "bytes": 3729,
+        "sha256": "27dfa453205459e3f3d1cb0392a409122b2d5d8b088fb853ac8c85b9ad5d552d"
+      },
+      "mtimeMs": 1791903658687.9446
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/EncodedSecretDetector.d.ts",
+        "bytes": 1750,
+        "sha256": "4c1ccc61e614057716f34dff7b9b3ab48cd309ef1c78c0f9d6b0cc7dfc60cbd0"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/EncodedSecretDetector.d.ts",
+        "bytes": 1750,
+        "sha256": "4c1ccc61e614057716f34dff7b9b3ab48cd309ef1c78c0f9d6b0cc7dfc60cbd0"
+      },
+      "mtimeMs": 1791903658471.5728
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/EncodedSecretDetector.d.ts.map",
+        "bytes": 330,
+        "sha256": "baaffce802fce80046c106fcb875ecc03bcfd55fc6ddbb76fc2884dbd7f7ebc3"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/EncodedSecretDetector.d.ts.map",
+        "bytes": 330,
+        "sha256": "baaffce802fce80046c106fcb875ecc03bcfd55fc6ddbb76fc2884dbd7f7ebc3"
+      },
+      "mtimeMs": 1791903658467.5757
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/EncodedSecretDetector.js",
+        "bytes": 6588,
+        "sha256": "28e21e18c744600f0663a2d1dced50e2bbbdf513b61ee480e4df328bd21f0478"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/EncodedSecretDetector.js",
+        "bytes": 6588,
+        "sha256": "28e21e18c744600f0663a2d1dced50e2bbbdf513b61ee480e4df328bd21f0478"
+      },
+      "mtimeMs": 1791903658463.023
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/EncodedSecretDetector.js.map",
+        "bytes": 3815,
+        "sha256": "f84517db161da1127110af3ad0218f2eff99f646fd5c01c19d412facadc75d94"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/EncodedSecretDetector.js.map",
+        "bytes": 3815,
+        "sha256": "f84517db161da1127110af3ad0218f2eff99f646fd5c01c19d412facadc75d94"
+      },
+      "mtimeMs": 1791903658461.0076
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/EnvFileDetector.d.ts",
+        "bytes": 220,
+        "sha256": "4101a0c9d2982f8e8ba13f996d87dc5c39e49e8787b22ff111fd3847b705a5d7"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/EnvFileDetector.d.ts",
+        "bytes": 220,
+        "sha256": "4101a0c9d2982f8e8ba13f996d87dc5c39e49e8787b22ff111fd3847b705a5d7"
+      },
+      "mtimeMs": 1791903658486.19
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/EnvFileDetector.d.ts.map",
+        "bytes": 270,
+        "sha256": "6fa230958c3c1002bd5f040a53a36566e9d8c9d9399968a698cee7e523143a2b"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/EnvFileDetector.d.ts.map",
+        "bytes": 270,
+        "sha256": "6fa230958c3c1002bd5f040a53a36566e9d8c9d9399968a698cee7e523143a2b"
+      },
+      "mtimeMs": 1791903658485.189
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/EnvFileDetector.js",
+        "bytes": 1831,
+        "sha256": "19b135030df2e1f5f1e89331376bdba9e7a0dcb0e075102ffffda418e388db06"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/EnvFileDetector.js",
+        "bytes": 1831,
+        "sha256": "19b135030df2e1f5f1e89331376bdba9e7a0dcb0e075102ffffda418e388db06"
+      },
+      "mtimeMs": 1791903658480.6577
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/EnvFileDetector.js.map",
+        "bytes": 1038,
+        "sha256": "86b47d5bf31e4abaf130f118fef9ef77369e1ebb3c2fa0ae87361487271b3428"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/EnvFileDetector.js.map",
+        "bytes": 1038,
+        "sha256": "86b47d5bf31e4abaf130f118fef9ef77369e1ebb3c2fa0ae87361487271b3428"
+      },
+      "mtimeMs": 1791903658478.1292
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/FileContextRiskDetector.d.ts",
+        "bytes": 264,
+        "sha256": "afc309fa49d6d38a7902f3aa05975ff51a304cd66fb091fa75a1d815ccae9881"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/FileContextRiskDetector.d.ts",
+        "bytes": 264,
+        "sha256": "afc309fa49d6d38a7902f3aa05975ff51a304cd66fb091fa75a1d815ccae9881"
+      },
+      "mtimeMs": 1791903658620.334
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/FileContextRiskDetector.d.ts.map",
+        "bytes": 314,
+        "sha256": "a368635840757fd0c0d0f2bf00860e3ac78d0f98b5e0be341ca56675f36fa27a"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/FileContextRiskDetector.d.ts.map",
+        "bytes": 314,
+        "sha256": "a368635840757fd0c0d0f2bf00860e3ac78d0f98b5e0be341ca56675f36fa27a"
+      },
+      "mtimeMs": 1791903658620.334
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/FileContextRiskDetector.js",
+        "bytes": 4248,
+        "sha256": "e3ec4a61595168ab8ff8efe1072abc3b4f910b98d486e6d99f05d240ed8ea9cf"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/FileContextRiskDetector.js",
+        "bytes": 4248,
+        "sha256": "e3ec4a61595168ab8ff8efe1072abc3b4f910b98d486e6d99f05d240ed8ea9cf"
+      },
+      "mtimeMs": 1791903658615.7793
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/FileContextRiskDetector.js.map",
+        "bytes": 3240,
+        "sha256": "71baf2049d3d2007b975f6df795332250c16e6fdee34a3e32ed7d7146f97b265"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/FileContextRiskDetector.js.map",
+        "bytes": 3240,
+        "sha256": "71baf2049d3d2007b975f6df795332250c16e6fdee34a3e32ed7d7146f97b265"
+      },
+      "mtimeMs": 1791903658614.2378
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/index.d.ts",
+        "bytes": 1406,
+        "sha256": "3648dc69af87c44af209d1c5b610e02673823a8a9e31da222367ae36768b490c"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/index.d.ts",
+        "bytes": 1406,
+        "sha256": "3648dc69af87c44af209d1c5b610e02673823a8a9e31da222367ae36768b490c"
+      },
+      "mtimeMs": 1791903658732.203
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/index.d.ts.map",
+        "bytes": 931,
+        "sha256": "82a633443a5537ea94b2f8b2b1b9e097039c19758e46d7e9b76bcd761ff0b9f1"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/index.d.ts.map",
+        "bytes": 931,
+        "sha256": "82a633443a5537ea94b2f8b2b1b9e097039c19758e46d7e9b76bcd761ff0b9f1"
+      },
+      "mtimeMs": 1791903658730.6929
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/index.js",
+        "bytes": 6993,
+        "sha256": "6609d1fec2c87e2ae1d42c6452338e09bd6f98b5dd73531627f2fe17daf3be6a"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/index.js",
+        "bytes": 6993,
+        "sha256": "6609d1fec2c87e2ae1d42c6452338e09bd6f98b5dd73531627f2fe17daf3be6a"
+      },
+      "mtimeMs": 1791903658726.6924
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/index.js.map",
+        "bytes": 1011,
+        "sha256": "f3606b54ffa06ddade581b50cacb03cddf5618dc94e1aa94e28d61c6781fa22f"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/index.js.map",
+        "bytes": 1011,
+        "sha256": "f3606b54ffa06ddade581b50cacb03cddf5618dc94e1aa94e28d61c6781fa22f"
+      },
+      "mtimeMs": 1791903658725.6794
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/IndiaPIIDetector.d.ts",
+        "bytes": 223,
+        "sha256": "ac9dfbf15ab7945132d0e3df8f4ad8f53c5e7fd22d9990cf89268abe3a3a527f"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/IndiaPIIDetector.d.ts",
+        "bytes": 223,
+        "sha256": "ac9dfbf15ab7945132d0e3df8f4ad8f53c5e7fd22d9990cf89268abe3a3a527f"
+      },
+      "mtimeMs": 1791903658556.0515
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/IndiaPIIDetector.d.ts.map",
+        "bytes": 272,
+        "sha256": "15a4bd0dcc0b2c4784f6b075a544e7fd8e0d72aea37d3ea973f7f7f0dd648d0a"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/IndiaPIIDetector.d.ts.map",
+        "bytes": 272,
+        "sha256": "15a4bd0dcc0b2c4784f6b075a544e7fd8e0d72aea37d3ea973f7f7f0dd648d0a"
+      },
+      "mtimeMs": 1791903658555.0537
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/IndiaPIIDetector.js",
+        "bytes": 3177,
+        "sha256": "43f31bf358abbef1633bedc954e30de4ae913cb84f50025cb618a2c72b4c3a4e"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/IndiaPIIDetector.js",
+        "bytes": 3177,
+        "sha256": "43f31bf358abbef1633bedc954e30de4ae913cb84f50025cb618a2c72b4c3a4e"
+      },
+      "mtimeMs": 1791903658519.4177
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/IndiaPIIDetector.js.map",
+        "bytes": 2346,
+        "sha256": "1b0b9f60c8e3abdec712a1ee7df87468ae50e60fda5f02b6628c23411bc9bffe"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/IndiaPIIDetector.js.map",
+        "bytes": 2346,
+        "sha256": "1b0b9f60c8e3abdec712a1ee7df87468ae50e60fda5f02b6628c23411bc9bffe"
+      },
+      "mtimeMs": 1791903658517.4175
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/JailbreakLiteDetector.d.ts",
+        "bytes": 476,
+        "sha256": "45f7050107c5f0564648ff51df265fde6b4d8f2d3bd055c5dc7c608dcf90410c"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/JailbreakLiteDetector.d.ts",
+        "bytes": 476,
+        "sha256": "45f7050107c5f0564648ff51df265fde6b4d8f2d3bd055c5dc7c608dcf90410c"
+      },
+      "mtimeMs": 1791903658607.202
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/JailbreakLiteDetector.d.ts.map",
+        "bytes": 458,
+        "sha256": "02100c455cdf7e981e2bf2b735389af72c074514af2b8045bc1d8c503baef94b"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/JailbreakLiteDetector.d.ts.map",
+        "bytes": 458,
+        "sha256": "02100c455cdf7e981e2bf2b735389af72c074514af2b8045bc1d8c503baef94b"
+      },
+      "mtimeMs": 1791903658606.1875
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/JailbreakLiteDetector.js",
+        "bytes": 10741,
+        "sha256": "05744da522c21ea71b6c78d1812aa5deac394d6c6afc6d707e4537d48f4058fe"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/JailbreakLiteDetector.js",
+        "bytes": 10741,
+        "sha256": "05744da522c21ea71b6c78d1812aa5deac394d6c6afc6d707e4537d48f4058fe"
+      },
+      "mtimeMs": 1791903658600.6548
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/JailbreakLiteDetector.js.map",
+        "bytes": 4741,
+        "sha256": "f45b100b6b2efe603974fa5623fb7e7bd169416b52c4d0d179d58ef8624745d7"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/JailbreakLiteDetector.js.map",
+        "bytes": 4741,
+        "sha256": "f45b100b6b2efe603974fa5623fb7e7bd169416b52c4d0d179d58ef8624745d7"
+      },
+      "mtimeMs": 1791903658599.643
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/MCPConfigRiskDetector.d.ts",
+        "bytes": 239,
+        "sha256": "88580073b57fe5901a4d6185ae12977e1834b98b2752ac73f1c5ad4c9c87157b"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/MCPConfigRiskDetector.d.ts",
+        "bytes": 239,
+        "sha256": "88580073b57fe5901a4d6185ae12977e1834b98b2752ac73f1c5ad4c9c87157b"
+      },
+      "mtimeMs": 1791903658676.865
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/MCPConfigRiskDetector.d.ts.map",
+        "bytes": 285,
+        "sha256": "79be7f53f4d6895632bd4a0f2856dd802da4263cf99655c039a39f269e817448"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/MCPConfigRiskDetector.d.ts.map",
+        "bytes": 285,
+        "sha256": "79be7f53f4d6895632bd4a0f2856dd802da4263cf99655c039a39f269e817448"
+      },
+      "mtimeMs": 1791903658675.865
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/MCPConfigRiskDetector.js",
+        "bytes": 2807,
+        "sha256": "44c6036f27a2f2b6fadfdae0ddd07134063e505bcbbcf322af24f1f680e6303d"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/MCPConfigRiskDetector.js",
+        "bytes": 2807,
+        "sha256": "44c6036f27a2f2b6fadfdae0ddd07134063e505bcbbcf322af24f1f680e6303d"
+      },
+      "mtimeMs": 1791903658665.8096
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/MCPConfigRiskDetector.js.map",
+        "bytes": 2276,
+        "sha256": "afdc1c74962b68c66c9cca7e21bb212da0b0fa43b2649624ba5d2555baeba066"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/MCPConfigRiskDetector.js.map",
+        "bytes": 2276,
+        "sha256": "afdc1c74962b68c66c9cca7e21bb212da0b0fa43b2649624ba5d2555baeba066"
+      },
+      "mtimeMs": 1791903658665.8096
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/OutputExfiltrationDetector.d.ts",
+        "bytes": 253,
+        "sha256": "3dbbaef72f37b37667509e8ce8377421641a10edec8398e16fc519b122ca325b"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/OutputExfiltrationDetector.d.ts",
+        "bytes": 253,
+        "sha256": "3dbbaef72f37b37667509e8ce8377421641a10edec8398e16fc519b122ca325b"
+      },
+      "mtimeMs": 1791903658706.062
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/OutputExfiltrationDetector.d.ts.map",
+        "bytes": 295,
+        "sha256": "720e88b285ca0f9f1554297e7a22c22d2b937f4257b8052dc91f4e440e9518b7"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/OutputExfiltrationDetector.d.ts.map",
+        "bytes": 295,
+        "sha256": "720e88b285ca0f9f1554297e7a22c22d2b937f4257b8052dc91f4e440e9518b7"
+      },
+      "mtimeMs": 1791903658705.0608
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/OutputExfiltrationDetector.js",
+        "bytes": 4020,
+        "sha256": "72439e44b89479c926aca1e43eeb2554528017e7348a9c097033dc47187e03bb"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/OutputExfiltrationDetector.js",
+        "bytes": 4020,
+        "sha256": "72439e44b89479c926aca1e43eeb2554528017e7348a9c097033dc47187e03bb"
+      },
+      "mtimeMs": 1791903658700.5356
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/OutputExfiltrationDetector.js.map",
+        "bytes": 2039,
+        "sha256": "b5e97b7101d903590e9684ef8daf2c8eb57465bbe03a134612bae6c4f689eb2f"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/OutputExfiltrationDetector.js.map",
+        "bytes": 2039,
+        "sha256": "b5e97b7101d903590e9684ef8daf2c8eb57465bbe03a134612bae6c4f689eb2f"
+      },
+      "mtimeMs": 1791903658699.521
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/PIIDetector.d.ts",
+        "bytes": 207,
+        "sha256": "af8160c78e78b502094345b985e094e7ccfd1dbf9ecaadf9377aba0311be6e01"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/PIIDetector.d.ts",
+        "bytes": 207,
+        "sha256": "af8160c78e78b502094345b985e094e7ccfd1dbf9ecaadf9377aba0311be6e01"
+      },
+      "mtimeMs": 1791903658504.7766
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/PIIDetector.d.ts.map",
+        "bytes": 262,
+        "sha256": "3cac9fa7b01e8a9b6e943ffbbe00f5da1824e1a5be097c0d1d095fe830dcb53c"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/PIIDetector.d.ts.map",
+        "bytes": 262,
+        "sha256": "3cac9fa7b01e8a9b6e943ffbbe00f5da1824e1a5be097c0d1d095fe830dcb53c"
+      },
+      "mtimeMs": 1791903658504.265
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/PIIDetector.js",
+        "bytes": 3004,
+        "sha256": "09eb678a36d3a4229aac48753645801428799748e3c347b2623e04be4bbf0a3c"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/PIIDetector.js",
+        "bytes": 3004,
+        "sha256": "09eb678a36d3a4229aac48753645801428799748e3c347b2623e04be4bbf0a3c"
+      },
+      "mtimeMs": 1791903658499.2483
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/PIIDetector.js.map",
+        "bytes": 2358,
+        "sha256": "38fe851082599ea10f5e985c77beae0be6b9849d9f87c5a11eba5a6ffd61924e"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/PIIDetector.js.map",
+        "bytes": 2358,
+        "sha256": "38fe851082599ea10f5e985c77beae0be6b9849d9f87c5a11eba5a6ffd61924e"
+      },
+      "mtimeMs": 1791903658497.735
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/PromptInjectionLiteDetector.d.ts",
+        "bytes": 490,
+        "sha256": "ce73a50971fb22453eeb847094e7fb998b75f3ea417a37f13df7652d2a01b945"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/PromptInjectionLiteDetector.d.ts",
+        "bytes": 490,
+        "sha256": "ce73a50971fb22453eeb847094e7fb998b75f3ea417a37f13df7652d2a01b945"
+      },
+      "mtimeMs": 1791903658581.5415
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/PromptInjectionLiteDetector.d.ts.map",
+        "bytes": 472,
+        "sha256": "43fea750e381af3583f79a0d3729b9c9c4b96edc569221ca0ce269b155b1ac8d"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/PromptInjectionLiteDetector.d.ts.map",
+        "bytes": 472,
+        "sha256": "43fea750e381af3583f79a0d3729b9c9c4b96edc569221ca0ce269b155b1ac8d"
+      },
+      "mtimeMs": 1791903658580.5366
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/PromptInjectionLiteDetector.js",
+        "bytes": 17029,
+        "sha256": "41af7547de48258269d5b05f2cae2e828c075cdb25f00c2d112ce33d524158dd"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/PromptInjectionLiteDetector.js",
+        "bytes": 17029,
+        "sha256": "41af7547de48258269d5b05f2cae2e828c075cdb25f00c2d112ce33d524158dd"
+      },
+      "mtimeMs": 1791903658576.0122
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/PromptInjectionLiteDetector.js.map",
+        "bytes": 7647,
+        "sha256": "64c346ff54b548f16aa27bc38830be6b1e30bb72cee4721e59b0a36df04cc6f0"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/PromptInjectionLiteDetector.js.map",
+        "bytes": 7647,
+        "sha256": "64c346ff54b548f16aa27bc38830be6b1e30bb72cee4721e59b0a36df04cc6f0"
+      },
+      "mtimeMs": 1791903658575.0117
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/RepoInstructionPoisoningDetector.d.ts",
+        "bytes": 361,
+        "sha256": "a53d81a6f6ce4673a2d383ebb3e8e2c28b0a27b46e51270b0c1192671689dbde"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/RepoInstructionPoisoningDetector.d.ts",
+        "bytes": 361,
+        "sha256": "a53d81a6f6ce4673a2d383ebb3e8e2c28b0a27b46e51270b0c1192671689dbde"
+      },
+      "mtimeMs": 1791903658658.7607
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/RepoInstructionPoisoningDetector.d.ts.map",
+        "bytes": 361,
+        "sha256": "aad94d81c36e687f89369eaa8e508f8a4a7cd94187cf4d4fa3cf0411e4201935"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/RepoInstructionPoisoningDetector.d.ts.map",
+        "bytes": 361,
+        "sha256": "aad94d81c36e687f89369eaa8e508f8a4a7cd94187cf4d4fa3cf0411e4201935"
+      },
+      "mtimeMs": 1791903658657.7585
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/RepoInstructionPoisoningDetector.js",
+        "bytes": 4295,
+        "sha256": "3b2b766ba552581f3563d520d63798d0bc5789904d39fa39320d064f9120bb50"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/RepoInstructionPoisoningDetector.js",
+        "bytes": 4295,
+        "sha256": "3b2b766ba552581f3563d520d63798d0bc5789904d39fa39320d064f9120bb50"
+      },
+      "mtimeMs": 1791903658654.731
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/RepoInstructionPoisoningDetector.js.map",
+        "bytes": 2556,
+        "sha256": "c94a64444f04c694c67caff74a535e7fd377ae6563dc1348627863bda503d2f3"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/RepoInstructionPoisoningDetector.js.map",
+        "bytes": 2556,
+        "sha256": "c94a64444f04c694c67caff74a535e7fd377ae6563dc1348627863bda503d2f3"
+      },
+      "mtimeMs": 1791903658654.2231
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/SecretDetector.d.ts",
+        "bytes": 3785,
+        "sha256": "413b319b1aa7a125a5f5a79d0cc9792aea50fad0acffe15fe4cf79f8a1216560"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/SecretDetector.d.ts",
+        "bytes": 3785,
+        "sha256": "413b319b1aa7a125a5f5a79d0cc9792aea50fad0acffe15fe4cf79f8a1216560"
+      },
+      "mtimeMs": 1791903658288.815
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/SecretDetector.d.ts.map",
+        "bytes": 590,
+        "sha256": "83bcce2fc6b7f92dcc2be3dcae138135fe3532bceee9155087f03f9bbb23718d"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/SecretDetector.d.ts.map",
+        "bytes": 590,
+        "sha256": "83bcce2fc6b7f92dcc2be3dcae138135fe3532bceee9155087f03f9bbb23718d"
+      },
+      "mtimeMs": 1791903658287.8145
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/SecretDetector.js",
+        "bytes": 31753,
+        "sha256": "af9d4d96092e3d5e2760f9f269a5b2e8991854cd4529fd777846742aaef6828a"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/SecretDetector.js",
+        "bytes": 31753,
+        "sha256": "af9d4d96092e3d5e2760f9f269a5b2e8991854cd4529fd777846742aaef6828a"
+      },
+      "mtimeMs": 1791903658272.7046
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/SecretDetector.js.map",
+        "bytes": 14033,
+        "sha256": "fd648992c68c201abc5083a78d9b6a6b214350b574958d48c00fdebc796cba21"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/SecretDetector.js.map",
+        "bytes": 14033,
+        "sha256": "fd648992c68c201abc5083a78d9b6a6b214350b574958d48c00fdebc796cba21"
+      },
+      "mtimeMs": 1791903658269.7036
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/TerminalCommandRiskDetector.d.ts",
+        "bytes": 257,
+        "sha256": "90d07482905984ce59bc8a4e213f4a3032906ec05a9ffac60710eea44dc363f0"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/TerminalCommandRiskDetector.d.ts",
+        "bytes": 257,
+        "sha256": "90d07482905984ce59bc8a4e213f4a3032906ec05a9ffac60710eea44dc363f0"
+      },
+      "mtimeMs": 1791903658643.165
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/TerminalCommandRiskDetector.d.ts.map",
+        "bytes": 297,
+        "sha256": "b98515df3e2d061acf3d1810b6bee289f2a09e69364334676095a517c1b4f293"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/TerminalCommandRiskDetector.d.ts.map",
+        "bytes": 297,
+        "sha256": "b98515df3e2d061acf3d1810b6bee289f2a09e69364334676095a517c1b4f293"
+      },
+      "mtimeMs": 1791903658641.1628
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/TerminalCommandRiskDetector.js",
+        "bytes": 6710,
+        "sha256": "33b8c2e0c20806c0c8bf6af60a17bef86b2effbe6b1e1743e85cdeaee68f397c"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/TerminalCommandRiskDetector.js",
+        "bytes": 6710,
+        "sha256": "33b8c2e0c20806c0c8bf6af60a17bef86b2effbe6b1e1743e85cdeaee68f397c"
+      },
+      "mtimeMs": 1791903658637.1619
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/TerminalCommandRiskDetector.js.map",
+        "bytes": 4112,
+        "sha256": "b965cc5efb2ab06769ddf579a2ea05c913ce361c3a58f9c916a7883fea669935"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/TerminalCommandRiskDetector.js.map",
+        "bytes": 4112,
+        "sha256": "b965cc5efb2ab06769ddf579a2ea05c913ce361c3a58f9c916a7883fea669935"
+      },
+      "mtimeMs": 1791903658635.1316
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/utils.d.ts",
+        "bytes": 1279,
+        "sha256": "c9fc50b28b06ed429ee88e840cf08c625eb7638365bef34b234a5b6747eafa76"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/utils.d.ts",
+        "bytes": 1279,
+        "sha256": "c9fc50b28b06ed429ee88e840cf08c625eb7638365bef34b234a5b6747eafa76"
+      },
+      "mtimeMs": 1791903658192.3484
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/utils.d.ts.map",
+        "bytes": 620,
+        "sha256": "a4e8f7f9d9f6c8c338d6905a65d63cebcd506613921c6ca8b58948140c94888a"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/utils.d.ts.map",
+        "bytes": 620,
+        "sha256": "a4e8f7f9d9f6c8c338d6905a65d63cebcd506613921c6ca8b58948140c94888a"
+      },
+      "mtimeMs": 1791903658191.3477
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/utils.js",
+        "bytes": 3561,
+        "sha256": "873e7266377cc36fe42e22c640ac345a4b8862896bbfc7d4e1b6cec21110f1bd"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/utils.js",
+        "bytes": 3561,
+        "sha256": "873e7266377cc36fe42e22c640ac345a4b8862896bbfc7d4e1b6cec21110f1bd"
+      },
+      "mtimeMs": 1791903658179.813
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/utils.js.map",
+        "bytes": 3341,
+        "sha256": "084307ebb74132aa52180ed6e619290780205051b059c4e138699bea4a980e12"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/utils.js.map",
+        "bytes": 3341,
+        "sha256": "084307ebb74132aa52180ed6e619290780205051b059c4e138699bea4a980e12"
+      },
+      "mtimeMs": 1791903658178.8118
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/_p1_baseline.d.ts",
+        "bytes": 215,
+        "sha256": "a455ef3a21d98bfc93b0722c8d8a16ef1fba823852f3f343fe20259cea539480"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/_p1_baseline.d.ts",
+        "bytes": 215,
+        "sha256": "a455ef3a21d98bfc93b0722c8d8a16ef1fba823852f3f343fe20259cea539480"
+      },
+      "mtimeMs": 1789733021564.057
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/_p1_baseline.d.ts.map",
+        "bytes": 264,
+        "sha256": "4433ba18c569934dfe99eef1f502eebeab745763e792543957756ba6b6733db5"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/_p1_baseline.d.ts.map",
+        "bytes": 264,
+        "sha256": "4433ba18c569934dfe99eef1f502eebeab745763e792543957756ba6b6733db5"
+      },
+      "mtimeMs": 1789733021563.0579
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/_p1_baseline.js",
+        "bytes": 19025,
+        "sha256": "098cc02814b0b932d64e3a7b0bd67108d681377af467266aa22ba6ec81245a7b"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/_p1_baseline.js",
+        "bytes": 19025,
+        "sha256": "098cc02814b0b932d64e3a7b0bd67108d681377af467266aa22ba6ec81245a7b"
+      },
+      "mtimeMs": 1789733021560.0234
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/detectors/_p1_baseline.js.map",
+        "bytes": 10145,
+        "sha256": "f58f5be784b482fb1dcdf6d57f012058f071bf4d193388c7a14b62db77bb8425"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/detectors/_p1_baseline.js.map",
+        "bytes": 10145,
+        "sha256": "f58f5be784b482fb1dcdf6d57f012058f071bf4d193388c7a14b62db77bb8425"
+      },
+      "mtimeMs": 1789733021557.502
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/EvidenceMinimizer.d.ts",
+        "bytes": 515,
+        "sha256": "af30c61a228e09e1843575e4f7e1c3ee8308795c64f08d27545045691771988e"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/EvidenceMinimizer.d.ts",
+        "bytes": 515,
+        "sha256": "af30c61a228e09e1843575e4f7e1c3ee8308795c64f08d27545045691771988e"
+      },
+      "mtimeMs": 1791903658746.2827
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/EvidenceMinimizer.d.ts.map",
+        "bytes": 352,
+        "sha256": "d3808d493f5bd39138c102fc841b001dddba25f2fba4696d7ad145b53e445f3f"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/EvidenceMinimizer.d.ts.map",
+        "bytes": 352,
+        "sha256": "d3808d493f5bd39138c102fc841b001dddba25f2fba4696d7ad145b53e445f3f"
+      },
+      "mtimeMs": 1791903658746.2827
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/EvidenceMinimizer.js",
+        "bytes": 1473,
+        "sha256": "45eb0653f7ce5934710b249075264e2d85d8766fe761a796e5dac5bbad392e95"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/EvidenceMinimizer.js",
+        "bytes": 1473,
+        "sha256": "45eb0653f7ce5934710b249075264e2d85d8766fe761a796e5dac5bbad392e95"
+      },
+      "mtimeMs": 1791903658742.7542
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/EvidenceMinimizer.js.map",
+        "bytes": 1400,
+        "sha256": "21895415af50691b7a3ab0655c3d21b61b55052a9e8927acf0ca1694a010672e"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/EvidenceMinimizer.js.map",
+        "bytes": 1400,
+        "sha256": "21895415af50691b7a3ab0655c3d21b61b55052a9e8927acf0ca1694a010672e"
+      },
+      "mtimeMs": 1791903658741.7527
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/ExtensionIsolationPolicy.d.ts",
+        "bytes": 1251,
+        "sha256": "52219525aa3f875b07acf3621b9f0300818c22d5c39740b8f74496c915247d9b"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/ExtensionIsolationPolicy.d.ts",
+        "bytes": 1251,
+        "sha256": "52219525aa3f875b07acf3621b9f0300818c22d5c39740b8f74496c915247d9b"
+      },
+      "mtimeMs": 1791903659205.4404
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/ExtensionIsolationPolicy.d.ts.map",
+        "bytes": 1252,
+        "sha256": "434cf3212c350bfd5fabea29ea0c0734c578a1c2ab42c5f752068fb4c5e2354e"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/ExtensionIsolationPolicy.d.ts.map",
+        "bytes": 1252,
+        "sha256": "434cf3212c350bfd5fabea29ea0c0734c578a1c2ab42c5f752068fb4c5e2354e"
+      },
+      "mtimeMs": 1791903659202.4077
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/ExtensionIsolationPolicy.js",
+        "bytes": 4472,
+        "sha256": "388c2e2a80c00bfa964656ec39e6e60bddd305c2e4676e127d5baca958ccbe56"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/ExtensionIsolationPolicy.js",
+        "bytes": 4472,
+        "sha256": "388c2e2a80c00bfa964656ec39e6e60bddd305c2e4676e127d5baca958ccbe56"
+      },
+      "mtimeMs": 1791903659197.8806
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/ExtensionIsolationPolicy.js.map",
+        "bytes": 4088,
+        "sha256": "7016dd3282144af743fb9b23c750c9afd78df1d92398d1e6efa353067da476a0"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/ExtensionIsolationPolicy.js.map",
+        "bytes": 4088,
+        "sha256": "7016dd3282144af743fb9b23c750c9afd78df1d92398d1e6efa353067da476a0"
+      },
+      "mtimeMs": 1791903659196.868
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/ExtensionRiskScanner.d.ts",
+        "bytes": 2056,
+        "sha256": "1dad0a555e62426f34294ef3f813e88728aa71ec04b27ff4cff50b45c415591f"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/ExtensionRiskScanner.d.ts",
+        "bytes": 2056,
+        "sha256": "1dad0a555e62426f34294ef3f813e88728aa71ec04b27ff4cff50b45c415591f"
+      },
+      "mtimeMs": 1791903659232.7495
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/ExtensionRiskScanner.d.ts.map",
+        "bytes": 1672,
+        "sha256": "bb3cbd2ff966d97ebcbfadf2a7c9c5e0117875c8239704d38650e847a61c69ec"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/ExtensionRiskScanner.d.ts.map",
+        "bytes": 1672,
+        "sha256": "bb3cbd2ff966d97ebcbfadf2a7c9c5e0117875c8239704d38650e847a61c69ec"
+      },
+      "mtimeMs": 1791903659231.735
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/ExtensionRiskScanner.js",
+        "bytes": 6546,
+        "sha256": "d009d2476d91fc8f501ffb6f194493a65de60dfa60578f4d7f6482c075bf3589"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/ExtensionRiskScanner.js",
+        "bytes": 6546,
+        "sha256": "d009d2476d91fc8f501ffb6f194493a65de60dfa60578f4d7f6482c075bf3589"
+      },
+      "mtimeMs": 1791903659226.563
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/ExtensionRiskScanner.js.map",
+        "bytes": 5192,
+        "sha256": "7e0c392c5bad0633b8d9b3df895dea9a3ae140143308ea80b6f48126a250b107"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/ExtensionRiskScanner.js.map",
+        "bytes": 5192,
+        "sha256": "7e0c392c5bad0633b8d9b3df895dea9a3ae140143308ea80b6f48126a250b107"
+      },
+      "mtimeMs": 1791903659223.0361
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/FileOperationFirewall.d.ts",
+        "bytes": 1123,
+        "sha256": "cc2d04f26a131e798e353e2df6aac1d31158bf8cd9f8d937c2153aee2bd36def"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/FileOperationFirewall.d.ts",
+        "bytes": 1123,
+        "sha256": "cc2d04f26a131e798e353e2df6aac1d31158bf8cd9f8d937c2153aee2bd36def"
+      },
+      "mtimeMs": 1791903659259.1902
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/FileOperationFirewall.d.ts.map",
+        "bytes": 1089,
+        "sha256": "6e4a9669e880a2edb98ec940d9c3f6619a11e2e437c05ffaa371bb48617f731a"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/FileOperationFirewall.d.ts.map",
+        "bytes": 1089,
+        "sha256": "6e4a9669e880a2edb98ec940d9c3f6619a11e2e437c05ffaa371bb48617f731a"
+      },
+      "mtimeMs": 1791903659257.189
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/FileOperationFirewall.js",
+        "bytes": 5709,
+        "sha256": "84fa3c50f7b01c9c5d4f8339295613e8cac8380bae6d060888dba445d643820f"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/FileOperationFirewall.js",
+        "bytes": 5709,
+        "sha256": "84fa3c50f7b01c9c5d4f8339295613e8cac8380bae6d060888dba445d643820f"
+      },
+      "mtimeMs": 1791903659251.6353
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/FileOperationFirewall.js.map",
+        "bytes": 5602,
+        "sha256": "b0e775f4b7f86a2ffb9dd15cda36bb225127ac8610c82ea64eb64beff28ba818"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/FileOperationFirewall.js.map",
+        "bytes": 5602,
+        "sha256": "b0e775f4b7f86a2ffb9dd15cda36bb225127ac8610c82ea64eb64beff28ba818"
+      },
+      "mtimeMs": 1791903659249.1213
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/GovernancePolicy.d.ts",
+        "bytes": 1076,
+        "sha256": "08e1187169902ab1316b38cf43b46b29a4799b12ff05c5a06036e057bdcc45bf"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/GovernancePolicy.d.ts",
+        "bytes": 1076,
+        "sha256": "08e1187169902ab1316b38cf43b46b29a4799b12ff05c5a06036e057bdcc45bf"
+      },
+      "mtimeMs": 1791903659285.412
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/GovernancePolicy.d.ts.map",
+        "bytes": 1053,
+        "sha256": "9eeacd7cc0c1836dc54ff96d90b5562eae17c8997fbc2fec7005dd510d5ca360"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/GovernancePolicy.d.ts.map",
+        "bytes": 1053,
+        "sha256": "9eeacd7cc0c1836dc54ff96d90b5562eae17c8997fbc2fec7005dd510d5ca360"
+      },
+      "mtimeMs": 1791903659284.4
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/GovernancePolicy.js",
+        "bytes": 3033,
+        "sha256": "73403668e77a44fd5cb9279ab0177b6184e5bce4e34eec80dfcbddc05b859561"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/GovernancePolicy.js",
+        "bytes": 3033,
+        "sha256": "73403668e77a44fd5cb9279ab0177b6184e5bce4e34eec80dfcbddc05b859561"
+      },
+      "mtimeMs": 1791903659279.3835
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/GovernancePolicy.js.map",
+        "bytes": 3216,
+        "sha256": "66658dabed8c92f778ccd4aacd7a55e8a6b0e92448dc1132c2dfe474d60e84b0"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/GovernancePolicy.js.map",
+        "bytes": 3216,
+        "sha256": "66658dabed8c92f778ccd4aacd7a55e8a6b0e92448dc1132c2dfe474d60e84b0"
+      },
+      "mtimeMs": 1791903659277.3857
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/HashCache.d.ts",
+        "bytes": 2145,
+        "sha256": "c475ac80ca1230d64b20a93724eff6616d49930f800a5cae8e21fdfec624da29"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/HashCache.d.ts",
+        "bytes": 2145,
+        "sha256": "c475ac80ca1230d64b20a93724eff6616d49930f800a5cae8e21fdfec624da29"
+      },
+      "mtimeMs": 1791903658382.8103
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/HashCache.d.ts.map",
+        "bytes": 969,
+        "sha256": "ccfe2a3ff04b964671989e7af736c1dd3258f46e02bbc5a05f5fcaf76a568458"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/HashCache.d.ts.map",
+        "bytes": 969,
+        "sha256": "ccfe2a3ff04b964671989e7af736c1dd3258f46e02bbc5a05f5fcaf76a568458"
+      },
+      "mtimeMs": 1791903658381.8088
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/HashCache.js",
+        "bytes": 7809,
+        "sha256": "ffa5487a66c52ef1bcb05a3a6bcc5196ba8abae6e4c67073ee85fcd3b3f00d0f"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/HashCache.js",
+        "bytes": 7809,
+        "sha256": "ffa5487a66c52ef1bcb05a3a6bcc5196ba8abae6e4c67073ee85fcd3b3f00d0f"
+      },
+      "mtimeMs": 1791903658373.3418
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/HashCache.js.map",
+        "bytes": 5135,
+        "sha256": "cb22068ec08a64b3a51321a3c32f846af155782813e20fa3897451dbddb48066"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/HashCache.js.map",
+        "bytes": 5135,
+        "sha256": "cb22068ec08a64b3a51321a3c32f846af155782813e20fa3897451dbddb48066"
+      },
+      "mtimeMs": 1791903658372.3423
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/index.d.ts",
+        "bytes": 1321,
+        "sha256": "976ea628b171a90af99e9297baf24a098d0975d3c019c5bd75777f84e24606c2"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/index.d.ts",
+        "bytes": 1321,
+        "sha256": "976ea628b171a90af99e9297baf24a098d0975d3c019c5bd75777f84e24606c2"
+      },
+      "mtimeMs": 1791903659611.7283
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/index.d.ts.map",
+        "bytes": 951,
+        "sha256": "2acf97378a7fe32257a34c37ff340101d4910d61c3052057421ec886049498c3"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/index.d.ts.map",
+        "bytes": 951,
+        "sha256": "2acf97378a7fe32257a34c37ff340101d4910d61c3052057421ec886049498c3"
+      },
+      "mtimeMs": 1791903659610.2158
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/index.js",
+        "bytes": 2896,
+        "sha256": "deff36cace0cded0f52e9cf0b56d2550f60cb0ecdf20d31c310ed82e0fefec5a"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/index.js",
+        "bytes": 2896,
+        "sha256": "deff36cace0cded0f52e9cf0b56d2550f60cb0ecdf20d31c310ed82e0fefec5a"
+      },
+      "mtimeMs": 1791903659607.2153
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/index.js.map",
+        "bytes": 620,
+        "sha256": "67e5442db0cfb3d73e980f724361ca6b0e2bd63f1a149c2642383bab53e92b3f"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/index.js.map",
+        "bytes": 620,
+        "sha256": "67e5442db0cfb3d73e980f724361ca6b0e2bd63f1a149c2642383bab53e92b3f"
+      },
+      "mtimeMs": 1791903659606.2039
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/Ledger.d.ts",
+        "bytes": 4545,
+        "sha256": "5ae54724fab5ca2f47363d6e7facfad9aee8306e464e7f3fefc4e468aabf2e2a"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/Ledger.d.ts",
+        "bytes": 4545,
+        "sha256": "5ae54724fab5ca2f47363d6e7facfad9aee8306e464e7f3fefc4e468aabf2e2a"
+      },
+      "mtimeMs": 1791903659308.91
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/Ledger.d.ts.map",
+        "bytes": 2771,
+        "sha256": "86a69ebe93f56ea37220590175b7a3a0a38f80322d32bf58f1407c15979449f7"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/Ledger.d.ts.map",
+        "bytes": 2771,
+        "sha256": "86a69ebe93f56ea37220590175b7a3a0a38f80322d32bf58f1407c15979449f7"
+      },
+      "mtimeMs": 1791903659308.3992
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/Ledger.js",
+        "bytes": 8790,
+        "sha256": "65ba22a2968655c9be12fb939bf806006b889d2a8cd38bb09176b2e80dfb78db"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/Ledger.js",
+        "bytes": 8790,
+        "sha256": "65ba22a2968655c9be12fb939bf806006b889d2a8cd38bb09176b2e80dfb78db"
+      },
+      "mtimeMs": 1791903659300.488
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/Ledger.js.map",
+        "bytes": 4908,
+        "sha256": "27d442665a14a85be598e95d5b2a031a37ff485ec6dc21a462f4e2a8d352e7ac"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/Ledger.js.map",
+        "bytes": 4908,
+        "sha256": "27d442665a14a85be598e95d5b2a031a37ff485ec6dc21a462f4e2a8d352e7ac"
+      },
+      "mtimeMs": 1791903659299.4705
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/LitePolicyCatalog.d.ts",
+        "bytes": 671,
+        "sha256": "b450ba609c0ac155eefac94e81487cb56386a59e6f9aa1d367493905da0ab46d"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/LitePolicyCatalog.d.ts",
+        "bytes": 671,
+        "sha256": "b450ba609c0ac155eefac94e81487cb56386a59e6f9aa1d367493905da0ab46d"
+      },
+      "mtimeMs": 1791903659363.257
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/LitePolicyCatalog.d.ts.map",
+        "bytes": 209,
+        "sha256": "5745d060289ebd47d110b763348a4917f4b6503960f180aedbf5f0ae6d8403d6"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/LitePolicyCatalog.d.ts.map",
+        "bytes": 209,
+        "sha256": "5745d060289ebd47d110b763348a4917f4b6503960f180aedbf5f0ae6d8403d6"
+      },
+      "mtimeMs": 1791903659361.3867
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/LitePolicyCatalog.js",
+        "bytes": 10382,
+        "sha256": "4abfd336bd4a9d26453460653fc3f75856b7320527cb6da159043724d581abce"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/LitePolicyCatalog.js",
+        "bytes": 10382,
+        "sha256": "4abfd336bd4a9d26453460653fc3f75856b7320527cb6da159043724d581abce"
+      },
+      "mtimeMs": 1791903659337.264
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/LitePolicyCatalog.js.map",
+        "bytes": 6362,
+        "sha256": "22c02f6e717326229235fca961fd91cc0e110abaafa8c9a6ebdbdaa09e3a497c"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/LitePolicyCatalog.js.map",
+        "bytes": 6362,
+        "sha256": "22c02f6e717326229235fca961fd91cc0e110abaafa8c9a6ebdbdaa09e3a497c"
+      },
+      "mtimeMs": 1791903659336.7349
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/MCPCredentialBoundary.d.ts",
+        "bytes": 1559,
+        "sha256": "c368acd3a5d7c700889c35e5c9efc9964ad9457dd17bcba72b1296824cd6ed73"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/MCPCredentialBoundary.d.ts",
+        "bytes": 1559,
+        "sha256": "c368acd3a5d7c700889c35e5c9efc9964ad9457dd17bcba72b1296824cd6ed73"
+      },
+      "mtimeMs": 1791903659375.6545
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/MCPCredentialBoundary.d.ts.map",
+        "bytes": 799,
+        "sha256": "88bf8b7b3d9185a320308c5521be95e26c7bb7d43fec909a07a599bc84a77632"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/MCPCredentialBoundary.d.ts.map",
+        "bytes": 799,
+        "sha256": "88bf8b7b3d9185a320308c5521be95e26c7bb7d43fec909a07a599bc84a77632"
+      },
+      "mtimeMs": 1791903659374.6404
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/MCPCredentialBoundary.js",
+        "bytes": 3665,
+        "sha256": "3a4ce5afa1d3c9ddc21e4f924de546b81ec8a1b2138c9be0ba0c78220c3fc897"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/MCPCredentialBoundary.js",
+        "bytes": 3665,
+        "sha256": "3a4ce5afa1d3c9ddc21e4f924de546b81ec8a1b2138c9be0ba0c78220c3fc897"
+      },
+      "mtimeMs": 1791903659370.6042
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/MCPCredentialBoundary.js.map",
+        "bytes": 2085,
+        "sha256": "908edf1cdc5cf6dac061105af2dbfb2834b28545d756c4eb4554bf46fc6f4cd3"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/MCPCredentialBoundary.js.map",
+        "bytes": 2085,
+        "sha256": "908edf1cdc5cf6dac061105af2dbfb2834b28545d756c4eb4554bf46fc6f4cd3"
+      },
+      "mtimeMs": 1791903659370.6042
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/MCPGateway.d.ts",
+        "bytes": 1331,
+        "sha256": "be58a6f09997e34b636381a7fdf2449b68a62c9e029da03113a7cb435449374e"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/MCPGateway.d.ts",
+        "bytes": 1331,
+        "sha256": "be58a6f09997e34b636381a7fdf2449b68a62c9e029da03113a7cb435449374e"
+      },
+      "mtimeMs": 1791903659442.1787
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/MCPGateway.d.ts.map",
+        "bytes": 997,
+        "sha256": "c40355ceae98fb15c583b513038c9e561003d12086b9912d6e767c2e6e2b517f"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/MCPGateway.d.ts.map",
+        "bytes": 997,
+        "sha256": "c40355ceae98fb15c583b513038c9e561003d12086b9912d6e767c2e6e2b517f"
+      },
+      "mtimeMs": 1791903659441.1804
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/MCPGateway.js",
+        "bytes": 4908,
+        "sha256": "1f93d209a74ea977167344d69b911569db9eb7590a160a54d6f68201759ebc37"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/MCPGateway.js",
+        "bytes": 4908,
+        "sha256": "1f93d209a74ea977167344d69b911569db9eb7590a160a54d6f68201759ebc37"
+      },
+      "mtimeMs": 1791903659437.1787
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/MCPGateway.js.map",
+        "bytes": 3704,
+        "sha256": "9c51e9d46e67de1ffa7fb26841c7c4568593aeecf361f5352b4aba1b3cf07fe3"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/MCPGateway.js.map",
+        "bytes": 3704,
+        "sha256": "9c51e9d46e67de1ffa7fb26841c7c4568593aeecf361f5352b4aba1b3cf07fe3"
+      },
+      "mtimeMs": 1791903659436.1655
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/MCPPolicyAnalyzer.d.ts",
+        "bytes": 1920,
+        "sha256": "04e728bfe8fc265b6823275c127c48142b95b21a587413201f6ee483a6690f28"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/MCPPolicyAnalyzer.d.ts",
+        "bytes": 1920,
+        "sha256": "04e728bfe8fc265b6823275c127c48142b95b21a587413201f6ee483a6690f28"
+      },
+      "mtimeMs": 1791903659407.309
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/MCPPolicyAnalyzer.d.ts.map",
+        "bytes": 1333,
+        "sha256": "e5ae88f931228c875a72189dd806dcc54a181550a8fddcd621229bcec0e99916"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/MCPPolicyAnalyzer.d.ts.map",
+        "bytes": 1333,
+        "sha256": "e5ae88f931228c875a72189dd806dcc54a181550a8fddcd621229bcec0e99916"
+      },
+      "mtimeMs": 1791903659406.295
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/MCPPolicyAnalyzer.js",
+        "bytes": 10043,
+        "sha256": "257eb4f978f07d44064f4b76a3a640f5f972693232222d1b775eb403ca4622b1"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/MCPPolicyAnalyzer.js",
+        "bytes": 10043,
+        "sha256": "257eb4f978f07d44064f4b76a3a640f5f972693232222d1b775eb403ca4622b1"
+      },
+      "mtimeMs": 1791903659400.77
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/MCPPolicyAnalyzer.js.map",
+        "bytes": 8428,
+        "sha256": "46bd0ffcbeeaba689ff6116fbd2be10322ae1b8b72dc725b35a49d371f98c9b7"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/MCPPolicyAnalyzer.js.map",
+        "bytes": 8428,
+        "sha256": "46bd0ffcbeeaba689ff6116fbd2be10322ae1b8b72dc725b35a49d371f98c9b7"
+      },
+      "mtimeMs": 1791903659398.244
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/MemorySession.d.ts",
+        "bytes": 3706,
+        "sha256": "0854b2c050e1cc5758753ad2cd6cb9a307f1aeaf07cfcd73496841c41a7e2e01"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/MemorySession.d.ts",
+        "bytes": 3706,
+        "sha256": "0854b2c050e1cc5758753ad2cd6cb9a307f1aeaf07cfcd73496841c41a7e2e01"
+      },
+      "mtimeMs": 1791903659472.858
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/MemorySession.d.ts.map",
+        "bytes": 2349,
+        "sha256": "c20dee0ed9627b20451f88a56a4e3a37470ed7af23445052d48a4b6019bda97f"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/MemorySession.d.ts.map",
+        "bytes": 2349,
+        "sha256": "c20dee0ed9627b20451f88a56a4e3a37470ed7af23445052d48a4b6019bda97f"
+      },
+      "mtimeMs": 1791903659470.8572
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/MemorySession.js",
+        "bytes": 4817,
+        "sha256": "c2cda00fe3577a736df57ad1a1b82e89b1e8d87caa5ee262e97d105c8d52bb2f"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/MemorySession.js",
+        "bytes": 4817,
+        "sha256": "c2cda00fe3577a736df57ad1a1b82e89b1e8d87caa5ee262e97d105c8d52bb2f"
+      },
+      "mtimeMs": 1791903659462.7969
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/MemorySession.js.map",
+        "bytes": 4132,
+        "sha256": "393a98fc6dcf11428d36221463144d8bcb1c44136aebcf3b28701517369f77ac"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/MemorySession.js.map",
+        "bytes": 4132,
+        "sha256": "393a98fc6dcf11428d36221463144d8bcb1c44136aebcf3b28701517369f77ac"
+      },
+      "mtimeMs": 1791903659460.7954
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/NetworkEgressPolicy.d.ts",
+        "bytes": 971,
+        "sha256": "ab337b30a2ed3d806281562ec01b0344e1cb8565c1f73c898f155725ef77fad0"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/NetworkEgressPolicy.d.ts",
+        "bytes": 971,
+        "sha256": "ab337b30a2ed3d806281562ec01b0344e1cb8565c1f73c898f155725ef77fad0"
+      },
+      "mtimeMs": 1791903659509.5898
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/NetworkEgressPolicy.d.ts.map",
+        "bytes": 953,
+        "sha256": "4ed9df4c0e6f06c1a6593d61334dd5c67fadd4b5385db39f29f3484dc788f8ce"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/NetworkEgressPolicy.d.ts.map",
+        "bytes": 953,
+        "sha256": "4ed9df4c0e6f06c1a6593d61334dd5c67fadd4b5385db39f29f3484dc788f8ce"
+      },
+      "mtimeMs": 1791903659507.591
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/NetworkEgressPolicy.js",
+        "bytes": 7031,
+        "sha256": "b9ae06b8a734a8204a95bdddec7b501ac978d601902ca54e023d09a22f5f53a1"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/NetworkEgressPolicy.js",
+        "bytes": 7031,
+        "sha256": "b9ae06b8a734a8204a95bdddec7b501ac978d601902ca54e023d09a22f5f53a1"
+      },
+      "mtimeMs": 1791903659498.5227
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/NetworkEgressPolicy.js.map",
+        "bytes": 6948,
+        "sha256": "d379fd52eb8d07521548826e08b3f37a6a78b33f0fe8ab64d613c21775202293"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/NetworkEgressPolicy.js.map",
+        "bytes": 6948,
+        "sha256": "d379fd52eb8d07521548826e08b3f37a6a78b33f0fe8ab64d613c21775202293"
+      },
+      "mtimeMs": 1791903659493.982
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/OutputLeakScanner.d.ts",
+        "bytes": 1526,
+        "sha256": "37999c726b6e01ee4ec184ea209509acdcf765fa5258744fb1bc93d5a03a5d9f"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/OutputLeakScanner.d.ts",
+        "bytes": 1526,
+        "sha256": "37999c726b6e01ee4ec184ea209509acdcf765fa5258744fb1bc93d5a03a5d9f"
+      },
+      "mtimeMs": 1791903658920.067
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/OutputLeakScanner.d.ts.map",
+        "bytes": 857,
+        "sha256": "8ce20cbc15fea6ab03693ece6d6cd94dfb9dadb48e02c2a4a0ac25fe9bdc87be"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/OutputLeakScanner.d.ts.map",
+        "bytes": 857,
+        "sha256": "8ce20cbc15fea6ab03693ece6d6cd94dfb9dadb48e02c2a4a0ac25fe9bdc87be"
+      },
+      "mtimeMs": 1791903658915.0537
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/OutputLeakScanner.js",
+        "bytes": 3287,
+        "sha256": "00e10b9699a1784faab1d243d6db42fa7e0730a45738686a9cc0c1c2f5b256eb"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/OutputLeakScanner.js",
+        "bytes": 3287,
+        "sha256": "00e10b9699a1784faab1d243d6db42fa7e0730a45738686a9cc0c1c2f5b256eb"
+      },
+      "mtimeMs": 1791903658907.4583
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/OutputLeakScanner.js.map",
+        "bytes": 2569,
+        "sha256": "b7ce689e48f90a3bbe958c842525bd955c86970224f2c2c1bc470f0d59261f58"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/OutputLeakScanner.js.map",
+        "bytes": 2569,
+        "sha256": "b7ce689e48f90a3bbe958c842525bd955c86970224f2c2c1bc470f0d59261f58"
+      },
+      "mtimeMs": 1791903658905.4414
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/PolicyEvaluator.d.ts",
+        "bytes": 1307,
+        "sha256": "6e106fb75507ec54d62208b51a85eb5d18ccfeae5d1dd7edc4035d89c598d4a1"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/PolicyEvaluator.d.ts",
+        "bytes": 1307,
+        "sha256": "6e106fb75507ec54d62208b51a85eb5d18ccfeae5d1dd7edc4035d89c598d4a1"
+      },
+      "mtimeMs": 1791903658772.2642
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/PolicyEvaluator.d.ts.map",
+        "bytes": 601,
+        "sha256": "d14d8c04c93f1036da50bec0c3d01abde10daf65b0332c6d4e6b7c09e22fa153"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/PolicyEvaluator.d.ts.map",
+        "bytes": 601,
+        "sha256": "d14d8c04c93f1036da50bec0c3d01abde10daf65b0332c6d4e6b7c09e22fa153"
+      },
+      "mtimeMs": 1791903658771.265
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/PolicyEvaluator.js",
+        "bytes": 3720,
+        "sha256": "33eb29ba48cfb47e6637b695d034e3a8b6f87c1548a73d102221a517cad5db30"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/PolicyEvaluator.js",
+        "bytes": 3720,
+        "sha256": "33eb29ba48cfb47e6637b695d034e3a8b6f87c1548a73d102221a517cad5db30"
+      },
+      "mtimeMs": 1791903658766.3965
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/PolicyEvaluator.js.map",
+        "bytes": 3145,
+        "sha256": "a93d029767278914c0ebc76e37d286b33e9cd6af86cb8beea56cd769f046644c"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/PolicyEvaluator.js.map",
+        "bytes": 3145,
+        "sha256": "a93d029767278914c0ebc76e37d286b33e9cd6af86cb8beea56cd769f046644c"
+      },
+      "mtimeMs": 1791903658765.3958
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/ProcessSandboxPolicy.d.ts",
+        "bytes": 1935,
+        "sha256": "1ff099581fdcba1a2276c2329845b6e8ea1d0fe2a1e122ceffb42d558157ffbb"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/ProcessSandboxPolicy.d.ts",
+        "bytes": 1935,
+        "sha256": "1ff099581fdcba1a2276c2329845b6e8ea1d0fe2a1e122ceffb42d558157ffbb"
+      },
+      "mtimeMs": 1791903659533.2358
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/ProcessSandboxPolicy.d.ts.map",
+        "bytes": 1667,
+        "sha256": "18abb3d1df46164f9512c9f842c0888d7c1e28eb15138a4e1b7a7f4b991f03ee"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/ProcessSandboxPolicy.d.ts.map",
+        "bytes": 1667,
+        "sha256": "18abb3d1df46164f9512c9f842c0888d7c1e28eb15138a4e1b7a7f4b991f03ee"
+      },
+      "mtimeMs": 1791903659531.7085
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/ProcessSandboxPolicy.js",
+        "bytes": 5662,
+        "sha256": "49e10546300fd2d2595fbb39a86196846b278235c1f1aedd00e30f122cf5c440"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/ProcessSandboxPolicy.js",
+        "bytes": 5662,
+        "sha256": "49e10546300fd2d2595fbb39a86196846b278235c1f1aedd00e30f122cf5c440"
+      },
+      "mtimeMs": 1791903659526.7107
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/ProcessSandboxPolicy.js.map",
+        "bytes": 5157,
+        "sha256": "bec08a4a79cc876f4913c04d264f1c7ab3f8010d476e76e11e65ee3c808db62e"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/ProcessSandboxPolicy.js.map",
+        "bytes": 5157,
+        "sha256": "bec08a4a79cc876f4913c04d264f1c7ab3f8010d476e76e11e65ee3c808db62e"
+      },
+      "mtimeMs": 1791903659524.6814
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/ProjectPolicy.d.ts",
+        "bytes": 3810,
+        "sha256": "04b821574490965c37aaab18ac06909706e45baba8393d4bdfae456a03abdfe6"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/ProjectPolicy.d.ts",
+        "bytes": 3810,
+        "sha256": "04b821574490965c37aaab18ac06909706e45baba8393d4bdfae456a03abdfe6"
+      },
+      "mtimeMs": 1791903658949.6191
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/ProjectPolicy.d.ts.map",
+        "bytes": 1565,
+        "sha256": "9e87e2c4ff4017e08b5aac71bb7dbafed1fb2334c5e169be01a6a87015f54505"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/ProjectPolicy.d.ts.map",
+        "bytes": 1565,
+        "sha256": "9e87e2c4ff4017e08b5aac71bb7dbafed1fb2334c5e169be01a6a87015f54505"
+      },
+      "mtimeMs": 1791903658947.6216
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/ProjectPolicy.js",
+        "bytes": 7843,
+        "sha256": "3dbab85be929e9866ce59d4627d14d5e2dd9a4eb8063cb344347a4c57660ef36"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/ProjectPolicy.js",
+        "bytes": 7843,
+        "sha256": "3dbab85be929e9866ce59d4627d14d5e2dd9a4eb8063cb344347a4c57660ef36"
+      },
+      "mtimeMs": 1791903658941.0679
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/ProjectPolicy.js.map",
+        "bytes": 5642,
+        "sha256": "57d86a7ab4d8e943feb05deecd63da64d45dc8a72fd327412d54c09cd95b0387"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/ProjectPolicy.js.map",
+        "bytes": 5642,
+        "sha256": "57d86a7ab4d8e943feb05deecd63da64d45dc8a72fd327412d54c09cd95b0387"
+      },
+      "mtimeMs": 1791903658940.0686
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/Redactor.d.ts",
+        "bytes": 2081,
+        "sha256": "0a53900e82b246f923aa46bd86771205201b81b6214eeeabeaa24c78cd5374e9"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/Redactor.d.ts",
+        "bytes": 2081,
+        "sha256": "0a53900e82b246f923aa46bd86771205201b81b6214eeeabeaa24c78cd5374e9"
+      },
+      "mtimeMs": 1791903658324.0413
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/Redactor.d.ts.map",
+        "bytes": 635,
+        "sha256": "b8fbf72c36903ff56a4695f6c231da4b01c6e6abf5c599ece5acd1358ebbc5d1"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/Redactor.d.ts.map",
+        "bytes": 635,
+        "sha256": "b8fbf72c36903ff56a4695f6c231da4b01c6e6abf5c599ece5acd1358ebbc5d1"
+      },
+      "mtimeMs": 1791903658321.5298
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/Redactor.js",
+        "bytes": 15935,
+        "sha256": "cfaf0c082c38effc48150940506edd1295ef1c85fb002795623b0b8f30c4c20f"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/Redactor.js",
+        "bytes": 15935,
+        "sha256": "cfaf0c082c38effc48150940506edd1295ef1c85fb002795623b0b8f30c4c20f"
+      },
+      "mtimeMs": 1791903658316.5164
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/Redactor.js.map",
+        "bytes": 6095,
+        "sha256": "477be74a325eedb2178919cb01bc465770a68d04cdf05ea9d20fc94204d5b445"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/Redactor.js.map",
+        "bytes": 6095,
+        "sha256": "477be74a325eedb2178919cb01bc465770a68d04cdf05ea9d20fc94204d5b445"
+      },
+      "mtimeMs": 1791903658314.5005
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/RuntimeDiscovery.d.ts",
+        "bytes": 1526,
+        "sha256": "89cb117a29d571304f13a7d97768f7375eeee4bfaac809ae7515889be1834b20"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/RuntimeDiscovery.d.ts",
+        "bytes": 1526,
+        "sha256": "89cb117a29d571304f13a7d97768f7375eeee4bfaac809ae7515889be1834b20"
+      },
+      "mtimeMs": 1791903659554.4636
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/RuntimeDiscovery.d.ts.map",
+        "bytes": 1488,
+        "sha256": "26db56c711c11bb1fc523f8b8c6d9d8c1dee8c3ac04229d22de942669504de5e"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/RuntimeDiscovery.d.ts.map",
+        "bytes": 1488,
+        "sha256": "26db56c711c11bb1fc523f8b8c6d9d8c1dee8c3ac04229d22de942669504de5e"
+      },
+      "mtimeMs": 1791903659553.9524
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/RuntimeDiscovery.js",
+        "bytes": 5072,
+        "sha256": "561bc9f2f85fb67a9ba3c5055540c60c1954ffb7b7d9e299131dca9bca76eff3"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/RuntimeDiscovery.js",
+        "bytes": 5072,
+        "sha256": "561bc9f2f85fb67a9ba3c5055540c60c1954ffb7b7d9e299131dca9bca76eff3"
+      },
+      "mtimeMs": 1791903659548.4272
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/RuntimeDiscovery.js.map",
+        "bytes": 4421,
+        "sha256": "ca6e5e3dad0dfb6717e003974621bbba76d2f4ff3d0a14ce58acbb76e12d4cee"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/RuntimeDiscovery.js.map",
+        "bytes": 4421,
+        "sha256": "ca6e5e3dad0dfb6717e003974621bbba76d2f4ff3d0a14ce58acbb76e12d4cee"
+      },
+      "mtimeMs": 1791903659547.4258
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/RuntimePolicyEngine.d.ts",
+        "bytes": 2479,
+        "sha256": "300849a7829603a5ff7095b0fd798f08d976deef923bc9d0280da8259a8d876c"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/RuntimePolicyEngine.d.ts",
+        "bytes": 2479,
+        "sha256": "300849a7829603a5ff7095b0fd798f08d976deef923bc9d0280da8259a8d876c"
+      },
+      "mtimeMs": 1791903659141.509
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/RuntimePolicyEngine.d.ts.map",
+        "bytes": 1902,
+        "sha256": "08f6f1126b8002af92f3e89eb2c15cc4ef6072ca5434d46933c8c1ae39d0f3f6"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/RuntimePolicyEngine.d.ts.map",
+        "bytes": 1902,
+        "sha256": "08f6f1126b8002af92f3e89eb2c15cc4ef6072ca5434d46933c8c1ae39d0f3f6"
+      },
+      "mtimeMs": 1791903659139.5076
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/RuntimePolicyEngine.js",
+        "bytes": 8640,
+        "sha256": "75697fc8e9bd553dfdd937d0b2ae3753dbd665bf915b9a99994aea4208338d34"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/RuntimePolicyEngine.js",
+        "bytes": 8640,
+        "sha256": "75697fc8e9bd553dfdd937d0b2ae3753dbd665bf915b9a99994aea4208338d34"
+      },
+      "mtimeMs": 1791903659132.9792
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/RuntimePolicyEngine.js.map",
+        "bytes": 6273,
+        "sha256": "1f4621d43d337ed20eb7e2e75e877bff92ed39da723d212f5feb6949cccd2b3d"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/RuntimePolicyEngine.js.map",
+        "bytes": 6273,
+        "sha256": "1f4621d43d337ed20eb7e2e75e877bff92ed39da723d212f5feb6949cccd2b3d"
+      },
+      "mtimeMs": 1791903659131.9768
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/SafeContextBuilder.d.ts",
+        "bytes": 3711,
+        "sha256": "32aad45585ae6135d583deb91f032dda99a17615224885685fb8908579119220"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/SafeContextBuilder.d.ts",
+        "bytes": 3711,
+        "sha256": "32aad45585ae6135d583deb91f032dda99a17615224885685fb8908579119220"
+      },
+      "mtimeMs": 1791903659580.987
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/SafeContextBuilder.d.ts.map",
+        "bytes": 1958,
+        "sha256": "aa0b9fe1a716781ad6e00105a9e846b46482b33e7aa2538074bc73c267d795fe"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/SafeContextBuilder.d.ts.map",
+        "bytes": 1958,
+        "sha256": "aa0b9fe1a716781ad6e00105a9e846b46482b33e7aa2538074bc73c267d795fe"
+      },
+      "mtimeMs": 1791903659579.9875
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/SafeContextBuilder.js",
+        "bytes": 9620,
+        "sha256": "0c011b4a595ac09360d9ca815f198713a706364b54e8e3e3482cbe59aa5dd88b"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/SafeContextBuilder.js",
+        "bytes": 9620,
+        "sha256": "0c011b4a595ac09360d9ca815f198713a706364b54e8e3e3482cbe59aa5dd88b"
+      },
+      "mtimeMs": 1791903659573.0652
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/SafeContextBuilder.js.map",
+        "bytes": 6874,
+        "sha256": "0d9ad85f52132ab36af3e783cf4b4dcb0743219fc9577d3ed198897dd2a6786b"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/SafeContextBuilder.js.map",
+        "bytes": 6874,
+        "sha256": "0d9ad85f52132ab36af3e783cf4b4dcb0743219fc9577d3ed198897dd2a6786b"
+      },
+      "mtimeMs": 1791903659572.0637
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/SafeMode.d.ts",
+        "bytes": 3571,
+        "sha256": "2cecba8ef2704c44afaf5ee938976984db15c6ed4765a2630122d7745ea0d315"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/SafeMode.d.ts",
+        "bytes": 3571,
+        "sha256": "2cecba8ef2704c44afaf5ee938976984db15c6ed4765a2630122d7745ea0d315"
+      },
+      "mtimeMs": 1791903658977.5974
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/SafeMode.d.ts.map",
+        "bytes": 1835,
+        "sha256": "3cf159a888263f218f0f41e63a8f4946d7104cebdda64714296d154baf146533"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/SafeMode.d.ts.map",
+        "bytes": 1835,
+        "sha256": "3cf159a888263f218f0f41e63a8f4946d7104cebdda64714296d154baf146533"
+      },
+      "mtimeMs": 1791903658975.7925
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/SafeMode.js",
+        "bytes": 8126,
+        "sha256": "f858c4f9c28ac4afe16b75b90ef4b45c37304ec3f79d35ec9f15130edf884333"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/SafeMode.js",
+        "bytes": 8126,
+        "sha256": "f858c4f9c28ac4afe16b75b90ef4b45c37304ec3f79d35ec9f15130edf884333"
+      },
+      "mtimeMs": 1791903658965.7314
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/SafeMode.js.map",
+        "bytes": 5772,
+        "sha256": "522081dd5d1f0113abca0d571fdcfe6c83c9d5d983247d9808ca6c8af364f480"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/SafeMode.js.map",
+        "bytes": 5772,
+        "sha256": "522081dd5d1f0113abca0d571fdcfe6c83c9d5d983247d9808ca6c8af364f480"
+      },
+      "mtimeMs": 1791903658964.7183
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/sensitiveFiles.d.ts",
+        "bytes": 3254,
+        "sha256": "705f3952e03055b6bb8c6431596f8aa9062e5bb48135d15582abb82f65123270"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/sensitiveFiles.d.ts",
+        "bytes": 3254,
+        "sha256": "705f3952e03055b6bb8c6431596f8aa9062e5bb48135d15582abb82f65123270"
+      },
+      "mtimeMs": 1791903659326.1836
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/sensitiveFiles.d.ts.map",
+        "bytes": 446,
+        "sha256": "1fb5efc0e8d38ccae52d3d4535c841fbcd92b8df34658f617a3e28362522fa66"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/sensitiveFiles.d.ts.map",
+        "bytes": 446,
+        "sha256": "1fb5efc0e8d38ccae52d3d4535c841fbcd92b8df34658f617a3e28362522fa66"
+      },
+      "mtimeMs": 1791903659325.1824
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/sensitiveFiles.js",
+        "bytes": 8275,
+        "sha256": "e9ff335cb9428f6725e15c18b91b3f68a82e348e2a3f7f2b22b4376884dac0ee"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/sensitiveFiles.js",
+        "bytes": 8275,
+        "sha256": "e9ff335cb9428f6725e15c18b91b3f68a82e348e2a3f7f2b22b4376884dac0ee"
+      },
+      "mtimeMs": 1791903659320.6565
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/sensitiveFiles.js.map",
+        "bytes": 2778,
+        "sha256": "cb9fd2aa05b1f75eb05cb04af777acda6ac8b16a5f6647641b08b44be18b32a6"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/sensitiveFiles.js.map",
+        "bytes": 2778,
+        "sha256": "cb9fd2aa05b1f75eb05cb04af777acda6ac8b16a5f6647641b08b44be18b32a6"
+      },
+      "mtimeMs": 1791903659318.6565
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/TaintEngine.d.ts",
+        "bytes": 1407,
+        "sha256": "e841fcdffbd27231fb0a893fe0bc9eb46d51bc202c1bf246c9b26b6650370bcd"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/TaintEngine.d.ts",
+        "bytes": 1407,
+        "sha256": "e841fcdffbd27231fb0a893fe0bc9eb46d51bc202c1bf246c9b26b6650370bcd"
+      },
+      "mtimeMs": 1791903659424.3738
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/TaintEngine.d.ts.map",
+        "bytes": 1237,
+        "sha256": "b85a8b7c2526898f2673f606df728673755088f0a26af9dbaf7056f2fcb9963f"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/TaintEngine.d.ts.map",
+        "bytes": 1237,
+        "sha256": "b85a8b7c2526898f2673f606df728673755088f0a26af9dbaf7056f2fcb9963f"
+      },
+      "mtimeMs": 1791903659422.375
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/TaintEngine.js",
+        "bytes": 2761,
+        "sha256": "826eb8f46c2261b2e2ced42dfba8c1bde76e827710ca236c56c7db618290ca86"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/TaintEngine.js",
+        "bytes": 2761,
+        "sha256": "826eb8f46c2261b2e2ced42dfba8c1bde76e827710ca236c56c7db618290ca86"
+      },
+      "mtimeMs": 1791903659417.376
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/TaintEngine.js.map",
+        "bytes": 2495,
+        "sha256": "3f29361dca84c7d879992ef8bdfa77a33cdc79966348c024808f56864110b4d6"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/TaintEngine.js.map",
+        "bytes": 2495,
+        "sha256": "3f29361dca84c7d879992ef8bdfa77a33cdc79966348c024808f56864110b4d6"
+      },
+      "mtimeMs": 1791903659416.3618
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/types.d.ts",
+        "bytes": 4452,
+        "sha256": "85bde64c396a2ccfc049c68f041d3e92c337fcc871ceac91639d8ff2628b1bb0"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/types.d.ts",
+        "bytes": 4452,
+        "sha256": "85bde64c396a2ccfc049c68f041d3e92c337fcc871ceac91639d8ff2628b1bb0"
+      },
+      "mtimeMs": 1791903658140.9568
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/types.d.ts.map",
+        "bytes": 4292,
+        "sha256": "753975b107cb5fffde119a68b17cd7a70ccbe3a2dc81895845cae2e067e349c1"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/types.d.ts.map",
+        "bytes": 4292,
+        "sha256": "753975b107cb5fffde119a68b17cd7a70ccbe3a2dc81895845cae2e067e349c1"
+      },
+      "mtimeMs": 1791903658139.4087
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/types.js",
+        "bytes": 298,
+        "sha256": "3d7d9f9a8a51ec9c98ed93cb98034f0e26454120835b63715fb8d73ae508752a"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/types.js",
+        "bytes": 298,
+        "sha256": "3d7d9f9a8a51ec9c98ed93cb98034f0e26454120835b63715fb8d73ae508752a"
+      },
+      "mtimeMs": 1791903658098.384
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/types.js.map",
+        "bytes": 114,
+        "sha256": "ed2a9407b15d8d81c29be7a1324e8def6ea97083fae233928f960986af37cc57"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/types.js.map",
+        "bytes": 114,
+        "sha256": "ed2a9407b15d8d81c29be7a1324e8def6ea97083fae233928f960986af37cc57"
+      },
+      "mtimeMs": 1791903658097.3855
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/Vault.d.ts",
+        "bytes": 3935,
+        "sha256": "83e1cccdbaee8fdbb98a624407b9fe0253e69833661be034374c66dca86f456c"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/Vault.d.ts",
+        "bytes": 3935,
+        "sha256": "83e1cccdbaee8fdbb98a624407b9fe0253e69833661be034374c66dca86f456c"
+      },
+      "mtimeMs": 1791903658880.7888
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/Vault.d.ts.map",
+        "bytes": 1338,
+        "sha256": "5f0ee051b4de8bc544d9ccbb9188659f89c67cc10cee76bb34844ef1cfba02a5"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/Vault.d.ts.map",
+        "bytes": 1338,
+        "sha256": "5f0ee051b4de8bc544d9ccbb9188659f89c67cc10cee76bb34844ef1cfba02a5"
+      },
+      "mtimeMs": 1791903658877.787
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/Vault.js",
+        "bytes": 9393,
+        "sha256": "cd9e52c0fc14d134a574689a157e154d36c477d44bfea92bf9dd92afade5b1b9"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/Vault.js",
+        "bytes": 9393,
+        "sha256": "cd9e52c0fc14d134a574689a157e154d36c477d44bfea92bf9dd92afade5b1b9"
+      },
+      "mtimeMs": 1791903658867.7417
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/Vault.js.map",
+        "bytes": 7014,
+        "sha256": "b0fed51c0e89425579923e8d727b39dca1cb615d1e5c18a0fcbb393105898c71"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/Vault.js.map",
+        "bytes": 7014,
+        "sha256": "b0fed51c0e89425579923e8d727b39dca1cb615d1e5c18a0fcbb393105898c71"
+      },
+      "mtimeMs": 1791903658866.7263
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/VaultCrypto.d.ts",
+        "bytes": 965,
+        "sha256": "19df503fb23da5e58fde3f0e55f4d459c140f28e375c321eef67c1300907beec"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/VaultCrypto.d.ts",
+        "bytes": 965,
+        "sha256": "19df503fb23da5e58fde3f0e55f4d459c140f28e375c321eef67c1300907beec"
+      },
+      "mtimeMs": 1791903659594.0435
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/VaultCrypto.d.ts.map",
+        "bytes": 384,
+        "sha256": "5efe54013d799539cbbf678b12721a72e1fee6501949a63f8755b46a8f25d920"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/VaultCrypto.d.ts.map",
+        "bytes": 384,
+        "sha256": "5efe54013d799539cbbf678b12721a72e1fee6501949a63f8755b46a8f25d920"
+      },
+      "mtimeMs": 1791903659592.044
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/VaultCrypto.js",
+        "bytes": 3334,
+        "sha256": "a76fc4ccd13c3c98aad821fa0cda8d1e7724630fb7d3d09dd565586495cd80c8"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/VaultCrypto.js",
+        "bytes": 3334,
+        "sha256": "a76fc4ccd13c3c98aad821fa0cda8d1e7724630fb7d3d09dd565586495cd80c8"
+      },
+      "mtimeMs": 1791903659589.0425
+    },
+    {
+      "original": {
+        "path": "packages/guard-core/dist/VaultCrypto.js.map",
+        "bytes": 2881,
+        "sha256": "8cb0d25cce686e54bb99360edf000de83d02947215dc7c6ce48f8f21dc6c3aae"
+      },
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-before-01/packages/guard-core/dist/VaultCrypto.js.map",
+        "bytes": 2881,
+        "sha256": "8cb0d25cce686e54bb99360edf000de83d02947215dc7c6ce48f8f21dc6c3aae"
+      },
+      "mtimeMs": 1791903659588.027
+    }
+  ],
+  "attributes": {
+    "path": ".gitattributes",
+    "bytes": 1831,
+    "sha256": "397d228bbfe069b4f0699638946e04a9ac4061119f61cbf3669c53d9d3cb4023"
+  },
+  "sourceFreshnessCause": "26 source timestamps newer than dist/index.js reported by actual H4; semantic source bytes equal committed bytes after only CRLF normalization. Origin of timestamp/line-ending changes unestablished. Real rebuild required; do not touch timestamps to bypass H4.",
+  "fixtureCause": "Both exact synthetic vendor JSON fixture raw bytes differ from their committed/pinned originals only by CRLF normalization. Actual vendor pins unchanged; no installed vendor profile or executable read.",
+  "full": {
+    "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/full-tests-01.txt",
+    "bytes": 799303,
+    "sha256": "74ccffee5a9903f148ae9c18d5d6e0d211ce605fca31698384dc667a95aa27d3"
+  },
+  "fullReceipt": {
+    "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/full-tests-01.txt.result.json",
+    "bytes": 610,
+    "sha256": "93a9d3a6bb390a758af1af20439deab64a57d6b3cbcff065113f3ce3599e5f45"
+  },
+  "scope": "All failures/sources/original generated runtime bytes preserved. No OS/process change, download, normalization of production pin checks, source semantics change, repair, or native launch."
+}

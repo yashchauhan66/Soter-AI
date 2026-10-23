@@ -1,0 +1,48 @@
+﻿{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\package-01.txt",
+    "observedAt":  "2026-10-22T18:38:28.9186448Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "packages/soterai-lite/scripts/package.cjs",
+                      "soterai-lite-0.7.0-f22h-20261022-attempt01.vsix"
+                  ],
+    "sha256":  "DE27C33CFCD197C4E72C1AB42DF6CD8E642BADC4E0B5CB48574D6F5E578380E6",
+    "file":  "node"
+}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\inspect-vsix-run-01.txt",
+    "observedAt":  "2026-10-22T18:38:38.1434495Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "-NoProfile",
+                      "-ExecutionPolicy",
+                      "Bypass",
+                      "-File",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\inspect-vsix-01.ps1",
+                      "-VsixPath",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\soterai-lite\\soterai-lite-0.7.0-f22h-20261022-attempt01.vsix",
+                      "-ExpectedVsixSha256",
+                      "578a9ef8193d6572eee314ea6b274b4e344db28837560e1cc621f12693465e3a",
+                      "-ExpectedBundleSha256",
+                      "26bef1decde9d42cd62ad4d669b502dcbbb2ada143b01b5b160c144d790e5e2a",
+                      "-InspectionName",
+                      "01"
+                  ],
+    "sha256":  "42AC1135C799A8D1388BF4C5089D20A25D44C8A72A30CA68C621D7AF5288FB1F",
+    "file":  "powershell"
+}
+powershell.exe : Frozen scoped source/test/build input changed.
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Frozen scoped s... input changed.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261022-f22h-mcp-config-08c45e2a\
+host-current-binding-01.ps1:6 char:186
++ ... Input.sha256){throw 'Frozen scoped source/test/build input changed.'}
++                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (Frozen scoped s... input changed.:String) [], RuntimeException
+    + FullyQualifiedErrorId : Frozen scoped source/test/build input changed.
+ 

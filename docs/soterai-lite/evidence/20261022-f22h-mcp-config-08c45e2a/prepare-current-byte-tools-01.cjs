@@ -1,0 +1,28 @@
+'use strict';
+const e=require('./evidence-lib-01.cjs'),parent='bcb65d52ae2f63e74a0a5f77edfc583632ddcb57';
+function put(from,to,change){const old=e.bytes(e.own(from)).toString('utf8'),text=change(old);e.assert.notEqual(text,old,to);if(to.endsWith('.cjs'))new(require('node:vm').Script)(text,{filename:to});e.fs.writeFileSync(e.own(to),text,{flag:'wx'});}
+put('prepare-acceptance-05.cjs','prepare-acceptance-06.cjs',s=>s.replaceAll("parent='0ef608959e35ec72d2d490322cbfeef8884c6069'","parent='"+parent+"'")
+ .replaceAll('check-frozen-membership-05.cjs','check-frozen-membership-06.cjs').replaceAll('source-inputs-04.json','source-inputs-05.json')
+ .replaceAll("kind==='serial'?'03':'02'","kind==='serial'?'03':'03'")
+ .replaceAll('host-fixture-validation-03.json','host-fixture-validation-04.json').replaceAll("'mcp-native-run-01'","'mcp-native-run-02'")
+ .replaceAll("'current-affected-suite-run-02'","'current-affected-suite-run-03'").replaceAll("'native-resume-run-01'","'native-resume-run-02'")
+ .replaceAll("'native-prelaunch-run-03'","'native-prelaunch-run-04'").replaceAll("'host-fixture-validation-run-03'","'host-fixture-validation-run-04'")
+ .replace("const names=['manifest-stability-guard-run-01'","const names=['fixture-fix-guard-run-01','failed-native-closure-run-02','build-native-hosts-run-02','manifest-stability-guard-run-01'")
+ .replace("const retainedFailures=['native-gates-run-01'","const retainedFailures=['native-resume-run-01','mcp-native-run-01','native-gates-run-01'")
+ .replace('const infrastructureRepair={',"const infrastructureRepair={historyReconciliation:e.fact(e.own('resume-reconciliation-01.json')),historyMetadata:e.fact(e.own('resume-git-metadata-01.json')),nativeFixtureCorrection:e.fact(e.own('native-fixture-correction-01.json')),driverComparison:e.fact(e.own('native-driver-fix-comparison-01.json')),")
+ .replace("earlierProgress:e.fact(e.own('progress-01.json'))","currentHistoryReconciliation:e.fact(e.own('resume-reconciliation-01.json')),nativeFixtureCorrection:e.fact(e.own('native-fixture-correction-01.json')),earlierProgress:e.fact(e.own('progress-01.json'))")
+ .replace('Current shared/affected workflows verified;', 'One native test-driver cleanup command corrected after primary21PASS/withdrawal failure; old failedrun retained and fresh compiler/native phases required. All unit-test files/product/runtime inputs unchanged from full3349tests3345PASS4SKIP. Git history externally changed; current parent and all664input bytes reconciled, original receipts preserved. Current shared/affected workflows verified;')
+ .replace('Parent\'+parent+\' unchanged.','Current reconciled parent\'+parent+\'.')
+ );
+put('prepare-index-01.cjs','prepare-index-02.cjs',s=>s.replaceAll("parent='0ef608959e35ec72d2d490322cbfeef8884c6069'","parent='"+parent+"'").replace("new Set(['.gitattributes'","new Set(['docs/soterai-lite/LITE-CATALOG.json','.gitattributes'"));
+put('verify-authored-whitespace-03.cjs','verify-authored-whitespace-04.cjs',s=>{
+ const start=s.indexOf("for(const name of['run-affected-hosts-04.ps1'");const end=s.indexOf("for(const row of read(own('host-template-snapshots-01.json'))",start);e.assert(start>=0&&end>start);
+ return s.slice(0,start)+`const inherited=[...['02','03','04'].flatMap(n=>read(own('host-fixture-inputs-'+n+'.json')).records)];
+for(const file of index.entries.filter(row=>row.path.startsWith(base+'/')&&/\\/run-(?:affected-hosts|functional|security)-0[345]\\.ps1$/.test(row.path))){const name=file.path.slice(base.length+1),row=inherited.find(r=>r.path===name&&r.sha256===file.sha256&&r.bytes===file.bytes);assert(row,'Pinned inherited whitespace exception required: '+name);current(file);excluded.add(file.path)}
+const archivedDriver=read(own('native-fixture-correction-01.json'));current(archivedDriver.beforeSnapshot);assert.equal(archivedDriver.beforeSnapshot.sha256,archivedDriver.before.sha256);assert.equal(archivedDriver.beforeSnapshot.bytes,archivedDriver.before.bytes);excluded.add(archivedDriver.beforeSnapshot.path);
+`+s.slice(end);
+});
+put('complete-byte-barriers-03.ps1','complete-byte-barriers-04.ps1',s=>s.replaceAll('confirm-owned-runner-exit-04.ps1','confirm-owned-runner-exit-05.ps1').replaceAll('check-frozen-membership-05.cjs','check-frozen-membership-06.cjs').replaceAll('prepare-acceptance-05.cjs','prepare-acceptance-06.cjs').replaceAll('prepare-index-01.cjs','prepare-index-02.cjs').replaceAll('verify-authored-whitespace-03.cjs','verify-authored-whitespace-04.cjs').replaceAll('feat(lite): add owner-reviewed MCP configuration scanner (F22h)','test(lite): verify MCP scanner native custody and cleanup (F22h)'));
+put('run-byte-entry-03.ps1','run-byte-entry-04.ps1',s=>s.replaceAll('complete-byte-barriers-03.ps1','complete-byte-barriers-04.ps1'));
+e.write('current-byte-tools-preparation-01.json',{status:'PREPARED_NOT_EXECUTED_CURRENT_HISTORY_BYTE_BARRIERS',parent,previousParent:'0ef608959e35ec72d2d490322cbfeef8884c6069',acceptance:'prepare-acceptance-06.cjs',index:'prepare-index-02.cjs',whitespace:'verify-authored-whitespace-04.cjs',entry:'run-byte-entry-04.ps1',scope:'New copies only. Same exact feature/expected paths/exhaustive byte checks; current parent independently reconciled, all historical commits/evidence unchanged. Source precommitted in current history; new scoped commit binds actual current acceptance, fixture cleanup and original custody. Native success/closure required before execution. Inherited archived wrapper whitespace exceptions are individually pinned against all three retained inventories; before-fix test source snapshot bound to original SHA.'});
+console.log(JSON.stringify({status:'PREPARED_CURRENT_PARENT_TOOLS_NOT_EXECUTED',parent}));

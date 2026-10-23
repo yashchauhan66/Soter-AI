@@ -9,7 +9,7 @@
   "planVersion": 1,
   "clientDate": "2026-10-13",
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
-  "scope": "F01-F10/F12-F21/F22a-g scoped DONE after current byte barriers; F11 optional absent NOT_TESTED/NOT_COVERED. ParentF22 incomplete; F22h MCP configs prepared ACTIVE, no production before transition proof. Remaining subcards/features/verification gates pending.",
+  "scope": "F01-F10/F12-F21/F22a-g scoped DONE after current byte barriers; F11 optional absent NOT_TESTED/NOT_COVERED. ParentF22 incomplete; F22h MCP configs implemented ACTIVE, current serial/artifact/native/byte gates pending. Remaining subcards/features/verification gates pending.",
   "implementationConcurrency": 1,
   "activeFeature": "F22",
   "prerequisiteBlock": {
@@ -754,17 +754,32 @@
         {
           "id": "F22h",
           "title": "MCP configs",
-          "status": "ACTIVE",
-          "result": "NOT-RUN",
+          "status": "VERIFYING",
+          "result": "PASS_SCOPED_PENDING_BYTE_BARRIERS",
           "requires": [
             "F22g"
-          ]
+          ],
+          "evidenceRoot": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a",
+          "progressEvidence": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/progress-08.json",
+          "scope": "F22h finite saved project MCP JSONC and static TOML copies only. Literal credential env/headers, complete command/URL strings, args, multiline material/comments and root-array prompt defaults; exact variable references and exact server-scoped TOML environment declarations remain unresolved. Known residuals, duplicate decoded names, malformed/dynamic/unsupported syntax withhold. TOML is a finite grammar, not full TOML/vendor schema validation; no dependency download. Strict machine family flag, owner-native file/finding selection, keyed possible-exposure metadata and canonical encrypted checkpoint-only migration/exact whole-file disclosure with saved denies; per-entry recovery refuses. Shared JSONC core preserves Editor mode including narrower reference grammar. No settings application, reference resolution, client/server/shell execution, global profile scan, live validity/AI-access/OS-boundary/human/independent claim. Unknown secrets, fragments, transforms, prior copies, original buffers and unmanaged reads remain limited. One native test-driver cleanup command corrected after primary21PASS/withdrawal failure; old failedrun retained and fresh compiler/native phases required. All unit-test files/product/runtime inputs unchanged from full3349tests3345PASS4SKIP. Git history externally changed; current parent and all664input bytes reconciled, original receipts preserved. Current shared/affected workflows verified; MCP runtime byte-identical; broker six integer-constant representation changes reviewed by exact source transformation and normalized compiled AST, with current backend144tests143PASS1SKIP and actual F14-F17 retained106 reverified; actual vendor executables not rerun for this scanner card and final exact-object V01 gates remain pending.",
+          "acceptanceEvidence": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/f22h-acceptance-01.json",
+          "currentAffectedVerification": {
+            "F06": "PASS_CURRENT_EXACT_OBJECT",
+            "F21": "PASS_CURRENT_EXACT_OBJECT",
+            "F22a": "PASS_CURRENT_EXACT_OBJECT",
+            "F22b": "PASS_CURRENT_EXACT_OBJECT",
+            "F22c": "PASS_CURRENT_EXACT_OBJECT",
+            "F22d": "PASS_CURRENT_EXACT_OBJECT",
+            "F22e": "PASS_CURRENT_EXACT_OBJECT",
+            "F22f": "PASS_CURRENT_EXACT_OBJECT",
+            "F22g": "PASS_CURRENT_EXACT_OBJECT"
+          }
         }
       ],
       "completionRule": "All required subcards pass individually before parent DONE",
       "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
       "activeSubcard": "F22h",
-      "progressEvidence": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/f22g-transition-byte-verification-01.json"
+      "progressEvidence": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/progress-08.json"
     },
     {
       "id": "F23",

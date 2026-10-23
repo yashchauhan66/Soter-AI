@@ -1,0 +1,83 @@
+﻿{"status":"PASS_CURRENT_INPUT_BYTES","files":664}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\build-native-hosts-run-01.txt",
+    "observedAt":  "2026-10-22T18:37:58.8063233Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\build-native-hosts-01.cjs",
+                      "prebuilt-native-hosts-01"
+                  ],
+    "sha256":  "BB4D591AD669CB8027ED4C1DF7C0B6E875E16BE42A0552A4F6B2CFE0B62D7A04",
+    "file":  "node"
+}
+{"status":"PASS_CURRENT_INPUT_BYTES","files":664}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\mcp-fixture-prelaunch-run-01.txt",
+    "observedAt":  "2026-10-22T18:37:59.3966998Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\verify-mcp-fixture-01.cjs"
+                  ],
+    "sha256":  "1C87E5EFED9EF7B481101D97F1CA7611F3D98A2503A23347753F38AB6F2FCB33",
+    "file":  "node"
+}
+{"status":"PASS_CURRENT_INPUT_BYTES","files":664}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\native-payload-validation-run-01.txt",
+    "observedAt":  "2026-10-22T18:38:00.5431877Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "--import",
+                      "tsx",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\validate-native-payloads-01.cjs"
+                  ],
+    "sha256":  "B6929B226BE8393F2FB4448FD31E49A57EF25C878C1D496D31D4872E55B6032F",
+    "file":  "node"
+}
+{"status":"PASS_CURRENT_INPUT_BYTES","files":664}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\prelaunch-run-02.txt",
+    "observedAt":  "2026-10-22T18:38:09.5782966Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "-NoLogo",
+                      "-NoProfile",
+                      "-ExecutionPolicy",
+                      "Bypass",
+                      "-File",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\run-prelaunch-02.ps1"
+                  ],
+    "sha256":  "A26652717C5AF1487753E66878333F66221EA19E52A967C30ABDF80C2C682FC6",
+    "file":  "powershell"
+}
+{"status":"PASS_CURRENT_INPUT_BYTES","files":664}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\candidate01-gates-run-01.txt",
+    "observedAt":  "2026-10-22T18:38:38.6112959Z",
+    "exitCode":  1,
+    "arguments":  [
+                      "-NoLogo",
+                      "-NoProfile",
+                      "-ExecutionPolicy",
+                      "Bypass",
+                      "-File",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\complete-candidate01-02.ps1"
+                  ],
+    "sha256":  "E20D341362F7536A3AAB92BE8583A481BF0A169D6BAF5866FFAE2DD937769047",
+    "file":  "powershell"
+}
+powershell.exe : Native gate stopped; retained: candidate01-gates-run-01
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Native gate sto...01-gates-run-01:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261022-f22h-mcp-config-08c45e2a\
+run-native-gates-04.ps1:10 char:34
++ ... eipt.exitCode -ne 0){throw ('Native gate stopped; retained: '+$Name)}
++                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (Native gate sto...01-gates-run-01:String) [], RuntimeException
+    + FullyQualifiedErrorId : Native gate stopped; retained: candidate01-gates-run-01
+ 

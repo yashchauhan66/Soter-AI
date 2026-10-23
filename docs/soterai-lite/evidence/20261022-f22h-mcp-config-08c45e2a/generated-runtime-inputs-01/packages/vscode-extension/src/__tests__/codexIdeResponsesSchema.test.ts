@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import {test} from 'node:test';
+import {readFileSync} from 'node:fs';
+import {join} from 'node:path';
+import {GatewayBoundary,GatewayPolicyError} from '../../../../apps/local-ai-broker/src/GatewayBoundary';
+const VALUE='TEST_ONLY_F20B_IDE_REGISTERED_VALUE';
+const fixture=()=>JSON.parse(readFileSync(join(__dirname,'fixtures/codex-ide-26.51007.21434-request-1.json'),'utf8'));
+const boundary=()=>new GatewayBoundary({version:1,values:[VALUE],codexResponses:true} as never);
+const code=(value:string)=>(e:unknown)=>e instanceof GatewayPolicyError&&e.code===value;
+test('F20B actual IDE request has no top-level instructions; preserve body exactly',()=>{const body=fixture();assert.equal(Object.hasOwn(body,'instructions'),false);assert.deepEqual(JSON.parse(boundary().prepareRequest('codex' as never,body).canonical),body);});
+for(const value of[null,42,{},[]])test('F20B malformed present instructions refused '+JSON.stringify(value),()=>{assert.throws(()=>boundary().prepareRequest('codex' as never,{...fixture(),instructions:value}),code('gateway_schema_unsupported'));});
+for(const carrier of['text','metadata','schema','cache','instructions','encoded','ordered'])test('F20B actual IDE registered carrier withheld '+carrier,()=>{const body=fixture();if(carrier==='text')body.input.at(-1).content[0].text=VALUE;if(carrier==='metadata')body.client_metadata.fixture=VALUE;if(carrier==='schema')body.tools[0].parameters.properties[VALUE]={type:'string'};if(carrier==='cache')body.prompt_cache_key=VALUE;if(carrier==='instructions')body.instructions=VALUE;if(carrier==='encoded')body.input.at(-1).content[0].text=Buffer.from(VALUE).toString('base64');if(carrier==='ordered')body.input.at(-1).content=[{type:'input_text',text:VALUE.slice(0,17)},{type:'input_text',text:VALUE.slice(17)}];assert.throws(()=>boundary().prepareRequest('codex' as never,body),code('gateway_sensitive'));});
+test('F20B absent instructions does not admit unknown or server-side carriers',()=>{for(const extra of[{previous_response_id:'resp_public'},{background:true},{stream:false},{store:true},{unknown:'public'}])assert.throws(()=>boundary().prepareRequest('codex' as never,{...fixture(),...extra}),code('gateway_schema_unsupported'));});
+test('F20B IDE traffic still requires the explicit Responses capability',()=>{assert.throws(()=>new GatewayBoundary({version:1,values:[VALUE]}).prepareRequest('codex' as never,fixture()),code('gateway_policy_unknown'));});

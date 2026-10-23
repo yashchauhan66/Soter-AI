@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "phase": "restart",
+  "syntheticOnly": true,
+  "hostVersion": "1.143.0",
+  "extensionBundleSha256": "26bef1decde9d42cd62ad4d669b502dcbbb2ada143b01b5b160c144d790e5e2a",
+  "currentDeveloperBundleSha256": "26bef1decde9d42cd62ad4d669b502dcbbb2ada143b01b5b160c144d790e5e2a",
+  "hostProbeSha256": "1a8296f7f654824debeb3f4c306d08e9db921e0dda7ec9df01e706df4f001947",
+  "observations": [
+    {
+      "id": "F22G-N01",
+      "scope": "Restart reuses keys/ledger and keeps exact masked source without startup read",
+      "status": "PASS"
+    },
+    {
+      "id": "F22G-N02",
+      "scope": "No stale family finding authority survives restart",
+      "status": "PASS"
+    },
+    {
+      "id": "F22G-N03",
+      "scope": "Actual canonical encrypted backup command recovers Editor after restart disclosure",
+      "status": "PASS"
+    },
+    {
+      "id": "F22G-N04",
+      "scope": "Fresh native review reestablishes two metadata findings after explicit recovery",
+      "status": "PASS"
+    }
+  ],
+  "passed": 4,
+  "failed": 0,
+  "notRun": 0,
+  "sourceDocumentCalls": 0,
+  "sourceDocumentEvents": 0,
+  "secretStorageStores": 0,
+  "reviews": [
+    {
+      "action": "Restore raw values",
+      "safe": true
+    },
+    {
+      "action": "Analyze saved project files",
+      "safe": true
+    }
+  ],
+  "metadataDocuments": 2,
+  "trace": [
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 394.2094000000002
+    },
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 402.9848000000002
+    },
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 782.3204000000001
+    },
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 1579.2031000000006
+    },
+    {
+      "event": "command-start-editorSecretScannerStatus",
+      "milliseconds": 1826.9495000000006
+    },
+    {
+      "event": "command-end-editorSecretScannerStatus",
+      "milliseconds": 1830.161,
+      "status": "OWNER_REVIEW_REQUIRED"
+    },
+    {
+      "event": "command-start-reviewEditorSecretVault",
+      "milliseconds": 1834.3423000000003
+    },
+    {
+      "event": "command-end-reviewEditorSecretVault",
+      "milliseconds": 1837.2107000000005,
+      "status": "REVIEW_FILES_FIRST"
+    },
+    {
+      "event": "command-start-restoreFileFromBackup",
+      "milliseconds": 1837.5046000000002
+    },
+    {
+      "event": "command-end-restoreFileFromBackup",
+      "milliseconds": 2189.8365000000003,
+      "status": "VOID"
+    },
+    {
+      "event": "command-start-reviewEditorSecrets",
+      "milliseconds": 2195.1401000000005
+    },
+    {
+      "event": "command-end-reviewEditorSecrets",
+      "milliseconds": 3020.7037,
+      "status": "ANALYZED",
+      "files": 1,
+      "findings": 3
+    },
+    {
+      "event": "command-start-openHygieneExposureLedger",
+      "milliseconds": 3020.7650000000003
+    },
+    {
+      "event": "command-end-openHygieneExposureLedger",
+      "milliseconds": 3614.4040000000005,
+      "status": "METADATA"
+    }
+  ],
+  "independence": "LOW",
+  "ownerPresence": "SCRIPTED_NATIVE_API_DECISIONS_NOT_HUMAN_REVIEW",
+  "notTested": [
+    "Config application/variable resolution/task/debug/client/shell execution and credential validity",
+    "Other config filenames/expressions, user settings and dynamic evaluation",
+    "Human usability/accessibility",
+    "Live credentials or provider rotation",
+    "OS custody/unmanaged native reads/uploads"
+  ]
+}

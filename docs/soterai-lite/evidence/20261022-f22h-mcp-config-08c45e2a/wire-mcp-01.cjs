@@ -1,0 +1,44 @@
+'use strict';
+const e=require('./evidence-lib-01.cjs'),root=e.path.join(e.repo,'packages/vscode-extension/src');
+function edit(name,change){const file=e.path.join(root,name),old=e.fs.readFileSync(file,'utf8');e.fs.writeFileSync(e.own(name.replaceAll('/','-')+'.before-01.txt'),old,{flag:'wx'});const next=change(old);e.assert.notEqual(next,old,name);require('@babel/parser').parse(next,{sourceType:'module',plugins:['typescript']});e.fs.writeFileSync(file,next);}
+const imports='import { mcpFormatForPath, MCP_WORKSPACE_GLOBS } from "../config-scanners/McpSecretPlan";\nimport { mcpScannerEnabled } from "../config-scanners/McpScannerFlags";\n';
+edit('firewall/VaultMigrationPlan.ts',s=>s.replace('export interface PrivateVaultCandidate','import { createMcpSecretPlan, type McpFormat } from "../config-scanners/McpSecretPlan";\n\nexport interface PrivateVaultCandidate').replace(' | EditorFormat):',' | EditorFormat | McpFormat):').replace('if (sourceSyntax === "editor-jsonc")','if (sourceSyntax === "mcp-jsonc" || sourceSyntax === "mcp-toml") return createMcpSecretPlan(text, sourceSyntax, generation);\n        if (sourceSyntax === "editor-jsonc")'));
+edit('hygiene/HygieneAnalysis.ts',s=>imports.split('\n')[0]+'\n'+s.replace('function analyze(input:', 'export function analyzeMcpText(input: HygieneInput, key: Buffer): Readonly<HygieneAnalysis> { return analyze(input, key, "mcp"); }\nfunction analyze(input:').replace(' | "editor"):',' | "editor" | "mcp"):').replace('family === "editor" ? editorFormatForPath(input.source)', 'family === "mcp" ? mcpFormatForPath(input.source) : family === "editor" ? editorFormatForPath(input.source)'));
+edit('hygiene/HygieneExposureLedger.ts',s=>s.replace('analyzeEditorText }','analyzeEditorText, analyzeMcpText }').replace('analyzeEditor: (input:', 'analyzeMcp: (input: HygieneInput) => { if (!alive) return hygieneUnavailable(); return analyzeMcpText(input, scopedKey); },\n                analyzeEditor: (input:'));
+edit('firewall/VaultManager.ts',s=>{
+ s=imports+s;s=s.replace('    private async migrateSelected(', '    async migrateMcp(uri: vscode.Uri, enabled: () => boolean): Promise<number> {\n        return this.migrateSelected(uri, () => mcpScannerEnabled() && hygieneAssistantEnabled() && enabled() === true, false, false, false, false, false, false, false, true);\n    }\n    private async migrateSelected(');
+ s=s.replace('editorMode = false): Promise<number>', 'editorMode = false, mcpMode = false): Promise<number>');
+ s=s.replace('[sourceMode, containerMode, terraformMode, registryMode, serviceAccountMode, ciMode, editorMode]', '[sourceMode, containerMode, terraformMode, registryMode, serviceAccountMode, ciMode, editorMode, mcpMode]');
+ s=s.replace('editorMode ? editorFormatForPath(relative)', 'mcpMode ? mcpFormatForPath(relative) : editorMode ? editorFormatForPath(relative)').replaceAll('|| editorMode)', '|| editorMode || mcpMode)').replaceAll('&& !editorMode &&','&& !editorMode && !mcpMode &&');
+ return s.replace('            if (editorMode) plan.candidates', '            if (mcpMode) plan.candidates.forEach((candidate, ordinal) => { candidate.key = "MCP_VALUE_" + (ordinal + 1); });\n            if (editorMode) plan.candidates');
+});
+edit('hygiene/HygieneController.ts',s=>{
+ s=imports+s;s=s.replace(' | "editor" }',' | "editor" | "mcp" }');
+ s=s.replace('(this.options.family !== "editor" || editorScannerEnabled());','(this.options.family !== "editor" || editorScannerEnabled()) && (this.options.family !== "mcp" || mcpScannerEnabled());');
+ s=s.replace('        : this.options.family === "editor" ?', '        : this.options.family === "mcp" ? "Saved project MCP JSONC and finite TOML copies only; no config execution, application, variable resolution, client/server/shell execution or request. Unsupported syntax/expressions withhold. Restoration uses the reviewed encrypted whole-file checkpoint; credential validity and AI access are unverified."\n        : this.options.family === "editor" ?');
+ s=s.replaceAll('editorMode = this.options.family === "editor",', 'editorMode = this.options.family === "editor", mcpMode = this.options.family === "mcp",');
+ s=s.replaceAll('&& !editorMode &&','&& !editorMode && !mcpMode &&').replaceAll('|| editorMode)', '|| editorMode || mcpMode)');
+ s=s.replace('editorMode ? editorFormatForPath(source)', 'mcpMode ? mcpFormatForPath(source) : editorMode ? editorFormatForPath(source)').replace('editorMode ? editorFormatForPath(relative)', 'mcpMode ? mcpFormatForPath(relative) : editorMode ? editorFormatForPath(relative)');
+ s=s.replace('editorMode ? analyzer.analyzeEditor(input)', 'mcpMode ? analyzer.analyzeMcp(input) : editorMode ? analyzer.analyzeEditor(input)');
+ s=s.replace('this.options.family === "editor" ? EDITOR_WORKSPACE_GLOBS', 'this.options.family === "mcp" ? MCP_WORKSPACE_GLOBS : this.options.family === "editor" ? EDITOR_WORKSPACE_GLOBS');
+ s=s.replace('editorMode ? "UNSUPPORTED_EDITOR_CONFIG"', 'mcpMode ? "UNSUPPORTED_MCP_CONFIG" : editorMode ? "UNSUPPORTED_EDITOR_CONFIG"');
+ s=s.replace('editorMode ? "Analyze saved launch/tasks/settings JSONC locally?"', 'mcpMode ? "Analyze saved project MCP JSONC/TOML copies locally?" : editorMode ? "Analyze saved launch/tasks/settings JSONC locally?"');
+ s=s.replace('                : editorMode ? ', '                : mcpMode ? "Review up to128 saved project MCP JSONC/TOML copies/64KiB each/1MiB analyzed text. Finite parse-only grammar; malformed, duplicate or unsupported expressions withhold. No home/global config, config application, variable/input/command resolution, client/server/shell execution or request. Repository values cannot relax machine safety policy. A separate reviewed vault migration replaces whole secret strings and may interrupt clients until you configure secret loading manually. Disclosure restores the entire encrypted original checkpoint and keeps saved denies. No value-bearing env file is generated."\n                : editorMode ? ');
+ return s.replace('this.options.family === "editor" ? await this.#vault.migrateEditor', 'this.options.family === "mcp" ? await this.#vault.migrateMcp(binding.uri, valid) : this.options.family === "editor" ? await this.#vault.migrateEditor');
+});
+edit('extension.ts',s=>s.replace('import { registerEditorScanner }','import { registerMcpScanner } from "./config-scanners/mcpCommands";\nimport { registerEditorScanner }').replace('    registerEditorScanner(context);','    registerEditorScanner(context);\n    registerMcpScanner(context);'));
+const dir=e.path.join(root,'config-scanners');
+for(const [source,target] of [['EditorScannerFlags.ts','McpScannerFlags.ts'],['editorCommands.ts','mcpCommands.ts']]){
+ let text=e.fs.readFileSync(e.path.join(dir,source),'utf8').replaceAll('Editor','Mcp').replaceAll('editorScanner','mcpScanner').replaceAll('editorSecretScannerStatus','mcpSecretScannerStatus').replaceAll('family: "editor"','family: "mcp"').replaceAll('lite.configScanner.editor','lite.configScanner.mcp');
+ text=text.replaceAll('Mcp JSONC','MCP JSONC/TOML').replace('"MCP JSONC/TOML": ["json"]','"MCP JSONC/TOML": ["json", "toml"]');
+ e.fs.writeFileSync(e.path.join(dir,target),text,{flag:'wx'});
+}
+for(const name of ['packages/vscode-extension/package.json','packages/soterai-lite/package.json']){
+ const file=e.path.join(e.repo,name),old=e.fs.readFileSync(file,'utf8'),p=JSON.parse(old),flag='soterai.lite.configScanner.mcp';e.assert(!p.contributes.configuration.properties[flag]);
+ e.fs.writeFileSync(e.own(name.replaceAll('/','-')+'.before-01.txt'),old,{flag:'wx'});
+ const template=p.contributes.configuration.properties['soterai.lite.configScanner.editor'];p.contributes.configuration.properties[flag]={...template,description:'Review finite saved project MCP JSONC/TOML copies with native owner consent and encrypted checkpoint-only recovery. No config application, variable resolution or client execution. Repository values cannot enable an owner-disabled scanner.'};
+ p.capabilities.untrustedWorkspaces.restrictedConfigurations.push(flag);
+ for(const command of p.contributes.commands.filter(c=>/soterai\.(?:reviewWorkspaceEditorSecrets|reviewEditorSecrets|reviewEditorSecretVault|restoreEditorSecretVault|editorSecretScannerStatus)$/.test(c.command))){const c=JSON.parse(JSON.stringify(command));c.command=c.command.replaceAll('Editor','Mcp').replaceAll('editorSecret','mcpSecret');c.title=c.title.replaceAll('Editor','MCP').replaceAll('JSONC','JSONC/TOML');p.contributes.commands.push(c);p.contributes.menus.commandPalette.push({command:c.command,when:'soterai.advancedCommands'});if(p.activationEvents.includes('onCommand:'+command.command))p.activationEvents.push('onCommand:'+c.command);}
+ e.fs.writeFileSync(file,JSON.stringify(p,null,2)+'\n');
+}
+console.log('MCP canonical authority, strict flag, owner commands and both manifests wired.');

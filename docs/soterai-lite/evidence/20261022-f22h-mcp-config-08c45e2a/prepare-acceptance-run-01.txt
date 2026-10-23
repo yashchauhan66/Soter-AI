@@ -1,0 +1,36 @@
+﻿{"status":"PASS_FROZEN_INPUT_BYTES_AND_TEST_BACKEND_MEMBERSHIP","files":664,"testAndBackendFiles":335}
+node.exe : node:assert:95
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (node:assert:95:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  throw new AssertionError(obj);
+  ^
+
+AssertionError [ERR_ASSERTION]: local-ai-broker.js
++ actual - expected
+
++ '8f736cc52495c12b62f56be96f5338e27df31308bf2426c119baad1d5cbfa882'
+- 'b45a4e373b5c44d13cfc4b96189af5c674ec29d0d0b45bb0326ab7e9a9e357f0'
+
+    at Object.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261022-f
+22h-mcp-config-08c45e2a\prepare-acceptance-06.cjs:16:75)
+    at Module._compile (node:internal/modules/cjs/loader:1730:14)
+    at Object..js (node:internal/modules/cjs/loader:1895:10)
+    at Module.load (node:internal/modules/cjs/loader:1465:32)
+    at Function._load (node:internal/modules/cjs/loader:1282:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: '8f736cc52495c12b62f56be96f5338e27df31308bf2426c119baad1d5cbfa882',
+  expected: 'b45a4e373b5c44d13cfc4b96189af5c674ec29d0d0b45bb0326ab7e9a9e357f0',
+  operator: 'strictEqual'
+}
+
+Node.js v22.16.0

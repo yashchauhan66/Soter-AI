@@ -1,0 +1,107 @@
+{
+  "status": "PASS_DIAGNOSED_BUILDER_EOL_ONLY_CHANGE_NO_CODE_LAUNCH",
+  "fullTested": {
+    "path": "packages/soterai-lite/package.json",
+    "bytes": 127855,
+    "sha256": "9f0a5153851f867eb5c34ffe9bb5fa8e0adfc7d7f1975553ab71efd44c0a40d0"
+  },
+  "currentBuilt": {
+    "path": "packages/soterai-lite/package.json",
+    "bytes": 124274,
+    "sha256": "c885cd67e52f2f2fca2b77f5bcfb47f87bab3e94b3e309615e9bd7d0bdd98489"
+  },
+  "currentSnapshot": {
+    "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/manifest-format-before-01/current-built.json.txt",
+    "bytes": 124274,
+    "sha256": "c885cd67e52f2f2fca2b77f5bcfb47f87bab3e94b3e309615e9bd7d0bdd98489"
+  },
+  "reconstructedFullTestedSnapshot": {
+    "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/manifest-format-before-01/full-tested-representation.json.txt",
+    "bytes": 127855,
+    "sha256": "9f0a5153851f867eb5c34ffe9bb5fa8e0adfc7d7f1975553ab71efd44c0a40d0"
+  },
+  "reconstruction": "Deterministically replace current LF with CRLF; resulting bytes and length exactly match the known full-tested frozen hash. Reconstructed representation, not a raw before-build capture.",
+  "formatOnly": true,
+  "jsonDataEqual": true,
+  "otherFrozenInputsUnchanged": 663,
+  "buildBehavior": "Existing Lite build.cjs serializes canonical contributions/activation/capabilities with JSON.stringify and LF, then atomically updates the operational Lite manifest. Source frozen before build used its CRLF representation. No contribution/default/activation/capability/data change; exact byte guard correctly stopped before ownedCode launch.",
+  "artifact": {
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-f22h-20261022-attempt01.vsix",
+    "bytes": 1664871,
+    "sha256": "578a9ef8193d6572eee314ea6b274b4e344db28837560e1cc621f12693465e3a"
+  },
+  "inspection": {
+    "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/vsix-inspection-01.json",
+    "bytes": 473179,
+    "sha256": "5368e32750daee0eacd2cf3f88aac3df5d1fb5cb1c3b485bcb7d7e45c798921e"
+  },
+  "package": {
+    "output": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\package-01.txt",
+    "observedAt": "2026-10-22T18:38:28.9186448Z",
+    "exitCode": 0,
+    "arguments": [
+      "packages/soterai-lite/scripts/package.cjs",
+      "soterai-lite-0.7.0-f22h-20261022-attempt01.vsix"
+    ],
+    "sha256": "DE27C33CFCD197C4E72C1AB42DF6CD8E642BADC4E0B5CB48574D6F5E578380E6",
+    "file": "node",
+    "log": {
+      "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/package-01.txt",
+      "bytes": 1895,
+      "sha256": "de27c33cfcd197c4e72c1ab42df6cd8e642badc4e0b5cb48574d6f5e578380e6"
+    },
+    "receipt": {
+      "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/package-01.txt.result.json",
+      "bytes": 531,
+      "sha256": "04fa32b4001d836219a1651e5f90a888c7984ac243566d8953e0f0fef6945002"
+    }
+  },
+  "content": {
+    "output": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\inspect-vsix-run-01.txt",
+    "observedAt": "2026-10-22T18:38:38.1434495Z",
+    "exitCode": 0,
+    "arguments": [
+      "-NoProfile",
+      "-ExecutionPolicy",
+      "Bypass",
+      "-File",
+      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\inspect-vsix-01.ps1",
+      "-VsixPath",
+      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\soterai-lite\\soterai-lite-0.7.0-f22h-20261022-attempt01.vsix",
+      "-ExpectedVsixSha256",
+      "578a9ef8193d6572eee314ea6b274b4e344db28837560e1cc621f12693465e3a",
+      "-ExpectedBundleSha256",
+      "26bef1decde9d42cd62ad4d669b502dcbbb2ada143b01b5b160c144d790e5e2a",
+      "-InspectionName",
+      "01"
+    ],
+    "sha256": "42AC1135C799A8D1388BF4C5089D20A25D44C8A72A30CA68C621D7AF5288FB1F",
+    "file": "powershell",
+    "log": {
+      "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/inspect-vsix-run-01.txt",
+      "bytes": 1928,
+      "sha256": "42ac1135c799a8d1388bf4c5089d20a25d44c8a72a30ca68c621d7af5288fb1f"
+    },
+    "receipt": {
+      "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/inspect-vsix-run-01.txt.result.json",
+      "bytes": 1263,
+      "sha256": "85044ae971d9d4b8c5f3d7b3c653a9dee9b0e3e362b7340ec1338f4073b2ab98"
+    }
+  },
+  "nativePipelineFailure": {
+    "raw": {
+      "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/native-gates-run-01.txt",
+      "bytes": 4639,
+      "sha256": "b85739135e7838eb3b416f0717b6b8cf3e19c2d619dca876722e54679d8a01fe"
+    },
+    "receipt": {
+      "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/native-gates-run-01.txt.result.json",
+      "bytes": 759,
+      "sha256": "5d42438c62341c1ae241efe984731365b3f53d24ac164724abdeb61b79aab686"
+    },
+    "innerExitCode": 1
+  },
+  "nativeBehaviorVerified": false,
+  "actualMcpCodeLaunches": 0,
+  "scope": "Retain built attempt01/contentPASS and pipelineFAIL separately. No blind repinning, source/test/runtime/policy weakening, secret/profile/OS/process changes. Need stable exact manifest retention and current source guard binding before any native run."
+}

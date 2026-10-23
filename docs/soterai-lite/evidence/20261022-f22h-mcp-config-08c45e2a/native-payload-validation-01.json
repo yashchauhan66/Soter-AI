@@ -1,0 +1,23 @@
+{
+  "status": "PASS_PRELAUNCH_COMPONENT_PAYLOADS_ONLY",
+  "source": {
+    "path": "packages/vscode-extension/src/__tests__/host/liteMcpScanner.host.ts",
+    "bytes": 22644,
+    "sha256": "9ce014d396809409a4b9aa740c698960556a1f63a9dd591758ec3beaf5f5740c"
+  },
+  "files": 5,
+  "findings": 4,
+  "publicControls": 2,
+  "scopes": [
+    "JSONC multiline key/credential URL",
+    "TOML adjacent credential arg/public args",
+    "JSONC password input default/exact reference and unexecuted policy weakening",
+    "uppercase JSONC/public variable references",
+    "public TOML environment declarations"
+  ],
+  "nativeBehaviorVerified": false,
+  "configApplications": 0,
+  "referenceResolutions": 0,
+  "clientServerShellExecutions": 0,
+  "independence": "LOW"
+}

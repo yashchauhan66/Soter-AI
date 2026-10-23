@@ -1,0 +1,67 @@
+{
+  "status": "REPAIRED_NOT_RETESTED",
+  "improvementRound": 2,
+  "diagnosis": {
+    "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/full-failure-diagnostics-01.json",
+    "bytes": 167160,
+    "sha256": "a905b98725dcdedc65448d89ea4a5d0890dc434c65c973f36cd60bf08927384d"
+  },
+  "closure": {
+    "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/durable-serial-failed-exit-01.json",
+    "bytes": 874,
+    "sha256": "d1699b18eb4b7f959366f630e1b1bf01be4491e9d481e8bdf1156bb98103cdf5"
+  },
+  "fixtures": [
+    {
+      "before": {
+        "path": "packages/vscode-extension/src/__tests__/fixtures/codex-ide-26.51007.21434-manifest.json",
+        "bytes": 7808,
+        "sha256": "ce1e0d5cda96c1c60e0d9191ac46900cb3c3fb0d81a76d11740a97372b0e681d"
+      },
+      "after": {
+        "path": "packages/vscode-extension/src/__tests__/fixtures/codex-ide-26.51007.21434-manifest.json",
+        "bytes": 7510,
+        "sha256": "10044df52cde43b8e7a98fd6f9c8b159db2283b3bee3a1f12ed7caf44b8d498c"
+      },
+      "preserved": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/full-failure-before-01/codex-ide-26.51007.21434-manifest.json.observed.txt",
+        "bytes": 7808,
+        "sha256": "ce1e0d5cda96c1c60e0d9191ac46900cb3c3fb0d81a76d11740a97372b0e681d"
+      },
+      "committed": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/full-failure-before-01/codex-ide-26.51007.21434-manifest.json.committed.txt",
+        "bytes": 7510,
+        "sha256": "10044df52cde43b8e7a98fd6f9c8b159db2283b3bee3a1f12ed7caf44b8d498c"
+      }
+    },
+    {
+      "before": {
+        "path": "packages/vscode-extension/src/__tests__/fixtures/codex-ide-26.51007.21434-runtime-package.json",
+        "bytes": 226,
+        "sha256": "f2fd3028e915fc8f9e7b4ca20ef7a32898270f4c2585d98b3a8d5ba6a93bae93"
+      },
+      "after": {
+        "path": "packages/vscode-extension/src/__tests__/fixtures/codex-ide-26.51007.21434-runtime-package.json",
+        "bytes": 226,
+        "sha256": "f2fd3028e915fc8f9e7b4ca20ef7a32898270f4c2585d98b3a8d5ba6a93bae93"
+      },
+      "preserved": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/full-failure-before-01/codex-ide-26.51007.21434-runtime-package.json.observed.txt",
+        "bytes": 226,
+        "sha256": "f2fd3028e915fc8f9e7b4ca20ef7a32898270f4c2585d98b3a8d5ba6a93bae93"
+      },
+      "committed": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/full-failure-before-01/codex-ide-26.51007.21434-runtime-package.json.committed.txt",
+        "bytes": 226,
+        "sha256": "f2fd3028e915fc8f9e7b4ca20ef7a32898270f4c2585d98b3a8d5ba6a93bae93"
+      }
+    }
+  ],
+  "attributes": {
+    "path": ".gitattributes",
+    "bytes": 2151,
+    "sha256": "f8c1237ddf5b8128778bbdba1857f31879a4600c96512d023d935134bea86a7a"
+  },
+  "guardCoreBuild": "PENDING_REAL_COMPILER_BUILD_FROM_UNCHANGED_SEMANTIC_SOURCE",
+  "scope": "Restore only exact pinned synthetic JSON fixture representations from verified committed bytes, retaining observed CRLF originals. Exact raw vendor pin verification code remains unchanged. Append three scoped -text attributes; preserve existing attributes. No checkout/reset/download/vendor/global-profile/OS changes or timestamp touch."
+}

@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "phase": "restart",
+  "syntheticOnly": true,
+  "hostVersion": "1.143.0",
+  "extensionBundleSha256": "26bef1decde9d42cd62ad4d669b502dcbbb2ada143b01b5b160c144d790e5e2a",
+  "currentDeveloperBundleSha256": "26bef1decde9d42cd62ad4d669b502dcbbb2ada143b01b5b160c144d790e5e2a",
+  "hostProbeSha256": "dc4cd1ffdb1df21d7ab2059c749f53d0d171564013802276181f46bd58ab2a74",
+  "observations": [
+    {
+      "id": "F22D-N01",
+      "scope": "Restart reuses keys/ledger and keeps exact masked source without startup read",
+      "status": "PASS"
+    },
+    {
+      "id": "F22D-N02",
+      "scope": "No stale family finding authority survives restart",
+      "status": "PASS"
+    },
+    {
+      "id": "F22D-N03",
+      "scope": "Actual canonical encrypted backup command recovers Registry after restart disclosure",
+      "status": "PASS"
+    },
+    {
+      "id": "F22D-N04",
+      "scope": "Fresh native review reestablishes two metadata findings after explicit recovery",
+      "status": "PASS"
+    }
+  ],
+  "passed": 4,
+  "failed": 0,
+  "notRun": 0,
+  "sourceDocumentCalls": 0,
+  "sourceDocumentEvents": 0,
+  "secretStorageStores": 0,
+  "reviews": [
+    {
+      "action": "Restore raw values",
+      "safe": true
+    },
+    {
+      "action": "Analyze saved project files",
+      "safe": true
+    }
+  ],
+  "metadataDocuments": 2,
+  "trace": [
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 729.0612999999998
+    },
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 913.9706000000001
+    },
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 1158.7208999999998
+    },
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 1482.0822000000003
+    },
+    {
+      "event": "command-start-registrySecretScannerStatus",
+      "milliseconds": 1970.9176999999995
+    },
+    {
+      "event": "command-end-registrySecretScannerStatus",
+      "milliseconds": 1975.5652999999998,
+      "status": "OWNER_REVIEW_REQUIRED"
+    },
+    {
+      "event": "command-start-reviewRegistrySecretVault",
+      "milliseconds": 1980.8710999999998
+    },
+    {
+      "event": "command-end-reviewRegistrySecretVault",
+      "milliseconds": 1986.1182000000003,
+      "status": "REVIEW_FILES_FIRST"
+    },
+    {
+      "event": "command-start-restoreFileFromBackup",
+      "milliseconds": 1986.6785999999997
+    },
+    {
+      "event": "command-end-restoreFileFromBackup",
+      "milliseconds": 2571.9661,
+      "status": "VOID"
+    },
+    {
+      "event": "command-start-reviewRegistrySecrets",
+      "milliseconds": 2579.7155
+    },
+    {
+      "event": "command-end-reviewRegistrySecrets",
+      "milliseconds": 3621.3372999999997,
+      "status": "ANALYZED",
+      "files": 1,
+      "findings": 2
+    },
+    {
+      "event": "command-start-openHygieneExposureLedger",
+      "milliseconds": 3621.3874
+    },
+    {
+      "event": "command-end-openHygieneExposureLedger",
+      "milliseconds": 4196.938,
+      "status": "METADATA"
+    }
+  ],
+  "independence": "LOW",
+  "ownerPresence": "SCRIPTED_NATIVE_API_DECISIONS_NOT_HUMAN_REVIEW",
+  "notTested": [
+    "Registry uploads/client execution/account validity",
+    "Unsupported INI behavior/external references/home profiles",
+    "Human usability/accessibility",
+    "Live credentials or provider rotation",
+    "OS custody/unmanaged native reads/uploads"
+  ]
+}

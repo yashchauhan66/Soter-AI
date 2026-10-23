@@ -1,0 +1,74 @@
+{
+  "status": "F22H_ACTIVE_ALL_NATIVE_PASS_REVIEWED_BROKER_DRIFT_BYTE_RETRY_PENDING",
+  "native": {
+    "output": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\native-resume-run-02.txt",
+    "observedAt": "2026-10-23T03:41:23.2346855Z",
+    "exitCode": 0,
+    "arguments": [
+      "-NoLogo",
+      "-NoProfile",
+      "-ExecutionPolicy",
+      "Bypass",
+      "-File",
+      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\resume-candidate01-02.ps1"
+    ],
+    "sha256": "A55BCD03A7AACFD611A7FAB186D2986C01EABD2907CC6245A280AC41586EA333",
+    "file": "powershell",
+    "log": {
+      "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/native-resume-run-02.txt",
+      "bytes": 4455,
+      "sha256": "a55bcd03a7aacfd611a7fab186d2986c01eabd2907cc6245a280ac41586ea333"
+    },
+    "receipt": {
+      "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/native-resume-run-02.txt.result.json",
+      "bytes": 762,
+      "sha256": "368a903d0ea5845ac0bf01144f2c5999e4dc8011b0864b00b941a7f88ce5636e"
+    }
+  },
+  "ownedClosure": {
+    "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/durable-native-exit-03.json",
+    "bytes": 1147,
+    "sha256": "489955770f655e62e3d8911fb7fbfe2a6bea714de21de0679e844c98680a9b3e"
+  },
+  "review": {
+    "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/runtime-drift-review-02.json",
+    "bytes": 15391,
+    "sha256": "af4499c495d222118df03b8b1fc18664dcd4429b1c7f6b8fb6905b72dc029a8f"
+  },
+  "reviewCommand": {
+    "output": "docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\runtime-drift-review-run-02.txt",
+    "observedAt": "2026-10-23T03:55:08.7210929Z",
+    "exitCode": 0,
+    "arguments": [
+      "docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\verify-runtime-drift-02.cjs"
+    ],
+    "sha256": "1A9C27C39DAEAACD7EB71C8F58E9816080BDC3B273DBFDF104BE93A698C1C397",
+    "file": "node",
+    "log": {
+      "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/runtime-drift-review-run-02.txt",
+      "bytes": 447,
+      "sha256": "1a9c27c39daeaacd7eb71c8f58e9816080bdc3b273dbfdf104be93a698c1c397"
+    },
+    "receipt": {
+      "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/runtime-drift-review-run-02.txt.result.json",
+      "bytes": 464,
+      "sha256": "ab0f66ff6a48f8284201648b392f43170c95691f8be432a8f43e7c18291813cb"
+    }
+  },
+  "preparedTools": {
+    "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/reviewed-runtime-byte-tools-03.json",
+    "bytes": 1045,
+    "sha256": "62795ef5663eefec21c5b35c6b3f0dbdadd798e2d4fbb1aba8d3a5999bd84264"
+  },
+  "originalAcceptanceFailure": {
+    "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/prepare-acceptance-run-01.txt",
+    "bytes": 1758,
+    "sha256": "9da1752c6432da1a541857b70dac5d66d773414c51bede876a27ff2f7f771878"
+  },
+  "originalByteFailure": {
+    "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/byte-barriers-run-01.txt",
+    "bytes": 3590,
+    "sha256": "d6a903af4eb58a88e260cc60a4a60761034d5066bb669a7c8fa5ee687b0cc908"
+  },
+  "scope": "No new product/runtime/test edits. Original equality invariant correctly refused distinct broker hash; source has exactly six constant constructor forms and16EOL-only inputs, compiled normalized AST identical, current backend and actual F14-F17 reverified. Raw bytes, hashes and failed aggregates preserved; current acceptance and local byte barriers pending."
+}

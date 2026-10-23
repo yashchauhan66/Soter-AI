@@ -1,0 +1,25 @@
+import assert from "node:assert/strict";
+import { test } from "node:test";
+import { decodeBoundedBase64Envelope, decodeChatBase64Blobs } from "../../../../apps/local-ai-broker/src/BoundedBase64";
+import { decodeBoundedJson } from "../../../../apps/local-ai-broker/src/BoundedJson";
+const chat=(content:unknown="Public 🙂")=>({model:"synthetic",messages:[{role:"user",content}]}),b64=(s:string,encoding:BufferEncoding="base64")=>Buffer.from(s).toString(encoding),uri=(s:string,media="text/plain")=>"data:"+media+";base64,"+b64(s),blob=(s:string,encoding="base64",media_type="text/plain")=>({type:"soterai_base64",encoding,media_type,data:b64(s,encoding as BufferEncoding)}),decode=(v:unknown,enabled=true)=>decodeChatBase64Blobs(decodeBoundedJson(Buffer.from(JSON.stringify(v))).body,enabled),envelope=(v:unknown=chat(),encoding="base64")=>Buffer.from(JSON.stringify({encoding,mediaType:"application/json",data:b64(JSON.stringify(v),encoding as BufferEncoding)}));
+test("F15h-B01 text data URI and part preserve Unicode and strip encoding metadata",()=>{for(const content of [uri("Public 🙂"),[{type:"text",text:uri("Public 🙂")}],[blob("Public 🙂")]]){const v=decode(chat(content));assert.equal(v.blobs,1);assert.ok(v.canonical.includes("Public 🙂"));assert.ok(!v.canonical.includes("base64"));assert.ok(Object.isFrozen(v.body.messages));}});
+test("F15h-B02 canonical base64url and JSON text blobs work",()=>{const v=decode(chat([blob("Public 🙂","base64url"),blob('{"b":2,"a":1}',"base64","application/json")]));assert.equal(v.blobs,2);assert.match(v.canonical,/Public/);assert.ok(!v.canonical.includes("soterai_base64"));});
+test("F15h-B03 complete JSON envelope both encodings and inert prototypes",()=>{for(const encoding of ["base64","base64url"]){const v=decodeBoundedBase64Envelope(envelope(JSON.parse('{"__proto__":{"polluted":true},"messages":[{"role":"user","content":"public"}]}'),encoding));assert.equal(v.blobs,1);assert.equal(Object.getPrototypeOf(v.body),null);assert.equal(({} as {polluted?:boolean}).polluted,undefined);}});
+test("F15h-B04 public unmarked base64-looking strings remain public text",()=>{const v=decode(chat("UHVibGljIHJhbmRvbSB0ZXh0"));assert.equal(v.blobs,0);assert.ok(v.canonical.includes("UHVibGljIHJhbmRvbSB0ZXh0"));assert.ok(decode(chat(),false).body);});
+for(const data of ["","Zg","Zh==","Zg===","Z g==","Zg==\n","Zg__","-w=="])test("F15h-B05 malformed/noncanonical base64 refuses "+JSON.stringify(data),()=>assert.throws(()=>decode(chat([{...blob("f"),data}]))));
+test("F15h-B06 base64url padding/mixed alphabets/unknown shape refuse",()=>{for(const part of [{...blob("f","base64url"),data:"Zg=="},{...blob("f","base64url"),data:"+w"},{...blob("f"),encoding:"unknown"},{...blob("f"),extra:"discarding forbidden"},{...blob("f"),media_type:"image/png"}])assert.throws(()=>decode(chat([part])));});
+test("F15h-B07 malformed/ambiguous data URI, binary, invalid UTF8/control refuse",()=>{for(const content of [" "+uri("public"),uri("public","image/png"),uri("public").replace(';base64,',';unknown;base64,'),uri("\0binary"),'data:text/plain;base64,wK8='])assert.throws(()=>decode(chat(content)));});
+test("F15h-B08 duplicate/unknown envelope fields and malformed inner JSON refuse",()=>{for(const v of [Buffer.from('{"encoding":"base64","encoding":"base64","mediaType":"application/json","data":"e30="}'),Buffer.from(JSON.stringify({encoding:"base64",mediaType:"text/plain",data:b64("public")})),Buffer.from(JSON.stringify({encoding:"base64",mediaType:"application/json",data:b64("{broken")})),envelope({messages:[]}),Buffer.from(JSON.stringify({encoding:"base64",mediaType:"application/json",data:b64(JSON.stringify(chat())),extra:true}))])assert.throws(()=>decodeBoundedBase64Envelope(v));});
+test("F15h-B09 nested URI/explicit blob/envelope refuse",()=>{assert.throws(()=>decode(chat(uri(uri("public")))));assert.throws(()=>decodeBoundedBase64Envelope(envelope(chat([blob("public")]))));assert.throws(()=>decode(chat([blob('{"value":"'+uri("public")+'"}',"base64","application/json")])));});
+test("F15h-B10 exact bytes/count/cumulative limits and overflow",()=>{
+    assert.ok(decode(chat([blob("P".repeat(32768))])).body);
+    assert.throws(()=>decode(chat([blob("P".repeat(32769))])));
+    const many=(count:number,text="public")=>Array.from({length:count},()=>blob(text));
+    assert.equal(decode(chat(many(16))).blobs,16);
+    assert.throws(()=>decode(chat(many(17))));
+    assert.ok(decode(chat(many(4,"P".repeat(32768)))).body);
+    assert.throws(()=>decode(chat(many(5,"P".repeat(32768)))));
+    assert.throws(()=>decodeBoundedBase64Envelope(Buffer.alloc(1048577)));
+});
+test("F15h-B11 flagoff withholds every explicit representation, no-echo errors",()=>{for(const v of [chat(uri("public")),chat([blob("public")])])assert.throws(()=>decode(v,false));assert.throws(()=>decodeBoundedBase64Envelope(envelope(),false));try{decode(chat([{...blob("public"),data:"synthetic-private-never-echo"}]));assert.fail();}catch(e){assert.ok(!String(e).includes("synthetic-private-never-echo"));}});

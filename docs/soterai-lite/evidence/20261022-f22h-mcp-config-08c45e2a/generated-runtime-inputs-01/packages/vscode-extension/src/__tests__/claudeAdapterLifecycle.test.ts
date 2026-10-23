@@ -1,0 +1,95 @@
+import "./phase2/register.mjs";
+import assert from "node:assert/strict";
+import { test } from "node:test";
+import { mkdtemp, mkdir, writeFile, readFile, readdir } from "node:fs/promises";
+import { join } from "node:path";
+import { tmpdir } from "node:os";
+import { randomUUID } from "node:crypto";
+import * as stub from "./phase2/vscode-stub";
+import { managedEmptyStoreIdentity } from "../terminal/ManagedOutputBinding";
+const adapterModule = () => import("../adapters/ClaudeAdapter");
+async function fixture(t: import("node:test").TestContext) {
+    const { ClaudeAdapter } = await adapterModule();
+    const root = await mkdtemp(join(tmpdir(), "soterai-f19-lifecycle-")), workspace = join(root, "project"), profile = join(root, "profile");
+    await mkdir(workspace); await mkdir(profile); stub.resetState(workspace);
+    const context = stub.makeExtensionContext(profile), session = randomUUID(); let captured: string | undefined, reads = 0;
+    const current = () => captured !== undefined && captured === managedEmptyStoreIdentity(context.globalStorageUri.fsPath);
+    const manager = { start: async () => { captured = managedEmptyStoreIdentity(context.globalStorageUri.fsPath); return { running: true, url: "http://127.0.0.1:12345" }; },
+        ownedSnapshot: () => ({ state: current() ? "healthy" : "stopping", session, port: 12345 }),
+        status: async () => ({ running: current() }), getClientToken: async () => "TEST_ONLY_F19_CURRENT_GATEWAY" };
+    const paths = { settings: join(profile, "settings.json"), state: join(profile, ".claude.json") };
+    await writeFile(paths.settings, '{"permissions":{"deny":["Read(.env)"]},"public":"keep"}'); await writeFile(paths.state, '{"nativePublic":"keep"}');
+    const adapter = new ClaudeAdapter(context as never, manager as never, { isEnabled: () => true,
+        readIntegration: async () => { reads++; return { status: "ALLOWED_ONCE", kind: "environment-schema", text: "TEST_KEY=[MASKED]" }; },
+        classifyIntegration: async () => "PUBLIC" } as never);
+    t.after(() => adapter.dispose());
+    t.mock.method(adapter as any, "artifact", async () => undefined);
+    t.mock.method(adapter as any, "paths", () => paths);
+    return { root, workspace, profile, adapter, paths, current, context, manager, counts: () => ({ reads }) };
+}
+test("F19-C01 construction/status perform no tool config or broker launch", async t => {
+    const { ClaudeAdapter } = await adapterModule(); let starts = 0;
+    const adapter = new ClaudeAdapter({} as never, { start: async () => { starts++; throw Error("unexpected"); } } as never, { isEnabled: () => false } as never);
+    t.after(() => adapter.dispose()); assert.equal(starts, 0); assert.equal((adapter.status() as { badge: string }).badge, "Uncovered");
+});
+test("F19-C02 cancelled native review preserves config and fresh empty-vault lease", async t => {
+    const f = await fixture(t), before = await readFile(f.paths.settings, "utf8");
+    t.mock.method(stub.window, "showWarningMessage", async () => undefined);
+    assert.equal((await f.adapter.configure() as { status: string }).status, "CANCELLED"); assert.equal(f.current(), true);
+    assert.equal(await readFile(f.paths.settings, "utf8"), before); assert.equal(f.counts().reads, 0);
+});
+test("F19-C03 reviewed current setup has encrypted backups and honest unverified status", async t => {
+    const f = await fixture(t), before = { settings: await readFile(f.paths.settings, "utf8"), state: await readFile(f.paths.state, "utf8") };
+    t.mock.method(stub.window, "showWarningMessage", async (_message: string, _options: unknown, action: string) => action);
+    assert.equal((await f.adapter.configure() as { status: string }).status, "APPLIED"); assert.equal(f.current(), true);
+    const settings = JSON.parse(await readFile(f.paths.settings, "utf8")), state = JSON.parse(await readFile(f.paths.state, "utf8"));
+    assert.equal(settings.hooks.PreToolUse[0].hooks[0].onFailure, "block"); assert.equal(state.mcpServers.soterai_safe_read.type, "http");
+    const backupNames = await readdir(join(f.context.globalStorageUri.fsPath, "config-backups")); assert.equal(backupNames.length, 2);
+    for (const name of backupNames) { const text = await readFile(join(f.context.globalStorageUri.fsPath, "config-backups", name), "utf8"); assert.equal(text.includes("Read(.env)"), false); }
+    assert.equal((f.adapter.status() as { badge: string }).badge, "Uncovered"); assert.equal(f.counts().reads, 0);
+    const startup = JSON.parse(await readFile(f.paths.state, "utf8")); startup.firstStartVersion = "synthetic"; await writeFile(f.paths.state, JSON.stringify(startup));
+    assert.equal((await f.adapter.undo() as { status: string }).status, "RESTORED");
+    assert.equal(await readFile(f.paths.settings, "utf8"), before.settings);
+    assert.equal(JSON.parse(await readFile(f.paths.state, "utf8")).firstStartVersion, "synthetic");
+    assert.equal(JSON.parse(await readFile(f.paths.state, "utf8")).mcpServers, undefined);
+});
+test("F19-C04 existing same-profile receipt blocks reconfiguration until reviewed restore", async t => {
+    const f = await fixture(t); t.mock.method(stub.window, "showWarningMessage", async (_message: string, _options: unknown, action: string) => action);
+    assert.equal((await f.adapter.configure() as { status: string }).status, "APPLIED");
+    const before = await readFile(f.paths.settings, "utf8");
+    assert.equal((await f.adapter.configure() as { status: string }).status, "RESTORE_PREVIOUS_CLAUDE_CONFIG_FIRST"); assert.equal(await readFile(f.paths.settings, "utf8"), before);
+});
+test("F19-C05 workspace native config override is refused before broker startup", async t => {
+    const f = await fixture(t); await mkdir(join(f.workspace, ".claude")); await writeFile(join(f.workspace, ".claude/settings.local.json"), "{}");
+    assert.equal((await f.adapter.configure() as { status: string }).status, "PROJECT_CLAUDE_OVERRIDE_REQUIRES_REVIEW"); assert.equal(f.current(), false);
+});
+test("F19-C06 persistence failure retains encrypted recovery receipt and stops live routing", async t => {
+    const f = await fixture(t); t.mock.method(stub.window, "showWarningMessage", async (_message: string, _options: unknown, action: string) => action);
+    t.mock.method(f.context.globalState, "update", async () => { throw Error("synthetic receipt store failure"); });
+    assert.equal((await f.adapter.configure() as { status: string }).status, "INCOMPLETE");
+    assert.equal((f.adapter.status() as { badge: string }).badge, "Uncovered");
+    const directory = join(f.context.globalStorageUri.fsPath, "adapter-sessions"), names = await readdir(directory);
+    assert.ok(names.some(name => /^claude-recovery-[a-f0-9-]+\.json$/.test(name)));
+});
+test("F19-C08 durable recovery receipt write failure precedes vendor config writes", async t => {
+    const f = await fixture(t), before = { settings: await readFile(f.paths.settings, "utf8"), state: await readFile(f.paths.state, "utf8") };
+    t.mock.method(stub.window, "showWarningMessage", async (_message: string, _options: unknown, action: string) => action);
+    const write = (f.adapter as any).write.bind(f.adapter);
+    t.mock.method(f.adapter as any, "write", async (file: string, text: string | undefined) => { if (/claude-recovery-/.test(file)) throw Error("synthetic recovery receipt disk failure"); return write(file, text); });
+    assert.equal((await f.adapter.configure() as { status: string }).status, "UNAVAILABLE");
+    assert.equal(await readFile(f.paths.settings, "utf8"), before.settings); assert.equal(await readFile(f.paths.state, "utf8"), before.state);
+});
+test("F19-C13 live artifact freshness withdrawal blocks current native hooks", async t => {
+    const f = await fixture(t); let current = true;
+    // Inject only this component's metadata checker; no installed vendor/profile
+    // is inspected by the synthetic test.
+    (f.adapter as any).artifactCurrent = async () => current;
+    t.mock.method(stub.window, "showWarningMessage", async (_message: string, _options: unknown, action: string) => action);
+    assert.equal((await f.adapter.configure() as { status: string }).status, "APPLIED");
+    const settings = JSON.parse(await readFile(f.paths.settings, "utf8")), hook = settings.hooks.UserPromptSubmit[0].hooks[0];
+    const packet = { cwd: f.workspace, hook_event_name: "UserPromptSubmit", permission_mode: "default", prompt: "synthetic public",
+        prompt_id: "synthetic", session_id: "synthetic", transcript_path: join(f.profile, "synthetic.jsonl") };
+    const send = () => fetch(hook.url, { method: "POST", headers: { ...hook.headers, "content-type": "application/json" }, body: JSON.stringify(packet) });
+    assert.equal((await send()).status, 200);
+    current = false; assert.equal((await send()).status, 503);
+});
