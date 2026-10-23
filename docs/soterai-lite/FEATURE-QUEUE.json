@@ -9,9 +9,9 @@
   "planVersion": 1,
   "clientDate": "2026-10-13",
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
-  "scope": "F01-F10/F12-F21/F22a-g scoped DONE after current byte barriers; F11 optional absent NOT_TESTED/NOT_COVERED. ParentF22 incomplete; F22h MCP configs implemented ACTIVE, current serial/artifact/native/byte gates pending. Remaining subcards/features/verification gates pending.",
+  "scope": "F01-F10/F12-F22 scoped DONE after current byte barriers; F11 optional absent NOT_TESTED/NOT_COVERED. F22a-h complete for finite scoped contracts. F23 active only after transition proof; F24-F32/V01-V05 pending. No final rating/human/independent claim.",
   "implementationConcurrency": 1,
-  "activeFeature": "F22",
+  "activeFeature": "F23",
   "prerequisiteBlock": {
     "id": "P00",
     "result": "FAIL",
@@ -591,8 +591,8 @@
     {
       "id": "F22",
       "title": "Source/config scanner families.",
-      "status": "ACTIVE",
-      "result": "INCOMPLETE",
+      "status": "DONE",
+      "result": "PASS_SCOPED",
       "requires": [
         "F21"
       ],
@@ -754,8 +754,8 @@
         {
           "id": "F22h",
           "title": "MCP configs",
-          "status": "VERIFYING",
-          "result": "PASS_SCOPED_PENDING_BYTE_BARRIERS",
+          "status": "DONE",
+          "result": "PASS_SCOPED",
           "requires": [
             "F22g"
           ],
@@ -773,18 +773,21 @@
             "F22e": "PASS_CURRENT_EXACT_OBJECT",
             "F22f": "PASS_CURRENT_EXACT_OBJECT",
             "F22g": "PASS_CURRENT_EXACT_OBJECT"
-          }
+          },
+          "sourceEvidenceCommit": "f676f340f8522a2beafeb526bda6c15eb40ef2ab",
+          "commitByteVerification": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/f22h-committed-byte-verification-01.json",
+          "transitionByteVerification": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/f22h-transition-byte-verification-01.json"
         }
       ],
       "completionRule": "All required subcards pass individually before parent DONE",
       "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
-      "activeSubcard": "F22h",
-      "progressEvidence": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/progress-08.json"
+      "progressEvidence": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/f22h-transition-byte-verification-01.json",
+      "sourceEvidenceCommit": "f676f340f8522a2beafeb526bda6c15eb40ef2ab"
     },
     {
       "id": "F23",
       "title": "Read-only Git history scanner.",
-      "status": "PLANNED",
+      "status": "ACTIVE",
       "result": "NOT-RUN",
       "requires": [
         "F22"

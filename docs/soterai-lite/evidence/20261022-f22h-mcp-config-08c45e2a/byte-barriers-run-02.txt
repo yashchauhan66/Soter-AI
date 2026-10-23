@@ -1,0 +1,62 @@
+﻿{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\prepare-acceptance-run-02.txt",
+    "observedAt":  "2026-10-23T04:01:05.3623949Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\prepare-acceptance-07.cjs"
+                  ],
+    "sha256":  "F679B9AD6E00D4105546FFFB85A2FF986C21334270FC9FE2C47201B3EA9D3912",
+    "file":  "node"
+}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\prepare-index-run-01.txt",
+    "observedAt":  "2026-10-23T04:01:20.4949044Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\prepare-index-04.cjs"
+                  ],
+    "sha256":  "50E924D4A8BEA230C2895F8FDF7CDA43E33E814DB4C4AEFBE52D22FAD2466F12",
+    "file":  "node"
+}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\stage-source-run-01.txt",
+    "observedAt":  "2026-10-23T04:01:25.9192615Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "-c",
+                      "core.autocrlf=false",
+                      "-c",
+                      "core.hooksPath=docs/soterai-lite/evidence/20261013-l0-disk-gate-51f892d0/offline-hooks",
+                      "add",
+                      "-f",
+                      "--pathspec-from-file=C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\f22h-commit-allowlist-01.txt"
+                  ],
+    "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+    "file":  "git"
+}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\source-staged-byte-verification-01.txt",
+    "observedAt":  "2026-10-23T04:01:28.6849209Z",
+    "exitCode":  1,
+    "arguments":  [
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\verify-source-01.cjs",
+                      "--staged"
+                  ],
+    "sha256":  "80C880ED20F92B242AC7F8DC571A860048C63B561E622C6CAA69FB45B236C145",
+    "file":  "node"
+}
+powershell.exe : Byte barrier stopped; raw retained: source-staged-byte-verification-01
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Byte barrier st...verification-01:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261022-f22h-mcp-config-08c45e2a\
+complete-byte-barriers-06.ps1:7 char:34
++ ... exitCode -ne 0){throw ('Byte barrier stopped; raw retained: '+$Name)}
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (Byte barrier st...verification-01:String) [], RuntimeException
+    + FullyQualifiedErrorId : Byte barrier stopped; raw retained: source-staged-byte-verification-01
+ 

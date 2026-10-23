@@ -1,0 +1,31 @@
+﻿node.exe : node:internal/assert/utils:281
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (node:internal/assert/utils:281:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+    throw err;
+    ^
+
+AssertionError [ERR_ASSERTION]: Pinned inherited whitespace exception required: 
+template-inputs-01/committed/run-affected-hosts-03.ps1
+    at Object.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261022-f
+22h-mcp-config-08c45e2a\verify-authored-whitespace-04.cjs:5:278)
+    at Module._compile (node:internal/modules/cjs/loader:1730:14)
+    at Object..js (node:internal/modules/cjs/loader:1895:10)
+    at Module.load (node:internal/modules/cjs/loader:1465:32)
+    at Function._load (node:internal/modules/cjs/loader:1282:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: undefined,
+  expected: true,
+  operator: '=='
+}
+
+Node.js v22.16.0
