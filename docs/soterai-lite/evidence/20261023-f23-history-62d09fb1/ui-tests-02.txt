@@ -1,0 +1,154 @@
+﻿TAP version 13
+# Subtest: F23 history registration and status create no startup history read, child, key or document
+ok 1 - F23 history registration and status create no startup history read, child, key or document
+  ---
+  duration_ms: 369.6409
+  type: 'test'
+  ...
+# Subtest: F23 a new controller rejects forged, copied and cancelled result authority
+ok 2 - F23 a new controller rejects forged, copied and cancelled result authority
+  ---
+  duration_ms: 6.4196
+  type: 'test'
+  ...
+# Subtest: F23 native owner cancellation ignores public approval, path and ref before any key or Git child
+ok 3 - F23 native owner cancellation ignores public approval, path and ref before any key or Git child
+  ---
+  duration_ms: 20.5072
+  type: 'test'
+  ...
+# Subtest: F23 one native owner prompt remains pending while status is side effect free and another review is refused
+ok 4 - F23 one native owner prompt remains pending while status is side effect free and another review is refused
+  ---
+  duration_ms: 13.5886
+  type: 'test'
+  ...
+# Subtest: F23 public review arguments never reach the controller and only current metadata becomes a JSON document
+ok 5 - F23 public review arguments never reach the controller and only current metadata becomes a JSON document
+  ---
+  duration_ms: 8.0376
+  type: 'test'
+  ...
+# Subtest: F23 an analyzed-looking result rejected by current never opens a metadata document
+ok 6 - F23 an analyzed-looking result rejected by current never opens a metadata document
+  ---
+  duration_ms: 4.5438
+  type: 'test'
+  ...
+# Subtest: F23 cancellation is returned to the caller without creating a document
+ok 7 - F23 cancellation is returned to the caller without creating a document
+  ---
+  duration_ms: 7.9161
+  type: 'test'
+  ...
+# Subtest: F23 command registration permits one pending review even when a controller review is awaiting
+ok 8 - F23 command registration permits one pending review even when a controller review is awaiting
+  ---
+  duration_ms: 5.0692
+  type: 'test'
+  ...
+# Subtest: F23 a completed cancelled review releases the command guard for a fresh native flow
+ok 9 - F23 a completed cancelled review releases the command guard for a fresh native flow
+  ---
+  duration_ms: 7.7793
+  type: 'test'
+  ...
+# Subtest: F23 private controller errors produce a static unavailable result and release the pending guard
+ok 10 - F23 private controller errors produce a static unavailable result and release the pending guard
+  ---
+  duration_ms: 7.2171
+  type: 'test'
+  ...
+# Subtest: F23 metadata-document failure is sanitized and never displays a partial document
+ok 11 - F23 metadata-document failure is sanitized and never displays a partial document
+  ---
+  duration_ms: 5.3713
+  type: 'test'
+  ...
+# Subtest: F23 authority is checked again after opening metadata and before display
+ok 12 - F23 authority is checked again after opening metadata and before display
+  ---
+  duration_ms: 5.0493
+  type: 'test'
+  ...
+# Subtest: F23 disable then reenable cannot display a withdrawn metadata result waiting on a document
+ok 13 - F23 disable then reenable cannot display a withdrawn metadata result waiting on a document
+  ---
+  duration_ms: 6.1372
+  type: 'test'
+  ...
+# Subtest: F23 workspace replacement withdraws pending metadata authority
+ok 14 - F23 workspace replacement withdraws pending metadata authority
+  ---
+  duration_ms: 4.5662
+  type: 'test'
+  ...
+# Subtest: F23 disposing command subscriptions suppresses a late review result and unregisters both commands
+ok 15 - F23 disposing command subscriptions suppresses a late review result and unregisters both commands
+  ---
+  duration_ms: 6.0623
+  type: 'test'
+  ...
+# Subtest: F23 disposing subscriptions during document creation prevents late display
+ok 16 - F23 disposing subscriptions during document creation prevents late display
+  ---
+  duration_ms: 4.2451
+  type: 'test'
+  ...
+# Subtest: F23 owner disable refuses public review arguments before calling the controller
+ok 17 - F23 owner disable refuses public review arguments before calling the controller
+  ---
+  duration_ms: 4.6724
+  type: 'test'
+  ...
+# Subtest: F23 strict history flag rejects nonboolean global enable values and an owner disable
+ok 18 - F23 strict history flag rejects nonboolean global enable values and an owner disable
+  ---
+  duration_ms: 10.958
+  type: 'test'
+  ...
+# Subtest: F23 workspace and folder flag values have no power to change the owner or boolean default
+ok 19 - F23 workspace and folder flag values have no power to change the owner or boolean default
+  ---
+  duration_ms: 7.0904
+  type: 'test'
+  ...
+# Subtest: F23 strict history default accepts only booleans and ignores the merged workspace get fallback
+ok 20 - F23 strict history default accepts only booleans and ignores the merged workspace get fallback
+  ---
+  duration_ms: 6.7604
+  type: 'test'
+  ...
+# Subtest: F23 untrusted and remote workspaces cannot enable history, and configuration errors fail closed
+ok 21 - F23 untrusted and remote workspaces cannot enable history, and configuration errors fail closed
+  ---
+  duration_ms: 5.4079
+  type: 'test'
+  ...
+# Subtest: F23 initial controller status withholds on absent, multiple or nonlocal workspace roots without IO
+ok 22 - F23 initial controller status withholds on absent, multiple or nonlocal workspace roots without IO
+  ---
+  duration_ms: 5.0805
+  type: 'test'
+  ...
+# Subtest: F23 disposing a real initial controller permanently withdraws status and forged result authority
+ok 23 - F23 disposing a real initial controller permanently withdraws status and forged result authority
+  ---
+  duration_ms: 5.4961
+  type: 'test'
+  ...
+# Subtest: F23 both manifests contribute only the two advanced history commands and the restricted machine flag
+ok 24 - F23 both manifests contribute only the two advanced history commands and the restricted machine flag
+  ---
+  duration_ms: 5.8283
+  type: 'test'
+  ...
+1..24
+# tests 24
+# suites 0
+# pass 24
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1450.7546

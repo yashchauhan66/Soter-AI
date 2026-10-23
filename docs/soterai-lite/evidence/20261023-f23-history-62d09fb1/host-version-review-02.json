@@ -1,0 +1,205 @@
+{
+  "schemaVersion": 1,
+  "status": "REVIEWED_NEW_EDITOR_HOST_STATIC_ONLY_NATIVE_PENDING",
+  "independence": "LOW",
+  "scope": "Observed external editor change before any F23 native launch; no agent download/update/OS or vendor-client pin change. Prior 1.143.0 guard refused; no native result transferred. Exact 1.143.1 behavior remains pending.",
+  "currentHost": {
+    "version": "1.143.1",
+    "fileAndProductVersionObserved": "1.143.1",
+    "commit": "e646868227c3e3a9e3f24277c8c7220be42c0be7",
+    "buildDate": "2026-10-22T17:23:22Z",
+    "quality": "stable",
+    "win32MutexName": "vscode",
+    "win32VersionedUpdate": true,
+    "target": "user",
+    "executable": {
+      "path": "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe",
+      "bytes": 238249784,
+      "sha256": "325fb30ba28d17fa6ba4df58043727b2469aca9d641793a65e413721b2110ec6"
+    },
+    "applicationFiles": [
+      {
+        "path": "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\e646868227\\resources\\app\\package.json",
+        "bytes": 15664,
+        "sha256": "a91603a6cb6533ca909edad2735037acf3bb23825e4be95efa85f482b98a26fd"
+      },
+      {
+        "path": "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\e646868227\\resources\\app\\product.json",
+        "bytes": 72372,
+        "sha256": "ad19af4947a5094661073f314cae17a41fbb8b01f0611f8ffe0ee4b91dfc8e5c"
+      },
+      {
+        "path": "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\e646868227\\resources\\app\\out\\mainImpl.js",
+        "bytes": 1359185,
+        "sha256": "b085bba2baf38d8131c4fc14738d4363d1cdb179424697deb0c6c540e4f2439b"
+      },
+      {
+        "path": "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\e646868227\\resources\\app\\out\\vs\\workbench\\api\\node\\extensionHostProcess.js",
+        "bytes": 2318558,
+        "sha256": "f9a596e45a96b53518966ebec2411a29f88a12943c1ae1f2a60af23dc2206796"
+      }
+    ],
+    "extensionEngine": "^1.85.0",
+    "engineRangeAdmitsCurrentVersion": true
+  },
+  "priorReview": {
+    "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261023-f23-history-62d09fb1\\host-version-review-01.json",
+    "bytes": 2290,
+    "sha256": "9651e199dabe302bd6cbdb9eae2c1c483d1930742cda564a8592eb12a9c6117d"
+  },
+  "priorApiReview": {
+    "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\template-inputs-01\\committed\\host-version-review-01.json",
+    "bytes": 13171,
+    "sha256": "6cca6d3a56d140160f6a271b85e8c49e9f3d4ff4ad7513c3a21ccabab776f988"
+  },
+  "apiReview": {
+    "source": {
+      "path": "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\e646868227\\resources\\app\\out\\vs\\workbench\\api\\node\\extensionHostProcess.js",
+      "bytes": 2318558,
+      "sha256": "f9a596e45a96b53518966ebec2411a29f88a12943c1ae1f2a60af23dc2206796"
+    },
+    "checks": [
+      {
+        "api": "workspace.fs",
+        "status": "PRESENT_STATIC_ONLY",
+        "utf16Offset": 2118826,
+        "exactWitness": "get fs(){return n.value}",
+        "assessment": "Stable workspace file system object remains exposed; consumer readFile/writeFile route to provider or MainThreadFileSystem RPC, without opening text documents."
+      },
+      {
+        "api": "workspace.fs.readFile",
+        "status": "PRESENT_STATIC_ONLY",
+        "utf16Offset": 1177781,
+        "exactWitness": "async readFile(o){try{let i=n._fileSystemProvider",
+        "assessment": "Async readFile is present. This review does not execute a real read."
+      },
+      {
+        "api": "workspace.fs.writeFile",
+        "status": "PRESENT_STATIC_ONLY",
+        "utf16Offset": 1178008,
+        "exactWitness": "async writeFile(o,i){try{let s=n._fileSystemProvider",
+        "assessment": "Async writeFile is present. This review does not execute a real write."
+      },
+      {
+        "api": "workspace.findFiles",
+        "status": "PRESENT_STATIC_ONLY",
+        "utf16Offset": 2114742,
+        "exactWitness": "findFiles:(I,C,D,Ae)=>i.findFiles(I,C,D,P.identifier,Ae)",
+        "assessment": "Stable findFiles passes include/exclude/maxResults and cancellation through the workspace service; no proposed findFiles2 API is required."
+      },
+      {
+        "api": "window.showOpenDialog",
+        "status": "PRESENT_STATIC_ONLY",
+        "utf16Offset": 2108986,
+        "exactWitness": "showOpenDialog(I){return xD.showOpenDialog(I)}",
+        "assessment": "Stable native file-dialog dispatch remains present; UI/cancellation requires actual fixture verification."
+      },
+      {
+        "api": "window.showQuickPick",
+        "status": "PRESENT_STATIC_ONLY",
+        "utf16Offset": 2108822,
+        "exactWitness": "showQuickPick(I,C,D){return $s.showQuickPick(P,I,C,D)}",
+        "assessment": "Stable quick-pick dispatch remains present. Fixture decisions remain scripted LOW independence."
+      },
+      {
+        "api": "window.showWarningMessage",
+        "status": "PRESENT_STATIC_ONLY",
+        "utf16Offset": 2108662,
+        "exactWitness": "showWarningMessage(I,...C){return ox.showMessage(P,Ct.Warning,I,C[0],C.slice(1))}",
+        "assessment": "Stable warning/message-options dispatch remains present; actual modal semantics are not proven by source."
+      },
+      {
+        "api": "SecretStorage context binding",
+        "status": "PRESENT_STATIC_ONLY",
+        "utf16Offset": 1317298,
+        "exactWitness": "secrets:a,subscriptions:[]",
+        "assessment": "Extension context exposes the per-extension SecretStorage instance."
+      },
+      {
+        "api": "SecretStorage ownership and methods",
+        "status": "PRESENT_STATIC_ONLY",
+        "utf16Offset": 1305740,
+        "exactWitness": "this._id=ke.toKey(t.identifier),this.#e=e",
+        "assessment": "Secret state uses extension identity; get/store/delete and filtered onDidChange are present. No OS custody/encryption claim follows."
+      },
+      {
+        "api": "SecretStorage store",
+        "status": "PRESENT_STATIC_ONLY",
+        "utf16Offset": 1305986,
+        "exactWitness": "store(t,e){return this.#e.store(this._id,t,e)}",
+        "assessment": "Store routes through the extension-ID scoped secret state; no storage operation was executed."
+      },
+      {
+        "api": "configuration.inspect",
+        "status": "PRESENT_STATIC_ONLY",
+        "utf16Offset": 1163292,
+        "exactWitness": "globalValue:At(d.user?.value??d.application?.value),workspaceValue:At(d.workspace?.value)",
+        "assessment": "Inspect still separates global and workspace values; local strict flag reads globalValue/defaultValue and does not adopt repository relaxation."
+      },
+      {
+        "api": "configuration.update",
+        "status": "PRESENT_STATIC_ONLY",
+        "utf16Offset": 1162990,
+        "exactWitness": "this._proxy.$removeConfigurationOption(m,l,o,u)",
+        "assessment": "The existing update/remove configuration pathway is present; actual event timing/withdrawal requires native tests."
+      },
+      {
+        "api": "registerCommand(",
+        "status": "PRESENT_STATIC_ONLY",
+        "utf16Offset": 1205381,
+        "exactWitness": "isterApiCommand(t){let e=this.registerCommand(!1,t.id,async(...n)=>{let o=t.args.map((s,a)=>{if(!s.validate(n[a]))throw new Error(`Inval",
+        "assessment": "Installed API source witness only; current exact-artifact dynamic native checks remain required."
+      },
+      {
+        "api": "executeCommand(",
+        "status": "PRESENT_STATIC_ONLY",
+        "utf16Offset": 1205646,
+        "exactWitness": ".convert(n[a])}),i=await this.executeCommand(t.internalId,...o);return t.result.convert(i,n,this.converter)},void 0,{description:t.desc",
+        "assessment": "Installed API source witness only; current exact-artifact dynamic native checks remain required."
+      },
+      {
+        "api": "openTextDocument(",
+        "status": "PRESENT_STATIC_ONLY",
+        "utf16Offset": 2106715,
+        "exactWitness": "y.isUri(I)?Promise.resolve(TD.openTextDocument(I)):Promise.resolve(I));return ct.showTextDocument(Ae,C,D)},createTextEditorDecorationType",
+        "assessment": "Installed API source witness only; current exact-artifact dynamic native checks remain required."
+      },
+      {
+        "api": "showTextDocument(",
+        "status": "PRESENT_STATIC_ONLY",
+        "utf16Offset": 2040652,
+        "exactWitness": "n e?n:n.map(o=>o.value)}async showTextDocument(e,n,o){let i;typeof n==\"number\"?i={position:an.from(n),preserveFocus:o}:typeof n==\"object\"",
+        "assessment": "Installed API source witness only; current exact-artifact dynamic native checks remain required."
+      },
+      {
+        "api": "onDidChangeConfiguration",
+        "status": "PRESENT_STATIC_ONLY",
+        "utf16Offset": 648313,
+        "exactWitness": "ter(this.configurationService.onDidChangeConfiguration(s=>{s.affectsConfiguration(O$)&&i()})),this._register(this.onDidChangeEntitlement(()=>i()",
+        "assessment": "Installed API source witness only; current exact-artifact dynamic native checks remain required."
+      },
+      {
+        "api": "onDidChangeWorkspaceFolders",
+        "status": "PRESENT_STATIC_ONLY",
+        "utf16Offset": 956256,
+        "exactWitness": "(this.workspaceContextService.onDidChangeWorkspaceFolders(a=>{this.workspaceUpdatePromise=this.workspaceUpdatePromise.then(()=>this.onDidChangeWork",
+        "assessment": "Installed API source witness only; current exact-artifact dynamic native checks remain required."
+      },
+      {
+        "api": "get(t){return this.#e.get(this._id,t)}",
+        "status": "PRESENT_STATIC_ONLY",
+        "utf16Offset": 1305948,
+        "exactWitness": "(){this.disposables.dispose()}get(t){return this.#e.get(this._id,t)}store(t,e){return this.#e.store(this._id,t,e)}delete(t){return this.#e.delete(this._id,t)}",
+        "assessment": "Installed API source witness only; current exact-artifact dynamic native checks remain required."
+      },
+      {
+        "api": "onDidChange",
+        "status": "PRESENT_STATIC_ONLY",
+        "utf16Offset": 207234,
+        "exactWitness": "tor(){this._zoomLevel=0;this._onDidChangeZoomLevel=new E;this.onDidChangeZoomLevel=this._onDidChangeZoomLevel.event}getZoomLevel(){",
+        "assessment": "Installed API source witness only; current exact-artifact dynamic native checks remain required."
+      }
+    ]
+  },
+  "nativeBehaviorVerified": false
+}

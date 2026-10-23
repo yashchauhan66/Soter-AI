@@ -1,0 +1,20 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),e=require('./input-lib-01.cjs');
+e.check();const first=JSON.parse(fs.readFileSync(path.join(__dirname,'source-inputs-01.json'),'utf8')),records=[...first.records,e.fact('docs/vscode-extension-readiness.md')].sort((a,b)=>a.path.localeCompare(b.path));
+// Native PowerShell iterates records without imposing an alternate locale sort.
+fs.writeFileSync(path.join(__dirname,'source-inputs-02.json'),JSON.stringify({status:'CURRENT_SOURCE_IDENTICAL_PLUS_REFRESHED_GENERATED_READINESS_DOC',prior:'source-inputs-01.json',records},null,2)+'\n',{flag:'wx'});
+const guard=fs.readFileSync(path.join(__dirname,'host-current-binding-04.ps1'),'utf8');assert(guard.includes('source-inputs-01.json'));fs.writeFileSync(path.join(__dirname,'host-current-binding-05.ps1'),guard.replaceAll('source-inputs-01.json','source-inputs-02.json'),{flag:'wx'});
+const snap=path.join(__dirname,'unexecuted-native-prior-inputs-02');fs.mkdirSync(snap);const changed=[];
+for(const entry of fs.readdirSync(__dirname,{withFileTypes:true})){
+ if(!entry.isFile()||!entry.name.endsWith('.ps1')||entry.name.startsWith('host-current-binding-'))continue;
+ const file=path.join(__dirname,entry.name),before=fs.readFileSync(file),text=before.toString('utf8');if(!text.includes('host-current-binding-04.ps1'))continue;
+ fs.writeFileSync(path.join(snap,entry.name),before,{flag:'wx'});fs.writeFileSync(file,text.replaceAll('host-current-binding-04.ps1','host-current-binding-05.ps1'));changed.push(entry.name);
+}
+const priorSerial=fs.readFileSync(path.join(__dirname,'run-serial-gates-01.ps1'),'utf8');
+const retry=priorSerial.replaceAll('check-inputs-01.cjs','check-inputs-02.cjs').replace("Invoke-F23Gate 'typecheck-04' @('node_modules/typescript/bin/tsc','--noEmit','-p','packages/vscode-extension/tsconfig.json')","Invoke-F23Gate 'readiness-tests-02' @('--import','tsx','--test','--test-concurrency=1','packages/vscode-extension/src/__tests__/readiness-doc.test.ts')").replaceAll("'full-tests-01'","'full-tests-02'");
+fs.writeFileSync(path.join(__dirname,'run-serial-gates-02.ps1'),retry,{flag:'wx'});
+for(const [before,after] of [['run-serial-entry-01.ps1','run-serial-entry-02.ps1'],['start-durable-serial-01.ps1','start-durable-serial-02.ps1']]){const text=fs.readFileSync(path.join(__dirname,before),'utf8');fs.writeFileSync(path.join(__dirname,after),text.replaceAll('serial-gates-01','serial-gates-02').replaceAll('serial-start-01','serial-start-02').replaceAll('serial-entry-01','serial-entry-02').replaceAll('serial-stdout-01','serial-stdout-02').replaceAll('serial-stderr-01','serial-stderr-02'),{flag:'wx'});}
+const candidate=path.join(__dirname,'complete-candidate01-01.ps1'),before=fs.readFileSync(candidate,'utf8');assert(before.includes('durable-serial-exit-01.json'));fs.writeFileSync(path.join(snap,'complete-candidate01-01.ps1'),before,{flag:'wx'});fs.writeFileSync(candidate,before.replaceAll('durable-serial-exit-01.json','durable-serial-exit-02.json').replaceAll('check-inputs-01.cjs','check-inputs-02.cjs'));
+const close=fs.readFileSync(path.join(__dirname,'confirm-owned-runner-01.ps1'),'utf8');fs.writeFileSync(path.join(__dirname,'confirm-owned-runner-02.ps1'),close.replace("$taskStartPath=","$taskRevision=if($Kind -eq 'serial'){'02'}else{'01'}\n$taskStartPath=").replace("+'-start-01.json'","+'-start-'+$taskRevision+'.json'").replace("+'-gates-01.txt'","+'-gates-'+$taskRevision+'.txt'").replace("+'-exit-01.json'","+'-exit-'+$taskRevision+'.json'"),{flag:'wx'});
+fs.writeFileSync(path.join(__dirname,'serial-retry-binding-02.json'),JSON.stringify({status:'PREPARED_NOT_EXECUTED',beforeSourceInputs:first.records.length,currentSourceInputs:records.length,change:'Only canonical generated readiness document refreshed; all906runtime/test/build/source bytes unchanged. No test/assertion/budget/product correction. Original full01 three stale generated-doc assertions retained; compiler04/focused163 remain current.',unexecutedNativeInputGuards:changed},null,2)+'\n',{flag:'wx'});
+console.log(JSON.stringify({status:'PREPARED_RETRY_NOT_RUN',files:records.length}));

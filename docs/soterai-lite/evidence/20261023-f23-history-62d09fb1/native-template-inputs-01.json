@@ -1,0 +1,110 @@
+{
+  "status": "PREPARED_NOT_EXECUTED",
+  "originals": [
+    {
+      "file": "host-current-binding-03.ps1",
+      "bytes": 1434,
+      "sha256": "2eaa35af8ecfd983b735327a4b7170b4eec159bb8ed50dc1788ef8567ab05b2d"
+    },
+    {
+      "file": "host-version-review-01.json",
+      "bytes": 2290,
+      "sha256": "9651e199dabe302bd6cbdb9eae2c1c483d1930742cda564a8592eb12a9c6117d"
+    },
+    {
+      "file": "artifact-binding-01.ps1",
+      "bytes": 3401,
+      "sha256": "98fab4ae50551ea863a84528b96653eb2cd3566defd20b52c8c10568ae538747"
+    },
+    {
+      "file": "inspect-vsix-01.ps1",
+      "bytes": 25544,
+      "sha256": "396775e0231902f1857634b7056243f47c7fa9e86270822f129ae7d3968969ea"
+    },
+    {
+      "file": "run-mcp-native-03.ps1",
+      "bytes": 18031,
+      "sha256": "1868513242aa51c08447af9bb87da4e3975dce3ce55ade55c8ae5744834ba4dd"
+    },
+    {
+      "file": "run-affected-editor-03.ps1",
+      "bytes": 18036,
+      "sha256": "0bf5b861b4adc0e3a96ecd7208dcb047662c80738465c291fcc8121ddaa26ead"
+    },
+    {
+      "file": "run-affected-ci-03.ps1",
+      "bytes": 18024,
+      "sha256": "347b6c690629402059096e7fe5688d324fb8ba366822017834e93b2064690a8d"
+    },
+    {
+      "file": "run-affected-service-account-03.ps1",
+      "bytes": 18063,
+      "sha256": "23891835d1b65ea7b88325af41e3053cc9b42567fbc29bc1660aaa38d79540e2"
+    },
+    {
+      "file": "run-affected-registry-03.ps1",
+      "bytes": 18042,
+      "sha256": "5765bf5062d6fa899abf70ec79dc4ca6b69a9e8560d07f6cedcf147f145d6a3d"
+    },
+    {
+      "file": "run-affected-terraform-03.ps1",
+      "bytes": 18045,
+      "sha256": "018a48ec535359dc82e5d5b9069dc3bdb3213c1b115fed5b4b79f195363588b9"
+    },
+    {
+      "file": "run-affected-container-03.ps1",
+      "bytes": 18045,
+      "sha256": "d99607ab11a8ea6d363d09f7df408e80b84a3a7e21950fa89478a56c83ad2b31"
+    },
+    {
+      "file": "run-affected-source-03.ps1",
+      "bytes": 18047,
+      "sha256": "d550448f2197d0121ed36b880e324e26418ff080c441009d479ed7934adcc862"
+    },
+    {
+      "file": "run-affected-hygiene-03.ps1",
+      "bytes": 18048,
+      "sha256": "709a49b8c2ab4d546ffca759913a1341aee9a6c124b3def7c48aa13d1f3b338c"
+    },
+    {
+      "file": "run-affected-vault-03.ps1",
+      "bytes": 18072,
+      "sha256": "78fd3f9d18e8eeff9892954ece0c29fbd75f770bc259de8917ab5048169f71d9"
+    },
+    {
+      "file": "run-retained-native-03.ps1",
+      "bytes": 18086,
+      "sha256": "4dcb6132149419c4bcf884be799f4b3dd4fcb7b7347068f8d51be3650de16302"
+    },
+    {
+      "file": "run-affected-hosts-05.ps1",
+      "bytes": 9117,
+      "sha256": "3d7c16bb3f8635362b1ec0434d183c4b16602b40c1ffa11db9ba19c186328c20"
+    },
+    {
+      "file": "run-functional-05.ps1",
+      "bytes": 8835,
+      "sha256": "ebe3cafe8f2747778c8e44e91ca1470503566bd506842702b6c283d49ebbe76d"
+    },
+    {
+      "file": "run-security-05.ps1",
+      "bytes": 9821,
+      "sha256": "be6af824cc9e062ad142e3dafa8ef47dded829491372196d607e2c7f19113c0d"
+    },
+    {
+      "file": "run-current-affected-suite-03.ps1",
+      "bytes": 4090,
+      "sha256": "1f96aef0073bfc48a2fee3b4318e9c0a17d646a29a5bdb96ecc0ce1c7d2d5c26"
+    },
+    {
+      "file": "build-native-hosts-02.cjs",
+      "bytes": 3075,
+      "sha256": "e96b41afe5095844b45e81741a97ad16347bbe32c47f552bedcff801606fb747"
+    }
+  ],
+  "firstPreparation": {
+    "status": "FAIL_BEFORE_INSPECTOR_OUTPUT",
+    "cause": "Original inspector has three command-list occurrences, including report metadata; original helper expected two. Three prior generated files and four original snapshots were preserved and byte-verified on resume. No native launch or product change."
+  },
+  "scope": "Only feature/evidence labels, current source guard, new machine flag/commands and added history driver; installed Code1.143.0 pins/timings/assertions/no-signals controls retained. History21primary+4restart prepared; no native PASS claim."
+}

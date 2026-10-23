@@ -1,0 +1,112 @@
+{
+  "status": "F23_ACTIVE_TEST_FIRST_NOT_IMPLEMENTED",
+  "head": "a06d436df82c507faa8c642a8b2ec23f6b27119e",
+  "branch": "soterai-lite-f22h-resume-20261023",
+  "flag": "soterai.lite.historyScanner",
+  "catalogIds": [
+    "LS-25",
+    "LS-26"
+  ],
+  "card": {
+    "path": "docs/soterai-lite/evidence/20261023-f23-history-62d09fb1/work-card-01.md",
+    "bytes": 5378,
+    "sha256": "b8c8fdc32b1025d47b048f9304a5a9c9a7b6aa6f5e40d6eec1c3b37610efa993"
+  },
+  "prerequisites": [
+    {
+      "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/f22h-committed-byte-verification-01.json",
+      "bytes": 1279,
+      "sha256": "5fc34a09363ccaa90965f35a662e36c2ced3f5075b5f343d25c8ef2e34869d5f"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/f22h-transition-byte-verification-01.json",
+      "bytes": 1261,
+      "sha256": "01cc94ab8c5ee340ad5873abb82467a6c327c178cc7736e9ea76629820fe3ff5"
+    }
+  ],
+  "inspectedInputs": [
+    {
+      "path": "packages/vscode-extension/src/terminal/CheckedGitMetadata.ts",
+      "bytes": 11622,
+      "sha256": "4327a101f667bee54c679bd5df4a45eb0c76dd536c67f3682d8a9a31290c3f95"
+    },
+    {
+      "path": "packages/vscode-extension/src/security/SafeGit.ts",
+      "bytes": 3938,
+      "sha256": "7605156c5b48522d9da8819f0d0c6950e533cc34779c0072aff8538546d9e219"
+    },
+    {
+      "path": "packages/vscode-extension/src/terminal/ManagedOutputBinding.ts",
+      "bytes": 3078,
+      "sha256": "47083a6e7ec4f161a9e1f7f91406102603adf18166237b47558f171b93c810c0"
+    },
+    {
+      "path": "packages/vscode-extension/src/hygiene/HygieneAnalysis.ts",
+      "bytes": 8291,
+      "sha256": "490a49c51a264d7eeb7c93d7c8ceb3708f29c0e03b66f90473f76e6e748e8267"
+    },
+    {
+      "path": "packages/vscode-extension/src/hygiene/HygieneExposureLedger.ts",
+      "bytes": 10838,
+      "sha256": "f42fa67f15dfe14ce1a401a452f46c3b6849e74bc5819a3848c7d3a45358905b"
+    },
+    {
+      "path": "packages/vscode-extension/src/hygiene/commands.ts",
+      "bytes": 4540,
+      "sha256": "99ffef3a71949c23b1c8778252343cc684a60615c11c0d41d7fe95c95e8037f6"
+    },
+    {
+      "path": "packages/vscode-extension/src/extension.ts",
+      "bytes": 34808,
+      "sha256": "97883a6294bb6f9b3518264c768434ae0a57e67ff2ee830fe55cc5951cfce728"
+    },
+    {
+      "path": "packages/vscode-extension/package.json",
+      "bytes": 128268,
+      "sha256": "7a2d39e67e91f6b212e718bb2fe75498be9f39c35e10c28b43f3ee04031fd86c"
+    },
+    {
+      "path": "packages/soterai-lite/package.json",
+      "bytes": 124274,
+      "sha256": "c885cd67e52f2f2fca2b77f5bcfb47f87bab3e94b3e309615e9bd7d0bdd98489"
+    },
+    {
+      "path": "packages/vscode-extension/README.md",
+      "bytes": 58075,
+      "sha256": "1fcf0152d616ff5f35b3fd1afa8246ac73e390728a999ccd3df99c87dd57fc96"
+    },
+    {
+      "path": "packages/soterai-lite/README.md",
+      "bytes": 52129,
+      "sha256": "9c1aea70d7209daa55362c877bd5225bde66559a4a593a077567c54522449723"
+    },
+    {
+      "path": "packages/soterai-lite/CHANGELOG.md",
+      "bytes": 7278,
+      "sha256": "19d72e96989e084a58587979134f7ef5ccdf88d7de027474b7f7f90a7a1eb120"
+    }
+  ],
+  "guarded": [
+    {
+      "path": "docs/soterai-lite/LITE-CATALOG.json",
+      "bytes": 160265,
+      "sha256": "1ce46192e9f315b5f2142c9f61542f1d513143dc2e19d4def6d95cea38c73ed4"
+    },
+    {
+      "path": "docs/soterai-lite/MASTER-PROMPT-20261016.txt",
+      "bytes": 15864,
+      "sha256": "2ea0c90b1fe3bdd591e5ae24470dcd8804abfff7a75741ec1f5a1aae7e4679ae"
+    },
+    {
+      "path": "packages/soterai-lite/package.json",
+      "bytes": 124274,
+      "sha256": "c885cd67e52f2f2fca2b77f5bcfb47f87bab3e94b3e309615e9bd7d0bdd98489"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/fixtures/codex-ide-26.51007.21434-manifest.json",
+      "bytes": 7510,
+      "sha256": "10044df52cde43b8e7a98fd6f9c8b159db2283b3bee3a1f12ed7caf44b8d498c"
+    }
+  ],
+  "scope": "Existing F23 order, no replacement plan. F22h source1955/1890paths/1082snapshots and transition71/72paths actual byte PASS0mismatch. Three Git-status format markers have identical actual current/HEAD bytes and zero numstat; no rewrite or cleanup. New production not yet implemented; protocol tests being authored in parallel, failure baseline required before implementation."
+}

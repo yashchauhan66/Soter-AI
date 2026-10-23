@@ -1,0 +1,243 @@
+{
+  "schemaVersion": 1,
+  "phase": "restart",
+  "syntheticOnly": true,
+  "hostVersion": "1.143.1",
+  "extensionBundleSha256": "7b61247bd80b789e76e84f80848d4a592d20c177734b6d93a5a32b667eab7503",
+  "currentDeveloperBundleSha256": "7b61247bd80b789e76e84f80848d4a592d20c177734b6d93a5a32b667eab7503",
+  "hostProbeSha256": "a10fcf723b1edeb480572c1339cecbcd2ef2baa34c0892cb43ed3b057735efd5",
+  "observations": [
+    {
+      "id": "F23-N01",
+      "scope": "Restart preserves keyed metadata and existing key without startup history, child, document or key writes",
+      "status": "PASS"
+    },
+    {
+      "id": "F23-N02",
+      "scope": "Restart cancellation still requires native owner consent before fresh history authority",
+      "status": "PASS"
+    },
+    {
+      "id": "F23-N03",
+      "scope": "Restart carries no stale current-file vault authority from historical findings",
+      "status": "PASS"
+    },
+    {
+      "id": "F23-N04",
+      "scope": "Fresh actual native restart review reestablishes one keyed historical finding without rewriting history or replacing its key",
+      "status": "PASS"
+    }
+  ],
+  "passed": 4,
+  "failed": 0,
+  "notRun": 0,
+  "sourceDocumentCalls": 0,
+  "sourceDocumentEvents": 0,
+  "directHistoryBodyReads": 0,
+  "secretStorageStores": 0,
+  "vaultKeyStores": 0,
+  "reviews": [
+    {
+      "action": "Analyze local Git history",
+      "safe": true
+    },
+    {
+      "action": "Analyze local Git history",
+      "safe": true
+    }
+  ],
+  "metadataDocuments": 2,
+  "children": [
+    {
+      "phase": "history",
+      "operation": "version",
+      "closed": true,
+      "code": 0,
+      "signal": null,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 29,
+      "stderrBytes": 0,
+      "stdoutSha256": "2bfdb478bf1093a587b8e6306b25f57e6b8aed47bffe7e885f7b279768af4c42",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "spawnFailed": false,
+      "streamError": false,
+      "overflow": false,
+      "signalsRequested": 0,
+      "stdinObjects": 0,
+      "invalidInput": false
+    },
+    {
+      "phase": "history",
+      "operation": "commits",
+      "closed": true,
+      "code": 0,
+      "signal": null,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 164,
+      "stderrBytes": 0,
+      "stdoutSha256": "d0bcdce85123da21ce57333b1e8cdc7a72754de1d5bf6855eb0096942b7276d6",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "spawnFailed": false,
+      "streamError": false,
+      "overflow": false,
+      "signalsRequested": 0,
+      "stdinObjects": 0,
+      "invalidInput": false
+    },
+    {
+      "phase": "history",
+      "operation": "tree",
+      "closed": true,
+      "code": 0,
+      "signal": null,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 72,
+      "stderrBytes": 0,
+      "stdoutSha256": "ef5f768e95051bd6a9755470cb51002da59dc2bc67bbaa1eebdb40698c025762",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "spawnFailed": false,
+      "streamError": false,
+      "overflow": false,
+      "signalsRequested": 0,
+      "stdinObjects": 0,
+      "invalidInput": false
+    },
+    {
+      "phase": "history",
+      "operation": "tree",
+      "closed": true,
+      "code": 0,
+      "signal": null,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 166,
+      "stderrBytes": 0,
+      "stdoutSha256": "3ca4ac0b559c1752a20c69c4f1a356f6b5fd616941523fa76fa2a5600d4afefa",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "spawnFailed": false,
+      "streamError": false,
+      "overflow": false,
+      "signalsRequested": 0,
+      "stdinObjects": 0,
+      "invalidInput": false
+    },
+    {
+      "phase": "history",
+      "operation": "tree",
+      "closed": true,
+      "code": 0,
+      "signal": null,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 154,
+      "stderrBytes": 0,
+      "stdoutSha256": "9f39b623470ea8f6490daae1a612ad153fd544147a8760a6f7f58fdf52ad5ce3",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "spawnFailed": false,
+      "streamError": false,
+      "overflow": false,
+      "signalsRequested": 0,
+      "stdinObjects": 0,
+      "invalidInput": false
+    },
+    {
+      "phase": "history",
+      "operation": "tree",
+      "closed": true,
+      "code": 0,
+      "signal": null,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 72,
+      "stderrBytes": 0,
+      "stdoutSha256": "ef5f768e95051bd6a9755470cb51002da59dc2bc67bbaa1eebdb40698c025762",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "spawnFailed": false,
+      "streamError": false,
+      "overflow": false,
+      "signalsRequested": 0,
+      "stdinObjects": 0,
+      "invalidInput": false
+    },
+    {
+      "phase": "history",
+      "operation": "batch",
+      "closed": true,
+      "code": 0,
+      "signal": null,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 176,
+      "stderrBytes": 0,
+      "stdoutSha256": "6c2a2b6f2ae1d08a33d5e54259940cbd7fa49a9503bd348f0013407626f41346",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "spawnFailed": false,
+      "streamError": false,
+      "overflow": false,
+      "signalsRequested": 0,
+      "stdinObjects": 2,
+      "invalidInput": false
+    }
+  ],
+  "processSignalsRequested": 0,
+  "trace": [
+    {
+      "event": "command-start-historyScannerStatus",
+      "milliseconds": 1746.2311
+    },
+    {
+      "event": "command-end-historyScannerStatus",
+      "milliseconds": 1747.8687999999997,
+      "status": "OWNER_REVIEW_REQUIRED"
+    },
+    {
+      "event": "command-start-reviewGitHistory",
+      "milliseconds": 1827.2021
+    },
+    {
+      "event": "command-end-reviewGitHistory",
+      "milliseconds": 1853.5403000000001,
+      "status": "CANCELLED"
+    },
+    {
+      "event": "command-start-reviewHygieneVault",
+      "milliseconds": 1853.9596000000001
+    },
+    {
+      "event": "command-end-reviewHygieneVault",
+      "milliseconds": 1860.4566,
+      "status": "REVIEW_FILES_FIRST"
+    },
+    {
+      "event": "command-start-openHygieneExposureLedger",
+      "milliseconds": 1860.4832999999999
+    },
+    {
+      "event": "command-end-openHygieneExposureLedger",
+      "milliseconds": 2239.7273999999998,
+      "status": "METADATA"
+    },
+    {
+      "event": "command-start-reviewGitHistory",
+      "milliseconds": 2361.5896999999995
+    },
+    {
+      "event": "command-end-reviewGitHistory",
+      "milliseconds": 6413.816000000001,
+      "status": "ANALYZED",
+      "files": 2,
+      "findings": 1
+    }
+  ],
+  "independence": "LOW",
+  "ownerPresence": "SCRIPTED_NATIVE_API_DECISIONS_NOT_HUMAN_REVIEW",
+  "notTested": [
+    "Human usability/accessibility",
+    "Credential validity, provider rotation, actual AI access or remote copies",
+    "History removal/rewrite and unreachable/reflog/message scanning",
+    "Same-user unmanaged reads or independent uploads"
+  ]
+}

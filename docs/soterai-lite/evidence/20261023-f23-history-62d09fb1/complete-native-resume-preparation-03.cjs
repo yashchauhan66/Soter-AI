@@ -1,0 +1,5 @@
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const build=fs.readFileSync(path.join(__dirname,'build-native-hosts-02.cjs'),'utf8');assert(build.includes('native-driver-provenance-02.json'));fs.writeFileSync(path.join(__dirname,'build-native-hosts-03.cjs'),build.replaceAll('native-driver-provenance-02.json','native-driver-provenance-03.json'),{flag:'wx'});
+const close=fs.readFileSync(path.join(__dirname,'confirm-failed-serial-01.ps1'),'utf8');fs.writeFileSync(path.join(__dirname,'confirm-failed-native-01.ps1'),close.replaceAll('serial','native'),{flag:'wx'});
+const acceptance=path.join(__dirname,'prepare-acceptance-02.cjs'),text=fs.readFileSync(acceptance,'utf8');assert(text.includes("for(const [kind,rev]"));fs.writeFileSync(acceptance,text.replace("for(const [kind,rev]","gates.push(receipt('build-native-hosts-run-02.txt'),receipt('verify-native-rebuild-run-02.txt'));\nfor(const [kind,rev]"));
+console.log(JSON.stringify({status:'PREPARED_NOT_EXECUTED',buildProvenance:'Unique03',closure:'Native01 failure',acceptance:'Fresh build02/native02 required'}));

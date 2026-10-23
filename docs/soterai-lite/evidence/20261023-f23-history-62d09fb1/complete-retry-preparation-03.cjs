@@ -1,0 +1,11 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),e=require('./input-lib-01.cjs');
+e.check();const frozen=JSON.parse(fs.readFileSync(path.join(__dirname,'source-inputs-02.json'),'utf8'));assert.equal(frozen.records.length,907);
+const candidate=path.join(__dirname,'complete-candidate01-01.ps1'),before=fs.readFileSync(candidate,'utf8'),snap=path.join(__dirname,'unexecuted-native-prior-inputs-02');
+const original=fs.readFileSync(path.join(snap,'complete-candidate01-01.ps1'),'utf8');assert.equal(before,original.replaceAll('host-current-binding-04.ps1','host-current-binding-05.ps1'));
+fs.writeFileSync(path.join(snap,'candidate-after-guard-before-closurechange.ps1'),before,{flag:'wx'});assert(before.includes('durable-serial-exit-01.json'));
+fs.writeFileSync(candidate,before.replaceAll('durable-serial-exit-01.json','durable-serial-exit-02.json').replaceAll('check-inputs-01.cjs','check-inputs-02.cjs'));
+const close=fs.readFileSync(path.join(__dirname,'confirm-owned-runner-01.ps1'),'utf8');
+fs.writeFileSync(path.join(__dirname,'confirm-owned-runner-02.ps1'),close.replace('$taskStartPath=',"$taskRevision=if($Kind -eq 'serial'){'02'}else{'01'}\n$taskStartPath=").replace("+'-start-01.json'","+'-start-'+$taskRevision+'.json'").replace("+'-gates-01.txt'","+'-gates-'+$taskRevision+'.txt'").replace("+'-exit-01.json'","+'-exit-'+$taskRevision+'.json'"),{flag:'wx'});
+fs.writeFileSync(path.join(__dirname,'serial-retry-binding-02.json'),JSON.stringify({status:'PREPARED_NOT_EXECUTED',beforeSourceInputs:906,currentSourceInputs:907,change:'Only canonical generated readiness document refreshed; all906runtime/test/build/source bytes unchanged. Original full01 3471tests3464PASS3FAIL4SKIP retained; compiler04/focused163 current.',preparationRefusal:'Helper02 attempted duplicate snapshot basename already preserved by its prior guard-update loop. EEXIST refused before closure change; prior bytes verified and kept, distinct pre-closure snapshot03 used. No test or native attempt launched by preparation.'},null,2)+'\n',{flag:'wx'});
+console.log(JSON.stringify({status:'PREPARED_RETRY_NOT_RUN',files:907}));

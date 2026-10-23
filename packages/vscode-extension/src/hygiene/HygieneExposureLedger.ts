@@ -57,10 +57,13 @@ export class HygieneExposureLedger {
     }
     /** Private controller capability. It keeps analysis synchronous inside the
      * vault's fresh-file callback; no key or original enters a command result. */
-    createAnalyzer(root: string) {
+    createAnalyzer(root: string, domain?: "history-v1") {
         return this.#run(async () => {
+            if (domain !== undefined && domain !== "history-v1") return hygieneUnavailable();
             rootValid(root); const loaded = await this.#load(true); if (!loaded.key || !loaded.encodedKey) return hygieneUnavailable();
-            const scopedKey = createHmac("sha256", loaded.key).update("analysis-root\0" + root).digest(); let alive = true, encoded: string | undefined = loaded.encodedKey;
+            let scopedKey = createHmac("sha256", loaded.key).update("analysis-root\0" + root).digest();
+            if (domain === "history-v1") { const current = scopedKey; scopedKey = createHmac("sha256", current).update("analysis-domain\0history-v1").digest(); current.fill(0); }
+            let alive = true, encoded: string | undefined = loaded.encodedKey;
             const dispose = () => { alive = false; encoded = undefined; scopedKey.fill(0); };
             return Object.freeze({
                 analyze: (input: HygieneInput) => { if (!alive) return hygieneUnavailable(); return analyzeHygieneText(input, scopedKey); },

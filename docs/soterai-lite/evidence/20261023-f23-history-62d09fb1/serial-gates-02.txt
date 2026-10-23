@@ -1,0 +1,76 @@
+﻿{"status":"EXACT_CURRENT_INPUTS","files":907}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261023-f23-history-62d09fb1\\readiness-tests-02.txt",
+    "observedAt":  "2026-10-23T12:57:18.6582906Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "--import",
+                      "tsx",
+                      "--test",
+                      "--test-concurrency=1",
+                      "packages/vscode-extension/src/__tests__/readiness-doc.test.ts"
+                  ],
+    "sha256":  "CA9598E1738F41615F0F46962ECEA201C443E26A043EC5ACA0DA61B7421A6413",
+    "file":  "node"
+}
+{"status":"EXACT_CURRENT_INPUTS","files":907}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261023-f23-history-62d09fb1\\full-tests-02.txt",
+    "observedAt":  "2026-10-23T13:07:04.5201433Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "--import",
+                      "tsx",
+                      "--test",
+                      "--test-concurrency=1",
+                      "../vscode-extension/src/__tests__/**/*.test.ts"
+                  ],
+    "sha256":  "21F0473AFAC3BBDB630D955CA2E5D3F2891DC9EDF4E98034D6E5E9F95974FF7F",
+    "file":  "node"
+}
+{"status":"EXACT_CURRENT_INPUTS","files":907}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261023-f23-history-62d09fb1\\backend-typecheck-01.txt",
+    "observedAt":  "2026-10-23T13:07:11.7426225Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "node_modules/typescript/bin/tsc",
+                      "--noEmit",
+                      "-p",
+                      "apps/local-ai-broker/tsconfig.json"
+                  ],
+    "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+    "file":  "node"
+}
+{"status":"EXACT_CURRENT_INPUTS","files":907}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261023-f23-history-62d09fb1\\backend-tests-01.txt",
+    "observedAt":  "2026-10-23T13:07:27.4817855Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "--import",
+                      "tsx",
+                      "--test",
+                      "--test-concurrency=1",
+                      "apps/local-ai-broker/src/__tests__/*.test.ts"
+                  ],
+    "sha256":  "4BCB78F8083F5063FF16C7A45749557C2E69E4861797792820F58C3D348BD687",
+    "file":  "node"
+}
+{"status":"EXACT_CURRENT_INPUTS","files":907}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261023-f23-history-62d09fb1\\build-native-hosts-run-01.txt",
+    "observedAt":  "2026-10-23T13:07:49.9362306Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261023-f23-history-62d09fb1\\build-native-hosts-02.cjs",
+                      "prebuilt-native-hosts-02"
+                  ],
+    "sha256":  "D322C93F55C2194E50CAF6B6A52146BF6AD592790E17442380A8C56ECCCFB374",
+    "file":  "node"
+}
+{"status":"EXACT_CURRENT_INPUTS","files":907}
+{
+    "status":  "PASS_CURRENT_SERIAL_F23",
+    "scope":  "Current compiler/full/backend/native driver build; exact VSIX/native acceptance still pending."
+}

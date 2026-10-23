@@ -1,0 +1,370 @@
+﻿TAP version 13
+# Subtest: F23 protocol freezes separate commit, blob, stream and time budgets
+ok 1 - F23 protocol freezes separate commit, blob, stream and time budgets
+  ---
+  duration_ms: 23.5669
+  type: 'test'
+  ...
+# Subtest: F23 commit list accepts empty history and exact LF or CRLF object IDs
+ok 2 - F23 commit list accepts empty history and exact LF or CRLF object IDs
+  ---
+  duration_ms: 3.8936
+  type: 'test'
+  ...
+# Subtest: F23 commit sentinel returns first32 and marks a33rd commit as capped
+ok 3 - F23 commit sentinel returns first32 and marks a33rd commit as capped
+  ---
+  duration_ms: 3.733
+  type: 'test'
+  ...
+# Subtest: F23 commit list rejects repeated IDs, option-looking revisions and noncanonical object shapes
+ok 4 - F23 commit list rejects repeated IDs, option-looking revisions and noncanonical object shapes
+  ---
+  duration_ms: 3.1555
+  type: 'test'
+  ...
+# Subtest: F23 commit list rejects missing terminators, blank records, bareCR and oversized streams
+ok 5 - F23 commit list rejects missing terminators, blank records, bareCR and oversized streams
+  ---
+  duration_ms: 2.3624
+  type: 'test'
+  ...
+# Subtest: F23 tree protocol retains private relative paths and accepts ordinary executable blobs
+ok 6 - F23 tree protocol retains private relative paths and accepts ordinary executable blobs
+  ---
+  duration_ms: 2.438
+  type: 'test'
+  ...
+# Subtest: F23 tree protocol accepts canonical size padding, empty blobs and UTF8 file names
+ok 7 - F23 tree protocol accepts canonical size padding, empty blobs and UTF8 file names
+  ---
+  duration_ms: 2.2059
+  type: 'test'
+  ...
+# Subtest: F23 tree protocol skips symlinks and gitlinks without admitting external contents
+ok 8 - F23 tree protocol skips symlinks and gitlinks without admitting external contents
+  ---
+  duration_ms: 1.7215
+  type: 'test'
+  ...
+# Subtest: F23 tree protocol leaves large object sizes for the scanner's explicit skip accounting
+ok 9 - F23 tree protocol leaves large object sizes for the scanner's explicit skip accounting
+  ---
+  duration_ms: 1.6715
+  type: 'test'
+  ...
+# Subtest: F23 tree protocol rejects unsafe absolute, drive, parent, empty and separator path forms
+ok 10 - F23 tree protocol rejects unsafe absolute, drive, parent, empty and separator path forms
+  ---
+  duration_ms: 2.4479
+  type: 'test'
+  ...
+# Subtest: F23 tree protocol rejects TAB, newline and other path controls rather than treating them as new frames
+ok 11 - F23 tree protocol rejects TAB, newline and other path controls rather than treating them as new frames
+  ---
+  duration_ms: 1.37
+  type: 'test'
+  ...
+# Subtest: F23 tree protocol enforces2048 UTF8 path bytes and refuses invalid encodings
+ok 12 - F23 tree protocol enforces2048 UTF8 path bytes and refuses invalid encodings
+  ---
+  duration_ms: 1.461
+  type: 'test'
+  ...
+# Subtest: F23 tree protocol requires complete NUL framing and rejects stray or duplicate frame separators
+ok 13 - F23 tree protocol requires complete NUL framing and rejects stray or duplicate frame separators
+  ---
+  duration_ms: 1.6825
+  type: 'test'
+  ...
+# Subtest: F23 tree protocol rejects forged modes, object types, malformed IDs and unsafe numeric sizes
+ok 14 - F23 tree protocol rejects forged modes, object types, malformed IDs and unsafe numeric sizes
+  ---
+  duration_ms: 2.266
+  type: 'test'
+  ...
+# Subtest: F23 tree stream budget rejects262145 bytes before unbounded path enumeration
+ok 15 - F23 tree stream budget rejects262145 bytes before unbounded path enumeration
+  ---
+  duration_ms: 1.6851
+  type: 'test'
+  ...
+# Subtest: F23 batch protocol verifies real Git blob hashes and exact requested order
+ok 16 - F23 batch protocol verifies real Git blob hashes and exact requested order
+  ---
+  duration_ms: 3.7219
+  type: 'test'
+  ...
+# Subtest: F23 batch framing handles empty bodies and embedded newline/NUL/binary bytes without line splitting bodies
+ok 17 - F23 batch framing handles empty bodies and embedded newline/NUL/binary bytes without line splitting bodies
+  ---
+  duration_ms: 1.7914
+  type: 'test'
+  ...
+# Subtest: F23 batch rejects content whose actual Git blob hash differs despite matching ID and size headers
+ok 18 - F23 batch rejects content whose actual Git blob hash differs despite matching ID and size headers
+  ---
+  duration_ms: 1.7156
+  type: 'test'
+  ...
+# Subtest: F23 batch rejects wrong declared sizes, object kinds, malformed IDs and missing-object messages
+ok 19 - F23 batch rejects wrong declared sizes, object kinds, malformed IDs and missing-object messages
+  ---
+  duration_ms: 3.1837
+  type: 'test'
+  ...
+# Subtest: F23 batch requires full header/body/final separator and exactEOF with no appended bytes
+ok 20 - F23 batch requires full header/body/final separator and exactEOF with no appended bytes
+  ---
+  duration_ms: 2.5749
+  type: 'test'
+  ...
+# Subtest: F23 batch rejects repeated requested objects and invalid requested size or identity metadata
+ok 21 - F23 batch rejects repeated requested objects and invalid requested size or identity metadata
+  ---
+  duration_ms: 1.8927
+  type: 'test'
+  ...
+# Subtest: F23 batch admits exact64KiB object bodies but rejects a65537-byte object
+ok 22 - F23 batch admits exact64KiB object bodies but rejects a65537-byte object
+  ---
+  duration_ms: 2.532
+  type: 'test'
+  ...
+# Subtest: F23 batch body aggregate allows exact1MiB and refuses one further byte independent of framing overhead
+ok 23 - F23 batch body aggregate allows exact1MiB and refuses one further byte independent of framing overhead
+  ---
+  duration_ms: 12.7387
+  type: 'test'
+  ...
+# Subtest: F23 batch accepts128 distinct requested blobs and refuses129 even below the byte budget
+ok 24 - F23 batch accepts128 distinct requested blobs and refuses129 even below the byte budget
+  ---
+  duration_ms: 10.1888
+  type: 'test'
+  ...
+# Subtest: F23 blob decode accepts strictUTF8 with LF CR TAB and rejects malformed encodings
+ok 25 - F23 blob decode accepts strictUTF8 with LF CR TAB and rejects malformed encodings
+  ---
+  duration_ms: 2.6074
+  type: 'test'
+  ...
+# Subtest: F23 blob decode refuses NUL and unsupportedC0 controls while preserving exact byte-size limits
+ok 26 - F23 blob decode refuses NUL and unsupportedC0 controls while preserving exact byte-size limits
+  ---
+  duration_ms: 2.1259
+  type: 'test'
+  ...
+# Subtest: F23 process uses pinned Git, fixed safe options and the descriptor environment for version
+ok 27 - F23 process uses pinned Git, fixed safe options and the descriptor environment for version
+  ---
+  duration_ms: 132.269
+  type: 'test'
+  ...
+# Subtest: F23 process has literal all-ref commits and exact-object tree operation arguments
+ok 28 - F23 process has literal all-ref commits and exact-object tree operation arguments
+  ---
+  duration_ms: 127.0103
+  type: 'test'
+  ...
+# Subtest: F23 batch passes validated object IDs only through private stdin
+ok 29 - F23 batch passes validated object IDs only through private stdin
+  ---
+  duration_ms: 65.9703
+  type: 'test'
+  ...
+# Subtest: F23 process requires close even after both stdout and stderr EOFs
+ok 30 - F23 process requires close even after both stdout and stderr EOFs
+  ---
+  duration_ms: 57.14
+  type: 'test'
+  ...
+# Subtest: F23 process requires both real EOFs even when close0 was observed first
+ok 31 - F23 process requires both real EOFs even when close0 was observed first
+  ---
+  duration_ms: 71.6013
+  type: 'test'
+  ...
+# Subtest: F23 process withholds valid-looking stdout when the actual child exit is nonzero
+ok 32 - F23 process withholds valid-looking stdout when the actual child exit is nonzero
+  ---
+  duration_ms: 46.6122
+  type: 'test'
+  ...
+# Subtest: F23 process does not treat a signal closure or missing exit code as successful exit0
+ok 33 - F23 process does not treat a signal closure or missing exit code as successful exit0
+  ---
+  duration_ms: 151.0532
+  type: 'test'
+  ...
+# Subtest: F23 process consumes private stderr without returning or logging its bytes
+ok 34 - F23 process consumes private stderr without returning or logging its bytes
+  ---
+  duration_ms: 48.051
+  type: 'test'
+  ...
+# Subtest: F23 process rejects stderr beyond8192 bytes without destroying or signalling the child
+ok 35 - F23 process rejects stderr beyond8192 bytes without destroying or signalling the child
+  ---
+  duration_ms: 48.6453
+  type: 'test'
+  ...
+# Subtest: F23 process separately caps version, commit, tree and batch stdout streams
+ok 36 - F23 process separately caps version, commit, tree and batch stdout streams
+  ---
+  duration_ms: 205.3198
+  type: 'test'
+  ...
+# Subtest: F23 process pre-start withdrawal is sticky and never schedules a child
+ok 37 - F23 process pre-start withdrawal is sticky and never schedules a child
+  ---
+  duration_ms: 41.9012
+  type: 'test'
+  ...
+# Subtest: F23 active withdrawal returns STOP_UNCONFIRMED and retains busy until close plus bothEOF
+ok 38 - F23 active withdrawal returns STOP_UNCONFIRMED and retains busy until close plus bothEOF
+  ---
+  duration_ms: 47.2742
+  type: 'test'
+  ...
+# Subtest: F23 expired or nonfinite deadlines refuse before process creation
+ok 39 - F23 expired or nonfinite deadlines refuse before process creation
+  ---
+  duration_ms: 146.5621
+  type: 'test'
+  ...
+# Subtest: F23 elapsed deadline withdraws without signals while an owned child is still open
+ok 40 - F23 elapsed deadline withdraws without signals while an owned child is still open
+  ---
+  duration_ms: 82.0404
+  type: 'test'
+  ...
+# Subtest: F23 validity withdrawal or guard exceptions cannot release buffered history bytes
+ok 41 - F23 validity withdrawal or guard exceptions cannot release buffered history bytes
+  ---
+  duration_ms: 130.3186
+  type: 'test'
+  ...
+# Subtest: F23 monotonic clock reversal and nonfinite clock values withhold successful-looking completion
+ok 42 - F23 monotonic clock reversal and nonfinite clock values withhold successful-looking completion
+  ---
+  duration_ms: 132.7123
+  type: 'test'
+  ...
+# Subtest: F23 lookalike descriptors cannot authorize history process execution
+ok 43 - F23 lookalike descriptors cannot authorize history process execution
+  ---
+  duration_ms: 31.6488
+  type: 'test'
+  ...
+# Subtest: F23 descriptor drift before start refuses and later repository drift withholds completion
+ok 44 - F23 descriptor drift before start refuses and later repository drift withholds completion
+  ---
+  duration_ms: 92.8
+  type: 'test'
+  ...
+# Subtest: F23 unsafe operation selectors and object identities never become Git arguments or stdin
+ok 45 - F23 unsafe operation selectors and object identities never become Git arguments or stdin
+  ---
+  duration_ms: 153.6045
+  type: 'test'
+  ...
+# Subtest: F23 synchronously thrown spawn errors are generic and close without inventing a live process
+ok 46 - F23 synchronously thrown spawn errors are generic and close without inventing a live process
+  ---
+  duration_ms: 45.4372
+  type: 'test'
+  ...
+# Subtest: F23 spawn error without a PID settles unavailable without waiting for nonexistent EOFs
+ok 47 - F23 spawn error without a PID settles unavailable without waiting for nonexistent EOFs
+  ---
+  duration_ms: 54.5972
+  type: 'test'
+  ...
+# Subtest: F23 repeated starts cannot schedule a second child or replay withdrawn output
+ok 48 - F23 repeated starts cannot schedule a second child or replay withdrawn output
+  ---
+  duration_ms: 67.2175
+  type: 'test'
+  ...
+# Subtest: F23 scanner public and unborn controls are useful bounded analyses with no key/IO authority of their own
+ok 49 - F23 scanner public and unborn controls are useful bounded analyses with no key/IO authority of their own
+  ---
+  duration_ms: 38.7809
+  type: 'test'
+  ...
+# Subtest: F23 scanner finds committed then renamed then deleted credentials despite a clean public tip
+ok 50 - F23 scanner finds committed then renamed then deleted credentials despite a clean public tip
+  ---
+  duration_ms: 12.0242
+  type: 'test'
+  ...
+# Subtest: F23 scanner deduplicates blob IO while preserving dotenv classification across a rename
+ok 51 - F23 scanner deduplicates blob IO while preserving dotenv classification across a rename
+  ---
+  duration_ms: 4.286
+  type: 'test'
+  ...
+# Subtest: F23 scanner disabled/expired authority schedules no version, tree or body operation
+ok 52 - F23 scanner disabled/expired authority schedules no version, tree or body operation
+  ---
+  duration_ms: 1.9911
+  type: 'test'
+  ...
+# Subtest: F23 scanner version mismatch withholds before list or content and never echoes private errors
+ok 53 - F23 scanner version mismatch withholds before list or content and never echoes private errors
+  ---
+  duration_ms: 1.695
+  type: 'test'
+  ...
+# Subtest: F23 scanner cancellation at an await boundary stops all subsequent children and analysis
+ok 54 - F23 scanner cancellation at an await boundary stops all subsequent children and analysis
+  ---
+  duration_ms: 2.4213
+  type: 'test'
+  ...
+# Subtest: F23 scanner unconfirmed process, noncomplete output and clock reversal cannot return findings
+ok 55 - F23 scanner unconfirmed process, noncomplete output and clock reversal cannot return findings
+  ---
+  duration_ms: 2.2867
+  type: 'test'
+  ...
+# Subtest: F23 scanner33rd reachable commit is explicit PARTIAL even when the first32 trees are public
+ok 56 - F23 scanner33rd reachable commit is explicit PARTIAL even when the first32 trees are public
+  ---
+  duration_ms: 2.8163
+  type: 'test'
+  ...
+# Subtest: F23 scanner skips oversize, symlink and binary blobs explicitly and grants no clean-history claim
+ok 57 - F23 scanner skips oversize, symlink and binary blobs explicitly and grants no clean-history claim
+  ---
+  duration_ms: 3.0919
+  type: 'test'
+  ...
+# Subtest: F23 scanner never fetches a129th unique blob and reports PARTIAL
+ok 58 - F23 scanner never fetches a129th unique blob and reports PARTIAL
+  ---
+  duration_ms: 26.3746
+  type: 'test'
+  ...
+# Subtest: F23 scanner malformed tree or batch cannot release earlier findings or raw private bytes
+ok 59 - F23 scanner malformed tree or batch cannot release earlier findings or raw private bytes
+  ---
+  duration_ms: 3.4395
+  type: 'test'
+  ...
+# Subtest: F23 scanner aggregate metadata is bounded independently of admitted blob bytes
+ok 60 - F23 scanner aggregate metadata is bounded independently of admitted blob bytes
+  ---
+  duration_ms: 1.2943
+  type: 'test'
+  ...
+1..60
+# tests 60
+# suites 0
+# pass 60
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 7406.5228

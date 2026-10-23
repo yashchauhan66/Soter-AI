@@ -1,0 +1,202 @@
+{
+  "status": "F23_ACTIVE_COMPONENT60_AND_ACTUAL_GIT8_PASS_UI_PENDING",
+  "baseline": {
+    "raw": {
+      "path": "docs/soterai-lite/evidence/20261023-f23-history-62d09fb1/process-scanner-baseline-01.txt",
+      "bytes": 55690,
+      "sha256": "5612dc3dc4f8f4a9ccde5d41c341398e911cb3ab37264362acda1c44fa21eb66"
+    },
+    "receipt": {
+      "path": "docs/soterai-lite/evidence/20261023-f23-history-62d09fb1/process-scanner-baseline-01.txt.result.json",
+      "bytes": 667,
+      "sha256": "e0f5741ea5e1ab009c5db599f1137763010076843f494b8965c9cd8f1ad52a09"
+    },
+    "exit": 1,
+    "counts": {
+      "tests": [
+        34
+      ],
+      "pass": [
+        0
+      ],
+      "fail": [
+        34
+      ],
+      "cancelled": [
+        0
+      ],
+      "skipped": [
+        0
+      ]
+    }
+  },
+  "first": {
+    "raw": {
+      "path": "docs/soterai-lite/evidence/20261023-f23-history-62d09fb1/components-tests-01.txt",
+      "bytes": 15074,
+      "sha256": "5faef7ebb7bbc17a9e31178832f2d301dd6c871c022b16091feb4a557da82ea3"
+    },
+    "receipt": {
+      "path": "docs/soterai-lite/evidence/20261023-f23-history-62d09fb1/components-tests-01.txt.result.json",
+      "bytes": 752,
+      "sha256": "799f0f291fee346710d12b386199e40f325ee69090666e5bad5ab82651273671"
+    },
+    "exit": 1,
+    "counts": {
+      "tests": [
+        60
+      ],
+      "pass": [
+        59
+      ],
+      "fail": [
+        0
+      ],
+      "cancelled": [
+        1
+      ],
+      "skipped": [
+        0
+      ]
+    }
+  },
+  "current": {
+    "raw": {
+      "path": "docs/soterai-lite/evidence/20261023-f23-history-62d09fb1/components-tests-02.txt",
+      "bytes": 14787,
+      "sha256": "407544e5094848da48c473984c962b89878987fb22b1286179abf429409f089c"
+    },
+    "receipt": {
+      "path": "docs/soterai-lite/evidence/20261023-f23-history-62d09fb1/components-tests-02.txt.result.json",
+      "bytes": 748,
+      "sha256": "8bfb97df7a6ab9da6ea092732b2e5536fc6ba5aa83e69c9bd56acf4936cfceba"
+    },
+    "exit": 0,
+    "counts": {
+      "tests": [
+        60
+      ],
+      "pass": [
+        60
+      ],
+      "fail": [
+        0
+      ],
+      "cancelled": [
+        0
+      ],
+      "skipped": [
+        0
+      ]
+    }
+  },
+  "actualGit": {
+    "raw": {
+      "path": "docs/soterai-lite/evidence/20261023-f23-history-62d09fb1/actual-git-tests-01.txt",
+      "bytes": 2323,
+      "sha256": "45ea4b03a24dfa28e3359221fb80f25a75d52e900204aff714e2dc0b155c248a"
+    },
+    "receipt": {
+      "path": "docs/soterai-lite/evidence/20261023-f23-history-62d09fb1/actual-git-tests-01.txt.result.json",
+      "bytes": 565,
+      "sha256": "3bdd7b651596afaa05a1c2041896e373f3acba2af8e559181cb95ebc040c87e4"
+    },
+    "exit": 0,
+    "counts": {
+      "tests": [
+        8
+      ],
+      "pass": [
+        8
+      ],
+      "fail": [
+        0
+      ],
+      "cancelled": [
+        0
+      ],
+      "skipped": [
+        0
+      ]
+    }
+  },
+  "compilerFailure": {
+    "raw": {
+      "path": "docs/soterai-lite/evidence/20261023-f23-history-62d09fb1/typecheck-02.txt",
+      "bytes": 682,
+      "sha256": "120e9912419e4b5fba09aa782272ddd4b5f0381bca0c3ed8137ceb0ae89672f5"
+    },
+    "receipt": {
+      "path": "docs/soterai-lite/evidence/20261023-f23-history-62d09fb1/typecheck-02.txt.result.json",
+      "bytes": 510,
+      "sha256": "2b21b5beff990d7dbfc2083b82d6ec25964c4a7cb8fd839dcf7a84a7ff0890ae"
+    },
+    "exit": 2,
+    "counts": {}
+  },
+  "fixtureRound1": {
+    "before": {
+      "path": "docs/soterai-lite/evidence/20261023-f23-history-62d09fb1/history-process-tests-before-fix01.ts",
+      "bytes": 18555,
+      "sha256": "9685c0c45b0913098ce7b1722da7c2af0818836db29229594377d3f8207f0b8f"
+    },
+    "after": {
+      "path": "packages/vscode-extension/src/__tests__/historyGitProcess.test.ts",
+      "bytes": 18843,
+      "sha256": "359b10e1a89a9f9fa58c3625fd557466c32a4f3b98821e490eff53addd300bce"
+    },
+    "change": "Only ten unsafe operation cases share one retained prepared descriptor; fresh worker and child per selector. All22 cases/assertions/1000ms timeout unchanged. Original59PASS1CANCELLED retained."
+  },
+  "typeOnlyOriginals": [
+    {
+      "path": "docs/soterai-lite/evidence/20261023-f23-history-62d09fb1/history-scanner-tests-before-typefix01.ts",
+      "bytes": 10371,
+      "sha256": "29fcfd7b8cd70e352f7e4c24c82dd82d3afb70fc59f06551577786f8b894003b"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261023-f23-history-62d09fb1/history-native-tests-before-typefix01.ts",
+      "bytes": 20494,
+      "sha256": "d90702e893809292639157664d5e9df2f94f8676b1ae06d6017e04647b1f1c9f"
+    }
+  ],
+  "currentInputs": [
+    {
+      "path": "packages/vscode-extension/src/history/GitHistoryProtocol.ts",
+      "bytes": 6196,
+      "sha256": "15bec74093d348792b4c457079a56246b78157c1392f22aa0e10a974bf27e547"
+    },
+    {
+      "path": "packages/vscode-extension/src/history/HistoryGitProcess.ts",
+      "bytes": 9190,
+      "sha256": "4aab1d9320ba126302e3474c5049181b1324abf9559265be942b71aacafcb35d"
+    },
+    {
+      "path": "packages/vscode-extension/src/history/HistoryScanner.ts",
+      "bytes": 7893,
+      "sha256": "ef9e20d34e6f12c43876d480870d321520562a2ed010b483871bf92202004420"
+    }
+  ],
+  "currentTests": [
+    {
+      "path": "packages/vscode-extension/src/__tests__/gitHistoryProtocol.test.ts",
+      "bytes": 15042,
+      "sha256": "ce2b1aa0c31e86c8fefe4a9b66070538922fbd919056daf4bc8d56bcd61d93e1"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/historyGitProcess.test.ts",
+      "bytes": 18843,
+      "sha256": "359b10e1a89a9f9fa58c3625fd557466c32a4f3b98821e490eff53addd300bce"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/historyScanner.test.ts",
+      "bytes": 10380,
+      "sha256": "e38ab7cbcb49aedc9b040bb8898fd69d99ec3a5020de3f51b189e64fce93d02b"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/historyNativeGit.test.ts",
+      "bytes": 20506,
+      "sha256": "babe10e492fae8c275bf5e88ea9747f4337878bb713da2b8bede0fa48e6c357d"
+    }
+  ],
+  "scope": "Actual synthetic Git8 passes include public/unborn/deleted/renamed/branch/merge/binary+oversize/unsupported metadata/withdrawal; fixed args, clean environment, actual close+bothEOF, no signals or repository modifications during scans. Retained synthetic repositories only; no real history scan. Compiler02 caught two test-only type annotations; before bytes retained, current compiler pending. No UI/artifact/native-host completion claim. Same lineage LOW."
+}
