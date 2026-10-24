@@ -1,0 +1,62 @@
+﻿{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\native-closure-run-01.txt",
+    "observedAt":  "2026-10-23T03:50:50.5304013Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "-NoLogo",
+                      "-NoProfile",
+                      "-ExecutionPolicy",
+                      "Bypass",
+                      "-File",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\confirm-owned-runner-exit-05.ps1",
+                      "-Kind",
+                      "native"
+                  ],
+    "sha256":  "489955770F655E62E3D8911FB7FBFE2A6BEA714DE21DE0679E844C98680A9B3E",
+    "file":  "powershell"
+}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\frozen-membership-run-01.txt",
+    "observedAt":  "2026-10-23T03:50:51.0410330Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\check-frozen-membership-06.cjs"
+                  ],
+    "sha256":  "FECDE02297042B0E54AFD92597F851C7D7ADCB5B132E3983DFEC5B698F6D8A0F",
+    "file":  "node"
+}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\snapshot-execution-run-01.txt",
+    "observedAt":  "2026-10-23T03:50:51.8156640Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\snapshot-execution-01.cjs"
+                  ],
+    "sha256":  "64AAB16AB16D778C63D90B6BC20FD8078A700ED8499DC61ACF536B27F2498650",
+    "file":  "node"
+}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\prepare-acceptance-run-01.txt",
+    "observedAt":  "2026-10-23T03:50:55.4245604Z",
+    "exitCode":  1,
+    "arguments":  [
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\prepare-acceptance-06.cjs"
+                  ],
+    "sha256":  "9DA1752C6432DA1A541857B70DAC5D66D773414C51BEDE876A27FF2F7F771878",
+    "file":  "node"
+}
+powershell.exe : Byte barrier stopped; raw retained: prepare-acceptance-run-01
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Byte barrier st...ceptance-run-01:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261022-f22h-mcp-config-08c45e2a\
+complete-byte-barriers-05.ps1:7 char:34
++ ... exitCode -ne 0){throw ('Byte barrier stopped; raw retained: '+$Name)}
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (Byte barrier st...ceptance-run-01:String) [], RuntimeException
+    + FullyQualifiedErrorId : Byte barrier stopped; raw retained: prepare-acceptance-run-01
+ 

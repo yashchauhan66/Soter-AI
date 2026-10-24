@@ -1,0 +1,4 @@
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),crypto=require('node:crypto');
+const sha=b=>crypto.createHash('sha256').update(b).digest('hex'),rows=[];
+for(const name of fs.readdirSync(path.join(__dirname,'prebuilt-native-hosts-02')).filter(n=>n.endsWith('.js'))){const before=sha(fs.readFileSync(path.join(__dirname,'prebuilt-native-hosts-02',name))),after=sha(fs.readFileSync(path.join(__dirname,'prebuilt-native-hosts-03',name)));if(name==='lite-history-host.js')assert.notEqual(before,after);else assert.equal(before,after,name);rows.push({name,before,after});}
+assert.equal(rows.length,12);fs.writeFileSync(path.join(__dirname,'native-rebuild-comparison-02.json'),JSON.stringify({status:'PASS_ONLY_HISTORY_FIXTURE_CHANGED',rows},null,2)+'\n',{flag:'wx'});console.log(JSON.stringify({status:'PASS',unchanged:11,changed:1}));

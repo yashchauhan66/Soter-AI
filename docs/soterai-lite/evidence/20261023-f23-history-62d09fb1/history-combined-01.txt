@@ -1,0 +1,738 @@
+﻿TAP version 13
+# Subtest: F23 protocol freezes separate commit, blob, stream and time budgets
+ok 1 - F23 protocol freezes separate commit, blob, stream and time budgets
+  ---
+  duration_ms: 22.402
+  type: 'test'
+  ...
+# Subtest: F23 commit list accepts empty history and exact LF or CRLF object IDs
+ok 2 - F23 commit list accepts empty history and exact LF or CRLF object IDs
+  ---
+  duration_ms: 4.0225
+  type: 'test'
+  ...
+# Subtest: F23 commit sentinel returns first32 and marks a33rd commit as capped
+ok 3 - F23 commit sentinel returns first32 and marks a33rd commit as capped
+  ---
+  duration_ms: 3.7424
+  type: 'test'
+  ...
+# Subtest: F23 commit list rejects repeated IDs, option-looking revisions and noncanonical object shapes
+ok 4 - F23 commit list rejects repeated IDs, option-looking revisions and noncanonical object shapes
+  ---
+  duration_ms: 3.2084
+  type: 'test'
+  ...
+# Subtest: F23 commit list rejects missing terminators, blank records, bareCR and oversized streams
+ok 5 - F23 commit list rejects missing terminators, blank records, bareCR and oversized streams
+  ---
+  duration_ms: 3.4862
+  type: 'test'
+  ...
+# Subtest: F23 tree protocol retains private relative paths and accepts ordinary executable blobs
+ok 6 - F23 tree protocol retains private relative paths and accepts ordinary executable blobs
+  ---
+  duration_ms: 3.5713
+  type: 'test'
+  ...
+# Subtest: F23 tree protocol accepts canonical size padding, empty blobs and UTF8 file names
+ok 7 - F23 tree protocol accepts canonical size padding, empty blobs and UTF8 file names
+  ---
+  duration_ms: 2.8162
+  type: 'test'
+  ...
+# Subtest: F23 tree protocol skips symlinks and gitlinks without admitting external contents
+ok 8 - F23 tree protocol skips symlinks and gitlinks without admitting external contents
+  ---
+  duration_ms: 2.4809
+  type: 'test'
+  ...
+# Subtest: F23 tree protocol leaves large object sizes for the scanner's explicit skip accounting
+ok 9 - F23 tree protocol leaves large object sizes for the scanner's explicit skip accounting
+  ---
+  duration_ms: 2.0207
+  type: 'test'
+  ...
+# Subtest: F23 tree protocol rejects unsafe absolute, drive, parent, empty and separator path forms
+ok 10 - F23 tree protocol rejects unsafe absolute, drive, parent, empty and separator path forms
+  ---
+  duration_ms: 3.6518
+  type: 'test'
+  ...
+# Subtest: F23 tree protocol rejects TAB, newline and other path controls rather than treating them as new frames
+ok 11 - F23 tree protocol rejects TAB, newline and other path controls rather than treating them as new frames
+  ---
+  duration_ms: 2.2911
+  type: 'test'
+  ...
+# Subtest: F23 tree protocol enforces2048 UTF8 path bytes and refuses invalid encodings
+ok 12 - F23 tree protocol enforces2048 UTF8 path bytes and refuses invalid encodings
+  ---
+  duration_ms: 2.258
+  type: 'test'
+  ...
+# Subtest: F23 tree protocol requires complete NUL framing and rejects stray or duplicate frame separators
+ok 13 - F23 tree protocol requires complete NUL framing and rejects stray or duplicate frame separators
+  ---
+  duration_ms: 2.2302
+  type: 'test'
+  ...
+# Subtest: F23 tree protocol rejects forged modes, object types, malformed IDs and unsafe numeric sizes
+ok 14 - F23 tree protocol rejects forged modes, object types, malformed IDs and unsafe numeric sizes
+  ---
+  duration_ms: 2.1457
+  type: 'test'
+  ...
+# Subtest: F23 tree stream budget rejects262145 bytes before unbounded path enumeration
+ok 15 - F23 tree stream budget rejects262145 bytes before unbounded path enumeration
+  ---
+  duration_ms: 1.52
+  type: 'test'
+  ...
+# Subtest: F23 batch protocol verifies real Git blob hashes and exact requested order
+ok 16 - F23 batch protocol verifies real Git blob hashes and exact requested order
+  ---
+  duration_ms: 4.307
+  type: 'test'
+  ...
+# Subtest: F23 batch framing handles empty bodies and embedded newline/NUL/binary bytes without line splitting bodies
+ok 17 - F23 batch framing handles empty bodies and embedded newline/NUL/binary bytes without line splitting bodies
+  ---
+  duration_ms: 2.5948
+  type: 'test'
+  ...
+# Subtest: F23 batch rejects content whose actual Git blob hash differs despite matching ID and size headers
+ok 18 - F23 batch rejects content whose actual Git blob hash differs despite matching ID and size headers
+  ---
+  duration_ms: 2.0823
+  type: 'test'
+  ...
+# Subtest: F23 batch rejects wrong declared sizes, object kinds, malformed IDs and missing-object messages
+ok 19 - F23 batch rejects wrong declared sizes, object kinds, malformed IDs and missing-object messages
+  ---
+  duration_ms: 2.8266
+  type: 'test'
+  ...
+# Subtest: F23 batch requires full header/body/final separator and exactEOF with no appended bytes
+ok 20 - F23 batch requires full header/body/final separator and exactEOF with no appended bytes
+  ---
+  duration_ms: 2.1194
+  type: 'test'
+  ...
+# Subtest: F23 batch rejects repeated requested objects and invalid requested size or identity metadata
+ok 21 - F23 batch rejects repeated requested objects and invalid requested size or identity metadata
+  ---
+  duration_ms: 2.004
+  type: 'test'
+  ...
+# Subtest: F23 batch admits exact64KiB object bodies but rejects a65537-byte object
+ok 22 - F23 batch admits exact64KiB object bodies but rejects a65537-byte object
+  ---
+  duration_ms: 2.5358
+  type: 'test'
+  ...
+# Subtest: F23 batch body aggregate allows exact1MiB and refuses one further byte independent of framing overhead
+ok 23 - F23 batch body aggregate allows exact1MiB and refuses one further byte independent of framing overhead
+  ---
+  duration_ms: 13.1827
+  type: 'test'
+  ...
+# Subtest: F23 batch accepts128 distinct requested blobs and refuses129 even below the byte budget
+ok 24 - F23 batch accepts128 distinct requested blobs and refuses129 even below the byte budget
+  ---
+  duration_ms: 9.2871
+  type: 'test'
+  ...
+# Subtest: F23 blob decode accepts strictUTF8 with LF CR TAB and rejects malformed encodings
+ok 25 - F23 blob decode accepts strictUTF8 with LF CR TAB and rejects malformed encodings
+  ---
+  duration_ms: 5.2648
+  type: 'test'
+  ...
+# Subtest: F23 blob decode refuses NUL and unsupportedC0 controls while preserving exact byte-size limits
+ok 26 - F23 blob decode refuses NUL and unsupportedC0 controls while preserving exact byte-size limits
+  ---
+  duration_ms: 5.3561
+  type: 'test'
+  ...
+# Subtest: F23 history registration and status create no startup history read, child, key or document
+ok 27 - F23 history registration and status create no startup history read, child, key or document
+  ---
+  duration_ms: 772.6476
+  type: 'test'
+  ...
+# Subtest: F23 a new controller rejects forged, copied and cancelled result authority
+ok 28 - F23 a new controller rejects forged, copied and cancelled result authority
+  ---
+  duration_ms: 7.8526
+  type: 'test'
+  ...
+# Subtest: F23 native owner cancellation ignores public approval, path and ref before any key or Git child
+not ok 29 - F23 native owner cancellation ignores public approval, path and ref before any key or Git child
+  ---
+  duration_ms: 21.9613
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\historyCommands.test.ts:2:6469'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'UNAVAILABLE'
+    - 'CANCELLED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'CANCELLED'
+  actual: 'UNAVAILABLE'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\historyCommands.test.ts:97:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F23 one native owner prompt remains pending while status is side effect free and another review is refused
+not ok 30 - F23 one native owner prompt remains pending while status is side effect free and another review is refused
+  ---
+  duration_ms: 2022.9425
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\historyCommands.test.ts:2:7505'
+  failureType: 'testCodeFailure'
+  error: 'Synthetic history UI stage was not reached.'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Timeout.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\historyCommands.test.ts:27:41)
+    listOnTimeout (node:internal/timers:588:17)
+    process.processTimers (node:internal/timers:523:7)
+  ...
+# Subtest: F23 public review arguments never reach the controller and only current metadata becomes a JSON document
+ok 31 - F23 public review arguments never reach the controller and only current metadata becomes a JSON document
+  ---
+  duration_ms: 11.9144
+  type: 'test'
+  ...
+# Subtest: F23 an analyzed-looking result rejected by current never opens a metadata document
+ok 32 - F23 an analyzed-looking result rejected by current never opens a metadata document
+  ---
+  duration_ms: 6.644
+  type: 'test'
+  ...
+# Subtest: F23 cancellation is returned to the caller without creating a document
+ok 33 - F23 cancellation is returned to the caller without creating a document
+  ---
+  duration_ms: 7.2678
+  type: 'test'
+  ...
+# Subtest: F23 command registration permits one pending review even when a controller review is awaiting
+ok 34 - F23 command registration permits one pending review even when a controller review is awaiting
+  ---
+  duration_ms: 7.7334
+  type: 'test'
+  ...
+# Subtest: F23 a completed cancelled review releases the command guard for a fresh native flow
+ok 35 - F23 a completed cancelled review releases the command guard for a fresh native flow
+  ---
+  duration_ms: 7.4842
+  type: 'test'
+  ...
+# Subtest: F23 private controller errors produce a static unavailable result and release the pending guard
+ok 36 - F23 private controller errors produce a static unavailable result and release the pending guard
+  ---
+  duration_ms: 8.7213
+  type: 'test'
+  ...
+# Subtest: F23 metadata-document failure is sanitized and never displays a partial document
+ok 37 - F23 metadata-document failure is sanitized and never displays a partial document
+  ---
+  duration_ms: 7.5202
+  type: 'test'
+  ...
+# Subtest: F23 authority is checked again after opening metadata and before display
+ok 38 - F23 authority is checked again after opening metadata and before display
+  ---
+  duration_ms: 10.3107
+  type: 'test'
+  ...
+# Subtest: F23 disable then reenable cannot display a withdrawn metadata result waiting on a document
+ok 39 - F23 disable then reenable cannot display a withdrawn metadata result waiting on a document
+  ---
+  duration_ms: 6.1501
+  type: 'test'
+  ...
+# Subtest: F23 workspace replacement withdraws pending metadata authority
+ok 40 - F23 workspace replacement withdraws pending metadata authority
+  ---
+  duration_ms: 6.7441
+  type: 'test'
+  ...
+# Subtest: F23 disposing command subscriptions suppresses a late review result and unregisters both commands
+ok 41 - F23 disposing command subscriptions suppresses a late review result and unregisters both commands
+  ---
+  duration_ms: 5.9424
+  type: 'test'
+  ...
+# Subtest: F23 disposing subscriptions during document creation prevents late display
+ok 42 - F23 disposing subscriptions during document creation prevents late display
+  ---
+  duration_ms: 6.5937
+  type: 'test'
+  ...
+# Subtest: F23 owner disable refuses public review arguments before calling the controller
+ok 43 - F23 owner disable refuses public review arguments before calling the controller
+  ---
+  duration_ms: 5.6517
+  type: 'test'
+  ...
+# Subtest: F23 strict history flag rejects nonboolean global enable values and an owner disable
+ok 44 - F23 strict history flag rejects nonboolean global enable values and an owner disable
+  ---
+  duration_ms: 15.3267
+  type: 'test'
+  ...
+# Subtest: F23 workspace and folder flag values have no power to change the owner or boolean default
+ok 45 - F23 workspace and folder flag values have no power to change the owner or boolean default
+  ---
+  duration_ms: 7.7648
+  type: 'test'
+  ...
+# Subtest: F23 strict history default accepts only booleans and ignores the merged workspace get fallback
+ok 46 - F23 strict history default accepts only booleans and ignores the merged workspace get fallback
+  ---
+  duration_ms: 7.7664
+  type: 'test'
+  ...
+# Subtest: F23 untrusted and remote workspaces cannot enable history, and configuration errors fail closed
+ok 47 - F23 untrusted and remote workspaces cannot enable history, and configuration errors fail closed
+  ---
+  duration_ms: 5.911
+  type: 'test'
+  ...
+# Subtest: F23 initial controller status withholds on absent, multiple or nonlocal workspace roots without IO
+ok 48 - F23 initial controller status withholds on absent, multiple or nonlocal workspace roots without IO
+  ---
+  duration_ms: 5.9844
+  type: 'test'
+  ...
+# Subtest: F23 disposing a real initial controller permanently withdraws status and forged result authority
+ok 49 - F23 disposing a real initial controller permanently withdraws status and forged result authority
+  ---
+  duration_ms: 5.9184
+  type: 'test'
+  ...
+# Subtest: F23 both manifests contribute only the two advanced history commands and the restricted machine flag
+ok 50 - F23 both manifests contribute only the two advanced history commands and the restricted machine flag
+  ---
+  duration_ms: 7.4216
+  type: 'test'
+  ...
+# Subtest: F23 controller construction/status has no history process, source open or analyzer-key side effect
+ok 51 - F23 controller construction/status has no history process, source open or analyzer-key side effect
+  ---
+  duration_ms: 84.8604
+  type: 'test'
+  ...
+# Subtest: F23 native review cancellation precedes history processes and analyzer-key creation
+ok 52 - F23 native review cancellation precedes history processes and analyzer-key creation
+  ---
+  duration_ms: 85.225
+  type: 'test'
+  ...
+# Subtest: F23 approved history analysis publishes only exact current keyed metadata and shared possible-exposure rows
+ok 53 - F23 approved history analysis publishes only exact current keyed metadata and shared possible-exposure rows
+  ---
+  duration_ms: 1211.0506
+  type: 'test'
+  ...
+# Subtest: F23 readonly history review preserves synthetic metadata and works with vaultMode disabled
+ok 54 - F23 readonly history review preserves synthetic metadata and works with vaultMode disabled
+  ---
+  duration_ms: 1288.7962
+  type: 'test'
+  ...
+# Subtest: F23 machine history/hygiene flags are strict and repository settings cannot enable either
+ok 55 - F23 machine history/hygiene flags are strict and repository settings cannot enable either
+  ---
+  duration_ms: 15.716
+  type: 'test'
+  ...
+# Subtest: F23 untrusted and multi-root reviews refuse before key or history authority
+ok 56 - F23 untrusted and multi-root reviews refuse before key or history authority
+  ---
+  duration_ms: 18.2233
+  type: 'test'
+  ...
+# Subtest: F23 a flag withdrawal event during owner approval stays revoked after the flag is reenabled
+ok 57 - F23 a flag withdrawal event during owner approval stays revoked after the flag is reenabled
+  ---
+  duration_ms: 22.8466
+  type: 'test'
+  ...
+# Subtest: F23 actual owner-policy drift while approval is pending cannot authorize history reads
+ok 58 - F23 actual owner-policy drift while approval is pending cannot authorize history reads
+  ---
+  duration_ms: 25.485
+  type: 'test'
+  ...
+# Subtest: F23 machine withdrawal after a completed private await stops subsequent tree/body operations
+ok 59 - F23 machine withdrawal after a completed private await stops subsequent tree/body operations
+  ---
+  duration_ms: 415.7649
+  type: 'test'
+  ...
+# Subtest: F23 repository metadata drift during a private await cannot publish or persist mock history findings
+ok 60 - F23 repository metadata drift during a private await cannot publish or persist mock history findings
+  ---
+  duration_ms: 392.6752
+  type: 'test'
+  ...
+# Subtest: F23 late analyzer-key replacement discards the pending historical candidates
+ok 61 - F23 late analyzer-key replacement discards the pending historical candidates
+  ---
+  duration_ms: 982.5191
+  type: 'test'
+  ...
+# Subtest: F23 failed metadata persistence returns generic unavailable without exposing private errors
+ok 62 - F23 failed metadata persistence returns generic unavailable without exposing private errors
+  ---
+  duration_ms: 1002.9234
+  type: 'test'
+  ...
+# Subtest: F23 approval expiry and monotonic clock reversal suppress further authority
+ok 63 - F23 approval expiry and monotonic clock reversal suppress further authority
+  ---
+  duration_ms: 226.3758
+  type: 'test'
+  ...
+# Subtest: F23 one pending native approval keeps controller busy and grants no early key or process
+ok 64 - F23 one pending native approval keeps controller busy and grants no early key or process
+  ---
+  duration_ms: 925.3094
+  type: 'test'
+  ...
+# Subtest: F23 disposal while native consent is pending prevents late approval from starting work
+ok 65 - F23 disposal while native consent is pending prevents late approval from starting work
+  ---
+  duration_ms: 15.5927
+  type: 'test'
+  ...
+# Subtest: F23 manual withdrawal before candidate publication suppresses ledger writes
+ok 66 - F23 manual withdrawal before candidate publication suppresses ledger writes
+  ---
+  duration_ms: 694.3092
+  type: 'test'
+  ...
+# Subtest: F23 STOP_UNCONFIRMED returns unavailable while retaining busy ownership until the process closes
+ok 67 - F23 STOP_UNCONFIRMED returns unavailable while retaining busy ownership until the process closes
+  ---
+  duration_ms: 238.7659
+  type: 'test'
+  ...
+# Subtest: F23 published result identity is withdrawn permanently by configuration events
+ok 68 - F23 published result identity is withdrawn permanently by configuration events
+  ---
+  duration_ms: 1116.4023
+  type: 'test'
+  ...
+# Subtest: F23 process uses pinned Git, fixed safe options and the descriptor environment for version
+ok 69 - F23 process uses pinned Git, fixed safe options and the descriptor environment for version
+  ---
+  duration_ms: 261.709
+  type: 'test'
+  ...
+# Subtest: F23 process has literal all-ref commits and exact-object tree operation arguments
+ok 70 - F23 process has literal all-ref commits and exact-object tree operation arguments
+  ---
+  duration_ms: 181.6631
+  type: 'test'
+  ...
+# Subtest: F23 batch passes validated object IDs only through private stdin
+ok 71 - F23 batch passes validated object IDs only through private stdin
+  ---
+  duration_ms: 84.6506
+  type: 'test'
+  ...
+# Subtest: F23 process requires close even after both stdout and stderr EOFs
+ok 72 - F23 process requires close even after both stdout and stderr EOFs
+  ---
+  duration_ms: 73.7563
+  type: 'test'
+  ...
+# Subtest: F23 process requires both real EOFs even when close0 was observed first
+ok 73 - F23 process requires both real EOFs even when close0 was observed first
+  ---
+  duration_ms: 81.5877
+  type: 'test'
+  ...
+# Subtest: F23 process withholds valid-looking stdout when the actual child exit is nonzero
+ok 74 - F23 process withholds valid-looking stdout when the actual child exit is nonzero
+  ---
+  duration_ms: 64.9374
+  type: 'test'
+  ...
+# Subtest: F23 process does not treat a signal closure or missing exit code as successful exit0
+ok 75 - F23 process does not treat a signal closure or missing exit code as successful exit0
+  ---
+  duration_ms: 131.6802
+  type: 'test'
+  ...
+# Subtest: F23 process consumes private stderr without returning or logging its bytes
+ok 76 - F23 process consumes private stderr without returning or logging its bytes
+  ---
+  duration_ms: 65.8397
+  type: 'test'
+  ...
+# Subtest: F23 process rejects stderr beyond8192 bytes without destroying or signalling the child
+ok 77 - F23 process rejects stderr beyond8192 bytes without destroying or signalling the child
+  ---
+  duration_ms: 56.9487
+  type: 'test'
+  ...
+# Subtest: F23 process separately caps version, commit, tree and batch stdout streams
+ok 78 - F23 process separately caps version, commit, tree and batch stdout streams
+  ---
+  duration_ms: 232.4865
+  type: 'test'
+  ...
+# Subtest: F23 process pre-start withdrawal is sticky and never schedules a child
+ok 79 - F23 process pre-start withdrawal is sticky and never schedules a child
+  ---
+  duration_ms: 44.0493
+  type: 'test'
+  ...
+# Subtest: F23 active withdrawal returns STOP_UNCONFIRMED and retains busy until close plus bothEOF
+ok 80 - F23 active withdrawal returns STOP_UNCONFIRMED and retains busy until close plus bothEOF
+  ---
+  duration_ms: 52.1167
+  type: 'test'
+  ...
+# Subtest: F23 expired or nonfinite deadlines refuse before process creation
+ok 81 - F23 expired or nonfinite deadlines refuse before process creation
+  ---
+  duration_ms: 155.397
+  type: 'test'
+  ...
+# Subtest: F23 elapsed deadline withdraws without signals while an owned child is still open
+ok 82 - F23 elapsed deadline withdraws without signals while an owned child is still open
+  ---
+  duration_ms: 71.8945
+  type: 'test'
+  ...
+# Subtest: F23 validity withdrawal or guard exceptions cannot release buffered history bytes
+ok 83 - F23 validity withdrawal or guard exceptions cannot release buffered history bytes
+  ---
+  duration_ms: 103.7517
+  type: 'test'
+  ...
+# Subtest: F23 monotonic clock reversal and nonfinite clock values withhold successful-looking completion
+ok 84 - F23 monotonic clock reversal and nonfinite clock values withhold successful-looking completion
+  ---
+  duration_ms: 161.0229
+  type: 'test'
+  ...
+# Subtest: F23 lookalike descriptors cannot authorize history process execution
+ok 85 - F23 lookalike descriptors cannot authorize history process execution
+  ---
+  duration_ms: 38.9745
+  type: 'test'
+  ...
+# Subtest: F23 descriptor drift before start refuses and later repository drift withholds completion
+ok 86 - F23 descriptor drift before start refuses and later repository drift withholds completion
+  ---
+  duration_ms: 116.3431
+  type: 'test'
+  ...
+# Subtest: F23 unsafe operation selectors and object identities never become Git arguments or stdin
+ok 87 - F23 unsafe operation selectors and object identities never become Git arguments or stdin
+  ---
+  duration_ms: 187.3387
+  type: 'test'
+  ...
+# Subtest: F23 synchronously thrown spawn errors are generic and close without inventing a live process
+ok 88 - F23 synchronously thrown spawn errors are generic and close without inventing a live process
+  ---
+  duration_ms: 60.0645
+  type: 'test'
+  ...
+# Subtest: F23 spawn error without a PID settles unavailable without waiting for nonexistent EOFs
+ok 89 - F23 spawn error without a PID settles unavailable without waiting for nonexistent EOFs
+  ---
+  duration_ms: 49.0561
+  type: 'test'
+  ...
+# Subtest: F23 repeated starts cannot schedule a second child or replay withdrawn output
+ok 90 - F23 repeated starts cannot schedule a second child or replay withdrawn output
+  ---
+  duration_ms: 61.0262
+  type: 'test'
+  ...
+# Subtest: F23 historical and current files cannot collide through a valid history-prefixed repository path
+ok 91 - F23 historical and current files cannot collide through a valid history-prefixed repository path
+  ---
+  duration_ms: 35.3972
+  type: 'test'
+  ...
+# Subtest: F23 historical exposure preserves a separate current-file ledger row and its last action
+ok 92 - F23 historical exposure preserves a separate current-file ledger row and its last action
+  ---
+  duration_ms: 5.8232
+  type: 'test'
+  ...
+# Subtest: F23 the same history domain remains stable across analyzer leases and repeated observations
+ok 93 - F23 the same history domain remains stable across analyzer leases and repeated observations
+  ---
+  duration_ms: 6.0533
+  type: 'test'
+  ...
+# Subtest: F23 history-domain references remain isolated between roots using the same profile key
+ok 94 - F23 history-domain references remain isolated between roots using the same profile key
+  ---
+  duration_ms: 6.8791
+  type: 'test'
+  ...
+# Subtest: F23 an omitted or undefined analyzer domain preserves the exact existing canonical output
+ok 95 - F23 an omitted or undefined analyzer domain preserves the exact existing canonical output
+  ---
+  duration_ms: 4.373
+  type: 'test'
+  ...
+# Subtest: F23 unsupported analyzer domains reject generically without changing retained key or ledger metadata
+ok 96 - F23 unsupported analyzer domains reject generically without changing retained key or ledger metadata
+  ---
+  duration_ms: 2.7908
+  type: 'test'
+  ...
+# Subtest: F23 history-domain leases withdraw on key drift or disposal without reverting to a current-file key
+ok 97 - F23 history-domain leases withdraw on key drift or disposal without reverting to a current-file key
+  ---
+  duration_ms: 5.1305
+  type: 'test'
+  ...
+# Subtest: F23 actual pinned Git unborn repository is an empty useful analysis with observed process closure
+ok 98 - F23 actual pinned Git unborn repository is an empty useful analysis with observed process closure
+  ---
+  duration_ms: 960.7484
+  type: 'test'
+  ...
+# Subtest: F23 actual public history remains useful and repeated commits deduplicate blob IO without repository writes
+ok 99 - F23 actual public history remains useful and repeated commits deduplicate blob IO without repository writes
+  ---
+  duration_ms: 1525.4046
+  type: 'test'
+  ...
+# Subtest: F23 actual .env committed then renamed and deleted is found once behind a clean public tip
+ok 100 - F23 actual .env committed then renamed and deleted is found once behind a clean public tip
+  ---
+  duration_ms: 2304.2396
+  type: 'test'
+  ...
+# Subtest: F23 actual reachable side-branch secret is scanned while the current main tree is public
+ok 101 - F23 actual reachable side-branch secret is scanned while the current main tree is public
+  ---
+  duration_ms: 1882.983
+  type: 'test'
+  ...
+# Subtest: F23 actual merge-parent history retains a deleted synthetic key without exposing messages or paths
+ok 102 - F23 actual merge-parent history retains a deleted synthetic key without exposing messages or paths
+  ---
+  duration_ms: 4725.6074
+  type: 'test'
+  ...
+# Subtest: F23 actual oversized and binary blobs produce explicit PARTIAL alongside an ordinary historical finding
+ok 103 - F23 actual oversized and binary blobs produce explicit PARTIAL alongside an ordinary historical finding
+  ---
+  duration_ms: 1222.0523
+  type: 'test'
+  ...
+# Subtest: F23 actual synthetic repositories with include or alternate metadata refuse before history processes
+ok 104 - F23 actual synthetic repositories with include or alternate metadata refuse before history processes
+  ---
+  duration_ms: 444.8639
+  type: 'test'
+  ...
+# Subtest: F23 actual owned Git withdrawal suppresses output and waits natural close plus bothEOF without signals
+ok 105 - F23 actual owned Git withdrawal suppresses output and waits natural close plus bothEOF without signals
+  ---
+  duration_ms: 405.8243
+  type: 'test'
+  ...
+# Subtest: F23 scanner public and unborn controls are useful bounded analyses with no key/IO authority of their own
+ok 106 - F23 scanner public and unborn controls are useful bounded analyses with no key/IO authority of their own
+  ---
+  duration_ms: 51.147
+  type: 'test'
+  ...
+# Subtest: F23 scanner finds committed then renamed then deleted credentials despite a clean public tip
+ok 107 - F23 scanner finds committed then renamed then deleted credentials despite a clean public tip
+  ---
+  duration_ms: 14.1382
+  type: 'test'
+  ...
+# Subtest: F23 scanner deduplicates blob IO while preserving dotenv classification across a rename
+ok 108 - F23 scanner deduplicates blob IO while preserving dotenv classification across a rename
+  ---
+  duration_ms: 5.0202
+  type: 'test'
+  ...
+# Subtest: F23 scanner disabled/expired authority schedules no version, tree or body operation
+ok 109 - F23 scanner disabled/expired authority schedules no version, tree or body operation
+  ---
+  duration_ms: 3.9755
+  type: 'test'
+  ...
+# Subtest: F23 scanner version mismatch withholds before list or content and never echoes private errors
+ok 110 - F23 scanner version mismatch withholds before list or content and never echoes private errors
+  ---
+  duration_ms: 2.0771
+  type: 'test'
+  ...
+# Subtest: F23 scanner cancellation at an await boundary stops all subsequent children and analysis
+ok 111 - F23 scanner cancellation at an await boundary stops all subsequent children and analysis
+  ---
+  duration_ms: 2.9352
+  type: 'test'
+  ...
+# Subtest: F23 scanner unconfirmed process, noncomplete output and clock reversal cannot return findings
+ok 112 - F23 scanner unconfirmed process, noncomplete output and clock reversal cannot return findings
+  ---
+  duration_ms: 2.8225
+  type: 'test'
+  ...
+# Subtest: F23 scanner33rd reachable commit is explicit PARTIAL even when the first32 trees are public
+ok 113 - F23 scanner33rd reachable commit is explicit PARTIAL even when the first32 trees are public
+  ---
+  duration_ms: 3.6319
+  type: 'test'
+  ...
+# Subtest: F23 scanner skips oversize, symlink and binary blobs explicitly and grants no clean-history claim
+ok 114 - F23 scanner skips oversize, symlink and binary blobs explicitly and grants no clean-history claim
+  ---
+  duration_ms: 3.5187
+  type: 'test'
+  ...
+# Subtest: F23 scanner never fetches a129th unique blob and reports PARTIAL
+ok 115 - F23 scanner never fetches a129th unique blob and reports PARTIAL
+  ---
+  duration_ms: 31.8336
+  type: 'test'
+  ...
+# Subtest: F23 scanner malformed tree or batch cannot release earlier findings or raw private bytes
+ok 116 - F23 scanner malformed tree or batch cannot release earlier findings or raw private bytes
+  ---
+  duration_ms: 3.3428
+  type: 'test'
+  ...
+# Subtest: F23 scanner aggregate metadata is bounded independently of admitted blob bytes
+ok 117 - F23 scanner aggregate metadata is bounded independently of admitted blob bytes
+  ---
+  duration_ms: 2.1811
+  type: 'test'
+  ...
+1..117
+# tests 117
+# suites 0
+# pass 115
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 34247.9651

@@ -1,0 +1,554 @@
+{
+  "schemaVersion": 1,
+  "phase": "primary",
+  "syntheticOnly": true,
+  "hostVersion": "1.143.1",
+  "extensionBundleSha256": "b68799a1eed4bd86061f0077e9eb042690da0238f6b03518d0a2cfb307426b29",
+  "currentDeveloperBundleSha256": "b68799a1eed4bd86061f0077e9eb042690da0238f6b03518d0a2cfb307426b29",
+  "hostProbeSha256": "25f360c2e8ba4b0ac2d11999c40112cc8d940b11e8b55bb02544cb8f4a40481c",
+  "observations": [
+    {
+      "id": "F24-N01",
+      "scope": "Exact runtime and two native artifact commands have no startup content, key or original document",
+      "status": "PASS"
+    },
+    {
+      "id": "F24-N02",
+      "scope": "Owner cancellation ignores caller authority before content or analyzer key",
+      "status": "PASS"
+    },
+    {
+      "id": "F24-N03",
+      "scope": "One pending native owner modal stays busy and refuses a second review without reading",
+      "status": "PASS"
+    },
+    {
+      "id": "F24-N04",
+      "scope": "Saved maps decode escaped embedded source, JS and renamed copies while public generated assets remain useful",
+      "status": "FAIL",
+      "errorName": "AssertionError"
+    },
+    {
+      "id": "F24-N05",
+      "scope": "Artifact report and canonical exposure ledger contain only keyed metadata, no values or filenames",
+      "status": "PASS"
+    },
+    {
+      "id": "F24-N06",
+      "scope": "Caller path, ref, content and approvals cannot redirect a fresh artifact review",
+      "status": "PASS"
+    },
+    {
+      "id": "F24-N07",
+      "scope": "Repeated artifact review preserves keyed ledger identity and increments observations",
+      "status": "PASS"
+    },
+    {
+      "id": "F24-N08",
+      "scope": "Indexed source map remains visibly partial without following references or discarding supported findings",
+      "status": "PASS"
+    },
+    {
+      "id": "F24-N09",
+      "scope": "Native ledger export cancellation writes nothing; approved export contains only keyed artifact rows",
+      "status": "PASS"
+    },
+    {
+      "id": "F24-N10",
+      "scope": "A key change and restoration during pending report creation cannot revive stale display or command output",
+      "status": "PASS"
+    },
+    {
+      "id": "F24-N11",
+      "scope": "Disable and reenable during the native owner modal irreversibly withdraws pending review",
+      "status": "PASS"
+    },
+    {
+      "id": "F24-N12",
+      "scope": "Owner disable blocks review and native machine scope rejects a repository override",
+      "status": "PASS"
+    },
+    {
+      "id": "F24-N13",
+      "scope": "Withdrawal while a native metadata document awaits prevents stale display and return",
+      "status": "PASS"
+    },
+    {
+      "id": "F24-N14",
+      "scope": "Actual reviewed public snapshot preserves public JS and releases only redacted generated JS with matching manifest hashes",
+      "status": "PASS"
+    },
+    {
+      "id": "F24-N15",
+      "scope": "Source-map release is withheld before any public output folder is created",
+      "status": "PASS"
+    },
+    {
+      "id": "F24-N16",
+      "scope": "SourceMappingURL-bearing generated JS remains withheld from publication",
+      "status": "PASS"
+    },
+    {
+      "id": "F24-N17",
+      "scope": "The artifact machine flag withdraws publication at admission without a new public output",
+      "status": "PASS"
+    },
+    {
+      "id": "F24-N18",
+      "scope": "Artifact disable and reenable during actual publication approval revokes the one-shot public plan",
+      "status": "PASS"
+    },
+    {
+      "id": "F24-N19",
+      "scope": "Cancelling actual publication leaves every output and saved original unchanged",
+      "status": "PASS"
+    },
+    {
+      "id": "F24-N20",
+      "scope": "Artifact findings confer no current-file vault authority or automatic original cleanup",
+      "status": "PASS"
+    },
+    {
+      "id": "F24-N21",
+      "scope": "An outside hardlink is withheld and retained, and exact original hashes plus keyed rows form the restart basis",
+      "status": "PASS"
+    }
+  ],
+  "passed": 20,
+  "failed": 1,
+  "notRun": 0,
+  "expectedChecks": 21,
+  "sourceDocumentCalls": 0,
+  "sourceDocumentEvents": 0,
+  "artifactContentReads": 0,
+  "referencedContentReads": 0,
+  "secretStorageStores": 3,
+  "vaultKeyStores": 0,
+  "reviews": [
+    {
+      "action": "Analyze local artifacts",
+      "safe": true
+    },
+    {
+      "action": "Analyze local artifacts",
+      "safe": true
+    },
+    {
+      "action": "Analyze local artifacts",
+      "safe": true
+    },
+    {
+      "action": "Analyze local artifacts",
+      "safe": true
+    },
+    {
+      "action": "Analyze local artifacts",
+      "safe": true
+    },
+    {
+      "action": "Analyze local artifacts",
+      "safe": true
+    },
+    {
+      "action": "Create metadata export",
+      "safe": true
+    },
+    {
+      "action": "Create metadata export",
+      "safe": true
+    },
+    {
+      "action": "Analyze local artifacts",
+      "safe": true
+    },
+    {
+      "action": "Analyze local artifacts",
+      "safe": true
+    },
+    {
+      "action": "Analyze local artifacts",
+      "safe": true
+    },
+    {
+      "action": "Publish reviewed snapshot",
+      "safe": true
+    },
+    {
+      "action": "Publish reviewed snapshot",
+      "safe": true
+    },
+    {
+      "action": "Publish reviewed snapshot",
+      "safe": true
+    },
+    {
+      "action": "Analyze local artifacts",
+      "safe": true
+    }
+  ],
+  "metadataDocuments": 11,
+  "trace": [
+    {
+      "event": "command-start-artifactScannerStatus",
+      "milliseconds": 2512.6636999999996
+    },
+    {
+      "event": "command-end-artifactScannerStatus",
+      "milliseconds": 2514.9725000000003,
+      "status": "OWNER_REVIEW_REQUIRED"
+    },
+    {
+      "event": "command-start-reviewArtifacts",
+      "milliseconds": 2535.7625000000003
+    },
+    {
+      "event": "command-end-reviewArtifacts",
+      "milliseconds": 2737.9285999999997,
+      "status": "CANCELLED"
+    },
+    {
+      "event": "command-start-reviewArtifacts",
+      "milliseconds": 2747.2971999999995
+    },
+    {
+      "event": "command-start-artifactScannerStatus",
+      "milliseconds": 2852.2409999999995
+    },
+    {
+      "event": "command-end-artifactScannerStatus",
+      "milliseconds": 2855.1793000000002,
+      "status": "OWNER_REVIEW_REQUIRED"
+    },
+    {
+      "event": "command-start-reviewArtifacts",
+      "milliseconds": 2855.2663
+    },
+    {
+      "event": "command-end-reviewArtifacts",
+      "milliseconds": 2856.7351000000003,
+      "status": "UNAVAILABLE"
+    },
+    {
+      "event": "command-end-reviewArtifacts",
+      "milliseconds": 2872.6340999999998,
+      "status": "CANCELLED"
+    },
+    {
+      "event": "command-start-artifactScannerStatus",
+      "milliseconds": 2872.7016
+    },
+    {
+      "event": "command-end-artifactScannerStatus",
+      "milliseconds": 2875.6985,
+      "status": "OWNER_REVIEW_REQUIRED"
+    },
+    {
+      "event": "command-start-reviewArtifacts",
+      "milliseconds": 2888.1185
+    },
+    {
+      "event": "artifact-key-event",
+      "milliseconds": 3046.4464000000003
+    },
+    {
+      "event": "command-end-reviewArtifacts",
+      "milliseconds": 3705.1555999999996,
+      "status": "ANALYZED",
+      "files": 9,
+      "findings": 4
+    },
+    {
+      "event": "command-start-openHygieneExposureLedger",
+      "milliseconds": 3954.1249000000003
+    },
+    {
+      "event": "command-end-openHygieneExposureLedger",
+      "milliseconds": 4154.378699999999,
+      "status": "METADATA"
+    },
+    {
+      "event": "command-start-reviewArtifacts",
+      "milliseconds": 4176.7111
+    },
+    {
+      "event": "command-end-reviewArtifacts",
+      "milliseconds": 5202.1546,
+      "status": "ANALYZED",
+      "files": 9,
+      "findings": 4
+    },
+    {
+      "event": "command-start-openHygieneExposureLedger",
+      "milliseconds": 5213.097900000001
+    },
+    {
+      "event": "command-end-openHygieneExposureLedger",
+      "milliseconds": 5403.3688,
+      "status": "METADATA"
+    },
+    {
+      "event": "command-start-reviewArtifacts",
+      "milliseconds": 5419.354300000001
+    },
+    {
+      "event": "command-end-reviewArtifacts",
+      "milliseconds": 6480.5934,
+      "status": "ANALYZED",
+      "files": 9,
+      "findings": 4
+    },
+    {
+      "event": "command-start-openHygieneExposureLedger",
+      "milliseconds": 6486.218800000001
+    },
+    {
+      "event": "command-end-openHygieneExposureLedger",
+      "milliseconds": 6590.9562000000005,
+      "status": "METADATA"
+    },
+    {
+      "event": "command-start-reviewArtifacts",
+      "milliseconds": 6605.000100000001
+    },
+    {
+      "event": "command-end-reviewArtifacts",
+      "milliseconds": 7611.3274,
+      "status": "PARTIAL",
+      "files": 9,
+      "findings": 4
+    },
+    {
+      "event": "command-start-exportHygieneExposureLedger",
+      "milliseconds": 7624.8428
+    },
+    {
+      "event": "command-end-exportHygieneExposureLedger",
+      "milliseconds": 7629.3295,
+      "status": "CANCELLED"
+    },
+    {
+      "event": "command-start-exportHygieneExposureLedger",
+      "milliseconds": 7630.601700000001
+    },
+    {
+      "event": "command-end-exportHygieneExposureLedger",
+      "milliseconds": 7808.611000000001,
+      "status": "EXPORTED"
+    },
+    {
+      "event": "command-start-reviewArtifacts",
+      "milliseconds": 7814.740600000001
+    },
+    {
+      "event": "artifact-key-event",
+      "milliseconds": 8890.3135
+    },
+    {
+      "event": "artifact-key-event",
+      "milliseconds": 8950.125100000001
+    },
+    {
+      "event": "command-end-reviewArtifacts",
+      "milliseconds": 8951.8793,
+      "status": "UNAVAILABLE"
+    },
+    {
+      "event": "command-start-reviewArtifacts",
+      "milliseconds": 8952.5519
+    },
+    {
+      "event": "soterai-configuration-event",
+      "milliseconds": 9220.1028
+    },
+    {
+      "event": "soterai-configuration-event",
+      "milliseconds": 9303.7739
+    },
+    {
+      "event": "command-end-reviewArtifacts",
+      "milliseconds": 9309.589,
+      "status": "UNAVAILABLE"
+    },
+    {
+      "event": "soterai-configuration-event",
+      "milliseconds": 9382.294
+    },
+    {
+      "event": "command-start-reviewArtifacts",
+      "milliseconds": 9387.5249
+    },
+    {
+      "event": "command-end-reviewArtifacts",
+      "milliseconds": 9388.3827,
+      "status": "UNAVAILABLE"
+    },
+    {
+      "event": "command-start-artifactScannerStatus",
+      "milliseconds": 9388.4015
+    },
+    {
+      "event": "command-end-artifactScannerStatus",
+      "milliseconds": 9389.0486,
+      "status": "UNAVAILABLE"
+    },
+    {
+      "event": "command-start-artifactScannerStatus",
+      "milliseconds": 9397.0479
+    },
+    {
+      "event": "command-end-artifactScannerStatus",
+      "milliseconds": 9397.8887,
+      "status": "UNAVAILABLE"
+    },
+    {
+      "event": "soterai-configuration-event",
+      "milliseconds": 9459.4393
+    },
+    {
+      "event": "command-start-reviewArtifacts",
+      "milliseconds": 9466.1144
+    },
+    {
+      "event": "soterai-configuration-event",
+      "milliseconds": 10184.229000000001
+    },
+    {
+      "event": "soterai-configuration-event",
+      "milliseconds": 10244.6563
+    },
+    {
+      "event": "command-end-reviewArtifacts",
+      "milliseconds": 10249.1464,
+      "status": "UNAVAILABLE"
+    },
+    {
+      "event": "soterai-configuration-event",
+      "milliseconds": 10322.709200000001
+    },
+    {
+      "event": "command-start-preparePublicWorkspace",
+      "milliseconds": 10335.7453
+    },
+    {
+      "event": "command-end-preparePublicWorkspace",
+      "milliseconds": 10856.0551,
+      "status": "PREPARED"
+    },
+    {
+      "event": "command-start-preparePublicWorkspace",
+      "milliseconds": 10874.463300000001
+    },
+    {
+      "event": "command-end-preparePublicWorkspace",
+      "milliseconds": 10900.2026,
+      "status": "FAILED"
+    },
+    {
+      "event": "command-start-preparePublicWorkspace",
+      "milliseconds": 10914.0223
+    },
+    {
+      "event": "command-end-preparePublicWorkspace",
+      "milliseconds": 10938.8541,
+      "status": "FAILED"
+    },
+    {
+      "event": "soterai-configuration-event",
+      "milliseconds": 11019.8857
+    },
+    {
+      "event": "command-start-preparePublicWorkspace",
+      "milliseconds": 11033.0725
+    },
+    {
+      "event": "command-end-preparePublicWorkspace",
+      "milliseconds": 11033.7186,
+      "status": "UNAVAILABLE"
+    },
+    {
+      "event": "soterai-configuration-event",
+      "milliseconds": 11091.0348
+    },
+    {
+      "event": "command-start-preparePublicWorkspace",
+      "milliseconds": 11108.1502
+    },
+    {
+      "event": "soterai-configuration-event",
+      "milliseconds": 11363.9689
+    },
+    {
+      "event": "soterai-configuration-event",
+      "milliseconds": 11442.7276
+    },
+    {
+      "event": "command-end-preparePublicWorkspace",
+      "milliseconds": 11448.0679,
+      "status": "FAILED"
+    },
+    {
+      "event": "command-start-preparePublicWorkspace",
+      "milliseconds": 11465.5671
+    },
+    {
+      "event": "command-end-preparePublicWorkspace",
+      "milliseconds": 11565.8585,
+      "status": "CANCELLED"
+    },
+    {
+      "event": "command-start-reviewHygieneVault",
+      "milliseconds": 11579.5597
+    },
+    {
+      "event": "command-end-reviewHygieneVault",
+      "milliseconds": 11580.583200000001,
+      "status": "REVIEW_FILES_FIRST"
+    },
+    {
+      "event": "command-start-reviewArtifacts",
+      "milliseconds": 11636.0888
+    },
+    {
+      "event": "command-end-reviewArtifacts",
+      "milliseconds": 11744.3744,
+      "status": "UNAVAILABLE"
+    },
+    {
+      "event": "command-start-reviewArtifacts",
+      "milliseconds": 11757.9032
+    },
+    {
+      "event": "command-end-reviewArtifacts",
+      "milliseconds": 12485.8614,
+      "status": "PARTIAL",
+      "files": 9,
+      "findings": 4
+    },
+    {
+      "event": "command-start-openHygieneExposureLedger",
+      "milliseconds": 12491.5247
+    },
+    {
+      "event": "command-end-openHygieneExposureLedger",
+      "milliseconds": 12634.7479,
+      "status": "METADATA"
+    },
+    {
+      "event": "soterai-configuration-event",
+      "milliseconds": 12841.6356
+    },
+    {
+      "event": "soterai-configuration-event",
+      "milliseconds": 12956.0404
+    }
+  ],
+  "independence": "LOW",
+  "ownerPresence": "SCRIPTED_NATIVE_API_DECISIONS_NOT_HUMAN_REVIEW",
+  "notTested": [
+    "Human usability/accessibility",
+    "Map validity, original-path sanitization or releasing source maps",
+    "Other platforms, transformed/prose/binary/unknown credentials",
+    "Credential validity, provider rotation, actual AI access or prior copies",
+    "Same-user unmanaged reads and independent uploads"
+  ]
+}

@@ -1,0 +1,6 @@
+﻿packages/vscode-extension/src/__tests__/historyNativeGit.test.ts(41,48): error TS2683: 'this' implicitly has type 'any' because it does not have a type annotation.
+packages/vscode-extension/src/__tests__/historyScanner.test.ts(77,155): error TS2322: Type 'Promise<{ status: string; }>' is not assignable to type 'Promise<HistoryGitOutcome>'.
+  Type '{ status: string; }' is not assignable to type 'HistoryGitOutcome'.
+    Type '{ status: string; }' is not assignable to type 'Readonly<{ status: "STOP_UNCONFIRMED" | "UNAVAILABLE"; }>'.
+      Types of property 'status' are incompatible.
+        Type 'string' is not assignable to type '"STOP_UNCONFIRMED" | "UNAVAILABLE"'.

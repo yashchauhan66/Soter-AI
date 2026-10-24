@@ -1,0 +1,24 @@
+{
+  "status": "PREPARED_NOT_EXECUTED_STRICT_EXIT_AND_BOTH_EOF",
+  "beforeExecutionRefusal": true,
+  "rows": [
+    {
+      "path": "run-functional-03.ps1",
+      "sha256": "8c894dbfb8f85793f36aecb011ce4c64167967d01532b199bbd1a29e4cb8b6d7",
+      "beforePath": "run-functional-02.ps1",
+      "beforeSha256": "acec11bddf379a3af3e5e63eb890226029927bf2b78a5441f8df72fb181b14a4"
+    },
+    {
+      "path": "run-security-03.ps1",
+      "sha256": "62ea37f9a0bb1cc25d8483a56e1dac3c560e9e53bb4e6fd130271b9966997c17",
+      "beforePath": "run-security-02.ps1",
+      "beforeSha256": "07128acae5c0d19cf9bde360b0fd493bb070dda46b77bc6661e8cff27609bc36"
+    }
+  ],
+  "dispatcher": {
+    "path": "run-affected-hosts-02.ps1",
+    "beforeSha256": "d25e010150541eddd9ad5d837751bdc263e93b384773bd02a001ab233889d86e",
+    "sha256": "ab1fa79b2107af73a33281317194a85fa53e85c11137d695d185bc329387c4ab"
+  },
+  "scope": "Still-unexecuted affected dispatcher now uses new launchers03. All previous helpers/bytes retained. Original budgets, payloads, expected assertions and no-signals rules unchanged. Pending or faulted drains cannot return passing exit. Actual closure receipts required in acceptance."
+}

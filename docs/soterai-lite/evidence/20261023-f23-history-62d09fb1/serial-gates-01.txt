@@ -1,0 +1,44 @@
+﻿{"status":"EXACT_CURRENT_INPUTS","files":906}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261023-f23-history-62d09fb1\\typecheck-04.txt",
+    "observedAt":  "2026-10-23T12:41:48.6232249Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "node_modules/typescript/bin/tsc",
+                      "--noEmit",
+                      "-p",
+                      "packages/vscode-extension/tsconfig.json"
+                  ],
+    "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+    "file":  "node"
+}
+{"status":"EXACT_CURRENT_INPUTS","files":906}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261023-f23-history-62d09fb1\\full-tests-01.txt",
+    "observedAt":  "2026-10-23T12:53:29.6892848Z",
+    "exitCode":  1,
+    "arguments":  [
+                      "--import",
+                      "tsx",
+                      "--test",
+                      "--test-concurrency=1",
+                      "../vscode-extension/src/__tests__/**/*.test.ts"
+                  ],
+    "sha256":  "5F52126DB3DE1BE43C7A3319F0195FDFE061D58C4B09051840BF9E9FB3E1D7B8",
+    "file":  "node"
+}
+powershell.exe : Gate failed; evidence retained: full-tests-01
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Gate failed; ev...: full-tests-01:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261023-f23-history-62d09fb1\run-
+serial-gates-01.ps1:10 char:34
++ ... ipt.exitCode -ne 0){throw ('Gate failed; evidence retained: '+$Name)}
++                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (Gate failed; ev...: full-tests-01:String) [], RuntimeException
+    + FullyQualifiedErrorId : Gate failed; evidence retained: full-tests-01
+ 

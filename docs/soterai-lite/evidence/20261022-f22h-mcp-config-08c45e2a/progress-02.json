@@ -1,0 +1,166 @@
+{
+  "status": "F22H_ACTIVE_FULL_RETRY_PENDING_NO_NATIVE_OR_ACCEPTANCE",
+  "parent": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+  "currentInputs": {
+    "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/source-inputs-02.json",
+    "bytes": 128899,
+    "sha256": "8fa734fb63e2fd62183c2ae42de6e637c3dc3568dcec408e1b2ce1ee4a9e6bae"
+  },
+  "currentInputCount": 662,
+  "focused": {
+    "tests": 419,
+    "pass": 419,
+    "fail": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "todo": 0
+  },
+  "compiler": {
+    "output": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\typecheck-03.txt",
+    "observedAt": "2026-10-22T17:40:05.2784848Z",
+    "exitCode": 0,
+    "arguments": [
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "packages/vscode-extension/tsconfig.json"
+    ],
+    "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+    "file": "node",
+    "log": {
+      "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/typecheck-03.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "receipt": {
+      "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/typecheck-03.txt.result.json",
+      "bytes": 579,
+      "sha256": "652e5f56162a6f18500b8bc28d1c7c3f101ab922f3610d25ae1988a58cd90229"
+    }
+  },
+  "backend": {
+    "tests": 144,
+    "pass": 143,
+    "fail": 0,
+    "skipped": 1,
+    "cancelled": 0,
+    "todo": 0
+  },
+  "backendCompiler": {
+    "output": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\backend-typecheck-01.txt",
+    "observedAt": "2026-10-22T17:44:57.3051816Z",
+    "exitCode": 0,
+    "arguments": [
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "apps/local-ai-broker/tsconfig.json"
+    ],
+    "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+    "file": "node",
+    "log": {
+      "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/backend-typecheck-01.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "receipt": {
+      "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/backend-typecheck-01.txt.result.json",
+      "bytes": 582,
+      "sha256": "41d4b224ba98c3d5b37c80917c0d3b2ae397166018b23602d07ba19196b9bb61"
+    }
+  },
+  "docs": {
+    "tests": 16,
+    "pass": 16,
+    "fail": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "todo": 0
+  },
+  "failedFull": {
+    "counts": {
+      "tests": 3349,
+      "pass": 3343,
+      "fail": 2,
+      "skipped": 4,
+      "cancelled": 0,
+      "todo": 0
+    },
+    "raw": {
+      "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/full-tests-01.txt",
+      "bytes": 799303,
+      "sha256": "74ccffee5a9903f148ae9c18d5d6e0d211ce605fca31698384dc667a95aa27d3"
+    },
+    "receipt": {
+      "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/full-tests-01.txt.result.json",
+      "bytes": 610,
+      "sha256": "93a9d3a6bb390a758af1af20439deab64a57d6b3cbcff065113f3ce3599e5f45"
+    },
+    "failures": [
+      "F20B exact distinct IDE manifest/runtime/native pin accepted",
+      "H4 @soterai/guard-core resolves to a dist newer than its sources"
+    ],
+    "status": "FAIL_RETAINED_NOT_REGRADED"
+  },
+  "diagnosis": {
+    "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/full-failure-diagnostics-01.json",
+    "bytes": 167160,
+    "sha256": "a905b98725dcdedc65448d89ea4a5d0890dc434c65c973f36cd60bf08927384d"
+  },
+  "fixtureRepair": {
+    "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/full-fixture-repair-01.json",
+    "bytes": 3322,
+    "sha256": "a00c4c8fdff0e0ded57bc38eb59031ffde1783ad65416e85a1645d3ba0c15b2a"
+  },
+  "realBuild": {
+    "output": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-build-01.txt",
+    "observedAt": "2026-10-22T18:04:02.0863372Z",
+    "exitCode": 0,
+    "arguments": [
+      "node_modules/typescript/bin/tsc",
+      "-p",
+      "packages/guard-core/tsconfig.json"
+    ],
+    "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+    "file": "node",
+    "log": {
+      "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-build-01.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "receipt": {
+      "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-build-01.txt.result.json",
+      "bytes": 480,
+      "sha256": "e825eb301c18cdaf1fc3279fc257a90893b3b7bbbafc53b5bdbc14e5b3c6d97e"
+    }
+  },
+  "rebuildComparison": {
+    "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/guard-core-rebuild-comparison-01.json",
+    "bytes": 164262,
+    "sha256": "b95f860a954041ddbab9555d2f8631a99a9c2f60236cf7d3c22f617e9564f20e"
+  },
+  "failedRunnerClosure": {
+    "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/durable-serial-failed-exit-01.json",
+    "bytes": 874,
+    "sha256": "d1699b18eb4b7f959366f630e1b1bf01be4491e9d481e8bdf1156bb98103cdf5"
+  },
+  "freshRetry": {
+    "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/durable-serial-02.json",
+    "bytes": 783,
+    "sha256": "de413719e7da6b5589847add4237c5e6bb1b8b94e76d4d866ab1f1cdf3c678c8"
+  },
+  "infrastructureImprovementRound": 2,
+  "productCorrectionRound": 1,
+  "preparedNativeInventory": {
+    "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/host-fixture-inputs-02.json",
+    "bytes": 10642,
+    "sha256": "7806f64485539e0a4cb3427b4032448bc5e017ea79bac3bda55667bb7ec90893"
+  },
+  "nativeLaunches": 0,
+  "templateSnapshots": {
+    "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/host-template-snapshots-01.json",
+    "bytes": 22922,
+    "sha256": "9c093e44c2491d9726713d39edae6979c7bbd3c987865a6b2df723abc925f85c"
+  },
+  "scope": "Current419focused/compiler/backend143PASS1SKIP/docs16PASS, unchanged original360inputs and212real compiler outputs. Two synthetic JSON fixtures restored to exact committed/vendor-pin bytes with observed originals retained; scoped .gitattributes -text prevents fixture/evidence normalization. Guard-core source87files semantic-equal to commit; actual freshness rebuild performed, no timestamp touch. Current662inputs frozen; targeted controls/new full02 active. All old full/compiler/CIchild/parser/helper failures remain retained; native/artifact/acceptance/byte commits not done. No OS/process changes/download/logins/global profile/real secrets/rating/human/independent claim."
+}

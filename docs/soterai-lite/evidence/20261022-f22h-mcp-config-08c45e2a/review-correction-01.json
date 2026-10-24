@@ -1,0 +1,53 @@
+{
+  "status": "IMPLEMENTED_NOT_RETESTED",
+  "improvementRound": 1,
+  "baseline": {
+    "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/mcp-review-baseline-01.txt",
+    "bytes": 3690,
+    "sha256": "a85810eb3fd82419275f0764319a12071decdcee03f3ee8df3f757baa0adaffd"
+  },
+  "combined": {
+    "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/mcp-combined-01.txt",
+    "bytes": 109689,
+    "sha256": "79bb32852ca0bf1e446a93e6bfd7d4e1768004b05f8f24964f19b80c2c99aac6"
+  },
+  "tests": {
+    "path": "packages/vscode-extension/src/__tests__/mcpSecretPlanReview.test.ts",
+    "bytes": 7169,
+    "sha256": "b1d6a86f8da6c7c1078bb1bf707a6ccdb57d21ee3fd0ffc1c6bb47fbb2bdf0cc"
+  },
+  "jsonc": {
+    "before": {
+      "bytes": 11018,
+      "sha256": "3f112d386c0885cdad9e32e912b1f494bc52be78875c8e226942c9d6b867786b"
+    },
+    "after": {
+      "path": "packages/vscode-extension/src/config-scanners/JsoncSecretPlan.ts",
+      "bytes": 11143,
+      "sha256": "3c28a859e5326edc0afb5673f9cdf1cdacf295689c2152340a24464bf73d733f"
+    }
+  },
+  "toml": {
+    "before": {
+      "bytes": 12182,
+      "sha256": "5a423fdd45995a34bd91f09b282a68820a97e91dbccfc19c41bbb34bc8ab5162"
+    },
+    "after": {
+      "path": "packages/vscode-extension/src/config-scanners/McpTomlSyntax.ts",
+      "bytes": 12187,
+      "sha256": "a3a7c7e1cbda1cd142db8fdce165d99000f62d1d3313f476e3ca5cd303fac16d"
+    }
+  },
+  "fixture": {
+    "before": {
+      "bytes": 20235,
+      "sha256": "1b5612ab17f2695d4f840b400a7b2344e1eb7c936fbad6974760d313a2a7cc93"
+    },
+    "after": {
+      "path": "packages/vscode-extension/src/__tests__/mcpScanner.test.ts",
+      "bytes": 20209,
+      "sha256": "e3942c37aaac368ee65913a904f3e4f012aceaca956137d2b39ca25686738af3"
+    }
+  },
+  "scope": "Bind MCP input controls to actual root array elements; lowercase TOML radix prefixes with case-insensitive hexadecimal digits. Initial combined410PASS1FAIL was a test expectation requiring unnecessary discovery queries after the canonical cap; fixture now asserts early stop after1query, preserving128files/PARTIAL checks. Existing production discovery and Editor behavior unchanged; no native claims."
+}

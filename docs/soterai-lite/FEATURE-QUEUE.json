@@ -9,9 +9,9 @@
   "planVersion": 1,
   "clientDate": "2026-10-13",
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
-  "scope": "F01-F10/F12-F21/F22a-g scoped DONE after current byte barriers; F11 optional absent NOT_TESTED/NOT_COVERED. ParentF22 incomplete; F22h MCP configs prepared ACTIVE, no production before transition proof. Remaining subcards/features/verification gates pending.",
+  "scope": "F01-F10/F12-F24 scoped DONE after byte barriers; F11 optional absent NOT_TESTED/NOT_COVERED. F25 active only after actual transition bytes; F26-F32/V01-V05 pending. No final rating/human/independent claim.",
   "implementationConcurrency": 1,
-  "activeFeature": "F22",
+  "activeFeature": "F25",
   "prerequisiteBlock": {
     "id": "P00",
     "result": "FAIL",
@@ -591,8 +591,8 @@
     {
       "id": "F22",
       "title": "Source/config scanner families.",
-      "status": "ACTIVE",
-      "result": "INCOMPLETE",
+      "status": "DONE",
+      "result": "PASS_SCOPED",
       "requires": [
         "F21"
       ],
@@ -754,42 +754,74 @@
         {
           "id": "F22h",
           "title": "MCP configs",
-          "status": "ACTIVE",
-          "result": "NOT-RUN",
+          "status": "DONE",
+          "result": "PASS_SCOPED",
           "requires": [
             "F22g"
-          ]
+          ],
+          "evidenceRoot": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a",
+          "progressEvidence": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/progress-08.json",
+          "scope": "F22h finite saved project MCP JSONC and static TOML copies only. Literal credential env/headers, complete command/URL strings, args, multiline material/comments and root-array prompt defaults; exact variable references and exact server-scoped TOML environment declarations remain unresolved. Known residuals, duplicate decoded names, malformed/dynamic/unsupported syntax withhold. TOML is a finite grammar, not full TOML/vendor schema validation; no dependency download. Strict machine family flag, owner-native file/finding selection, keyed possible-exposure metadata and canonical encrypted checkpoint-only migration/exact whole-file disclosure with saved denies; per-entry recovery refuses. Shared JSONC core preserves Editor mode including narrower reference grammar. No settings application, reference resolution, client/server/shell execution, global profile scan, live validity/AI-access/OS-boundary/human/independent claim. Unknown secrets, fragments, transforms, prior copies, original buffers and unmanaged reads remain limited. One native test-driver cleanup command corrected after primary21PASS/withdrawal failure; old failedrun retained and fresh compiler/native phases required. All unit-test files/product/runtime inputs unchanged from full3349tests3345PASS4SKIP. Git history externally changed; current parent and all664input bytes reconciled, original receipts preserved. Current shared/affected workflows verified; MCP runtime byte-identical; broker six integer-constant representation changes reviewed by exact source transformation and normalized compiled AST, with current backend144tests143PASS1SKIP and actual F14-F17 retained106 reverified; actual vendor executables not rerun for this scanner card and final exact-object V01 gates remain pending.",
+          "acceptanceEvidence": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/f22h-acceptance-01.json",
+          "currentAffectedVerification": {
+            "F06": "PASS_CURRENT_EXACT_OBJECT",
+            "F21": "PASS_CURRENT_EXACT_OBJECT",
+            "F22a": "PASS_CURRENT_EXACT_OBJECT",
+            "F22b": "PASS_CURRENT_EXACT_OBJECT",
+            "F22c": "PASS_CURRENT_EXACT_OBJECT",
+            "F22d": "PASS_CURRENT_EXACT_OBJECT",
+            "F22e": "PASS_CURRENT_EXACT_OBJECT",
+            "F22f": "PASS_CURRENT_EXACT_OBJECT",
+            "F22g": "PASS_CURRENT_EXACT_OBJECT"
+          },
+          "sourceEvidenceCommit": "f676f340f8522a2beafeb526bda6c15eb40ef2ab",
+          "commitByteVerification": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/f22h-committed-byte-verification-01.json",
+          "transitionByteVerification": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/f22h-transition-byte-verification-01.json"
         }
       ],
       "completionRule": "All required subcards pass individually before parent DONE",
       "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
-      "activeSubcard": "F22h",
-      "progressEvidence": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/f22g-transition-byte-verification-01.json"
+      "progressEvidence": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/f22h-transition-byte-verification-01.json",
+      "sourceEvidenceCommit": "f676f340f8522a2beafeb526bda6c15eb40ef2ab"
     },
     {
       "id": "F23",
       "title": "Read-only Git history scanner.",
-      "status": "PLANNED",
-      "result": "NOT-RUN",
+      "status": "DONE",
+      "result": "PASS_SCOPED",
       "requires": [
         "F22"
       ],
-      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "progressEvidence": "docs/soterai-lite/evidence/20261023-f23-history-62d09fb1/progress-07.json",
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261023-f23-history-62d09fb1/f23-acceptance-03.json",
+      "sourceEvidenceCommit": "76e0bd5458fa2876d60ee0b370bd0bbc384bc1b0",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261023-f23-history-62d09fb1/f23-source-byte-verification-01.json",
+      "transitionByteVerification": "docs/soterai-lite/evidence/20261023-f23-history-62d09fb1/f23-transition-byte-verification-01.json",
+      "scope": "Bounded owner-reviewed reachable local Git history only. Strict machine flag; keyed metadata with independent history-v1 domain; no raw values, rewrite, remote read, startup history, vault authority or OS boundary. Caps/binary/unsupported histories remain PARTIAL or withheld. Current exact-package actual native and affected flows PASS; old failures retained; LOW independence. Actual vendor executables not rerun for this scanner card; final exact-object V01 routes remain pending.",
+      "sourceCommit": "76e0bd5458fa2876d60ee0b370bd0bbc384bc1b0",
+      "byteVerification": "docs/soterai-lite/evidence/20261023-f23-history-62d09fb1/f23-source-byte-verification-01.json"
     },
     {
       "id": "F24",
       "title": "Build/artifact/source-map scanning.",
-      "status": "PLANNED",
-      "result": "NOT-RUN",
+      "status": "DONE",
+      "result": "PASS_SCOPED",
       "requires": [
         "F23"
       ],
-      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "progressEvidence": "docs/soterai-lite/evidence/20261023-f24-artifact-c3a5d91e/progress-01.json",
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261023-f24-artifact-c3a5d91e/f24-acceptance-01.json",
+      "sourceEvidenceCommit": "3cd993674d302e5a23b58cc04cb946b4d862459d",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261023-f24-artifact-c3a5d91e/f24-source-byte-verification-01.json",
+      "transitionByteVerification": "docs/soterai-lite/evidence/20261023-f24-artifact-c3a5d91e/f24-transition-byte-verification-01.json",
+      "scope": "Bounded owner-reviewed local artifacts/copies and finite embedded v3 maps; keyed metadata only. Canonical recognized source/text placeholders in public snapshots; maps/mapping-URL files withheld. Strict machine flag withdraws scanner and new exports. Reserved policy/editor/store paths skipped without artifact reads and counted PARTIAL. No reference/build/config execution, original edit, cleanup, vault mutation, recall, OS boundary, human or independent claim. Current exact package affected publication/hygiene/source/history/retained functional/security PASS; failures retained, LOW. Actual vendor executables not rerun for scanner card; final exact-object V01 routes pending."
     },
     {
       "id": "F25",
       "title": "Logs/test/debug leak handling.",
-      "status": "PLANNED",
+      "status": "ACTIVE",
       "result": "NOT-RUN",
       "requires": [
         "F24"

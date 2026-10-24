@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "phase": "restart",
+  "syntheticOnly": true,
+  "hostVersion": "1.143.1",
+  "extensionBundleSha256": "7b61247bd80b789e76e84f80848d4a592d20c177734b6d93a5a32b667eab7503",
+  "currentDeveloperBundleSha256": "7b61247bd80b789e76e84f80848d4a592d20c177734b6d93a5a32b667eab7503",
+  "hostProbeSha256": "92fee0fecf75f752814d29022d547360ae0021e8193083aaa5aab253f6db7bec",
+  "observations": [
+    {
+      "id": "F22F-N01",
+      "scope": "Restart reuses keys/ledger and keeps exact masked source without startup read",
+      "status": "PASS"
+    },
+    {
+      "id": "F22F-N02",
+      "scope": "No stale family finding authority survives restart",
+      "status": "PASS"
+    },
+    {
+      "id": "F22F-N03",
+      "scope": "Actual canonical encrypted backup command recovers Ci after restart disclosure",
+      "status": "PASS"
+    },
+    {
+      "id": "F22F-N04",
+      "scope": "Fresh native review reestablishes two metadata findings after explicit recovery",
+      "status": "PASS"
+    }
+  ],
+  "passed": 4,
+  "failed": 0,
+  "notRun": 0,
+  "sourceDocumentCalls": 0,
+  "sourceDocumentEvents": 0,
+  "secretStorageStores": 0,
+  "reviews": [
+    {
+      "action": "Restore raw values",
+      "safe": true
+    },
+    {
+      "action": "Analyze saved project files",
+      "safe": true
+    }
+  ],
+  "metadataDocuments": 2,
+  "trace": [
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 691.5312000000001
+    },
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 788.3087000000003
+    },
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 1040.6116
+    },
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 1795.6535000000001
+    },
+    {
+      "event": "command-start-ciSecretScannerStatus",
+      "milliseconds": 1985.0319000000002
+    },
+    {
+      "event": "command-end-ciSecretScannerStatus",
+      "milliseconds": 1989.1744,
+      "status": "OWNER_REVIEW_REQUIRED"
+    },
+    {
+      "event": "command-start-reviewCiSecretVault",
+      "milliseconds": 2008.4926000000003
+    },
+    {
+      "event": "command-end-reviewCiSecretVault",
+      "milliseconds": 2011.3275,
+      "status": "REVIEW_FILES_FIRST"
+    },
+    {
+      "event": "command-start-restoreFileFromBackup",
+      "milliseconds": 2011.6968
+    },
+    {
+      "event": "command-end-restoreFileFromBackup",
+      "milliseconds": 2466.9008999999996,
+      "status": "VOID"
+    },
+    {
+      "event": "command-start-reviewCiSecrets",
+      "milliseconds": 2470.3215
+    },
+    {
+      "event": "command-end-reviewCiSecrets",
+      "milliseconds": 3036.8370999999997,
+      "status": "ANALYZED",
+      "files": 1,
+      "findings": 2
+    },
+    {
+      "event": "command-start-openHygieneExposureLedger",
+      "milliseconds": 3036.8851999999997
+    },
+    {
+      "event": "command-end-openHygieneExposureLedger",
+      "milliseconds": 3472.7438999999995,
+      "status": "METADATA"
+    }
+  ],
+  "independence": "LOW",
+  "ownerPresence": "SCRIPTED_NATIVE_API_DECISIONS_NOT_HUMAN_REVIEW",
+  "notTested": [
+    "CI/client/shell execution/build/deployment and key validity",
+    "Other CI vendors/languages, include resolution and dynamic shell evaluation",
+    "Human usability/accessibility",
+    "Live credentials or provider rotation",
+    "OS custody/unmanaged native reads/uploads"
+  ]
+}

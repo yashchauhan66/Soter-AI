@@ -1,0 +1,134 @@
+# SOTERAI LITE: BUILD, MAXIMIZE, TEST, RATE (single master prompt, maximum effort)
+
+## MISSION
+Split the project into two extensions and take the LITE extension to the highest coverage that extension-level controls can honestly reach.
+ - SoterAI Lite (this task): every current non-VM feature, plus the upgrades below. Install the VSIX, run a 1-2 minute wizard. No admin rights,
+   no VirtualBox, no controller service, no extra software.
+ - SoterAI Full (VM isolation): scaffold only in this task; its code must not ship inside Lite.
+Lite's promise: reduce exposure of project secrets (env files, keys, tokens, credentials) to AI tools that behave as documented but may
+accidentally include anything readable in their prompts, requests and commands (the COOPERATIVE-AI model). Lite is NOT a boundary against a hostile or
+manipulated same-user process; say this in the UI and docs. Never claim "perfect", "complete" or "unbypassable". The goal is a measured Lite Coverage
+Score >= 80% for the supported tools, with every gate passing. If 80% is not reachable honestly, report the real number and why.
+
+## STATE (open every file before relying on it)
+Repo C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard. Read: docs/project-privacy/ (reports, USER-GUIDE, CLINE-ASSESSMENT, full-mode/*, host comparison),
+packages/vscode-extension/README.md, apps/privacy-controller/README.md, docs/secretguard/guarantee-program-2026-10-09/ (ledgers, FINAL-REPORT,
+SCORECARD, release-checklist). Reported facts to re-verify: extension 790 pass/0 fail/3 skip; 9 leaks open in the 17-case host comparison (original-file
+reads, hardlink, junction, env, git history, encoded egress); the reader terminal is not a real shell guard; broker port conflicts (47321); control-auth-token absent; sensitive-deny relaxation workflow
+missing; Windows is the only tested OS.
+
+## WORKING PROTOCOL (strict)
+Ledger docs/soterai-lite/ledger.md (create it; after any context compaction read it FIRST; never redo finished work). After every stage append a STEP
+RECEIPT: exact commands | raw-output file | files changed + SHA-256 | result label | what remains unprotected | next. Verify before you claim; compute
+hashes and counts, never recall them; failures, skips and INCOMPLETE are first-class results; never overwrite or delete evidence (new unique files);
+every behaviour change sits behind a feature flag with a regression test and a rollback that never restores weaker protection; labels PASS / FAIL /
+INCOMPLETE / UNTESTED / STATIC-ONLY / UNVERIFIED / NOT-RUN / BLOCKED-HUMAN. Re-run truncated or ambiguous output narrower; do not guess. Safety filter
+or refusal: record the exact message, mark INCOMPLETE, skip, never rephrase around it. Commit locally after every stage. You may use sub-agents for
+test authoring and for an adversarial review of your own design, but their results count as LOW independence and never replace a human or
+different-vendor review. Keep working autonomously; stop ONLY at L6.
+
+## RULES
+Synthetic canaries only; never read or print real secrets or tokens; no new attack or exploit code (defensive verification of my own software only).
+Network checks: loopback only; any non-loopback test is a connection ATTEMPT with no payload to a destination listed in docs/soterai-lite/inputs.json.
+Pre-approved: branch soterai-lite with local commits; builds, suites and the EXISTING host harnesses; read-only inspection; installing the VSIX only
+into isolated test profiles (--user-data-dir, --extensions-dir); building VSIX files locally; a git-bundle backup in C:\Users\USER\soterai-backups\.
+NOT pre-approved: push, publish (Marketplace, Open VSX, npm), tag; my normal VS Code profile; killing processes; firewall, drivers, accounts, Windows
+features; VM changes; downloads unless the file path is in inputs.json; any login, token or credential; real secrets.
+
+## LITE COVERAGE CATALOG (freeze it BEFORE implementing; this prevents moving the goalposts)
+In L0 create docs/soterai-lite/LITE-CATALOG.json with >= 40 leak checks (IDs LS-01..), commit it and record its SHA-256. Later changes need a logged reason
+and a new hash. Categories and minimum counts: file-read paths (8), terminal and environment (8), network and egress (8), git and history (4),
+editor/clipboard/UI (4), config, CI and build artifacts (6), logs, test output and debug (2), extension self-hygiene (2). Each check lists: scenario,
+assumed AI-tool behaviour, mitigation, tool classes it applies to, the automated test ID, and the status. Status values: STRONG = prevented by design AND
+an automated test with a positive control and a negative control passes AND the test FAILS when the feature flag is turned off (mutation sanity);
+PARTIAL; NONE; N/A; UNVERIFIED. Score = (STRONG + 0.5 x PARTIAL) / applicable x 100, computed PER TOOL for the installed and supported tools
+(Cline, Claude Code, others found; unsupported tools are listed as NOT COVERED and never inflate the score). Also report (informational, out of Lite scope) a
+hostile-same-user sub-score and the old 10-scenario score with its arithmetic for comparability.
+
+## STAGES
+L0 Preflight and split.
+ - Commit current work on branch soterai-lite; create and verify a git-bundle backup; check free disk (>= 20 GB else STOP); git fsck; write docs/soterai-lite/
+   inputs.json if missing.
+ - FEATURE-SPLIT.md: classify every current feature as LITE / FULL / SHARED-CORE / DROP, with reasons.
+ - Restructure: packages/core (shared guard logic), packages/soterai-lite (the extension), packages/soterai-full (scaffold only: package.json, README,
+   extensionDependencies on Lite, no VM code shipped). Move VM, controller, gateway-VM and mTLS code out of Lite without deleting history. Lite keeps the
+   settings namespace "soterai.*" (migrate cleanly); Full uses "soterai.full.*". Publisher and extension IDs go in a config for me to finalize.
+ - Build the Lite VSIX and inspect it: no VM or controller code, no fixtures, evidence, secrets or local paths; record size.
+ - Freeze LITE-CATALOG.json. Write ITEM-MATRIX.md mapping every item below to the catalog IDs it should raise.
+L1 Implement the upgrades (each behind a flag, test-first against the frozen catalog):
+ U1 Secure env editor: a custom editor (not a TextDocument-backed editor) for .env, .env.* and files marked sensitive, so plaintext never enters
+    vscode.workspace.textDocuments; masked by default, reveal per value for the user only; opt-in association with a diff and undo; a warning when a
+    protected file is opened as plain text.
+ U2 Vault mode (opt-in, with migration wizard and full rollback): protected env/secret files become placeholders on disk; real values live in the OS
+    credential store; a run/task/debug integration injects them only into the app process (environment variables, never files in the workspace);
+    generate .env.example; document the workflow cost. Default stays Lite hooks-only.
+ U3 Guarded terminal v2: terminal profiles for PowerShell 5.1 and 7, Git Bash and cmd (document limits; bash/zsh designed but NOT_TESTED if not available):
+    scrubbed environment (no inherited secrets), command hooks that intercept reads of protected paths and env dumps
+    (cat/type/Get-Content/head/tail/grep/rg/sed/awk/cp, git show/diff/log -p, env/printenv/set, language one-liners where detectable), the same consent
+    prompt and masking tiers, and an OUTPUT REDACTOR that masks registered secret values (raw and common encodings) in command output, including chunk
+    boundaries and ANSI sequences. Opt-in, with a diff and undo. Publish a known-bypass list.
+ U4 Tool adapters, per installed tool and version: detection; official deny/ignore/permission/hook mechanisms (verify each against the installed
+    version's docs or source; unverified stays UNVERIFIED); an MCP "safe read" tool backed by the existing reviewed masked reader; vendor config writers
+    with diff, approval, backup and undo; a per-tool coverage badge (Gateway-routed / Vendor-controls-only / Uncovered).
+ U5 Gateway v2 (the broker): request-body coverage for gzip/br/deflate, chunked, multipart, JSON, NDJSON, SSE and base64 blobs; exact-value fingerprints with
+    encodings (raw, base64, base64url, URL, hex, JSON-escaped, quoted); pattern and entropy detectors for common providers; detection of a secret split across
+    messages in one request; fail-closed per-tool policy; size and latency budgets; automatic free-port selection per window; multi-window coexistence;
+    audit without plaintext; a built-in self-test.
+ U6 Secrets hygiene assistant: detect real secrets in the workspace; move them out of the project or into the OS credential store; generate .env.example;
+    keep an "exposure ledger" of keys an AI tool may have seen, with a per-provider rotation checklist; never print values.
+ U7 Leak-surface scanners and fixers: hardcoded secrets in source (suggest move-to-env), git history (read-only scan plus guidance; never rewrite history
+    automatically), config families (docker-compose, k8s, terraform and tfvars, .npmrc, .pypirc, service-account JSON, CI files, launch.json, tasks,
+    settings, MCP configs), build artifacts and source maps, logs and test output; optional pre-commit and pre-push hook installer; PSReadLine history
+    exclusion option (opt-in).
+ U8 Policy: stack presets (200+ filename and path patterns), team policy file that can only add denies, import and export, protect-by-default for known
+    credential paths, the sensitive-deny relaxation workflow (explicit owner action, typed confirmation, cooldown, audit; labelled not agent-proof),
+    startup and periodic protection-drift checks with alerts, versioned policy, safe downgrade handling.
+ U9 Extension self-hygiene: logs, crash reports, telemetry (opt-in, off by default), memory and audit never contain secrets (canary-tested).
+ U10 Reliability and performance: scan-time budgets on large repos, startup budget, graceful fail-closed degradation with clear UX, symlink and junction
+    handling, parent-directory race tests (symlink tests only if the privilege exists, otherwise list the Developer Mode step in HUMAN-ACTIONS).
+L2 UX (the "Protection Center"): a one-sidebar design (Protected items, Activity, Coverage); health score = the Lite Coverage Score computed from LOCAL
+   self-checks with "last verified" times (never a claim without a test); per-surface and per-tool coverage; a consent prompt that previews exactly what will be
+   returned; onboarding under 2 minutes with zero admin prompts; Explorer menu, lock badges, status bar; empty and error states; undo everywhere;
+   accessibility (axe-core in headless Edge, keyboard-only flow, high contrast, reduced motion); localization-ready strings; calm professional copy.
+   Use native VS Code components first. A "Verify my setup" button runs the canary self-test and shows PASS/FAIL per surface.
+L3 Verification and measurement:
+ - Full unit, property and fuzz suites (masking engine, path and policy parsers, redactor, body decoders, detectors).
+ - Canary project plus a loopback mock provider logging every request body, for every routable tool: assert canaries never appear (with positive controls).
+ - Terminal-hook tests (PowerShell 5.1 and 7 here; others NOT_TESTED), consent-flow tests in the VS Code test host, the existing host harnesses on the NEW
+   bundle compared with the 17-case baseline, stress and performance tests.
+ - Mutation sanity for every STRONG item. Evaluate the whole catalog; write the SCORE table per tool; compute the old 10-scenario score and the hostile
+   sub-score with arithmetic; end-to-end coding benchmarks on 2 synthetic projects (Node/Express with a fake DB, Next.js with fake API mocks): completion
+   with protection on vs off, prompt count, interruptions, time.
+ - Iterate (max 3 rounds) on every FAIL or PARTIAL that can reasonably become STRONG, then stop.
+L4 Marketplace readiness for Lite (prepare only; never publish): win32-x64 VSIX, content inspection, size, license, icon, CHANGELOG, README from
+   README-CLAIMS (honest "does / does not protect" and a supported-tools table), privacy policy, Workspace Trust and virtual-workspace declarations, minimal
+   activation events, dependency audit, license check, SBOM; clean-profile install test with ONLY the VSIX (steps, minutes, admin prompts = 0, extra installs = 0);
+   uninstall cleanup (restore edited AI configs, remove terminal-profile changes, stop the broker); upgrade keeps policy; platform matrix (Linux, macOS and
+   remote workspaces NOT_TESTED, stated in UI and README). Write PUBLISHING-RUNBOOK.md for me (publisher, token or secure automated publishing, platform
+   target, pre-release channel first, Open VSX). The agent never publishes.
+L5 Independent-verification packet: a self-contained reviewer-prompt.md (defensive review of the owner's own software; static plus synthetic-fixture dynamic checks
+   in an isolated profile; every finding as ID, severity, evidence, affected catalog item and a fix suggestion), the verifier kit, the exact object identity and
+   the output format. Exclude the ledger, scorecard, reports and builder notes; prove it with a search and a file list with SHA-256.
+L6 HUMAN-ACTIONS.md, then STOP. Exact steps in order: tool logins; real-agent smoke test per installed tool (checklist and results template); usability test with
+   5 users (script); real screen-reader pass; Developer Mode for symlink tests (optional); independent review in a FRESH session by a different vendor's model
+   or a human expert (report saved to docs/soterai-lite/independent-review-report/); Linux and macOS decisions; the publish decision. Say exactly what to send
+   with "resume".
+L7 After "resume": ingest the independent report VERBATIM (record SHA-256, no re-grading), triage every finding (valid / invalid with evidence / out of Lite
+   scope), fix valid ones (max 3 rounds with flag, regression test, rebuild, suites, host harnesses, local commit), ingest my smoke and usability results,
+   mark the object "NOT independently reviewed" if code changed after review, then finalize.
+
+## RATING
+1. Lite Coverage Score per tool and overall (the headline), with the catalog table, evidence links and the mutation-sanity result. Target >= 80%.
+2. Requirement scores 0-10 with caps: R1 secrets unreadable by AI max 6 (a native bypass remains by design); R2 easy restriction max 9; R3 terminal approval
+   and masking max 7; R4 UX max 6 without human usability and screen-reader evidence, max 8 with them; R5 leak surfaces max 6; R6 install ease max 6
+   if the clean-profile test is unmeasured. Show arithmetic.
+3. Informational: hostile-same-user sub-score (out of Lite scope), the old 10-scenario score, and the independence level (LOW: same lineage or static;
+   MEDIUM: fresh session, different vendor; HIGH: human or third-party expert with dynamic testing). Label the result PROVISIONAL unless independence >= MEDIUM
+   for the exact final object and no valid finding is open.
+
+## DELIVERABLES (docs/soterai-lite/)
+FEATURE-SPLIT.md, LITE-CATALOG.json (frozen) and the final score table, ITEM-MATRIX.md, SCORECARD.md, FINAL-REPORT.md, release-checklist.md, README-CLAIMS.md, a
+user guide, coverage-map.md, PUBLISHING-RUNBOOK.md, HUMAN-ACTIONS.md, the independent-review packet, an evidence index with SHA-256.
+FINAL MESSAGE (Hinglish, max 14 lines): the scorecard, the claim sentence "Lite Coverage Score X% for cooperative AI on tools [..], under threat model T, on
+configuration Y (OS build, VS Code version, loaded extension hash); independence: LOW/MEDIUM/HIGH; hostile same-user: out of scope; untested: [...]; residual
+risk: [...]", and a plain list of what is still not done and why. Re-verify the final bundle hash at the end.

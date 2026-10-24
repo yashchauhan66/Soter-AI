@@ -1,0 +1,1801 @@
+{
+  "status": "DIAGNOSED_PREVIOUS_RUNTIME_IDENTITY_DRIFT_NOT_ACCEPTED",
+  "previous": {
+    "path": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/vsix-inspection-03.json",
+    "bytes": 468155,
+    "sha256": "58b18a500511c0dfbc3b8f41f49dbb13e8581925b93bf222901c771fe80025f7"
+  },
+  "current": {
+    "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/vsix-inspection-01.json",
+    "bytes": 473179,
+    "sha256": "5368e32750daee0eacd2cf3f88aac3df5d1fb5cb1c3b485bcb7d7e45c798921e"
+  },
+  "runtimes": [
+    {
+      "name": "extension.js",
+      "beforeSha256": "624cc55f795e533c2d31233a65713fbcdd458d3602fa43fe0afb4feae4d5d044",
+      "afterSha256": "26bef1decde9d42cd62ad4d669b502dcbbb2ada143b01b5b160c144d790e5e2a",
+      "changed": true,
+      "inputChanges": [
+        {
+          "path": "packages/vscode-extension/src/broker/OwnedBrokerLifecycle.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/broker/OwnedBrokerLifecycle.ts",
+            "bytes": 12347,
+            "sha256": "29be90b7eb228dc7e571697eb586de2b4ed76d38e2f927dfbbe7bc4541d5d46c"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/broker/OwnedBrokerLifecycle.ts",
+            "bytes": 12525,
+            "sha256": "b193c6667b4a93f567a8e562eb75b1cd5dbf8922b4bdb7a813e5ed1d7c2aea78"
+          }
+        },
+        {
+          "path": "packages/core/src/pathContainment.ts",
+          "before": {
+            "path": "packages/core/src/pathContainment.ts",
+            "bytes": 490,
+            "sha256": "977feeb3e8ca2aee4350a007606d0a54d79c3be1f7686e47474bcea99012c6db"
+          },
+          "after": {
+            "path": "packages/core/src/pathContainment.ts",
+            "bytes": 503,
+            "sha256": "9d0d1645532bc306805fd4fe1610cd17c52cb9a7acf0f7010f8bb40cdf9f5c5f"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/project-privacy/SensitiveRestrictions.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/project-privacy/SensitiveRestrictions.ts",
+            "bytes": 639,
+            "sha256": "5510d4b407f0cd5cf6ee76d191f4e2d8c4b8a9e92ce474c830ab7751904c3ab5"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/project-privacy/SensitiveRestrictions.ts",
+            "bytes": 649,
+            "sha256": "0dd3b4345a286c63fc3d36c95d34d27a62b21c45d361acba5de829b1cfe7230e"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/ai-boundary/OwnerReviewProtocol.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/ai-boundary/OwnerReviewProtocol.ts",
+            "bytes": 4014,
+            "sha256": "1f56f8946c0bfb28a3c52510574433d81bb50b67332fe666eff92229a3545bc4"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/ai-boundary/OwnerReviewProtocol.ts",
+            "bytes": 4073,
+            "sha256": "d080cfab15a0f63ae737fc1d870075234adde508edcb2dd08ee46b5d213551db"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/ai-boundary/VersionedPolicy.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/ai-boundary/VersionedPolicy.ts",
+            "bytes": 8627,
+            "sha256": "cbe9386f346b53977355e86619fa9b7e69e2c676bcd7124e6d9756e1db3932bb"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/ai-boundary/VersionedPolicy.ts",
+            "bytes": 8744,
+            "sha256": "8168aeba9912cb213e731e45488f2b5562e6bdc0fa40450063c8b1a580c1c81a"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/ai-boundary/RestrictionOperation.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/ai-boundary/RestrictionOperation.ts",
+            "bytes": 4338,
+            "sha256": "e2fdc8517cd054109814ff17d10f656cba59af393de405fa6efac78db332a2ee"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/ai-boundary/RestrictionOperation.ts",
+            "bytes": 4428,
+            "sha256": "521e9f98a038c807b6d37ace9edebad0687793b0a0bbfc1633caaf2ad4d3d33d"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/project-privacy/SafeFileView.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/project-privacy/SafeFileView.ts",
+            "bytes": 3445,
+            "sha256": "6b8e7723380a791f0450cb9627354a2e8bbdb96d900a05607e0d2bc57cb13f51"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/project-privacy/SafeFileView.ts",
+            "bytes": 3513,
+            "sha256": "a3c2dc0168d8de3ab68406509634d90c9222e5868af7354728490f72a0e4b655"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/project-privacy/SecureEditorModel.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/project-privacy/SecureEditorModel.ts",
+            "bytes": 5095,
+            "sha256": "4b7e17ed3e0912e97f8b612395561413097d03ba92eacfd6e7ee81ac7c32c9b1"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/project-privacy/SecureEditorModel.ts",
+            "bytes": 5184,
+            "sha256": "a6979bea28ddabc711de4d20fe27b5e89cbbbded5d2228c4052c4a6545668a75"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/hygiene/HygieneCandidatePolicy.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/hygiene/HygieneCandidatePolicy.ts",
+            "bytes": 1219,
+            "sha256": "4ec2a6259c7969d96988b8bcabe548f111d8bcdef013844aa9b666427d8e9db1"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/hygiene/HygieneCandidatePolicy.ts",
+            "bytes": 1236,
+            "sha256": "3806e4593005889587110757993e0b9a2701f7ad20ca328bbac321fc097f7dc3"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/config-scanners/SourceSecretPlan.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/config-scanners/SourceSecretPlan.ts",
+            "bytes": 9278,
+            "sha256": "cab7a7520ebab3e50e22db715c37f0c6662d20b4347ae8b169c34ba0c21cac9c"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/config-scanners/SourceSecretPlan.ts",
+            "bytes": 9393,
+            "sha256": "664a48b968408ef4a73ae2675d5bf4ae9b10d900e9240c94e5f4fdee32e1ecbf"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/config-scanners/ContainerSecretPlan.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/config-scanners/ContainerSecretPlan.ts",
+            "bytes": 15679,
+            "sha256": "c1eebddad9afd0c6c3bf227a844e07ff9ff0a070ecd4616ea93a8cfd7612c649"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/config-scanners/ContainerSecretPlan.ts",
+            "bytes": 15859,
+            "sha256": "e0db6548767222d830d14b436b84a0c1f8788f9a62d5ee34e77e017b397858f4"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/config-scanners/TerraformSecretPlan.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/config-scanners/TerraformSecretPlan.ts",
+            "bytes": 13255,
+            "sha256": "19a0e7e019b89fbe4b3ff20a5eefcbafb4886b5c782673ddfab0173d97f07e67"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/config-scanners/TerraformSecretPlan.ts",
+            "bytes": 13375,
+            "sha256": "63a42a7e368b0d86688fd428d17a6a55713a58bc3ac77aa1371d0c66bf1290a8"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/config-scanners/RegistrySecretPlan.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/config-scanners/RegistrySecretPlan.ts",
+            "bytes": 11565,
+            "sha256": "bd1ce8cccad6a59d1d2d3784d95ba789428dcdf625219c4c1de46dffeb24597c"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/config-scanners/RegistrySecretPlan.ts",
+            "bytes": 11665,
+            "sha256": "8b967ed63cf06a3866a9c06c5af57963650f180780ada9fe01d3858a2d443f91"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/config-scanners/ServiceAccountSecretPlan.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/config-scanners/ServiceAccountSecretPlan.ts",
+            "bytes": 7113,
+            "sha256": "5072ac5282c4c7d24d87ff89b1f98f051b6e2bd0cde23e540ab3225763e32093"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/config-scanners/ServiceAccountSecretPlan.ts",
+            "bytes": 7181,
+            "sha256": "ad92278b6728091dfacb7ea719c624a764020aca383a06d52b50ce271ee9128e"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/config-scanners/CiSecretPlan.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/config-scanners/CiSecretPlan.ts",
+            "bytes": 9507,
+            "sha256": "d11596cde13f75e25c42f77a1b5b3439baad94b4fd9f45dad7411480204c8bb1"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/config-scanners/CiSecretPlan.ts",
+            "bytes": 9583,
+            "sha256": "c6c1bf9705864d493ecb728aa0b8509f1188b2dd0d13083263ecf8f973974251"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/config-scanners/EditorSecretPlan.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/config-scanners/EditorSecretPlan.ts",
+            "bytes": 9945,
+            "sha256": "9647c8d9f987adb26101f91dee348e67e276033c127d645689219a98cdaab05f"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/config-scanners/EditorSecretPlan.ts",
+            "bytes": 1154,
+            "sha256": "c3be23346c7f164bf12fd1cd8a10984aa1eb518b548219860bd71d6411645f8f"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/firewall/VaultMigrationPlan.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/firewall/VaultMigrationPlan.ts",
+            "bytes": 5338,
+            "sha256": "355858da100ef9e2e034a1675a101d0c254be8e099b5fd16cb79f29e4e39b17c"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/firewall/VaultMigrationPlan.ts",
+            "bytes": 5637,
+            "sha256": "f6ea7a53693094381cb8ec63cc32aeb82d2265eea116e31db445542a9f00d320"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/firewall/VaultStorage.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/firewall/VaultStorage.ts",
+            "bytes": 10311,
+            "sha256": "116d88e3016527b8e2c88fa3383b4a0688ba1dfe22c5c9c3d1ec88deeed870fb"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/firewall/VaultStorage.ts",
+            "bytes": 10455,
+            "sha256": "04d46d8f67727454042fc992c95a1a2c8b45f5b1b27db307531a519fa1060fbb"
+          }
+        },
+        {
+          "path": "packages/core/src/VaultAppDescriptor.ts",
+          "before": {
+            "path": "packages/core/src/VaultAppDescriptor.ts",
+            "bytes": 5485,
+            "sha256": "ffc21361b5cefb6586ed672d41157fe68c9fbcf8c894494d2e195067c15a5134"
+          },
+          "after": {
+            "path": "packages/core/src/VaultAppDescriptor.ts",
+            "bytes": 5556,
+            "sha256": "63315c4132093cc5efd0d82ac2ca783638e7426307fb4f4456895c42654df95b"
+          }
+        },
+        {
+          "path": "packages/core/src/RegisteredSecretMatcher.ts",
+          "before": {
+            "path": "packages/core/src/RegisteredSecretMatcher.ts",
+            "bytes": 17574,
+            "sha256": "82175760c43de04aa91e801c1a4e0659b2058f39d1ce3b7d3eb4bfec51d151e3"
+          },
+          "after": {
+            "path": "packages/core/src/RegisteredSecretMatcher.ts",
+            "bytes": 17818,
+            "sha256": "686ff58c8c7b0e5d76cf2c2e004e402baf8b632c3a884a1739415ab04319df1a"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/vault-runtime/RuntimeBinding.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/vault-runtime/RuntimeBinding.ts",
+            "bytes": 4252,
+            "sha256": "b6b9e7eb49aad7644192a7abcacbbe289785a78c6aae77dda6fad6eb3adeba8e"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/vault-runtime/RuntimeBinding.ts",
+            "bytes": 4310,
+            "sha256": "593ad1a5e778cb627f8ef475dce603e5f312cb303bcfe3b306e6726ba1f9c1cc"
+          }
+        },
+        {
+          "path": "packages/core/src/StreamingOutputRedactor.ts",
+          "before": {
+            "path": "packages/core/src/StreamingOutputRedactor.ts",
+            "bytes": 7985,
+            "sha256": "428903846312dc93d3f30b0c3f976678d7a59b6f2458f1ecb5deffa9daf69dc8"
+          },
+          "after": {
+            "path": "packages/core/src/StreamingOutputRedactor.ts",
+            "bytes": 8130,
+            "sha256": "0b518baf29772d6684e80de2a03a77559488ce7d0d06485d62d050d5a0c5052d"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/terminal/ManagedOutputFilter.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/terminal/ManagedOutputFilter.ts",
+            "bytes": 3435,
+            "sha256": "07cf169207c8f2e39b6c125e4dea75b578e12a18b41c949cd81504051382e094"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/terminal/ManagedOutputFilter.ts",
+            "bytes": 3495,
+            "sha256": "1168db66a6638fd2612bc95b20d919df7f8e009246994438286a398e0fe4ac53"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/terminal/ManagedOutputBinding.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/terminal/ManagedOutputBinding.ts",
+            "bytes": 3033,
+            "sha256": "4b304b45e6a86c6ade886bc36805287238c3b255631afa5208d84fce41169d80"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/terminal/ManagedOutputBinding.ts",
+            "bytes": 3078,
+            "sha256": "47083a6e7ec4f161a9e1f7f91406102603adf18166237b47558f171b93c810c0"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/broker/GatewayRegistryLease.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/broker/GatewayRegistryLease.ts",
+            "bytes": 1586,
+            "sha256": "f2decf5aab7882718b8dce93ae897a6943140b0ffa2cc142bff14366e1c5d2fa"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/broker/GatewayRegistryLease.ts",
+            "bytes": 1615,
+            "sha256": "beb74838cac8550df037881188cbf6ceb2b5a93d41bf7e918c4cea91196b13df"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/hygiene/HygieneFlags.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/hygiene/HygieneFlags.ts",
+            "bytes": 452,
+            "sha256": "4e46104cb785d7c4e460a9be128e20715ad6c2343103e1731420c9c543a7e902"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/hygiene/HygieneFlags.ts",
+            "bytes": 459,
+            "sha256": "f9e2ca3c71c0eae1718d895bfe2b5236a6021627c1e97303f2a8f37287ba6ded"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/config-scanners/SourceScannerFlags.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/config-scanners/SourceScannerFlags.ts",
+            "bytes": 465,
+            "sha256": "af0b21945a6698659657bfa1b3945d1592a17f920c85c3bcd68540dbf3ba2c95"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/config-scanners/SourceScannerFlags.ts",
+            "bytes": 473,
+            "sha256": "e7c9d6ab0dc5b6ee549425f41d4e5f914d91c72c34ec56a379bbce2b7bacf423"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/config-scanners/TerraformScannerFlags.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/config-scanners/TerraformScannerFlags.ts",
+            "bytes": 474,
+            "sha256": "9006e2a94db5b00aba2e010203a81ac20c7431b24f5a69415c97a2cac8f69c5d"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/config-scanners/TerraformScannerFlags.ts",
+            "bytes": 482,
+            "sha256": "6f5d8b950309ae79e471295d8b5386a4d5f5fcd72eba7cabad0f8b08555e2496"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/config-scanners/RegistryScannerFlags.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/config-scanners/RegistryScannerFlags.ts",
+            "bytes": 471,
+            "sha256": "9f4cc83d849652a1b6fe9b3c1af289d1cba762b714426e20e28e13e0cc1c8c11"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/config-scanners/RegistryScannerFlags.ts",
+            "bytes": 479,
+            "sha256": "c51631b660701d3618c918443515cad75f67cc09dd256a8ac9f86290f58b3d14"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/config-scanners/ServiceAccountScannerFlags.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/config-scanners/ServiceAccountScannerFlags.ts",
+            "bytes": 489,
+            "sha256": "a83013c546ac5e63630ec01df0b44f05a8096deced65236287efd69f7b955e50"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/config-scanners/ServiceAccountScannerFlags.ts",
+            "bytes": 497,
+            "sha256": "015948349428e25993e7acb7e98fe33adae8051d61752f2aadfcaf09a08658ec"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/config-scanners/CiScannerFlags.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/config-scanners/CiScannerFlags.ts",
+            "bytes": 453,
+            "sha256": "154c7916174bf42a1c693a883a9f851b9ce400988750547fd2546ffa4802b9f7"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/config-scanners/CiScannerFlags.ts",
+            "bytes": 461,
+            "sha256": "c9e0f5f47605647f66e69a26173d16278be14260c6c8633f9b0359e16b7cadce"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/config-scanners/EditorScannerFlags.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/config-scanners/EditorScannerFlags.ts",
+            "bytes": 465,
+            "sha256": "6cc0b19222aaa49bb17ffdc9dabe780981d48c4cb18ec7999248a96f1077f94e"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/config-scanners/EditorScannerFlags.ts",
+            "bytes": 473,
+            "sha256": "521d63697c8c585e9f98d61c2371b4364a99e1079b1266c39f4fc2d01b0077a6"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/config-scanners/ContainerScannerFlags.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/config-scanners/ContainerScannerFlags.ts",
+            "bytes": 488,
+            "sha256": "0b8047837176c8945e1a9010ffb30da96bca53d87c60f0c71115ea3adde5602e"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/config-scanners/ContainerScannerFlags.ts",
+            "bytes": 496,
+            "sha256": "26ce548d45a49aa7c367595bde25b9147f9f0f0400f81074539ba00c3dc065e2"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/firewall/VaultManager.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/firewall/VaultManager.ts",
+            "bytes": 50201,
+            "sha256": "06e44cd4099dd6e1f1c905ad2b7a16e1e444806476a7fc9ee7fff43b4b1cff3b"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/firewall/VaultManager.ts",
+            "bytes": 51412,
+            "sha256": "1a7fdbc1070903ce724939dd08dc6a6ca3d40894d89ec6fcd2a497dea1e7e189"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/broker/BrokerManager.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/broker/BrokerManager.ts",
+            "bytes": 20566,
+            "sha256": "bb65a91e682624a6f8340ba29c1815b31b1fcd27317ffc562909b9b5718d0aac"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/broker/BrokerManager.ts",
+            "bytes": 20797,
+            "sha256": "710cf6f78a1302231288f14f97111d31498c2e2a35ad99fe70f3e76831307fc9"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/firewall/vault-commands.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/firewall/vault-commands.ts",
+            "bytes": 4940,
+            "sha256": "1349234d89c7c79d80071674289a9d082cdc7b220eb521e254bec4b9755e85c4"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/firewall/vault-commands.ts",
+            "bytes": 4993,
+            "sha256": "d6760b3ec983892c3d80938376500ae0939ba40139923b8574915d7960047d08"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/vault-runtime/VaultAppJob.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/vault-runtime/VaultAppJob.ts",
+            "bytes": 15613,
+            "sha256": "d3e50fbb9a6ce1699a40a5fc78811718ec99d4247e5d64fed38cfb1fc1851bda"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/vault-runtime/VaultAppJob.ts",
+            "bytes": 15851,
+            "sha256": "134ddf4957c1772d56c43774c0314e4ba334718a43e3e283d2aba37b95ee174a"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/vault-runtime/VaultRuntime.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/vault-runtime/VaultRuntime.ts",
+            "bytes": 9358,
+            "sha256": "7a19b97cec9be86c1f7b0b91e23e0a67a47199ede123f60e06d175271f25ea08"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/vault-runtime/VaultRuntime.ts",
+            "bytes": 9485,
+            "sha256": "05eb6b0f11e486fbbd613f3768082e558a8c205bbfff0db072cfef7285f7770d"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/vault-runtime/VaultSurfaces.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/vault-runtime/VaultSurfaces.ts",
+            "bytes": 8974,
+            "sha256": "54ec706c8311dfdc31537792b3b6cad8eab086cf852ab2a7c0fc9e95bb0ea05d"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/vault-runtime/VaultSurfaces.ts",
+            "bytes": 9099,
+            "sha256": "37efd6ad3984073422be581b26c00a949f9c081cb83f81dffe0387eab3b773f5"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/vault-runtime/commands.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/vault-runtime/commands.ts",
+            "bytes": 8298,
+            "sha256": "59e2f2cc9ec6094be4bd116df1d4889d4aef0da725fa65de023911c34b064ed6"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/vault-runtime/commands.ts",
+            "bytes": 8390,
+            "sha256": "15b97e8677b768672b347f2d6c44c4882a6e88df91e256e753a0a9fc979361a1"
+          }
+        },
+        {
+          "path": "packages/core/src/PowerShell51Command.ts",
+          "before": {
+            "path": "packages/core/src/PowerShell51Command.ts",
+            "bytes": 8152,
+            "sha256": "ca54087a3f1720f72eb8b6afac48b6b683f29ef45b4ade5c532f3520c9588e80"
+          },
+          "after": {
+            "path": "packages/core/src/PowerShell51Command.ts",
+            "bytes": 8259,
+            "sha256": "c50885d749ff1e26b42d97e12809862be77dae4f8611b0796befa08c507b6a60"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/terminal/CheckedGitMetadata.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/terminal/CheckedGitMetadata.ts",
+            "bytes": 11476,
+            "sha256": "f330b8fd1fcb2ef870cf200c4bc78f860e88788f68b1522dc92a27a60ca38c9f"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/terminal/CheckedGitMetadata.ts",
+            "bytes": 11622,
+            "sha256": "4327a101f667bee54c679bd5df4a45eb0c76dd536c67f3682d8a9a31290c3f95"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/terminal/PowerShell51Worker.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/terminal/PowerShell51Worker.ts",
+            "bytes": 17237,
+            "sha256": "855993e83ceb104fe776405174175994879fb08db0c1c2c1861cb547c030b024"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/terminal/PowerShell51Worker.ts",
+            "bytes": 17497,
+            "sha256": "2bfe1cd84fc277200954f90de57bb6a1503e844337d5e7d1559a2fd93b6c9d9e"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/terminal/CheckedPowerShellSession.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/terminal/CheckedPowerShellSession.ts",
+            "bytes": 12150,
+            "sha256": "2594ac145945f21c3825a65937f9b7ef39cf92b05168542a1107cea0ab879016"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/terminal/CheckedPowerShellSession.ts",
+            "bytes": 12299,
+            "sha256": "ec28dce76732de9d3c83324c45ebcb9090315b009bb11d2ff1dd3f7e349fec5d"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/terminal/CheckedPowerShellProfile.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/terminal/CheckedPowerShellProfile.ts",
+            "bytes": 7837,
+            "sha256": "52c416547abc6ca5e4fff930875cfbeae8ad22bbc1a9939be1d1baeae715ecb8"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/terminal/CheckedPowerShellProfile.ts",
+            "bytes": 7938,
+            "sha256": "663970ca5e774dff3aa962580990227082fdb3f2f7c454ba374035acab69737b"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/terminal/PowerShell51Terminal.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/terminal/PowerShell51Terminal.ts",
+            "bytes": 5276,
+            "sha256": "0b15fc761be9d418fb6580071ae767dce8d1e74a50d35cefe751f9b7e1fb93ea"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/terminal/PowerShell51Terminal.ts",
+            "bytes": 5363,
+            "sha256": "93eaf746b3760e94b11ba63e3567db01ba117a3b4f2f7a976d3f8429ea0e1bad"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/terminal/commands.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/terminal/commands.ts",
+            "bytes": 11565,
+            "sha256": "8cee701f3ec740ff08f14957527f2c4fd1c143971253861ecd1d5fbb0678ebf7"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/terminal/commands.ts",
+            "bytes": 11719,
+            "sha256": "aed47a385e8e3d90e001385c3d2ea8d380a8e9456ed460aedf8898b097d2b444"
+          }
+        },
+        {
+          "path": "packages/core/src/CmdCommand.ts",
+          "before": {
+            "path": "packages/core/src/CmdCommand.ts",
+            "bytes": 3955,
+            "sha256": "8678bd45eb0b49bccbdde2d923c4e4a1a074f6a41adfd0165ba51b0425924d8f"
+          },
+          "after": {
+            "path": "packages/core/src/CmdCommand.ts",
+            "bytes": 3996,
+            "sha256": "c3b4516db48168c171fbdcc981a08af2a3abce7087c768d2e431d4ae786a7831"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/terminal/CmdWorker.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/terminal/CmdWorker.ts",
+            "bytes": 11910,
+            "sha256": "6c9d3f00bf3fe87ea27570ca6142666cb2e22e9e6f96f634aa4a85dcdf70f8f1"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/terminal/CmdWorker.ts",
+            "bytes": 12018,
+            "sha256": "b6db325630b00ceabc485976bfec1a69677089f0d01747e584929526ee60f595"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/terminal/CheckedCmdProfile.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/terminal/CheckedCmdProfile.ts",
+            "bytes": 7809,
+            "sha256": "28d67607cf05addcafd97e54bcc70d1b844b9f072d0961cfc4b31a0910418276"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/terminal/CheckedCmdProfile.ts",
+            "bytes": 7910,
+            "sha256": "ae179b390136eaa16dd2add1946866aba775d68e8d9fdf550f6f26123db538e8"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/terminal/cmdCommands.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/terminal/cmdCommands.ts",
+            "bytes": 12294,
+            "sha256": "b6b2cbfab50ae980826e7e350f966296d249b5e30d2e45b78f697f32dfdd12df"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/terminal/cmdCommands.ts",
+            "bytes": 12452,
+            "sha256": "774f5bc121eb8fa7ec8fdd0bc34af23edc8e8c5e38edd17bb853430e36c520fa"
+          }
+        },
+        {
+          "path": "packages/core/src/GitBashCommand.ts",
+          "before": {
+            "path": "packages/core/src/GitBashCommand.ts",
+            "bytes": 5560,
+            "sha256": "a8b041b9c8739cc0b1da161911216394c7c9c9453e43b9416eb2e7f5e8278e4f"
+          },
+          "after": {
+            "path": "packages/core/src/GitBashCommand.ts",
+            "bytes": 5615,
+            "sha256": "b5998cf1d9c7cb38d1f993a79a209ddddf4752b82c98953c19091612e5a39631"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/terminal/GitBashWorker.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/terminal/GitBashWorker.ts",
+            "bytes": 12410,
+            "sha256": "68a2d81f0374090850e770de7532571508a331bd5b91c0571c8c2fcb494e23dc"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/terminal/GitBashWorker.ts",
+            "bytes": 12526,
+            "sha256": "1f68eae7803b67df208160f16e3d82bf13dbde75da0594fac2cd200b16c90332"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/terminal/CheckedGitBashProfile.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/terminal/CheckedGitBashProfile.ts",
+            "bytes": 7835,
+            "sha256": "74236b51878d4811421dfc10aa5c1ca650d996d24efd6807922baa9d6df68632"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/terminal/CheckedGitBashProfile.ts",
+            "bytes": 7936,
+            "sha256": "cdab193cda87fe59a73e335bb31eb94e5f9385fad3f847912e4e9569d072e0e8"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/terminal/gitBashCommands.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/terminal/gitBashCommands.ts",
+            "bytes": 12587,
+            "sha256": "3bc6321ccd552615aaec2e8bd4ca7e90d43fd30493656824633af6021883d6ae"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/terminal/gitBashCommands.ts",
+            "bytes": 12745,
+            "sha256": "4154c1717245ae886d6db3e3a9031dd7ba76250efe6485f12cde2de5618e7ae6"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/agent/SafeReadProtocol.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/agent/SafeReadProtocol.ts",
+            "bytes": 5764,
+            "sha256": "d1b20af4b61f9cf201681905488fe74a0721ea71c48895f090e0ab324140cbc2"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/agent/SafeReadProtocol.ts",
+            "bytes": 5826,
+            "sha256": "541bffe84d6385c2a5afa44d2c09c0eaa90e6e706ae65b90bef21c81f462f35d"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/agent/SafeReadBridge.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/agent/SafeReadBridge.ts",
+            "bytes": 7981,
+            "sha256": "0f60799c5221c3a8a20d573dae624b37d8173a9efaa8821d055919ff463ca5ac"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/agent/SafeReadBridge.ts",
+            "bytes": 8077,
+            "sha256": "41aa28b0422ed6962c2c8a70a0fc7af4e001b575e95dd3d5803ece717ea413ad"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/agent/SealedBridgeTicket.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/agent/SealedBridgeTicket.ts",
+            "bytes": 6237,
+            "sha256": "53db293cd903031c49de69455f3e74630e92fcbe11adc4726a1c609f6ad669ca"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/agent/SealedBridgeTicket.ts",
+            "bytes": 6306,
+            "sha256": "58fe62545d4a41997490b1059f7625cd5729578ee3045ef1e220c241a59f117a"
+          }
+        },
+        {
+          "path": "apps/local-ai-broker/src/BoundedJson.ts",
+          "before": {
+            "path": "apps/local-ai-broker/src/BoundedJson.ts",
+            "bytes": 5129,
+            "sha256": "dd5955e57956de86a7e2067791b2ffc637ca397e543fb773151d28da265e0b03"
+          },
+          "after": {
+            "path": "apps/local-ai-broker/src/BoundedJson.ts",
+            "bytes": 5200,
+            "sha256": "69715861b1a544e4af17b7898fa2d8a92475cef1e0ad28af642aa6fc124f7c31"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/adapters/ClineHookProtocol.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/adapters/ClineHookProtocol.ts",
+            "bytes": 10220,
+            "sha256": "be4c38084ee00d097f769eb2217282d7587d37180efe425a172b1f35bb7374f7"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/adapters/ClineHookProtocol.ts",
+            "bytes": 10326,
+            "sha256": "fd9ba283b79863b048e6d977eacaca5c18ee61248ba587005111e723cadfb21c"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/adapters/ClineAdapterPolicy.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/adapters/ClineAdapterPolicy.ts",
+            "bytes": 18612,
+            "sha256": "552779622320dd2c773409c5d885b8355a0bbeda280f482be1369fc8c6b15cfc"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/adapters/ClineAdapterPolicy.ts",
+            "bytes": 18826,
+            "sha256": "b06985ae7f385a52f229571c9c975359b21a8560882ff9b573d4cf182a1fed5d"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/adapters/ClineAdapter.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/adapters/ClineAdapter.ts",
+            "bytes": 19759,
+            "sha256": "295eeefbd42929fd99cce55edf2575c5c63797fd28b90f349fdbc041638df9ee"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/adapters/ClineAdapter.ts",
+            "bytes": 19978,
+            "sha256": "ad7353ff956d8e9cb4a864d89e206b67121730878ec2c218499ec403098bd263"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/adapters/ClaudeHookProtocol.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/adapters/ClaudeHookProtocol.ts",
+            "bytes": 7643,
+            "sha256": "635bacfcf267bb3944259bd929cbc3f941d08e9ed9c90b5dff1945d97a6513bc"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/adapters/ClaudeHookProtocol.ts",
+            "bytes": 7741,
+            "sha256": "9930ae0e63d47b4f7e8bcc131a89d4702379fbfebb6cd926437779b0bb6dc2a3"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/adapters/ClaudeHttpBridge.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/adapters/ClaudeHttpBridge.ts",
+            "bytes": 12008,
+            "sha256": "eb4e58d6b6ae0aeb4a76d6b7536fe6638d1f634664ae46a9115cb573ec76a7c7"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/adapters/ClaudeHttpBridge.ts",
+            "bytes": 12150,
+            "sha256": "4d04d112055285877add49a992b65f66ab6245335334db782b0a0e090bd4474e"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/adapters/ClaudeAdapterPolicy.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/adapters/ClaudeAdapterPolicy.ts",
+            "bytes": 19128,
+            "sha256": "0fcab59859d039654064de842a1123fec098e2d14d390676b6f4a3d30cd19ffa"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/adapters/ClaudeAdapterPolicy.ts",
+            "bytes": 19344,
+            "sha256": "96926526c4225da18e3adad7b98a81ae4dc84ccbc442a6f759357ea96d812516"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/adapters/ClaudeAdapter.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/adapters/ClaudeAdapter.ts",
+            "bytes": 22146,
+            "sha256": "3d662282bee93054a02864c390e90c1274eeee674056a0b6238d2a333af7a542"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/adapters/ClaudeAdapter.ts",
+            "bytes": 22407,
+            "sha256": "3ab9d616315b2bfba1e63f9367c18b75b0ac6046a809fd39a004e03f683e075e"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/adapters/CodexHttpBridge.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/adapters/CodexHttpBridge.ts",
+            "bytes": 11178,
+            "sha256": "1746ea0ec949b0e38d1d7356c78f0882cae249ac23a5a6a9a21575006178f577"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/adapters/CodexHttpBridge.ts",
+            "bytes": 11297,
+            "sha256": "53a2c8e674a21dcd7409ca8479b1483cce5c1f50bd75070efeb2162fa5087b60"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/adapters/CodexResponsesBridge.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/adapters/CodexResponsesBridge.ts",
+            "bytes": 8967,
+            "sha256": "744bc34ef91f06075a244a592bdf23696893f564e323e6a00fb17f867d2743d4"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/adapters/CodexResponsesBridge.ts",
+            "bytes": 9065,
+            "sha256": "4973186b4613b373a1c5a396a4bfd28c4829b4da8335eeeb97e543e590dbf8c3"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/adapters/CodexIdeAdapterPolicy.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/adapters/CodexIdeAdapterPolicy.ts",
+            "bytes": 13991,
+            "sha256": "bbf30d76474d25b9c5113eddfafac8d263e98aa3114e0440cb3bf81acc07bf02"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/adapters/CodexIdeAdapterPolicy.ts",
+            "bytes": 14139,
+            "sha256": "caa63d03aa15c77eb0165b3da64cc112082bd34ee019060411484917ab70b99d"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/adapters/CodexIdeAdapter.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/adapters/CodexIdeAdapter.ts",
+            "bytes": 23965,
+            "sha256": "822c2991077de4a2dad1ca810d3eb0ea485a155f674cdbed5b8390a045e39692"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/adapters/CodexIdeAdapter.ts",
+            "bytes": 24243,
+            "sha256": "fbbdf2a6be26969f7368a02d3e71867237619a848338bb22ce686f1761d50a90"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/adapters/CodexCliAdapterPolicy.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/adapters/CodexCliAdapterPolicy.ts",
+            "bytes": 13514,
+            "sha256": "5a0a2f66aaef9db4f4936a792d664ed4442a346a8b6a96106327bf3be78d978c"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/adapters/CodexCliAdapterPolicy.ts",
+            "bytes": 13662,
+            "sha256": "dfc22e682819f92c51a12f41aba7782338e43ccf001dd8f02d9af12ec89921bf"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/adapters/CodexCliAdapter.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/adapters/CodexCliAdapter.ts",
+            "bytes": 22677,
+            "sha256": "582531047f9495cec0f1f1a8ce875bf9332751aaf93d669f3c23c5e9bfe9ae09"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/adapters/CodexCliAdapter.ts",
+            "bytes": 22947,
+            "sha256": "92ac0edb844ee1ded8b5f41e4b260cd8112be41411a6efabe7fe1707eaf031fd"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/adapters/GeminiHttpBridge.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/adapters/GeminiHttpBridge.ts",
+            "bytes": 11082,
+            "sha256": "73b0b593a00905060cb012e9e69f4034c23bca65b51b49cf3f2c9baa3b8424cb"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/adapters/GeminiHttpBridge.ts",
+            "bytes": 11197,
+            "sha256": "8dd556cceb6b3c7b0e249bbce5045c1ba5030097545d53c40724cd8ce400cec7"
+          }
+        },
+        {
+          "path": "apps/local-ai-broker/src/CodexResponsesSchema.ts",
+          "before": {
+            "path": "apps/local-ai-broker/src/CodexResponsesSchema.ts",
+            "bytes": 9563,
+            "sha256": "109a748e98d7eaa1598e8ec69b4e36f171f56b938c9137871d565984a29a9e27"
+          },
+          "after": {
+            "path": "apps/local-ai-broker/src/CodexResponsesSchema.ts",
+            "bytes": 9680,
+            "sha256": "fe0d7134bc19a2ddd8683ddcf1789f96a77c7053f4c43d3b3905a41a626df25c"
+          }
+        },
+        {
+          "path": "apps/local-ai-broker/src/GatewayBoundary.ts",
+          "before": {
+            "path": "apps/local-ai-broker/src/GatewayBoundary.ts",
+            "bytes": 21304,
+            "sha256": "8475f04f546d68ff90788a3e5043ce37818babd71e58aaab5f49aaf6f6df197b"
+          },
+          "after": {
+            "path": "apps/local-ai-broker/src/GatewayBoundary.ts",
+            "bytes": 21550,
+            "sha256": "2294305c9fa22eca626486c48e9d25f535e04281909ca297199069002bac62fb"
+          }
+        },
+        {
+          "path": "apps/local-ai-broker/src/GeminiGenerateContentSchema.ts",
+          "before": {
+            "path": "apps/local-ai-broker/src/GeminiGenerateContentSchema.ts",
+            "bytes": 8834,
+            "sha256": "fe68b0cb7fc3fa9a58cd21171a68ca21353fe38f36be031c56e315aefdf73b77"
+          },
+          "after": {
+            "path": "apps/local-ai-broker/src/GeminiGenerateContentSchema.ts",
+            "bytes": 8974,
+            "sha256": "b9f274c5bdb2ffcbe8e07b681fea93eaaa11511bce3c93e7e2e5d40df528da3e"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/adapters/GeminiGenerateContentBridge.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/adapters/GeminiGenerateContentBridge.ts",
+            "bytes": 10019,
+            "sha256": "a6dc0581f704ae8f00a80bf04a4aead65d4628de41a580e01f918387ab18b3ec"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/adapters/GeminiGenerateContentBridge.ts",
+            "bytes": 10128,
+            "sha256": "b8855c6a02ed45741d6b88917734794b7b5061cd56d821db29bb12a078f2495f"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/adapters/GeminiCliAdapterPolicy.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/adapters/GeminiCliAdapterPolicy.ts",
+            "bytes": 13176,
+            "sha256": "c282cda4e66115f6b6eee8f40ff47f57b5f34d7aaf93dc69548e5c14bc9698a2"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/adapters/GeminiCliAdapterPolicy.ts",
+            "bytes": 13324,
+            "sha256": "1d0bf2c1c9b148c9a29febbe0a0936cb2161eae9ad4495badb4bf2d2fb24dde4"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/adapters/GeminiCliPinData.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/adapters/GeminiCliPinData.ts",
+            "bytes": 92272,
+            "sha256": "59fa9690b190370aafedae9c6d3eae428c8cb988d8f1d2d02be0a4366bfc4c3c"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/adapters/GeminiCliPinData.ts",
+            "bytes": 94655,
+            "sha256": "bfe855ad71aafa74fe7aac05cab6ff4f5c68c9a1ce60a0e50b12b84a81b32ddd"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/adapters/GeminiCliRuntimePin.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/adapters/GeminiCliRuntimePin.ts",
+            "bytes": 6382,
+            "sha256": "f9c9b3f56cde6df0a42b85f66b5b95122dc3a35780e56f9513afda8e542bfa7a"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/adapters/GeminiCliRuntimePin.ts",
+            "bytes": 6454,
+            "sha256": "a60e76d48d2eac4670b9a11598a09ea4ab41b45828c4dff169f195049bcb0bf7"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/adapters/GeminiCliAdapter.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/adapters/GeminiCliAdapter.ts",
+            "bytes": 23284,
+            "sha256": "2629dbca2a868a3cf7e5c7d71ba955ef718a46d11639fbcfe2547814812ffa79"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/adapters/GeminiCliAdapter.ts",
+            "bytes": 23552,
+            "sha256": "3a53c15f8158218304bf44e51d3ddf68d08a3b9f2e096a7ddd8df8add62fc0e2"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/secret-broker/OutputSelfTest.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/secret-broker/OutputSelfTest.ts",
+            "bytes": 4204,
+            "sha256": "d9927b247e174d486fe37b7dc50fd7807d99088490fbde446dac2227dd4e1edb"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/secret-broker/OutputSelfTest.ts",
+            "bytes": 4242,
+            "sha256": "4b3fe184d0f8b4e0a13ca622f1264de610867f2f19abcbc68a71c41cf6912f8e"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/ai-boundary/VersionedPolicyCommands.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/ai-boundary/VersionedPolicyCommands.ts",
+            "bytes": 8360,
+            "sha256": "aa38c536e2f9d4d899da470d6c06617379aa2ec77f2379026f6519b04736deac"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/ai-boundary/VersionedPolicyCommands.ts",
+            "bytes": 8470,
+            "sha256": "99d9aaa6246415663b871815441f67913a7ecdd524c2e40d35a07de00f13adf9"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/ai-boundary/PolicyDrift.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/ai-boundary/PolicyDrift.ts",
+            "bytes": 7032,
+            "sha256": "6cd2b30cd08ba32be8dbf287c7f01cd7ce0be874e459c346b17e60b7f5e1aeb8"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/ai-boundary/PolicyDrift.ts",
+            "bytes": 7116,
+            "sha256": "36ddf0a4a5b9f001f1730bee3e2a9498fc2adcc13dc0533140a46bba1ddb1357"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/project-privacy/ProjectFileAccess.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/project-privacy/ProjectFileAccess.ts",
+            "bytes": 7846,
+            "sha256": "931b5e22570fb2b53ae8f31cca7946e06da0ab1b6a685ab276d649e53f1da428"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/project-privacy/ProjectFileAccess.ts",
+            "bytes": 7993,
+            "sha256": "0740e59243ec3caad430853f0968d625cf0f10496d9381340570f97877109121"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/project-privacy/ReadTerminal.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/project-privacy/ReadTerminal.ts",
+            "bytes": 3476,
+            "sha256": "ece1e4ec5396190af8ed6a89003bb26ddd6cae928a9078f223bd6c02486df413"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/project-privacy/ReadTerminal.ts",
+            "bytes": 3542,
+            "sha256": "e8f6fb85c95ca84dc16f6d7b5cc005ac0a91bcc1e852e57e0d1aec56e88261b0"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/project-privacy/VerificationEvidence.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/project-privacy/VerificationEvidence.ts",
+            "bytes": 13061,
+            "sha256": "0267116ca14cd403bdea3f344b177bdad84a4a4d135e3a555b9bff71055f567b"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/project-privacy/VerificationEvidence.ts",
+            "bytes": 13254,
+            "sha256": "cafe1140d9c46bbad318f00595caa5b799645f1271cec3b9cc71f93daec06181"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/project-privacy/PrivacyActionOutcome.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/project-privacy/PrivacyActionOutcome.ts",
+            "bytes": 2665,
+            "sha256": "fd3f145e5ca0361071754cebddacbb4a0d9c36df5ff813b4fc41e08cfc79310c"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/project-privacy/PrivacyActionOutcome.ts",
+            "bytes": 2691,
+            "sha256": "7a455847bc9c162b29da85dfded00d057cb0db2bf19bebd8b834d20f1ce4f8fe"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/project-privacy/panel.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/project-privacy/panel.ts",
+            "bytes": 27634,
+            "sha256": "300d58b57364445909cb0d4cb5865e758995de8206ab5dddbca53893ca8cb69a"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/project-privacy/panel.ts",
+            "bytes": 27786,
+            "sha256": "d045c58023fd1d1bbc10c2b4281045e96df43b9a6e5038c7ae81fa45749496d7"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/project-privacy/SecureEditorRecovery.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/project-privacy/SecureEditorRecovery.ts",
+            "bytes": 6007,
+            "sha256": "b5000252ecd3bcae604236bbe3932e37ffb65b910c6254acd2b974965685e5ed"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/project-privacy/SecureEditorRecovery.ts",
+            "bytes": 6088,
+            "sha256": "6b6596aaa3aa810cad44763a3a71d2656e883ed5792054fbb15a52709e0370f9"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/project-privacy/SecureEditor.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/project-privacy/SecureEditor.ts",
+            "bytes": 39615,
+            "sha256": "95f9e6c0fa50adaf490418fec6efcb9901ac1f31d0b37c6de0a27450b0c849a1"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/project-privacy/SecureEditor.ts",
+            "bytes": 40006,
+            "sha256": "44245c4f66d3bf9bab07dc54c2bdd7155055e9165b0586832abe4c6612ae160f"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/project-privacy/commands.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/project-privacy/commands.ts",
+            "bytes": 19326,
+            "sha256": "969c88cbd1d24d449e2a739f7fd8ce69023db5b9dc45f3287b8d673221b419eb"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/project-privacy/commands.ts",
+            "bytes": 19583,
+            "sha256": "6d52d9ed07331477a76e4731b3d05d771f630d0dcd7032a1a102b81fe30211d0"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/project-privacy/publication/DevelopmentContract.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/project-privacy/publication/DevelopmentContract.ts",
+            "bytes": 2982,
+            "sha256": "29570c3fb5a3577e613bcf206c72cacf983981873cb8f83d8d3ec689a3a86634"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/project-privacy/publication/DevelopmentContract.ts",
+            "bytes": 3033,
+            "sha256": "675049423e4f8a2803c8fbceae23f0502fc7c94514f944798227be582c20cb21"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/project-privacy/publication/PublicationPaths.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/project-privacy/publication/PublicationPaths.ts",
+            "bytes": 3851,
+            "sha256": "946f4884b570adf3028b8a40b20cc9a25e9ba34b7abbcdae97b96ec5b51300ff"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/project-privacy/publication/PublicationPaths.ts",
+            "bytes": 3914,
+            "sha256": "6737824cb94eb033cc09308867ad1a29d5f514d08cedf038462a852e3f3ac79d"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/project-privacy/publication/PublicWorkspace.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/project-privacy/publication/PublicWorkspace.ts",
+            "bytes": 12769,
+            "sha256": "a07a4c81fe278e1bc2a263a6c285dc28c2581b40bc9754b3a8dcceac98522203"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/project-privacy/publication/PublicWorkspace.ts",
+            "bytes": 12965,
+            "sha256": "545287d3963fd02fe6120ebdc3e830a22502ba206461463451bbaad2d44a8c36"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/project-privacy/publication/commands.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/project-privacy/publication/commands.ts",
+            "bytes": 12460,
+            "sha256": "145c3814ad184a9e4f41ff265bec468a5f273a31f7c62338a85db9a4dff2d2eb"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/project-privacy/publication/commands.ts",
+            "bytes": 12617,
+            "sha256": "4accde41c7da68118b6c60182ea59ae2e0fc96fc249b844a3e16078fc7e04970"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/project-privacy/SyntheticPreview.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/project-privacy/SyntheticPreview.ts",
+            "bytes": 4024,
+            "sha256": "c92af63780de8b60e53e9141edc8617851c6295587aa5ae9a9030036570ee60d"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/project-privacy/SyntheticPreview.ts",
+            "bytes": 4089,
+            "sha256": "fe323b5f2ed65596f6447fa2e443b96b337cf4fe27dff805430b791d90e01642"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/hygiene/HygieneAnalysis.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/hygiene/HygieneAnalysis.ts",
+            "bytes": 7941,
+            "sha256": "0cf3fa7007cc2be183bc3d1a4caf0fea8a8aa6462a41d81f686aaa56813436d7"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/hygiene/HygieneAnalysis.ts",
+            "bytes": 8291,
+            "sha256": "490a49c51a264d7eeb7c93d7c8ceb3708f29c0e03b66f90473f76e6e748e8267"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/hygiene/HygieneExposureLedger.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/hygiene/HygieneExposureLedger.ts",
+            "bytes": 10580,
+            "sha256": "e4e0a987c7c28971e3d8319684ee2b5ffc954e99e607cf9ab688dcc7f2cbe80b"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/hygiene/HygieneExposureLedger.ts",
+            "bytes": 10838,
+            "sha256": "f42fa67f15dfe14ce1a401a452f46c3b6849e74bc5819a3848c7d3a45358905b"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/hygiene/HygieneController.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/hygiene/HygieneController.ts",
+            "bytes": 27807,
+            "sha256": "0838c5021fdf5285ae168bd5eaa48b15b925f23ee3935c279eae0a9dce0b588a"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/hygiene/HygieneController.ts",
+            "bytes": 29706,
+            "sha256": "2bb92c9a1007ab730ff79fca0843b938a9f6284ac7a7b3a0cfe504660a439343"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/hygiene/HygieneRotation.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/hygiene/HygieneRotation.ts",
+            "bytes": 5108,
+            "sha256": "3b01e932b6768f8cd1b414691f559a68e13b5f3a34731fa9665e93b5ffb32080"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/hygiene/HygieneRotation.ts",
+            "bytes": 5155,
+            "sha256": "93c48991a0e60545948af2d7c9f96cd01ab91ee4e03f668ce86023cfc2eeb2de"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/hygiene/commands.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/hygiene/commands.ts",
+            "bytes": 4487,
+            "sha256": "7529ce4ce86a1cf9db51c5c9bb6bf3abacf31c79c3849855cac90ad574639488"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/hygiene/commands.ts",
+            "bytes": 4540,
+            "sha256": "99ffef3a71949c23b1c8778252343cc684a60615c11c0d41d7fe95c95e8037f6"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/config-scanners/commands.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/config-scanners/commands.ts",
+            "bytes": 3005,
+            "sha256": "81741d11c9d61713939865b0d78500843f937f9cefed08c9102cf609f48dabe5"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/config-scanners/commands.ts",
+            "bytes": 3042,
+            "sha256": "c8e63ecece78e4675ce711c6f119cc85f4c415504c941ea1bd320d8900776dab"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/config-scanners/containerCommands.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/config-scanners/containerCommands.ts",
+            "bytes": 3059,
+            "sha256": "00d19b38b82fada143c631b43cfea5be76677843c07d0f1cfe1b30fb911980fe"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/config-scanners/containerCommands.ts",
+            "bytes": 3093,
+            "sha256": "5c3cbbc7c329abeb4cd80b93ee39f05bb8f7570b1301130d5748b8d31f5209ea"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/config-scanners/terraformCommands.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/config-scanners/terraformCommands.ts",
+            "bytes": 3041,
+            "sha256": "d4bb12db89bcee7de6104a42792d8941937eeede142b5e287c49e05601dd9ad8"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/config-scanners/terraformCommands.ts",
+            "bytes": 3075,
+            "sha256": "93c08fc2330ebaea2485c12687615634589062d6edcabd35f89901f4559f4b0c"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/config-scanners/registryCommands.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/config-scanners/registryCommands.ts",
+            "bytes": 3030,
+            "sha256": "22487931c814d877fb34a720a05f8b572ab5258382dbd39a92571c3984328fb7"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/config-scanners/registryCommands.ts",
+            "bytes": 3064,
+            "sha256": "ef41a01d08c406b562cf2cddc402c627abbb8a33bfc686cbb3adb19d7f2d4f0a"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/config-scanners/serviceAccountCommands.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/config-scanners/serviceAccountCommands.ts",
+            "bytes": 3065,
+            "sha256": "c205b502009af0323c62c57452b77e93b22ea983bd8d81b00f75942ed7958876"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/config-scanners/serviceAccountCommands.ts",
+            "bytes": 3099,
+            "sha256": "b0ff2754459017d19263d36b446714d307a59e73786262634cd48eba2996d357"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/config-scanners/editorCommands.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/config-scanners/editorCommands.ts",
+            "bytes": 2977,
+            "sha256": "bdaab6494a407e4c79cafbb8322d588b110609d826c13389c31ab0306f7b834a"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/config-scanners/editorCommands.ts",
+            "bytes": 3011,
+            "sha256": "459ca72f93344f43102dc42d9955b0a48c09514bf63358eb5af06779aed4c86f"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/config-scanners/ciCommands.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/config-scanners/ciCommands.ts",
+            "bytes": 2936,
+            "sha256": "0bb4913f1b40a320e8b95a7c8f3d7021990ffbfceaaa15629732fc7a35f9bfe5"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/config-scanners/ciCommands.ts",
+            "bytes": 2970,
+            "sha256": "bb2b57ce279470ab1d00410a74d0085124d00a9c193a26cc5be15a8cd6c01ff6"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/extension.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/extension.ts",
+            "bytes": 34707,
+            "sha256": "2973c692f657acd61c33ae1c2e87ab0db6da8c01fe29e9fab359fb770b663aea"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/extension.ts",
+            "bytes": 34808,
+            "sha256": "97883a6294bb6f9b3518264c768434ae0a57e67ff2ee830fe55cc5951cfce728"
+          }
+        },
+        {
+          "path": "packages/soterai-lite/src/extension.ts",
+          "before": {
+            "path": "packages/soterai-lite/src/extension.ts",
+            "bytes": 157,
+            "sha256": "580c2fa81aa8509358e15ff521b6b286af36b12a2bd41b0f372f899fc827fa65"
+          },
+          "after": {
+            "path": "packages/soterai-lite/src/extension.ts",
+            "bytes": 159,
+            "sha256": "78c98cf7d41b74dc8dcefc7d285729a2e7da58d44c2f7c85b98367b3624e7095"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/config-scanners/JsoncSecretPlan.ts",
+          "before": null,
+          "after": {
+            "path": "packages/vscode-extension/src/config-scanners/JsoncSecretPlan.ts",
+            "bytes": 11230,
+            "sha256": "e5432237e9d864cfa81ab9b111263839418f232f5fe3626a9d86f554b675d55b"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/config-scanners/McpTomlSyntax.ts",
+          "before": null,
+          "after": {
+            "path": "packages/vscode-extension/src/config-scanners/McpTomlSyntax.ts",
+            "bytes": 12360,
+            "sha256": "636dadc04acaef416b77ff3748f7e2b5d02f5c6a0de0450177d7037b4f100fea"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/config-scanners/McpSecretPlan.ts",
+          "before": null,
+          "after": {
+            "path": "packages/vscode-extension/src/config-scanners/McpSecretPlan.ts",
+            "bytes": 1968,
+            "sha256": "bd29f7c9dcd798a5a57535623b7e5c9415e69749b7d05908efc9c261466900c0"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/config-scanners/McpScannerFlags.ts",
+          "before": null,
+          "after": {
+            "path": "packages/vscode-extension/src/config-scanners/McpScannerFlags.ts",
+            "bytes": 464,
+            "sha256": "669645dd1e70251b43116d87e57330e2412e2448ae575df819d02cfe81595c01"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/config-scanners/mcpCommands.ts",
+          "before": null,
+          "after": {
+            "path": "packages/vscode-extension/src/config-scanners/mcpCommands.ts",
+            "bytes": 3006,
+            "sha256": "f94a73d7afcaaf1eadf93e874440fbe6cc749869f62f30fb3b3463d7acbd8dc0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "local-ai-broker.js",
+      "beforeSha256": "b45a4e373b5c44d13cfc4b96189af5c674ec29d0d0b45bb0326ab7e9a9e357f0",
+      "afterSha256": "8f736cc52495c12b62f56be96f5338e27df31308bf2426c119baad1d5cbfa882",
+      "changed": true,
+      "inputChanges": [
+        {
+          "path": "apps/local-ai-broker/src/BoundedJson.ts",
+          "before": {
+            "path": "apps/local-ai-broker/src/BoundedJson.ts",
+            "bytes": 5129,
+            "sha256": "dd5955e57956de86a7e2067791b2ffc637ca397e543fb773151d28da265e0b03"
+          },
+          "after": {
+            "path": "apps/local-ai-broker/src/BoundedJson.ts",
+            "bytes": 5200,
+            "sha256": "69715861b1a544e4af17b7898fa2d8a92475cef1e0ad28af642aa6fc124f7c31"
+          }
+        },
+        {
+          "path": "apps/local-ai-broker/src/BoundedChatFrames.ts",
+          "before": {
+            "path": "apps/local-ai-broker/src/BoundedChatFrames.ts",
+            "bytes": 5508,
+            "sha256": "a62b84b666b466d6b8cd9a4538fd3942f1c92217bcf4522cb2781d5a9399dc76"
+          },
+          "after": {
+            "path": "apps/local-ai-broker/src/BoundedChatFrames.ts",
+            "bytes": 5588,
+            "sha256": "f245672b6e1d4246cde454a528589296d5ed779a7741649c24a247952eb7cab6"
+          }
+        },
+        {
+          "path": "apps/local-ai-broker/src/BoundedMultipart.ts",
+          "before": {
+            "path": "apps/local-ai-broker/src/BoundedMultipart.ts",
+            "bytes": 5610,
+            "sha256": "42149a9f58a609578cf8d9f72dca3731ee75ede9ef74f8ae901f0af10896743d"
+          },
+          "after": {
+            "path": "apps/local-ai-broker/src/BoundedMultipart.ts",
+            "bytes": 5676,
+            "sha256": "70b9f67ba8af01f383f72555a8f50a81bb513bf1be4d1b7d526d09795e79d872"
+          }
+        },
+        {
+          "path": "apps/local-ai-broker/src/BoundedBase64.ts",
+          "before": {
+            "path": "apps/local-ai-broker/src/BoundedBase64.ts",
+            "bytes": 6394,
+            "sha256": "ed2363f903b3c555b9d96dfb7fe883c9e4f8bc1a5afd89a0f54180e6a6ada100"
+          },
+          "after": {
+            "path": "apps/local-ai-broker/src/BoundedBase64.ts",
+            "bytes": 6479,
+            "sha256": "81c99143707b8710cfaf62a0a536757a5636a13f50122e3057038dfcbb4ec2e8"
+          }
+        },
+        {
+          "path": "apps/local-ai-broker/src/BoundedGzip.ts",
+          "before": {
+            "path": "apps/local-ai-broker/src/BoundedGzip.ts",
+            "bytes": 3504,
+            "sha256": "7769b2774b6665094c671390fc833c638139885d11c3ab99483095d934e1c796"
+          },
+          "after": {
+            "path": "apps/local-ai-broker/src/BoundedGzip.ts",
+            "bytes": 3555,
+            "sha256": "39e83c33cf11724d87200e53b6d5ca7d1b64856e2bc0f48c4c801d18b165ee07"
+          }
+        },
+        {
+          "path": "apps/local-ai-broker/src/BoundedBrotli.ts",
+          "before": {
+            "path": "apps/local-ai-broker/src/BoundedBrotli.ts",
+            "bytes": 2250,
+            "sha256": "989a80858ba634dd8f8fb8502c18ee5aeef9da18174aaa31d08636c8a0a5d3f4"
+          },
+          "after": {
+            "path": "apps/local-ai-broker/src/BoundedBrotli.ts",
+            "bytes": 2282,
+            "sha256": "91b17be35dd0dfd656b85c84bef46d1cd7854e0a353fcc7cbb71eee0951b238e"
+          }
+        },
+        {
+          "path": "apps/local-ai-broker/src/BoundedDeflate.ts",
+          "before": {
+            "path": "apps/local-ai-broker/src/BoundedDeflate.ts",
+            "bytes": 2218,
+            "sha256": "8eb8791049e353bf973ace7cb235fc1faf6c646e96c3bc05cf794583f39386f5"
+          },
+          "after": {
+            "path": "apps/local-ai-broker/src/BoundedDeflate.ts",
+            "bytes": 2249,
+            "sha256": "8bca723b3a4138d5d327e3492810a25e3dc93d13fa4b3dbb0f619e41ab330aa6"
+          }
+        },
+        {
+          "path": "packages/core/src/RegisteredSecretMatcher.ts",
+          "before": {
+            "path": "packages/core/src/RegisteredSecretMatcher.ts",
+            "bytes": 17574,
+            "sha256": "82175760c43de04aa91e801c1a4e0659b2058f39d1ce3b7d3eb4bfec51d151e3"
+          },
+          "after": {
+            "path": "packages/core/src/RegisteredSecretMatcher.ts",
+            "bytes": 17818,
+            "sha256": "686ff58c8c7b0e5d76cf2c2e004e402baf8b632c3a884a1739415ab04319df1a"
+          }
+        },
+        {
+          "path": "packages/core/src/StreamingOutputRedactor.ts",
+          "before": {
+            "path": "packages/core/src/StreamingOutputRedactor.ts",
+            "bytes": 7985,
+            "sha256": "428903846312dc93d3f30b0c3f976678d7a59b6f2458f1ecb5deffa9daf69dc8"
+          },
+          "after": {
+            "path": "packages/core/src/StreamingOutputRedactor.ts",
+            "bytes": 8130,
+            "sha256": "0b518baf29772d6684e80de2a03a77559488ce7d0d06485d62d050d5a0c5052d"
+          }
+        },
+        {
+          "path": "apps/local-ai-broker/src/CodexResponsesSchema.ts",
+          "before": {
+            "path": "apps/local-ai-broker/src/CodexResponsesSchema.ts",
+            "bytes": 9563,
+            "sha256": "109a748e98d7eaa1598e8ec69b4e36f171f56b938c9137871d565984a29a9e27"
+          },
+          "after": {
+            "path": "apps/local-ai-broker/src/CodexResponsesSchema.ts",
+            "bytes": 9680,
+            "sha256": "fe0d7134bc19a2ddd8683ddcf1789f96a77c7053f4c43d3b3905a41a626df25c"
+          }
+        },
+        {
+          "path": "apps/local-ai-broker/src/GeminiGenerateContentSchema.ts",
+          "before": {
+            "path": "apps/local-ai-broker/src/GeminiGenerateContentSchema.ts",
+            "bytes": 8834,
+            "sha256": "fe68b0cb7fc3fa9a58cd21171a68ca21353fe38f36be031c56e315aefdf73b77"
+          },
+          "after": {
+            "path": "apps/local-ai-broker/src/GeminiGenerateContentSchema.ts",
+            "bytes": 8974,
+            "sha256": "b9f274c5bdb2ffcbe8e07b681fea93eaaa11511bce3c93e7e2e5d40df528da3e"
+          }
+        },
+        {
+          "path": "apps/local-ai-broker/src/GatewayBoundary.ts",
+          "before": {
+            "path": "apps/local-ai-broker/src/GatewayBoundary.ts",
+            "bytes": 21304,
+            "sha256": "8475f04f546d68ff90788a3e5043ce37818babd71e58aaab5f49aaf6f6df197b"
+          },
+          "after": {
+            "path": "apps/local-ai-broker/src/GatewayBoundary.ts",
+            "bytes": 21550,
+            "sha256": "2294305c9fa22eca626486c48e9d25f535e04281909ca297199069002bac62fb"
+          }
+        },
+        {
+          "path": "apps/local-ai-broker/src/GeminiProviderTarget.ts",
+          "before": {
+            "path": "apps/local-ai-broker/src/GeminiProviderTarget.ts",
+            "bytes": 833,
+            "sha256": "c42f8eaf63d91ba159f297f3416ae882bc51904cdd6f2840112eabc86082831f"
+          },
+          "after": {
+            "path": "apps/local-ai-broker/src/GeminiProviderTarget.ts",
+            "bytes": 847,
+            "sha256": "ec4d1cce3611df4ce8a090995dc3ebdf8527437fdcdccd37900409f1fb3b4df8"
+          }
+        },
+        {
+          "path": "apps/local-ai-broker/src/GatewayPolicy.ts",
+          "before": {
+            "path": "apps/local-ai-broker/src/GatewayPolicy.ts",
+            "bytes": 13460,
+            "sha256": "787376949d1f43a7daf54ef612ec182e620018f3542515f3de23a1a521d78ec5"
+          },
+          "after": {
+            "path": "apps/local-ai-broker/src/GatewayPolicy.ts",
+            "bytes": 13599,
+            "sha256": "3398a9b11ec7e3e93c73f26e5ee9aba22f8ecda4698c0ea8be33df686296b6e8"
+          }
+        },
+        {
+          "path": "apps/local-ai-broker/src/GatewaySelfTest.ts",
+          "before": {
+            "path": "apps/local-ai-broker/src/GatewaySelfTest.ts",
+            "bytes": 4666,
+            "sha256": "082ddf1c2840d1f977e1ca53ad23d87e4375bec78c71fd2bec1035c77788ce20"
+          },
+          "after": {
+            "path": "apps/local-ai-broker/src/GatewaySelfTest.ts",
+            "bytes": 4697,
+            "sha256": "bc33340a00c3c826e75c90a8f46fd12d31d207e054145c87d4b07cc28a8aae3f"
+          }
+        },
+        {
+          "path": "apps/local-ai-broker/src/auth.ts",
+          "before": {
+            "path": "apps/local-ai-broker/src/auth.ts",
+            "bytes": 5873,
+            "sha256": "55a21d4d1ed8f070d1496097797e9b19f73e460f0d54b3a573409d79ef40d683"
+          },
+          "after": {
+            "path": "apps/local-ai-broker/src/auth.ts",
+            "bytes": 5915,
+            "sha256": "99df5840b0091914356ed16a9a98b073247766af0076460af49fe50675cbabf6"
+          }
+        },
+        {
+          "path": "apps/local-ai-broker/src/GatewayParentGuard.ts",
+          "before": {
+            "path": "apps/local-ai-broker/src/GatewayParentGuard.ts",
+            "bytes": 1592,
+            "sha256": "515f44715d85f773137a5b284010c5861a386e3310ab6a837d37153baf65f1ce"
+          },
+          "after": {
+            "path": "apps/local-ai-broker/src/GatewayParentGuard.ts",
+            "bytes": 1611,
+            "sha256": "8e76503e52ed00a8461a7b598fc58d1efd591ee72d5cd61ee9cf8e1e3c4354a9"
+          }
+        }
+      ]
+    },
+    {
+      "name": "soterai-mcp-server.js",
+      "beforeSha256": "a268e8ddbb12ca78a3372385e207e9b6928754e4177967820f81dddf6c88d40d",
+      "afterSha256": "a268e8ddbb12ca78a3372385e207e9b6928754e4177967820f81dddf6c88d40d",
+      "changed": false,
+      "inputChanges": [
+        {
+          "path": "packages/vscode-extension/src/agent/SafeReadProtocol.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/agent/SafeReadProtocol.ts",
+            "bytes": 5764,
+            "sha256": "d1b20af4b61f9cf201681905488fe74a0721ea71c48895f090e0ab324140cbc2"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/agent/SafeReadProtocol.ts",
+            "bytes": 5826,
+            "sha256": "541bffe84d6385c2a5afa44d2c09c0eaa90e6e706ae65b90bef21c81f462f35d"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/agent/SealedBridgeTicket.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/agent/SealedBridgeTicket.ts",
+            "bytes": 6237,
+            "sha256": "53db293cd903031c49de69455f3e74630e92fcbe11adc4726a1c609f6ad669ca"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/agent/SealedBridgeTicket.ts",
+            "bytes": 6306,
+            "sha256": "58fe62545d4a41997490b1059f7625cd5729578ee3045ef1e220c241a59f117a"
+          }
+        },
+        {
+          "path": "apps/local-ai-broker/src/BoundedJson.ts",
+          "before": {
+            "path": "apps/local-ai-broker/src/BoundedJson.ts",
+            "bytes": 5129,
+            "sha256": "dd5955e57956de86a7e2067791b2ffc637ca397e543fb773151d28da265e0b03"
+          },
+          "after": {
+            "path": "apps/local-ai-broker/src/BoundedJson.ts",
+            "bytes": 5200,
+            "sha256": "69715861b1a544e4af17b7898fa2d8a92475cef1e0ad28af642aa6fc124f7c31"
+          }
+        },
+        {
+          "path": "packages/vscode-extension/src/adapters/ClineHookProtocol.ts",
+          "before": {
+            "path": "packages/vscode-extension/src/adapters/ClineHookProtocol.ts",
+            "bytes": 10220,
+            "sha256": "be4c38084ee00d097f769eb2217282d7587d37180efe425a172b1f35bb7374f7"
+          },
+          "after": {
+            "path": "packages/vscode-extension/src/adapters/ClineHookProtocol.ts",
+            "bytes": 10326,
+            "sha256": "fd9ba283b79863b048e6d977eacaca5c18ee61248ba587005111e723cadfb21c"
+          }
+        }
+      ]
+    }
+  ],
+  "scope": "Read-only existing provenance comparison. Retain failed acceptance, no pin update or code rollback. All current native phases passed, but prior-runtime equality assertion refused. Establish actual source/runtime differences and affected checks before completion."
+}

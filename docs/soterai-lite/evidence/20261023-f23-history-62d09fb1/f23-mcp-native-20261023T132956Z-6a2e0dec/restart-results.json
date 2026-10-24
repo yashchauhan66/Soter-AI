@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "phase": "restart",
+  "syntheticOnly": true,
+  "hostVersion": "1.143.1",
+  "extensionBundleSha256": "7b61247bd80b789e76e84f80848d4a592d20c177734b6d93a5a32b667eab7503",
+  "currentDeveloperBundleSha256": "7b61247bd80b789e76e84f80848d4a592d20c177734b6d93a5a32b667eab7503",
+  "hostProbeSha256": "67584553214f8a8cbc017fc77a56efc6f8b658a38b2749300c46c2c93a20f531",
+  "observations": [
+    {
+      "id": "F22H-N01",
+      "scope": "Restart reuses keys/ledger and keeps exact masked source without startup read",
+      "status": "PASS"
+    },
+    {
+      "id": "F22H-N02",
+      "scope": "No stale family finding authority survives restart",
+      "status": "PASS"
+    },
+    {
+      "id": "F22H-N03",
+      "scope": "Actual canonical encrypted backup command recovers Mcp after restart disclosure",
+      "status": "PASS"
+    },
+    {
+      "id": "F22H-N04",
+      "scope": "Fresh native review reestablishes two metadata findings after explicit recovery",
+      "status": "PASS"
+    }
+  ],
+  "passed": 4,
+  "failed": 0,
+  "notRun": 0,
+  "sourceDocumentCalls": 0,
+  "sourceDocumentEvents": 0,
+  "secretStorageStores": 0,
+  "reviews": [
+    {
+      "action": "Restore raw values",
+      "safe": true
+    },
+    {
+      "action": "Analyze saved project files",
+      "safe": true
+    }
+  ],
+  "metadataDocuments": 2,
+  "trace": [
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 639.9906000000001
+    },
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 798.4952000000003
+    },
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 1041.9895999999999
+    },
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 1394.9768
+    },
+    {
+      "event": "command-start-mcpSecretScannerStatus",
+      "milliseconds": 1749.9016000000001
+    },
+    {
+      "event": "command-end-mcpSecretScannerStatus",
+      "milliseconds": 1753.228,
+      "status": "OWNER_REVIEW_REQUIRED"
+    },
+    {
+      "event": "command-start-reviewMcpSecretVault",
+      "milliseconds": 1756.4965000000002
+    },
+    {
+      "event": "command-end-reviewMcpSecretVault",
+      "milliseconds": 1759.1285000000003,
+      "status": "REVIEW_FILES_FIRST"
+    },
+    {
+      "event": "command-start-restoreFileFromBackup",
+      "milliseconds": 1759.4569000000001
+    },
+    {
+      "event": "command-end-restoreFileFromBackup",
+      "milliseconds": 2255.2462000000005,
+      "status": "VOID"
+    },
+    {
+      "event": "command-start-reviewMcpSecrets",
+      "milliseconds": 2259.4334
+    },
+    {
+      "event": "command-end-reviewMcpSecrets",
+      "milliseconds": 2900.6441000000004,
+      "status": "ANALYZED",
+      "files": 1,
+      "findings": 2
+    },
+    {
+      "event": "command-start-openHygieneExposureLedger",
+      "milliseconds": 2900.7011
+    },
+    {
+      "event": "command-end-openHygieneExposureLedger",
+      "milliseconds": 3388.6423000000004,
+      "status": "METADATA"
+    }
+  ],
+  "independence": "LOW",
+  "ownerPresence": "SCRIPTED_NATIVE_API_DECISIONS_NOT_HUMAN_REVIEW",
+  "notTested": [
+    "MCP config application/variable-input resolution/client-server/shell execution and credential validity",
+    "Other config filenames/expressions, user/global profiles and dynamic evaluation",
+    "Human usability/accessibility",
+    "Live credentials or provider rotation",
+    "OS custody/unmanaged native reads/uploads"
+  ]
+}

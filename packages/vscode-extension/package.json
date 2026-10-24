@@ -144,7 +144,9 @@
         "soterai.lite.configScanner.serviceAccount",
         "soterai.lite.configScanner.ci",
         "soterai.lite.configScanner.editor",
-        "soterai.lite.configScanner.mcp"
+        "soterai.lite.configScanner.mcp",
+        "soterai.lite.historyScanner",
+        "soterai.lite.artifactScanner"
       ]
     }
   },
@@ -1564,6 +1566,26 @@
         "command": "soterai.mcpSecretScannerStatus",
         "title": "MCP JSONC/TOML Secret Scanner Status",
         "category": "SoterAI"
+      },
+      {
+        "command": "soterai.reviewGitHistory",
+        "title": "Review Local Git History",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.historyScannerStatus",
+        "title": "Git History Scanner Status",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.reviewArtifacts",
+        "title": "Review Build Artifacts and Copies",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.artifactScannerStatus",
+        "title": "Artifact Scanner Status",
+        "category": "SoterAI"
       }
     ],
     "viewsContainers": {
@@ -2310,6 +2332,18 @@
           "default": true,
           "scope": "machine",
           "description": "Review finite saved project MCP JSONC/TOML copies with native owner consent and encrypted checkpoint-only recovery. No config application, variable resolution or client execution. Repository values cannot enable an owner-disabled scanner."
+        },
+        "soterai.lite.historyScanner": {
+          "type": "boolean",
+          "default": true,
+          "scope": "machine",
+          "description": "Enable owner-reviewed bounded read-only local reachable Git history analysis and keyed possible-exposure metadata. No history rewrite, automatic removal, provider request or claim of complete detection. Disable withdraws pending work and preserves stronger protection and metadata."
+        },
+        "soterai.lite.artifactScanner": {
+          "type": "boolean",
+          "default": true,
+          "scope": "machine",
+          "description": "Enable bounded owner-reviewed artifact/source-map/copy analysis and guarded public release. Disable withdraws scans and new publication. Source maps and sourceMappingURL-bearing files are withheld from release; no automatic cleanup or build is performed."
         }
       }
     },
@@ -3480,6 +3514,22 @@
         },
         {
           "command": "soterai.mcpSecretScannerStatus",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.reviewGitHistory",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.historyScannerStatus",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.reviewArtifacts",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.artifactScannerStatus",
           "when": "soterai.advancedCommands"
         }
       ]

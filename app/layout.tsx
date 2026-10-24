@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { inter, jetbrainsMono } from "@/app/fonts";
 import { AuthProvider } from "@/components/auth/AuthProvider";
@@ -183,6 +184,13 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
           </SiteChrome>
         </AuthProvider>
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || ""} />
+        {/* Cloudflare Web Analytics (RUM) — Privacy-first, zero-cookie, real human tracking */}
+        <Script
+          defer
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon='{"token": "48b07d6eac054c2a9337aac571e5c563"}'
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );

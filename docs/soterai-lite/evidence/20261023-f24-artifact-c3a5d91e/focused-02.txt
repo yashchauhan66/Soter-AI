@@ -1,0 +1,898 @@
+﻿TAP version 13
+# Subtest: F24 artifact registration and status create no startup artifact read, child, key or document
+ok 1 - F24 artifact registration and status create no startup artifact read, child, key or document
+  ---
+  duration_ms: 391.5364
+  type: 'test'
+  ...
+# Subtest: F24 a new controller rejects forged, copied and cancelled result authority
+ok 2 - F24 a new controller rejects forged, copied and cancelled result authority
+  ---
+  duration_ms: 6.3724
+  type: 'test'
+  ...
+# Subtest: F24 native owner cancellation ignores public approval, content and paths before any key or content read
+ok 3 - F24 native owner cancellation ignores public approval, content and paths before any key or content read
+  ---
+  duration_ms: 22.0446
+  type: 'test'
+  ...
+# Subtest: F24 one native owner prompt remains pending while status is side effect free and another review is refused
+ok 4 - F24 one native owner prompt remains pending while status is side effect free and another review is refused
+  ---
+  duration_ms: 15.0661
+  type: 'test'
+  ...
+# Subtest: F24 public review arguments never reach the controller and only current metadata becomes a JSON document
+ok 5 - F24 public review arguments never reach the controller and only current metadata becomes a JSON document
+  ---
+  duration_ms: 7.9371
+  type: 'test'
+  ...
+# Subtest: F24 an analyzed-looking result rejected by current never opens a metadata document
+ok 6 - F24 an analyzed-looking result rejected by current never opens a metadata document
+  ---
+  duration_ms: 5.5313
+  type: 'test'
+  ...
+# Subtest: F24 cancellation is returned to the caller without creating a document
+ok 7 - F24 cancellation is returned to the caller without creating a document
+  ---
+  duration_ms: 6.1317
+  type: 'test'
+  ...
+# Subtest: F24 command registration permits one pending review even when a controller review is awaiting
+ok 8 - F24 command registration permits one pending review even when a controller review is awaiting
+  ---
+  duration_ms: 5.7911
+  type: 'test'
+  ...
+# Subtest: F24 a completed cancelled review releases the command guard for a fresh native flow
+ok 9 - F24 a completed cancelled review releases the command guard for a fresh native flow
+  ---
+  duration_ms: 5.5796
+  type: 'test'
+  ...
+# Subtest: F24 private controller errors produce a static unavailable result and release the pending guard
+ok 10 - F24 private controller errors produce a static unavailable result and release the pending guard
+  ---
+  duration_ms: 7.7824
+  type: 'test'
+  ...
+# Subtest: F24 metadata-document failure is sanitized and never displays a partial document
+ok 11 - F24 metadata-document failure is sanitized and never displays a partial document
+  ---
+  duration_ms: 5.5094
+  type: 'test'
+  ...
+# Subtest: F24 authority is checked again after opening metadata and before display
+ok 12 - F24 authority is checked again after opening metadata and before display
+  ---
+  duration_ms: 6.1547
+  type: 'test'
+  ...
+# Subtest: F24 disable then reenable cannot display a withdrawn metadata result waiting on a document
+ok 13 - F24 disable then reenable cannot display a withdrawn metadata result waiting on a document
+  ---
+  duration_ms: 6.0552
+  type: 'test'
+  ...
+# Subtest: F24 workspace replacement withdraws pending metadata authority
+ok 14 - F24 workspace replacement withdraws pending metadata authority
+  ---
+  duration_ms: 6.0655
+  type: 'test'
+  ...
+# Subtest: F24 disposing command subscriptions suppresses a late review result and unregisters both commands
+ok 15 - F24 disposing command subscriptions suppresses a late review result and unregisters both commands
+  ---
+  duration_ms: 5.8343
+  type: 'test'
+  ...
+# Subtest: F24 disposing subscriptions during document creation prevents late display
+ok 16 - F24 disposing subscriptions during document creation prevents late display
+  ---
+  duration_ms: 5.1565
+  type: 'test'
+  ...
+# Subtest: F24 owner disable refuses public review arguments before calling the controller
+ok 17 - F24 owner disable refuses public review arguments before calling the controller
+  ---
+  duration_ms: 10.3798
+  type: 'test'
+  ...
+# Subtest: F24 strict artifact flag rejects nonboolean global enable values and an owner disable
+ok 18 - F24 strict artifact flag rejects nonboolean global enable values and an owner disable
+  ---
+  duration_ms: 11.0812
+  type: 'test'
+  ...
+# Subtest: F24 workspace and folder flag values have no power to change the owner or boolean default
+ok 19 - F24 workspace and folder flag values have no power to change the owner or boolean default
+  ---
+  duration_ms: 10.1694
+  type: 'test'
+  ...
+# Subtest: F24 strict artifact default accepts only booleans and ignores the merged workspace get fallback
+ok 20 - F24 strict artifact default accepts only booleans and ignores the merged workspace get fallback
+  ---
+  duration_ms: 5.5952
+  type: 'test'
+  ...
+# Subtest: F24 untrusted and remote workspaces cannot enable artifact, and configuration errors fail closed
+ok 21 - F24 untrusted and remote workspaces cannot enable artifact, and configuration errors fail closed
+  ---
+  duration_ms: 6.2107
+  type: 'test'
+  ...
+# Subtest: F24 initial controller status withholds on absent, multiple or nonlocal workspace roots without IO
+ok 22 - F24 initial controller status withholds on absent, multiple or nonlocal workspace roots without IO
+  ---
+  duration_ms: 5.3726
+  type: 'test'
+  ...
+# Subtest: F24 disposing a real initial controller permanently withdraws status and forged result authority
+ok 23 - F24 disposing a real initial controller permanently withdraws status and forged result authority
+  ---
+  duration_ms: 4.4195
+  type: 'test'
+  ...
+# Subtest: F24 both manifests contribute only the two advanced artifact commands and the restricted machine flag
+ok 24 - F24 both manifests contribute only the two advanced artifact commands and the restricted machine flag
+  ---
+  duration_ms: 6.7765
+  type: 'test'
+  ...
+# Subtest: F24 revoked publication during metadata creation returns unavailable to the command caller
+ok 25 - F24 revoked publication during metadata creation returns unavailable to the command caller
+  ---
+  duration_ms: 11.1054
+  type: 'test'
+  ...
+# Subtest: F24 revoked publication during native display cannot return stale analyzed metadata
+ok 26 - F24 revoked publication during native display cannot return stale analyzed metadata
+  ---
+  duration_ms: 5.1943
+  type: 'test'
+  ...
+# Subtest: F24 an invalid analyzed-looking controller result is withheld from the command return
+ok 27 - F24 an invalid analyzed-looking controller result is withheld from the command return
+  ---
+  duration_ms: 6.1971
+  type: 'test'
+  ...
+# Subtest: F24 a current partial artifact result remains visibly incomplete in returned and displayed metadata
+ok 28 - F24 a current partial artifact result remains visibly incomplete in returned and displayed metadata
+  ---
+  duration_ms: 5.6897
+  type: 'test'
+  ...
+# Subtest: F24 artifact limits are explicit frozen independent file, map and execution budgets
+ok 29 - F24 artifact limits are explicit frozen independent file, map and execution budgets
+  ---
+  duration_ms: 34.3198
+  type: 'test'
+  ...
+# Subtest: F24 private text views preserve raw synthetic copy bytes while findings stay keyed
+ok 30 - F24 private text views preserve raw synthetic copy bytes while findings stay keyed
+  ---
+  duration_ms: 29.1963
+  type: 'test'
+  ...
+# Subtest: F24 JS JSX TS TSX MJS and CJS artifacts select canonical parse-only source analysis
+ok 31 - F24 JS JSX TS TSX MJS and CJS artifacts select canonical parse-only source analysis
+  ---
+  duration_ms: 36.9984
+  type: 'test'
+  ...
+# Subtest: F24 renamed leading-source copies retain canonical source semantics without trusting their extension
+ok 32 - F24 renamed leading-source copies retain canonical source semantics without trusting their extension
+  ---
+  duration_ms: 14.805
+  type: 'test'
+  ...
+# Subtest: F24 minified recognized literals and static credential comments remain detectable
+ok 33 - F24 minified recognized literals and static credential comments remain detectable
+  ---
+  duration_ms: 13.9619
+  type: 'test'
+  ...
+# Subtest: F24 decoded JS escapes are analyzed canonically and exact encoded source values are excluded from publication
+ok 34 - F24 decoded JS escapes are analyzed canonically and exact encoded source values are excluded from publication
+  ---
+  duration_ms: 5.4116
+  type: 'test'
+  ...
+# Subtest: F24 public source CSS and ordinary copy controls remain byte-for-byte useful
+ok 35 - F24 public source CSS and ordinary copy controls remain byte-for-byte useful
+  ---
+  duration_ms: 10.0187
+  type: 'test'
+  ...
+# Subtest: F24 raw credential copies are sanitized deterministically and repeated sanitization is idempotent
+ok 36 - F24 raw credential copies are sanitized deterministically and repeated sanitization is idempotent
+  ---
+  duration_ms: 4.1606
+  type: 'test'
+  ...
+# Subtest: F24 source publication uses stable placeholders across repeated capture and never adds execution or imports
+ok 37 - F24 source publication uses stable placeholders across repeated capture and never adds execution or imports
+  ---
+  duration_ms: 8.3248
+  type: 'test'
+  ...
+# Subtest: F24 private v3 map sourcesContent is decoded once with null entries skipped
+ok 38 - F24 private v3 map sourcesContent is decoded once with null entries skipped
+  ---
+  duration_ms: 10.1114
+  type: 'test'
+  ...
+# Subtest: F24 renamed strict source-map copies are recognized independently of the map suffix
+ok 39 - F24 renamed strict source-map copies are recognized independently of the map suffix
+  ---
+  duration_ms: 10.8379
+  type: 'test'
+  ...
+# Subtest: F24 map JSON escaping and embedded source escaping preserve canonical decoded credentials
+ok 40 - F24 map JSON escaping and embedded source escaping preserve canonical decoded credentials
+  ---
+  duration_ms: 2.9914
+  type: 'test'
+  ...
+# Subtest: F24 sourceRoot sources file and URLs are inert metadata and do not become original-path analysis identities
+ok 41 - F24 sourceRoot sources file and URLs are inert metadata and do not become original-path analysis identities
+  ---
+  duration_ms: 4.6513
+  type: 'test'
+  ...
+# Subtest: F24 every source map is withheld from publication even with harmless or empty embedded sources
+ok 42 - F24 every source map is withheld from publication even with harmless or empty embedded sources
+  ---
+  duration_ms: 5.1783
+  type: 'test'
+  ...
+# Subtest: F24 sourceMappingURL-bearing JS CSS and copied text are withheld for explicit reviewed exclusion
+ok 43 - F24 sourceMappingURL-bearing JS CSS and copied text are withheld for explicit reviewed exclusion
+  ---
+  duration_ms: 4.629
+  type: 'test'
+  ...
+# Subtest: F24 inline data-map references remain unsupported instead of being decoded or treated as inspected originals
+ok 44 - F24 inline data-map references remain unsupported instead of being decoded or treated as inspected originals
+  ---
+  duration_ms: 1.9483
+  type: 'test'
+  ...
+# Subtest: F24 malformed truncated commented or trailing-comma maps fail with generic value-free errors
+ok 45 - F24 malformed truncated commented or trailing-comma maps fail with generic value-free errors
+  ---
+  duration_ms: 2.7929
+  type: 'test'
+  ...
+# Subtest: F24 duplicate decoded map keys cannot conceal a competing sourcesContent or version
+ok 46 - F24 duplicate decoded map keys cannot conceal a competing sourcesContent or version
+  ---
+  duration_ms: 2.5052
+  type: 'test'
+  ...
+# Subtest: F24 finite map schema refuses version shape mismatches mismatched arrays and unknown root fields
+ok 47 - F24 finite map schema refuses version shape mismatches mismatched arrays and unknown root fields
+  ---
+  duration_ms: 4.4732
+  type: 'test'
+  ...
+# Subtest: F24 indexed inline sections and external section URLs are explicitly unsupported
+ok 48 - F24 indexed inline sections and external section URLs are explicitly unsupported
+  ---
+  duration_ms: 2.9855
+  type: 'test'
+  ...
+# Subtest: F24 maps enforce128 embedded source slots and refuse a129th before unbounded analysis
+ok 49 - F24 maps enforce128 embedded source slots and refuse a129th before unbounded analysis
+  ---
+  duration_ms: 71.806
+  type: 'test'
+  ...
+# Subtest: F24 deep or excessive map work fails generically without stack-dependent output
+ok 50 - F24 deep or excessive map work fails generically without stack-dependent output
+  ---
+  duration_ms: 24.5404
+  type: 'test'
+  ...
+# Subtest: F24 raw and decoded map source controls reject NUL ESC unsupportedC0 and lone surrogates
+ok 51 - F24 raw and decoded map source controls reject NUL ESC unsupportedC0 and lone surrogates
+  ---
+  duration_ms: 5.521
+  type: 'test'
+  ...
+# Subtest: F24 single-file64KiB bound measures UTF8 bytes and applies before source-map expansion
+ok 52 - F24 single-file64KiB bound measures UTF8 bytes and applies before source-map expansion
+  ---
+  duration_ms: 40.9043
+  type: 'test'
+  ...
+# Subtest: F24 relative paths reject traversal Windows streams devices ambiguous names and controls
+ok 53 - F24 relative paths reject traversal Windows streams devices ambiguous names and controls
+  ---
+  duration_ms: 2.2956
+  type: 'test'
+  ...
+# Subtest: F24 recognized filename canaries are withheld before publication metadata can expose original names
+ok 54 - F24 recognized filename canaries are withheld before publication metadata can expose original names
+  ---
+  duration_ms: 2.0227
+  type: 'test'
+  ...
+# Subtest: F24 unsupported dynamic or malformed source is never released through a generic-text fallback
+ok 55 - F24 unsupported dynamic or malformed source is never released through a generic-text fallback
+  ---
+  duration_ms: 6.5418
+  type: 'test'
+  ...
+# Subtest: F24 artifact parsing and publication never evaluate generated JavaScript
+ok 56 - F24 artifact parsing and publication never evaluate generated JavaScript
+  ---
+  duration_ms: 7.3626
+  type: 'test'
+  ...
+# Subtest: F24 recognized credentials in ignored source metadata literals withhold publication
+ok 57 - F24 recognized credentials in ignored source metadata literals withhold publication
+  ---
+  duration_ms: 15.5015
+  type: 'test'
+  ...
+# Subtest: F24 forged placeholder text cannot conceal a recognized credential in source metadata
+ok 58 - F24 forged placeholder text cannot conceal a recognized credential in source metadata
+  ---
+  duration_ms: 2.612
+  type: 'test'
+  ...
+# Subtest: F24 inline mapping payload in generated source stays visibly unsupported during analysis
+ok 59 - F24 inline mapping payload in generated source stays visibly unsupported during analysis
+  ---
+  duration_ms: 2.5254
+  type: 'test'
+  ...
+# Subtest: F24 forged placeholder names cannot hide recognized filename or source-map metadata credentials
+ok 60 - F24 forged placeholder names cannot hide recognized filename or source-map metadata credentials
+  ---
+  duration_ms: 2.4878
+  type: 'test'
+  ...
+# Subtest: F24 artifact construction and status do not discover, read content, create a key, open originals or launch a process
+ok 61 - F24 artifact construction and status do not discover, read content, create a key, open originals or launch a process
+  ---
+  duration_ms: 90.4198
+  type: 'test'
+  ...
+# Subtest: F24 native artifact cancellation precedes canonical content reads and analyzer-key creation
+ok 62 - F24 native artifact cancellation precedes canonical content reads and analyzer-key creation
+  ---
+  duration_ms: 52.1528
+  type: 'test'
+  ...
+# Subtest: F24 approved artifact source review publishes exact keyed metadata and canonical possible-exposure rows
+ok 63 - F24 approved artifact source review publishes exact keyed metadata and canonical possible-exposure rows
+  ---
+  duration_ms: 252.8862
+  type: 'test'
+  ...
+# Subtest: F24 artifact source findings use a disjoint key domain from current-file and historical analysis
+ok 64 - F24 artifact source findings use a disjoint key domain from current-file and historical analysis
+  ---
+  duration_ms: 181.6322
+  type: 'test'
+  ...
+# Subtest: F24 discovery admits generated directories and a renamed source copy while excluding Git objects and node_modules
+ok 65 - F24 discovery admits generated directories and a renamed source copy while excluding Git objects and node_modules
+  ---
+  duration_ms: 685.9512
+  type: 'test'
+  ...
+# Subtest: F24 source-map embedded sources are private views and never cause referenced filesystem reads
+ok 66 - F24 source-map embedded sources are private views and never cause referenced filesystem reads
+  ---
+  duration_ms: 148.548
+  type: 'test'
+  ...
+# Subtest: F24 malformed maps and binary artifacts remain explicitly incomplete without findings or ledger rows
+ok 67 - F24 malformed maps and binary artifacts remain explicitly incomplete without findings or ledger rows
+  ---
+  duration_ms: 176.9964
+  type: 'test'
+  ...
+# Subtest: F24 public artifact control remains useful with vault mode disabled and no vault key
+ok 68 - F24 public artifact control remains useful with vault mode disabled and no vault key
+  ---
+  duration_ms: 144.4357
+  type: 'test'
+  ...
+# Subtest: F24 owner artifact and hygiene flags fail closed despite repository enables
+ok 69 - F24 owner artifact and hygiene flags fail closed despite repository enables
+  ---
+  duration_ms: 10.1025
+  type: 'test'
+  ...
+# Subtest: F24 untrusted, remote, absent and multiple workspace roots refuse before key or content
+ok 70 - F24 untrusted, remote, absent and multiple workspace roots refuse before key or content
+  ---
+  duration_ms: 5.9165
+  type: 'test'
+  ...
+# Subtest: F24 disable and reenable during native approval stay revoked before content or key
+ok 71 - F24 disable and reenable during native approval stay revoked before content or key
+  ---
+  duration_ms: 15.5004
+  type: 'test'
+  ...
+# Subtest: F24 actual owner-policy drift during native approval cannot authorize artifact reads
+ok 72 - F24 actual owner-policy drift during native approval cannot authorize artifact reads
+  ---
+  duration_ms: 22.6019
+  type: 'test'
+  ...
+# Subtest: F24 withdrawal immediately after analyzer creation prevents subsequent private content reads
+ok 73 - F24 withdrawal immediately after analyzer creation prevents subsequent private content reads
+  ---
+  duration_ms: 43.038
+  type: 'test'
+  ...
+# Subtest: F24 root replacement during a private await cannot publish artifact metadata
+ok 74 - F24 root replacement during a private await cannot publish artifact metadata
+  ---
+  duration_ms: 47.9427
+  type: 'test'
+  ...
+# Subtest: F24 source changes after private analysis withhold the entire result and pending ledger findings
+ok 75 - F24 source changes after private analysis withhold the entire result and pending ledger findings
+  ---
+  duration_ms: 119.3513
+  type: 'test'
+  ...
+# Subtest: F24 trust drift after a private analysis suppresses findings and subsequent publication
+ok 76 - F24 trust drift after a private analysis suppresses findings and subsequent publication
+  ---
+  duration_ms: 91.7557
+  type: 'test'
+  ...
+# Subtest: F24 analyzer-key replacement during a private await discards pending candidates
+ok 77 - F24 analyzer-key replacement during a private await discards pending candidates
+  ---
+  duration_ms: 51.5106
+  type: 'test'
+  ...
+# Subtest: F24 native approval expiry and monotonic clock reversal cannot publish artifact findings
+ok 78 - F24 native approval expiry and monotonic clock reversal cannot publish artifact findings
+  ---
+  duration_ms: 99.4262
+  type: 'test'
+  ...
+# Subtest: F24 one pending owner modal retains busy state and permits no second review
+ok 79 - F24 one pending owner modal retains busy state and permits no second review
+  ---
+  duration_ms: 145.7486
+  type: 'test'
+  ...
+# Subtest: F24 disposal during an owner modal refuses the late native action before content or key
+ok 80 - F24 disposal during an owner modal refuses the late native action before content or key
+  ---
+  duration_ms: 10.3397
+  type: 'test'
+  ...
+# Subtest: F24 failed canonical ledger persistence returns generic unavailable with no current finding authority
+ok 81 - F24 failed canonical ledger persistence returns generic unavailable with no current finding authority
+  ---
+  duration_ms: 159.7547
+  type: 'test'
+  ...
+# Subtest: F24 file-count sentinel and byte caps remain PARTIAL rather than a clean artifact claim
+ok 82 - F24 file-count sentinel and byte caps remain PARTIAL rather than a clean artifact claim
+  ---
+  duration_ms: 10628.2997
+  type: 'test'
+  ...
+# Subtest: F24 oversized regular artifact is skipped explicitly without reading more than the admitted file budget
+ok 83 - F24 oversized regular artifact is skipped explicitly without reading more than the admitted file budget
+  ---
+  duration_ms: 75.3611
+  type: 'test'
+  ...
+# Subtest: F24 aggregate admitted content never exceeds one MiB even when every individual artifact fits
+ok 84 - F24 aggregate admitted content never exceeds one MiB even when every individual artifact fits
+  ---
+  duration_ms: 1963.0155
+  type: 'test'
+  ...
+# Subtest: F24 forged discovery outside the captured root and unsupported URI schemes grant no artifact read
+ok 85 - F24 forged discovery outside the captured root and unsupported URI schemes grant no artifact read
+  ---
+  duration_ms: 131.5329
+  type: 'test'
+  ...
+# Subtest: F24 multiple hardlinks and a retained synthetic junction cannot provide artifact content authority
+ok 86 - F24 multiple hardlinks and a retained synthetic junction cannot provide artifact content authority
+  ---
+  duration_ms: 23.2945
+  type: 'test'
+  ...
+# Subtest: F24 invalid ADS and Windows device discovery paths are rejected without analysis or disclosed path errors
+ok 87 - F24 invalid ADS and Windows device discovery paths are rejected without analysis or disclosed path errors
+  ---
+  duration_ms: 17.2204
+  type: 'test'
+  ...
+# Subtest: F24 published result authority stays withdrawn after disable, source restoration or root reenable
+ok 88 - F24 published result authority stays withdrawn after disable, source restoration or root reenable
+  ---
+  duration_ms: 385.4891
+  type: 'test'
+  ...
+# Subtest: F24 observed key change withdraws published authority synchronously before delayed key validation
+ok 89 - F24 observed key change withdraws published authority synchronously before delayed key validation
+  ---
+  duration_ms: 195.3125
+  type: 'test'
+  ...
+# Subtest: F24 ordinary policy and editor files coexist with a supported artifact without blocking private review
+ok 90 - F24 ordinary policy and editor files coexist with a supported artifact without blocking private review
+  ---
+  duration_ms: 188.0012
+  type: 'test'
+  ...
+# Subtest: F24 artifact references cannot collide with canonical current-file or history references
+ok 91 - F24 artifact references cannot collide with canonical current-file or history references
+  ---
+  duration_ms: 25.7199
+  type: 'test'
+  ...
+# Subtest: F24 artifact observation retains a distinct exposure row and preserves current-file vaulted action
+ok 92 - F24 artifact observation retains a distinct exposure row and preserves current-file vaulted action
+  ---
+  duration_ms: 5.2024
+  type: 'test'
+  ...
+# Subtest: F24 artifact analyzer survives ordinary reuse but withdraws on key drift and disposal
+ok 93 - F24 artifact analyzer survives ordinary reuse but withdraws on key drift and disposal
+  ---
+  duration_ms: 4.6038
+  type: 'test'
+  ...
+# Subtest: F24 artifact flag off withdraws actual publication before selection or content
+ok 94 - F24 artifact flag off withdraws actual publication before selection or content
+  ---
+  duration_ms: 19.1556
+  type: 'test'
+  ...
+# Subtest: F24 actual publication masks decoded static source credentials and keeps useful public code
+ok 95 - F24 actual publication masks decoded static source credentials and keeps useful public code
+  ---
+  duration_ms: 459.1187
+  type: 'test'
+  ...
+# Subtest: F24 source map publication is withheld with original embedded source preserved
+ok 96 - F24 source map publication is withheld with original embedded source preserved
+  ---
+  duration_ms: 64.4165
+  type: 'test'
+  ...
+# Subtest: F24 sourceMappingURL-bearing source is withheld without reference reads or output
+ok 97 - F24 sourceMappingURL-bearing source is withheld without reference reads or output
+  ---
+  duration_ms: 55.1404
+  type: 'test'
+  ...
+# Subtest: F24 disabling artifact release during final owner review prevents actual output
+ok 98 - F24 disabling artifact release during final owner review prevents actual output
+  ---
+  duration_ms: 60.6828
+  type: 'test'
+  ...
+# Subtest: F24 harmless CSS release remains useful and originals unchanged
+ok 99 - F24 harmless CSS release remains useful and originals unchanged
+  ---
+  duration_ms: 353.7771
+  type: 'test'
+  ...
+# Subtest: F23 historical and current files cannot collide through a valid history-prefixed repository path
+ok 100 - F23 historical and current files cannot collide through a valid history-prefixed repository path
+  ---
+  duration_ms: 30.6099
+  type: 'test'
+  ...
+# Subtest: F23 historical exposure preserves a separate current-file ledger row and its last action
+ok 101 - F23 historical exposure preserves a separate current-file ledger row and its last action
+  ---
+  duration_ms: 6.2568
+  type: 'test'
+  ...
+# Subtest: F23 the same history domain remains stable across analyzer leases and repeated observations
+ok 102 - F23 the same history domain remains stable across analyzer leases and repeated observations
+  ---
+  duration_ms: 6.3891
+  type: 'test'
+  ...
+# Subtest: F23 history-domain references remain isolated between roots using the same profile key
+ok 103 - F23 history-domain references remain isolated between roots using the same profile key
+  ---
+  duration_ms: 6.9501
+  type: 'test'
+  ...
+# Subtest: F23 an omitted or undefined analyzer domain preserves the exact existing canonical output
+ok 104 - F23 an omitted or undefined analyzer domain preserves the exact existing canonical output
+  ---
+  duration_ms: 4.7226
+  type: 'test'
+  ...
+# Subtest: F23 unsupported analyzer domains reject generically without changing retained key or ledger metadata
+ok 105 - F23 unsupported analyzer domains reject generically without changing retained key or ledger metadata
+  ---
+  duration_ms: 3.6704
+  type: 'test'
+  ...
+# Subtest: F23 history-domain leases withdraw on key drift or disposal without reverting to a current-file key
+ok 106 - F23 history-domain leases withdraw on key drift or disposal without reverting to a current-file key
+  ---
+  duration_ms: 5.9667
+  type: 'test'
+  ...
+# Subtest: F21 no IO/key creation in constructor or empty read, no original/root/path in stored/exported metadata
+ok 107 - F21 no IO/key creation in constructor or empty read, no original/root/path in stored/exported metadata
+  ---
+  duration_ms: 445.1117
+  type: 'test'
+  ...
+# Subtest: F21 repeated observations deduplicate, root scope isolates and distinct owner reports never become confirmed AI reads
+ok 108 - F21 repeated observations deduplicate, root scope isolates and distinct owner reports never become confirmed AI reads
+  ---
+  duration_ms: 11.2965
+  type: 'test'
+  ...
+# Subtest: F21 corrupt state, unknown fields and lost/replaced key preserve prior bytes and refuse
+ok 109 - F21 corrupt state, unknown fields and lost/replaced key preserve prior bytes and refuse
+  ---
+  duration_ms: 13.0791
+  type: 'test'
+  ...
+# Subtest: F21 capacity is bounded256 without truncation or partial persistence
+ok 110 - F21 capacity is bounded256 without truncation or partial persistence
+  ---
+  duration_ms: 131.6499
+  type: 'test'
+  ...
+# Subtest: F21 concurrent owner observations serialize without losing existing metadata
+ok 111 - F21 concurrent owner observations serialize without losing existing metadata
+  ---
+  duration_ms: 7.3849
+  type: 'test'
+  ...
+# Subtest: F21 key/state persistence failure releases no raw exception and never overwrites existing ledger
+ok 112 - F21 key/state persistence failure releases no raw exception and never overwrites existing ledger
+  ---
+  duration_ms: 3.6102
+  type: 'test'
+  ...
+# Subtest: F21 backwards clock refuses an update without corrupting preserved chronological metadata
+ok 113 - F21 backwards clock refuses an update without corrupting preserved chronological metadata
+  ---
+  duration_ms: 4.1845
+  type: 'test'
+  ...
+# Subtest: F21 private synchronous analysis lease revokes on key drift/disposal without exposing its key
+ok 114 - F21 private synchronous analysis lease revokes on key drift/disposal without exposing its key
+  ---
+  duration_ms: 5.2295
+  type: 'test'
+  ...
+# Subtest: native command positive control publishes selected public code with known secrets redacted and source unchanged
+ok 115 - native command positive control publishes selected public code with known secrets redacted and source unchanged
+  ---
+  duration_ms: 477.9497
+  type: 'test'
+  ...
+# Subtest: native selection cannot publish a manually denied regular file
+ok 116 - native selection cannot publish a manually denied regular file
+  ---
+  duration_ms: 36.137
+  type: 'test'
+  ...
+# Subtest: repository-classified sensitive files are withheld even when their configured treatment is redact
+ok 117 - repository-classified sensitive files are withheld even when their configured treatment is redact
+  ---
+  duration_ms: 43.1505
+  type: 'test'
+  ...
+# Subtest: ordinary selected code retains public context while protected regions stay withheld
+ok 118 - ordinary selected code retains public context while protected regions stay withheld
+  ---
+  duration_ms: 345.7139
+  type: 'test'
+  ...
+# Subtest: environment selection exposes only approved keys and synthetic values, never raw original values or unapproved keys
+ok 119 - environment selection exposes only approved keys and synthetic values, never raw original values or unapproved keys
+  ---
+  duration_ms: 323.7888
+  type: 'test'
+  ...
+# Subtest: native approved-name development-defaults selection produces fixed synthetic values only
+ok 120 - native approved-name development-defaults selection produces fixed synthetic values only
+  ---
+  duration_ms: 324.7128
+  type: 'test'
+  ...
+# Subtest: environment with protected regions is withheld before any schema parsing or publication
+ok 121 - environment with protected regions is withheld before any schema parsing or publication
+  ---
+  duration_ms: 25.4752
+  type: 'test'
+  ...
+# Subtest: preview returns PREVIEWED with safe metadata and creates no export folder
+ok 122 - preview returns PREVIEWED with safe metadata and creates no export folder
+  ---
+  duration_ms: 57.8167
+  type: 'test'
+  ...
+# Subtest: cancellation at native approval creates no public files
+ok 123 - cancellation at native approval creates no public files
+  ---
+  duration_ms: 47.3763
+  type: 'test'
+  ...
+# Subtest: feature flag and workspace trust disable public preparation before reading source files
+ok 124 - feature flag and workspace trust disable public preparation before reading source files
+  ---
+  duration_ms: 4.5419
+  type: 'test'
+  ...
+# Subtest: caller-supplied approval, path and secret arguments cannot replace native user selection
+ok 125 - caller-supplied approval, path and secret arguments cannot replace native user selection
+  ---
+  duration_ms: 8.6291
+  type: 'test'
+  ...
+# Subtest: history and credential paths fail before source content enters any preview
+ok 126 - history and credential paths fail before source content enters any preview
+  ---
+  duration_ms: 18.5601
+  type: 'test'
+  ...
+# Subtest: multiple hardlinks are withheld by the real source reader
+ok 127 - multiple hardlinks are withheld by the real source reader
+  ---
+  duration_ms: 40.8756
+  type: 'test'
+  ...
+# Subtest: file symlink aliases are withheld by the real source reader
+ok 128 - file symlink aliases are withheld by the real source reader # SKIP OS denied synthetic file-symlink creation; assertion UNTESTED.
+  ---
+  duration_ms: 5.3484
+  type: 'test'
+  ...
+# Subtest: synthetic contract accepts only finite presets and emits no runtime or original URL
+ok 129 - synthetic contract accepts only finite presets and emits no runtime or original URL
+  ---
+  duration_ms: 14.8421
+  type: 'test'
+  ...
+# Subtest: local development defaults derive only from approved names and use finite synthetic loopback examples
+ok 130 - local development defaults derive only from approved names and use finite synthetic loopback examples
+  ---
+  duration_ms: 6.1805
+  type: 'test'
+  ...
+# Subtest: publication paths reject traversal, Windows streams/device aliases and credential/history/policy outputs
+ok 131 - publication paths reject traversal, Windows streams/device aliases and credential/history/policy outputs
+  ---
+  duration_ms: 11.2518
+  type: 'test'
+  ...
+# Subtest: publication writes only selected safe saved content and synthetic fixtures to a new folder
+ok 132 - publication writes only selected safe saved content and synthetic fixtures to a new folder
+  ---
+  duration_ms: 173.362
+  type: 'test'
+  ...
+# Subtest: environment publication copies no .env original and exports only explicitly approved names with synthetic examples
+ok 133 - environment publication copies no .env original and exports only explicitly approved names with synthetic examples
+  ---
+  duration_ms: 120.9769
+  type: 'test'
+  ...
+# Subtest: synthetic fields absent from selected approved schema fail closed
+ok 134 - synthetic fields absent from selected approved schema fail closed
+  ---
+  duration_ms: 11.6962
+  type: 'test'
+  ...
+# Subtest: source .env.example is schema-only and cannot collide with the synthetic generated output
+ok 135 - source .env.example is schema-only and cannot collide with the synthetic generated output
+  ---
+  duration_ms: 7.9346
+  type: 'test'
+  ...
+# Subtest: preparation bounds file inventory, text bytes, binary data and duplicate selections
+ok 136 - preparation bounds file inventory, text bytes, binary data and duplicate selections
+  ---
+  duration_ms: 29.858
+  type: 'test'
+  ...
+# Subtest: policy/source changes after review publish nothing
+ok 137 - policy/source changes after review publish nothing
+  ---
+  duration_ms: 8.2402
+  type: 'test'
+  ...
+# Subtest: same safe output with a changed original identity still invalidates approval
+ok 138 - same safe output with a changed original identity still invalidates approval
+  ---
+  duration_ms: 9.0602
+  type: 'test'
+  ...
+# Subtest: revocation before or during preparation and disabled publication withhold output
+ok 139 - revocation before or during preparation and disabled publication withhold output
+  ---
+  duration_ms: 15.4099
+  type: 'test'
+  ...
+# Subtest: review expiration and replay cannot publish a second snapshot
+ok 140 - review expiration and replay cannot publish a second snapshot
+  ---
+  duration_ms: 137.0339
+  type: 'test'
+  ...
+# Subtest: publication rejects nonfinite, negative, unsafe and regressing clocks, including exact expiry
+ok 141 - publication rejects nonfinite, negative, unsafe and regressing clocks, including exact expiry
+  ---
+  duration_ms: 15.8885
+  type: 'test'
+  ...
+# Subtest: revocation during the completion-manifest write never acknowledges successful preparation
+ok 142 - revocation during the completion-manifest write never acknowledges successful preparation
+  ---
+  duration_ms: 104.6179
+  type: 'test'
+  ...
+# Subtest: completion-manifest content is verified after its write before acknowledging success
+ok 143 - completion-manifest content is verified after its write before acknowledging success
+  ---
+  duration_ms: 114.3485
+  type: 'test'
+  ...
+# Subtest: manifest copies and mutations are rejected; original plan data is immutable
+ok 144 - manifest copies and mutations are rejected; original plan data is immutable
+  ---
+  duration_ms: 9.7458
+  type: 'test'
+  ...
+# Subtest: existing destinations, source children/ancestors and protected stores are never overwritten
+ok 145 - existing destinations, source children/ancestors and protected stores are never overwritten
+  ---
+  duration_ms: 36.826
+  type: 'test'
+  ...
+# Subtest: junction or symlink output-parent aliases are rejected without a completion manifest
+ok 146 - junction or symlink output-parent aliases are rejected without a completion manifest
+  ---
+  duration_ms: 15.6354
+  type: 'test'
+  ...
+# Subtest: changed policy after writing leaves an explicitly incomplete folder and no completion manifest
+ok 147 - changed policy after writing leaves an explicitly incomplete folder and no completion manifest
+  ---
+  duration_ms: 68.7993
+  type: 'test'
+  ...
+# Subtest: source canonical root aliases are rejected during preparation
+ok 148 - source canonical root aliases are rejected during preparation
+  ---
+  duration_ms: 7.6169
+  type: 'test'
+  ...
+1..148
+# tests 148
+# suites 0
+# pass 147
+# fail 0
+# cancelled 0
+# skipped 1
+# todo 0
+# duration_ms 32811.0586

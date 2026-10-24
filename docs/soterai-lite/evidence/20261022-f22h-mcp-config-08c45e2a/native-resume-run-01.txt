@@ -1,0 +1,59 @@
+﻿{"status":"PASS_CURRENT_INPUT_BYTES","files":664}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\native-prelaunch-run-03.txt",
+    "observedAt":  "2026-10-23T03:08:26.4335638Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "-NoLogo",
+                      "-NoProfile",
+                      "-ExecutionPolicy",
+                      "Bypass",
+                      "-File",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\run-prelaunch-03.ps1"
+                  ],
+    "sha256":  "A5044969D2CCA23B7DE445F937EF4A42C9F41D83ABC19E59BE88903E7BDDFFF7",
+    "file":  "powershell"
+}
+{"status":"PASS_CURRENT_INPUT_BYTES","files":664}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\mcp-native-run-01.txt",
+    "observedAt":  "2026-10-23T03:09:05.8774414Z",
+    "exitCode":  1,
+    "arguments":  [
+                      "-NoLogo",
+                      "-NoProfile",
+                      "-ExecutionPolicy",
+                      "Bypass",
+                      "-File",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\run-mcp-native-02.ps1",
+                      "-CodePath",
+                      "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe",
+                      "-HostTestsPath",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\prebuilt-native-hosts-01\\lite-mcp-host.js",
+                      "-ExtensionRoot",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\vsix-extracted-01\\extension",
+                      "-VsixPath",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\soterai-lite\\soterai-lite-0.7.0-f22h-20261022-attempt01.vsix",
+                      "-ExpectedVsixSha256",
+                      "578a9ef8193d6572eee314ea6b274b4e344db28837560e1cc621f12693465e3a",
+                      "-ExpectedBundleSha256",
+                      "26bef1decde9d42cd62ad4d669b502dcbbb2ada143b01b5b160c144d790e5e2a"
+                  ],
+    "sha256":  "78CD97E39212E057AB3AE8A51142BC9B561A70B9F2032ECFFB51D235B6AD5A84",
+    "file":  "powershell"
+}
+powershell.exe : Native resume stopped; raw retained: mcp-native-run-01
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Native resume s...p-native-run-01:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261022-f22h-mcp-config-08c45e2a\
+resume-candidate01-01.ps1:9 char:34
++ ... xitCode -ne 0){throw ('Native resume stopped; raw retained: '+$Name)}
++                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (Native resume s...p-native-run-01:String) [], RuntimeException
+    + FullyQualifiedErrorId : Native resume stopped; raw retained: mcp-native-run-01
+ 

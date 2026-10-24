@@ -1,0 +1,81 @@
+{
+  "status": "F23_ACTIVE_PROTOCOL26_PASS_PROCESS_SCANNER_UI_PENDING",
+  "baseline": {
+    "raw": {
+      "path": "docs/soterai-lite/evidence/20261023-f23-history-62d09fb1/protocol-baseline-01.txt",
+      "bytes": 42951,
+      "sha256": "6744e8d777d5293366c53eb7e85df6219d24382e879f235a5c86146798ef93aa"
+    },
+    "receipt": {
+      "path": "docs/soterai-lite/evidence/20261023-f23-history-62d09fb1/protocol-baseline-01.txt.result.json",
+      "bytes": 572,
+      "sha256": "05c451f88830fc10ca41a18531f9a4f1d7944942c969d6e5f2c14d3bba0fce94"
+    },
+    "exitCode": 1,
+    "counts": {
+      "tests": 26,
+      "pass": 0,
+      "fail": 26,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    "cause": "Missing new GitHistoryProtocol implementation before production edit"
+  },
+  "current": {
+    "raw": {
+      "path": "docs/soterai-lite/evidence/20261023-f23-history-62d09fb1/protocol-tests-01.txt",
+      "bytes": 6570,
+      "sha256": "988371888b40b0d26eaa67b866de440156d144dd0b4a1e03d8f49767b9f61cab"
+    },
+    "receipt": {
+      "path": "docs/soterai-lite/evidence/20261023-f23-history-62d09fb1/protocol-tests-01.txt.result.json",
+      "bytes": 569,
+      "sha256": "67b2258cd149453c314a7666ab71283fbf7add44b8c4cbdd38c4548c47f0eaa0"
+    },
+    "exitCode": 0,
+    "counts": {
+      "tests": 26,
+      "pass": 26,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0
+    }
+  },
+  "compiler": {
+    "raw": {
+      "path": "docs/soterai-lite/evidence/20261023-f23-history-62d09fb1/typecheck-01.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "receipt": {
+      "path": "docs/soterai-lite/evidence/20261023-f23-history-62d09fb1/typecheck-01.txt.result.json",
+      "bytes": 514,
+      "sha256": "57bc26041e0e10d83cdbf4e7e15187c6fc2c9228f6007721bde68724f87df4ca"
+    },
+    "exitCode": 0
+  },
+  "version": {
+    "raw": {
+      "path": "docs/soterai-lite/evidence/20261023-f23-history-62d09fb1/git-version-01.txt",
+      "bytes": 33,
+      "sha256": "13b0c6bd9fec1c2461cb3e1ca15f9c3eadf6786fdba45cb494e6fff5512e75bd"
+    },
+    "receipt": {
+      "path": "docs/soterai-lite/evidence/20261023-f23-history-62d09fb1/git-version-01.txt.result.json",
+      "bytes": 396,
+      "sha256": "6ae7c1b86dda3bc4fc630c0579d745dde2a5be547206f8dd27cc3eb6977b1006"
+    },
+    "exitCode": 0
+  },
+  "test": {
+    "path": "packages/vscode-extension/src/__tests__/gitHistoryProtocol.test.ts",
+    "bytes": 15042,
+    "sha256": "ce2b1aa0c31e86c8fefe4a9b66070538922fbd919056daf4bc8d56bcd61d93e1"
+  },
+  "module": {
+    "path": "packages/vscode-extension/src/history/GitHistoryProtocol.ts",
+    "bytes": 6196,
+    "sha256": "15bec74093d348792b4c457079a56246b78157c1392f22aa0e10a974bf27e547"
+  },
+  "scope": "Pure private buffer parsers only: strict finite OIDs/NUL trees/batch framing/object SHA1/UTF8 and separate byte/count bounds. No Git process/history scan, controller, key/UI/registration, package or native completion claim. Process lifecycle test authoring proceeds in parallel; missing-module baseline required before next production component. Same-lineage test author/review LOW; original order/flags/denies/limitations remain."
+}

@@ -1,0 +1,14 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const p=name=>path.join(__dirname,name);
+const read=name=>fs.readFileSync(p(name),'utf8');
+const put=(name,text)=>fs.writeFileSync(p(name),text,{flag:'wx'});
+assert(!fs.existsSync(p('durable-native-start-02.json')));
+const pipeline=read('run-native-pipeline-02.ps1');
+assert(pipeline.includes('verify-native-rebuild-02.cjs'));
+put('run-native-pipeline-before-helper-fix-02.ps1',pipeline);
+fs.writeFileSync(p('run-native-pipeline-02.ps1'),pipeline.replace('verify-native-rebuild-02.cjs','verify-native-rebuild-03.cjs'));
+put('start-durable-native-02.ps1',read('start-durable-native-01.ps1').replaceAll('-01.','-02.'));
+put('confirm-owned-runner-02.ps1',read('confirm-owned-runner-01.ps1').replace("else{'01'}","else{'02'}"));
+put('validate-prepared-03.ps1',read('validate-prepared-02.ps1').replace('check-inputs-01.cjs','check-inputs-02.cjs').replace('prepared-validation-02.json','prepared-validation-03.json'));
+console.log(JSON.stringify({status:'PREPARED_UNEXECUTED_NATIVE02_AND_CURRENT_VALIDATION03',helperFix:'JSON newline serialization only; new verifier03; unexecuted pipeline02 before bytes retained'}));

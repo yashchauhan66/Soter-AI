@@ -25,3 +25,14 @@ final/*.mp3 filter=lfs diff=lfs merge=lfs -text
 docs/secretguard/**/evidence/** -text
 docs/secretguard/guarantee-program-2026-10-09/phase5/** -text
 
+
+# Preserve pinned synthetic vendor fixtures and SoterAI Lite evidence bytes on Windows.
+docs/soterai-lite/evidence/** -text
+packages/vscode-extension/src/__tests__/fixtures/codex-ide-26.51007.21434-manifest.json -text
+packages/vscode-extension/src/__tests__/fixtures/codex-ide-26.51007.21434-runtime-package.json -text
+
+# Frozen Lite inputs and receipts must retain their exact committed representations.
+docs/soterai-lite/** -text
+
+# The Lite builder serializes this operational manifest with canonical LF bytes.
+packages/soterai-lite/package.json -text

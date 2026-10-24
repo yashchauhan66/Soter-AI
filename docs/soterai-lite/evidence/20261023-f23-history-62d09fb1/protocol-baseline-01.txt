@@ -1,0 +1,556 @@
+﻿TAP version 13
+# Subtest: F23 protocol freezes separate commit, blob, stream and time budgets
+not ok 1 - F23 protocol freezes separate commit, blob, stream and time budgets
+  ---
+  duration_ms: 25.3964
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts:2:2115'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\history\\GitHistoryProtocol' imported from C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:860:10)
+    defaultResolve (node:internal/modules/esm/resolve:984:11)
+    nextResolve (node:internal/modules/esm/hooks:748:28)
+    resolveBase (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:8141)
+    async resolveDirectory (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:9221)
+    async resolve2 (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:11932)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
+    async handleMessage (node:internal/modules/esm/worker:199:18)
+  ...
+# Subtest: F23 commit list accepts empty history and exact LF or CRLF object IDs
+not ok 2 - F23 commit list accepts empty history and exact LF or CRLF object IDs
+  ---
+  duration_ms: 7.9052
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts:2:2440'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\history\\GitHistoryProtocol' imported from C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:860:10)
+    defaultResolve (node:internal/modules/esm/resolve:984:11)
+    nextResolve (node:internal/modules/esm/hooks:748:28)
+    resolveBase (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:8141)
+    async resolveDirectory (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:9221)
+    async resolve2 (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:11932)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
+    async handleMessage (node:internal/modules/esm/worker:199:18)
+  ...
+# Subtest: F23 commit sentinel returns first32 and marks a33rd commit as capped
+not ok 3 - F23 commit sentinel returns first32 and marks a33rd commit as capped
+  ---
+  duration_ms: 7.0126
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts:2:2875'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\history\\GitHistoryProtocol' imported from C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:860:10)
+    defaultResolve (node:internal/modules/esm/resolve:984:11)
+    nextResolve (node:internal/modules/esm/hooks:748:28)
+    resolveBase (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:8141)
+    async resolveDirectory (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:9221)
+    async resolve2 (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:11932)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
+    async handleMessage (node:internal/modules/esm/worker:199:18)
+  ...
+# Subtest: F23 commit list rejects repeated IDs, option-looking revisions and noncanonical object shapes
+not ok 4 - F23 commit list rejects repeated IDs, option-looking revisions and noncanonical object shapes
+  ---
+  duration_ms: 6.8977
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts:2:3502'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\history\\GitHistoryProtocol' imported from C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:860:10)
+    defaultResolve (node:internal/modules/esm/resolve:984:11)
+    nextResolve (node:internal/modules/esm/hooks:748:28)
+    resolveBase (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:8141)
+    async resolveDirectory (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:9221)
+    async resolve2 (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:11932)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
+    async handleMessage (node:internal/modules/esm/worker:199:18)
+  ...
+# Subtest: F23 commit list rejects missing terminators, blank records, bareCR and oversized streams
+not ok 5 - F23 commit list rejects missing terminators, blank records, bareCR and oversized streams
+  ---
+  duration_ms: 8.6544
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts:2:3965'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\history\\GitHistoryProtocol' imported from C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:860:10)
+    defaultResolve (node:internal/modules/esm/resolve:984:11)
+    nextResolve (node:internal/modules/esm/hooks:748:28)
+    resolveBase (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:8141)
+    async resolveDirectory (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:9221)
+    async resolve2 (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:11932)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
+    async handleMessage (node:internal/modules/esm/worker:199:18)
+  ...
+# Subtest: F23 tree protocol retains private relative paths and accepts ordinary executable blobs
+not ok 6 - F23 tree protocol retains private relative paths and accepts ordinary executable blobs
+  ---
+  duration_ms: 7.2426
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts:2:4406'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\history\\GitHistoryProtocol' imported from C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:860:10)
+    defaultResolve (node:internal/modules/esm/resolve:984:11)
+    nextResolve (node:internal/modules/esm/hooks:748:28)
+    resolveBase (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:8141)
+    async resolveDirectory (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:9221)
+    async resolve2 (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:11932)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
+    async handleMessage (node:internal/modules/esm/worker:199:18)
+  ...
+# Subtest: F23 tree protocol accepts canonical size padding, empty blobs and UTF8 file names
+not ok 7 - F23 tree protocol accepts canonical size padding, empty blobs and UTF8 file names
+  ---
+  duration_ms: 7.6196
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts:2:4938'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\history\\GitHistoryProtocol' imported from C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:860:10)
+    defaultResolve (node:internal/modules/esm/resolve:984:11)
+    nextResolve (node:internal/modules/esm/hooks:748:28)
+    resolveBase (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:8141)
+    async resolveDirectory (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:9221)
+    async resolve2 (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:11932)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
+    async handleMessage (node:internal/modules/esm/worker:199:18)
+  ...
+# Subtest: F23 tree protocol skips symlinks and gitlinks without admitting external contents
+not ok 8 - F23 tree protocol skips symlinks and gitlinks without admitting external contents
+  ---
+  duration_ms: 7.0158
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts:2:5381'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\history\\GitHistoryProtocol' imported from C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:860:10)
+    defaultResolve (node:internal/modules/esm/resolve:984:11)
+    nextResolve (node:internal/modules/esm/hooks:748:28)
+    resolveBase (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:8141)
+    async resolveDirectory (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:9221)
+    async resolve2 (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:11932)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
+    async handleMessage (node:internal/modules/esm/worker:199:18)
+  ...
+# Subtest: F23 tree protocol leaves large object sizes for the scanner's explicit skip accounting
+not ok 9 - F23 tree protocol leaves large object sizes for the scanner's explicit skip accounting
+  ---
+  duration_ms: 7.8892
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts:2:5819'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\history\\GitHistoryProtocol' imported from C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:860:10)
+    defaultResolve (node:internal/modules/esm/resolve:984:11)
+    nextResolve (node:internal/modules/esm/hooks:748:28)
+    resolveBase (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:8141)
+    async resolveDirectory (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:9221)
+    async resolve2 (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:11932)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
+    async handleMessage (node:internal/modules/esm/worker:199:18)
+  ...
+# Subtest: F23 tree protocol rejects unsafe absolute, drive, parent, empty and separator path forms
+not ok 10 - F23 tree protocol rejects unsafe absolute, drive, parent, empty and separator path forms
+  ---
+  duration_ms: 7.6088
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts:2:6131'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\history\\GitHistoryProtocol' imported from C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:860:10)
+    defaultResolve (node:internal/modules/esm/resolve:984:11)
+    nextResolve (node:internal/modules/esm/hooks:748:28)
+    resolveBase (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:8141)
+    async resolveDirectory (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:9221)
+    async resolve2 (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:11932)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
+    async handleMessage (node:internal/modules/esm/worker:199:18)
+  ...
+# Subtest: F23 tree protocol rejects TAB, newline and other path controls rather than treating them as new frames
+not ok 11 - F23 tree protocol rejects TAB, newline and other path controls rather than treating them as new frames
+  ---
+  duration_ms: 6.4669
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts:2:6565'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\history\\GitHistoryProtocol' imported from C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:860:10)
+    defaultResolve (node:internal/modules/esm/resolve:984:11)
+    nextResolve (node:internal/modules/esm/hooks:748:28)
+    resolveBase (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:8141)
+    async resolveDirectory (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:9221)
+    async resolve2 (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:11932)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
+    async handleMessage (node:internal/modules/esm/worker:199:18)
+  ...
+# Subtest: F23 tree protocol enforces2048 UTF8 path bytes and refuses invalid encodings
+not ok 12 - F23 tree protocol enforces2048 UTF8 path bytes and refuses invalid encodings
+  ---
+  duration_ms: 9.1494
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts:2:6890'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\history\\GitHistoryProtocol' imported from C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:860:10)
+    defaultResolve (node:internal/modules/esm/resolve:984:11)
+    nextResolve (node:internal/modules/esm/hooks:748:28)
+    resolveBase (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:8141)
+    async resolveDirectory (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:9221)
+    async resolve2 (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:11932)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
+    async handleMessage (node:internal/modules/esm/worker:199:18)
+  ...
+# Subtest: F23 tree protocol requires complete NUL framing and rejects stray or duplicate frame separators
+not ok 13 - F23 tree protocol requires complete NUL framing and rejects stray or duplicate frame separators
+  ---
+  duration_ms: 7.891
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts:2:7429'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\history\\GitHistoryProtocol' imported from C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:860:10)
+    defaultResolve (node:internal/modules/esm/resolve:984:11)
+    nextResolve (node:internal/modules/esm/hooks:748:28)
+    resolveBase (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:8141)
+    async resolveDirectory (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:9221)
+    async resolve2 (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:11932)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
+    async handleMessage (node:internal/modules/esm/worker:199:18)
+  ...
+# Subtest: F23 tree protocol rejects forged modes, object types, malformed IDs and unsafe numeric sizes
+not ok 14 - F23 tree protocol rejects forged modes, object types, malformed IDs and unsafe numeric sizes
+  ---
+  duration_ms: 7.0348
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts:2:7926'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\history\\GitHistoryProtocol' imported from C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:860:10)
+    defaultResolve (node:internal/modules/esm/resolve:984:11)
+    nextResolve (node:internal/modules/esm/hooks:748:28)
+    resolveBase (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:8141)
+    async resolveDirectory (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:9221)
+    async resolve2 (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:11932)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
+    async handleMessage (node:internal/modules/esm/worker:199:18)
+  ...
+# Subtest: F23 tree stream budget rejects262145 bytes before unbounded path enumeration
+not ok 15 - F23 tree stream budget rejects262145 bytes before unbounded path enumeration
+  ---
+  duration_ms: 7.9448
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts:2:8583'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\history\\GitHistoryProtocol' imported from C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:860:10)
+    defaultResolve (node:internal/modules/esm/resolve:984:11)
+    nextResolve (node:internal/modules/esm/hooks:748:28)
+    resolveBase (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:8141)
+    async resolveDirectory (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:9221)
+    async resolve2 (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:11932)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
+    async handleMessage (node:internal/modules/esm/worker:199:18)
+  ...
+# Subtest: F23 batch protocol verifies real Git blob hashes and exact requested order
+not ok 16 - F23 batch protocol verifies real Git blob hashes and exact requested order
+  ---
+  duration_ms: 7.513
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts:2:8833'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\history\\GitHistoryProtocol' imported from C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:860:10)
+    defaultResolve (node:internal/modules/esm/resolve:984:11)
+    nextResolve (node:internal/modules/esm/hooks:748:28)
+    resolveBase (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:8141)
+    async resolveDirectory (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:9221)
+    async resolve2 (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:11932)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
+    async handleMessage (node:internal/modules/esm/worker:199:18)
+  ...
+# Subtest: F23 batch framing handles empty bodies and embedded newline/NUL/binary bytes without line splitting bodies
+not ok 17 - F23 batch framing handles empty bodies and embedded newline/NUL/binary bytes without line splitting bodies
+  ---
+  duration_ms: 6.3058
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts:2:9509'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\history\\GitHistoryProtocol' imported from C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:860:10)
+    defaultResolve (node:internal/modules/esm/resolve:984:11)
+    nextResolve (node:internal/modules/esm/hooks:748:28)
+    resolveBase (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:8141)
+    async resolveDirectory (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:9221)
+    async resolve2 (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:11932)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
+    async handleMessage (node:internal/modules/esm/worker:199:18)
+  ...
+# Subtest: F23 batch rejects content whose actual Git blob hash differs despite matching ID and size headers
+not ok 18 - F23 batch rejects content whose actual Git blob hash differs despite matching ID and size headers
+  ---
+  duration_ms: 4.676
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts:2:10072'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\history\\GitHistoryProtocol' imported from C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:860:10)
+    defaultResolve (node:internal/modules/esm/resolve:984:11)
+    nextResolve (node:internal/modules/esm/hooks:748:28)
+    resolveBase (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:8141)
+    async resolveDirectory (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:9221)
+    async resolve2 (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:11932)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
+    async handleMessage (node:internal/modules/esm/worker:199:18)
+  ...
+# Subtest: F23 batch rejects wrong declared sizes, object kinds, malformed IDs and missing-object messages
+not ok 19 - F23 batch rejects wrong declared sizes, object kinds, malformed IDs and missing-object messages
+  ---
+  duration_ms: 4.8309
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts:2:10521'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\history\\GitHistoryProtocol' imported from C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:860:10)
+    defaultResolve (node:internal/modules/esm/resolve:984:11)
+    nextResolve (node:internal/modules/esm/hooks:748:28)
+    resolveBase (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:8141)
+    async resolveDirectory (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:9221)
+    async resolve2 (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:11932)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
+    async handleMessage (node:internal/modules/esm/worker:199:18)
+  ...
+# Subtest: F23 batch requires full header/body/final separator and exactEOF with no appended bytes
+not ok 20 - F23 batch requires full header/body/final separator and exactEOF with no appended bytes
+  ---
+  duration_ms: 4.5354
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts:2:11136'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\history\\GitHistoryProtocol' imported from C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:860:10)
+    defaultResolve (node:internal/modules/esm/resolve:984:11)
+    nextResolve (node:internal/modules/esm/hooks:748:28)
+    resolveBase (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:8141)
+    async resolveDirectory (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:9221)
+    async resolve2 (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:11932)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
+    async handleMessage (node:internal/modules/esm/worker:199:18)
+  ...
+# Subtest: F23 batch rejects repeated requested objects and invalid requested size or identity metadata
+not ok 21 - F23 batch rejects repeated requested objects and invalid requested size or identity metadata
+  ---
+  duration_ms: 5.5581
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts:2:11755'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\history\\GitHistoryProtocol' imported from C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:860:10)
+    defaultResolve (node:internal/modules/esm/resolve:984:11)
+    nextResolve (node:internal/modules/esm/hooks:748:28)
+    resolveBase (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:8141)
+    async resolveDirectory (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:9221)
+    async resolve2 (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:11932)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
+    async handleMessage (node:internal/modules/esm/worker:199:18)
+  ...
+# Subtest: F23 batch admits exact64KiB object bodies but rejects a65537-byte object
+not ok 22 - F23 batch admits exact64KiB object bodies but rejects a65537-byte object
+  ---
+  duration_ms: 4.6975
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts:2:12485'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\history\\GitHistoryProtocol' imported from C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:860:10)
+    defaultResolve (node:internal/modules/esm/resolve:984:11)
+    nextResolve (node:internal/modules/esm/hooks:748:28)
+    resolveBase (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:8141)
+    async resolveDirectory (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:9221)
+    async resolve2 (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:11932)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
+    async handleMessage (node:internal/modules/esm/worker:199:18)
+  ...
+# Subtest: F23 batch body aggregate allows exact1MiB and refuses one further byte independent of framing overhead
+not ok 23 - F23 batch body aggregate allows exact1MiB and refuses one further byte independent of framing overhead
+  ---
+  duration_ms: 6.2977
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts:2:12947'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\history\\GitHistoryProtocol' imported from C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:860:10)
+    defaultResolve (node:internal/modules/esm/resolve:984:11)
+    nextResolve (node:internal/modules/esm/hooks:748:28)
+    resolveBase (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:8141)
+    async resolveDirectory (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:9221)
+    async resolve2 (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:11932)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
+    async handleMessage (node:internal/modules/esm/worker:199:18)
+  ...
+# Subtest: F23 batch accepts128 distinct requested blobs and refuses129 even below the byte budget
+not ok 24 - F23 batch accepts128 distinct requested blobs and refuses129 even below the byte budget
+  ---
+  duration_ms: 5.6613
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts:2:13626'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\history\\GitHistoryProtocol' imported from C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:860:10)
+    defaultResolve (node:internal/modules/esm/resolve:984:11)
+    nextResolve (node:internal/modules/esm/hooks:748:28)
+    resolveBase (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:8141)
+    async resolveDirectory (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:9221)
+    async resolve2 (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:11932)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
+    async handleMessage (node:internal/modules/esm/worker:199:18)
+  ...
+# Subtest: F23 blob decode accepts strictUTF8 with LF CR TAB and rejects malformed encodings
+not ok 25 - F23 blob decode accepts strictUTF8 with LF CR TAB and rejects malformed encodings
+  ---
+  duration_ms: 6.061
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts:2:14209'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\history\\GitHistoryProtocol' imported from C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:860:10)
+    defaultResolve (node:internal/modules/esm/resolve:984:11)
+    nextResolve (node:internal/modules/esm/hooks:748:28)
+    resolveBase (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:8141)
+    async resolveDirectory (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:9221)
+    async resolve2 (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:11932)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
+    async handleMessage (node:internal/modules/esm/worker:199:18)
+  ...
+# Subtest: F23 blob decode refuses NUL and unsupportedC0 controls while preserving exact byte-size limits
+not ok 26 - F23 blob decode refuses NUL and unsupportedC0 controls while preserving exact byte-size limits
+  ---
+  duration_ms: 4.9272
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts:2:14744'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\history\\GitHistoryProtocol' imported from C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\gitHistoryProtocol.test.ts"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:860:10)
+    defaultResolve (node:internal/modules/esm/resolve:984:11)
+    nextResolve (node:internal/modules/esm/hooks:748:28)
+    resolveBase (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:8141)
+    async resolveDirectory (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:9221)
+    async resolve2 (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:11932)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
+    async handleMessage (node:internal/modules/esm/worker:199:18)
+  ...
+1..26
+# tests 26
+# suites 0
+# pass 0
+# fail 26
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1610.2803

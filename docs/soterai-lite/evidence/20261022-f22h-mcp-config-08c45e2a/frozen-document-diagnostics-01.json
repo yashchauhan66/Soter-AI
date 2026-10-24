@@ -1,0 +1,48 @@
+{
+  "status": "PASS_READ_ONLY_FROZEN_DOCUMENT_DIAGNOSIS",
+  "records": [
+    {
+      "original": {
+        "path": "docs/soterai-lite/LITE-CATALOG.json",
+        "bytes": 163345,
+        "sha256": "19bd05b4ece5ad62831e23a5f7831e3bb70fa9994572aeffceec6ff001adf96e"
+      },
+      "expected": "1ce46192e9f315b5f2142c9f61542f1d513143dc2e19d4def6d95cea38c73ed4",
+      "committedRevision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+      "observed": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/frozen-documents-before-01/LITE-CATALOG.json.observed.txt",
+        "bytes": 163345,
+        "sha256": "19bd05b4ece5ad62831e23a5f7831e3bb70fa9994572aeffceec6ff001adf96e"
+      },
+      "committed": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/frozen-documents-before-01/LITE-CATALOG.json.committed.txt",
+        "bytes": 160265,
+        "sha256": "1ce46192e9f315b5f2142c9f61542f1d513143dc2e19d4def6d95cea38c73ed4"
+      },
+      "byteEqual": false,
+      "onlyLineEndingsDiffer": true
+    },
+    {
+      "original": {
+        "path": "docs/soterai-lite/MASTER-PROMPT-20261016.txt",
+        "bytes": 15864,
+        "sha256": "2ea0c90b1fe3bdd591e5ae24470dcd8804abfff7a75741ec1f5a1aae7e4679ae"
+      },
+      "expected": "2ea0c90b1fe3bdd591e5ae24470dcd8804abfff7a75741ec1f5a1aae7e4679ae",
+      "committedRevision": "0ef608959e35ec72d2d490322cbfeef8884c6069",
+      "observed": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/frozen-documents-before-01/MASTER-PROMPT-20261016.txt.observed.txt",
+        "bytes": 15864,
+        "sha256": "2ea0c90b1fe3bdd591e5ae24470dcd8804abfff7a75741ec1f5a1aae7e4679ae"
+      },
+      "committed": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/frozen-documents-before-01/MASTER-PROMPT-20261016.txt.committed.txt",
+        "bytes": 15864,
+        "sha256": "2ea0c90b1fe3bdd591e5ae24470dcd8804abfff7a75741ec1f5a1aae7e4679ae"
+      },
+      "byteEqual": true,
+      "onlyLineEndingsDiffer": true
+    }
+  ],
+  "scope": "Only exact explicitly frozen catalog and original saved user request inspected. Committed bytes match historical pins, current bytes differ at most by line endings. Original observed and committed representations archived. No catalog content, applicability, scores, original request, test, source or rating changed; origin of normalization unestablished."
+}

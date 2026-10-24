@@ -1,0 +1,68 @@
+{
+  "status": "F23_ACTIVE_FRESH_FULL02_RUNNING_AFTER_GENERATED_DOC_REFRESH",
+  "failedFull": {
+    "raw": {
+      "path": "docs/soterai-lite/evidence/20261023-f23-history-62d09fb1/full-tests-01.txt",
+      "bytes": 847944,
+      "sha256": "5f52126db3de1be43c7a3319f0195fdfe061d58c4b09051840bf9e9fb3e1d7b8"
+    },
+    "receipt": {
+      "path": "docs/soterai-lite/evidence/20261023-f23-history-62d09fb1/full-tests-01.txt.result.json",
+      "bytes": 606,
+      "sha256": "6ea136c0c3608bf709d1d4f5d969294d1c8b909601b69a84fc9356ff34927966"
+    },
+    "exit": 1,
+    "counts": {
+      "tests": 3471,
+      "pass": 3464,
+      "fail": 3,
+      "skipped": 4,
+      "cancelled": 0
+    },
+    "cause": "Three canonical generated readiness assertions: exact generated body and manifest command/setting counts. No other behavior failure observed; original FAIL retained."
+  },
+  "refresh": {
+    "raw": {
+      "path": "docs/soterai-lite/evidence/20261023-f23-history-62d09fb1/readiness-refresh-01.txt",
+      "bytes": 100,
+      "sha256": "b6d9f2d83b0cdf237d087269167e179c1057af8dde4312e59b137f0df729e65f"
+    },
+    "receipt": {
+      "path": "docs/soterai-lite/evidence/20261023-f23-history-62d09fb1/readiness-refresh-01.txt.result.json",
+      "bytes": 413,
+      "sha256": "5c7fab8d74fa4e2d3ad4a4095df75c3c89369f65179049ce44c873b66af42df4"
+    },
+    "exit": 0
+  },
+  "beforeDoc": {
+    "path": "docs/soterai-lite/evidence/20261023-f23-history-62d09fb1/readiness-before-refresh01.md",
+    "bytes": 3882,
+    "sha256": "f4d8578d5dff105f43e80c544eb065fe339c94f1666f0bf4d89cf92b0c666176"
+  },
+  "currentDoc": {
+    "path": "docs/vscode-extension-readiness.md",
+    "bytes": 3792,
+    "sha256": "bb6db4f4533ccd717b52158098fe21ca62da69a46bb84c6fcc4eed580aad0ddc"
+  },
+  "sourceInputs": {
+    "path": "docs/soterai-lite/evidence/20261023-f23-history-62d09fb1/source-inputs-02.json",
+    "bytes": 175348,
+    "sha256": "0846352b29543504f34b3390d519825c29dd69d19ded31acaeb1fef02b990760"
+  },
+  "oldRunnerClosure": {
+    "path": "docs/soterai-lite/evidence/20261023-f23-history-62d09fb1/failed-serial-closure-01.json",
+    "bytes": 1041,
+    "sha256": "880efd1fa777dd4e6181173ebf342db501507630e3e2005a048d2ff2c38fc742"
+  },
+  "retryBinding": {
+    "path": "docs/soterai-lite/evidence/20261023-f23-history-62d09fb1/serial-retry-binding-02.json",
+    "bytes": 585,
+    "sha256": "94e47b7ee9c80de246909573f5b25f5ef0dcd6e7dbec2118cb981d48079a2b36"
+  },
+  "start": {
+    "path": "docs/soterai-lite/evidence/20261023-f23-history-62d09fb1/durable-serial-start-02.json",
+    "bytes": 739,
+    "sha256": "f27637c9b284ff084fb1b39d5b33ec039f534253b79c96e161870b392b67738d"
+  },
+  "scope": "Original906source/test/build/runtime inputs exact; added generated readiness doc makes907 frozen inputs. Compiler04/focused163 unchanged. Newserial02 runs readiness target/full02/backend01/current12driver build. No VSIX/native launched; candidate requires actual full/backend/build+closure. Original preparation refusal/EEXIST preserved, no deletion/assertion weakening or process signal."
+}

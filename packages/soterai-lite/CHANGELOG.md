@@ -1,5 +1,9 @@
 # Changelog
 
+- Add bounded owner-reviewed build/artifact/source-map/copy scanning and strict machine withdrawal of artifact analysis/public release. Reuse private keyed exposure metadata and canonical source/text placeholders. Maps and mapping-URL files are withheld from publication with reviewed exclusion/rebuild guidance; originals and evidence stay intact. No build/reference execution, cleanup or past-copy recall.
+
+- Add native owner-reviewed bounded read-only local Git history scanning with strict machine withdrawal, a separate keyed historical metadata domain and manual rotation/removal guidance. No history rewrite, network, startup scan or original TextDocument; capped/unsupported results remain partial or withheld.
+
 - Add owner-reviewed project MCP JSONC/finite TOML secret scanning, strict machine withdrawal, keyed findings and canonical encrypted checkpoint-only migration/disclosure. Preserve exact reference controls; duplicate/unsupported syntax withholds. No config application, variable resolution, MCP client/server execution, global profile scan or new dependency.
 
 - Add owner-reviewed project launch/tasks/settings JSONC scanning, bounded duplicate-aware parse-only grammar, secret args/env/URL review and guarded encrypted checkpoint disclosure. Machine withdrawal remains strict; no config application, resolution or task/debug execution.

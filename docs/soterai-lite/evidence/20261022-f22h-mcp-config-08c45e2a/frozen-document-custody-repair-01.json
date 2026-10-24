@@ -1,0 +1,120 @@
+{
+  "status": "PASS_EXACT_FROZEN_DOCUMENT_BYTES_RESTORED_NO_DATA_CHANGE",
+  "diagnosis": {
+    "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/frozen-document-diagnostics-01.json",
+    "bytes": 2434,
+    "sha256": "e99568b1cf3976d36290e9935128196c3168a2a9b541facd6a76e52d96ac30cb"
+  },
+  "fullTestedInputs": {
+    "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/source-inputs-02.json",
+    "bytes": 128899,
+    "sha256": "8fa734fb63e2fd62183c2ae42de6e637c3dc3568dcec408e1b2ce1ee4a9e6bae"
+  },
+  "full": {
+    "output": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\full-tests-02.txt",
+    "observedAt": "2026-10-22T18:27:21.4079181Z",
+    "exitCode": 0,
+    "arguments": [
+      "--import",
+      "tsx",
+      "--test",
+      "--test-concurrency=1",
+      "../vscode-extension/src/__tests__/**/*.test.ts"
+    ],
+    "sha256": "C51ABF8158BDB83AB84DC94FB07D0769828D3EEA04ED93C53C8BA4E203DEB3C3",
+    "file": "node",
+    "log": {
+      "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/full-tests-02.txt",
+      "bytes": 796892,
+      "sha256": "c51abf8158bdb83ab84dc94fb07d0769828d3eea04ed93c53c8ba4e203deb3c3"
+    },
+    "receipt": {
+      "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/full-tests-02.txt.result.json",
+      "bytes": 610,
+      "sha256": "ad00295eeadb6d9f8490ae30fb04d19cdf5dd75cd93d9a90a01dcf15696af548"
+    }
+  },
+  "fullCounts": {
+    "tests": 3349,
+    "pass": 3345,
+    "fail": 0,
+    "skipped": 4,
+    "cancelled": 0,
+    "todo": 0
+  },
+  "fullRunnerClosure": {
+    "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/durable-serial-exit-03.json",
+    "bytes": 1145,
+    "sha256": "5c7a38d6123042a2cedd8260cfff9e327d6130fb7dda23209662e165cb947d6f"
+  },
+  "unchangedFullInputFiles": 661,
+  "changedFullInputFiles": [
+    {
+      "path": ".gitattributes",
+      "before": {
+        "path": ".gitattributes",
+        "bytes": 2151,
+        "sha256": "f8c1237ddf5b8128778bbdba1857f31879a4600c96512d023d935134bea86a7a"
+      },
+      "after": {
+        "path": ".gitattributes",
+        "bytes": 2264,
+        "sha256": "39069a39105ef810f2e19e78911d799c46bd3c48249895ad1a410d8eb693b719"
+      },
+      "reason": "Append exact-byte retention for remaining frozen Lite docs, preserving existing rules; no application/test/runtime behavior change."
+    }
+  ],
+  "frozenDocuments": [
+    {
+      "before": {
+        "path": "docs/soterai-lite/LITE-CATALOG.json",
+        "bytes": 163345,
+        "sha256": "19bd05b4ece5ad62831e23a5f7831e3bb70fa9994572aeffceec6ff001adf96e"
+      },
+      "observed": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/frozen-documents-before-01/LITE-CATALOG.json.observed.txt",
+        "bytes": 163345,
+        "sha256": "19bd05b4ece5ad62831e23a5f7831e3bb70fa9994572aeffceec6ff001adf96e"
+      },
+      "committed": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/frozen-documents-before-01/LITE-CATALOG.json.committed.txt",
+        "bytes": 160265,
+        "sha256": "1ce46192e9f315b5f2142c9f61542f1d513143dc2e19d4def6d95cea38c73ed4"
+      },
+      "after": {
+        "path": "docs/soterai-lite/LITE-CATALOG.json",
+        "bytes": 160265,
+        "sha256": "1ce46192e9f315b5f2142c9f61542f1d513143dc2e19d4def6d95cea38c73ed4"
+      }
+    },
+    {
+      "before": {
+        "path": "docs/soterai-lite/MASTER-PROMPT-20261016.txt",
+        "bytes": 15864,
+        "sha256": "2ea0c90b1fe3bdd591e5ae24470dcd8804abfff7a75741ec1f5a1aae7e4679ae"
+      },
+      "observed": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/frozen-documents-before-01/MASTER-PROMPT-20261016.txt.observed.txt",
+        "bytes": 15864,
+        "sha256": "2ea0c90b1fe3bdd591e5ae24470dcd8804abfff7a75741ec1f5a1aae7e4679ae"
+      },
+      "committed": {
+        "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/frozen-documents-before-01/MASTER-PROMPT-20261016.txt.committed.txt",
+        "bytes": 15864,
+        "sha256": "2ea0c90b1fe3bdd591e5ae24470dcd8804abfff7a75741ec1f5a1aae7e4679ae"
+      },
+      "after": {
+        "path": "docs/soterai-lite/MASTER-PROMPT-20261016.txt",
+        "bytes": 15864,
+        "sha256": "2ea0c90b1fe3bdd591e5ae24470dcd8804abfff7a75741ec1f5a1aae7e4679ae"
+      }
+    }
+  ],
+  "catalogDataChanged": false,
+  "catalogScoresChanged": false,
+  "originalRequestChanged": false,
+  "applicationSourceChanged": false,
+  "runtimeBytesChanged": false,
+  "testSourceChanged": false,
+  "scope": "Successful full02 measured the same unchanged application/test/runtime bytes. Only additional custody attributes and exact original frozen-doc representations differ afterward. Frozen catalog JSON is deeply equal, exact original pin restored; original saved request already exact and not rewritten. Do not regrade original failed full01, parser/CI/OOM or preflight failures."
+}

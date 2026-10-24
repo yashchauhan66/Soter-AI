@@ -1,0 +1,91 @@
+﻿{"status":"PASS_CURRENT_INPUT_BYTES","files":360}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\typecheck-03.txt",
+    "observedAt":  "2026-10-22T17:40:05.2784848Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "node_modules/typescript/bin/tsc",
+                      "--noEmit",
+                      "-p",
+                      "packages/vscode-extension/tsconfig.json"
+                  ],
+    "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+    "file":  "node"
+}
+{"status":"PASS_CURRENT_INPUT_BYTES","files":360}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\focused-run-03.txt",
+    "observedAt":  "2026-10-22T17:44:52.0801001Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "-NoLogo",
+                      "-NoProfile",
+                      "-ExecutionPolicy",
+                      "Bypass",
+                      "-File",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\run-combined-02.ps1",
+                      "-EvidenceName",
+                      "mcp-combined-03.txt"
+                  ],
+    "sha256":  "947BD6C3EDB3511344CAAE28DEBBAC566EE83257C7C403846D97CC042DDD820C",
+    "file":  "powershell"
+}
+{"status":"PASS_CURRENT_INPUT_BYTES","files":360}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\backend-typecheck-01.txt",
+    "observedAt":  "2026-10-22T17:44:57.3051816Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "node_modules/typescript/bin/tsc",
+                      "--noEmit",
+                      "-p",
+                      "apps/local-ai-broker/tsconfig.json"
+                  ],
+    "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+    "file":  "node"
+}
+{"status":"PASS_CURRENT_INPUT_BYTES","files":360}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\backend-tests-01.txt",
+    "observedAt":  "2026-10-22T17:45:12.4718531Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "--import",
+                      "tsx",
+                      "--test",
+                      "--test-concurrency=1",
+                      "apps/local-ai-broker/src/__tests__/*.test.ts"
+                  ],
+    "sha256":  "80352573E3B5AE7FD602E7479374DA526333131F20D6337EE17DBFF6209AC42B",
+    "file":  "node"
+}
+{"status":"PASS_CURRENT_INPUT_BYTES","files":360}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261022-f22h-mcp-config-08c45e2a\\full-tests-01.txt",
+    "observedAt":  "2026-10-22T17:54:42.3039090Z",
+    "exitCode":  1,
+    "arguments":  [
+                      "--import",
+                      "tsx",
+                      "--test",
+                      "--test-concurrency=1",
+                      "../vscode-extension/src/__tests__/**/*.test.ts"
+                  ],
+    "sha256":  "74CCFFEE5A9903F148AE9C18D5D6E0D211CE605FCA31698384DC667A95AA27D3",
+    "file":  "node"
+}
+powershell.exe : Gate failed; retained: full-tests-01
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Gate failed; retained: full-tests-01:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261022-f22h-mcp-config-08c45e2a\
+run-serial-gates-01.ps1:10 char:34
++ ... $taskReceipt.exitCode -ne 0){throw ('Gate failed; retained: '+$Name)}
++                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (Gate failed; retained: full-tests-01:String) [], RuntimeException
+    + FullyQualifiedErrorId : Gate failed; retained: full-tests-01
+ 

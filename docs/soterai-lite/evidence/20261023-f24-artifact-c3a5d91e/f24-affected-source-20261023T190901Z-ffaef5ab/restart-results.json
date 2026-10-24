@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "phase": "restart",
+  "syntheticOnly": true,
+  "hostVersion": "1.143.1",
+  "extensionBundleSha256": "b68799a1eed4bd86061f0077e9eb042690da0238f6b03518d0a2cfb307426b29",
+  "currentDeveloperBundleSha256": "b68799a1eed4bd86061f0077e9eb042690da0238f6b03518d0a2cfb307426b29",
+  "hostProbeSha256": "05f022d000f2842765e7791a6ce72ea055c11c4324a90d4d8336bd2b0db3972b",
+  "observations": [
+    {
+      "id": "F22A-N01",
+      "scope": "Restart reuses profile key/ledger with no startup source read",
+      "status": "PASS"
+    },
+    {
+      "id": "F22A-N02",
+      "scope": "Restart source ledger and exact saved original match prior receipt",
+      "status": "PASS"
+    },
+    {
+      "id": "F22A-N03",
+      "scope": "Stale source finding authority never survives restart",
+      "status": "PASS"
+    }
+  ],
+  "passed": 3,
+  "failed": 0,
+  "notRun": 0,
+  "sourceDocumentCalls": 0,
+  "sourceDocumentEvents": 0,
+  "secretStorageStores": 0,
+  "reviews": [],
+  "metadataDocuments": 1,
+  "trace": [
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 762.4427999999998
+    },
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 957.6259
+    },
+    {
+      "event": "command-start-sourceSecretScannerStatus",
+      "milliseconds": 1746.6264999999999
+    },
+    {
+      "event": "command-end-sourceSecretScannerStatus",
+      "milliseconds": 1749.0276,
+      "status": "OWNER_REVIEW_REQUIRED"
+    },
+    {
+      "event": "command-start-openHygieneExposureLedger",
+      "milliseconds": 1750.3020000000001
+    },
+    {
+      "event": "command-end-openHygieneExposureLedger",
+      "milliseconds": 2034.8993999999998,
+      "status": "UNEXPECTED"
+    },
+    {
+      "event": "command-start-reviewSourceSecretVault",
+      "milliseconds": 2113.1719
+    },
+    {
+      "event": "command-end-reviewSourceSecretVault",
+      "milliseconds": 2115.079,
+      "status": "REVIEW_FILES_FIRST"
+    }
+  ],
+  "independence": "LOW",
+  "ownerPresence": "SCRIPTED_NATIVE_API_DECISIONS_NOT_HUMAN_REVIEW",
+  "notTested": [
+    "Other languages, dynamic assembly and unsupported proposals",
+    "Human usability/accessibility",
+    "Live credentials or provider rotation",
+    "OS custody or unmanaged native reads/uploads"
+  ]
+}

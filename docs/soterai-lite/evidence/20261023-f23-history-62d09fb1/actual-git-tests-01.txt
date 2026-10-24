@@ -1,0 +1,58 @@
+﻿TAP version 13
+# Subtest: F23 actual pinned Git unborn repository is an empty useful analysis with observed process closure
+ok 1 - F23 actual pinned Git unborn repository is an empty useful analysis with observed process closure
+  ---
+  duration_ms: 608.4219
+  type: 'test'
+  ...
+# Subtest: F23 actual public history remains useful and repeated commits deduplicate blob IO without repository writes
+ok 2 - F23 actual public history remains useful and repeated commits deduplicate blob IO without repository writes
+  ---
+  duration_ms: 1389.2358
+  type: 'test'
+  ...
+# Subtest: F23 actual .env committed then renamed and deleted is found once behind a clean public tip
+ok 3 - F23 actual .env committed then renamed and deleted is found once behind a clean public tip
+  ---
+  duration_ms: 1910.1556
+  type: 'test'
+  ...
+# Subtest: F23 actual reachable side-branch secret is scanned while the current main tree is public
+ok 4 - F23 actual reachable side-branch secret is scanned while the current main tree is public
+  ---
+  duration_ms: 1969.6076
+  type: 'test'
+  ...
+# Subtest: F23 actual merge-parent history retains a deleted synthetic key without exposing messages or paths
+ok 5 - F23 actual merge-parent history retains a deleted synthetic key without exposing messages or paths
+  ---
+  duration_ms: 3126.6644
+  type: 'test'
+  ...
+# Subtest: F23 actual oversized and binary blobs produce explicit PARTIAL alongside an ordinary historical finding
+ok 6 - F23 actual oversized and binary blobs produce explicit PARTIAL alongside an ordinary historical finding
+  ---
+  duration_ms: 1788.2344
+  type: 'test'
+  ...
+# Subtest: F23 actual synthetic repositories with include or alternate metadata refuse before history processes
+ok 7 - F23 actual synthetic repositories with include or alternate metadata refuse before history processes
+  ---
+  duration_ms: 524.5183
+  type: 'test'
+  ...
+# Subtest: F23 actual owned Git withdrawal suppresses output and waits natural close plus bothEOF without signals
+ok 8 - F23 actual owned Git withdrawal suppresses output and waits natural close plus bothEOF without signals
+  ---
+  duration_ms: 426.6865
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 12946.6103

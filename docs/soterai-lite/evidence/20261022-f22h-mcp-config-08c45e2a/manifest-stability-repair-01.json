@@ -1,0 +1,41 @@
+{
+  "status": "PASS_STABLE_CANONICAL_MANIFEST_CUSTODY_NO_DATA_CHANGE",
+  "diagnosis": {
+    "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/manifest-format-diagnostics-01.json",
+    "bytes": 5331,
+    "sha256": "b74c07e511d2096e98251d93da64dcf8c0aa69317900256e182c344113b399a6"
+  },
+  "priorInputs": {
+    "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/source-inputs-03.json",
+    "bytes": 128921,
+    "sha256": "3236b10bb6696e3fe745a4eeeb3ab16f01ac20b211b4592a6d32b54a25fa2b89"
+  },
+  "manifest": {
+    "path": "packages/soterai-lite/package.json",
+    "bytes": 124274,
+    "sha256": "c885cd67e52f2f2fca2b77f5bcfb47f87bab3e94b3e309615e9bd7d0bdd98489"
+  },
+  "attributes": {
+    "path": ".gitattributes",
+    "bytes": 2387,
+    "sha256": "d5b5ef5f3e4b2beb6032bb81b54a9a745c3fbe5aac625d9ed6d2a7b5f3499a6d"
+  },
+  "failedClosure": {
+    "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/durable-native-failed-exit-01.json",
+    "bytes": 886,
+    "sha256": "7bee7e2a52fa4260a94e4e4b592ff52d84ad6a7cb328082195410125c3b3354a"
+  },
+  "fullTestedInputs": {
+    "path": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/source-inputs-02.json",
+    "bytes": 128899,
+    "sha256": "8fa734fb63e2fd62183c2ae42de6e637c3dc3568dcec408e1b2ce1ee4a9e6bae"
+  },
+  "sourceRuntimeTestsChanged": 0,
+  "manifestJsonDataChanged": false,
+  "artifact": {
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-f22h-20261022-attempt01.vsix",
+    "bytes": 1664871,
+    "sha256": "578a9ef8193d6572eee314ea6b274b4e344db28837560e1cc621f12693465e3a"
+  },
+  "scope": "Keep the already built canonical LF manifest and exact artifact, protect its bytes with one scoped -text attribute, strengthen current native guards to all664inputs. Full-tested CRLF manifest is exactly reconstructed to its known prior hash, JSON data identical. No application/default/permission/pin/assertion/timer/budget weakening or new package build; old pipelineFAIL retained before first Code launch."
+}

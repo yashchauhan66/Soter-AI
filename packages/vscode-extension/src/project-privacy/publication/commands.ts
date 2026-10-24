@@ -11,6 +11,10 @@ import { buildSafeFileView, isEnvironmentFile } from "../SafeFileView";
 import { developmentContract, localDevelopmentFields, syntheticEnvironment, type SyntheticField, type SyntheticPreset } from "./DevelopmentContract";
 import { canonicalDirectory, publicationRelativePath } from "./PublicationPaths";
 import { PublicationSession, type PublicationCapture, type PublicationPlan } from "./PublicWorkspace";
+import { artifactScannerEnabled } from "../../artifacts/ArtifactFlags";
+import { artifactPublicationText } from "../../artifacts/ArtifactContent";
+import { managedRootIdentity } from "../../terminal/ManagedOutputBinding";
+import { OMITTED } from "../../ai-boundary/policy";
 
 export type PublicWorkspaceCommandResult = { readonly status: "PREPARED" | "PREVIEWED" | "CANCELLED" | "UNAVAILABLE" | "FAILED";
     readonly destination?: string; readonly manifestSha256?: string };
@@ -35,19 +39,21 @@ export function publicationReviewMessage(plan: PublicationPlan, destination: str
 
 /** Native user-selection commands, deliberately without caller-supplied paths, approvals or secrets. */
 export function registerPublicWorkspaceCommands(context: vscode.ExtensionContext): void {
-    const enabled = () => vscode.workspace.isTrusted
+    const enabled = () => artifactScannerEnabled() && vscode.workspace.isTrusted
         && vscode.workspace.getConfiguration("soterai").get<boolean>("projectPrivacy.enabled", true)
         && vscode.workspace.getConfiguration("soterai").get<boolean>("projectPrivacy.atomicSensitivePolicy", true)
         && vscode.workspace.getConfiguration("soterai").get<boolean>("projectPrivacy.safePublication", false)
         && vscode.workspace.getConfiguration("soterai").get<boolean>("hardening.addOnlyPolicy", true);
     const active = new Set<PublicationSession>();
-    let pending = false;
+    let pending = false, generation = 0;
     context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(event => {
-        if (event.affectsConfiguration("soterai")) for (const session of active) session.revoke();
-    }), new vscode.Disposable(() => { for (const session of active) session.revoke(); active.clear(); }));
+        if (event.affectsConfiguration("soterai")) { generation++; for (const session of active) session.revoke(); }
+    }), vscode.workspace.onDidChangeWorkspaceFolders(() => {
+        generation++; for (const session of active) session.revoke();
+    }), new vscode.Disposable(() => { generation++; for (const session of active) session.revoke(); active.clear(); }));
 
-    async function capture(folder: vscode.WorkspaceFolder, rel: string): Promise<PublicationCapture> {
-        if (!enabled()) throw new Error("Safe publication disabled.");
+    async function capture(folder: vscode.WorkspaceFolder, rel: string, valid: () => boolean): Promise<PublicationCapture> {
+        if (!valid()) throw new Error("Safe publication disabled.");
         publicationRelativePath(rel);
         const uri = vscode.Uri.joinPath(folder.uri, ...rel.split("/"));
         await canonicalDirectory(folder.uri.fsPath);
@@ -66,10 +72,18 @@ export function registerPublicWorkspaceCommands(context: vscode.ExtensionContext
         exactCanonicalFile(await assertWorkspaceFileUri(uri), uri.fsPath);
         const stat = await lstat(uri.fsPath);
         if (!stat.isFile() || stat.isSymbolicLink() || stat.nlink !== 1) throw new Error("Regular unaliased source file required.");
-        const view = buildSafeFileView(rel, boundary.approvedRegionView(uri, text), false, text);
+        const approvedText = boundary.approvedRegionView(uri, text);
+        if (!environment && approvedText === OMITTED) throw new Error("Public source view is withheld.");
+        // A canonical omitted region can stand where a JavaScript expression
+        // used to be. Quote that fixed marker for parse-only source treatment;
+        // removed text never re-enters this view or its snapshot.
+        const releaseText = environment ? approvedText : artifactPublicationText(rel,
+            approvedText === text ? text : approvedText.replaceAll(OMITTED, JSON.stringify(OMITTED)));
+        const view = environment ? buildSafeFileView(rel, releaseText, false, text)
+            : { kind: "redacted-file" as const, text: releaseText, fieldCount: 0 };
         if (!environment && view.kind !== "redacted-file") throw new Error("Unsupported source view.");
         if (environment && view.kind !== "environment-schema") throw new Error("Environment schema unavailable.");
-        if ((await BoundarySnapshot.load()).accessRevision(uri) !== revision) throw new Error("Policy changed during capture.");
+        if ((await BoundarySnapshot.load()).accessRevision(uri) !== revision || !valid()) throw new Error("Policy changed during capture.");
         const environmentNames = environment ? view.text.split("\n").map(line => /^([A-Za-z_][A-Za-z0-9_]*)=\[MASKED\]$/.exec(line)?.[1])
             .filter((name): name is string => !!name) : undefined;
         return { relativePath: rel, revision, identity: JSON.stringify([stat.dev, stat.ino, stat.size, stat.mtimeMs, stat.birthtimeMs,
@@ -88,9 +102,15 @@ export function registerPublicWorkspaceCommands(context: vscode.ExtensionContext
             const folder = vscode.workspace.workspaceFolders?.length === 1 ? vscode.workspace.workspaceFolders[0]
                 : await vscode.window.showWorkspaceFolderPick();
             if (!folder || folder.uri.scheme !== "file") return { status: "CANCELLED" };
+            const epoch = generation, identity = managedRootIdentity(folder.uri);
+            const valid = () => {
+                try { return enabled() && epoch === generation && managedRootIdentity(folder.uri) === identity; }
+                catch { return false; }
+            };
             const picked = await vscode.window.showOpenDialog({ title: "Select saved files to review as public AI context",
                 defaultUri: folder.uri, canSelectFiles: true, canSelectFolders: false, canSelectMany: true,
                 openLabel: "Review selected files" });
+            if (!valid()) return { status: "UNAVAILABLE" };
             if (!picked?.length) return { status: "CANCELLED" };
             const selected = picked.map(uri => {
                 if (uri.scheme !== "file" || vscode.workspace.getWorkspaceFolder(uri)?.uri.toString() !== folder.uri.toString()) {
@@ -100,7 +120,7 @@ export function registerPublicWorkspaceCommands(context: vscode.ExtensionContext
             });
             const names = new Set<string>();
             for (const rel of selected.filter(isEnvironmentFile)) {
-                const source = await capture(folder, rel);
+                const source = await capture(folder, rel, valid);
                 source.environmentNames?.forEach(name => names.add(name));
             }
             let fields: SyntheticField[] = [];
@@ -121,16 +141,21 @@ export function registerPublicWorkspaceCommands(context: vscode.ExtensionContext
                 fields = preset.preset === "local-defaults" ? localDevelopmentFields(keys.map(key => key.label))
                     : keys.map(key => ({ name: key.label, preset: preset.preset as SyntheticPreset }));
             }
-            session = new PublicationSession(folder.uri.fsPath, { enabled, now: () => performance.now(), capture: rel => capture(folder, rel) });
+            session = new PublicationSession(folder.uri.fsPath, { enabled: valid, now: () => performance.now(), capture: rel => capture(folder, rel, valid) });
             active.add(session);
             const plan = await session.prepare(selected, fields);
             const preview = "SoterAI public snapshot review — NO ISOLATION\n\n"
                 + JSON.stringify(plan, null, 2) + "\n\nSynthetic .env.example:\n"
                 + syntheticEnvironment(developmentContract(fields));
-            await vscode.window.showTextDocument(await vscode.workspace.openTextDocument({ language: "plaintext", content: preview }), { preview: true });
+            if (!valid()) return { status: "UNAVAILABLE" };
+            const document = await vscode.workspace.openTextDocument({ language: "plaintext", content: preview });
+            if (!valid()) return { status: "UNAVAILABLE" };
+            await vscode.window.showTextDocument(document, { preview: true });
+            if (!valid()) return { status: "UNAVAILABLE" };
             if (!publish) return { status: "PREVIEWED", manifestSha256: plan.manifestSha256 };
             const parent = await vscode.window.showOpenDialog({ title: "Choose a parent outside the source and protected stores; a new snapshot folder will be created",
                 canSelectFiles: false, canSelectFolders: true, canSelectMany: false, openLabel: "Choose snapshot parent" });
+            if (!valid()) return { status: "UNAVAILABLE" };
             if (!parent?.[0]) return { status: "CANCELLED" };
             if (parent[0].scheme !== "file") throw new Error("Local output folder required.");
             const destination = path.join(parent[0].fsPath, `soterai-public-${plan.id}`);

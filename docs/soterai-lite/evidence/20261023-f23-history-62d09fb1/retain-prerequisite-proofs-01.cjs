@@ -1,0 +1,7 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),crypto=require('node:crypto');
+const source=path.resolve(__dirname,'../20261022-f22h-mcp-config-08c45e2a'),out=path.join(__dirname,'prerequisite-proof-originals-01');fs.mkdirSync(out);const sha=b=>crypto.createHash('sha256').update(b).digest('hex');
+const files=['f22h-committed-byte-verification-01.json','f22h-transition-byte-verification-01.json','source-byte-verification-01.txt','source-byte-verification-01.txt.result.json','transition-byte-verification-01.txt','transition-byte-verification-01.txt.result.json'];
+const records=files.map(file=>{const bytes=fs.readFileSync(path.join(source,file));fs.writeFileSync(path.join(out,file),bytes,{flag:'wx'});return {file,bytes:bytes.length,sha256:sha(bytes)};});
+const sourceProof=JSON.parse(fs.readFileSync(path.join(source,files[0]),'utf8')),transitionProof=JSON.parse(fs.readFileSync(path.join(source,files[1]),'utf8'));assert.equal(sourceProof.status,'PASS');assert.equal(transitionProof.status,'PASS');assert.equal(sourceProof.revision,'f676f340f8522a2beafeb526bda6c15eb40ef2ab');assert.equal(transitionProof.revision,'a06d436df82c507faa8c642a8b2ec23f6b27119e');
+fs.writeFileSync(path.join(__dirname,'prerequisite-proof-retention-01.json'),JSON.stringify({status:'EXACT_RETAINED_PREREQUISITE_PROOFS',records},null,2)+'\n',{flag:'wx'});console.log(JSON.stringify({status:'RETAINED',files:records.length}));

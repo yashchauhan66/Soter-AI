@@ -1,0 +1,16 @@
+packages/soterai-lite/CHANGELOG.md:3: trailing whitespace.
++- Add native owner-reviewed bounded read-only local Git history scanning with strict machine withdrawal, a separate keyed historical metadata domain and manual rotation/removal guidance. No history rewrite, network, startup scan or original TextDocument; capped/unsupported results remain partial or withheld.
+packages/vscode-extension/README.md:167: trailing whitespace.
++- **Repository settings have limited authority.** The 79 safety-relevant settings are `machine`-scoped and declared as restricted in untrusted workspaces. This limits repository overrides; it does not prevent an agent running as the same user from changing user settings or other execution paths.
+packages/vscode-extension/src/extension.ts:227: trailing whitespace.
++    registerHistoryScanner(context);
+packages/vscode-extension/src/hygiene/HygieneExposureLedger.ts:60: trailing whitespace.
++    createAnalyzer(root: string, domain?: "history-v1") {
+packages/vscode-extension/src/hygiene/HygieneExposureLedger.ts:62: trailing whitespace.
++            if (domain !== undefined && domain !== "history-v1") return hygieneUnavailable();
+packages/vscode-extension/src/hygiene/HygieneExposureLedger.ts:64: trailing whitespace.
++            let scopedKey = createHmac("sha256", loaded.key).update("analysis-root\0" + root).digest();
+packages/vscode-extension/src/hygiene/HygieneExposureLedger.ts:65: trailing whitespace.
++            if (domain === "history-v1") { const current = scopedKey; scopedKey = createHmac("sha256", current).update("analysis-domain\0history-v1").digest(); current.fill(0); }
+packages/vscode-extension/src/hygiene/HygieneExposureLedger.ts:66: trailing whitespace.
++            let alive = true, encoded: string | undefined = loaded.encodedKey;
