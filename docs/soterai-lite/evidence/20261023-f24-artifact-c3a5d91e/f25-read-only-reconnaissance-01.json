@@ -1,0 +1,24 @@
+{
+  "status": "F25_READ_ONLY_RECONNAISSANCE_NOT_STARTED",
+  "independence": "LOW",
+  "scope": "Existing F25/frozen LS41/42 only; no replacement plan, production, fixtures, execution or next-feature activation.",
+  "modules": [
+    "packages/core/src/StreamingOutputRedactor.ts",
+    "packages/vscode-extension/src/vault-runtime/VaultAppJob.ts",
+    "packages/vscode-extension/src/vault-runtime/VaultSurfaces.ts",
+    "packages/vscode-extension/src/vault-runtime/commands.ts",
+    "packages/vscode-extension/src/terminal/ManagedOutputFilter.ts",
+    "packages/vscode-extension/src/firewall/VaultManager.ts",
+    "packages/vscode-extension/src/secret-broker/OutputFilter.ts"
+  ],
+  "findings": [
+    "F08 provides atomic128KiB/4096chunk UTF8/control handling and withdrawal. Ownedapp/task/debug paths call it directly; only OutputFilter adds boundedJSON semantic-leaf inspection. ExistingstreamingOutputIntegration.test.ts72 tests encodedsecretssplitacrossJSONfields; do notinferactualtask/debugcoverage.",
+    "ManagedOutputFilter/VaultManager lease supportsps51/cmd/gitBash routes only; it is notyetlog/test/debug authority. No dedicatedsavedlogscanner/logProtectionflag/TestingAPIcollector/generalotherextensionlogs collector found.",
+    "F25 shouldcovernativeownedapp/task/debugsuccess,error,stack,structuredstdout/stderr,testfailuresandownerreviewedsavedlogs metadata/manualcleanup, preservingpublicfailurelocations. Otherextensionlogs/arbitraryprocesses/pastdisclosuresstayexplicitlimits."
+  ],
+  "nativeReuse": [
+    "src/__tests__/host/liteVaultRuntime.host.ts",
+    "src/__tests__/host/liteStreamingOutput.host.ts"
+  ],
+  "next": "After F24 actual newVSIX/affectednative/withdrawal/source+transition bytesPASS only, inspect modules/writeexistingF25workcard+tests-first; keeponeproductionfeature."
+}

@@ -1,0 +1,350 @@
+{
+  "schemaVersion": 1,
+  "phase": "primary",
+  "syntheticOnly": true,
+  "hostVersion": "1.143.1",
+  "extensionBundleSha256": "b68799a1eed4bd86061f0077e9eb042690da0238f6b03518d0a2cfb307426b29",
+  "currentDeveloperBundleSha256": "b68799a1eed4bd86061f0077e9eb042690da0238f6b03518d0a2cfb307426b29",
+  "hostProbeSha256": "ce2e25225165ad53f524f4a02048560014a3ac79190b87a58c541249e6a2f16a",
+  "observations": [
+    {
+      "id": "F21-N01",
+      "scope": "Exact runtime, registration and no startup scan/key",
+      "status": "PASS"
+    },
+    {
+      "id": "F21-N02",
+      "scope": "File picker cancellation before originals/key",
+      "status": "PASS"
+    },
+    {
+      "id": "F21-N03",
+      "scope": "Actual selected saved file, safe metadata and real profile key",
+      "status": "PASS"
+    },
+    {
+      "id": "F21-N04",
+      "scope": "Workspace public control and bounded metadata report",
+      "status": "PASS"
+    },
+    {
+      "id": "F21-N05",
+      "scope": "Possible-exposure ledger has keyed refs without source/value/name",
+      "status": "PASS"
+    },
+    {
+      "id": "F21-N06",
+      "scope": "Canonical empty example keeps original source",
+      "status": "PASS"
+    },
+    {
+      "id": "F21-N07",
+      "scope": "Vault cancellation preserves source",
+      "status": "PASS"
+    },
+    {
+      "id": "F21-N08",
+      "scope": "Approved canonical migration, placeholders and real SecretStorage",
+      "status": "PASS"
+    },
+    {
+      "id": "F21-N09",
+      "scope": "Vault action remains possible-exposure metadata",
+      "status": "PASS"
+    },
+    {
+      "id": "F21-N10",
+      "scope": "Disclosure cancellation withholds originals",
+      "status": "PASS"
+    },
+    {
+      "id": "F21-N11",
+      "scope": "Explicit disclosure restores source and retains saved deny",
+      "status": "PASS"
+    },
+    {
+      "id": "F21-N12",
+      "scope": "Source drift during approval withholds current report",
+      "status": "PASS"
+    },
+    {
+      "id": "F21-N13",
+      "scope": "Export cancellation creates no metadata file",
+      "status": "PASS"
+    },
+    {
+      "id": "F21-N14",
+      "scope": "Reviewed exclusive metadata export is value/path free",
+      "status": "PASS"
+    },
+    {
+      "id": "F21-N15",
+      "scope": "Native manual checklist ignores caller credentials and performs no rotation",
+      "status": "PASS"
+    },
+    {
+      "id": "F21-N16",
+      "scope": "Flag withdrawal invalidates a pending actual content review",
+      "status": "PASS"
+    },
+    {
+      "id": "F21-N17",
+      "scope": "Disabled route preserves source, ledger and saved denies",
+      "status": "PASS"
+    },
+    {
+      "id": "F21-N18",
+      "scope": "Reenable and preserve restart binding; all original documents absent",
+      "status": "PASS"
+    }
+  ],
+  "passed": 18,
+  "failed": 0,
+  "notRun": 0,
+  "sourceDocumentCalls": 0,
+  "sourceDocumentEvents": 0,
+  "secretStorageStores": 2,
+  "reviews": [
+    {
+      "action": "Analyze saved project files",
+      "safe": true
+    },
+    {
+      "action": "Analyze saved project files",
+      "safe": true
+    },
+    {
+      "action": "Write empty example values",
+      "safe": true
+    },
+    {
+      "action": "Migrate securely",
+      "safe": true
+    },
+    {
+      "action": "Migrate securely",
+      "safe": true
+    },
+    {
+      "action": "Restore raw values",
+      "safe": true
+    },
+    {
+      "action": "Restore raw values",
+      "safe": true
+    },
+    {
+      "action": "Analyze saved project files",
+      "safe": true
+    },
+    {
+      "action": "Create metadata export",
+      "safe": true
+    },
+    {
+      "action": "Create metadata export",
+      "safe": true
+    },
+    {
+      "action": "Analyze saved project files",
+      "safe": true
+    }
+  ],
+  "metadataDocuments": 6,
+  "trace": [
+    {
+      "event": "command-start-hygieneStatus",
+      "milliseconds": 2305.7829
+    },
+    {
+      "event": "command-end-hygieneStatus",
+      "milliseconds": 2310.3286,
+      "status": "OWNER_REVIEW_REQUIRED"
+    },
+    {
+      "event": "command-start-reviewSelectedFileHygiene",
+      "milliseconds": 2329.6773000000003
+    },
+    {
+      "event": "command-end-reviewSelectedFileHygiene",
+      "milliseconds": 2336.5843999999997,
+      "status": "CANCELLED"
+    },
+    {
+      "event": "command-start-reviewSelectedFileHygiene",
+      "milliseconds": 2346.8009
+    },
+    {
+      "event": "hygiene-key-event",
+      "milliseconds": 2467.0679
+    },
+    {
+      "event": "command-end-reviewSelectedFileHygiene",
+      "milliseconds": 2868.5388999999996,
+      "status": "ANALYZED",
+      "files": 1,
+      "findings": 1
+    },
+    {
+      "event": "command-start-reviewWorkspaceHygiene",
+      "milliseconds": 3141.697
+    },
+    {
+      "event": "command-end-reviewWorkspaceHygiene",
+      "milliseconds": 4150.0261,
+      "status": "ANALYZED",
+      "files": 3,
+      "findings": 1
+    },
+    {
+      "event": "command-start-openHygieneExposureLedger",
+      "milliseconds": 4150.2588
+    },
+    {
+      "event": "command-end-openHygieneExposureLedger",
+      "milliseconds": 4316.6075,
+      "status": "UNEXPECTED"
+    },
+    {
+      "event": "command-start-generateHygieneEnvExample",
+      "milliseconds": 4316.9289
+    },
+    {
+      "event": "vault-key-event",
+      "milliseconds": 4603.915999999999
+    },
+    {
+      "event": "command-end-generateHygieneEnvExample",
+      "milliseconds": 4748.807199999999,
+      "status": "APPLIED"
+    },
+    {
+      "event": "command-start-reviewHygieneVault",
+      "milliseconds": 4750.333199999999
+    },
+    {
+      "event": "command-end-reviewHygieneVault",
+      "milliseconds": 4846.301299999999,
+      "status": "CANCELLED"
+    },
+    {
+      "event": "command-start-reviewHygieneVault",
+      "milliseconds": 4847.1932
+    },
+    {
+      "event": "command-end-reviewHygieneVault",
+      "milliseconds": 5782.3495,
+      "status": "APPLIED"
+    },
+    {
+      "event": "command-start-openHygieneExposureLedger",
+      "milliseconds": 5785.5792
+    },
+    {
+      "event": "command-end-openHygieneExposureLedger",
+      "milliseconds": 5825.604600000001,
+      "status": "UNEXPECTED"
+    },
+    {
+      "event": "command-start-restoreHygieneVault",
+      "milliseconds": 5825.7111
+    },
+    {
+      "event": "command-end-restoreHygieneVault",
+      "milliseconds": 5988.350700000001,
+      "status": "CANCELLED"
+    },
+    {
+      "event": "command-start-restoreHygieneVault",
+      "milliseconds": 5989.644399999999
+    },
+    {
+      "event": "command-end-restoreHygieneVault",
+      "milliseconds": 6314.2942,
+      "status": "RESTORED"
+    },
+    {
+      "event": "command-start-reviewSelectedFileHygiene",
+      "milliseconds": 6315.227500000001
+    },
+    {
+      "event": "command-end-reviewSelectedFileHygiene",
+      "milliseconds": 6385.2420999999995,
+      "status": "CHANGED"
+    },
+    {
+      "event": "command-start-exportHygieneExposureLedger",
+      "milliseconds": 6386.3207999999995
+    },
+    {
+      "event": "command-end-exportHygieneExposureLedger",
+      "milliseconds": 6388.741099999999,
+      "status": "CANCELLED"
+    },
+    {
+      "event": "command-start-exportHygieneExposureLedger",
+      "milliseconds": 6389.3258000000005
+    },
+    {
+      "event": "command-end-exportHygieneExposureLedger",
+      "milliseconds": 6470.8768,
+      "status": "EXPORTED"
+    },
+    {
+      "event": "command-start-openHygieneRotationChecklist",
+      "milliseconds": 6471.9532
+    },
+    {
+      "event": "command-end-openHygieneRotationChecklist",
+      "milliseconds": 6506.7197,
+      "status": "NOT_PERFORMED"
+    },
+    {
+      "event": "command-start-reviewSelectedFileHygiene",
+      "milliseconds": 6506.870999999999
+    },
+    {
+      "event": "soterai-configuration-event",
+      "milliseconds": 6667.753500000001
+    },
+    {
+      "event": "command-end-reviewSelectedFileHygiene",
+      "milliseconds": 6675.3694,
+      "status": "UNAVAILABLE"
+    },
+    {
+      "event": "command-start-reviewSelectedFileHygiene",
+      "milliseconds": 6676.7356
+    },
+    {
+      "event": "command-end-reviewSelectedFileHygiene",
+      "milliseconds": 6677.4429,
+      "status": "UNAVAILABLE"
+    },
+    {
+      "event": "soterai-configuration-event",
+      "milliseconds": 6742.5211
+    },
+    {
+      "event": "command-start-hygieneStatus",
+      "milliseconds": 6747.6805
+    },
+    {
+      "event": "command-end-hygieneStatus",
+      "milliseconds": 6748.3663,
+      "status": "OWNER_REVIEW_REQUIRED"
+    },
+    {
+      "event": "soterai-configuration-event",
+      "milliseconds": 6816.874400000001
+    }
+  ],
+  "independence": "LOW",
+  "ownerPresence": "SCRIPTED_NATIVE_API_DECISIONS_NOT_HUMAN_REVIEW",
+  "notTested": [
+    "Human accessibility/usability",
+    "Live credential validity or account rotation",
+    "OS credential custody certification",
+    "Same-user native reads or independent uploads"
+  ]
+}

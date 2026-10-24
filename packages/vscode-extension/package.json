@@ -145,7 +145,8 @@
         "soterai.lite.configScanner.ci",
         "soterai.lite.configScanner.editor",
         "soterai.lite.configScanner.mcp",
-        "soterai.lite.historyScanner"
+        "soterai.lite.historyScanner",
+        "soterai.lite.artifactScanner"
       ]
     }
   },
@@ -1575,6 +1576,16 @@
         "command": "soterai.historyScannerStatus",
         "title": "Git History Scanner Status",
         "category": "SoterAI"
+      },
+      {
+        "command": "soterai.reviewArtifacts",
+        "title": "Review Build Artifacts and Copies",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.artifactScannerStatus",
+        "title": "Artifact Scanner Status",
+        "category": "SoterAI"
       }
     ],
     "viewsContainers": {
@@ -2327,6 +2338,12 @@
           "default": true,
           "scope": "machine",
           "description": "Enable owner-reviewed bounded read-only local reachable Git history analysis and keyed possible-exposure metadata. No history rewrite, automatic removal, provider request or claim of complete detection. Disable withdraws pending work and preserves stronger protection and metadata."
+        },
+        "soterai.lite.artifactScanner": {
+          "type": "boolean",
+          "default": true,
+          "scope": "machine",
+          "description": "Enable bounded owner-reviewed artifact/source-map/copy analysis and guarded public release. Disable withdraws scans and new publication. Source maps and sourceMappingURL-bearing files are withheld from release; no automatic cleanup or build is performed."
         }
       }
     },
@@ -3505,6 +3522,14 @@
         },
         {
           "command": "soterai.historyScannerStatus",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.reviewArtifacts",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.artifactScannerStatus",
           "when": "soterai.advancedCommands"
         }
       ]

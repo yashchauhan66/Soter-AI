@@ -1,0 +1,137 @@
+{
+  "schemaVersion": 1,
+  "phase": "restart",
+  "syntheticOnly": true,
+  "hostVersion": "1.143.1",
+  "extensionBundleSha256": "b68799a1eed4bd86061f0077e9eb042690da0238f6b03518d0a2cfb307426b29",
+  "currentDeveloperBundleSha256": "b68799a1eed4bd86061f0077e9eb042690da0238f6b03518d0a2cfb307426b29",
+  "hostProbeSha256": "1cdcb0a525b4a8ee2a2c3e90cb76aa8e20da102c60c6c30ebea0ef87bc7f566e",
+  "observations": [
+    {
+      "id": "F24-N01",
+      "scope": "Restart reuses persisted key and keyed ledger without startup content, documents or new key stores",
+      "status": "PASS"
+    },
+    {
+      "id": "F24-N02",
+      "scope": "Restart cancellation still requires native owner consent before artifact content or fresh authority",
+      "status": "PASS"
+    },
+    {
+      "id": "F24-N03",
+      "scope": "Fresh restart review reestablishes stable keyed artifact findings and preserves unsupported-map partial scope",
+      "status": "PASS"
+    },
+    {
+      "id": "F24-N04",
+      "scope": "Restart publication requires a fresh owner decision and still produces verified canary-free output",
+      "status": "PASS"
+    }
+  ],
+  "passed": 4,
+  "failed": 0,
+  "notRun": 0,
+  "expectedChecks": 4,
+  "sourceDocumentCalls": 0,
+  "sourceDocumentEvents": 0,
+  "artifactContentReads": 30,
+  "referencedContentReads": 0,
+  "observedFileCalls": 66,
+  "caseVariantContentMatches": 30,
+  "secretStorageStores": 0,
+  "vaultKeyStores": 0,
+  "reviews": [
+    {
+      "action": "Analyze local artifacts",
+      "safe": true
+    },
+    {
+      "action": "Analyze local artifacts",
+      "safe": true
+    },
+    {
+      "action": "Publish reviewed snapshot",
+      "safe": true
+    },
+    {
+      "action": "Publish reviewed snapshot",
+      "safe": true
+    }
+  ],
+  "metadataDocuments": 2,
+  "trace": [
+    {
+      "event": "command-start-artifactScannerStatus",
+      "milliseconds": 1794.8928
+    },
+    {
+      "event": "command-end-artifactScannerStatus",
+      "milliseconds": 1797.8734,
+      "status": "OWNER_REVIEW_REQUIRED"
+    },
+    {
+      "event": "command-start-reviewArtifacts",
+      "milliseconds": 1830.5534000000002
+    },
+    {
+      "event": "command-end-reviewArtifacts",
+      "milliseconds": 2036.9544,
+      "status": "CANCELLED"
+    },
+    {
+      "event": "command-start-reviewArtifacts",
+      "milliseconds": 2059.695
+    },
+    {
+      "event": "command-end-reviewArtifacts",
+      "milliseconds": 3793.7643999999996,
+      "status": "PARTIAL",
+      "files": 9,
+      "findings": 4
+    },
+    {
+      "event": "command-start-openHygieneExposureLedger",
+      "milliseconds": 4545.1664
+    },
+    {
+      "event": "command-end-openHygieneExposureLedger",
+      "milliseconds": 4720.2243,
+      "status": "METADATA"
+    },
+    {
+      "event": "soterai-configuration-event",
+      "milliseconds": 5474.6062999999995
+    },
+    {
+      "event": "command-start-preparePublicWorkspace",
+      "milliseconds": 5628.5394
+    },
+    {
+      "event": "command-end-preparePublicWorkspace",
+      "milliseconds": 5942.454399999999,
+      "status": "CANCELLED"
+    },
+    {
+      "event": "command-start-preparePublicWorkspace",
+      "milliseconds": 5965.919
+    },
+    {
+      "event": "command-end-preparePublicWorkspace",
+      "milliseconds": 6875.7603,
+      "status": "PREPARED"
+    },
+    {
+      "event": "soterai-configuration-event",
+      "milliseconds": 7021.4179
+    }
+  ],
+  "independence": "LOW",
+  "ownerPresence": "SCRIPTED_NATIVE_API_DECISIONS_NOT_HUMAN_REVIEW",
+  "notTested": [
+    "Human usability/accessibility",
+    "Map validity, original-path sanitization or releasing source maps",
+    "Other platforms, transformed/prose/binary/unknown credentials",
+    "Credential validity, provider rotation, actual AI access or prior copies",
+    "Same-user unmanaged reads and independent uploads"
+  ]
+}

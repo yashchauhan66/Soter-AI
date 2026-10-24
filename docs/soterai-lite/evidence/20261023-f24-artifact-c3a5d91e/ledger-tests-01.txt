@@ -1,0 +1,118 @@
+﻿TAP version 13
+# Subtest: F24 artifact references cannot collide with canonical current-file or history references
+ok 1 - F24 artifact references cannot collide with canonical current-file or history references
+  ---
+  duration_ms: 23.4198
+  type: 'test'
+  ...
+# Subtest: F24 artifact observation retains a distinct exposure row and preserves current-file vaulted action
+ok 2 - F24 artifact observation retains a distinct exposure row and preserves current-file vaulted action
+  ---
+  duration_ms: 5.0028
+  type: 'test'
+  ...
+# Subtest: F24 artifact analyzer survives ordinary reuse but withdraws on key drift and disposal
+ok 3 - F24 artifact analyzer survives ordinary reuse but withdraws on key drift and disposal
+  ---
+  duration_ms: 3.2681
+  type: 'test'
+  ...
+# Subtest: F23 historical and current files cannot collide through a valid history-prefixed repository path
+ok 4 - F23 historical and current files cannot collide through a valid history-prefixed repository path
+  ---
+  duration_ms: 30.8885
+  type: 'test'
+  ...
+# Subtest: F23 historical exposure preserves a separate current-file ledger row and its last action
+ok 5 - F23 historical exposure preserves a separate current-file ledger row and its last action
+  ---
+  duration_ms: 4.6116
+  type: 'test'
+  ...
+# Subtest: F23 the same history domain remains stable across analyzer leases and repeated observations
+ok 6 - F23 the same history domain remains stable across analyzer leases and repeated observations
+  ---
+  duration_ms: 4.4149
+  type: 'test'
+  ...
+# Subtest: F23 history-domain references remain isolated between roots using the same profile key
+ok 7 - F23 history-domain references remain isolated between roots using the same profile key
+  ---
+  duration_ms: 3.8836
+  type: 'test'
+  ...
+# Subtest: F23 an omitted or undefined analyzer domain preserves the exact existing canonical output
+ok 8 - F23 an omitted or undefined analyzer domain preserves the exact existing canonical output
+  ---
+  duration_ms: 3.7533
+  type: 'test'
+  ...
+# Subtest: F23 unsupported analyzer domains reject generically without changing retained key or ledger metadata
+ok 9 - F23 unsupported analyzer domains reject generically without changing retained key or ledger metadata
+  ---
+  duration_ms: 2.4802
+  type: 'test'
+  ...
+# Subtest: F23 history-domain leases withdraw on key drift or disposal without reverting to a current-file key
+ok 10 - F23 history-domain leases withdraw on key drift or disposal without reverting to a current-file key
+  ---
+  duration_ms: 3.4182
+  type: 'test'
+  ...
+# Subtest: F21 no IO/key creation in constructor or empty read, no original/root/path in stored/exported metadata
+ok 11 - F21 no IO/key creation in constructor or empty read, no original/root/path in stored/exported metadata
+  ---
+  duration_ms: 383.6408
+  type: 'test'
+  ...
+# Subtest: F21 repeated observations deduplicate, root scope isolates and distinct owner reports never become confirmed AI reads
+ok 12 - F21 repeated observations deduplicate, root scope isolates and distinct owner reports never become confirmed AI reads
+  ---
+  duration_ms: 5.6879
+  type: 'test'
+  ...
+# Subtest: F21 corrupt state, unknown fields and lost/replaced key preserve prior bytes and refuse
+ok 13 - F21 corrupt state, unknown fields and lost/replaced key preserve prior bytes and refuse
+  ---
+  duration_ms: 7.3467
+  type: 'test'
+  ...
+# Subtest: F21 capacity is bounded256 without truncation or partial persistence
+ok 14 - F21 capacity is bounded256 without truncation or partial persistence
+  ---
+  duration_ms: 99.0343
+  type: 'test'
+  ...
+# Subtest: F21 concurrent owner observations serialize without losing existing metadata
+ok 15 - F21 concurrent owner observations serialize without losing existing metadata
+  ---
+  duration_ms: 4.3415
+  type: 'test'
+  ...
+# Subtest: F21 key/state persistence failure releases no raw exception and never overwrites existing ledger
+ok 16 - F21 key/state persistence failure releases no raw exception and never overwrites existing ledger
+  ---
+  duration_ms: 2.5595
+  type: 'test'
+  ...
+# Subtest: F21 backwards clock refuses an update without corrupting preserved chronological metadata
+ok 17 - F21 backwards clock refuses an update without corrupting preserved chronological metadata
+  ---
+  duration_ms: 2.8241
+  type: 'test'
+  ...
+# Subtest: F21 private synchronous analysis lease revokes on key drift/disposal without exposing its key
+ok 18 - F21 private synchronous analysis lease revokes on key drift/disposal without exposing its key
+  ---
+  duration_ms: 3.8573
+  type: 'test'
+  ...
+1..18
+# tests 18
+# suites 0
+# pass 18
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2816.064

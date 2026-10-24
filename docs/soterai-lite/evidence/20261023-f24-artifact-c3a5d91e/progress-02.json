@@ -1,0 +1,104 @@
+{
+  "status": "F24_ACTIVE_NATIVE_ARTIFACT25_PASS_AFFECTED_RUNNING",
+  "inputBinding": {
+    "path": "docs/soterai-lite/evidence/20261023-f24-artifact-c3a5d91e/source-inputs-02.json",
+    "bytes": 177786,
+    "sha256": "64b4bd1ba8b77043c01ea33b1d3a7357cbe16e5238c8c2ff7bf91545efa9f331"
+  },
+  "facts": [
+    {
+      "path": "docs/soterai-lite/evidence/20261023-f24-artifact-c3a5d91e/full-tests-01.txt",
+      "bytes": 853611,
+      "sha256": "e0feddeac666ee13f9ede4a20167f1b85eeb187a4046a6cfbd539f53b06a4443"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261023-f24-artifact-c3a5d91e/focused-02.txt",
+      "bytes": 37682,
+      "sha256": "f4c795eec3b0d7a4d84f497b4d2b1c3f7ee2ea99ace2120dc359644cf765e54f"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261023-f24-artifact-c3a5d91e/build-native-hosts-run-02.txt",
+      "bytes": 254,
+      "sha256": "8ce63094f618eae435e8f435c8216ee6ceb7cf435f94ed1327b0f8a256e5d372"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261023-f24-artifact-c3a5d91e/verify-native-rebuild-run-02.txt",
+      "bytes": 80,
+      "sha256": "d4bbbdd4d17eca1320986a781ced3a72956483a80d44cf9b935b4997870cd8e2"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261023-f24-artifact-c3a5d91e/prepared-validation-run-04.txt",
+      "bytes": 202,
+      "sha256": "f18afdd171746f4f58b7498aac2271071b4c0df36356ccbc0b2fb32c466f0eae"
+    }
+  ],
+  "nativeSuccessfulSummaries": [
+    {
+      "summary": {
+        "path": "docs/soterai-lite/evidence/20261023-f24-artifact-c3a5d91e/f24-affected-ci-20261023T190128Z-bfacfa9c/summary.json",
+        "bytes": 1116,
+        "sha256": "120ec7a46056a0a33d75fb87ba9ec88260290b2d1df00efee33e64fe4b951726"
+      },
+      "checks": 25
+    },
+    {
+      "summary": {
+        "path": "docs/soterai-lite/evidence/20261023-f24-artifact-c3a5d91e/f24-affected-editor-20261023T190006Z-8f5bc0d6/summary.json",
+        "bytes": 1124,
+        "sha256": "2fa8b6377a2d080ac39008a2398d5cdf209de7796f7cbe02aaea49f27df5ebbc"
+      },
+      "checks": 25
+    },
+    {
+      "summary": {
+        "path": "docs/soterai-lite/evidence/20261023-f24-artifact-c3a5d91e/f24-artifact-native-20261023T185451Z-eb2e7d06/summary.json",
+        "bytes": 1124,
+        "sha256": "4d11ff6a4b39e728034e6cf5b9d1ffdd5355b8b901f3799747b1025ae1a6396d"
+      },
+      "checks": 25
+    },
+    {
+      "summary": {
+        "path": "docs/soterai-lite/evidence/20261023-f24-artifact-c3a5d91e/f24-history-native-20261023T185650Z-7b7f3054/summary.json",
+        "bytes": 1122,
+        "sha256": "c2d61cfd445934cc304ba3db685b3361702ee0abae36b499d58cc3a7756f2959"
+      },
+      "checks": 25
+    },
+    {
+      "summary": {
+        "path": "docs/soterai-lite/evidence/20261023-f24-artifact-c3a5d91e/f24-mcp-native-20261023T185836Z-31f9b1a8/summary.json",
+        "bytes": 1114,
+        "sha256": "4f7f8e7d034c8d4944ddea459e7d0990c9475047f6f534fb171b05e78d4cc5c9"
+      },
+      "checks": 25
+    }
+  ],
+  "actualArtifactObservation": {
+    "contentReads": 148,
+    "caseVariantContentMatches": 148,
+    "observedFileCalls": 175,
+    "referenceReads": 0,
+    "sourceDocumentCalls": 0,
+    "sourceDocumentEvents": 0
+  },
+  "nativeStart": {
+    "pid": 18348,
+    "entry": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261023-f24-artifact-c3a5d91e\\run-native-entry-02.ps1",
+    "startedAt": "2026-10-23T18:54:05.1061816Z",
+    "stdout": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261023-f24-artifact-c3a5d91e\\durable-native-stdout-02.txt",
+    "status": "STARTED_NOT_COMPLETED",
+    "stderr": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261023-f24-artifact-c3a5d91e\\durable-native-stderr-02.txt",
+    "signalsRequested": 0,
+    "entrySha256": "c3eefbcfb0794a44656d79e7f47e4b57086cae6a549cbf0f6f09c6e109dc5596"
+  },
+  "helperReview": {
+    "newlineConcern": "Initial concern was a tool JSON-rendering misread; actual files contain correct single escape codepoints92/110. New verifier03 is redundant but valid. Before-helper pipeline bytes retained; no actual syntax/JSON failure claimed.",
+    "refusal": "Acceptance template preparation01 refused case-sensitive expected prose before final checker creation; partial preliminary helper bytes retained and exactly checked by preparation02. No behavior gate executed or regraded.",
+    "byteGuards": "Frozen pre-add expectations, post-add/post-commit working recapture, source working recapture before and after transition; source queue/ledger intentionally excluded at final transition.",
+    "nativeDrains": "New not-yet-executed functional/security03 launchers require actual owned exit and both EOF, new exclusive closure receipts; still-unexecuted affected02 dispatcher beforebytes retained."
+  },
+  "pending": "Remaining affected native families, functional10/security17 unchanged, aggregate closure, snapshots, acceptance, scoped local source/transition commits and exhaustive byte proofs before F25 production.",
+  "independence": "LOW",
+  "time": "2026-10-23T19:03:34.905Z"
+}

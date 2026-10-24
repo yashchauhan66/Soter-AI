@@ -52,7 +52,7 @@ function approve() {
 const prepare = () => stub.commands.executeCommand("soterai.preparePublicWorkspace") as Promise<{ status: string; destination?: string }>;
 
 test("native command positive control publishes selected public code with known secrets redacted and source unchanged", async () => {
-    const original = `export const greeting = 'Public hello';\nAPI_KEY=${fakeSecret}\n`;
+    const original = `export const greeting = 'Public hello';\nconst API_KEY="${fakeSecret}";\n`;
     await write("app.ts", original);
     choose(["app.ts"]); approve();
     const result = await prepare();

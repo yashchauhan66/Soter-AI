@@ -1,0 +1,420 @@
+﻿TAP version 13
+# Subtest: F24 artifact registration and status create no startup artifact read, child, key or document
+ok 1 - F24 artifact registration and status create no startup artifact read, child, key or document
+  ---
+  duration_ms: 2725.2559
+  type: 'test'
+  ...
+# Subtest: F24 a new controller rejects forged, copied and cancelled result authority
+ok 2 - F24 a new controller rejects forged, copied and cancelled result authority
+  ---
+  duration_ms: 8.3623
+  type: 'test'
+  ...
+# Subtest: F24 native owner cancellation ignores public approval, content and paths before any key or content read
+ok 3 - F24 native owner cancellation ignores public approval, content and paths before any key or content read
+  ---
+  duration_ms: 26.8721
+  type: 'test'
+  ...
+# Subtest: F24 one native owner prompt remains pending while status is side effect free and another review is refused
+ok 4 - F24 one native owner prompt remains pending while status is side effect free and another review is refused
+  ---
+  duration_ms: 18.7369
+  type: 'test'
+  ...
+# Subtest: F24 public review arguments never reach the controller and only current metadata becomes a JSON document
+ok 5 - F24 public review arguments never reach the controller and only current metadata becomes a JSON document
+  ---
+  duration_ms: 16.5749
+  type: 'test'
+  ...
+# Subtest: F24 an analyzed-looking result rejected by current never opens a metadata document
+ok 6 - F24 an analyzed-looking result rejected by current never opens a metadata document
+  ---
+  duration_ms: 7.6924
+  type: 'test'
+  ...
+# Subtest: F24 cancellation is returned to the caller without creating a document
+ok 7 - F24 cancellation is returned to the caller without creating a document
+  ---
+  duration_ms: 7.7253
+  type: 'test'
+  ...
+# Subtest: F24 command registration permits one pending review even when a controller review is awaiting
+ok 8 - F24 command registration permits one pending review even when a controller review is awaiting
+  ---
+  duration_ms: 6.1438
+  type: 'test'
+  ...
+# Subtest: F24 a completed cancelled review releases the command guard for a fresh native flow
+ok 9 - F24 a completed cancelled review releases the command guard for a fresh native flow
+  ---
+  duration_ms: 9.2522
+  type: 'test'
+  ...
+# Subtest: F24 private controller errors produce a static unavailable result and release the pending guard
+ok 10 - F24 private controller errors produce a static unavailable result and release the pending guard
+  ---
+  duration_ms: 8.1145
+  type: 'test'
+  ...
+# Subtest: F24 metadata-document failure is sanitized and never displays a partial document
+ok 11 - F24 metadata-document failure is sanitized and never displays a partial document
+  ---
+  duration_ms: 6.5876
+  type: 'test'
+  ...
+# Subtest: F24 authority is checked again after opening metadata and before display
+ok 12 - F24 authority is checked again after opening metadata and before display
+  ---
+  duration_ms: 6.4159
+  type: 'test'
+  ...
+# Subtest: F24 disable then reenable cannot display a withdrawn metadata result waiting on a document
+ok 13 - F24 disable then reenable cannot display a withdrawn metadata result waiting on a document
+  ---
+  duration_ms: 6.5641
+  type: 'test'
+  ...
+# Subtest: F24 workspace replacement withdraws pending metadata authority
+ok 14 - F24 workspace replacement withdraws pending metadata authority
+  ---
+  duration_ms: 6.5654
+  type: 'test'
+  ...
+# Subtest: F24 disposing command subscriptions suppresses a late review result and unregisters both commands
+ok 15 - F24 disposing command subscriptions suppresses a late review result and unregisters both commands
+  ---
+  duration_ms: 5.2612
+  type: 'test'
+  ...
+# Subtest: F24 disposing subscriptions during document creation prevents late display
+ok 16 - F24 disposing subscriptions during document creation prevents late display
+  ---
+  duration_ms: 5.6404
+  type: 'test'
+  ...
+# Subtest: F24 owner disable refuses public review arguments before calling the controller
+ok 17 - F24 owner disable refuses public review arguments before calling the controller
+  ---
+  duration_ms: 5.1685
+  type: 'test'
+  ...
+# Subtest: F24 strict artifact flag rejects nonboolean global enable values and an owner disable
+ok 18 - F24 strict artifact flag rejects nonboolean global enable values and an owner disable
+  ---
+  duration_ms: 9.9915
+  type: 'test'
+  ...
+# Subtest: F24 workspace and folder flag values have no power to change the owner or boolean default
+ok 19 - F24 workspace and folder flag values have no power to change the owner or boolean default
+  ---
+  duration_ms: 7.3657
+  type: 'test'
+  ...
+# Subtest: F24 strict artifact default accepts only booleans and ignores the merged workspace get fallback
+ok 20 - F24 strict artifact default accepts only booleans and ignores the merged workspace get fallback
+  ---
+  duration_ms: 7.2282
+  type: 'test'
+  ...
+# Subtest: F24 untrusted and remote workspaces cannot enable artifact, and configuration errors fail closed
+ok 21 - F24 untrusted and remote workspaces cannot enable artifact, and configuration errors fail closed
+  ---
+  duration_ms: 7.7836
+  type: 'test'
+  ...
+# Subtest: F24 initial controller status withholds on absent, multiple or nonlocal workspace roots without IO
+ok 22 - F24 initial controller status withholds on absent, multiple or nonlocal workspace roots without IO
+  ---
+  duration_ms: 5.5047
+  type: 'test'
+  ...
+# Subtest: F24 disposing a real initial controller permanently withdraws status and forged result authority
+ok 23 - F24 disposing a real initial controller permanently withdraws status and forged result authority
+  ---
+  duration_ms: 4.9227
+  type: 'test'
+  ...
+# Subtest: F24 both manifests contribute only the two advanced artifact commands and the restricted machine flag
+ok 24 - F24 both manifests contribute only the two advanced artifact commands and the restricted machine flag
+  ---
+  duration_ms: 6.2184
+  type: 'test'
+  ...
+# Subtest: F24 revoked publication during metadata creation returns unavailable to the command caller
+ok 25 - F24 revoked publication during metadata creation returns unavailable to the command caller
+  ---
+  duration_ms: 6.1147
+  type: 'test'
+  ...
+# Subtest: F24 revoked publication during native display cannot return stale analyzed metadata
+ok 26 - F24 revoked publication during native display cannot return stale analyzed metadata
+  ---
+  duration_ms: 5.4559
+  type: 'test'
+  ...
+# Subtest: F24 an invalid analyzed-looking controller result is withheld from the command return
+ok 27 - F24 an invalid analyzed-looking controller result is withheld from the command return
+  ---
+  duration_ms: 7.0401
+  type: 'test'
+  ...
+# Subtest: F24 a current partial artifact result remains visibly incomplete in returned and displayed metadata
+ok 28 - F24 a current partial artifact result remains visibly incomplete in returned and displayed metadata
+  ---
+  duration_ms: 7.1407
+  type: 'test'
+  ...
+# Subtest: F24 artifact construction and status do not discover, read content, create a key, open originals or launch a process
+ok 29 - F24 artifact construction and status do not discover, read content, create a key, open originals or launch a process
+  ---
+  duration_ms: 177.8408
+  type: 'test'
+  ...
+# Subtest: F24 native artifact cancellation precedes canonical content reads and analyzer-key creation
+ok 30 - F24 native artifact cancellation precedes canonical content reads and analyzer-key creation
+  ---
+  duration_ms: 157.3892
+  type: 'test'
+  ...
+# Subtest: F24 approved artifact source review publishes exact keyed metadata and canonical possible-exposure rows
+ok 31 - F24 approved artifact source review publishes exact keyed metadata and canonical possible-exposure rows
+  ---
+  duration_ms: 463.1049
+  type: 'test'
+  ...
+# Subtest: F24 artifact source findings use a disjoint key domain from current-file and historical analysis
+ok 32 - F24 artifact source findings use a disjoint key domain from current-file and historical analysis
+  ---
+  duration_ms: 273.0743
+  type: 'test'
+  ...
+# Subtest: F24 discovery admits generated directories and a renamed source copy while excluding Git objects and node_modules
+not ok 33 - F24 discovery admits generated directories and a renamed source copy while excluding Git objects and node_modules
+  ---
+  duration_ms: 1518.3755
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\artifactController.test.ts:2:10107'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'PARTIAL'
+    - 'ANALYZED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'ANALYZED'
+  actual: 'PARTIAL'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\artifactController.test.ts:122:55)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F24 source-map embedded sources are private views and never cause referenced filesystem reads
+ok 34 - F24 source-map embedded sources are private views and never cause referenced filesystem reads
+  ---
+  duration_ms: 250.4942
+  type: 'test'
+  ...
+# Subtest: F24 malformed maps and binary artifacts remain explicitly incomplete without findings or ledger rows
+ok 35 - F24 malformed maps and binary artifacts remain explicitly incomplete without findings or ledger rows
+  ---
+  duration_ms: 262.3892
+  type: 'test'
+  ...
+# Subtest: F24 public artifact control remains useful with vault mode disabled and no vault key
+ok 36 - F24 public artifact control remains useful with vault mode disabled and no vault key
+  ---
+  duration_ms: 212.9106
+  type: 'test'
+  ...
+# Subtest: F24 owner artifact and hygiene flags fail closed despite repository enables
+ok 37 - F24 owner artifact and hygiene flags fail closed despite repository enables
+  ---
+  duration_ms: 10.9381
+  type: 'test'
+  ...
+# Subtest: F24 untrusted, remote, absent and multiple workspace roots refuse before key or content
+ok 38 - F24 untrusted, remote, absent and multiple workspace roots refuse before key or content
+  ---
+  duration_ms: 6.7349
+  type: 'test'
+  ...
+# Subtest: F24 disable and reenable during native approval stay revoked before content or key
+ok 39 - F24 disable and reenable during native approval stay revoked before content or key
+  ---
+  duration_ms: 19.2387
+  type: 'test'
+  ...
+# Subtest: F24 actual owner-policy drift during native approval cannot authorize artifact reads
+ok 40 - F24 actual owner-policy drift during native approval cannot authorize artifact reads
+  ---
+  duration_ms: 21.6607
+  type: 'test'
+  ...
+# Subtest: F24 withdrawal immediately after analyzer creation prevents subsequent private content reads
+ok 41 - F24 withdrawal immediately after analyzer creation prevents subsequent private content reads
+  ---
+  duration_ms: 51.8963
+  type: 'test'
+  ...
+# Subtest: F24 root replacement during a private await cannot publish artifact metadata
+ok 42 - F24 root replacement during a private await cannot publish artifact metadata
+  ---
+  duration_ms: 58.3509
+  type: 'test'
+  ...
+# Subtest: F24 source changes after private analysis withhold the entire result and pending ledger findings
+ok 43 - F24 source changes after private analysis withhold the entire result and pending ledger findings
+  ---
+  duration_ms: 125.1073
+  type: 'test'
+  ...
+# Subtest: F24 trust drift after a private analysis suppresses findings and subsequent publication
+ok 44 - F24 trust drift after a private analysis suppresses findings and subsequent publication
+  ---
+  duration_ms: 124.1912
+  type: 'test'
+  ...
+# Subtest: F24 analyzer-key replacement during a private await discards pending candidates
+ok 45 - F24 analyzer-key replacement during a private await discards pending candidates
+  ---
+  duration_ms: 56.1615
+  type: 'test'
+  ...
+# Subtest: F24 native approval expiry and monotonic clock reversal cannot publish artifact findings
+ok 46 - F24 native approval expiry and monotonic clock reversal cannot publish artifact findings
+  ---
+  duration_ms: 130.4644
+  type: 'test'
+  ...
+# Subtest: F24 one pending owner modal retains busy state and permits no second review
+ok 47 - F24 one pending owner modal retains busy state and permits no second review
+  ---
+  duration_ms: 162.0426
+  type: 'test'
+  ...
+# Subtest: F24 disposal during an owner modal refuses the late native action before content or key
+ok 48 - F24 disposal during an owner modal refuses the late native action before content or key
+  ---
+  duration_ms: 12.2373
+  type: 'test'
+  ...
+# Subtest: F24 failed canonical ledger persistence returns generic unavailable with no current finding authority
+ok 49 - F24 failed canonical ledger persistence returns generic unavailable with no current finding authority
+  ---
+  duration_ms: 160.6072
+  type: 'test'
+  ...
+# Subtest: F24 file-count sentinel and byte caps remain PARTIAL rather than a clean artifact claim
+not ok 50 - F24 file-count sentinel and byte caps remain PARTIAL rather than a clean artifact claim
+  ---
+  duration_ms: 60395.0593
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\artifactController.test.ts:2:21441'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'UNAVAILABLE'
+    - 'PARTIAL'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'PARTIAL'
+  actual: 'UNAVAILABLE'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\artifactController.test.ts:239:56)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F24 oversized regular artifact is skipped explicitly without reading more than the admitted file budget
+ok 51 - F24 oversized regular artifact is skipped explicitly without reading more than the admitted file budget
+  ---
+  duration_ms: 73.2744
+  type: 'test'
+  ...
+# Subtest: F24 aggregate admitted content never exceeds one MiB even when every individual artifact fits
+ok 52 - F24 aggregate admitted content never exceeds one MiB even when every individual artifact fits
+  ---
+  duration_ms: 2984.7999
+  type: 'test'
+  ...
+# Subtest: F24 forged discovery outside the captured root and unsupported URI schemes grant no artifact read
+ok 53 - F24 forged discovery outside the captured root and unsupported URI schemes grant no artifact read
+  ---
+  duration_ms: 18.3493
+  type: 'test'
+  ...
+# Subtest: F24 multiple hardlinks and a retained synthetic junction cannot provide artifact content authority
+ok 54 - F24 multiple hardlinks and a retained synthetic junction cannot provide artifact content authority
+  ---
+  duration_ms: 26.2357
+  type: 'test'
+  ...
+# Subtest: F24 invalid ADS and Windows device discovery paths are rejected without analysis or disclosed path errors
+ok 55 - F24 invalid ADS and Windows device discovery paths are rejected without analysis or disclosed path errors
+  ---
+  duration_ms: 21.4529
+  type: 'test'
+  ...
+# Subtest: F24 published result authority stays withdrawn after disable, source restoration or root reenable
+not ok 56 - F24 published result authority stays withdrawn after disable, source restoration or root reenable
+  ---
+  duration_ms: 13.8967
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\artifactController.test.ts:2:25673'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\artifactController.test.ts:282:151)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F24 observed key change withdraws published authority synchronously before delayed key validation
+not ok 57 - F24 observed key change withdraws published authority synchronously before delayed key validation
+  ---
+  duration_ms: 13.4727
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\artifactController.test.ts:2:26577'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\artifactController.test.ts:289:144)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..57
+# tests 57
+# suites 0
+# pass 53
+# fail 4
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 74384.864

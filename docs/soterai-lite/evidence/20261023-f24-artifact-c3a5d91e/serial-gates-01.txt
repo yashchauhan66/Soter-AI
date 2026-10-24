@@ -1,0 +1,102 @@
+﻿{"status":"EXACT_CURRENT_INPUTS","files":917}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261023-f24-artifact-c3a5d91e\\typecheck-02.txt",
+    "observedAt":  "2026-10-23T18:22:22.7120069Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "node_modules/typescript/bin/tsc",
+                      "-p",
+                      "packages/vscode-extension/tsconfig.json",
+                      "--noEmit"
+                  ],
+    "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+    "file":  "node"
+}
+{"status":"EXACT_CURRENT_INPUTS","files":917}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261023-f24-artifact-c3a5d91e\\readiness-tests-01.txt",
+    "observedAt":  "2026-10-23T18:22:25.3584237Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "--import",
+                      "tsx",
+                      "--test",
+                      "--test-concurrency=1",
+                      "packages/vscode-extension/src/__tests__/readiness-doc.test.ts"
+                  ],
+    "sha256":  "8337B0E80B18135D9DDB77E40C5C6D311CB98CA97B578806F696A60A762CD009",
+    "file":  "node"
+}
+{"status":"EXACT_CURRENT_INPUTS","files":917}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261023-f24-artifact-c3a5d91e\\full-tests-01.txt",
+    "observedAt":  "2026-10-23T18:33:52.4916710Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "--import",
+                      "tsx",
+                      "--test",
+                      "--test-concurrency=1",
+                      "../vscode-extension/src/__tests__/**/*.test.ts"
+                  ],
+    "sha256":  "E0FEDDEAC666EE13F9EDE4A20167F1B85EEB187A4046A6CFBD539F53B06A4443",
+    "file":  "node"
+}
+{"status":"EXACT_CURRENT_INPUTS","files":917}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261023-f24-artifact-c3a5d91e\\backend-typecheck-01.txt",
+    "observedAt":  "2026-10-23T18:33:58.7939736Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "node_modules/typescript/bin/tsc",
+                      "--noEmit",
+                      "-p",
+                      "apps/local-ai-broker/tsconfig.json"
+                  ],
+    "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+    "file":  "node"
+}
+{"status":"EXACT_CURRENT_INPUTS","files":917}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261023-f24-artifact-c3a5d91e\\backend-tests-01.txt",
+    "observedAt":  "2026-10-23T18:34:15.6673273Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "--import",
+                      "tsx",
+                      "--test",
+                      "--test-concurrency=1",
+                      "apps/local-ai-broker/src/__tests__/*.test.ts"
+                  ],
+    "sha256":  "3E66D82C48744F793DDB89DA19B1680235A128CB457A69E7A3CE758711E677D5",
+    "file":  "node"
+}
+{"status":"EXACT_CURRENT_INPUTS","files":917}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261023-f24-artifact-c3a5d91e\\build-native-hosts-run-01.txt",
+    "observedAt":  "2026-10-23T18:34:45.7511301Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261023-f24-artifact-c3a5d91e\\build-native-hosts-01.cjs",
+                      "prebuilt-native-hosts-01"
+                  ],
+    "sha256":  "706D8E127E2521BA0B8BF85C449E693D69DAC76693D85204015F3266F25ACA16",
+    "file":  "node"
+}
+{"status":"EXACT_CURRENT_INPUTS","files":917}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261023-f24-artifact-c3a5d91e\\package-01.txt",
+    "observedAt":  "2026-10-23T18:35:17.8818449Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "packages/soterai-lite/scripts/package.cjs",
+                      "soterai-lite-0.7.0-f24-20261023-attempt01.vsix"
+                  ],
+    "sha256":  "E4EBE7903F0694B7336BC82C78ACE9B9821750B238FABFA67025BC53E09E25EE",
+    "file":  "node"
+}
+{"status":"EXACT_CURRENT_INPUTS","files":917}
+{
+    "status":  "PASS_CURRENT_SERIAL_F24_COMPONENT_GATES_NATIVE_PENDING",
+    "scope":  "Current compiler/full/backend/native fixture build/new exact package only; actual native acceptance and byte barriers remain required."
+}

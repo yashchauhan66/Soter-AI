@@ -1,0 +1,41 @@
+﻿{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261023-f24-artifact-c3a5d91e\\artifact-native-run-01.txt",
+    "observedAt":  "2026-10-23T18:39:43.3981338Z",
+    "exitCode":  1,
+    "arguments":  [
+                      "-NoProfile",
+                      "-ExecutionPolicy",
+                      "Bypass",
+                      "-File",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261023-f24-artifact-c3a5d91e\\run-artifact-native-01.ps1",
+                      "-CodePath",
+                      "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe",
+                      "-HostTestsPath",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261023-f24-artifact-c3a5d91e\\prebuilt-native-hosts-01\\lite-artifact-host.js",
+                      "-ExtensionRoot",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261023-f24-artifact-c3a5d91e\\vsix-extracted-01\\extension",
+                      "-VsixPath",
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\soterai-lite\\soterai-lite-0.7.0-f24-20261023-attempt01.vsix",
+                      "-ExpectedVsixSha256",
+                      "fd19ddd440164b540bdf786b6cded0f8aea0c6a2bab2175847e782355a3bdaa2",
+                      "-ExpectedBundleSha256",
+                      "b68799a1eed4bd86061f0077e9eb042690da0238f6b03518d0a2cfb307426b29"
+                  ],
+    "sha256":  "0F52707830DC2F6BB1A5FCE57F5FB11320142DDFDBD4A674FE352EC26B2DF48F",
+    "file":  "powershell"
+}
+powershell.exe : Artifact native gate failed/incomplete; affected suite was not started.
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Artifact native...as not started.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261023-f24-artifact-c3a5d91e\run
+-native-gates-01.ps1:19 char:41
++ ... Code -ne 0){throw 'Artifact native gate failed/incomplete; affected s ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (Artifact native...as not started.:String) [], RuntimeException
+    + FullyQualifiedErrorId : Artifact native gate failed/incomplete; affected suite was not started.
+ 

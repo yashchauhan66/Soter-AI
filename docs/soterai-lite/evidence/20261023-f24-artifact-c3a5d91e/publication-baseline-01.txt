@@ -1,0 +1,168 @@
+﻿TAP version 13
+# Subtest: F24 artifact flag off withdraws actual publication before selection or content
+not ok 1 - F24 artifact flag off withdraws actual publication before selection or content
+  ---
+  duration_ms: 623.3026
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\artifactPublication.test.ts:2:3085'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+    +   destination: 'C:\\Users\\USER\\AppData\\Local\\Temp\\soterai-f24-publication-unit-8xaZy9\\soterai-public-fdbcefe5-57ce-40c4-9d11-989d9e32c59c',
+    +   manifestSha256: '788a70414bbd0fab2420fdaee8e32a7cd7a685b23366e71e9b1b00e3b9473e6f',
+    +   status: 'PREPARED'
+    -   status: 'UNAVAILABLE'
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    status: 'UNAVAILABLE'
+  actual:
+    status: 'PREPARED'
+    destination: 'C:\\Users\\USER\\AppData\\Local\\Temp\\soterai-f24-publication-unit-8xaZy9\\soterai-public-fdbcefe5-57ce-40c4-9d11-989d9e32c59c'
+    manifestSha256: '788a70414bbd0fab2420fdaee8e32a7cd7a685b23366e71e9b1b00e3b9473e6f'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\artifactPublication.test.ts:47:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F24 actual publication masks decoded static source credentials and keeps useful public code
+not ok 2 - F24 actual publication masks decoded static source credentials and keeps useful public code
+  ---
+  duration_ms: 255.4271
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\artifactPublication.test.ts:2:3515'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /SOTERAI_PROTECTED/. Input:
+    
+    "export const greeting = 'Public asset'; const [REDACTED_SECRET];\n"
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    export const greeting = 'Public asset'; const [REDACTED_SECRET];
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\artifactPublication.test.ts:57:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F24 source map publication is withheld with original embedded source preserved
+not ok 3 - F24 source map publication is withheld with original embedded source preserved
+  ---
+  duration_ms: 249.7579
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\artifactPublication.test.ts:3:682'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+    +   destination: 'C:\\Users\\USER\\AppData\\Local\\Temp\\soterai-f24-publication-unit-ESGSSa\\soterai-public-e718ac87-5f9f-4abf-bb42-e2382732ca85',
+    +   manifestSha256: '364330890f7d0c17ef7c381cfcf3c2f7d5ea2ecc4c46f9d8548a7e7816b122de',
+    +   status: 'PREPARED'
+    -   status: 'FAILED'
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    status: 'FAILED'
+  actual:
+    status: 'PREPARED'
+    destination: 'C:\\Users\\USER\\AppData\\Local\\Temp\\soterai-f24-publication-unit-ESGSSa\\soterai-public-e718ac87-5f9f-4abf-bb42-e2382732ca85'
+    manifestSha256: '364330890f7d0c17ef7c381cfcf3c2f7d5ea2ecc4c46f9d8548a7e7816b122de'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\artifactPublication.test.ts:65:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F24 sourceMappingURL-bearing source is withheld without reference reads or output
+not ok 4 - F24 sourceMappingURL-bearing source is withheld without reference reads or output
+  ---
+  duration_ms: 231.9862
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\artifactPublication.test.ts:3:1443'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+    +   destination: 'C:\\Users\\USER\\AppData\\Local\\Temp\\soterai-f24-publication-unit-0VdecE\\soterai-public-113a6e0e-fa05-4817-a997-01f5a445bb6c',
+    +   manifestSha256: '06fd07d5935f3eeb07b6b3cdb2d532ab26700edb5859fdbab2da292ec5a05de1',
+    +   status: 'PREPARED'
+    -   status: 'FAILED'
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    status: 'FAILED'
+  actual:
+    status: 'PREPARED'
+    destination: 'C:\\Users\\USER\\AppData\\Local\\Temp\\soterai-f24-publication-unit-0VdecE\\soterai-public-113a6e0e-fa05-4817-a997-01f5a445bb6c'
+    manifestSha256: '06fd07d5935f3eeb07b6b3cdb2d532ab26700edb5859fdbab2da292ec5a05de1'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\artifactPublication.test.ts:75:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F24 disabling artifact release during final owner review prevents actual output
+not ok 5 - F24 disabling artifact release during final owner review prevents actual output
+  ---
+  duration_ms: 285.8614
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\artifactPublication.test.ts:3:1998'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+    +   destination: 'C:\\Users\\USER\\AppData\\Local\\Temp\\soterai-f24-publication-unit-QSrwTQ\\soterai-public-15663d3c-a62a-4271-bcf0-c9025808ad1b',
+    +   manifestSha256: '8cf0bde84c16cd5b2ff292816be1990f4c392d0b7b487deb14f647e3bffb2528',
+    +   status: 'PREPARED'
+    -   status: 'FAILED'
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    status: 'FAILED'
+  actual:
+    status: 'PREPARED'
+    destination: 'C:\\Users\\USER\\AppData\\Local\\Temp\\soterai-f24-publication-unit-QSrwTQ\\soterai-public-15663d3c-a62a-4271-bcf0-c9025808ad1b'
+    manifestSha256: '8cf0bde84c16cd5b2ff292816be1990f4c392d0b7b487deb14f647e3bffb2528'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\artifactPublication.test.ts:84:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F24 harmless CSS release remains useful and originals unchanged
+ok 6 - F24 harmless CSS release remains useful and originals unchanged
+  ---
+  duration_ms: 247.0786
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 1
+# fail 5
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3461.7443
