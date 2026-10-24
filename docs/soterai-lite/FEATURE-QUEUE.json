@@ -9,9 +9,9 @@
   "planVersion": 1,
   "clientDate": "2026-10-13",
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
-  "scope": "F01-F10/F12-F23 scoped DONE after byte barriers; F11 optional absent NOT_TESTED/NOT_COVERED. F24 active only after transition byte proof; F25-F32/V01-V05 pending. No final rating/human/independent claim.",
+  "scope": "F01-F10/F12-F24 scoped DONE after byte barriers; F11 optional absent NOT_TESTED/NOT_COVERED. F25 active only after actual transition bytes; F26-F32/V01-V05 pending. No final rating/human/independent claim.",
   "implementationConcurrency": 1,
-  "activeFeature": "F24",
+  "activeFeature": "F25",
   "prerequisiteBlock": {
     "id": "P00",
     "result": "FAIL",
@@ -805,19 +805,23 @@
     {
       "id": "F24",
       "title": "Build/artifact/source-map scanning.",
-      "status": "VERIFYING",
-      "result": "NOT-RUN",
+      "status": "DONE",
+      "result": "PASS_SCOPED",
       "requires": [
         "F23"
       ],
       "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
       "progressEvidence": "docs/soterai-lite/evidence/20261023-f24-artifact-c3a5d91e/progress-01.json",
-      "acceptanceEvidence": "docs/soterai-lite/evidence/20261023-f24-artifact-c3a5d91e/f24-acceptance-01.json"
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261023-f24-artifact-c3a5d91e/f24-acceptance-01.json",
+      "sourceEvidenceCommit": "3cd993674d302e5a23b58cc04cb946b4d862459d",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261023-f24-artifact-c3a5d91e/f24-source-byte-verification-01.json",
+      "transitionByteVerification": "docs/soterai-lite/evidence/20261023-f24-artifact-c3a5d91e/f24-transition-byte-verification-01.json",
+      "scope": "Bounded owner-reviewed local artifacts/copies and finite embedded v3 maps; keyed metadata only. Canonical recognized source/text placeholders in public snapshots; maps/mapping-URL files withheld. Strict machine flag withdraws scanner and new exports. Reserved policy/editor/store paths skipped without artifact reads and counted PARTIAL. No reference/build/config execution, original edit, cleanup, vault mutation, recall, OS boundary, human or independent claim. Current exact package affected publication/hygiene/source/history/retained functional/security PASS; failures retained, LOW. Actual vendor executables not rerun for scanner card; final exact-object V01 routes pending."
     },
     {
       "id": "F25",
       "title": "Logs/test/debug leak handling.",
-      "status": "PLANNED",
+      "status": "ACTIVE",
       "result": "NOT-RUN",
       "requires": [
         "F24"
