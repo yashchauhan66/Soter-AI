@@ -1,0 +1,395 @@
+﻿TAP version 13
+# Subtest: F25 saved-log registration and status create no startup saved-log read, child, key or document
+ok 1 - F25 saved-log registration and status create no startup saved-log read, child, key or document
+  ---
+  duration_ms: 570.5006
+  type: 'test'
+  ...
+# Subtest: F25 a new controller rejects forged, copied and cancelled result authority
+ok 2 - F25 a new controller rejects forged, copied and cancelled result authority
+  ---
+  duration_ms: 7.7836
+  type: 'test'
+  ...
+# Subtest: F25 native owner cancellation ignores public approval, content and paths before any key or content read
+ok 3 - F25 native owner cancellation ignores public approval, content and paths before any key or content read
+  ---
+  duration_ms: 24.7464
+  type: 'test'
+  ...
+# Subtest: F25 one native owner prompt remains pending while status is side effect free and another review is refused
+ok 4 - F25 one native owner prompt remains pending while status is side effect free and another review is refused
+  ---
+  duration_ms: 20.7769
+  type: 'test'
+  ...
+# Subtest: F25 public review arguments never reach the controller and only current metadata becomes a JSON document
+ok 5 - F25 public review arguments never reach the controller and only current metadata becomes a JSON document
+  ---
+  duration_ms: 10.4023
+  type: 'test'
+  ...
+# Subtest: F25 an analyzed-looking result rejected by current never opens a metadata document
+ok 6 - F25 an analyzed-looking result rejected by current never opens a metadata document
+  ---
+  duration_ms: 7.6411
+  type: 'test'
+  ...
+# Subtest: F25 cancellation is returned to the caller without creating a document
+ok 7 - F25 cancellation is returned to the caller without creating a document
+  ---
+  duration_ms: 9.9238
+  type: 'test'
+  ...
+# Subtest: F25 command registration permits one pending review even when a controller review is awaiting
+ok 8 - F25 command registration permits one pending review even when a controller review is awaiting
+  ---
+  duration_ms: 7.0069
+  type: 'test'
+  ...
+# Subtest: F25 a completed cancelled review releases the command guard for a fresh native flow
+ok 9 - F25 a completed cancelled review releases the command guard for a fresh native flow
+  ---
+  duration_ms: 6.3311
+  type: 'test'
+  ...
+# Subtest: F25 private controller errors produce a static unavailable result and release the pending guard
+ok 10 - F25 private controller errors produce a static unavailable result and release the pending guard
+  ---
+  duration_ms: 9.1129
+  type: 'test'
+  ...
+# Subtest: F25 metadata-document failure is sanitized and never displays a partial document
+ok 11 - F25 metadata-document failure is sanitized and never displays a partial document
+  ---
+  duration_ms: 6.4712
+  type: 'test'
+  ...
+# Subtest: F25 authority is checked again after opening metadata and before display
+ok 12 - F25 authority is checked again after opening metadata and before display
+  ---
+  duration_ms: 5.5141
+  type: 'test'
+  ...
+# Subtest: F25 disable then reenable cannot display a withdrawn metadata result waiting on a document
+ok 13 - F25 disable then reenable cannot display a withdrawn metadata result waiting on a document
+  ---
+  duration_ms: 8.5028
+  type: 'test'
+  ...
+# Subtest: F25 workspace replacement withdraws pending metadata authority
+ok 14 - F25 workspace replacement withdraws pending metadata authority
+  ---
+  duration_ms: 8.1049
+  type: 'test'
+  ...
+# Subtest: F25 disposing command subscriptions suppresses a late review result and unregisters both commands
+ok 15 - F25 disposing command subscriptions suppresses a late review result and unregisters both commands
+  ---
+  duration_ms: 56.2023
+  type: 'test'
+  ...
+# Subtest: F25 disposing subscriptions during document creation prevents late display
+ok 16 - F25 disposing subscriptions during document creation prevents late display
+  ---
+  duration_ms: 53.6597
+  type: 'test'
+  ...
+# Subtest: F25 owner disable refuses public review arguments before calling the controller
+ok 17 - F25 owner disable refuses public review arguments before calling the controller
+  ---
+  duration_ms: 9.1756
+  type: 'test'
+  ...
+# Subtest: F25 strict saved-log flag rejects nonboolean global enable values and an owner disable
+ok 18 - F25 strict saved-log flag rejects nonboolean global enable values and an owner disable
+  ---
+  duration_ms: 9.6562
+  type: 'test'
+  ...
+# Subtest: F25 workspace and folder flag values have no power to change the owner or boolean default
+ok 19 - F25 workspace and folder flag values have no power to change the owner or boolean default
+  ---
+  duration_ms: 8.0386
+  type: 'test'
+  ...
+# Subtest: F25 strict saved-log default accepts only booleans and ignores the merged workspace get fallback
+ok 20 - F25 strict saved-log default accepts only booleans and ignores the merged workspace get fallback
+  ---
+  duration_ms: 12.5811
+  type: 'test'
+  ...
+# Subtest: F25 untrusted and remote workspaces cannot enable saved-log, and configuration errors fail closed
+ok 21 - F25 untrusted and remote workspaces cannot enable saved-log, and configuration errors fail closed
+  ---
+  duration_ms: 8.1189
+  type: 'test'
+  ...
+# Subtest: F25 initial controller status withholds on absent, multiple or nonlocal workspace roots without IO
+ok 22 - F25 initial controller status withholds on absent, multiple or nonlocal workspace roots without IO
+  ---
+  duration_ms: 7.0633
+  type: 'test'
+  ...
+# Subtest: F25 disposing a real initial controller permanently withdraws status and forged result authority
+ok 23 - F25 disposing a real initial controller permanently withdraws status and forged result authority
+  ---
+  duration_ms: 28.0104
+  type: 'test'
+  ...
+# Subtest: F25 both manifests contribute only the two advanced saved-log commands and the restricted machine flag
+not ok 24 - F25 both manifests contribute only the two advanced saved-log commands and the restricted machine flag
+  ---
+  duration_ms: 26.3261
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\logCommands.test.ts:2:22013'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - 'machine'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'machine'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logCommands.test.ts:283:16)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F25 revoked publication during metadata creation returns unavailable to the command caller
+ok 25 - F25 revoked publication during metadata creation returns unavailable to the command caller
+  ---
+  duration_ms: 11.026
+  type: 'test'
+  ...
+# Subtest: F25 revoked publication during native display cannot return stale analyzed metadata
+ok 26 - F25 revoked publication during native display cannot return stale analyzed metadata
+  ---
+  duration_ms: 8.2375
+  type: 'test'
+  ...
+# Subtest: F25 an invalid analyzed-looking controller result is withheld from the command return
+ok 27 - F25 an invalid analyzed-looking controller result is withheld from the command return
+  ---
+  duration_ms: 5.5389
+  type: 'test'
+  ...
+# Subtest: F25 a current partial saved-log result remains visibly incomplete in returned and displayed metadata
+ok 28 - F25 a current partial saved-log result remains visibly incomplete in returned and displayed metadata
+  ---
+  duration_ms: 13.5796
+  type: 'test'
+  ...
+# Subtest: F25 log construction and status do not discover, read content, create a key, open originals or launch a process
+ok 29 - F25 log construction and status do not discover, read content, create a key, open originals or launch a process
+  ---
+  duration_ms: 83.7569
+  type: 'test'
+  ...
+# Subtest: F25 native log cancellation precedes canonical content reads and analyzer-key creation
+ok 30 - F25 native log cancellation precedes canonical content reads and analyzer-key creation
+  ---
+  duration_ms: 24.8057
+  type: 'test'
+  ...
+# Subtest: F25 approved log source review publishes exact keyed metadata and canonical possible-exposure rows
+ok 31 - F25 approved log source review publishes exact keyed metadata and canonical possible-exposure rows
+  ---
+  duration_ms: 219.3821
+  type: 'test'
+  ...
+# Subtest: F25 saved-log findings use a disjoint key domain from current-file historical and artifact analysis
+ok 32 - F25 saved-log findings use a disjoint key domain from current-file historical and artifact analysis
+  ---
+  duration_ms: 140.4234
+  type: 'test'
+  ...
+# Subtest: F25 saved logs in generated folders and renamed retained reports exclude Git objects and dependencies
+ok 33 - F25 saved logs in generated folders and renamed retained reports exclude Git objects and dependencies
+  ---
+  duration_ms: 489.6805
+  type: 'test'
+  ...
+# Subtest: F25 nested JSONL failure strings remain private and reference-looking locations are never followed
+not ok 34 - F25 nested JSONL failure strings remain private and reference-looking locations are never followed
+  ---
+  duration_ms: 134.3966
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\logController.test.ts:2:11110'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    2 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 2
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logController.test.ts:133:125)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F25 malformed late JSONL records and binary saved logs withhold earlier private candidates atomically
+ok 35 - F25 malformed late JSONL records and binary saved logs withhold earlier private candidates atomically
+  ---
+  duration_ms: 133.8724
+  type: 'test'
+  ...
+# Subtest: F25 public log control remains useful with vault mode disabled and no vault key
+ok 36 - F25 public log control remains useful with vault mode disabled and no vault key
+  ---
+  duration_ms: 109.8835
+  type: 'test'
+  ...
+# Subtest: F25 owner log and hygiene flags fail closed despite repository enables
+ok 37 - F25 owner log and hygiene flags fail closed despite repository enables
+  ---
+  duration_ms: 6.4033
+  type: 'test'
+  ...
+# Subtest: F25 untrusted, remote, absent and multiple workspace roots refuse before key or content
+ok 38 - F25 untrusted, remote, absent and multiple workspace roots refuse before key or content
+  ---
+  duration_ms: 9.0425
+  type: 'test'
+  ...
+# Subtest: F25 disable and reenable during native approval stay revoked before content or key
+ok 39 - F25 disable and reenable during native approval stay revoked before content or key
+  ---
+  duration_ms: 6.6305
+  type: 'test'
+  ...
+# Subtest: F25 actual owner-policy drift during native approval cannot authorize log reads
+ok 40 - F25 actual owner-policy drift during native approval cannot authorize log reads
+  ---
+  duration_ms: 20.9148
+  type: 'test'
+  ...
+# Subtest: F25 withdrawal immediately after analyzer creation prevents subsequent private content reads
+ok 41 - F25 withdrawal immediately after analyzer creation prevents subsequent private content reads
+  ---
+  duration_ms: 25.2295
+  type: 'test'
+  ...
+# Subtest: F25 root replacement during a private await cannot publish log metadata
+ok 42 - F25 root replacement during a private await cannot publish log metadata
+  ---
+  duration_ms: 27.4478
+  type: 'test'
+  ...
+# Subtest: F25 source changes after private analysis withhold the entire result and pending ledger findings
+ok 43 - F25 source changes after private analysis withhold the entire result and pending ledger findings
+  ---
+  duration_ms: 81.3389
+  type: 'test'
+  ...
+# Subtest: F25 trust drift after a private analysis suppresses findings and subsequent publication
+ok 44 - F25 trust drift after a private analysis suppresses findings and subsequent publication
+  ---
+  duration_ms: 64.0569
+  type: 'test'
+  ...
+# Subtest: F25 analyzer-key replacement during a private await discards pending candidates
+ok 45 - F25 analyzer-key replacement during a private await discards pending candidates
+  ---
+  duration_ms: 33.2922
+  type: 'test'
+  ...
+# Subtest: F25 native approval expiry and monotonic clock reversal cannot publish log findings
+ok 46 - F25 native approval expiry and monotonic clock reversal cannot publish log findings
+  ---
+  duration_ms: 66.5324
+  type: 'test'
+  ...
+# Subtest: F25 one pending owner modal retains busy state and permits no second review
+ok 47 - F25 one pending owner modal retains busy state and permits no second review
+  ---
+  duration_ms: 112.1241
+  type: 'test'
+  ...
+# Subtest: F25 disposal during an owner modal refuses the late native action before content or key
+ok 48 - F25 disposal during an owner modal refuses the late native action before content or key
+  ---
+  duration_ms: 6.3069
+  type: 'test'
+  ...
+# Subtest: F25 failed canonical ledger persistence returns generic unavailable with no current finding authority
+ok 49 - F25 failed canonical ledger persistence returns generic unavailable with no current finding authority
+  ---
+  duration_ms: 89.882
+  type: 'test'
+  ...
+# Subtest: F25 file-count sentinel and byte caps remain PARTIAL rather than a clean log claim
+ok 50 - F25 file-count sentinel and byte caps remain PARTIAL rather than a clean log claim
+  ---
+  duration_ms: 7554.0328
+  type: 'test'
+  ...
+# Subtest: F25 oversized regular log is skipped explicitly without reading more than the admitted file budget
+ok 51 - F25 oversized regular log is skipped explicitly without reading more than the admitted file budget
+  ---
+  duration_ms: 55.1721
+  type: 'test'
+  ...
+# Subtest: F25 aggregate admitted content never exceeds one MiB even when every individual log fits
+ok 52 - F25 aggregate admitted content never exceeds one MiB even when every individual log fits
+  ---
+  duration_ms: 999.4559
+  type: 'test'
+  ...
+# Subtest: F25 forged discovery outside the captured root and unsupported URI schemes grant no log read
+ok 53 - F25 forged discovery outside the captured root and unsupported URI schemes grant no log read
+  ---
+  duration_ms: 10.3332
+  type: 'test'
+  ...
+# Subtest: F25 multiple hardlinks and a retained synthetic junction cannot provide log content authority
+ok 54 - F25 multiple hardlinks and a retained synthetic junction cannot provide log content authority
+  ---
+  duration_ms: 19.2142
+  type: 'test'
+  ...
+# Subtest: F25 invalid ADS and Windows device discovery paths are rejected without analysis or disclosed path errors
+ok 55 - F25 invalid ADS and Windows device discovery paths are rejected without analysis or disclosed path errors
+  ---
+  duration_ms: 13.2449
+  type: 'test'
+  ...
+# Subtest: F25 published result authority stays withdrawn after disable, source restoration or root reenable
+ok 56 - F25 published result authority stays withdrawn after disable, source restoration or root reenable
+  ---
+  duration_ms: 207.727
+  type: 'test'
+  ...
+# Subtest: F25 observed key change withdraws published authority synchronously before delayed key validation
+ok 57 - F25 observed key change withdraws published authority synchronously before delayed key validation
+  ---
+  duration_ms: 99.453
+  type: 'test'
+  ...
+# Subtest: F25 ordinary policy and editor files coexist with a supported log without blocking private review
+ok 58 - F25 ordinary policy and editor files coexist with a supported log without blocking private review
+  ---
+  duration_ms: 102.8513
+  type: 'test'
+  ...
+1..58
+# tests 58
+# suites 0
+# pass 56
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 14210.1306

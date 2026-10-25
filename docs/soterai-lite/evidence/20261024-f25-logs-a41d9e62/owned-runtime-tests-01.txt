@@ -1,0 +1,70 @@
+﻿TAP version 13
+# Subtest: F25-R01 real canonical runtime preserves public output and nonzero completion without changing source
+ok 1 - F25-R01 real canonical runtime preserves public output and nonzero completion without changing source
+  ---
+  duration_ms: 1179.7072
+  type: 'test'
+  ...
+# Subtest: F25-R02 the complete current-window registry masks unselected output while IPC contains selected values only
+ok 2 - F25-R02 the complete current-window registry masks unselected output while IPC contains selected values only
+  ---
+  duration_ms: 411.267
+  type: 'test'
+  ...
+# Subtest: F25-R03 unavailable complete registry refuses before spawning without selected-only fallback
+ok 3 - F25-R03 unavailable complete registry refuses before spawning without selected-only fallback
+  ---
+  duration_ms: 53.6169
+  type: 'test'
+  ...
+# Subtest: F25-R04 selected guard withdrawal during held complete-registry acquisition prevents launch
+ok 4 - F25-R04 selected guard withdrawal during held complete-registry acquisition prevents launch
+  ---
+  duration_ms: 54.4657
+  type: 'test'
+  ...
+# Subtest: F25-R05 machine log protection withdrawal during registry acquisition prevents launch after reenable
+ok 5 - F25-R05 machine log protection withdrawal during registry acquisition prevents launch after reenable
+  ---
+  duration_ms: 53.919
+  type: 'test'
+  ...
+# Subtest: F25-R06 complete registry stays live across COMPLETE and is disposed with final job authority
+ok 6 - F25-R06 complete registry stays live across COMPLETE and is disposed with final job authority
+  ---
+  duration_ms: 271.9563
+  type: 'test'
+  ...
+# Subtest: F25-R07 late complete-registry withdrawal revokes held output and cannot be reenabled
+ok 7 - F25-R07 late complete-registry withdrawal revokes held output and cannot be reenabled
+  ---
+  duration_ms: 240.7529
+  type: 'test'
+  ...
+# Subtest: F25-R08 late selected source authority withdrawal still revokes output after complete-registry acquisition
+ok 8 - F25-R08 late selected source authority withdrawal still revokes output after complete-registry acquisition
+  ---
+  duration_ms: 240.4419
+  type: 'test'
+  ...
+# Subtest: F25-R09 runtime disposal releases retained completed registry leases and held output authority
+ok 9 - F25-R09 runtime disposal releases retained completed registry leases and held output authority
+  ---
+  duration_ms: 227.0233
+  type: 'test'
+  ...
+# Subtest: F25-R10 registry post-use validation failure retains and cooperatively stops any created owned job
+ok 10 - F25-R10 registry post-use validation failure retains and cooperatively stops any created owned job
+  ---
+  duration_ms: 99.0299
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3566.2976

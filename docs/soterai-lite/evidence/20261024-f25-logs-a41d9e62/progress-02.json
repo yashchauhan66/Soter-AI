@@ -1,0 +1,110 @@
+{
+  "status": "F25_ACTIVE_CONTROLLER56PASS2FAIL_NOT_ACCEPTED",
+  "files": [
+    {
+      "path": "packages/vscode-extension/src/logs/LogContent.ts",
+      "bytes": 6577,
+      "sha256": "df93e804eeaa4a8c0502e24f0631d048e8faa6c014cddd8ebb32dfb20774ec49"
+    },
+    {
+      "path": "packages/vscode-extension/src/logs/ManagedLogCollector.ts",
+      "bytes": 5486,
+      "sha256": "200918b9b5a296293d59488754c233cc033172f14c5ef54b57bedde293a38965"
+    },
+    {
+      "path": "packages/vscode-extension/src/logs/LogController.ts",
+      "bytes": 13167,
+      "sha256": "940dc250fea3ec482cd7fd6d1238a8756abe724d4a874dd5614aa745c2452599"
+    },
+    {
+      "path": "packages/vscode-extension/src/logs/LogFlags.ts",
+      "bytes": 470,
+      "sha256": "e9d78dfe657c1e591d5bbad80d18162bd64784427b92fd8cf2feb518c8146054"
+    },
+    {
+      "path": "packages/vscode-extension/src/logs/commands.ts",
+      "bytes": 1561,
+      "sha256": "0edbdaf7cff052b00581340163777b5bbd8917062a7ff188f9d0e67ce434b480"
+    },
+    {
+      "path": "packages/vscode-extension/src/hygiene/HygieneExposureLedger.ts",
+      "bytes": 11223,
+      "sha256": "cb03cee9cb625cec7b8092a805f34135f5d0c9ab53e1a6f94a2e59a4c77f381c"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/logContent.test.ts",
+      "bytes": 24619,
+      "sha256": "9b590e952b66424eab17e3a963bff6cd06511e3f73547a3fc31f49647a217fe4"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/managedLogCollector.test.ts",
+      "bytes": 25374,
+      "sha256": "dc9da142dd357098f644dc2b226d59477d058488d1b1931aeee2e16cb8fcc492"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/logController.test.ts",
+      "bytes": 26983,
+      "sha256": "e4d4d127f1dfb72a758d9ba3f62030d4322dbd34a2524c4b1ab33a3d5dc6d47d"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/logCommands.test.ts",
+      "bytes": 25125,
+      "sha256": "55d58ca8450efc18f49d24a8b503368b9b852272c97c0c1fdfe55946333e4d54"
+    }
+  ],
+  "baseline": {
+    "raw": {
+      "path": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/controller-commands-baseline-02.txt",
+      "bytes": 94222,
+      "sha256": "684c80ae862cae8431191fee280dc6dc9b148495e92cac3f4e2f4b19616997a5"
+    },
+    "receipt": {
+      "path": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/controller-commands-baseline-02.txt.result.json",
+      "bytes": 710,
+      "sha256": "48593ffd4881b593c41b1e200c9dc195ccbf26e1e5dde4430de39d67eaa33fd8"
+    },
+    "exitCode": 1
+  },
+  "current": {
+    "raw": {
+      "path": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/controller-commands-tests-01.txt",
+      "bytes": 16596,
+      "sha256": "f2562466da8dd1d89183c2d02e875b2ec0b60455d5b2cb4eb44a2ffb1cacaf94"
+    },
+    "receipt": {
+      "path": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/controller-commands-tests-01.txt.result.json",
+      "bytes": 707,
+      "sha256": "a0b5a19f9cc5e0a5f0a438cadc6f93a0c9248318bef37af132f24376e219caf4"
+    },
+    "exitCode": 1
+  },
+  "counts": {
+    "tests": 58,
+    "pass": 56,
+    "fail": 2,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "failures": [
+    {
+      "test": "Both manifests contribute saved-log commands/restricted machine flag",
+      "status": "INITIAL_IMPLEMENTATION_REGISTRATION_PENDING"
+    },
+    {
+      "test": "Nested JSONL private failure/reference strings",
+      "expectedFindings": 1,
+      "actualFindings": 2,
+      "status": "RETAINED_FAILED_ORACLE_NOT_WEAKENED",
+      "cause": "INFERENCE: generic raw serialized JSONL classification captures escaped framing as a different candidate from decoded semantic value; actual synthetic candidate diagnostic pending."
+    }
+  ],
+  "protocol": "Root correction03 replaces stale artifact/map fixtures with actual saved logs/TAP/JSONL, adds zero-discovery cancellation and artifact-domain separation before implementation. Original103missingmodule failures and snapshots retained. Corrected58missingmodule failures retained; no assertion weakening.",
+  "implementation": "Reused canonical ArtifactController guard/read/timeout/final-recapture pattern, native approval moved before discovery, metadata-only commands/strict machine flag, finite logs-v1 HMAC domain; no startup/key/content/reference/cleanup/vault-mutation behavior. Structured raw+decoded views with per-file value-reference dedup currently still produce two candidates; do not claim complete.",
+  "pending": "Diagnose/fix structured candidate duplication with meaningful tests and exact beforebytes (round01 snapshot retained). Finish manifests/registration/docs; BEFORE modifying VaultAppJob/VaultRuntime/VaultSurfaces add meaningful final-delivery regressions and complete-registry integration tests/baselines. Then focused/compiler/full/backend/newVSIX/content81settings/actualsavedlog+ownedtaskdebugnative/affected+withdrawal/scopedcommits+byteproofs beforeF26a.",
+  "corrections": {
+    "collectorLineFraming": 1,
+    "controllerStructured": 0
+  },
+  "independence": "LOW",
+  "time": "2026-10-24T03:29:56.426Z"
+}

@@ -1,0 +1,173 @@
+﻿TAP version 13
+# Subtest: F25-O01 useful completed public task and lifecycle output preserves both channels and actual nonzero exit
+ok 1 - F25-O01 useful completed public task and lifecycle output preserves both channels and actual nonzero exit
+  ---
+  duration_ms: 6.2611
+  type: 'test'
+  ...
+# Subtest: F25-O02 authority withdrawn after COMPLETE but before the await continuation suppresses both native sinks
+not ok 2 - F25-O02 authority withdrawn after COMPLETE but before the await continuation suppresses both native sinks
+  ---
+  duration_ms: 8.047
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\logOwnedOutput.test.ts:2:5435'
+  failureType: 'testCodeFailure'
+  error: |-
+    Withdrawn or unauthenticated candidates must not reach a native sink.
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    noCandidates (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logOwnedOutput.test.ts:92:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logOwnedOutput.test.ts:110:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F25-O03 task withdrawal from the stdout listener prevents the following stderr write
+not ok 3 - F25-O03 task withdrawal from the stdout listener prevents the following stderr write
+  ---
+  duration_ms: 2.0491
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\logOwnedOutput.test.ts:2:5952'
+  failureType: 'testCodeFailure'
+  error: |-
+    Task authority must be rechecked after synchronous stdout listeners run.
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logOwnedOutput.test.ts:120:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F25-O04 lifecycle withdrawal from the stdout event listener prevents the following stderr event
+not ok 4 - F25-O04 lifecycle withdrawal from the stdout event listener prevents the following stderr event
+  ---
+  duration_ms: 1.6507
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\logOwnedOutput.test.ts:2:6595'
+  failureType: 'testCodeFailure'
+  error: |-
+    DAP authority must be rechecked after synchronous stdout listeners run.
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logOwnedOutput.test.ts:129:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F25-O05 throwing final release guards withhold candidate output and exception text
+not ok 5 - F25-O05 throwing final release guards withhold candidate output and exception text
+  ---
+  duration_ms: 2.2757
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\logOwnedOutput.test.ts:2:7230'
+  failureType: 'testCodeFailure'
+  error: |-
+    Withdrawn or unauthenticated candidates must not reach a native sink.
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    noCandidates (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logOwnedOutput.test.ts:92:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logOwnedOutput.test.ts:137:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F25-O06 a completed structural job without a release guard fails closed at both native sinks
+not ok 6 - F25-O06 a completed structural job without a release guard fails closed at both native sinks
+  ---
+  duration_ms: 2.2811
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\logOwnedOutput.test.ts:2:7685'
+  failureType: 'testCodeFailure'
+  error: |-
+    Withdrawn or unauthenticated candidates must not reach a native sink.
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    noCandidates (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logOwnedOutput.test.ts:92:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logOwnedOutput.test.ts:146:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F25-O07 each native release check receives the exact completed output capability
+not ok 7 - F25-O07 each native release check receives the exact completed output capability
+  ---
+  duration_ms: 1.7642
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\logOwnedOutput.test.ts:2:8137'
+  failureType: 'testCodeFailure'
+  error: |-
+    A COMPLETE label must not bypass final output authority.
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logOwnedOutput.test.ts:155:16)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F25-O08 completed jobs release collector authority exactly once after native delivery
+not ok 8 - F25-O08 completed jobs release collector authority exactly once after native delivery
+  ---
+  duration_ms: 1.3132
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\logOwnedOutput.test.ts:2:8883'
+  failureType: 'testCodeFailure'
+  error: |-
+    Finished native surfaces must dispose retained job authority exactly once.
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logOwnedOutput.test.ts:172:16)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 1
+# fail 7
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 588.6894

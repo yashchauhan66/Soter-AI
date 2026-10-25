@@ -1,0 +1,30 @@
+﻿{"status":"EXACT_CURRENT_FULL_INPUTS","files":932}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261024-f25-logs-a41d9e62\\full-tests-04.txt",
+    "observedAt":  "2026-10-25T03:10:57.3505608Z",
+    "exitCode":  1,
+    "arguments":  [
+                      "--import",
+                      "tsx",
+                      "--test",
+                      "--test-concurrency=1",
+                      "../vscode-extension/src/__tests__/**/*.test.ts"
+                  ],
+    "sha256":  "46404CB3657B0C661B3A30D8BB7BA50452D12B9EBD0B29D14ADD677D36146C0E",
+    "file":  "node"
+}
+powershell.exe : Gate failed; evidence retained: full-tests-04
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Gate failed; ev...: full-tests-04:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261024-f25-logs-a41d9e62\run-ful
+l-gates-05.ps1:10 char:34
++ ... ipt.exitCode -ne 0){throw ('Gate failed; evidence retained: '+$Name)}
++                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (Gate failed; ev...: full-tests-04:String) [], RuntimeException
+    + FullyQualifiedErrorId : Gate failed; evidence retained: full-tests-04
+ 

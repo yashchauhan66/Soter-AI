@@ -1,0 +1,168 @@
+{
+  "status": "F25_ACTIVE_PRIVATE_CONTENT_AND_COLLECTOR_COMPONENTS_PASS",
+  "baseline": {
+    "tests": 32,
+    "pass": 0,
+    "fail": 32,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "components": {
+    "tests": 103,
+    "pass": 0,
+    "fail": 103,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "first": {
+    "tests": 77,
+    "pass": 76,
+    "fail": 1,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "current": {
+    "tests": 79,
+    "pass": 79,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "framing": {
+    "tests": 3,
+    "pass": 1,
+    "fail": 2,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "evidence": [
+    {
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/content-baseline-02.txt",
+        "bytes": 51990,
+        "sha256": "1d7c9eb81e7f43cd4d0b54e367decee907e844650a47e08b1505191556c08e1e"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/content-baseline-02.txt.result.json",
+        "bytes": 615,
+        "sha256": "46cad9e8b86c118bc97e6ef6b9060e67a7e0f086b8b09e0c65d7624fcd7f24ab"
+      },
+      "exitCode": 1
+    },
+    {
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/components-baseline-01.txt",
+        "bytes": 168299,
+        "sha256": "f1d06b384f6e5b50592102de71d1869fd981448b83b391eba0d3337c922a4c8b"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/components-baseline-01.txt.result.json",
+        "bytes": 789,
+        "sha256": "49605692e5cde8bfa02ffa006965600919043aac1ad84bb1773df5b68252aa5c"
+      },
+      "exitCode": 1
+    },
+    {
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/content-tests-01.txt",
+        "bytes": 8067,
+        "sha256": "9914ccd91cdd617484584345844d5f7ded72118613c9c2f2996041d2446c806b"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/content-tests-01.txt.result.json",
+        "bytes": 612,
+        "sha256": "bbefc4f08f6f64e3a4bedf3be1f15fce59f19dfdde7f172037989c642e75ea20"
+      },
+      "exitCode": 0
+    },
+    {
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/content-collector-tests-01.txt",
+        "bytes": 20017,
+        "sha256": "a820d5c9d70e25f8d20613d622750048f6f2e5809c14a4fa75b826592cdffc43"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/content-collector-tests-01.txt.result.json",
+        "bytes": 710,
+        "sha256": "842d515bb298768d96c0ac10a888e27e75d1486456e0008cd31f1613bbf3a3c0"
+      },
+      "exitCode": 1
+    },
+    {
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/line-framing-baseline-01.txt",
+        "bytes": 2500,
+        "sha256": "7f5e824c33a63397f7b092dd7893c581d49f6504d85a15975dceb557d2d9afe7"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/line-framing-baseline-01.txt.result.json",
+        "bytes": 723,
+        "sha256": "87803468b518ed4533a2f464a11ea9aa0c66db25a93866c4264e5817ae5c24bd"
+      },
+      "exitCode": 1
+    },
+    {
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/content-collector-tests-02.txt",
+        "bytes": 19638,
+        "sha256": "6143f8d13bff9e1d24609ed723ecfe42918ef160b2024abfbc2f3b81362eec51"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/content-collector-tests-02.txt.result.json",
+        "bytes": 710,
+        "sha256": "96267f4aa6c9efa352cdd89fab654ca2fe4b0bd189721896e0747782678e54da"
+      },
+      "exitCode": 0
+    }
+  ],
+  "files": [
+    {
+      "path": "packages/vscode-extension/src/logs/LogContent.ts",
+      "bytes": 6577,
+      "sha256": "df93e804eeaa4a8c0502e24f0631d048e8faa6c014cddd8ebb32dfb20774ec49"
+    },
+    {
+      "path": "packages/vscode-extension/src/logs/ManagedLogCollector.ts",
+      "bytes": 5486,
+      "sha256": "200918b9b5a296293d59488754c233cc033172f14c5ef54b57bedde293a38965"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/logContent.test.ts",
+      "bytes": 24619,
+      "sha256": "9b590e952b66424eab17e3a963bff6cd06511e3f73547a3fc31f49647a217fe4"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/managedLogCollector.test.ts",
+      "bytes": 25374,
+      "sha256": "dc9da142dd357098f644dc2b226d59477d058488d1b1931aeee2e16cb8fcc492"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/logController.test.ts",
+      "bytes": 26816,
+      "sha256": "ddbe4fbbabcca3664c72e435e777afa538b2833256f5916c9d48e65ba5096482"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/logCommands.test.ts",
+      "bytes": 25103,
+      "sha256": "65b13a28d9da5cb431a1eb6b7545d9b030e9c52cf00fc1a7c509353287360501"
+    }
+  ],
+  "wrapperFailure": {
+    "status": "RAW_NOT_CAPTURED_NO_TEST_RESULT_CLAIM",
+    "attempt": "content-baseline-01",
+    "toolObservedError": "Out-File : Could not find a part of the path ending packages/soterai-lite/docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/content-baseline-01.txt.",
+    "reason": "Runner writes relative OutputFile within WorkingDirectory; corrected absolute path in new02. No old output overwritten and no counts inferred from lost buffered output."
+  },
+  "protocolReview": {
+    "status": "CONTROLLER_COMMANDS_PRODUCTION_STILL_ABSENT",
+    "finding": "Root prematurely froze the current prepared controller copy before its log-specific fixture adaptation completed; old artifact/map fixtures remain in that baseline snapshot. Original bytes/raw103FAIL retained. New numbered prepared revisions and meaningful pre-production baseline required; do not implement artifact behavior to satisfy stale test descriptions."
+  },
+  "correctionRounds": {
+    "collectorLineFraming": 1,
+    "content": 0
+  },
+  "scope": "Private pure components only; no collector registration, complete registry runtime binding, task/debug final sink integration, flag/UI/controller or native claim yet. Last source change after79PASS is two TypeScript number annotations only; fresh final compiler/combined tests remain mandatory.",
+  "pending": "Finish corrected controller/command test protocol and baseline, implement controller/flag/ledger-domain/commands and owned runtime/task/debug binding with before regressions; compiler/focused/full/backend/newexactVSIX/content/actualnative/safe withdrawal/scoped commits+exhaustivebytes beforeF26a.",
+  "independence": "LOW",
+  "time": "2026-10-24T03:17:46.922Z"
+}

@@ -1,0 +1,52 @@
+{
+  "status": "READ_ONLY_INTERRUPTED_BATCH_RECONCILIATION",
+  "records": [
+    {
+      "name": "raw-budget-tests-01",
+      "bytes": 387,
+      "sha256": "3119fceb0ead1d0804db90fb0c87a3381089f9d2264a376c41a39a06e532a641",
+      "nulBytes": 387,
+      "receiptPresent": true,
+      "exitCode": 0,
+      "rawHashMatches": false,
+      "observedAt": "2026-10-24T05:08:01.6581519Z",
+      "status": "INCOMPLETE_EVIDENCE_INTEGRITY_NOT_PASS"
+    },
+    {
+      "name": "readiness-tests-01",
+      "bytes": 2922,
+      "sha256": "f31c4200e983517f7f47c33ffe20b81ea9ef6996646785ef7f72aa02a81b45a3",
+      "nulBytes": 0,
+      "receiptPresent": true,
+      "exitCode": 0,
+      "rawHashMatches": true,
+      "observedAt": "2026-10-24T05:08:03.3162368Z",
+      "status": "RECEIPT_AND_RAW_INTEGRITY_PASS"
+    },
+    {
+      "name": "full-tests-01",
+      "status": "RAW_NOT_PRESENT_NO_RESULT_CLAIM",
+      "receiptPresent": false
+    },
+    {
+      "name": "backend-typecheck-01",
+      "status": "RAW_NOT_PRESENT_NO_RESULT_CLAIM",
+      "receiptPresent": false
+    },
+    {
+      "name": "backend-tests-01",
+      "status": "RAW_NOT_PRESENT_NO_RESULT_CLAIM",
+      "receiptPresent": false
+    },
+    {
+      "name": "package-01",
+      "status": "RAW_NOT_PRESENT_NO_RESULT_CLAIM",
+      "receiptPresent": false
+    }
+  ],
+  "inputs": {
+    "status": "EXACT_INPUTS_PASS",
+    "files": 932
+  },
+  "observedAt": "2026-10-24T14:53:04.771Z"
+}

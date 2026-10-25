@@ -1,0 +1,54 @@
+﻿TAP version 13
+# Subtest: F25-L05 every byte split of JSON string body stays buffered until whole-channel redaction
+not ok 1 - F25-L05 every byte split of JSON string body stays buffered until whole-channel redaction
+  ---
+  duration_ms: 291.9017
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\managedLogCollector.test.ts:2:7927'
+  failureType: 'testCodeFailure'
+  error: 'Completed stdout differs from the declared public treatment.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    complete (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\managedLogCollector.test.ts:51:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\managedLogCollector.test.ts:119:49)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F25-L35 ordinary Windows stack locations retain their literal backslashes
+ok 2 - F25-L35 ordinary Windows stack locations retain their literal backslashes
+  ---
+  duration_ms: 12.9833
+  type: 'test'
+  ...
+# Subtest: F25-L36 line-framing cap admits32 JSON-body lines and atomically withholds a33rd
+not ok 3 - F25-L36 line-framing cap admits32 JSON-body lines and atomically withholds a33rd
+  ---
+  duration_ms: 35.5561
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\managedLogCollector.test.ts:2:23684'
+  failureType: 'testCodeFailure'
+  error: 'Completed stdout differs from the declared public treatment.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    complete (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\managedLogCollector.test.ts:51:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\managedLogCollector.test.ts:338:60)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..3
+# tests 3
+# suites 0
+# pass 1
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 997.3453

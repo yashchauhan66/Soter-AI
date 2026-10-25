@@ -1,0 +1,4 @@
+$ErrorActionPreference='Stop'
+$taskRepo=[IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../../../..'))
+& (Join-Path $taskRepo 'docs/soterai-lite/evidence/20261013-l0-resume-88fb9432/run-check.ps1') -FilePath powershell -ArgumentList @('-NoLogo','-NoProfile','-ExecutionPolicy','Bypass','-File',(Join-Path $PSScriptRoot 'run-native-gates-01.ps1'),'-CodePath','C:\Users\USER\AppData\Local\Programs\Microsoft VS Code\Code.exe','-VsixPath',(Join-Path $taskRepo 'packages/soterai-lite/soterai-lite-0.7.0-f25-20261024-attempt01.vsix'),'-ExpectedVsixSha256','60a32ab790cf2f6adbf2fe197c2aeebbc12c446d68d3842ba6f1572cec3be473','-ExpectedBundleSha256','cdfa7604796930081b199b7ceab6a1279bf7f34b23042032fcaea83373d7729a') -OutputFile (Join-Path $PSScriptRoot 'native-gates-01.txt') -WorkingDirectory $taskRepo
+exit $LASTEXITCODE

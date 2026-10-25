@@ -1,0 +1,671 @@
+{
+  "schemaVersion": 1,
+  "phase": "primary",
+  "syntheticOnly": true,
+  "hostVersion": "1.143.1",
+  "extensionBundleSha256": "cdfa7604796930081b199b7ceab6a1279bf7f34b23042032fcaea83373d7729a",
+  "currentDeveloperBundleSha256": "cdfa7604796930081b199b7ceab6a1279bf7f34b23042032fcaea83373d7729a",
+  "hostProbeSha256": "4f014043b9ff4a46dadb4f29403e7f801a3e6cc429adb8ea2d99fb12bd48c251",
+  "observations": [
+    {
+      "id": "F25-N01",
+      "scope": "Exact packaged commands have no startup discovery, content, key or original document",
+      "status": "PASS"
+    },
+    {
+      "id": "F25-N02",
+      "scope": "Native owner cancellation ignores caller authority before discovery, key and content",
+      "status": "PASS"
+    },
+    {
+      "id": "F25-N03",
+      "scope": "One pending owner modal stays busy and refuses a second command without discovery",
+      "status": "PASS"
+    },
+    {
+      "id": "F25-N04",
+      "scope": "Actual saved log, TAP, nested sensitive JSON property and decoded JSONL each produce one finding",
+      "status": "PASS"
+    },
+    {
+      "id": "F25-N05",
+      "scope": "logs-v1 exact value references and canonical ledger rows are metadata only with distinct finding IDs",
+      "status": "PASS"
+    },
+    {
+      "id": "F25-N06",
+      "scope": "Caller paths and approvals cannot redirect repeated scans or change keyed ledger identity",
+      "status": "PASS"
+    },
+    {
+      "id": "F25-N07",
+      "scope": "Public TAP, Windows stack and credential templates remain useful without vault mode or a vault key",
+      "status": "PASS"
+    },
+    {
+      "id": "F25-N08",
+      "scope": "Malformed late JSONL, duplicate keys, strict syntax, decoded controls and invalid UTF8 withhold atomically",
+      "status": "PASS"
+    },
+    {
+      "id": "F25-N09",
+      "scope": "Exactly32 semantic strings are admitted and a33rd withholds the complete structured file",
+      "status": "PASS"
+    },
+    {
+      "id": "F25-N10",
+      "scope": "Exact depth32,10000 value-container nodes and128 JSONL records remain useful; each next unit withholds",
+      "status": "PASS"
+    },
+    {
+      "id": "F25-N11",
+      "scope": "Inclusive64KiB saved-file admission preserves a public log and skips the next byte before reading",
+      "status": "PASS"
+    },
+    {
+      "id": "F25-N12",
+      "scope": "Seventeen64KiB public files admit at most1MiB unique raw content and report the rest partial",
+      "status": "PASS"
+    },
+    {
+      "id": "F25-N13",
+      "scope": "Failed UTF8 decoding consumes the1MiB raw admission budget and prevents a later valid read",
+      "status": "PASS"
+    },
+    {
+      "id": "F25-N14",
+      "scope": "Native discovery uses129 as the sentinel and scans no more than128 regular files",
+      "status": "PASS"
+    },
+    {
+      "id": "F25-N15",
+      "scope": "Owner disable blocks discovery and a repository enable is rejected by native machine scope",
+      "status": "PASS"
+    },
+    {
+      "id": "F25-N16",
+      "scope": "Disable and reenable while owner approval waits irreversibly withdraws before discovery",
+      "status": "PASS"
+    },
+    {
+      "id": "F25-N17",
+      "scope": "Key change and restoration while metadata creation waits cannot revive stale display or command output",
+      "status": "PASS"
+    },
+    {
+      "id": "F25-N18",
+      "scope": "Canonical source replacement while a metadata document waits suppresses stale display and preserves restored originals",
+      "status": "PASS"
+    },
+    {
+      "id": "F25-N19",
+      "scope": "Owned flag withdrawal after analysis and before display suppresses the completed saved-log result",
+      "status": "PASS"
+    },
+    {
+      "id": "F25-N20",
+      "scope": "The real60-second native approval deadline withdraws output while busy remains until the late modal closes",
+      "status": "PASS"
+    },
+    {
+      "id": "F25-N21",
+      "scope": "Outside hardlinks are withheld without reference reads; findings grant no vault authority and form the restart basis",
+      "status": "PASS"
+    }
+  ],
+  "passed": 21,
+  "failed": 0,
+  "notRun": 0,
+  "expectedChecks": 21,
+  "sourceDocumentCalls": 0,
+  "sourceDocumentEvents": 0,
+  "logContentReads": 409,
+  "referencedContentReads": 0,
+  "observedFileCalls": 417,
+  "caseVariantContentMatches": 409,
+  "discoveries": [
+    {
+      "maximum": 129,
+      "isolatedSyntheticDirectory": false
+    },
+    {
+      "maximum": 129,
+      "isolatedSyntheticDirectory": false
+    },
+    {
+      "maximum": 129,
+      "isolatedSyntheticDirectory": true
+    },
+    {
+      "maximum": 129,
+      "isolatedSyntheticDirectory": true
+    },
+    {
+      "maximum": 129,
+      "isolatedSyntheticDirectory": true
+    },
+    {
+      "maximum": 129,
+      "isolatedSyntheticDirectory": true
+    },
+    {
+      "maximum": 129,
+      "isolatedSyntheticDirectory": true
+    },
+    {
+      "maximum": 129,
+      "isolatedSyntheticDirectory": true
+    },
+    {
+      "maximum": 129,
+      "isolatedSyntheticDirectory": true
+    },
+    {
+      "maximum": 129,
+      "isolatedSyntheticDirectory": true
+    },
+    {
+      "maximum": 129,
+      "isolatedSyntheticDirectory": false
+    },
+    {
+      "maximum": 129,
+      "isolatedSyntheticDirectory": false
+    },
+    {
+      "maximum": 129,
+      "isolatedSyntheticDirectory": false
+    },
+    {
+      "maximum": 129,
+      "isolatedSyntheticDirectory": true
+    },
+    {
+      "maximum": 129,
+      "isolatedSyntheticDirectory": false
+    }
+  ],
+  "limits": {
+    "files": 128,
+    "fileBytes": 65536,
+    "totalBytes": 1048576,
+    "milliseconds": 60000,
+    "parts": 32,
+    "depth": 32,
+    "valueContainerNodes": 10000,
+    "records": 128
+  },
+  "secretStorageStores": 4,
+  "vaultKeyStores": 0,
+  "reviews": [
+    {
+      "action": "Analyze saved logs",
+      "modal": true
+    },
+    {
+      "action": "Analyze saved logs",
+      "modal": true
+    },
+    {
+      "action": "Analyze saved logs",
+      "modal": true
+    },
+    {
+      "action": "Analyze saved logs",
+      "modal": true
+    },
+    {
+      "action": "Analyze saved logs",
+      "modal": true
+    },
+    {
+      "action": "Analyze saved logs",
+      "modal": true
+    },
+    {
+      "action": "Analyze saved logs",
+      "modal": true
+    },
+    {
+      "action": "Analyze saved logs",
+      "modal": true
+    },
+    {
+      "action": "Analyze saved logs",
+      "modal": true
+    },
+    {
+      "action": "Analyze saved logs",
+      "modal": true
+    },
+    {
+      "action": "Analyze saved logs",
+      "modal": true
+    },
+    {
+      "action": "Analyze saved logs",
+      "modal": true
+    },
+    {
+      "action": "Analyze saved logs",
+      "modal": true
+    },
+    {
+      "action": "Analyze saved logs",
+      "modal": true
+    },
+    {
+      "action": "Analyze saved logs",
+      "modal": true
+    },
+    {
+      "action": "Analyze saved logs",
+      "modal": true
+    },
+    {
+      "action": "Analyze saved logs",
+      "modal": true
+    },
+    {
+      "action": "Analyze saved logs",
+      "modal": true
+    },
+    {
+      "action": "Analyze saved logs",
+      "modal": true
+    }
+  ],
+  "metadataDocuments": 18,
+  "trace": [
+    {
+      "event": "command-start-logProtectionStatus",
+      "milliseconds": 1811.6097
+    },
+    {
+      "event": "command-end-logProtectionStatus",
+      "milliseconds": 1813.4114,
+      "status": "OWNER_REVIEW_REQUIRED"
+    },
+    {
+      "event": "command-start-reviewLogs",
+      "milliseconds": 1828.0632999999998
+    },
+    {
+      "event": "command-end-reviewLogs",
+      "milliseconds": 1837.1454000000003,
+      "status": "CANCELLED"
+    },
+    {
+      "event": "command-start-reviewLogs",
+      "milliseconds": 1865.6958000000004
+    },
+    {
+      "event": "command-start-logProtectionStatus",
+      "milliseconds": 1868.8113999999996
+    },
+    {
+      "event": "command-end-logProtectionStatus",
+      "milliseconds": 1869.7155000000002,
+      "status": "OWNER_REVIEW_REQUIRED"
+    },
+    {
+      "event": "command-start-reviewLogs",
+      "milliseconds": 1869.7452000000003
+    },
+    {
+      "event": "command-end-reviewLogs",
+      "milliseconds": 1870.1351000000004,
+      "status": "UNAVAILABLE"
+    },
+    {
+      "event": "command-end-reviewLogs",
+      "milliseconds": 1871.5779000000002,
+      "status": "CANCELLED"
+    },
+    {
+      "event": "command-start-logProtectionStatus",
+      "milliseconds": 1871.5953
+    },
+    {
+      "event": "command-end-logProtectionStatus",
+      "milliseconds": 1872.3540000000003,
+      "status": "OWNER_REVIEW_REQUIRED"
+    },
+    {
+      "event": "command-start-reviewLogs",
+      "milliseconds": 1875.8900999999996
+    },
+    {
+      "event": "log-key-event",
+      "milliseconds": 2022.6431000000002
+    },
+    {
+      "event": "command-end-reviewLogs",
+      "milliseconds": 2497.6594999999998,
+      "status": "ANALYZED",
+      "files": 6,
+      "findings": 4
+    },
+    {
+      "event": "command-start-openHygieneExposureLedger",
+      "milliseconds": 2776.2623000000003
+    },
+    {
+      "event": "command-end-openHygieneExposureLedger",
+      "milliseconds": 2900.6027999999997,
+      "status": "METADATA"
+    },
+    {
+      "event": "command-start-openHygieneExposureLedger",
+      "milliseconds": 2900.9812
+    },
+    {
+      "event": "command-end-openHygieneExposureLedger",
+      "milliseconds": 3105.8875,
+      "status": "METADATA"
+    },
+    {
+      "event": "command-start-reviewLogs",
+      "milliseconds": 3122.3415999999997
+    },
+    {
+      "event": "command-end-reviewLogs",
+      "milliseconds": 3904.4888,
+      "status": "ANALYZED",
+      "files": 6,
+      "findings": 4
+    },
+    {
+      "event": "command-start-openHygieneExposureLedger",
+      "milliseconds": 3910.0888000000004
+    },
+    {
+      "event": "command-end-openHygieneExposureLedger",
+      "milliseconds": 4054.0702,
+      "status": "METADATA"
+    },
+    {
+      "event": "soterai-configuration-event",
+      "milliseconds": 4228.4463
+    },
+    {
+      "event": "command-start-reviewLogs",
+      "milliseconds": 4256.0711
+    },
+    {
+      "event": "command-end-reviewLogs",
+      "milliseconds": 4945.8694,
+      "status": "ANALYZED",
+      "files": 3,
+      "findings": 0
+    },
+    {
+      "event": "soterai-configuration-event",
+      "milliseconds": 5100.7749
+    },
+    {
+      "event": "command-start-reviewLogs",
+      "milliseconds": 5131.6087
+    },
+    {
+      "event": "command-end-reviewLogs",
+      "milliseconds": 5653.958299999999,
+      "status": "PARTIAL",
+      "files": 0,
+      "findings": 0
+    },
+    {
+      "event": "command-start-reviewLogs",
+      "milliseconds": 5678.7321
+    },
+    {
+      "event": "command-end-reviewLogs",
+      "milliseconds": 6125.6336,
+      "status": "PARTIAL",
+      "files": 1,
+      "findings": 0
+    },
+    {
+      "event": "command-start-reviewLogs",
+      "milliseconds": 6171.161800000001
+    },
+    {
+      "event": "command-end-reviewLogs",
+      "milliseconds": 6649.486099999999,
+      "status": "PARTIAL",
+      "files": 3,
+      "findings": 0
+    },
+    {
+      "event": "command-start-reviewLogs",
+      "milliseconds": 6678.5333
+    },
+    {
+      "event": "command-end-reviewLogs",
+      "milliseconds": 6940.254599999999,
+      "status": "PARTIAL",
+      "files": 1,
+      "findings": 0
+    },
+    {
+      "event": "command-start-reviewLogs",
+      "milliseconds": 7085.7794
+    },
+    {
+      "event": "command-end-reviewLogs",
+      "milliseconds": 8808.1931,
+      "status": "PARTIAL",
+      "files": 16,
+      "findings": 0
+    },
+    {
+      "event": "command-start-reviewLogs",
+      "milliseconds": 8924.2131
+    },
+    {
+      "event": "command-end-reviewLogs",
+      "milliseconds": 9722.825099999998,
+      "status": "PARTIAL",
+      "files": 0,
+      "findings": 0
+    },
+    {
+      "event": "command-start-reviewLogs",
+      "milliseconds": 9998.179199999999
+    },
+    {
+      "event": "command-end-reviewLogs",
+      "milliseconds": 17299.7518,
+      "status": "PARTIAL",
+      "files": 128,
+      "findings": 0
+    },
+    {
+      "event": "soterai-configuration-event",
+      "milliseconds": 17406.8623
+    },
+    {
+      "event": "command-start-reviewLogs",
+      "milliseconds": 17422.607099999997
+    },
+    {
+      "event": "command-end-reviewLogs",
+      "milliseconds": 17425.2237,
+      "status": "UNAVAILABLE"
+    },
+    {
+      "event": "command-start-logProtectionStatus",
+      "milliseconds": 17425.2409
+    },
+    {
+      "event": "command-end-logProtectionStatus",
+      "milliseconds": 17426.2231,
+      "status": "UNAVAILABLE"
+    },
+    {
+      "event": "soterai-configuration-event",
+      "milliseconds": 17517.178799999998
+    },
+    {
+      "event": "command-start-reviewLogs",
+      "milliseconds": 17523.529
+    },
+    {
+      "event": "soterai-configuration-event",
+      "milliseconds": 17617.943499999998
+    },
+    {
+      "event": "soterai-configuration-event",
+      "milliseconds": 17707.6763
+    },
+    {
+      "event": "command-end-reviewLogs",
+      "milliseconds": 17715.7103,
+      "status": "UNAVAILABLE"
+    },
+    {
+      "event": "command-start-reviewLogs",
+      "milliseconds": 17730.0949
+    },
+    {
+      "event": "log-key-event",
+      "milliseconds": 18707.907499999998
+    },
+    {
+      "event": "log-key-event",
+      "milliseconds": 18711.9207
+    },
+    {
+      "event": "log-key-event",
+      "milliseconds": 18728.425
+    },
+    {
+      "event": "command-end-reviewLogs",
+      "milliseconds": 18729.9228,
+      "status": "UNAVAILABLE"
+    },
+    {
+      "event": "command-start-reviewLogs",
+      "milliseconds": 18730.4051
+    },
+    {
+      "event": "command-end-reviewLogs",
+      "milliseconds": 19348.357,
+      "status": "UNAVAILABLE"
+    },
+    {
+      "event": "command-start-reviewLogs",
+      "milliseconds": 19357.4571
+    },
+    {
+      "event": "soterai-configuration-event",
+      "milliseconds": 20196.6286
+    },
+    {
+      "event": "soterai-configuration-event",
+      "milliseconds": 20279.5
+    },
+    {
+      "event": "command-end-reviewLogs",
+      "milliseconds": 20284.4548,
+      "status": "UNAVAILABLE"
+    },
+    {
+      "event": "command-start-reviewLogs",
+      "milliseconds": 20285.172599999998
+    },
+    {
+      "event": "command-end-reviewLogs",
+      "milliseconds": 80304.8282,
+      "status": "UNAVAILABLE"
+    },
+    {
+      "event": "command-start-logProtectionStatus",
+      "milliseconds": 80304.84980000001
+    },
+    {
+      "event": "command-end-logProtectionStatus",
+      "milliseconds": 80305.76060000001,
+      "status": "OWNER_REVIEW_REQUIRED"
+    },
+    {
+      "event": "command-start-reviewLogs",
+      "milliseconds": 80305.7767
+    },
+    {
+      "event": "command-end-reviewLogs",
+      "milliseconds": 80306.56820000001,
+      "status": "UNAVAILABLE"
+    },
+    {
+      "event": "command-start-logProtectionStatus",
+      "milliseconds": 80306.5849
+    },
+    {
+      "event": "command-end-logProtectionStatus",
+      "milliseconds": 80307.3975,
+      "status": "OWNER_REVIEW_REQUIRED"
+    },
+    {
+      "event": "command-start-logProtectionStatus",
+      "milliseconds": 80320.18840000001
+    },
+    {
+      "event": "command-end-logProtectionStatus",
+      "milliseconds": 80321.0436,
+      "status": "OWNER_REVIEW_REQUIRED"
+    },
+    {
+      "event": "command-start-reviewLogs",
+      "milliseconds": 80323.2412
+    },
+    {
+      "event": "command-end-reviewLogs",
+      "milliseconds": 80388.21250000001,
+      "status": "UNAVAILABLE"
+    },
+    {
+      "event": "command-start-reviewLogs",
+      "milliseconds": 80394.25020000001
+    },
+    {
+      "event": "command-end-reviewLogs",
+      "milliseconds": 81098.9755,
+      "status": "ANALYZED",
+      "files": 6,
+      "findings": 4
+    },
+    {
+      "event": "command-start-reviewHygieneVault",
+      "milliseconds": 81106.04060000001
+    },
+    {
+      "event": "command-end-reviewHygieneVault",
+      "milliseconds": 81107.58910000001,
+      "status": "REVIEW_FILES_FIRST"
+    },
+    {
+      "event": "command-start-openHygieneExposureLedger",
+      "milliseconds": 81107.60560000001
+    },
+    {
+      "event": "command-end-openHygieneExposureLedger",
+      "milliseconds": 81246.8653,
+      "status": "METADATA"
+    },
+    {
+      "event": "soterai-configuration-event",
+      "milliseconds": 81524.92020000001
+    }
+  ],
+  "independence": "LOW",
+  "ownerPresence": "SCRIPTED_NATIVE_API_DECISIONS_NOT_HUMAN_REVIEW",
+  "boundaryDiscovery": "NATIVE_DISCOVERY_RESTRICTED_TO_RETAINED_SYNTHETIC_DIRECTORY_WITH_DETERMINISTIC_ADMISSION_ORDER",
+  "notTested": [
+    "Human usability/accessibility",
+    "Other extensions, normal debug consoles, arbitrary processes and transformed/prose/binary credentials",
+    "Credential validity, provider rotation, AI access or prior disclosures",
+    "Same-user unmanaged reads, process memory and independent uploads",
+    "Other platforms and remote workspaces"
+  ]
+}

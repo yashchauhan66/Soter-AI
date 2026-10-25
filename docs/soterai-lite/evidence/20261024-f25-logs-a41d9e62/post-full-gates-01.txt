@@ -1,0 +1,37 @@
+﻿{"status":"EXACT_CURRENT_FULL_INPUTS","files":932}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261024-f25-logs-a41d9e62\\build-native-hosts-run-02.txt",
+    "observedAt":  "2026-10-25T03:34:43.6711263Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261024-f25-logs-a41d9e62\\build-native-hosts-02.cjs"
+                  ],
+    "sha256":  "F0AF85FB443381AB485849F1AE80F3F4E3CB35FB61B7892A51D649815EA8A104",
+    "file":  "node"
+}
+{"status":"EXACT_CURRENT_FULL_INPUTS","files":932}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261024-f25-logs-a41d9e62\\current-equivalence-run-02.txt",
+    "observedAt":  "2026-10-25T03:34:46.7098741Z",
+    "exitCode":  1,
+    "arguments":  [
+                      "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261024-f25-logs-a41d9e62\\record-current-equivalence-02.cjs"
+                  ],
+    "sha256":  "2357F6514209C5DE076FDFB1B707C49C5C5972408D4D12C3D1D2494840100867",
+    "file":  "node"
+}
+powershell.exe : Post-full gate failed; retained: current-equivalence-run-02
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Post-full gate ...ivalence-run-02:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261024-f25-logs-a41d9e62\run-pos
+t-full-gates-01.ps1:18 char:34
++ ... pt.exitCode -ne 0){throw ('Post-full gate failed; retained: '+$Name)}
++                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (Post-full gate ...ivalence-run-02:String) [], RuntimeException
+    + FullyQualifiedErrorId : Post-full gate failed; retained: current-equivalence-run-02
+ 

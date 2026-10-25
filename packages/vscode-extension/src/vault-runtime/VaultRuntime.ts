@@ -5,6 +5,8 @@ import { VaultManager, vaultRuntimeEnabled } from "../firewall/VaultManager";
 import { samePath } from "../firewall/VaultStorage";
 import { runtimeBinding } from "./RuntimeBinding";
 import { VaultAppJob, type VaultAppJobSnapshot } from "./VaultAppJob";
+import { logProtectionEnabled } from "../logs/LogFlags";
+import type { GatewayRegistrationLease } from "../broker/GatewayRegistryLease";
 
 const DESCRIPTORS = "soterai.lite.vaultApps.v1", OWNERSHIP = "soterai.lite.vaultJobs.v1";
 const UUID = /^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/i;
@@ -81,14 +83,19 @@ export class VaultRuntime implements vscode.Disposable {
         this.#pending++; const epoch = this.#epoch, serialized = JSON.stringify(descriptor), jobId = randomUUID(); this.#reserved.add(jobId);
         const enabled = () => !signal?.aborted && epoch === this.#epoch && this.#allowed(descriptor)
             && JSON.stringify(this.descriptors().find(item => item.id === id)) === serialized;
-        let job: VaultAppJob | undefined;
+        let job: VaultAppJob | undefined, created: VaultAppJob | undefined, registry: GatewayRegistrationLease | undefined;
         try {
             await this.#persist(); if (!enabled()) return undefined;
-            job = await this.#vault.withRuntimeValues(descriptor, (values, guard) => {
+            job = await this.#vault.withRuntimeValues(descriptor, async (values, guard) => {
                 if (!enabled() || !guard()) return unavailable(); runtimeBinding(descriptor);
-                const owned = new VaultAppJob({ descriptor: { ...descriptor, id: jobId }, values,
+                const lease = await this.#vault.createGatewayRegistry(() => enabled() && guard()); registry = lease;
+                if (!enabled() || !guard() || !lease.available()) return unavailable();
+                return lease.use(async outputValues => {
+                if (!enabled() || !guard() || !lease.available()) return unavailable(); runtimeBinding(descriptor);
+                const owned = new VaultAppJob({ descriptor: { ...descriptor, id: jobId }, values, outputValues,
                     runtime: { executable: process.execPath, electron: !!process.versions.electron }, parentEnvironment: process.env,
-                    enabled: () => enabled() && guard() });
+                    enabled: () => enabled() && guard() && lease.available(), onDispose: () => lease.dispose() });
+                created = owned;
                 this.#jobs.set(jobId, owned); this.#active.add(jobId); this.#reserved.delete(jobId);
                 const abort = () => owned.requestStop(); signal?.addEventListener("abort", abort, { once: true });
                 void owned.start().then(() => this.#persist()).catch(() => {});
@@ -96,23 +103,24 @@ export class VaultRuntime implements vscode.Disposable {
                     signal?.removeEventListener("abort", abort);
                     this.#active.delete(jobId); this.#trim(); void this.#persist().catch(() => {});
                 }); return owned;
+                });
             }, enabled);
             return job;
-        } catch { return undefined; }
+        } catch { if (created) created.dispose(); else registry?.dispose(); return undefined; }
         finally { this.#pending--; this.#reserved.delete(jobId); if (!job) void this.#persist().catch(() => {}); }
     }
     stop(jobId: string): void { if (this.#active.has(jobId)) this.#jobs.get(jobId)?.requestStop(); }
     jobs(): readonly VaultRuntimeSnapshot[] { return Object.freeze([...this.#prior.values(), ...[...this.#jobs.values()].map(job => job.snapshot())]); }
-    dispose(): void { if (this.#disposed) return; this.#disposed = true; this.#epoch++; for (const id of this.#active) this.#jobs.get(id)?.requestStop(); void this.#persist().catch(() => {}); }
+    dispose(): void { if (this.#disposed) return; this.#disposed = true; this.#epoch++; for (const job of this.#jobs.values()) job.dispose(); void this.#persist().catch(() => {}); }
     async shutdown(): Promise<void> { this.dispose(); await this.#persist(); }
     #allowed(descriptor: VaultAppDescriptor): boolean {
-        if (this.#disposed || !this.#ownershipAvailable || !vaultRuntimeEnabled()) return false;
+        if (this.#disposed || !this.#ownershipAvailable || !vaultRuntimeEnabled() || !logProtectionEnabled()) return false;
         const folder = vscode.workspace.getWorkspaceFolder(vscode.Uri.file(descriptor.source));
         return !!folder && folder.uri.scheme === "file" && !folder.uri.authority && !folder.uri.query && !folder.uri.fragment && samePath(folder.uri.fsPath, descriptor.root);
     }
     #trim(): void {
         if (this.#jobs.size <= 32) return;
-        for (const id of this.#jobs.keys()) { if (!this.#active.has(id)) this.#jobs.delete(id); if (this.#jobs.size <= 32) break; }
+        for (const id of this.#jobs.keys()) { if (!this.#active.has(id)) { this.#jobs.get(id)?.dispose(); this.#jobs.delete(id); } if (this.#jobs.size <= 32) break; }
     }
     #persist(): Promise<void> {
         const write = this.#writeQueue.then(async () => {

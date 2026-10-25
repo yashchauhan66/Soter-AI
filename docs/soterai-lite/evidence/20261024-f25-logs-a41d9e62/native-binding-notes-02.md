@@ -1,0 +1,11 @@
+# Current preparation binding notes
+
+Use `native-template-inputs-02.json` and `inspect-vsix-02.template.ps1`. Original inspector01/manifest01 remain unexecuted historical preparation. The only correction scopes the new required-source check to extension.js; the private normalizer can legitimately be inlined in other runtime bundles too.
+
+All29current fixture templates are UNBOUND and unexecuted. The separate `materialize-native-01.template.cjs` is also failguarded, unexecuted, and intentionally outside the29-fixture manifest. Root creates a new bound builder copy first, after actual final native934-input freeze preserves all932full records and adds both final newhost bytes. Builder needs its native source JSON/hash, new output directory/provenance name and boundflag; it does not need the future provenance hash it will create.
+
+After current full/compiler/readiness/backend/nativeBuild/newpackage results pass, root writes NEW `native-binding-current-01.json` from `native-binding-required-01.json` with actual current receipt hashes, expected exact TAP totals and reviewed host facts. Status must become `F25_CURRENT_GATES_REVIEWED_FOR_MATERIALIZATION`. `templateManifest` identifies current manifest02/hash. Fresh host inspection must add `currentFeature: F25`; copied F24 review is refused. Exact current Code1.143.1 and application file hashes must be freshly inspected before any native execution.
+
+Root then creates NEW `materialize-native-01.cjs` from its retained unbound template, binding only its initial guard after reviewing that concrete current binding file. Materializer validates exact current full/native membership, all7required gate receipts/raw bytes, full TAP totals, exact new package, fresh host byte pins and all20built drivers. It creates28new bound PS copies and an immutable materialization receipt; the builder copy already exists separately. The inspector creates new exact package extraction/content evidence. Main gate executes new logs/owned followed by all20affected families plus functional10/security17.
+
+No generated fixture has been executed by the template authors. Static parser checks are preparation checks only, with compiler/build/newpackage/Code/native all NOT_RUN. No current full/host/artifact/native facts are borrowed from F24.

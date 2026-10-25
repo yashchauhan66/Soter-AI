@@ -9,6 +9,7 @@ import type * as vscode from "vscode";
 import type { VaultAppDescriptor } from "../../../core/src/VaultAppDescriptor";
 import type { OutputResult } from "../../../core/src/StreamingOutputRedactor";
 import type { VaultManager } from "../firewall/VaultManager";
+import { GatewayRegistryLease } from "../broker/GatewayRegistryLease";
 import * as stub from "./phase2/vscode-stub";
 
 // The real coordinator and real finite Node job execute only synthetic public
@@ -26,7 +27,8 @@ type Job = { snapshot(): Snapshot; requestStop(): void; readonly completion: Pro
 type Runtime = { descriptors(): readonly VaultAppDescriptor[]; save(value: unknown): Promise<VaultAppDescriptor>;
     run(id: string): Promise<Job | undefined>; stop(jobId: string): void; jobs(): readonly Snapshot[]; dispose(): void };
 type Factory = new (context: vscode.ExtensionContext, vault: VaultManager) => Runtime;
-type Lease = { withRuntimeValues<T>(descriptor: VaultAppDescriptor, use: (values: Readonly<Record<string, string>>, guard: () => boolean) => T, enabled: () => boolean): Promise<T> };
+type Lease = { withRuntimeValues<T>(descriptor: VaultAppDescriptor, use: (values: Readonly<Record<string, string>>, guard: () => boolean) => T, enabled: () => boolean): Promise<T>;
+    createGatewayRegistry(enabled: () => boolean): Promise<GatewayRegistryLease> };
 function deferred() { let release!: () => void; const promise = new Promise<void>(done => { release = done; }); return { promise, release }; }
 async function bounded<T>(work: PromiseLike<T>, ms = 6000): Promise<T> {
     let timer: ReturnType<typeof setTimeout> | undefined;
@@ -94,7 +96,7 @@ beforeEach(async () => {
         calls.push(descriptor); await leaseHold?.promise;
         if (!leaseApproved || !leaseGuard || !enabled()) throw new Error("Synthetic private lease withheld.");
         return use(Object.freeze({ DATABASE_URL: FAKE }), () => leaseGuard && enabled());
-    } };
+    }, async createGatewayRegistry(enabled) { return new GatewayRegistryLease([FAKE], () => leaseGuard && enabled()); } };
 });
 afterEach(async () => {
     leaseGuard = false; for (const runtime of runtimes) runtime.dispose(); leaseHold?.release();

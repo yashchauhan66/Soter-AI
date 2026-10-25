@@ -146,7 +146,8 @@
         "soterai.lite.configScanner.editor",
         "soterai.lite.configScanner.mcp",
         "soterai.lite.historyScanner",
-        "soterai.lite.artifactScanner"
+        "soterai.lite.artifactScanner",
+        "soterai.lite.logProtection"
       ]
     }
   },
@@ -1586,6 +1587,16 @@
         "command": "soterai.artifactScannerStatus",
         "title": "Artifact Scanner Status",
         "category": "SoterAI"
+      },
+      {
+        "command": "soterai.reviewLogs",
+        "title": "Review Saved Logs and Test Reports",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.logProtectionStatus",
+        "title": "Log Protection Status",
+        "category": "SoterAI"
       }
     ],
     "viewsContainers": {
@@ -2344,6 +2355,12 @@
           "default": true,
           "scope": "machine",
           "description": "Enable bounded owner-reviewed artifact/source-map/copy analysis and guarded public release. Disable withdraws scans and new publication. Source maps and sourceMappingURL-bearing files are withheld from release; no automatic cleanup or build is performed."
+        },
+        "soterai.lite.logProtection": {
+          "type": "boolean",
+          "default": true,
+          "scope": "machine",
+          "description": "Enable owner-reviewed bounded saved-log analysis and guarded SoterAI-owned app/task/lifecycle output. Disable withdraws pending and completed output. Original logs, other extensions and arbitrary processes remain outside these collectors; no automatic cleanup or past-disclosure recall."
         }
       }
     },
@@ -3530,6 +3547,14 @@
         },
         {
           "command": "soterai.artifactScannerStatus",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.reviewLogs",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.logProtectionStatus",
           "when": "soterai.advancedCommands"
         }
       ]

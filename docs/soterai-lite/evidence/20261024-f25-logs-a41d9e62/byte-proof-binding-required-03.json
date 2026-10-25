@@ -1,0 +1,81 @@
+{
+  "status": "PREPARED_NOT_BOUND_NO_GIT_OR_HELPER_EXECUTION",
+  "feature": "F25",
+  "parent": "10d3916f1fa0000300813b8696b068a6c880b6d9",
+  "artifactPath": "packages/soterai-lite/soterai-lite-0.7.0-f25-20261024-attempt01.vsix",
+  "acceptanceSha256": "__F25_FINAL_CURRENT_ACCEPTANCE_SHA256__",
+  "sourceQueueSha256": "__F25_ROOT_REVIEWED_VERIFYING_QUEUE_SHA256__",
+  "sourceLedgerSha256": "__F25_ROOT_REVIEWED_SOURCE_LEDGER_SHA256__",
+  "sourcePathsReviewedAgainstCurrentGitDiff": false,
+  "sourcePaths": [
+    "docs/vscode-extension-readiness.md",
+    "packages/core/src/StreamingOutputRedactor.ts",
+    "packages/core/src/StreamingOutputNormalizer.ts",
+    "packages/vscode-extension/package.json",
+    "packages/soterai-lite/package.json",
+    "packages/vscode-extension/README.md",
+    "packages/soterai-lite/README.md",
+    "packages/vscode-extension/src/__tests__/vaultRuntimeCoordinator.test.ts",
+    "packages/vscode-extension/src/__tests__/vaultRuntimeSurfaces.test.ts",
+    "packages/vscode-extension/src/extension.ts",
+    "packages/vscode-extension/src/hygiene/HygieneExposureLedger.ts",
+    "packages/vscode-extension/src/vault-runtime/VaultAppJob.ts",
+    "packages/vscode-extension/src/vault-runtime/VaultRuntime.ts",
+    "packages/vscode-extension/src/vault-runtime/VaultSurfaces.ts",
+    "packages/vscode-extension/src/logs/LogContent.ts",
+    "packages/vscode-extension/src/logs/ManagedLogCollector.ts",
+    "packages/vscode-extension/src/logs/LogController.ts",
+    "packages/vscode-extension/src/logs/LogFlags.ts",
+    "packages/vscode-extension/src/logs/commands.ts",
+    "packages/vscode-extension/src/__tests__/logContent.test.ts",
+    "packages/vscode-extension/src/__tests__/managedLogCollector.test.ts",
+    "packages/vscode-extension/src/__tests__/logAggregateFraming.test.ts",
+    "packages/vscode-extension/src/__tests__/logController.test.ts",
+    "packages/vscode-extension/src/__tests__/logCommands.test.ts",
+    "packages/vscode-extension/src/__tests__/logOwnedOutput.test.ts",
+    "packages/vscode-extension/src/__tests__/logVaultJob.test.ts",
+    "packages/vscode-extension/src/__tests__/logVaultRuntime.test.ts",
+    "packages/vscode-extension/src/__tests__/logProviderOutput.test.ts",
+    "packages/vscode-extension/src/__tests__/host/liteLogs.host.ts",
+    "packages/vscode-extension/src/__tests__/host/liteLogVaultRuntime.host.ts",
+    "docs/soterai-lite/FEATURE-QUEUE.json",
+    "docs/soterai-lite/ledger.md"
+  ],
+  "focusedBindingMode": "EARLIER400_FOCUSED_PLUS_CURRENT_RAW_BUDGET_AND_FULL",
+  "requiredGatePaths": [
+    { "role": "compiler", "rawPath": "__F25_FINAL_COMPILER_RAW_PATH__" },
+    { "role": "focused", "rawPath": "__F25_ACTUAL400_FOCUSED_RAW_PATH__" },
+    { "role": "rawBudget", "rawPath": "__F25_CURRENT_RAW_BUDGET_1PASS_RAW_PATH__" },
+    { "role": "readiness", "rawPath": "__F25_READINESS_RAW_PATH__" },
+    { "role": "full", "rawPath": "__F25_FINAL_PASSING_FULL03_RAW_PATH__" },
+    { "role": "backendCompiler", "rawPath": "__F25_BACKEND_COMPILER_RAW_PATH__" },
+    { "role": "backendTests", "rawPath": "__F25_BACKEND_TESTS_RAW_PATH__" },
+    { "role": "nativeBuild", "rawPath": "__F25_FINAL20DRIVER_BUILD_RAW_PATH__" },
+    { "role": "package", "rawPath": "__F25_NEW_EXACT_PACKAGE_RAW_PATH__" },
+    { "role": "nativeAggregate", "rawPath": "__F25_ACTUAL_NATIVE_AGGREGATE_RAW_PATH__" }
+  ],
+  "knownNonPassEvidence": [
+    {
+      "path": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/raw-budget-tests-01.txt",
+      "bytes": 387,
+      "sha256": "3119fceb0ead1d0804db90fb0c87a3381089f9d2264a376c41a39a06e532a641",
+      "containsNul": true,
+      "disposition": "RETAINED_NONPASS_NOT_EXECUTABLE_NOT_CURRENT_GATE"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/check-full-inputs-01.cjs",
+      "bytes": 199,
+      "sha256": "4f74882d2c7f0195a206cd5fa55bc1cfbe217137390a8e80109f788525905ccf",
+      "containsNul": true,
+      "disposition": "RETAINED_NONPASS_NOT_EXECUTABLE_NOT_CURRENT_GATE"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/full-tests-02.txt",
+      "bytes": 902785,
+      "sha256": "35f4ce8d9020378e14881525138fc108668c372d0b8a030e8cd073bb4f4061c9",
+      "containsNul": false,
+      "disposition": "RETAINED_NONPASS_NOT_EXECUTABLE_NOT_CURRENT_GATE"
+    }
+  ],
+  "instructions": "Root creates NEW byte-proof-binding-current-01.json only after actual final acceptance/native/custody exists, with status F25_CURRENT_ACCEPTANCE_AND_EXPLICIT_SCOPE_BOUND and exact reviewed facts. Bind its hash and guard in NEW helper03 copies. All templates remain UNEXECUTED. Root alone reviews/mutates queue/ledger/Git. Current full-input-lib02/full-inputs02 are mandatory; earlierfull02failed400-sourcegap is explicitly labelled and current rawbudget1PASS/finalfull coverfinaldelta. Unrelated ws-bridge/phase2 paths stay excluded."
+}

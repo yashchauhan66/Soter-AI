@@ -1,0 +1,202 @@
+﻿TAP version 13
+# Subtest: F25 public stack traces preserve useful failure text, numeric locations and exact saved text
+ok 1 - F25 public stack traces preserve useful failure text, numeric locations and exact saved text
+  ---
+  duration_ms: 152.5836
+  type: 'test'
+  ...
+# Subtest: F25 public TAP failures and diagnostics remain useful without evaluating test syntax
+ok 2 - F25 public TAP failures and diagnostics remain useful without evaluating test syntax
+  ---
+  duration_ms: 8.5782
+  type: 'test'
+  ...
+# Subtest: F25 ordinary non-JSON log lines containing braces are supported text
+ok 3 - F25 ordinary non-JSON log lines containing braces are supported text
+  ---
+  duration_ms: 2.8741
+  type: 'test'
+  ...
+# Subtest: F25 empty saved log and renamed plain output are explicit useful text controls
+ok 4 - F25 empty saved log and renamed plain output are explicit useful text controls
+  ---
+  duration_ms: 3.0588
+  type: 'test'
+  ...
+# Subtest: F25 static credential assignments in old fixture logs reach canonical keyed findings
+ok 5 - F25 static credential assignments in old fixture logs reach canonical keyed findings
+  ---
+  duration_ms: 11.2823
+  type: 'test'
+  ...
+# Subtest: F25 nested actual and expected JSON fields expose decoded private semantic strings to the canonical analyzer
+ok 6 - F25 nested actual and expected JSON fields expose decoded private semantic strings to the canonical analyzer
+  ---
+  duration_ms: 6.0103
+  type: 'test'
+  ...
+# Subtest: F25 JSON Unicode escapes are decoded before canonical credential recognition
+ok 7 - F25 JSON Unicode escapes are decoded before canonical credential recognition
+  ---
+  duration_ms: 4.2399
+  type: 'test'
+  ...
+# Subtest: F25 a registered value split across nested JSON leaves is caught by canonical semantic composition
+ok 8 - F25 a registered value split across nested JSON leaves is caught by canonical semantic composition
+  ---
+  duration_ms: 14.3265
+  type: 'test'
+  ...
+# Subtest: F25 raw and one-layer encoded registrations remain detectable when split between JSON leaves
+ok 9 - F25 raw and one-layer encoded registrations remain detectable when split between JSON leaves
+  ---
+  duration_ms: 27.8677
+  type: 'test'
+  ...
+# Subtest: F25 public structured failures retain strings in document order while ignoring numeric and boolean scalars
+ok 10 - F25 public structured failures retain strings in document order while ignoring numeric and boolean scalars
+  ---
+  duration_ms: 3.72
+  type: 'test'
+  ...
+# Subtest: F25 JSON arrays of public strings are supported without coercing nonstring nodes
+ok 11 - F25 JSON arrays of public strings are supported without coercing nonstring nodes
+  ---
+  duration_ms: 2.3516
+  type: 'test'
+  ...
+# Subtest: F25 JSONL supports bounded complete records and preserves nested failure strings
+ok 12 - F25 JSONL supports bounded complete records and preserves nested failure strings
+  ---
+  duration_ms: 2.8473
+  type: 'test'
+  ...
+# Subtest: F25 semantic matching spans JSONL record boundaries within one reviewed operation
+ok 13 - F25 semantic matching spans JSONL record boundaries within one reviewed operation
+  ---
+  duration_ms: 1.7795
+  type: 'test'
+  ...
+# Subtest: F25 a malformed late JSONL record withholds earlier private views atomically
+ok 14 - F25 a malformed late JSONL record withholds earlier private views atomically
+  ---
+  duration_ms: 1.9981
+  type: 'test'
+  ...
+# Subtest: F25 declared and structured-looking malformed JSON cannot silently become plain text
+ok 15 - F25 declared and structured-looking malformed JSON cannot silently become plain text
+  ---
+  duration_ms: 2.6663
+  type: 'test'
+  ...
+# Subtest: F25 strict JSON rejects comments trailing commas nonfinite numbers and concatenated roots
+ok 16 - F25 strict JSON rejects comments trailing commas nonfinite numbers and concatenated roots
+  ---
+  duration_ms: 2.3182
+  type: 'test'
+  ...
+# Subtest: F25 duplicate decoded JSON keys at any depth cannot hide a competing private value
+ok 17 - F25 duplicate decoded JSON keys at any depth cannot hide a competing private value
+  ---
+  duration_ms: 1.7526
+  type: 'test'
+  ...
+# Subtest: F25 duplicate keys in a later JSONL record withhold the whole reviewed operation
+ok 18 - F25 duplicate keys in a later JSONL record withhold the whole reviewed operation
+  ---
+  duration_ms: 1.3232
+  type: 'test'
+  ...
+# Subtest: F25 the complete structured operation admits32 semantic strings and withholds a33rd
+ok 19 - F25 the complete structured operation admits32 semantic strings and withholds a33rd
+  ---
+  duration_ms: 6.713
+  type: 'test'
+  ...
+# Subtest: F25 JSONL admits128 nonempty records but withholds a129th even when there are no strings
+ok 20 - F25 JSONL admits128 nonempty records but withholds a129th even when there are no strings
+  ---
+  duration_ms: 10.3619
+  type: 'test'
+  ...
+# Subtest: F25 JSON container nesting is bounded at32 before recursive parsing can exhaust the stack
+ok 21 - F25 JSON container nesting is bounded at32 before recursive parsing can exhaust the stack
+  ---
+  duration_ms: 4.8289
+  type: 'test'
+  ...
+# Subtest: F25 JSON node work is independently bounded at10000 even when no semantic strings exist
+ok 22 - F25 JSON node work is independently bounded at10000 even when no semantic strings exist
+  ---
+  duration_ms: 91.6663
+  type: 'test'
+  ...
+# Subtest: F25 raw input admission measures exact UTF8 bytes with an inclusive64KiB limit
+ok 23 - F25 raw input admission measures exact UTF8 bytes with an inclusive64KiB limit
+  ---
+  duration_ms: 7.1398
+  type: 'test'
+  ...
+# Subtest: F25 raw JSON and JSONL size caps apply before decoding or returning earlier values
+ok 24 - F25 raw JSON and JSONL size caps apply before decoding or returning earlier values
+  ---
+  duration_ms: 3.6868
+  type: 'test'
+  ...
+# Subtest: F25 raw and JSON-decoded unsupported controls never become private analysis views
+ok 25 - F25 raw and JSON-decoded unsupported controls never become private analysis views
+  ---
+  duration_ms: 3.7589
+  type: 'test'
+  ...
+# Subtest: F25 malformed JavaScript Unicode and escaped lone surrogates withhold instead of replacement repair
+ok 26 - F25 malformed JavaScript Unicode and escaped lone surrogates withhold instead of replacement repair
+  ---
+  duration_ms: 2.4078
+  type: 'test'
+  ...
+# Subtest: F25 source identifiers reject traversal aliases Windows streams devices absolute paths and control spellings
+ok 27 - F25 source identifiers reject traversal aliases Windows streams devices absolute paths and control spellings
+  ---
+  duration_ms: 3.2547
+  type: 'test'
+  ...
+# Subtest: F25 recognized secret-bearing filenames are withheld without returning their path or value
+ok 28 - F25 recognized secret-bearing filenames are withheld without returning their path or value
+  ---
+  duration_ms: 2.0193
+  type: 'test'
+  ...
+# Subtest: F25 reference-looking fields remain inert private strings and never become source paths
+ok 29 - F25 reference-looking fields remain inert private strings and never become source paths
+  ---
+  duration_ms: 4.5758
+  type: 'test'
+  ...
+# Subtest: F25 JSON keys and referenced labels cannot inject private or unsafe source identifiers
+ok 30 - F25 JSON keys and referenced labels cannot inject private or unsafe source identifiers
+  ---
+  duration_ms: 2.4883
+  type: 'test'
+  ...
+# Subtest: F25 deterministic view IDs retain no state from a prior private operation
+ok 31 - F25 deterministic view IDs retain no state from a prior private operation
+  ---
+  duration_ms: 2.4965
+  type: 'test'
+  ...
+# Subtest: F25 unknown input types with coercion hooks fail closed without invoking caller code
+ok 32 - F25 unknown input types with coercion hooks fail closed without invoking caller code
+  ---
+  duration_ms: 6.2288
+  type: 'test'
+  ...
+1..32
+# tests 32
+# suites 0
+# pass 32
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1319.2008

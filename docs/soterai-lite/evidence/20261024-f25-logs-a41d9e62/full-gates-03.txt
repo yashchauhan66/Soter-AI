@@ -1,0 +1,46 @@
+﻿{"status":"EXACT_FULL_UNIT_PRODUCT_INPUTS","files":932,"exclusions":"ONLY_TWO_NEW_NATIVE_FIXTURES_NO_PRODUCT_OR_UNIT_EXCLUSIONS"}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261024-f25-logs-a41d9e62\\raw-budget-tests-02.txt",
+    "observedAt":  "2026-10-24T14:57:50.3946484Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "--import",
+                      "tsx",
+                      "--test",
+                      "--test-name-pattern",
+                      "malformed UTF8 admissions",
+                      "../vscode-extension/src/__tests__/logController.test.ts"
+                  ],
+    "sha256":  "E0ECDAE588651830C7E7BE62740ED04262541A0D9B200AF12AD2E43761345920",
+    "file":  "node"
+}
+{"status":"EXACT_FULL_UNIT_PRODUCT_INPUTS","files":932,"exclusions":"ONLY_TWO_NEW_NATIVE_FIXTURES_NO_PRODUCT_OR_UNIT_EXCLUSIONS"}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261024-f25-logs-a41d9e62\\full-tests-02.txt",
+    "observedAt":  "2026-10-24T15:10:30.0709340Z",
+    "exitCode":  1,
+    "arguments":  [
+                      "--import",
+                      "tsx",
+                      "--test",
+                      "--test-concurrency=1",
+                      "../vscode-extension/src/__tests__/**/*.test.ts"
+                  ],
+    "sha256":  "35F4CE8D9020378E14881525138FC108668C372D0B8A030E8CD073BB4F4061C9",
+    "file":  "node"
+}
+powershell.exe : Gate failed; evidence retained: full-tests-02
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Gate failed; ev...: full-tests-02:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261024-f25-logs-a41d9e62\run-ful
+l-gates-03.ps1:10 char:34
++ ... ipt.exitCode -ne 0){throw ('Gate failed; evidence retained: '+$Name)}
++                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (Gate failed; ev...: full-tests-02:String) [], RuntimeException
+    + FullyQualifiedErrorId : Gate failed; evidence retained: full-tests-02
+ 

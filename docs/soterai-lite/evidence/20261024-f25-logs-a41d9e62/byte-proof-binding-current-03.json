@@ -1,0 +1,141 @@
+{
+  "status": "F25_CURRENT_ACCEPTANCE_AND_EXPLICIT_SCOPE_BOUND",
+  "feature": "F25",
+  "parent": "17b5995c90403530f5258a87601b1719e10de12b",
+  "originalFeatureParent": "10d3916f1fa0000300813b8696b068a6c880b6d9",
+  "externalCommits": [
+    "52e67229651d91466ea6e9bbe01712494d12acf8",
+    "17b5995c90403530f5258a87601b1719e10de12b"
+  ],
+  "metadataEquivalence": {
+    "path": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/current-metadata-equivalence-02.json",
+    "bytes": 23610,
+    "sha256": "60bdd3ed1baaa910360fc8f55c3edb186729120c4923fca9e1af0040f874bb36"
+  },
+  "fixtureCorrection": {
+    "path": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/deadline-fixture-correction-01.json",
+    "bytes": 1763,
+    "sha256": "d235bbb745a1a46a5945efdddc5ed5a1a319ecc0d6b58bee9a5ebebc3e3bf90e"
+  },
+  "artifactPath": "packages/soterai-lite/soterai-lite-0.7.0-f25-20261024-attempt01.vsix",
+  "acceptanceSha256": "50c30625bfb6d941b0f4011cc35afa7bd500966e9a13f8c8b7b6cf8ab5ce27cc",
+  "sourceQueueSha256": "b9a28c8bac628b7017f1f427961fead4490a9ab54d0b169ba03f3ba099c26e02",
+  "sourceLedgerSha256": "f9e8cb7afeaf77feea78eebb7a52edcbb223641f9d149e7156c1500e35f47f93",
+  "sourcePathsReviewedAgainstCurrentGitDiff": true,
+  "sourcePaths": [
+    "docs/vscode-extension-readiness.md",
+    "packages/core/src/StreamingOutputRedactor.ts",
+    "packages/core/src/StreamingOutputNormalizer.ts",
+    "packages/vscode-extension/package.json",
+    "packages/soterai-lite/package.json",
+    "packages/vscode-extension/README.md",
+    "packages/soterai-lite/README.md",
+    "packages/vscode-extension/src/__tests__/vaultRuntimeCoordinator.test.ts",
+    "packages/vscode-extension/src/__tests__/vaultRuntimeSurfaces.test.ts",
+    "packages/vscode-extension/src/__tests__/historyGitProcess.test.ts",
+    "packages/vscode-extension/src/extension.ts",
+    "packages/vscode-extension/src/hygiene/HygieneExposureLedger.ts",
+    "packages/vscode-extension/src/vault-runtime/VaultAppJob.ts",
+    "packages/vscode-extension/src/vault-runtime/VaultRuntime.ts",
+    "packages/vscode-extension/src/vault-runtime/VaultSurfaces.ts",
+    "packages/vscode-extension/src/logs/LogContent.ts",
+    "packages/vscode-extension/src/logs/ManagedLogCollector.ts",
+    "packages/vscode-extension/src/logs/LogController.ts",
+    "packages/vscode-extension/src/logs/LogFlags.ts",
+    "packages/vscode-extension/src/logs/commands.ts",
+    "packages/vscode-extension/src/__tests__/logContent.test.ts",
+    "packages/vscode-extension/src/__tests__/managedLogCollector.test.ts",
+    "packages/vscode-extension/src/__tests__/logAggregateFraming.test.ts",
+    "packages/vscode-extension/src/__tests__/logController.test.ts",
+    "packages/vscode-extension/src/__tests__/logCommands.test.ts",
+    "packages/vscode-extension/src/__tests__/logOwnedOutput.test.ts",
+    "packages/vscode-extension/src/__tests__/logVaultJob.test.ts",
+    "packages/vscode-extension/src/__tests__/logVaultRuntime.test.ts",
+    "packages/vscode-extension/src/__tests__/logProviderOutput.test.ts",
+    "packages/vscode-extension/src/__tests__/host/liteLogs.host.ts",
+    "packages/vscode-extension/src/__tests__/host/liteLogVaultRuntime.host.ts",
+    "docs/soterai-lite/FEATURE-QUEUE.json",
+    "docs/soterai-lite/ledger.md"
+  ],
+  "focusedBindingMode": "EARLIER400_FOCUSED_PLUS_CURRENT_RAW_BUDGET_AND_FULL",
+  "requiredGatePaths": [
+    {
+      "role": "compiler",
+      "rawPath": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/build-native-hosts-run-02.txt"
+    },
+    {
+      "role": "focused",
+      "rawPath": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/log-runtime-combined-02.txt"
+    },
+    {
+      "role": "rawBudget",
+      "rawPath": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/raw-budget-tests-02.txt"
+    },
+    {
+      "role": "readiness",
+      "rawPath": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/readiness-tests-01.txt"
+    },
+    {
+      "role": "full",
+      "rawPath": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/full-tests-05.txt"
+    },
+    {
+      "role": "backendCompiler",
+      "rawPath": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/backend-typecheck-02.txt"
+    },
+    {
+      "role": "backendTests",
+      "rawPath": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/backend-tests-02.txt"
+    },
+    {
+      "role": "nativeBuild",
+      "rawPath": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/build-native-hosts-run-02.txt"
+    },
+    {
+      "role": "package",
+      "rawPath": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/package-01.txt"
+    },
+    {
+      "role": "nativeAggregate",
+      "rawPath": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/native-gates-01.txt"
+    }
+  ],
+  "knownNonPassEvidence": [
+    {
+      "path": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/raw-budget-tests-01.txt",
+      "bytes": 387,
+      "sha256": "3119fceb0ead1d0804db90fb0c87a3381089f9d2264a376c41a39a06e532a641",
+      "containsNul": true,
+      "disposition": "RETAINED_NONPASS_NOT_EXECUTABLE_NOT_CURRENT_GATE"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/check-full-inputs-01.cjs",
+      "bytes": 199,
+      "sha256": "4f74882d2c7f0195a206cd5fa55bc1cfbe217137390a8e80109f788525905ccf",
+      "containsNul": true,
+      "disposition": "RETAINED_NONPASS_NOT_EXECUTABLE_NOT_CURRENT_GATE"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/full-tests-02.txt",
+      "bytes": 902785,
+      "sha256": "35f4ce8d9020378e14881525138fc108668c372d0b8a030e8cd073bb4f4061c9",
+      "containsNul": false,
+      "disposition": "RETAINED_NONPASS_NOT_EXECUTABLE_NOT_CURRENT_GATE"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/full-tests-04.txt",
+      "bytes": 902583,
+      "sha256": "46404cb3657b0c661b3a30d8bb7ba50452d12b9ebd0b29d14add677d36146c0e",
+      "containsNul": false,
+      "disposition": "RETAINED_NONPASS_NOT_EXECUTABLE_NOT_CURRENT_GATE"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/full-gates-05.txt",
+      "bytes": 1623,
+      "sha256": "32d8ee1664f7d7cf7c34c3ac0700e7c672241778ca0bc716dd907ab5c7f54512",
+      "containsNul": false,
+      "disposition": "RETAINED_NONPASS_NOT_EXECUTABLE_NOT_CURRENT_GATE"
+    }
+  ],
+  "instructions": "Root creates NEW byte-proof-binding-current-03.json only after actual final acceptance/current-metadata-equivalence02 exists, with status F25_CURRENT_ACCEPTANCE_AND_EXPLICIT_SCOPE_BOUND and exact reviewed facts. Bind its hash and guard in NEW helper05 copies; bind shared metadata-equivalence-guard02 to exact actual proofSHA. All templates remain UNEXECUTED. Root alone reviews/mutates queue/ledger/Git. Current full-input-lib04/full-inputs04/native-source03 and freshfull05/full-gates06/backend02/compiler-build02 are mandatory; original native01/materialization/pre48/driver01 remain actual execution basis. EXACT metadata2 + one test fixture correction are allowed, total3 deltas; full929/native931 other inputs and bundled387/3runtimes20drivers/manifest8assets equality remain mandatory. Explicit33path scope adds historyGitProcess.test.ts; fixture beforebytes/correction evidence + exact targeted body replacement checked. Failed full04/full-gates05 retained NONPASS alongside earlier failures. Parents/actual external ancestry+LFblob versus historical CRLF-working normalization proven separately. Preserve app external commits and unrelated ws-bridge/phase2."
+}

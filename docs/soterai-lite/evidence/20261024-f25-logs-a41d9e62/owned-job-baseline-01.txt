@@ -1,0 +1,239 @@
+﻿TAP version 13
+# Subtest: F25-J01 exact public completion stays releasable after close with useful channels and nonzero exit
+not ok 1 - F25-J01 exact public completion stays releasable after close with useful channels and nonzero exit
+  ---
+  duration_ms: 63.9817
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\logVaultJob.test.ts:2:5042'
+  failureType: 'testCodeFailure'
+  error: |-
+    The owned job must expose exact completed-output release authority.
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    canRelease (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logVaultJob.test.ts:59:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logVaultJob.test.ts:96:18)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F25-J02 output clones unknown objects and another job completion cannot borrow final authority
+not ok 2 - F25-J02 output clones unknown objects and another job completion cannot borrow final authority
+  ---
+  duration_ms: 10.0257
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\logVaultJob.test.ts:2:6103'
+  failureType: 'testCodeFailure'
+  error: |-
+    The owned job must expose exact completed-output release authority.
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    canRelease (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logVaultJob.test.ts:59:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logVaultJob.test.ts:108:18)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F25-J03 an observed live-guard withdrawal after completion stays revoked after reenable
+not ok 3 - F25-J03 an observed live-guard withdrawal after completion stays revoked after reenable
+  ---
+  duration_ms: 3.9207
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\logVaultJob.test.ts:2:7010'
+  failureType: 'testCodeFailure'
+  error: |-
+    The owned job must expose exact completed-output release authority.
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    canRelease (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logVaultJob.test.ts:59:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logVaultJob.test.ts:117:51)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F25-J04 a throwing completion guard is generic and permanently revokes held output
+not ok 4 - F25-J04 a throwing completion guard is generic and permanently revokes held output
+  ---
+  duration_ms: 4.1549
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\logVaultJob.test.ts:2:7646'
+  failureType: 'testCodeFailure'
+  error: |-
+    The owned job must expose exact completed-output release authority.
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    canRelease (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logVaultJob.test.ts:59:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logVaultJob.test.ts:124:98)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F25-J05 post-completion disposal revokes exact output without signalling the closed child
+not ok 5 - F25-J05 post-completion disposal revokes exact output without signalling the closed child
+  ---
+  duration_ms: 3.7102
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\logVaultJob.test.ts:2:8327'
+  failureType: 'testCodeFailure'
+  error: |-
+    The owned job must expose exact completed-output release authority.
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    canRelease (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logVaultJob.test.ts:59:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logVaultJob.test.ts:131:18)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F25-J06 a legacy completion without an explicit live guard grants no final output authority
+not ok 6 - F25-J06 a legacy completion without an explicit live guard grants no final output authority
+  ---
+  duration_ms: 3.2589
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\logVaultJob.test.ts:2:8999'
+  failureType: 'testCodeFailure'
+  error: |-
+    The owned job must expose exact completed-output release authority.
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    canRelease (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logVaultJob.test.ts:59:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logVaultJob.test.ts:139:18)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F25-J07 complete registry output filtering does not inject an unselected registration
+not ok 7 - F25-J07 complete registry output filtering does not inject an unselected registration
+  ---
+  duration_ms: 3.9469
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\logVaultJob.test.ts:2:9385'
+  failureType: 'testCodeFailure'
+  error: |-
+    Job results and metadata must contain no synthetic registration or guard exception.
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    safe (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logVaultJob.test.ts:55:12)
+    Object.finish (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logVaultJob.test.ts:88:13)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logVaultJob.test.ts:149:85)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F25-J08 structured escaped leaves compose an unselected registration before output release
+not ok 8 - F25-J08 structured escaped leaves compose an unselected registration before output release
+  ---
+  duration_ms: 8.1524
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\logVaultJob.test.ts:2:10502'
+  failureType: 'testCodeFailure'
+  error: |-
+    Decoded semantic leaves must reach the complete registry collector before native release.
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logVaultJob.test.ts:160:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F25-J09 interleaved escaped registration fragments retain arrival framing through actual job integration
+not ok 9 - F25-J09 interleaved escaped registration fragments retain arrival framing through actual job integration
+  ---
+  duration_ms: 7.444
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\logVaultJob.test.ts:2:11369'
+  failureType: 'testCodeFailure'
+  error: |-
+    Arrival-order one-layer JSON-body output must be filtered despite channel splits and its trailing newline.
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logVaultJob.test.ts:171:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F25-J10 an additional output registry cannot remove selected-value output protection
+not ok 10 - F25-J10 an additional output registry cannot remove selected-value output protection
+  ---
+  duration_ms: 5.317
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\logVaultJob.test.ts:2:12216'
+  failureType: 'testCodeFailure'
+  error: |-
+    The owned job must expose exact completed-output release authority.
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    canRelease (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logVaultJob.test.ts:59:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logVaultJob.test.ts:181:18)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 0
+# fail 10
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 660.2655

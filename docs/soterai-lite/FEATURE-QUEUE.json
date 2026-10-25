@@ -9,7 +9,7 @@
   "planVersion": 1,
   "clientDate": "2026-10-13",
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
-  "scope": "F01-F10/F12-F24 scoped DONE after byte barriers; F11 optional absent NOT_TESTED/NOT_COVERED. F25 active only after actual transition bytes; F26-F32/V01-V05 pending. No final rating/human/independent claim.",
+  "scope": "F01-F10/F12-F24 scoped DONE; F11 optional absent NOT_TESTED/NOT_COVERED. F25 VERIFYING after scoped actual gates; source/transition byte barriers pending. F26-F32/V01-V05 pending; no rating/human/independent claim.",
   "implementationConcurrency": 1,
   "activeFeature": "F25",
   "prerequisiteBlock": {
@@ -821,12 +821,14 @@
     {
       "id": "F25",
       "title": "Logs/test/debug leak handling.",
-      "status": "ACTIVE",
-      "result": "NOT-RUN",
+      "status": "VERIFYING",
+      "result": "PASS_SCOPED_GATES_BYTE_BARRIERS_PENDING",
       "requires": [
         "F24"
       ],
-      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/f25-acceptance-01.json",
+      "scope": "Owner-reviewed bounded TEXT/strict JSON/JSONL saved logs plus SoterAI-owned finite app/task/lifecycle-debug collectors; canonical registry/redactor, private logs-v1 exposure metadata, strict machine withdrawal, final guarded per-channel release. Current509native/37phases/20families and functional10/security17same; final delivery race evidence UNIT_ONLY. No arbitrary process/otherextension/earliercopy recall/OS boundary or human independence claim. Raw caps/unknown/binary remain PARTIAL or withheld. LOW; source/transition bytes pending."
     },
     {
       "id": "F26",

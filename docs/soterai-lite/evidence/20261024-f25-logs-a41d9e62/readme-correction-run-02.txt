@@ -1,0 +1,1 @@
+﻿{"status":"README_COUNT_CORRECTED_DOCS_ONLY_FULL_RERUN_REQUIRED","machineSettings":81,"changed":["packages/soterai-lite/README.md","packages/vscode-extension/README.md"],"files":932,"productUnitBytesUnchanged":true}

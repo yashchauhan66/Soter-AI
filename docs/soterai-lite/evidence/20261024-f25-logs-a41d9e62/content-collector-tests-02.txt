@@ -1,0 +1,484 @@
+﻿TAP version 13
+# Subtest: F25 public stack traces preserve useful failure text, numeric locations and exact saved text
+ok 1 - F25 public stack traces preserve useful failure text, numeric locations and exact saved text
+  ---
+  duration_ms: 24.4737
+  type: 'test'
+  ...
+# Subtest: F25 public TAP failures and diagnostics remain useful without evaluating test syntax
+ok 2 - F25 public TAP failures and diagnostics remain useful without evaluating test syntax
+  ---
+  duration_ms: 5.8257
+  type: 'test'
+  ...
+# Subtest: F25 ordinary non-JSON log lines containing braces are supported text
+ok 3 - F25 ordinary non-JSON log lines containing braces are supported text
+  ---
+  duration_ms: 1.3835
+  type: 'test'
+  ...
+# Subtest: F25 empty saved log and renamed plain output are explicit useful text controls
+ok 4 - F25 empty saved log and renamed plain output are explicit useful text controls
+  ---
+  duration_ms: 1.6261
+  type: 'test'
+  ...
+# Subtest: F25 static credential assignments in old fixture logs reach canonical keyed findings
+ok 5 - F25 static credential assignments in old fixture logs reach canonical keyed findings
+  ---
+  duration_ms: 7.4926
+  type: 'test'
+  ...
+# Subtest: F25 nested actual and expected JSON fields expose decoded private semantic strings to the canonical analyzer
+ok 6 - F25 nested actual and expected JSON fields expose decoded private semantic strings to the canonical analyzer
+  ---
+  duration_ms: 5.5215
+  type: 'test'
+  ...
+# Subtest: F25 JSON Unicode escapes are decoded before canonical credential recognition
+ok 7 - F25 JSON Unicode escapes are decoded before canonical credential recognition
+  ---
+  duration_ms: 3.0379
+  type: 'test'
+  ...
+# Subtest: F25 a registered value split across nested JSON leaves is caught by canonical semantic composition
+ok 8 - F25 a registered value split across nested JSON leaves is caught by canonical semantic composition
+  ---
+  duration_ms: 5.8965
+  type: 'test'
+  ...
+# Subtest: F25 raw and one-layer encoded registrations remain detectable when split between JSON leaves
+ok 9 - F25 raw and one-layer encoded registrations remain detectable when split between JSON leaves
+  ---
+  duration_ms: 20.2339
+  type: 'test'
+  ...
+# Subtest: F25 public structured failures retain strings in document order while ignoring numeric and boolean scalars
+ok 10 - F25 public structured failures retain strings in document order while ignoring numeric and boolean scalars
+  ---
+  duration_ms: 2.667
+  type: 'test'
+  ...
+# Subtest: F25 JSON arrays of public strings are supported without coercing nonstring nodes
+ok 11 - F25 JSON arrays of public strings are supported without coercing nonstring nodes
+  ---
+  duration_ms: 1.3279
+  type: 'test'
+  ...
+# Subtest: F25 JSONL supports bounded complete records and preserves nested failure strings
+ok 12 - F25 JSONL supports bounded complete records and preserves nested failure strings
+  ---
+  duration_ms: 1.5871
+  type: 'test'
+  ...
+# Subtest: F25 semantic matching spans JSONL record boundaries within one reviewed operation
+ok 13 - F25 semantic matching spans JSONL record boundaries within one reviewed operation
+  ---
+  duration_ms: 1.1465
+  type: 'test'
+  ...
+# Subtest: F25 a malformed late JSONL record withholds earlier private views atomically
+ok 14 - F25 a malformed late JSONL record withholds earlier private views atomically
+  ---
+  duration_ms: 1.1755
+  type: 'test'
+  ...
+# Subtest: F25 declared and structured-looking malformed JSON cannot silently become plain text
+ok 15 - F25 declared and structured-looking malformed JSON cannot silently become plain text
+  ---
+  duration_ms: 1.7007
+  type: 'test'
+  ...
+# Subtest: F25 strict JSON rejects comments trailing commas nonfinite numbers and concatenated roots
+ok 16 - F25 strict JSON rejects comments trailing commas nonfinite numbers and concatenated roots
+  ---
+  duration_ms: 1.422
+  type: 'test'
+  ...
+# Subtest: F25 duplicate decoded JSON keys at any depth cannot hide a competing private value
+ok 17 - F25 duplicate decoded JSON keys at any depth cannot hide a competing private value
+  ---
+  duration_ms: 1.1366
+  type: 'test'
+  ...
+# Subtest: F25 duplicate keys in a later JSONL record withhold the whole reviewed operation
+ok 18 - F25 duplicate keys in a later JSONL record withhold the whole reviewed operation
+  ---
+  duration_ms: 1.1495
+  type: 'test'
+  ...
+# Subtest: F25 the complete structured operation admits32 semantic strings and withholds a33rd
+ok 19 - F25 the complete structured operation admits32 semantic strings and withholds a33rd
+  ---
+  duration_ms: 4.1709
+  type: 'test'
+  ...
+# Subtest: F25 JSONL admits128 nonempty records but withholds a129th even when there are no strings
+ok 20 - F25 JSONL admits128 nonempty records but withholds a129th even when there are no strings
+  ---
+  duration_ms: 6.1741
+  type: 'test'
+  ...
+# Subtest: F25 JSON container nesting is bounded at32 before recursive parsing can exhaust the stack
+ok 21 - F25 JSON container nesting is bounded at32 before recursive parsing can exhaust the stack
+  ---
+  duration_ms: 2.6415
+  type: 'test'
+  ...
+# Subtest: F25 JSON node work is independently bounded at10000 even when no semantic strings exist
+ok 22 - F25 JSON node work is independently bounded at10000 even when no semantic strings exist
+  ---
+  duration_ms: 49.7043
+  type: 'test'
+  ...
+# Subtest: F25 raw input admission measures exact UTF8 bytes with an inclusive64KiB limit
+ok 23 - F25 raw input admission measures exact UTF8 bytes with an inclusive64KiB limit
+  ---
+  duration_ms: 5.0234
+  type: 'test'
+  ...
+# Subtest: F25 raw JSON and JSONL size caps apply before decoding or returning earlier values
+ok 24 - F25 raw JSON and JSONL size caps apply before decoding or returning earlier values
+  ---
+  duration_ms: 2.0809
+  type: 'test'
+  ...
+# Subtest: F25 raw and JSON-decoded unsupported controls never become private analysis views
+ok 25 - F25 raw and JSON-decoded unsupported controls never become private analysis views
+  ---
+  duration_ms: 3.3001
+  type: 'test'
+  ...
+# Subtest: F25 malformed JavaScript Unicode and escaped lone surrogates withhold instead of replacement repair
+ok 26 - F25 malformed JavaScript Unicode and escaped lone surrogates withhold instead of replacement repair
+  ---
+  duration_ms: 1.4212
+  type: 'test'
+  ...
+# Subtest: F25 source identifiers reject traversal aliases Windows streams devices absolute paths and control spellings
+ok 27 - F25 source identifiers reject traversal aliases Windows streams devices absolute paths and control spellings
+  ---
+  duration_ms: 1.9671
+  type: 'test'
+  ...
+# Subtest: F25 recognized secret-bearing filenames are withheld without returning their path or value
+ok 28 - F25 recognized secret-bearing filenames are withheld without returning their path or value
+  ---
+  duration_ms: 1.226
+  type: 'test'
+  ...
+# Subtest: F25 reference-looking fields remain inert private strings and never become source paths
+ok 29 - F25 reference-looking fields remain inert private strings and never become source paths
+  ---
+  duration_ms: 2.2133
+  type: 'test'
+  ...
+# Subtest: F25 JSON keys and referenced labels cannot inject private or unsafe source identifiers
+ok 30 - F25 JSON keys and referenced labels cannot inject private or unsafe source identifiers
+  ---
+  duration_ms: 1.15
+  type: 'test'
+  ...
+# Subtest: F25 deterministic view IDs retain no state from a prior private operation
+ok 31 - F25 deterministic view IDs retain no state from a prior private operation
+  ---
+  duration_ms: 1.8105
+  type: 'test'
+  ...
+# Subtest: F25 unknown input types with coercion hooks fail closed without invoking caller code
+ok 32 - F25 unknown input types with coercion hooks fail closed without invoking caller code
+  ---
+  duration_ms: 1.4712
+  type: 'test'
+  ...
+# Subtest: F25-L01 construction and availability create no output or early publication authority
+ok 33 - F25-L01 construction and availability create no output or early publication authority
+  ---
+  duration_ms: 267.2168
+  type: 'test'
+  ...
+# Subtest: F25-L02 public stdout, compiler warnings and an ordinary nonzero error stack remain useful
+ok 34 - F25-L02 public stdout, compiler warnings and an ordinary nonzero error stack remain useful
+  ---
+  duration_ms: 8.3309
+  type: 'test'
+  ...
+# Subtest: F25-L03 public test and TAP output preserves assertions, totals and exit status
+ok 35 - F25-L03 public test and TAP output preserves assertions, totals and exit status
+  ---
+  duration_ms: 3.5387
+  type: 'test'
+  ...
+# Subtest: F25-L04 an empty completed operation has one exact immutable result capability
+ok 36 - F25-L04 an empty completed operation has one exact immutable result capability
+  ---
+  duration_ms: 2.2208
+  type: 'test'
+  ...
+# Subtest: F25-L05 every byte split of raw stays buffered until whole-channel redaction
+ok 37 - F25-L05 every byte split of raw stays buffered until whole-channel redaction
+  ---
+  duration_ms: 80.1305
+  type: 'test'
+  ...
+# Subtest: F25-L05 every byte split of base64 padded stays buffered until whole-channel redaction
+ok 38 - F25-L05 every byte split of base64 padded stays buffered until whole-channel redaction
+  ---
+  duration_ms: 108.1577
+  type: 'test'
+  ...
+# Subtest: F25-L05 every byte split of base64 unpadded stays buffered until whole-channel redaction
+ok 39 - F25-L05 every byte split of base64 unpadded stays buffered until whole-channel redaction
+  ---
+  duration_ms: 95.4422
+  type: 'test'
+  ...
+# Subtest: F25-L05 every byte split of base64url padded stays buffered until whole-channel redaction
+ok 40 - F25-L05 every byte split of base64url padded stays buffered until whole-channel redaction
+  ---
+  duration_ms: 101.9798
+  type: 'test'
+  ...
+# Subtest: F25-L05 every byte split of base64url unpadded stays buffered until whole-channel redaction
+ok 41 - F25-L05 every byte split of base64url unpadded stays buffered until whole-channel redaction
+  ---
+  duration_ms: 106.0115
+  type: 'test'
+  ...
+# Subtest: F25-L05 every byte split of hex lowercase stays buffered until whole-channel redaction
+ok 42 - F25-L05 every byte split of hex lowercase stays buffered until whole-channel redaction
+  ---
+  duration_ms: 99.7054
+  type: 'test'
+  ...
+# Subtest: F25-L05 every byte split of hex uppercase stays buffered until whole-channel redaction
+ok 43 - F25-L05 every byte split of hex uppercase stays buffered until whole-channel redaction
+  ---
+  duration_ms: 126.9257
+  type: 'test'
+  ...
+# Subtest: F25-L05 every byte split of hex mixed case stays buffered until whole-channel redaction
+ok 44 - F25-L05 every byte split of hex mixed case stays buffered until whole-channel redaction
+  ---
+  duration_ms: 93.5147
+  type: 'test'
+  ...
+# Subtest: F25-L05 every byte split of percent full stays buffered until whole-channel redaction
+ok 45 - F25-L05 every byte split of percent full stays buffered until whole-channel redaction
+  ---
+  duration_ms: 402.4604
+  type: 'test'
+  ...
+# Subtest: F25-L05 every byte split of percent partial stays buffered until whole-channel redaction
+ok 46 - F25-L05 every byte split of percent partial stays buffered until whole-channel redaction
+  ---
+  duration_ms: 86.5222
+  type: 'test'
+  ...
+# Subtest: F25-L05 every byte split of JSON quoted stays buffered until whole-channel redaction
+ok 47 - F25-L05 every byte split of JSON quoted stays buffered until whole-channel redaction
+  ---
+  duration_ms: 109.319
+  type: 'test'
+  ...
+# Subtest: F25-L05 every byte split of JSON string body stays buffered until whole-channel redaction
+ok 48 - F25-L05 every byte split of JSON string body stays buffered until whole-channel redaction
+  ---
+  duration_ms: 94.3865
+  type: 'test'
+  ...
+# Subtest: F25-L06 a raw known value in an error stack masks both nonempty channels and retains the actual error exit
+ok 49 - F25-L06 a raw known value in an error stack masks both nonempty channels and retains the actual error exit
+  ---
+  duration_ms: 3.7945
+  type: 'test'
+  ...
+# Subtest: F25-L07 interleaved stdout and stderr fragments cannot reconstruct a registration outside the filter
+ok 50 - F25-L07 interleaved stdout and stderr fragments cannot reconstruct a registration outside the filter
+  ---
+  duration_ms: 4.4947
+  type: 'test'
+  ...
+# Subtest: F25-L08 public Unicode bytes, CRLF, SGR and OSC follow the established F08 normalization
+ok 51 - F25-L08 public Unicode bytes, CRLF, SGR and OSC follow the established F08 normalization
+  ---
+  duration_ms: 3.1377
+  type: 'test'
+  ...
+# Subtest: F25-L09 invalid UTF8, unfinished controls and terminal rewriting withhold every earlier prefix
+ok 52 - F25-L09 invalid UTF8, unfinished controls and terminal rewriting withhold every earlier prefix
+  ---
+  duration_ms: 7.9248
+  type: 'test'
+  ...
+# Subtest: F25-L10 public structured JSON preserves ordinary string leaves and both channels
+ok 53 - F25-L10 public structured JSON preserves ordinary string leaves and both channels
+  ---
+  duration_ms: 4.8499
+  type: 'test'
+  ...
+# Subtest: F25-L11 registrations split across JSON string leaves are caught after semantic decoding
+ok 54 - F25-L11 registrations split across JSON string leaves are caught after semantic decoding
+  ---
+  duration_ms: 492.6312
+  type: 'test'
+  ...
+# Subtest: F25-L12 JSON Unicode escapes may split one registration across several semantic leaves
+ok 55 - F25-L12 JSON Unicode escapes may split one registration across several semantic leaves
+  ---
+  duration_ms: 2.8566
+  type: 'test'
+  ...
+# Subtest: F25-L13 a short registration that occurs in the canonical mask forces conservative withholding
+ok 56 - F25-L13 a short registration that occurs in the canonical mask forces conservative withholding
+  ---
+  duration_ms: 7.0665
+  type: 'test'
+  ...
+# Subtest: F25-L14 a semantic-leaf match cannot release a marker that itself contains a registration
+ok 57 - F25-L14 a semantic-leaf match cannot release a marker that itself contains a registration
+  ---
+  duration_ms: 4.7544
+  type: 'test'
+  ...
+# Subtest: F25-L15 malformed or duplicate structured JSON never falls back to public plain-text release
+ok 58 - F25-L15 malformed or duplicate structured JSON never falls back to public plain-text release
+  ---
+  duration_ms: 13.5276
+  type: 'test'
+  ...
+# Subtest: F25-L16 the inclusive semantic string-part limit admits32 leaves and withholds33
+ok 59 - F25-L16 the inclusive semantic string-part limit admits32 leaves and withholds33
+  ---
+  duration_ms: 8.2594
+  type: 'test'
+  ...
+# Subtest: F25-L17 the inclusive semantic depth limit admits32 levels and withholds33
+ok 60 - F25-L17 the inclusive semantic depth limit admits32 levels and withholds33
+  ---
+  duration_ms: 3.0921
+  type: 'test'
+  ...
+# Subtest: F25-L18 the inclusive semantic node budget admits10000 nodes and withholds10001
+ok 61 - F25-L18 the inclusive semantic node budget admits10000 nodes and withholds10001
+  ---
+  duration_ms: 77.899
+  type: 'test'
+  ...
+# Subtest: F25-L19 exact128KiB public input remains useful while one extra byte withholds both channels
+ok 62 - F25-L19 exact128KiB public input remains useful while one extra byte withholds both channels
+  ---
+  duration_ms: 1090.173
+  type: 'test'
+  ...
+# Subtest: F25-L20 stdout and stderr share the same128KiB operation budget
+ok 63 - F25-L20 stdout and stderr share the same128KiB operation budget
+  ---
+  duration_ms: 233.7429
+  type: 'test'
+  ...
+# Subtest: F25-L21 exactly4096 chunks are admitted and chunk4097 withdraws atomically
+ok 64 - F25-L21 exactly4096 chunks are admitted and chunk4097 withdraws atomically
+  ---
+  duration_ms: 92.1124
+  type: 'test'
+  ...
+# Subtest: F25-L22 input overflow is sticky even if later bytes and the final exit look harmless
+ok 65 - F25-L22 input overflow is sticky even if later bytes and the final exit look harmless
+  ---
+  duration_ms: 1.4539
+  type: 'test'
+  ...
+# Subtest: F25-L23 disabling before any content is sticky when the callback is later reenabled
+ok 66 - F25-L23 disabling before any content is sticky when the callback is later reenabled
+  ---
+  duration_ms: 1.4998
+  type: 'test'
+  ...
+# Subtest: F25-L24 an observed flag disable during collection withholds prior content after reenable
+ok 67 - F25-L24 an observed flag disable during collection withholds prior content after reenable
+  ---
+  duration_ms: 1.1308
+  type: 'test'
+  ...
+# Subtest: F25-L25 a completed result held before UI publication loses release authority on disable
+ok 68 - F25-L25 a completed result held before UI publication loses release authority on disable
+  ---
+  duration_ms: 1.3707
+  type: 'test'
+  ...
+# Subtest: F25-L26 cloned, deserialized and other-operation completions have no release authority
+ok 69 - F25-L26 cloned, deserialized and other-operation completions have no release authority
+  ---
+  duration_ms: 2.369
+  type: 'test'
+  ...
+# Subtest: F25-L27 cancellation before or during collection permanently withholds that operation
+ok 70 - F25-L27 cancellation before or during collection permanently withholds that operation
+  ---
+  duration_ms: 1.0444
+  type: 'test'
+  ...
+# Subtest: F25-L28 cancellation after completion revokes the exact held report
+ok 71 - F25-L28 cancellation after completion revokes the exact held report
+  ---
+  duration_ms: 1.1702
+  type: 'test'
+  ...
+# Subtest: F25-L29 disposal before or during collection permanently withholds that operation
+ok 72 - F25-L29 disposal before or during collection permanently withholds that operation
+  ---
+  duration_ms: 1.1834
+  type: 'test'
+  ...
+# Subtest: F25-L30 disposal after completion prevents an exact held report from being displayed
+ok 73 - F25-L30 disposal after completion prevents an exact held report from being displayed
+  ---
+  duration_ms: 1.427
+  type: 'test'
+  ...
+# Subtest: F25-L31 callback exceptions are generic and permanently withdraw collection or held publication
+ok 74 - F25-L31 callback exceptions are generic and permanently withdraw collection or held publication
+  ---
+  duration_ms: 1.3535
+  type: 'test'
+  ...
+# Subtest: F25-L32 nonboolean enable callbacks cannot authorize collection
+ok 75 - F25-L32 nonboolean enable callbacks cannot authorize collection
+  ---
+  duration_ms: 1.3477
+  type: 'test'
+  ...
+# Subtest: F25-L33 invalid runtime channel or byte inputs fail closed without echoing their contents
+ok 76 - F25-L33 invalid runtime channel or byte inputs fail closed without echoing their contents
+  ---
+  duration_ms: 1.3601
+  type: 'test'
+  ...
+# Subtest: F25-L34 nonfinite, fractional or out-of-int32 exit values withhold instead of inventing success
+ok 77 - F25-L34 nonfinite, fractional or out-of-int32 exit values withhold instead of inventing success
+  ---
+  duration_ms: 4.7073
+  type: 'test'
+  ...
+# Subtest: F25-L35 ordinary Windows stack locations retain their literal backslashes
+ok 78 - F25-L35 ordinary Windows stack locations retain their literal backslashes
+  ---
+  duration_ms: 1.6038
+  type: 'test'
+  ...
+# Subtest: F25-L36 line-framing cap admits32 JSON-body lines and atomically withholds a33rd
+ok 79 - F25-L36 line-framing cap admits32 JSON-body lines and atomically withholds a33rd
+  ---
+  duration_ms: 27.488
+  type: 'test'
+  ...
+1..79
+# tests 79
+# suites 0
+# pass 79
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5081.3449

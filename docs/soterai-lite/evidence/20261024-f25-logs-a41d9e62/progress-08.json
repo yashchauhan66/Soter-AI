@@ -1,0 +1,70 @@
+{
+  "status": "F25_CURRENT_FULL05_PENDING_AFTER_RETAINED_FULL04_FIXTURE_FAILURE",
+  "feature": "F25",
+  "currentFullInputs": {
+    "path": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/full-inputs-04.json",
+    "bytes": 180983,
+    "sha256": "7c15456c439667f90f2f588af4fa5ee6544f91549c97668c89389fae03dbbb03"
+  },
+  "currentNativeInputs": {
+    "path": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/native-source-inputs-03.json",
+    "bytes": 181748,
+    "sha256": "9d7b317bc19b15123e5110d72523f59acf1379cd559c46da7140bd0df23d410e"
+  },
+  "failedFull": {
+    "raw": {
+      "path": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/full-tests-04.txt",
+      "bytes": 902583,
+      "sha256": "46404cb3657b0c661b3a30d8bb7ba50452d12b9ebd0b29d14add677d36146c0e"
+    },
+    "receipt": {
+      "path": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/full-tests-04.txt.result.json",
+      "bytes": 603,
+      "sha256": "15ce32d99ee0fb8f945d65e17d243f10a6406d6deff48bce96cdfb2a01995712"
+    },
+    "exitCode": 1
+  },
+  "failedAggregate": {
+    "raw": {
+      "path": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/full-gates-05.txt",
+      "bytes": 1623,
+      "sha256": "32d8ee1664f7d7cf7c34c3ac0700e7c672241778ca0bc716dd907ab5c7f54512"
+    },
+    "receipt": {
+      "path": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/full-gates-05.txt.result.json",
+      "bytes": 737,
+      "sha256": "61feabef361cbe8b4d159114df0709cf45531ee2bc8f10e488b28591bd99b3a3"
+    },
+    "exitCode": 1
+  },
+  "targeted": {
+    "raw": {
+      "path": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/deadline-fixture-tests-01.txt",
+      "bytes": 5322,
+      "sha256": "33e8516eb7d53edf984c8c4df8737f6c53f05baa6f2d617c678e09d892f52249"
+    },
+    "receipt": {
+      "path": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/deadline-fixture-tests-01.txt.result.json",
+      "bytes": 628,
+      "sha256": "28271410d655df88af5455228a34bff9cc131a7ed2874fd4027aa62f2719db30"
+    },
+    "exitCode": 0
+  },
+  "fixtureCorrection": {
+    "path": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/deadline-fixture-correction-01.json",
+    "bytes": 1763,
+    "sha256": "d235bbb745a1a46a5945efdddc5ed5a1a319ecc0d6b58bee9a5ebebc3e3bf90e"
+  },
+  "fullStart": {
+    "path": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/durable-full-start-06.json",
+    "bytes": 724,
+    "sha256": "d32cb06af6cfbf415d3438bd3f1fc29ea48696e1f4dc24943d6a2ef115a00e06"
+  },
+  "postFullStart": {
+    "path": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/durable-post-full-start-01.json",
+    "bytes": 762,
+    "sha256": "3594b59c144adc0bc9cead3bde81e82f07704aa0d0d1f90f8e68140065ab6f24"
+  },
+  "scope": "Full04 sole pre-spawn30ms fixture failure retained. Test-only monotonic clock held1000 through fakechild admission then1031; all22targetedPASS, unchanged30ms+1000ms limits and prior assertions. Currentfull05/native03 freeze explicitly adds fixture delta to2external root metadata files. Native509/functional10/security17 on exact originalVSIX remain attributed to originalnative01; same3runtime20driver/manifest8asset equality must pass beforecurrentacceptance. Full05/backend02/rebuild owned24424; postfull24160 waitsaggregate0 thencompiler+20driver02/equivalence02. No newnative/acceptance/commit/queueadvance claim.",
+  "time": "2026-10-25T03:32:10.490Z"
+}

@@ -1,0 +1,103 @@
+﻿TAP version 13
+# Subtest: F25-P01 plain provider URLs retain COMPLETE masking with and without an explicit registration
+not ok 1 - F25-P01 plain provider URLs retain COMPLETE masking with and without an explicit registration
+  ---
+  duration_ms: 197.1326
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\logProviderOutput.test.ts:2:3219'
+  failureType: 'testCodeFailure'
+  error: |-
+    Supported provider output must complete with both channels masked and the actual nonzero exit.
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    masked (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logProviderOutput.test.ts:32:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logProviderOutput.test.ts:45:53)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F25-P02 a malformed late JSON property containing a provider withholds original structured content
+ok 2 - F25-P02 a malformed late JSON property containing a provider withholds original structured content
+  ---
+  duration_ms: 8.8197
+  type: 'test'
+  ...
+# Subtest: F25-P03 duplicate decoded JSON names containing a provider remain atomic WITHHELD inputs
+ok 3 - F25-P03 duplicate decoded JSON names containing a provider remain atomic WITHHELD inputs
+  ---
+  duration_ms: 11.5971
+  type: 'test'
+  ...
+# Subtest: F25-P04 valid nested provider JSON retains COMPLETE sanitized output
+not ok 4 - F25-P04 valid nested provider JSON retains COMPLETE sanitized output
+  ---
+  duration_ms: 4.6468
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\logProviderOutput.test.ts:2:4035'
+  failureType: 'testCodeFailure'
+  error: |-
+    Supported provider output must complete with both channels masked and the actual nonzero exit.
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    masked (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logProviderOutput.test.ts:32:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logProviderOutput.test.ts:59:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F25-P05 ANSI and CRLF normalized valid provider JSON preserves strict admission and COMPLETE masks
+not ok 5 - F25-P05 ANSI and CRLF normalized valid provider JSON preserves strict admission and COMPLETE masks
+  ---
+  duration_ms: 4.6892
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\logProviderOutput.test.ts:2:4266'
+  failureType: 'testCodeFailure'
+  error: |-
+    Supported provider output must complete with both channels masked and the actual nonzero exit.
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    masked (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logProviderOutput.test.ts:32:12)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logProviderOutput.test.ts:64:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F25-P06 valid public JSON stays useful after the same ANSI UTF8 and CRLF normalization
+ok 6 - F25-P06 valid public JSON stays useful after the same ANSI UTF8 and CRLF normalization
+  ---
+  duration_ms: 13.8705
+  type: 'test'
+  ...
+# Subtest: F25-P07 ANSI normalized malformed provider JSON still withholds before any fallback release
+ok 7 - F25-P07 ANSI normalized malformed provider JSON still withholds before any fallback release
+  ---
+  duration_ms: 4.1403
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 4
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 804.8286

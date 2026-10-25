@@ -1,0 +1,100 @@
+﻿TAP version 13
+# Subtest: F25 nested JSONL failure strings remain private and reference-looking locations are never followed
+ok 1 - F25 nested JSONL failure strings remain private and reference-looking locations are never followed
+  ---
+  duration_ms: 279.0189
+  type: 'test'
+  ...
+# Subtest: F25 structured assignment leaves do not concatenate unrelated public locations into candidates
+ok 2 - F25 structured assignment leaves do not concatenate unrelated public locations into candidates
+  ---
+  duration_ms: 143.096
+  type: 'test'
+  ...
+# Subtest: F25 structured nested password retains exact canonical value identity without serialization framing
+ok 3 - F25 structured nested password retains exact canonical value identity without serialization framing
+  ---
+  duration_ms: 124.2683
+  type: 'test'
+  ...
+# Subtest: F25 structured escaped credential key retains exact canonical value identity without serialization framing
+ok 4 - F25 structured escaped credential key retains exact canonical value identity without serialization framing
+  ---
+  duration_ms: 148.9475
+  type: 'test'
+  ...
+# Subtest: F25 structured array credential ownership retains exact canonical value identity without serialization framing
+ok 5 - F25 structured array credential ownership retains exact canonical value identity without serialization framing
+  ---
+  duration_ms: 136.8408
+  type: 'test'
+  ...
+# Subtest: F25 structured quoted multiline value retains exact canonical value identity without serialization framing
+ok 6 - F25 structured quoted multiline value retains exact canonical value identity without serialization framing
+  ---
+  duration_ms: 109.2272
+  type: 'test'
+  ...
+# Subtest: F25 structured credential templates and Stripe public controls stay excluded
+ok 7 - F25 structured credential templates and Stripe public controls stay excluded
+  ---
+  duration_ms: 127.4747
+  type: 'test'
+  ...
+# Subtest: F25-O01 useful completed public task and lifecycle output preserves both channels and actual nonzero exit
+ok 8 - F25-O01 useful completed public task and lifecycle output preserves both channels and actual nonzero exit
+  ---
+  duration_ms: 4.89
+  type: 'test'
+  ...
+# Subtest: F25-O02 authority withdrawn after COMPLETE but before the await continuation suppresses both native sinks
+ok 9 - F25-O02 authority withdrawn after COMPLETE but before the await continuation suppresses both native sinks
+  ---
+  duration_ms: 1.2362
+  type: 'test'
+  ...
+# Subtest: F25-O03 task withdrawal from the stdout listener prevents the following stderr write
+ok 10 - F25-O03 task withdrawal from the stdout listener prevents the following stderr write
+  ---
+  duration_ms: 0.8421
+  type: 'test'
+  ...
+# Subtest: F25-O04 lifecycle withdrawal from the stdout event listener prevents the following stderr event
+ok 11 - F25-O04 lifecycle withdrawal from the stdout event listener prevents the following stderr event
+  ---
+  duration_ms: 1.1483
+  type: 'test'
+  ...
+# Subtest: F25-O05 throwing final release guards withhold candidate output and exception text
+ok 12 - F25-O05 throwing final release guards withhold candidate output and exception text
+  ---
+  duration_ms: 1.1183
+  type: 'test'
+  ...
+# Subtest: F25-O06 a completed structural job without a release guard fails closed at both native sinks
+ok 13 - F25-O06 a completed structural job without a release guard fails closed at both native sinks
+  ---
+  duration_ms: 2.2665
+  type: 'test'
+  ...
+# Subtest: F25-O07 each native release check receives the exact completed output capability
+ok 14 - F25-O07 each native release check receives the exact completed output capability
+  ---
+  duration_ms: 1.0105
+  type: 'test'
+  ...
+# Subtest: F25-O08 completed jobs release collector authority exactly once after native delivery
+ok 15 - F25-O08 completed jobs release collector authority exactly once after native delivery
+  ---
+  duration_ms: 1.1094
+  type: 'test'
+  ...
+1..15
+# tests 15
+# suites 0
+# pass 15
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2060.3836

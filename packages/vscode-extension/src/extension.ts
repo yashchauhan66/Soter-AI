@@ -62,6 +62,7 @@ import { registerRegistryScanner } from "./config-scanners/registryCommands";
 import { registerServiceAccountScanner } from "./config-scanners/serviceAccountCommands";
 import { registerHistoryScanner } from "./history/commands";
 import { registerArtifactScanner } from "./artifacts/commands";
+import { registerLogProtection } from "./logs/commands";
 import { registerMcpScanner } from "./config-scanners/mcpCommands";
 import { registerEditorScanner } from "./config-scanners/editorCommands";
 import { registerCiScanner } from "./config-scanners/ciCommands";
@@ -227,6 +228,7 @@ export function activate(context: vscode.ExtensionContext): void {
     registerMcpScanner(context);
     registerHistoryScanner(context);
     registerArtifactScanner(context);
+    registerLogProtection(context);
     registerScannerCommands(context, async () => (await protectionState?.refresh())?.descriptor);
     registerBrokerCommands(context, brokerManager, refreshViews);
     registerClineAdapter(context, brokerManager, managedReader);

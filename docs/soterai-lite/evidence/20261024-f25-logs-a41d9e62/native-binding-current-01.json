@@ -1,0 +1,105 @@
+{
+  "status": "F25_CURRENT_GATES_REVIEWED_FOR_MATERIALIZATION",
+  "feature": "F25",
+  "expectedArtifact": "packages/soterai-lite/soterai-lite-0.7.0-f25-20261024-attempt01.vsix",
+  "templateManifest": {
+    "path": "native-template-inputs-03.json",
+    "bytes": 28825,
+    "sha256": "a94eff080c5e1420bfc4a24470650a0116a1fda4fb8f28bd656969f6dd566a51"
+  },
+  "fullInputs": {
+    "path": "full-inputs-02.json",
+    "bytes": 180492,
+    "sha256": "0a0e8baa993d413786aad781135eaff32d1c0a8b4c8d7962df0637638ecc989a"
+  },
+  "nativeInputs": {
+    "path": "native-source-inputs-01.json",
+    "bytes": 181222,
+    "sha256": "303128dd11a71f2e9bf204f4772d26390b8813aec90dd1c63eb23f46236be3f8"
+  },
+  "hostReview": {
+    "path": "host-version-review-01.json",
+    "bytes": 10260,
+    "sha256": "5753c649112077de63fe26fabfb10491b4dc278de4ffc4aa6436b29057a155de"
+  },
+  "nativeProvenance": {
+    "path": "native-driver-provenance-01.json",
+    "bytes": 189928,
+    "sha256": "633d8b88ab0c2fcc4e55ef9ed0c46a20de9ccc63b7814c16f7ab03f95a25cd08"
+  },
+  "nativeOutputDirectory": "prebuilt-native-hosts-01",
+  "fullCounts": {
+    "tests": 3757,
+    "pass": 3753,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 4
+  },
+  "gates": [
+    {
+      "role": "compiler",
+      "raw": "build-native-hosts-run-01.txt",
+      "result": {
+        "path": "build-native-hosts-run-01.txt.result.json",
+        "bytes": 619,
+        "sha256": "00cd734a7007fca980f6de2a54ac0fb547f85ca2994983b505d4d00da379ca4e"
+      }
+    },
+    {
+      "role": "readiness",
+      "raw": "readiness-tests-01.txt",
+      "result": {
+        "path": "readiness-tests-01.txt.result.json",
+        "bytes": 623,
+        "sha256": "8f2bbd352e6d3a86722bb544879bda1a2188eb1cb8c3f5f39db4c640b0e477c3"
+      }
+    },
+    {
+      "role": "full",
+      "raw": "full-tests-03.txt",
+      "result": {
+        "path": "full-tests-03.txt.result.json",
+        "bytes": 603,
+        "sha256": "cbd15f4146d780eb97a125eb2cb32d6c00e84a659710a31884fc5a23a4e4d0eb"
+      }
+    },
+    {
+      "role": "backendCompiler",
+      "raw": "backend-typecheck-01.txt",
+      "result": {
+        "path": "backend-typecheck-01.txt.result.json",
+        "bytes": 575,
+        "sha256": "cf333dd95aedfaf34d3f32ebd749aec0eb8a52cd8fa441768851efa357b3dfb4"
+      }
+    },
+    {
+      "role": "backendTests",
+      "raw": "backend-tests-01.txt",
+      "result": {
+        "path": "backend-tests-01.txt.result.json",
+        "bytes": 604,
+        "sha256": "52ab63d39bdde7a40529a4fe4e11475125e914099fad806bf14e09f3d2c794ff"
+      }
+    },
+    {
+      "role": "nativeBuild",
+      "raw": "build-native-hosts-run-01.txt",
+      "result": {
+        "path": "build-native-hosts-run-01.txt.result.json",
+        "bytes": 619,
+        "sha256": "00cd734a7007fca980f6de2a54ac0fb547f85ca2994983b505d4d00da379ca4e"
+      }
+    },
+    {
+      "role": "package",
+      "raw": "package-01.txt",
+      "result": {
+        "path": "package-01.txt.result.json",
+        "bytes": 523,
+        "sha256": "e248cf77058a9f9e1012c614dbad6869d3252e9e113ab9df7afb5680acb0964f"
+      }
+    }
+  ],
+  "compilerScope": "Compiler and nativeBuild roles share one actual successful fresh934-input tsc+20-driver build gate. No doubled test/native count.",
+  "factsReviewedAt": "2026-10-24T15:34:31.775Z"
+}

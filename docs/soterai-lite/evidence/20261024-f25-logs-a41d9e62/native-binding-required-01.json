@@ -1,0 +1,22 @@
+{
+  "status": "PREPARED_NOT_BOUND_DO_NOT_USE_AS_CURRENT_BINDING",
+  "feature": "F25",
+  "expectedArtifact": "packages/soterai-lite/soterai-lite-0.7.0-f25-20261024-attempt01.vsix",
+  "templateManifest": { "path": "native-template-inputs-02.json", "sha256": "__F25_PREPARED_TEMPLATE_MANIFEST_SHA256__" },
+  "fullInputs": { "path": "full-inputs-01.json", "sha256": "__F25_FULL_INPUTS_SHA256__" },
+  "nativeInputs": { "path": "native-source-inputs-01.json", "sha256": "__F25_NATIVE_INPUTS_SHA256__" },
+  "hostReview": { "path": "host-version-review-01.json", "sha256": "__F25_FRESH_HOST_REVIEW_SHA256__" },
+  "nativeProvenance": { "path": "native-driver-provenance-01.json", "sha256": "__F25_NATIVE_PROVENANCE_SHA256__" },
+  "nativeOutputDirectory": "prebuilt-native-hosts-01",
+  "fullCounts": { "tests": "__F25_CURRENT_TESTS__", "pass": "__F25_CURRENT_PASS__", "fail": 0, "cancelled": 0, "skipped": "__F25_CURRENT_SKIPPED__" },
+  "gates": [
+    { "role": "compiler", "raw": "__F25_COMPILER_RAW__", "result": { "path": "__F25_COMPILER_RECEIPT__", "sha256": "__F25_COMPILER_RECEIPT_SHA256__" } },
+    { "role": "readiness", "raw": "__F25_READINESS_RAW__", "result": { "path": "__F25_READINESS_RECEIPT__", "sha256": "__F25_READINESS_RECEIPT_SHA256__" } },
+    { "role": "full", "raw": "__F25_FULL_RAW__", "result": { "path": "__F25_FULL_RECEIPT__", "sha256": "__F25_FULL_RECEIPT_SHA256__" } },
+    { "role": "backendCompiler", "raw": "__F25_BACKEND_COMPILER_RAW__", "result": { "path": "__F25_BACKEND_COMPILER_RECEIPT__", "sha256": "__F25_BACKEND_COMPILER_RECEIPT_SHA256__" } },
+    { "role": "backendTests", "raw": "__F25_BACKEND_TESTS_RAW__", "result": { "path": "__F25_BACKEND_TESTS_RECEIPT__", "sha256": "__F25_BACKEND_TESTS_RECEIPT_SHA256__" } },
+    { "role": "nativeBuild", "raw": "__F25_NATIVE_BUILD_RAW__", "result": { "path": "__F25_NATIVE_BUILD_RECEIPT__", "sha256": "__F25_NATIVE_BUILD_RECEIPT_SHA256__" } },
+    { "role": "package", "raw": "__F25_PACKAGE_RAW__", "result": { "path": "__F25_PACKAGE_RECEIPT__", "sha256": "__F25_PACKAGE_RECEIPT_SHA256__" } }
+  ],
+  "bindingInstructions": "Root writes NEW native-binding-current-01.json after final gates with status F25_CURRENT_GATES_REVIEWED_FOR_MATERIALIZATION. Fresh review must identify currentFeature F25 and actual current installed Code/application bytes. Do not copy this file as a current receipt. Materializer remains failguarded and unexecuted."
+}

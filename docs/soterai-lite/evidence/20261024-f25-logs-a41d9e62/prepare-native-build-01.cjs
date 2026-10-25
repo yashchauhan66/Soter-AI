@@ -1,0 +1,18 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),crypto=require('node:crypto'),vm=require('node:vm');
+const repo=path.resolve(__dirname,'../../../..'),sha=bytes=>crypto.createHash('sha256').update(bytes).digest('hex'),library=require('./full-input-lib-02.cjs');
+assert.equal(library.check(),932);
+const fullFile=path.join(__dirname,'full-inputs-02.json'),fullRaw=fs.readFileSync(fullFile),full=JSON.parse(fullRaw);
+const expected=[['packages/vscode-extension/src/__tests__/host/liteLogs.host.ts',39576,'0e70972729a14a0c2a9b694aec046632cb3da3c71c2d5cb86595387e1caa46af'],['packages/vscode-extension/src/__tests__/host/liteLogVaultRuntime.host.ts',47345,'343987c68c866cf7538dd3ffd1ce9aab6a6dd7492f20ab42e3644272717acbf5']];
+const added=expected.map(([file,bytes,digest])=>{const fact=library.fact(file);assert.equal(fact.bytes,bytes);assert.equal(fact.sha256,digest);return fact;});
+const records=[...full.records,...added].sort((a,b)=>a.path.localeCompare(b.path));assert.equal(new Set(records.map(row=>row.path)).size,934);
+for(const row of records)assert.deepEqual(library.fact(row.path),row);
+const value={status:'FINAL_NATIVE_INPUTS_FROZEN_BUILD_NOT_RUN',feature:'F25',records,fullInputBinding:{path:'full-inputs-02.json',bytes:fullRaw.length,sha256:sha(fullRaw)},nativeOnlyAdditions:added,observedAt:new Date().toISOString()};
+const nativePath=path.join(__dirname,'native-source-inputs-01.json');fs.writeFileSync(nativePath,JSON.stringify(value,null,2),{flag:'wx'});const nativeRaw=fs.readFileSync(nativePath);
+const manifest=JSON.parse(fs.readFileSync(path.join(__dirname,'native-template-inputs-03.json'),'utf8')),row=manifest.templates.find(row=>row.materializeAs==='build-native-hosts-01.cjs');assert(row);
+const raw=fs.readFileSync(path.join(__dirname,row.template));assert.equal(raw.length,row.bytes);assert.equal(sha(raw),row.sha256);assert(!raw.includes(0));
+let text=raw.toString('utf8');for(const [token,value] of Object.entries({__F25_TEMPLATE_BOUND__:'F25_CURRENT_FACTS_BOUND',__F25_NATIVE_INPUTS_JSON__:'native-source-inputs-01.json',__F25_NATIVE_INPUTS_SHA256__:sha(nativeRaw),__F25_NATIVE_HOST_OUTPUT_DIR__:'prebuilt-native-hosts-01',__F25_NATIVE_DRIVER_PROVENANCE_JSON__:'native-driver-provenance-01.json'}))text=text.replaceAll(token,value);
+assert(!/__F25_[A-Z0-9_]+__/.test(text));new vm.Script(text,{filename:'build-native-hosts-01.cjs'});
+fs.writeFileSync(path.join(__dirname,'build-native-hosts-01.cjs'),text,{flag:'wx'});
+const receipt={status:'BOUND_CURRENT_NATIVE_BUILDER_NOT_EXECUTED',records:934,nativeInputs:{path:'native-source-inputs-01.json',bytes:nativeRaw.length,sha256:sha(nativeRaw)},builder:{path:'build-native-hosts-01.cjs',bytes:Buffer.byteLength(text),sha256:sha(Buffer.from(text))},sourceTemplate:{path:row.template,bytes:row.bytes,sha256:row.sha256},fullInputBinding:value.fullInputBinding,scope:'New native-only fixture additions do not change any full-tested product/unit/build input. Root must wait for actual full/backend/package success before executing the combined fresh compiler/20-driver build. No native result implied.'};
+fs.writeFileSync(path.join(__dirname,'native-build-preparation-01.json'),JSON.stringify(receipt,null,2),{flag:'wx'});console.log(JSON.stringify({status:receipt.status,records:934,builderSha256:receipt.builder.sha256}));

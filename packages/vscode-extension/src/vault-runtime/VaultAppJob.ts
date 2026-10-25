@@ -1,7 +1,7 @@
 import { spawn, type ChildProcess } from "node:child_process";
 import * as path from "node:path";
-import { RegisteredSecretMatcher } from "../../../core/src/RegisteredSecretMatcher";
-import { StreamingOutputRedactor, type OutputResult, type OutputChannel } from "../../../core/src/StreamingOutputRedactor";
+import type { OutputResult, OutputChannel } from "../../../core/src/StreamingOutputRedactor";
+import { ManagedLogCollector } from "../logs/ManagedLogCollector";
 import { parseVaultAppDescriptor, VAULT_RUNTIME_LIMITS, type VaultAppDescriptor } from "../../../core/src/VaultAppDescriptor";
 import { brokerChildEnvironment } from "../security/childEnvironment";
 
@@ -9,6 +9,7 @@ export type VaultAppJobState = "READY" | "BLOCKED" | "RUNNING" | "STOP_REQUESTED
 export interface VaultAppJobSnapshot { readonly id: string; readonly state: VaultAppJobState; readonly pid?: number; readonly exitCode?: number }
 export interface VaultAppJobCompletion { readonly snapshot: VaultAppJobSnapshot; readonly output: OutputResult }
 interface Options { descriptor: VaultAppDescriptor; values: Readonly<Record<string, string>>;
+    outputValues?: readonly string[]; onDispose?: () => void;
     runtime: { executable: string; electron: boolean }; parentEnvironment: NodeJS.ProcessEnv; enabled?: () => boolean }
 interface Dependencies { spawn?: typeof spawn; setTimer?: (callback: () => void, ms: number) => unknown; clearTimer?: (handle: unknown) => void }
 
@@ -83,9 +84,8 @@ export class VaultAppJob {
     #environment: NodeJS.ProcessEnv = {};
     #executable = "";
     #enabled: () => boolean;
-    #redactor: StreamingOutputRedactor | undefined;
-    #replacementMatcher: RegisteredSecretMatcher | undefined;
-    #shortOutput = false;
+    #redactor: ManagedLogCollector | undefined;
+    #explicitGuard = false; #disposed = false; #onDispose?: () => void;
     #spawn: typeof spawn;
     #setTimer: NonNullable<Dependencies["setTimer"]>;
     #clearTimer: NonNullable<Dependencies["clearTimer"]>;
@@ -111,6 +111,7 @@ export class VaultAppJob {
         this.#completion = new Promise(done => { this.#resolve = done; });
         this.#id = "unavailable";
         this.#enabled = options?.enabled ?? (() => true);
+        this.#explicitGuard = typeof options?.enabled === "function"; this.#onDispose = options?.onDispose;
         this.#spawn = deps.spawn ?? spawn;
         this.#setTimer = deps.setTimer ?? ((callback, ms) => { const timer = setTimeout(callback, ms); timer.unref(); return timer; });
         this.#clearTimer = deps.clearTimer ?? (handle => clearTimeout(handle as ReturnType<typeof setTimeout>));
@@ -131,12 +132,12 @@ export class VaultAppJob {
                 if (typeof value !== "string" || value.includes("\0")) throw new Error();
                 Object.defineProperty(values, name, { value, enumerable: true });
             }
-            const registrations = Object.values(values), matcher = new RegisteredSecretMatcher(registrations);
-            if (matcher.inspectRequest([]).status !== "CLEAN") throw new Error();
-            this.#replacementMatcher = matcher; this.#shortOutput = registrations.some(value => Array.from(value).length < 8);
+            if (options.outputValues !== undefined && !Array.isArray(options.outputValues)) throw Error();
+            const registrations = [...new Set([...Object.values(values), ...(options.outputValues ?? [])])];
             this.#values = Object.freeze(values); this.#environment = minimalEnvironment(options.parentEnvironment);
             if (options.runtime.electron) this.#environment.ELECTRON_RUN_AS_NODE = "1";
-            this.#redactor = new StreamingOutputRedactor(Object.values(values), { enabled: () => this.#available() });
+            this.#redactor = new ManagedLogCollector(registrations, () => this.#live());
+            if (!this.#redactor.available()) throw Error();
         } catch { this.#failed = true; this.#state = "BLOCKED"; this.#values = undefined; }
     }
     get completion(): Promise<VaultAppJobCompletion> { return this.#completion; }
@@ -194,9 +195,18 @@ export class VaultAppJob {
         try { if (this.#child.connected) this.#child.send({ type: "STOP" }, () => {}); } catch { /* An IPC error is not exit proof. */ }
         this.#timer(() => { if (!this.#closed && !this.#finished) this.#state = "STOP_UNCONFIRMED"; }, VAULT_RUNTIME_LIMITS.stopGraceMs);
     }
-    cancel(): void { if (this.#finished) return; this.#cancelled = true; this.requestStop(); if (!this.#started) { this.#started = true; this.#finishWithoutChild(); } }
-    dispose(): void { this.cancel(); }
-    #available(): boolean { if (this.#cancelled || this.#stopping || this.#finished || this.#failed) return false; try { return this.#enabled() === true && !this.#cancelled && !this.#stopping; } catch { return false; } }
+    cancel(): void { if (this.#finished) { this.dispose(); return; } this.#cancelled = true; this.requestStop(); if (!this.#started) { this.#started = true; this.#finishWithoutChild(); } }
+    dispose(): void {
+        if (this.#disposed) return; this.#disposed = true; if (!this.#finished) this.cancel();
+        this.#redactor?.dispose(); this.#redactor = undefined; this.#enabled = () => false;
+        const release = this.#onDispose; this.#onDispose = undefined;
+        try { release?.(); } catch { /* Private ownership cleanup never becomes output. */ }
+    }
+    canRelease(output: OutputResult): boolean {
+        return this.#finished && this.#explicitGuard && !this.#disposed && this.#redactor?.canRelease(output) === true;
+    }
+    #live(): boolean { if (this.#cancelled || this.#stopping || this.#disposed || this.#failed) return false; try { return this.#enabled() === true && !this.#cancelled && !this.#stopping && !this.#disposed; } catch { return false; } }
+    #available(): boolean { return !this.#finished && this.#live(); }
     #message(message: unknown): void {
         if (this.#released || this.#finished || !message || typeof message !== "object" || Reflect.ownKeys(message).length !== 1
             || (message as { type?: unknown }).type !== "READY") return;
@@ -220,18 +230,13 @@ export class VaultAppJob {
     }
     #tryFinish(): void {
         if (!this.#closed || !this.#drained.stdout || !this.#drained.stderr || this.#finished) return;
-        let output = this.#stopping || this.#failed || this.#exitCode === undefined ? withheld() : this.#redactor?.finish(this.#exitCode) ?? withheld();
-        if (output.status === "COMPLETE" && this.#shortOutput && (output.stdout || output.stderr)) {
-            const marker = "[REDACTED_SECRET_OUTPUT]", stdout = output.stdout ? marker : "", stderr = output.stderr ? marker : "";
-            output = this.#replacementMatcher?.isSafeReplacement(stdout + stderr)
-                ? Object.freeze({ status: "COMPLETE", stdout, stderr, redacted: true, exitCode: output.exitCode }) : withheld();
-        }
+        const output = this.#stopping || this.#failed || this.#exitCode === undefined ? withheld() : this.#redactor?.finish(this.#exitCode) ?? withheld();
         this.#state = this.#failed ? "BLOCKED" : this.#cancelled ? "CANCELLED" : this.#stopping ? "STOPPED" : "EXITED"; this.#complete(output);
     }
     #complete(output: OutputResult): void {
         if (this.#finished) return; this.#finished = true; this.#values = undefined; this.#environment = {}; this.#descriptor = undefined;
-        this.#redactor?.dispose(); this.#redactor = undefined; this.#child = undefined;
-        this.#replacementMatcher = undefined;
+        this.#child = undefined;
+        if (output.status !== "COMPLETE") this.dispose();
         for (const timer of this.#timers) this.#clearTimer(timer); this.#timers.clear();
         this.#resolve(Object.freeze({ snapshot: this.snapshot(), output }));
     }

@@ -1,0 +1,11 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const original=fs.readFileSync(path.join(__dirname,'record-current-equivalence-02.cjs'),'utf8');
+const old="toString('utf8').split(/\\r?\\n/)",replacement="toString('utf8').replace(/^\\uFEFF/,'').split(/\\r?\\n/)";
+assert.equal(original.split(old).length,2);
+fs.writeFileSync(path.join(__dirname,'record-current-equivalence-03.cjs'),original.replace(old,replacement),{flag:'wx'});
+const closure=fs.readFileSync(path.join(__dirname,'record-refresh-wrapper-closures-01.ps1'));
+fs.writeFileSync(path.join(__dirname,'record-refresh-wrapper-closures-01.before-post-result.ps1'),closure,{flag:'wx'});
+const row="start='durable-post-full-start-01.json';inner='post-full-gates-01.txt.result.json';exit=0";assert(closure.toString('utf8').includes(row));
+fs.writeFileSync(path.join(__dirname,'record-refresh-wrapper-closures-01.ps1'),closure.toString('utf8').replace(row,row.replace('exit=0','exit=1')));
+console.log('NEW recorder03 strips PowerShell UTF8 BOM only for derived stdout JSON parsing; original raw, failed recorder02/aggregate01 retained. Closure observer now expects actual post-full exit1, no regrade. No product/limits/pins/assertion change.');

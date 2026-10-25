@@ -1,0 +1,142 @@
+﻿TAP version 13
+# Subtest: F23 process uses pinned Git, fixed safe options and the descriptor environment for version
+ok 1 - F23 process uses pinned Git, fixed safe options and the descriptor environment for version
+  ---
+  duration_ms: 449.4639
+  type: 'test'
+  ...
+# Subtest: F23 process has literal all-ref commits and exact-object tree operation arguments
+ok 2 - F23 process has literal all-ref commits and exact-object tree operation arguments
+  ---
+  duration_ms: 202.3366
+  type: 'test'
+  ...
+# Subtest: F23 batch passes validated object IDs only through private stdin
+ok 3 - F23 batch passes validated object IDs only through private stdin
+  ---
+  duration_ms: 83.0396
+  type: 'test'
+  ...
+# Subtest: F23 process requires close even after both stdout and stderr EOFs
+ok 4 - F23 process requires close even after both stdout and stderr EOFs
+  ---
+  duration_ms: 82.7272
+  type: 'test'
+  ...
+# Subtest: F23 process requires both real EOFs even when close0 was observed first
+ok 5 - F23 process requires both real EOFs even when close0 was observed first
+  ---
+  duration_ms: 71.2634
+  type: 'test'
+  ...
+# Subtest: F23 process withholds valid-looking stdout when the actual child exit is nonzero
+ok 6 - F23 process withholds valid-looking stdout when the actual child exit is nonzero
+  ---
+  duration_ms: 60.5724
+  type: 'test'
+  ...
+# Subtest: F23 process does not treat a signal closure or missing exit code as successful exit0
+ok 7 - F23 process does not treat a signal closure or missing exit code as successful exit0
+  ---
+  duration_ms: 145.273
+  type: 'test'
+  ...
+# Subtest: F23 process consumes private stderr without returning or logging its bytes
+ok 8 - F23 process consumes private stderr without returning or logging its bytes
+  ---
+  duration_ms: 73.4242
+  type: 'test'
+  ...
+# Subtest: F23 process rejects stderr beyond8192 bytes without destroying or signalling the child
+ok 9 - F23 process rejects stderr beyond8192 bytes without destroying or signalling the child
+  ---
+  duration_ms: 61.5246
+  type: 'test'
+  ...
+# Subtest: F23 process separately caps version, commit, tree and batch stdout streams
+ok 10 - F23 process separately caps version, commit, tree and batch stdout streams
+  ---
+  duration_ms: 295.298
+  type: 'test'
+  ...
+# Subtest: F23 process pre-start withdrawal is sticky and never schedules a child
+ok 11 - F23 process pre-start withdrawal is sticky and never schedules a child
+  ---
+  duration_ms: 49.4074
+  type: 'test'
+  ...
+# Subtest: F23 active withdrawal returns STOP_UNCONFIRMED and retains busy until close plus bothEOF
+ok 12 - F23 active withdrawal returns STOP_UNCONFIRMED and retains busy until close plus bothEOF
+  ---
+  duration_ms: 64.8676
+  type: 'test'
+  ...
+# Subtest: F23 expired or nonfinite deadlines refuse before process creation
+ok 13 - F23 expired or nonfinite deadlines refuse before process creation
+  ---
+  duration_ms: 158.3473
+  type: 'test'
+  ...
+# Subtest: F23 elapsed deadline withdraws without signals while an owned child is still open
+ok 14 - F23 elapsed deadline withdraws without signals while an owned child is still open
+  ---
+  duration_ms: 80.5462
+  type: 'test'
+  ...
+# Subtest: F23 validity withdrawal or guard exceptions cannot release buffered history bytes
+ok 15 - F23 validity withdrawal or guard exceptions cannot release buffered history bytes
+  ---
+  duration_ms: 110.1926
+  type: 'test'
+  ...
+# Subtest: F23 monotonic clock reversal and nonfinite clock values withhold successful-looking completion
+ok 16 - F23 monotonic clock reversal and nonfinite clock values withhold successful-looking completion
+  ---
+  duration_ms: 156.5894
+  type: 'test'
+  ...
+# Subtest: F23 lookalike descriptors cannot authorize history process execution
+ok 17 - F23 lookalike descriptors cannot authorize history process execution
+  ---
+  duration_ms: 36.6462
+  type: 'test'
+  ...
+# Subtest: F23 descriptor drift before start refuses and later repository drift withholds completion
+ok 18 - F23 descriptor drift before start refuses and later repository drift withholds completion
+  ---
+  duration_ms: 118.0083
+  type: 'test'
+  ...
+# Subtest: F23 unsafe operation selectors and object identities never become Git arguments or stdin
+ok 19 - F23 unsafe operation selectors and object identities never become Git arguments or stdin
+  ---
+  duration_ms: 185.5453
+  type: 'test'
+  ...
+# Subtest: F23 synchronously thrown spawn errors are generic and close without inventing a live process
+ok 20 - F23 synchronously thrown spawn errors are generic and close without inventing a live process
+  ---
+  duration_ms: 48.5667
+  type: 'test'
+  ...
+# Subtest: F23 spawn error without a PID settles unavailable without waiting for nonexistent EOFs
+ok 21 - F23 spawn error without a PID settles unavailable without waiting for nonexistent EOFs
+  ---
+  duration_ms: 49.1315
+  type: 'test'
+  ...
+# Subtest: F23 repeated starts cannot schedule a second child or replay withdrawn output
+ok 22 - F23 repeated starts cannot schedule a second child or replay withdrawn output
+  ---
+  duration_ms: 62.4993
+  type: 'test'
+  ...
+1..22
+# tests 22
+# suites 0
+# pass 22
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3807.5285

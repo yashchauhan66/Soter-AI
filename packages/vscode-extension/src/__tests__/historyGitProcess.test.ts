@@ -190,7 +190,10 @@ test("F23 expired or nonfinite deadlines refuse before process creation", { time
 });
 
 test("F23 elapsed deadline withdraws without signals while an owned child is still open", { timeout: 1000 }, async () => {
-    const f = await fixture({ kind: "version" }, {}, 30), { result } = await f.begin();
+    let clock = 1000;
+    const f = await fixture({ kind: "version" }, { now: () => clock }, 30), { result } = await f.begin();
+    assert.equal(f.settled, false); assert.equal(f.worker.busy, true);
+    clock = 1031; // Expire only after the one owned fake child has actually started.
     unavailable(await result, "STOP_UNCONFIRMED"); assert.equal(f.worker.busy, true); assert.equal(f.closed, false); f.checkNoActions();
     f.child.stdout.write(PRIVATE); await f.child.finish(); await f.worker.closed; assert.equal(f.worker.busy, false); f.checkNoActions();
 });

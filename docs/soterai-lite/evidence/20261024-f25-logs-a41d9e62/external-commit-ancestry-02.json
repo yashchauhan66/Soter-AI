@@ -1,0 +1,191 @@
+{
+  "status": "PASS_EXACT_EXTERNAL_ANCESTRY_AND_NARROW_APP_METADATA_DELTA",
+  "oldParent": "10d3916f1fa0000300813b8696b068a6c880b6d9",
+  "parent": "17b5995c90403530f5258a87601b1719e10de12b",
+  "externalCommits": [
+    "52e67229651d91466ea6e9bbe01712494d12acf8",
+    "17b5995c90403530f5258a87601b1719e10de12b"
+  ],
+  "changedPaths": [
+    "app/layout.tsx",
+    "next.config.mjs",
+    "package-lock.json",
+    "package.json"
+  ],
+  "commands": [
+    {
+      "arguments": [
+        "rev-parse",
+        "HEAD"
+      ],
+      "exitCode": 0,
+      "stdoutSha256": "7410eeb276083139acd6983962b63c76daece21590a063fa572b484461bf4fab"
+    },
+    {
+      "arguments": [
+        "rev-parse",
+        "17b5995c90403530f5258a87601b1719e10de12b^"
+      ],
+      "exitCode": 0,
+      "stdoutSha256": "b80efad352e7aedfb25bd2a9256666dde29316998a81b191a8d7fc33fba02474"
+    },
+    {
+      "arguments": [
+        "rev-parse",
+        "52e67229651d91466ea6e9bbe01712494d12acf8^"
+      ],
+      "exitCode": 0,
+      "stdoutSha256": "57f1f33073b0455bd6894d35e527e29a65112297afb300bda693739cdfcf9676"
+    },
+    {
+      "arguments": [
+        "merge-base",
+        "--is-ancestor",
+        "10d3916f1fa0000300813b8696b068a6c880b6d9",
+        "52e67229651d91466ea6e9bbe01712494d12acf8"
+      ],
+      "exitCode": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "arguments": [
+        "merge-base",
+        "--is-ancestor",
+        "52e67229651d91466ea6e9bbe01712494d12acf8",
+        "17b5995c90403530f5258a87601b1719e10de12b"
+      ],
+      "exitCode": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "arguments": [
+        "merge-base",
+        "--is-ancestor",
+        "10d3916f1fa0000300813b8696b068a6c880b6d9",
+        "17b5995c90403530f5258a87601b1719e10de12b"
+      ],
+      "exitCode": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "arguments": [
+        "diff",
+        "--name-only",
+        "-z",
+        "10d3916f1fa0000300813b8696b068a6c880b6d9",
+        "17b5995c90403530f5258a87601b1719e10de12b"
+      ],
+      "exitCode": 0,
+      "stdoutSha256": "ee97fe714eae0b33bd7de90100e0ff68d03caf60e7aee18d571594ab041a395f"
+    },
+    {
+      "arguments": [
+        "show",
+        "10d3916f1fa0000300813b8696b068a6c880b6d9:package-lock.json"
+      ],
+      "exitCode": 0,
+      "stdoutSha256": "e45a8f58c764558828693ed8f12078e9a536627515552f5c2e6fc19cfe829a1d"
+    },
+    {
+      "arguments": [
+        "rev-parse",
+        "10d3916f1fa0000300813b8696b068a6c880b6d9:package-lock.json"
+      ],
+      "exitCode": 0,
+      "stdoutSha256": "bd66e1854473e0f0afca6e58e5cf31e1668f3b23f3ef38445344c9dfe9fbf69e"
+    },
+    {
+      "arguments": [
+        "show",
+        "10d3916f1fa0000300813b8696b068a6c880b6d9:package.json"
+      ],
+      "exitCode": 0,
+      "stdoutSha256": "48e103f96ba6b5232c6da203c6d23e90d484d71291a9322490783d6cd5df1a44"
+    },
+    {
+      "arguments": [
+        "rev-parse",
+        "10d3916f1fa0000300813b8696b068a6c880b6d9:package.json"
+      ],
+      "exitCode": 0,
+      "stdoutSha256": "33faf18926d82f91b1b85c61e11775625597d3760dd4caaf76001508e404adba"
+    }
+  ],
+  "ancestorChecks": [
+    {
+      "ancestor": "10d3916f1fa0000300813b8696b068a6c880b6d9",
+      "descendant": "52e67229651d91466ea6e9bbe01712494d12acf8",
+      "exitCode": 0
+    },
+    {
+      "ancestor": "52e67229651d91466ea6e9bbe01712494d12acf8",
+      "descendant": "17b5995c90403530f5258a87601b1719e10de12b",
+      "exitCode": 0
+    },
+    {
+      "ancestor": "10d3916f1fa0000300813b8696b068a6c880b6d9",
+      "descendant": "17b5995c90403530f5258a87601b1719e10de12b",
+      "exitCode": 0
+    }
+  ],
+  "oldMetadataBlobs": [
+    {
+      "path": "package-lock.json",
+      "oid": "b5a6c363a2d2ccf39604d5318a5cadb2c6ce508c",
+      "gitObject": {
+        "saved": {
+          "path": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/external-app-original-metadata-02/package-lock.json.git-blob",
+          "bytes": 541053,
+          "sha256": "e45a8f58c764558828693ed8f12078e9a536627515552f5c2e6fc19cfe829a1d"
+        },
+        "bytes": 541053,
+        "sha256": "e45a8f58c764558828693ed8f12078e9a536627515552f5c2e6fc19cfe829a1d"
+      },
+      "frozenWorking": {
+        "saved": {
+          "path": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/external-app-original-metadata-02/package-lock.json.frozen-working",
+          "bytes": 556588,
+          "sha256": "67eae61abbc3453e02ed56a4cabbae1a7fe4bdea7791feb95942f8957735045d"
+        },
+        "bytes": 556588,
+        "sha256": "67eae61abbc3453e02ed56a4cabbae1a7fe4bdea7791feb95942f8957735045d"
+      },
+      "normalization": "LF_TO_CRLF_EXACT_FROZEN_MATCH"
+    },
+    {
+      "path": "package.json",
+      "oid": "558d892a836677113a3e028e6f237d894ae8a1d6",
+      "gitObject": {
+        "saved": {
+          "path": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/external-app-original-metadata-02/package.json.git-blob",
+          "bytes": 12152,
+          "sha256": "48e103f96ba6b5232c6da203c6d23e90d484d71291a9322490783d6cd5df1a44"
+        },
+        "bytes": 12152,
+        "sha256": "48e103f96ba6b5232c6da203c6d23e90d484d71291a9322490783d6cd5df1a44"
+      },
+      "frozenWorking": {
+        "saved": {
+          "path": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/external-app-original-metadata-02/package.json.frozen-working",
+          "bytes": 12363,
+          "sha256": "1ee13df532c49ddaf21b315e068ad8b20e14b2cfb98ee8174175a8a41cb9ff71"
+        },
+        "bytes": 12363,
+        "sha256": "1ee13df532c49ddaf21b315e068ad8b20e14b2cfb98ee8174175a8a41cb9ff71"
+      },
+      "normalization": "LF_TO_CRLF_EXACT_FROZEN_MATCH"
+    }
+  ],
+  "packageChanges": {
+    "fields": [
+      "dependencies"
+    ],
+    "dependencyChanges": [
+      "next"
+    ],
+    "oldNext": "15.5.25",
+    "currentNext": "15.5.28"
+  },
+  "scope": "Exact two public package metadata blobs only. Git LF blobs and saved historical working-byte CRLF forms are retained separately; normalization admitted solely by exact prior frozen length/SHA. No history/secret scan, Git write/reset/hook/push/tag or normal profile access.",
+  "observedAt": "2026-10-25T03:02:28.145Z"
+}

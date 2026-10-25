@@ -1,0 +1,22 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),crypto=require('node:crypto'),cp=require('node:child_process');
+const repo=path.resolve(__dirname,'../../../..'),base=path.relative(repo,__dirname).replaceAll('\\','/'),sha=raw=>crypto.createHash('sha256').update(raw).digest('hex');
+const old='10d3916f1fa0000300813b8696b068a6c880b6d9',middle='52e67229651d91466ea6e9bbe01712494d12acf8',head='17b5995c90403530f5258a87601b1719e10de12b',commands=[];
+function git(args){const result=cp.spawnSync('git',['-c','core.hooksPath=docs/soterai-lite/evidence/20261013-l0-disk-gate-51f892d0/offline-hooks',...args],{cwd:repo,windowsHide:true,shell:false,maxBuffer:8*1024*1024});assert(!result.error);assert.equal(result.status,0);commands.push({arguments:args,exitCode:result.status,stdoutSha256:sha(result.stdout)});return result.stdout;}
+assert.equal(git(['rev-parse','HEAD']).toString().trim(),head);assert.equal(git(['rev-parse',head+'^']).toString().trim(),middle);assert.equal(git(['rev-parse',middle+'^']).toString().trim(),old);
+const ancestorChecks=[[old,middle],[middle,head],[old,head]].map(([ancestor,descendant])=>{git(['merge-base','--is-ancestor',ancestor,descendant]);return {ancestor,descendant,exitCode:0};});
+const changedPaths=git(['diff','--name-only','-z',old,head]).toString().split('\0').filter(Boolean).sort();assert.deepEqual(changedPaths,['app/layout.tsx','next.config.mjs','package-lock.json','package.json']);
+const frozen=JSON.parse(fs.readFileSync(path.join(__dirname,'full-inputs-02.json'),'utf8')),directory=path.join(__dirname,'external-app-original-metadata-02');fs.mkdirSync(directory);const oldMetadataBlobs=[];
+function save(name,bytes){const file=path.join(directory,name);fs.writeFileSync(file,bytes,{flag:'wx'});return {path:base+'/external-app-original-metadata-02/'+name,bytes:bytes.length,sha256:sha(bytes)};}
+for(const file of ['package-lock.json','package.json']){
+ const blob=git(['show',old+':'+file]),oid=git(['rev-parse',old+':'+file]).toString().trim(),expected=frozen.records.find(row=>row.path===file);
+ assert.equal(crypto.createHash('sha1').update(Buffer.from('blob '+blob.length+'\0')).update(blob).digest('hex'),oid);
+ const candidates=[['IDENTITY',blob],['LF_TO_CRLF_EXACT_FROZEN_MATCH',Buffer.from(blob.toString('utf8').replace(/\r?\n/g,'\r\n'),'utf8')]];
+ const matched=candidates.filter(([,bytes])=>bytes.length===expected.bytes&&sha(bytes)===expected.sha256);assert(matched.length>=1,'Historical working metadata not established by exact saved hash');
+ const [normalization,working]=matched[0];
+ oldMetadataBlobs.push({path:file,oid,gitObject:{saved:save(file+'.git-blob',blob),bytes:blob.length,sha256:sha(blob)},frozenWorking:{saved:save(file+'.frozen-working',working),bytes:working.length,sha256:sha(working)},normalization});
+}
+const packageRecord=oldMetadataBlobs.find(row=>row.path==='package.json'),priorPackage=JSON.parse(fs.readFileSync(path.join(repo,packageRecord.frozenWorking.saved.path),'utf8')),currentPackage=JSON.parse(fs.readFileSync(path.join(repo,'package.json'),'utf8'));
+const fields=[...new Set([...Object.keys(priorPackage),...Object.keys(currentPackage)])].filter(key=>JSON.stringify(priorPackage[key])!==JSON.stringify(currentPackage[key]));assert.deepEqual(fields,['dependencies']);const dependencyChanges=[...new Set([...Object.keys(priorPackage.dependencies),...Object.keys(currentPackage.dependencies)])].filter(key=>priorPackage.dependencies[key]!==currentPackage.dependencies[key]);assert.deepEqual(dependencyChanges,['next']);
+const value={status:'PASS_EXACT_EXTERNAL_ANCESTRY_AND_NARROW_APP_METADATA_DELTA',oldParent:old,parent:head,externalCommits:[middle,head],changedPaths,commands,ancestorChecks,oldMetadataBlobs,packageChanges:{fields,dependencyChanges,oldNext:priorPackage.dependencies.next,currentNext:currentPackage.dependencies.next},scope:'Exact two public package metadata blobs only. Git LF blobs and saved historical working-byte CRLF forms are retained separately; normalization admitted solely by exact prior frozen length/SHA. No history/secret scan, Git write/reset/hook/push/tag or normal profile access.',observedAt:new Date().toISOString()};
+fs.writeFileSync(path.join(__dirname,'external-commit-ancestry-02.json'),JSON.stringify(value,null,2),{flag:'wx'});console.log(JSON.stringify({status:value.status,parent:head,changedPaths,metadata:oldMetadataBlobs.map(row=>({path:row.path,normalization:row.normalization,gitBytes:row.gitObject.bytes,frozenBytes:row.frozenWorking.bytes}))}));

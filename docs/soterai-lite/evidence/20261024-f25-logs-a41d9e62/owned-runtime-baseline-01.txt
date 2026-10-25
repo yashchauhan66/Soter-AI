@@ -1,0 +1,202 @@
+﻿TAP version 13
+# Subtest: F25-R01 real canonical runtime preserves public output and nonzero completion without changing source
+ok 1 - F25-R01 real canonical runtime preserves public output and nonzero completion without changing source
+  ---
+  duration_ms: 1676.9827
+  type: 'test'
+  ...
+# Subtest: F25-R02 the complete current-window registry masks unselected output while IPC contains selected values only
+not ok 2 - F25-R02 the complete current-window registry masks unselected output while IPC contains selected values only
+  ---
+  duration_ms: 629.9719
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\logVaultRuntime.test.ts:2:9072'
+  failureType: 'testCodeFailure'
+  error: |-
+    Public coordinator state and completed output must exclude synthetic registry values and exceptions.
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    safe (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logVaultRuntime.test.ts:68:12)
+    Object.finish (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logVaultRuntime.test.ts:134:13)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logVaultRuntime.test.ts:159:92)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F25-R03 unavailable complete registry refuses before spawning without selected-only fallback
+not ok 3 - F25-R03 unavailable complete registry refuses before spawning without selected-only fallback
+  ---
+  duration_ms: 166.7556
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\logVaultRuntime.test.ts:2:10149'
+  failureType: 'testCodeFailure'
+  error: |-
+    A complete-registry acquisition failure must not create an app with weaker selected-only filtering.
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logVaultRuntime.test.ts:166:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F25-R04 selected guard withdrawal during held complete-registry acquisition prevents launch
+not ok 4 - F25-R04 selected guard withdrawal during held complete-registry acquisition prevents launch
+  ---
+  duration_ms: 168.8858
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\logVaultRuntime.test.ts:2:10640'
+  failureType: 'testCodeFailure'
+  error: |-
+    Every owned run must acquire the complete current-window registry.
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    Object.registryPending (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logVaultRuntime.test.ts:139:35)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logVaultRuntime.test.ts:172:90)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F25-R05 machine log protection withdrawal during registry acquisition prevents launch after reenable
+not ok 5 - F25-R05 machine log protection withdrawal during registry acquisition prevents launch after reenable
+  ---
+  duration_ms: 130.12
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\logVaultRuntime.test.ts:2:11117'
+  failureType: 'testCodeFailure'
+  error: |-
+    Every owned run must acquire the complete current-window registry.
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    Object.registryPending (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logVaultRuntime.test.ts:139:35)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logVaultRuntime.test.ts:178:90)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F25-R06 complete registry stays live across COMPLETE and is disposed with final job authority
+not ok 6 - F25-R06 complete registry stays live across COMPLETE and is disposed with final job authority
+  ---
+  duration_ms: 270.2524
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\logVaultRuntime.test.ts:2:11760'
+  failureType: 'testCodeFailure'
+  error: |-
+    Child completion must retain the registry guard until native consumers can check the exact held output.
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logVaultRuntime.test.ts:187:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F25-R07 late complete-registry withdrawal revokes held output and cannot be reenabled
+not ok 7 - F25-R07 late complete-registry withdrawal revokes held output and cannot be reenabled
+  ---
+  duration_ms: 556.7564
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\logVaultRuntime.test.ts:2:12597'
+  failureType: 'testCodeFailure'
+  error: |-
+    Final native release must still sample the complete-registry guard.
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logVaultRuntime.test.ts:198:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F25-R08 late selected source authority withdrawal still revokes output after complete-registry acquisition
+ok 8 - F25-R08 late selected source authority withdrawal still revokes output after complete-registry acquisition
+  ---
+  duration_ms: 355.2772
+  type: 'test'
+  ...
+# Subtest: F25-R09 runtime disposal releases retained completed registry leases and held output authority
+not ok 9 - F25-R09 runtime disposal releases retained completed registry leases and held output authority
+  ---
+  duration_ms: 297.3209
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\logVaultRuntime.test.ts:2:14025'
+  failureType: 'testCodeFailure'
+  error: |-
+    Completed jobs must not retain live registry leases after runtime disposal.
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logVaultRuntime.test.ts:215:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F25-R10 registry post-use validation failure retains and cooperatively stops any created owned job
+not ok 10 - F25-R10 registry post-use validation failure retains and cooperatively stops any created owned job
+  ---
+  duration_ms: 120.9905
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\logVaultRuntime.test.ts:2:14678'
+  failureType: 'testCodeFailure'
+  error: |-
+    A failed final lease validation must not return a job capability.
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logVaultRuntime.test.ts:221:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 2
+# fail 8
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5886.0992

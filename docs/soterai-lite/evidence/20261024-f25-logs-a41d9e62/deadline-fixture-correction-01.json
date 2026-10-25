@@ -1,0 +1,27 @@
+{
+  "status": "TEST_ONLY_DEADLINE_CLOCK_ORDER_CORRECTION_PENDING_VERIFICATION",
+  "file": "packages/vscode-extension/src/__tests__/historyGitProcess.test.ts",
+  "before": {
+    "path": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/historyGitProcess.before-deadline-fixture-01.ts",
+    "bytes": 18843,
+    "sha256": "359b10e1a89a9f9fa58c3625fd557466c32a4f3b98821e490eff53addd300bce"
+  },
+  "after": {
+    "path": "packages/vscode-extension/src/__tests__/historyGitProcess.test.ts",
+    "bytes": 19040,
+    "sha256": "7012bca256212849ce7a8894f0f6d7e669824b4b1abb6ffef0ea3978047e4786"
+  },
+  "failureRaw": {
+    "path": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/full-tests-04.txt",
+    "bytes": 902583,
+    "sha256": "46404cb3657b0c661b3a30d8bb7ba50452d12b9ebd0b29d14add677d36146c0e"
+  },
+  "failureReceipt": {
+    "path": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/full-tests-04.txt.result.json",
+    "bytes": 603,
+    "sha256": "15ce32d99ee0fb8f945d65e17d243f10a6406d6deff48bce96cdfb2a01995712"
+  },
+  "oldLine": "    const f = await fixture({ kind: \"version\" }, {}, 30), { result } = await f.begin();",
+  "newLines": "    let clock = 1000;\n    const f = await fixture({ kind: \"version\" }, { now: () => clock }, 30), { result } = await f.begin();\n    assert.equal(f.settled, false); assert.equal(f.worker.busy, true);\n    clock = 1031; // Expire only after the one owned fake child has actually started.",
+  "scope": "Only existing elapsed-deadline test uses injected monotonic clock; initial1000/deadline1030; advance1031 strictly after verified single fake-child admission. Same30ms timer,1000ms test timeout, STOP_UNCONFIRMED/busy/real-close/bothEOF/no-signals assertions. No product change or prior-failure regrade."
+}

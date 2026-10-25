@@ -1,0 +1,102 @@
+﻿TAP version 13
+# Subtest: F25 aggregate JSON-body framing preserves cross-channel arrival matching starting in stdout
+not ok 1 - F25 aggregate JSON-body framing preserves cross-channel arrival matching starting in stdout
+  ---
+  duration_ms: 16.8417
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\logAggregateFraming.test.ts:2:1273'
+  failureType: 'testCodeFailure'
+  error: 'An interleaved escaped registration must be masked.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logAggregateFraming.test.ts:16:9)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: F25 aggregate JSON-body framing preserves cross-channel arrival matching starting in stderr
+not ok 2 - F25 aggregate JSON-body framing preserves cross-channel arrival matching starting in stderr
+  ---
+  duration_ms: 2.4397
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\logAggregateFraming.test.ts:2:1273'
+  failureType: 'testCodeFailure'
+  error: 'An interleaved escaped registration must be masked.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logAggregateFraming.test.ts:16:9)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F25 canonical aggregate framing admits32 candidate lines and withholds33 atomically
+not ok 3 - F25 canonical aggregate framing admits32 candidate lines and withholds33 atomically
+  ---
+  duration_ms: 6.9423
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\logAggregateFraming.test.ts:2:2101'
+  failureType: 'testCodeFailure'
+  error: 'The inclusive framing budget remains useful.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logAggregateFraming.test.ts:26:27)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F25 unknown completed-log framing modes cannot silently opt into unframed release
+not ok 4 - F25 unknown completed-log framing modes cannot silently opt into unframed release
+  ---
+  duration_ms: 0.9593
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\logAggregateFraming.test.ts:2:2782'
+  failureType: 'testCodeFailure'
+  error: 'Invalid private mode admission must fail closed.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\logAggregateFraming.test.ts:34:5)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F25 canonical framing keeps normalized public Windows locations useful in both modes
+ok 5 - F25 canonical framing keeps normalized public Windows locations useful in both modes
+  ---
+  duration_ms: 2.8713
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 1
+# fail 4
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 534.3245

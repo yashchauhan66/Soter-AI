@@ -1,0 +1,214 @@
+{
+  "status": "MATERIALIZED_CURRENT_BOUND_FIXTURES_NOT_NATIVE_EXECUTED",
+  "feature": "F25",
+  "bindingSha256": "a4bb0d36fa94fb6b3e400fe69e301d5c99d660a971a16cd86026c9093b59c2ae",
+  "artifact": {
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-f25-20261024-attempt01.vsix",
+    "bytes": 1680590,
+    "sha256": "60a32ab790cf2f6adbf2fe197c2aeebbc12c446d68d3842ba6f1572cec3be473",
+    "frontendSha256": "cdfa7604796930081b199b7ceab6a1279bf7f34b23042032fcaea83373d7729a"
+  },
+  "nativeDrivers": 20,
+  "declaredNativeChecks": 509,
+  "declaredNativePhases": 37,
+  "files": [
+    {
+      "path": "host-current-binding-01.ps1",
+      "bytes": 4642,
+      "sha256": "e18d1d9d013c0ff565bb180f10d97f1e58a96aa1d96ed89043190d8602d487fb",
+      "source": "host-current-binding-02.template.ps1",
+      "sourceSha256": "a8f93b3bf65d420d690fda930a0fd63a999aa792e6995e663276723624d3e456"
+    },
+    {
+      "path": "artifact-binding-01.ps1",
+      "bytes": 3832,
+      "sha256": "44282af0d0cbe009ef3bc03a2bb7562447687033c1300f0590baf7ae439496bc",
+      "source": "artifact-binding-01.template.ps1",
+      "sourceSha256": "c2895f9fb0de535f710f67113b5f4ec64ba4e9460d174a892d53affe5bb476ed"
+    },
+    {
+      "path": "inspect-vsix-01.ps1",
+      "bytes": 27641,
+      "sha256": "da62005856d045525ef8a8d975b738cb1d19b6eeac1696456ff6130c95d6e182",
+      "source": "inspect-vsix-02.template.ps1",
+      "sourceSha256": "8c4f9d1fd364f016b6b9e0dc8452a8c122d3cd6ed5b5922c1515da0a6aef2df7"
+    },
+    {
+      "path": "run-artifact-native-01.ps1",
+      "bytes": 18185,
+      "sha256": "f2af9b080e239f27a6057af66d8b0fbd7a72b2a86faea815ea68b84bdd0b8545",
+      "source": "run-artifact-native-01.template.ps1",
+      "sourceSha256": "e09c7a95a869502e10d5da100be58b33bd28b252edbc395530210dbc7ae957c1"
+    },
+    {
+      "path": "run-affected-history-01.ps1",
+      "bytes": 18203,
+      "sha256": "c657e885c00ab2b175b2aad8822aeab7d0cef4c604829a04e8bac9f3d6b213c1",
+      "source": "run-affected-history-01.template.ps1",
+      "sourceSha256": "72eeec8e409463d0b051d044df1549ec1a026407a7415aa19284825e67af3add"
+    },
+    {
+      "path": "run-mcp-native-01.ps1",
+      "bytes": 18199,
+      "sha256": "47d189dd2629f67b9645528bd3d933f21d76ea52133f6f51a15eb1f8951ad158",
+      "source": "run-mcp-native-01.template.ps1",
+      "sourceSha256": "abe1e5f7c0057abe02c245f62394029a048d722f4d0d6d82d7632844cbfb3045"
+    },
+    {
+      "path": "run-affected-editor-01.ps1",
+      "bytes": 18204,
+      "sha256": "6a82d4b468f3de182349119f340ca272c628ec2252c04d5c4eca3c1f40ee4352",
+      "source": "run-affected-editor-01.template.ps1",
+      "sourceSha256": "e3b8d916cca5a61ca4f236dd91bec4b61dd6605b94cb090323dafd92935d5fce"
+    },
+    {
+      "path": "run-affected-ci-01.ps1",
+      "bytes": 18192,
+      "sha256": "7b24e7d81245415ba36b7c5d09c7a197b25e4477c459cdc159835887300a42b9",
+      "source": "run-affected-ci-01.template.ps1",
+      "sourceSha256": "747c32cdbac93c739fd3a8cbf8b491c6c1c6a4ba0f821acb90f4490272295e08"
+    },
+    {
+      "path": "run-affected-service-account-01.ps1",
+      "bytes": 18231,
+      "sha256": "670103498c18f8e6e4918348af72ced0846012840b35f7ddbd1465981965c0c9",
+      "source": "run-affected-service-account-01.template.ps1",
+      "sourceSha256": "303cab396e64f699b8f70d467877aae50a8706424c402de74b49606dde65eb0e"
+    },
+    {
+      "path": "run-affected-registry-01.ps1",
+      "bytes": 18210,
+      "sha256": "b9bb1ee7e6dbd733e5f6971d3bce1814e34225ef96c1d59e9a8958bef18313b7",
+      "source": "run-affected-registry-01.template.ps1",
+      "sourceSha256": "c2b3d39e905424845fb3cd7ce6cd0ffd9feea2be2b98f8a84877fce1e765c67f"
+    },
+    {
+      "path": "run-affected-terraform-01.ps1",
+      "bytes": 18213,
+      "sha256": "f4f6842436cdef6bd10957a42678414a1510dcda8f5c34264c2ab45dd4333b7e",
+      "source": "run-affected-terraform-01.template.ps1",
+      "sourceSha256": "04e58c61c15f1fd542fd0723da03e037f224c3ca03b628390f60e3a361ba237c"
+    },
+    {
+      "path": "run-affected-container-01.ps1",
+      "bytes": 18213,
+      "sha256": "231772853a759d4cfa273570a8634f7d37696c9c5ee2b2cdc9ca9b0acb25b78d",
+      "source": "run-affected-container-01.template.ps1",
+      "sourceSha256": "7ead8c2cfb989e7267367e7805d06cc19e4ff7d94b5ec25a1b495dfeec592812"
+    },
+    {
+      "path": "run-affected-source-01.ps1",
+      "bytes": 18215,
+      "sha256": "837a929520020a6ff4c252ee4c7d9b2ba773eb5709ccd5d82d8bbf4f4cd8bd4c",
+      "source": "run-affected-source-01.template.ps1",
+      "sourceSha256": "3f7e19a3095a5cbdd4b3641828aa385021b6904b96a5a3c56203afdce24da325"
+    },
+    {
+      "path": "run-affected-hygiene-01.ps1",
+      "bytes": 18216,
+      "sha256": "3516f5c63fc5c44d0be3032e509551325a06327f0084b36525f2a82d61bc364d",
+      "source": "run-affected-hygiene-01.template.ps1",
+      "sourceSha256": "2fff35846beb0be4f4310be4baa0154927de638e98f10d674def551465c81900"
+    },
+    {
+      "path": "run-affected-vault-01.ps1",
+      "bytes": 18240,
+      "sha256": "5c2c9e15b104407e257e4477ee21d145614b9bee4a4b7e4393b090738d210de5",
+      "source": "run-affected-vault-01.template.ps1",
+      "sourceSha256": "4a8b57a0339d77e12a7936033c47175aec32aa2e374ece335772c1e45dc96555"
+    },
+    {
+      "path": "run-retained-native-01.ps1",
+      "bytes": 18254,
+      "sha256": "af1e461c63ceda5c02519ba15ffc8fac0aee8168c445ef0fb810c4e7ff72b0ed",
+      "source": "run-retained-native-01.template.ps1",
+      "sourceSha256": "22d97b37e8caff529c23a3f89a738b2daaf4e30bff7b7c9d559bb5f2710a4653"
+    },
+    {
+      "path": "run-affected-hosts-01.ps1",
+      "bytes": 9629,
+      "sha256": "528846a7a0f9bc0ffcb76ca9d2478181d552d84df5408bada098cc8348b83c08",
+      "source": "run-affected-hosts-01.template.ps1",
+      "sourceSha256": "ffa7c1b5d261ed64be053c5e589bce260baa60c6924bf212da85ef0b068540bb"
+    },
+    {
+      "path": "run-functional-01.ps1",
+      "bytes": 9840,
+      "sha256": "7230df41ec69aed4a5b924ba3b1b52ad60290a3b38a0e558d1d1e00f3ab4412d",
+      "source": "run-functional-01.template.ps1",
+      "sourceSha256": "0c4725b17a36bf96399cfe85183bd08c810d32121faa93c4e8086abf8e42a505"
+    },
+    {
+      "path": "run-security-01.ps1",
+      "bytes": 10826,
+      "sha256": "04771163130a97d5761e801c531d7310d347a65a38dbd41bbf8c42188f11cc3b",
+      "source": "run-security-01.template.ps1",
+      "sourceSha256": "13b6c001f2dbfae7def9449c7ed11381788de66ae8a494a66d54d021f424f5eb"
+    },
+    {
+      "path": "run-current-affected-suite-01.ps1",
+      "bytes": 5160,
+      "sha256": "3f77e8400211db7013c6a25c418b7dd64694460f988b45431d7db3adc8285f79",
+      "source": "run-current-affected-suite-01.template.ps1",
+      "sourceSha256": "06e2a59e95bc1442c2424b317c9323e5be48d587d5472643e7b423d5c0848550"
+    },
+    {
+      "path": "run-native-gates-01.ps1",
+      "bytes": 3649,
+      "sha256": "eaea1dea8990d21f0f11955a13b6e0e308f420f9579397396c32e5aa2c3933f0",
+      "source": "run-native-gates-01.template.ps1",
+      "sourceSha256": "b2eb1082c714c1ccc420a15e08879a97b90f295c1918f943eded6e8b3248aa94"
+    },
+    {
+      "path": "run-logs-native-01.ps1",
+      "bytes": 18191,
+      "sha256": "bf98ccd0bb0f7eac1518caef00a9d4deab619391e646ac567d61d4b473b69dda",
+      "source": "run-logs-native-01.template.ps1",
+      "sourceSha256": "fa1b7f1081b3d941b6849a03a60eb9fe3f59652631b16c0a99a5ea779dd0e5ce"
+    },
+    {
+      "path": "run-owned-output-native-01.ps1",
+      "bytes": 18059,
+      "sha256": "7345e9362c6e91ec4c81ceb8b8bdb06c2664a1ddd47e73b8b9515d03842da252",
+      "source": "run-owned-output-native-01.template.ps1",
+      "sourceSha256": "1f84f2e4de3ec1067d0f29548fa6215d45e28acc5f81303f49d4830b644d42d3"
+    },
+    {
+      "path": "run-affected-streaming-output-01.ps1",
+      "bytes": 18123,
+      "sha256": "c1d7188441111f9d4aa13df6cbae7e4e1189932fbe3ed1a5ce491adee85cdbaf",
+      "source": "run-affected-streaming-output-01.template.ps1",
+      "sourceSha256": "edc9b685d68d8935049143a470f49aa95e81bcf5ae36ef122d1cdc209eb28fce"
+    },
+    {
+      "path": "run-affected-vault-runtime-01.ps1",
+      "bytes": 18120,
+      "sha256": "19b15c6f70ed0d05633e6a6965e64795129cf029983cc2dba59d1ccb66fdcb3d",
+      "source": "run-affected-vault-runtime-01.template.ps1",
+      "sourceSha256": "093b5766fb5439f0b1c170591e240a697be80d02a8a626be93be2423ce252c39"
+    },
+    {
+      "path": "run-affected-ps51-01.ps1",
+      "bytes": 18200,
+      "sha256": "503a537c8cfc1588f1b4197c4a8409134ec6ba4faddda165fdc6aef039accdf2",
+      "source": "run-affected-ps51-01.template.ps1",
+      "sourceSha256": "3d33647529d034433c577d46ffc6f877a5b9db9de617e272d337f5276ffa76c8"
+    },
+    {
+      "path": "run-affected-cmd-01.ps1",
+      "bytes": 18199,
+      "sha256": "d367ac9c7c8cc5c5a79e15e86acce25eb35894f1d8cf7a1f7373824501f53e30",
+      "source": "run-affected-cmd-01.template.ps1",
+      "sourceSha256": "a6f0b3ff81fd3bd77401f33c70e2c464a35354522cfdc9864db383f137b81175"
+    },
+    {
+      "path": "run-affected-gitbash-01.ps1",
+      "bytes": 18203,
+      "sha256": "eafdeb8f188df2c08726bb333a9f9908333d2fba0f9d90d7e34658ef36d71392",
+      "source": "run-affected-gitbash-01.template.ps1",
+      "sourceSha256": "4a234e45d550b2bed9d063643531a3a4ba403cf9cd25c6addaca9831d231973d"
+    }
+  ],
+  "time": "2026-10-24T15:34:37.173Z",
+  "scope": "Current gates/input membership/host/build/package bytes checked. New bound fixture copies only; actual ZIP inspection, native execution, owned close/EOF, custody, acceptance and source+transition byte barriers remain pending."
+}

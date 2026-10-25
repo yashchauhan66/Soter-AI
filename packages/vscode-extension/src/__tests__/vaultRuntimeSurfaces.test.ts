@@ -17,13 +17,14 @@ function deferred<T>() { let resolve!: (value: T) => void, reject!: (error: unkn
 function safe(value: unknown): void { assert.ok(!JSON.stringify(value).includes(PRIVATE), "Native surface messages must exclude private values and exception text."); }
 function fakeJob() {
     const pending = deferred<{ snapshot: Snapshot; output: OutputResult }>(); let state = "RUNNING", exitCode: number | undefined;
-    let stopped = 0, cancelled = 0, completed = false;
+    let stopped = 0, cancelled = 0, completed = false, disposed = false; let capability: OutputResult | undefined;
     return { completion: pending.promise, snapshot: (): Readonly<Snapshot> => Object.freeze({ id: JOB, state, pid: 32145, ...(exitCode === undefined ? {} : { exitCode }) }),
-        requestStop() { stopped++; state = "STOP_REQUESTED"; }, cancel() { cancelled++; state = "STOP_REQUESTED"; }, dispose() { cancelled++; state = "STOP_REQUESTED"; },
+        requestStop() { stopped++; state = "STOP_REQUESTED"; }, cancel() { cancelled++; state = "STOP_REQUESTED"; }, dispose() { disposed = true; },
+        canRelease(output: OutputResult) { return completed && !disposed && stopped === 0 && cancelled === 0 && output === capability; },
         get stops() { return stopped + cancelled; }, unconfirmed() { state = "STOP_UNCONFIRMED"; },
         finish(output: OutputResult = { status: "COMPLETE", stdout: "public output\n", stderr: "", redacted: false, exitCode: 0 }, code = output.exitCode ?? 0) {
             if (completed) return; completed = true; state = stopped || cancelled ? "STOPPED" : "EXITED"; exitCode = code;
-            pending.resolve(Object.freeze({ snapshot: this.snapshot(), output: Object.freeze(output) }));
+            capability = Object.freeze(output); pending.resolve(Object.freeze({ snapshot: this.snapshot(), output: capability }));
         } };
 }
 type FakeJob = ReturnType<typeof fakeJob>;
