@@ -2,7 +2,24 @@
 
 Date: 13 October 2026. Plan version: 1. Scope: existing non-VM functionality plus the remaining Lite upgrades. This is a plan, not an implementation or a passing product report. Final rating: **PENDING until completion and required verification**.
 
-The user's latest instruction controls execution: **finish and test one feature, then start the next**. Implementation has one active feature at a time. Test specifications and adversarial reviews may run in parallel; production implementation may not. Existing working-tree changes and the tested dated 0.6.3 candidate are the starting inputs; they are not a newly completed Lite split.
+The user's latest instruction controls execution. **26 October 2026 priority amendment:** implement shorter independent work first and defer time-consuming work, while keeping one implementation task active at a time. The original finish-and-test rule still applies to each selected task's declared contract; an unfinished deferred card remains INCOMPLETE and cannot acquire another card's PASS. Test specifications and adversarial reviews may run in parallel; production implementation may not. Existing working-tree changes and the tested dated 0.6.3 candidate are the starting inputs; they are not a newly completed Lite split.
+
+## Priority amendment — 26 October 2026
+
+User instruction: “abhi jo features jaldi implement ho sakte hai unko pahle implement kro or jo time consuming hai unko baad ke implement kro.” This changes scheduling, not the frozen catalog, required behavior or verification standard. F26a is preserved at progress-14 and native06 stays explicitly deferred; its former serial dependency no longer blocks independent preparation. Original before-bytes are retained in `evidence/20261026-f31a-offline-release-6c28a19f/`.
+
+Preferred remaining order, subject to technical dependencies: **F31a → F26c → F27 → F29 → F30 → F26a → F26b → F28 → F31b → F32**, then unchanged V01–V05. This is a relative effort judgment from current scope, not a measured completion-time promise. F26a/native06 still needs a later explicit extra-round authorization; no push is authorized for F26b. A declined operation is not retried merely because another card completes.
+
+F31 is split at a reviewable boundary: **F31a** is an offline release-inventory/SBOM utility and owner publishing runbook, independent of runtime feature completion. It reads only an explicit exact VSIX, bounded build-provenance code inputs and dependency license metadata. It never publishes, logs in, downloads, launches Code or declares release readiness. **F31b** retains all original final-package requirements, honest final README-CLAIMS, complete shipped notices/privacy, final exact-object SBOM inclusion, platform declarations, audits and final content inspection. Parent F31 cannot be DONE before F31b. An early detached SBOM is not a claim that the VSIX already embeds it.
+
+Current selected task F31a:
+
+- [x] Retain pre-change plan/queue/ledger and a meaningful missing-module regression baseline (17FAIL).
+- [x] Add `packages/soterai-lite/scripts/audit-release.cjs` with `auditRelease({repoRoot,vsixPath,expectedSha256,buildReceiptPath})`, returning bounded deterministic `{report,sbom}`; CLI writes new report files only to a new explicit workspace directory. Consumers use this API; no runtime import or flag is added.
+- [x] Test exact ZIP entries/runtime/source hashes, missing/tampered inputs, unsupported platform, duplicate/case aliases, budget/truncation failures, license uncertainty, deterministic SBOM and no absolute workspace paths. Actual current20tests20PASS; original17 retained, three real-packager/shared-root regressions added. Earlier17PASS1FAIL and18PASS2FAIL retained.
+- [x] Execute the auditor on the retained exact F26a attempt02 VSIX and immutable build receipt; actual03/04 output byte-identical and overwrite refusal1 retained.15entries/four runtimes/408inputs/three bundled components. This build-tool scope does not change installed runtimes or substitute for F26a's native checks.
+- [x] Write `PUBLISHING-RUNBOOK.md` from current official docs and installed CLI options; owner identity/token or secure automation, exact win32-x64 artifact, pre-release first and Open VSX are covered. No publish command is executed.
+- [ ] Verify unchanged F26a990 input bytes, record ledger receipt, scope only F31a files for a local utility commit and verify actual committed bytes. Preserve all unrelated and uncommitted F26a work. Do not mark parent F31 or F26 complete.
 
 ## Product contract
 

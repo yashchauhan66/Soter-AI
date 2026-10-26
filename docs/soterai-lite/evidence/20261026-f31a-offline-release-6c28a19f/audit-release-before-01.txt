@@ -1,0 +1,418 @@
+﻿TAP version 13
+# Subtest: exact synthetic artifact yields inventory and actual bundled-component SBOM; readiness stays incomplete
+not ok 1 - exact synthetic artifact yields inventory and actual bundled-component SBOM; readiness stays incomplete
+  ---
+  duration_ms: 70.44
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\soterai-lite\\scripts\\__tests__\\audit-release.test.cjs:23:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Cannot find module '../audit-release.cjs'
+    Require stack:
+    - C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs
+  code: 'MODULE_NOT_FOUND'
+  stack: |-
+    Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)
+    defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    Function._load (node:internal/modules/cjs/loader:1211:37)
+    TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    Module.require (node:internal/modules/cjs/loader:1487:12)
+    require (node:internal/modules/helpers:135:16)
+    load (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs:22:16)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs:24:47)
+  ...
+# Subtest: artifact SHA mismatch refuses before archive contents are accepted
+not ok 2 - artifact SHA mismatch refuses before archive contents are accepted
+  ---
+  duration_ms: 26.2514
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\soterai-lite\\scripts\\__tests__\\audit-release.test.cjs:29:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Cannot find module '../audit-release.cjs'
+    Require stack:
+    - C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs
+  code: 'MODULE_NOT_FOUND'
+  stack: |-
+    Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)
+    defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    Function._load (node:internal/modules/cjs/loader:1211:37)
+    TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    Module.require (node:internal/modules/cjs/loader:1487:12)
+    require (node:internal/modules/helpers:135:16)
+    load (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs:22:16)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs:29:131)
+  ...
+# Subtest: missing runtime cannot yield inventory success
+not ok 3 - missing runtime cannot yield inventory success
+  ---
+  duration_ms: 18.233
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\soterai-lite\\scripts\\__tests__\\audit-release.test.cjs:30:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Cannot find module '../audit-release.cjs'
+    Require stack:
+    - C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs
+  code: 'MODULE_NOT_FOUND'
+  stack: |-
+    Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)
+    defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    Function._load (node:internal/modules/cjs/loader:1211:37)
+    TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    Module.require (node:internal/modules/cjs/loader:1487:12)
+    require (node:internal/modules/helpers:135:16)
+    load (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs:22:16)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs:30:170)
+  ...
+# Subtest: runtime bytes must agree with build provenance
+not ok 4 - runtime bytes must agree with build provenance
+  ---
+  duration_ms: 23.0652
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\soterai-lite\\scripts\\__tests__\\audit-release.test.cjs:31:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Cannot find module '../audit-release.cjs'
+    Require stack:
+    - C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs
+  code: 'MODULE_NOT_FOUND'
+  stack: |-
+    Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)
+    defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    Function._load (node:internal/modules/cjs/loader:1211:37)
+    TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    Module.require (node:internal/modules/cjs/loader:1487:12)
+    require (node:internal/modules/helpers:135:16)
+    load (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs:22:16)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs:31:183)
+  ...
+# Subtest: source maps and evidence are not accepted as release entries
+not ok 5 - source maps and evidence are not accepted as release entries
+  ---
+  duration_ms: 19.0297
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\soterai-lite\\scripts\\__tests__\\audit-release.test.cjs:32:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Cannot find module '../audit-release.cjs'
+    Require stack:
+    - C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs
+  code: 'MODULE_NOT_FOUND'
+  stack: |-
+    Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)
+    defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    Function._load (node:internal/modules/cjs/loader:1211:37)
+    TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    Module.require (node:internal/modules/cjs/loader:1487:12)
+    require (node:internal/modules/helpers:135:16)
+    load (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs:22:16)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs:32:202)
+  ...
+# Subtest: case alias entries are refused
+not ok 6 - case alias entries are refused
+  ---
+  duration_ms: 16.5425
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\soterai-lite\\scripts\\__tests__\\audit-release.test.cjs:33:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Cannot find module '../audit-release.cjs'
+    Require stack:
+    - C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs
+  code: 'MODULE_NOT_FOUND'
+  stack: |-
+    Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)
+    defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    Function._load (node:internal/modules/cjs/loader:1211:37)
+    TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    Module.require (node:internal/modules/cjs/loader:1487:12)
+    require (node:internal/modules/helpers:135:16)
+    load (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs:22:16)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs:33:156)
+  ...
+# Subtest: platform must be explicitly win32-x64
+not ok 7 - platform must be explicitly win32-x64
+  ---
+  duration_ms: 17.9151
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\soterai-lite\\scripts\\__tests__\\audit-release.test.cjs:34:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Cannot find module '../audit-release.cjs'
+    Require stack:
+    - C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs
+  code: 'MODULE_NOT_FOUND'
+  stack: |-
+    Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)
+    defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    Function._load (node:internal/modules/cjs/loader:1211:37)
+    TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    Module.require (node:internal/modules/cjs/loader:1487:12)
+    require (node:internal/modules/helpers:135:16)
+    load (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs:22:16)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs:34:199)
+  ...
+# Subtest: manifest identity must match build provenance
+not ok 8 - manifest identity must match build provenance
+  ---
+  duration_ms: 15.6395
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\soterai-lite\\scripts\\__tests__\\audit-release.test.cjs:35:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Cannot find module '../audit-release.cjs'
+    Require stack:
+    - C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs
+  code: 'MODULE_NOT_FOUND'
+  stack: |-
+    Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)
+    defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    Function._load (node:internal/modules/cjs/loader:1211:37)
+    TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    Module.require (node:internal/modules/cjs/loader:1487:12)
+    require (node:internal/modules/helpers:135:16)
+    load (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs:22:16)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs:35:216)
+  ...
+# Subtest: missing build input cannot become a complete SBOM
+not ok 9 - missing build input cannot become a complete SBOM
+  ---
+  duration_ms: 19.7926
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\soterai-lite\\scripts\\__tests__\\audit-release.test.cjs:36:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Cannot find module '../audit-release.cjs'
+    Require stack:
+    - C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs
+  code: 'MODULE_NOT_FOUND'
+  stack: |-
+    Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)
+    defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    Function._load (node:internal/modules/cjs/loader:1211:37)
+    TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    Module.require (node:internal/modules/cjs/loader:1487:12)
+    require (node:internal/modules/helpers:135:16)
+    load (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs:22:16)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs:36:192)
+  ...
+# Subtest: changed build input is refused
+not ok 10 - changed build input is refused
+  ---
+  duration_ms: 23.5916
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\soterai-lite\\scripts\\__tests__\\audit-release.test.cjs:37:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Cannot find module '../audit-release.cjs'
+    Require stack:
+    - C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs
+  code: 'MODULE_NOT_FOUND'
+  stack: |-
+    Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)
+    defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    Function._load (node:internal/modules/cjs/loader:1211:37)
+    TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    Module.require (node:internal/modules/cjs/loader:1487:12)
+    require (node:internal/modules/helpers:135:16)
+    load (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs:22:16)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs:37:186)
+  ...
+# Subtest: repository selector input paths outside code inventory are refused before reading
+not ok 11 - repository selector input paths outside code inventory are refused before reading
+  ---
+  duration_ms: 27.4535
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\soterai-lite\\scripts\\__tests__\\audit-release.test.cjs:38:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Cannot find module '../audit-release.cjs'
+    Require stack:
+    - C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs
+  code: 'MODULE_NOT_FOUND'
+  stack: |-
+    Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)
+    defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    Function._load (node:internal/modules/cjs/loader:1211:37)
+    TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    Module.require (node:internal/modules/cjs/loader:1487:12)
+    require (node:internal/modules/helpers:135:16)
+    load (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs:22:16)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs:38:228)
+  ...
+# Subtest: unknown license is visible INCOMPLETE without inventing approval
+not ok 12 - unknown license is visible INCOMPLETE without inventing approval
+  ---
+  duration_ms: 27.511
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\soterai-lite\\scripts\\__tests__\\audit-release.test.cjs:39:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Cannot find module '../audit-release.cjs'
+    Require stack:
+    - C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs
+  code: 'MODULE_NOT_FOUND'
+  stack: |-
+    Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)
+    defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    Function._load (node:internal/modules/cjs/loader:1211:37)
+    TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    Module.require (node:internal/modules/cjs/loader:1487:12)
+    require (node:internal/modules/helpers:135:16)
+    load (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs:22:16)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs:39:270)
+  ...
+# Subtest: missing notice is visible INCOMPLETE
+not ok 13 - missing notice is visible INCOMPLETE
+  ---
+  duration_ms: 24.7118
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\soterai-lite\\scripts\\__tests__\\audit-release.test.cjs:40:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Cannot find module '../audit-release.cjs'
+    Require stack:
+    - C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs
+  code: 'MODULE_NOT_FOUND'
+  stack: |-
+    Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)
+    defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    Function._load (node:internal/modules/cjs/loader:1211:37)
+    TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    Module.require (node:internal/modules/cjs/loader:1487:12)
+    require (node:internal/modules/helpers:135:16)
+    load (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs:22:16)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs:40:177)
+  ...
+# Subtest: duplicate runtime provenance is rejected
+not ok 14 - duplicate runtime provenance is rejected
+  ---
+  duration_ms: 21.1141
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\soterai-lite\\scripts\\__tests__\\audit-release.test.cjs:41:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Cannot find module '../audit-release.cjs'
+    Require stack:
+    - C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs
+  code: 'MODULE_NOT_FOUND'
+  stack: |-
+    Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)
+    defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    Function._load (node:internal/modules/cjs/loader:1211:37)
+    TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    Module.require (node:internal/modules/cjs/loader:1487:12)
+    require (node:internal/modules/helpers:135:16)
+    load (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs:22:16)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs:41:159)
+  ...
+# Subtest: truncated ZIP is a failure, never a partially successful inventory
+not ok 15 - truncated ZIP is a failure, never a partially successful inventory
+  ---
+  duration_ms: 21.9571
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\soterai-lite\\scripts\\__tests__\\audit-release.test.cjs:42:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Cannot find module '../audit-release.cjs'
+    Require stack:
+    - C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs
+  code: 'MODULE_NOT_FOUND'
+  stack: |-
+    Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)
+    defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    Function._load (node:internal/modules/cjs/loader:1211:37)
+    TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    Module.require (node:internal/modules/cjs/loader:1487:12)
+    require (node:internal/modules/helpers:135:16)
+    load (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs:22:16)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs:42:239)
+  ...
+# Subtest: archive entry with excessive expanded size is refused
+not ok 16 - archive entry with excessive expanded size is refused
+  ---
+  duration_ms: 135.9278
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\soterai-lite\\scripts\\__tests__\\audit-release.test.cjs:43:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Cannot find module '../audit-release.cjs'
+    Require stack:
+    - C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs
+  code: 'MODULE_NOT_FOUND'
+  stack: |-
+    Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)
+    defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    Function._load (node:internal/modules/cjs/loader:1211:37)
+    TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    Module.require (node:internal/modules/cjs/loader:1487:12)
+    require (node:internal/modules/helpers:135:16)
+    load (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs:22:16)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs:43:187)
+  ...
+# Subtest: deterministic SBOM and report do not include current timestamps or guessed results
+not ok 17 - deterministic SBOM and report do not include current timestamps or guessed results
+  ---
+  duration_ms: 18.7067
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\soterai-lite\\scripts\\__tests__\\audit-release.test.cjs:44:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Cannot find module '../audit-release.cjs'
+    Require stack:
+    - C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs
+  code: 'MODULE_NOT_FOUND'
+  stack: |-
+    Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)
+    defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    Function._load (node:internal/modules/cjs/loader:1211:37)
+    TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    Module.require (node:internal/modules/cjs/loader:1487:12)
+    require (node:internal/modules/helpers:135:16)
+    load (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs:22:16)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs:44:134)
+  ...
+1..17
+# tests 17
+# suites 0
+# pass 0
+# fail 17
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 746.7185

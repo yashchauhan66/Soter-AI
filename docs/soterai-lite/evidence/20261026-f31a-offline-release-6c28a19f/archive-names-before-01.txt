@@ -1,0 +1,129 @@
+﻿TAP version 13
+# Subtest: exact synthetic artifact yields inventory and actual bundled-component SBOM; readiness stays incomplete
+ok 1 - exact synthetic artifact yields inventory and actual bundled-component SBOM; readiness stays incomplete
+  ---
+  duration_ms: 354.4746
+  type: 'test'
+  ...
+# Subtest: artifact SHA mismatch refuses before archive contents are accepted
+ok 2 - artifact SHA mismatch refuses before archive contents are accepted
+  ---
+  duration_ms: 27.2764
+  type: 'test'
+  ...
+# Subtest: missing runtime cannot yield inventory success
+ok 3 - missing runtime cannot yield inventory success
+  ---
+  duration_ms: 36.7013
+  type: 'test'
+  ...
+# Subtest: runtime bytes must agree with build provenance
+ok 4 - runtime bytes must agree with build provenance
+  ---
+  duration_ms: 33.0752
+  type: 'test'
+  ...
+# Subtest: source maps and evidence are not accepted as release entries
+ok 5 - source maps and evidence are not accepted as release entries
+  ---
+  duration_ms: 33.2317
+  type: 'test'
+  ...
+# Subtest: case alias entries are refused
+ok 6 - case alias entries are refused
+  ---
+  duration_ms: 25.9291
+  type: 'test'
+  ...
+# Subtest: platform must be explicitly win32-x64
+ok 7 - platform must be explicitly win32-x64
+  ---
+  duration_ms: 29.2178
+  type: 'test'
+  ...
+# Subtest: manifest identity must match build provenance
+ok 8 - manifest identity must match build provenance
+  ---
+  duration_ms: 40.7763
+  type: 'test'
+  ...
+# Subtest: missing build input cannot become a complete SBOM
+ok 9 - missing build input cannot become a complete SBOM
+  ---
+  duration_ms: 35.9497
+  type: 'test'
+  ...
+# Subtest: changed build input is refused
+ok 10 - changed build input is refused
+  ---
+  duration_ms: 40.857
+  type: 'test'
+  ...
+# Subtest: repository selector input paths outside code inventory are refused before reading
+ok 11 - repository selector input paths outside code inventory are refused before reading
+  ---
+  duration_ms: 30.5356
+  type: 'test'
+  ...
+# Subtest: unknown license is visible INCOMPLETE without inventing approval
+ok 12 - unknown license is visible INCOMPLETE without inventing approval
+  ---
+  duration_ms: 53.62
+  type: 'test'
+  ...
+# Subtest: missing notice is visible INCOMPLETE
+ok 13 - missing notice is visible INCOMPLETE
+  ---
+  duration_ms: 50.0263
+  type: 'test'
+  ...
+# Subtest: duplicate runtime provenance is rejected
+ok 14 - duplicate runtime provenance is rejected
+  ---
+  duration_ms: 47.1801
+  type: 'test'
+  ...
+# Subtest: truncated ZIP is a failure, never a partially successful inventory
+ok 15 - truncated ZIP is a failure, never a partially successful inventory
+  ---
+  duration_ms: 24.8238
+  type: 'test'
+  ...
+# Subtest: archive entry with excessive expanded size is refused
+ok 16 - archive entry with excessive expanded size is refused
+  ---
+  duration_ms: 106.9198
+  type: 'test'
+  ...
+# Subtest: deterministic SBOM and report do not include current timestamps or guessed results
+ok 17 - deterministic SBOM and report do not include current timestamps or guessed results
+  ---
+  duration_ms: 92.8853
+  type: 'test'
+  ...
+# Subtest: actual vsce canonical lowercase readme and changelog names are accepted without allowing aliases
+not ok 18 - actual vsce canonical lowercase readme and changelog names are accepted without allowing aliases
+  ---
+  duration_ms: 34.3689
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\soterai-lite\\scripts\\__tests__\\audit-release.test.cjs:45:1'
+  failureType: 'testCodeFailure'
+  error: 'Unexpected, duplicate or aliased archive entry'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    demand (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\audit-release.cjs:10:42)
+    archive (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\audit-release.cjs:27:29)
+    async Object.auditRelease (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\audit-release.cjs:43:16)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs:45:310)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..18
+# tests 18
+# suites 0
+# pass 17
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1384.2119

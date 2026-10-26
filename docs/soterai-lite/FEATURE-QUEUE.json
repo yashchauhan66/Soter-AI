@@ -11,7 +11,15 @@
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
   "scope": "F01-F10/F12-F25 scoped DONE only after actual F25 transition byte barrier; F11 optional absent NOT_TESTED/NOT_COVERED. F26a active after barrier; F26b-c/F27-F32/V01-V05 pending. No rating/human/independent claim.",
   "implementationConcurrency": 1,
-  "activeFeature": "F26",
+  "activeFeature": "F31",
+  "activeSubcard": "F31a",
+  "priorityAmendment": {
+    "date": "2026-10-26",
+    "authority": "User requested shorter independent features first and time-consuming work later",
+    "order": ["F31a", "F26c", "F27", "F29", "F30", "F26a", "F26b", "F28", "F31b", "F32"],
+    "deferred": ["F26a native06 remains explicitly deferred; no extra-round approval", "F26b has no push authorization"],
+    "rule": "One selected implementation task at a time; all original required feature gates retained. Parent F31 cannot be DONE on F31a preparation alone."
+  },
   "prerequisiteBlock": {
     "id": "P00",
     "result": "FAIL",
@@ -846,10 +854,12 @@
           "id": "F26a",
           "title": "pre-commit",
           "status": "ACTIVE",
-          "result": "NOT-RUN",
+          "result": "INCOMPLETE",
           "requires": [
             "parent prerequisites"
-          ]
+          ],
+          "progressEvidence": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/progress-14.json",
+          "executionDecision": "Native06 deferred by explicit user answer on 2026-10-26. Fresh compiler15/full03/backend04/21-driver04/new attempt02 VSIX/content PASS; required native34/offline/20 affected families/withdrawal/commits and exact bytes remain pending. Do not run06 without later explicit approval. New user priority amendment permits independent work first; it does not complete F26a."
         },
         {
           "id": "F26b",
@@ -866,7 +876,7 @@
           "status": "PLANNED",
           "result": "NOT-RUN",
           "requires": [
-            "F26b"
+            "F10", "F21", "F25"
           ]
         }
       ],
@@ -879,7 +889,7 @@
       "status": "PLANNED",
       "result": "NOT-RUN",
       "requires": [
-        "F26"
+        "F25"
       ],
       "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
     },
@@ -889,7 +899,7 @@
       "status": "PLANNED",
       "result": "NOT-RUN",
       "requires": [
-        "F27"
+        "F26", "F27", "F30"
       ],
       "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
     },
@@ -899,7 +909,7 @@
       "status": "PLANNED",
       "result": "NOT-RUN",
       "requires": [
-        "F28"
+        "F27"
       ],
       "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
     },
@@ -916,11 +926,33 @@
     {
       "id": "F31",
       "title": "Marketplace-ready package preparation.",
-      "status": "PLANNED",
-      "result": "NOT-RUN",
+      "status": "ACTIVE",
+      "result": "INCOMPLETE",
       "requires": [
-        "F30"
+        "F25"
       ],
+      "subcards": [
+        {
+          "id": "F31a",
+          "title": "Offline release inventory, detached bundled-component SBOM and publishing runbook",
+          "status": "VERIFYING",
+          "result": "INCOMPLETE",
+          "requires": ["F25"],
+          "scope": "Build/documentation utility only; explicit exact VSIX/provenance and bounded code/license inputs. No runtime change/native acceptance/release-readiness or publishing claim.",
+          "evidence": "docs/soterai-lite/evidence/20261026-f31a-offline-release-6c28a19f",
+          "progressEvidence": "docs/soterai-lite/evidence/20261026-f31a-offline-release-6c28a19f/acceptance-01.json",
+          "verification": "Current20tests20PASS; exact15-entry/4-runtime/408-input/3-component offline audit repeated byte-identically; overwrite refused. Source/transition local Git byte barriers pending; no new native or release-readiness claim."
+        },
+        {
+          "id": "F31b",
+          "title": "Final exact-package readiness, honest claims, shipped notices/privacy/SBOM and audits",
+          "status": "PLANNED",
+          "result": "NOT-RUN",
+          "requires": ["F26", "F27", "F28", "F29", "F30", "F31a"],
+          "scope": "All original F31 final-object packaging and readiness requirements retained; early detached SBOM does not complete this subcard."
+        }
+      ],
+      "completionRule": "Both F31a and F31b pass their declared scope; all required earlier runtime features pass before parent DONE",
       "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
     },
     {

@@ -1,0 +1,152 @@
+﻿TAP version 13
+# Subtest: exact synthetic artifact yields inventory and actual bundled-component SBOM; readiness stays incomplete
+ok 1 - exact synthetic artifact yields inventory and actual bundled-component SBOM; readiness stays incomplete
+  ---
+  duration_ms: 100.5549
+  type: 'test'
+  ...
+# Subtest: artifact SHA mismatch refuses before archive contents are accepted
+ok 2 - artifact SHA mismatch refuses before archive contents are accepted
+  ---
+  duration_ms: 18.1123
+  type: 'test'
+  ...
+# Subtest: missing runtime cannot yield inventory success
+ok 3 - missing runtime cannot yield inventory success
+  ---
+  duration_ms: 30.2029
+  type: 'test'
+  ...
+# Subtest: runtime bytes must agree with build provenance
+ok 4 - runtime bytes must agree with build provenance
+  ---
+  duration_ms: 32.5824
+  type: 'test'
+  ...
+# Subtest: source maps and evidence are not accepted as release entries
+ok 5 - source maps and evidence are not accepted as release entries
+  ---
+  duration_ms: 33.5743
+  type: 'test'
+  ...
+# Subtest: case alias entries are refused
+ok 6 - case alias entries are refused
+  ---
+  duration_ms: 26.4203
+  type: 'test'
+  ...
+# Subtest: platform must be explicitly win32-x64
+ok 7 - platform must be explicitly win32-x64
+  ---
+  duration_ms: 27.6988
+  type: 'test'
+  ...
+# Subtest: manifest identity must match build provenance
+ok 8 - manifest identity must match build provenance
+  ---
+  duration_ms: 30.1222
+  type: 'test'
+  ...
+# Subtest: missing build input cannot become a complete SBOM
+ok 9 - missing build input cannot become a complete SBOM
+  ---
+  duration_ms: 28.5751
+  type: 'test'
+  ...
+# Subtest: changed build input is refused
+ok 10 - changed build input is refused
+  ---
+  duration_ms: 25.6989
+  type: 'test'
+  ...
+# Subtest: repository selector input paths outside code inventory are refused before reading
+ok 11 - repository selector input paths outside code inventory are refused before reading
+  ---
+  duration_ms: 23.4908
+  type: 'test'
+  ...
+# Subtest: unknown license is visible INCOMPLETE without inventing approval
+ok 12 - unknown license is visible INCOMPLETE without inventing approval
+  ---
+  duration_ms: 41.1416
+  type: 'test'
+  ...
+# Subtest: missing notice is visible INCOMPLETE
+ok 13 - missing notice is visible INCOMPLETE
+  ---
+  duration_ms: 42.4473
+  type: 'test'
+  ...
+# Subtest: duplicate runtime provenance is rejected
+ok 14 - duplicate runtime provenance is rejected
+  ---
+  duration_ms: 36.4531
+  type: 'test'
+  ...
+# Subtest: truncated ZIP is a failure, never a partially successful inventory
+ok 15 - truncated ZIP is a failure, never a partially successful inventory
+  ---
+  duration_ms: 32.837
+  type: 'test'
+  ...
+# Subtest: archive entry with excessive expanded size is refused
+ok 16 - archive entry with excessive expanded size is refused
+  ---
+  duration_ms: 97.0437
+  type: 'test'
+  ...
+# Subtest: deterministic SBOM and report do not include current timestamps or guessed results
+ok 17 - deterministic SBOM and report do not include current timestamps or guessed results
+  ---
+  duration_ms: 56.3612
+  type: 'test'
+  ...
+# Subtest: actual vsce canonical lowercase readme and changelog names are accepted without allowing aliases
+ok 18 - actual vsce canonical lowercase readme and changelog names are accepted without allowing aliases
+  ---
+  duration_ms: 42.9039
+  type: 'test'
+  ...
+# Subtest: actual shared code input root is admitted: packages/core/src/pathContainment.ts
+not ok 19 - actual shared code input root is admitted: packages/core/src/pathContainment.ts
+  ---
+  duration_ms: 27.9442
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\soterai-lite\\scripts\\__tests__\\audit-release.test.cjs:46:101'
+  failureType: 'testCodeFailure'
+  error: 'Unsupported build input path'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    demand (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\audit-release.cjs:10:42)
+    codeInput (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\audit-release.cjs:21:179)
+    Object.auditRelease (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\audit-release.cjs:56:4)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs:46:503)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: actual shared code input root is admitted: packages/detectors/dist/secrets.js
+not ok 20 - actual shared code input root is admitted: packages/detectors/dist/secrets.js
+  ---
+  duration_ms: 35.6717
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\soterai-lite\\scripts\\__tests__\\audit-release.test.cjs:46:101'
+  failureType: 'testCodeFailure'
+  error: 'Unsupported build input path'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    demand (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\audit-release.cjs:10:42)
+    codeInput (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\audit-release.cjs:21:179)
+    Object.auditRelease (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\audit-release.cjs:56:4)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\__tests__\audit-release.test.cjs:46:503)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..20
+# tests 20
+# suites 0
+# pass 18
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 929.9216
