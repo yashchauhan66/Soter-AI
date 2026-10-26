@@ -19,7 +19,7 @@ Current selected task F31a:
 - [x] Test exact ZIP entries/runtime/source hashes, missing/tampered inputs, unsupported platform, duplicate/case aliases, budget/truncation failures, license uncertainty, deterministic SBOM and no absolute workspace paths. Actual current20tests20PASS; original17 retained, three real-packager/shared-root regressions added. Earlier17PASS1FAIL and18PASS2FAIL retained.
 - [x] Execute the auditor on the retained exact F26a attempt02 VSIX and immutable build receipt; actual03/04 output byte-identical and overwrite refusal1 retained.15entries/four runtimes/408inputs/three bundled components. This build-tool scope does not change installed runtimes or substitute for F26a's native checks.
 - [x] Write `PUBLISHING-RUNBOOK.md` from current official docs and installed CLI options; owner identity/token or secure automation, exact win32-x64 artifact, pre-release first and Open VSX are covered. No publish command is executed.
-- [ ] Verify unchanged F26a990 input bytes, record ledger receipt, scope only F31a files for a local utility commit and verify actual committed bytes. Preserve all unrelated and uncommitted F26a work. Do not mark parent F31 or F26 complete.
+- [x] Verify unchanged F26a990 input bytes, record ledger receipt, scope only F31a files for a local utility commit and verify actual committed bytes: source0906b502162c79b590df6210b5d262fa113b86a3/44paths/zero mismatch. Separate transition byte proof is required before the prepared next-task selection takes effect. Preserve all unrelated and uncommitted F26a work. Parent F31 and F26 remain incomplete.
 
 ## Product contract
 

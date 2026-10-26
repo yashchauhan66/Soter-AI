@@ -11,8 +11,8 @@
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
   "scope": "F01-F10/F12-F25 scoped DONE only after actual F25 transition byte barrier; F11 optional absent NOT_TESTED/NOT_COVERED. F26a active after barrier; F26b-c/F27-F32/V01-V05 pending. No rating/human/independent claim.",
   "implementationConcurrency": 1,
-  "activeFeature": "F31",
-  "activeSubcard": "F31a",
+  "activeFeature": "F26",
+  "activeSubcard": "F26c",
   "priorityAmendment": {
     "date": "2026-10-26",
     "authority": "User requested shorter independent features first and time-consuming work later",
@@ -873,11 +873,12 @@
         {
           "id": "F26c",
           "title": "PSReadLine exclusion",
-          "status": "PLANNED",
+          "status": "ACTIVE",
           "result": "NOT-RUN",
           "requires": [
             "F10", "F21", "F25"
-          ]
+          ],
+          "startCondition": "Selected by user shorter-first priority; no production before actual F31a transition byte proof. Synthetic isolated profile only, no real shell-history read or normal-profile edit."
         }
       ],
       "completionRule": "All required subcards pass individually before parent DONE",
@@ -935,13 +936,16 @@
         {
           "id": "F31a",
           "title": "Offline release inventory, detached bundled-component SBOM and publishing runbook",
-          "status": "VERIFYING",
-          "result": "INCOMPLETE",
+          "status": "DONE",
+          "result": "PASS",
           "requires": ["F25"],
           "scope": "Build/documentation utility only; explicit exact VSIX/provenance and bounded code/license inputs. No runtime change/native acceptance/release-readiness or publishing claim.",
           "evidence": "docs/soterai-lite/evidence/20261026-f31a-offline-release-6c28a19f",
           "progressEvidence": "docs/soterai-lite/evidence/20261026-f31a-offline-release-6c28a19f/acceptance-01.json",
-          "verification": "Current20tests20PASS; exact15-entry/4-runtime/408-input/3-component offline audit repeated byte-identically; overwrite refused. Source/transition local Git byte barriers pending; no new native or release-readiness claim."
+          "verification": "Scoped offline utility only: current20tests20PASS; exact15-entry/4-runtime/408-input/3-component audit repeated byte-identically; overwrite refused. Source0906b502162c79b590df6210b5d262fa113b86a3 all44paths byte-exact. Prepared DONE/next selection valid only with actual utility-transition-byte-proof-01.json PASS. Parent F31/F31b/runtime/native/human/release gates remain incomplete.",
+          "sourceCommit": "0906b502162c79b590df6210b5d262fa113b86a3",
+          "sourceByteProof": "docs/soterai-lite/evidence/20261026-f31a-offline-release-6c28a19f/utility-source-byte-proof-01.json",
+          "transitionByteProofRequired": "docs/soterai-lite/evidence/20261026-f31a-offline-release-6c28a19f/utility-transition-byte-proof-01.json"
         },
         {
           "id": "F31b",
