@@ -1,0 +1,148 @@
+{
+  "status": "FAIL_OR_INCOMPLETE_NO_LATER_PHASES",
+  "observedAt": "2026-10-27T02:27:48.177Z",
+  "results": [
+    {
+      "name": "journal-controller-02",
+      "status": "PASS_CLOSED_WRAPPER_AND_CANONICAL_RECEIPT",
+      "observedAt": "2026-10-26T19:39:37.257Z",
+      "pid": 6284,
+      "actualClose": true,
+      "wrapperExit": 0,
+      "signal": null,
+      "innerExit": 0,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "overflow": false,
+      "streamError": false,
+      "deadlineExceeded": false,
+      "signalsRequested": 0,
+      "streams": [
+        {
+          "name": "stdout",
+          "bytes": 759,
+          "sha256": "5aa30e4f8dbe5115add4e367e45f024b2745ab0d14edca290b58cd934a23858c"
+        },
+        {
+          "name": "stderr",
+          "bytes": 616,
+          "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+        }
+      ]
+    },
+    {
+      "name": "compiler-08",
+      "status": "PASS_CLOSED_WRAPPER_AND_CANONICAL_RECEIPT",
+      "observedAt": "2026-10-26T19:40:16.529Z",
+      "pid": 28480,
+      "actualClose": true,
+      "wrapperExit": 0,
+      "signal": null,
+      "innerExit": 0,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "overflow": false,
+      "streamError": false,
+      "deadlineExceeded": false,
+      "signalsRequested": 0,
+      "streams": [
+        {
+          "name": "stdout",
+          "bytes": 606,
+          "sha256": "0d887830d41e16d0dee14183f1f9848646b936e8ad22b16a2e9a6c3fcf8beab6"
+        },
+        {
+          "name": "stderr",
+          "bytes": 616,
+          "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+        }
+      ]
+    },
+    {
+      "name": "readiness-03",
+      "status": "PASS_CLOSED_WRAPPER_AND_CANONICAL_RECEIPT",
+      "observedAt": "2026-10-26T19:40:19.605Z",
+      "pid": 21528,
+      "actualClose": true,
+      "wrapperExit": 0,
+      "signal": null,
+      "innerExit": 0,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "overflow": false,
+      "streamError": false,
+      "deadlineExceeded": false,
+      "signalsRequested": 0,
+      "streams": [
+        {
+          "name": "stdout",
+          "bytes": 536,
+          "sha256": "85ac756159de30d733402a21e1cb90a644d160788ef51de04ade5a2615eab597"
+        },
+        {
+          "name": "stderr",
+          "bytes": 616,
+          "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+        }
+      ]
+    },
+    {
+      "name": "package-03",
+      "status": "PASS_CLOSED_WRAPPER_AND_CANONICAL_RECEIPT",
+      "observedAt": "2026-10-26T19:41:17.839Z",
+      "pid": 21160,
+      "actualClose": true,
+      "wrapperExit": 0,
+      "signal": null,
+      "innerExit": 0,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "overflow": false,
+      "streamError": false,
+      "deadlineExceeded": false,
+      "signalsRequested": 0,
+      "streams": [
+        {
+          "name": "stdout",
+          "bytes": 559,
+          "sha256": "aedb55ddc91c8c5457e5270a5df1839d754ff9778863eb990865b5c945c287bb"
+        },
+        {
+          "name": "stderr",
+          "bytes": 616,
+          "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+        }
+      ]
+    },
+    {
+      "name": "full-tests-03",
+      "status": "FAIL_OR_INCOMPLETE",
+      "observedAt": "2026-10-27T02:27:48.149Z",
+      "pid": 11580,
+      "actualClose": true,
+      "wrapperExit": 1,
+      "signal": null,
+      "innerExit": 1,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "overflow": false,
+      "streamError": false,
+      "deadlineExceeded": true,
+      "signalsRequested": 0,
+      "streams": [
+        {
+          "name": "stdout",
+          "bytes": 638,
+          "sha256": "0e25012344d6047fd07e7ec61cfaeaa194f5c63cf4dc28d4ee08eb88940a2f25"
+        },
+        {
+          "name": "stderr",
+          "bytes": 616,
+          "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+        }
+      ]
+    }
+  ],
+  "reason": "ERR_ASSERTION",
+  "signalsRequested": 0
+}

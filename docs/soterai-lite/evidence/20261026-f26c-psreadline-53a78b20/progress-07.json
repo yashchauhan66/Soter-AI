@@ -1,0 +1,95 @@
+{
+  "status": "F26c_ACTIVE_APPROVED_EXTRA05_CONSUMED_21PASS2FAIL_NATIVE_KEY_AVAILABILITY_UNSTABLE_AFFECTED44PASS_ARTIFACT_FAIL",
+  "observedAt": "2026-10-27T04:24:43.750Z",
+  "sourceProof": {
+    "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/full-inputs-03.json",
+    "bytes": 195561,
+    "sha256": "f4dbd673ceeee25b1bb728c7f849fb8419489eceaa0742d5e2b2200c0cdc369e"
+  },
+  "unchangedSourceInputs": 1005,
+  "currentFull": "4319tests4315PASS0FAIL0cancelled4SKIP",
+  "backend": "143PASS1SKIP/typecheckPASS",
+  "candidateVSIX": "6857b94f8405489430dc832bb4b4fe838370b662d01bb61de6da4d02e0a565f3",
+  "approval": {
+    "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/proposal05-approval-01.json",
+    "bytes": 549,
+    "sha256": "ab7c8ba52b0a5ec4c98a114bd187fabc6d8e86539aad0fb491847638893dcd35"
+  },
+  "consumed": {
+    "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/proposal05-run-consumed-01.json",
+    "bytes": 139,
+    "sha256": "0ed4eff210aef1debed4a2fb2add8953f722cdc81de9b558b6136420a4799518"
+  },
+  "native05": {
+    "primaryPass": 21,
+    "primaryFail": 2,
+    "restart": "NOT_RUN",
+    "result": {
+      "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/f26c-history-native-20261027T041500Z-8941826b/primary-results.json",
+      "bytes": 5943,
+      "sha256": "519b48d733dbb5d311aff2db8a32f2e4e353d870f0809b94c29899cf7b1417fb"
+    },
+    "close": {
+      "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/f26c-history-native-20261027T041500Z-8941826b/primary-owned-close.json",
+      "bytes": 619,
+      "sha256": "e338124a35995c29a694d0f49f646debccfa2961f98a922fe93606d141b1730b"
+    },
+    "observed": "After own synthetic key return it was present/equal saved, after failed N19 it was absent, after N20 present/equal again. Receipt APPLIED, profile-after-match true and backup240bytes at all3 snapshots.",
+    "cause": "Native SecretStorage availability is observed unstable; actor/storage/RPC cause not established. Product safely withheld when unavailable. No automatic retry or guessed product fix.",
+    "rounds": "Normal02/03/04 plus explicitly approved05 consumed. Another F26c run needs new bounded proposal and explicit approval."
+  },
+  "components": {
+    "proposal17": {
+      "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/proposal05-component-01.txt.result.json",
+      "bytes": 663,
+      "sha256": "3004ac52e00e2dbe9aad0272919b6ddf6a7dff3b6612b608d5e4d96576ddd838"
+    },
+    "repeatLifecycle1": {
+      "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/repeat-recovery-component-01.txt.result.json",
+      "bytes": 779,
+      "sha256": "33aec75359eada0fbf6566c7cd8249f606a4a4d01a00e13bedfa0f350f224734"
+    },
+    "compiler": {
+      "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/compiler-proposal05.txt.result.json",
+      "bytes": 632,
+      "sha256": "acd7cc0131130f90173a6bbee2ef97022ac9af0e37deeb403911bea788bb8c03"
+    },
+    "drivers": {
+      "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/native-driver-provenance-proposal05.json",
+      "bytes": 193387,
+      "sha256": "373b7550d90f1e478d186007250dbc2f51f627350ff7222b4d94d62de3fedba9"
+    },
+    "unchangedOtherDrivers": 20
+  },
+  "affected": {
+    "logs25": "PASS",
+    "owned19": "PASS",
+    "artifactPrimary": "9PASS12FAIL_restartNOT_RUN",
+    "artifactResult": {
+      "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/f26a-artifact-native-20261027T041054Z-3f9d0d4e/primary-results.json",
+      "bytes": 12435,
+      "sha256": "6e4c8f687cc4d07458d0814ed6f334fbb67625376ee951e8db465213a1142d68"
+    },
+    "chain": {
+      "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/affected-chain-failure-01.json",
+      "bytes": 2524,
+      "sha256": "ce8cb6a35e0e9761b4469af5dd6c7ed1eb6459760e2eb5cdb26b014c1503aff2"
+    },
+    "firstFailure": "F24-N03 pending-review cancellation returned UNAVAILABLE rather than CANCELLED; holdPrompt was not reset on assertion failure, then N04 waited60sec. Later failure cascade inferred, first cause unestablished.",
+    "remaining": "Other17families/functional10/security17 NOT_RUN after batch stopped",
+    "next": "Eligible affectedF24 first diagnostic/cleanup improvement within existing3 limit; preserve all25 assertions, add value-free failure frames and always release fixture holds."
+  },
+  "nextF26c": "Prepare one extra Proposal06 isolating the actual missing-key negative control after positive UI flows, retaining every28 oracle/ID and actual restart restore; no sleep/retry/product change. Not approved or executed.",
+  "native06": "Separate_F26a_USER_DEFERRED_NOT_RUN",
+  "git": "HEAD_e419281_last_read_no_Git_writes",
+  "remaining": [
+    "F26c extra-round authorization",
+    "all28/restart",
+    "affected artifact+17families",
+    "console",
+    "functional/security",
+    "withdrawal",
+    "acceptance",
+    "scoped commits+bytes"
+  ]
+}

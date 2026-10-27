@@ -1,0 +1,229 @@
+{
+  "phase": "primary",
+  "extensionBundleSha256": "7e42e9212ef61fdd69865b258bedba5b3283475a92d55d4d08ce2f2a3ec68c5d",
+  "observations": [
+    {
+      "id": "F26c-N01",
+      "scope": "Exact runtime/commands/default-off machine flag; idle profile/history/key activity absent",
+      "status": "PASS"
+    },
+    {
+      "id": "F26c-N02",
+      "scope": "Disabled install ignores caller authority before selection",
+      "status": "PASS"
+    },
+    {
+      "id": "F26c-N03",
+      "scope": "Actual native machine setting refuses repository override",
+      "status": "PASS"
+    },
+    {
+      "id": "F26c-N04",
+      "scope": "Explicit global opt-in does not initiate profile/key activity",
+      "status": "PASS"
+    },
+    {
+      "id": "F26c-N05",
+      "scope": "Native selection cancellation preserves original and key absence",
+      "status": "PASS"
+    },
+    {
+      "id": "F26c-N06",
+      "scope": "Modal cancellation uses actual private metadata documents and no raw source document",
+      "status": "PASS"
+    },
+    {
+      "id": "F26c-N07",
+      "scope": "Executable original refused before diff/key/mutation",
+      "status": "PASS"
+    },
+    {
+      "id": "F26c-N08",
+      "scope": "Outside-owner synthetic profile refused before content access",
+      "status": "PASS"
+    },
+    {
+      "id": "F26c-N09",
+      "scope": "Confirmed native owner install preserves inert prefix and installs owned generation",
+      "status": "PASS"
+    },
+    {
+      "id": "F26c-N10",
+      "scope": "Actual encrypted backup/key/journal contain no raw public metadata or sibling backup",
+      "status": "PASS"
+    },
+    {
+      "id": "F26c-N11",
+      "scope": "Actual emitted script equals the tested template modulo only public generation",
+      "status": "PASS"
+    },
+    {
+      "id": "F26c-N12",
+      "scope": "Native status never promotes installed profile to verified coverage",
+      "status": "PASS"
+    },
+    {
+      "id": "F26c-N13",
+      "scope": "Flag withdrawal preserves installed stronger bytes and refuses new install",
+      "status": "PASS"
+    },
+    {
+      "id": "F26c-N14",
+      "scope": "Explicit reviewed restore works while disabled and preserves exact original",
+      "status": "PASS"
+    },
+    {
+      "id": "F26c-N15",
+      "scope": "Profile drift during modal preserves the independent edit without backup",
+      "status": "PASS"
+    },
+    {
+      "id": "F26c-N16",
+      "scope": "Foreign profile identity cannot adopt an owned journal",
+      "status": "PASS"
+    },
+    {
+      "id": "F26c-N17",
+      "scope": "Corrupt durable receipt withheld without file/key mutation or green status",
+      "status": "PASS"
+    },
+    {
+      "id": "F26c-N19",
+      "scope": "Native flag withdrawal while a modal is pending invalidates approval",
+      "status": "PASS"
+    },
+    {
+      "id": "F26c-N20",
+      "scope": "Single held native review rejects a second mutation and cancellation is final",
+      "status": "PASS"
+    },
+    {
+      "id": "F26c-N21",
+      "scope": "All public results/modal/private documents are value and owner-path free",
+      "status": "PASS"
+    },
+    {
+      "id": "F26c-N22",
+      "scope": "Native hardlink and junction selected profile routes are refused",
+      "status": "PASS"
+    },
+    {
+      "id": "F26c-N23",
+      "scope": "Exact installed profile prepared for restart; existing synthetic history unchanged",
+      "status": "PASS"
+    },
+    {
+      "id": "F26c-N18",
+      "scope": "Missing own synthetic recovery key withholds restore without replacing it",
+      "status": "PASS"
+    }
+  ],
+  "passed": 23,
+  "failed": 0,
+  "notRun": 0,
+  "recoveryDiagnostics": [
+    {
+      "point": "after-F26c-N19",
+      "ownKeyPresent": true,
+      "ownKeyMatchesSaved": true,
+      "receiptPhase": "UNKNOWN",
+      "profileMatchesBefore": false,
+      "profileMatchesAfter": false,
+      "observedAt": "2026-10-27T06:07:24.273Z"
+    },
+    {
+      "point": "after-F26c-N20",
+      "ownKeyPresent": true,
+      "ownKeyMatchesSaved": true,
+      "receiptPhase": "UNKNOWN",
+      "profileMatchesBefore": false,
+      "profileMatchesAfter": false,
+      "observedAt": "2026-10-27T06:07:24.665Z"
+    },
+    {
+      "point": "after-own-key-return",
+      "ownKeyPresent": true,
+      "ownKeyMatchesSaved": true,
+      "receiptPhase": "APPLIED",
+      "profileMatchesBefore": false,
+      "profileMatchesAfter": true,
+      "backupBytes": 240,
+      "observedAt": "2026-10-27T06:07:25.890Z"
+    }
+  ],
+  "counts": {
+    "picks": 16,
+    "modals": 10,
+    "keyReads": 15,
+    "keyStores": 2,
+    "profileReads": 70,
+    "historyReads": 0,
+    "outsideReads": 0,
+    "originalDocumentCalls": 0,
+    "originalDocumentEvents": 0
+  },
+  "configuration": [
+    {
+      "stage": "write-start",
+      "enabled": true,
+      "observedAt": "2026-10-27T06:07:19.487Z"
+    },
+    {
+      "stage": "native-event",
+      "enabled": true,
+      "observedAt": "2026-10-27T06:07:19.594Z"
+    },
+    {
+      "stage": "write-start",
+      "enabled": false,
+      "observedAt": "2026-10-27T06:07:21.533Z"
+    },
+    {
+      "stage": "native-event",
+      "enabled": false,
+      "observedAt": "2026-10-27T06:07:21.674Z"
+    },
+    {
+      "stage": "write-start",
+      "enabled": true,
+      "observedAt": "2026-10-27T06:07:22.256Z"
+    },
+    {
+      "stage": "native-event",
+      "enabled": true,
+      "observedAt": "2026-10-27T06:07:22.360Z"
+    },
+    {
+      "stage": "write-start",
+      "enabled": false,
+      "observedAt": "2026-10-27T06:07:24.092Z"
+    },
+    {
+      "stage": "native-event",
+      "enabled": false,
+      "observedAt": "2026-10-27T06:07:24.254Z"
+    },
+    {
+      "stage": "write-start",
+      "enabled": true,
+      "observedAt": "2026-10-27T06:07:24.274Z"
+    },
+    {
+      "stage": "native-event",
+      "enabled": true,
+      "observedAt": "2026-10-27T06:07:24.374Z"
+    },
+    {
+      "stage": "write-start",
+      "enabled": false,
+      "observedAt": "2026-10-27T06:07:25.449Z"
+    },
+    {
+      "stage": "native-event",
+      "enabled": false,
+      "observedAt": "2026-10-27T06:07:25.549Z"
+    }
+  ],
+  "independence": "LOW_SCRIPTED_NATIVE_API_NOT_HUMAN",
+  "historyScope": "Extension-owned observed filesystem routes only; no real history or console execution in this host"
+}

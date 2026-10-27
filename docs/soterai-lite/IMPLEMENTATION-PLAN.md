@@ -21,6 +21,10 @@ Current selected task F31a:
 - [x] Write `PUBLISHING-RUNBOOK.md` from current official docs and installed CLI options; owner identity/token or secure automation, exact win32-x64 artifact, pre-release first and Open VSX are covered. No publish command is executed.
 - [x] Verify unchanged F26a990 input bytes, record ledger receipt, scope only F31a files for a local utility commit and verify actual committed bytes: source0906b502162c79b590df6210b5d262fa113b86a3/44paths/zero mismatch. Separate transition byte proof is required before the prepared next-task selection takes effect. Preserve all unrelated and uncommitted F26a work. Parent F31 and F26 remain incomplete.
 
+## Current checkpoint ? 27 October 2026
+
+F31a scoped utility is DONE after source44/transition11 byte verification. F26c has current scoped verification PASS: full4319/4315PASS/4SKIP/zero failures, backend, exact VSIX03 content/offline, native28, emitted-console8, affected20families/509checks, functional10 and unchanged security17 baseline. F26c is VERIFYING until scoped source and transition commits both pass exhaustive actual-byte checks; F27 must wait. F26a/native06 remains explicitly deferred and incomplete; its shared source dependencies are checkpointed without accepting F26a. Evidence: `evidence/20261026-f26c-psreadline-53a78b20/acceptance-01.json`. Original L6 HUMAN-ACTIONS/STOP and remaining order/gates are unchanged.
+
 ## Product contract
 
 Lite installs as one VSIX and starts local checks automatically. Advertised local functionality must not require administrator rights, VM software, a controller service, npm commands, accounts or new external software. Protected file selection, access approval and a short reviewed setup are user interactions, not extra installations. Vendor integration changes and vault migration require explicit review; they must never be silently applied.

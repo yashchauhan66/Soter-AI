@@ -1,0 +1,31 @@
+{
+  "status": "GUARD_CORE_REBUILT_EXACT_FOUR_PROJECTION_OUTPUTS_ONLY",
+  "observedAt": "2026-10-26T18:05:26.879Z",
+  "changed": [
+    {
+      "path": "packages/guard-core/dist/detectors/SecretDetector.d.ts",
+      "bytes": 4141,
+      "sha256": "2ae64f554de75cf5871d4e9a14f81ce363a944391aff226728133fcb2174afe9"
+    },
+    {
+      "path": "packages/guard-core/dist/detectors/SecretDetector.d.ts.map",
+      "bytes": 742,
+      "sha256": "9d53091d7ea06efc296aea1c016cc605f2b61ee0cf072b31b2c2b16e8d49d688"
+    },
+    {
+      "path": "packages/guard-core/dist/detectors/SecretDetector.js",
+      "bytes": 32181,
+      "sha256": "564476c85ca12385137a9b37e50ef4abdf3c15725c5f52bc4b3cdedebc1432b4"
+    },
+    {
+      "path": "packages/guard-core/dist/detectors/SecretDetector.js.map",
+      "bytes": 14287,
+      "sha256": "3d448d3954b8bfe30beefdf8e89ad1c5293279b528e28704cadba2dadfeeb8e3"
+    }
+  ],
+  "unchangedCount": 208,
+  "preservedBefore": 212,
+  "allBeforeRetained": true,
+  "productPatternOrPolicyChanges": 0,
+  "notes": "Stale-dist H4 failure corrected by actual canonical tsc emit; old outputs and first failed full remain preserved. New exact VSIX/full binding required."
+}

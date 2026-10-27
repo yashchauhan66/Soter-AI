@@ -1,0 +1,124 @@
+﻿TAP version 13
+# Subtest: F26c idle controller/status never selects a profile or creates a backup key
+ok 1 - F26c idle controller/status never selects a profile or creates a backup key
+  ---
+  duration_ms: 1897.2968
+  type: 'test'
+  ...
+# Subtest: F26c canceled profile selection leaves source, key and journal untouched
+ok 2 - F26c canceled profile selection leaves source, key and journal untouched
+  ---
+  duration_ms: 8.0608
+  type: 'test'
+  ...
+# Subtest: F26c declined modal leaves source and key untouched after metadata-only diff
+ok 3 - F26c declined modal leaves source and key untouched after metadata-only diff
+  ---
+  duration_ms: 41.8312
+  type: 'test'
+  ...
+# Subtest: F26c confirmed native review installs synthetic profile with encrypted backup and honest badge
+ok 4 - F26c confirmed native review installs synthetic profile with encrypted backup and honest badge
+  ---
+  duration_ms: 166.1174
+  type: 'test'
+  ...
+# Subtest: F26c explicit owner restore works after install flag disabled and returns exact original bytes
+ok 5 - F26c explicit owner restore works after install flag disabled and returns exact original bytes
+  ---
+  duration_ms: 287.3356
+  type: 'test'
+  ...
+# Subtest: F26c disabled install refuses before profile selection or key access
+ok 6 - F26c disabled install refuses before profile selection or key access
+  ---
+  duration_ms: 4.399
+  type: 'test'
+  ...
+# Subtest: F26c file drift during native modal preserves independent profile edit
+ok 7 - F26c file drift during native modal preserves independent profile edit
+  ---
+  duration_ms: 33.377
+  type: 'test'
+  ...
+# Subtest: F26c flag withdrawal during diff stops before modal and backup
+ok 8 - F26c flag withdrawal during diff stops before modal and backup
+  ---
+  duration_ms: 12.3772
+  type: 'test'
+  ...
+# Subtest: F26c workspace drift during modal invalidates approval
+ok 9 - F26c workspace drift during modal invalidates approval
+  ---
+  duration_ms: 18.8393
+  type: 'test'
+  ...
+# Subtest: F26c untrusted window refuses before profile selection
+ok 10 - F26c untrusted window refuses before profile selection
+  ---
+  duration_ms: 4.3853
+  type: 'test'
+  ...
+# Subtest: F26c executable profile is withheld before native diff or backup access
+ok 11 - F26c executable profile is withheld before native diff or backup access
+  ---
+  duration_ms: 13.3017
+  type: 'test'
+  ...
+# Subtest: F26c dispose during review invalidates approval and preserves original file
+ok 12 - F26c dispose during review invalidates approval and preserves original file
+  ---
+  duration_ms: 26.0752
+  type: 'test'
+  ...
+# Subtest: F26c strict history flag ignores repository overrides and malformed global values
+ok 13 - F26c strict history flag ignores repository overrides and malformed global values
+  ---
+  duration_ms: 2.9467
+  type: 'test'
+  ...
+# Subtest: F26c remote extension host refuses before owner-profile selection
+ok 14 - F26c remote extension host refuses before owner-profile selection
+  ---
+  duration_ms: 3.788
+  type: 'test'
+  ...
+# Subtest: F26c drift after the final review-read closes cannot replace approval with new source bytes
+ok 15 - F26c drift after the final review-read closes cannot replace approval with new source bytes
+  ---
+  duration_ms: 40.1388
+  type: 'test'
+  ...
+# Subtest: F26c late native Memento echo cannot regress an applied journal or block exact restore
+not ok 16 - F26c late native Memento echo cannot regress an applied journal or block exact restore
+  ---
+  duration_ms: 139.4249
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\psReadLineHistoryController.test.ts:2:12188'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'RECOVERY_REVIEW_REQUIRED'
+    - 'INSTALLED_CONSOLE_LOAD_UNVERIFIED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'INSTALLED_CONSOLE_LOAD_UNVERIFIED'
+  actual: 'RECOVERY_REVIEW_REQUIRED'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\psReadLineHistoryController.test.ts:139:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..16
+# tests 16
+# suites 0
+# pass 15
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5325.0962

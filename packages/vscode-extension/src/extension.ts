@@ -61,6 +61,8 @@ import { registerTerraformScanner } from "./config-scanners/terraformCommands";
 import { registerRegistryScanner } from "./config-scanners/registryCommands";
 import { registerServiceAccountScanner } from "./config-scanners/serviceAccountCommands";
 import { registerHistoryScanner } from "./history/commands";
+import { registerPreCommitHooks } from "./history-hooks/commands";
+import { registerPSReadLineHistory } from "./history-hooks/psReadLineCommands";
 import { registerArtifactScanner } from "./artifacts/commands";
 import { registerLogProtection } from "./logs/commands";
 import { registerMcpScanner } from "./config-scanners/mcpCommands";
@@ -227,6 +229,8 @@ export function activate(context: vscode.ExtensionContext): void {
     registerEditorScanner(context);
     registerMcpScanner(context);
     registerHistoryScanner(context);
+    registerPreCommitHooks(context);
+    registerPSReadLineHistory(context);
     registerArtifactScanner(context);
     registerLogProtection(context);
     registerScannerCommands(context, async () => (await protectionState?.refresh())?.descriptor);

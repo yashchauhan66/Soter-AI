@@ -1,0 +1,112 @@
+﻿TAP version 13
+# Subtest: F26c idle controller/status never selects a profile or creates a backup key
+ok 1 - F26c idle controller/status never selects a profile or creates a backup key
+  ---
+  duration_ms: 375.2203
+  type: 'test'
+  ...
+# Subtest: F26c canceled profile selection leaves source, key and journal untouched
+ok 2 - F26c canceled profile selection leaves source, key and journal untouched
+  ---
+  duration_ms: 14.0538
+  type: 'test'
+  ...
+# Subtest: F26c declined modal leaves source and key untouched after metadata-only diff
+ok 3 - F26c declined modal leaves source and key untouched after metadata-only diff
+  ---
+  duration_ms: 48.9935
+  type: 'test'
+  ...
+# Subtest: F26c confirmed native review installs synthetic profile with encrypted backup and honest badge
+ok 4 - F26c confirmed native review installs synthetic profile with encrypted backup and honest badge
+  ---
+  duration_ms: 308.1348
+  type: 'test'
+  ...
+# Subtest: F26c explicit owner restore works after install flag disabled and returns exact original bytes
+ok 5 - F26c explicit owner restore works after install flag disabled and returns exact original bytes
+  ---
+  duration_ms: 486.681
+  type: 'test'
+  ...
+# Subtest: F26c disabled install refuses before profile selection or key access
+ok 6 - F26c disabled install refuses before profile selection or key access
+  ---
+  duration_ms: 7.9101
+  type: 'test'
+  ...
+# Subtest: F26c file drift during native modal preserves independent profile edit
+ok 7 - F26c file drift during native modal preserves independent profile edit
+  ---
+  duration_ms: 50.7394
+  type: 'test'
+  ...
+# Subtest: F26c flag withdrawal during diff stops before modal and backup
+ok 8 - F26c flag withdrawal during diff stops before modal and backup
+  ---
+  duration_ms: 16.7816
+  type: 'test'
+  ...
+# Subtest: F26c workspace drift during modal invalidates approval
+ok 9 - F26c workspace drift during modal invalidates approval
+  ---
+  duration_ms: 31.8087
+  type: 'test'
+  ...
+# Subtest: F26c untrusted window refuses before profile selection
+ok 10 - F26c untrusted window refuses before profile selection
+  ---
+  duration_ms: 6.0548
+  type: 'test'
+  ...
+# Subtest: F26c executable profile is withheld before native diff or backup access
+ok 11 - F26c executable profile is withheld before native diff or backup access
+  ---
+  duration_ms: 19.5131
+  type: 'test'
+  ...
+# Subtest: F26c dispose during review invalidates approval and preserves original file
+ok 12 - F26c dispose during review invalidates approval and preserves original file
+  ---
+  duration_ms: 31.7069
+  type: 'test'
+  ...
+# Subtest: F26c strict history flag ignores repository overrides and malformed global values
+ok 13 - F26c strict history flag ignores repository overrides and malformed global values
+  ---
+  duration_ms: 4.589
+  type: 'test'
+  ...
+# Subtest: F26c remote extension host refuses before owner-profile selection
+ok 14 - F26c remote extension host refuses before owner-profile selection
+  ---
+  duration_ms: 6.5568
+  type: 'test'
+  ...
+# Subtest: F26c drift after the final review-read closes cannot replace approval with new source bytes
+ok 15 - F26c drift after the final review-read closes cannot replace approval with new source bytes
+  ---
+  duration_ms: 56.0439
+  type: 'test'
+  ...
+# Subtest: F26c late native Memento echo cannot regress an applied journal or block exact restore
+ok 16 - F26c late native Memento echo cannot regress an applied journal or block exact restore
+  ---
+  duration_ms: 467.5064
+  type: 'test'
+  ...
+# Subtest: F26c proposal05 own synthetic recovery key return permits exact restore in component adapter
+ok 17 - F26c proposal05 own synthetic recovery key return permits exact restore in component adapter
+  ---
+  duration_ms: 558.6116
+  type: 'test'
+  ...
+1..17
+# tests 17
+# suites 0
+# pass 17
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4005.4041

@@ -21,7 +21,8 @@ async function main() {
   const specs = [
     ['extension.js', path.join(extensionRoot, 'src/extension.ts'), ['vscode']],
     ['local-ai-broker.js', path.join(repo, 'apps/local-ai-broker/src/cli.ts'), []],
-    ['soterai-mcp-server.js', path.join(legacy, 'src/agent/mcpServer.ts'), []]
+    ['soterai-mcp-server.js', path.join(legacy, 'src/agent/mcpServer.ts'), []],
+    ['pre-commit-client.js', path.join(legacy, 'src/history-hooks/preCommitClientMain.ts'), []]
   ];
   const forbidden = ['apps/privacy-controller/', 'project-privacy/capabilities/', 'tier2-lite/'];
   const inventory = [];

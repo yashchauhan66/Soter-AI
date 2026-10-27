@@ -1,0 +1,70 @@
+﻿TAP version 13
+# Subtest: F19 actual default26 Claude tools and manual text controls pass only their declared protocol profile
+ok 1 - F19 actual default26 Claude tools and manual text controls pass only their declared protocol profile
+  ---
+  duration_ms: 384.5096
+  type: 'test'
+  ...
+# Subtest: F19 registered originals and encodings in native schema metadata are withheld
+ok 2 - F19 registered originals and encodings in native schema metadata are withheld
+  ---
+  duration_ms: 483.8224
+  type: 'test'
+  ...
+# Subtest: F19 ordinary metadata remains inspected and bounded
+ok 3 - F19 ordinary metadata remains inspected and bounded
+  ---
+  duration_ms: 184.731
+  type: 'test'
+  ...
+# Subtest: F19 unsupported model controls, tool definitions, images and resource overflow remain withheld
+ok 4 - F19 unsupported model controls, tool definitions, images and resource overflow remain withheld
+  ---
+  duration_ms: 47.0687
+  type: 'test'
+  ...
+# Subtest: F19 profile supports empty/ordinary Anthropic tool lists without relaxing the OpenAI profile
+ok 5 - F19 profile supports empty/ordinary Anthropic tool lists without relaxing the OpenAI profile
+  ---
+  duration_ms: 7.2274
+  type: 'test'
+  ...
+# Subtest: H1 leak oracle finds a canary in every encoding it claims to cover
+ok 6 - H1 leak oracle finds a canary in every encoding it claims to cover
+  ---
+  duration_ms: 8.1524
+  type: 'test'
+  ...
+# Subtest: H2 fixture plants all canaries on disk
+ok 7 - H2 fixture plants all canaries on disk
+  ---
+  duration_ms: 1079.6348
+  type: 'test'
+  ...
+# Subtest: H3 `vscode` resolves to the stub and modules under test load
+ok 8 - H3 `vscode` resolves to the stub and modules under test load
+  ---
+  duration_ms: 494.8629
+  type: 'test'
+  ...
+# Subtest: H4 @soterai/guard-core resolves to a dist newer than its sources
+ok 9 - H4 @soterai/guard-core resolves to a dist newer than its sources
+  ---
+  duration_ms: 175.0126
+  type: 'test'
+  ...
+# Subtest: H5 git is available (several scenarios shell out to it)
+ok 10 - H5 git is available (several scenarios shell out to it)
+  ---
+  duration_ms: 297.135
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4024.1186

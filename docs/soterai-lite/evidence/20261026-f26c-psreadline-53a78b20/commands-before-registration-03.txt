@@ -1,0 +1,99 @@
+﻿TAP version 13
+# Subtest: F26c commands register exact owner actions without key or profile activity
+ok 1 - F26c commands register exact owner actions without key or profile activity
+  ---
+  duration_ms: 202.7298
+  type: 'test'
+  ...
+# Subtest: F26c command caller arguments never reach install or restore authority
+ok 2 - F26c command caller arguments never reach install or restore authority
+  ---
+  duration_ms: 5.9087
+  type: 'test'
+  ...
+# Subtest: F26c command exceptions and unexpected result fields cannot publish private caller text
+ok 3 - F26c command exceptions and unexpected result fields cannot publish private caller text
+  ---
+  duration_ms: 4.8275
+  type: 'test'
+  ...
+# Subtest: F26c command single pending review refuses another mutation
+ok 4 - F26c command single pending review refuses another mutation
+  ---
+  duration_ms: 4.0935
+  type: 'test'
+  ...
+# Subtest: F26c command flag-off rejects install but permits explicit reviewed restore
+ok 5 - F26c command flag-off rejects install but permits explicit reviewed restore
+  ---
+  duration_ms: 4.4406
+  type: 'test'
+  ...
+# Subtest: F26c configuration and folder events withdraw reviews; disposed commands stay unavailable
+ok 6 - F26c configuration and folder events withdraw reviews; disposed commands stay unavailable
+  ---
+  duration_ms: 3.1786
+  type: 'test'
+  ...
+# Subtest: F26c flag withdrawal while command awaits cannot publish a late APPLIED result
+ok 7 - F26c flag withdrawal while command awaits cannot publish a late APPLIED result
+  ---
+  duration_ms: 2.9411
+  type: 'test'
+  ...
+# Subtest: F26c manifests make history profile writes machine-only restricted and off by default
+not ok 8 - F26c manifests make history profile writes machine-only restricted and off by default
+  ---
+  duration_ms: 162.2184
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\psReadLineHistoryCommands.test.ts:2:7016'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      require.resolve("../extension.ts")
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\psReadLineHistoryCommands.test.ts:77:79)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F26c activation registers owner commands through the feature module
+not ok 9 - F26c activation registers owner commands through the feature module
+  ---
+  duration_ms: 112.0854
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\psReadLineHistoryCommands.test.ts:2:7948'
+  failureType: 'testCodeFailure'
+  error: 'false == true'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\psReadLineHistoryCommands.test.ts:85:5)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 7
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1085.0924

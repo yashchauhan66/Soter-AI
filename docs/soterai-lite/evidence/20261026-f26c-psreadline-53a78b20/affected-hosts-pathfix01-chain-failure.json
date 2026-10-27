@@ -1,0 +1,36 @@
+{
+  "status": "FAIL_OR_INCOMPLETE_NO_LATER_PHASES",
+  "observedAt": "2026-10-27T06:40:49.186Z",
+  "results": [
+    {
+      "name": "affected-hosts-pathfix01",
+      "status": "FAIL_OR_INCOMPLETE",
+      "observedAt": "2026-10-27T06:40:49.179Z",
+      "pid": 14632,
+      "actualClose": true,
+      "wrapperExit": 1,
+      "signal": null,
+      "innerExit": 1,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "overflow": false,
+      "streamError": false,
+      "deadlineExceeded": false,
+      "signalsRequested": 0,
+      "streams": [
+        {
+          "name": "stdout",
+          "bytes": 1330,
+          "sha256": "f3d2db115e3fe1d4bfbb9faaf975534e805c62ea873c5e69a45635f8b7fd0e3d"
+        },
+        {
+          "name": "stderr",
+          "bytes": 616,
+          "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+        }
+      ]
+    }
+  ],
+  "reason": "ERR_ASSERTION",
+  "signalsRequested": 0
+}

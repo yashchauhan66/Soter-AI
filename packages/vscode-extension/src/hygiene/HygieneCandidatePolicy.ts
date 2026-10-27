@@ -7,11 +7,15 @@ export function normalizeHygieneName(name: string): string {
 export function hygieneCredentialName(name: string): boolean {
     return /(?:^|_)(?:API|KEY|SECRET|TOKEN|PASSWORD|PASSWD|PWD|CREDENTIALS?|AUTH|PRIVATE|DATABASE_URL|DB_URL|CONNECTION_STRING|DSN)(?:_|$)/.test(normalizeHygieneName(name));
 }
-export function isHygieneCandidate(name: string, value: string): boolean {
+/** Positive public-field control; absence of a candidate is not release authority. */
+export function isHygienePublicStripeValue(name: string, value: string): boolean {
     const normalized = normalizeHygieneName(name);
+    return /(?:^|_)STRIPE(?:_|$)/.test(normalized) && /(?:^|_)(?:PUBLISHABLE|PUBLIC)(?:_|$)/.test(normalized)
+        && /^pk_(?:test|live)_[A-Za-z0-9]+$/.test(value);
+}
+export function isHygieneCandidate(name: string, value: string): boolean {
     const template = /^(?:\$\{[A-Za-z_][A-Za-z0-9_]*\}|YOUR_[A-Z0-9_]+|REPLACE_ME|\[MASKED\]|<[^<>\r\n]{1,128}>)$/i.test(value)
         || value.includes("[SOTERAI_PROTECTED_") || /^(?:ssh-(?:rsa|ed25519) |-----BEGIN (?:RSA )?PUBLIC KEY-----)/.test(value);
-    const stripePublic = /(?:^|_)STRIPE(?:_|$)/.test(normalized) && /(?:^|_)(?:PUBLISHABLE|PUBLIC)(?:_|$)/.test(normalized)
-        && /^pk_(?:test|live)_[A-Za-z0-9]+$/.test(value);
+    const stripePublic = isHygienePublicStripeValue(name, value);
     return !!value && !template && !stripePublic && (hygieneCredentialName(name) || containsRawSecret(value));
 }

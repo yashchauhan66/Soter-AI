@@ -1,0 +1,100 @@
+﻿TAP version 13
+# Subtest: F26c canonical pattern projection is frozen public data with all detector classes
+ok 1 - F26c canonical pattern projection is frozen public data with all detector classes
+  ---
+  duration_ms: 138.3297
+  type: 'test'
+  ...
+# Subtest: F26c default/off/missing/invalid opt-in produces no executable profile text
+ok 2 - F26c default/off/missing/invalid opt-in produces no executable profile text
+  ---
+  duration_ms: 15.8056
+  type: 'test'
+  ...
+# Subtest: F26c refuses noncanonical generations instead of interpolating caller code
+ok 3 - F26c refuses noncanonical generations instead of interpolating caller code
+  ---
+  duration_ms: 3.2278
+  type: 'test'
+  ...
+# Subtest: F26c rejects proxy/accessor/coercion options without executing them
+ok 4 - F26c rejects proxy/accessor/coercion options without executing them
+  ---
+  duration_ms: 2.3314
+  type: 'test'
+  ...
+# Subtest: F26c generated callback is deterministic ASCII with bounded decisions and exact enum returns
+ok 5 - F26c generated callback is deterministic ASCII with bounded decisions and exact enum returns
+  ---
+  duration_ms: 2.9515
+  type: 'test'
+  ...
+# Subtest: F26c projection directly embeds every unchanged canonical regex without secret values
+ok 6 - F26c projection directly embeds every unchanged canonical regex without secret values
+  ---
+  duration_ms: 3.6989
+  type: 'test'
+  ...
+# Subtest: F26c accepts absent empty and ordinary comment-only profile inputs
+ok 7 - F26c accepts absent empty and ordinary comment-only profile inputs
+  ---
+  duration_ms: 3.6223
+  type: 'test'
+  ...
+# Subtest: F26c preserves original UTF8 bytes including BOM and final comment without newline
+ok 8 - F26c preserves original UTF8 bytes including BOM and final comment without newline
+  ---
+  duration_ms: 2.6166
+  type: 'test'
+  ...
+# Subtest: F26c rejects executable profile syntax including flow, multiline comments and here-strings
+ok 9 - F26c rejects executable profile syntax including flow, multiline comments and here-strings
+  ---
+  duration_ms: 2.3492
+  type: 'test'
+  ...
+# Subtest: F26c refuses requires, signed, owned and ambiguous comment profiles
+ok 10 - F26c refuses requires, signed, owned and ambiguous comment profiles
+  ---
+  duration_ms: 1.9322
+  type: 'test'
+  ...
+# Subtest: F26c no duplicate hook insertion and opt-out does not return a modified buffer
+ok 11 - F26c no duplicate hook insertion and opt-out does not return a modified buffer
+  ---
+  duration_ms: 2.0139
+  type: 'test'
+  ...
+# Subtest: F26c rejects malformed UTF8, nonbuffers and bounded oversized profile inputs
+ok 12 - F26c rejects malformed UTF8, nonbuffers and bounded oversized profile inputs
+  ---
+  duration_ms: 2.1723
+  type: 'test'
+  ...
+# Subtest: F26c generated profile has explicit limitation notice and no history-read/rewrite command
+not ok 13 - F26c generated profile has explicit limitation notice and no history-read/rewrite command
+  ---
+  duration_ms: 161.3526
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\powerShellHistoryText.test.ts:2:7697'
+  failureType: 'testCodeFailure'
+  error: 'false == true'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\powerShellHistoryText.test.ts:97:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 12
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 775.283

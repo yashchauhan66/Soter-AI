@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "feature": "F26c",
+  "status": "ACTIVE_STATIC_INSPECTION_BEFORE_API_PROBE_OR_IMPLEMENTATION",
+  "observedAt": "2026-10-26T15:06:59.765Z",
+  "head": "e4192819c644c57afdb074ed6dd712d91126372d",
+  "authority": "Explicit user shorter-first schedule; actual F31a source44/transition11 local bytes PASS",
+  "priorTransition": {
+    "path": "docs/soterai-lite/evidence/20261026-f31a-offline-release-6c28a19f/utility-transition-byte-proof-01.json",
+    "bytes": 4201,
+    "sha256": "62d643f597eca09110a905cfc9583298d667d3d086c557003ecbf9a039ee333f"
+  },
+  "workCard": {
+    "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/work-card-00.md",
+    "bytes": 2941,
+    "sha256": "ab2aa5dec4fcaa943ec11d1c1e38f472694c89b4fde7a985fcaa26f2fd2c7973"
+  },
+  "catalogItem": "LS-28",
+  "preservedPositiveControl": "Public command history remains useful; SaveNothing is not a substitute",
+  "installedModule": {
+    "declaredVersion": "2.0.0",
+    "status": "STATIC_METADATA_ONLY_NOT_RUNTIME_TESTED",
+    "files": [
+      {
+        "path": "C:\\Program Files\\WindowsPowerShell\\Modules\\PSReadLine\\2.0.0\\PSReadLine.psd1",
+        "bytes": 778,
+        "sha256": "ee8d23cf89dc67ba7147aa51910219f66b656d9ceb2630deb62a8e847ebbbc4f"
+      },
+      {
+        "path": "C:\\Program Files\\WindowsPowerShell\\Modules\\PSReadLine\\2.0.0\\PSReadLine.psm1",
+        "bytes": 180,
+        "sha256": "96d892d15384a3ce6f5baf8418e8f83762fd83dcab4263ad24fdde0ad5e8b9fa"
+      },
+      {
+        "path": "C:\\Program Files\\WindowsPowerShell\\Modules\\PSReadLine\\2.0.0\\Microsoft.PowerShell.PSReadLine.dll",
+        "bytes": 471552,
+        "sha256": "2bb1add6c2393a6e0ef5c5a30668d9e8f3072f0a049a81e28b9025d810ec6b70"
+      },
+      {
+        "path": "C:\\Program Files\\WindowsPowerShell\\Modules\\PSReadLine\\2.0.0\\PSReadLine.format.ps1xml",
+        "bytes": 8963,
+        "sha256": "da79d15c91edd0559d70dbcda76f9b41ef1b17a141d137a485027971a08df1bb"
+      }
+    ]
+  },
+  "inspectedSources": [
+    {
+      "path": "packages/vscode-extension/src/terminal/CheckedPowerShellProfile.ts",
+      "bytes": 7938,
+      "sha256": "663970ca5e774dff3aa962580990227082fdb3f2f7c454ba374035acab69737b"
+    },
+    {
+      "path": "packages/vscode-extension/src/broker/IntegrationAdapter.ts",
+      "bytes": 15562,
+      "sha256": "b59e48310facf0329d5b21dbfa32b4a8fc101d32d5dedcf203d7028705c0a07a"
+    },
+    {
+      "path": "packages/vscode-extension/src/broker/EncryptedBackupSink.ts",
+      "bytes": 5435,
+      "sha256": "488cc13800790f7641c1a9996efa197313c45423047b96cd1f7bade1a2f84ae9"
+    }
+  ],
+  "runtimeChanges": 0,
+  "profileOrHistoryReads": 0,
+  "historyApisExecuted": 0,
+  "moduleImports": 0,
+  "processSignals": 0,
+  "native06": "USER_DEFERRED_NOT_RUN",
+  "next": "Owned isolated version/API probe then frozen meaningful fixtures before production",
+  "ratings": "NO_INTERIM_RATING"
+}

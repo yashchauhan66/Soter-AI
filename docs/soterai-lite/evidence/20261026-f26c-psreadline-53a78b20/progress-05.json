@@ -1,0 +1,86 @@
+{
+  "status": "F26c_ACTIVE_DURABLE_FULL05_ONE_SHOT_NATIVE04_CONTINUATION_STARTED_NOT_COMPLETED",
+  "observedAt": "2026-10-27T03:13:13.274Z",
+  "sourceProof": {
+    "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/full-inputs-03.json",
+    "bytes": 195561,
+    "sha256": "f4dbd673ceeee25b1bb728c7f849fb8419489eceaa0742d5e2b2200c0cdc369e"
+  },
+  "sourceInputs": 1005,
+  "sourceChangedAfterFull03": 0,
+  "priorCheckpoint": {
+    "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/progress-04.json",
+    "bytes": 5996,
+    "sha256": "b122a38959cfad1c68b84d79d68b8bbb16da4a733cad0f3f386299500b53c7cb"
+  },
+  "full04Interrupted": {
+    "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/full04-unobserved-closure-05.json",
+    "bytes": 1170,
+    "sha256": "40bc0360d35bd25c3f2a2c27adad34ffd2d13f864668f7953817f62ebc1a0807"
+  },
+  "full04": "INCOMPLETE_NO_RESULT_CLOSE_OR_EOF_RECEIPT; recorded parents/children absent before replacement; not regraded PASS",
+  "full05": {
+    "ownerPid": 10980,
+    "wrapperPid": 10384,
+    "start": {
+      "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/durable-serial-start-05.json",
+      "bytes": 281,
+      "sha256": "9789dbaa5c9dd01ef95e2b60e151b41203ff1843b446b3590f296ffa700eaca7"
+    },
+    "script": {
+      "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-serial-05.cjs",
+      "bytes": 5682,
+      "sha256": "b65c8df1be689acc0525437c89879dd1442d75d48b7666bad7ede69f3f905a72"
+    },
+    "startUtc": "2026-10-27T03:07:28.4277562Z",
+    "status": "STARTED_NOT_COMPLETED"
+  },
+  "continuation": {
+    "pid": 2196,
+    "start": {
+      "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/durable-watcher-start-05.json",
+      "bytes": 378,
+      "sha256": "90049aa8ea4e3927d4c6593a8d92e39885c8ca03c30017399677b7baa8932ce7"
+    },
+    "script": {
+      "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/watch-verification-native-05.cjs",
+      "bytes": 5113,
+      "sha256": "671fcdb9edd458ecaf84a1dbc388e44ac17180374054c1fddd09027e3ef1d4f1"
+    },
+    "nativeChain": {
+      "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-native-chain-05.cjs",
+      "bytes": 5440,
+      "sha256": "aa839b540e4d1813ec36d42940c7bdf4553cd8268ce9ef54c4472ac969ccd585"
+    },
+    "condition": "Only after exact full05/backend03 PASS; one native04 third normal improvement, no automatic retry. Emits binding for exact native profile console05 then stops.",
+    "native06": "USER_DEFERRED_EXCLUDED_NOT_RUN"
+  },
+  "candidate": {
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-f26c-20261027-attempt03.vsix",
+    "bytes": 1712806,
+    "sha256": "6857b94f8405489430dc832bb4b4fe838370b662d01bb61de6da4d02e0a565f3",
+    "frontend": "7e42e9212ef61fdd69865b258bedba5b3283475a92d55d4d08ce2f2a3ec68c5d"
+  },
+  "knownCurrentGates": {
+    "focused31": "PASS",
+    "isolatedFailedFiles70": "PASS",
+    "compiler08": "PASS",
+    "newVSIX03": "BUILT_NOT_HOST_VERIFIED",
+    "content04": "PASS_15entries_4runtimes_83machineSettings"
+  },
+  "remaining": [
+    "full05",
+    "backend03",
+    "native04",
+    "actualEmittedConsole05",
+    "20affectedFamilies",
+    "functional10",
+    "security17",
+    "withdrawal",
+    "acceptance",
+    "scopedSourceAndTransitionCommits",
+    "exactGitBytes"
+  ],
+  "nativeRoundNumbers": "05 is verification/binding generation, not extra native fixture round; native04 remains the single third normal improvement.",
+  "limits": "No feature acceptance/current-native/human/independent/rating claim. User today priority does not authorize declined native06, push/publish, normal profile, OS changes or signals. L6 HUMAN-ACTIONS STOP persists."
+}

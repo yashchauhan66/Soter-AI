@@ -1,0 +1,96 @@
+{
+  "status": "F26c_ACTIVE_JOURNAL_CORRECTION_COMPONENT_VERIFIED_FINAL_GATES_PENDING",
+  "observedAt": "2026-10-26T19:38:29.863Z",
+  "sourceProof": {
+    "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/full-inputs-03.json",
+    "bytes": 195561,
+    "sha256": "f4dbd673ceeee25b1bb728c7f849fb8419489eceaa0742d5e2b2200c0cdc369e"
+  },
+  "currentTargeted": {
+    "tests": 31,
+    "pass": 31,
+    "fail": 0
+  },
+  "before": {
+    "staleMemento": "16tests15PASS1FAIL",
+    "journal": "15tests0PASS15FAIL_missing_module"
+  },
+  "receipts": [
+    {
+      "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/controller-before-native-storage-05.txt",
+      "bytes": 4587,
+      "sha256": "12f15de306746896207a86085fe952559905d07877ec33ba2a11497c5f88577f"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/controller-before-native-storage-05.txt.result.json",
+      "bytes": 655,
+      "sha256": "54bfd72377ea2aedc0474bb2c7286e10a8abad2644036ef74e91459b692c3e01"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/journal-before-01.txt",
+      "bytes": 24611,
+      "sha256": "933638f6f245439fe87694841cdf7b7d2a10160f311c3abd1004847419010a8d"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/journal-before-01.txt.result.json",
+      "bytes": 631,
+      "sha256": "18b87322d74657221cd72f58e0bf03373604c1c699fa1c7409e711224cc75058"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/journal-controller-01.txt",
+      "bytes": 7015,
+      "sha256": "ced8ab21e0cc8d8e61942541dec7849b52da5f6ea5313402aabe92fe67e67685"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/journal-controller-01.txt.result.json",
+      "bytes": 731,
+      "sha256": "b498ea721f02d47c09941b7a186b64d2730e63c3bad74b82f711709f14b1b1e2"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/design-04-durable-journal.md",
+      "bytes": 3169,
+      "sha256": "41fca13152a9de3a65a02656ef33c1512689471f2a1843720ba041e4eb673507"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/native-journal-adaptation-04.json",
+      "bytes": 580,
+      "sha256": "7c001bcd7a4e0e898df479ccf420151975971ad06ac2d6a904b05d1b3b1f1645"
+    }
+  ],
+  "native": {
+    "native01": "17PASS6FAIL_RESTART_NOT_RUN",
+    "native02": "17PASS6FAIL_RESTART_NOT_RUN",
+    "diagnostic03": "16PASS7FAIL_RESTART_NOT_RUN_NOT_ACCEPTANCE",
+    "actualClose": "All natural0/nullsignal/bothEOF/no signals",
+    "observation": "APPLIED receipt at N09 regressed before any restore to RECOVERY at N12 in diagnostic03",
+    "inference": "Pinned Memento storage listener can replace cache with a late prior snapshot; RPC timeline not captured",
+    "next": "Undebugged native04 third normal improvement after02/03, exact new artifact and fresh mandatory full gates first",
+    "oracles": "23primary+5restart unchanged"
+  },
+  "priorFull02": {
+    "tests": 4303,
+    "pass": 4299,
+    "fail": 0,
+    "skip": 4,
+    "currentForJournalFix": false
+  },
+  "newArtifact": "20261027-attempt03_REQUIRED_NOT_BUILT",
+  "native06": "USER_DEFERRED_NOT_RUN",
+  "pending": [
+    "compiler08",
+    "full03",
+    "backend03",
+    "newExactVSIX03",
+    "content03",
+    "native04",
+    "actualEmittedConsole",
+    "20affectedFamilies",
+    "functional10",
+    "security17",
+    "safeWithdrawal",
+    "acceptance",
+    "scopedLocalCommits",
+    "exactGitBytes"
+  ],
+  "note": "Initial native-adaptation helper refused before source write on LF versus CRLF matching; successor04b preserves original source backup and all28 titles. Initial helper retained."
+}

@@ -1,0 +1,62 @@
+{
+  "status": "PREPARED_REVIEWED_COMPONENT17_COMPILER_AND21DRIVERS_PASS_NOT_APPROVED_NOT_EXECUTED",
+  "observedAt": "2026-10-27T04:03:27.160Z",
+  "feature": "F26c",
+  "priorNative04": "21PASS2FAIL_RESTART_NOT_RUN",
+  "reason": "N19 restore after fixture own-key return remained INCOMPLETE, N20 original-byte assertion cascaded; cause unestablished.",
+  "proposal": "One additional bounded normal undebugged isolated native run. Only add own synthetic key readback and value-free recovery snapshots at N18/N19/N20. Same28 original oracles/payloads/deadlines/vendor pins/VSIX; no retry/sleep/repair/inspector/signals.",
+  "component": {
+    "tests": 17,
+    "pass": 17,
+    "fail": 0,
+    "scope": "Real private file journal/AES backup with in-memory synthetic SecretStorage; NOT native key lifecycle evidence."
+  },
+  "sourceInputs": 1005,
+  "allCurrentInputsUnchanged": true,
+  "unchangedOtherDrivers": 20,
+  "candidate": {
+    "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/litePSReadLineHistory.proposal05.host.ts",
+    "bytes": 28571,
+    "sha256": "797ba180e6c94361752e5cb7be29448cf5385c88f24f30bfe92d43a5844dd0dd"
+  },
+  "driverProvenance": {
+    "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/native-driver-provenance-proposal05.json",
+    "bytes": 193387,
+    "sha256": "373b7550d90f1e478d186007250dbc2f51f627350ff7222b4d94d62de3fedba9"
+  },
+  "runnerTemplate": {
+    "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-history-native-proposal05.cjs.txt",
+    "bytes": 11106,
+    "sha256": "f6a2672d14f2c5d2329a5e69e00a893f58c29b15520b5ac3c30fd2f7991c6ebc"
+  },
+  "guard": {
+    "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/current-native-guard-proposal05.cjs",
+    "bytes": 3458,
+    "sha256": "c3f04caa5eb5cc231a4304c2b36e175a78fc9891ab4d9d46155101b703d907b5"
+  },
+  "materializer": {
+    "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/materialize-native-binding-proposal05.cjs",
+    "bytes": 4623,
+    "sha256": "2600f04370d4438922ed18003e7d35757256888ab2505ab74d082537eee20e6e"
+  },
+  "gates": [
+    {
+      "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/proposal05-component-01.txt.result.json",
+      "bytes": 663,
+      "sha256": "3004ac52e00e2dbe9aad0272919b6ddf6a7dff3b6612b608d5e4d96576ddd838"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/compiler-proposal05.txt.result.json",
+      "bytes": 632,
+      "sha256": "acd7cc0131130f90173a6bbee2ef97022ac9af0e37deeb403911bea788bb8c03"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/native-build-proposal05.txt.result.json",
+      "bytes": 523,
+      "sha256": "e0b39a43b32c1b6beec20bbab802c5292779c57721eb9e8a4ddd101e7adeb297"
+    }
+  ],
+  "authorization": "Existing plan at most three improvement rounds exhausted by02/03/04. Explicit one-extra approval required before executable runner materialization or Code launch.",
+  "native06": "F26a_EXPLICITLY_DEFERRED_SEPARATE_NOT_REQUESTED_NOT_RUN",
+  "pending": "Actual native05/restart5 acceptance only if user authorizes and all28 pass; existing21 primary PASS not promoted; all remaining affected/console/commit gates preserved."
+}

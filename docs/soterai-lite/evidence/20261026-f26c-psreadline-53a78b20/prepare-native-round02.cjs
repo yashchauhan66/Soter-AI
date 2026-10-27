@@ -1,0 +1,14 @@
+const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto'),assert=require('node:assert/strict');
+const repo=path.resolve(__dirname,'../../../..'),own=n=>path.join(__dirname,n),sha=b=>crypto.createHash('sha256').update(b).digest('hex'),read=f=>JSON.parse(fs.readFileSync(f,'utf8').replace(/^\uFEFF/,''));
+const prior=read(own('full-inputs-02.json')),host='packages/vscode-extension/src/__tests__/host/litePSReadLineHistory.host.ts',changed=[];
+const files=prior.files.map(old=>{const raw=fs.readFileSync(path.join(repo,old.path)),current={path:old.path,bytes:raw.length,sha256:sha(raw)};if(current.bytes!==old.bytes||current.sha256!==old.sha256)changed.push(current.path);return current;});assert.deepEqual(changed,[host]);assert.equal(files.length,1003);
+const before=fs.readFileSync(own('litePSReadLineHistory-host-before-native02.ts.txt'),'utf8'),current=fs.readFileSync(path.join(repo,host),'utf8');
+const oracles=text=>[...text.matchAll(/await check\("([^"]+)"/g)].map(row=>row[1]);assert.equal(oracles(before).length,28);assert.deepEqual(oracles(current),oracles(before));
+const compiler=read(own('compiler-07.txt.result.json'));assert.equal(compiler.exitCode,0);
+const result={status:'NATIVE_FIXTURE_ONLY_EVENT_ACK_FULL02_PRODUCT_UNIT_AND_RUNTIME_BYTES_UNCHANGED',observedAt:new Date().toISOString(),fileCount:1003,unchangedFromFull02:1002,changed,files,full02ReceiptSha256:sha(fs.readFileSync(own('full-tests-02.txt.result.json'))),priorFixtureSha256:sha(Buffer.from(before)),oracleTitlesUnchanged:28,productChanges:0,fixtureImprovementRound:1,firstNative:'17PASS6FAIL_RESTART_NOT_RUN_RETAINED',cause:'Configuration-event race inferred from safe UNAVAILABLE at first off-flag restore; fresh actual event acknowledgement/trace required before claiming cause established'};
+fs.writeFileSync(own('native-source-inputs-03.json'),JSON.stringify(result,null,2)+'\n',{flag:'wx'});
+let builder=fs.readFileSync(own('build-native-hosts-01.cjs'),'utf8').replaceAll('full-inputs-02.json','native-source-inputs-03.json').replaceAll('compiler-06','compiler-07').replaceAll('prebuilt-native-hosts-01','prebuilt-native-hosts-02').replaceAll('native-driver-provenance-01','native-driver-provenance-02');
+fs.writeFileSync(own('build-native-hosts-02.cjs'),builder,{flag:'wx'});
+let guard=fs.readFileSync(own('current-native-guard-01.cjs'),'utf8').replaceAll('native-binding-01.json','native-binding-02.json');fs.writeFileSync(own('current-native-guard-02.cjs'),guard,{flag:'wx'});
+let runner=fs.readFileSync(own('run-history-native-01.cjs'),'utf8').replaceAll('./current-native-guard-01.cjs','./current-native-guard-02.cjs').replaceAll('native-run-failure-01.json','native-run-failure-02.json');fs.writeFileSync(own('run-history-native-02.cjs'),runner,{flag:'wx'});
+console.log(JSON.stringify({status:result.status,fixtureOnlyRound:1,unchangedInputs:1002,oracles:28,newVSIXRequired:false,native06:'DEFERRED_NOT_RUN'}));

@@ -1,0 +1,103 @@
+import { createHash, randomUUID } from "node:crypto";
+import { lstat, open, realpath, rename, unlink } from "node:fs/promises";
+import type { Stats } from "node:fs";
+import * as path from "node:path";
+import { verifyOutputPath } from "../security/FileSystemPathPolicy";
+import type { HistoryProfileSnapshot } from "./HistoryProfileTransaction";
+
+const unavailable = () => Error("History profile unavailable.");
+const comparable = (name: string) => path.resolve(name).toLowerCase();
+const stamp = (s: Stats) => [s.ino, s.size, s.mtimeMs, s.ctimeMs, s.nlink].join(":");
+const same = (a: HistoryProfileSnapshot, b: HistoryProfileSnapshot) => a.identity === b.identity
+    && (a.content === undefined) === (b.content === undefined) && (a.content === undefined || a.content.equals(b.content!));
+
+/** One private, owner-selected ConsoleHost profile. Constructor performs no I/O.
+ * The controller supplies the home root and authorization lease; public commands
+ * cannot supply either. This CAS is not a hostile same-user filesystem boundary. */
+export class CheckedHistoryProfileFile {
+    #root: string;
+    #file: string;
+    #authorized: () => boolean;
+    #identity: string | undefined;
+    #busy = false;
+    constructor(root: string, file: string, authorized: () => boolean) { this.#root = root; this.#file = file; this.#authorized = authorized; }
+    #allowed(): boolean { try { return this.#authorized() === true; } catch { return false; } }
+    async #guard(authorize = true): Promise<string> {
+        if (process.platform !== "win32" || authorize && !this.#allowed() || typeof this.#root !== "string" || typeof this.#file !== "string"
+            || !/^[A-Za-z]:\\/.test(this.#root) || !/^[A-Za-z]:\\/.test(this.#file) || this.#root.length > 4096 || this.#file.length > 4096
+            || /[\p{Cc}\p{Cf}]/u.test(this.#root + this.#file) || path.resolve(this.#root) !== this.#root || path.resolve(this.#file) !== this.#file
+            || path.basename(this.#file).toLowerCase() !== "microsoft.powershell_profile.ps1"
+            || path.basename(path.dirname(this.#file)).toLowerCase() !== "windowspowershell") throw unavailable();
+        const owner = await lstat(this.#root); if (!owner.isDirectory() || owner.isSymbolicLink()) throw unavailable();
+        const canonical = await verifyOutputPath(this.#root, this.#file);
+        if (comparable(canonical) !== comparable(this.#file) || comparable(await realpath(this.#root)) !== comparable(this.#root)) throw unavailable();
+        const parent = await lstat(path.dirname(this.#file)); if (!parent.isDirectory() || parent.isSymbolicLink()) throw unavailable();
+        const identity = createHash("sha256").update([comparable(this.#root), owner.dev, owner.ino, comparable(canonical), parent.dev, parent.ino].join("\0")).digest("hex");
+        if (this.#identity !== undefined && this.#identity !== identity || authorize && !this.#allowed()) throw unavailable();
+        this.#identity = identity; return identity;
+    }
+    async snapshot(): Promise<HistoryProfileSnapshot> {
+        try {
+            const identity = await this.#guard(); let first: Stats;
+            try { first = await lstat(this.#file); } catch (error) {
+                if ((error as { code?: string }).code !== "ENOENT") throw error;
+                await this.#guard(); return Object.freeze({ identity });
+            }
+            if (!first.isFile() || first.isSymbolicLink() || first.nlink !== 1 || first.size > 131072) throw unavailable();
+            const handle = await open(this.#file, "r");
+            try {
+                const opened = await handle.stat();
+                // Windows fstat.dev and lstat.dev differ on the installed runtime;
+                // bind inode/content metadata, with path dev checked path-to-path.
+                if (!opened.isFile() || opened.nlink !== 1 || stamp(opened) !== stamp(first)) throw unavailable();
+                await this.#guard();
+                const bytes = Buffer.alloc(first.size + 1); let length = 0;
+                while (length < bytes.length) { const read = await handle.read(bytes, length, bytes.length - length, length); if (!read.bytesRead) break; length += read.bytesRead; }
+                const closed = await handle.stat(), after = await lstat(this.#file); await this.#guard();
+                if (length !== first.size || stamp(closed) !== stamp(opened) || !after.isFile() || after.isSymbolicLink() || after.dev !== first.dev || stamp(after) !== stamp(first)) throw unavailable();
+                return Object.freeze({ identity, content: Buffer.from(bytes.subarray(0, length)) });
+            } finally { await handle.close(); }
+        } catch { throw unavailable(); }
+    }
+    async replace(before: HistoryProfileSnapshot, value: Buffer | undefined): Promise<void> {
+        if (this.#busy || !this.#allowed() || !before || value !== undefined && (!Buffer.isBuffer(value) || value.length > 131072)) throw unavailable();
+        this.#busy = true;
+        let stage: string | undefined, owned: { dev: number; ino: number } | undefined, committed = false;
+        const after = value === undefined ? undefined : Buffer.from(value);
+        try {
+            if (!same(await this.snapshot(), before)) throw unavailable();
+            if (after === undefined) {
+                if (before.content === undefined) return;
+                await this.#guard(); if (!same(await this.snapshot(), before)) throw unavailable();
+                await this.#guard(); await unlink(this.#file); committed = true; return;
+            }
+            const parent = path.dirname(this.#file); stage = path.join(parent, ".soterai-history-" + randomUUID() + ".tmp");
+            await this.#guard(); if (comparable(await verifyOutputPath(this.#root, stage)) !== comparable(stage)) throw unavailable();
+            const handle = await open(stage, "wx", 0o600);
+            try {
+                const fd = await handle.stat(), named = await lstat(stage);
+                if (!named.isFile() || named.isSymbolicLink() || named.nlink !== 1 || fd.ino !== named.ino) throw unavailable();
+                owned = { dev: named.dev, ino: named.ino }; await this.#guard();
+                await handle.writeFile(after); await handle.sync();
+            } finally { await handle.close(); }
+            const staged = await lstat(stage);
+            if (!staged.isFile() || staged.isSymbolicLink() || staged.nlink !== 1 || staged.dev !== owned.dev || staged.ino !== owned.ino || staged.size !== after.length) throw unavailable();
+            if (!same(await this.snapshot(), before)) throw unavailable();
+            await this.#guard(); if (comparable(await verifyOutputPath(this.#root, stage)) !== comparable(stage)) throw unavailable();
+            await this.#guard(); await rename(stage, this.#file); committed = true;
+        } catch { throw unavailable(); }
+        finally {
+            if (!committed && stage && owned) {
+                try {
+                    // Withdrawal may clean only this exact ephemeral stage, with
+                    // filesystem containment/identity still required independently.
+                    await this.#guard(false); const current = await lstat(stage);
+                    if (!current.isFile() || current.isSymbolicLink() || current.nlink !== 1 || current.dev !== owned.dev || current.ino !== owned.ino || current.size > (after?.length ?? 0)) throw unavailable();
+                    if (comparable(await verifyOutputPath(this.#root, stage)) !== comparable(stage)) throw unavailable();
+                    await unlink(stage);
+                } catch { /* Uncertain ownership retains the stage for explicit recovery. */ }
+            }
+            this.#busy = false;
+        }
+    }
+}

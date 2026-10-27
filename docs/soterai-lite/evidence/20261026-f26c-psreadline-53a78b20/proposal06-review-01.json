@@ -1,0 +1,64 @@
+{
+  "status": "PREPARED_COMPONENT17_COMPILER_21DRIVERS_PASS_NOT_APPROVED_NOT_EXECUTED",
+  "feature": "F26c",
+  "observedAt": "2026-10-27T04:36:42.600Z",
+  "priorExtra05": "CONSUMED_21PASS2FAIL_RESTART_NOT_RUN",
+  "proposal": "Move the byte-exact missing-key negative check after independent positive UI checks. Preserve all28 assertions and stable IDs; actual next-process restore remains mandatory. No retries, key repair, sleep, timeout relaxation or production changes.",
+  "component": {
+    "tests": 17,
+    "pass": 17,
+    "fail": 0,
+    "scope": "Synthetic in-memory SecretStorage with real journal/AES, not native persistence evidence"
+  },
+  "sourceInputs": 1005,
+  "allCurrentInputsUnchanged": true,
+  "unchangedOtherDrivers": 20,
+  "candidate": {
+    "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/litePSReadLineHistory.proposal06.host.ts",
+    "bytes": 30341,
+    "sha256": "3632cf751787731b75457bc092a655e7a4f5fb48e5feba2eebec129f73eea7f9"
+  },
+  "driverProvenance": {
+    "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/native-driver-provenance-proposal06.json",
+    "bytes": 193387,
+    "sha256": "332c6e8bbafcc336dd8c5d9ec5489b413e7561cff34e69767a6ba496d0c22e01"
+  },
+  "runnerTemplate": {
+    "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-history-native-proposal06.cjs.txt",
+    "bytes": 11106,
+    "sha256": "d60534c2cdbe7ab6fd5f64a49705bd27933102bf4033a99fb1f24320a387aa06"
+  },
+  "guard": {
+    "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/current-native-guard-proposal06.cjs",
+    "bytes": 3458,
+    "sha256": "008fdca1e3b1cd351b6bd3d1ab2e055b6ebb03119a4a4b22bf6af16f0cbbd59f"
+  },
+  "materializer": {
+    "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/materialize-native-binding-proposal06.cjs",
+    "bytes": 4623,
+    "sha256": "7d8495eb87e686428fc02f5eb24f422cc125ab25ff6b4726a51193d1af419aea"
+  },
+  "orderReview": {
+    "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/proposal06-order-review-01.json",
+    "bytes": 7337,
+    "sha256": "386b288e4939e4e8ad5aa0304a75ac2da074f34905259d61d862dd035d8a07d4"
+  },
+  "gates": [
+    {
+      "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/proposal06-component-02.txt.result.json",
+      "bytes": 611,
+      "sha256": "4a0ff6fbc8e526e07dcf28f059c9eeaf7f27f388baca3dc33d89d62fde6816c2"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/compiler-proposal06.txt.result.json",
+      "bytes": 627,
+      "sha256": "15c2360d3dfd4d66c7cba63325d717001cf59fe54ceec298eaeb938c8bc727e2"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/native-build-proposal06.txt.result.json",
+      "bytes": 518,
+      "sha256": "f22c34f447ed349a0a1192cc16433b8a2f9472c877fa065e42f69563177099c8"
+    }
+  ],
+  "f26aNative06": "USER_DEFERRED_NOT_AUTHORIZED_NOT_RUN"
+}

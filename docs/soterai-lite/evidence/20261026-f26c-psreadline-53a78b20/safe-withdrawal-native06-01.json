@@ -1,0 +1,28 @@
+{
+  "status": "PASS_SCOPED_SYNTHETIC_WITHDRAWAL_AND_RECOVERY_NOT_FEATURE_ACCEPTANCE",
+  "observedAt": "2026-10-27T06:15:22.153Z",
+  "primary": {
+    "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/f26c-history-native-20261027T060656Z-740b7052/primary-results.json",
+    "bytes": 6274,
+    "sha256": "0eccfba7acce4bb823ac81714ade642c780bbacf19fe9e88f9aa0c9aa869f496"
+  },
+  "restart": {
+    "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/f26c-history-native-20261027T060656Z-740b7052/restart-results.json",
+    "bytes": 1833,
+    "sha256": "136d3c4828060248e9a5b12ecfa23bd8c293a6bee99ae6a30a15dd267397f4be"
+  },
+  "assertions": [
+    "Disabled install refused without weakening installed bytes",
+    "Explicit off-flag restore returns exact original",
+    "Pending approval invalidated by withdrawal",
+    "Missing key refuses without replacement or profile mutation",
+    "Concurrent mutation refused; cancellation final",
+    "Restart explicit restore uses prior encrypted key without new key",
+    "Originally absent profile returns to exact absence",
+    "Final synthetic history exact, private journal absent, badge Uncovered",
+    "Restart finally restores prior synthetic setting; no driver failure"
+  ],
+  "limits": "Scripted synthetic profiles only. No current-user console ownership, human verification, feature completion or OS boundary claim.",
+  "signalsRequested": 0,
+  "f26aNative06": "USER_DEFERRED_NOT_RUN"
+}

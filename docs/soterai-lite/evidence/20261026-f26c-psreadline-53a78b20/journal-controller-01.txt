@@ -1,0 +1,196 @@
+﻿TAP version 13
+# Subtest: F26c private journal constructor and absent read do not create storage
+ok 1 - F26c private journal constructor and absent read do not create storage
+  ---
+  duration_ms: 206.5298
+  type: 'test'
+  ...
+# Subtest: F26c private journal durably transitions and new instance reads exact metadata
+ok 2 - F26c private journal durably transitions and new instance reads exact metadata
+  ---
+  duration_ms: 101.6089
+  type: 'test'
+  ...
+# Subtest: F26c private journal exact authorized clear preserves other private files
+ok 3 - F26c private journal exact authorized clear preserves other private files
+  ---
+  duration_ms: 53.3007
+  type: 'test'
+  ...
+# Subtest: F26c private journal requires prior read and refuses unknown authority
+ok 4 - F26c private journal requires prior read and refuses unknown authority
+  ---
+  duration_ms: 6.9342
+  type: 'test'
+  ...
+# Subtest: F26c private journal refuses stale cross-instance write and clear
+ok 5 - F26c private journal refuses stale cross-instance write and clear
+  ---
+  duration_ms: 104.8435
+  type: 'test'
+  ...
+# Subtest: F26c private journal refuses malformed schema without storing raw fields
+ok 6 - F26c private journal refuses malformed schema without storing raw fields
+  ---
+  duration_ms: 4.205
+  type: 'test'
+  ...
+# Subtest: F26c private journal refuses duplicate keys BOM trailing garbage and noncanonical JSON
+ok 7 - F26c private journal refuses duplicate keys BOM trailing garbage and noncanonical JSON
+  ---
+  duration_ms: 45.5278
+  type: 'test'
+  ...
+# Subtest: F26c private journal rejects oversized invalid UTF8 and directory targets
+ok 8 - F26c private journal rejects oversized invalid UTF8 and directory targets
+  ---
+  duration_ms: 16.5608
+  type: 'test'
+  ...
+# Subtest: F26c private journal refuses hardlink target preserving its source
+ok 9 - F26c private journal refuses hardlink target preserving its source
+  ---
+  duration_ms: 7.6615
+  type: 'test'
+  ...
+# Subtest: F26c private journal refuses junction root and junction ancestor
+ok 10 - F26c private journal refuses junction root and junction ancestor
+  ---
+  duration_ms: 9.7855
+  type: 'test'
+  ...
+# Subtest: F26c private journal binds root identity and refuses directory replacement
+ok 11 - F26c private journal binds root identity and refuses directory replacement
+  ---
+  duration_ms: 12.2276
+  type: 'test'
+  ...
+# Subtest: F26c private journal rejects relative roots without creating anything
+ok 12 - F26c private journal rejects relative roots without creating anything
+  ---
+  duration_ms: 1.9652
+  type: 'test'
+  ...
+# Subtest: F26c private journal withdrawal during stage write preserves original metadata
+ok 13 - F26c private journal withdrawal during stage write preserves original metadata
+  ---
+  duration_ms: 87.7146
+  type: 'test'
+  ...
+# Subtest: F26c private journal preserves foreign same-inode stage tampering
+ok 14 - F26c private journal preserves foreign same-inode stage tampering
+  ---
+  duration_ms: 83.2488
+  type: 'test'
+  ...
+# Subtest: F26c private journal single writer refuses overlapping mutation
+ok 15 - F26c private journal single writer refuses overlapping mutation
+  ---
+  duration_ms: 38.983
+  type: 'test'
+  ...
+# Subtest: F26c idle controller/status never selects a profile or creates a backup key
+ok 16 - F26c idle controller/status never selects a profile or creates a backup key
+  ---
+  duration_ms: 365.4529
+  type: 'test'
+  ...
+# Subtest: F26c canceled profile selection leaves source, key and journal untouched
+ok 17 - F26c canceled profile selection leaves source, key and journal untouched
+  ---
+  duration_ms: 25.0308
+  type: 'test'
+  ...
+# Subtest: F26c declined modal leaves source and key untouched after metadata-only diff
+ok 18 - F26c declined modal leaves source and key untouched after metadata-only diff
+  ---
+  duration_ms: 65.8669
+  type: 'test'
+  ...
+# Subtest: F26c confirmed native review installs synthetic profile with encrypted backup and honest badge
+ok 19 - F26c confirmed native review installs synthetic profile with encrypted backup and honest badge
+  ---
+  duration_ms: 396.949
+  type: 'test'
+  ...
+# Subtest: F26c explicit owner restore works after install flag disabled and returns exact original bytes
+ok 20 - F26c explicit owner restore works after install flag disabled and returns exact original bytes
+  ---
+  duration_ms: 586.4223
+  type: 'test'
+  ...
+# Subtest: F26c disabled install refuses before profile selection or key access
+ok 21 - F26c disabled install refuses before profile selection or key access
+  ---
+  duration_ms: 5.6649
+  type: 'test'
+  ...
+# Subtest: F26c file drift during native modal preserves independent profile edit
+ok 22 - F26c file drift during native modal preserves independent profile edit
+  ---
+  duration_ms: 45.9273
+  type: 'test'
+  ...
+# Subtest: F26c flag withdrawal during diff stops before modal and backup
+ok 23 - F26c flag withdrawal during diff stops before modal and backup
+  ---
+  duration_ms: 15.5654
+  type: 'test'
+  ...
+# Subtest: F26c workspace drift during modal invalidates approval
+ok 24 - F26c workspace drift during modal invalidates approval
+  ---
+  duration_ms: 25.0332
+  type: 'test'
+  ...
+# Subtest: F26c untrusted window refuses before profile selection
+ok 25 - F26c untrusted window refuses before profile selection
+  ---
+  duration_ms: 5.2784
+  type: 'test'
+  ...
+# Subtest: F26c executable profile is withheld before native diff or backup access
+ok 26 - F26c executable profile is withheld before native diff or backup access
+  ---
+  duration_ms: 19.2668
+  type: 'test'
+  ...
+# Subtest: F26c dispose during review invalidates approval and preserves original file
+ok 27 - F26c dispose during review invalidates approval and preserves original file
+  ---
+  duration_ms: 29.9405
+  type: 'test'
+  ...
+# Subtest: F26c strict history flag ignores repository overrides and malformed global values
+ok 28 - F26c strict history flag ignores repository overrides and malformed global values
+  ---
+  duration_ms: 3.4327
+  type: 'test'
+  ...
+# Subtest: F26c remote extension host refuses before owner-profile selection
+ok 29 - F26c remote extension host refuses before owner-profile selection
+  ---
+  duration_ms: 4.1556
+  type: 'test'
+  ...
+# Subtest: F26c drift after the final review-read closes cannot replace approval with new source bytes
+ok 30 - F26c drift after the final review-read closes cannot replace approval with new source bytes
+  ---
+  duration_ms: 67.7354
+  type: 'test'
+  ...
+# Subtest: F26c late native Memento echo cannot regress an applied journal or block exact restore
+ok 31 - F26c late native Memento echo cannot regress an applied journal or block exact restore
+  ---
+  duration_ms: 572.7316
+  type: 'test'
+  ...
+1..31
+# tests 31
+# suites 0
+# pass 31
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4431.4098

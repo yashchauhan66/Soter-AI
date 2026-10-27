@@ -1,0 +1,166 @@
+﻿TAP version 13
+# Subtest: F26c transaction installs absent profile with durable owned receipt and no unnecessary backup
+ok 1 - F26c transaction installs absent profile with durable owned receipt and no unnecessary backup
+  ---
+  duration_ms: 200.849
+  type: 'test'
+  ...
+# Subtest: F26c transaction encrypts/read-verifies existing original before the first write
+ok 2 - F26c transaction encrypts/read-verifies existing original before the first write
+  ---
+  duration_ms: 6.9828
+  type: 'test'
+  ...
+# Subtest: F26c transaction refuses unapproved install with no backup key journal or mutation
+ok 3 - F26c transaction refuses unapproved install with no backup key journal or mutation
+  ---
+  duration_ms: 4.8692
+  type: 'test'
+  ...
+# Subtest: F26c transaction withholds before write on backup-store
+ok 4 - F26c transaction withholds before write on backup-store
+  ---
+  duration_ms: 3.4386
+  type: 'test'
+  ...
+# Subtest: F26c transaction withholds before write on backup-missing
+ok 5 - F26c transaction withholds before write on backup-missing
+  ---
+  duration_ms: 2.6162
+  type: 'test'
+  ...
+# Subtest: F26c transaction withholds before write on backup-tamper
+ok 6 - F26c transaction withholds before write on backup-tamper
+  ---
+  duration_ms: 1.7664
+  type: 'test'
+  ...
+# Subtest: F26c transaction withholds before write on journal-first
+ok 7 - F26c transaction withholds before write on journal-first
+  ---
+  duration_ms: 2.0165
+  type: 'test'
+  ...
+# Subtest: F26c transaction withholds before write on journal-noop
+ok 8 - F26c transaction withholds before write on journal-noop
+  ---
+  duration_ms: 2.0664
+  type: 'test'
+  ...
+# Subtest: F26c withdrawal during encrypted backup withholds file and journal
+ok 9 - F26c withdrawal during encrypted backup withholds file and journal
+  ---
+  duration_ms: 3.4923
+  type: 'test'
+  ...
+# Subtest: F26c file drift during backup is preserved and cannot be overwritten
+ok 10 - F26c file drift during backup is preserved and cannot be overwritten
+  ---
+  duration_ms: 2.5658
+  type: 'test'
+  ...
+# Subtest: F26c withdrawal after PREPARED preserves original and recoverable metadata
+ok 11 - F26c withdrawal after PREPARED preserves original and recoverable metadata
+  ---
+  duration_ms: 2.0585
+  type: 'test'
+  ...
+# Subtest: F26c ambiguous post-write failure retains PREPARED and stronger installed bytes
+ok 12 - F26c ambiguous post-write failure retains PREPARED and stronger installed bytes
+  ---
+  duration_ms: 3.0631
+  type: 'test'
+  ...
+# Subtest: F26c final journal failure recovers exact after bytes without duplicate write or backup
+ok 13 - F26c final journal failure recovers exact after bytes without duplicate write or backup
+  ---
+  duration_ms: 4.8903
+  type: 'test'
+  ...
+# Subtest: F26c durable PREPARED with exact before bytes resumes the same original backup
+ok 14 - F26c durable PREPARED with exact before bytes resumes the same original backup
+  ---
+  duration_ms: 4.7094
+  type: 'test'
+  ...
+# Subtest: F26c repeated applied install is byte-idempotent without new key or backup
+ok 15 - F26c repeated applied install is byte-idempotent without new key or backup
+  ---
+  duration_ms: 3.7293
+  type: 'test'
+  ...
+# Subtest: F26c foreign generation or file identity cannot adopt a receipt
+ok 16 - F26c foreign generation or file identity cannot adopt a receipt
+  ---
+  duration_ms: 2.7623
+  type: 'test'
+  ...
+# Subtest: F26c corrupt or extra-field receipt refuses without replacement
+ok 17 - F26c corrupt or extra-field receipt refuses without replacement
+  ---
+  duration_ms: 2.6704
+  type: 'test'
+  ...
+# Subtest: F26c executable original profile is refused before creating backups or receipt
+ok 18 - F26c executable original profile is refused before creating backups or receipt
+  ---
+  duration_ms: 2.4118
+  type: 'test'
+  ...
+# Subtest: F26c explicit reviewed restore returns original exact bytes and clears receipt
+ok 19 - F26c explicit reviewed restore returns original exact bytes and clears receipt
+  ---
+  duration_ms: 5.9179
+  type: 'test'
+  ...
+# Subtest: F26c explicit restore of originally absent profile removes only exact owned bytes
+ok 20 - F26c explicit restore of originally absent profile removes only exact owned bytes
+  ---
+  duration_ms: 5.2598
+  type: 'test'
+  ...
+# Subtest: F26c restore refuses file drift and missing or tampered encrypted backup
+ok 21 - F26c restore refuses file drift and missing or tampered encrypted backup
+  ---
+  duration_ms: 5.5704
+  type: 'test'
+  ...
+# Subtest: F26c restore withdrawal preserves the installed exclusion and its receipt
+ok 22 - F26c restore withdrawal preserves the installed exclusion and its receipt
+  ---
+  duration_ms: 2.9743
+  type: 'test'
+  ...
+# Subtest: F26c restore final-journal failure is recoverable without overwriting original again
+ok 23 - F26c restore final-journal failure is recoverable without overwriting original again
+  ---
+  duration_ms: 8.2992
+  type: 'test'
+  ...
+# Subtest: F26c receipt parser accepts its own exact eight-field durable schema
+ok 24 - F26c receipt parser accepts its own exact eight-field durable schema
+  ---
+  duration_ms: 3.3346
+  type: 'test'
+  ...
+# Subtest: F26c receipt parser refuses getters proxies symbol additions and unsafe backup handles
+ok 25 - F26c receipt parser refuses getters proxies symbol additions and unsafe backup handles
+  ---
+  duration_ms: 3.6738
+  type: 'test'
+  ...
+# Subtest: F26c restore withdrawal during snapshot prevents subsequent encrypted-backup access
+ok 26 - F26c restore withdrawal during snapshot prevents subsequent encrypted-backup access
+  ---
+  duration_ms: 3.8905
+  type: 'test'
+  ...
+1..26
+# tests 26
+# suites 0
+# pass 26
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 928.1304

@@ -1,0 +1,52 @@
+﻿TAP version 13
+# Subtest: F26c commands register exact owner actions without key or profile activity
+ok 1 - F26c commands register exact owner actions without key or profile activity
+  ---
+  duration_ms: 525.0422
+  type: 'test'
+  ...
+# Subtest: F26c command caller arguments never reach install or restore authority
+ok 2 - F26c command caller arguments never reach install or restore authority
+  ---
+  duration_ms: 27.7647
+  type: 'test'
+  ...
+# Subtest: F26c command exceptions and unexpected result fields cannot publish private caller text
+ok 3 - F26c command exceptions and unexpected result fields cannot publish private caller text
+  ---
+  duration_ms: 21.4427
+  type: 'test'
+  ...
+# Subtest: F26c command single pending review refuses another mutation
+ok 4 - F26c command single pending review refuses another mutation
+  ---
+  duration_ms: 13.9641
+  type: 'test'
+  ...
+# Subtest: F26c command flag-off rejects install but permits explicit reviewed restore
+ok 5 - F26c command flag-off rejects install but permits explicit reviewed restore
+  ---
+  duration_ms: 16.0415
+  type: 'test'
+  ...
+# Subtest: F26c configuration and folder events withdraw reviews; disposed commands stay unavailable
+ok 6 - F26c configuration and folder events withdraw reviews; disposed commands stay unavailable
+  ---
+  duration_ms: 10.6624
+  type: 'test'
+  ...
+# Subtest: F26c flag withdrawal while command awaits cannot publish a late APPLIED result
+ok 7 - F26c flag withdrawal while command awaits cannot publish a late APPLIED result
+  ---
+  duration_ms: 8.1465
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1575.475

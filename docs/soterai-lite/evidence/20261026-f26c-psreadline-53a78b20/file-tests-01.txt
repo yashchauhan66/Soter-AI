@@ -1,0 +1,82 @@
+﻿TAP version 13
+# Subtest: F26c checked profile backend reads and CAS-creates only its fixed absent profile
+ok 1 - F26c checked profile backend reads and CAS-creates only its fixed absent profile
+  ---
+  duration_ms: 235.5011
+  type: 'test'
+  ...
+# Subtest: F26c checked profile backend replaces exact existing bytes and removes exact owned bytes
+ok 2 - F26c checked profile backend replaces exact existing bytes and removes exact owned bytes
+  ---
+  duration_ms: 91.1445
+  type: 'test'
+  ...
+# Subtest: F26c checked profile backend refuses stale snapshot and preserves independent edit
+ok 3 - F26c checked profile backend refuses stale snapshot and preserves independent edit
+  ---
+  duration_ms: 37.2785
+  type: 'test'
+  ...
+# Subtest: F26c checked profile backend refuses file created after absent snapshot
+ok 4 - F26c checked profile backend refuses file created after absent snapshot
+  ---
+  duration_ms: 18.8562
+  type: 'test'
+  ...
+# Subtest: F26c checked profile backend withdrawal refuses reads and mutation
+ok 5 - F26c checked profile backend withdrawal refuses reads and mutation
+  ---
+  duration_ms: 12.5659
+  type: 'test'
+  ...
+# Subtest: F26c checked profile backend refuses paths outside the fixed owner root
+ok 6 - F26c checked profile backend refuses paths outside the fixed owner root
+  ---
+  duration_ms: 8.0076
+  type: 'test'
+  ...
+# Subtest: F26c checked profile backend refuses unsupported profile name and missing parent
+ok 7 - F26c checked profile backend refuses unsupported profile name and missing parent
+  ---
+  duration_ms: 5.6818
+  type: 'test'
+  ...
+# Subtest: F26c checked profile backend refuses directory and oversized profile targets
+ok 8 - F26c checked profile backend refuses directory and oversized profile targets
+  ---
+  duration_ms: 15.2222
+  type: 'test'
+  ...
+# Subtest: F26c checked profile backend refuses hardlinked profile before reading content
+ok 9 - F26c checked profile backend refuses hardlinked profile before reading content
+  ---
+  duration_ms: 9.8885
+  type: 'test'
+  ...
+# Subtest: F26c checked profile backend refuses junction parent into another synthetic root
+ok 10 - F26c checked profile backend refuses junction parent into another synthetic root
+  ---
+  duration_ms: 9.9608
+  type: 'test'
+  ...
+# Subtest: F26c checked profile backend refuses foreign ownership snapshot
+ok 11 - F26c checked profile backend refuses foreign ownership snapshot
+  ---
+  duration_ms: 11.9718
+  type: 'test'
+  ...
+# Subtest: F26c checked profile backend refuses oversized or nonbuffer output before staging
+ok 12 - F26c checked profile backend refuses oversized or nonbuffer output before staging
+  ---
+  duration_ms: 7.533
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1172.868

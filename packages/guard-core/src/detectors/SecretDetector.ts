@@ -734,6 +734,13 @@ function isFalsePositive(match: string): boolean {
  */
 export const SECRET_DETECTOR_CLASSES: readonly string[] = [...new Set(SECRET_SPECS.map((s) => s.type))];
 
+/** Public pattern data for conservative foreign-runtime projections. No regex
+ * instances or mutable specs escape. This does not include false-positive
+ * suppression and therefore is not a substitute for detectSecrets(). */
+export const SECRET_PATTERN_SNAPSHOT: readonly Readonly<{ type: string; source: string; flags: string }>[] = Object.freeze(
+    SECRET_SPECS.map(spec => Object.freeze({ type: spec.type, source: spec.pattern.source, flags: spec.pattern.flags })),
+);
+
 export function detectSecrets(text: string): DetectorResult {
     const raw = runRegexDetectors(text, SECRET_SPECS);
     // Phase 4 FP control: drop known placeholders / docs examples so they do

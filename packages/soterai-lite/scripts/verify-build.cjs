@@ -5,9 +5,9 @@ const root = path.resolve(__dirname, '..');
 const sha = file => crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
 function verifyBuild() {
   const receipt = JSON.parse(fs.readFileSync(path.join(root, 'dist/build-receipt.json'), 'utf8'));
-  if (receipt.runtimeCount !== 3 || receipt.inventory.length !== 3) throw new Error('Incomplete build receipt');
+  if (receipt.runtimeCount !== 4 || receipt.inventory.length !== 4) throw new Error('Incomplete build receipt');
   if (sha(path.join(root, 'package.json')) !== receipt.manifestSha256) throw new Error('Manifest/build mismatch');
-  const expected = new Set(['extension.js', 'local-ai-broker.js', 'soterai-mcp-server.js']);
+  const expected = new Set(['extension.js', 'local-ai-broker.js', 'soterai-mcp-server.js', 'pre-commit-client.js']);
   for (const item of receipt.inventory) {
     if (!expected.delete(item.name) || sha(path.join(root, 'dist', item.name)) !== item.sha256) throw new Error('Runtime/build mismatch');
   }
@@ -20,6 +20,6 @@ function verifyBuild() {
 }
 module.exports = { verifyBuild };
 if (require.main === module) {
-  try { const {receipt} = verifyBuild(); console.log(JSON.stringify({status:'PASS',runId:receipt.runId,verifiedBundles:3})); }
+  try { const {receipt} = verifyBuild(); console.log(JSON.stringify({status:'PASS',runId:receipt.runId,verifiedBundles:4})); }
   catch (error) { console.error(error); process.exitCode=1; }
 }

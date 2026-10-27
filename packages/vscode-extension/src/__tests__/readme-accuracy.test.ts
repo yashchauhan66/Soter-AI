@@ -12,6 +12,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { CLINE_PIN } from "../adapters/ClineAdapterPolicy";
 import { CLAUDE_PIN } from "../adapters/ClaudeAdapterPolicy";
+import { PSREADLINE_HISTORY_MODULE_VERSION } from "../history-hooks/PowerShellHistoryText";
 
 const extensionRoot = join(__dirname, "..", "..");
 const manifest = JSON.parse(readFileSync(join(extensionRoot, "package.json"), "utf8"));
@@ -73,11 +74,16 @@ describe("README accuracy", () => {
         // is verifiable against the manifest rather than hand-maintained — Gap 2
         // added "SoterAI keeps its VS Code `^1.85.0` floor", which this check
         // read as a stale product version. The explicit Cline vendor mention is
-        // bound to its actual product pin; another vendor version still fails.
+        // bound to its actual product pin. The explicitly named PSReadLine
+        // version is the same pin emitted by its actually tested native hook.
+        // Another vendor version still fails; this is not a general exemption.
         const engineFloor = String(manifest.engines?.vscode ?? "").replace(/^[^\d]*/, "");
         const allowed = new Set([manifest.version, engineFloor].filter(Boolean));
-        const productClaims = readme.replaceAll("Cline **" + CLINE_PIN.version + "**", "Cline [pinned vendor]")
-            .replaceAll("Claude Code **" + CLAUDE_PIN.version + "**", "Claude Code [pinned vendor]");
+        const withoutPinnedVendors = (source: string) => source.replaceAll("Cline **" + CLINE_PIN.version + "**", "Cline [pinned vendor]")
+            .replaceAll("Claude Code **" + CLAUDE_PIN.version + "**", "Claude Code [pinned vendor]")
+            .replaceAll("PSReadLine **" + PSREADLINE_HISTORY_MODULE_VERSION + "**", "PSReadLine [pinned runtime]");
+        const productClaims = withoutPinnedVendors(readme);
+        assert.deepEqual([...withoutPinnedVendors("PSReadLine **9.9.9**").matchAll(/\b\d+\.\d+\.\d+\b/g)].map(m => m[0]), ["9.9.9"], "An unpinned runtime version must remain visible after the same vendor-claim transformation.");
         const versions = [...new Set([...productClaims.matchAll(/\b\d+\.\d+\.\d+\b/g)].map((m) => m[0]))];
         const stale = versions.filter((v) => !allowed.has(v));
         assert.deepEqual(

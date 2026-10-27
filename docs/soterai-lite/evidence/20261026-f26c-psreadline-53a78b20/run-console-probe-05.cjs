@@ -1,0 +1,22 @@
+// Inherits a real tool console; console stdout/stderr are merged, never separate EOF claims.
+const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto'),cp=require('node:child_process'),assert=require('node:assert/strict');
+const home=__dirname,repo=path.resolve(home,'../../../..'),own=n=>path.join(home,n),sha=b=>crypto.createHash('sha256').update(b).digest('hex');
+const read=n=>JSON.parse(fs.readFileSync(own(n),'utf8').replace(/^\uFEFF/,''));
+for(const pin of read('start-checkpoint-01.json').installedModule.files){const raw=fs.readFileSync(pin.path);assert.equal(raw.length,pin.bytes);assert.equal(sha(raw),pin.sha256);}
+const id=new Date().toISOString().replace(/[-:.]/g,'').replace(/\d{3}Z$/,'Z')+'-'+crypto.randomBytes(4).toString('hex');
+const profile=path.join('D:\\SoterAI-Lite-test-profiles','f26c-console-probe-'+id);assert(!fs.existsSync(profile));fs.mkdirSync(profile);fs.writeFileSync(path.join(profile,'.synthetic-only'),'f26c-console-probe-v5',{flag:'wx'});
+const env={SystemRoot:'C:\\Windows',WINDIR:'C:\\Windows',COMSPEC:'C:\\Windows\\System32\\cmd.exe',PATH:'C:\\Windows\\System32;C:\\Windows;C:\\Windows\\System32\\WindowsPowerShell\\v1.0',PSModulePath:'C:\\Program Files\\WindowsPowerShell\\Modules',SOTERAI_F26C_PROFILE:profile};
+for(const key of ['HOME','USERPROFILE','APPDATA','LOCALAPPDATA','TEMP','TMP','XDG_CONFIG_HOME','XDG_DATA_HOME']){env[key]=path.join(profile,key);fs.mkdirSync(env[key]);}
+const binding=read('native-emitted-profile-binding-05.json');assert.equal(binding.status,'BOUND_ACTUAL_NATIVE28_PASS_EMITTED_PROFILE_NOT_CONSOLE_TESTED');
+for(const pin of [binding.nativeSummary,binding.emittedProfile,binding.sourceProof]){const raw=fs.readFileSync(path.join(repo,pin.path));assert.equal(raw.length,pin.bytes);assert.equal(sha(raw),pin.sha256);}
+const summary=JSON.parse(fs.readFileSync(path.join(repo,binding.nativeSummary.path),'utf8'));assert.equal(summary.status,'PASS_SCOPED_NATIVE_OWNER_API_ONLY');assert.equal(summary.nativeChecks,28);assert.equal(summary.vsixSha256,'6857b94f8405489430dc832bb4b4fe838370b662d01bb61de6da4d02e0a565f3');
+fs.writeFileSync(path.join(profile,'generated-history.ps1'),fs.readFileSync(path.join(repo,binding.emittedProfile.path)),{flag:'wx'});
+const exe='C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe',script=own('probe-console-05.ps1'),args=['-NoLogo','-NoProfile','-ExecutionPolicy','Bypass','-File',script];
+assert.equal(fs.statSync(exe).size,454656);assert.equal(sha(fs.readFileSync(exe)),'8e8b07b3e7de55252ecc09dd7082542b6592afba8410e640acb7cda965a4ba16');
+const child=cp.spawn(exe,args,{env,cwd:profile,windowsHide:true,shell:false,stdio:'inherit'});
+const fact=file=>{const raw=fs.readFileSync(file);return{path:file.startsWith(repo+path.sep)?path.relative(repo,file).replace(/\\/g,'/'):file,bytes:raw.length,sha256:sha(raw)}};
+const start={status:'STARTED_NOT_COMPLETED',pid:child.pid??null,observedAt:new Date().toISOString(),profile,args,executable:fact(exe),script:fact(script),output:'INHERITED_MERGED_CONSOLE_SEPARATE_EOF_NOT_APPLICABLE',signalsRequested:0};fs.writeFileSync(own('console-probe-start-05.json'),JSON.stringify(start,null,2)+'\n',{flag:'wx'});
+const timer=setTimeout(()=>{fs.writeFileSync(own('console-probe-timeout-05.json'),JSON.stringify({status:'STOP_UNCONFIRMED_RETAIN_OWNERSHIP',pid:child.pid,signalsRequested:0})+'\n',{flag:'wx'});},140000);
+child.on('error',e=>{fs.writeFileSync(own('console-probe-error-05.json'),JSON.stringify({code:e.code,signalsRequested:0})+'\n',{flag:'wx'});process.exitCode=1;});
+child.on('close',(exitCode,signal)=>{clearTimeout(timer);const evidence=[];for(const name of ['api-metadata.json','console-result.json','read-observation.json']){const source=path.join(profile,name);if(fs.existsSync(source)){const raw=fs.readFileSync(source);assert(raw.length<8192);const dest=own('console-05-'+name);fs.writeFileSync(dest,raw,{flag:'wx'});evidence.push(fact(dest));}}
+ const result={status:exitCode===0&&signal===null?'CLOSED_CONSOLE_MECHANISM_RESULT_AVAILABLE':'FAIL_OR_INCOMPLETE',pid:child.pid,profile,exitCode,signal,actualClose:true,output:'INHERITED_MERGED_CONSOLE_SEPARATE_EOF_NOT_APPLICABLE',signalsRequested:0,evidence,observedAt:new Date().toISOString()};fs.writeFileSync(own('console-probe-close-05.json'),JSON.stringify(result,null,2)+'\n',{flag:'wx'});console.log(JSON.stringify(result));if(exitCode!==0||signal!==null)process.exitCode=1;});

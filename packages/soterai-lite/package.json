@@ -147,7 +147,9 @@
         "soterai.lite.configScanner.mcp",
         "soterai.lite.historyScanner",
         "soterai.lite.artifactScanner",
-        "soterai.lite.logProtection"
+        "soterai.lite.logProtection",
+        "soterai.lite.historyHooks.preCommit",
+        "soterai.lite.historyHooks.psReadLine"
       ]
     }
   },
@@ -1149,7 +1151,7 @@
       },
       {
         "command": "soterai.installGitSecretHook",
-        "title": "Install Git Pre-Commit Secret Hook (block secrets at commit time)",
+        "title": "Review and Install Pre-Commit Guard (Legacy Alias)",
         "category": "SoterAI"
       },
       {
@@ -1169,7 +1171,7 @@
       },
       {
         "command": "soterai.copyPreCommitHookScript",
-        "title": "Copy Pre-Commit Hook Script (for husky/lefthook repos)",
+        "title": "Pre-Commit Owner Guidance (Legacy Alias)",
         "category": "SoterAI"
       },
       {
@@ -1596,6 +1598,41 @@
       {
         "command": "soterai.logProtectionStatus",
         "title": "Log Protection Status",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.installPreCommitGuard",
+        "title": "Review and Install Pre-Commit Guard",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.resumePreCommitGuard",
+        "title": "Resume Pre-Commit Owner",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.restorePreCommitGuard",
+        "title": "Restore Original Pre-Commit Hook",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.preCommitGuardStatus",
+        "title": "Pre-Commit Owner Status",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.installPSReadLineHistoryGuard",
+        "title": "Review and Install PowerShell History Exclusion",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.restorePSReadLineHistoryGuard",
+        "title": "Restore Owned PowerShell History Profile",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.psReadLineHistoryGuardStatus",
+        "title": "PowerShell History Exclusion Status",
         "category": "SoterAI"
       }
     ],
@@ -2361,6 +2398,18 @@
           "default": true,
           "scope": "machine",
           "description": "Enable owner-reviewed bounded saved-log analysis and guarded SoterAI-owned app/task/lifecycle output. Disable withdraws pending and completed output. Original logs, other extensions and arbitrary processes remain outside these collectors; no automatic cleanup or past-disclosure recall."
+        },
+        "soterai.lite.historyHooks.preCommit": {
+          "type": "boolean",
+          "default": false,
+          "scope": "machine",
+          "description": "Opt in to an owner-reviewed cooperative staged-tree pre-commit guard. Requires the live owning editor and explicit resume after restart. Unsupported data and absent owners withhold commits. Reviewed encrypted recovery/restore remains available while disabled. Deliberate bypass and final commit races remain; no complete detection or registered-value guarantee."
+        },
+        "soterai.lite.historyHooks.psReadLine": {
+          "type": "boolean",
+          "default": false,
+          "scope": "machine",
+          "description": "Opt in to native owner-reviewed credential-command history exclusion for a selected Windows PowerShell 5.1 / PSReadLine 2.0.0 ConsoleHost profile. Only absent, blank or ordinary comment-only originals are supported automatically. Preserves prior handler denies and public history, with conservative extra exclusions. Existing history and unknown values/encodings remain limited. Status stays Uncovered until the selected profile is actually loaded and verified. Disable stops new installs; explicit reviewed restore verifies encrypted recovery and exact owned bytes."
         }
       }
     },
@@ -2639,11 +2688,11 @@
         },
         {
           "command": "soterai.installGitSecretHook",
-          "when": "soterai.advancedCommands"
+          "when": "false"
         },
         {
           "command": "soterai.copyPreCommitHookScript",
-          "when": "soterai.advancedCommands"
+          "when": "false"
         },
         {
           "command": "soterai.checkScreenShareRisk",
@@ -3556,6 +3605,34 @@
         {
           "command": "soterai.logProtectionStatus",
           "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.installPreCommitGuard",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.resumePreCommitGuard",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.restorePreCommitGuard",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.preCommitGuardStatus",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.installPSReadLineHistoryGuard",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.restorePSReadLineHistoryGuard",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.psReadLineHistoryGuardStatus",
+          "when": "soterai.advancedCommands"
         }
       ]
     },
@@ -3646,6 +3723,7 @@
     "dist/extension.js",
     "dist/local-ai-broker.js",
     "dist/soterai-mcp-server.js",
+    "dist/pre-commit-client.js",
     "media/icon.svg",
     "media/logo_circle_whiter.png",
     "media/walkthrough/*.md",

@@ -1,0 +1,138 @@
+import { createHash } from "node:crypto";
+import { TextDecoder, types } from "node:util";
+import type { BackupSink } from "../broker/IntegrationAdapter";
+import { buildHistoryProfile, supportedHistoryProfile } from "./PowerShellHistoryText";
+
+export interface HistoryProfileSnapshot { readonly identity: string; readonly content?: Buffer }
+export interface HistoryProfileTransactionIO {
+    authorized(): boolean;
+    snapshot(): Promise<HistoryProfileSnapshot>;
+    /** Fixed-file backend must atomically compare the supplied private snapshot
+     * before replacement. No caller-selected path or unguarded write fallback. */
+    replace(before: HistoryProfileSnapshot, after: Buffer | undefined): Promise<void>;
+    readReceipt(): unknown;
+    writeReceipt(receipt: HistoryProfileReceipt | undefined): Promise<void>;
+    backup: BackupSink;
+}
+export interface HistoryProfileReceipt {
+    readonly schemaVersion: 1;
+    readonly generation: string;
+    readonly identity: string;
+    readonly phase: "PREPARED" | "APPLIED" | "RESTORING";
+    readonly existed: boolean;
+    readonly beforeDigest: string;
+    readonly afterDigest: string;
+    readonly backupHandle: string | null;
+}
+export interface HistoryProfileResult { readonly status: "APPLIED" | "RESTORED" | "UNAVAILABLE" | "INCOMPLETE" }
+const hash = (raw: Buffer) => createHash("sha256").update(raw).digest("hex");
+const digest = (v: unknown): v is string => typeof v === "string" && /^[a-f0-9]{64}$/.test(v);
+const uuid = (v: unknown): v is string => typeof v === "string" && /^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/.test(v);
+const equal = (a: unknown, b: unknown) => JSON.stringify(a) === JSON.stringify(b);
+const result = (status: HistoryProfileResult["status"]): HistoryProfileResult => Object.freeze({ status });
+const allowed = (io: HistoryProfileTransactionIO) => { try { return io.authorized() === true; } catch { return false; } };
+const contentHash = (s: HistoryProfileSnapshot) => hash(s.content ?? Buffer.alloc(0));
+function snapshot(value: HistoryProfileSnapshot): HistoryProfileSnapshot {
+    if (!value || !digest(value.identity) || value.content !== undefined && (!Buffer.isBuffer(value.content) || value.content.length > 131072)) throw Error();
+    return Object.freeze({ identity: value.identity, ...(value.content === undefined ? {} : { content: Buffer.from(value.content) }) });
+}
+function same(a: HistoryProfileSnapshot, b: HistoryProfileSnapshot): boolean {
+    return a.identity === b.identity && (a.content === undefined) === (b.content === undefined) && contentHash(a) === contentHash(b);
+}
+export function parseHistoryProfileReceipt(value: unknown): HistoryProfileReceipt | undefined {
+    try {
+        if (!value || typeof value !== "object" || types.isProxy(value) || Array.isArray(value) || ![Object.prototype, null].includes(Object.getPrototypeOf(value))) return;
+        const rows = Object.getOwnPropertyDescriptors(value);
+        if (Reflect.ownKeys(rows).length !== 9 || Object.keys(rows).sort().join(",") !== "afterDigest,backupHandle,beforeDigest,existed,generation,identity,phase,schemaVersion"
+            || Object.values(rows).some(row => !Object.hasOwn(row, "value"))) return;
+        const row = value as HistoryProfileReceipt;
+        if (row.schemaVersion !== 1 || !uuid(row.generation) || !digest(row.identity) || !["PREPARED", "APPLIED", "RESTORING"].includes(row.phase)
+            || typeof row.existed !== "boolean" || !digest(row.beforeDigest) || !digest(row.afterDigest)
+            || (row.existed ? typeof row.backupHandle !== "string" || !/^[a-f0-9]{32}$/.test(row.backupHandle) : row.backupHandle !== null || row.beforeDigest !== hash(Buffer.alloc(0)))) return;
+        return Object.freeze({ ...row });
+    } catch { return; }
+}
+async function original(io: HistoryProfileTransactionIO, row: HistoryProfileReceipt): Promise<Buffer | undefined> {
+    if (!row.existed) return;
+    const text = await io.backup.retrieve(row.backupHandle!);
+    if (typeof text !== "string" || Buffer.byteLength(text, "utf8") > 65536) throw Error();
+    const raw = Buffer.from(text, "utf8");
+    if (hash(raw) !== row.beforeDigest || !supportedHistoryProfile(raw)) throw Error();
+    return raw;
+}
+async function fresh(io: HistoryProfileTransactionIO, before: HistoryProfileSnapshot, receipt: unknown): Promise<boolean> {
+    return allowed(io) && equal(io.readReceipt(), receipt) && same(snapshot(await io.snapshot()), before) && allowed(io) && equal(io.readReceipt(), receipt);
+}
+
+/** Owner authorization/review lives above this private transaction. Authorization
+ * is rechecked at every awaited boundary. Failures never return source content
+ * or automatically remove stronger installed exclusions. */
+export async function installHistoryProfile(io: HistoryProfileTransactionIO, generation: string): Promise<HistoryProfileResult> {
+    if (!allowed(io)) return result("UNAVAILABLE");
+    try {
+        if (!uuid(generation)) throw Error();
+        const before = snapshot(await io.snapshot()); if (!allowed(io)) return result("UNAVAILABLE");
+        const raw = io.readReceipt(); let receipt: HistoryProfileReceipt, after: Buffer;
+        if (raw === undefined) {
+            if (!supportedHistoryProfile(before.content)) throw Error();
+            const built = buildHistoryProfile(before.content, { enabled: true, generation }); if (!built) throw Error(); after = built;
+            let handle: string | null = null;
+            if (before.content !== undefined) {
+                const text = new TextDecoder("utf-8", { fatal: true, ignoreBOM: true }).decode(before.content);
+                handle = await io.backup.store(before.identity, text);
+                if (!allowed(io)) return result("UNAVAILABLE");
+                if (!/^[a-f0-9]{32}$/.test(handle) || await io.backup.retrieve(handle) !== text) throw Error();
+            }
+            if (!await fresh(io, before, raw)) return result(allowed(io) ? "INCOMPLETE" : "UNAVAILABLE");
+            receipt = Object.freeze({ schemaVersion: 1, generation, identity: before.identity, phase: "PREPARED", existed: before.content !== undefined,
+                beforeDigest: contentHash(before), afterDigest: hash(after), backupHandle: handle });
+            await io.writeReceipt(receipt);
+            if (!await fresh(io, before, receipt)) return result(allowed(io) ? "INCOMPLETE" : "UNAVAILABLE");
+        } else {
+            const parsed = parseHistoryProfileReceipt(raw);
+            if (!parsed || parsed.generation !== generation || parsed.identity !== before.identity || parsed.phase === "RESTORING") throw Error(); receipt = parsed;
+            const prior = await original(io, receipt); if (!allowed(io)) return result("UNAVAILABLE");
+            const built = buildHistoryProfile(prior, { enabled: true, generation }); if (!built || hash(built) !== receipt.afterDigest) throw Error(); after = built;
+            if (!await fresh(io, before, raw)) return result(allowed(io) ? "INCOMPLETE" : "UNAVAILABLE");
+            if (before.content !== undefined && contentHash(before) === receipt.afterDigest) {
+                if (receipt.phase === "APPLIED") return result("APPLIED");
+                const applied = Object.freeze({ ...receipt, phase: "APPLIED" as const }); await io.writeReceipt(applied);
+                return result(await fresh(io, before, applied) ? "APPLIED" : allowed(io) ? "INCOMPLETE" : "UNAVAILABLE");
+            }
+            if (receipt.phase !== "PREPARED" || (before.content !== undefined) !== receipt.existed || contentHash(before) !== receipt.beforeDigest) throw Error();
+        }
+        if (!await fresh(io, before, receipt)) return result(allowed(io) ? "INCOMPLETE" : "UNAVAILABLE");
+        await io.replace(before, Buffer.from(after));
+        if (!allowed(io)) return result("UNAVAILABLE");
+        const installed = snapshot(await io.snapshot());
+        if (!allowed(io) || installed.identity !== before.identity || installed.content === undefined || contentHash(installed) !== receipt.afterDigest || !equal(io.readReceipt(), receipt)) throw Error();
+        const applied = Object.freeze({ ...receipt, phase: "APPLIED" as const }); await io.writeReceipt(applied);
+        return result(await fresh(io, installed, applied) ? "APPLIED" : allowed(io) ? "INCOMPLETE" : "UNAVAILABLE");
+    } catch { return result(allowed(io) ? "INCOMPLETE" : "UNAVAILABLE"); }
+}
+
+/** Explicit reviewed restore only. Pass a restore-specific authorization lease,
+ * rather than the install flag, to permit owner undo after flag withdrawal. */
+export async function restoreHistoryProfile(io: HistoryProfileTransactionIO, generation: string): Promise<HistoryProfileResult> {
+    if (!allowed(io)) return result("UNAVAILABLE");
+    try {
+        const before = snapshot(await io.snapshot()), raw = io.readReceipt(), receipt = parseHistoryProfileReceipt(raw);
+        if (!uuid(generation) || !receipt || receipt.generation !== generation || receipt.identity !== before.identity) throw Error();
+        const prior = await original(io, receipt); if (!allowed(io)) return result("UNAVAILABLE");
+        const intended = buildHistoryProfile(prior, { enabled: true, generation }); if (!intended || hash(intended) !== receipt.afterDigest) throw Error();
+        if (!await fresh(io, before, raw)) return result(allowed(io) ? "INCOMPLETE" : "UNAVAILABLE");
+        const alreadyRestored = (before.content !== undefined) === receipt.existed && contentHash(before) === receipt.beforeDigest;
+        if (alreadyRestored && receipt.phase === "RESTORING") {
+            await io.writeReceipt(undefined); return result(await fresh(io, before, undefined) ? "RESTORED" : allowed(io) ? "INCOMPLETE" : "UNAVAILABLE");
+        }
+        if (before.content === undefined || contentHash(before) !== receipt.afterDigest) throw Error();
+        const restoring = Object.freeze({ ...receipt, phase: "RESTORING" as const }); await io.writeReceipt(restoring);
+        if (!await fresh(io, before, restoring)) return result(allowed(io) ? "INCOMPLETE" : "UNAVAILABLE");
+        await io.replace(before, prior === undefined ? undefined : Buffer.from(prior));
+        if (!allowed(io)) return result("UNAVAILABLE");
+        const restored = snapshot(await io.snapshot());
+        if (restored.identity !== before.identity || (restored.content !== undefined) !== receipt.existed || contentHash(restored) !== receipt.beforeDigest || !equal(io.readReceipt(), restoring)) throw Error();
+        await io.writeReceipt(undefined);
+        return result(await fresh(io, restored, undefined) ? "RESTORED" : allowed(io) ? "INCOMPLETE" : "UNAVAILABLE");
+    } catch { return result(allowed(io) ? "INCOMPLETE" : "UNAVAILABLE"); }
+}

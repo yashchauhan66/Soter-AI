@@ -16,8 +16,22 @@
   "priorityAmendment": {
     "date": "2026-10-26",
     "authority": "User requested shorter independent features first and time-consuming work later",
-    "order": ["F31a", "F26c", "F27", "F29", "F30", "F26a", "F26b", "F28", "F31b", "F32"],
-    "deferred": ["F26a native06 remains explicitly deferred; no extra-round approval", "F26b has no push authorization"],
+    "order": [
+      "F31a",
+      "F26c",
+      "F27",
+      "F29",
+      "F30",
+      "F26a",
+      "F26b",
+      "F28",
+      "F31b",
+      "F32"
+    ],
+    "deferred": [
+      "F26a native06 remains explicitly deferred; no extra-round approval",
+      "F26b has no push authorization"
+    ],
     "rule": "One selected implementation task at a time; all original required feature gates retained. Parent F31 cannot be DONE on F31a preparation alone."
   },
   "prerequisiteBlock": {
@@ -873,12 +887,16 @@
         {
           "id": "F26c",
           "title": "PSReadLine exclusion",
-          "status": "ACTIVE",
-          "result": "NOT-RUN",
+          "status": "VERIFYING",
+          "result": "SCOPED_PASS_LOCAL_BYTE_BARRIERS_PENDING",
           "requires": [
-            "F10", "F21", "F25"
+            "F10",
+            "F21",
+            "F25"
           ],
-          "startCondition": "Selected by user shorter-first priority; no production before actual F31a transition byte proof. Synthetic isolated profile only, no real shell-history read or normal-profile edit."
+          "startCondition": "Selected by user shorter-first priority; no production before actual F31a transition byte proof. Synthetic isolated profile only, no real shell-history read or normal-profile edit.",
+          "progressEvidence": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/acceptance-01.json",
+          "executionDecision": "Current1005/full4319 zeroFAIL/backend/exactVSIX03 content/offline/native28/emittedconsole8/20affected509/functional10/security17 unchanged baseline/safe withdrawal PASS. Scoped source89 dependency paths and evidence local commit/exhaustive bytes plus separate transition barrier required before F27. F26a incomplete/native06USER_DEFERRED."
         }
       ],
       "completionRule": "All required subcards pass individually before parent DONE",
@@ -900,7 +918,9 @@
       "status": "PLANNED",
       "result": "NOT-RUN",
       "requires": [
-        "F26", "F27", "F30"
+        "F26",
+        "F27",
+        "F30"
       ],
       "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
     },
@@ -938,7 +958,9 @@
           "title": "Offline release inventory, detached bundled-component SBOM and publishing runbook",
           "status": "DONE",
           "result": "PASS",
-          "requires": ["F25"],
+          "requires": [
+            "F25"
+          ],
           "scope": "Build/documentation utility only; explicit exact VSIX/provenance and bounded code/license inputs. No runtime change/native acceptance/release-readiness or publishing claim.",
           "evidence": "docs/soterai-lite/evidence/20261026-f31a-offline-release-6c28a19f",
           "progressEvidence": "docs/soterai-lite/evidence/20261026-f31a-offline-release-6c28a19f/acceptance-01.json",
@@ -952,7 +974,14 @@
           "title": "Final exact-package readiness, honest claims, shipped notices/privacy/SBOM and audits",
           "status": "PLANNED",
           "result": "NOT-RUN",
-          "requires": ["F26", "F27", "F28", "F29", "F30", "F31a"],
+          "requires": [
+            "F26",
+            "F27",
+            "F28",
+            "F29",
+            "F30",
+            "F31a"
+          ],
           "scope": "All original F31 final-object packaging and readiness requirements retained; early detached SBOM does not complete this subcard."
         }
       ],
@@ -1029,5 +1058,11 @@
       "requiredBehaviorReclassified": false,
       "queueNormalization": "Late reconciliation of proposed linear F12 dependency; catalog unchanged"
     }
+  },
+  "f26cLatestCheckpoint": {
+    "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/acceptance-01.json",
+    "sha256": "caf3358f8322b7d19135cf2e8802b608c2fa68f69234ba9a8ff41ea51a5ffac8",
+    "status": "PASS_SCOPED_F26C_LOCAL_BYTE_BARRIERS_PENDING",
+    "native06": "F26a_USER_DEFERRED_NOT_RUN"
   }
 }

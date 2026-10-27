@@ -1,0 +1,1068 @@
+{
+  "schemaVersion": 1,
+  "applicabilityLock": {
+    "preparation": "P03 before frozen catalog and implementation",
+    "optionalAbsent": "Remain NOT_TESTED/NOT COVERED, never DONE; visibly retained inventory, not a supported execution card",
+    "requiredFailure": "Cannot be removed or made optional to advance; current card stays open",
+    "executionDependencies": "Record any availability-based change to the proposed linear queue before freeze; no unsupported card counted complete"
+  },
+  "planVersion": 1,
+  "clientDate": "2026-10-13",
+  "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
+  "scope": "F01-F10/F12-F25 scoped DONE only after actual F25 transition byte barrier; F11 optional absent NOT_TESTED/NOT_COVERED. F26a active after barrier; F26b-c/F27-F32/V01-V05 pending. No rating/human/independent claim.",
+  "implementationConcurrency": 1,
+  "activeFeature": "F26",
+  "activeSubcard": "F26c",
+  "priorityAmendment": {
+    "date": "2026-10-26",
+    "authority": "User requested shorter independent features first and time-consuming work later",
+    "order": [
+      "F31a",
+      "F26c",
+      "F27",
+      "F29",
+      "F30",
+      "F26a",
+      "F26b",
+      "F28",
+      "F31b",
+      "F32"
+    ],
+    "deferred": [
+      "F26a native06 remains explicitly deferred; no extra-round approval",
+      "F26b has no push authorization"
+    ],
+    "rule": "One selected implementation task at a time; all original required feature gates retained. Parent F31 cannot be DONE on F31a preparation alone."
+  },
+  "prerequisiteBlock": {
+    "id": "P00",
+    "result": "FAIL",
+    "reason": "20 GB threshold explicitly waived by the user for this run; historical measurement remains FAIL; P01 may proceed.",
+    "waivedByUser": true,
+    "executionGate": "OPEN"
+  },
+  "finalRating": {
+    "status": "PENDING",
+    "allowed": false,
+    "requires": "All required feature, integration, artifact and human acceptance gates; no numerical interim rating"
+  },
+  "preparations": [
+    {
+      "id": "P00",
+      "status": "DONE",
+      "result": "FAIL",
+      "requires": [],
+      "disposition": "WAIVED BY USER"
+    },
+    {
+      "id": "P01",
+      "status": "DONE",
+      "result": "PASS",
+      "requires": [
+        "P00"
+      ],
+      "scope": "Git connectivity-only PASS; supplemental full fsck ended resource-limited FAIL, full object integrity UNVERIFIED."
+    },
+    {
+      "id": "P02",
+      "status": "DONE",
+      "result": "PASS",
+      "requires": [
+        "P01"
+      ],
+      "artifactSha256": "cf163471b7a022d5a9f922a3f1fcc6bfd3b56a08ab14f1aebfdfb345c337bae1"
+    },
+    {
+      "id": "P03",
+      "status": "DONE",
+      "result": "PASS",
+      "requires": [
+        "P02"
+      ],
+      "catalogSha256": "1ce46192e9f315b5f2142c9f61542f1d513143dc2e19d4def6d95cea38c73ed4"
+    }
+  ],
+  "features": [
+    {
+      "id": "F01",
+      "title": "Reliable saved restrictions.",
+      "status": "DONE",
+      "result": "PASS",
+      "requires": [
+        "P03"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "flag": "soterai.lite.restrictionSave",
+      "sourceEvidenceCommit": "6c90381bb03ddd9fd8361eb98d63e62bdb4ed419",
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261013-f01-restrictions-914f6b6e/f01-acceptance-01.json",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261013-f01-restrictions-914f6b6e/f01-committed-byte-verification-01.json"
+    },
+    {
+      "id": "F02",
+      "title": "Versioned policy and defaults.",
+      "status": "DONE",
+      "result": "PASS",
+      "requires": [
+        "F01"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "flag": "soterai.lite.versionedPolicy",
+      "sourceEvidenceCommit": "b1ffbcce27b8bafda7a9358d81b78e4aaff6416e",
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261013-f02-policy-6fb804da/f02-acceptance-01.json",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261013-f02-policy-6fb804da/f02-committed-byte-verification-01.json"
+    },
+    {
+      "id": "F03",
+      "title": "Policy drift and deliberate relaxation.",
+      "status": "DONE",
+      "result": "PASS",
+      "requires": [
+        "F02"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "sourceEvidenceCommit": "3754191788eee4d042f39258ca08e3bbcfaae0ba",
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261013-f03-policy-review-207ad3dc/f03-acceptance-01.json",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261013-f03-policy-review-207ad3dc/f03-committed-byte-verification-01.json"
+    },
+    {
+      "id": "F04",
+      "title": "Exact one-time safe-read consent.",
+      "status": "DONE",
+      "result": "PASS",
+      "requires": [
+        "F03"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "sourceEvidenceCommit": "bc697b9070edee7adc1f578fc30f949bd8fad5a4",
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261014-f04-safe-consent-47193acb/f04-acceptance-01.json",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261014-f04-safe-consent-47193acb/f04-committed-byte-verification-01.json"
+    },
+    {
+      "id": "F05",
+      "title": "Secure masked env editor.",
+      "status": "DONE",
+      "result": "PASS",
+      "requires": [
+        "F04"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "sourceEvidenceCommit": "fd73041ad2d773a9c259c69e20e48245e51487ea",
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261014-f05-secure-editor-597d8a24/f05-acceptance-01.json",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261014-f05-secure-editor-597d8a24/f05-committed-byte-verification-01.json"
+    },
+    {
+      "id": "F06",
+      "title": "Optional vault migration and recovery.",
+      "status": "DONE",
+      "result": "PASS",
+      "flag": "soterai.lite.vaultMode",
+      "requires": [
+        "F05"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "sourceEvidenceCommit": "9ef608baec316f8bf80f2ff853db57df203e99c9",
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261014-f06-vault-9c361a42/f06-acceptance-01.json",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261014-f06-vault-9c361a42/f06-committed-byte-verification-01.json"
+    },
+    {
+      "id": "F07",
+      "title": "Shared registered-value matching.",
+      "status": "DONE",
+      "result": "PASS",
+      "requires": [
+        "F06"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "sourceEvidenceCommit": "5740f70c2c656ec25f346c1297504c7a4155af7a",
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261015-f07-matching-64a72df1/f07-acceptance-01.json",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261015-f07-matching-64a72df1/f07-committed-byte-verification-01.json"
+    },
+    {
+      "id": "F08",
+      "title": "Streaming output redactor.",
+      "status": "DONE",
+      "result": "PASS",
+      "requires": [
+        "F07"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "sourceEvidenceCommit": "8241568cbe311ebd69f81fa13357d9ca0258016f",
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261015-f08-output-b7429e10/f08-acceptance-01.json",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261015-f08-output-b7429e10/f08-committed-byte-verification-01.json"
+    },
+    {
+      "id": "F09",
+      "title": "Vault Run/Task/Debug integration.",
+      "status": "DONE",
+      "result": "PASS",
+      "requires": [
+        "F08"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "sourceEvidenceCommit": "7bfdc91279ab9f59811ba6918e388846c5ea2411",
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261015-f09-runtime-81e65c2a/f09-acceptance-01.json",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261015-f09-runtime-81e65c2a/f09-committed-byte-verification-01.json"
+    },
+    {
+      "id": "F10",
+      "title": "Managed PowerShell 5.1 terminal.",
+      "status": "DONE",
+      "result": "PASS",
+      "requires": [
+        "F09"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "sourceEvidenceCommit": "93e8487a5cd004bb9ac3a201bcdc5e6640cdf746",
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/f10-acceptance-01.json",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/f10-committed-byte-verification-01.json",
+      "transitionByteVerification": "docs/soterai-lite/evidence/20261015-f10-ps51-3f12ab64/f10-transition-byte-verification-01.json"
+    },
+    {
+      "id": "F11",
+      "title": "Managed PowerShell 7 terminal.",
+      "status": "PLANNED",
+      "result": "UNTESTED",
+      "requires": [
+        "F10"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "supportedExecution": false,
+      "coverage": "NOT_TESTED/NOT_COVERED",
+      "disposition": "OPTIONAL_UNAVAILABLE_UNIMPLEMENTED",
+      "availabilityEvidence": "docs/soterai-lite/evidence/20261017-f11-ps7-availability-6f721c9d/availability-01.json",
+      "remainingWork": "Install only if separately authorized/available later, then implement and execute all F11 gates. No PS7 support advertised."
+    },
+    {
+      "id": "F12",
+      "title": "Managed cmd profile.",
+      "status": "DONE",
+      "result": "PASS",
+      "requires": [
+        "F10"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "requestedInventoryRequires": [
+        "F11"
+      ],
+      "dependencyReason": "Frozen P03 optional PS7 absence excludes F11 only from supported execution. Proposed linear dependency reconciled here; F11 remains unimplemented/NOT_TESTED and in inventory.",
+      "sourceEvidenceCommit": "f403e9d8e13afc0463ea197d9cd03dce6d7e74c7",
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261017-f12-cmd-74b6d291/f12-acceptance-01.json",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261017-f12-cmd-74b6d291/f12-committed-byte-verification-01.json",
+      "transitionByteVerification": "docs/soterai-lite/evidence/20261017-f12-cmd-74b6d291/f12-transition-byte-verification-01.json"
+    },
+    {
+      "id": "F13",
+      "title": "Managed Git Bash profile.",
+      "status": "DONE",
+      "result": "PASS",
+      "requires": [
+        "F12"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "sourceEvidenceCommit": "99c2d78e427ef2ba07bcd0d29583e80017dbb309",
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261017-f13-gitbash-291c8e70/f13-acceptance-01.json",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261017-f13-gitbash-291c8e70/f13-committed-byte-verification-01.json",
+      "transitionByteVerification": "docs/soterai-lite/evidence/20261017-f13-gitbash-291c8e70/f13-transition-byte-verification-01.json"
+    },
+    {
+      "id": "F14",
+      "title": "Broker lifecycle and window ownership.",
+      "status": "DONE",
+      "result": "PASS",
+      "requires": [
+        "F13"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "sourceEvidenceCommit": "0f10dcd0bab93ae709c2b5592c6262da36581867",
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261017-f14-broker-lifecycle-71e5b490/f14-acceptance-02.json",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261017-f14-broker-lifecycle-71e5b490/f14-committed-byte-verification-02.json",
+      "transitionByteVerification": "docs/soterai-lite/evidence/20261017-f14-broker-lifecycle-71e5b490/f14-transition-byte-verification-01.json"
+    },
+    {
+      "id": "F15",
+      "title": "Gateway body-decoder coverage.",
+      "status": "DONE",
+      "result": "PASS",
+      "requires": [
+        "F14"
+      ],
+      "subcards": [
+        {
+          "id": "F15a",
+          "title": "JSON",
+          "status": "DONE",
+          "result": "PASS",
+          "requires": [
+            "parent prerequisites"
+          ],
+          "sourceRevision": "dec76fa3957a79a55f8a73cb0b4fdf64465c443d",
+          "evidence": "docs/soterai-lite/evidence/20261017-f15a-json-4c82d1a7/f15a-acceptance-01.json",
+          "commitByteVerification": "docs/soterai-lite/evidence/20261017-f15a-json-4c82d1a7/f15a-committed-byte-verification-01.json",
+          "transitionByteVerification": "docs/soterai-lite/evidence/20261017-f15a-json-4c82d1a7/f15a-transition-byte-verification-01.json"
+        },
+        {
+          "id": "F15b",
+          "title": "gzip",
+          "status": "DONE",
+          "result": "PASS",
+          "requires": [
+            "F15a"
+          ],
+          "sourceRevision": "74faf895f39e49f0d3b8105287bba3cbcd273c9b",
+          "evidence": "docs/soterai-lite/evidence/20261018-f15b-gzip-5e0d2a91/f15b-acceptance-01.json",
+          "commitByteVerification": "docs/soterai-lite/evidence/20261018-f15b-gzip-5e0d2a91/f15b-committed-byte-verification-01.json",
+          "transitionByteVerification": "docs/soterai-lite/evidence/20261018-f15b-gzip-5e0d2a91/f15b-transition-byte-verification-01.json"
+        },
+        {
+          "id": "F15c",
+          "title": "Brotli",
+          "status": "DONE",
+          "result": "PASS",
+          "requires": [
+            "F15b"
+          ],
+          "sourceRevision": "b273a838a147ff9714599e0668b6298119c5eaf4",
+          "evidence": "docs/soterai-lite/evidence/20261018-f15c-brotli-93e1c6b4/f15c-acceptance-01.json",
+          "commitByteVerification": "docs/soterai-lite/evidence/20261018-f15c-brotli-93e1c6b4/f15c-committed-byte-verification-01.json",
+          "transitionByteVerification": "docs/soterai-lite/evidence/20261018-f15c-brotli-93e1c6b4/f15c-transition-byte-verification-01.json"
+        },
+        {
+          "id": "F15d",
+          "title": "deflate",
+          "status": "DONE",
+          "result": "PASS",
+          "requires": [
+            "F15c"
+          ],
+          "sourceRevision": "8e11c01c00d5a531961b112a012f2689a5992430",
+          "evidence": "docs/soterai-lite/evidence/20261018-f15d-deflate-26b04d8f/f15d-acceptance-01.json",
+          "commitByteVerification": "docs/soterai-lite/evidence/20261018-f15d-deflate-26b04d8f/f15d-committed-byte-verification-01.json",
+          "transitionByteVerification": "docs/soterai-lite/evidence/20261018-f15d-deflate-26b04d8f/f15d-transition-byte-verification-01.json"
+        },
+        {
+          "id": "F15e",
+          "title": "chunked framing",
+          "status": "DONE",
+          "result": "PASS",
+          "requires": [
+            "F15d"
+          ],
+          "sourceRevision": "021c0a89cf0960e86376f61f5c6d5927c242e904",
+          "evidence": "docs/soterai-lite/evidence/20261018-f15e-chunked-0d79a31c/f15e-acceptance-01.json",
+          "commitByteVerification": "docs/soterai-lite/evidence/20261018-f15e-chunked-0d79a31c/f15e-committed-byte-verification-01.json",
+          "transitionByteVerification": "docs/soterai-lite/evidence/20261018-f15e-chunked-0d79a31c/f15e-transition-byte-verification-01.json"
+        },
+        {
+          "id": "F15f",
+          "title": "NDJSON/SSE",
+          "status": "DONE",
+          "result": "PASS",
+          "requires": [
+            "F15e"
+          ],
+          "sourceRevision": "65e86d4e394a4e1a4f278a53ba607aab958f50c0",
+          "evidence": "docs/soterai-lite/evidence/20261018-f15f-framed-73d9b102/f15f-acceptance-01.json",
+          "commitByteVerification": "docs/soterai-lite/evidence/20261018-f15f-framed-73d9b102/f15f-committed-byte-verification-01.json",
+          "transitionByteVerification": "docs/soterai-lite/evidence/20261018-f15f-framed-73d9b102/f15f-transition-byte-verification-01.json"
+        },
+        {
+          "id": "F15g",
+          "title": "multipart",
+          "status": "DONE",
+          "result": "PASS",
+          "requires": [
+            "F15f"
+          ],
+          "sourceRevision": "3397190e0906efec6e4036ae021fcb5efb6f8785",
+          "evidence": "docs/soterai-lite/evidence/20261018-f15g-multipart-4a6c139b/f15g-acceptance-01.json",
+          "commitByteVerification": "docs/soterai-lite/evidence/20261018-f15g-multipart-4a6c139b/f15g-committed-byte-verification-01.json",
+          "transitionByteVerification": "docs/soterai-lite/evidence/20261018-f15g-multipart-4a6c139b/f15g-transition-byte-verification-01.json"
+        },
+        {
+          "id": "F15h",
+          "title": "base64 blobs",
+          "status": "DONE",
+          "result": "PASS",
+          "requires": [
+            "F15g"
+          ],
+          "sourceRevision": "b36da66d79ed75871ffc4de36e5145a2ffe27e69",
+          "evidence": "docs/soterai-lite/evidence/20261018-f15h-base64-8b7d260e/f15h-acceptance-01.json",
+          "commitByteVerification": "docs/soterai-lite/evidence/20261018-f15h-base64-8b7d260e/f15h-committed-byte-verification-01.json",
+          "transitionByteVerification": "docs/soterai-lite/evidence/20261018-f15h-base64-8b7d260e/f15h-transition-byte-verification-01.json"
+        }
+      ],
+      "completionRule": "All required subcards pass individually before parent DONE",
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "sourceEvidenceCommit": "b36da66d79ed75871ffc4de36e5145a2ffe27e69",
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261018-f15h-base64-8b7d260e/f15-parent-acceptance-01.json",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261018-f15h-base64-8b7d260e/f15h-committed-byte-verification-01.json",
+      "transitionByteVerification": "docs/soterai-lite/evidence/20261018-f15h-base64-8b7d260e/f15h-transition-byte-verification-01.json",
+      "parentCompletionVerification": "docs/soterai-lite/evidence/20261018-f15h-base64-8b7d260e/f15-parent-completion-byte-verification-01.json"
+    },
+    {
+      "id": "F16",
+      "title": "Gateway per-tool policy and self-test.",
+      "status": "DONE",
+      "result": "PASS",
+      "requires": [
+        "F15"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "sourceEvidenceCommit": "5891325f56ca4801c3e330727c3627ee783d1d2b",
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261018-f16-gateway-policy-6e9a31d4/f16-acceptance-02.json",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261018-f16-gateway-policy-6e9a31d4/f16-committed-byte-verification-02.json",
+      "transitionByteVerification": "docs/soterai-lite/evidence/20261018-f16-gateway-policy-6e9a31d4/f16-transition-byte-verification-01.json"
+    },
+    {
+      "id": "F17",
+      "title": "Approved safe-read MCP adapter.",
+      "status": "DONE",
+      "result": "PASS",
+      "requires": [
+        "F16"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "sourceEvidenceCommit": "c97a8b5cf344a29707117f476c1fef5f014bf33c",
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261018-f17-safe-read-73bc91a2/f17-acceptance-02.json",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261018-f17-safe-read-73bc91a2/f17-committed-byte-verification-02.json",
+      "transitionByteVerification": "docs/soterai-lite/evidence/20261018-f17-safe-read-73bc91a2/f17-transition-byte-verification-01.json"
+    },
+    {
+      "id": "F18",
+      "title": "Cline adapter, one pinned version.",
+      "status": "DONE",
+      "result": "PASS",
+      "requires": [
+        "F17"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "sourceEvidenceCommit": "c0c427bb164aed74aad0907cc2fbaaf32eb7afdf",
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261018-f18-cline-46a8c902/f18-acceptance-01.json",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261018-f18-cline-46a8c902/f18-committed-byte-verification-01.json",
+      "transitionByteVerification": "docs/soterai-lite/evidence/20261018-f18-cline-46a8c902/f18-transition-byte-verification-01.json",
+      "scope": "Pinned Cline4.1.25 managed OpenAI-compatible+safe MCP; LOW actual scripted routes. Vendor hooks only; native context/images/independent traffic Uncovered, current-owner status unverified."
+    },
+    {
+      "id": "F19",
+      "title": "Claude Code adapter, one pinned version.",
+      "status": "DONE",
+      "result": "PASS",
+      "requires": [
+        "F18"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "sourceEvidenceCommit": "f1d1fd1bfe1717c29fc411c3945965120455ecc2",
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/f19-acceptance-01.json",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/f19-committed-byte-verification-01.json",
+      "transitionByteVerification": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/f19-transition-byte-verification-01.json",
+      "scope": "Pinned Claude Code2.1.301 native CLI text route plus actual editor owner setup/consent/restore. LOW scripted native22; vendor hooks only. Webview prompt session, context/images/independent traffic and current-owner routing UNVERIFIED; badge Uncovered."
+    },
+    {
+      "id": "F20",
+      "title": "Other discovered adapters, one at a time.",
+      "status": "DONE",
+      "result": "PASS_SCOPED",
+      "requires": [
+        "F19"
+      ],
+      "childCards": "One per additional supported tool/version; enumerate at P03 before frozen applicability",
+      "completionRule": "No supported additional adapter bypasses actual-tool acceptance",
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "progressEvidence": "docs/soterai-lite/evidence/20261020-f20c-gemini-cli-8a6d3e70/f20c-acceptance-01.json",
+      "orderedSubcards": [
+        {
+          "id": "F20A",
+          "tool": "codexCli",
+          "version": "0.160.1",
+          "status": "DONE",
+          "result": "PASS_SCOPED",
+          "evidence": "docs/soterai-lite/evidence/20261019-f20-codex-cli-17b8e403/design-01.md",
+          "components": [
+            {
+              "id": "F20A-MCP",
+              "status": "DONE_SCOPED",
+              "result": "PASS_SCOPED",
+              "acceptance": "docs/soterai-lite/evidence/20261019-f20-codex-cli-17b8e403/f20a-mcp-acceptance-01.json",
+              "sourceEvidenceCommit": "7defc1e755bf684f045deaa8b4083207358d680c",
+              "commitByteVerification": "docs/soterai-lite/evidence/20261019-f20-codex-cli-17b8e403/f20a-mcp-committed-byte-verification-01.json",
+              "transitionByteVerification": "docs/soterai-lite/evidence/20261019-f20-codex-cli-17b8e403/f20a-mcp-transition-byte-verification-01.json"
+            },
+            {
+              "id": "F20A-RESPONSES",
+              "status": "DONE_SCOPED",
+              "result": "PASS_SCOPED",
+              "requiredBeforeNextVendor": true,
+              "evidence": "docs/soterai-lite/evidence/20261019-f20a-responses-45ae291c/progress-01.json",
+              "acceptance": "docs/soterai-lite/evidence/20261019-f20a-responses-45ae291c/f20a-responses-acceptance-01.json",
+              "sourceEvidenceCommit": "fd50edb37d0fc01c6b66aa9e467aaa9aaa289fdd",
+              "commitByteVerification": "docs/soterai-lite/evidence/20261019-f20a-responses-45ae291c/f20a-responses-committed-byte-verification-01.json",
+              "transitionByteVerification": "docs/soterai-lite/evidence/20261019-f20a-responses-45ae291c/f20a-responses-transition-byte-verification-01.json"
+            }
+          ],
+          "sourceEvidenceCommit": "fd50edb37d0fc01c6b66aa9e467aaa9aaa289fdd",
+          "acceptanceEvidence": "docs/soterai-lite/evidence/20261019-f20a-responses-45ae291c/f20a-responses-acceptance-01.json",
+          "commitByteVerification": "docs/soterai-lite/evidence/20261019-f20a-responses-45ae291c/f20a-responses-committed-byte-verification-01.json",
+          "transitionByteVerification": "docs/soterai-lite/evidence/20261019-f20a-responses-45ae291c/f20a-responses-transition-byte-verification-01.json",
+          "scope": "Pinned native CLI0.160.1 restricted stateless HTTP text Responses and F04 safe-read; native20/current actual owner/withdrawal. Output fully buffered, no general incremental gateway/real-provider compatibility; explicit provider overrides remain uncovered; badge Uncovered, scripted LOW.",
+          "retainedDiagnosticWorkers": {
+            "sessions": [
+              11701,
+              72516,
+              47543
+            ],
+            "status": "WITHDRAWAL_INCOMPLETE_NO_SIGNALS",
+            "productRouteReached": false,
+            "followup": "F28 fixture lifecycle audit and original L6 human actions; no clean historical-worker teardown claim"
+          }
+        },
+        {
+          "id": "F20B",
+          "tool": "codexIde",
+          "status": "DONE",
+          "result": "PASS_SCOPED",
+          "pin": "IDE26.51007.21434/bundled0.162.0-alpha.17.2 public bytes rechecked separately; no F20A CLI pin inference",
+          "progressEvidence": "docs/soterai-lite/evidence/20261019-f20b-codex-ide-c7a309e2/f20b-acceptance-01.json",
+          "requiredGate": "PASS_SCOPED_ACTUAL_IDE_PRODUCT_ROUTE",
+          "fixtureImprovementRounds": 3,
+          "acceptanceEvidence": "docs/soterai-lite/evidence/20261019-f20b-codex-ide-c7a309e2/f20b-acceptance-01.json",
+          "scope": "Pinned IDE26.51007.21434/bundled0.162.0-alpha.17.2 actual internal-client/native restricted text HTTP Responses/F04 MCP; native21 with CLI flag false and current owned withdrawal. Buffered output, no general incremental/physical webview/real-provider/clean-install/human/independent/OS/all-descendant claim; explicit provider override uncovered, badgeUncovered. Prior peer OOM102PASS1FAIL retained; unchanged-byte retry106PASS, not regraded.",
+          "sourceEvidenceCommit": "2daee252bd38bbeacf697410cbceadcbe3c87481",
+          "commitByteVerification": "docs/soterai-lite/evidence/20261019-f20b-codex-ide-c7a309e2/f20b-committed-byte-verification-01.json",
+          "transitionByteVerification": "docs/soterai-lite/evidence/20261019-f20b-codex-ide-c7a309e2/f20b-transition-byte-verification-01.json",
+          "additionalFixtureRound": {
+            "authorized": true,
+            "evidence": "docs/soterai-lite/evidence/20261019-f20b-codex-ide-c7a309e2/user-round-authorization-01.json",
+            "run": 5,
+            "result": "PASS_SCOPED_IDE_CLIENT_FEASIBILITY"
+          }
+        },
+        {
+          "id": "F20C",
+          "tool": "geminiCli",
+          "status": "DONE",
+          "result": "PASS_SCOPED",
+          "pin": "Installed0.55.1 public463file bundle/Node22.16.0/picomatch4.0.2 rechecked; exact pin02",
+          "progressEvidence": "docs/soterai-lite/evidence/20261020-f20c-gemini-cli-8a6d3e70/f20c-progress-04.json",
+          "requiredGate": "INCOMPLETE_CURRENT_FULL_SUITE_AFFECTED_IDE_RETAINED_AND_BYTE_BARRIERS",
+          "fixtureImprovementRounds": 3,
+          "additionalFixtureRound": {
+            "authorized": true,
+            "evidence": "docs/soterai-lite/evidence/20261020-f20c-gemini-cli-8a6d3e70/user-round-authorization-01.json",
+            "run": 5,
+            "result": "INCOMPLETE_NO_SIGNALS"
+          },
+          "nextDiagnosticProposal": "docs/soterai-lite/evidence/20261020-f20c-gemini-cli-8a6d3e70/feasibility-proposal-06.json",
+          "publicNativeFeasibility": "PASS_SCOPED_NATIVE_PUBLIC_FEASIBILITY",
+          "mcpNativeFeasibility": "PASS_SCOPED_NATIVE_MCP_FEASIBILITY",
+          "additionalFixtureRounds": [
+            {
+              "run": 5,
+              "result": "INCOMPLETE_NO_SIGNALS",
+              "authorization": "user-round-authorization-01.json"
+            },
+            {
+              "run": 6,
+              "result": "INCOMPLETE_NO_SIGNALS",
+              "authorization": "user-round-authorization-02.json"
+            },
+            {
+              "run": 7,
+              "result": "PASS_SCOPED_NATIVE_PUBLIC_FEASIBILITY",
+              "authorization": "user-round-authorization-03.json"
+            }
+          ],
+          "mcpFixtureImprovementRounds": 3,
+          "nextDiagnosticProposalStatus": "HISTORICAL_CONSUMED_BY_APPROVED_NATIVE06",
+          "currentProductMatrix": {
+            "run": 2,
+            "driver": "gemini-product-matrix-03.cjs",
+            "result": "PASS_SCOPED_PRODUCT_GEMINI_MATRIX",
+            "evidence": "docs/soterai-lite/evidence/20261020-f20c-gemini-cli-8a6d3e70/f20c-product-20261020T142131Z-3dfc1593/product-result.json",
+            "improvementRoundsUsed": 1
+          },
+          "acceptanceEvidence": "docs/soterai-lite/evidence/20261020-f20c-gemini-cli-8a6d3e70/f20c-acceptance-01.json",
+          "scope": "Pinned Gemini CLI0.55.1/Node22.16.0 selected manifest+complete bundle/picomatch4.0.2; actual registered owner native16/7closed clients, separate local MCP/GenerateContent roles, one-attempt reviewed home/environment and buffered stateless text/F04 only. Explicit provider override leak/uncovered; badgeUncovered. Optional native probes refused by fixture, no product command-confinement/opaque/media/state/real-provider/human/independent/OS/all-descendant claim. Historical failed current-matrix/Claude timing/IDE runs and incomplete worker observations retained separately.",
+          "sourceEvidenceCommit": "199d39410ba149aa74471ed6042fc497e0359676",
+          "commitByteVerification": "docs/soterai-lite/evidence/20261020-f20c-gemini-cli-8a6d3e70/f20c-committed-byte-verification-01.json",
+          "transitionByteVerification": "docs/soterai-lite/evidence/20261020-f20c-gemini-cli-8a6d3e70/f20c-transition-byte-verification-01.json"
+        }
+      ],
+      "sourceEvidenceCommit": "199d39410ba149aa74471ed6042fc497e0359676",
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261020-f20c-gemini-cli-8a6d3e70/f20c-acceptance-01.json",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261020-f20c-gemini-cli-8a6d3e70/f20c-committed-byte-verification-01.json",
+      "transitionByteVerification": "docs/soterai-lite/evidence/20261020-f20c-gemini-cli-8a6d3e70/f20c-transition-byte-verification-01.json",
+      "scope": "Enumerated installed supported Codex CLI, Codex IDE and Gemini CLI subcards complete for their separate pinned text/F04 routes. No generic support inference; unsupported/native bypass routes remain named uncovered."
+    },
+    {
+      "id": "F21",
+      "title": "Secrets hygiene and exposure ledger.",
+      "status": "DONE",
+      "result": "PASS_SCOPED",
+      "requires": [
+        "F20"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "progressEvidence": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/f21-progress-06.json",
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/f21-acceptance-01.json",
+      "scope": "Owner-reviewed Windows trusted single local saved-file/workspace heuristic hygiene. Canonical F02 additive enrollment precedes consent basis; candidate originals stay in bounded private F06 snapshots after consent. Real isolated SecretStorage API, canonical whole-file vault/example/disclosure restore with saved denies, keyed possible-exposure view/export, manual NOT_PERFORMED provider checklists. No actual AI access/key validity/rotation/OS custody/human/independent/hostile-same-user or universal scanner guarantee. Current affected F06 vault/F04 reader/gateway lifecycle and functional/security checks; adapter/server production code unchanged, actual vendor executables not rerun for F21 and final exact-object V01 route gates remain pending.",
+      "sourceEvidenceCommit": "43c1d114f816c97de17907e433a5581f0943222a",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/f21-committed-byte-verification-01.json",
+      "transitionByteVerification": "docs/soterai-lite/evidence/20261020-f21-hygiene-4f8a1c92/f21-transition-byte-verification-01.json"
+    },
+    {
+      "id": "F22",
+      "title": "Source/config scanner families.",
+      "status": "DONE",
+      "result": "PASS_SCOPED",
+      "requires": [
+        "F21"
+      ],
+      "subcards": [
+        {
+          "id": "F22a",
+          "title": "source",
+          "status": "DONE",
+          "result": "PASS_SCOPED",
+          "requires": [
+            "parent prerequisites"
+          ],
+          "progressEvidence": "docs/soterai-lite/evidence/20261021-f22a-source-6c4d81f2/f22a-progress-03.json",
+          "acceptanceEvidence": "docs/soterai-lite/evidence/20261021-f22a-source-6c4d81f2/f22a-acceptance-01.json",
+          "scope": "F22a saved JS/JSX/TS/TSX/MJS/CJS static credential strings and canonical comment candidates only, parse-only installed Babel7.29.7 with fixed grammar. Owner consent, F21 keyed possible-exposure metadata, canonical F06 whole-file encrypted vault, exact escaped disclosure restore and saved denies; strict machine source flag and private native file/finding selection. Other languages/dynamic assembly/type-only declarations/import specifiers/regex bodies are unverified. No execution/config loading/automatic code-import rewrite/value-bearing env file/live validity/actual AI access/OS confinement/human/independent/universal scanner claim. Current affected hygiene/vault/reader/gateway/functional/security verified; adapter/backend/MCP production unchanged, actual vendor executables not rerun for this subcard and final exact-object V01 route gates remain pending.",
+          "sourceEvidenceCommit": "c36328d3acfdb084ebfd863a17124f75f92ba0bd",
+          "commitByteVerification": "docs/soterai-lite/evidence/20261021-f22a-source-6c4d81f2/f22a-committed-byte-verification-01.json",
+          "transitionByteVerification": "docs/soterai-lite/evidence/20261021-f22a-source-6c4d81f2/f22a-transition-byte-verification-01.json"
+        },
+        {
+          "id": "F22b",
+          "title": "Docker/Kubernetes",
+          "status": "DONE",
+          "result": "PASS_SCOPED",
+          "requires": [
+            "F22a"
+          ],
+          "progressEvidence": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/f22b-progress-07.json",
+          "affectedVerification": {
+            "F06": "CURRENT_UNIT_SUBSET_PASS_FULL_NATIVE_PENDING",
+            "F21": "CURRENT_UNIT_SUBSET_PASS_FULL_NATIVE_PENDING",
+            "F22a": "CURRENT_UNIT_SUBSET_PASS_FULL_NATIVE_PENDING"
+          },
+          "acceptanceEvidence": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/f22b-acceptance-01.json",
+          "scope": "F22b bounded saved Dockerfile ENV/ARG and declared Compose/Kubernetes static YAML grammar only, fixed parse-only YAML2.9.0 ISC; strict family flag, owner consent, F21 HMAC metadata and canonical F06 encrypted migration. YAML uses guarded exact whole-file checkpoint disclosure; generic per-entry recovery refuses checkpoint-only entries including encoded Secret data. Docker/source per-entry behavior retained. Unsupported/dynamic/alias/tag/foreign/malformed input withholds. No config execution, build/deployment, value-bearing env file, live validity, actual AI-access observation, OS boundary, human or independent verification claim. Backend/MCP production unchanged; actual vendor executables not rerun for this subcard; final exact-object V01 route gates remain pending.",
+          "sourceEvidenceCommit": "f1d67891e7a27e2adf9fadadfd70cfa48c7c3de3",
+          "commitByteVerification": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/f22b-committed-byte-verification-01.json",
+          "transitionByteVerification": "docs/soterai-lite/evidence/20261021-f22b-container-config-35a1c8f0/f22b-transition-byte-verification-01.json",
+          "currentAffectedVerification": {
+            "F06": "PASS_CURRENT_EXACT_OBJECT",
+            "F21": "PASS_CURRENT_EXACT_OBJECT",
+            "F22a": "PASS_CURRENT_EXACT_OBJECT"
+          }
+        },
+        {
+          "id": "F22c",
+          "title": "Terraform/tfvars",
+          "status": "DONE",
+          "result": "PASS_SCOPED",
+          "requires": [
+            "F22b"
+          ],
+          "progressEvidence": "docs/soterai-lite/evidence/20261021-f22c-terraform-79d3c2a1/f22c-progress-02.json",
+          "currentAffectedVerification": {
+            "F06": "PASS_CURRENT_EXACT_OBJECT",
+            "F21": "PASS_CURRENT_EXACT_OBJECT",
+            "F22a": "PASS_CURRENT_EXACT_OBJECT",
+            "F22b": "PASS_CURRENT_EXACT_OBJECT"
+          },
+          "acceptanceEvidence": "docs/soterai-lite/evidence/20261021-f22c-terraform-79d3c2a1/f22c-acceptance-01.json",
+          "scope": "F22c finite saved static Terraform/tfvars native HCL and strict duplicate-aware JSON only: quoted/heredoc strings, actual comments, named credential/default/output fields and nested literals. Dynamic templates/functions/operators/comprehensions/unsupported syntax withhold; no Terraform execution, plan/provider/schema validity or full-HCL claim. Strict machine family flag, owner-native file/finding selection, F21 HMAC possible-exposure metadata and canonical encrypted F06 checkpoint-only migration/exact whole-file disclosure with saved denies. Generic per-entry restoration refuses these records. No new dependency, value-bearing env file, live validity, AI-access observation, OS boundary, human or independent verification claim. Current affected container/source/hygiene/vault/reader/gateway verified; backend/MCP production unchanged. Actual vendor executables not rerun; final exact-object V01 route gates remain pending.",
+          "sourceEvidenceCommit": "47417e2699d91402d686318b481dbb7a09a28cae",
+          "commitByteVerification": "docs/soterai-lite/evidence/20261021-f22c-terraform-79d3c2a1/f22c-committed-byte-verification-01.json",
+          "transitionByteVerification": "docs/soterai-lite/evidence/20261021-f22c-terraform-79d3c2a1/f22c-transition-byte-verification-01.json"
+        },
+        {
+          "id": "F22d",
+          "title": "npm/pypi registry configs",
+          "status": "DONE",
+          "result": "PASS_SCOPED",
+          "requires": [
+            "F22c"
+          ],
+          "progressEvidence": "docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/f22d-progress-05.json",
+          "currentAffectedVerification": {
+            "F06": "PASS_CURRENT_EXACT_OBJECT",
+            "F21": "PASS_CURRENT_EXACT_OBJECT",
+            "F22a": "PASS_CURRENT_EXACT_OBJECT",
+            "F22b": "PASS_CURRENT_EXACT_OBJECT",
+            "F22c": "PASS_CURRENT_EXACT_OBJECT"
+          },
+          "acceptanceEvidence": "docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/f22d-acceptance-01.json",
+          "scope": "F22d finite static saved project .npmrc/.pypirc credential fields/URL userinfo/canonical UTF8 base64 and supported comments/multiline only. Known public registry/schema controls retained; unsupported/malformed/dynamic inputs and external references withhold. Strict machine family flag and native owner selection, F21 keyed possible-exposure metadata, canonical F06 encrypted whole-file checkpoint migration/exact disclosure with saved denies; generic per-entry restoration refuses. No new dependency/INI library, home/global config loading, package client, registry request, upload, login, value-bearing env file, credential-validity/AI-access observation/OS/human/independent claim. Composite auth fragments/other client-specific semantics/prior copies/unmanaged reads remain limited. Affected shared native workflows verified; backend/MCP production unchanged; actual vendor executables not rerun and final exact-object V01 route gates remain pending.",
+          "sourceEvidenceCommit": "b0f450dd72babae0cb056459bc682312134790eb",
+          "commitByteVerification": "docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/f22d-committed-byte-verification-01.json",
+          "transitionByteVerification": "docs/soterai-lite/evidence/20261021-f22d-registry-1a98d4e7/f22d-transition-byte-verification-01.json"
+        },
+        {
+          "id": "F22e",
+          "title": "service-account JSON",
+          "status": "DONE",
+          "result": "PASS_SCOPED",
+          "requires": [
+            "F22d"
+          ],
+          "progressEvidence": "docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/f22e-progress-04.json",
+          "currentAffectedVerification": {
+            "F06": "PASS_CURRENT_EXACT_OBJECT",
+            "F21": "PASS_CURRENT_EXACT_OBJECT",
+            "F22a": "PASS_CURRENT_EXACT_OBJECT",
+            "F22b": "PASS_CURRENT_EXACT_OBJECT",
+            "F22c": "PASS_CURRENT_EXACT_OBJECT",
+            "F22d": "PASS_CURRENT_EXACT_OBJECT"
+          },
+          "acceptanceEvidence": "docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/f22e-acceptance-01.json",
+          "scope": "F22e finite saved strict service-account/key JSON objects only: escaped multiline private material, actual credential fields, recognized secret-shaped values, whole credential URL scalars and nested public controls. Duplicate decoded names, malformed/JSONC syntax, invalid controls and unsupported external credential sources withhold. Strict machine family flag and native owner selection, F21 HMAC possible-exposure metadata and canonical F06 encrypted whole-file checkpoint migration/exact disclosure with saved denies; generic per-entry restoration refuses. No new dependency/auth client, config execution, authentication, credential-source read, token request, value-bearing env file, key validity/AI-access/OS/human/independent claim. Composite fragments, unknown secrets/prior copies/unmanaged reads remain limited. Current affected shared workflows verified; backend/MCP production unchanged, actual vendor executables not rerun and final exact-object V01 routes pending.",
+          "sourceEvidenceCommit": "8539c3217949f2c0740f466dd318b08c276e069a",
+          "commitByteVerification": "docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/f22e-committed-byte-verification-01.json",
+          "transitionByteVerification": "docs/soterai-lite/evidence/20261021-f22e-service-account-28c5d0a9/f22e-transition-byte-verification-01.json"
+        },
+        {
+          "id": "F22f",
+          "title": "CI",
+          "status": "DONE",
+          "result": "PASS_SCOPED",
+          "requires": [
+            "F22e"
+          ],
+          "progressEvidence": "docs/soterai-lite/evidence/20261021-f22f-ci-46f38b2d/f22f-progress-04.json",
+          "currentAffectedVerification": {
+            "F06": "PASS_CURRENT_EXACT_OBJECT",
+            "F21": "PASS_CURRENT_EXACT_OBJECT",
+            "F22a": "PASS_CURRENT_EXACT_OBJECT",
+            "F22b": "PASS_CURRENT_EXACT_OBJECT",
+            "F22c": "PASS_CURRENT_EXACT_OBJECT",
+            "F22d": "PASS_CURRENT_EXACT_OBJECT",
+            "F22e": "PASS_CURRENT_EXACT_OBJECT"
+          },
+          "acceptanceEvidence": "docs/soterai-lite/evidence/20261021-f22f-ci-46f38b2d/f22f-acceptance-01.json",
+          "scope": "F22f finite saved static GitHub/GitLab CI YAML only: actual literal credential fields, GitLab variable value/options, multiline material/comments, whole command/URL scalars and known shapes. Public commands/permissions/labels/exact references retained; malformed/duplicate/alias/tag/directive/mixed expressions/unsupported inputs and decoded known-value residuals withhold. No include/config resolution, CI/client/shell execution, build/deployment, new dependency or full schema/credential validity/AI-access claim. Strict machine family flag, native owner selection, F21 HMAC metadata and canonical F06 encrypted checkpoint-only migration/exact disclosure with permanent saved denies; per-entry restore refuses. Current affected shared workflows verified. Other CI providers/languages, compound fragments, unknown transformations/prior copies/unmanaged reads remain limited. Backend/MCP production unchanged, actual vendor tools not rerun; V01/human/independent evidence pending.",
+          "sourceEvidenceCommit": "23d4e773a563d3e68ad49e1d3997b096a456a70a",
+          "commitByteVerification": "docs/soterai-lite/evidence/20261021-f22f-ci-46f38b2d/f22f-committed-byte-verification-01.json",
+          "transitionByteVerification": "docs/soterai-lite/evidence/20261021-f22f-ci-46f38b2d/f22f-transition-byte-verification-01.json"
+        },
+        {
+          "id": "F22g",
+          "title": "launch/tasks/settings",
+          "status": "DONE",
+          "result": "PASS_SCOPED",
+          "requires": [
+            "F22f"
+          ],
+          "acceptanceEvidence": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/f22g-acceptance-01.json",
+          "scope": "F22g finite saved project .vscode launch/tasks/settings JSONC only: literal credential properties/env/actual Authorization, adjacent and inline arguments, multiline material/canonical idempotent comments, whole command/URL scalars and known shapes. Public labels/args/exact references and two exact root token-color maps retained with child scanning; malformed/duplicates/unsupported/mixed expressions and decoded known-value residuals withhold. Fixed parse-only jsonc-parser3.3.1 already installed/direct build pin, declared ESM entry selected in shared build options and actual compiled-load regression verified; no download/config application/variable-input resolution/task/debug/client/shell execution/full schema validation. Strict machine flag, native owner selection, HMAC metadata and canonical encrypted checkpoint-only migration/exact disclosure with permanent saved denies; per-entry restore refuses. Native synthetic configs remain nested copies, not automatically loaded root configs. Repository settings cannot relax machine disable. Current shared/affected workflows verified on explicitly reviewed Code1.143.0; original1.142.0 startup failures retained with no native results. Fragments/arbitrary transforms/prior copies/original buffers/unmanaged reads remain limited. Backend/MCP production unchanged; actual vendor tools not rerun, V01/human/independent evidence pending.",
+          "currentAffectedVerification": {
+            "F06": "PASS_CURRENT_EXACT_OBJECT",
+            "F21": "PASS_CURRENT_EXACT_OBJECT",
+            "F22a": "PASS_CURRENT_EXACT_OBJECT",
+            "F22b": "PASS_CURRENT_EXACT_OBJECT",
+            "F22c": "PASS_CURRENT_EXACT_OBJECT",
+            "F22d": "PASS_CURRENT_EXACT_OBJECT",
+            "F22e": "PASS_CURRENT_EXACT_OBJECT",
+            "F22f": "PASS_CURRENT_EXACT_OBJECT"
+          },
+          "sourceEvidenceCommit": "ad4a89f45648108f471f925c542c1265bc72743b",
+          "commitByteVerification": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/f22g-committed-byte-verification-01.json",
+          "transitionByteVerification": "docs/soterai-lite/evidence/20261021-f22g-editor-config-5d7a91c3/f22g-transition-byte-verification-01.json"
+        },
+        {
+          "id": "F22h",
+          "title": "MCP configs",
+          "status": "DONE",
+          "result": "PASS_SCOPED",
+          "requires": [
+            "F22g"
+          ],
+          "evidenceRoot": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a",
+          "progressEvidence": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/progress-08.json",
+          "scope": "F22h finite saved project MCP JSONC and static TOML copies only. Literal credential env/headers, complete command/URL strings, args, multiline material/comments and root-array prompt defaults; exact variable references and exact server-scoped TOML environment declarations remain unresolved. Known residuals, duplicate decoded names, malformed/dynamic/unsupported syntax withhold. TOML is a finite grammar, not full TOML/vendor schema validation; no dependency download. Strict machine family flag, owner-native file/finding selection, keyed possible-exposure metadata and canonical encrypted checkpoint-only migration/exact whole-file disclosure with saved denies; per-entry recovery refuses. Shared JSONC core preserves Editor mode including narrower reference grammar. No settings application, reference resolution, client/server/shell execution, global profile scan, live validity/AI-access/OS-boundary/human/independent claim. Unknown secrets, fragments, transforms, prior copies, original buffers and unmanaged reads remain limited. One native test-driver cleanup command corrected after primary21PASS/withdrawal failure; old failedrun retained and fresh compiler/native phases required. All unit-test files/product/runtime inputs unchanged from full3349tests3345PASS4SKIP. Git history externally changed; current parent and all664input bytes reconciled, original receipts preserved. Current shared/affected workflows verified; MCP runtime byte-identical; broker six integer-constant representation changes reviewed by exact source transformation and normalized compiled AST, with current backend144tests143PASS1SKIP and actual F14-F17 retained106 reverified; actual vendor executables not rerun for this scanner card and final exact-object V01 gates remain pending.",
+          "acceptanceEvidence": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/f22h-acceptance-01.json",
+          "currentAffectedVerification": {
+            "F06": "PASS_CURRENT_EXACT_OBJECT",
+            "F21": "PASS_CURRENT_EXACT_OBJECT",
+            "F22a": "PASS_CURRENT_EXACT_OBJECT",
+            "F22b": "PASS_CURRENT_EXACT_OBJECT",
+            "F22c": "PASS_CURRENT_EXACT_OBJECT",
+            "F22d": "PASS_CURRENT_EXACT_OBJECT",
+            "F22e": "PASS_CURRENT_EXACT_OBJECT",
+            "F22f": "PASS_CURRENT_EXACT_OBJECT",
+            "F22g": "PASS_CURRENT_EXACT_OBJECT"
+          },
+          "sourceEvidenceCommit": "f676f340f8522a2beafeb526bda6c15eb40ef2ab",
+          "commitByteVerification": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/f22h-committed-byte-verification-01.json",
+          "transitionByteVerification": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/f22h-transition-byte-verification-01.json"
+        }
+      ],
+      "completionRule": "All required subcards pass individually before parent DONE",
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "progressEvidence": "docs/soterai-lite/evidence/20261022-f22h-mcp-config-08c45e2a/f22h-transition-byte-verification-01.json",
+      "sourceEvidenceCommit": "f676f340f8522a2beafeb526bda6c15eb40ef2ab"
+    },
+    {
+      "id": "F23",
+      "title": "Read-only Git history scanner.",
+      "status": "DONE",
+      "result": "PASS_SCOPED",
+      "requires": [
+        "F22"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "progressEvidence": "docs/soterai-lite/evidence/20261023-f23-history-62d09fb1/progress-07.json",
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261023-f23-history-62d09fb1/f23-acceptance-03.json",
+      "sourceEvidenceCommit": "76e0bd5458fa2876d60ee0b370bd0bbc384bc1b0",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261023-f23-history-62d09fb1/f23-source-byte-verification-01.json",
+      "transitionByteVerification": "docs/soterai-lite/evidence/20261023-f23-history-62d09fb1/f23-transition-byte-verification-01.json",
+      "scope": "Bounded owner-reviewed reachable local Git history only. Strict machine flag; keyed metadata with independent history-v1 domain; no raw values, rewrite, remote read, startup history, vault authority or OS boundary. Caps/binary/unsupported histories remain PARTIAL or withheld. Current exact-package actual native and affected flows PASS; old failures retained; LOW independence. Actual vendor executables not rerun for this scanner card; final exact-object V01 routes remain pending.",
+      "sourceCommit": "76e0bd5458fa2876d60ee0b370bd0bbc384bc1b0",
+      "byteVerification": "docs/soterai-lite/evidence/20261023-f23-history-62d09fb1/f23-source-byte-verification-01.json"
+    },
+    {
+      "id": "F24",
+      "title": "Build/artifact/source-map scanning.",
+      "status": "DONE",
+      "result": "PASS_SCOPED",
+      "requires": [
+        "F23"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "progressEvidence": "docs/soterai-lite/evidence/20261023-f24-artifact-c3a5d91e/progress-01.json",
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261023-f24-artifact-c3a5d91e/f24-acceptance-01.json",
+      "sourceEvidenceCommit": "3cd993674d302e5a23b58cc04cb946b4d862459d",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261023-f24-artifact-c3a5d91e/f24-source-byte-verification-01.json",
+      "transitionByteVerification": "docs/soterai-lite/evidence/20261023-f24-artifact-c3a5d91e/f24-transition-byte-verification-01.json",
+      "scope": "Bounded owner-reviewed local artifacts/copies and finite embedded v3 maps; keyed metadata only. Canonical recognized source/text placeholders in public snapshots; maps/mapping-URL files withheld. Strict machine flag withdraws scanner and new exports. Reserved policy/editor/store paths skipped without artifact reads and counted PARTIAL. No reference/build/config execution, original edit, cleanup, vault mutation, recall, OS boundary, human or independent claim. Current exact package affected publication/hygiene/source/history/retained functional/security PASS; failures retained, LOW. Actual vendor executables not rerun for scanner card; final exact-object V01 routes pending."
+    },
+    {
+      "id": "F25",
+      "title": "Logs/test/debug leak handling.",
+      "status": "DONE",
+      "result": "PASS_SCOPED",
+      "requires": [
+        "F24"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/f25-acceptance-01.json",
+      "scope": "Owner-reviewed bounded TEXT/strict JSON/JSONL saved logs plus SoterAI-owned finite app/task/lifecycle-debug collectors; canonical registry/redactor, private logs-v1 exposure metadata, strict machine withdrawal, final guarded per-channel release. Current509native/37phases/20families and functional10/security17same; final delivery race evidence UNIT_ONLY. No arbitrary process/otherextension/earliercopy recall/OS boundary or human independence claim. Raw caps/unknown/binary remain PARTIAL or withheld. LOW; Scoped source bytes verified; separate transition proof is required before F26a.",
+      "sourceEvidenceCommit": "a6f125e194049bca29e5d031e47a25ddd57fa334",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/f25-source-byte-verification-05.json",
+      "transitionByteVerification": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/f25-transition-byte-verification-05.json"
+    },
+    {
+      "id": "F26",
+      "title": "Optional Git/history hooks.",
+      "status": "ACTIVE",
+      "result": "INCOMPLETE",
+      "requires": [
+        "F25"
+      ],
+      "subcards": [
+        {
+          "id": "F26a",
+          "title": "pre-commit",
+          "status": "ACTIVE",
+          "result": "INCOMPLETE",
+          "requires": [
+            "parent prerequisites"
+          ],
+          "progressEvidence": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/progress-14.json",
+          "executionDecision": "Native06 deferred by explicit user answer on 2026-10-26. Fresh compiler15/full03/backend04/21-driver04/new attempt02 VSIX/content PASS; required native34/offline/20 affected families/withdrawal/commits and exact bytes remain pending. Do not run06 without later explicit approval. New user priority amendment permits independent work first; it does not complete F26a."
+        },
+        {
+          "id": "F26b",
+          "title": "pre-push",
+          "status": "PLANNED",
+          "result": "NOT-RUN",
+          "requires": [
+            "F26a"
+          ]
+        },
+        {
+          "id": "F26c",
+          "title": "PSReadLine exclusion",
+          "status": "ACTIVE",
+          "result": "INCOMPLETE",
+          "requires": [
+            "F10",
+            "F21",
+            "F25"
+          ],
+          "startCondition": "Selected by user shorter-first priority; no production before actual F31a transition byte proof. Synthetic isolated profile only, no real shell-history read or normal-profile edit.",
+          "progressEvidence": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/progress-02.json",
+          "executionDecision": "Default-off strict machine flag/three native owner commands registered; current345 targeted/compiler05/new exact VSIX/content PASS. Full/backend/current28native/20affected/console/acceptance/local Git bytes pending. No native06 approval."
+        }
+      ],
+      "completionRule": "All required subcards pass individually before parent DONE",
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+    },
+    {
+      "id": "F27",
+      "title": "Extension self-hygiene.",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "F25"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+    },
+    {
+      "id": "F28",
+      "title": "Path race, performance and degradation.",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "F26",
+        "F27",
+        "F30"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+    },
+    {
+      "id": "F29",
+      "title": "One Protection Center.",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "F27"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+    },
+    {
+      "id": "F30",
+      "title": "Verify my setup.",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "F29"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+    },
+    {
+      "id": "F31",
+      "title": "Marketplace-ready package preparation.",
+      "status": "ACTIVE",
+      "result": "INCOMPLETE",
+      "requires": [
+        "F25"
+      ],
+      "subcards": [
+        {
+          "id": "F31a",
+          "title": "Offline release inventory, detached bundled-component SBOM and publishing runbook",
+          "status": "DONE",
+          "result": "PASS",
+          "requires": [
+            "F25"
+          ],
+          "scope": "Build/documentation utility only; explicit exact VSIX/provenance and bounded code/license inputs. No runtime change/native acceptance/release-readiness or publishing claim.",
+          "evidence": "docs/soterai-lite/evidence/20261026-f31a-offline-release-6c28a19f",
+          "progressEvidence": "docs/soterai-lite/evidence/20261026-f31a-offline-release-6c28a19f/acceptance-01.json",
+          "verification": "Scoped offline utility only: current20tests20PASS; exact15-entry/4-runtime/408-input/3-component audit repeated byte-identically; overwrite refused. Source0906b502162c79b590df6210b5d262fa113b86a3 all44paths byte-exact. Prepared DONE/next selection valid only with actual utility-transition-byte-proof-01.json PASS. Parent F31/F31b/runtime/native/human/release gates remain incomplete.",
+          "sourceCommit": "0906b502162c79b590df6210b5d262fa113b86a3",
+          "sourceByteProof": "docs/soterai-lite/evidence/20261026-f31a-offline-release-6c28a19f/utility-source-byte-proof-01.json",
+          "transitionByteProofRequired": "docs/soterai-lite/evidence/20261026-f31a-offline-release-6c28a19f/utility-transition-byte-proof-01.json"
+        },
+        {
+          "id": "F31b",
+          "title": "Final exact-package readiness, honest claims, shipped notices/privacy/SBOM and audits",
+          "status": "PLANNED",
+          "result": "NOT-RUN",
+          "requires": [
+            "F26",
+            "F27",
+            "F28",
+            "F29",
+            "F30",
+            "F31a"
+          ],
+          "scope": "All original F31 final-object packaging and readiness requirements retained; early detached SBOM does not complete this subcard."
+        }
+      ],
+      "completionRule": "Both F31a and F31b pass their declared scope; all required earlier runtime features pass before parent DONE",
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+    },
+    {
+      "id": "F32",
+      "title": "Install, upgrade and removal lifecycle.",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "F31"
+      ],
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+    }
+  ],
+  "finalGates": [
+    {
+      "id": "V01",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "F32"
+      ]
+    },
+    {
+      "id": "V02",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "V01"
+      ]
+    },
+    {
+      "id": "V03",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "V02"
+      ]
+    },
+    {
+      "id": "V04",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "V03"
+      ]
+    },
+    {
+      "id": "V05",
+      "status": "PLANNED",
+      "result": "NOT-RUN",
+      "requires": [
+        "V04"
+      ],
+      "action": "L6 HUMAN-ACTIONS and STOP; L7 resumes from supplied exact-object evidence"
+    }
+  ],
+  "runtimeFeatureFlags": "Proposed only in plan; no settings or runtime implementation changed",
+  "catalog": {
+    "path": "docs/soterai-lite/LITE-CATALOG.json",
+    "status": "FROZEN",
+    "sha256": "1ce46192e9f315b5f2142c9f61542f1d513143dc2e19d4def6d95cea38c73ed4",
+    "checks": 44
+  },
+  "supportedExecutionExclusions": {
+    "F11": {
+      "reason": "P03 frozen PowerShell7 NOT_FOUND_ON_PATH, fresh bounded discovery unchanged",
+      "recordedAt": "2026-10-17T02:46:49.7493288Z",
+      "evidence": "docs/soterai-lite/evidence/20261017-f11-ps7-availability-6f721c9d/availability-01.json",
+      "requestedFeatureRetained": true,
+      "requiredBehaviorReclassified": false,
+      "queueNormalization": "Late reconciliation of proposed linear F12 dependency; catalog unchanged"
+    }
+  },
+  "f26cLatestCheckpoint": {
+    "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/progress-03.json",
+    "sha256": "3d326101cf3d3df92ed677f674d5fa29f66e5a93620ed588fe8890225c8f5f9e",
+    "status": "F26c_ACTIVE_JOURNAL_CORRECTION_COMPONENT_VERIFIED_FINAL_GATES_PENDING",
+    "native06": "USER_DEFERRED_NOT_RUN"
+  }
+}

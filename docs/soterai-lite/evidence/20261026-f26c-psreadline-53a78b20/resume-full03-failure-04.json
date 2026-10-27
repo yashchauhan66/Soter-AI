@@ -1,0 +1,78 @@
+{
+  "status": "ACTUAL_FULL03_FAIL_RETAINED_CURRENT1005_EXACT",
+  "observedAt": "2026-10-27T02:41:29.770Z",
+  "summary": {
+    "tests": 4319,
+    "pass": 4289,
+    "fail": 5,
+    "cancelled": 21,
+    "skipped": 4,
+    "duration_ms": 24404937.4666
+  },
+  "largestRecordedTestDurations": [
+    {
+      "title": "F03-S20 a successful audit write followed by root drift cannot issue a session grant",
+      "durationMs": 19599446.1459
+    },
+    {
+      "title": "F22g raw discovery cap remains partial with at most128 public files analyzed",
+      "durationMs": 51082.4425
+    },
+    {
+      "title": "F22f raw discovery cap remains partial with at most128 public files analyzed",
+      "durationMs": 28920.2019
+    },
+    {
+      "title": "F22h raw discovery cap remains partial with at most128 public files analyzed",
+      "durationMs": 25717.7233
+    },
+    {
+      "title": "F22d raw discovery cap remains partial with at most128 public files analyzed",
+      "durationMs": 22093.7352
+    },
+    {
+      "title": "F22c raw discovery cap remains partial with at most128 public files analyzed",
+      "durationMs": 21601.0308
+    },
+    {
+      "title": "F22e raw discovery cap remains partial with at most128 public files analyzed",
+      "durationMs": 18957.2407
+    },
+    {
+      "title": "F25 file-count sentinel and byte caps remain PARTIAL rather than a clean log claim",
+      "durationMs": 18287.084
+    }
+  ],
+  "close": {
+    "name": "full-tests-03",
+    "status": "FAIL_OR_INCOMPLETE",
+    "observedAt": "2026-10-27T02:27:48.149Z",
+    "pid": 11580,
+    "actualClose": true,
+    "wrapperExit": 1,
+    "signal": null,
+    "innerExit": 1,
+    "stdoutEOF": true,
+    "stderrEOF": true,
+    "overflow": false,
+    "streamError": false,
+    "deadlineExceeded": true,
+    "signalsRequested": 0,
+    "streams": [
+      {
+        "name": "stdout",
+        "bytes": 638,
+        "sha256": "0e25012344d6047fd07e7ec61cfaeaa194f5c63cf4dc28d4ee08eb88940a2f25"
+      },
+      {
+        "name": "stderr",
+        "bytes": 616,
+        "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+      }
+    ]
+  },
+  "sourceProofSha256": "f4dbd673ceeee25b1bb728c7f849fb8419489eceaa0742d5e2b2200c0cdc369e",
+  "inference": "Gateway four failures reached existing1000ms limit, vault confirmation missed existing2000ms wait and21 child tests cancelled. Wall-clock gap source not established; no product deadline or oracle change authorized by this record.",
+  "native06": "USER_DEFERRED_NOT_RUN",
+  "next": "Require isolated unchanged failing files PASS before new full04/backend03 chain. Native04 still NOT_RUN."
+}

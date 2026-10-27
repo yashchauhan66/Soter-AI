@@ -1,0 +1,98 @@
+﻿TAP version 13
+# Subtest: F26c checked profile backend reads and CAS-creates only its fixed absent profile
+ok 1 - F26c checked profile backend reads and CAS-creates only its fixed absent profile
+  ---
+  duration_ms: 93.202
+  type: 'test'
+  ...
+# Subtest: F26c checked profile backend replaces exact existing bytes and removes exact owned bytes
+ok 2 - F26c checked profile backend replaces exact existing bytes and removes exact owned bytes
+  ---
+  duration_ms: 140.6559
+  type: 'test'
+  ...
+# Subtest: F26c checked profile backend refuses stale snapshot and preserves independent edit
+ok 3 - F26c checked profile backend refuses stale snapshot and preserves independent edit
+  ---
+  duration_ms: 29.5278
+  type: 'test'
+  ...
+# Subtest: F26c checked profile backend refuses file created after absent snapshot
+ok 4 - F26c checked profile backend refuses file created after absent snapshot
+  ---
+  duration_ms: 18.6792
+  type: 'test'
+  ...
+# Subtest: F26c checked profile backend withdrawal refuses reads and mutation
+ok 5 - F26c checked profile backend withdrawal refuses reads and mutation
+  ---
+  duration_ms: 12.5969
+  type: 'test'
+  ...
+# Subtest: F26c checked profile backend refuses paths outside the fixed owner root
+ok 6 - F26c checked profile backend refuses paths outside the fixed owner root
+  ---
+  duration_ms: 17.0935
+  type: 'test'
+  ...
+# Subtest: F26c checked profile backend refuses unsupported profile name and missing parent
+ok 7 - F26c checked profile backend refuses unsupported profile name and missing parent
+  ---
+  duration_ms: 6.2263
+  type: 'test'
+  ...
+# Subtest: F26c checked profile backend refuses directory and oversized profile targets
+ok 8 - F26c checked profile backend refuses directory and oversized profile targets
+  ---
+  duration_ms: 16.3221
+  type: 'test'
+  ...
+# Subtest: F26c checked profile backend refuses hardlinked profile before reading content
+ok 9 - F26c checked profile backend refuses hardlinked profile before reading content
+  ---
+  duration_ms: 10.3569
+  type: 'test'
+  ...
+# Subtest: F26c checked profile backend refuses junction parent into another synthetic root
+ok 10 - F26c checked profile backend refuses junction parent into another synthetic root
+  ---
+  duration_ms: 7.9643
+  type: 'test'
+  ...
+# Subtest: F26c checked profile backend refuses foreign ownership snapshot
+ok 11 - F26c checked profile backend refuses foreign ownership snapshot
+  ---
+  duration_ms: 11.7831
+  type: 'test'
+  ...
+# Subtest: F26c checked profile backend refuses oversized or nonbuffer output before staging
+ok 12 - F26c checked profile backend refuses oversized or nonbuffer output before staging
+  ---
+  duration_ms: 6.1492
+  type: 'test'
+  ...
+# Subtest: F26c checked profile backend refuses same-inode staging tamper and retains foreign bytes
+not ok 13 - F26c checked profile backend refuses same-inode staging tamper and retains foreign bytes
+  ---
+  duration_ms: 48.9581
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedHistoryProfileFile.test.ts:2:8667'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  operator: 'rejects'
+  stack: |-
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedHistoryProfileFile.test.ts:97:11)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 12
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 991.9426

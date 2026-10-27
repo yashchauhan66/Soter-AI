@@ -1,0 +1,128 @@
+{
+  "status": "F26c_ACTIVE_NATIVE04_21PASS2FAIL_RESTART_NOT_RUN_EXTRA_ROUND_REQUIRES_USER_APPROVAL",
+  "observedAt": "2026-10-27T03:31:27.806Z",
+  "sourceProof": {
+    "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/full-inputs-03.json",
+    "bytes": 195561,
+    "sha256": "f4dbd673ceeee25b1bb728c7f849fb8419489eceaa0742d5e2b2200c0cdc369e"
+  },
+  "sourceInputs": 1005,
+  "currentFull05": {
+    "tests": 4319,
+    "pass": 4315,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 4,
+    "serialResult": {
+      "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/serial-result-05.json",
+      "bytes": 2551,
+      "sha256": "ef7776df75aa99123b0b9d6ad0191a73a2c1c31c392c55f0cc1e6790b2851699"
+    },
+    "receipt": {
+      "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/full-tests-05.txt.result.json",
+      "bytes": 641,
+      "sha256": "cdb70e92f989c88a6b32615df64d57d9dcf5ed1e7232aae156fe6a9340c0bdc4"
+    },
+    "close": {
+      "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/full-tests-05-owned-close.json",
+      "bytes": 666,
+      "sha256": "93b985b04c960c76c72525cff573e47f947d6501fb096f6a39477479369b4aff"
+    }
+  },
+  "backend03": {
+    "tests": 144,
+    "pass": 143,
+    "fail": 0,
+    "skipped": 1,
+    "typecheckReceipt": {
+      "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/backend-typecheck-03.txt.result.json",
+      "bytes": 613,
+      "sha256": "a1808ce2c70537fc23fc8a9c34b963bb3741a74a7038a966a0e35abcf9d1e396"
+    },
+    "testsReceipt": {
+      "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/backend-tests-03.txt.result.json",
+      "bytes": 642,
+      "sha256": "35ca541ab21c6dea25f051d647e2c32d5a9ecc48667bfb00acd64ab874ab7820"
+    }
+  },
+  "native04": {
+    "improvementRound": 3,
+    "primaryPass": 21,
+    "primaryFail": 2,
+    "failures": [
+      "N19 starts with restore returning INCOMPLETE after N18 deletes and restores its own synthetic recovery key",
+      "N20 concurrent-review statuses observed UNAVAILABLE/CANCELLED but final original-byte precondition fails after N19 restore did not complete"
+    ],
+    "restart": "NOT_RUN",
+    "rootCause": "UNESTABLISHED; product/fixture SecretStorage lifecycle metadata needed; do not guess a fix or waive recovery",
+    "result": {
+      "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/f26c-history-native-20261027T032243Z-f58548a1/primary-results.json",
+      "bytes": 5043,
+      "sha256": "07967c8d0eb82f534632f393b39f550c380cc617bddae4a4b4546a41ec9f0637"
+    },
+    "close": {
+      "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/f26c-history-native-20261027T032243Z-f58548a1/primary-owned-close.json",
+      "bytes": 619,
+      "sha256": "a60cc5e4e6249a29de084f5b145047672d8a5edd91edbd38cf1d1f8aac7970c8"
+    },
+    "trace": {
+      "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/f26c-history-native-20261027T032243Z-f58548a1/primary.command-trace.jsonl",
+      "bytes": 2349,
+      "sha256": "6f6d7ab7da1e49f1225281f743c706c20a332d7850579a08c23375c150d3c40a"
+    },
+    "actualChild": 14332,
+    "actualExit": 0,
+    "signal": null,
+    "stdoutEOF": true,
+    "stderrEOF": true,
+    "signalsRequested": 0
+  },
+  "emittedProfile": {
+    "status": "ACTUAL_NATIVE_N11_PASS_COMPONENT_PROVENANCE_ONLY_NOT_FULL_NATIVE_ACCEPTANCE",
+    "file": {
+      "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/native04-emitted-profile.ps1",
+      "bytes": 9496,
+      "sha256": "7aafee619c9e3ad624bd6d0ac69c8027b45cce3b7db49586158c7b7f41a8c4f6"
+    },
+    "nativeInput": {
+      "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/f26c-history-native-20261027T032243Z-f58548a1/inputs.json",
+      "bytes": 1171,
+      "sha256": "068f5f98dffb7d28886191f0d1469b3c4ea835eaecd3d459ebe3e7dc663a9010"
+    }
+  },
+  "binding": {
+    "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/native-binding-04.json",
+    "bytes": 8643,
+    "sha256": "8c74b2af98dfc2feb50da8e2f599dc1bcf9a68fc072e4813c757d020f0a24882"
+  },
+  "guard": {
+    "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/current-native-guard-05.cjs",
+    "bytes": 3115,
+    "sha256": "e5e9ad53aea5c10cf0d4d049d53655dff7f337c3ba21879eba52cafef424a66d"
+  },
+  "drivers": {
+    "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/native-driver-provenance-03.json",
+    "bytes": 192715,
+    "sha256": "fbe7d01bec9a182b34a315a63922e84169081f84a08f529148267950c83733b2"
+  },
+  "affectedMaterialization": {
+    "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/affected-materialization-01.json",
+    "bytes": 8677,
+    "sha256": "115ee5583dbfab1bc903fc2b33ac91111ce40fd75aca8a0e3aba0fff5383babb"
+  },
+  "oneShotWatcher": "Stopped after failed native04; actual closed, no retry",
+  "next": "Prepare one bounded unchanged-runtime normal Proposal05 with metadata-only own-key recovery readback. Existing21 primary PASS stay attributed to failed04. All28 and restart must PASS before acceptance. Current20 unaffected native families may run on exact same artifact while extra round approval pending.",
+  "native06": "F26a_USER_DEFERRED_NOT_RUN",
+  "remaining": [
+    "extra-F26c-native-approval-and-run",
+    "restart5",
+    "actualEmittedConsole",
+    "20affectedFamilies",
+    "functional10",
+    "security17",
+    "withdrawal",
+    "acceptance",
+    "scopedCommits",
+    "GitBytes"
+  ]
+}
