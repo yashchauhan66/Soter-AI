@@ -23,7 +23,7 @@ Current selected task F31a:
 
 ## Current checkpoint ? 27 October 2026
 
-F31a scoped utility is DONE after source44/transition11 byte verification. F26c has current scoped verification PASS: full4319/4315PASS/4SKIP/zero failures, backend, exact VSIX03 content/offline, native28, emitted-console8, affected20families/509checks, functional10 and unchanged security17 baseline. F26c is VERIFYING until scoped source and transition commits both pass exhaustive actual-byte checks; F27 must wait. F26a/native06 remains explicitly deferred and incomplete; its shared source dependencies are checkpointed without accepting F26a. Evidence: `evidence/20261026-f26c-psreadline-53a78b20/acceptance-01.json`. Original L6 HUMAN-ACTIONS/STOP and remaining order/gates are unchanged.
+F31a scoped utility is DONE after source44/transition11 byte verification. F26c has current scoped verification PASS: full4319/4315PASS/4SKIP/zero failures, backend, exact VSIX03 content/offline, native28, emitted-console8, affected20families/509checks, functional10 and unchanged security17 baseline. F26c scoped source commit `f86d4150132f383f496075c937ce2e84e575e86b` has1696 exact paths/zero mismatch/empty index. Prepared F26c DONE/F27 selection takes effect only after actual `f26c-transition-byte-proof-01.json` PASS; no F27 production before that barrier. F26a/native06 remains explicitly deferred and incomplete; its shared source dependencies are checkpointed without accepting F26a. Evidence: `evidence/20261026-f26c-psreadline-53a78b20/acceptance-01.json`. Original L6 HUMAN-ACTIONS/STOP and remaining order/gates are unchanged.
 
 ## Product contract
 
