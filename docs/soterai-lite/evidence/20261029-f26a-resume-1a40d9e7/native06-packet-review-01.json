@@ -1,0 +1,108 @@
+{
+  "status": "CURRENT_F26A_NATIVE06_PACKET_PREPARED_USER_DEFERRED_NOT_EXECUTED",
+  "observedAt": "2026-10-28T18:44:01.275Z",
+  "sourceProof": {
+    "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/full-inputs-03.json",
+    "bytes": 206575,
+    "sha256": "38997e02615ba51e25fb452157a8f0c0c4c366f985d0465ee2a599451919ef7c"
+  },
+  "vsix": {
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-f26a-20261029-attempt01.vsix",
+    "bytes": 1729536,
+    "sha256": "d06a8740074054db0512fe43fe7b7b4734c775f4133e716fe78cd41a744708f8"
+  },
+  "frontendSha256": "70a0485db0b186a65b760995bed8ae7a2d4bdbd2ac4c0434e70d02c26f52f8d1",
+  "driver": {
+    "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/prebuilt-native-hosts-02/lite-precommit-guard-host.js",
+    "bytes": 69664,
+    "sha256": "899f01c8e699e613ac5d3fc2f8066e8997938e79ecc665dfe34af3e5c4e9090b"
+  },
+  "binding": {
+    "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/native-current-binding-01.json",
+    "bytes": 209541,
+    "sha256": "f11a219199db670dd1ae31db7ab948868517f08012b752a5328e055229136533"
+  },
+  "candidate": {
+    "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/native06-candidate-01.ps1.txt",
+    "bytes": 51529,
+    "sha256": "b323bda7be76140fc5a412f6bee0f8e6b51e6548ab1932fb793e12dbac22e616"
+  },
+  "parentCandidate": {
+    "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/precommit-launcher06-proposed.ps1.txt",
+    "bytes": 50222,
+    "sha256": "947fff92a41cdbc527c862c80fdbe77110865b63c92af35171c286124b82c58e"
+  },
+  "metadataRebindings": [
+    [
+      "032e88e332df9a9470dcfc83ddcdfd60b722991fdae0be4a61d701604ef46629",
+      "d06a8740074054db0512fe43fe7b7b4734c775f4133e716fe78cd41a744708f8"
+    ],
+    [
+      "99af67297678d240ae03e4aaab71c47f81b3e4f7aa645d8f9f28ac601e549942",
+      "70a0485db0b186a65b760995bed8ae7a2d4bdbd2ac4c0434e70d02c26f52f8d1"
+    ],
+    [
+      "soterai-lite-0.7.0-f26a-20261026-attempt02.vsix",
+      "soterai-lite-0.7.0-f26a-20261029-attempt01.vsix"
+    ],
+    [
+      "precommit-offline-owner-04.cjs",
+      "precommit-offline-owner-01.cjs"
+    ],
+    [
+      "vsix-extracted-02/extension",
+      "vsix-extracted-01/extension"
+    ],
+    [
+      "prebuilt-native-hosts-04/lite-precommit-guard-host.js",
+      "prebuilt-native-hosts-02/lite-precommit-guard-host.js"
+    ],
+    [
+      "native-driver-provenance-04.json",
+      "native-driver-provenance-02.json"
+    ],
+    [
+      "ce1041b8c2b92b054e518d0980f14d15b1c407dd2b2e85ab0ff6641e84330af0",
+      "427befc36241649e54b9f87a9c5dc9232470dc7b78472a5594b832c57bc3fe89"
+    ],
+    [
+      "@($taskProvenance.drivers).Count -ne 21",
+      "@($taskProvenance.drivers).Count -ne 25"
+    ],
+    [
+      "host-current-binding-03.ps1",
+      "host-current-binding-01.ps1"
+    ],
+    [
+      "artifact-binding-02.ps1",
+      "artifact-binding-01.ps1"
+    ],
+    [
+      "native-current-binding-04.json",
+      "native-current-binding-01.json"
+    ],
+    [
+      "'72f16522827f941c3ba1cf7d2930ec18a9a1681506cf858cd33c6162ddbb5c50' 8398",
+      "'f11a219199db670dd1ae31db7ab948868517f08012b752a5328e055229136533' 209541"
+    ],
+    [
+      "FRESH990_FULL03_COMPILER15_BUILD04_ATTEMPT02_BOUND_NATIVE_NOT_RUN",
+      "FRESH1036_FULL03_COMPILER03_BUILD02_ATTEMPT01_BOUND_NATIVE_NOT_RUN"
+    ],
+    [
+      "$taskCurrentBinding.fileCount -ne 990",
+      "$taskCurrentBinding.fileCount -ne 1036"
+    ]
+  ],
+  "normalizedRebindingRestoresExactParent": true,
+  "bootstrapUnchanged": true,
+  "bootstrapSha256": "81007c902f7161188a72a4522e04298431fd4e8cfe2820b2f1d710b2ff3c93d3",
+  "deadlinesUnchanged": true,
+  "offlineHelperUnchanged": true,
+  "oracles": 34,
+  "hostFixtureUnchanged": true,
+  "explicitFreshUserApprovalRequired": true,
+  "materialized": false,
+  "native06": "USER_DEFERRED_NOT_RUN",
+  "signalsRequested": 0
+}

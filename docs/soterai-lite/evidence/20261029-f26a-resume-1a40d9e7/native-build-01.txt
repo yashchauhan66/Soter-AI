@@ -1,0 +1,20 @@
+﻿node.exe : AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (AssertionError ... a falsy value::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+  assert(parser.some(n=>n.endsWith('/lib/esm/main.js')))
+
+    at C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261029-f26a-resume-1a40d9e7\
+build-native-drivers-01.cjs:3:639
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '=='
+}

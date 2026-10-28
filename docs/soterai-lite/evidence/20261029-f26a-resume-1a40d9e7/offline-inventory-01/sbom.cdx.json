@@ -1,0 +1,127 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6",
+  "version": 1,
+  "metadata": {
+    "component": {
+      "type": "application",
+      "bom-ref": "vsix:d06a8740074054db0512fe43fe7b7b4734c775f4133e716fe78cd41a744708f8",
+      "name": "soterai.soterai-ide-guard",
+      "version": "0.7.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "d06a8740074054db0512fe43fe7b7b4734c775f4133e716fe78cd41a744708f8"
+        }
+      ]
+    }
+  },
+  "components": [
+    {
+      "type": "library",
+      "bom-ref": "npm:node_modules/@babel/parser@7.29.7",
+      "name": "@babel/parser",
+      "version": "7.29.7",
+      "purl": "pkg:npm/%40babel/parser@7.29.7",
+      "licenses": [
+        {
+          "license": {
+            "name": "MIT"
+          }
+        }
+      ],
+      "properties": [
+        {
+          "name": "soterai:package-root",
+          "value": "node_modules/@babel/parser"
+        },
+        {
+          "name": "soterai:package-metadata-sha256",
+          "value": "808c30900ff9e55aafff6361e55c21a39556bdcd2d349e0474fde1e985d855af"
+        },
+        {
+          "name": "soterai:bundled-input-count",
+          "value": "1"
+        },
+        {
+          "name": "soterai:bundled-runtimes",
+          "value": "[\"extension.js\"]"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "npm:node_modules/jsonc-parser@3.3.1",
+      "name": "jsonc-parser",
+      "version": "3.3.1",
+      "purl": "pkg:npm/jsonc-parser@3.3.1",
+      "licenses": [
+        {
+          "license": {
+            "name": "MIT"
+          }
+        }
+      ],
+      "properties": [
+        {
+          "name": "soterai:package-root",
+          "value": "node_modules/jsonc-parser"
+        },
+        {
+          "name": "soterai:package-metadata-sha256",
+          "value": "a7a9192caaac00d9330592f4fd572908bee037518128a0fc3db96d2cd652e2b5"
+        },
+        {
+          "name": "soterai:bundled-input-count",
+          "value": "6"
+        },
+        {
+          "name": "soterai:bundled-runtimes",
+          "value": "[\"extension.js\"]"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "npm:node_modules/yaml@2.9.0",
+      "name": "yaml",
+      "version": "2.9.0",
+      "purl": "pkg:npm/yaml@2.9.0",
+      "licenses": [
+        {
+          "license": {
+            "name": "ISC"
+          }
+        }
+      ],
+      "properties": [
+        {
+          "name": "soterai:package-root",
+          "value": "node_modules/yaml"
+        },
+        {
+          "name": "soterai:package-metadata-sha256",
+          "value": "20b8b197cbd10dad245d45e463dfe58e4c8c25a47e24bc4256ad9ab58bf35683"
+        },
+        {
+          "name": "soterai:bundled-input-count",
+          "value": "72"
+        },
+        {
+          "name": "soterai:bundled-runtimes",
+          "value": "[\"extension.js\"]"
+        }
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "vsix:d06a8740074054db0512fe43fe7b7b4734c775f4133e716fe78cd41a744708f8",
+      "dependsOn": [
+        "npm:node_modules/@babel/parser@7.29.7",
+        "npm:node_modules/jsonc-parser@3.3.1",
+        "npm:node_modules/yaml@2.9.0"
+      ]
+    }
+  ]
+}
