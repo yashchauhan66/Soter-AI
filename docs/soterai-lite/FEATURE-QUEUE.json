@@ -9,9 +9,9 @@
   "planVersion": 1,
   "clientDate": "2026-10-13",
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
-  "scope": "F01-F10/F12-F25 and F26c scoped DONE; F11 optional absent NOT_TESTED/NOT_COVERED. F27 scoped DONE only under actual source/transition byte barriers. F29 selected; F26a/native06 USER_DEFERRED, F26b/F28/F30/F31b/F32/V01-V05 remain incomplete. F31a build-only DONE, parentF31 incomplete. No rating/human/independent claim.",
+  "scope": "F01-F10/F12-F25/F26c/F27/F29 scoped DONE subject to exact recorded byte barriers; F11 optional absent NOT_TESTED/NOT_COVERED. F30 selected after F29 transition proof; F26a/native06 USER_DEFERRED, F26b/F28/F31b/F32/V01-V05 incomplete. F31a build-only DONE; parentF26/F31 incomplete. No human/independent/rating claim.",
   "implementationConcurrency": 1,
-  "activeFeature": "F29",
+  "activeFeature": "F30",
   "activeSubcard": null,
   "priorityAmendment": {
     "date": "2026-10-26",
@@ -939,8 +939,8 @@
     {
       "id": "F29",
       "title": "One Protection Center.",
-      "status": "VERIFYING",
-      "result": "INCOMPLETE",
+      "status": "DONE",
+      "result": "PASS",
       "requires": [
         "F27"
       ],
@@ -948,22 +948,27 @@
       "startCondition": "Existing priority order selects F29 only after actual F27 source1004 and separate transition byte proof PASS. No production before the barrier.",
       "flag": "soterai.lite.protectionCenter",
       "progressEvidence": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/progress-11.json",
-      "executionDecision": "Declared scoped gates PASS: current1024/full4421zeroFAIL/backend143PASS1SKIP/exactVSIX47df/content/native30+actualkeyboard3trees/arrows/revoke/Enter/Escape/highcontrast/reducedmotion/Edge3modeszeroViolations/affected66/functional10/security17unchanged/actualwithdrawal. AllCode+observers natural0/EOF/no signals. Explicitextra07 consumed; prior05/06failures retained. Local scopedsource+transition commits/rawbyteproof required before F30. Human/manual accessibility and F26a06 deferred remain.",
+      "executionDecision": "Current1024/full4421zeroFAIL/backend143PASS1SKIP/exactVSIX47df/content85flags/native30/actual3tree keyboard focus+arrows+EnterEscape+revokeowner/highcontrast/reducedmotion/Edge3modeszeroViolations/affected66+functional10+security17unchanged/actualwithdrawal PASS. Actualsource1322rawbytePASS. Manualaria/forcedcontrast findings and frameDOMunobserved/humanL6 remain explicit; unrelated3guardcore+8generated paths preserved unstaged with tested snapshots.",
       "acceptanceEvidence": {
         "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/acceptance-01.json",
         "bytes": 46558,
         "sha256": "2b9952db3c76b458f0b0355f8f668542102c12818c60f795e7c5eb9584dd3dcb"
-      }
+      },
+      "sourceEvidenceCommit": "1603dd5f32e92e62e49824e2f5370217279d5b35",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/f29-source-byte-proof-01.json",
+      "transitionByteVerification": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/f29-transition-byte-proof-01.json",
+      "completionCondition": "Scoped DONE takes effect only after actual separate transition-byte-proof01 PASS. Later human/manual accessibility, complete live verification and other cards remain required."
     },
     {
       "id": "F30",
       "title": "Verify my setup.",
-      "status": "PLANNED",
-      "result": "NOT-RUN",
+      "status": "ACTIVE",
+      "result": "INCOMPLETE",
       "requires": [
         "F29"
       ],
-      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "startCondition": "Existing priority order selects F30 after actual F29 source1322 and separate transition byte proof PASS. No F30 production before barrier."
     },
     {
       "id": "F31",
@@ -1093,8 +1098,9 @@
     "transitionProof": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/f27-transition-byte-proof-01.json"
   },
   "f29LatestCheckpoint": {
-    "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/progress-11.json",
-    "bytes": 2017,
-    "sha256": "195fa79d89a6ab0c63740ec9a10c89508cdfef326210228900b8c1e10f914507"
+    "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/f29-source-byte-proof-01.json",
+    "sha256": "0b664de4540d685121b046bf2dc560516d529ea0ac5e986124ed12b9b1a5672c",
+    "status": "SOURCE_1322_EXACT_BYTES_PASS_SEPARATE_TRANSITION_REQUIRED_BEFORE_F30",
+    "transitionProof": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/f29-transition-byte-proof-01.json"
   }
 }
