@@ -9,6 +9,7 @@ import type { AISentinel } from "../sentinel/AISentinel";
 import { CENTER_WORKFLOWS, centerEnglish, protectionCenterRows, type CenterFacts, type CenterRow, type CenterRows, type CenterSection } from "./ProtectionCenterModel";
 import { ProtectionCenterSession } from "./ProtectionCenterSession";
 import { protectionCenterEnabled } from "./ProtectionCenterFlags";
+import type {SetupReportState} from "../setup-verification/SetupVerificationReport";
 
 const t = (message: string, ...args: Array<string | number>) => {
     try { return vscode.l10n.t(message, ...args); } catch { return centerEnglish(message, ...args); }
@@ -37,6 +38,7 @@ class CenterTree implements vscode.TreeDataProvider<CenterRow>, vscode.Disposabl
 export interface ProtectionCenterDependencies {
     sentinel: Pick<AISentinel, "getEvents" | "isEnabled">;
     brokerState(): string;
+    setupEnabled?():boolean;setupState?():SetupReportState|undefined;
 }
 export interface ProtectionCenterHandle extends vscode.Disposable { refresh(): Promise<void> }
 
@@ -70,6 +72,7 @@ export function registerProtectionCenter(context: vscode.ExtensionContext, deps:
         result.activity = result.activityEnabled ? deps.sentinel.getEvents().slice(-100) : [];
         result.evidence = loadPrivacyVerification(context.extensionPath, vscode.workspace.getConfiguration("soterai").get<boolean>("hardening.runtimeEvidence", true));
         result.broker = deps.brokerState();
+        result.setupEnabled=deps.setupEnabled?.()===true;result.setupReport=deps.setupState?.();
         return result;
     };
     const session = new ProtectionCenterSession({ enabled: protectionCenterEnabled, trusted: () => vscode.workspace.isTrusted,

@@ -1,0 +1,12 @@
+import {test} from "node:test";
+import assert from "node:assert/strict";
+import * as fs from "node:fs";
+import * as path from "node:path";
+import {tmpdir} from "node:os";
+import {captureSetupCompanions,sameSetupCompanions} from "../setup-verification/SetupVerificationIdentity";
+const parent=fs.mkdtempSync(path.join(tmpdir(),"soterai-f30-synthetic-identity-")),dir=path.join(parent,"dist");fs.mkdirSync(dir);
+for(const name of ["local-ai-broker.js","pre-commit-client.js","soterai-mcp-server.js"])fs.writeFileSync(path.join(dir,name),"// synthetic public runtime fixture "+name+"\n",{flag:"wx"});
+test("F30 companion identities bind all three exact ordinary bundled runtimes",()=>{const captured=captureSetupCompanions(dir);assert(captured);assert.equal(Object.keys(captured).length,3);assert(sameSetupCompanions(captured,captureSetupCompanions(dir)));});
+test("F30 runtime replacement mismatches captured activation bytes",()=>{const before=captureSetupCompanions(dir);fs.appendFileSync(path.join(dir,"local-ai-broker.js"),"// synthetic changed\n");assert.equal(sameSetupCompanions(before,captureSetupCompanions(dir)),false);});
+test("F30 missing runtime or non-dist path cannot supply a matching artifact",()=>{assert.equal(captureSetupCompanions(parent),undefined);assert.equal(sameSetupCompanions(undefined,captureSetupCompanions(dir)),false);});
+test("F30 bounded runtime admission refuses an oversized file before reading",()=>{const large=path.join(dir,"pre-commit-client.js"),fd=fs.openSync(large,"r+");try{fs.ftruncateSync(fd,8*1024*1024+1);}finally{fs.closeSync(fd);}assert.equal(captureSetupCompanions(dir),undefined);});

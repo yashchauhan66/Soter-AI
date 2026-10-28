@@ -1,0 +1,24 @@
+﻿node.exe : AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (AssertionError ... a falsy value::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+  assert(typeof name==='string'&&!path.isAbsolute(name))
+
+    at relativeFile (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261028-f29-pro
+tection-center-6c93e15a\current-native-guard-03.cjs:12:27)
+    at pin (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261028-f29-protection-c
+enter-6c93e15a\current-native-guard-03.cjs:16:68)
+    at C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261028-f30-setup-verificatio
+n-847d2f09\prepare-edge-01.cjs:7:88
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '=='
+}

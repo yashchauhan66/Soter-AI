@@ -17,6 +17,8 @@ import { emitOwnedDiagnostic } from "../../core/src/OwnedSinkMetadata";
 import { selfHygieneEnabled } from "./self-hygiene/SelfHygieneFlags";
 import { registerProtectionCenter, type ProtectionCenterHandle } from "./protection-center/ProtectionCenter";
 import { protectionCenterEnabled } from "./protection-center/ProtectionCenterFlags";
+import {registerSetupVerification,type SetupVerificationHandle} from "./setup-verification/SetupVerification";
+import {setupVerificationEnabled} from "./setup-verification/SetupVerificationFlags";
 import { BrokerManager, setBrokerManager } from "./broker/BrokerManager";
 import { autoStartBroker, RETRY_START } from "./broker/autoStart";
 import { registerBrokerCommands } from "./broker/commands";
@@ -222,7 +224,8 @@ export function activate(context: vscode.ExtensionContext): void {
 
     registerAIBoundaryCommands(context);
     const managedReader = registerProjectPrivacyCommands(context);
-    protectionCenter = registerProtectionCenter(context, { sentinel, brokerState: () => protectionState.current.facts.broker });
+    let setupVerification:SetupVerificationHandle|undefined;
+    protectionCenter = registerProtectionCenter(context, { sentinel, brokerState: () => protectionState.current.facts.broker,setupEnabled:setupVerificationEnabled,setupState:()=>setupVerification?.current() });
     registerPublicWorkspaceCommands(context);
     registerSyntheticPreviewCommands(context);
     registerCommands(context, refreshViews);
@@ -243,6 +246,8 @@ export function activate(context: vscode.ExtensionContext): void {
     registerLogProtection(context);
     registerScannerCommands(context, async () => (await protectionState?.refresh())?.descriptor);
     registerBrokerCommands(context, brokerManager, refreshViews);
+    setupVerification=registerSetupVerification(context,{manager:brokerManager,changed:()=>{void protectionCenter?.refresh().catch(()=>{});}});
+    void protectionCenter.refresh().catch(()=>{});
     registerClineAdapter(context, brokerManager, managedReader);
     registerClaudeAdapter(context, brokerManager, managedReader);
     registerCodexCliAdapter(context, managedReader, brokerManager);

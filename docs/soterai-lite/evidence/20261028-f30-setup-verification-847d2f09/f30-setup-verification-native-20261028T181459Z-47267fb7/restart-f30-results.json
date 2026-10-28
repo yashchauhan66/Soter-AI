@@ -1,0 +1,131 @@
+{
+  "feature": "F30",
+  "phase": "restart",
+  "extensionBundleSha256": "70a0485db0b186a65b760995bed8ae7a2d4bdbd2ac4c0434e70d02c26f52f8d1",
+  "observations": [
+    {
+      "id": "F30-R01",
+      "status": "PASS"
+    },
+    {
+      "id": "F30-R02",
+      "status": "PASS"
+    },
+    {
+      "id": "F30-R03",
+      "status": "PASS"
+    },
+    {
+      "id": "F30-R04",
+      "status": "PASS"
+    },
+    {
+      "id": "F30-R05",
+      "status": "PASS"
+    }
+  ],
+  "passed": 5,
+  "failed": 0,
+  "notRun": 0,
+  "diagnostics": {
+    "phase": "restart",
+    "stage": "F30-R05",
+    "views": [
+      "soterai-protected-items",
+      "soterai-protection-activity",
+      "soterai-protection-coverage"
+    ],
+    "verifyCalls": [
+      {
+        "argc": 0,
+        "status": "OPENED"
+      },
+      {
+        "argc": 0,
+        "status": "UNAVAILABLE"
+      }
+    ],
+    "brokerChildren": [
+      {
+        "pid": 2184,
+        "closed": true,
+        "code": 0,
+        "signal": null,
+        "stdoutEOF": true,
+        "stderrEOF": true
+      }
+    ],
+    "originalCenter": {
+      "status": "PREPARED_INSTALLED_OWNER_NATIVE_API_FIXTURE",
+      "phase": "restart",
+      "nativeViewIds": [
+        "soterai-protected-items",
+        "soterai-protection-activity",
+        "soterai-protection-coverage"
+      ],
+      "nativeDecorationProviders": 1,
+      "statusItemCount": 3,
+      "policyWrites": 0,
+      "ownerCalls": 13,
+      "syntheticReportInputs": 0,
+      "currentWorkspaceMode": "normal",
+      "syntheticOnly": true,
+      "productImports": false,
+      "signals": 0
+    },
+    "productImports": false,
+    "signalsRequested": 0
+  },
+  "verifyCalls": [
+    {
+      "argc": 0,
+      "status": "OPENED",
+      "report": {
+        "schemaVersion": 1,
+        "binding": "8a58d665414b2962c8ce244df5837927cab0c2d934730867c8d2493352703fe3",
+        "extensionSha256": "70a0485db0b186a65b760995bed8ae7a2d4bdbd2ac4c0434e70d02c26f52f8d1",
+        "brokerSha256": "24c633aff86713f35133e6c103299a24bc2a4df0a6726c90462283ce9030b744",
+        "verifiedAt": "2026-10-28T18:16:29.285Z",
+        "checks": [
+          {
+            "id": "secret-matching",
+            "status": "PASS",
+            "passed": 3,
+            "total": 3
+          },
+          {
+            "id": "output-redactor",
+            "status": "PASS",
+            "passed": 10,
+            "total": 10
+          },
+          {
+            "id": "gateway-loopback",
+            "status": "PASS",
+            "passed": 6,
+            "total": 6
+          }
+        ]
+      }
+    },
+    {
+      "argc": 0,
+      "status": "UNAVAILABLE"
+    }
+  ],
+  "brokerChildren": [
+    {
+      "pid": 2184,
+      "closed": true,
+      "code": 0,
+      "signal": null,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdout": "D:\\SoterAI-Lite-test-profiles\\f30-setup-verification-native-20261028T181459Z-47267fb7\\restart-f30-broker-1-stdout.bin",
+      "stderr": "D:\\SoterAI-Lite-test-profiles\\f30-setup-verification-native-20261028T181459Z-47267fb7\\restart-f30-broker-1-stderr.bin"
+    }
+  ],
+  "cancellation": "INJECTED_PRE_CANCELLED_NATIVE_PROGRESS_TOKEN_NOT_PHYSICAL_CANCEL_CLICK",
+  "independence": "LOW_ACTUAL_NATIVE_AND_RENDERER_SEPARATE",
+  "signalsRequested": 0
+}

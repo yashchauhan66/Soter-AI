@@ -1,0 +1,9 @@
+# F30 affected verification selection
+
+Predeclared before any F30 affected launch. Use the fresh current F30 VSIX only; no historical PASS transfers.
+
+The new command invokes the existing production matching engine, streaming output canary, authenticated owned broker self-test, and native Coverage/Activity publication. It does not change vendor configuration writers, shells, scanner persistence or managed hook installation. Select the accepted F14–F17 retained native family (106 assertions), streaming output (13), private editor/refusal/recovery (25), and Activity/session withdrawal (22): 166 affected assertions, plus the unchanged functional10 and security17 comparison. The composite new native50 already retains all original F29 native30 and adds F30 native20; actual renderer keyboard/HC/motion and separate three-mode Edge axe remain mandatory. Full4464 covers all unit/property/fuzz inputs. Later V gates still require their broader supported tool/shell/platform selection; this selection cannot claim those gates or a real agent route.
+
+All original family IDs, assertions, timeouts and positive/negative controls remain. Activity uses the already accepted settlement04 fixture; no new relaxation. Fresh 24 driver outputs and exact runtime/source/vendor bindings are checked before/after each serial invocation. F26a precommit/native06 is excluded and remains USER_DEFERRED. Functional10/security17 keep the original baseline: 8 BLOCKED_SCOPED and 9 LEAK_CONFIRMED must not become a fabricated protection PASS.
+
+Only synthetic D profiles and numeric loopback, one actual native/browser owner at a time, natural close plus both pipe EOF. No process signal, normal profile, real secret/history, download/login, OS/VM change or publication. Failures stop the chain and retain all outputs; no automatic retry. Withdrawal must preserve prior policy/denies and exact profile receipts.

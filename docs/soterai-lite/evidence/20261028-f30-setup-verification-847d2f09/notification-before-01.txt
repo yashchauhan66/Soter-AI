@@ -1,0 +1,110 @@
+﻿TAP version 13
+# Subtest: F30 machine flag ignores repository values and rejects malformed globals
+ok 1 - F30 machine flag ignores repository values and rejects malformed globals
+  ---
+  duration_ms: 13.6207
+  type: 'test'
+  ...
+# Subtest: F30 native command is registered and rejects all forwarded inputs
+ok 2 - F30 native command is registered and rejects all forwarded inputs
+  ---
+  duration_ms: 313.2188
+  type: 'test'
+  ...
+# Subtest: F30 missing loaded identity cannot run a gateway test or create green state
+ok 3 - F30 missing loaded identity cannot run a gateway test or create green state
+  ---
+  duration_ms: 3.3936
+  type: 'test'
+  ...
+# Subtest: F30 flag-off and untrusted contexts preserve stored policy without requests
+ok 4 - F30 flag-off and untrusted contexts preserve stored policy without requests
+  ---
+  duration_ms: 2.6763
+  type: 'test'
+  ...
+# Subtest: F30 disposal removes its command and invalidates cached presentation
+ok 5 - F30 disposal removes its command and invalidates cached presentation
+  ---
+  duration_ms: 2.1538
+  type: 'test'
+  ...
+# Subtest: F30 completed command releases its owner before a pending native notification is dismissed
+not ok 6 - F30 completed command releases its owner before a pending native notification is dismissed
+  ---
+  duration_ms: 116.2078
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\setupVerification.native.test.ts:2:6035'
+  failureType: 'testCodeFailure'
+  error: |-
+    Native notification must not keep the reviewed action pending
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\setupVerification.native.test.ts:28:71)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F30 notification rejection does not discard a committed current self-check
+not ok 7 - F30 notification rejection does not discard a committed current self-check
+  ---
+  duration_ms: 29.3502
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\setupVerification.native.test.ts:2:6672'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'INCOMPLETE'
+    - 'OPENED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'OPENED'
+  actual: 'INCOMPLETE'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\setupVerification.native.test.ts:30:187)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F30 synchronous notification failure does not discard a committed current self-check
+not ok 8 - F30 synchronous notification failure does not discard a committed current self-check
+  ---
+  duration_ms: 25.1884
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\setupVerification.native.test.ts:2:6938'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'INCOMPLETE'
+    - 'OPENED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'OPENED'
+  actual: 'INCOMPLETE'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\setupVerification.native.test.ts:31:190)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 5
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 520.6132

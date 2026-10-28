@@ -1,0 +1,2 @@
+'use strict';const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');const own=n=>path.join(__dirname,n);
+const source=fs.readFileSync(own('build-native-hosts-02.cjs'),'utf8'),from="JSON.parse(fs.readFileSync(f,'utf8'))";assert.equal(source.split(from).length-1,1);const after=source.replace(from,"JSON.parse(fs.readFileSync(f,'utf8').replace(/^\\uFEFF/,''))");fs.writeFileSync(own('build-native-hosts-03.cjs'),after,{flag:'wx'});console.log('BUILDER03_RETAINS_ALL_GUARDS_ACCEPTS_CANONICAL_UTF8_BOM_JSON_BEFORE_ANY_OUTPUT');

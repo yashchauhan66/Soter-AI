@@ -1,0 +1,250 @@
+﻿TAP version 13
+# Subtest: F30 actual production matcher preserves a public control and masks synthetic raw/base64 values
+ok 1 - F30 actual production matcher preserves a public control and masks synthetic raw/base64 values
+  ---
+  duration_ms: 50.5586
+  type: 'test'
+  ...
+# Subtest: F30 permissive mutation fails secret-negative controls
+ok 2 - F30 permissive mutation fails secret-negative controls
+  ---
+  duration_ms: 0.7944
+  type: 'test'
+  ...
+# Subtest: F30 a collector that withholds everything cannot pass its public control
+ok 3 - F30 a collector that withholds everything cannot pass its public control
+  ---
+  duration_ms: 0.7672
+  type: 'test'
+  ...
+# Subtest: F30 withdrawn production matcher returns WITHHELD instead of PASS
+ok 4 - F30 withdrawn production matcher returns WITHHELD instead of PASS
+  ---
+  duration_ms: 0.5267
+  type: 'test'
+  ...
+# Subtest: F30 private exception text is absent from synthetic report
+ok 5 - F30 private exception text is absent from synthetic report
+  ---
+  duration_ms: 0.7994
+  type: 'test'
+  ...
+# Subtest: F30 companion identities bind all three exact ordinary bundled runtimes
+ok 6 - F30 companion identities bind all three exact ordinary bundled runtimes
+  ---
+  duration_ms: 15.1305
+  type: 'test'
+  ...
+# Subtest: F30 runtime replacement mismatches captured activation bytes
+ok 7 - F30 runtime replacement mismatches captured activation bytes
+  ---
+  duration_ms: 45.8994
+  type: 'test'
+  ...
+# Subtest: F30 missing runtime or non-dist path cannot supply a matching artifact
+ok 8 - F30 missing runtime or non-dist path cannot supply a matching artifact
+  ---
+  duration_ms: 4.6093
+  type: 'test'
+  ...
+# Subtest: F30 bounded runtime admission refuses an oversized file before reading
+ok 9 - F30 bounded runtime admission refuses an oversized file before reading
+  ---
+  duration_ms: 5.0613
+  type: 'test'
+  ...
+# Subtest: F30 vscode-extension registers one fixed command and restricted-machine flag
+ok 10 - F30 vscode-extension registers one fixed command and restricted-machine flag
+  ---
+  duration_ms: 8.6549
+  type: 'test'
+  ...
+# Subtest: F30 soterai-lite registers one fixed command and restricted-machine flag
+ok 11 - F30 soterai-lite registers one fixed command and restricted-machine flag
+  ---
+  duration_ms: 3.8347
+  type: 'test'
+  ...
+# Subtest: F30 native Center action uses its fixed verify command without paths
+ok 12 - F30 native Center action uses its fixed verify command without paths
+  ---
+  duration_ms: 0.4563
+  type: 'test'
+  ...
+# Subtest: F30 coverage offers its real owner action while results are still missing
+ok 13 - F30 coverage offers its real owner action while results are still missing
+  ---
+  duration_ms: 3.6893
+  type: 'test'
+  ...
+# Subtest: F30 machine flag ignores repository values and rejects malformed globals
+ok 14 - F30 machine flag ignores repository values and rejects malformed globals
+  ---
+  duration_ms: 213.0702
+  type: 'test'
+  ...
+# Subtest: F30 native command is registered and rejects all forwarded inputs
+ok 15 - F30 native command is registered and rejects all forwarded inputs
+  ---
+  duration_ms: 460.3462
+  type: 'test'
+  ...
+# Subtest: F30 missing loaded identity cannot run a gateway test or create green state
+ok 16 - F30 missing loaded identity cannot run a gateway test or create green state
+  ---
+  duration_ms: 5.6638
+  type: 'test'
+  ...
+# Subtest: F30 flag-off and untrusted contexts preserve stored policy without requests
+ok 17 - F30 flag-off and untrusted contexts preserve stored policy without requests
+  ---
+  duration_ms: 7.8042
+  type: 'test'
+  ...
+# Subtest: F30 disposal removes its command and invalidates cached presentation
+ok 18 - F30 disposal removes its command and invalidates cached presentation
+  ---
+  duration_ms: 2.4354
+  type: 'test'
+  ...
+# Subtest: F30 complete production output controls pass with exact finite ids
+ok 19 - F30 complete production output controls pass with exact finite ids
+  ---
+  duration_ms: 6.7448
+  type: 'test'
+  ...
+# Subtest: F30 public positive-control failure cannot become green
+ok 20 - F30 public positive-control failure cannot become green
+  ---
+  duration_ms: 1.0983
+  type: 'test'
+  ...
+# Subtest: F30 duplicate/missing output checks cannot become green
+ok 21 - F30 duplicate/missing output checks cannot become green
+  ---
+  duration_ms: 0.6943
+  type: 'test'
+  ...
+# Subtest: F30 skipped or extra output metadata does not substitute for an oracle
+ok 22 - F30 skipped or extra output metadata does not substitute for an oracle
+  ---
+  duration_ms: 0.5562
+  type: 'test'
+  ...
+# Subtest: F30 complete actual gateway collector and six fixed controls pass
+ok 23 - F30 complete actual gateway collector and six fixed controls pass
+  ---
+  duration_ms: 0.7987
+  type: 'test'
+  ...
+# Subtest: F30 gateway statusPASS with failed public collector is FAIL
+ok 24 - F30 gateway statusPASS with failed public collector is FAIL
+  ---
+  duration_ms: 0.4888
+  type: 'test'
+  ...
+# Subtest: F30 partial/duplicate gateway result is NOT_TESTED
+ok 25 - F30 partial/duplicate gateway result is NOT_TESTED
+  ---
+  duration_ms: 0.7781
+  type: 'test'
+  ...
+# Subtest: F30 foreign getters cannot execute while parsing a result
+ok 26 - F30 foreign getters cannot execute while parsing a result
+  ---
+  duration_ms: 0.9388
+  type: 'test'
+  ...
+# Subtest: F30 finite report binds actual artifact/configuration and its timestamp
+ok 27 - F30 finite report binds actual artifact/configuration and its timestamp
+  ---
+  duration_ms: 5.9933
+  type: 'test'
+  ...
+# Subtest: F30 stale/future/mismatched evidence never returns CURRENT
+ok 28 - F30 stale/future/mismatched evidence never returns CURRENT
+  ---
+  duration_ms: 4.756
+  type: 'test'
+  ...
+# Subtest: F30 malformed/extra/private stored fields are rejected
+ok 29 - F30 malformed/extra/private stored fields are rejected
+  ---
+  duration_ms: 0.9097
+  type: 'test'
+  ...
+# Subtest: F30 local component success never invents tool routing or unmanaged-surface coverage
+ok 30 - F30 local component success never invents tool routing or unmanaged-surface coverage
+  ---
+  duration_ms: 1.3608
+  type: 'test'
+  ...
+# Subtest: F30 missing raw component results remain explicitly NOT_TESTED
+ok 31 - F30 missing raw component results remain explicitly NOT_TESTED
+  ---
+  duration_ms: 0.6387
+  type: 'test'
+  ...
+# Subtest: F30 stored status objects are never coerced or executed
+ok 32 - F30 stored status objects are never coerced or executed
+  ---
+  duration_ms: 0.9708
+  type: 'test'
+  ...
+# Subtest: F30 native coordinator saves bounded actual results and current binding
+ok 33 - F30 native coordinator saves bounded actual results and current binding
+  ---
+  duration_ms: 10.5211
+  type: 'test'
+  ...
+# Subtest: F30 disabled coordinator executes no self-test or storage action
+ok 34 - F30 disabled coordinator executes no self-test or storage action
+  ---
+  duration_ms: 0.7819
+  type: 'test'
+  ...
+# Subtest: F30 flag withdrawal during an await prevents publication and save
+ok 35 - F30 flag withdrawal during an await prevents publication and save
+  ---
+  duration_ms: 1.0409
+  type: 'test'
+  ...
+# Subtest: F30 configuration binding drift withholds a completed operation
+ok 36 - F30 configuration binding drift withholds a completed operation
+  ---
+  duration_ms: 0.7417
+  type: 'test'
+  ...
+# Subtest: F30 storage failure returns fixed metadata and does not display a current pass
+ok 37 - F30 storage failure returns fixed metadata and does not display a current pass
+  ---
+  duration_ms: 1.5115
+  type: 'test'
+  ...
+# Subtest: F30 a second activation cannot overlap the first self-test
+ok 38 - F30 a second activation cannot overlap the first self-test
+  ---
+  duration_ms: 0.9297
+  type: 'test'
+  ...
+# Subtest: F30 cancellation withholds report writes
+ok 39 - F30 cancellation withholds report writes
+  ---
+  duration_ms: 0.436
+  type: 'test'
+  ...
+# Subtest: F30 disposal prevents later commands and clears current report
+ok 40 - F30 disposal prevents later commands and clears current report
+  ---
+  duration_ms: 0.9158
+  type: 'test'
+  ...
+1..40
+# tests 40
+# suites 0
+# pass 40
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1736.586

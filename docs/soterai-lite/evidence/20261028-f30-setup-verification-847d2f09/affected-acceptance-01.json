@@ -1,0 +1,289 @@
+{
+  "status": "PASS_CURRENT_F30_AFFECTED166_FUNCTIONAL10_SECURITY17_UNCHANGED",
+  "observedAt": "2026-10-28T18:25:33.728Z",
+  "sourceProof": {
+    "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/full-inputs-03.json",
+    "bytes": 206575,
+    "sha256": "38997e02615ba51e25fb452157a8f0c0c4c366f985d0465ee2a599451919ef7c"
+  },
+  "vsix": {
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-f30-20261028-attempt02.vsix",
+    "bytes": 1729536,
+    "sha256": "142832a714ef7c7f2cfc2d401282dbb6c7f43b9f699bf59ca7822bb4ecb3ceed"
+  },
+  "frontendSha256": "70a0485db0b186a65b760995bed8ae7a2d4bdbd2ac4c0434e70d02c26f52f8d1",
+  "families": [
+    {
+      "id": "streaming-output",
+      "checks": 13,
+      "run": "f26a-streaming-output-native-20261028T181710Z-3d4c8de2"
+    },
+    {
+      "id": "editor",
+      "checks": 25,
+      "run": "f26a-affected-editor-20261028T181807Z-9939930b"
+    },
+    {
+      "id": "retained",
+      "checks": 106,
+      "run": "f26a-retained-native-20261028T181930Z-b223507e"
+    },
+    {
+      "id": "activity",
+      "checks": 22,
+      "run": "f30-affected-activity-20261028T182133Z-70cf25dd"
+    }
+  ],
+  "nativeChecks": 166,
+  "functionalChecks": 10,
+  "securityCases": 17,
+  "securityChanged": 0,
+  "residuals": {
+    "BLOCKED_SCOPED": 8,
+    "LEAK_CONFIRMED": 9
+  },
+  "evidence": [
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/f26a-streaming-output-native-20261028T181710Z-3d4c8de2/single-results.json",
+      "bytes": 5557,
+      "sha256": "25a8acfe7c515b938bd52f6ae9b6f4d3df00af04d0da3a4555ace8f5127ceca3"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/f26a-streaming-output-native-20261028T181710Z-3d4c8de2/single-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/f26a-streaming-output-native-20261028T181710Z-3d4c8de2/single-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "e406fb716ee65705ec9ec165db9c20013439a9e8307a580bc5056b525acef559"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/f26a-streaming-output-native-20261028T181710Z-3d4c8de2/summary.json",
+      "bytes": 763,
+      "sha256": "19086aea682fe0edb7ab61d7998ef0ffe295afb97dc8415391f20bd4d5d2666c"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/f26a-affected-editor-20261028T181807Z-9939930b/primary-results.json",
+      "bytes": 16844,
+      "sha256": "c7b0d9ac24f07a50ec76995e78a5acc3fac71b2d0fc41b47ec3a19388b9861a2"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/f26a-affected-editor-20261028T181807Z-9939930b/primary-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/f26a-affected-editor-20261028T181807Z-9939930b/primary-helper-pipe-ownership.json",
+      "bytes": 530,
+      "sha256": "28131140125b87416e1e00aa7a60c90d58e90eb0661cf612848d96bd51af82a9"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/f26a-affected-editor-20261028T181807Z-9939930b/restart-results.json",
+      "bytes": 3218,
+      "sha256": "eb35cc28b0b49a86a0494f977f097e8f5921ac3541406a53ddc258f1b1fdaa1b"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/f26a-affected-editor-20261028T181807Z-9939930b/restart-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/f26a-affected-editor-20261028T181807Z-9939930b/restart-helper-pipe-ownership.json",
+      "bytes": 530,
+      "sha256": "2bab9c7ba8174d3daf05043c3b19443ee6bd08880ef537dccdfc5f37c850fb86"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/f26a-affected-editor-20261028T181807Z-9939930b/summary.json",
+      "bytes": 1126,
+      "sha256": "e7c6b1e8b0ee5a1ff9330dfc88959c2c06c1dbf27fdf16efcbf504ab4443ae98"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/f26a-retained-native-20261028T181930Z-b223507e/primary-results.json",
+      "bytes": 15895,
+      "sha256": "0f9d9c8da64b5251c12c1ea822001a2c894d31d484faa6532f041d4e90b8d3fc"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/f26a-retained-native-20261028T181930Z-b223507e/primary-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/f26a-retained-native-20261028T181930Z-b223507e/primary-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "77450262ca0b36deb96f2a2a31d4b1a6b125bdb064f178fdd9e05f9c075a55bb"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/f26a-retained-native-20261028T181930Z-b223507e/restart-results.json",
+      "bytes": 1239,
+      "sha256": "a182a5734cded65dc507be49f6f43bc7dbd7e530273877f43e177546c691066b"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/f26a-retained-native-20261028T181930Z-b223507e/restart-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/f26a-retained-native-20261028T181930Z-b223507e/restart-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "92520c6c676c8cca6a43f820190502624fc19041299b336baac28d9f478e08d1"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/f26a-retained-native-20261028T181930Z-b223507e/summary.json",
+      "bytes": 1128,
+      "sha256": "433e4b7fb1f8fbbfa6093d96ab94e77596eb9f941c1ae1c2b5088d6a534df69b"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/f30-affected-activity-20261028T182133Z-70cf25dd/primary-results.json",
+      "bytes": 3790,
+      "sha256": "bc52cf6d2a6258306b1c8baaf44e94736670123fb4f92dc9bb6918f56ff37d23"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/f30-affected-activity-20261028T182133Z-70cf25dd/primary-owned-close.json",
+      "bytes": 618,
+      "sha256": "4f309dd07750bf3bea90048fb1bf817d704e0fca862c8993ca98995e28669ae9"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/f30-affected-activity-20261028T182133Z-70cf25dd/restart-results.json",
+      "bytes": 1686,
+      "sha256": "bf9e1bca1624f51455312960273f40cceed8c92c2c7f413fbd6296087e0737e2"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/f30-affected-activity-20261028T182133Z-70cf25dd/restart-owned-close.json",
+      "bytes": 619,
+      "sha256": "ab24ea7997f228f43f81f9bc13ec5d32df827232c898742c10aa9ad2fdea2b2f"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/f30-affected-activity-20261028T182133Z-70cf25dd/summary.json",
+      "bytes": 698,
+      "sha256": "d26035c32fdecb5f738cb9af8b980d4a5c5632cf389a8255e8dc8437fa914f6b"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/affected-streaming-output-run-01.txt",
+      "bytes": 212,
+      "sha256": "931c3c9d0203416c1fd002037430d10a236113e4a6b2a428c15440a5ffccfe8a"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/affected-streaming-output-run-01.txt.result.json",
+      "bytes": 1977,
+      "sha256": "7febd3bbcce0ecd864e57466cb439d2a71d5ac553a21db721a089ba0ee8f5e66"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/affected-streaming-output-run-01-owned-close.json",
+      "bytes": 619,
+      "sha256": "e3ca5e9e910b388cefc8b33c203bcf1b42c29006d8b93f2790f1cb89929b9d00"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/affected-streaming-output-run-01-verification.json",
+      "bytes": 281,
+      "sha256": "4fc575ffec9d3e128d9f021ce924f2b1d307ba48203aabd02551b82ad2081dd7"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/affected-editor-run-01.txt",
+      "bytes": 204,
+      "sha256": "3656fcfb5dbc3a8c677a7d39111c7ab7b70fb48e9fcc8bad315f8b30e2d7b2d3"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/affected-editor-run-01.txt.result.json",
+      "bytes": 1947,
+      "sha256": "796a509c70b1638b32b2660b1c733bb4534b9c432e7610a0eab1d7c51dde6918"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/affected-editor-run-01-owned-close.json",
+      "bytes": 618,
+      "sha256": "98aeb315d35909858a715f7871e494b62d64fb916be4c9837daf1faeba610522"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/affected-editor-run-01-verification.json",
+      "bytes": 271,
+      "sha256": "88cf4450406c523496143400572a4b748d880cf490626a1d3b599123636a19c3"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/affected-retained-run-01.txt",
+      "bytes": 214,
+      "sha256": "7f67118c81b6999756f06640d3991d6b2643ac4c06a8b23820bf9a6c230e22c5"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/affected-retained-run-01.txt.result.json",
+      "bytes": 1951,
+      "sha256": "30e81f0d6ad60624086a31ceb74d6de27be6514ba293506d3764b7e07faed376"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/affected-retained-run-01-owned-close.json",
+      "bytes": 619,
+      "sha256": "5a046416ef7d8f2b3c3b57955e81b2e5855c7ff426e16f2a0d52af0ad0468caf"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/affected-retained-run-01-verification.json",
+      "bytes": 273,
+      "sha256": "009eb9db1f7a90b64175711e447dab0c332d31487e25c7ccdce09c0dea621cc9"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/affected-activity-run-01.txt",
+      "bytes": 1287,
+      "sha256": "4ad7c74bb181257c2e0ec9c7cb049b518675c59d49ebd0200218859f614537f2"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/affected-activity-run-01.txt.result.json",
+      "bytes": 629,
+      "sha256": "fd7068a84b8eae2c285d80522d69a646d2d8c6d8c4f082af07b9f52d362e4dbd"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/affected-activity-run-01-owned-close.json",
+      "bytes": 617,
+      "sha256": "32f4587b16bd7bec7f92b8b19604e4ead3d6f1f86aad0c01ae2a5a54bce77e7a"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/affected-activity-run-01-verification.json",
+      "bytes": 273,
+      "sha256": "51f646dc10e1218cd4ddce49218c969fec77d2ac6b2c73e35763d4b7a21ab57b"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/affected-functional-security-run-01.txt",
+      "bytes": 4543,
+      "sha256": "5d800a60489226fc9e6fc2ae9f42135652e902ed35661af9c41c1740acc7af81"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/affected-functional-security-run-01.txt.result.json",
+      "bytes": 1569,
+      "sha256": "8461423aacf75f2a43d9c3dfe138f7ea22844c31bc6536460c77964ba96bea01"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/affected-functional-security-run-01-owned-close.json",
+      "bytes": 619,
+      "sha256": "772ebc19a09079cadc67abffb470fd64f66e0e0621c0f13271b21e7bc769c548"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/affected-functional-security-run-01-verification.json",
+      "bytes": 284,
+      "sha256": "6d123470399f36d48a8e0ed8e00ff5451adb32fb01f895a1eb49a3e937d0c4f3"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/affected-20261028T182246Z-16a561f97ddf451eaf1edb70e6dffc9a/affected-summary-01.json",
+      "bytes": 1207,
+      "sha256": "40ddff4150b71cffa7adab2cdc310dcd1855a4c87ebaa490517e7efb594131bf"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/affected-20261028T182246Z-16a561f97ddf451eaf1edb70e6dffc9a/functional/privacy-20261028T182305Z-81066ba5/functional-results.json",
+      "bytes": 2168,
+      "sha256": "55968095bd38f57b2bf751c13977e81c672f872f94b20e34ad29379eea82c82b"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/affected-20261028T182246Z-16a561f97ddf451eaf1edb70e6dffc9a/security/host-20261028T182401Z-5d456f6e96f14934a9f8c1473d1f1fd3/live-host.json",
+      "bytes": 4878,
+      "sha256": "f5c000c5b3ee514f2c1fffcdfa9bb7dfd3780bd126faa56e6d6f533c0a5a10e4"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/affected-20261028T182246Z-16a561f97ddf451eaf1edb70e6dffc9a/security-comparison-01.json",
+      "bytes": 4057,
+      "sha256": "cd01fa227a045c967c7b940408afec47ab8f0a07959a0c339085f876b43c65ae"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/affected-chain-result-01.json",
+      "bytes": 1984,
+      "sha256": "b8c13a3568971fbff48129aa5ec2dbfdcc076ec25febe0a6eb3c6d9a308f34c0"
+    }
+  ],
+  "native06": "F26a_USER_DEFERRED_NOT_RUN",
+  "signalsRequested": 0
+}

@@ -1,0 +1,299 @@
+{
+  "phase": "restart",
+  "extensionBundleSha256": "70a0485db0b186a65b760995bed8ae7a2d4bdbd2ac4c0434e70d02c26f52f8d1",
+  "observations": [
+    {
+      "id": "F29-R01",
+      "scope": "Fresh actual host retains exact policy custody and does not duplicate persistent restriction writes",
+      "status": "PASS"
+    },
+    {
+      "id": "F29-R02",
+      "scope": "Fresh actual native views redisplay saved selectors and real Explorer restriction decoration",
+      "status": "PASS"
+    },
+    {
+      "id": "F29-R03",
+      "scope": "Fresh actual Activity presentation contains finite metadata without synthetic private values",
+      "status": "PASS"
+    },
+    {
+      "id": "F29-R04",
+      "scope": "Actual TreeItem revoke dispatch resolves a pending original managed read; a late scripted answer cannot grant it",
+      "status": "PASS"
+    },
+    {
+      "id": "F29-R05",
+      "scope": "Final actual machine withdrawal preserves denies and recovery records and disables the selected Sentinel preference",
+      "status": "PASS"
+    }
+  ],
+  "passed": 5,
+  "failed": 0,
+  "notRun": 0,
+  "diagnostics": {
+    "status": "PREPARED_INSTALLED_OWNER_NATIVE_API_FIXTURE",
+    "phase": "restart",
+    "nativeViewIds": [
+      "soterai-protected-items",
+      "soterai-protection-activity",
+      "soterai-protection-coverage"
+    ],
+    "nativeDecorationProviders": 1,
+    "statusItemCount": 3,
+    "policyWrites": 0,
+    "ownerCalls": 10,
+    "syntheticReportInputs": 0,
+    "currentWorkspaceMode": "normal",
+    "syntheticOnly": true,
+    "productImports": false,
+    "signals": 0
+  },
+  "nativeOwnerCalls": [
+    {
+      "command": "soterai.refreshProtectionCenter",
+      "argumentCount": 0,
+      "status": "REFRESHED"
+    },
+    {
+      "command": "soterai.startLocalAIBroker",
+      "argumentCount": 0
+    },
+    {
+      "command": "soterai.verifySetup",
+      "argumentCount": 0,
+      "status": "OPENED"
+    },
+    {
+      "command": "soterai.refreshProtectionCenter",
+      "argumentCount": 0,
+      "status": "REFRESHED"
+    },
+    {
+      "command": "soterai.refreshProtectionCenter",
+      "argumentCount": 0,
+      "status": "REFRESHED"
+    },
+    {
+      "command": "soterai.readProjectFileSafely",
+      "argumentCount": 1,
+      "status": "EXPIRED"
+    },
+    {
+      "command": "soterai.protectionCenterAction",
+      "argumentCount": 1,
+      "status": "REVOKED"
+    },
+    {
+      "command": "soterai.revokeProjectReads",
+      "argumentCount": 0,
+      "status": "REVOKED"
+    },
+    {
+      "command": "soterai.refreshProtectionCenter",
+      "argumentCount": 0,
+      "status": "UNAVAILABLE"
+    },
+    {
+      "command": "soterai.disableAISentinel",
+      "argumentCount": 0
+    }
+  ],
+  "protectedContentReadObservations": {
+    "document": 0,
+    "vscodeRead": 0,
+    "nodeReadFile": 0,
+    "nodeOpen": 0,
+    "syncReadFile": 0,
+    "syncOpen": 0
+  },
+  "nativeApiDescriptorObservations": [
+    {
+      "name": "workspaceFolders",
+      "own": true,
+      "kind": "accessor",
+      "configurable": true,
+      "frozen": false
+    },
+    {
+      "name": "isTrusted",
+      "own": true,
+      "kind": "accessor",
+      "configurable": true,
+      "frozen": false
+    },
+    {
+      "name": "createTreeView",
+      "own": true,
+      "kind": "data",
+      "configurable": true,
+      "frozen": false
+    },
+    {
+      "name": "registerFileDecorationProvider",
+      "own": true,
+      "kind": "data",
+      "configurable": true,
+      "frozen": false
+    },
+    {
+      "name": "createStatusBarItem",
+      "own": true,
+      "kind": "data",
+      "configurable": true,
+      "frozen": false
+    },
+    {
+      "name": "registerCommand",
+      "own": true,
+      "kind": "data",
+      "configurable": true,
+      "frozen": false
+    },
+    {
+      "name": "executeCommand",
+      "own": true,
+      "kind": "data",
+      "configurable": true,
+      "frozen": false
+    },
+    {
+      "name": "get",
+      "own": false,
+      "kind": "data",
+      "configurable": true,
+      "frozen": false
+    },
+    {
+      "name": "update",
+      "own": false,
+      "kind": "data",
+      "configurable": true,
+      "frozen": false
+    },
+    {
+      "name": "getConfiguration",
+      "own": true,
+      "kind": "data",
+      "configurable": true,
+      "frozen": false
+    },
+    {
+      "name": "openTextDocument",
+      "own": true,
+      "kind": "data",
+      "configurable": true,
+      "frozen": false
+    },
+    {
+      "name": "fs",
+      "own": true,
+      "kind": "accessor",
+      "configurable": true,
+      "frozen": false
+    },
+    {
+      "name": "readFile",
+      "own": true,
+      "kind": "data",
+      "configurable": true,
+      "frozen": false
+    },
+    {
+      "name": "open",
+      "own": true,
+      "kind": "data",
+      "configurable": true,
+      "frozen": false
+    },
+    {
+      "name": "readFileSync",
+      "own": true,
+      "kind": "data",
+      "configurable": true,
+      "frozen": false
+    },
+    {
+      "name": "openSync",
+      "own": true,
+      "kind": "data",
+      "configurable": true,
+      "frozen": false
+    },
+    {
+      "name": "showQuickPick",
+      "own": true,
+      "kind": "data",
+      "configurable": true,
+      "frozen": false
+    },
+    {
+      "name": "showWorkspaceFolderPick",
+      "own": true,
+      "kind": "data",
+      "configurable": true,
+      "frozen": false
+    },
+    {
+      "name": "showOpenDialog",
+      "own": true,
+      "kind": "data",
+      "configurable": true,
+      "frozen": false
+    },
+    {
+      "name": "showWarningMessage",
+      "own": true,
+      "kind": "data",
+      "configurable": true,
+      "frozen": false
+    },
+    {
+      "name": "showInformationMessage",
+      "own": true,
+      "kind": "data",
+      "configurable": true,
+      "frozen": false
+    },
+    {
+      "name": "showErrorMessage",
+      "own": true,
+      "kind": "data",
+      "configurable": true,
+      "frozen": false
+    },
+    {
+      "name": "createWebviewPanel",
+      "own": true,
+      "kind": "data",
+      "configurable": true,
+      "frozen": false
+    }
+  ],
+  "mainStatusOwner": {
+    "selected": true,
+    "allocationCountIncludesLegacyAuxiliaries": 3,
+    "publicCommand": "soterai.openControlPanel",
+    "publicPriority": 100
+  },
+  "observedProjectSettingChanges": [],
+  "retainedSyntheticReportInputs": [],
+  "readModalCount": 1,
+  "rendererGate": {
+    "status": "NOT_RUN_SEPARATE_RENDERER_GATE_UNBOUND"
+  },
+  "independence": "LOW_SCRIPTED_ACTUAL_INSTALLED_NATIVE_APIS_NOT_HUMAN",
+  "keyboard": "ACTUAL_VIEW_FOCUS_LIST_NAVIGATION_AND_TREEITEM_COMMAND_APIS; PHYSICAL_KEYS_AND_RENDERER_FOCUS_NOT_OBSERVED",
+  "workspaceStates": "UNTRUSTED_AND_EMPTY_ARE_EXPLICIT_INJECTED_NATIVE_API_FACTS_NOT_REAL_TRUST_OR_WORKSPACE_TRANSITIONS",
+  "reports": "SYNTHETIC_INSTALLED_COPY_INPUTS_WITH_ZERO_PASSING_SUITES; NOT_SHIPPED_OR_ACCEPTED_COVERAGE_EVIDENCE",
+  "exclusions": [
+    "Human screen reader/usability",
+    "Different-vendor independence",
+    "Real agent behavior",
+    "Physical keyboard/renderer automation",
+    "Real workspace trust UI transition",
+    "OS isolation and unmanaged native reads",
+    "Actual vendor setup beyond the isolated project-terminal owner",
+    "F26a/native06 remains explicitly deferred"
+  ]
+}

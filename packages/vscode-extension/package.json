@@ -151,7 +151,8 @@
                 "soterai.lite.historyHooks.preCommit",
                 "soterai.lite.historyHooks.psReadLine",
                 "soterai.lite.selfHygiene",
-                "soterai.lite.protectionCenter"
+                "soterai.lite.protectionCenter",
+                "soterai.lite.setupVerification"
             ]
         }
     },
@@ -1654,6 +1655,12 @@
                 "title": "Protection Center reviewed action",
                 "category": "SoterAI",
                 "icon": "$(list-selection)"
+            },
+            {
+                "command": "soterai.verifySetup",
+                "title": "Verify my setup",
+                "category": "SoterAI",
+                "icon": "$(beaker)"
             }
         ],
         "viewsContainers": {
@@ -2461,6 +2468,12 @@
                     "default": true,
                     "scope": "machine",
                     "description": "Show native Protected items, Activity and Coverage in one sidebar. Uses saved explicit metadata and existing reviewed setup/restore commands; settings never establish tested protection. Repository overrides are ignored. Disable withdraws this presentation and retains saved denies, audit and recovery records."
+                },
+                "soterai.lite.setupVerification": {
+                    "type": "boolean",
+                    "default": true,
+                    "scope": "machine",
+                    "description": "Offer owner-triggered synthetic local component checks and current artifact/configuration-bound timestamps in Protection Center. No real workspace scan, tool launch, login or automatic broker start. Missing, stale or withdrawn evidence stays NOT_TESTED; local checks do not verify live AI-tool routes or establish a coverage score. Disable withdraws checks/presentation while retaining saved protection."
                 }
             }
         },
@@ -3705,6 +3718,10 @@
                 },
                 {
                     "command": "soterai.protectionCenterAction",
+                    "when": "false"
+                },
+                {
+                    "command": "soterai.verifySetup",
                     "when": "false"
                 }
             ],

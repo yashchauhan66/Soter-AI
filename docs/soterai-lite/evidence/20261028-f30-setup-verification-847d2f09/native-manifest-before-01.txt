@@ -1,0 +1,212 @@
+﻿TAP version 13
+# Subtest: F30 vscode-extension registers one fixed command and restricted-machine flag
+not ok 1 - F30 vscode-extension registers one fixed command and restricted-machine flag
+  ---
+  duration_ms: 83.9154
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\setupVerification.manifest.test.ts:2:1139'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      protectionCenterRows(facts)
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\setupVerification.manifest.test.ts:7:301)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: F30 soterai-lite registers one fixed command and restricted-machine flag
+not ok 2 - F30 soterai-lite registers one fixed command and restricted-machine flag
+  ---
+  duration_ms: 5.4017
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\setupVerification.manifest.test.ts:2:1139'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      protectionCenterRows(facts)
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\setupVerification.manifest.test.ts:7:301)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F30 native Center action uses its fixed verify command without paths
+not ok 3 - F30 native Center action uses its fixed verify command without paths
+  ---
+  duration_ms: 2.0436
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\setupVerification.manifest.test.ts:2:1841'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - 'soterai.verifySetup'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'soterai.verifySetup'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\setupVerification.manifest.test.ts:8:88)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F30 coverage offers its real owner action while results are still missing
+not ok 4 - F30 coverage offers its real owner action while results are still missing
+  ---
+  duration_ms: 57.808
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\setupVerification.manifest.test.ts:2:2045'
+  failureType: 'testCodeFailure'
+  error: 'false == true'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\setupVerification.manifest.test.ts:9:390)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F30 machine flag ignores repository values and rejects malformed globals
+not ok 5 - F30 machine flag ignores repository values and rejects malformed globals
+  ---
+  duration_ms: 19.2686
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\setupVerification.native.test.ts:2:1741'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\setup-verification\\SetupVerificationFlags' imported from C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\setupVerification.native.test.ts"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:860:10)
+    defaultResolve (node:internal/modules/esm/resolve:984:11)
+    nextResolve (node:internal/modules/esm/hooks:748:28)
+    resolveBase (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:8141)
+    async resolveDirectory (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:9221)
+    async resolve2 (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:11932)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
+  ...
+# Subtest: F30 native command is registered and rejects all forwarded inputs
+not ok 6 - F30 native command is registered and rejects all forwarded inputs
+  ---
+  duration_ms: 10.8385
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\setupVerification.native.test.ts:2:2446'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\setup-verification\\SetupVerification' imported from C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\setupVerification.native.test.ts"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:860:10)
+    defaultResolve (node:internal/modules/esm/resolve:984:11)
+    nextResolve (node:internal/modules/esm/hooks:748:28)
+    resolveBase (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:8141)
+    async resolveDirectory (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:9221)
+    async resolve2 (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:11932)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
+  ...
+# Subtest: F30 missing loaded identity cannot run a gateway test or create green state
+not ok 7 - F30 missing loaded identity cannot run a gateway test or create green state
+  ---
+  duration_ms: 9.8557
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\setupVerification.native.test.ts:2:2883'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\setup-verification\\SetupVerification' imported from C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\setupVerification.native.test.ts"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:860:10)
+    defaultResolve (node:internal/modules/esm/resolve:984:11)
+    nextResolve (node:internal/modules/esm/hooks:748:28)
+    resolveBase (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:8141)
+    async resolveDirectory (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:9221)
+    async resolve2 (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:11932)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
+  ...
+# Subtest: F30 flag-off and untrusted contexts preserve stored policy without requests
+not ok 8 - F30 flag-off and untrusted contexts preserve stored policy without requests
+  ---
+  duration_ms: 11.6064
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\setupVerification.native.test.ts:2:3277'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\setup-verification\\SetupVerification' imported from C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\setupVerification.native.test.ts"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:860:10)
+    defaultResolve (node:internal/modules/esm/resolve:984:11)
+    nextResolve (node:internal/modules/esm/hooks:748:28)
+    resolveBase (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:8141)
+    async resolveDirectory (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:9221)
+    async resolve2 (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:11932)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
+  ...
+# Subtest: F30 disposal removes its command and invalidates cached presentation
+not ok 9 - F30 disposal removes its command and invalidates cached presentation
+  ---
+  duration_ms: 14.9138
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\setupVerification.native.test.ts:2:4041'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\setup-verification\\SetupVerification' imported from C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\setupVerification.native.test.ts"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:860:10)
+    defaultResolve (node:internal/modules/esm/resolve:984:11)
+    nextResolve (node:internal/modules/esm/hooks:748:28)
+    resolveBase (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:8141)
+    async resolveDirectory (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:9221)
+    async resolve2 (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:11932)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 0
+# fail 9
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1008.2593

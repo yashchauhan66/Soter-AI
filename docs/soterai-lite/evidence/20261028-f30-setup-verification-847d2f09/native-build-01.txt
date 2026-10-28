@@ -1,0 +1,33 @@
+﻿node.exe : node:fs:562
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (node:fs:562:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  return binding.open(
+                 ^
+
+Error: ENOENT: no such file or directory, open 'C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lit
+e\evidence\20261028-f29-protection-center-6c93e15a\f27-activity-settlement04.host.ts'
+    at Object.openSync (node:fs:562:18)
+    at Object.readFileSync (node:fs:446:35)
+    at fact (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261028-f30-setup-verif
+ication-847d2f09\build-native-hosts-01.cjs:3:210)
+    at Array.map (<anonymous>)
+    at Object.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261028-f
+30-setup-verification-847d2f09\build-native-hosts-01.cjs:5:642)
+    at Module._compile (node:internal/modules/cjs/loader:1730:14)
+    at Object..js (node:internal/modules/cjs/loader:1895:10)
+    at Module.load (node:internal/modules/cjs/loader:1465:32)
+    at Function._load (node:internal/modules/cjs/loader:1282:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14) {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261028-f29-protec
+tion-center-6c93e15a\\f27-activity-settlement04.host.ts'
+}
+
+Node.js v22.16.0

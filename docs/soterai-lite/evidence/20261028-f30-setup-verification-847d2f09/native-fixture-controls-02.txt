@@ -1,0 +1,64 @@
+﻿TAP version 13
+# Subtest: actual fixture patch forwards with correct receiver and restores descriptor
+ok 1 - actual fixture patch forwards with correct receiver and restores descriptor
+  ---
+  duration_ms: 5.1432
+  type: 'test'
+  ...
+# Subtest: actual fixture undo is idempotent after a later owner change
+ok 2 - actual fixture undo is idempotent after a later owner change
+  ---
+  duration_ms: 0.482
+  type: 'test'
+  ...
+# Subtest: F29 earlier cleanup cannot resurrect its old wrapper during F30 teardown
+ok 3 - F29 earlier cleanup cannot resurrect its old wrapper during F30 teardown
+  ---
+  duration_ms: 0.3866
+  type: 'test'
+  ...
+# Subtest: foreign method replacement is preserved instead of overwritten
+ok 4 - foreign method replacement is preserved instead of overwritten
+  ---
+  duration_ms: 0.4569
+  type: 'test'
+  ...
+# Subtest: frozen native shape refuses before changing its descriptor
+ok 5 - frozen native shape refuses before changing its descriptor
+  ---
+  duration_ms: 3.2751
+  type: 'test'
+  ...
+# Subtest: prototype-backed method restores absence of an own property
+ok 6 - prototype-backed method restores absence of an own property
+  ---
+  duration_ms: 0.5501
+  type: 'test'
+  ...
+# Subtest: successful mismatch witness restores exact original and retains mutated bytes
+ok 7 - successful mismatch witness restores exact original and retains mutated bytes
+  ---
+  duration_ms: 67.6532
+  type: 'test'
+  ...
+# Subtest: a failing assertion still restores original and retains failed mutated witness
+ok 8 - a failing assertion still restores original and retains failed mutated witness
+  ---
+  duration_ms: 18.9846
+  type: 'test'
+  ...
+# Subtest: pre-existing archive refuses without moving either original or foreign evidence
+ok 9 - pre-existing archive refuses without moving either original or foreign evidence
+  ---
+  duration_ms: 13.0076
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 128.5987

@@ -1,0 +1,201 @@
+{
+  "status": "BOUND_CURRENT_F30_AFFECTED166_NOT_EXECUTED",
+  "observedAt": "2026-10-28T18:15:00.700Z",
+  "binding": {
+    "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/native-binding-02.json",
+    "bytes": 10421,
+    "sha256": "1cb51b1a7710f3b816c17234f3c6b8c918f2e7ecf6fe507570fb702af6d80bcf"
+  },
+  "scope": {
+    "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/work-card-affected-01.md",
+    "bytes": 1896,
+    "sha256": "e04d045f19da0930dbef20a32fcd1066468d47c246faffb235aba72047422d8a"
+  },
+  "families": [
+    {
+      "id": "streaming-output",
+      "assertions": 13,
+      "phases": 1,
+      "helper": "affected-streaming-output-01.ps1",
+      "driver": {
+        "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/prebuilt-native-hosts-02/lite-streaming-output-host.js",
+        "bytes": 12789,
+        "sha256": "25f981d467639de9e910e9765e71ca9e13f630cd9062cfd08c96d8ad4d1e9f9d"
+      }
+    },
+    {
+      "id": "editor",
+      "assertions": 25,
+      "phases": 2,
+      "helper": "affected-editor-01.ps1",
+      "driver": {
+        "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/prebuilt-native-hosts-02/lite-editor-host.js",
+        "bytes": 408042,
+        "sha256": "e3cbb70a89ffee3e2611c4d98e378a9824b19210c3bc0e7e8dbb48ae845a0510"
+      }
+    },
+    {
+      "id": "retained",
+      "assertions": 106,
+      "phases": 2,
+      "helper": "affected-retained-01.ps1",
+      "driver": {
+        "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/prebuilt-native-hosts-02/lite-broker-host.js",
+        "bytes": 457904,
+        "sha256": "3a2277b1a567c8fed5b699cc96c04146ef29fb27cfed6963bf8406f7f764d504"
+      }
+    }
+  ],
+  "activity": {
+    "checks": 22,
+    "runner": {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/run-affected-activity-01.cjs",
+      "bytes": 10388,
+      "sha256": "40ec87f1cc3260cf73704579f9e1093c70f2befcd5fe06e80b0f832653e64560"
+    },
+    "driver": {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/prebuilt-native-hosts-02/lite-f27-self-hygiene-host.js",
+      "bytes": 27127,
+      "sha256": "1c0c4b6586f57f211f091806477c0b03c2bbff3156a37480d9887192968acfc6"
+    }
+  },
+  "expectedNativeAffected": 166,
+  "functional": 10,
+  "security": 17,
+  "outputs": [
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-preparation-pipe-ownership-01.ps1",
+        "bytes": 4180,
+        "sha256": "246b0ccdb2457fd80f560770b129a1fde67d5d4212e8eae200f965dffd69698c"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/affected-preparation-pipe-ownership-01.ps1",
+        "bytes": 4180,
+        "sha256": "246b0ccdb2457fd80f560770b129a1fde67d5d4212e8eae200f965dffd69698c"
+      }
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-preparation-functional10-driver-01.js",
+        "bytes": 532622,
+        "sha256": "b64a85f99d9c5c3194b2bd427822116b7c59f8565dc3fc5477c27b92208a8b3b"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/affected-preparation-functional10-driver-01.js",
+        "bytes": 532622,
+        "sha256": "b64a85f99d9c5c3194b2bd427822116b7c59f8565dc3fc5477c27b92208a8b3b"
+      }
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-preparation-security17-driver-01.js",
+        "bytes": 13372,
+        "sha256": "de3e734ece51d89adaa58caec792c5d39b142d9e88cd17b2cda312099d0d38c9"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/affected-preparation-security17-driver-01.js",
+        "bytes": 13372,
+        "sha256": "de3e734ece51d89adaa58caec792c5d39b142d9e88cd17b2cda312099d0d38c9"
+      }
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-native-binding-01.ps1",
+        "bytes": 5526,
+        "sha256": "e0c54d0581222c801d5e90cd6335ca5294b3ada6e5ef7e49b95ada737bc559c9"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/affected-native-binding-01.ps1",
+        "bytes": 5526,
+        "sha256": "452249c8c48f17430f12881724ad0f16c63774555878dca288fcfe914cfc6fbf"
+      }
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-streaming-output-01.ps1",
+        "bytes": 18504,
+        "sha256": "6cb11879c6f1949c6f31487b848ae0a41861094e31242fec11360ff525111464"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/affected-streaming-output-01.ps1",
+        "bytes": 18504,
+        "sha256": "7d5ebcab71d432d9fedf43714907e1efa4cd3d777297632f048caa1090bfe3e2"
+      }
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-editor-01.ps1",
+        "bytes": 18585,
+        "sha256": "3563ecbdb0c986d6e3bba91b743c2c0b346d9de050e35b2e250f1491f3f9c014"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/affected-editor-01.ps1",
+        "bytes": 18585,
+        "sha256": "f7b8fe8bca00bc53b594496cdf1a6069842a3564a7e41d358a229e2115e3b5cf"
+      }
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-retained-01.ps1",
+        "bytes": 18635,
+        "sha256": "d77a3ef334c653c3806482aa5fbbf62c9ec5c4986005030e39310376373d4222"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/affected-retained-01.ps1",
+        "bytes": 18635,
+        "sha256": "d16c219042a14b31734d9bb05b5f71e2d84fd6feb083e5921eab672094e87b15"
+      }
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/affected-functional-security-01.ps1",
+        "bytes": 9680,
+        "sha256": "8de70a6de9d10058f1e397623e156b21badba92a066b0596ffc81ef1c9b213cc"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/affected-functional-security-01.ps1",
+        "bytes": 9680,
+        "sha256": "9725d82e2fb607a0ca4837a933deb2cba556854dc097c0f3572e9e3407daa359"
+      }
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/affected-functional10-01.ps1",
+        "bytes": 10635,
+        "sha256": "b7a22c9fbbbea66e17fdcdedb45815e27ef08be0ec29afc66797ff3c40ca74ab"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/affected-functional10-01.ps1",
+        "bytes": 10635,
+        "sha256": "e6d28d491b22e3a293f30cdb563516e3e06751f1450321dcd3c07f6f86bf02c2"
+      }
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/affected-security17-01.ps1",
+        "bytes": 11993,
+        "sha256": "3ac03b0892b57936549b22e215122823f3a16225e40fb0c1f1d44d0271acdd33"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/affected-security17-01.ps1",
+        "bytes": 11993,
+        "sha256": "41eec431fc8282efb4cc914677413ab16e3c31f4c7f6d73d8167b5ab79043e90"
+      }
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/run-affected-activity-03.cjs",
+        "bytes": 10409,
+        "sha256": "89473e14f6081fb64fd986ac782370d56c386c637c477e9c4837d7895932d3b2"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/run-affected-activity-01.cjs",
+        "bytes": 10388,
+        "sha256": "40ec87f1cc3260cf73704579f9e1093c70f2befcd5fe06e80b0f832653e64560"
+      }
+    }
+  ],
+  "native06": "F26a_USER_DEFERRED_NOT_RUN",
+  "signalsRequested": 0
+}

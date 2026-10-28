@@ -962,13 +962,21 @@
     {
       "id": "F30",
       "title": "Verify my setup.",
-      "status": "ACTIVE",
+      "status": "VERIFYING",
       "result": "INCOMPLETE",
       "requires": [
         "F29"
       ],
       "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
-      "startCondition": "Existing priority order selects F30 after actual F29 source1322 and separate transition byte proof PASS. No F30 production before barrier."
+      "startCondition": "Existing priority order selects F30 after actual F29 source1322 and separate transition byte proof PASS. No F30 production before barrier.",
+      "progressEvidence": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/progress-06.json",
+      "executionDecision": "Declared F30 scoped gates PASS on current1036proof03/full4464zeroFAIL/backend143PASS1SKIP/exactVSIX142832a7/content86flags/native50+actualkeyboard/HC/motion/Edge3zeroViolations/affected166+functional10/security17unchanged/actualsafe withdrawal. Local scoped source+transition commits and exhaustive raw byte verification pending. All8 live surfaces and5 tools remain NOT_TESTED/Uncovered; no score. Manual accessibility/human/frameDOM limitations and9 unmanaged leaks persist. Failed initial Edge EOF remains unobserved/not regraded; fresh query admitted corrected bounded run with actual0+EOF. F26a06 USER_DEFERRED.",
+      "flag": "soterai.lite.setupVerification",
+      "acceptanceEvidence": {
+        "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/acceptance-01.json",
+        "bytes": 55823,
+        "sha256": "5317501d7536e5df2a7b466fee284c2c4fba4a6da51990d96bc29d832f6f1b48"
+      }
     },
     {
       "id": "F31",
@@ -1102,5 +1110,10 @@
     "sha256": "0b664de4540d685121b046bf2dc560516d529ea0ac5e986124ed12b9b1a5672c",
     "status": "SOURCE_1322_EXACT_BYTES_PASS_SEPARATE_TRANSITION_REQUIRED_BEFORE_F30",
     "transitionProof": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/f29-transition-byte-proof-01.json"
+  },
+  "f30LatestCheckpoint": {
+    "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/acceptance-01.json",
+    "bytes": 55823,
+    "sha256": "5317501d7536e5df2a7b466fee284c2c4fba4a6da51990d96bc29d832f6f1b48"
   }
 }

@@ -39,6 +39,6 @@ for (const ownerEdit of [false, true]) test("F26a hook stage foreign equal-byte 
     assert.ok(swapped && stage, "Fixture must replace the actual exclusively created stage pathname.");
     assert.ok((await readFile(stage!)).equals(after), "Unknown foreign stage must survive cleanup unchanged.");
     assert.ok((await readFile(retained)).equals(after), "Originally created stage remains retained as separate evidence.");
-    assert.notEqual((await lstat(stage!)).ino, (await lstat(retained)).ino, "Fixture must exercise distinct filesystem identities.");
+    assert.notEqual((await lstat(stage!, { bigint: true })).ino, (await lstat(retained, { bigint: true })).ino, "Fixture must exercise distinct filesystem identities.");
     assert.ok((await readFile(file)).equals(ownerEdit ? owner : before), "The target owner state must remain exact.");
 });

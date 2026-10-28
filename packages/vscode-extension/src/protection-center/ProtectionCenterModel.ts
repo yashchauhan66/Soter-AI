@@ -1,3 +1,4 @@
+import {setupCoverage,type SetupReportState} from "../setup-verification/SetupVerificationReport";
 /** Presentation only: saved policy and existing reviewed commands remain authoritative. */
 export interface CenterRow { readonly label: string; readonly description?: string; readonly icon: string; readonly action?: string }
 export interface CenterFacts {
@@ -5,13 +6,14 @@ export interface CenterFacts {
     restrictions: ReadonlyArray<{ project: string; kind: string; pattern: string; sensitive?: boolean }>;
     activity: ReadonlyArray<unknown>; activityEnabled: boolean; broker: string;
     evidence: { state: string; generatedAt?: string; surfaces: ReadonlyArray<{ id: string; status: string }>; fullClaim: string };
+    setupEnabled?:boolean;setupReport?:SetupReportState;
 }
 export type CenterSection = "protected" | "activity" | "coverage";
 export type CenterRows = Record<CenterSection, ReadonlyArray<CenterRow>>;
 export type CenterTranslator = (message: string, ...args: Array<string | number>) => string;
 export const centerEnglish: CenterTranslator = (message, ...args) => message.replace(/\{(\d+)\}/g, (all, n: string) => String(args[Number(n)] ?? all));
 export const CENTER_ACTIONS: Readonly<Record<string, string>> = Object.freeze({
-    privacy: "soterai.openProjectPrivacy", restrict: "soterai.restrictProjectFile", sensitive: "soterai.restrictSensitiveFile",
+    privacy: "soterai.openProjectPrivacy", verify:"soterai.verifySetup", restrict: "soterai.restrictProjectFile", sensitive: "soterai.restrictSensitiveFile",
     manage: "soterai.manageAIRules", review: "soterai.reviewSafeFileAccess", revoke: "soterai.revokeProjectReads",
     activity: "soterai.showAITimeline", exportActivity: "soterai.exportAIActivityReport",
     vault: "soterai.migrateSecretsToVault", restoreVault: "soterai.restoreSecretPlaceholders",
@@ -87,6 +89,16 @@ export function protectionCenterRows(facts: CenterFacts, now = Date.now(), t: Ce
     c.push(row(t("Packaged evidence: {0}", state === "MATCHED" && !fresh ? "STALE" : state), current ? "info" : "warning"),
         row("Live verification: NOT_TESTED. Use verified results, never enabled settings."),
         row("Uncovered: unmanaged native reads, other extensions and independent uploads.", "warning"));
+    if(facts.setupEnabled){
+        c.push(row("Verify my setup","beaker","verify"));
+        const result=facts.setupReport;
+        c.push(row(t("Synthetic checks: {0}",result?.state??"MISSING"),result?.state==="CURRENT"?"info":"warning"));
+        if(result?.report){
+            c.push(row(t("Last synthetic check: {0}",result.report.verifiedAt)));
+            for(const check of result.report.checks)c.push(row(t("{0}: {1} ({2}/{3})",check.id,result.state==="CURRENT"?check.status:"NOT_TESTED",result.state==="CURRENT"?check.passed:0,check.total),check.status==="FAIL"?"warning":"info",undefined,"Synthetic owned component only; live tool routes remain NOT_TESTED."));
+        }
+        for(const surface of setupCoverage(result??{state:"MISSING"}).surfaces)c.push(row(t("Live {0}: {1}",surface.id,surface.status),"info",undefined,"Local synthetic component checks do not establish this live surface or a tool route."));
+    }
     if (current) {
         c.push(row(t("Report time: {0}", new Date(stamp).toISOString())));
         for (const id of SURFACES) {

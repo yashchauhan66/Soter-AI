@@ -258,3 +258,12 @@ The machine setting `soterai.lite.protectionCenter` defaults on and ignores repo
 Coverage distinguishes missing, invalid, unavailable, mismatched and stale packaged evidence. A matching report less than 24 hours old is labelled reported evidence, with its report time; it does not establish live tool routing or an independent boundary. Enabled settings and an online broker never become a passing score. Live verification remains NOT_TESTED until a separate actual self-check supplies evidence. Activity displays finite public metadata only and is withheld when its privacy/observation controls are off. Visible views refresh metadata periodically and on owner changes; no protected file content is opened for the list or badges.
 
 Native tree focus, theme icons and accessible labels use VS Code controls, with no added animations or custom sidebar HTML. English messages pass through a shared translation boundary. Human screen-reader and usability verification remain required; these controls do not establish OS isolation or protect unmanaged uploads.
+
+
+### Verify my setup: synthetic local checks
+
+Use **Verify my setup** under Protection Center → Coverage. It exercises the production output matcher/redactor with generated public and private controls. If this window already owns a healthy broker, it also runs the existing isolated loopback collector checks; it does not start a broker, change routing, launch an AI tool or scan real workspace files. A missing broker leaves that check NOT_TESTED.
+
+Results show the current artifact/configuration binding and last check time. Missing, partial, mismatched, cancelled, withdrawn or older-than-five-minute results cannot become a current PASS; a previous-session record is not reused as current evidence. Storage failure withholds the new result. PASS describes only the named synthetic component checks. All live surfaces and AI-tool routes remain NOT_TESTED/Uncovered here; no coverage score, real-agent or independent-review claim is created.
+
+`soterai.lite.setupVerification` is a restricted machine setting, enabled by default. Turning it off withdraws these checks and their presentation while retaining saved denies, approvals/recovery rules and existing broker ownership. No normal-profile install, login or extra software is required for the advertised local checks.

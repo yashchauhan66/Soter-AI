@@ -1,0 +1,88 @@
+﻿TAP version 13
+# Subtest: F30 complete production output controls pass with exact finite ids
+ok 1 - F30 complete production output controls pass with exact finite ids
+  ---
+  duration_ms: 3.5604
+  type: 'test'
+  ...
+# Subtest: F30 public positive-control failure cannot become green
+ok 2 - F30 public positive-control failure cannot become green
+  ---
+  duration_ms: 0.5017
+  type: 'test'
+  ...
+# Subtest: F30 duplicate/missing output checks cannot become green
+ok 3 - F30 duplicate/missing output checks cannot become green
+  ---
+  duration_ms: 0.2699
+  type: 'test'
+  ...
+# Subtest: F30 skipped or extra output metadata does not substitute for an oracle
+ok 4 - F30 skipped or extra output metadata does not substitute for an oracle
+  ---
+  duration_ms: 0.1969
+  type: 'test'
+  ...
+# Subtest: F30 complete actual gateway collector and six fixed controls pass
+ok 5 - F30 complete actual gateway collector and six fixed controls pass
+  ---
+  duration_ms: 0.2867
+  type: 'test'
+  ...
+# Subtest: F30 gateway statusPASS with failed public collector is FAIL
+ok 6 - F30 gateway statusPASS with failed public collector is FAIL
+  ---
+  duration_ms: 0.1875
+  type: 'test'
+  ...
+# Subtest: F30 partial/duplicate gateway result is NOT_TESTED
+ok 7 - F30 partial/duplicate gateway result is NOT_TESTED
+  ---
+  duration_ms: 0.2614
+  type: 'test'
+  ...
+# Subtest: F30 foreign getters cannot execute while parsing a result
+ok 8 - F30 foreign getters cannot execute while parsing a result
+  ---
+  duration_ms: 0.2378
+  type: 'test'
+  ...
+# Subtest: F30 finite report binds actual artifact/configuration and its timestamp
+ok 9 - F30 finite report binds actual artifact/configuration and its timestamp
+  ---
+  duration_ms: 3.5401
+  type: 'test'
+  ...
+# Subtest: F30 stale/future/mismatched evidence never returns CURRENT
+ok 10 - F30 stale/future/mismatched evidence never returns CURRENT
+  ---
+  duration_ms: 1.2455
+  type: 'test'
+  ...
+# Subtest: F30 malformed/extra/private stored fields are rejected
+ok 11 - F30 malformed/extra/private stored fields are rejected
+  ---
+  duration_ms: 0.3652
+  type: 'test'
+  ...
+# Subtest: F30 local component success never invents tool routing or unmanaged-surface coverage
+ok 12 - F30 local component success never invents tool routing or unmanaged-surface coverage
+  ---
+  duration_ms: 0.5817
+  type: 'test'
+  ...
+# Subtest: F30 missing raw component results remain explicitly NOT_TESTED
+ok 13 - F30 missing raw component results remain explicitly NOT_TESTED
+  ---
+  duration_ms: 0.2492
+  type: 'test'
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 13
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 32.3082

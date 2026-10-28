@@ -1,0 +1,32 @@
+﻿node.exe : node:internal/modules/run_main:123
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (node:internal/modules/run_main:123:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+    triggerUncaughtException(
+    ^
+
+Error: spawn EPERM
+    at ChildProcess.spawn (node:internal/child_process:420:11)
+    at Object.spawn (node:child_process:753:9)
+    at ensureServiceIsRunning 
+(C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\node_modules\esbuild\lib\main.js:2268:29)
+    at startSyncServiceWorker 
+(C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\node_modules\esbuild\lib\main.js:2474:19)
+    at Object.<anonymous> 
+(C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\node_modules\esbuild\lib\main.js:2515:3)
+    at Module._compile (node:internal/modules/cjs/loader:1730:14)
+    at Object..js (node:internal/modules/cjs/loader:1895:10)
+    at Module.load (node:internal/modules/cjs/loader:1465:32)
+    at Function._load (node:internal/modules/cjs/loader:1282:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14) {
+  errno: -4048,
+  code: 'EPERM',
+  syscall: 'spawn',
+  name: 'TransformError'
+}
+
+Node.js v22.16.0
