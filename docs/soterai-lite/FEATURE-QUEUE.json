@@ -9,9 +9,9 @@
   "planVersion": 1,
   "clientDate": "2026-10-13",
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
-  "scope": "F01-F10/F12-F25 scoped DONE; F11 optional absent NOT_TESTED/NOT_COVERED. F31a build-only DONE, parentF31 incomplete. F26c scoped DONE only after actual transition byte barrier. F27 selected next; F26a incomplete/native06USER_DEFERRED, F26b/F28-F32/V01-V05 remain. No rating/human/independent claim.",
+  "scope": "F01-F10/F12-F25 and F26c scoped DONE; F11 optional absent NOT_TESTED/NOT_COVERED. F27 scoped DONE only under actual source/transition byte barriers. F29 selected; F26a/native06 USER_DEFERRED, F26b/F28/F30/F31b/F32/V01-V05 remain incomplete. F31a build-only DONE, parentF31 incomplete. No rating/human/independent claim.",
   "implementationConcurrency": 1,
-  "activeFeature": "F27",
+  "activeFeature": "F29",
   "activeSubcard": null,
   "priorityAmendment": {
     "date": "2026-10-26",
@@ -908,16 +908,21 @@
     {
       "id": "F27",
       "title": "Extension self-hygiene.",
-      "status": "VERIFYING",
-      "result": "LOCAL_BYTE_BARRIERS_PENDING",
+      "status": "DONE",
+      "result": "PASS",
       "requires": [
         "F25"
       ],
       "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
       "startCondition": "Selected next by existing shorter-first order only after actual F26c transition-byte-proof01 PASS; no production before barrier.",
       "progressEvidence": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/acceptance-01.json",
-      "executionDecision": "Current1016/full4376zeroFAIL/compiler/backend/exactVSIX/content15fourruntime84/compiled27/nativeOwner22/affected21families537/console8/functional10/security17unchanged/withdrawal PASS. Scoped source and separate transition commits with exhaustive bytes required before F29. F26a native06 user-deferred.",
-      "acceptanceEvidence": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/acceptance-01.json"
+      "executionDecision": "Current1016/full4376zeroFAIL/backend143PASS1SKIP/exactVSIX/content/compiled27/native22/affected537/console8/functional10/security17unchanged/withdrawal PASS; actual source1004 raw-byte verified. Nine unmanaged baseline leaks and component-only global audit export remain.",
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/acceptance-01.json",
+      "flag": "soterai.lite.selfHygiene",
+      "sourceEvidenceCommit": "e772c2b0b8422e87638daccf48c3e37c93a3ace5",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/f27-source-byte-proof-01.json",
+      "transitionByteVerification": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/f27-transition-byte-proof-01.json",
+      "completionCondition": "Scoped DONE takes effect only after actual separate transition-byte-proof01 PASS; never accept unrelated F26a or later human gates."
     },
     {
       "id": "F28",
@@ -934,12 +939,13 @@
     {
       "id": "F29",
       "title": "One Protection Center.",
-      "status": "PLANNED",
-      "result": "NOT-RUN",
+      "status": "ACTIVE",
+      "result": "INCOMPLETE",
       "requires": [
         "F27"
       ],
-      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "startCondition": "Existing priority order selects F29 only after actual F27 source1004 and separate transition byte proof PASS. No production before the barrier."
     },
     {
       "id": "F30",
@@ -1069,12 +1075,13 @@
   "f26cLatestCheckpoint": {
     "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/f26c-source-byte-proof-01.json",
     "sha256": "3d5ae6f5d7885ae1a60cdfb4d4b506d318719e8a8d3f6aca373fe12a5e427959",
-    "status": "SOURCE_1696_BYTE_PASS_TRANSITION_PROOF_REQUIRED_BEFORE_F27",
+    "status": "SOURCE_1696_AND_TRANSITION_10_EXACT_BYTES_PASS",
     "native06": "F26a_USER_DEFERRED_NOT_RUN"
   },
   "f27LatestCheckpoint": {
-    "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/acceptance-01.json",
-    "sha256": "b4ff1f3a24f19c9e08868b1938793d52f676c87f0a66bc0309d3bcd64c500d7c",
-    "status": "PASS_SCOPED_F27_LOCAL_BYTE_BARRIERS_PENDING"
+    "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/f27-source-byte-proof-01.json",
+    "sha256": "3b8a1539dfbb0b6c0a89df15923c46bfcfaf5f39f5ce1ed47b7cc0647a99cd5d",
+    "status": "SOURCE_1004_EXACT_BYTES_PASS_SEPARATE_TRANSITION_REQUIRED_BEFORE_F29",
+    "transitionProof": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/f27-transition-byte-proof-01.json"
   }
 }
