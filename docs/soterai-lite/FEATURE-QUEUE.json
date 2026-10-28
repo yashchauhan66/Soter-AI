@@ -9,10 +9,10 @@
   "planVersion": 1,
   "clientDate": "2026-10-13",
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
-  "scope": "F01-F10/F12-F25/F26c/F27/F29 scoped DONE subject to exact recorded byte barriers; F11 optional absent NOT_TESTED/NOT_COVERED. F30 selected after F29 transition proof; F26a/native06 USER_DEFERRED, F26b/F28/F31b/F32/V01-V05 incomplete. F31a build-only DONE; parentF26/F31 incomplete. No human/independent/rating claim.",
+  "scope": "F01-F10/F12-F25/F26c/F27/F29/F30 scoped DONE subject to exact recorded byte barriers; F11 optional absent NOT_TESTED/NOT_COVERED. F26a selected but native06 explicitly USER_DEFERRED; F26b/F28/F31b/F32/V01-V05 incomplete. F31a build-only DONE; parentF26/F31 incomplete. No human/independent/rating claim.",
   "implementationConcurrency": 1,
-  "activeFeature": "F30",
-  "activeSubcard": null,
+  "activeFeature": "F26",
+  "activeSubcard": "F26a",
   "priorityAmendment": {
     "date": "2026-10-26",
     "authority": "User requested shorter independent features first and time-consuming work later",
@@ -873,7 +873,7 @@
             "parent prerequisites"
           ],
           "progressEvidence": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/progress-14.json",
-          "executionDecision": "Native06 deferred by explicit user answer on 2026-10-26. Fresh compiler15/full03/backend04/21-driver04/new attempt02 VSIX/content PASS; required native34/offline/20 affected families/withdrawal/commits and exact bytes remain pending. Do not run06 without later explicit approval. New user priority amendment permits independent work first; it does not complete F26a."
+          "executionDecision": "Selected after actual F30 source729+separate transition proof. Existing progress14 code/evidence preserved. F26a/native06 remains explicitly USER_DEFERRED by prior user answer; prepare a concrete current-artifact bounded proposal and request fresh explicit authorization before any native06 execution. Generic continue/F29 extras do not authorize it. No precommit acceptance or next dependent production card yet."
         },
         {
           "id": "F26b",
@@ -962,21 +962,25 @@
     {
       "id": "F30",
       "title": "Verify my setup.",
-      "status": "VERIFYING",
-      "result": "INCOMPLETE",
+      "status": "DONE",
+      "result": "PASS",
       "requires": [
         "F29"
       ],
       "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
       "startCondition": "Existing priority order selects F30 after actual F29 source1322 and separate transition byte proof PASS. No F30 production before barrier.",
       "progressEvidence": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/progress-06.json",
-      "executionDecision": "Declared F30 scoped gates PASS on current1036proof03/full4464zeroFAIL/backend143PASS1SKIP/exactVSIX142832a7/content86flags/native50+actualkeyboard/HC/motion/Edge3zeroViolations/affected166+functional10/security17unchanged/actualsafe withdrawal. Local scoped source+transition commits and exhaustive raw byte verification pending. All8 live surfaces and5 tools remain NOT_TESTED/Uncovered; no score. Manual accessibility/human/frameDOM limitations and9 unmanaged leaks persist. Failed initial Edge EOF remains unobserved/not regraded; fresh query admitted corrected bounded run with actual0+EOF. F26a06 USER_DEFERRED.",
+      "executionDecision": "F30 declared scoped gates PASS: current1036/full4464zeroFAIL/backend143PASS1SKIP/exactVSIX142832a7/native50+actualVerify/keys/HC/motion/Edge3zeroViolations/affected166+functional10/security17unchanged/withdrawal. Source4c2a5f0/729 exact paths verified. Manual accessibility/liveframeDOM/human/L6/9 unmanaged leaks retained; failed initialEdge originalEOF unobserved/not regraded. F26a06 USER_DEFERRED.",
       "flag": "soterai.lite.setupVerification",
       "acceptanceEvidence": {
         "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/acceptance-01.json",
         "bytes": 55823,
         "sha256": "5317501d7536e5df2a7b466fee284c2c4fba4a6da51990d96bc29d832f6f1b48"
-      }
+      },
+      "sourceEvidenceCommit": "4c2a5f0350ede2a1a4e8d8cc744936e122da89aa",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/f30-source-byte-proof-01.json",
+      "transitionByteVerification": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/f30-transition-byte-proof-01.json",
+      "completionCondition": "Scoped DONE takes effect only after actual separate transition-byte-proof01 PASS. All8 live surfaces and5 tools remain NOT_TESTED/Uncovered; no human/rating claim."
     },
     {
       "id": "F31",
@@ -1115,5 +1119,20 @@
     "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/acceptance-01.json",
     "bytes": 55823,
     "sha256": "5317501d7536e5df2a7b466fee284c2c4fba4a6da51990d96bc29d832f6f1b48"
+  },
+  "f30SourceByteBarrier": {
+    "status": "SOURCE_729_EXACT_BYTES_PASS_SEPARATE_TRANSITION_REQUIRED",
+    "commit": "4c2a5f0350ede2a1a4e8d8cc744936e122da89aa",
+    "proof": {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/f30-source-byte-proof-01.json",
+      "bytes": 237944,
+      "sha256": "291399a3c26857993278bc1bd7e33325702c06dec861a9f413d70619b8f453d5"
+    },
+    "acceptance": {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/acceptance-01.json",
+      "bytes": 55823,
+      "sha256": "5317501d7536e5df2a7b466fee284c2c4fba4a6da51990d96bc29d832f6f1b48"
+    },
+    "native06": "F26a_USER_DEFERRED_NOT_RUN"
   }
 }
