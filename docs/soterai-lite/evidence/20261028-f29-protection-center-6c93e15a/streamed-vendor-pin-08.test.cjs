@@ -1,0 +1,11 @@
+'use strict';
+const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
+const {verifyStreamedPin}=require('./streamed-vendor-pin-08.cjs');
+const directory=fs.mkdtempSync(path.join(__dirname,'streamed-pin-fixture-08-')),file=path.join(directory,'synthetic-public.bin'),sha=b=>crypto.createHash('sha256').update(b).digest('hex');
+const raw=Buffer.alloc(8*1024*1024+17,0x39);fs.writeFileSync(file,raw,{flag:'wx'});const row={path:file,bytes:raw.length,sha256:sha(raw)};
+test('actual multi-chunk public file matches while each read stays at most64KiB',()=>{const read=fs.readSync,sizes=[];fs.readSync=function(...args){sizes.push(args[3]);return Reflect.apply(read,this,args);};try{const result=verifyStreamedPin(row);assert.equal(result.bytes,raw.length);assert.equal(result.maximumReadBuffer,65536);assert(sizes.length>128);assert(Math.max(...sizes)<=65536);}finally{fs.readSync=read;}});
+test('same-length middle tampering refuses, exact original restored in fixture only',()=>{const f=fs.openSync(file,'r+');try{fs.writeSync(f,Buffer.from('X'),0,1,4000000);}finally{fs.closeSync(f);}try{assert.throws(()=>verifyStreamedPin(row),/hash differs/);}finally{fs.writeFileSync(file,raw);}});
+test('wrong exact byte length refuses before reading',()=>assert.throws(()=>verifyStreamedPin({...row,bytes:row.bytes-1})));
+test('wrong exact hash refuses after bounded reads',()=>assert.throws(()=>verifyStreamedPin({...row,sha256:'0'.repeat(64)}),/hash differs/));
+test('single-link guard refuses a real hard-linked synthetic file',()=>{const alias=path.join(directory,'synthetic-public-alias.bin');fs.linkSync(file,alias);assert.throws(()=>verifyStreamedPin(row),/single-link/);});
+test('zero-byte ordinary file validates exact empty digest with bounded EOF read',()=>{const empty=path.join(directory,'synthetic-empty.bin');fs.writeFileSync(empty,'',{flag:'wx'});assert.equal(verifyStreamedPin({path:empty,bytes:0,sha256:sha(Buffer.alloc(0))}).bytes,0);});

@@ -1,0 +1,45 @@
+﻿TAP version 13
+# Subtest: F29 review: initially visible native trees refresh activity without a visibility-change event
+not ok 1 - F29 review: initially visible native trees refresh activity without a visibility-change event
+  ---
+  duration_ms: 4170.4447
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261028-f29-protection-center-6c93e15a\\review-native-regressions-01.test.ts:2:3670'
+  failureType: 'testCodeFailure'
+  error: 'The actual adapter timer must refresh an initially visible activity tree.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261028-f29-protection-center-6c93e15a\review-native-regressions-01.test.ts:61:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F29 review: saved deny lock decoration matches the owner's NFC normalization
+not ok 2 - F29 review: saved deny lock decoration matches the owner's NFC normalization
+  ---
+  duration_ms: 426.3025
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261028-f29-protection-center-6c93e15a\\review-native-regressions-01.test.ts:2:4280'
+  failureType: 'testCodeFailure'
+  error: 'NFC-equivalent path enforced by the owner must retain its saved-deny lock decoration.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261028-f29-protection-center-6c93e15a\review-native-regressions-01.test.ts:77:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 0
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 19275.6318

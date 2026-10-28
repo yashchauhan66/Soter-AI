@@ -1,0 +1,156 @@
+{
+  "status": "BOUND_CURRENT_F29_AFFECTED_CONTROLS_NOT_EXECUTED",
+  "observedAt": "2026-10-28T12:10:18.305Z",
+  "binding": {
+    "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/native-binding-02.json",
+    "bytes": 27722,
+    "sha256": "9d9cf02b283fbc2211abb8e07f7ea116123ac4204aa816112c25f77d93b15078"
+  },
+  "sourceProof": {
+    "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/full-inputs-05.json",
+    "bytes": 208843,
+    "sha256": "0a8331e1fbe3b41f0153e7564ae9ee1c2ec25c77db8ec46196c4c6e280dc540f"
+  },
+  "scope": "Existing F29 workcard requires saved restrictions/consent, Activity and functional/security. Actual functional10 checks saved denies and consent; editor25 exercises private document/refusal/recovery; PS5119 exercises reviewed terminal setup/undo reached by fixed UI; actual F27 Activity22 covers the finite event owner and withdrawal. F29 itself adds native30, renderer/Edge are separate. Unchanged adapter/config-writer families are not newly claimed or transferred; later full verification gates remain required.",
+  "families": [
+    {
+      "id": "ps51",
+      "assertions": 19,
+      "phases": 2,
+      "helper": "affected-ps51-01.ps1",
+      "driver": {
+        "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/prebuilt-native-hosts-03/lite-ps51-host.js",
+        "bytes": 41881,
+        "sha256": "4ace212abaa62e358203f62a959751484f70f2ff596c3fd7601a3d3f35054a78"
+      }
+    },
+    {
+      "id": "editor",
+      "assertions": 25,
+      "phases": 2,
+      "helper": "affected-editor-01.ps1",
+      "driver": {
+        "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/prebuilt-native-hosts-03/lite-editor-host.js",
+        "bytes": 408042,
+        "sha256": "e3cbb70a89ffee3e2611c4d98e378a9824b19210c3bc0e7e8dbb48ae845a0510"
+      }
+    }
+  ],
+  "activity": {
+    "checks": 22,
+    "runner": {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/run-affected-activity-01.cjs",
+      "bytes": 10405,
+      "sha256": "2dc62429f5578a868808600f7881d9441f24dfa8524bb093abf36e89af071dc8"
+    },
+    "driver": {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/prebuilt-native-hosts-03/lite-f27-self-hygiene-host.js",
+      "bytes": 25190,
+      "sha256": "7f4a791e7026a04e5de2dd8e7bc12128498d6941b8a56810665ed92e19690d15"
+    }
+  },
+  "expectedNativeAffected": 66,
+  "functional": 10,
+  "security": 17,
+  "unmanagedBaseline": "8BLOCKED_SCOPED_9LEAK_CONFIRMED_NOT_UNIVERSAL_PROTECTION",
+  "outputs": [
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-preparation-pipe-ownership-01.ps1",
+        "bytes": 4180,
+        "sha256": "246b0ccdb2457fd80f560770b129a1fde67d5d4212e8eae200f965dffd69698c"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/affected-preparation-pipe-ownership-01.ps1",
+        "bytes": 4180,
+        "sha256": "246b0ccdb2457fd80f560770b129a1fde67d5d4212e8eae200f965dffd69698c"
+      }
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-preparation-functional10-driver-01.js",
+        "bytes": 532622,
+        "sha256": "b64a85f99d9c5c3194b2bd427822116b7c59f8565dc3fc5477c27b92208a8b3b"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/affected-preparation-functional10-driver-01.js",
+        "bytes": 532622,
+        "sha256": "b64a85f99d9c5c3194b2bd427822116b7c59f8565dc3fc5477c27b92208a8b3b"
+      }
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-preparation-security17-driver-01.js",
+        "bytes": 13372,
+        "sha256": "de3e734ece51d89adaa58caec792c5d39b142d9e88cd17b2cda312099d0d38c9"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/affected-preparation-security17-driver-01.js",
+        "bytes": 13372,
+        "sha256": "de3e734ece51d89adaa58caec792c5d39b142d9e88cd17b2cda312099d0d38c9"
+      }
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-native-binding-01.ps1",
+        "bytes": 5526,
+        "sha256": "e0c54d0581222c801d5e90cd6335ca5294b3ada6e5ef7e49b95ada737bc559c9"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/affected-native-binding-01.ps1",
+        "bytes": 5526,
+        "sha256": "c27abc21c23900284dcedefd4e2c937732cce87495d52e1c87738756d1112699"
+      }
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-ps51-01.ps1",
+        "bytes": 18581,
+        "sha256": "1ef656e0388226b63a1781312c5c04d4fad0ca425b42ef3045c63820f7efa58f"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/affected-ps51-01.ps1",
+        "bytes": 18581,
+        "sha256": "b2a301df3e0b5cf8f45cc343bd1a268ffcec7158a6f27cd4ff1616da446da125"
+      }
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-editor-01.ps1",
+        "bytes": 18585,
+        "sha256": "3563ecbdb0c986d6e3bba91b743c2c0b346d9de050e35b2e250f1491f3f9c014"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/affected-editor-01.ps1",
+        "bytes": 18585,
+        "sha256": "9c57adc08155a6320f3f3c7917a170be93c928c084f9c200052570f635cff0e6"
+      }
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-functional-security-01.ps1",
+        "bytes": 9680,
+        "sha256": "b01e2106ea3523c4235478a73c2080c6edd23e82d1b4aa1e4c8064438d50087a"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/affected-functional-security-01.ps1",
+        "bytes": 9680,
+        "sha256": "8de70a6de9d10058f1e397623e156b21badba92a066b0596ffc81ef1c9b213cc"
+      }
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/run-f27-native-01.cjs",
+        "bytes": 9945,
+        "sha256": "9a46fbf32be101b7c07b4492dcd48606f9685b5208a96b6543be6bf35507621e"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/run-affected-activity-01.cjs",
+        "bytes": 10405,
+        "sha256": "2dc62429f5578a868808600f7881d9441f24dfa8524bb093abf36e89af071dc8"
+      }
+    }
+  ],
+  "native06": "F26a_USER_DEFERRED_NOT_RUN",
+  "signalsRequested": 0
+}

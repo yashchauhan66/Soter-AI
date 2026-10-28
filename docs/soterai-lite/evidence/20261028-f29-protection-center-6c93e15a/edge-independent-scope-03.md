@@ -1,0 +1,7 @@
+# Independent Edge gate, before its first run
+
+The original work card requires both actual native keyboard/HC/motion and real headless Edge axe. The Edge fixture initially coupled them by requiring a complete renderer PASS. This added coupling is unnecessary: actual owned HTML and host theme were already captured before the keyboard failure. Running the independent Edge check does not waive, repair or promote that failure. F29 stays open until the required keyboard flow also passes under an authorized run.
+
+Edge03 accepts only the two finite known renderer result statuses, requires the actually observed HC and reduced-motion markers, and retains source/VSIX/runtimes/ready-SHA/HTML/theme/vendor/loopback/profile guards and all original Edge assertions. It records the native renderer status and still-open keyboard gate in its own result. Exact HTML/CSP remain unchanged; any workbench CSS hosting layer is explicitly labeled. No live webview frame, extension-button action execution, human screen reader or usability claim comes from this headless snapshot audit.
+
+This is the first required Edge audit, not another F29 native fixture improvement. It uses a new synthetic D profile, direct pinned Edge child, attach-only CDP, loopback refusal proxy, protocol Browser.close and actual natural closure/EOF, with no process signal, download, login, normal profile or OS change. It runs only after existing native owners actually close. F26a/native06 remains deferred. Native extra05 remains separately approval-gated.

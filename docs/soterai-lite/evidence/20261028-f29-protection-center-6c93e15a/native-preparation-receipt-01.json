@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "feature": "F29",
+  "status": "PREPARED_NOT_NATIVE_EXECUTED",
+  "assertions": { "primary": 25, "restart": 5 },
+  "nativeRuns": 0,
+  "productImports": false,
+  "productionChangesByAuthor": 0,
+  "signals": 0,
+  "checks": [
+    {
+      "status": "SANDBOX_SPAWN_REFUSED_BEFORE_ESBUILD_SERVICE",
+      "command": "node docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/validate-native-syntax-01.cjs",
+      "error": { "message": "spawn EPERM", "code": "EPERM", "errno": -4048, "syscall": "spawn" },
+      "nativeLaunch": false
+    },
+    {
+      "status": "PASS_TS_SYNTAX_ONLY_NOT_TYPECHECKED_OR_EXECUTED",
+      "bytes": 52146,
+      "sha256": "d77baf85401df7c735c413e22c078e90fdc7295bbf6e0cda3360b95897ec0621",
+      "note": "Observed permitted local esbuild transform before final archive guards; historical source pin only."
+    },
+    {
+      "status": "PASS_TS_SYNTAX_ONLY_NOT_TYPECHECKED_OR_EXECUTED",
+      "bytes": 52376,
+      "sha256": "a6e4ee2a2e84db4e5fd8b94375ca6b8661e4135bff4d9a3f6376e9f7fa670d75",
+      "note": "Observed permitted local esbuild transform before final cleanup driverFailure propagation; historical source pin only."
+    },
+    {
+      "status": "PASS_TS_SYNTAX_ONLY_NOT_TYPECHECKED_OR_EXECUTED",
+      "bytes": 52418,
+      "sha256": "b3cb6db95101e3fdeb14bb2a3f773526b6c342da9967b9e5863fb90fd812627d",
+      "note": "Final observed local esbuild transform; fixture has not been typechecked, built into a bound driver or executed."
+    }
+  ],
+  "requiredBeforeNative": [
+    "Fresh final syntax and isolated fixture typecheck/build",
+    "Exact current production/source/VSIX/runtime/vendor/driver guards",
+    "H27-compatible real-context beforeActivate/activate/run bootstrap review",
+    "Retained real Code closure and both EOF; no process signals",
+    "Root assertion IDs/status/raw result review; no old VSIX native transfer"
+  ]
+}

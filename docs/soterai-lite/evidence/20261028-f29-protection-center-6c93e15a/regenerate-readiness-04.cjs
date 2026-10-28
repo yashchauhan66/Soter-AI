@@ -1,0 +1,9 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),{pathToFileURL}=require('node:url'),crypto=require('node:crypto'),assert=require('node:assert/strict');
+const repo=path.resolve(__dirname,'../../../..'),own=n=>path.join(__dirname,n),sha=b=>crypto.createHash('sha256').update(b).digest('hex'),read=f=>JSON.parse(fs.readFileSync(f,'utf8').replace(/^\uFEFF/,''));
+(async()=>{
+ const proof=read(own('full-inputs-04.json'));for(const row of [...proof.files,proof.auxiliaryFixture]){const raw=fs.readFileSync(path.join(repo,row.path));assert.equal(raw.length,row.bytes);assert.equal(sha(raw),row.sha256);}
+ const target=path.join(repo,'docs/vscode-extension-readiness.md'),before=fs.readFileSync(target);fs.writeFileSync(own('readiness-before-current-dependency-refresh-04.md'),before,{flag:'wx'});
+ await import(pathToFileURL(path.join(repo,'packages/vscode-extension/scripts/generate-readiness.mjs')).href);
+ const after=fs.readFileSync(target);assert.notEqual(sha(after),sha(before));const record={status:'GENERATED_DOCUMENT_REFRESHED_ORIGINAL_CHECK_REQUIRES_RERUN',observedAt:new Date().toISOString(),target:'docs/vscode-extension-readiness.md',before:{bytes:before.length,sha256:sha(before)},after:{bytes:after.length,sha256:sha(after)},cause:'Full03 4421/4416PASS1FAIL4SKIP; sole failure stale exact generated readiness after preserved guard-core source edits.',assertions:'No test or runtime behavior changed',priorRefresh:'03 retained; failed at Windows absolute-path ESM import before generator mutation. 04 uses explicit file URL.',signalsRequested:0};fs.writeFileSync(own('readiness-regeneration-04.json'),JSON.stringify(record,null,2)+'\n',{flag:'wx'});console.log(JSON.stringify(record));
+})().catch(error=>{console.error(String(error?.stack??error).slice(0,3000));process.exitCode=1;});

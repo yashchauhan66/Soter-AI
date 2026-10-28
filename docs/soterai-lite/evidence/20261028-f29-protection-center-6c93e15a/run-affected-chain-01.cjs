@@ -1,0 +1,21 @@
+// Current-artifact affected checks only; no F26a/native06 or next feature.
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto'),assert=require('node:assert/strict');
+const {guard,repo,own,read}=require('./current-native-guard-02.cjs'),{phase}=require('../20261027-f27-self-hygiene-8c16e402/native-owned-phase-01.cjs');
+const sha=b=>crypto.createHash('sha256').update(b).digest('hex'),quote=s=>"'"+s.replaceAll("'","''")+"'",json=(n,v)=>fs.writeFileSync(own(n),JSON.stringify(v,null,2)+'\n',{flag:'wx'}),ps='C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe',results=[];
+async function step(name,args,program=ps){
+ await guard();const output=own(name+'.txt');assert(!fs.existsSync(output));const command='& '+quote(path.join(repo,'docs/soterai-lite/evidence/20261013-l0-resume-88fb9432/run-check.ps1'))+' -FilePath '+quote(program)+' -ArgumentList @('+args.map(quote).join(',')+') -OutputFile '+quote(output)+' -WorkingDirectory '+quote(repo);
+ const r=await phase({executable:ps,args:['-NoLogo','-NoProfile','-NonInteractive','-ExecutionPolicy','Bypass','-EncodedCommand',Buffer.from(command,'utf16le').toString('base64')],cwd:repo,env:process.env,run:__dirname,name,profile:'NEW_SYNTHETIC_D_AFFECTED_PROFILE_ONLY',deadlineMs:1200000});
+ const receipt=read(output+'.result.json');assert.equal(sha(fs.readFileSync(output)),receipt.sha256.toLowerCase());const row={name,status:r.closed.code===0&&r.closed.signal===null&&receipt.exitCode===0&&!r.deadline&&!r.error&&!r.overflow&&r.close.stdoutEOF&&r.close.stderrEOF?'PASS_CLOSED_WRAPPER_AND_CANONICAL_RECEIPT':'FAIL_OR_INCOMPLETE_NO_LATER_PHASE',actualClose:true,wrapperExit:r.closed.code,innerExit:receipt.exitCode,signal:r.closed.signal,stdoutEOF:r.close.stdoutEOF,stderrEOF:r.close.stderrEOF,deadlineExceeded:r.deadline,signalsRequested:0};results.push(row);json(name+'-verification.json',row);assert.equal(row.status,'PASS_CLOSED_WRAPPER_AND_CANONICAL_RECEIPT');await guard();
+}
+const keep=setInterval(()=>{},1000);
+(async()=>{
+ const previous=read(own('f29-native-chain-result-04.json'));assert(previous.actualClose&&previous.stdoutEOF&&previous.stderrEOF&&previous.signalsRequested===0);const actual=read(own('f29-protection-center-native-20261028T123619Z-44aa23dd/native-api-summary.json'));assert.equal(actual.nativeChecks,30);assert.equal(actual.status,'PASS_SCOPED_ACTUAL_NATIVE_API_30_RENDERER_SEPARATE');
+ const binding=await guard(),manifest=read(own('affected-materialization-01.json')),host=read(path.join(repo,binding.hostReview.path)).currentHost.executable.path;assert.equal(binding.vsix.sha256,'47dfb6a3f475f53b7bb5ca4a21f3ada524a1a6e64622c90f1325e529fa85b253');
+ json('affected-chain-start-01.json',{status:'STARTED_NOT_COMPLETED_RENDERER_GATE_REMAINS_OPEN',pid:process.pid,observedAt:new Date().toISOString(),native06:'F26a_USER_DEFERRED_NOT_RUN',signalsRequested:0});
+ const artifact=['-VsixPath',path.join(repo,binding.vsix.path),'-ExpectedVsixSha256',binding.vsix.sha256,'-ExpectedBundleSha256',binding.frontendSha256];
+ for(const family of manifest.families)await step('affected-'+family.id+'-run-01',['-NoLogo','-NoProfile','-NonInteractive','-ExecutionPolicy','Bypass','-File',own(family.helper),'-CodePath',host,...artifact,'-HostTestsPath',path.join(repo,family.driver.path),'-ExtensionRoot',path.join(repo,binding.extractedRoot)]);
+ await step('affected-activity-run-01',[own('run-affected-activity-01.cjs')],process.execPath);
+ await step('affected-functional-security-run-01',['-NoLogo','-NoProfile','-NonInteractive','-ExecutionPolicy','Bypass','-File',own('affected-functional-security-01.ps1'),'-CodePath',host,...artifact,'-InspectionName','02']);
+ json('affected-chain-result-01.json',{status:'AFFECTED_WRAPPERS_PASS_ROOT_AGGREGATION_PENDING_RENDERER_GATE_STILL_REQUIRED',observedAt:new Date().toISOString(),results,expectedNativeChecks:66,functionalExpected:10,securityExpected:17,vsixSha256:binding.vsix.sha256,native06:'F26a_USER_DEFERRED_NOT_RUN',signalsRequested:0});
+})().catch(error=>{json('affected-chain-failure-01.json',{status:'FAIL_OR_INCOMPLETE_NO_AUTO_RETRY_NO_LATER_PHASE',observedAt:new Date().toISOString(),results,errorName:error instanceof Error?error.name:'UnknownFailure',message:String(error?.message).slice(0,400),signalsRequested:0});process.exitCode=1;}).finally(()=>clearInterval(keep));

@@ -15,6 +15,8 @@ import { ControlPanelViewProvider } from "./webview/ControlPanelViewProvider";
 import { TelemetryManager } from "./telemetry";
 import { emitOwnedDiagnostic } from "../../core/src/OwnedSinkMetadata";
 import { selfHygieneEnabled } from "./self-hygiene/SelfHygieneFlags";
+import { registerProtectionCenter, type ProtectionCenterHandle } from "./protection-center/ProtectionCenter";
+import { protectionCenterEnabled } from "./protection-center/ProtectionCenterFlags";
 import { BrokerManager, setBrokerManager } from "./broker/BrokerManager";
 import { autoStartBroker, RETRY_START } from "./broker/autoStart";
 import { registerBrokerCommands } from "./broker/commands";
@@ -185,6 +187,7 @@ export function activate(context: vscode.ExtensionContext): void {
     const projectRiskProvider = new RiskTreeProvider("soterai-project-risk");
     const latestFindingsProvider = new RiskTreeProvider("soterai-latest-findings");
     const policyStatusProvider = new RiskTreeProvider("soterai-policy-status");
+    let protectionCenter: ProtectionCenterHandle | undefined;
 
     // Consolidated Control Panel — single sidebar surface for every protection
     // toggle (Safe Mode, Protected Workspace, Live Scan, Sentinel, MCP Firewall)
@@ -213,11 +216,13 @@ export function activate(context: vscode.ExtensionContext): void {
         if (DashboardPanel.currentPanel) DashboardPanel.currentPanel.refresh();
         if (EnterpriseDashboard.currentPanel) EnterpriseDashboard.currentPanel.refresh();
         controlPanelProvider.refresh();
+        void protectionCenter?.refresh().catch(() => {});
         void updateStatusBar();
     };
 
     registerAIBoundaryCommands(context);
     const managedReader = registerProjectPrivacyCommands(context);
+    protectionCenter = registerProtectionCenter(context, { sentinel, brokerState: () => protectionState.current.facts.broker });
     registerPublicWorkspaceCommands(context);
     registerSyntheticPreviewCommands(context);
     registerCommands(context, refreshViews);
@@ -416,7 +421,7 @@ export function activate(context: vscode.ExtensionContext): void {
 
     statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
     // One click → the consolidated Control Panel, where every toggle lives.
-    statusBarItem.command = "soterai.openControlPanel";
+    statusBarItem.command = protectionCenterEnabled() ? "soterai.openProtectionCenter" : "soterai.openControlPanel";
     context.subscriptions.push(statusBarItem);
     updateStatusBar();
     statusBarItem.show();
@@ -582,13 +587,15 @@ async function updateStatusBar(): Promise<void> {
             line("AI Safe Mode", safeMode?.enabled ? `on${safeMode.level ? ` (${safeMode.level})` : ""}${brokerRunning ? "" : " — not enforced while broker stopped"}` : "off"),
             line("AI Memory", memoryActive ? "active" : "idle"),
             "",
-            "$(list-selection) Click to open the SoterAI Control Panel.",
+            protectionCenterEnabled() ? "$(list-selection) Click to open the Protection Center. Live verification is separate from setup." : "$(list-selection) Click to open the SoterAI Control Panel.",
         ].join("\n\n"),
     );
     tip.isTrusted = true;
     tip.supportThemeIcons = true;
 
     statusBarItem.text = text;
+    statusBarItem.command = protectionCenterEnabled() ? "soterai.openProtectionCenter" : "soterai.openControlPanel";
+    statusBarItem.accessibilityInformation = { label: protectionCenterEnabled() ? "SoterAI Protection Center. Review protected items, activity and coverage." : "SoterAI Control Panel", role: "button" };
     statusBarItem.tooltip = tip;
     statusBarItem.backgroundColor = background;
 }

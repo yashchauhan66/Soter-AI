@@ -1,0 +1,12 @@
+'use strict';
+const fs=require('node:fs'),assert=require('node:assert/strict');const {own,sha,read}=require('./current-native-guard-03.cjs');
+let source=fs.readFileSync(own('accessibility-binding-01.cjs'),'utf8');
+const from='for (const row of inventory.pins) pin(row, { singleLink: !path.isAbsolute(row.path) || inside(root, row.path) });';
+assert.equal(source.split(from).length-1,1);
+source=source.replace('"use strict";','"use strict";\nconst {verifyStreamedPin}=require("./streamed-vendor-pin-08.cjs");').replace(from,'for (const row of inventory.pins) verifyStreamedPin(row, { singleLink: !path.isAbsolute(row.path) || inside(root, row.path) });');
+fs.writeFileSync(own('accessibility-binding-02.cjs'),source,{flag:'wx'});
+const current=require('./accessibility-binding-02.cjs'),{verifyStreamedPin}=require('./streamed-vendor-pin-08.cjs');
+const bound=current.admit(own('renderer-binding-07.json'),'CODE_RENDERER');
+const rows=bound.inventory.pins.map(row=>{const result=verifyStreamedPin(row,{singleLink:!require('node:path').isAbsolute(row.path)||current.inside(current.root,row.path)});return{path:row.path,bytes:result.bytes,sha256:result.sha256,maximumReadBuffer:result.maximumReadBuffer};});
+const result={status:'PASS_READ_ONLY_CURRENT_FULL_ADMISSION_ALL11_VENDOR_PINS_STREAMED_NO_HOST_BROWSER_LAUNCH',observedAt:new Date().toISOString(),sourceCount:1024,vsix:bound.b.vsix,allVendorPins:rows,maximumVendorBuffer:65536,originalFailure:{stage:'inventory.pins verification at accessibility-binding01 line74',error:'UNKNOWN: unknown error, read',exactFile:'UNESTABLISHED',cause:'UNESTABLISHED; full read allocates entire file, including357676360-byte Edge DLL. Bounded reads remove this allocation but do not prove the original OS error cause.'},priorFixture07:'2PASS4FAIL; Windows lstat.dev0 differs from fstat.dev volume number.08 compares path stats with path and descriptor stats with descriptor, retaining all original path/stat guards plus fd stability.',componentChecks:6,native06:'F26a_USER_DEFERRED_NOT_RUN',signalsRequested:0};
+fs.writeFileSync(own('streamed-admission-result-08.json'),JSON.stringify(result,null,2)+'\n',{flag:'wx'});console.log(JSON.stringify({status:result.status,vendorFiles:rows.length,maximumVendorBuffer:65536,productionChanged:false}));

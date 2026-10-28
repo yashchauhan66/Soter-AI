@@ -1,0 +1,174 @@
+﻿TAP version 13
+# Subtest: F29 presentation flag uses literal machine/global/default and ignores repository overrides
+ok 1 - F29 presentation flag uses literal machine/global/default and ignores repository overrides
+  ---
+  duration_ms: 42.0311
+  type: 'test'
+  ...
+# Subtest: F29 registers three actual native tree providers and one decoration provider
+ok 2 - F29 registers three actual native tree providers and one decoration provider
+  ---
+  duration_ms: 985.2484
+  type: 'test'
+  ...
+# Subtest: F29 native rows expose keyboard command and accessibility label without HTML
+ok 3 - F29 native rows expose keyboard command and accessibility label without HTML
+  ---
+  duration_ms: 15.9244
+  type: 'test'
+  ...
+# Subtest: F29 native action invokes finite existing owner and preserves cancellation
+ok 4 - F29 native action invokes finite existing owner and preserves cancellation
+  ---
+  duration_ms: 23.7672
+  type: 'test'
+  ...
+# Subtest: F29 presentation off prevents native focus and clears old rows
+ok 5 - F29 presentation off prevents native focus and clears old rows
+  ---
+  duration_ms: 17.5772
+  type: 'test'
+  ...
+# Subtest: F29 native disposal clears provider rows and command registrations
+ok 6 - F29 native disposal clears provider rows and command registrations
+  ---
+  duration_ms: 12.6363
+  type: 'test'
+  ...
+# Subtest: F29 sidebar restriction uses the existing owner's file picker without forwarding a selection
+not ok 7 - F29 sidebar restriction uses the existing owner's file picker without forwarding a selection
+  ---
+  duration_ms: 26.3752
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\protectionCenter.native.test.ts:2:6093'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+    +   status: 'FAILED'
+    -   status: 'CANCELLED'
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    status: 'CANCELLED'
+  actual:
+    status: 'FAILED'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\protectionCenter.native.test.ts:24:416)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F29 session off refuses actions and avoids state reads
+ok 8 - F29 session off refuses actions and avoids state reads
+  ---
+  duration_ms: 81.417
+  type: 'test'
+  ...
+# Subtest: F29 session dispatches finite command with no caller path or approval arguments
+ok 9 - F29 session dispatches finite command with no caller path or approval arguments
+  ---
+  duration_ms: 15.1288
+  type: 'test'
+  ...
+# Subtest: F29 session ignores arbitrary command objects and inherited identifiers
+ok 10 - F29 session ignores arbitrary command objects and inherited identifiers
+  ---
+  duration_ms: 9.8991
+  type: 'test'
+  ...
+# Subtest: F29 thrown backend text becomes fixed failed outcome
+ok 11 - F29 thrown backend text becomes fixed failed outcome
+  ---
+  duration_ms: 6.8366
+  type: 'test'
+  ...
+# Subtest: F29 undefined backend response never acknowledges saved protection
+ok 12 - F29 undefined backend response never acknowledges saved protection
+  ---
+  duration_ms: 6.5167
+  type: 'test'
+  ...
+# Subtest: F29 arbitrary or accessor-backed backend status cannot become acknowledged success
+ok 13 - F29 arbitrary or accessor-backed backend status cannot become acknowledged success
+  ---
+  duration_ms: 5.0773
+  type: 'test'
+  ...
+# Subtest: F29 duplicate action while owner review is pending refuses
+ok 14 - F29 duplicate action while owner review is pending refuses
+  ---
+  duration_ms: 6.1316
+  type: 'test'
+  ...
+# Subtest: F29 an earlier slow refresh cannot overwrite a later snapshot
+ok 15 - F29 an earlier slow refresh cannot overwrite a later snapshot
+  ---
+  duration_ms: 13.7031
+  type: 'test'
+  ...
+# Subtest: F29 opt-out then opt-in invalidates a held old refresh
+ok 16 - F29 opt-out then opt-in invalidates a held old refresh
+  ---
+  duration_ms: 9.2667
+  type: 'test'
+  ...
+# Subtest: F29 disposal prevents held refresh and action completion from publishing
+ok 17 - F29 disposal prevents held refresh and action completion from publishing
+  ---
+  duration_ms: 7.0832
+  type: 'test'
+  ...
+# Subtest: F29 policy failure replaces cached paths with unavailable state
+ok 18 - F29 policy failure replaces cached paths with unavailable state
+  ---
+  duration_ms: 4.3729
+  type: 'test'
+  ...
+# Subtest: F29 restricted workspace permits only view/revoke actions
+ok 19 - F29 restricted workspace permits only view/revoke actions
+  ---
+  duration_ms: 3.0558
+  type: 'test'
+  ...
+# Subtest: F29 actual safe-read outcomes stay finite without retaining returned preview text
+not ok 20 - F29 actual safe-read outcomes stay finite without retaining returned preview text
+  ---
+  duration_ms: 18.2822
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\protectionCenter.session.test.ts:2:7950'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+    +   status: 'UNVERIFIED'
+    -   status: 'ALLOWED_ONCE'
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    status: 'ALLOWED_ONCE'
+  actual:
+    status: 'UNVERIFIED'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\protectionCenter.session.test.ts:19:332)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..20
+# tests 20
+# suites 0
+# pass 18
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 7979.0038

@@ -16,10 +16,10 @@
 
 | Measure | Count |
 | --- | --- |
-| Commands declared and registered | 285 |
+| Commands declared and registered | 288 |
 | Visible in the palette by default | 17 |
 | Behind `soterai.showAllCommands` | 238 |
-| Hidden from the palette (aliases, reports, internal) | 30 |
+| Hidden from the palette (aliases, reports, internal) | 33 |
 
 Hidden commands remain **registered**: a keybinding, task or another
 extension's `executeCommand` that references one keeps working. They are
@@ -30,7 +30,7 @@ guess which one acts.
 
 | Surface | Detail |
 | --- | --- |
-| Non-palette menu groups | editor/context, soterai.editorContext, explorer/context, soterai.explorerContext, scm/title, view/title |
+| Non-palette menu groups | editor/context, soterai.editorContext, explorer/context, soterai.explorerContext, scm/title, view/title, view/item/context |
 | Keybindings | 2 |
 | View welcome messages | 4 |
 | Walkthrough steps | 3 |
@@ -50,9 +50,9 @@ what an agent does on its own.
 
 | Measure | Count |
 | --- | --- |
-| Settings declared | 89 |
-| `machine`-scoped (a repo cannot set them) | 84 |
-| Restricted in untrusted workspaces | 84 |
+| Settings declared | 90 |
+| `machine`-scoped (a repo cannot set them) | 85 |
+| Restricted in untrusted workspaces | 85 |
 | Pinnable by an administrator (`policy`) | 8 |
 
 ## Detection engine
@@ -71,8 +71,8 @@ what an agent does on its own.
 | `PromptInjectionLiteDetector` | 36 |
 | `RepoInstructionPoisoningDetector` | 9 |
 | `SecretDetector` | 36 |
-| `TerminalCommandRiskDetector` | 21 |
-| **Total** | **181** |
+| `TerminalCommandRiskDetector` | 22 |
+| **Total** | **182** |
 
 All 13 detectors are deterministic regex/heuristic rules, bundled inline.
 **No ML model ships in the VSIX.** `onnxruntime` appears zero times in

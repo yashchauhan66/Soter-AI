@@ -1,0 +1,65 @@
+{
+  "status": "STATIC_INSTALLED_VENDOR_DEBUG_TRANSPORT_REVIEW_NOT_NATIVE_PASS",
+  "observedAt": "2026-10-28T12:07:52.813Z",
+  "main": {
+    "path": "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\e646868227\\resources\\app\\out\\mainImpl.js",
+    "bytes": 1359185,
+    "sha256": "b085bba2baf38d8131c4fc14738d4363d1cdb179424697deb0c6c540e4f2439b"
+  },
+  "playwright": {
+    "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\playwright-core\\lib\\coreBundle.js",
+    "bytes": 3352341,
+    "sha256": "6be5c2ea035554e9b184b1dbc7aa5e7f1fb428dd1b5c202022858dcfae9bee27"
+  },
+  "witnesses": [
+    {
+      "term": "remote-debugging-port",
+      "offset": 1352681,
+      "present": true,
+      "excerpt": "orce-color-profile\",\"disable-lcd-text\",\"proxy-bypass-list\",\"remote-debugging-port\"];process.platform===\"linux\"&&(n.push(\"force-renderer-accessibility\"),n.push(\"password-store\"));let e=[\"enable-proposed-api\",\"log-level\",\"use-inmemor"
+    },
+    {
+      "term": "remote-debugging-address",
+      "offset": -1,
+      "present": false
+    },
+    {
+      "term": "remote-allow-origins",
+      "offset": -1,
+      "present": false
+    }
+  ],
+  "transport": [
+    {
+      "offset": 1946673,
+      "excerpt": "    /* hadRedirects */\n            );\n          }\n          return transport;\n        } catch (error) {\n          await transport.closeAndWait();\n          throw error;\n        }\n      }\n      send(message) {\n        this._ws.send(JSON.stringify(message));\n      }\n      close() {\n        this._progress?.log(`<ws disconnecting> $"
+    },
+    {
+      "offset": 2075700,
+      "excerpt": "}.\n${remoteDebuggingHint(channel)}`);\n          throw e;\n        }\n        const closeAndWait = async () => await chromeTransport.closeAndWait();\n        return this._connectOverCDPImpl(progress2, chromeTransport, closeAndWait, options, onClose);\n      }\n      async _connectOverCDPImpl(progress2, transport, closeAndWait, options"
+    },
+    {
+      "offset": 2075784,
+      "excerpt": "seAndWait = async () => await chromeTransport.closeAndWait();\n        return this._connectOverCDPImpl(progress2, chromeTransport, closeAndWait, options, onClose);\n      }\n      async _connectOverCDPImpl(progress2, transport, closeAndWait, options, onClose) {\n        let artifactsDir;\n        const tempDirectories = [];\n        i"
+    },
+    {
+      "offset": 2075879,
+      "excerpt": "DPImpl(progress2, chromeTransport, closeAndWait, options, onClose);\n      }\n      async _connectOverCDPImpl(progress2, transport, closeAndWait, options, onClose) {\n        let artifactsDir;\n        const tempDirectories = [];\n        if (options.artifactsDir) {\n          artifactsDir = options.artifactsDir;\n        } else {\n    "
+    },
+    {
+      "offset": 2076470,
+      "excerpt": "b = onClose;\n          onClose = void 0;\n          await cb?.();\n        };\n        const doClose = async () => {\n          await closeAndWait();\n          await doCleanup();\n        };\n        try {\n          const browserProcess = { close: doClose, kill: doClose };\n          const persistent = {\n            noDefaultViewport: "
+    },
+    {
+      "offset": 2078298,
+      "excerpt": "ogsCollector());\n          const session2 = connection.rootSession;\n          const worker = new Worker(this, \"\", () => transport.closeAndWait());\n          session2.on(\"Runtime.executionContextCreated\", (event) => {\n            const isDefault = event.context.auxData?.isDefault;\n            if (isDefault === false) {\n          "
+    },
+    {
+      "offset": 2079545,
+      "excerpt": "l(\"Runtime.runIfWaitingForDebugger\");\n          return worker;\n        } catch (error) {\n          await progress2.race(transport.closeAndWait().catch(() => {\n          }));\n          throw error;\n        }\n      }\n      _createDevTools() {\n        const directory = registry.findExecutable(\"chromium\").directory;\n        return d"
+    }
+  ],
+  "scope": "Exact Code CLI/browser debug flag witnesses and attached-CDP transport code only; actual numeric-loopback listener/PID/profile/keys still require owned runtime checks.",
+  "native": "NOT_RUN",
+  "signalsRequested": 0
+}

@@ -8,6 +8,7 @@ import { DashboardPanel } from "./webview/DashboardPanel";
 import { RuntimePolicyEngine, redactForSharing, isSensitiveFilePath, type Finding, type ProtectionMode } from "@soterai/guard-core";
 import { escapeHtml, getNonce } from "./firewall/util";
 import { applySelectionBoundary } from "./ai-boundary/BoundarySnapshot";
+import { protectionCenterEnabled } from "./protection-center/ProtectionCenterFlags";
 
 const execFileAsync = promisify(execFile);
 
@@ -494,6 +495,7 @@ export function registerCommands(context: vscode.ExtensionContext, refreshViews:
             DashboardPanel.createOrShow(context.extensionUri);
         }),
         vscode.commands.registerCommand("soterai.openControlPanel", async () => {
+            if (protectionCenterEnabled()) return vscode.commands.executeCommand("soterai.openProtectionCenter");
             // Reveal the consolidated Control Panel webview in the SoterAI sidebar.
             await vscode.commands.executeCommand("soterai-control-panel.focus");
         })

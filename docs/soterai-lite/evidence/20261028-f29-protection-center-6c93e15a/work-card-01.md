@@ -1,0 +1,15 @@
+# F29 — One Protection Center
+
+Existing IMPLEMENTATION-PLAN F29 / original L2. Frozen catalog44 remains unchanged: presentation of LS01–44, with no new coverage score or protection authority. Scheduling remains F29→F30→deferred F26a→F26b→F28→F31b→F32 and V01–V05.
+
+Prerequisite F27: source e772c2b0b8422e87638daccf48c3e37c93a3ace5 /1004 exact paths and transition28323cdc1f8adb40fc0ca629b738adee0170a595 /13 exact paths, zero mismatches, empty index. F26a/native06 remains explicitly deferred.
+
+Scope: three native sidebar trees (Protected items, Activity, Coverage), existing single status item, Explorer action and explicit-rule lock decorations. Show bounded saved explicit restrictions without opening protected file contents; retain existing policy as sole authority. Coverage uses current packaged identity/evidence, never settings as PASS; stale/missing/mismatched/outage/untrusted states remain visible. Activities use the actual F27 finite event projection. Consolidate existing reviewed setup/undo/revoke commands through a finite action list; no forwarded paths, approvals or caller commands. Disable clears presentation/caches and restores legacy view visibility without removing denies or receipts.
+
+Flag: soterai.lite.protectionCenter, restricted machine, default true. Global/default literal boolean only; repository values cannot override it. Turning it off only withdraws this presentation.
+
+Affected sources: new protection-center model/strings/native adapter; existing extension registration/status item and commands.ts legacy Control Panel alias; canonical/Lite manifests and READMEs. Alias adjustment is necessary because the old sidebar view is hidden while the new presentation is enabled. Existing backend, reader, consent, adapter, profile and vault implementations stay authoritative.
+
+Acceptance: meaningful synthetic model/coordinator tests first, including public restriction display and private-activity exclusion, all evidence/error states, fixed-command dispatch/cancellation/failure/disabled drift, bounded rendering and stale refresh disposal. Compiler/full/backend where affected; unique new VSIX and actual contents/source pins. Actual isolated shipped-instance host: native three-view registration, menus/status/open, saved rule lock, keyboard command paths, restricted machine flag, trusted/empty/outage/disabled states, reviewed action cancel/undo/revoke and safe withdrawal. High contrast/reduced motion and browser axe checks using existing installed tooling; native tree semantics and keyboard automation are distinct from later human screen-reader/usability gates. Rerun affected saved restrictions/consent, activity and functional/security baseline on exact new artifact. Preserve every failure, local scoped source/transition commits and exhaustive bytes before F30.
+
+Limits: no OS boundary, independent agent authentication, perfect memory protection, real-agent/human screen-reader claim, fabricated score or evidence transfer from old VSIX. F30's live canary runner remains a separate card.

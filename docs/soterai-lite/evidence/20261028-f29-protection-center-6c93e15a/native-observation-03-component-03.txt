@@ -1,0 +1,82 @@
+﻿TAP version 13
+# Subtest: F29 fixture facade forwards a frozen configuration without changing its descriptors
+ok 1 - F29 fixture facade forwards a frozen configuration without changing its descriptors
+  ---
+  duration_ms: 2.8817
+  type: 'test'
+  ...
+# Subtest: F29 fixture facade binds accessors and all methods to the original frozen receiver
+ok 2 - F29 fixture facade binds accessors and all methods to the original frozen receiver
+  ---
+  duration_ms: 0.3073
+  type: 'test'
+  ...
+# Subtest: F29 fixture facade avoids frozen-target Proxy invariants and preserves property queries
+ok 3 - F29 fixture facade avoids frozen-target Proxy invariants and preserves property queries
+  ---
+  duration_ms: 0.4801
+  type: 'test'
+  ...
+# Subtest: F29 fixture facade preserves exact synchronous errors and original promise identity/rejections
+ok 4 - F29 fixture facade preserves exact synchronous errors and original promise identity/rejections
+  ---
+  duration_ms: 1.0165
+  type: 'test'
+  ...
+# Subtest: F29 fixture facade cannot mutate the original or silently install facade properties
+ok 5 - F29 fixture facade cannot mutate the original or silently install facade properties
+  ---
+  duration_ms: 0.5206
+  type: 'test'
+  ...
+# Subtest: F29 fixture frozen filesystem facade forwards read and untouched methods with exact args/results
+ok 6 - F29 fixture frozen filesystem facade forwards read and untouched methods with exact args/results
+  ---
+  duration_ms: 0.5551
+  type: 'test'
+  ...
+# Subtest: F29 fixture configurable outer fs getter is replaced and exact original descriptor restored
+ok 7 - F29 fixture configurable outer fs getter is replaced and exact original descriptor restored
+  ---
+  duration_ms: 0.5632
+  type: 'test'
+  ...
+# Subtest: F29 fixture getter replacement refuses unsupported descriptors before mutation
+ok 8 - F29 fixture getter replacement refuses unsupported descriptors before mutation
+  ---
+  duration_ms: 1.226
+  type: 'test'
+  ...
+# Subtest: F29 fixture replacement forwards a real accessor exception unchanged and restores any setter
+ok 9 - F29 fixture replacement forwards a real accessor exception unchanged and restores any setter
+  ---
+  duration_ms: 0.7715
+  type: 'test'
+  ...
+# Subtest: F29 fixture selects exactly the public MAIN command owner among real auxiliary allocations
+ok 10 - F29 fixture selects exactly the public MAIN command owner among real auxiliary allocations
+  ---
+  duration_ms: 0.7129
+  type: 'test'
+  ...
+# Subtest: F29 fixture main selector rejects missing/ambiguous owners and wrong priority
+ok 11 - F29 fixture main selector rejects missing/ambiguous owners and wrong priority
+  ---
+  duration_ms: 1.4526
+  type: 'test'
+  ...
+# Subtest: F29 successor retains all30 fixed oracle blocks and only gate forwards the original native picker
+ok 12 - F29 successor retains all30 fixed oracle blocks and only gate forwards the original native picker
+  ---
+  duration_ms: 0.3852
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 29.0728

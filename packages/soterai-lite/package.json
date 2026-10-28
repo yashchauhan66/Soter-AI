@@ -150,7 +150,8 @@
         "soterai.lite.logProtection",
         "soterai.lite.historyHooks.preCommit",
         "soterai.lite.historyHooks.psReadLine",
-        "soterai.lite.selfHygiene"
+        "soterai.lite.selfHygiene",
+        "soterai.lite.protectionCenter"
       ]
     }
   },
@@ -1635,6 +1636,24 @@
         "command": "soterai.psReadLineHistoryGuardStatus",
         "title": "PowerShell History Exclusion Status",
         "category": "SoterAI"
+      },
+      {
+        "command": "soterai.openProtectionCenter",
+        "title": "Open Protection Center",
+        "category": "SoterAI",
+        "icon": "$(shield)"
+      },
+      {
+        "command": "soterai.refreshProtectionCenter",
+        "title": "Refresh Protection Center",
+        "category": "SoterAI",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "soterai.protectionCenterAction",
+        "title": "Protection Center reviewed action",
+        "category": "SoterAI",
+        "icon": "$(list-selection)"
       }
     ],
     "viewsContainers": {
@@ -1649,21 +1668,40 @@
     "views": {
       "soterai-explorer": [
         {
+          "id": "soterai-protected-items",
+          "name": "Protected items",
+          "when": "soterai.protectionCenter"
+        },
+        {
+          "id": "soterai-protection-activity",
+          "name": "Activity",
+          "when": "soterai.protectionCenter"
+        },
+        {
+          "id": "soterai-protection-coverage",
+          "name": "Coverage",
+          "when": "soterai.protectionCenter"
+        },
+        {
           "id": "soterai-control-panel",
           "name": "Control Panel",
-          "type": "webview"
+          "type": "webview",
+          "when": "!soterai.protectionCenter"
         },
         {
           "id": "soterai-project-risk",
-          "name": "Project Risk"
+          "name": "Project Risk",
+          "when": "!soterai.protectionCenter"
         },
         {
           "id": "soterai-latest-findings",
-          "name": "Latest Findings"
+          "name": "Latest Findings",
+          "when": "!soterai.protectionCenter"
         },
         {
           "id": "soterai-policy-status",
-          "name": "Policy & Cloud Sync Status"
+          "name": "Policy & Cloud Sync Status",
+          "when": "!soterai.protectionCenter"
         }
       ]
     },
@@ -2417,6 +2455,12 @@
           "default": false,
           "scope": "machine",
           "description": "Opt in to owned metadata-only audit, activity, broker and diagnostic sinks. Caller text, paths, previews and error messages are withheld. Telemetry still requires separate global opt-in and defaults off. Disable withdraws new owned emissions and purges in-memory telemetry; old signed audit history is not rewritten. JS/native transient processing memory and arbitrary crash dumps remain outside this guarantee."
+        },
+        "soterai.lite.protectionCenter": {
+          "type": "boolean",
+          "default": true,
+          "scope": "machine",
+          "description": "Show native Protected items, Activity and Coverage in one sidebar. Uses saved explicit metadata and existing reviewed setup/restore commands; settings never establish tested protection. Repository overrides are ignored. Disable withdraws this presentation and retains saved denies, audit and recovery records."
         }
       }
     },
@@ -2475,6 +2519,11 @@
           "command": "soterai.recoverVaultMigration",
           "when": "resourceScheme == file && !explorerResourceIsFolder && isWorkspaceTrusted",
           "group": "soterai@7"
+        },
+        {
+          "command": "soterai.openProtectionCenter",
+          "when": "soterai.protectionCenter && resourceScheme == file",
+          "group": "soterai@0"
         }
       ],
       "soterai.explorerContext": [
@@ -2566,6 +2615,11 @@
           "command": "soterai.openWalkthrough",
           "group": "1_help@1",
           "when": "view == soterai-control-panel"
+        },
+        {
+          "command": "soterai.refreshProtectionCenter",
+          "when": "view == soterai-protected-items || view == soterai-protection-activity || view == soterai-protection-coverage",
+          "group": "navigation"
         }
       ],
       "commandPalette": [
@@ -3640,6 +3694,25 @@
         {
           "command": "soterai.psReadLineHistoryGuardStatus",
           "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.openProtectionCenter",
+          "when": "false"
+        },
+        {
+          "command": "soterai.refreshProtectionCenter",
+          "when": "false"
+        },
+        {
+          "command": "soterai.protectionCenterAction",
+          "when": "false"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "soterai.manageAIRules",
+          "when": "view == soterai-protected-items && viewItem == soterai.savedRestriction",
+          "group": "inline"
         }
       ]
     },

@@ -1,0 +1,26 @@
+{
+  "status": "PASS_LITERAL_ROOT_CAUSE_AND_FIXED_PRELAUNCH_FILE_EXISTENCE_NOT_NATIVE_PASS",
+  "observedAt": "2026-10-28T12:14:27.969Z",
+  "before": {
+    "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/run-f29-native-02.cjs",
+    "bytes": 15751,
+    "sha256": "b64ea9c2b3a024b9d888ed9b0e049119a199b377af2b173cc3ddb3ef7f3857e7"
+  },
+  "after": {
+    "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/run-f29-native-03.cjs",
+    "bytes": 15912,
+    "sha256": "b5d150c0ecbd1f36f4aee00e55913ca63dfcb252c71312b7b102a1a298111c58"
+  },
+  "oldCookedLiteral": "C:WindowsSystem32WindowsPowerShell\u000b1.0powershell.exe",
+  "fixedCookedLiteral": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+  "expectedFileExists": true,
+  "rootCause": "Nested raw-template generation emitted single-backslash Windows executable in JavaScript. Cooked path lost separators and contained vertical-tab; spawn returned -4058/pidnull before query or observer launch. Fresh successor uses JSON JavaScript string literal and prelaunch existence assertion.",
+  "productionChanges": 0,
+  "fixtureChanges": 0,
+  "oracles": {
+    "primary": 25,
+    "restart": 5
+  },
+  "nativeImprovement": "FIRST_OF_AT_MOST_THREE_AFTER_ACTUAL_INITIAL_OWNER_CLOSURE",
+  "signalsRequested": 0
+}

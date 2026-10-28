@@ -1,0 +1,46 @@
+﻿TAP version 13
+# Subtest: actual multi-chunk public file matches while each read stays at most64KiB
+ok 1 - actual multi-chunk public file matches while each read stays at most64KiB
+  ---
+  duration_ms: 47.3241
+  type: 'test'
+  ...
+# Subtest: same-length middle tampering refuses, exact original restored in fixture only
+ok 2 - same-length middle tampering refuses, exact original restored in fixture only
+  ---
+  duration_ms: 44.3463
+  type: 'test'
+  ...
+# Subtest: wrong exact byte length refuses before reading
+ok 3 - wrong exact byte length refuses before reading
+  ---
+  duration_ms: 1.5807
+  type: 'test'
+  ...
+# Subtest: wrong exact hash refuses after bounded reads
+ok 4 - wrong exact hash refuses after bounded reads
+  ---
+  duration_ms: 42.1583
+  type: 'test'
+  ...
+# Subtest: single-link guard refuses a real hard-linked synthetic file
+ok 5 - single-link guard refuses a real hard-linked synthetic file
+  ---
+  duration_ms: 3.664
+  type: 'test'
+  ...
+# Subtest: zero-byte ordinary file validates exact empty digest with bounded EOF read
+ok 6 - zero-byte ordinary file validates exact empty digest with bounded EOF read
+  ---
+  duration_ms: 3.8628
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 170.0251

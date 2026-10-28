@@ -1,0 +1,169 @@
+{
+  "feature": "F29",
+  "status": "ACTIVE_COMPONENT155_COMPILER_AND_AUXILIARY_TYPECHECK_PASS_CURRENT_FULL_SERIAL_RUNNING",
+  "observedAt": "2026-10-28T07:56:47.610Z",
+  "head": "28323cdc1f8adb40fc0ca629b738adee0170a595",
+  "previousFeature": "F27 scopedDONE source1004/transition13 exact-bytePASS",
+  "sourceProof": {
+    "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/full-inputs-02.json",
+    "bytes": 202834,
+    "sha256": "5f3dcbde4613f07397723fcc5587158460c9a5000df9cef9930ed58b967113ce"
+  },
+  "sourceCount": 1024,
+  "sourcePins": [
+    {
+      "path": "docs/vscode-extension-readiness.md",
+      "bytes": 3811,
+      "sha256": "60414f99919aee397c687b28a9157e61feb29e697dae37bedcf3877252cfa6dc"
+    },
+    {
+      "path": "packages/soterai-lite/README.md",
+      "bytes": 65525,
+      "sha256": "a359f328e72699e69444b470af3a32dffbc31991470ca4d8773e9ef2efc580f1"
+    },
+    {
+      "path": "packages/soterai-lite/package.json",
+      "bytes": 133791,
+      "sha256": "d8dfdc6a9134fd11a92944b9e4bd081b4e293bb07388bb919e091cbb9dc3ffdd"
+    },
+    {
+      "path": "packages/vscode-extension/README.md",
+      "bytes": 71523,
+      "sha256": "8c0d187458cd6c17cd502fbb979073bc21cb6ca8c7228998f9de7470deb7858f"
+    },
+    {
+      "path": "packages/vscode-extension/package.json",
+      "bytes": 165439,
+      "sha256": "864cd6d4ac51b3d73d6f3a42afef740b4fb6f52526e545814abf93ab8d9b3842"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/protectionCenter.manifest.test.ts",
+      "bytes": 2027,
+      "sha256": "0d37824f438eac3fed8af2cf1495b1ec713d10e0eae5e8fce994db51c21db68a"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/protectionCenter.model.test.ts",
+      "bytes": 6929,
+      "sha256": "fef74260209d1e31d181608caeb927849359020ee0317ad6fc5d3b4ae8734ccf"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/protectionCenter.native.test.ts",
+      "bytes": 6424,
+      "sha256": "edfaaa2c5549aa91c4684aec884d238eefce445b9fbb03375602fa83290eaacc"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/protectionCenter.session.test.ts",
+      "bytes": 6838,
+      "sha256": "1c5820c1d76a819a4000056235aff0e8d6aa952012c366275cc058f1d0db2e08"
+    },
+    {
+      "path": "packages/vscode-extension/src/commands.ts",
+      "bytes": 29233,
+      "sha256": "ede8beed67a6f9082000e47f8065f80378466989297f3c351d122bd1b671c672"
+    },
+    {
+      "path": "packages/vscode-extension/src/extension.ts",
+      "bytes": 36558,
+      "sha256": "a9d8d3f257f2394c5f245973a52fd82e87c8cface73d7fb4d46056b99ba88897"
+    },
+    {
+      "path": "packages/vscode-extension/src/protection-center/ProtectionCenter.ts",
+      "bytes": 11863,
+      "sha256": "0287b52736aa10c2845a707620cc73da21043e6426fdcba3f01feac84cf67e2e"
+    },
+    {
+      "path": "packages/vscode-extension/src/protection-center/ProtectionCenterFlags.ts",
+      "bytes": 467,
+      "sha256": "d87de1c8f9f4fe690d2bf6ef5e940cf2156ccf9168ce6b46cf37c4614d24f60e"
+    },
+    {
+      "path": "packages/vscode-extension/src/protection-center/ProtectionCenterModel.ts",
+      "bytes": 10428,
+      "sha256": "b12c92bd3bbe19aadf1852f99e1c118eae25a1b3c923ef7698dc27a32e47bd31"
+    },
+    {
+      "path": "packages/vscode-extension/src/protection-center/ProtectionCenterSession.ts",
+      "bytes": 3563,
+      "sha256": "4dc0246de8db6098eaad9873b9ed63f0f789c2f7169f565fa80da511073a759a"
+    }
+  ],
+  "component": {
+    "combined": {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/combined-current-05.txt.result.json",
+      "bytes": 1135,
+      "sha256": "9e2f697b86b61fd30df0235ef59536a30104f1db97096465a4e0260c7b6af580"
+    },
+    "tests": 155,
+    "pass": 155,
+    "fail": 0,
+    "annotation": "Final native test Memento cast is typing-only after this run; compiler02 and frozen full cover current bytes."
+  },
+  "currentGates": [
+    "compiler02PASS",
+    "nativeFixtureTypecheck02PASS",
+    "backendTypecheck01PASS",
+    "backendTests01PASS"
+  ],
+  "failuresRetained": [
+    "model-before01 sandbox EPERM before tests; model-before02 actual19missingmoduleFAIL",
+    "session-before01 actual12missingmoduleFAIL",
+    "native-component-before01 actual6missingmoduleFAIL",
+    "manifest-before01 actual1PASS2FAIL",
+    "compiler01 actual2descriptor-narrowing errors",
+    "combined-current03 actual149PASS1palettecontractFAIL, hidden duplicate palette rows preserve original17core entries",
+    "review-before-owner01 actual18PASS2FAIL, corrected owning file-picker route and finite safe-read outcomes",
+    "review-native-regressions-before02 actual2FAIL: initial-visible polling and NFC decoration",
+    "review-before-label-root01 actual2FAIL: remaining bidi marks and whole-workspace root decoration",
+    "native-api-before01 actual1FAIL raw injected exception; command boundary now returns fixedINCOMPLETE",
+    "nativeFixtureTypecheck01 actual3typingerrors; successor02 only descriptor/callback narrowing, original30oracles retained"
+  ],
+  "nativeFixture": {
+    "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/f29-native02.host.ts",
+    "bytes": 52583,
+    "sha256": "ebf3820acc2ea39bc210dd318fa20eed4014d27690287bfe6302919783b9331e"
+  },
+  "nativeExpected": {
+    "primary": 25,
+    "restart": 5,
+    "status": "TYPED_NOT_BUILT_NOT_RUN"
+  },
+  "serial": {
+    "ownerPid": 5432,
+    "start": {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/durable-serial-owner-02.json",
+      "bytes": 361,
+      "sha256": "57505b38890e7df934ff9d754ff58610bf1422d0b7c35d2bbf597a57b8c2a501"
+    },
+    "script": {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/run-serial-02.cjs",
+      "bytes": 4857,
+      "sha256": "20ce331d986c107243c398181ae85c90b00dd136d429ecc32f635d2a259e9c35"
+    },
+    "status": "FULL_STARTED_NOT_COMPLETED_noCodeLaunch_noAutomaticRetry"
+  },
+  "accessibility": {
+    "status": "PREPARED_NOT_RUN_UNBOUND",
+    "notes": {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/accessibility-prep-01.md",
+      "bytes": 8330,
+      "sha256": "2fb746a3fc0d000ccac2d2e7ef30c8eca7e7ea1c4c1756d3dedbf1e66222581e"
+    },
+    "tools": {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/accessibility-tooling-inventory-01.json",
+      "bytes": 6492,
+      "sha256": "33abf34b0128c45389b3b56eae5b787684d96659446cfd60c44cb7bedd5ef0d6"
+    },
+    "agent": "Preparation agent stopped on capacity; no alternate model requested. Root continues. Avoid Playwright-owned launch/kill fallback."
+  },
+  "remaining": [
+    "currentFull/readiness/newexactVSIX/content",
+    "freshdriverbuild/currentvendorandartifactbindings",
+    "actualnative30/restart/realrendererkeyboard/highcontrast/reducedmotion/adjacentrealEdgeaxe",
+    "affectedreader/consent/restrictions/activity/PS51 and functional10/security17 on exact currentartifact",
+    "withdrawal/acceptance/scopedsource+transitioncommits/exhaustiveGitbytes"
+  ],
+  "native06": "F26a_USER_DEFERRED_NOT_RUN",
+  "rating": "NOT_ISSUED",
+  "independence": "LOW_SAME_LINEAGE_NOT_HUMAN_OR_DIFFERENT_VENDOR",
+  "originalL6": "HUMAN-ACTIONS_AND_STOP"
+}

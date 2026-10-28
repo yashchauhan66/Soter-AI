@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "feature": "F29",
+  "status": "FAIL_OR_INCOMPLETE_ACTUAL_RENDERER_OBSERVER",
+  "independence": "LOW_SAME_LINEAGE",
+  "startedAt": "2026-10-28T12:16:43.779Z",
+  "bindingPin": {
+    "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261028-f29-protection-center-6c93e15a\\renderer-binding-03.json",
+    "bytes": 6343,
+    "sha256": "9652e263bd9d3054432bae97b1a1ca42cdbb340a6260ef1736aa34780785e39a"
+  },
+  "readySha256": "b2c13688786cb581e20cadec5cf9fa50dda2f48a18b485eb7da0107a5fe2ebe7",
+  "actualCodePid": 22640,
+  "listenerPid": 22640,
+  "origin": "http://127.0.0.1:56442",
+  "signals": 0,
+  "childLaunched": false,
+  "inputMethod": "REAL_OWNED_RENDERER_KEYBOARD_ONLY_NO_MOUSE_NO_DOM_FOCUS",
+  "observations": [
+    {
+      "phase": "initial-live-DOM-discovery",
+      "at": 1793189805771,
+      "bodyClass": "",
+      "workbenchClass": "monaco-reduce-motion modern-ui modern-ui-tabs modern-ui-connected-editor-tabs modern-ui-notifications-dialogs monaco-workbench windows chromium nopanel floating-panels panel-position-bottom panel-alignment-center hc-black vscode-theme-defaults-themes-hc_black-json file-icons-enabled",
+      "highContrast": true,
+      "reducedMotion": true,
+      "mediaReducedMotion": true,
+      "active": {
+        "id": "",
+        "role": null,
+        "ariaLabel": null,
+        "activeDescendant": null,
+        "text": ""
+      },
+      "views": [
+        {
+          "view": "soterai-protected-items",
+          "found": false,
+          "candidateIds": []
+        },
+        {
+          "view": "soterai-protection-activity",
+          "found": false,
+          "candidateIds": []
+        },
+        {
+          "view": "soterai-protection-coverage",
+          "found": false,
+          "candidateIds": []
+        }
+      ]
+    }
+  ],
+  "nativeTreeKeyboard": "NOT_RUN",
+  "highContrast": "OBSERVED_ACTUAL_HC_BLACK_RENDERER",
+  "reducedMotion": "OBSERVED_ACTUAL_MONACO_REDUCE_MOTION",
+  "chooserEscape": "NOT_RUN",
+  "scope": "Actual owned Code renderer and exact shipped adjacent privacy webview. API-only native tests, Edge snapshot axe, human screen reader and usability are separate.",
+  "limitations": [
+    "Synthetic isolated profile and same-lineage automation; no independent/human evidence.",
+    "Initial isolated profile uses built-in high contrast and reduceMotion:on; no normal profile or OS setting was changed."
+  ],
+  "renderer": {
+    "url": "vscode-file://vscode-app/c:/Users/USER/AppData/Local/Programs/Microsoft%20VS%20Code/e646868227/resources/app/out/vs/code/electron-browser/workbench/workbench.html",
+    "title": "[Extension Development Host] SoterAI: Project Privacy - f29-renderer-workspace-20261028T121614Z-5035275a - Visual Studio Code"
+  },
+  "error": "Error: Actual shipped Project Privacy webview frame not found; last=not observed\n    at until (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261028-f29-protection-center-6c93e15a\\accessibility-binding-01.cjs:82:11)\n    at async main (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261028-f29-protection-center-6c93e15a\\run-code-renderer-observer-02.cjs:81:23)",
+  "transport": "ATTACHED_CDP_TRANSPORT_DISCONNECTED_CODE_OWNER_RETAINED",
+  "finishedAt": "2026-10-28T12:16:55.840Z"
+}

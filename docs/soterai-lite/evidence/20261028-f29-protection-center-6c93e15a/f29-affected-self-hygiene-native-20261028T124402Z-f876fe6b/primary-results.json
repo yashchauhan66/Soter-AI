@@ -1,0 +1,117 @@
+{
+  "phase": "primary",
+  "extensionBundleSha256": "77b6b476977772da61abef337010536acf3f25e98a5cbd7c44e0e41ede26bf8a",
+  "observations": [
+    {
+      "id": "F27-N01",
+      "scope": "Default-off machine setting and telemetry off; no owned audit key or store writes",
+      "status": "PASS"
+    },
+    {
+      "id": "F27-N02",
+      "scope": "Disabled actual programmatic audit command refuses without storing caller values",
+      "status": "PASS"
+    },
+    {
+      "id": "F27-N03",
+      "scope": "Native restricted machine setting refuses repository override",
+      "status": "PASS"
+    },
+    {
+      "id": "F27-N04",
+      "scope": "Explicit global opt-in itself creates no audit key or audit record",
+      "status": "PASS"
+    },
+    {
+      "id": "F27-N05",
+      "scope": "Actual registered public egress command persists useful signed finite metadata",
+      "status": "PASS"
+    },
+    {
+      "id": "F27-N06",
+      "scope": "Actual registered synthetic-secret egress command stores no caller text or previews",
+      "status": "PASS"
+    },
+    {
+      "id": "F27-N07",
+      "scope": "Actual native storage rejection exposes a fixed audit error and preserves stored bytes",
+      "status": "PASS"
+    },
+    {
+      "id": "F27-N08",
+      "scope": "Actual audit key await is invalidated by native opt-out then opt-in",
+      "status": "PASS"
+    },
+    {
+      "id": "F27-N09",
+      "scope": "Actual audit queue recovers after rejected work without retaining rejected payload",
+      "status": "PASS"
+    },
+    {
+      "id": "F27-N10",
+      "scope": "Actual registered audit status shows verified integrity for stored metadata",
+      "status": "PASS"
+    },
+    {
+      "id": "F27-N11",
+      "scope": "Actual Sentinel command and native filesystem watcher persist finite metadata",
+      "status": "PASS"
+    },
+    {
+      "id": "F27-N12",
+      "scope": "Actual Sentinel export opens a real value-free JSON document with positive events",
+      "status": "PASS"
+    },
+    {
+      "id": "F27-N13",
+      "scope": "Actual Sentinel timeline renders public metadata without private paths or values",
+      "status": "PASS"
+    },
+    {
+      "id": "F27-N14",
+      "scope": "Native activity storage rejection is reported incomplete without raw exception text",
+      "status": "FAIL",
+      "errorName": "AssertionError"
+    },
+    {
+      "id": "F27-N15",
+      "scope": "Native opt-out stops actual Sentinel observations and export withholds old events",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "F27-N16",
+      "scope": "Scripted cancel then explicit native disable stop the selected Sentinel preference",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "F27-N17",
+      "scope": "Actual audit/activity state prepared for a fresh native host restart",
+      "status": "NOT_RUN"
+    }
+  ],
+  "passed": 13,
+  "failed": 1,
+  "notRun": 3,
+  "driverFailure": "AssertionError",
+  "diagnostics": {
+    "status": "PREPARED_NATIVE_API_FIXTURE",
+    "phase": "primary",
+    "auditKeyReads": 6,
+    "auditKeyStores": 1,
+    "auditWriteCount": 3,
+    "activityWriteCount": 1,
+    "reports": 1,
+    "heldKey": true,
+    "syntheticOnly": true,
+    "productImports": false
+  },
+  "independence": "LOW_SCRIPTED_ACTUAL_NATIVE_APIS_NOT_HUMAN",
+  "auditExport": "NO_REGISTERED_EXPORT_COMMAND_COMPONENT_COVERAGE_ONLY",
+  "exclusions": [
+    "Transient JS/native processing memory",
+    "Arbitrary native crash dumps",
+    "Other extensions and unmanaged processes",
+    "Real agent or human independence",
+    "Native broker/MCP runtime controls belong to separate exact-runtime fixtures"
+  ]
+}

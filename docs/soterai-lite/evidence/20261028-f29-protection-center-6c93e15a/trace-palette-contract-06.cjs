@@ -1,0 +1,12 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),crypto=require('node:crypto');
+const {own,read,relativeFile,sha}=require('./current-native-guard-03.cjs');
+const binding=read(own('native-binding-03.json')),manifest=read(path.join(relativeFile(binding.extractedRoot),'package.json'));
+const ids=['soterai.openProtectionCenter','soterai.openControlPanel'];
+const commands=ids.map(id=>({id,command:manifest.contributes.commands.find(c=>c.command===id),menu:manifest.contributes.menus.commandPalette.filter(c=>c.command===id)}));
+const review=read(relativeFile(binding.hostReview.path)),app=path.dirname(review.currentHost.applicationFiles.find(row=>row.path.endsWith('package.json')).path);
+const file=path.join(app,'out/vs/workbench/workbench.desktop.main.js'),raw=fs.readFileSync(file),source=raw.toString('utf8');
+const terms=['Focus on {0} View','focusView','focusCommand','viewDescriptor.focusCommand'];
+const witnesses=terms.map(term=>{const at=source.indexOf(term);return{term,at,excerpt:at<0?null:source.slice(Math.max(0,at-350),at+650)}});
+const facts={status:'STATIC_EXACT_SHIPPED_MANIFEST_AND_INSTALLED_COMMAND_CONTRACT_TRACE',commands,codeWorkbench:{path:file,bytes:raw.length,sha256:sha(raw),witnesses},productionRoute:fs.readFileSync(relativeFile('packages/vscode-extension/src/commands.ts'),'utf8').split('\n').slice(496,501).join('\n'),observedFailure:read(own('f29-protection-center-native-20261028T160924Z-1168b2f7/f29-renderer-observations-01.json')).failureUi};
+fs.writeFileSync(own('palette-contract-trace-06.json'),JSON.stringify(facts,null,2)+'\n',{flag:'wx'});console.log(JSON.stringify(facts,null,2));

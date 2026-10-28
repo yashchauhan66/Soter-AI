@@ -1,0 +1,29 @@
+﻿TAP version 13
+# Subtest: F29 native command API failure returns fixed incomplete without private exception text
+not ok 1 - F29 native command API failure returns fixed incomplete without private exception text
+  ---
+  duration_ms: 552.0482
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\protectionCenter.native.test.ts:2:7440'
+  failureType: 'testCodeFailure'
+  error: 'PRIVATE_API_FAILURE'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    <anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\protectionCenter.native.test.ts:26:189)
+    Object.executeCommand (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\phase2\vscode-stub.ts:475:26)
+    refresh (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\protection-center\ProtectionCenter.ts:83:31)
+    <anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\protection-center\ProtectionCenter.ts:131:15)
+    Object.executeCommand (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\phase2\vscode-stub.ts:475:26)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\protectionCenter.native.test.ts:26:257)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2523.5069

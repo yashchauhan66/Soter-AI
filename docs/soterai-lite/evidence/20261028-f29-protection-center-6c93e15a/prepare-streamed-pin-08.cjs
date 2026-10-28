@@ -1,0 +1,10 @@
+'use strict';
+const fs=require('node:fs'),assert=require('node:assert/strict');const {own}=require('./current-native-guard-03.cjs');
+let source=fs.readFileSync(own('streamed-vendor-pin-07.cjs'),'utf8');
+const before="try{same(fs.fstatSync(fd));for(;;){const n=fs.readSync(fd,buffer,0,Math.min(buffer.length,row.bytes+1-count),null);if(n===0)break;count+=n;assert(count<=row.bytes,'File grew beyond exact pin.');hash.update(buffer.subarray(0,n));}same(fs.fstatSync(fd));}finally{fs.closeSync(fd);}";
+assert(source.includes(before));
+source=source.replace(before,"try{const opened=fs.fstatSync(fd);for(const k of ['ino','size','mtimeMs','ctimeMs','nlink'])assert.equal(opened[k],before[k],'Opened descriptor differs: '+k);assert(opened.isFile());for(;;){const n=fs.readSync(fd,buffer,0,Math.min(buffer.length,row.bytes+1-count),null);if(n===0)break;count+=n;assert(count<=row.bytes,'File grew beyond exact pin.');hash.update(buffer.subarray(0,n));}const ended=fs.fstatSync(fd);for(const k of ['ino','dev','size','mtimeMs','ctimeMs','nlink'])assert.equal(ended[k],opened[k],'Descriptor changed: '+k);}finally{fs.closeSync(fd);}");
+fs.writeFileSync(own('streamed-vendor-pin-08.cjs'),source,{flag:'wx'});
+let test=fs.readFileSync(own('streamed-vendor-pin-07.test.cjs'),'utf8').replace("require('./streamed-vendor-pin-07.cjs')","require('./streamed-vendor-pin-08.cjs')").replace('streamed-pin-fixture-07-','streamed-pin-fixture-08-');
+fs.writeFileSync(own('streamed-vendor-pin-08.test.cjs'),test,{flag:'wx'});
+console.log('PREPARED08: path-before/path-after dev equality and descriptor-before/descriptor-after dev equality both retained; no cross-API dev comparison on Windows.');

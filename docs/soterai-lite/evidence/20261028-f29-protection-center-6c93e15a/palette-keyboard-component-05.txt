@@ -1,0 +1,40 @@
+﻿TAP version 13
+# Subtest: delayed native input receives no key until visible focus, then the exact full command
+ok 1 - delayed native input receives no key until visible focus, then the exact full command
+  ---
+  duration_ms: 8.6606
+  type: 'test'
+  ...
+# Subtest: never-focused input refuses without typing or Enter
+ok 2 - never-focused input refuses without typing or Enter
+  ---
+  duration_ms: 6.2607
+  type: 'test'
+  ...
+# Subtest: recorded real missing-prefix value is rejected before Enter
+ok 3 - recorded real missing-prefix value is rejected before Enter
+  ---
+  duration_ms: 6.8393
+  type: 'test'
+  ...
+# Subtest: reopening with an old query uses only keyboard selection and replacement
+ok 4 - reopening with an old query uses only keyboard selection and replacement
+  ---
+  duration_ms: 1.0086
+  type: 'test'
+  ...
+# Subtest: the fixture never activates a command; observer must check actual results first
+ok 5 - the fixture never activates a command; observer must check actual results first
+  ---
+  duration_ms: 30.0531
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 124.3201

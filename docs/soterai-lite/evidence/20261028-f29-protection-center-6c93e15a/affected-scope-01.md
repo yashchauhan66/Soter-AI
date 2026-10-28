@@ -1,0 +1,7 @@
+# F29 affected verification selection, before any launch
+
+The existing F29 work-card requires saved restrictions/consent, Activity and the functional/security baseline on the new artifact. Current selection retains all assertions of the accepted actual editor25, PS51 profile19, F27 activity22 and functional10/security17 fixtures. F29 native30 separately verifies the actual saved-rule owner, finite dispatch, chooser cancellation, project profile apply/undo, original pending-read revoke, policy custody and presentation withdrawal. Real renderer keys/HC/motion and adjacent Edge axe remain separate required checks.
+
+This selection follows the read-only presentation change and its reached owners. F29 does not modify the reader, policy evaluator, adapters, vendor writers, gateway or vault contracts. The parallel guard-core changes are preserved and separately revalidated with current guard-core515 tests/typecheck, main full suite, backend and the new exact bundle; their new behavior is not relabeled an accepted F29 capability. Unchanged adapter/config-writer family results remain attributed to their historical artifacts until the later broad verification gates run. The F29 receipt will list exactly these current checks and will not inherit earlier509/537 results.
+
+No actual native/renderer/Edge check has run at this selection checkpoint. No F26a/native06 invocation is included. No real data, normal profile, download, login, signal or process termination is authorized by this selection.

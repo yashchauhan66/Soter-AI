@@ -1,0 +1,137 @@
+{
+  "status": "READ_ONLY_BUILD_REFUSAL_DIAGNOSTIC",
+  "observedAt": "2026-10-28T11:39:39.364Z",
+  "issues": [
+    {
+      "path": "packages/guard-core/dist/DecisionEngine.d.ts.map",
+      "expected": "03ba992eeabde9ccebd0e60a97cfb55cb45b415e52011331cdaa6e00e5a1ce02",
+      "actual": "cc98a086010cb465e698e451c7ff63562b640d76c8f9bf1ba1da9581fea54f1e",
+      "expectedBytes": 846,
+      "actualBytes": 846
+    },
+    {
+      "path": "packages/guard-core/dist/DecisionEngine.js",
+      "expected": "2c45dd65a2b6c708e418c6c42cce6c434d2e071eb61845c73581d52fc084d7e1",
+      "actual": "c2a6ebdaaee4ecedd7e6fc16173abb6930a312922d0ff7de680cfce95452cfd2",
+      "expectedBytes": 10593,
+      "actualBytes": 12229
+    },
+    {
+      "path": "packages/guard-core/dist/DecisionEngine.js.map",
+      "expected": "08076cdd2773e2b679d73a89fa13ca503ef4d5a9292cdb52dc49fa8f54b3e26d",
+      "actual": "f0bba26079713636be528ee27966666751c0fa94d451203ac8d68ba4ecfd574a",
+      "expectedBytes": 7137,
+      "actualBytes": 8245
+    },
+    {
+      "path": "packages/guard-core/dist/detectors/PromptInjectionLiteDetector.js",
+      "expected": "41af7547de48258269d5b05f2cae2e828c075cdb25f00c2d112ce33d524158dd",
+      "actual": "47245977ed5e455c77750b9289fe6cd62250d6553cc330183b9cdf9cd5f42a32",
+      "expectedBytes": 17029,
+      "actualBytes": 17071
+    },
+    {
+      "path": "packages/guard-core/dist/detectors/PromptInjectionLiteDetector.js.map",
+      "expected": "64c346ff54b548f16aa27bc38830be6b1e30bb72cee4721e59b0a36df04cc6f0",
+      "actual": "693b2f63068c6a45c2d7597fb316e6ad5b07158f030c5730a897f8ec87a4f8db",
+      "expectedBytes": 7647,
+      "actualBytes": 7647
+    },
+    {
+      "path": "packages/guard-core/dist/detectors/TerminalCommandRiskDetector.d.ts.map",
+      "expected": "b98515df3e2d061acf3d1810b6bee289f2a09e69364334676095a517c1b4f293",
+      "actual": "43c147dd0ef7e6da2dcfedd3582438d00e801baa1a9b66f1fd2d460361a98e63",
+      "expectedBytes": 297,
+      "actualBytes": 297
+    },
+    {
+      "path": "packages/guard-core/dist/detectors/TerminalCommandRiskDetector.js",
+      "expected": "33b8c2e0c20806c0c8bf6af60a17bef86b2effbe6b1e1743e85cdeaee68f397c",
+      "actual": "f64e3ddf6f8e1b95d332d1f677327d1914c3940985c554d0ad918a556fa33e1a",
+      "expectedBytes": 6710,
+      "actualBytes": 7059
+    },
+    {
+      "path": "packages/guard-core/dist/detectors/TerminalCommandRiskDetector.js.map",
+      "expected": "b965cc5efb2ab06769ddf579a2ea05c913ce361c3a58f9c916a7883fea669935",
+      "actual": "f1dc6b170f64b84e4448725967dcce4c494c68fca7beedf997a0a5e490cecdc4",
+      "expectedBytes": 4112,
+      "actualBytes": 4247
+    },
+    {
+      "path": "packages/guard-core/src/DecisionEngine.ts",
+      "expected": "e7134c03e60470d7845ba2d08e64935ef954f71bcb7a72f8187681875c86944b",
+      "actual": "e3c29f1e4616d05898f213ec38a423275345847ca6ce3f18b2e8bd56cb40e9c7",
+      "expectedBytes": 11876,
+      "actualBytes": 13658
+    },
+    {
+      "path": "packages/guard-core/src/detectors/PromptInjectionLiteDetector.ts",
+      "expected": "ae097d19dbb832478a0a367aba71c002df9191424ed0f16715d661530af5a1e3",
+      "actual": "3187b7fb460010272e677448f4b03564855d97068842e09e4663578314774403",
+      "expectedBytes": 17096,
+      "actualBytes": 17138
+    },
+    {
+      "path": "packages/guard-core/src/detectors/TerminalCommandRiskDetector.ts",
+      "expected": "ddd66efc537ea992d0025f7dc740e7f09e9079533afe5f660daaf47194791d35",
+      "actual": "0a411ba90df4b21bda09a5d9c6936f763e577ece68f6694120ea97fde8193f8f",
+      "expectedBytes": 6836,
+      "actualBytes": 7185
+    }
+  ],
+  "sourceProofSha": "9c6ba8ba6d5e7f63bc3bb466ec5b5aacbfea03039b09135ef6b86af80039a67e",
+  "provenanceSourceSha": "9c6ba8ba6d5e7f63bc3bb466ec5b5aacbfea03039b09135ef6b86af80039a67e",
+  "drivers": 23,
+  "outExists": false,
+  "canonical": {
+    "output": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261028-f29-protection-center-6c93e15a\\native-fixture-typecheck-03.txt",
+    "observedAt": "2026-10-28T11:38:47.8804109Z",
+    "exitCode": 0,
+    "arguments": [
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "--strict",
+      "--skipLibCheck",
+      "--types",
+      "node,vscode",
+      "--target",
+      "ES2022",
+      "--module",
+      "commonjs",
+      "--esModuleInterop",
+      "--lib",
+      "ES2022",
+      "docs\\soterai-lite\\evidence\\20261028-f29-protection-center-6c93e15a\\f29-native03.host.ts"
+    ],
+    "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+    "file": "C:\\Program Files\\nodejs\\node.exe"
+  },
+  "close": {
+    "observedAt": "2026-10-28T11:38:48.156Z",
+    "pid": 22880,
+    "actualClose": true,
+    "exitCode": 0,
+    "signal": null,
+    "stdoutEOF": true,
+    "stderrEOF": true,
+    "overflow": false,
+    "streamError": false,
+    "deadlineExceeded": false,
+    "signalsRequested": 0,
+    "streams": [
+      {
+        "name": "stdout",
+        "bytes": 1046,
+        "observedBytes": 1046,
+        "sha256": "559bd4acd5b78015f716477a31d1e5ea89cb06fed070f8afda697b7260fb4365"
+      },
+      {
+        "name": "stderr",
+        "bytes": 616,
+        "observedBytes": 616,
+        "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+      }
+    ]
+  }
+}

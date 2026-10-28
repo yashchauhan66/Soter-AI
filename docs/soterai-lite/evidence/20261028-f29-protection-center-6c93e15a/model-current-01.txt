@@ -1,0 +1,124 @@
+﻿TAP version 13
+# Subtest: F29 three bounded native sections preserve explicit protected paths without file contents
+ok 1 - F29 three bounded native sections preserve explicit protected paths without file contents
+  ---
+  duration_ms: 459.3062
+  type: 'test'
+  ...
+# Subtest: F29 empty workspace and no explicit rules have distinct honest states
+ok 2 - F29 empty workspace and no explicit rules have distinct honest states
+  ---
+  duration_ms: 4.9324
+  type: 'test'
+  ...
+# Subtest: F29 disabled tree withholds cached restrictions and activities
+ok 3 - F29 disabled tree withholds cached restrictions and activities
+  ---
+  duration_ms: 4.0025
+  type: 'test'
+  ...
+# Subtest: F29 untrusted workspace withholds saved paths and action rows
+ok 4 - F29 untrusted workspace withholds saved paths and action rows
+  ---
+  duration_ms: 10.2054
+  type: 'test'
+  ...
+# Subtest: F29 unavailable policy never presents cached restrictions as current
+ok 5 - F29 unavailable policy never presents cached restrictions as current
+  ---
+  duration_ms: 4.748
+  type: 'test'
+  ...
+# Subtest: F29 evidence MISSING cannot become passing coverage
+ok 6 - F29 evidence MISSING cannot become passing coverage
+  ---
+  duration_ms: 5.9407
+  type: 'test'
+  ...
+# Subtest: F29 evidence INVALID cannot become passing coverage
+ok 7 - F29 evidence INVALID cannot become passing coverage
+  ---
+  duration_ms: 9.8862
+  type: 'test'
+  ...
+# Subtest: F29 evidence MISMATCH cannot become passing coverage
+ok 8 - F29 evidence MISMATCH cannot become passing coverage
+  ---
+  duration_ms: 4.071
+  type: 'test'
+  ...
+# Subtest: F29 evidence UNAVAILABLE cannot become passing coverage
+ok 9 - F29 evidence UNAVAILABLE cannot become passing coverage
+  ---
+  duration_ms: 6.494
+  type: 'test'
+  ...
+# Subtest: F29 evidence DISABLED cannot become passing coverage
+ok 10 - F29 evidence DISABLED cannot become passing coverage
+  ---
+  duration_ms: 5.2575
+  type: 'test'
+  ...
+# Subtest: F29 matching report remains reported evidence with no live or independent claim
+ok 11 - F29 matching report remains reported evidence with no live or independent claim
+  ---
+  duration_ms: 8.074
+  type: 'test'
+  ...
+# Subtest: F29 stale matching report is visibly stale and never reported PASS
+ok 12 - F29 stale matching report is visibly stale and never reported PASS
+  ---
+  duration_ms: 4.8016
+  type: 'test'
+  ...
+# Subtest: F29 future or malformed evidence time is not current
+ok 13 - F29 future or malformed evidence time is not current
+  ---
+  duration_ms: 2.7928
+  type: 'test'
+  ...
+# Subtest: F29 activity accepts only finite public types/risk/decision and generated timestamp
+ok 14 - F29 activity accepts only finite public types/risk/decision and generated timestamp
+  ---
+  duration_ms: 3.5058
+  type: 'test'
+  ...
+# Subtest: F29 unknown activity properties never become visible caller text
+ok 15 - F29 unknown activity properties never become visible caller text
+  ---
+  duration_ms: 7.0321
+  type: 'test'
+  ...
+# Subtest: F29 opt-out suppresses activity even if stale events were supplied
+ok 16 - F29 opt-out suppresses activity even if stale events were supplied
+  ---
+  duration_ms: 4.055
+  type: 'test'
+  ...
+# Subtest: F29 restrictive node text cannot inject codicons, controls or bidi tricks
+ok 17 - F29 restrictive node text cannot inject codicons, controls or bidi tricks
+  ---
+  duration_ms: 3.3128
+  type: 'test'
+  ...
+# Subtest: F29 rows are bounded for large manual rule and activity lists
+ok 18 - F29 rows are bounded for large manual rule and activity lists
+  ---
+  duration_ms: 13.9211
+  type: 'test'
+  ...
+# Subtest: F29 finite UI actions route only existing review/restore owners
+ok 19 - F29 finite UI actions route only existing review/restore owners
+  ---
+  duration_ms: 6.0901
+  type: 'test'
+  ...
+1..19
+# tests 19
+# suites 0
+# pass 19
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1715.7506

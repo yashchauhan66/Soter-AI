@@ -1,0 +1,202 @@
+{
+  "status": "PASS_CURRENT_AFFECTED66_FUNCTIONAL10_SECURITY17_UNCHANGED_RENDERER_REQUIRED",
+  "observedAt": "2026-10-28T13:32:28.171Z",
+  "families": [
+    {
+      "id": "ps51",
+      "run": "f26a-ps51-native-20261028T124143Z-848a6abe",
+      "checks": 19
+    },
+    {
+      "id": "editor",
+      "run": "f26a-affected-editor-20261028T124253Z-0a6b7b5d",
+      "checks": 25
+    },
+    {
+      "id": "activity",
+      "run": "f29-affected-activity-settlement-20261028T132230Z-f6ab4c06",
+      "checks": 22
+    }
+  ],
+  "nativeChecks": 66,
+  "functionalChecks": 10,
+  "securityCases": 17,
+  "securityChanged": 0,
+  "residuals": {
+    "BLOCKED_SCOPED": 8,
+    "LEAK_CONFIRMED": 9
+  },
+  "sourceProof": {
+    "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/full-inputs-05.json",
+    "bytes": 208843,
+    "sha256": "0a8331e1fbe3b41f0153e7564ae9ee1c2ec25c77db8ec46196c4c6e280dc540f"
+  },
+  "vsix": {
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-f29-20261028-attempt02.vsix",
+    "bytes": 1725456,
+    "sha256": "47dfb6a3f475f53b7bb5ca4a21f3ada524a1a6e64622c90f1325e529fa85b253"
+  },
+  "frontendSha256": "77b6b476977772da61abef337010536acf3f25e98a5cbd7c44e0e41ede26bf8a",
+  "evidence": [
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/f26a-ps51-native-20261028T124143Z-848a6abe/summary.json",
+      "bytes": 1118,
+      "sha256": "33f36a61e12b372546e8d23f7724dc38684d5e036a27adf4b974170c059739b2"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/f26a-ps51-native-20261028T124143Z-848a6abe/primary-results.json",
+      "bytes": 6511,
+      "sha256": "542d3a4db5f4774fcef593df57cdace605b59ff122d8df8fa33c5d30623f31e1"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/f26a-ps51-native-20261028T124143Z-848a6abe/primary-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/f26a-ps51-native-20261028T124143Z-848a6abe/primary-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "85914aa502f75cd7729cd6c955f84b44622aaf92512a1d89531a8b41203ec18b"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/f26a-ps51-native-20261028T124143Z-848a6abe/restart-results.json",
+      "bytes": 2082,
+      "sha256": "71c9296c0d9505c7970eddebc2ebc748d1a5704d8f44b4231ff2a8b924553109"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/f26a-ps51-native-20261028T124143Z-848a6abe/restart-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/f26a-ps51-native-20261028T124143Z-848a6abe/restart-helper-pipe-ownership.json",
+      "bytes": 530,
+      "sha256": "5a891492cd2e65286132653bccc770367f39d81d5468b03c782029da09c01648"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/f26a-affected-editor-20261028T124253Z-0a6b7b5d/summary.json",
+      "bytes": 1126,
+      "sha256": "eeb1fed16f37bf0886c5068a48c25eac628f9aecdd84e93aacf4e9e3df5d276c"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/f26a-affected-editor-20261028T124253Z-0a6b7b5d/primary-results.json",
+      "bytes": 16780,
+      "sha256": "ed464ec79e7b5d4962c0b2c2a4a7a53393d5409b85ce0a3eca8923ce8d849550"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/f26a-affected-editor-20261028T124253Z-0a6b7b5d/primary-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/f26a-affected-editor-20261028T124253Z-0a6b7b5d/primary-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "3533bca8972fdb14e66d33b6bec572614ad471ad6f02bc594946bb4c1b36fc26"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/f26a-affected-editor-20261028T124253Z-0a6b7b5d/restart-results.json",
+      "bytes": 3318,
+      "sha256": "846dadac819c124519786b2b8b95444612a850c3d53f41d36c8e11a554d7eeca"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/f26a-affected-editor-20261028T124253Z-0a6b7b5d/restart-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/f26a-affected-editor-20261028T124253Z-0a6b7b5d/restart-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "8ff1d5e9866cf7f3417f3b9df5be7f0669508da423869f3f2e707483453af5f9"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/f29-affected-activity-settlement-20261028T132230Z-f6ab4c06/summary.json",
+      "bytes": 698,
+      "sha256": "ca3e293f43727c7517b8e9f8a0ca1ab6ea5c059649b6b831e563f2bcce25d8f3"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/f29-affected-activity-settlement-20261028T132230Z-f6ab4c06/primary-results.json",
+      "bytes": 3790,
+      "sha256": "c5e5fbe0d63dc73a3e72145089c6ebbb3819eb6edef00bc638eab468763952b7"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/f29-affected-activity-settlement-20261028T132230Z-f6ab4c06/primary-owned-close.json",
+      "bytes": 619,
+      "sha256": "82910d36fd3f98af3653afbbd6cfe881c272d243aa8d6d2a47fc1f1bdcbdc071"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/f29-affected-activity-settlement-20261028T132230Z-f6ab4c06/restart-results.json",
+      "bytes": 1686,
+      "sha256": "5b1c7f441e26e12d341aca30e3892ef6be0981d54f78dcdaba456b4041856853"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/f29-affected-activity-settlement-20261028T132230Z-f6ab4c06/restart-owned-close.json",
+      "bytes": 619,
+      "sha256": "4b3e871d626c4865e6dfe5a38a5ae475abd7eff3df28f5896eb938376ad63bd7"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/affected-ps51-run-01.txt.result.json",
+      "bytes": 1937,
+      "sha256": "d913ec27a3697f6874762cc7b8ed602dd554437f03707591c1275092d4b36177"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/affected-ps51-run-01-owned-close.json",
+      "bytes": 619,
+      "sha256": "c07b46cfef3b36e3b3c93e0290728af762ad239e20d07aaa61582ea8bea1c5e0"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/affected-editor-run-01.txt.result.json",
+      "bytes": 1943,
+      "sha256": "b57452b9f49fbdbe801a4f7d318a805a6f4a6bc313f7c856e18950fdc1730951"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/affected-editor-run-01-owned-close.json",
+      "bytes": 619,
+      "sha256": "9823e1091d61ccaddae57f4068aec584b722bfbcf5718446df87eac456787623"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/affected-activity-run-04.txt.result.json",
+      "bytes": 627,
+      "sha256": "bcad4cb6b6c18dd5d3b287a1cdf52b4882645df27af54ac28c2f4f34f9163a79"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/affected-activity-run-04-owned-close.json",
+      "bytes": 617,
+      "sha256": "b30f3c58332e21b13e8ef67c3173b53fdb6c98b0195275b73241e06e94fe8cb2"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/affected-functional-security-run-02.txt.result.json",
+      "bytes": 1567,
+      "sha256": "957cf94a1cd9c593c6f65c722b8b291c8aaa30227c21c9786bdca1f54d356607"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/affected-functional-security-run-02-owned-close.json",
+      "bytes": 619,
+      "sha256": "6a155031b4ba95912f7c35f1989a28d70b79e2148022ae90e422a409ee5f4609"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/affected-20261028T131227Z-677772586b994508ac2ecee968d35b61/affected-summary-01.json",
+      "bytes": 1205,
+      "sha256": "ad5139278965b8806329b6898e7785d9b85723164d1811cff19ee61131bb0007"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/affected-20261028T131227Z-677772586b994508ac2ecee968d35b61/functional/privacy-20261028T131240Z-68f3e0b8/functional-results.json",
+      "bytes": 2168,
+      "sha256": "68de05ca483ba4cd7d40dfd6dfecc3401c53b0f2f7b0e1f905c1d853e168a6eb"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/affected-20261028T131227Z-677772586b994508ac2ecee968d35b61/security-comparison-01.json",
+      "bytes": 4057,
+      "sha256": "3e64561a0f4189c81356c26d2c91d26992f6bafceb2219debb08d4c46b464051"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/affected-20261028T131227Z-677772586b994508ac2ecee968d35b61/security/host-20261028T131325Z-9637103418ef4ba5a16d37ba2560a6d3/live-host.json",
+      "bytes": 4878,
+      "sha256": "9b8e1a50860934d5bd09f55003797ef3dd8ffb94e9c725f47f2d89ff4cba4c4c"
+    }
+  ],
+  "activityFixture": "Original storage-byte/finalINCOMPLETE22oracles retained; only actual PENDING observation is awaited within original15s budget. Minimal in-memory diagnostics. Original13PASS1FAIL attempts and exact-old-causeUNESTABLISHED retained unregraded.",
+  "nativeKeyboard": "INCOMPLETE_EXTRA05_EXPLICIT_USER_APPROVAL_PENDING",
+  "independence": "LOW_SCRIPTED_SAME_LINEAGE",
+  "native06": "F26a_USER_DEFERRED_NOT_RUN",
+  "signalsRequested": 0
+}

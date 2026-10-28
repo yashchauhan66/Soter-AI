@@ -1,0 +1,32 @@
+// Prepare admission only after current serial/content/fresh23-driver evidence.
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),crypto=require('node:crypto');
+const own=n=>path.join(__dirname,n),read=f=>JSON.parse(fs.readFileSync(f,'utf8').replace(/^\uFEFF/,'')),sha=b=>crypto.createHash('sha256').update(b).digest('hex');
+const proof=fs.readFileSync(own('full-inputs-04.json'));assert.equal(sha(proof),'5a2b1568faa8af067f0065c7c83affc5a2be5d6ac82d169ccc2cce753278c690');
+assert.equal(read(own('serial-result-04.json')).results.length,9);assert.equal(read(own('postfull-watcher-result-03.json')).status,'CURRENT_CONTENT_AND_FRESH23_DRIVERS_PASS_NATIVE_AND_ACCESSIBILITY_NOT_RUN');
+const inspection=read(own('content-inspection-02.json')),drivers=read(own('native-driver-provenance-03.json'));assert.equal(drivers.drivers.length,23);assert.equal(drivers.sourceProofSha256,sha(proof));
+let guard=fs.readFileSync(own('current-native-guard-01.cjs'),'utf8');
+for(const [a,b]of [['FULL02_EXACT_ATTEMPT01','FULL03_EXACT_ATTEMPT02'],['full-inputs-03.json','full-inputs-04.json'],['9c6ba8ba6d5e7f63bc3bb466ec5b5aacbfea03039b09135ef6b86af80039a67e',sha(proof)],['b.sourceProof.bytes,203135','b.sourceProof.bytes,'+proof.length],['100e86843e929c5e1bef8ae06ada04063fb3fe8cf29ce646b3a9e6b49f773105',inspection.vsix.sha256],['547e956909d28eeeb45503d7c94d23dac10885ef053a65915da54150e40acb1e',inspection.vsix.extensionSha256],['1724214',String(inspection.vsix.bytes)],['compiler-03','compiler-04'],['backend-typecheck-01','backend-typecheck-02'],['backend-tests-01','backend-tests-02'],['full-tests-02','full-tests-03'],['readiness-01','readiness-02'],['package-01','package-02'],['content-02','content-03'],['native-fixture-typecheck-03','native-fixture-typecheck-04'],['native-build-02','native-build-03'],['serial-result-03.json','serial-result-04.json'],['native-driver-provenance-02.json','native-driver-provenance-03.json'],['content-inspection-01.json','content-inspection-02.json'],['vsix-extracted-01','vsix-extracted-02']])guard=guard.replaceAll(a,b);
+const required=['compiler-04','guard-core-typecheck-01','guard-core-tests-01','backend-typecheck-02','backend-tests-02','full-tests-03','readiness-02','package-02','content-03','native-fixture-typecheck-04','native-build-03'];
+const serial=['compiler-04','guard-core-typecheck-01','guard-core-tests-01','native-fixture-typecheck-04','backend-typecheck-02','backend-tests-02','full-tests-03','readiness-02','package-02'];
+guard=guard.replace(/^const REQUIRED=.+;$/m,'const REQUIRED='+JSON.stringify(required)+';').replace(/^const SERIAL_NAMES=.+;$/m,'const SERIAL_NAMES='+JSON.stringify(serial)+';').replace('serial.results.length,7','serial.results.length,9');
+// A fresh23-driver build uses the new, user-preserved dependencies. Retain old
+// driver names/source contracts but never pretend22 old bytes were reverified.
+guard=guard.replace("assert.equal(prior.sourceProofSha256,SOURCE_SHA);","assert.equal(prior.sourceProofSha256,'9c6ba8ba6d5e7f63bc3bb466ec5b5aacbfea03039b09135ef6b86af80039a67e');");
+const deltaStart=guard.indexOf(" for(const old of prior.drivers.filter"),deltaEnd=guard.indexOf(' for(const record of drivers.auxiliaryInputs)',deltaStart);assert(deltaStart>0&&deltaEnd>deltaStart);
+guard=guard.slice(0,deltaStart)+" assert.equal(prior.drivers.filter(row=>driverName(row)!==changed).length,22);\n"+guard.slice(deltaEnd);
+const runtimeRows=inspection.entries.filter(row=>/^extension\/dist\/.+\.js$/.test(row.path)).map(row=>[path.basename(row.path),row.bytes,row.sha256]);assert.equal(runtimeRows.length,4);
+guard=guard.replace(/^ const expectedRuntimes=.+;$/m,' const expectedRuntimes='+JSON.stringify(runtimeRows)+';');
+fs.writeFileSync(own('current-native-guard-02.cjs'),guard,{flag:'wx'});
+let materializer=fs.readFileSync(own('materialize-native-binding-01.cjs'),'utf8').replaceAll('./current-native-guard-01.cjs','./current-native-guard-02.cjs').replaceAll('native-binding-01.json','native-binding-02.json').replaceAll('full-inputs-03.json','full-inputs-04.json').replaceAll('serial-result-03.json','serial-result-04.json').replaceAll('native-driver-provenance-02.json','native-driver-provenance-03.json').replaceAll('content-inspection-01.json','content-inspection-02.json').replaceAll('vsix-extracted-01','vsix-extracted-02');
+fs.writeFileSync(own('materialize-native-binding-02.cjs'),materializer,{flag:'wx'});
+// The accepted guard defaults to01; this successor has a distinct binding.
+guard=fs.readFileSync(own('current-native-guard-02.cjs'),'utf8').replaceAll("name='native-binding-01.json'","name='native-binding-02.json'").replaceAll("assert.equal(name,'native-binding-01.json')","assert.equal(name,'native-binding-02.json')");
+fs.writeFileSync(own('current-native-guard-02.cjs'),guard);
+let runner=fs.readFileSync(own('run-f29-native-01.cjs'),'utf8').replaceAll('./current-native-guard-01.cjs','./current-native-guard-02.cjs').replaceAll('f29-native-run-start-01.json','f29-native-run-start-02.json').replaceAll('f29-native-run-failure-01.json','f29-native-run-failure-02.json').replaceAll('renderer-binding-01.json','renderer-binding-02.json').replaceAll('run-code-renderer-observer-01.cjs','run-code-renderer-observer-02.cjs');
+// Preserve actual phase output before observer failure is surfaced.
+runner=runner.replace("if(observerWork){observer=await observerWork;assert.equal(observer.status,'PASS_SCOPED_ACTUAL_RENDERER_KEYS_HC_MOTION_ROOT_REVIEW_PENDING');}","if(observerWork)observer=await observerWork;");
+runner=runner.replace("const result=read(output),count=", "if(observerWork)assert.equal(observer.status,'PASS_SCOPED_ACTUAL_RENDERER_KEYS_HC_MOTION_ROOT_REVIEW_PENDING');\n  const result=read(output),count=");
+runner=runner.replace('phases.push({phase,passed:count,',"if(phase==='primary'){const calls=result.nativeOwnerCalls;assert(Array.isArray(calls));const revoke=calls.findIndex(row=>row.command==='soterai.revokeProjectReads'&&row.status==='REVOKED'&&row.argumentCount===0),restrict=calls.findIndex(row=>row.command==='soterai.restrictProjectFile');assert(revoke>=0&&restrict>revoke,'Actual renderer Enter did not reach the original revoke owner before later API-only checks');}\n  phases.push({phase,passed:count,");
+fs.writeFileSync(own('run-f29-native-02.cjs'),runner,{flag:'wx'});
+console.log(JSON.stringify({status:'CURRENT_ADMISSION_AND_RUNNER_PREPARED_NOT_RUN',proof:sha(proof),vsix:inspection.vsix.sha256,requiredReceipts:required.length,serialPhases:serial.length,nativeChecks:30}));

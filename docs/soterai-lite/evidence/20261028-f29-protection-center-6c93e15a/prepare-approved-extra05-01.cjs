@@ -1,0 +1,26 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const {guard,own,read,pin,sha,repo}=require('./current-native-guard-03.cjs');
+const fact=file=>{const raw=fs.readFileSync(file);return{path:path.relative(repo,file).replace(/\\/g,'/'),bytes:raw.length,sha256:sha(raw)}};
+const put=(name,value)=>fs.writeFileSync(own(name),JSON.stringify(value,null,2)+'\n',{flag:'wx'});
+(async()=>{
+ const binding=await guard();
+ const affected=read(own('affected-acceptance-04.json'));
+ assert.equal(affected.status,'PASS_CURRENT_AFFECTED66_FUNCTIONAL10_SECURITY17_UNCHANGED_RENDERER_REQUIRED');
+ assert.equal(affected.nativeChecks,66);assert.equal(affected.functionalChecks,10);assert.equal(affected.securityCases,17);assert.equal(affected.securityChanged,0);
+ assert.equal(affected.vsix.sha256,binding.vsix.sha256);assert.equal(affected.sourceProof.sha256,binding.sourceProof.sha256);
+ for(const row of affected.evidence)await pin(row);
+ const edge=read(own('edge-acceptance-01.json'));
+ assert.equal(edge.status,'PASS_SCOPED_ACTUAL_EDGE_AXE_ZERO_VIOLATIONS_MANUAL_ITEMS_RETAINED_NATIVE_KEYS_STILL_OPEN');
+ for(const row of edge.retained)await pin(row);
+ const prior=read(own('f29-native-chain-result-04.json'));
+ assert(prior.actualClose&&prior.stdoutEOF&&prior.stderrEOF&&prior.signalsRequested===0);
+ const approval={feature:'F29',status:'EXPLICIT_USER_SINGLE_EXTRA05_APPROVED_NOT_YET_CONSUMED',observedAt:new Date().toISOString(),questionItemId:'["request_user_input_async","call_a9d1a35d3231469b82b46db729d7f041",0]',answer:'Ek extra F29 Proposal05 run allow karo',proposalSha256:sha(fs.readFileSync(own('PROPOSAL05.md'))),allowedNativeAttempts:1,explicitUserApproval:true,native06:'F26a_USER_DEFERRED_NOT_RUN',signalsRequested:0};
+ assert(!fs.existsSync(own('extra05-consumption-01.json')));put('extra05-approval-01.json',approval);
+ const old=fs.readFileSync(own('start-native-chain-05.ps1'),'utf8');
+ assert(old.includes("'affected-chain-result-03.json'"));
+ const launcher=old.replace("'affected-chain-result-03.json'","'affected-acceptance-04.json'").replace('AFFECTED_CURRENT_SELECTED_WORKFLOWS_CLOSED_PASS_ROOT_AGGREGATION_PENDING_RENDERER_STILL_REQUIRED','PASS_CURRENT_AFFECTED66_FUNCTIONAL10_SECURITY17_UNCHANGED_RENDERER_REQUIRED');
+ fs.writeFileSync(own('start-native-chain-06.ps1'),launcher,{flag:'wx'});
+ put('approved-extra05-prelaunch-01.json',{status:'CURRENT_ALL_BYTES_AND_RETAINED_AFFECTED_EDGE_REVERIFIED_SINGLE_EXTRA_APPROVED_NOT_LAUNCHED',observedAt:new Date().toISOString(),approval:fact(own('extra05-approval-01.json')),launcher:fact(own('start-native-chain-06.ps1')),previousLauncher:fact(own('start-native-chain-05.ps1')),affected:fact(own('affected-acceptance-04.json')),edge:fact(own('edge-acceptance-01.json')),sourceProof:binding.sourceProof,vsix:binding.vsix,launcherDelta:'Only closure admission pointer/status: failed chain03 is retained; actual current affected66/functional10/security17 closure acceptance04 now required.',signalsRequested:0,native06:'F26a_USER_DEFERRED_NOT_RUN'});
+ console.log(JSON.stringify({status:'APPROVED_EXTRA05_PRELAUNCH_PASS_NOT_LAUNCHED',inputs:1024,affectedNative:66,functional:10,security:17,allowedAttempts:1,native06:'F26a_USER_DEFERRED_NOT_RUN'}));
+})().catch(error=>{console.error(error);process.exitCode=1;});

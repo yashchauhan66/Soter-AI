@@ -1,0 +1,52 @@
+{
+  "status": "PASS_SCOPED_F29_ACTUAL_OWNER_WITHDRAWAL_AND_RESTART",
+  "observedAt": "2026-10-28T16:26:03.945Z",
+  "run": "f29-protection-center-native-20261028T162406Z-0875e7ac",
+  "vsixSha256": "47dfb6a3f475f53b7bb5ca4a21f3ada524a1a6e64622c90f1325e529fa85b253",
+  "checks": [
+    "Actual flag-off clears three trees/lock decorations and restores existing main status action",
+    "Policy digest and PS51 profile receipt preserved across withdrawal and restart",
+    "Actual managed pending read invalidated by original revoke owner, no ALLOWED_ONCE or text",
+    "Actual Sentinel disabled and last restart owner retains denies; report originals restored",
+    "Actual Code and observer child closure+both EOF; all selected affected owners independently closed"
+  ],
+  "primary": {
+    "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/f29-protection-center-native-20261028T162406Z-0875e7ac/primary-results.json",
+    "bytes": 18919,
+    "sha256": "83a0ce69872b9d576fd906de76ee57ccebcebae4f895aa49a51cff54e91e43e7"
+  },
+  "restart": {
+    "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/f29-protection-center-native-20261028T162406Z-0875e7ac/restart-results.json",
+    "bytes": 6913,
+    "sha256": "dfdee8b1b621bb4d552c0970a0109a421598571bc4595105bf1b985c3358118b"
+  },
+  "closureEvidence": [
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/f29-protection-center-native-20261028T162406Z-0875e7ac/primary-owned-close.json",
+      "bytes": 619,
+      "sha256": "4285e15ea8236ae8ca3ecd563703926960cb8b5ba907174c0de1661f6f382ce9"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/f29-protection-center-native-20261028T162406Z-0875e7ac/restart-owned-close.json",
+      "bytes": 619,
+      "sha256": "24f06d10cf3cce76ee868b9c751bdedb0a0998cb12d2cd3dc4c1a9f2a3f32739"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/f29-protection-center-native-20261028T162406Z-0875e7ac/renderer-observer-owned-close.json",
+      "bytes": 613,
+      "sha256": "a4bd0143de70b76926ff5e12bb61e0818c8a932cb44145cc156a4fd2eed32f3c"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/f29-protection-center-native-20261028T162406Z-0875e7ac/renderer-custody-query-owned-close.json",
+      "bytes": 615,
+      "sha256": "38c5e0340c0dc84f7ecc376323049ee9951f1c40ddc741f380c916358586f27f"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/native-run-07-owned-close.json",
+      "bytes": 616,
+      "sha256": "43f13ecdeef0fb52fbbc02d68482ef644bce0230cb5e0230972db509bb209e08"
+    }
+  ],
+  "signalsRequested": 0,
+  "retention": "Synthetic profiles/evidence retained; no process signals, normal profile, real history or OS changes."
+}

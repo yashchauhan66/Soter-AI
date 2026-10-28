@@ -1,0 +1,1123 @@
+﻿TAP version 13
+# Subtest: deprecated aliases stay callable but leave the palette
+    # Subtest: soterai.scanSelectedText is still declared and registered, so nothing that calls it breaks
+    ok 1 - soterai.scanSelectedText is still declared and registered, so nothing that calls it breaks
+      ---
+      duration_ms: 5.2472
+      type: 'test'
+      ...
+    # Subtest: soterai.scanSelectedText is hidden from the palette in favour of soterai.scanSelection
+    ok 2 - soterai.scanSelectedText is hidden from the palette in favour of soterai.scanSelection
+      ---
+      duration_ms: 0.5935
+      type: 'test'
+      ...
+    # Subtest: soterai.scanSelection is the one the palette offers
+    ok 3 - soterai.scanSelection is the one the palette offers
+      ---
+      duration_ms: 0.4259
+      type: 'test'
+      ...
+    # Subtest: soterai.scanGitDiff is still declared and registered, so nothing that calls it breaks
+    ok 4 - soterai.scanGitDiff is still declared and registered, so nothing that calls it breaks
+      ---
+      duration_ms: 0.3525
+      type: 'test'
+      ...
+    # Subtest: soterai.scanGitDiff is hidden from the palette in favour of soterai.scanGitChanges
+    ok 5 - soterai.scanGitDiff is hidden from the palette in favour of soterai.scanGitChanges
+      ---
+      duration_ms: 0.286
+      type: 'test'
+      ...
+    # Subtest: soterai.scanGitChanges is the one the palette offers
+    ok 6 - soterai.scanGitChanges is the one the palette offers
+      ---
+      duration_ms: 0.4198
+      type: 'test'
+      ...
+    # Subtest: soterai.reviewTerminalCommand is still declared and registered, so nothing that calls it breaks
+    ok 7 - soterai.reviewTerminalCommand is still declared and registered, so nothing that calls it breaks
+      ---
+      duration_ms: 0.3433
+      type: 'test'
+      ...
+    # Subtest: soterai.reviewTerminalCommand is hidden from the palette in favour of soterai.checkTerminalCommand
+    ok 8 - soterai.reviewTerminalCommand is hidden from the palette in favour of soterai.checkTerminalCommand
+      ---
+      duration_ms: 0.4728
+      type: 'test'
+      ...
+    # Subtest: soterai.checkTerminalCommand is the one the palette offers
+    ok 9 - soterai.checkTerminalCommand is the one the palette offers
+      ---
+      duration_ms: 0.584
+      type: 'test'
+      ...
+    # Subtest: soterai.choosePolicyPack is still declared and registered, so nothing that calls it breaks
+    ok 10 - soterai.choosePolicyPack is still declared and registered, so nothing that calls it breaks
+      ---
+      duration_ms: 1.0463
+      type: 'test'
+      ...
+    # Subtest: soterai.choosePolicyPack is hidden from the palette in favour of soterai.applyPolicyPack
+    ok 11 - soterai.choosePolicyPack is hidden from the palette in favour of soterai.applyPolicyPack
+      ---
+      duration_ms: 0.3978
+      type: 'test'
+      ...
+    # Subtest: soterai.applyPolicyPack is the one the palette offers
+    ok 12 - soterai.applyPolicyPack is the one the palette offers
+      ---
+      duration_ms: 0.2407
+      type: 'test'
+      ...
+    # Subtest: soterai.openSecurityPanel is still declared and registered, so nothing that calls it breaks
+    ok 13 - soterai.openSecurityPanel is still declared and registered, so nothing that calls it breaks
+      ---
+      duration_ms: 0.2356
+      type: 'test'
+      ...
+    # Subtest: soterai.openSecurityPanel is hidden from the palette in favour of soterai.openControlPanel
+    ok 14 - soterai.openSecurityPanel is hidden from the palette in favour of soterai.openControlPanel
+      ---
+      duration_ms: 0.2355
+      type: 'test'
+      ...
+    # Subtest: soterai.openControlPanel is the one the palette offers
+    ok 15 - soterai.openControlPanel is the one the palette offers
+      ---
+      duration_ms: 0.3441
+      type: 'test'
+      ...
+    # Subtest: soterai.scanMCPAgentTools is still declared and registered, so nothing that calls it breaks
+    ok 16 - soterai.scanMCPAgentTools is still declared and registered, so nothing that calls it breaks
+      ---
+      duration_ms: 0.4388
+      type: 'test'
+      ...
+    # Subtest: soterai.scanMCPAgentTools is hidden from the palette in favour of soterai.scanMCPConfigs
+    ok 17 - soterai.scanMCPAgentTools is hidden from the palette in favour of soterai.scanMCPConfigs
+      ---
+      duration_ms: 0.2986
+      type: 'test'
+      ...
+    # Subtest: soterai.scanMCPConfigs is the one the palette offers
+    ok 18 - soterai.scanMCPConfigs is the one the palette offers
+      ---
+      duration_ms: 0.2618
+      type: 'test'
+      ...
+    # Subtest: soterai.openAIActivityLedger is still declared and registered, so nothing that calls it breaks
+    ok 19 - soterai.openAIActivityLedger is still declared and registered, so nothing that calls it breaks
+      ---
+      duration_ms: 0.2962
+      type: 'test'
+      ...
+    # Subtest: soterai.openAIActivityLedger is hidden from the palette in favour of soterai.openAILedger
+    ok 20 - soterai.openAIActivityLedger is hidden from the palette in favour of soterai.openAILedger
+      ---
+      duration_ms: 0.2465
+      type: 'test'
+      ...
+    # Subtest: soterai.openAILedger is the one the palette offers
+    ok 21 - soterai.openAILedger is the one the palette offers
+      ---
+      duration_ms: 0.2453
+      type: 'test'
+      ...
+    # Subtest: soterai.generateCanaryToken is still declared and registered, so nothing that calls it breaks
+    ok 22 - soterai.generateCanaryToken is still declared and registered, so nothing that calls it breaks
+      ---
+      duration_ms: 0.2245
+      type: 'test'
+      ...
+    # Subtest: soterai.generateCanaryToken is hidden from the palette in favour of soterai.generateCanary
+    ok 23 - soterai.generateCanaryToken is hidden from the palette in favour of soterai.generateCanary
+      ---
+      duration_ms: 0.2271
+      type: 'test'
+      ...
+    # Subtest: soterai.generateCanary is the one the palette offers
+    ok 24 - soterai.generateCanary is the one the palette offers
+      ---
+      duration_ms: 0.194
+      type: 'test'
+      ...
+    1..24
+ok 1 - deprecated aliases stay callable but leave the palette
+  ---
+  duration_ms: 20.2943
+  type: 'suite'
+  ...
+# Subtest: no two palette-visible commands describe the same workflow
+    # Subtest: gives every visible command a distinct normalised title
+    ok 1 - gives every visible command a distinct normalised title
+      ---
+      duration_ms: 5.1995
+      type: 'test'
+      ...
+    1..1
+ok 2 - no two palette-visible commands describe the same workflow
+  ---
+  duration_ms: 5.5571
+  type: 'suite'
+  ...
+# Subtest: one Open Report entry point replaces eighteen show* rows
+    # Subtest: offers a quick pick that lists the reports
+    ok 1 - offers a quick pick that lists the reports
+      ---
+      duration_ms: 0.6829
+      type: 'test'
+      ...
+    # Subtest: points every catalogue entry at a command that exists
+    ok 2 - points every catalogue entry at a command that exists
+      ---
+      duration_ms: 0.7218
+      type: 'test'
+      ...
+    # Subtest: describes each report in one line, so the user can choose without guessing
+    ok 3 - describes each report in one line, so the user can choose without guessing
+      ---
+      duration_ms: 0.5833
+      type: 'test'
+      ...
+    # Subtest: keeps every individual report command registered for automation
+    ok 4 - keeps every individual report command registered for automation
+      ---
+      duration_ms: 0.4195
+      type: 'test'
+      ...
+    # Subtest: lists no duplicate command in the catalogue
+    ok 5 - lists no duplicate command in the catalogue
+      ---
+      duration_ms: 0.5257
+      type: 'test'
+      ...
+    # Subtest: hides the individual report commands it replaces
+    ok 6 - hides the individual report commands it replaces
+      ---
+      duration_ms: 0.4478
+      type: 'test'
+      ...
+    1..6
+ok 3 - one Open Report entry point replaces eighteen show* rows
+  ---
+  duration_ms: 4.1065
+  type: 'suite'
+  ...
+# Subtest: the README stops advertising a command count
+    # Subtest: does not sell the raw number of commands as a feature
+    ok 1 - does not sell the raw number of commands as a feature
+      ---
+      duration_ms: 0.9447
+      type: 'test'
+      ...
+    1..1
+ok 4 - the README stops advertising a command count
+  ---
+  duration_ms: 1.2216
+  type: 'suite'
+  ...
+# Subtest: Command registration parity (\#4)
+    # Subtest: every declared command is registered
+    ok 1 - every declared command is registered
+      ---
+      duration_ms: 6.2642
+      type: 'test'
+      ...
+    # Subtest: every registered command is declared (no orphan handlers)
+    ok 2 - every registered command is declared (no orphan handlers)
+      ---
+      duration_ms: 1.2824
+      type: 'test'
+      ...
+    # Subtest: the three previously-missing commands are still registered
+    ok 3 - the three previously-missing commands are still registered
+      ---
+      duration_ms: 9.7123
+      type: 'test'
+      ...
+    1..3
+ok 5 - Command registration parity (\#4)
+  ---
+  duration_ms: 37.0341
+  type: 'suite'
+  ...
+# Subtest: AI Context Firewall commands (Phases 1–7)
+    # Subtest: all firewall commands are declared AND registered
+    ok 1 - all firewall commands are declared AND registered
+      ---
+      duration_ms: 0.9903
+      type: 'test'
+      ...
+    1..1
+ok 6 - AI Context Firewall commands (Phases 1–7)
+  ---
+  duration_ms: 1.5681
+  type: 'suite'
+  ...
+# Subtest: Workspace Trust (\#5)
+    # Subtest: declares limited untrusted-workspace support
+    ok 1 - declares limited untrusted-workspace support
+      ---
+      duration_ms: 0.8766
+      type: 'test'
+      ...
+    # Subtest: gates cloud connection behind workspace trust
+    ok 2 - gates cloud connection behind workspace trust
+      ---
+      duration_ms: 1.167
+      type: 'test'
+      ...
+    # Subtest: gates the secret vault behind workspace trust
+    ok 3 - gates the secret vault behind workspace trust
+      ---
+      duration_ms: 1.0976
+      type: 'test'
+      ...
+    1..3
+ok 7 - Workspace Trust (\#5)
+  ---
+  duration_ms: 4.5589
+  type: 'suite'
+  ...
+# Subtest: Workspace filesystem containment
+    # Subtest: canonicalizes targets and rejects symlink or junction escapes before vault writes
+    ok 1 - canonicalizes targets and rejects symlink or junction escapes before vault writes
+      ---
+      duration_ms: 0.8447
+      type: 'test'
+      ...
+    1..1
+ok 8 - Workspace filesystem containment
+  ---
+  duration_ms: 1.2601
+  type: 'suite'
+  ...
+# Subtest: Vault safety — dry-run preview + backup + confirm
+    # Subtest: migration backup is encrypted and OUTSIDE the workspace (no plaintext .bak)
+    ok 1 - migration backup is encrypted and OUTSIDE the workspace (no plaintext .bak)
+      ---
+      duration_ms: 1.0028
+      type: 'test'
+      ...
+    # Subtest: migration requires an explicit modal confirmation after previewing
+    ok 2 - migration requires an explicit modal confirmation after previewing
+      ---
+      duration_ms: 1.3368
+      type: 'test'
+      ...
+    # Subtest: vault status/preview surface metadata only — rawValue stays inside the encrypted store
+    ok 3 - vault status/preview surface metadata only — rawValue stays inside the encrypted store
+      ---
+      duration_ms: 1.1202
+      type: 'test'
+      ...
+    1..3
+ok 9 - Vault safety — dry-run preview + backup + confirm
+  ---
+  duration_ms: 4.3486
+  type: 'suite'
+  ...
+# Subtest: Ledger privacy — no raw secrets persisted (\#6)
+    # Subtest: every ledger write goes through sanitizeLedgerEntry / buildLedgerEntry
+    ok 1 - every ledger write goes through sanitizeLedgerEntry / buildLedgerEntry
+      ---
+      duration_ms: 10.8482
+      type: 'test'
+      ...
+    # Subtest: ledger store never references raw content fields
+    ok 2 - ledger store never references raw content fields
+      ---
+      duration_ms: 0.8473
+      type: 'test'
+      ...
+    1..2
+ok 10 - Ledger privacy — no raw secrets persisted (\#6)
+  ---
+  duration_ms: 12.1173
+  type: 'suite'
+  ...
+# Subtest: Telemetry contains no raw content (\#6)
+    # Subtest: telemetry never references redactedText or raw content fields
+    ok 1 - telemetry never references redactedText or raw content fields
+      ---
+      duration_ms: 0.7669
+      type: 'test'
+      ...
+    # Subtest: event payload excludes caller evidence previews and arbitrary detector metadata
+    ok 2 - event payload excludes caller evidence previews and arbitrary detector metadata
+      ---
+      duration_ms: 0.6209
+      type: 'test'
+      ...
+    1..2
+ok 11 - Telemetry contains no raw content (\#6)
+  ---
+  duration_ms: 1.7289
+  type: 'suite'
+  ...
+# Subtest: SecretStorage token hygiene (\#6)
+    # Subtest: token is stored via context.secrets, never logged
+    ok 1 - token is stored via context.secrets, never logged
+      ---
+      duration_ms: 1.3825
+      type: 'test'
+      ...
+    # Subtest: vault key and canary tokens live in SecretStorage, not globalState/logs
+    ok 2 - vault key and canary tokens live in SecretStorage, not globalState/logs
+      ---
+      duration_ms: 0.431
+      type: 'test'
+      ...
+    1..2
+ok 12 - SecretStorage token hygiene (\#6)
+  ---
+  duration_ms: 2.3595
+  type: 'suite'
+  ...
+# Subtest: Launch readiness command surface
+    # Subtest: declares and registers launch-critical command names
+    ok 1 - declares and registers launch-critical command names
+      ---
+      duration_ms: 1.0206
+      type: 'test'
+      ...
+    # Subtest: keeps friendly launch aliases mapped to implemented scanners
+    ok 2 - keeps friendly launch aliases mapped to implemented scanners
+      ---
+      duration_ms: 0.4161
+      type: 'test'
+      ...
+    # Subtest: has build and lint scripts required by release automation
+    ok 3 - has build and lint scripts required by release automation
+      ---
+      duration_ms: 0.2666
+      type: 'test'
+      ...
+    1..3
+ok 13 - Launch readiness command surface
+  ---
+  duration_ms: 2.3053
+  type: 'suite'
+  ...
+# Subtest: Marketplace README media hygiene
+    # Subtest: preserves historical screenshot sources without presenting them as current evidence
+    ok 1 - preserves historical screenshot sources without presenting them as current evidence
+      ---
+      duration_ms: 3.9341
+      type: 'test'
+      ...
+    # Subtest: preserves the historical demo GIF while withdrawing its release reference
+    ok 2 - preserves the historical demo GIF while withdrawing its release reference
+      ---
+      duration_ms: 1.1508
+      type: 'test'
+      ...
+    1..2
+ok 14 - Marketplace README media hygiene
+  ---
+  duration_ms: 5.6069
+  type: 'suite'
+  ...
+# Subtest: Local-first privacy mode
+    # Subtest: declares soterai.privacyMode with local default
+    ok 1 - declares soterai.privacyMode with local default
+      ---
+      duration_ms: 0.9653
+      type: 'test'
+      ...
+    # Subtest: prevents telemetry flush in local mode and untrusted workspaces
+    ok 2 - prevents telemetry flush in local mode and untrusted workspaces
+      ---
+      duration_ms: 2.5802
+      type: 'test'
+      ...
+    # Subtest: health reports never include raw secrets or prompt text
+    ok 3 - health reports never include raw secrets or prompt text
+      ---
+      duration_ms: 0.5091
+      type: 'test'
+      ...
+    # Subtest: privacy report scopes local handling and preserves same-user and unmarked-data limits
+    ok 4 - privacy report scopes local handling and preserves same-user and unmarked-data limits
+      ---
+      duration_ms: 0.8164
+      type: 'test'
+      ...
+    # Subtest: README separates local scanning from provider egress and incomplete custody
+    ok 5 - README separates local scanning from provider egress and incomplete custody
+      ---
+      duration_ms: 1.0009
+      type: 'test'
+      ...
+    # Subtest: trust checklist and product matrix lock the reviewer-facing privacy contract
+    ok 6 - trust checklist and product matrix lock the reviewer-facing privacy contract
+      ---
+      duration_ms: 0.4665
+      type: 'test'
+      ...
+    1..6
+ok 15 - Local-first privacy mode
+  ---
+  duration_ms: 7.2259
+  type: 'suite'
+  ...
+# Subtest: Clipboard safety for firewall handlers (\#1)
+    # Subtest: all firewall clipboard writes go through redactForSharing or a canary token by design
+    ok 1 - all firewall clipboard writes go through redactForSharing or a canary token by design
+      ---
+      duration_ms: 0.7494
+      type: 'test'
+      ...
+    1..1
+ok 16 - Clipboard safety for firewall handlers (\#1)
+  ---
+  duration_ms: 0.9872
+  type: 'suite'
+  ...
+# Subtest: Webview hardening (\#7)
+    # Subtest: all webviews declare a Content-Security-Policy
+    ok 1 - all webviews declare a Content-Security-Policy
+      ---
+      duration_ms: 2.553
+      type: 'test'
+      ...
+    # Subtest: webviews escape finding fields before HTML interpolation
+    ok 2 - webviews escape finding fields before HTML interpolation
+      ---
+      duration_ms: 0.3917
+      type: 'test'
+      ...
+    # Subtest: firewall info webviews disable scripts
+    ok 3 - firewall info webviews disable scripts
+      ---
+      duration_ms: 2.2131
+      type: 'test'
+      ...
+    # Subtest: dashboard message handler keeps a strict command allowlist including new actions
+    ok 4 - dashboard message handler keeps a strict command allowlist including new actions
+      ---
+      duration_ms: 1.3334
+      type: 'test'
+      ...
+    # Subtest: dashboard surfaces the 9+ trust center without overstating enforcement
+    ok 5 - dashboard surfaces the 9+ trust center without overstating enforcement
+      ---
+      duration_ms: 0.6057
+      type: 'test'
+      ...
+    1..5
+ok 17 - Webview hardening (\#7)
+  ---
+  duration_ms: 7.8387
+  type: 'suite'
+  ...
+# Subtest: Enterprise policy export
+    # Subtest: exports a buyer-ready enterprise policy bundle with honest enforcement scope
+    ok 1 - exports a buyer-ready enterprise policy bundle with honest enforcement scope
+      ---
+      duration_ms: 0.999
+      type: 'test'
+      ...
+    1..1
+ok 18 - Enterprise policy export
+  ---
+  duration_ms: 1.2567
+  type: 'suite'
+  ...
+# Subtest: Broker auto-start wiring (activation actually turns protection on)
+    # Subtest: activate() starts the broker, not just constructs one
+    ok 1 - activate() starts the broker, not just constructs one
+      ---
+      duration_ms: 0.7114
+      type: 'test'
+      ...
+    # Subtest: does not await the start, so a slow broker cannot hang activation
+    ok 2 - does not await the start, so a slow broker cannot hang activation
+      ---
+      duration_ms: 0.3967
+      type: 'test'
+      ...
+    # Subtest: exposes an opt-out that is declared, machine-scoped, and restricted
+    ok 3 - exposes an opt-out that is declared, machine-scoped, and restricted
+      ---
+      duration_ms: 0.5455
+      type: 'test'
+      ...
+    # Subtest: never fails silently — every non-started outcome notifies the user
+    ok 4 - never fails silently — every non-started outcome notifies the user
+      ---
+      duration_ms: 0.4289
+      type: 'test'
+      ...
+    # Subtest: withholds the provider key in a restricted workspace
+    ok 5 - withholds the provider key in a restricted workspace
+      ---
+      duration_ms: 0.4744
+      type: 'test'
+      ...
+    1..5
+ok 19 - Broker auto-start wiring (activation actually turns protection on)
+  ---
+  duration_ms: 3.1454
+  type: 'suite'
+  ...
+# Subtest: Local AI Broker, Safe Mode, and Memory Inspector
+    # Subtest: declares and registers every new command
+    ok 1 - declares and registers every new command
+      ---
+      duration_ms: 0.8929
+      type: 'test'
+      ...
+    # Subtest: stores broker/provider tokens in SecretStorage and fixes the host to loopback
+    ok 2 - stores broker/provider tokens in SecretStorage and fixes the host to loopback
+      ---
+      duration_ms: 0.6429
+      type: 'test'
+      ...
+    # Subtest: never injects a token or provider key into a webview
+    ok 3 - never injects a token or provider key into a webview
+      ---
+      duration_ms: 0.8762
+      type: 'test'
+      ...
+    # Subtest: redacts Memory Inspector exports and trust-gates provider configuration
+    ok 4 - redacts Memory Inspector exports and trust-gates provider configuration
+      ---
+      duration_ms: 0.5107
+      type: 'test'
+      ...
+    # Subtest: warns on raw terminals and routes users to controlled broker execution
+    ok 5 - warns on raw terminals and routes users to controlled broker execution
+      ---
+      duration_ms: 0.5025
+      type: 'test'
+      ...
+    # Subtest: surfaces extension isolation through the authenticated broker preflight
+    ok 6 - surfaces extension isolation through the authenticated broker preflight
+      ---
+      duration_ms: 0.4518
+      type: 'test'
+      ...
+    1..6
+ok 20 - Local AI Broker, Safe Mode, and Memory Inspector
+  ---
+  duration_ms: 4.5525
+  type: 'suite'
+  ...
+# Subtest: Command-palette hygiene (clutter control)
+    # Subtest: core commands are always palette-visible (not gated)
+    ok 1 - core commands are always palette-visible (not gated)
+      ---
+      duration_ms: 0.6183
+      type: 'test'
+      ...
+    # Subtest: keeps the default palette to a small set of clear, reversible newcomer workflows
+    ok 2 - keeps the default palette to a small set of clear, reversible newcomer workflows
+      ---
+      duration_ms: 0.3895
+      type: 'test'
+      ...
+    # Subtest: every non-core declared command is gated behind soterai.advancedCommands (or fully hidden)
+    not ok 3 - every non-core declared command is gated behind soterai.advancedCommands (or fully hidden)
+      ---
+      duration_ms: 19.506
+      type: 'test'
+      location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\extension.test.ts:2:29224'
+      failureType: 'testCodeFailure'
+      error: |-
+        These commands should be gated: soterai.openProtectionCenter, soterai.refreshProtectionCenter
+        + actual - expected
+        
+        + [
+        +   'soterai.openProtectionCenter',
+        +   'soterai.refreshProtectionCenter'
+        + ]
+        - []
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected:
+      actual:
+        0: 'soterai.openProtectionCenter'
+        1: 'soterai.refreshProtectionCenter'
+      operator: 'deepStrictEqual'
+      stack: |-
+        TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\extension.test.ts:524:16)
+        Test.runInAsyncScope (node:async_hooks:214:14)
+        Test.run (node:internal/test_runner/test:1047:25)
+        Suite.processPendingSubtests (node:internal/test_runner/test:744:18)
+        Test.postRun (node:internal/test_runner/test:1173:19)
+        Test.run (node:internal/test_runner/test:1101:12)
+        async Suite.processPendingSubtests (node:internal/test_runner/test:744:7)
+      ...
+    # Subtest: the context key is driven by stable and experimental command visibility settings
+    ok 4 - the context key is driven by stable and experimental command visibility settings
+      ---
+      duration_ms: 1.1025
+      type: 'test'
+      ...
+    1..4
+not ok 21 - Command-palette hygiene (clutter control)
+  ---
+  duration_ms: 22.2817
+  type: 'suite'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\extension.test.ts:2:27473'
+  failureType: 'subtestsFailed'
+  error: '1 subtest failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: Onboarding walkthrough (UX)
+    # Subtest: contributes a Getting Started walkthrough with 3 value-first steps
+    ok 1 - contributes a Getting Started walkthrough with 3 value-first steps
+      ---
+      duration_ms: 0.5835
+      type: 'test'
+      ...
+    # Subtest: every walkthrough step points to an existing markdown media file
+    ok 2 - every walkthrough step points to an existing markdown media file
+      ---
+      duration_ms: 2.0244
+      type: 'test'
+      ...
+    # Subtest: every walkthrough command button targets a declared or built-in command
+    ok 3 - every walkthrough command button targets a declared or built-in command
+      ---
+      duration_ms: 0.6985
+      type: 'test'
+      ...
+    # Subtest: declares onWalkthrough activation and a registered openWalkthrough command
+    ok 4 - declares onWalkthrough activation and a registered openWalkthrough command
+      ---
+      duration_ms: 0.477
+      type: 'test'
+      ...
+    # Subtest: opens the walkthrough only once via a globalState onboarding flag
+    ok 5 - opens the walkthrough only once via a globalState onboarding flag
+      ---
+      duration_ms: 0.6238
+      type: 'test'
+      ...
+    1..5
+ok 22 - Onboarding walkthrough (UX)
+  ---
+  duration_ms: 5.6942
+  type: 'suite'
+  ...
+# Subtest: Live inline scanning + Quick Fixes (UX)
+    # Subtest: does not pass a ThemeIcon id as a decoration file URI
+    ok 1 - does not pass a ThemeIcon id as a decoration file URI
+      ---
+      duration_ms: 0.7432
+      type: 'test'
+      ...
+    # Subtest: declares soterai.liveScan.enabled defaulting to on and registers the scanner
+    ok 2 - declares soterai.liveScan.enabled defaulting to on and registers the scanner
+      ---
+      duration_ms: 0.8714
+      type: 'test'
+      ...
+    # Subtest: uses a debounced, local-only scan mapped to a DiagnosticCollection
+    ok 3 - uses a debounced, local-only scan mapped to a DiagnosticCollection
+      ---
+      duration_ms: 0.6241
+      type: 'test'
+      ...
+    # Subtest: skips non-file schemes, oversized files, and excluded globs
+    ok 4 - skips non-file schemes, oversized files, and excluded globs
+      ---
+      duration_ms: 0.4105
+      type: 'test'
+      ...
+    # Subtest: offers redact + copy-safe Quick Fixes and gates the internal fix command
+    ok 5 - offers redact + copy-safe Quick Fixes and gates the internal fix command
+      ---
+      duration_ms: 0.8908
+      type: 'test'
+      ...
+    # Subtest: redaction never writes raw secrets and disposes its timers
+    ok 6 - redaction never writes raw secrets and disposes its timers
+      ---
+      duration_ms: 0.5592
+      type: 'test'
+      ...
+    1..6
+ok 23 - Live inline scanning + Quick Fixes (UX)
+  ---
+  duration_ms: 4.7953
+  type: 'suite'
+  ...
+# Subtest: Clipboard / paste guard (UX)
+    # Subtest: registers scanClipboard (core) and safePaste (advanced) commands
+    ok 1 - registers scanClipboard (core) and safePaste (advanced) commands
+      ---
+      duration_ms: 0.6496
+      type: 'test'
+      ...
+    # Subtest: scans clipboard locally and offers a redacted safe version
+    ok 2 - scans clipboard locally and offers a redacted safe version
+      ---
+      duration_ms: 0.5064
+      type: 'test'
+      ...
+    # Subtest: safe paste can insert a redacted version instead of the raw clipboard
+    ok 3 - safe paste can insert a redacted version instead of the raw clipboard
+      ---
+      duration_ms: 0.349
+      type: 'test'
+      ...
+    # Subtest: never logs the raw clipboard value
+    ok 4 - never logs the raw clipboard value
+      ---
+      duration_ms: 0.3007
+      type: 'test'
+      ...
+    1..4
+ok 24 - Clipboard / paste guard (UX)
+  ---
+  duration_ms: 2.3092
+  type: 'suite'
+  ...
+# Subtest: Security search guardrails
+    # Subtest: does not use console.log in extension source
+    ok 1 - does not use console.log in extension source
+      ---
+      duration_ms: 5.4031
+      type: 'test'
+      ...
+    # Subtest: documents every child process boundary as non-shell fixed argv usage
+    ok 2 - documents every child process boundary as non-shell fixed argv usage
+      ---
+      duration_ms: 9.6229
+      type: 'test'
+      ...
+    1..2
+ok 25 - Security search guardrails
+  ---
+  duration_ms: 15.6349
+  type: 'suite'
+  ...
+# Subtest: Control Panel (consolidated sidebar toggles)
+    # Subtest: declares the control panel as a webview view in the SoterAI sidebar
+    ok 1 - declares the control panel as a webview view in the SoterAI sidebar
+      ---
+      duration_ms: 1.0735
+      type: 'test'
+      ...
+    # Subtest: registers the webview view provider with the matching viewType
+    ok 2 - registers the webview view provider with the matching viewType
+      ---
+      duration_ms: 0.614
+      type: 'test'
+      ...
+    # Subtest: every toggle delegates to a command or setting that actually exists
+    ok 3 - every toggle delegates to a command or setting that actually exists
+      ---
+      duration_ms: 0.5938
+      type: 'test'
+      ...
+    # Subtest: Phase 11: five primary workflows are allowlisted and wired to real commands
+    ok 4 - Phase 11: five primary workflows are allowlisted and wired to real commands
+      ---
+      duration_ms: 0.6886
+      type: 'test'
+      ...
+    # Subtest: uses the central protection state instead of an any-toggle ENFORCED roll-up
+    ok 5 - uses the central protection state instead of an any-toggle ENFORCED roll-up
+      ---
+      duration_ms: 0.9036
+      type: 'test'
+      ...
+    # Subtest: exposes one primary Full Protection action and persistent lockdown recovery
+    ok 6 - exposes one primary Full Protection action and persistent lockdown recovery
+      ---
+      duration_ms: 1.7976
+      type: 'test'
+      ...
+    # Subtest: resolves live-scan and MCP badges from CAPABILITY_REGISTRY (no stronger claim than registry)
+    ok 7 - resolves live-scan and MCP badges from CAPABILITY_REGISTRY (no stronger claim than registry)
+      ---
+      duration_ms: 5.123
+      type: 'test'
+      ...
+    # Subtest: rejects webview messages outside the allowlist
+    ok 8 - rejects webview messages outside the allowlist
+      ---
+      duration_ms: 1.3277
+      type: 'test'
+      ...
+    # Subtest: never sends secrets or raw content to the webview
+    ok 9 - never sends secrets or raw content to the webview
+      ---
+      duration_ms: 1.5215
+      type: 'test'
+      ...
+    1..9
+ok 26 - Control Panel (consolidated sidebar toggles)
+  ---
+  duration_ms: 15.0367
+  type: 'suite'
+  ...
+# Subtest: F29 vscode-extension contributes native center behind a restricted machine flag
+ok 27 - F29 vscode-extension contributes native center behind a restricted machine flag
+  ---
+  duration_ms: 14.9622
+  type: 'test'
+  ...
+# Subtest: F29 soterai-lite contributes native center behind a restricted machine flag
+ok 28 - F29 soterai-lite contributes native center behind a restricted machine flag
+  ---
+  duration_ms: 10.3413
+  type: 'test'
+  ...
+# Subtest: F29 all fixed apply/restore targets exist in the canonical contributed command set
+ok 29 - F29 all fixed apply/restore targets exist in the canonical contributed command set
+  ---
+  duration_ms: 4.2851
+  type: 'test'
+  ...
+# Subtest: F29 three bounded native sections preserve explicit protected paths without file contents
+ok 30 - F29 three bounded native sections preserve explicit protected paths without file contents
+  ---
+  duration_ms: 80.1671
+  type: 'test'
+  ...
+# Subtest: F29 empty workspace and no explicit rules have distinct honest states
+ok 31 - F29 empty workspace and no explicit rules have distinct honest states
+  ---
+  duration_ms: 15.0727
+  type: 'test'
+  ...
+# Subtest: F29 disabled tree withholds cached restrictions and activities
+ok 32 - F29 disabled tree withholds cached restrictions and activities
+  ---
+  duration_ms: 4.8213
+  type: 'test'
+  ...
+# Subtest: F29 untrusted workspace withholds saved paths and action rows
+ok 33 - F29 untrusted workspace withholds saved paths and action rows
+  ---
+  duration_ms: 3.2434
+  type: 'test'
+  ...
+# Subtest: F29 unavailable policy never presents cached restrictions as current
+ok 34 - F29 unavailable policy never presents cached restrictions as current
+  ---
+  duration_ms: 3.8033
+  type: 'test'
+  ...
+# Subtest: F29 evidence MISSING cannot become passing coverage
+ok 35 - F29 evidence MISSING cannot become passing coverage
+  ---
+  duration_ms: 6.4752
+  type: 'test'
+  ...
+# Subtest: F29 evidence INVALID cannot become passing coverage
+ok 36 - F29 evidence INVALID cannot become passing coverage
+  ---
+  duration_ms: 4.2593
+  type: 'test'
+  ...
+# Subtest: F29 evidence MISMATCH cannot become passing coverage
+ok 37 - F29 evidence MISMATCH cannot become passing coverage
+  ---
+  duration_ms: 5.2724
+  type: 'test'
+  ...
+# Subtest: F29 evidence UNAVAILABLE cannot become passing coverage
+ok 38 - F29 evidence UNAVAILABLE cannot become passing coverage
+  ---
+  duration_ms: 3.3931
+  type: 'test'
+  ...
+# Subtest: F29 evidence DISABLED cannot become passing coverage
+ok 39 - F29 evidence DISABLED cannot become passing coverage
+  ---
+  duration_ms: 4.4984
+  type: 'test'
+  ...
+# Subtest: F29 matching report remains reported evidence with no live or independent claim
+ok 40 - F29 matching report remains reported evidence with no live or independent claim
+  ---
+  duration_ms: 9.009
+  type: 'test'
+  ...
+# Subtest: F29 stale matching report is visibly stale and never reported PASS
+ok 41 - F29 stale matching report is visibly stale and never reported PASS
+  ---
+  duration_ms: 6.1964
+  type: 'test'
+  ...
+# Subtest: F29 future or malformed evidence time is not current
+ok 42 - F29 future or malformed evidence time is not current
+  ---
+  duration_ms: 6.6456
+  type: 'test'
+  ...
+# Subtest: F29 activity accepts only finite public types/risk/decision and generated timestamp
+ok 43 - F29 activity accepts only finite public types/risk/decision and generated timestamp
+  ---
+  duration_ms: 8.9199
+  type: 'test'
+  ...
+# Subtest: F29 unknown activity properties never become visible caller text
+ok 44 - F29 unknown activity properties never become visible caller text
+  ---
+  duration_ms: 2.8729
+  type: 'test'
+  ...
+# Subtest: F29 opt-out suppresses activity even if stale events were supplied
+ok 45 - F29 opt-out suppresses activity even if stale events were supplied
+  ---
+  duration_ms: 3.9948
+  type: 'test'
+  ...
+# Subtest: F29 restrictive node text cannot inject codicons, controls or bidi tricks
+ok 46 - F29 restrictive node text cannot inject codicons, controls or bidi tricks
+  ---
+  duration_ms: 7.4824
+  type: 'test'
+  ...
+# Subtest: F29 rows are bounded for large manual rule and activity lists
+ok 47 - F29 rows are bounded for large manual rule and activity lists
+  ---
+  duration_ms: 11.0824
+  type: 'test'
+  ...
+# Subtest: F29 finite UI actions route only existing review/restore owners
+ok 48 - F29 finite UI actions route only existing review/restore owners
+  ---
+  duration_ms: 3.7709
+  type: 'test'
+  ...
+# Subtest: F29 presentation flag uses literal machine/global/default and ignores repository overrides
+ok 49 - F29 presentation flag uses literal machine/global/default and ignores repository overrides
+  ---
+  duration_ms: 34.2452
+  type: 'test'
+  ...
+# Subtest: F29 registers three actual native tree providers and one decoration provider
+ok 50 - F29 registers three actual native tree providers and one decoration provider
+  ---
+  duration_ms: 1118.267
+  type: 'test'
+  ...
+# Subtest: F29 native rows expose keyboard command and accessibility label without HTML
+ok 51 - F29 native rows expose keyboard command and accessibility label without HTML
+  ---
+  duration_ms: 32.0006
+  type: 'test'
+  ...
+# Subtest: F29 native action invokes finite existing owner and preserves cancellation
+ok 52 - F29 native action invokes finite existing owner and preserves cancellation
+  ---
+  duration_ms: 14.2741
+  type: 'test'
+  ...
+# Subtest: F29 presentation off prevents native focus and clears old rows
+ok 53 - F29 presentation off prevents native focus and clears old rows
+  ---
+  duration_ms: 18.3631
+  type: 'test'
+  ...
+# Subtest: F29 native disposal clears provider rows and command registrations
+ok 54 - F29 native disposal clears provider rows and command registrations
+  ---
+  duration_ms: 13.8863
+  type: 'test'
+  ...
+# Subtest: F29 sidebar restriction uses the existing owner's file picker without forwarding a selection
+ok 55 - F29 sidebar restriction uses the existing owner's file picker without forwarding a selection
+  ---
+  duration_ms: 9.7419
+  type: 'test'
+  ...
+# Subtest: F29 session off refuses actions and avoids state reads
+ok 56 - F29 session off refuses actions and avoids state reads
+  ---
+  duration_ms: 204.3113
+  type: 'test'
+  ...
+# Subtest: F29 session dispatches finite command with no caller path or approval arguments
+ok 57 - F29 session dispatches finite command with no caller path or approval arguments
+  ---
+  duration_ms: 9.14
+  type: 'test'
+  ...
+# Subtest: F29 session ignores arbitrary command objects and inherited identifiers
+ok 58 - F29 session ignores arbitrary command objects and inherited identifiers
+  ---
+  duration_ms: 6.3959
+  type: 'test'
+  ...
+# Subtest: F29 thrown backend text becomes fixed failed outcome
+ok 59 - F29 thrown backend text becomes fixed failed outcome
+  ---
+  duration_ms: 4.3509
+  type: 'test'
+  ...
+# Subtest: F29 undefined backend response never acknowledges saved protection
+ok 60 - F29 undefined backend response never acknowledges saved protection
+  ---
+  duration_ms: 6.7786
+  type: 'test'
+  ...
+# Subtest: F29 arbitrary or accessor-backed backend status cannot become acknowledged success
+ok 61 - F29 arbitrary or accessor-backed backend status cannot become acknowledged success
+  ---
+  duration_ms: 4.2326
+  type: 'test'
+  ...
+# Subtest: F29 duplicate action while owner review is pending refuses
+ok 62 - F29 duplicate action while owner review is pending refuses
+  ---
+  duration_ms: 5.4567
+  type: 'test'
+  ...
+# Subtest: F29 an earlier slow refresh cannot overwrite a later snapshot
+ok 63 - F29 an earlier slow refresh cannot overwrite a later snapshot
+  ---
+  duration_ms: 6.2428
+  type: 'test'
+  ...
+# Subtest: F29 opt-out then opt-in invalidates a held old refresh
+ok 64 - F29 opt-out then opt-in invalidates a held old refresh
+  ---
+  duration_ms: 7.5534
+  type: 'test'
+  ...
+# Subtest: F29 disposal prevents held refresh and action completion from publishing
+ok 65 - F29 disposal prevents held refresh and action completion from publishing
+  ---
+  duration_ms: 3.6829
+  type: 'test'
+  ...
+# Subtest: F29 policy failure replaces cached paths with unavailable state
+ok 66 - F29 policy failure replaces cached paths with unavailable state
+  ---
+  duration_ms: 10.9103
+  type: 'test'
+  ...
+# Subtest: F29 restricted workspace permits only view/revoke actions
+ok 67 - F29 restricted workspace permits only view/revoke actions
+  ---
+  duration_ms: 12.2544
+  type: 'test'
+  ...
+# Subtest: F29 actual safe-read outcomes stay finite without retaining returned preview text
+ok 68 - F29 actual safe-read outcomes stay finite without retaining returned preview text
+  ---
+  duration_ms: 9.0624
+  type: 'test'
+  ...
+1..68
+# tests 150
+# suites 26
+# pass 149
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3044.171

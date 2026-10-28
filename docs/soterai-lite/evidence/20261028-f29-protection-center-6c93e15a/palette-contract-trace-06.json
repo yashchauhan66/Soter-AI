@@ -1,0 +1,69 @@
+{
+  "status": "STATIC_EXACT_SHIPPED_MANIFEST_AND_INSTALLED_COMMAND_CONTRACT_TRACE",
+  "commands": [
+    {
+      "id": "soterai.openProtectionCenter",
+      "command": {
+        "command": "soterai.openProtectionCenter",
+        "title": "Open Protection Center",
+        "category": "SoterAI",
+        "icon": "$(shield)"
+      },
+      "menu": [
+        {
+          "command": "soterai.openProtectionCenter",
+          "when": "false"
+        }
+      ]
+    },
+    {
+      "id": "soterai.openControlPanel",
+      "command": {
+        "command": "soterai.openControlPanel",
+        "title": "Open Control Panel",
+        "category": "SoterAI"
+      },
+      "menu": []
+    }
+  ],
+  "codeWorkbench": {
+    "path": "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\e646868227\\resources\\app\\out\\vs\\workbench\\workbench.desktop.main.js",
+    "bytes": 21153550,
+    "sha256": "987e8e58870a4b7f15d01559e96c44a962c71f85b3b77edd5a2560eb24676f8c",
+    "witnesses": [
+      {
+        "term": "Focus on {0} View",
+        "at": 7651403,
+        "excerpt": "on(a);t.add(De.appendMenuItem(O.MenubarViewMenu,{command:{id:n,title:e.openCommandActionDescriptor.mnemonicTitle},group:c===0?\"3_sidebar\":c===2?\"4_auxbar\":\"5_panel\",when:D.has(`${e.id}.active`),order:e.openCommandActionDescriptor.order??Number.MAX_VALUE}))}}return t}registerFocusViewAction(e,t){return V(class extends j{constructor(){let n=H(28683,\"Focus on {0} View\",e.name.value);super({id:e.focusCommand?e.focusCommand.id:`${e.id}.focus`,title:n,category:t,menu:[{id:O.CommandPalette,when:e.when}],keybinding:{when:D.has(`${e.id}.active`),weight:200,primary:e.focusCommand?.keybindings?.primary,secondary:e.focusCommand?.keybindings?.secondary,linux:e.focusCommand?.keybindings?.linux,mac:e.focusCommand?.keybindings?.mac,win:e.focusCommand?.keybindings?.win},metadata:{description:n.value,args:[{name:\"focusOptions\",description:\"Focus Options\",schema:{type:\"object\",properties:{preserveFocus:{type:\"boolean\",default:!1}}}}]}})}run(n,r){n.get(pi).openView(e.id,!r?.preserveFocus)}})}registerReset"
+      },
+      {
+        "term": "focusView",
+        "at": 8862792,
+        "excerpt": "terIfOutsideViewport(e){let t=this.getViewScrollTop(),i=this.getViewScrollBottom();if(e<t||e>i){let n=Math.max(0,e-this.view.renderHeight/2);this.view.setScrollTop(n)}}_revealInCenterIfOutsideViewport(e){this._revealInternal(e,!0,1)}domElementOfElement(e){let t=this._getViewIndexUpperBound(e);return t>=0&&t<this.length?this.view.domElement(t):null}focusView(){this.view.domNode.focus()}triggerScrollFromMouseWheelEvent(e){this.view.delegateScrollFromMouseWheelEvent(e)}delegateVerticalScrollbarPointerDown(e){this.view.delegateVerticalScrollbarPointerDown(e)}isElementAboveViewport(e){return this.view.elementTop(e)+this.view.elementHeight(e)<this.scrollTop}updateElementHeight2(e,t,i=null){let n=this._getViewIndexUpperBound(e);if(n===void 0||n<0||n>=this.length)return;if(this.isElementAboveViewport(n)){let l=this.elementHeight(e)-t;this._webviewElement&&q.once(this.view.onWillScroll)(()=>{let u=parseInt(this._webviewElement.domNode.style.top,10);PKr(this._webviewElement.domNode)?this._webvie"
+      },
+      {
+        "term": "focusCommand",
+        "at": 5738526,
+        "excerpt": "ll;if(!e){let t=he.as(xr.ViewContainersRegistry).registerViewContainer({id:am,title:V_t,ctorDescriptor:new ci(tu,[am,{mergeViewWithContainerWhenSingleView:!0}]),storageId:Dmn,hideIfEmpty:!0,icon:Egn,order:10},1);he.as(xr.ViewsRegistry).registerViews([{id:am,name:V_t,canToggleVisibility:!1,ctorDescriptor:new ci(D$e),canMoveView:!0,containerIcon:Egn,focusCommand:{id:\"workbench.action.focusCommentsPanel\"}}],t)}this.registerViewListeners(e)}setComments(){[...this._commentControllers.keys()].forEach(e=>{let t=this._commentControllers.get(e).getAllComments();if(t.length){let i=this.getHandler(e);this._commentService.setWorkspaceComments(i,t)}})}registerViewOpenedListener(){this._openViewListener.value||(this._openViewListener.value=this._viewsService.onDidChangeViewVisibility(e=>{e.id===am&&e.visible&&(this.setComments(),this._openViewListener&&this._openViewListener.dispose())}))}registerViewListeners(e){e||this.registerViewOpenedListener(),this._onChangeContainerListener.value||(this._onCh"
+      },
+      {
+        "term": "viewDescriptor.focusCommand",
+        "at": -1,
+        "excerpt": null
+      }
+    ]
+  },
+  "productionRoute": "        vscode.commands.registerCommand(\"soterai.openControlPanel\", async () => {\r\n            if (protectionCenterEnabled()) return vscode.commands.executeCommand(\"soterai.openProtectionCenter\");\r\n            // Reveal the consolidated Control Panel webview in the SoterAI sidebar.\r\n            await vscode.commands.executeCommand(\"soterai-control-panel.focus\");\r\n        })\r",
+  "observedFailure": {
+    "focused": true,
+    "activeTag": "INPUT",
+    "activeRole": null,
+    "quickInput": [
+      {
+        "text": "5 Results\nView: Set Panel Alignment to Center\nsimilar commands\nSoterAI: Open Control Panel\nSoterAI: Open Getting Started Walkthrough\nSoterAI: Open Redacted AI Preview\nSoterAI: Open Report",
+        "visible": true,
+        "input": ">SoterAI: Open Protection Center"
+      }
+    ]
+  }
+}

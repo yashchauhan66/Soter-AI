@@ -1,0 +1,70 @@
+{
+  "status": "STATIC_LOCAL_PS_HELPER_CLOSURE_PASS_NOT_NATIVE",
+  "observedAt": "2026-10-28T13:05:56.576Z",
+  "copies": [
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-functional10-01.ps1",
+        "bytes": 10635,
+        "sha256": "e825348e7b21812d11fcf390922cfa9c2953672904fd396b36eb835a62bb0931"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/affected-functional10-01.ps1",
+        "bytes": 10635,
+        "sha256": "b7a22c9fbbbea66e17fdcdedb45815e27ef08be0ec29afc66797ff3c40ca74ab"
+      }
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-security17-01.ps1",
+        "bytes": 11993,
+        "sha256": "3e2091c3d9ea6291f64a091f7dc68d92855ea4145231c394a82f777f70d4786c"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/affected-security17-01.ps1",
+        "bytes": 11993,
+        "sha256": "3ac03b0892b57936549b22e215122823f3a16225e40fb0c1f1d44d0271acdd33"
+      }
+    }
+  ],
+  "checked": [
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/affected-editor-01.ps1",
+      "bytes": 18585,
+      "sha256": "9c57adc08155a6320f3f3c7917a170be93c928c084f9c200052570f635cff0e6"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/affected-functional-security-01.ps1",
+      "bytes": 9680,
+      "sha256": "8de70a6de9d10058f1e397623e156b21badba92a066b0596ffc81ef1c9b213cc"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/affected-functional10-01.ps1",
+      "bytes": 10635,
+      "sha256": "b7a22c9fbbbea66e17fdcdedb45815e27ef08be0ec29afc66797ff3c40ca74ab"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/affected-native-binding-01.ps1",
+      "bytes": 5526,
+      "sha256": "c27abc21c23900284dcedefd4e2c937732cce87495d52e1c87738756d1112699"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/affected-preparation-pipe-ownership-01.ps1",
+      "bytes": 4180,
+      "sha256": "246b0ccdb2457fd80f560770b129a1fde67d5d4212e8eae200f965dffd69698c"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/affected-ps51-01.ps1",
+      "bytes": 18581,
+      "sha256": "b2a301df3e0b5cf8f45cc343bd1a268ffcec7158a6f27cd4ff1616da446da125"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/affected-security17-01.ps1",
+      "bytes": 11993,
+      "sha256": "3ac03b0892b57936549b22e215122823f3a16225e40fb0c1f1d44d0271acdd33"
+    }
+  ],
+  "cause": "Functional/security wrapper01 refused before Code: two accepted child PS1 launchers were omitted from the first selected-helper materialization. Original missing-file failure retained. Copy only original helpers/rebind marker; no product/test oracle/deadline change.",
+  "native": "NOT_RUN_BY_THIS_SCRIPT",
+  "signalsRequested": 0
+}

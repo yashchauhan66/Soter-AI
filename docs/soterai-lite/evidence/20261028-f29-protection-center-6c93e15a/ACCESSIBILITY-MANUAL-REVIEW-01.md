@@ -1,0 +1,10 @@
+# Retained human accessibility checks
+
+Exact object: F29 attempt02 VSIX SHA256 `47dfb6a3f475f53b7bb5ca4a21f3ada524a1a6e64622c90f1325e529fa85b253`, frontend `77b6b476977772da61abef337010536acf3f25e98a5cbd7c44e0e41ede26bf8a`. Installed axe4.12.1 in real pinned Edge produced zero violations in standard, forced-colors and reduced-motion modes. Raw incomplete nodes remain in `retained-edge-axe-01/`; this is an automated snapshot result with manual review outstanding.
+
+- All three modes flag one `aria-prohibited-attr` item: the masked synthetic example uses `<pre aria-label="Synthetic masked environment example">` without an explicit supported role. Axe requests manual review of label support. The original L6 real screen-reader pass must check the example's announcement, context and readable key names; this has not been supplied or promoted to PASS.
+- Forced-colors mode flags104 `color-contrast` incomplete nodes; one reported computed white-on-white1:1. The retained actual rendered PNG visibly shows white/gray text on black. The computation/rendering discrepancy is UNVERIFIED; an image inspection is not a measured contrast or assistive-technology certification. Keep the raw data and compare the actual supported system palette in the original L6 usability/screen-reader checks.
+
+The screenshot of the actual Code host also shows the three native named trees and the rendered legacy Project Privacy page. Its webview frame DOM was not attached by the observer, so live-frame semantic coverage remains unobserved. The Edge audit uses exact owner HTML and explicitly recorded actual workbench CSS variables, with no fabricated VS Code bridge or button execution.
+
+The native automated keyboard flow is a separate current required gate, still INCOMPLETE pending one explicitly authorized extra05 run. These manual items follow the existing work card's distinction between automated native/browser checks and later real screen-reader/usability evidence. No complete-accessibility, human, independent-review or coverage-score claim is made here.

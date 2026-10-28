@@ -939,13 +939,21 @@
     {
       "id": "F29",
       "title": "One Protection Center.",
-      "status": "ACTIVE",
+      "status": "VERIFYING",
       "result": "INCOMPLETE",
       "requires": [
         "F27"
       ],
       "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
-      "startCondition": "Existing priority order selects F29 only after actual F27 source1004 and separate transition byte proof PASS. No production before the barrier."
+      "startCondition": "Existing priority order selects F29 only after actual F27 source1004 and separate transition byte proof PASS. No production before the barrier.",
+      "flag": "soterai.lite.protectionCenter",
+      "progressEvidence": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/progress-11.json",
+      "executionDecision": "Declared scoped gates PASS: current1024/full4421zeroFAIL/backend143PASS1SKIP/exactVSIX47df/content/native30+actualkeyboard3trees/arrows/revoke/Enter/Escape/highcontrast/reducedmotion/Edge3modeszeroViolations/affected66/functional10/security17unchanged/actualwithdrawal. AllCode+observers natural0/EOF/no signals. Explicitextra07 consumed; prior05/06failures retained. Local scopedsource+transition commits/rawbyteproof required before F30. Human/manual accessibility and F26a06 deferred remain.",
+      "acceptanceEvidence": {
+        "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/acceptance-01.json",
+        "bytes": 46558,
+        "sha256": "2b9952db3c76b458f0b0355f8f668542102c12818c60f795e7c5eb9584dd3dcb"
+      }
     },
     {
       "id": "F30",
@@ -1083,5 +1091,10 @@
     "sha256": "3b8a1539dfbb0b6c0a89df15923c46bfcfaf5f39f5ce1ed47b7cc0647a99cd5d",
     "status": "SOURCE_1004_EXACT_BYTES_PASS_SEPARATE_TRANSITION_REQUIRED_BEFORE_F29",
     "transitionProof": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/f27-transition-byte-proof-01.json"
+  },
+  "f29LatestCheckpoint": {
+    "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/progress-11.json",
+    "bytes": 2017,
+    "sha256": "195fa79d89a6ab0c63740ec9a10c89508cdfef326210228900b8c1e10f914507"
   }
 }

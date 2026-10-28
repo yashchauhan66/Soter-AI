@@ -1,0 +1,147 @@
+{
+  "schemaVersion": 1,
+  "status": "PREPARED_STATIC_LOCAL_INVENTORY_NOT_ACCESSIBILITY_ACCEPTANCE",
+  "observedAt": "2026-10-28T07:33:25.223Z",
+  "independence": "LOW_SAME_LINEAGE",
+  "browserLaunched": false,
+  "editorLaunched": false,
+  "networkRequests": 0,
+  "signals": 0,
+  "versions": {
+    "playwright": "1.61.1",
+    "axe": "4.12.1",
+    "edgeFileVersionObserved": "157.0.4341.24",
+    "codePriorPinVersion": "1.143.1"
+  },
+  "pins": [
+    {
+      "path": "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe",
+      "bytes": 5107528,
+      "sha256": "45522ea7ec518bd704a7a706921666434efc96c471ecc05d4e532b29491931e1"
+    },
+    {
+      "path": "C:/Program Files (x86)/Microsoft/Edge/Application/157.0.4341.24/msedge.dll",
+      "bytes": 357676360,
+      "sha256": "5284426707afc4646fc2a5843a52315d03f5ffff575b34a151170cd45bfd3284"
+    },
+    {
+      "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\playwright\\package.json",
+      "bytes": 1559,
+      "sha256": "6b840268612656f0639fb7d68782e8353bdf11518589d30ddf66f283c2670ed5"
+    },
+    {
+      "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\playwright-core\\package.json",
+      "bytes": 876,
+      "sha256": "759e376f995bf39edd4810d699b99469bab1d7428b6fbc78d41912f367df7ba9"
+    },
+    {
+      "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\playwright-core\\lib\\coreBundle.js",
+      "bytes": 3352341,
+      "sha256": "6be5c2ea035554e9b184b1dbc7aa5e7f1fb428dd1b5c202022858dcfae9bee27"
+    },
+    {
+      "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\axe-core\\package.json",
+      "bytes": 7196,
+      "sha256": "4bbbae790b390b5d431e2c47c3bdef6396e9ece9fb6a33dd8d442784114c39ef"
+    },
+    {
+      "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\axe-core\\axe.min.js",
+      "bytes": 572599,
+      "sha256": "66a8aaa95a8b044a7fd74a5435873bf04ff65a1ca75567c921b7509742085a14"
+    },
+    {
+      "path": "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\e646868227\\resources\\app\\out\\vs\\workbench\\workbench.desktop.main.js",
+      "bytes": 21153550,
+      "sha256": "987e8e58870a4b7f15d01559e96c44a962c71f85b3b77edd5a2560eb24676f8c"
+    },
+    {
+      "path": "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\e646868227\\resources\\app\\extensions\\theme-defaults\\package.json",
+      "bytes": 1495,
+      "sha256": "1188ab40303da2345797c509f81c87c3e168249e50009bdec24a1ea28b515bb4"
+    },
+    {
+      "path": "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\e646868227\\resources\\app\\extensions\\theme-defaults\\themes\\hc_black.json",
+      "bytes": 7191,
+      "sha256": "1551bcb764405d8dc0d8945aa16701bd0602d4c217503e4c22c1dcaf8c939e59"
+    },
+    {
+      "path": "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\e646868227\\resources\\app\\extensions\\theme-defaults\\themes\\hc_light.json",
+      "bytes": 8886,
+      "sha256": "1e9f335cc039264ed7ae5b32e3c23fa6d93731dd30bcd1c3e37ce91a07ae5ed7"
+    }
+  ],
+  "staticWitnesses": {
+    "playwright": [
+      {
+        "term": "async function launchProcess(options)",
+        "offset": 331885,
+        "present": true,
+        "excerpt": "cessHandlers[handler]);\n  installedHandlers.clear();\n}\nasync function launchProcess(options) {\n  const stdio = options.stdio === \"pipe\" ? [\"ignore\", \"pipe\", \"pipe\", \"pipe\", \"pipe\"] : [\"pi"
+      },
+      {
+        "term": "taskkill /pid",
+        "offset": 335768,
+        "present": true,
+        "excerpt": "       const taskkillProcess = childProcess.spawnSync(`taskkill /pid ${spawnedProcess.pid} /T /F`, { shell: true });\n          const [stdout2, stderr2] = [taskkill"
+      },
+      {
+        "term": "async _connectOverCDPInternal",
+        "offset": 2074522,
+        "present": true,
+        "excerpt": "rogress2, params2.endpointURL, params2);\n      }\n      async _connectOverCDPInternal(progress2, endpointURL, options, onClose) {\n        let headersMap;\n        if (options.header"
+      },
+      {
+        "term": "chromeTransport.close()",
+        "offset": -1,
+        "present": false,
+        "excerpt": null
+      }
+    ],
+    "workbench": [
+      {
+        "term": "workbench.reduceMotion",
+        "offset": 6148761,
+        "present": true,
+        "excerpt": "mber\",description:d(9643,null),default:500,minimum:0},\"workbench.reduceMotion\":{type:\"string\",description:d(9652,null),enumDescriptions:[d(9655,null),d(9654,null),d(9653,nu"
+      },
+      {
+        "term": "prefers-reduced-motion",
+        "offset": 2391868,
+        "present": true,
+        "excerpt": ".monaco-reduce-motion\")||xe(this.domNode).matchMedia(\"(prefers-reduced-motion: reduce)\").matches)return;let i=this._getRowElement(this._list.indexOf(e));if(!i)return;let n="
+      },
+      {
+        "term": "monaco-reduce-motion",
+        "offset": 2391814,
+        "present": true,
+        "excerpt": "Top=n)}_animateItemMove(e,t){if(this.domNode.closest(\".monaco-reduce-motion\")||xe(this.domNode).matchMedia(\"(prefers-reduced-motion: reduce)\").matches)return;let i=this._"
+      },
+      {
+        "term": "hc-black",
+        "offset": 1132153,
+        "present": true,
+        "excerpt": "itch(s){case\"dark\":return\"vs-dark\";case\"hcDark\":return\"hc-black\";case\"hcLight\":return\"hc-light\";default:return\"vs\"}}var Fji={ThemingContribution:\"base.contrib"
+      },
+      {
+        "term": "role",
+        "offset": 287420,
+        "present": true,
+        "excerpt": "iv\");return t.className=\"monaco-alert\",t.setAttribute(\"role\",\"alert\"),t.setAttribute(\"aria-atomic\",\"true\"),fCe.appendChild(t),t};gjt=o(),oGi=o();let e=()="
+      },
+      {
+        "term": "treeitem",
+        "offset": 2720134,
+        "present": true,
+        "excerpt": "ole?t=>e.accessibilityProvider.getRole(t.element):()=>\"treeitem\",getAriaLabel(t){return e.accessibilityProvider.getAriaLabel(t.element)},getWidgetAriaLabel(){"
+      }
+    ]
+  },
+  "acceptance": {
+    "nativeTreeKeyboard": "NOT_RUN",
+    "nativeTreeHighContrast": "NOT_RUN",
+    "nativeTreeReducedMotion": "NOT_RUN",
+    "edgeAxeAdjacentShippedWebview": "NOT_RUN_UNBOUND",
+    "humanScreenReader": "NOT_RUN_HUMAN_REQUIRED_LATER",
+    "note": "No DOM mock, duplicate product instance, new renderer, old artifact PASS transfer, or native command invocation is counted as keyboard execution."
+  }
+}

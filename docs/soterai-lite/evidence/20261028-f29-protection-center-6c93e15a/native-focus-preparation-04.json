@@ -1,0 +1,28 @@
+{
+  "status": "PREPARED_NOT_RUN_LAST_NORMAL_IMPROVEMENT",
+  "observedAt": "2026-10-28T12:31:42.316Z",
+  "before": {
+    "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/f29-native03.host.ts",
+    "bytes": 58440,
+    "sha256": "e6b26882625a209d23dd2474f44f878c73d32be44df64de13a51aa7c68946bae"
+  },
+  "after": {
+    "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/f29-native04.host.ts",
+    "bytes": 58729,
+    "sha256": "64971fecb241873a12112607b31dd3682f4c6023fd9c4d30d6565b043a7934fb"
+  },
+  "observer": {
+    "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/run-code-renderer-observer-04.cjs",
+    "bytes": 19531,
+    "sha256": "05e334c934aabddb4ba1493214a858f12325ff5e90d71cfc1fee21e9b9f1e382"
+  },
+  "scope": "Actual owner opens a focused ViewColumn.One privacy panel before oldready marker. Capture unchanged HTML first, restore actual existing native center focus through its owner API before readiness, then real keyboard-only observer begins. page.bringToFront activates only owned target; focus oracle requires actual active descendant inside tree (not stale aria-activedescendant). Real palette/failure metadata + screenshot retained.",
+  "productionChanges": 0,
+  "vsix": "47dfb6a3f475f53b7bb5ca4a21f3ada524a1a6e64622c90f1325e529fa85b253",
+  "nativeOracles": {
+    "primary": 25,
+    "restart": 5
+  },
+  "priorNative30": "ACTUAL_API30_PASS_SEPARATE_RENDERER_FAIL_RETAINED",
+  "signalsRequested": 0
+}

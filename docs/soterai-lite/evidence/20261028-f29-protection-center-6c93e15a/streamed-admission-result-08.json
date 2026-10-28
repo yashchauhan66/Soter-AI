@@ -1,0 +1,89 @@
+{
+  "status": "PASS_READ_ONLY_CURRENT_FULL_ADMISSION_ALL11_VENDOR_PINS_STREAMED_NO_HOST_BROWSER_LAUNCH",
+  "observedAt": "2026-10-28T16:21:21.046Z",
+  "sourceCount": 1024,
+  "vsix": {
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-f29-20261028-attempt02.vsix",
+    "bytes": 1725456,
+    "sha256": "47dfb6a3f475f53b7bb5ca4a21f3ada524a1a6e64622c90f1325e529fa85b253"
+  },
+  "allVendorPins": [
+    {
+      "path": "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe",
+      "bytes": 5107528,
+      "sha256": "45522ea7ec518bd704a7a706921666434efc96c471ecc05d4e532b29491931e1",
+      "maximumReadBuffer": 65536
+    },
+    {
+      "path": "C:/Program Files (x86)/Microsoft/Edge/Application/157.0.4341.24/msedge.dll",
+      "bytes": 357676360,
+      "sha256": "5284426707afc4646fc2a5843a52315d03f5ffff575b34a151170cd45bfd3284",
+      "maximumReadBuffer": 65536
+    },
+    {
+      "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\playwright\\package.json",
+      "bytes": 1559,
+      "sha256": "6b840268612656f0639fb7d68782e8353bdf11518589d30ddf66f283c2670ed5",
+      "maximumReadBuffer": 1560
+    },
+    {
+      "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\playwright-core\\package.json",
+      "bytes": 876,
+      "sha256": "759e376f995bf39edd4810d699b99469bab1d7428b6fbc78d41912f367df7ba9",
+      "maximumReadBuffer": 877
+    },
+    {
+      "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\playwright-core\\lib\\coreBundle.js",
+      "bytes": 3352341,
+      "sha256": "6be5c2ea035554e9b184b1dbc7aa5e7f1fb428dd1b5c202022858dcfae9bee27",
+      "maximumReadBuffer": 65536
+    },
+    {
+      "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\axe-core\\package.json",
+      "bytes": 7196,
+      "sha256": "4bbbae790b390b5d431e2c47c3bdef6396e9ece9fb6a33dd8d442784114c39ef",
+      "maximumReadBuffer": 7197
+    },
+    {
+      "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\axe-core\\axe.min.js",
+      "bytes": 572599,
+      "sha256": "66a8aaa95a8b044a7fd74a5435873bf04ff65a1ca75567c921b7509742085a14",
+      "maximumReadBuffer": 65536
+    },
+    {
+      "path": "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\e646868227\\resources\\app\\out\\vs\\workbench\\workbench.desktop.main.js",
+      "bytes": 21153550,
+      "sha256": "987e8e58870a4b7f15d01559e96c44a962c71f85b3b77edd5a2560eb24676f8c",
+      "maximumReadBuffer": 65536
+    },
+    {
+      "path": "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\e646868227\\resources\\app\\extensions\\theme-defaults\\package.json",
+      "bytes": 1495,
+      "sha256": "1188ab40303da2345797c509f81c87c3e168249e50009bdec24a1ea28b515bb4",
+      "maximumReadBuffer": 1496
+    },
+    {
+      "path": "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\e646868227\\resources\\app\\extensions\\theme-defaults\\themes\\hc_black.json",
+      "bytes": 7191,
+      "sha256": "1551bcb764405d8dc0d8945aa16701bd0602d4c217503e4c22c1dcaf8c939e59",
+      "maximumReadBuffer": 7192
+    },
+    {
+      "path": "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\e646868227\\resources\\app\\extensions\\theme-defaults\\themes\\hc_light.json",
+      "bytes": 8886,
+      "sha256": "1e9f335cc039264ed7ae5b32e3c23fa6d93731dd30bcd1c3e37ce91a07ae5ed7",
+      "maximumReadBuffer": 8887
+    }
+  ],
+  "maximumVendorBuffer": 65536,
+  "originalFailure": {
+    "stage": "inventory.pins verification at accessibility-binding01 line74",
+    "error": "UNKNOWN: unknown error, read",
+    "exactFile": "UNESTABLISHED",
+    "cause": "UNESTABLISHED; full read allocates entire file, including357676360-byte Edge DLL. Bounded reads remove this allocation but do not prove the original OS error cause."
+  },
+  "priorFixture07": "2PASS4FAIL; Windows lstat.dev0 differs from fstat.dev volume number.08 compares path stats with path and descriptor stats with descriptor, retaining all original path/stat guards plus fd stability.",
+  "componentChecks": 6,
+  "native06": "F26a_USER_DEFERRED_NOT_RUN",
+  "signalsRequested": 0
+}
