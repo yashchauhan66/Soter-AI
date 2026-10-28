@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "phase": "restart",
+  "syntheticOnly": true,
+  "hostVersion": "1.143.1",
+  "extensionBundleSha256": "7d75cea01f70f1a3f0c892539b8b8b478c6393253111d28cc381addb58fddd53",
+  "currentDeveloperBundleSha256": "7d75cea01f70f1a3f0c892539b8b8b478c6393253111d28cc381addb58fddd53",
+  "hostProbeSha256": "a13752ba5a709179447aa68e9d8b336030f0df1be3d2a94e692e7f65f3302e14",
+  "observations": [
+    {
+      "id": "F22G-N01",
+      "scope": "Restart reuses keys/ledger and keeps exact masked source without startup read",
+      "status": "PASS"
+    },
+    {
+      "id": "F22G-N02",
+      "scope": "No stale family finding authority survives restart",
+      "status": "PASS"
+    },
+    {
+      "id": "F22G-N03",
+      "scope": "Actual canonical encrypted backup command recovers Editor after restart disclosure",
+      "status": "PASS"
+    },
+    {
+      "id": "F22G-N04",
+      "scope": "Fresh native review reestablishes two metadata findings after explicit recovery",
+      "status": "PASS"
+    }
+  ],
+  "passed": 4,
+  "failed": 0,
+  "notRun": 0,
+  "sourceDocumentCalls": 0,
+  "sourceDocumentEvents": 0,
+  "secretStorageStores": 0,
+  "reviews": [
+    {
+      "action": "Restore raw values",
+      "safe": true
+    },
+    {
+      "action": "Analyze saved project files",
+      "safe": true
+    }
+  ],
+  "metadataDocuments": 2,
+  "trace": [
+    {
+      "event": "command-start-editorSecretScannerStatus",
+      "milliseconds": 2229.808
+    },
+    {
+      "event": "command-end-editorSecretScannerStatus",
+      "milliseconds": 2232.4885000000004,
+      "status": "OWNER_REVIEW_REQUIRED"
+    },
+    {
+      "event": "command-start-reviewEditorSecretVault",
+      "milliseconds": 2236.2197000000006
+    },
+    {
+      "event": "command-end-reviewEditorSecretVault",
+      "milliseconds": 2238.6858,
+      "status": "REVIEW_FILES_FIRST"
+    },
+    {
+      "event": "command-start-restoreFileFromBackup",
+      "milliseconds": 2238.9720000000007
+    },
+    {
+      "event": "command-end-restoreFileFromBackup",
+      "milliseconds": 2612.0298000000003,
+      "status": "VOID"
+    },
+    {
+      "event": "command-start-reviewEditorSecrets",
+      "milliseconds": 2616.4491000000007
+    },
+    {
+      "event": "command-end-reviewEditorSecrets",
+      "milliseconds": 3346.2201000000005,
+      "status": "ANALYZED",
+      "files": 1,
+      "findings": 3
+    },
+    {
+      "event": "command-start-openHygieneExposureLedger",
+      "milliseconds": 3346.2767000000003
+    },
+    {
+      "event": "command-end-openHygieneExposureLedger",
+      "milliseconds": 4072.262100000001,
+      "status": "METADATA"
+    }
+  ],
+  "independence": "LOW",
+  "ownerPresence": "SCRIPTED_NATIVE_API_DECISIONS_NOT_HUMAN_REVIEW",
+  "notTested": [
+    "Config application/variable resolution/task/debug/client/shell execution and credential validity",
+    "Other config filenames/expressions, user settings and dynamic evaluation",
+    "Human usability/accessibility",
+    "Live credentials or provider rotation",
+    "OS custody/unmanaged native reads/uploads"
+  ]
+}

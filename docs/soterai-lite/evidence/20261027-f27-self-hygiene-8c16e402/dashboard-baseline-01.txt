@@ -1,0 +1,54 @@
+﻿TAP version 13
+# Subtest: F27 actual dashboard rejection with owner flag false withholds caller text
+not ok 1 - F27 actual dashboard rejection with owner flag false withholds caller text
+  ---
+  duration_ms: 4.0982
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261027-f27-self-hygiene-8c16e402\\dashboard-boundary-01.test.ts:2:1216'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input was expected to not match the regular expression /F27_SYNTHETIC_UNKNOWN_DASHBOARD_8c16e402/. Input:
+    
+    '[["[SoterAI Dashboard] Rejected unknown webview message command: F27_SYNTHETIC_UNKNOWN_DASHBOARD_8c16e402"]]'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: '[["[SoterAI Dashboard] Rejected unknown webview message command: F27_SYNTHETIC_UNKNOWN_DASHBOARD_8c16e402"]]'
+  operator: 'doesNotMatch'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261027-f27-self-hygiene-8c16e402\dashboard-boundary-01.test.ts:20:16)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F27 actual dashboard rejection with owner flag true withholds caller text
+not ok 2 - F27 actual dashboard rejection with owner flag true withholds caller text
+  ---
+  duration_ms: 0.5965
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261027-f27-self-hygiene-8c16e402\\dashboard-boundary-01.test.ts:2:1216'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input was expected to not match the regular expression /F27_SYNTHETIC_UNKNOWN_DASHBOARD_8c16e402/. Input:
+    
+    '[["[SoterAI Dashboard] Rejected unknown webview message command: F27_SYNTHETIC_UNKNOWN_DASHBOARD_8c16e402"]]'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: '[["[SoterAI Dashboard] Rejected unknown webview message command: F27_SYNTHETIC_UNKNOWN_DASHBOARD_8c16e402"]]'
+  operator: 'doesNotMatch'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261027-f27-self-hygiene-8c16e402\dashboard-boundary-01.test.ts:20:16)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 0
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1137.7549

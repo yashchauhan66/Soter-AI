@@ -1,0 +1,630 @@
+{
+  "status": "PREPARED_UNBOUND_NOT_EXECUTED",
+  "observedAt": "2026-10-27T14:32:54.507Z",
+  "sourceManifest": {
+    "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-preparation-source-provenance-01.json",
+    "bytes": 67190,
+    "sha256": "52c3be91a274917deeaf2592f13232e51c2263c935684cbb3c1299109f2d88ae"
+  },
+  "families": [
+    {
+      "id": "logs",
+      "assertions": 25,
+      "phases": 2,
+      "helperSource": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-logs-native-04.template.ps1",
+      "helperOutput": "affected-preparation-logs-01.template.ps1",
+      "acceptedDriver": {
+        "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-logs-host.js",
+        "bytes": 43848,
+        "sha256": "4f014043b9ff4a46dadb4f29403e7f801a3e6cc429adb8ea2d99fb12bd48c251"
+      },
+      "currentDriver": null
+    },
+    {
+      "id": "owned-output",
+      "assertions": 19,
+      "phases": 1,
+      "helperSource": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-owned-output-native-04.template.ps1",
+      "helperOutput": "affected-preparation-owned-output-01.template.ps1",
+      "acceptedDriver": {
+        "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-log-vault-runtime-host.js",
+        "bytes": 47379,
+        "sha256": "1a19fd05c39e4aee19d8707b2249f47a356bf5da19ee44f48c006073a795cf14"
+      },
+      "currentDriver": null
+    },
+    {
+      "id": "artifact",
+      "assertions": 25,
+      "phases": 2,
+      "helperSource": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-artifact-native-cleanup01.ps1",
+      "helperOutput": "affected-preparation-artifact-01.template.ps1",
+      "acceptedDriver": {
+        "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/lite-artifact-cleanup01-driver.js",
+        "bytes": 38260,
+        "sha256": "8aa9a8fa5ef3d48d23dbf2388920e89d8574666b918d005f477f84c9569c91c5"
+      },
+      "currentDriver": null
+    },
+    {
+      "id": "streaming-output",
+      "assertions": 13,
+      "phases": 1,
+      "helperSource": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-streaming-output-04.template.ps1",
+      "helperOutput": "affected-preparation-streaming-output-01.template.ps1",
+      "acceptedDriver": {
+        "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-streaming-output-host.js",
+        "bytes": 12789,
+        "sha256": "25f981d467639de9e910e9765e71ca9e13f630cd9062cfd08c96d8ad4d1e9f9d"
+      },
+      "currentDriver": null
+    },
+    {
+      "id": "vault-runtime",
+      "assertions": 12,
+      "phases": 1,
+      "helperSource": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-vault-runtime-04.template.ps1",
+      "helperOutput": "affected-preparation-vault-runtime-01.template.ps1",
+      "acceptedDriver": {
+        "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-vault-runtime-host.js",
+        "bytes": 27544,
+        "sha256": "79eadfbe075cfee1f4e2afd46ef9b60fdbb9c59c68b5ade4e2558fb8d46ac661"
+      },
+      "currentDriver": null
+    },
+    {
+      "id": "ps51",
+      "assertions": 19,
+      "phases": 2,
+      "helperSource": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-ps51-04.template.ps1",
+      "helperOutput": "affected-preparation-ps51-01.template.ps1",
+      "acceptedDriver": {
+        "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-ps51-host.js",
+        "bytes": 41881,
+        "sha256": "4ace212abaa62e358203f62a959751484f70f2ff596c3fd7601a3d3f35054a78"
+      },
+      "currentDriver": null
+    },
+    {
+      "id": "cmd",
+      "assertions": 19,
+      "phases": 2,
+      "helperSource": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-cmd-04.template.ps1",
+      "helperOutput": "affected-preparation-cmd-01.template.ps1",
+      "acceptedDriver": {
+        "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-cmd-host.js",
+        "bytes": 36788,
+        "sha256": "1fa4a1f7530492704242083f7c71fe159b50856bde4525808b55ff324809cb86"
+      },
+      "currentDriver": null
+    },
+    {
+      "id": "gitbash",
+      "assertions": 19,
+      "phases": 2,
+      "helperSource": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-gitbash-04.template.ps1",
+      "helperOutput": "affected-preparation-gitbash-01.template.ps1",
+      "acceptedDriver": {
+        "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-gitbash-host.js",
+        "bytes": 42493,
+        "sha256": "525d6efc1523dde42f3c98cf39c63f15e49692611d51777a53af795eca9d65d1"
+      },
+      "currentDriver": null
+    },
+    {
+      "id": "history",
+      "assertions": 25,
+      "phases": 2,
+      "helperSource": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-history-04.template.ps1",
+      "helperOutput": "affected-preparation-history-01.template.ps1",
+      "acceptedDriver": {
+        "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-history-host.js",
+        "bytes": 40585,
+        "sha256": "a10fcf723b1edeb480572c1339cecbcd2ef2baa34c0892cb43ed3b057735efd5"
+      },
+      "currentDriver": null
+    },
+    {
+      "id": "mcp",
+      "assertions": 25,
+      "phases": 2,
+      "helperSource": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-mcp-native-04.template.ps1",
+      "helperOutput": "affected-preparation-mcp-01.template.ps1",
+      "acceptedDriver": {
+        "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-mcp-host.js",
+        "bytes": 417504,
+        "sha256": "f4992dd24ae9cfcce45371286ab6c52cba87c2c638b4f7c99096550073efeedf"
+      },
+      "currentDriver": null
+    },
+    {
+      "id": "editor",
+      "assertions": 25,
+      "phases": 2,
+      "helperSource": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-editor-04.template.ps1",
+      "helperOutput": "affected-preparation-editor-01.template.ps1",
+      "acceptedDriver": {
+        "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-editor-host.js",
+        "bytes": 406021,
+        "sha256": "a13752ba5a709179447aa68e9d8b336030f0df1be3d2a94e692e7f65f3302e14"
+      },
+      "currentDriver": null
+    },
+    {
+      "id": "ci",
+      "assertions": 25,
+      "phases": 2,
+      "helperSource": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-ci-04.template.ps1",
+      "helperOutput": "affected-preparation-ci-01.template.ps1",
+      "acceptedDriver": {
+        "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-ci-host.js",
+        "bytes": 636407,
+        "sha256": "54f125580e81c80d58c4f56391d54d9d304e2f10f7b8640c5272fcf14ea8b7fa"
+      },
+      "currentDriver": null
+    },
+    {
+      "id": "service-account",
+      "assertions": 25,
+      "phases": 2,
+      "helperSource": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-service-account-04.template.ps1",
+      "helperOutput": "affected-preparation-service-account-01.template.ps1",
+      "acceptedDriver": {
+        "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-service-account-host.js",
+        "bytes": 372857,
+        "sha256": "b2ff3e5fcda9b4de8ea43bee956b798107e8a20bd238d48f278db9fc593310fb"
+      },
+      "currentDriver": null
+    },
+    {
+      "id": "registry",
+      "assertions": 25,
+      "phases": 2,
+      "helperSource": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-registry-04.template.ps1",
+      "helperOutput": "affected-preparation-registry-01.template.ps1",
+      "acceptedDriver": {
+        "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-registry-host.js",
+        "bytes": 376783,
+        "sha256": "4f32b4244abc7c9fd68d556d1740248adc1fd72f9e27c0137fb1cbcbbaa26756"
+      },
+      "currentDriver": null
+    },
+    {
+      "id": "terraform",
+      "assertions": 25,
+      "phases": 2,
+      "helperSource": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-terraform-04.template.ps1",
+      "helperOutput": "affected-preparation-terraform-01.template.ps1",
+      "acceptedDriver": {
+        "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-terraform-host.js",
+        "bytes": 377816,
+        "sha256": "5fafd9150338644faffb220dd578805cf03a50755e9cdfe420d88bdd6d2afcf8"
+      },
+      "currentDriver": null
+    },
+    {
+      "id": "container",
+      "assertions": 25,
+      "phases": 2,
+      "helperSource": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-container-04.template.ps1",
+      "helperOutput": "affected-preparation-container-01.template.ps1",
+      "acceptedDriver": {
+        "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-container-host.js",
+        "bytes": 288133,
+        "sha256": "c7b475a18a921ffeebc0a2f315b14cdee92b9a06264c79ec23229b794794415d"
+      },
+      "currentDriver": null
+    },
+    {
+      "id": "source",
+      "assertions": 21,
+      "phases": 2,
+      "helperSource": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-source-04.template.ps1",
+      "helperOutput": "affected-preparation-source-01.template.ps1",
+      "acceptedDriver": {
+        "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-source-host.js",
+        "bytes": 21099,
+        "sha256": "05f022d000f2842765e7791a6ce72ea055c11c4324a90d4d8336bd2b0db3972b"
+      },
+      "currentDriver": null
+    },
+    {
+      "id": "hygiene",
+      "assertions": 21,
+      "phases": 2,
+      "helperSource": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-hygiene-04.template.ps1",
+      "helperOutput": "affected-preparation-hygiene-01.template.ps1",
+      "acceptedDriver": {
+        "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-hygiene-host.js",
+        "bytes": 20170,
+        "sha256": "ce2e25225165ad53f524f4a02048560014a3ac79190b87a58c541249e6a2f16a"
+      },
+      "currentDriver": null
+    },
+    {
+      "id": "vault",
+      "assertions": 10,
+      "phases": 2,
+      "helperSource": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-vault-04.template.ps1",
+      "helperOutput": "affected-preparation-vault-01.template.ps1",
+      "acceptedDriver": {
+        "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-vault-host.js",
+        "bytes": 29928,
+        "sha256": "2b98b5e9943812e100d1dbcd160dffa8a015cbce06405e1397f3bc071062dcd4"
+      },
+      "currentDriver": null
+    },
+    {
+      "id": "retained",
+      "assertions": 106,
+      "phases": 2,
+      "helperSource": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-retained-native-04.template.ps1",
+      "helperOutput": "affected-preparation-retained-01.template.ps1",
+      "acceptedDriver": {
+        "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-broker-host.js",
+        "bytes": 455883,
+        "sha256": "023eedd308e782864d14a9e83d44684f45e713e4977893e7a165af88cb59321a"
+      },
+      "currentDriver": null
+    }
+  ],
+  "outputs": [
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-logs-native-04.template.ps1",
+        "bytes": 18521,
+        "sha256": "ba8eeed3eee57eaaddbcf080eb42260d61c02d4d07068af5841f125ca26974fe"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-preparation-logs-01.template.ps1",
+        "bytes": 18592,
+        "sha256": "1f5d4aededf31f6a762d09642f38ab0e5dbb88c578015fe084b4cbafdbbbe44f"
+      },
+      "adaptation": "powershell-helper"
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-owned-output-native-04.template.ps1",
+        "bytes": 18389,
+        "sha256": "729fcf1ed1ba11f21fd3e34a1aa82a1afae15136c9af768a9f4c28e666425523"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-preparation-owned-output-01.template.ps1",
+        "bytes": 18460,
+        "sha256": "fd4050e2adfe055c7f8c4440b7c6c26104a0cc6cab049647c4d3834b5d58f3ce"
+      },
+      "adaptation": "powershell-helper"
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-artifact-native-cleanup01.ps1",
+        "bytes": 18548,
+        "sha256": "978dfdf0a9f0347d34ef9277d3a68cb6281b2f08b3a68d1dee738591dc290613"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-preparation-artifact-01.template.ps1",
+        "bytes": 18586,
+        "sha256": "f0f7d4062fcaf195ae463d36755e3bdcae84e6defc6fe87d0d5cbfad2c92ab31"
+      },
+      "adaptation": "powershell-helper"
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-streaming-output-04.template.ps1",
+        "bytes": 18453,
+        "sha256": "7fe3f524a1c25a8279d3758dde02e1660f18ecb4f1059d7e418256391a45ad5c"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-preparation-streaming-output-01.template.ps1",
+        "bytes": 18524,
+        "sha256": "6b43300fcdfc34d54d1c6449cd6fb58ce9409a9e9fdf545346a3242b591ae5e1"
+      },
+      "adaptation": "powershell-helper"
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-vault-runtime-04.template.ps1",
+        "bytes": 18450,
+        "sha256": "f829d22284f365e93caf8f62f798a1f148e9b7cd6ed043e3efdabfd2e5bbb998"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-preparation-vault-runtime-01.template.ps1",
+        "bytes": 18521,
+        "sha256": "4a89d47fca1100beb96f2df2872c32c9886a47c7bb053934d56a4dece58c53a6"
+      },
+      "adaptation": "powershell-helper"
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-ps51-04.template.ps1",
+        "bytes": 18530,
+        "sha256": "7d70c8a41673893abca94d278aa405e89b8e27d5b989fdee3490b8f3730f5c0f"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-preparation-ps51-01.template.ps1",
+        "bytes": 18601,
+        "sha256": "d4231479751b5d53548380568a4ded7aa856878d6934c2df2b8269b26f199696"
+      },
+      "adaptation": "powershell-helper"
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-cmd-04.template.ps1",
+        "bytes": 18529,
+        "sha256": "f8ae0459f51003817d5c6f48972e079ac86caf5d0f4e00f061c4676352630a5a"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-preparation-cmd-01.template.ps1",
+        "bytes": 18600,
+        "sha256": "e1f53f66bdcdc4ccea789d05df690e196d5336b5df5dda7f950760ec5f21426c"
+      },
+      "adaptation": "powershell-helper"
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-gitbash-04.template.ps1",
+        "bytes": 18533,
+        "sha256": "27caaed52b53bbc2aff0ea4a2005879cf781d11de431db6cf7457d419b0b1af8"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-preparation-gitbash-01.template.ps1",
+        "bytes": 18604,
+        "sha256": "930da2d9bb7c8136764bf0cf4cda34639dc07e149b227434cab52737d3a5aa83"
+      },
+      "adaptation": "powershell-helper"
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-history-04.template.ps1",
+        "bytes": 18533,
+        "sha256": "900fde0c3b71eb08e1c7ae464b50d0265090b97c61bc7adf02b70c84ff476784"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-preparation-history-01.template.ps1",
+        "bytes": 18604,
+        "sha256": "62508e6837e66c374d89108898aa965bb39c754c308cf4c117d2a4ae7335b7ef"
+      },
+      "adaptation": "powershell-helper"
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-mcp-native-04.template.ps1",
+        "bytes": 18529,
+        "sha256": "f7a68885c4487941be7b88b3f2ef565f93f6dc202348c8f46ad3e35a2e8cf597"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-preparation-mcp-01.template.ps1",
+        "bytes": 18600,
+        "sha256": "7601a94416e5afdbab8326268afb752de5a5a47b1f741774b31e6f34f3df8a04"
+      },
+      "adaptation": "powershell-helper"
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-editor-04.template.ps1",
+        "bytes": 18534,
+        "sha256": "4e832af0a1d64650e9c41efbb02b9968468e6dcaf6af29278a1765e971e66e75"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-preparation-editor-01.template.ps1",
+        "bytes": 18605,
+        "sha256": "e1d9c593d9c90375dfd851caf91842160d8de3803bffe971bde547a9ca14dd8f"
+      },
+      "adaptation": "powershell-helper"
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-ci-04.template.ps1",
+        "bytes": 18522,
+        "sha256": "11af6a559ef14d927f4ae47bceae8413d0c19dcd37248a25bc69e996ae574e63"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-preparation-ci-01.template.ps1",
+        "bytes": 18593,
+        "sha256": "cc0121abd5a1507dcd593d80e4feb8d3a3d2b21370c89c578ef7bb62b3ee8dc1"
+      },
+      "adaptation": "powershell-helper"
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-service-account-04.template.ps1",
+        "bytes": 18561,
+        "sha256": "9924f0ad94a24df75306f9893cf27d8529e2d446eac266f05c40fa382980a741"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-preparation-service-account-01.template.ps1",
+        "bytes": 18632,
+        "sha256": "f6a5d5f1c0a807956d87af57882505f1525eb0a57ef8079c6fb3de8218cddfd9"
+      },
+      "adaptation": "powershell-helper"
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-registry-04.template.ps1",
+        "bytes": 18540,
+        "sha256": "64051a3fa23a0bda9d63989b80cf2a5e472f507f754fd6f7b69a6b326eda2f23"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-preparation-registry-01.template.ps1",
+        "bytes": 18611,
+        "sha256": "2e148be2087af0a77c64e240d80d6d5e65858843849048a1177128cc3b42b9da"
+      },
+      "adaptation": "powershell-helper"
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-terraform-04.template.ps1",
+        "bytes": 18543,
+        "sha256": "6ea528934c42d2f32ebaa2897c53615b2e9af48f0313acafb1c7c16c3b2b70d5"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-preparation-terraform-01.template.ps1",
+        "bytes": 18614,
+        "sha256": "f7b824d8cce1f88b17b0b5e5cfe00375ade11842d8876137559eb581bb526f26"
+      },
+      "adaptation": "powershell-helper"
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-container-04.template.ps1",
+        "bytes": 18543,
+        "sha256": "e40b2999c0ddc631d44654ad9bf4e65b415e433a8f74cb8cde67a08858abea14"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-preparation-container-01.template.ps1",
+        "bytes": 18614,
+        "sha256": "3b375967a37b8e43a968e9feec785600705615d2adb02cb6e47034faf5c25023"
+      },
+      "adaptation": "powershell-helper"
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-source-04.template.ps1",
+        "bytes": 18545,
+        "sha256": "fd6bd6ac7b854deb095c7985996e17637b8d2143f7cabdd5933e4bbfcc1ee226"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-preparation-source-01.template.ps1",
+        "bytes": 18616,
+        "sha256": "e7383bea3102ec9a822fb813577d24e87d42c34d6e501e8e4e8a47c2d2d4e8a7"
+      },
+      "adaptation": "powershell-helper"
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-hygiene-04.template.ps1",
+        "bytes": 18546,
+        "sha256": "007e2e37c628c0d632800649c37e73149f9f18095c05be81667dee5e34021a63"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-preparation-hygiene-01.template.ps1",
+        "bytes": 18617,
+        "sha256": "d64620db3f767e9db2408c3b185e22cdae5a04b152972bde3b9a5200bf22321a"
+      },
+      "adaptation": "powershell-helper"
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-vault-04.template.ps1",
+        "bytes": 18570,
+        "sha256": "eb202b8df333c1a62114437a02eb79796e7c17a85126158fa7a5c9fe1f4b0ccc"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-preparation-vault-01.template.ps1",
+        "bytes": 18641,
+        "sha256": "4028ad7ceab54cadb9b1d453cab9723c9d88d13be947d8ef90d703e08dafc431"
+      },
+      "adaptation": "powershell-helper"
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-retained-native-04.template.ps1",
+        "bytes": 18584,
+        "sha256": "65718dfe5175410c501da0db6731b6761026d1ca1386d6985f9e9f2254d2d542"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-preparation-retained-01.template.ps1",
+        "bytes": 18655,
+        "sha256": "41b817395ac38e5d4fc36b27add3abed431aaedab356f624a64a26e5d291f147"
+      },
+      "adaptation": "powershell-helper"
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-hosts-pathfix02.ps1",
+        "bytes": 9620,
+        "sha256": "b526ab9438d74f81d1e8f61e85ec59320811ae508911def324b516183e2cb31a"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-preparation-functional-security-01.template.ps1",
+        "bytes": 9777,
+        "sha256": "41509d373611ce94012583229c1f26fd1c42a2c627f2211b3d0d835d7fd4226f"
+      },
+      "adaptation": "powershell-helper"
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-functional-pathfix02.ps1",
+        "bytes": 10585,
+        "sha256": "d64db90d21a1b9674bf47893ebc2dfe9513374a6c9e4fdc1055831e4ce5e401c"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-preparation-functional10-01.template.ps1",
+        "bytes": 10669,
+        "sha256": "fdf4627df64133c4cd2071c521bc9c328fe9af947b7770787d440d2dcfae19fe"
+      },
+      "adaptation": "powershell-helper"
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-security-pathfix01.ps1",
+        "bytes": 11943,
+        "sha256": "9db10e6bf80e959cc6b2f98ff6c62c41660ffcbbf75a20822feaaebb75db535b"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-preparation-security17-01.template.ps1",
+        "bytes": 12027,
+        "sha256": "22ed210febb38d179923045c913c7cce0e50e679db60db511df87d9e693d101c"
+      },
+      "adaptation": "powershell-helper"
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/native-pipe-ownership-02.ps1",
+        "bytes": 4180,
+        "sha256": "246b0ccdb2457fd80f560770b129a1fde67d5d4212e8eae200f965dffd69698c"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-preparation-pipe-ownership-01.ps1",
+        "bytes": 4180,
+        "sha256": "246b0ccdb2457fd80f560770b129a1fde67d5d4212e8eae200f965dffd69698c"
+      },
+      "adaptation": "byte-copy"
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/retained-functional10-driver-01.js",
+        "bytes": 532622,
+        "sha256": "b64a85f99d9c5c3194b2bd427822116b7c59f8565dc3fc5477c27b92208a8b3b"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-preparation-functional10-driver-01.js",
+        "bytes": 532622,
+        "sha256": "b64a85f99d9c5c3194b2bd427822116b7c59f8565dc3fc5477c27b92208a8b3b"
+      },
+      "adaptation": "byte-copy"
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/retained-security17-driver-01.js",
+        "bytes": 13372,
+        "sha256": "de3e734ece51d89adaa58caec792c5d39b142d9e88cd17b2cda312099d0d38c9"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-preparation-security17-driver-01.js",
+        "bytes": 13372,
+        "sha256": "de3e734ece51d89adaa58caec792c5d39b142d9e88cd17b2cda312099d0d38c9"
+      },
+      "adaptation": "byte-copy"
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/liteArtifactScanner.cleanup01.host.ts",
+        "bytes": 33875,
+        "sha256": "a4f4f34c06b13bc9308c3f9d7fd5721988d6707115eb3461ce7d02c72ce777d0"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-preparation-artifact-cleanup01.host.ts",
+        "bytes": 33875,
+        "sha256": "a4f4f34c06b13bc9308c3f9d7fd5721988d6707115eb3461ce7d02c72ce777d0"
+      },
+      "adaptation": "byte-copy"
+    }
+  ],
+  "candidate": null,
+  "nativeResults": null,
+  "sourceAdmissionChange": "NONE",
+  "native06": "F26a_USER_DEFERRED_EXCLUDED_NOT_RUN",
+  "signalsRequested": 0,
+  "scope": "20 accepted earlier families/509 assertions/37 phases plus functional10/security17; no prior native PASS transferred."
+}

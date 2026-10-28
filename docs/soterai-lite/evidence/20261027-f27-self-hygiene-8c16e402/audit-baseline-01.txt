@@ -1,0 +1,76 @@
+﻿TAP version 13
+# Subtest: F27 audit preserves useful public sequence and verification metadata
+ok 1 - F27 audit preserves useful public sequence and verification metadata
+  ---
+  duration_ms: 12.2473
+  type: 'test'
+  ...
+# Subtest: F27 audit sanitizes every caller text field before durable admission
+not ok 2 - F27 audit sanitizes every caller text field before durable admission
+  ---
+  duration_ms: 3.5556
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\selfHygiene.audit.test.ts:2:2196'
+  failureType: 'testCodeFailure'
+  error: |-
+    Audit storage retained a synthetic private value
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\selfHygiene.audit.test.ts:33:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F27 restart export withholds unsafe legacy text without rewriting signed history
+not ok 3 - F27 restart export withholds unsafe legacy text without rewriting signed history
+  ---
+  duration_ms: 1.548
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\selfHygiene.audit.test.ts:2:2675'
+  failureType: 'testCodeFailure'
+  error: |-
+    Restart export reflected unsafe stored text
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\selfHygiene.audit.test.ts:50:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F27 disabled owned audit sink withholds emission before storage or key creation
+not ok 4 - F27 disabled owned audit sink withholds emission before storage or key creation
+  ---
+  duration_ms: 1.512
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\selfHygiene.audit.test.ts:2:3665'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  operator: 'rejects'
+  stack: |-
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\selfHygiene.audit.test.ts:58:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 1
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1904.9276

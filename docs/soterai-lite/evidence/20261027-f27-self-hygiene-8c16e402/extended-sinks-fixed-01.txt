@@ -1,0 +1,46 @@
+﻿TAP version 13
+# Subtest: F27 actual dashboard rejection with owner flag false withholds caller text
+ok 1 - F27 actual dashboard rejection with owner flag false withholds caller text
+  ---
+  duration_ms: 2.3039
+  type: 'test'
+  ...
+# Subtest: F27 actual dashboard rejection with owner flag true withholds caller text
+ok 2 - F27 actual dashboard rejection with owner flag true withholds caller text
+  ---
+  duration_ms: 0.4746
+  type: 'test'
+  ...
+# Subtest: F27 local ledger owner-off withholds persistence
+ok 3 - F27 local ledger owner-off withholds persistence
+  ---
+  duration_ms: 4.6492
+  type: 'test'
+  ...
+# Subtest: F27 local ledger owner-on retains public decisions but no arbitrary caller text
+ok 4 - F27 local ledger owner-on retains public decisions but no arbitrary caller text
+  ---
+  duration_ms: 16.6204
+  type: 'test'
+  ...
+# Subtest: F27 local ledger legacy export and views withhold private fields without rewriting old chain
+ok 5 - F27 local ledger legacy export and views withhold private fields without rewriting old chain
+  ---
+  duration_ms: 8.4403
+  type: 'test'
+  ...
+# Subtest: F27 local ledger verification preserves original tamper failure independently of projections
+ok 6 - F27 local ledger verification preserves original tamper failure independently of projections
+  ---
+  duration_ms: 6.5145
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1563.137

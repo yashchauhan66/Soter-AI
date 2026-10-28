@@ -1,0 +1,962 @@
+{
+    "schemaVersion":  1,
+    "feature":  "F27",
+    "status":  "PREPARED_UNBOUND_NOT_EXECUTED",
+    "observedAt":  "2026-10-27T14:27:52.5997389Z",
+    "native06":  "F26a_USER_DEFERRED_EXCLUDED_NOT_RUN",
+    "families":  [
+                     {
+                         "id":  "logs",
+                         "assertions":  25,
+                         "phases":  2,
+                         "helperSource":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-logs-native-04.template.ps1",
+                         "helperOutput":  "affected-preparation-logs-01.template.ps1",
+                         "acceptedDriver":  {
+                                                "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-logs-host.js",
+                                                "bytes":  43848,
+                                                "sha256":  "4f014043b9ff4a46dadb4f29403e7f801a3e6cc429adb8ea2d99fb12bd48c251"
+                                            },
+                         "currentDriver":  null
+                     },
+                     {
+                         "id":  "owned-output",
+                         "assertions":  19,
+                         "phases":  1,
+                         "helperSource":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-owned-output-native-04.template.ps1",
+                         "helperOutput":  "affected-preparation-owned-output-01.template.ps1",
+                         "acceptedDriver":  {
+                                                "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-log-vault-runtime-host.js",
+                                                "bytes":  47379,
+                                                "sha256":  "1a19fd05c39e4aee19d8707b2249f47a356bf5da19ee44f48c006073a795cf14"
+                                            },
+                         "currentDriver":  null
+                     },
+                     {
+                         "id":  "artifact",
+                         "assertions":  25,
+                         "phases":  2,
+                         "helperSource":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-artifact-native-cleanup01.ps1",
+                         "helperOutput":  "affected-preparation-artifact-01.template.ps1",
+                         "acceptedDriver":  {
+                                                "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/lite-artifact-cleanup01-driver.js",
+                                                "bytes":  38260,
+                                                "sha256":  "8aa9a8fa5ef3d48d23dbf2388920e89d8574666b918d005f477f84c9569c91c5"
+                                            },
+                         "currentDriver":  null
+                     },
+                     {
+                         "id":  "streaming-output",
+                         "assertions":  13,
+                         "phases":  1,
+                         "helperSource":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-streaming-output-04.template.ps1",
+                         "helperOutput":  "affected-preparation-streaming-output-01.template.ps1",
+                         "acceptedDriver":  {
+                                                "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-streaming-output-host.js",
+                                                "bytes":  12789,
+                                                "sha256":  "25f981d467639de9e910e9765e71ca9e13f630cd9062cfd08c96d8ad4d1e9f9d"
+                                            },
+                         "currentDriver":  null
+                     },
+                     {
+                         "id":  "vault-runtime",
+                         "assertions":  12,
+                         "phases":  1,
+                         "helperSource":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-vault-runtime-04.template.ps1",
+                         "helperOutput":  "affected-preparation-vault-runtime-01.template.ps1",
+                         "acceptedDriver":  {
+                                                "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-vault-runtime-host.js",
+                                                "bytes":  27544,
+                                                "sha256":  "79eadfbe075cfee1f4e2afd46ef9b60fdbb9c59c68b5ade4e2558fb8d46ac661"
+                                            },
+                         "currentDriver":  null
+                     },
+                     {
+                         "id":  "ps51",
+                         "assertions":  19,
+                         "phases":  2,
+                         "helperSource":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-ps51-04.template.ps1",
+                         "helperOutput":  "affected-preparation-ps51-01.template.ps1",
+                         "acceptedDriver":  {
+                                                "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-ps51-host.js",
+                                                "bytes":  41881,
+                                                "sha256":  "4ace212abaa62e358203f62a959751484f70f2ff596c3fd7601a3d3f35054a78"
+                                            },
+                         "currentDriver":  null
+                     },
+                     {
+                         "id":  "cmd",
+                         "assertions":  19,
+                         "phases":  2,
+                         "helperSource":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-cmd-04.template.ps1",
+                         "helperOutput":  "affected-preparation-cmd-01.template.ps1",
+                         "acceptedDriver":  {
+                                                "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-cmd-host.js",
+                                                "bytes":  36788,
+                                                "sha256":  "1fa4a1f7530492704242083f7c71fe159b50856bde4525808b55ff324809cb86"
+                                            },
+                         "currentDriver":  null
+                     },
+                     {
+                         "id":  "gitbash",
+                         "assertions":  19,
+                         "phases":  2,
+                         "helperSource":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-gitbash-04.template.ps1",
+                         "helperOutput":  "affected-preparation-gitbash-01.template.ps1",
+                         "acceptedDriver":  {
+                                                "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-gitbash-host.js",
+                                                "bytes":  42493,
+                                                "sha256":  "525d6efc1523dde42f3c98cf39c63f15e49692611d51777a53af795eca9d65d1"
+                                            },
+                         "currentDriver":  null
+                     },
+                     {
+                         "id":  "history",
+                         "assertions":  25,
+                         "phases":  2,
+                         "helperSource":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-history-04.template.ps1",
+                         "helperOutput":  "affected-preparation-history-01.template.ps1",
+                         "acceptedDriver":  {
+                                                "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-history-host.js",
+                                                "bytes":  40585,
+                                                "sha256":  "a10fcf723b1edeb480572c1339cecbcd2ef2baa34c0892cb43ed3b057735efd5"
+                                            },
+                         "currentDriver":  null
+                     },
+                     {
+                         "id":  "mcp",
+                         "assertions":  25,
+                         "phases":  2,
+                         "helperSource":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-mcp-native-04.template.ps1",
+                         "helperOutput":  "affected-preparation-mcp-01.template.ps1",
+                         "acceptedDriver":  {
+                                                "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-mcp-host.js",
+                                                "bytes":  417504,
+                                                "sha256":  "f4992dd24ae9cfcce45371286ab6c52cba87c2c638b4f7c99096550073efeedf"
+                                            },
+                         "currentDriver":  null
+                     },
+                     {
+                         "id":  "editor",
+                         "assertions":  25,
+                         "phases":  2,
+                         "helperSource":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-editor-04.template.ps1",
+                         "helperOutput":  "affected-preparation-editor-01.template.ps1",
+                         "acceptedDriver":  {
+                                                "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-editor-host.js",
+                                                "bytes":  406021,
+                                                "sha256":  "a13752ba5a709179447aa68e9d8b336030f0df1be3d2a94e692e7f65f3302e14"
+                                            },
+                         "currentDriver":  null
+                     },
+                     {
+                         "id":  "ci",
+                         "assertions":  25,
+                         "phases":  2,
+                         "helperSource":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-ci-04.template.ps1",
+                         "helperOutput":  "affected-preparation-ci-01.template.ps1",
+                         "acceptedDriver":  {
+                                                "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-ci-host.js",
+                                                "bytes":  636407,
+                                                "sha256":  "54f125580e81c80d58c4f56391d54d9d304e2f10f7b8640c5272fcf14ea8b7fa"
+                                            },
+                         "currentDriver":  null
+                     },
+                     {
+                         "id":  "service-account",
+                         "assertions":  25,
+                         "phases":  2,
+                         "helperSource":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-service-account-04.template.ps1",
+                         "helperOutput":  "affected-preparation-service-account-01.template.ps1",
+                         "acceptedDriver":  {
+                                                "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-service-account-host.js",
+                                                "bytes":  372857,
+                                                "sha256":  "b2ff3e5fcda9b4de8ea43bee956b798107e8a20bd238d48f278db9fc593310fb"
+                                            },
+                         "currentDriver":  null
+                     },
+                     {
+                         "id":  "registry",
+                         "assertions":  25,
+                         "phases":  2,
+                         "helperSource":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-registry-04.template.ps1",
+                         "helperOutput":  "affected-preparation-registry-01.template.ps1",
+                         "acceptedDriver":  {
+                                                "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-registry-host.js",
+                                                "bytes":  376783,
+                                                "sha256":  "4f32b4244abc7c9fd68d556d1740248adc1fd72f9e27c0137fb1cbcbbaa26756"
+                                            },
+                         "currentDriver":  null
+                     },
+                     {
+                         "id":  "terraform",
+                         "assertions":  25,
+                         "phases":  2,
+                         "helperSource":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-terraform-04.template.ps1",
+                         "helperOutput":  "affected-preparation-terraform-01.template.ps1",
+                         "acceptedDriver":  {
+                                                "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-terraform-host.js",
+                                                "bytes":  377816,
+                                                "sha256":  "5fafd9150338644faffb220dd578805cf03a50755e9cdfe420d88bdd6d2afcf8"
+                                            },
+                         "currentDriver":  null
+                     },
+                     {
+                         "id":  "container",
+                         "assertions":  25,
+                         "phases":  2,
+                         "helperSource":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-container-04.template.ps1",
+                         "helperOutput":  "affected-preparation-container-01.template.ps1",
+                         "acceptedDriver":  {
+                                                "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-container-host.js",
+                                                "bytes":  288133,
+                                                "sha256":  "c7b475a18a921ffeebc0a2f315b14cdee92b9a06264c79ec23229b794794415d"
+                                            },
+                         "currentDriver":  null
+                     },
+                     {
+                         "id":  "source",
+                         "assertions":  21,
+                         "phases":  2,
+                         "helperSource":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-source-04.template.ps1",
+                         "helperOutput":  "affected-preparation-source-01.template.ps1",
+                         "acceptedDriver":  {
+                                                "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-source-host.js",
+                                                "bytes":  21099,
+                                                "sha256":  "05f022d000f2842765e7791a6ce72ea055c11c4324a90d4d8336bd2b0db3972b"
+                                            },
+                         "currentDriver":  null
+                     },
+                     {
+                         "id":  "hygiene",
+                         "assertions":  21,
+                         "phases":  2,
+                         "helperSource":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-hygiene-04.template.ps1",
+                         "helperOutput":  "affected-preparation-hygiene-01.template.ps1",
+                         "acceptedDriver":  {
+                                                "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-hygiene-host.js",
+                                                "bytes":  20170,
+                                                "sha256":  "ce2e25225165ad53f524f4a02048560014a3ac79190b87a58c541249e6a2f16a"
+                                            },
+                         "currentDriver":  null
+                     },
+                     {
+                         "id":  "vault",
+                         "assertions":  10,
+                         "phases":  2,
+                         "helperSource":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-vault-04.template.ps1",
+                         "helperOutput":  "affected-preparation-vault-01.template.ps1",
+                         "acceptedDriver":  {
+                                                "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-vault-host.js",
+                                                "bytes":  29928,
+                                                "sha256":  "2b98b5e9943812e100d1dbcd160dffa8a015cbce06405e1397f3bc071062dcd4"
+                                            },
+                         "currentDriver":  null
+                     },
+                     {
+                         "id":  "retained",
+                         "assertions":  106,
+                         "phases":  2,
+                         "helperSource":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-retained-native-04.template.ps1",
+                         "helperOutput":  "affected-preparation-retained-01.template.ps1",
+                         "acceptedDriver":  {
+                                                "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-broker-host.js",
+                                                "bytes":  455883,
+                                                "sha256":  "023eedd308e782864d14a9e83d44684f45e713e4977893e7a165af88cb59321a"
+                                            },
+                         "currentDriver":  null
+                     }
+                 ],
+    "sources":  [
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-logs-native-04.template.ps1",
+                                       "bytes":  18521,
+                                       "sha256":  "ba8eeed3eee57eaaddbcf080eb42260d61c02d4d07068af5841f125ca26974fe"
+                                   },
+                        "output":  "affected-preparation-logs-01.template.ps1",
+                        "adapt":  "powershell-helper",
+                        "timeouts":  [
+                                         "setTimeout(async()=\u003e{try { await startup(\u0027driver-run-start\u0027); await driver.run(context); await startup(\u0027driver-run-end\u0027); } catch(error) { await startup(\u0027driver-error\u0027); await failure(\u0027run\u0027,error); }",
+                                         "WaitForExit(1000)",
+                                         "TotalSeconds -lt 240"
+                                     ]
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-logs-host.js",
+                                       "bytes":  43848,
+                                       "sha256":  "4f014043b9ff4a46dadb4f29403e7f801a3e6cc429adb8ea2d99fb12bd48c251"
+                                   },
+                        "output":  null,
+                        "adapt":  "reference-only",
+                        "role":  "Accepted prior driver oracle reference, never a current F27 compiled proof."
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-owned-output-native-04.template.ps1",
+                                       "bytes":  18389,
+                                       "sha256":  "729fcf1ed1ba11f21fd3e34a1aa82a1afae15136c9af768a9f4c28e666425523"
+                                   },
+                        "output":  "affected-preparation-owned-output-01.template.ps1",
+                        "adapt":  "powershell-helper",
+                        "timeouts":  [
+                                         "setTimeout(async()=\u003e{try { await startup(\u0027driver-run-start\u0027); await driver.run(context); await startup(\u0027driver-run-end\u0027); } catch(error) { await startup(\u0027driver-error\u0027); await failure(\u0027run\u0027,error); }",
+                                         "WaitForExit(1000)",
+                                         "TotalSeconds -lt 180"
+                                     ]
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-log-vault-runtime-host.js",
+                                       "bytes":  47379,
+                                       "sha256":  "1a19fd05c39e4aee19d8707b2249f47a356bf5da19ee44f48c006073a795cf14"
+                                   },
+                        "output":  null,
+                        "adapt":  "reference-only",
+                        "role":  "Accepted prior driver oracle reference, never a current F27 compiled proof."
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-artifact-native-cleanup01.ps1",
+                                       "bytes":  18548,
+                                       "sha256":  "978dfdf0a9f0347d34ef9277d3a68cb6281b2f08b3a68d1dee738591dc290613"
+                                   },
+                        "output":  "affected-preparation-artifact-01.template.ps1",
+                        "adapt":  "powershell-helper",
+                        "timeouts":  [
+                                         "setTimeout(async()=\u003e{try { await startup(\u0027driver-run-start\u0027); await driver.run(context); await startup(\u0027driver-run-end\u0027); } catch(error) { await startup(\u0027driver-error\u0027); await failure(\u0027run\u0027,error); }",
+                                         "WaitForExit(1000)",
+                                         "TotalSeconds -lt 180"
+                                     ]
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/lite-artifact-cleanup01-driver.js",
+                                       "bytes":  38260,
+                                       "sha256":  "8aa9a8fa5ef3d48d23dbf2388920e89d8574666b918d005f477f84c9569c91c5"
+                                   },
+                        "output":  null,
+                        "adapt":  "reference-only",
+                        "role":  "Accepted prior driver oracle reference, never a current F27 compiled proof."
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-streaming-output-04.template.ps1",
+                                       "bytes":  18453,
+                                       "sha256":  "7fe3f524a1c25a8279d3758dde02e1660f18ecb4f1059d7e418256391a45ad5c"
+                                   },
+                        "output":  "affected-preparation-streaming-output-01.template.ps1",
+                        "adapt":  "powershell-helper",
+                        "timeouts":  [
+                                         "setTimeout(async()=\u003e{try { await startup(\u0027driver-run-start\u0027); await driver.run(context); await startup(\u0027driver-run-end\u0027); } catch(error) { await startup(\u0027driver-error\u0027); await failure(\u0027run\u0027,error); }",
+                                         "WaitForExit(1000)",
+                                         "TotalSeconds -lt 180"
+                                     ]
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-streaming-output-host.js",
+                                       "bytes":  12789,
+                                       "sha256":  "25f981d467639de9e910e9765e71ca9e13f630cd9062cfd08c96d8ad4d1e9f9d"
+                                   },
+                        "output":  null,
+                        "adapt":  "reference-only",
+                        "role":  "Accepted prior driver oracle reference, never a current F27 compiled proof."
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-vault-runtime-04.template.ps1",
+                                       "bytes":  18450,
+                                       "sha256":  "f829d22284f365e93caf8f62f798a1f148e9b7cd6ed043e3efdabfd2e5bbb998"
+                                   },
+                        "output":  "affected-preparation-vault-runtime-01.template.ps1",
+                        "adapt":  "powershell-helper",
+                        "timeouts":  [
+                                         "setTimeout(async()=\u003e{try { await startup(\u0027driver-run-start\u0027); await driver.run(context); await startup(\u0027driver-run-end\u0027); } catch(error) { await startup(\u0027driver-error\u0027); await failure(\u0027run\u0027,error); }",
+                                         "WaitForExit(1000)",
+                                         "TotalSeconds -lt 180"
+                                     ]
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-vault-runtime-host.js",
+                                       "bytes":  27544,
+                                       "sha256":  "79eadfbe075cfee1f4e2afd46ef9b60fdbb9c59c68b5ade4e2558fb8d46ac661"
+                                   },
+                        "output":  null,
+                        "adapt":  "reference-only",
+                        "role":  "Accepted prior driver oracle reference, never a current F27 compiled proof."
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-ps51-04.template.ps1",
+                                       "bytes":  18530,
+                                       "sha256":  "7d70c8a41673893abca94d278aa405e89b8e27d5b989fdee3490b8f3730f5c0f"
+                                   },
+                        "output":  "affected-preparation-ps51-01.template.ps1",
+                        "adapt":  "powershell-helper",
+                        "timeouts":  [
+                                         "setTimeout(async()=\u003e{try { await startup(\u0027driver-run-start\u0027); await driver.run(context); await startup(\u0027driver-run-end\u0027); } catch(error) { await startup(\u0027driver-error\u0027); await failure(\u0027run\u0027,error); }",
+                                         "WaitForExit(1000)",
+                                         "TotalSeconds -lt 180"
+                                     ]
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-ps51-host.js",
+                                       "bytes":  41881,
+                                       "sha256":  "4ace212abaa62e358203f62a959751484f70f2ff596c3fd7601a3d3f35054a78"
+                                   },
+                        "output":  null,
+                        "adapt":  "reference-only",
+                        "role":  "Accepted prior driver oracle reference, never a current F27 compiled proof."
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-cmd-04.template.ps1",
+                                       "bytes":  18529,
+                                       "sha256":  "f8ae0459f51003817d5c6f48972e079ac86caf5d0f4e00f061c4676352630a5a"
+                                   },
+                        "output":  "affected-preparation-cmd-01.template.ps1",
+                        "adapt":  "powershell-helper",
+                        "timeouts":  [
+                                         "setTimeout(async()=\u003e{try { await startup(\u0027driver-run-start\u0027); await driver.run(context); await startup(\u0027driver-run-end\u0027); } catch(error) { await startup(\u0027driver-error\u0027); await failure(\u0027run\u0027,error); }",
+                                         "WaitForExit(1000)",
+                                         "TotalSeconds -lt 180"
+                                     ]
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-cmd-host.js",
+                                       "bytes":  36788,
+                                       "sha256":  "1fa4a1f7530492704242083f7c71fe159b50856bde4525808b55ff324809cb86"
+                                   },
+                        "output":  null,
+                        "adapt":  "reference-only",
+                        "role":  "Accepted prior driver oracle reference, never a current F27 compiled proof."
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-gitbash-04.template.ps1",
+                                       "bytes":  18533,
+                                       "sha256":  "27caaed52b53bbc2aff0ea4a2005879cf781d11de431db6cf7457d419b0b1af8"
+                                   },
+                        "output":  "affected-preparation-gitbash-01.template.ps1",
+                        "adapt":  "powershell-helper",
+                        "timeouts":  [
+                                         "setTimeout(async()=\u003e{try { await startup(\u0027driver-run-start\u0027); await driver.run(context); await startup(\u0027driver-run-end\u0027); } catch(error) { await startup(\u0027driver-error\u0027); await failure(\u0027run\u0027,error); }",
+                                         "WaitForExit(1000)",
+                                         "TotalSeconds -lt 180"
+                                     ]
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-gitbash-host.js",
+                                       "bytes":  42493,
+                                       "sha256":  "525d6efc1523dde42f3c98cf39c63f15e49692611d51777a53af795eca9d65d1"
+                                   },
+                        "output":  null,
+                        "adapt":  "reference-only",
+                        "role":  "Accepted prior driver oracle reference, never a current F27 compiled proof."
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-history-04.template.ps1",
+                                       "bytes":  18533,
+                                       "sha256":  "900fde0c3b71eb08e1c7ae464b50d0265090b97c61bc7adf02b70c84ff476784"
+                                   },
+                        "output":  "affected-preparation-history-01.template.ps1",
+                        "adapt":  "powershell-helper",
+                        "timeouts":  [
+                                         "setTimeout(async()=\u003e{try { await startup(\u0027driver-run-start\u0027); await driver.run(context); await startup(\u0027driver-run-end\u0027); } catch(error) { await startup(\u0027driver-error\u0027); await failure(\u0027run\u0027,error); }",
+                                         "WaitForExit(1000)",
+                                         "TotalSeconds -lt 180"
+                                     ]
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-history-host.js",
+                                       "bytes":  40585,
+                                       "sha256":  "a10fcf723b1edeb480572c1339cecbcd2ef2baa34c0892cb43ed3b057735efd5"
+                                   },
+                        "output":  null,
+                        "adapt":  "reference-only",
+                        "role":  "Accepted prior driver oracle reference, never a current F27 compiled proof."
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-mcp-native-04.template.ps1",
+                                       "bytes":  18529,
+                                       "sha256":  "f7a68885c4487941be7b88b3f2ef565f93f6dc202348c8f46ad3e35a2e8cf597"
+                                   },
+                        "output":  "affected-preparation-mcp-01.template.ps1",
+                        "adapt":  "powershell-helper",
+                        "timeouts":  [
+                                         "setTimeout(async()=\u003e{try { await startup(\u0027driver-run-start\u0027); await driver.run(context); await startup(\u0027driver-run-end\u0027); } catch(error) { await startup(\u0027driver-error\u0027); await failure(\u0027run\u0027,error); }",
+                                         "WaitForExit(1000)",
+                                         "TotalSeconds -lt 180"
+                                     ]
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-mcp-host.js",
+                                       "bytes":  417504,
+                                       "sha256":  "f4992dd24ae9cfcce45371286ab6c52cba87c2c638b4f7c99096550073efeedf"
+                                   },
+                        "output":  null,
+                        "adapt":  "reference-only",
+                        "role":  "Accepted prior driver oracle reference, never a current F27 compiled proof."
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-editor-04.template.ps1",
+                                       "bytes":  18534,
+                                       "sha256":  "4e832af0a1d64650e9c41efbb02b9968468e6dcaf6af29278a1765e971e66e75"
+                                   },
+                        "output":  "affected-preparation-editor-01.template.ps1",
+                        "adapt":  "powershell-helper",
+                        "timeouts":  [
+                                         "setTimeout(async()=\u003e{try { await startup(\u0027driver-run-start\u0027); await driver.run(context); await startup(\u0027driver-run-end\u0027); } catch(error) { await startup(\u0027driver-error\u0027); await failure(\u0027run\u0027,error); }",
+                                         "WaitForExit(1000)",
+                                         "TotalSeconds -lt 180"
+                                     ]
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-editor-host.js",
+                                       "bytes":  406021,
+                                       "sha256":  "a13752ba5a709179447aa68e9d8b336030f0df1be3d2a94e692e7f65f3302e14"
+                                   },
+                        "output":  null,
+                        "adapt":  "reference-only",
+                        "role":  "Accepted prior driver oracle reference, never a current F27 compiled proof."
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-ci-04.template.ps1",
+                                       "bytes":  18522,
+                                       "sha256":  "11af6a559ef14d927f4ae47bceae8413d0c19dcd37248a25bc69e996ae574e63"
+                                   },
+                        "output":  "affected-preparation-ci-01.template.ps1",
+                        "adapt":  "powershell-helper",
+                        "timeouts":  [
+                                         "setTimeout(async()=\u003e{try { await startup(\u0027driver-run-start\u0027); await driver.run(context); await startup(\u0027driver-run-end\u0027); } catch(error) { await startup(\u0027driver-error\u0027); await failure(\u0027run\u0027,error); }",
+                                         "WaitForExit(1000)",
+                                         "TotalSeconds -lt 180"
+                                     ]
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-ci-host.js",
+                                       "bytes":  636407,
+                                       "sha256":  "54f125580e81c80d58c4f56391d54d9d304e2f10f7b8640c5272fcf14ea8b7fa"
+                                   },
+                        "output":  null,
+                        "adapt":  "reference-only",
+                        "role":  "Accepted prior driver oracle reference, never a current F27 compiled proof."
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-service-account-04.template.ps1",
+                                       "bytes":  18561,
+                                       "sha256":  "9924f0ad94a24df75306f9893cf27d8529e2d446eac266f05c40fa382980a741"
+                                   },
+                        "output":  "affected-preparation-service-account-01.template.ps1",
+                        "adapt":  "powershell-helper",
+                        "timeouts":  [
+                                         "setTimeout(async()=\u003e{try { await startup(\u0027driver-run-start\u0027); await driver.run(context); await startup(\u0027driver-run-end\u0027); } catch(error) { await startup(\u0027driver-error\u0027); await failure(\u0027run\u0027,error); }",
+                                         "WaitForExit(1000)",
+                                         "TotalSeconds -lt 180"
+                                     ]
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-service-account-host.js",
+                                       "bytes":  372857,
+                                       "sha256":  "b2ff3e5fcda9b4de8ea43bee956b798107e8a20bd238d48f278db9fc593310fb"
+                                   },
+                        "output":  null,
+                        "adapt":  "reference-only",
+                        "role":  "Accepted prior driver oracle reference, never a current F27 compiled proof."
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-registry-04.template.ps1",
+                                       "bytes":  18540,
+                                       "sha256":  "64051a3fa23a0bda9d63989b80cf2a5e472f507f754fd6f7b69a6b326eda2f23"
+                                   },
+                        "output":  "affected-preparation-registry-01.template.ps1",
+                        "adapt":  "powershell-helper",
+                        "timeouts":  [
+                                         "setTimeout(async()=\u003e{try { await startup(\u0027driver-run-start\u0027); await driver.run(context); await startup(\u0027driver-run-end\u0027); } catch(error) { await startup(\u0027driver-error\u0027); await failure(\u0027run\u0027,error); }",
+                                         "WaitForExit(1000)",
+                                         "TotalSeconds -lt 180"
+                                     ]
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-registry-host.js",
+                                       "bytes":  376783,
+                                       "sha256":  "4f32b4244abc7c9fd68d556d1740248adc1fd72f9e27c0137fb1cbcbbaa26756"
+                                   },
+                        "output":  null,
+                        "adapt":  "reference-only",
+                        "role":  "Accepted prior driver oracle reference, never a current F27 compiled proof."
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-terraform-04.template.ps1",
+                                       "bytes":  18543,
+                                       "sha256":  "6ea528934c42d2f32ebaa2897c53615b2e9af48f0313acafb1c7c16c3b2b70d5"
+                                   },
+                        "output":  "affected-preparation-terraform-01.template.ps1",
+                        "adapt":  "powershell-helper",
+                        "timeouts":  [
+                                         "setTimeout(async()=\u003e{try { await startup(\u0027driver-run-start\u0027); await driver.run(context); await startup(\u0027driver-run-end\u0027); } catch(error) { await startup(\u0027driver-error\u0027); await failure(\u0027run\u0027,error); }",
+                                         "WaitForExit(1000)",
+                                         "TotalSeconds -lt 180"
+                                     ]
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-terraform-host.js",
+                                       "bytes":  377816,
+                                       "sha256":  "5fafd9150338644faffb220dd578805cf03a50755e9cdfe420d88bdd6d2afcf8"
+                                   },
+                        "output":  null,
+                        "adapt":  "reference-only",
+                        "role":  "Accepted prior driver oracle reference, never a current F27 compiled proof."
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-container-04.template.ps1",
+                                       "bytes":  18543,
+                                       "sha256":  "e40b2999c0ddc631d44654ad9bf4e65b415e433a8f74cb8cde67a08858abea14"
+                                   },
+                        "output":  "affected-preparation-container-01.template.ps1",
+                        "adapt":  "powershell-helper",
+                        "timeouts":  [
+                                         "setTimeout(async()=\u003e{try { await startup(\u0027driver-run-start\u0027); await driver.run(context); await startup(\u0027driver-run-end\u0027); } catch(error) { await startup(\u0027driver-error\u0027); await failure(\u0027run\u0027,error); }",
+                                         "WaitForExit(1000)",
+                                         "TotalSeconds -lt 180"
+                                     ]
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-container-host.js",
+                                       "bytes":  288133,
+                                       "sha256":  "c7b475a18a921ffeebc0a2f315b14cdee92b9a06264c79ec23229b794794415d"
+                                   },
+                        "output":  null,
+                        "adapt":  "reference-only",
+                        "role":  "Accepted prior driver oracle reference, never a current F27 compiled proof."
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-source-04.template.ps1",
+                                       "bytes":  18545,
+                                       "sha256":  "fd6bd6ac7b854deb095c7985996e17637b8d2143f7cabdd5933e4bbfcc1ee226"
+                                   },
+                        "output":  "affected-preparation-source-01.template.ps1",
+                        "adapt":  "powershell-helper",
+                        "timeouts":  [
+                                         "setTimeout(async()=\u003e{try { await startup(\u0027driver-run-start\u0027); await driver.run(context); await startup(\u0027driver-run-end\u0027); } catch(error) { await startup(\u0027driver-error\u0027); await failure(\u0027run\u0027,error); }",
+                                         "WaitForExit(1000)",
+                                         "TotalSeconds -lt 180"
+                                     ]
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-source-host.js",
+                                       "bytes":  21099,
+                                       "sha256":  "05f022d000f2842765e7791a6ce72ea055c11c4324a90d4d8336bd2b0db3972b"
+                                   },
+                        "output":  null,
+                        "adapt":  "reference-only",
+                        "role":  "Accepted prior driver oracle reference, never a current F27 compiled proof."
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-hygiene-04.template.ps1",
+                                       "bytes":  18546,
+                                       "sha256":  "007e2e37c628c0d632800649c37e73149f9f18095c05be81667dee5e34021a63"
+                                   },
+                        "output":  "affected-preparation-hygiene-01.template.ps1",
+                        "adapt":  "powershell-helper",
+                        "timeouts":  [
+                                         "setTimeout(async()=\u003e{try { await startup(\u0027driver-run-start\u0027); await driver.run(context); await startup(\u0027driver-run-end\u0027); } catch(error) { await startup(\u0027driver-error\u0027); await failure(\u0027run\u0027,error); }",
+                                         "WaitForExit(1000)",
+                                         "TotalSeconds -lt 180"
+                                     ]
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-hygiene-host.js",
+                                       "bytes":  20170,
+                                       "sha256":  "ce2e25225165ad53f524f4a02048560014a3ac79190b87a58c541249e6a2f16a"
+                                   },
+                        "output":  null,
+                        "adapt":  "reference-only",
+                        "role":  "Accepted prior driver oracle reference, never a current F27 compiled proof."
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-vault-04.template.ps1",
+                                       "bytes":  18570,
+                                       "sha256":  "eb202b8df333c1a62114437a02eb79796e7c17a85126158fa7a5c9fe1f4b0ccc"
+                                   },
+                        "output":  "affected-preparation-vault-01.template.ps1",
+                        "adapt":  "powershell-helper",
+                        "timeouts":  [
+                                         "setTimeout(async()=\u003e{try { await startup(\u0027driver-run-start\u0027); await driver.run(context); await startup(\u0027driver-run-end\u0027); } catch(error) { await startup(\u0027driver-error\u0027); await failure(\u0027run\u0027,error); }",
+                                         "WaitForExit(1000)",
+                                         "TotalSeconds -lt 180"
+                                     ]
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-vault-host.js",
+                                       "bytes":  29928,
+                                       "sha256":  "2b98b5e9943812e100d1dbcd160dffa8a015cbce06405e1397f3bc071062dcd4"
+                                   },
+                        "output":  null,
+                        "adapt":  "reference-only",
+                        "role":  "Accepted prior driver oracle reference, never a current F27 compiled proof."
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-retained-native-04.template.ps1",
+                                       "bytes":  18584,
+                                       "sha256":  "65718dfe5175410c501da0db6731b6761026d1ca1386d6985f9e9f2254d2d542"
+                                   },
+                        "output":  "affected-preparation-retained-01.template.ps1",
+                        "adapt":  "powershell-helper",
+                        "timeouts":  [
+                                         "setTimeout(async()=\u003e{try { await startup(\u0027driver-run-start\u0027); await driver.run(context); await startup(\u0027driver-run-end\u0027); } catch(error) { await startup(\u0027driver-error\u0027); await failure(\u0027run\u0027,error); }",
+                                         "WaitForExit(1000)",
+                                         "TotalSeconds -lt 180"
+                                     ]
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prebuilt-native-hosts-03/lite-broker-host.js",
+                                       "bytes":  455883,
+                                       "sha256":  "023eedd308e782864d14a9e83d44684f45e713e4977893e7a165af88cb59321a"
+                                   },
+                        "output":  null,
+                        "adapt":  "reference-only",
+                        "role":  "Accepted prior driver oracle reference, never a current F27 compiled proof."
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-affected-hosts-pathfix02.ps1",
+                                       "bytes":  9620,
+                                       "sha256":  "b526ab9438d74f81d1e8f61e85ec59320811ae508911def324b516183e2cb31a"
+                                   },
+                        "output":  "affected-preparation-functional-security-01.template.ps1",
+                        "adapt":  "powershell-helper"
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-functional-pathfix02.ps1",
+                                       "bytes":  10585,
+                                       "sha256":  "d64db90d21a1b9674bf47893ebc2dfe9513374a6c9e4fdc1055831e4ce5e401c"
+                                   },
+                        "output":  "affected-preparation-functional10-01.template.ps1",
+                        "adapt":  "powershell-helper"
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-security-pathfix01.ps1",
+                                       "bytes":  11943,
+                                       "sha256":  "9db10e6bf80e959cc6b2f98ff6c62c41660ffcbbf75a20822feaaebb75db535b"
+                                   },
+                        "output":  "affected-preparation-security17-01.template.ps1",
+                        "adapt":  "powershell-helper"
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/native-pipe-ownership-02.ps1",
+                                       "bytes":  4180,
+                                       "sha256":  "246b0ccdb2457fd80f560770b129a1fde67d5d4212e8eae200f965dffd69698c"
+                                   },
+                        "output":  "affected-preparation-pipe-ownership-01.ps1",
+                        "adapt":  "byte-copy"
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/retained-functional10-driver-01.js",
+                                       "bytes":  532622,
+                                       "sha256":  "b64a85f99d9c5c3194b2bd427822116b7c59f8565dc3fc5477c27b92208a8b3b"
+                                   },
+                        "output":  "affected-preparation-functional10-driver-01.js",
+                        "adapt":  "byte-copy"
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/retained-security17-driver-01.js",
+                                       "bytes":  13372,
+                                       "sha256":  "de3e734ece51d89adaa58caec792c5d39b142d9e88cd17b2cda312099d0d38c9"
+                                   },
+                        "output":  "affected-preparation-security17-driver-01.js",
+                        "adapt":  "byte-copy"
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/liteArtifactScanner.cleanup01.host.ts",
+                                       "bytes":  33875,
+                                       "sha256":  "a4f4f34c06b13bc9308c3f9d7fd5721988d6707115eb3461ce7d02c72ce777d0"
+                                   },
+                        "output":  "affected-preparation-artifact-cleanup01.host.ts",
+                        "adapt":  "byte-copy"
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/acceptance-01.json",
+                                       "bytes":  35074,
+                                       "sha256":  "caf3358f8322b7d19135cf2e8802b608c2fa68f69234ba9a8ff41ea51a5ffac8"
+                                   },
+                        "output":  null,
+                        "adapt":  "reference-only",
+                        "role":  "Historical lineage/admission reference; not executed or promoted to F27."
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/prepare-affected-01.cjs",
+                                       "bytes":  2732,
+                                       "sha256":  "0495413d383c9d6b7b54c2fa4ca4433efd76591d0aa2e82a7c66b7482730d3d9"
+                                   },
+                        "output":  null,
+                        "adapt":  "reference-only",
+                        "role":  "Historical lineage/admission reference; not executed or promoted to F27."
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/affected-template-provenance-01.json",
+                                       "bytes":  16985,
+                                       "sha256":  "8eaa20d907794d4b23851c0ae533669f719cee49cf2efb27736de9f3fa9cec9f"
+                                   },
+                        "output":  null,
+                        "adapt":  "reference-only",
+                        "role":  "Historical lineage/admission reference; not executed or promoted to F27."
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/run-remaining-affected-chain-01.cjs",
+                                       "bytes":  5856,
+                                       "sha256":  "7db9f6e0ae2f9908680d1a227f4b1ab22e8ed9a0cf5c37d183bd204e112bccbc"
+                                   },
+                        "output":  null,
+                        "adapt":  "reference-only",
+                        "role":  "Historical lineage/admission reference; not executed or promoted to F27."
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/affected-family-aggregation-01.json",
+                                       "bytes":  43796,
+                                       "sha256":  "89debcfd2a9dc772e5e2a5f2d019517e503356b5d3f75f7c9af503bb5aff2a6f"
+                                   },
+                        "output":  null,
+                        "adapt":  "reference-only",
+                        "role":  "Historical lineage/admission reference; not executed or promoted to F27."
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/artifact-cleanup01-preparation.json",
+                                       "bytes":  603,
+                                       "sha256":  "5f42f0caec2ac59b64a43753b57df9868dfbfd5a0c9ef8b71984125859d9e8db"
+                                   },
+                        "output":  null,
+                        "adapt":  "reference-only",
+                        "role":  "Historical lineage/admission reference; not executed or promoted to F27."
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/affected-host-pathfix02-review.json",
+                                       "bytes":  343,
+                                       "sha256":  "6046629d0755a392574f27ef7bf2c2a01cb5569cf1088598351a7b5eb344539a"
+                                   },
+                        "output":  null,
+                        "adapt":  "reference-only",
+                        "role":  "Historical lineage/admission reference; not executed or promoted to F27."
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/affected-native-binding-artifact-cleanup01.ps1",
+                                       "bytes":  5963,
+                                       "sha256":  "6b92dec2133ccf3680b3525e5580bcc85baa8122f8fcb591c836fb0b9df397f5"
+                                   },
+                        "output":  null,
+                        "adapt":  "reference-only",
+                        "role":  "Historical lineage/admission reference; not executed or promoted to F27."
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/affected-native-binding-01.ps1",
+                                       "bytes":  5502,
+                                       "sha256":  "a8ccf4ffdf41d0d6c4cfc13b8444a93f810ff65319d7ce20f4710b0dbd2c1f1d"
+                                   },
+                        "output":  null,
+                        "adapt":  "reference-only",
+                        "role":  "Historical lineage/admission reference; not executed or promoted to F27."
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/current-native-guard-05.cjs",
+                                       "bytes":  3115,
+                                       "sha256":  "e5e9ad53aea5c10cf0d4d049d53655dff7f337c3ba21879eba52cafef424a66d"
+                                   },
+                        "output":  null,
+                        "adapt":  "reference-only",
+                        "role":  "Historical lineage/admission reference; not executed or promoted to F27."
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/native-driver-provenance-03.json",
+                                       "bytes":  192715,
+                                       "sha256":  "fbe7d01bec9a182b34a315a63922e84169081f84a08f529148267950c83733b2"
+                                   },
+                        "output":  null,
+                        "adapt":  "reference-only",
+                        "role":  "Historical lineage/admission reference; not executed or promoted to F27."
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/host-version-review-04.json",
+                                       "bytes":  11044,
+                                       "sha256":  "747493ddb0469a3b085a43a0204880821e1e91dfc487b397bb7534aa33a39836"
+                                   },
+                        "output":  null,
+                        "adapt":  "reference-only",
+                        "role":  "Historical lineage/admission reference; not executed or promoted to F27."
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261013-l0-resume-88fb9432/run-check.ps1",
+                                       "bytes":  1110,
+                                       "sha256":  "fc13b8c896906942ca1cd885e34fe06026e4c3c90f7766c940c17e51db346901"
+                                   },
+                        "output":  null,
+                        "adapt":  "reference-only",
+                        "role":  "Canonical owned wrapper."
+                    },
+                    {
+                        "source":  {
+                                       "path":  "docs/soterai-lite/evidence/20261014-f06-vault-9c361a42/security-comparison-01.json",
+                                       "bytes":  2571,
+                                       "sha256":  "c1cde060f5f062280b2e0961b49262569151ab716cf425b553363cb6f8646718"
+                                   },
+                        "output":  null,
+                        "adapt":  "reference-only",
+                        "role":  "17 unchanged security cases; eight scoped blocks/nine unmanaged leaks."
+                    }
+                ],
+    "functionalAssertions":  10,
+    "securityCases":  17,
+    "sourceAdmissionChange":  "NONE",
+    "artifact":  null,
+    "nativeResults":  null,
+    "executions":  0,
+    "signalsRequested":  0,
+    "scope":  "Accepted earlier 20 families/509 assertions/37 phases, finallycleanup01 and pathfix02 retained. Historical metadata asserts prior scope only, never F27 execution."
+}

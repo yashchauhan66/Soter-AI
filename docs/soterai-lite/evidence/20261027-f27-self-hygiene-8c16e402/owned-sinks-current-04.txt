@@ -1,0 +1,178 @@
+﻿TAP version 13
+# Subtest: concurrent audit events retain distinct monotonic sequences
+ok 1 - concurrent audit events retain distinct monotonic sequences
+  ---
+  duration_ms: 51.3919
+  type: 'test'
+  ...
+# Subtest: legacy data migrates on append and retention checkpoints survive multiple evictions
+ok 2 - legacy data migrates on append and retention checkpoints survive multiple evictions
+  ---
+  duration_ms: 171.1392
+  type: 'test'
+  ...
+# Subtest: modified entries, removed tail, and forged checkpoint fail verification
+ok 3 - modified entries, removed tail, and forged checkpoint fail verification
+  ---
+  duration_ms: 2.9452
+  type: 'test'
+  ...
+# Subtest: already-truncated legacy data is preserved for inspection, not silently trusted
+ok 4 - already-truncated legacy data is preserved for inspection, not silently trusted
+  ---
+  duration_ms: 1.1058
+  type: 'test'
+  ...
+# Subtest: missing signing key never regenerates trust for existing data
+ok 5 - missing signing key never regenerates trust for existing data
+  ---
+  duration_ms: 0.7185
+  type: 'test'
+  ...
+# Subtest: F27 activity keeps public event metadata while withholding caller text from storage, UI and export
+ok 6 - F27 activity keeps public event metadata while withholding caller text from storage, UI and export
+  ---
+  duration_ms: 3.0867
+  type: 'test'
+  ...
+# Subtest: F27 disabled activity sink withholds a new event and releases queued metadata
+ok 7 - F27 disabled activity sink withholds a new event and releases queued metadata
+  ---
+  duration_ms: 1.6003
+  type: 'test'
+  ...
+# Subtest: F27 audit preserves useful public sequence and verification metadata
+ok 8 - F27 audit preserves useful public sequence and verification metadata
+  ---
+  duration_ms: 8.5472
+  type: 'test'
+  ...
+# Subtest: F27 audit sanitizes every caller text field before durable admission
+ok 9 - F27 audit sanitizes every caller text field before durable admission
+  ---
+  duration_ms: 0.9929
+  type: 'test'
+  ...
+# Subtest: F27 restart export withholds unsafe legacy text without rewriting signed history
+ok 10 - F27 restart export withholds unsafe legacy text without rewriting signed history
+  ---
+  duration_ms: 1.17
+  type: 'test'
+  ...
+# Subtest: F27 disabled owned audit sink withholds emission before storage or key creation
+ok 11 - F27 disabled owned audit sink withholds emission before storage or key creation
+  ---
+  duration_ms: 0.6374
+  type: 'test'
+  ...
+# Subtest: F27 restart audit anchors never reflect unsigned extra properties
+ok 12 - F27 restart audit anchors never reflect unsigned extra properties
+  ---
+  duration_ms: 1.0135
+  type: 'test'
+  ...
+# Subtest: F27 authenticated legacy private text exports no private-content-derived hashes or signatures
+ok 13 - F27 authenticated legacy private text exports no private-content-derived hashes or signatures
+  ---
+  duration_ms: 2.4356
+  type: 'test'
+  ...
+# Subtest: F27 diagnostic emission keeps useful public code and bounded numeric metadata
+ok 14 - F27 diagnostic emission keeps useful public code and bounded numeric metadata
+  ---
+  duration_ms: 3.6627
+  type: 'test'
+  ...
+# Subtest: F27 diagnostic flag-off withholds before metadata access or callback
+ok 15 - F27 diagnostic flag-off withholds before metadata access or callback
+  ---
+  duration_ms: 0.3362
+  type: 'test'
+  ...
+# Subtest: F27 diagnostic canaries, unknown fields, error messages and caller paths are omitted
+ok 16 - F27 diagnostic canaries, unknown fields, error messages and caller paths are omitted
+  ---
+  duration_ms: 0.4043
+  type: 'test'
+  ...
+# Subtest: F27 diagnostic metadata accessors are not invoked and invalid counts are refused
+ok 17 - F27 diagnostic metadata accessors are not invoked and invalid counts are refused
+  ---
+  duration_ms: 0.3115
+  type: 'test'
+  ...
+# Subtest: F27 diagnostic callback failure is value-free and does not escape to crash reporting
+ok 18 - F27 diagnostic callback failure is value-free and does not escape to crash reporting
+  ---
+  duration_ms: 0.2513
+  type: 'test'
+  ...
+# Subtest: F27 central metadata preserves public code/decision/bounded count only
+ok 19 - F27 central metadata preserves public code/decision/bounded count only
+  ---
+  duration_ms: 2.1992
+  type: 'test'
+  ...
+# Subtest: F27 central metadata withholds arbitrary private text without hashing it
+ok 20 - F27 central metadata withholds arbitrary private text without hashing it
+  ---
+  duration_ms: 0.2408
+  type: 'test'
+  ...
+# Subtest: F27 central metadata never coerces caller objects or invokes accessors
+ok 21 - F27 central metadata never coerces caller objects or invokes accessors
+  ---
+  duration_ms: 0.2492
+  type: 'test'
+  ...
+# Subtest: F27 central metadata refuses nonfinite, fractional, negative and excessive counters
+ok 22 - F27 central metadata refuses nonfinite, fractional, negative and excessive counters
+  ---
+  duration_ms: 0.337
+  type: 'test'
+  ...
+# Subtest: F27 owned sink is default-off and ignores repository-only opt-in
+ok 23 - F27 owned sink is default-off and ignores repository-only opt-in
+  ---
+  duration_ms: 0.4515
+  type: 'test'
+  ...
+# Subtest: F27 owned sink requires literal global true and honors global withdrawal
+ok 24 - F27 owned sink requires literal global true and honors global withdrawal
+  ---
+  duration_ms: 0.2562
+  type: 'test'
+  ...
+# Subtest: F27 telemetry keeps useful public decision metadata without caller text in queue
+ok 25 - F27 telemetry keeps useful public decision metadata without caller text in queue
+  ---
+  duration_ms: 4.9045
+  type: 'test'
+  ...
+# Subtest: F27 telemetry sanitizes caller context and purges queue on sink withdrawal
+ok 26 - F27 telemetry sanitizes caller context and purges queue on sink withdrawal
+  ---
+  duration_ms: 0.9947
+  type: 'test'
+  ...
+# Subtest: F27 telemetry dispose clears retained metadata without a final send
+ok 27 - F27 telemetry dispose clears retained metadata without a final send
+  ---
+  duration_ms: 0.723
+  type: 'test'
+  ...
+# Subtest: F27 telemetry repository settings cannot opt into collection
+ok 28 - F27 telemetry repository settings cannot opt into collection
+  ---
+  duration_ms: 0.3448
+  type: 'test'
+  ...
+1..28
+# tests 28
+# suites 0
+# pass 28
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4157.3807

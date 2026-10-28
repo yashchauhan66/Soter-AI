@@ -149,7 +149,8 @@
         "soterai.lite.artifactScanner",
         "soterai.lite.logProtection",
         "soterai.lite.historyHooks.preCommit",
-        "soterai.lite.historyHooks.psReadLine"
+        "soterai.lite.historyHooks.psReadLine",
+        "soterai.lite.selfHygiene"
       ]
     }
   },
@@ -2410,6 +2411,12 @@
           "default": false,
           "scope": "machine",
           "description": "Opt in to native owner-reviewed credential-command history exclusion for a selected Windows PowerShell 5.1 / PSReadLine 2.0.0 ConsoleHost profile. Only absent, blank or ordinary comment-only originals are supported automatically. Preserves prior handler denies and public history, with conservative extra exclusions. Existing history and unknown values/encodings remain limited. Status stays Uncovered until the selected profile is actually loaded and verified. Disable stops new installs; explicit reviewed restore verifies encrypted recovery and exact owned bytes."
+        },
+        "soterai.lite.selfHygiene": {
+          "type": "boolean",
+          "default": false,
+          "scope": "machine",
+          "description": "Opt in to owned metadata-only audit, activity, broker and diagnostic sinks. Caller text, paths, previews and error messages are withheld. Telemetry still requires separate global opt-in and defaults off. Disable withdraws new owned emissions and purges in-memory telemetry; old signed audit history is not rewritten. JS/native transient processing memory and arbitrary crash dumps remain outside this guarantee."
         }
       }
     },

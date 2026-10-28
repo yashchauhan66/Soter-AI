@@ -1,0 +1,52 @@
+﻿TAP version 13
+# Subtest: F27 activity keeps public event metadata while withholding caller text from storage, UI and export
+ok 1 - F27 activity keeps public event metadata while withholding caller text from storage, UI and export
+  ---
+  duration_ms: 2.5921
+  type: 'test'
+  ...
+# Subtest: F27 disabled activity sink withholds a new event and releases queued metadata
+ok 2 - F27 disabled activity sink withholds a new event and releases queued metadata
+  ---
+  duration_ms: 0.422
+  type: 'test'
+  ...
+# Subtest: F27 held document callback cannot read or persist after Sentinel disposal
+ok 3 - F27 held document callback cannot read or persist after Sentinel disposal
+  ---
+  duration_ms: 0.8379
+  type: 'test'
+  ...
+# Subtest: F27 flag off and on cannot revive a held activity document callback
+ok 4 - F27 flag off and on cannot revive a held activity document callback
+  ---
+  duration_ms: 0.7039
+  type: 'test'
+  ...
+# Subtest: F27 activity storage failure never throws private text toward an outer crash reporter
+ok 5 - F27 activity storage failure never throws private text toward an outer crash reporter
+  ---
+  duration_ms: 0.4975
+  type: 'test'
+  ...
+# Subtest: F27 opted-in activity restart minimizes legacy owned storage before retaining a new copy
+ok 6 - F27 opted-in activity restart minimizes legacy owned storage before retaining a new copy
+  ---
+  duration_ms: 6.7892
+  type: 'test'
+  ...
+# Subtest: F27 failed activity opt-in is value-free and cannot leave observation enabled
+ok 7 - F27 failed activity opt-in is value-free and cannot leave observation enabled
+  ---
+  duration_ms: 1.1311
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 632.7151

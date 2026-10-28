@@ -1,0 +1,70 @@
+{
+  "phase": "restart",
+  "extensionBundleSha256": "7d75cea01f70f1a3f0c892539b8b8b478c6393253111d28cc381addb58fddd53",
+  "observations": [
+    {
+      "id": "F26c-R01",
+      "scope": "Restart status stays unverified with no profile/history/key startup access",
+      "status": "PASS"
+    },
+    {
+      "id": "F26c-R02",
+      "scope": "Disabled restart install cannot mutate the retained owned profile",
+      "status": "PASS"
+    },
+    {
+      "id": "F26c-R03",
+      "scope": "Explicit restart restore uses prior encrypted recovery without new key",
+      "status": "PASS"
+    },
+    {
+      "id": "F26c-R04",
+      "scope": "Originally absent profile installs and restores exact absence",
+      "status": "PASS"
+    },
+    {
+      "id": "F26c-R05",
+      "scope": "Final owned custody/history and no original TextDocuments/green badge",
+      "status": "PASS"
+    }
+  ],
+  "passed": 5,
+  "failed": 0,
+  "notRun": 0,
+  "recoveryDiagnostics": [],
+  "counts": {
+    "picks": 3,
+    "modals": 3,
+    "keyReads": 1,
+    "keyStores": 0,
+    "profileReads": 20,
+    "historyReads": 0,
+    "outsideReads": 0,
+    "originalDocumentCalls": 0,
+    "originalDocumentEvents": 0
+  },
+  "configuration": [
+    {
+      "stage": "write-start",
+      "enabled": true,
+      "observedAt": "2026-10-28T04:43:48.951Z"
+    },
+    {
+      "stage": "native-event",
+      "enabled": true,
+      "observedAt": "2026-10-28T04:43:49.171Z"
+    },
+    {
+      "stage": "write-start",
+      "enabled": false,
+      "observedAt": "2026-10-28T04:43:50.040Z"
+    },
+    {
+      "stage": "native-event",
+      "enabled": false,
+      "observedAt": "2026-10-28T04:43:50.109Z"
+    }
+  ],
+  "independence": "LOW_SCRIPTED_NATIVE_API_NOT_HUMAN",
+  "historyScope": "Extension-owned observed filesystem routes only; no real history or console execution in this host"
+}

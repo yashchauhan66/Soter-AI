@@ -1,0 +1,64 @@
+{
+  "status": "FAIL_OR_INCOMPLETE_NO_LATER_PHASES",
+  "observedAt": "2026-10-27T14:18:57.719Z",
+  "results": [
+    {
+      "name": "compiler-05",
+      "status": "PASS_CLOSED_WRAPPER_AND_CANONICAL_RECEIPT",
+      "observedAt": "2026-10-27T14:18:44.084Z",
+      "pid": 7928,
+      "actualClose": true,
+      "wrapperExit": 0,
+      "signal": null,
+      "innerExit": 0,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "overflow": false,
+      "streamError": false,
+      "deadlineExceeded": false,
+      "signalsRequested": 0,
+      "streams": [
+        {
+          "name": "stdout",
+          "bytes": 607,
+          "sha256": "51886d85d1f3f89d45c0c829d8a567e77b1336db5fa8ed39b482e77534ace99a"
+        },
+        {
+          "name": "stderr",
+          "bytes": 616,
+          "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+        }
+      ]
+    },
+    {
+      "name": "backend-typecheck-02",
+      "status": "FAIL_OR_INCOMPLETE",
+      "observedAt": "2026-10-27T14:18:57.705Z",
+      "pid": 3152,
+      "actualClose": true,
+      "wrapperExit": 1,
+      "signal": null,
+      "innerExit": 2,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "overflow": false,
+      "streamError": false,
+      "deadlineExceeded": false,
+      "signalsRequested": 0,
+      "streams": [
+        {
+          "name": "stdout",
+          "bytes": 611,
+          "sha256": "7dfc074d3eb7678ada6445ee45630fb79ef3658559bbf0490ebb789ba25fdd84"
+        },
+        {
+          "name": "stderr",
+          "bytes": 616,
+          "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+        }
+      ]
+    }
+  ],
+  "reason": "ERR_ASSERTION",
+  "signalsRequested": 0
+}

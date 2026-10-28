@@ -1,0 +1,247 @@
+import * as vscode from "vscode";
+import { SENSITIVE_FILE_GLOBS, isSensitiveFilePath } from "@soterai/guard-core";
+
+export interface SentinelEvent {
+    id: string;
+    timestamp: number;
+    type: "file_change" | "protected_access" | "mcp_config_change" | "repo_instruction_change" | "canary_hit" | "extension_change" | "config_change" | "terminal_command";
+    risk: "low" | "medium" | "high" | "critical";
+    source: string;
+    filePath?: string;
+    decision: string;
+    redactedEvidence: string;
+}
+
+// Secret-bearing files are classified via the canonical guard-core predicate
+// (isSensitiveFilePath) in onFileChange — shared with every other proactive
+// guard and now covering agent credential configs. The globs below are the
+// sentinel's OWN additional concern: instruction-poisoning files and dependency
+// manifests, which are not secrets but are worth watching for change.
+const INSTRUCTION_AND_MANIFEST_GLOBS = [
+    "**/CLAUDE.md",
+    "**/.cursorrules",
+    "**/.cursor/rules/**",
+    "**/.github/copilot-instructions.md",
+    "**/.windsurfrules",
+    "**/.clinerules",
+    "**/package.json",
+    "**/package-lock.json",
+    "**/yarn.lock",
+    "**/pnpm-lock.yaml",
+];
+
+const REPO_INSTRUCTION_FILES = [
+    "CLAUDE.md",
+    ".cursorrules",
+    ".github/copilot-instructions.md",
+    ".windsurfrules",
+    ".clinerules",
+];
+
+const SENTINEL_ENABLED_KEY = "soterai.sentinel.enabledState";
+
+const INJECTION_PATTERNS = [
+    /ignore previous instructions/i,
+    /ignore all previous/i,
+    /disregard.*instructions/i,
+    /override.*safety/i,
+    /bypass.*security/i,
+    /always trust/i,
+    /store this secret/i,
+    /remember credentials/i,
+    /do not reveal/i,
+    /exfiltrate/i,
+    /read \.env/i,
+    /send to/i,
+    /hidden instruction/i,
+    /secret instruction/i,
+];
+
+export class AISentinel implements vscode.Disposable {
+    private enabled = false;
+    private events: SentinelEvent[] = [];
+    private watchers: vscode.FileSystemWatcher[] = [];
+    private statusBarItem: vscode.StatusBarItem;
+    private disposables: vscode.Disposable[] = [];
+    private readonly maxEvents = 500;
+
+    constructor(private readonly context: vscode.ExtensionContext) {
+        this.statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 95);
+        this.statusBarItem.command = "soterai.showAITimeline";
+        context.subscriptions.push(this.statusBarItem);
+        this.updateStatusBar();
+
+        const stored = context.globalState.get<SentinelEvent[]>("soterai.sentinelEvents");
+        if (stored) this.events = stored;
+        this.enabled = context.globalState.get<boolean>(SENTINEL_ENABLED_KEY) ?? false;
+        this.pruneExpired();
+        if (this.enabled) this.startWatching();
+        this.updateStatusBar();
+    }
+
+    get isEnabled(): boolean { return this.enabled; }
+
+    async enable(): Promise<void> {
+        if (this.enabled) return;
+        this.enabled = true;
+        await this.context.globalState.update(SENTINEL_ENABLED_KEY, true);
+        this.startWatching();
+        this.updateStatusBar();
+    }
+
+    async disable(): Promise<void> {
+        if (!this.enabled) return;
+        this.enabled = false;
+        await this.context.globalState.update(SENTINEL_ENABLED_KEY, false);
+        this.stopWatching();
+        this.updateStatusBar();
+    }
+
+    getEvents(): ReadonlyArray<SentinelEvent> { return this.events; }
+
+    getHighRiskEvents(): SentinelEvent[] {
+        return this.events.filter((e) => e.risk === "high" || e.risk === "critical");
+    }
+
+    recordEvent(event: Omit<SentinelEvent, "id" | "timestamp">, options?: { notify?: boolean }): void {
+        this.pruneExpired();
+        const full: SentinelEvent = { ...event, id: `sent_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`, timestamp: Date.now() };
+        this.events.push(full);
+        if (this.events.length > this.maxEvents) this.events.splice(0, this.events.length - this.maxEvents);
+        void this.context.globalState.update("soterai.sentinelEvents", this.events);
+
+        // `notify: false` is for callers that already told the user themselves.
+        // The terminal watcher (Gap 4) shows a modal naming the matched pattern,
+        // and a second generic Sentinel toast for the same event would read as
+        // two findings.
+        if (options?.notify === false) return;
+        if (event.risk === "high" || event.risk === "critical") {
+            vscode.window.showWarningMessage(`[SoterAI Sentinel] ${event.risk.toUpperCase()}: ${event.redactedEvidence}`);
+        }
+    }
+
+    clearEvents(): void {
+        this.events = [];
+        void this.context.globalState.update("soterai.sentinelEvents", this.events);
+    }
+
+    exportReport(): string {
+        const safe = this.events.map((e) => ({
+            timestamp: new Date(e.timestamp).toISOString(),
+            type: e.type,
+            risk: e.risk,
+            source: e.source,
+            filePath: e.filePath,
+            decision: e.decision,
+            redactedEvidence: e.redactedEvidence,
+        }));
+        return JSON.stringify({ exportedAt: new Date().toISOString(), privacyMode: "metadata_and_redacted_evidence", retentionDays: this.retentionDays, eventCount: safe.length, events: safe }, null, 2);
+    }
+
+    private get retentionDays(): number {
+        return Math.max(1, Math.min(365, vscode.workspace.getConfiguration("soterai").get<number>("sentinel.retentionDays", 30)));
+    }
+
+    private pruneExpired(): void {
+        const cutoff = Date.now() - this.retentionDays * 86_400_000;
+        const retained = this.events.filter((event) => event.timestamp >= cutoff);
+        if (retained.length !== this.events.length) {
+            this.events = retained;
+            void this.context.globalState.update("soterai.sentinelEvents", this.events);
+        }
+    }
+
+    private startWatching(): void {
+        const folder = vscode.workspace.workspaceFolders?.[0];
+        if (!folder) return;
+
+        // Canonical secret files (incl. agent configs and every mcp.json form)
+        // + the sentinel's own instruction/manifest concern. Deduped so an
+        // overlapping entry does not create two watchers for one file.
+        const sensitivePatterns = [...new Set([...SENSITIVE_FILE_GLOBS, ...INSTRUCTION_AND_MANIFEST_GLOBS])];
+
+        for (const pattern of sensitivePatterns) {
+            const watcher = vscode.workspace.createFileSystemWatcher(pattern);
+            watcher.onDidChange((uri) => this.onFileChange(uri, "change"));
+            watcher.onDidCreate((uri) => this.onFileChange(uri, "create"));
+            watcher.onDidDelete((uri) => this.onFileChange(uri, "delete"));
+            this.watchers.push(watcher);
+            this.disposables.push(watcher);
+        }
+
+        this.disposables.push(
+            vscode.extensions.onDidChange(() => {
+                this.recordEvent({
+                    type: "extension_change",
+                    risk: "medium",
+                    source: "sentinel",
+                    decision: "monitor",
+                    redactedEvidence: "VS Code extensions changed — recheck AI extension risk",
+                });
+            })
+        );
+    }
+
+    private stopWatching(): void {
+        for (const w of this.watchers) w.dispose();
+        this.watchers = [];
+    }
+
+    private async onFileChange(uri: vscode.Uri, changeType: string): Promise<void> {
+        const rel = vscode.workspace.asRelativePath(uri);
+        const isRepoInstruction = REPO_INSTRUCTION_FILES.some((f) => rel.endsWith(f) || rel.includes(f));
+
+        let risk: SentinelEvent["risk"] = "low";
+        let type: SentinelEvent["type"] = "file_change";
+
+        if (isRepoInstruction) {
+            type = "repo_instruction_change";
+            risk = "high";
+            try {
+                const doc = await vscode.workspace.openTextDocument(uri);
+                const text = doc.getText();
+                const hasInjection = INJECTION_PATTERNS.some((p) => p.test(text));
+                if (hasInjection) {
+                    risk = "critical";
+                    this.recordEvent({ type, risk, source: "sentinel", filePath: rel, decision: "alert", redactedEvidence: `Repo instruction file ${rel} contains prompt injection pattern` });
+                    return;
+                }
+            } catch { /* skip unreadable files */ }
+        } else if (/mcp\.json/i.test(rel)) {
+            // Checked before the generic sensitive branch so an mcp config keeps
+            // its specific event type — several mcp.json forms are now also in
+            // the canonical sensitive list.
+            type = "mcp_config_change";
+            risk = "high";
+        } else if (isSensitiveFilePath(rel)) {
+            type = "protected_access";
+            risk = "high";
+        } else if (/package\.json|lockfile/i.test(rel)) {
+            type = "config_change";
+            risk = "medium";
+        }
+
+        this.recordEvent({ type, risk, source: "sentinel", filePath: rel, decision: "monitor", redactedEvidence: `${changeType} on ${rel}` });
+    }
+
+    private updateStatusBar(): void {
+        // Same rule as WorkspaceGuard: an item that only ever says "Off" is not
+        // status, it is clutter. The consolidated item in extension.ts already
+        // reports Sentinel state in its tooltip, so this entry appears only
+        // while the Sentinel is actually recording.
+        if (!this.enabled) {
+            this.statusBarItem.hide();
+            return;
+        }
+        const highRisk = this.getHighRiskEvents().length;
+        this.statusBarItem.text = `$(eye) Sentinel${highRisk > 0 ? ` (${highRisk})` : ""}`;
+        this.statusBarItem.tooltip = `AI Activity Sentinel: Active. ${this.events.length} events, ${highRisk} high-risk.`;
+        this.statusBarItem.show();
+    }
+
+    dispose(): void {
+        this.stopWatching();
+        for (const d of this.disposables) d.dispose();
+        this.statusBarItem.dispose();
+    }
+}

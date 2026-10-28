@@ -1,0 +1,62 @@
+﻿TAP version 13
+# Subtest: F27 audit preserves useful public sequence and verification metadata
+ok 1 - F27 audit preserves useful public sequence and verification metadata
+  ---
+  duration_ms: 8.4595
+  type: 'test'
+  ...
+# Subtest: F27 audit sanitizes every caller text field before durable admission
+ok 2 - F27 audit sanitizes every caller text field before durable admission
+  ---
+  duration_ms: 0.8536
+  type: 'test'
+  ...
+# Subtest: F27 restart export withholds unsafe legacy text without rewriting signed history
+ok 3 - F27 restart export withholds unsafe legacy text without rewriting signed history
+  ---
+  duration_ms: 0.9203
+  type: 'test'
+  ...
+# Subtest: F27 disabled owned audit sink withholds emission before storage or key creation
+ok 4 - F27 disabled owned audit sink withholds emission before storage or key creation
+  ---
+  duration_ms: 0.4825
+  type: 'test'
+  ...
+# Subtest: F27 restart audit anchors never reflect unsigned extra properties
+ok 5 - F27 restart audit anchors never reflect unsigned extra properties
+  ---
+  duration_ms: 1.0045
+  type: 'test'
+  ...
+# Subtest: F27 authenticated legacy private text exports no private-content-derived hashes or signatures
+ok 6 - F27 authenticated legacy private text exports no private-content-derived hashes or signatures
+  ---
+  duration_ms: 1.5344
+  type: 'test'
+  ...
+# Subtest: F27 audit pending key lookup cannot revive after owner flag off and on
+not ok 7 - F27 audit pending key lookup cannot revive after owner flag off and on
+  ---
+  duration_ms: 9.9504
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\selfHygiene.audit.test.ts:2:6245'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  operator: 'rejects'
+  stack: |-
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\selfHygiene.audit.test.ts:110:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 6
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 565.7302

@@ -1,0 +1,138 @@
+{
+  "feature": "F27",
+  "status": "ACTIVE_NATIVE22_COMPILED27_FULL4376_PASS_AFFECTED_BATCH_RUNNING",
+  "observedAt": "2026-10-28T04:11:54.526Z",
+  "head": "abfc347e4ae81917ff267cf1b7d80103aa428057",
+  "nativeOwner": {
+    "summary": {
+      "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/f27-self-hygiene-native-20261028T035619Z-2e5409df/summary.json",
+      "bytes": 698,
+      "sha256": "6b5d9cef84428a2d42a9c41c045a296361ad69f33a8088d6319eac9a06e4cca7"
+    },
+    "primary": 17,
+    "restart": 5,
+    "actualCodePids": [
+      15276,
+      18984
+    ],
+    "natural0": true,
+    "bothEOF": true,
+    "signalsRequested": 0,
+    "auditExport": "NO_REGISTERED_GLOBAL_AUDIT_EXPORT_OWNER_API_COMPONENT_ONLY"
+  },
+  "affectedBatch": {
+    "owner": 26052,
+    "script": "run-affected-chain-02.cjs",
+    "status": "STARTED_NOT_COMPLETED",
+    "firstFamily": {
+      "summary": {
+        "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/f26a-logs-native-20261028T040720Z-aec89f00/summary.json",
+        "bytes": 1118,
+        "sha256": "48ae568ef7315b2ab808bc62c14b3338ee555c19eac21b1f80b12caa8e3e1c51"
+      },
+      "checks": 25,
+      "phases": 2,
+      "wrapper": {
+        "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-logs-run-01-owned-close.json",
+        "bytes": 674,
+        "sha256": "b3e603ad1c3e133a50ef7a6463ef7fe049dbdf69a71e130e54a6bb76235755f3"
+      }
+    },
+    "expectedOriginalFamilies": 20,
+    "expectedOriginalChecks": 509,
+    "historyRegression": {
+      "checks": 28,
+      "status": "PREPARED_NOT_RUN",
+      "runner": "run-affected-history-01.cjs"
+    },
+    "console": {
+      "checks": 8,
+      "status": "UNBOUND_NOT_RUN"
+    },
+    "functional10": "AFTER_ALL20_PASS",
+    "security17": "AFTER_ALL20_PASS"
+  },
+  "guardOptimization": {
+    "receipt": {
+      "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/native-guard-equivalence-02.json",
+      "bytes": 681,
+      "sha256": "5be2987f3e6f21aa0c0492a000d0436cae9a17cd2c9df4ab8ac693de87c5678f"
+    },
+    "originalMs": 18059,
+    "boundedSyncMs": 1757,
+    "all1016ChecksRetained": true,
+    "changedSameLengthBytes": "REFUSED",
+    "wrongLength": "REFUSED",
+    "removedChecks": 0
+  },
+  "pins": [
+    {
+      "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/resume-byte-check-01.json",
+      "bytes": 883,
+      "sha256": "97f7513c42982420323cd3f0645ae71bae1961b68e68a7c42d722447ebb13276"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/f27-native-chain-result-01.json",
+      "bytes": 937,
+      "sha256": "d2a9cea6f86c2d187882e765c786c67518367a2228c01b6ef7b33d1fd1d61160"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/native-admission-01.txt.result.json",
+      "bytes": 515,
+      "sha256": "c1b9db13d288d39f96bd6bba2ba141bd5ec6a5dbbc75f94c3410e75aae6750d1"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/native-owner-validation-01.txt.result.json",
+      "bytes": 523,
+      "sha256": "508286767d4f413b217f29c9058a9ef981d6e3b52540296a0345f5b64524a011"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/native-binding-01.json",
+      "bytes": 9429,
+      "sha256": "096f91da0249100960f54045edd56799fc2a124a4e84703cb586f69ef5d1e7ed"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-history-binding-01.json",
+      "bytes": 9471,
+      "sha256": "62f343a446b22d6b2f4494aeca147fc9af1f04558d6258a2938211e2804945a8"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-materialization-01.json",
+      "bytes": 21470,
+      "sha256": "f979c075acf62607dde37adbd417f31806249e64482b9b80e44a09da3a54ab80"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-materialization-01.txt.result.json",
+      "bytes": 523,
+      "sha256": "55ed0a9da212e4271fe345d88025317fbe31647cbbd8134d3c21dec03b2891dc"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-materialization-02.txt.result.json",
+      "bytes": 523,
+      "sha256": "2fe297713fbc20aace63ad63794aab6c57f3cba05d11c0f07d234bd7feb20c06"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-parser-01.txt.result.json",
+      "bytes": 790,
+      "sha256": "377e443d3b05da9f0b7e44f828d7116b30314457219dacc7b05fb93742ec63d7"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/affected-owner-01.json",
+      "bytes": 380,
+      "sha256": "0f7682451a051c76eb41c178eb46a947493bc2120656ab056f30d03a3d04c7cd"
+    }
+  ],
+  "retainedRefusal": "Materialization01 emitted23 helper files then refused accepted F24 cleanup driver basename mismatch; no native launch. Successor02 verifies existing bytes unchanged, explicitly maps current cleanup-pinned source to lite-artifact-host.js, finishes binding; originalfailure retained.",
+  "remaining": [
+    "Remaining20-family batch results and aggregation",
+    "F26c affected28 + actual newly emitted console8",
+    "functional10/security17 expected residuals, safe withdrawal",
+    "acceptance/scoped local source+transition commits/exhaustive bytes"
+  ],
+  "limits": [
+    "F27ACTIVE/INCOMPLETE, noF29production",
+    "F26a native06 USER_DEFERRED_NOT_RUN",
+    "LOW scripted; no real secrets/normalprofile/signals/OSchanges/push/rating",
+    "Original L6 HUMAN-ACTIONS STOP remains"
+  ]
+}

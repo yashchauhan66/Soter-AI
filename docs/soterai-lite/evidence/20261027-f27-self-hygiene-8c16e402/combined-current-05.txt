@@ -1,0 +1,1443 @@
+﻿TAP version 13
+# Subtest: concurrent audit events retain distinct monotonic sequences
+ok 1 - concurrent audit events retain distinct monotonic sequences
+  ---
+  duration_ms: 35.3955
+  type: 'test'
+  ...
+# Subtest: legacy data migrates on append and retention checkpoints survive multiple evictions
+ok 2 - legacy data migrates on append and retention checkpoints survive multiple evictions
+  ---
+  duration_ms: 239.7944
+  type: 'test'
+  ...
+# Subtest: modified entries, removed tail, and forged checkpoint fail verification
+ok 3 - modified entries, removed tail, and forged checkpoint fail verification
+  ---
+  duration_ms: 4.3396
+  type: 'test'
+  ...
+# Subtest: already-truncated legacy data is preserved for inspection, not silently trusted
+ok 4 - already-truncated legacy data is preserved for inspection, not silently trusted
+  ---
+  duration_ms: 1.3171
+  type: 'test'
+  ...
+# Subtest: missing signing key never regenerates trust for existing data
+ok 5 - missing signing key never regenerates trust for existing data
+  ---
+  duration_ms: 0.96
+  type: 'test'
+  ...
+# Subtest: Command registration parity (\#4)
+    # Subtest: every declared command is registered
+    ok 1 - every declared command is registered
+      ---
+      duration_ms: 2.2281
+      type: 'test'
+      ...
+    # Subtest: every registered command is declared (no orphan handlers)
+    ok 2 - every registered command is declared (no orphan handlers)
+      ---
+      duration_ms: 0.4533
+      type: 'test'
+      ...
+    # Subtest: the three previously-missing commands are still registered
+    ok 3 - the three previously-missing commands are still registered
+      ---
+      duration_ms: 0.2742
+      type: 'test'
+      ...
+    1..3
+ok 6 - Command registration parity (\#4)
+  ---
+  duration_ms: 4.5854
+  type: 'suite'
+  ...
+# Subtest: AI Context Firewall commands (Phases 1–7)
+    # Subtest: all firewall commands are declared AND registered
+    ok 1 - all firewall commands are declared AND registered
+      ---
+      duration_ms: 0.3375
+      type: 'test'
+      ...
+    1..1
+ok 7 - AI Context Firewall commands (Phases 1–7)
+  ---
+  duration_ms: 0.4886
+  type: 'suite'
+  ...
+# Subtest: Workspace Trust (\#5)
+    # Subtest: declares limited untrusted-workspace support
+    ok 1 - declares limited untrusted-workspace support
+      ---
+      duration_ms: 0.2593
+      type: 'test'
+      ...
+    # Subtest: gates cloud connection behind workspace trust
+    ok 2 - gates cloud connection behind workspace trust
+      ---
+      duration_ms: 0.4232
+      type: 'test'
+      ...
+    # Subtest: gates the secret vault behind workspace trust
+    ok 3 - gates the secret vault behind workspace trust
+      ---
+      duration_ms: 0.4096
+      type: 'test'
+      ...
+    1..3
+ok 8 - Workspace Trust (\#5)
+  ---
+  duration_ms: 1.4658
+  type: 'suite'
+  ...
+# Subtest: Workspace filesystem containment
+    # Subtest: canonicalizes targets and rejects symlink or junction escapes before vault writes
+    ok 1 - canonicalizes targets and rejects symlink or junction escapes before vault writes
+      ---
+      duration_ms: 0.2648
+      type: 'test'
+      ...
+    1..1
+ok 9 - Workspace filesystem containment
+  ---
+  duration_ms: 0.4085
+  type: 'suite'
+  ...
+# Subtest: Vault safety — dry-run preview + backup + confirm
+    # Subtest: migration backup is encrypted and OUTSIDE the workspace (no plaintext .bak)
+    ok 1 - migration backup is encrypted and OUTSIDE the workspace (no plaintext .bak)
+      ---
+      duration_ms: 0.3497
+      type: 'test'
+      ...
+    # Subtest: migration requires an explicit modal confirmation after previewing
+    ok 2 - migration requires an explicit modal confirmation after previewing
+      ---
+      duration_ms: 0.4433
+      type: 'test'
+      ...
+    # Subtest: vault status/preview surface metadata only — rawValue stays inside the encrypted store
+    ok 3 - vault status/preview surface metadata only — rawValue stays inside the encrypted store
+      ---
+      duration_ms: 0.4753
+      type: 'test'
+      ...
+    1..3
+ok 10 - Vault safety — dry-run preview + backup + confirm
+  ---
+  duration_ms: 1.5339
+  type: 'suite'
+  ...
+# Subtest: Ledger privacy — no raw secrets persisted (\#6)
+    # Subtest: every ledger write goes through sanitizeLedgerEntry / buildLedgerEntry
+    ok 1 - every ledger write goes through sanitizeLedgerEntry / buildLedgerEntry
+      ---
+      duration_ms: 0.186
+      type: 'test'
+      ...
+    # Subtest: ledger store never references raw content fields
+    ok 2 - ledger store never references raw content fields
+      ---
+      duration_ms: 0.174
+      type: 'test'
+      ...
+    1..2
+ok 11 - Ledger privacy — no raw secrets persisted (\#6)
+  ---
+  duration_ms: 0.4904
+  type: 'suite'
+  ...
+# Subtest: Telemetry contains no raw content (\#6)
+    # Subtest: telemetry never references redactedText or raw content fields
+    ok 1 - telemetry never references redactedText or raw content fields
+      ---
+      duration_ms: 0.2556
+      type: 'test'
+      ...
+    # Subtest: event payload only uses the safe redacted preview
+    not ok 2 - event payload only uses the safe redacted preview
+      ---
+      duration_ms: 7.623
+      type: 'test'
+      location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\extension.test.ts:2:9849'
+      failureType: 'testCodeFailure'
+      error: |-
+        The input did not match the regular expression /redactedEvidencePreview:\s*decision\.evidencePreview/. Input:
+        
+        'import * as vscode from "vscode";\r\n' +
+          'import { RedactedEvent, GuardDecision } from "@soterai/guard-core";\r\n' +
+          'import { shouldRecord, shouldRetainQueuedTelemetry, shouldSend, telemetryHoldReason, type TelemetryGateInput } from "./enterprise/telemetryGate";\r\n' +
+          'import { ownedSinkMetadata } from "../../core/src/OwnedSinkMetadata";\r\n' +
+          'import { selfHygieneEnabled } from "./self-hygiene/SelfHygieneFlags";\r\n' +
+          '\r\n' +
+          '/**\r\n' +
+          " * GAP 3 — telemetry that the user's own editor preference can switch off.\r\n" +
+          ' *\r\n' +
+          ' * Two defects were fixed here, both auditable:\r\n' +
+          ' *\r\n' +
+          ' * 1. `vscode.env.isTelemetryEnabled` was never consulted. A user who turned\r\n' +
+          ' *    telemetry off for the whole editor still had SoterAI events queued, which\r\n' +
+          ' *    for a security product is a compliance finding rather than a preference\r\n' +
+          ' *    mismatch. Events now flow through `env.createTelemetryLogger`, which VS\r\n' +
+          ' *    Code itself silences when telemetry is off — and the gate is checked\r\n' +
+          ' *    explicitly as well, so behaviour is identical on a 1.85 host where the\r\n' +
+          ' *    logger API does not exist.\r\n' +
+          ' * 2. `sendEventsToCloud()` returned `true` without sending anything, so the\r\n' +
+          ' *    queue was trimmed as though delivered. There is no reviewed endpoint client\r\n' +
+          ' *    yet; that is now stated as a *hold*, and the queue is only cleared when a\r\n' +
+          ' *    real sender reports success.\r\n' +
+          ' *\r\n' +
+          ' * The gating logic lives in `enterprise/telemetryGate.ts` — pure, so every\r\n' +
+          ' * branch of "may this leave the machine?" is unit-testable without a host.\r\n' +
+          ' */\r\n' +
+          'export class TelemetryManager {\r\n' +
+          '    private static instance: TelemetryManager;\r\n' +
+          '    private queue: RedactedEvent[] = [];\r\n' +
+          '    private batchInterval: NodeJS.Timeout | undefined;\r\n' +
+          '    private maxQueueSize = 1000;\r\n' +
+          '    private isOffline = false;\r\n' +
+          '    private disposed = false;\r\n' +
+          '    private retryTimer: NodeJS.Timeout | undefined;\r\n' +
+          '    /**\r\n' +
+          "     * The host's own logger, when the API exists (VS Code 1.75+). It is the\r\n" +
+          "     * channel that respects the user's global preference without SoterAI having\r\n" +
+          "     * to re-implement it, and it writes to the editor's telemetry output so a\r\n" +
+          '     * user can read exactly what would be reported.\r\n' +
+          '     */\r\n' +
+          '    private logger: vscode.TelemetryLogger | undefined;\r\n' +
+          '\r\n' +
+          '    private constructor() {\r\n' +
+          '        this.logger = TelemetryManager.createLogger();\r\n' +
+          '        this.startBatchTimer();\r\n' +
+          '    }\r\n' +
+          '\r\n' +
+          '    /**\r\n' +
+          '     * Feature-detected: `env.createTelemetryLogger` arrived after the `^1.85.0`\r\n' +
+          '     * floor this extension keeps for Cursor/Windsurf/Kiro. On a host without it\r\n' +
+          '     * the explicit gate below is the only control, which is why the gate is not\r\n' +
+          '     * delegated to the logger.\r\n' +
+          '     */\r\n' +
+          '    private static createLogger(): vscode.TelemetryLogger | undefined {\r\n' +
+          '        const api = vscode.env as unknown as {\r\n' +
+          '            createTelemetryLogger?: (sender: vscode.TelemetrySender) => vscode.TelemetryLogger;\r\n' +
+          '        };\r\n' +
+          '        if (typeof api.createTelemetryLogger !== "function") return undefined;\r\n' +
+          '        try {\r\n' +
+          '            return api.createTelemetryLogger({\r\n' +
+          '                // No network sender ships yet. Sending nothing is the honest\r\n' +
+          '                // behaviour; events stay visible to the user through the\r\n' +
+          "                // editor's own telemetry output, which is the point of routing\r\n" +
+          '                // through the logger rather than a private queue.\r\n' +
+          '                sendEventData: () => { /* no reviewed endpoint client yet */ },\r\n' +
+          '                sendErrorData: () => { /* errors are never reported off-machine */ },\r\n' +
+          '            });\r\n' +
+          '        } catch {\r\n' +
+          '            return undefined;\r\n' +
+          '        }\r\n' +
+          '    }\r\n' +
+          '\r\n' +
+          '    public static getInstance(): TelemetryManager {\r\n' +
+          '        if (!TelemetryManager.instance || TelemetryManager.instance.disposed) {\r\n' +
+          '            TelemetryManager.instance = new TelemetryManager();\r\n' +
+          '        }\r\n' +
+          '        return TelemetryManager.instance;\r\n' +
+          '    }\r\n' +
+          '\r\n' +
+          '    /** True when the editor itself permits telemetry. Absent API ⇒ treat as on. */\r\n' +
+          '    private hostTelemetryEnabled(): boolean {\r\n' +
+          '        const flag = (vscode.env as unknown as { isTelemetryEnabled?: boolean }).isTelemetryEnabled;\r\n' +
+          '        return typeof flag === "boolean" ? flag : true;\r\n' +
+          '    }\r\n' +
+          '\r\n' +
+          '    public trackDetection(decision: GuardDecision, textLength: number, context: string): void {\r\n' +
+          '        const telemetryLevel = this.gateInput().level;\r\n' +
+          '        // Apply every durable privacy choice before constructing an event. A\r\n' +
+          '        // contradictory/stale configuration must not create a queue that merely\r\n' +
+          '        // waits for the next flush to be purged.\r\n' +
+          '        if (this.disposed || !selfHygieneEnabled() || !shouldRetainQueuedTelemetry(this.gateInput())) {\r\n' +
+          '            this.queue = [];\r\n' +
+          '            return;\r\n' +
+          '        }\r\n' +
+          '        if (!shouldRecord(telemetryLevel, decision.riskScore)) return;\r\n' +
+          '        if (!["allow", "warn", "redact", "block", "approval_required"].includes(decision.decision)\r\n' +
+          '            || !["info", "low", "medium", "high", "critical"].includes(decision.severity)\r\n' +
+          '            || !Number.isInteger(decision.riskScore) || decision.riskScore < 0 || decision.riskScore > 100) return;\r\n' +
+          '        const metadata = ownedSinkMetadata("scan_" + context, decision.decision, decision.riskScore);\r\n' +
+          '\r\n' +
+          '        // Build fully redacted minimized event\r\n' +
+          '        const event: RedactedEvent = {\r\n' +
+          '            eventId: this.generateUUID(),\r\n' +
+          '            workspacePseudoId: "local-workspace",\r\n' +
+          '            policyVersion: "1.0.0",\r\n' +
+          '            detectorVersions: {},\r\n' +
+          '            eventType: metadata.code,\r\n' +
+          '            decision: decision.decision,\r\n' +
+          '            categories: [],\r\n' +
+          '            severity: decision.severity,\r\n' +
+          '            riskScore: decision.riskScore,\r\n' +
+          '            contentLength: Number.isSafeInteger(textLength) && textLength >= 0 && textLength <= 2147483647 ? textLength : 0,\r\n' +
+          '            localOnly: true,\r\n' +
+          '            timestamp: new Date().toISOString(),\r\n' +
+          '        };\r\n' +
+          '\r\n' +
+          '        this.enqueue(event);\r\n' +
+          '    }\r\n' +
+          '\r\n' +
+          '    private enqueue(event: RedactedEvent): void {\r\n' +
+          '        if (this.queue.length >= this.maxQueueSize) {\r\n' +
+          '            // Discard oldest\r\n' +
+          '            this.queue.shift();\r\n' +
+          '        }\r\n' +
+          '        this.queue.push(event);\r\n' +
+          '    }\r\n' +
+          '\r\n' +
+          '    public startBatchTimer(): void {\r\n' +
+          '        if (this.disposed) return;\r\n' +
+          '        if (this.batchInterval) clearInterval(this.batchInterval);\r\n' +
+          '        this.batchInterval = setInterval(() => {\r\n' +
+          '            this.flush();\r\n' +
+          '        }, 45000); // 45 seconds batching\r\n' +
+          '    }\r\n' +
+          '\r\n' +
+          '    /**\r\n' +
+          '     * Why the queue is currently held, in one plain sentence, or `undefined`\r\n' +
+          '     * when nothing holds it. Exposed so a diagnostics surface can tell the user\r\n' +
+          '     * the truth instead of leaving a silent queue unexplained.\r\n' +
+          '     */\r\n' +
+          '    public holdReason(): string | undefined {\r\n' +
+          '        if (this.disposed || !selfHygieneEnabled()) return "Owned diagnostic collection is disabled.";\r\n' +
+          '        return telemetryHoldReason(this.gateInput());\r\n' +
+          '    }\r\n' +
+          '\r\n' +
+          '    private gateInput(): TelemetryGateInput {\r\n' +
+          '        const config = vscode.workspace.getConfiguration("soterai");\r\n' +
+          '        let level = "off";\r\n' +
+          '        try {\r\n' +
+          '            const inspected = config.inspect<unknown>("telemetry.redactedEvents");\r\n' +
+          '            const selected = inspected?.globalValue === undefined ? inspected?.defaultValue ?? "off" : inspected.globalValue;\r\n' +
+          '            if (selected === "batched" || selected === "high-risk-only") level = selected;\r\n' +
+          '        } catch { /* Unknown ownership never opts into telemetry. */ }\r\n' +
+          '        return {\r\n' +
+          '            level,\r\n' +
+          '            privacyMode: config.get<string>("privacyMode", "local"),\r\n' +
+          '            cloudEnabled: config.get<boolean>("cloud.enabled", false),\r\n' +
+          '            trusted: vscode.workspace.isTrusted,\r\n' +
+          '            hostTelemetryEnabled: this.hostTelemetryEnabled(),\r\n' +
+          '            offline: this.isOffline,\r\n' +
+          '        };\r\n' +
+          '    }\r\n' +
+          '\r\n' +
+          '    /** Apply an opt-out immediately; disabled collection must not leave a latent queue. */\r\n' +
+          '    public syncPrivacyBoundary(): void {\r\n' +
+          '        if (this.disposed || !selfHygieneEnabled() || !shouldRetainQueuedTelemetry(this.gateInput())) this.queue = [];\r\n' +
+          '    }\r\n' +
+          '\r\n' +
+          '    public async flush(): Promise<void> {\r\n' +
+          '        if (this.disposed || !selfHygieneEnabled()) { this.queue = []; return; }\r\n' +
+          '        if (this.queue.length === 0) return;\r\n' +
+          '        const gate = this.gateInput();\r\n' +
+          '        if (!shouldRetainQueuedTelemetry(gate)) {\r\n' +
+          '            this.queue = [];\r\n' +
+          '            return;\r\n' +
+          '        }\r\n' +
+          '        const permitted = shouldSend(gate);\r\n' +
+          '        if (!permitted) return; // Hold in queue; holdReason() explains why.\r\n' +
+          '\r\n' +
+          '        try {\r\n' +
+          '            const batchToSend = [...this.queue];\r\n' +
+          '            const delivered = await this.sendEventsToCloud(batchToSend);\r\n' +
+          '            if (delivered) {\r\n' +
+          '                this.queue = this.queue.slice(batchToSend.length);\r\n' +
+          '            }\r\n' +
+          '        } catch {\r\n' +
+          '            this.isOffline = true;\r\n' +
+          '            if (!this.disposed) this.retryTimer = setTimeout(() => { this.isOffline = false; }, 60000);\r\n' +
+          '        }\r\n' +
+          '    }\r\n' +
+          '\r\n' +
+          '    /**\r\n' +
+          "     * Hand a batch to the editor's telemetry logger.\r\n" +
+          '     *\r\n' +
+          '     * Returns `false` deliberately: no reviewed network client ships, so nothing\r\n' +
+          '     * left the machine and the queue must not be trimmed as if it had. The old\r\n' +
+          '     * `return true` discarded every event while reporting success — exactly the\r\n' +
+          '     * kind of quiet inaccuracy this product cannot afford.\r\n' +
+          '     */\r\n' +
+          '    private async sendEventsToCloud(events: RedactedEvent[]): Promise<boolean> {\r\n' +
+          '        for (const event of events) {\r\n' +
+          '            if (this.disposed || !selfHygieneEnabled() || !shouldRetainQueuedTelemetry(this.gateInput())) {\r\n' +
+          '                this.queue = [];\r\n' +
+          '                return false;\r\n' +
+          '            }\r\n' +
+          '            if (!shouldSend(this.gateInput())) return false;\r\n' +
+          '            // Redacted metadata only — no content, no secrets. The logger is the\r\n' +
+          '            // user-visible record of what SoterAI *would* report, and VS Code\r\n' +
+          "            // silences it entirely when the user's telemetry preference is off.\r\n" +
+          '            this.logger?.logUsage(event.eventType, {\r\n' +
+          '                decision: event.decision,\r\n' +
+          '                severity: event.severity,\r\n' +
+          '                riskScore: event.riskScore,\r\n' +
+          ' '... 525 more characters
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected:
+      actual: |-
+        import * as vscode from "vscode";
+        import { RedactedEvent, GuardDecision } from "@soterai/guard-core";
+        import { shouldRecord, shouldRetainQueuedTelemetry, shouldSend, telemetryHoldReason, type TelemetryGateInput } from "./enterprise/telemetryGate";
+        import { ownedSinkMetadata } from "../../core/src/OwnedSinkMetadata";
+        import { selfHygieneEnabled } from "./self-hygiene/SelfHygieneFlags";
+        
+        /**
+         * GAP 3 — telemetry that the user's own editor preference can switch off.
+         *
+         * Two defects were fixed here, both auditable:
+         *
+         * 1. `vscode.env.isTelemetryEnabled` was never consulted. A user who turned
+         *    telemetry off for the whole editor still had SoterAI events queued, which
+         *    for a security product is a compliance finding rather than a preference
+         *    mismatch. Events now flow through `env.createTelemetryLogger`, which VS
+         *    Code itself silences when telemetry is off — and the gate is checked
+         *    explicitly as well, so behaviour is identical on a 1.85 host where the
+         *    logger API does not exist.
+         * 2. `sendEventsToCloud()` returned `true` without sending anything, so the
+         *    queue was trimmed as though delivered. There is no reviewed endpoint client
+         *    yet; that is now stated as a *hold*, and the queue is only cleared when a
+         *    real sender reports success.
+         *
+         * The gating logic lives in `enterprise/telemetryGate.ts` — pure, so every
+         * branch of "may this leave the machine?" is unit-testable without a host.
+         */
+        export class TelemetryManager {
+            private static instance: TelemetryManager;
+            private queue: RedactedEvent[] = [];
+            private batchInterval: NodeJS.Timeout | undefined;
+            private maxQueueSize = 1000;
+            private isOffline = false;
+            private disposed = false;
+            private retryTimer: NodeJS.Timeout | undefined;
+            /**
+             * The host's own logger, when the API exists (VS Code 1.75+). It is the
+             * channel that respects the user's global preference without SoterAI having
+             * to re-implement it, and it writes to the editor's telemetry output so a
+             * user can read exactly what would be reported.
+             */
+            private logger: vscode.TelemetryLogger | undefined;
+        
+            private constructor() {
+                this.logger = TelemetryManager.createLogger();
+                this.startBatchTimer();
+            }
+        
+            /**
+             * Feature-detected: `env.createTelemetryLogger` arrived after the `^1.85.0`
+             * floor this extension keeps for Cursor/Windsurf/Kiro. On a host without it
+             * the explicit gate below is the only control, which is why the gate is not
+             * delegated to the logger.
+             */
+            private static createLogger(): vscode.TelemetryLogger | undefined {
+                const api = vscode.env as unknown as {
+                    createTelemetryLogger?: (sender: vscode.TelemetrySender) => vscode.TelemetryLogger;
+                };
+                if (typeof api.createTelemetryLogger !== "function") return undefined;
+                try {
+                    return api.createTelemetryLogger({
+                        // No network sender ships yet. Sending nothing is the honest
+                        // behaviour; events stay visible to the user through the
+                        // editor's own telemetry output, which is the point of routing
+                        // through the logger rather than a private queue.
+                        sendEventData: () => { /* no reviewed endpoint client yet */ },
+                        sendErrorData: () => { /* errors are never reported off-machine */ },
+                    });
+                } catch {
+                    return undefined;
+                }
+            }
+        
+            public static getInstance(): TelemetryManager {
+                if (!TelemetryManager.instance || TelemetryManager.instance.disposed) {
+                    TelemetryManager.instance = new TelemetryManager();
+                }
+                return TelemetryManager.instance;
+            }
+        
+            /** True when the editor itself permits telemetry. Absent API ⇒ treat as on. */
+            private hostTelemetryEnabled(): boolean {
+                const flag = (vscode.env as unknown as { isTelemetryEnabled?: boolean }).isTelemetryEnabled;
+                return typeof flag === "boolean" ? flag : true;
+            }
+        
+            public trackDetection(decision: GuardDecision, textLength: number, context: string): void {
+                const telemetryLevel = this.gateInput().level;
+                // Apply every durable privacy choice before constructing an event. A
+                // contradictory/stale configuration must not create a queue that merely
+                // waits for the next flush to be purged.
+                if (this.disposed || !selfHygieneEnabled() || !shouldRetainQueuedTelemetry(this.gateInput())) {
+                    this.queue = [];
+                    return;
+                }
+                if (!shouldRecord(telemetryLevel, decision.riskScore)) return;
+                if (!["allow", "warn", "redact", "block", "approval_required"].includes(decision.decision)
+                    || !["info", "low", "medium", "high", "critical"].includes(decision.severity)
+                    || !Number.isInteger(decision.riskScore) || decision.riskScore < 0 || decision.riskScore > 100) return;
+                const metadata = ownedSinkMetadata("scan_" + context, decision.decision, decision.riskScore);
+        
+                // Build fully redacted minimized event
+                const event: RedactedEvent = {
+                    eventId: this.generateUUID(),
+                    workspacePseudoId: "local-workspace",
+                    policyVersion: "1.0.0",
+                    detectorVersions: {},
+                    eventType: metadata.code,
+                    decision: decision.decision,
+                    categories: [],
+                    severity: decision.severity,
+                    riskScore: decision.riskScore,
+                    contentLength: Number.isSafeInteger(textLength) && textLength >= 0 && textLength <= 2147483647 ? textLength : 0,
+                    localOnly: true,
+                    timestamp: new Date().toISOString(),
+                };
+        
+                this.enqueue(event);
+            }
+        
+            private enqueue(event: RedactedEvent): void {
+                if (this.queue.length >= this.maxQueueSize) {
+                    // Discard oldest
+                    this.queue.shift();
+                }
+                this.queue.push(event);
+            }
+        
+            public startBatchTimer(): void {
+                if (this.disposed) return;
+                if (this.batchInterval) clearInterval(this.batchInterval);
+                this.batchInterval = setInterval(() => {
+                    this.flush();
+                }, 45000); // 45 seconds batching
+            }
+        
+            /**
+             * Why the queue is currently held, in one plain sentence, or `undefined`
+             * when nothing holds it. Exposed so a diagnostics surface can tell the user
+             * the truth instead of leaving a silent queue unexplained.
+             */
+            public holdReason(): string | undefined {
+                if (this.disposed || !selfHygieneEnabled()) return "Owned diagnostic collection is disabled.";
+                return telemetryHoldReason(this.gateInput());
+            }
+        
+            private gateInput(): TelemetryGateInput {
+                const config = vscode.workspace.getConfiguration("soterai");
+                let level = "off";
+                try {
+                    const inspected = config.inspect<unknown>("telemetry.redactedEvents");
+                    const selected = inspected?.globalValue === undefined ? inspected?.defaultValue ?? "off" : inspected.globalValue;
+                    if (selected === "batched" || selected === "high-risk-only") level = selected;
+                } catch { /* Unknown ownership never opts into telemetry. */ }
+                return {
+                    level,
+                    privacyMode: config.get<string>("privacyMode", "local"),
+                    cloudEnabled: config.get<boolean>("cloud.enabled", false),
+                    trusted: vscode.workspace.isTrusted,
+                    hostTelemetryEnabled: this.hostTelemetryEnabled(),
+                    offline: this.isOffline,
+                };
+            }
+        
+            /** Apply an opt-out immediately; disabled collection must not leave a latent queue. */
+            public syncPrivacyBoundary(): void {
+                if (this.disposed || !selfHygieneEnabled() || !shouldRetainQueuedTelemetry(this.gateInput())) this.queue = [];
+            }
+        
+            public async flush(): Promise<void> {
+                if (this.disposed || !selfHygieneEnabled()) { this.queue = []; return; }
+                if (this.queue.length === 0) return;
+                const gate = this.gateInput();
+                if (!shouldRetainQueuedTelemetry(gate)) {
+                    this.queue = [];
+                    return;
+                }
+                const permitted = shouldSend(gate);
+                if (!permitted) return; // Hold in queue; holdReason() explains why.
+        
+                try {
+                    const batchToSend = [...this.queue];
+                    const delivered = await this.sendEventsToCloud(batchToSend);
+                    if (delivered) {
+                        this.queue = this.queue.slice(batchToSend.length);
+                    }
+                } catch {
+                    this.isOffline = true;
+                    if (!this.disposed) this.retryTimer = setTimeout(() => { this.isOffline = false; }, 60000);
+                }
+            }
+        
+            /**
+             * Hand a batch to the editor's telemetry logger.
+             *
+             * Returns `false` deliberately: no reviewed network client ships, so nothing
+             * left the machine and the queue must not be trimmed as if it had. The old
+             * `return true` discarded every event while reporting success — exactly the
+             * kind of quiet inaccuracy this product cannot afford.
+             */
+            private async sendEventsToCloud(events: RedactedEvent[]): Promise<boolean> {
+                for (const event of events) {
+                    if (this.disposed || !selfHygieneEnabled() || !shouldRetainQueuedTelemetry(this.gateInput())) {
+                        this.queue = [];
+                        return false;
+                    }
+                    if (!shouldSend(this.gateInput())) return false;
+                    // Redacted metadata only — no content, no secrets. The logger is the
+                    // user-visible record of what SoterAI *would* report, and VS Code
+                    // silences it entirely when the user's telemetry preference is off.
+                    this.logger?.logUsage(event.eventType, {
+                        decision: event.decision,
+                        severity: event.severity,
+                        riskScore: event.riskScore,
+                        contentLength: event.contentLength,
+                    });
+                }
+                return false;
+            }
+        
+            private generateUUID(): string {
+                return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+            }
+        
+            public dispose(): void {
+                this.disposed = true;
+                if (this.batchInterval) clearInterval(this.batchInterval);
+                if (this.retryTimer) clearTimeout(this.retryTimer);
+                this.queue = [];
+                this.logger?.dispose();
+            }
+        }
+        
+      operator: 'match'
+      stack: |-
+        TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\extension.test.ts:164:16)
+        Test.runInAsyncScope (node:async_hooks:214:14)
+        Test.run (node:internal/test_runner/test:1047:25)
+        Suite.processPendingSubtests (node:internal/test_runner/test:744:18)
+        Test.postRun (node:internal/test_runner/test:1173:19)
+        Test.run (node:internal/test_runner/test:1101:12)
+        async Promise.all (index 0)
+        async Suite.run (node:internal/test_runner/test:1442:7)
+        async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+      ...
+    1..2
+not ok 12 - Telemetry contains no raw content (\#6)
+  ---
+  duration_ms: 8.3768
+  type: 'suite'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\extension.test.ts:2:9458'
+  failureType: 'subtestsFailed'
+  error: '1 subtest failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: SecretStorage token hygiene (\#6)
+    # Subtest: token is stored via context.secrets, never logged
+    ok 1 - token is stored via context.secrets, never logged
+      ---
+      duration_ms: 0.6463
+      type: 'test'
+      ...
+    # Subtest: vault key and canary tokens live in SecretStorage, not globalState/logs
+    ok 2 - vault key and canary tokens live in SecretStorage, not globalState/logs
+      ---
+      duration_ms: 0.2515
+      type: 'test'
+      ...
+    1..2
+ok 13 - SecretStorage token hygiene (\#6)
+  ---
+  duration_ms: 1.0997
+  type: 'suite'
+  ...
+# Subtest: Launch readiness command surface
+    # Subtest: declares and registers launch-critical command names
+    ok 1 - declares and registers launch-critical command names
+      ---
+      duration_ms: 0.2557
+      type: 'test'
+      ...
+    # Subtest: keeps friendly launch aliases mapped to implemented scanners
+    ok 2 - keeps friendly launch aliases mapped to implemented scanners
+      ---
+      duration_ms: 0.1811
+      type: 'test'
+      ...
+    # Subtest: has build and lint scripts required by release automation
+    ok 3 - has build and lint scripts required by release automation
+      ---
+      duration_ms: 0.1266
+      type: 'test'
+      ...
+    1..3
+ok 14 - Launch readiness command surface
+  ---
+  duration_ms: 0.734
+  type: 'suite'
+  ...
+# Subtest: Marketplace README media hygiene
+    # Subtest: preserves historical screenshot sources without presenting them as current evidence
+    ok 1 - preserves historical screenshot sources without presenting them as current evidence
+      ---
+      duration_ms: 1.173
+      type: 'test'
+      ...
+    # Subtest: preserves the historical demo GIF while withdrawing its release reference
+    ok 2 - preserves the historical demo GIF while withdrawing its release reference
+      ---
+      duration_ms: 0.5548
+      type: 'test'
+      ...
+    1..2
+ok 15 - Marketplace README media hygiene
+  ---
+  duration_ms: 1.9015
+  type: 'suite'
+  ...
+# Subtest: Local-first privacy mode
+    # Subtest: declares soterai.privacyMode with local default
+    ok 1 - declares soterai.privacyMode with local default
+      ---
+      duration_ms: 0.3643
+      type: 'test'
+      ...
+    # Subtest: prevents telemetry flush in local mode and untrusted workspaces
+    ok 2 - prevents telemetry flush in local mode and untrusted workspaces
+      ---
+      duration_ms: 0.3962
+      type: 'test'
+      ...
+    # Subtest: health reports never include raw secrets or prompt text
+    ok 3 - health reports never include raw secrets or prompt text
+      ---
+      duration_ms: 0.2144
+      type: 'test'
+      ...
+    # Subtest: privacy report scopes local handling and preserves same-user and unmarked-data limits
+    ok 4 - privacy report scopes local handling and preserves same-user and unmarked-data limits
+      ---
+      duration_ms: 0.2505
+      type: 'test'
+      ...
+    # Subtest: README separates local scanning from provider egress and incomplete custody
+    ok 5 - README separates local scanning from provider egress and incomplete custody
+      ---
+      duration_ms: 0.4686
+      type: 'test'
+      ...
+    # Subtest: trust checklist and product matrix lock the reviewer-facing privacy contract
+    ok 6 - trust checklist and product matrix lock the reviewer-facing privacy contract
+      ---
+      duration_ms: 0.1676
+      type: 'test'
+      ...
+    1..6
+ok 16 - Local-first privacy mode
+  ---
+  duration_ms: 2.1328
+  type: 'suite'
+  ...
+# Subtest: Clipboard safety for firewall handlers (\#1)
+    # Subtest: all firewall clipboard writes go through redactForSharing or a canary token by design
+    ok 1 - all firewall clipboard writes go through redactForSharing or a canary token by design
+      ---
+      duration_ms: 0.331
+      type: 'test'
+      ...
+    1..1
+ok 17 - Clipboard safety for firewall handlers (\#1)
+  ---
+  duration_ms: 0.4163
+  type: 'suite'
+  ...
+# Subtest: Webview hardening (\#7)
+    # Subtest: all webviews declare a Content-Security-Policy
+    ok 1 - all webviews declare a Content-Security-Policy
+      ---
+      duration_ms: 0.4576
+      type: 'test'
+      ...
+    # Subtest: webviews escape finding fields before HTML interpolation
+    ok 2 - webviews escape finding fields before HTML interpolation
+      ---
+      duration_ms: 0.1539
+      type: 'test'
+      ...
+    # Subtest: firewall info webviews disable scripts
+    ok 3 - firewall info webviews disable scripts
+      ---
+      duration_ms: 0.3448
+      type: 'test'
+      ...
+    # Subtest: dashboard message handler keeps a strict command allowlist including new actions
+    ok 4 - dashboard message handler keeps a strict command allowlist including new actions
+      ---
+      duration_ms: 0.4488
+      type: 'test'
+      ...
+    # Subtest: dashboard surfaces the 9+ trust center without overstating enforcement
+    ok 5 - dashboard surfaces the 9+ trust center without overstating enforcement
+      ---
+      duration_ms: 0.2122
+      type: 'test'
+      ...
+    1..5
+ok 18 - Webview hardening (\#7)
+  ---
+  duration_ms: 1.8327
+  type: 'suite'
+  ...
+# Subtest: Enterprise policy export
+    # Subtest: exports a buyer-ready enterprise policy bundle with honest enforcement scope
+    ok 1 - exports a buyer-ready enterprise policy bundle with honest enforcement scope
+      ---
+      duration_ms: 0.3185
+      type: 'test'
+      ...
+    1..1
+ok 19 - Enterprise policy export
+  ---
+  duration_ms: 0.4003
+  type: 'suite'
+  ...
+# Subtest: Broker auto-start wiring (activation actually turns protection on)
+    # Subtest: activate() starts the broker, not just constructs one
+    ok 1 - activate() starts the broker, not just constructs one
+      ---
+      duration_ms: 0.2902
+      type: 'test'
+      ...
+    # Subtest: does not await the start, so a slow broker cannot hang activation
+    ok 2 - does not await the start, so a slow broker cannot hang activation
+      ---
+      duration_ms: 0.1424
+      type: 'test'
+      ...
+    # Subtest: exposes an opt-out that is declared, machine-scoped, and restricted
+    ok 3 - exposes an opt-out that is declared, machine-scoped, and restricted
+      ---
+      duration_ms: 0.1926
+      type: 'test'
+      ...
+    # Subtest: never fails silently — every non-started outcome notifies the user
+    ok 4 - never fails silently — every non-started outcome notifies the user
+      ---
+      duration_ms: 0.1298
+      type: 'test'
+      ...
+    # Subtest: withholds the provider key in a restricted workspace
+    ok 5 - withholds the provider key in a restricted workspace
+      ---
+      duration_ms: 0.1705
+      type: 'test'
+      ...
+    1..5
+ok 20 - Broker auto-start wiring (activation actually turns protection on)
+  ---
+  duration_ms: 1.1216
+  type: 'suite'
+  ...
+# Subtest: Local AI Broker, Safe Mode, and Memory Inspector
+    # Subtest: declares and registers every new command
+    ok 1 - declares and registers every new command
+      ---
+      duration_ms: 0.3835
+      type: 'test'
+      ...
+    # Subtest: stores broker/provider tokens in SecretStorage and fixes the host to loopback
+    ok 2 - stores broker/provider tokens in SecretStorage and fixes the host to loopback
+      ---
+      duration_ms: 0.2506
+      type: 'test'
+      ...
+    # Subtest: never injects a token or provider key into a webview
+    ok 3 - never injects a token or provider key into a webview
+      ---
+      duration_ms: 0.3978
+      type: 'test'
+      ...
+    # Subtest: redacts Memory Inspector exports and trust-gates provider configuration
+    ok 4 - redacts Memory Inspector exports and trust-gates provider configuration
+      ---
+      duration_ms: 0.2191
+      type: 'test'
+      ...
+    # Subtest: warns on raw terminals and routes users to controlled broker execution
+    ok 5 - warns on raw terminals and routes users to controlled broker execution
+      ---
+      duration_ms: 0.1973
+      type: 'test'
+      ...
+    # Subtest: surfaces extension isolation through the authenticated broker preflight
+    ok 6 - surfaces extension isolation through the authenticated broker preflight
+      ---
+      duration_ms: 0.1644
+      type: 'test'
+      ...
+    1..6
+ok 21 - Local AI Broker, Safe Mode, and Memory Inspector
+  ---
+  duration_ms: 1.8461
+  type: 'suite'
+  ...
+# Subtest: Command-palette hygiene (clutter control)
+    # Subtest: core commands are always palette-visible (not gated)
+    ok 1 - core commands are always palette-visible (not gated)
+      ---
+      duration_ms: 0.2031
+      type: 'test'
+      ...
+    # Subtest: keeps the default palette to a small set of clear, reversible newcomer workflows
+    ok 2 - keeps the default palette to a small set of clear, reversible newcomer workflows
+      ---
+      duration_ms: 0.1504
+      type: 'test'
+      ...
+    # Subtest: every non-core declared command is gated behind soterai.advancedCommands (or fully hidden)
+    ok 3 - every non-core declared command is gated behind soterai.advancedCommands (or fully hidden)
+      ---
+      duration_ms: 0.2543
+      type: 'test'
+      ...
+    # Subtest: the context key is driven by stable and experimental command visibility settings
+    ok 4 - the context key is driven by stable and experimental command visibility settings
+      ---
+      duration_ms: 0.2607
+      type: 'test'
+      ...
+    1..4
+ok 22 - Command-palette hygiene (clutter control)
+  ---
+  duration_ms: 1.0479
+  type: 'suite'
+  ...
+# Subtest: Onboarding walkthrough (UX)
+    # Subtest: contributes a Getting Started walkthrough with 3 value-first steps
+    ok 1 - contributes a Getting Started walkthrough with 3 value-first steps
+      ---
+      duration_ms: 0.2173
+      type: 'test'
+      ...
+    # Subtest: every walkthrough step points to an existing markdown media file
+    ok 2 - every walkthrough step points to an existing markdown media file
+      ---
+      duration_ms: 0.6333
+      type: 'test'
+      ...
+    # Subtest: every walkthrough command button targets a declared or built-in command
+    ok 3 - every walkthrough command button targets a declared or built-in command
+      ---
+      duration_ms: 0.2851
+      type: 'test'
+      ...
+    # Subtest: declares onWalkthrough activation and a registered openWalkthrough command
+    ok 4 - declares onWalkthrough activation and a registered openWalkthrough command
+      ---
+      duration_ms: 0.1231
+      type: 'test'
+      ...
+    # Subtest: opens the walkthrough only once via a globalState onboarding flag
+    ok 5 - opens the walkthrough only once via a globalState onboarding flag
+      ---
+      duration_ms: 0.1914
+      type: 'test'
+      ...
+    1..5
+ok 23 - Onboarding walkthrough (UX)
+  ---
+  duration_ms: 1.6564
+  type: 'suite'
+  ...
+# Subtest: Live inline scanning + Quick Fixes (UX)
+    # Subtest: does not pass a ThemeIcon id as a decoration file URI
+    ok 1 - does not pass a ThemeIcon id as a decoration file URI
+      ---
+      duration_ms: 0.3117
+      type: 'test'
+      ...
+    # Subtest: declares soterai.liveScan.enabled defaulting to on and registers the scanner
+    ok 2 - declares soterai.liveScan.enabled defaulting to on and registers the scanner
+      ---
+      duration_ms: 0.3417
+      type: 'test'
+      ...
+    # Subtest: uses a debounced, local-only scan mapped to a DiagnosticCollection
+    ok 3 - uses a debounced, local-only scan mapped to a DiagnosticCollection
+      ---
+      duration_ms: 0.5914
+      type: 'test'
+      ...
+    # Subtest: skips non-file schemes, oversized files, and excluded globs
+    ok 4 - skips non-file schemes, oversized files, and excluded globs
+      ---
+      duration_ms: 0.4891
+      type: 'test'
+      ...
+    # Subtest: offers redact + copy-safe Quick Fixes and gates the internal fix command
+    ok 5 - offers redact + copy-safe Quick Fixes and gates the internal fix command
+      ---
+      duration_ms: 0.493
+      type: 'test'
+      ...
+    # Subtest: redaction never writes raw secrets and disposes its timers
+    ok 6 - redaction never writes raw secrets and disposes its timers
+      ---
+      duration_ms: 0.2706
+      type: 'test'
+      ...
+    1..6
+ok 24 - Live inline scanning + Quick Fixes (UX)
+  ---
+  duration_ms: 2.9251
+  type: 'suite'
+  ...
+# Subtest: Clipboard / paste guard (UX)
+    # Subtest: registers scanClipboard (core) and safePaste (advanced) commands
+    ok 1 - registers scanClipboard (core) and safePaste (advanced) commands
+      ---
+      duration_ms: 0.2301
+      type: 'test'
+      ...
+    # Subtest: scans clipboard locally and offers a redacted safe version
+    ok 2 - scans clipboard locally and offers a redacted safe version
+      ---
+      duration_ms: 0.1706
+      type: 'test'
+      ...
+    # Subtest: safe paste can insert a redacted version instead of the raw clipboard
+    ok 3 - safe paste can insert a redacted version instead of the raw clipboard
+      ---
+      duration_ms: 0.1244
+      type: 'test'
+      ...
+    # Subtest: never logs the raw clipboard value
+    ok 4 - never logs the raw clipboard value
+      ---
+      duration_ms: 0.1092
+      type: 'test'
+      ...
+    1..4
+ok 25 - Clipboard / paste guard (UX)
+  ---
+  duration_ms: 0.799
+  type: 'suite'
+  ...
+# Subtest: Security search guardrails
+    # Subtest: does not use console.log in extension source
+    ok 1 - does not use console.log in extension source
+      ---
+      duration_ms: 1.7285
+      type: 'test'
+      ...
+    # Subtest: documents every child process boundary as non-shell fixed argv usage
+    ok 2 - documents every child process boundary as non-shell fixed argv usage
+      ---
+      duration_ms: 0.7869
+      type: 'test'
+      ...
+    1..2
+ok 26 - Security search guardrails
+  ---
+  duration_ms: 2.6592
+  type: 'suite'
+  ...
+# Subtest: Control Panel (consolidated sidebar toggles)
+    # Subtest: declares the control panel as a webview view in the SoterAI sidebar
+    ok 1 - declares the control panel as a webview view in the SoterAI sidebar
+      ---
+      duration_ms: 0.3013
+      type: 'test'
+      ...
+    # Subtest: registers the webview view provider with the matching viewType
+    ok 2 - registers the webview view provider with the matching viewType
+      ---
+      duration_ms: 0.2258
+      type: 'test'
+      ...
+    # Subtest: every toggle delegates to a command or setting that actually exists
+    ok 3 - every toggle delegates to a command or setting that actually exists
+      ---
+      duration_ms: 0.2092
+      type: 'test'
+      ...
+    # Subtest: Phase 11: five primary workflows are allowlisted and wired to real commands
+    ok 4 - Phase 11: five primary workflows are allowlisted and wired to real commands
+      ---
+      duration_ms: 0.2333
+      type: 'test'
+      ...
+    # Subtest: uses the central protection state instead of an any-toggle ENFORCED roll-up
+    ok 5 - uses the central protection state instead of an any-toggle ENFORCED roll-up
+      ---
+      duration_ms: 0.3554
+      type: 'test'
+      ...
+    # Subtest: exposes one primary Full Protection action and persistent lockdown recovery
+    ok 6 - exposes one primary Full Protection action and persistent lockdown recovery
+      ---
+      duration_ms: 0.9842
+      type: 'test'
+      ...
+    # Subtest: resolves live-scan and MCP badges from CAPABILITY_REGISTRY (no stronger claim than registry)
+    ok 7 - resolves live-scan and MCP badges from CAPABILITY_REGISTRY (no stronger claim than registry)
+      ---
+      duration_ms: 0.7631
+      type: 'test'
+      ...
+    # Subtest: rejects webview messages outside the allowlist
+    ok 8 - rejects webview messages outside the allowlist
+      ---
+      duration_ms: 0.212
+      type: 'test'
+      ...
+    # Subtest: never sends secrets or raw content to the webview
+    ok 9 - never sends secrets or raw content to the webview
+      ---
+      duration_ms: 0.2222
+      type: 'test'
+      ...
+    1..9
+ok 27 - Control Panel (consolidated sidebar toggles)
+  ---
+  duration_ms: 3.8559
+  type: 'suite'
+  ...
+# Subtest: the canonical readiness doc is generated, not maintained
+    # Subtest: exists
+    ok 1 - exists
+      ---
+      duration_ms: 1.3838
+      type: 'test'
+      ...
+    # Subtest: matches what the generator produces from source right now
+    ok 2 - matches what the generator produces from source right now
+      ---
+      duration_ms: 101.7077
+      type: 'test'
+      ...
+    # Subtest: says out loud that it is generated
+    ok 3 - says out loud that it is generated
+      ---
+      duration_ms: 1.5631
+      type: 'test'
+      ...
+    1..3
+ok 28 - the canonical readiness doc is generated, not maintained
+  ---
+  duration_ms: 106.2553
+  type: 'suite'
+  ...
+# Subtest: the readiness doc states the real, current numbers
+    # Subtest: names the version being published
+    ok 1 - names the version being published
+      ---
+      duration_ms: 1.4353
+      type: 'test'
+      ...
+    # Subtest: names the license that actually ships
+    ok 2 - names the license that actually ships
+      ---
+      duration_ms: 0.3095
+      type: 'test'
+      ...
+    # Subtest: states the command count the manifest actually declares
+    ok 3 - states the command count the manifest actually declares
+      ---
+      duration_ms: 0.249
+      type: 'test'
+      ...
+    # Subtest: states the setting and policy counts the manifest actually declares
+    ok 4 - states the setting and policy counts the manifest actually declares
+      ---
+      duration_ms: 0.33
+      type: 'test'
+      ...
+    # Subtest: claims no ML in the packaged extension
+    ok 5 - claims no ML in the packaged extension
+      ---
+      duration_ms: 0.3927
+      type: 'test'
+      ...
+    # Subtest: keeps the permanent limitations in the document, not just in the code
+    ok 6 - keeps the permanent limitations in the document, not just in the code
+      ---
+      duration_ms: 0.3616
+      type: 'test'
+      ...
+    1..6
+ok 29 - the readiness doc states the real, current numbers
+  ---
+  duration_ms: 3.9059
+  type: 'suite'
+  ...
+# Subtest: stale documents do not contradict the shipped product
+    # Subtest: vscode-extension-marketplace-readiness.md no longer states a contradicted number
+    ok 1 - vscode-extension-marketplace-readiness.md no longer states a contradicted number
+      ---
+      duration_ms: 0.3868
+      type: 'test'
+      ...
+    # Subtest: no extension-facing document advertises a detection-rule count the source does not back
+    ok 2 - no extension-facing document advertises a detection-rule count the source does not back
+      ---
+      duration_ms: 4.7647
+      type: 'test'
+      ...
+    1..2
+ok 30 - stale documents do not contradict the shipped product
+  ---
+  duration_ms: 5.3515
+  type: 'suite'
+  ...
+# Subtest: README accuracy
+    # Subtest: names only commands that exist
+    ok 1 - names only commands that exist
+      ---
+      duration_ms: 2.7602
+      type: 'test'
+      ...
+    # Subtest: names only settings that exist, with the manifest's real defaults
+    ok 2 - names only settings that exist, with the manifest's real defaults
+      ---
+      duration_ms: 0.9418
+      type: 'test'
+      ...
+    # Subtest: does not advertise a version other than the one being published
+    ok 3 - does not advertise a version other than the one being published
+      ---
+      duration_ms: 1.518
+      type: 'test'
+      ...
+    # Subtest: points at a license file that ships in the VSIX
+    ok 4 - points at a license file that ships in the VSIX
+      ---
+      duration_ms: 3.6036
+      type: 'test'
+      ...
+    # Subtest: states the real count of machine-scoped settings
+    not ok 5 - states the real count of machine-scoped settings
+      ---
+      duration_ms: 3.5386
+      type: 'test'
+      location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\readme-accuracy.test.ts:2:4765'
+      failureType: 'testCodeFailure'
+      error: |-
+        README claims 83 machine-scoped settings, the manifest declares 84
+        
+        83 !== 84
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: 84
+      actual: 83
+      operator: 'strictEqual'
+      stack: |-
+        TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\readme-accuracy.test.ts:121:16)
+        Test.runInAsyncScope (node:async_hooks:214:14)
+        Test.run (node:internal/test_runner/test:1047:25)
+        Suite.processPendingSubtests (node:internal/test_runner/test:744:18)
+        Test.postRun (node:internal/test_runner/test:1173:19)
+        Test.run (node:internal/test_runner/test:1101:12)
+        async Suite.processPendingSubtests (node:internal/test_runner/test:744:7)
+      ...
+    1..5
+not ok 31 - README accuracy
+  ---
+  duration_ms: 14.4105
+  type: 'suite'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\readme-accuracy.test.ts:2:1842'
+  failureType: 'subtestsFailed'
+  error: '1 subtest failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: F27 activity keeps public event metadata while withholding caller text from storage, UI and export
+ok 32 - F27 activity keeps public event metadata while withholding caller text from storage, UI and export
+  ---
+  duration_ms: 7.837
+  type: 'test'
+  ...
+# Subtest: F27 disabled activity sink withholds a new event and releases queued metadata
+ok 33 - F27 disabled activity sink withholds a new event and releases queued metadata
+  ---
+  duration_ms: 0.9155
+  type: 'test'
+  ...
+# Subtest: F27 audit preserves useful public sequence and verification metadata
+ok 34 - F27 audit preserves useful public sequence and verification metadata
+  ---
+  duration_ms: 8.1717
+  type: 'test'
+  ...
+# Subtest: F27 audit sanitizes every caller text field before durable admission
+ok 35 - F27 audit sanitizes every caller text field before durable admission
+  ---
+  duration_ms: 1.2314
+  type: 'test'
+  ...
+# Subtest: F27 restart export withholds unsafe legacy text without rewriting signed history
+ok 36 - F27 restart export withholds unsafe legacy text without rewriting signed history
+  ---
+  duration_ms: 1.3359
+  type: 'test'
+  ...
+# Subtest: F27 disabled owned audit sink withholds emission before storage or key creation
+ok 37 - F27 disabled owned audit sink withholds emission before storage or key creation
+  ---
+  duration_ms: 0.6541
+  type: 'test'
+  ...
+# Subtest: F27 restart audit anchors never reflect unsigned extra properties
+ok 38 - F27 restart audit anchors never reflect unsigned extra properties
+  ---
+  duration_ms: 1.8162
+  type: 'test'
+  ...
+# Subtest: F27 authenticated legacy private text exports no private-content-derived hashes or signatures
+ok 39 - F27 authenticated legacy private text exports no private-content-derived hashes or signatures
+  ---
+  duration_ms: 1.1046
+  type: 'test'
+  ...
+# Subtest: F27 actual loopback broker diagnostics keep public status while omitting request path and auth
+ok 40 - F27 actual loopback broker diagnostics keep public status while omitting request path and auth
+  ---
+  duration_ms: 117.7271
+  type: 'test'
+  ...
+# Subtest: F27 default-off actual broker diagnostic sink withholds success and error emissions
+ok 41 - F27 default-off actual broker diagnostic sink withholds success and error emissions
+  ---
+  duration_ms: 15.8531
+  type: 'test'
+  ...
+# Subtest: F27 actual broker callback exceptions do not escape startup or request failure
+ok 42 - F27 actual broker callback exceptions do not escape startup or request failure
+  ---
+  duration_ms: 9.0257
+  type: 'test'
+  ...
+# Subtest: F27 diagnostic emission keeps useful public code and bounded numeric metadata
+ok 43 - F27 diagnostic emission keeps useful public code and bounded numeric metadata
+  ---
+  duration_ms: 7.934
+  type: 'test'
+  ...
+# Subtest: F27 diagnostic flag-off withholds before metadata access or callback
+ok 44 - F27 diagnostic flag-off withholds before metadata access or callback
+  ---
+  duration_ms: 0.5594
+  type: 'test'
+  ...
+# Subtest: F27 diagnostic canaries, unknown fields, error messages and caller paths are omitted
+ok 45 - F27 diagnostic canaries, unknown fields, error messages and caller paths are omitted
+  ---
+  duration_ms: 0.5612
+  type: 'test'
+  ...
+# Subtest: F27 diagnostic metadata accessors are not invoked and invalid counts are refused
+ok 46 - F27 diagnostic metadata accessors are not invoked and invalid counts are refused
+  ---
+  duration_ms: 0.6875
+  type: 'test'
+  ...
+# Subtest: F27 diagnostic callback failure is value-free and does not escape to crash reporting
+ok 47 - F27 diagnostic callback failure is value-free and does not escape to crash reporting
+  ---
+  duration_ms: 0.4751
+  type: 'test'
+  ...
+# Subtest: F27 MCP unknown-tool diagnostic does not reflect caller name
+ok 48 - F27 MCP unknown-tool diagnostic does not reflect caller name
+  ---
+  duration_ms: 1.3694
+  type: 'test'
+  ...
+# Subtest: F27 MCP unknown-method diagnostic does not reflect caller method
+ok 49 - F27 MCP unknown-method diagnostic does not reflect caller method
+  ---
+  duration_ms: 0.2201
+  type: 'test'
+  ...
+# Subtest: F27 MCP detector exception is value-free and subsequent public ping still works
+ok 50 - F27 MCP detector exception is value-free and subsequent public ping still works
+  ---
+  duration_ms: 1.111
+  type: 'test'
+  ...
+# Subtest: F27 central metadata preserves public code/decision/bounded count only
+ok 51 - F27 central metadata preserves public code/decision/bounded count only
+  ---
+  duration_ms: 2.3625
+  type: 'test'
+  ...
+# Subtest: F27 central metadata withholds arbitrary private text without hashing it
+ok 52 - F27 central metadata withholds arbitrary private text without hashing it
+  ---
+  duration_ms: 0.2815
+  type: 'test'
+  ...
+# Subtest: F27 central metadata never coerces caller objects or invokes accessors
+ok 53 - F27 central metadata never coerces caller objects or invokes accessors
+  ---
+  duration_ms: 0.2792
+  type: 'test'
+  ...
+# Subtest: F27 central metadata refuses nonfinite, fractional, negative and excessive counters
+ok 54 - F27 central metadata refuses nonfinite, fractional, negative and excessive counters
+  ---
+  duration_ms: 0.3862
+  type: 'test'
+  ...
+# Subtest: F27 owned sink is default-off and ignores repository-only opt-in
+ok 55 - F27 owned sink is default-off and ignores repository-only opt-in
+  ---
+  duration_ms: 0.4835
+  type: 'test'
+  ...
+# Subtest: F27 owned sink requires literal global true and honors global withdrawal
+ok 56 - F27 owned sink requires literal global true and honors global withdrawal
+  ---
+  duration_ms: 0.2814
+  type: 'test'
+  ...
+# Subtest: F27 telemetry keeps useful public decision metadata without caller text in queue
+ok 57 - F27 telemetry keeps useful public decision metadata without caller text in queue
+  ---
+  duration_ms: 6.1883
+  type: 'test'
+  ...
+# Subtest: F27 telemetry sanitizes caller context and purges queue on sink withdrawal
+ok 58 - F27 telemetry sanitizes caller context and purges queue on sink withdrawal
+  ---
+  duration_ms: 1.2431
+  type: 'test'
+  ...
+# Subtest: F27 telemetry dispose clears retained metadata without a final send
+ok 59 - F27 telemetry dispose clears retained metadata without a final send
+  ---
+  duration_ms: 0.7288
+  type: 'test'
+  ...
+# Subtest: F27 telemetry repository settings cannot opt into collection
+ok 60 - F27 telemetry repository settings cannot opt into collection
+  ---
+  duration_ms: 0.4125
+  type: 'test'
+  ...
+1..60
+# tests 126
+# suites 26
+# pass 124
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 9310.5369

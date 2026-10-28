@@ -1,0 +1,148 @@
+﻿TAP version 13
+# Subtest: F27 actual loopback broker diagnostics keep public status while omitting request path and auth
+ok 1 - F27 actual loopback broker diagnostics keep public status while omitting request path and auth
+  ---
+  duration_ms: 319.3512
+  type: 'test'
+  ...
+# Subtest: F27 default-off actual broker diagnostic sink withholds success and error emissions
+ok 2 - F27 default-off actual broker diagnostic sink withholds success and error emissions
+  ---
+  duration_ms: 33.0152
+  type: 'test'
+  ...
+# Subtest: F27 actual broker callback exceptions do not escape startup or request failure
+ok 3 - F27 actual broker callback exceptions do not escape startup or request failure
+  ---
+  duration_ms: 25.8664
+  type: 'test'
+  ...
+# Subtest: F27 nested checkpoint diagnostic boundary obeys owner flag false
+ok 4 - F27 nested checkpoint diagnostic boundary obeys owner flag false
+  ---
+  duration_ms: 24.4088
+  type: 'test'
+  ...
+# Subtest: F27 nested checkpoint diagnostic boundary obeys owner flag true
+ok 5 - F27 nested checkpoint diagnostic boundary obeys owner flag true
+  ---
+  duration_ms: 11.0294
+  type: 'test'
+  ...
+# Subtest: F27 nested checkpoint logger exceptions cannot escape to owned crash reporting
+ok 6 - F27 nested checkpoint logger exceptions cannot escape to owned crash reporting
+  ---
+  duration_ms: 16.1486
+  type: 'test'
+  ...
+# Subtest: F27 broker retained activity metadata obeys owner flag false
+ok 7 - F27 broker retained activity metadata obeys owner flag false
+  ---
+  duration_ms: 2.3289
+  type: 'test'
+  ...
+# Subtest: F27 broker retained activity metadata obeys owner flag true
+ok 8 - F27 broker retained activity metadata obeys owner flag true
+  ---
+  duration_ms: 1.747
+  type: 'test'
+  ...
+# Subtest: F27 actual loopback memory inspector owns IDs and withholds caller metadata on export
+ok 9 - F27 actual loopback memory inspector owns IDs and withholds caller metadata on export
+  ---
+  duration_ms: 89.574
+  type: 'test'
+  ...
+# Subtest: F27 default-off loopback memory inspector refuses retention and labels withheld export
+ok 10 - F27 default-off loopback memory inspector refuses retention and labels withheld export
+  ---
+  duration_ms: 43.0442
+  type: 'test'
+  ...
+# Subtest: F27 memory events cannot auto-create caller-named sessions
+ok 11 - F27 memory events cannot auto-create caller-named sessions
+  ---
+  duration_ms: 48.5714
+  type: 'test'
+  ...
+# Subtest: F27 actual dashboard rejection with owner flag false withholds caller text
+ok 12 - F27 actual dashboard rejection with owner flag false withholds caller text
+  ---
+  duration_ms: 7.4261
+  type: 'test'
+  ...
+# Subtest: F27 actual dashboard rejection with owner flag true withholds caller text
+ok 13 - F27 actual dashboard rejection with owner flag true withholds caller text
+  ---
+  duration_ms: 1.1156
+  type: 'test'
+  ...
+# Subtest: F27 local ledger owner-off withholds persistence
+ok 14 - F27 local ledger owner-off withholds persistence
+  ---
+  duration_ms: 10.51
+  type: 'test'
+  ...
+# Subtest: F27 local ledger owner-on retains public decisions but no arbitrary caller text
+ok 15 - F27 local ledger owner-on retains public decisions but no arbitrary caller text
+  ---
+  duration_ms: 39.4076
+  type: 'test'
+  ...
+# Subtest: F27 local ledger legacy export and views withhold private fields without rewriting old chain
+ok 16 - F27 local ledger legacy export and views withhold private fields without rewriting old chain
+  ---
+  duration_ms: 23.1361
+  type: 'test'
+  ...
+# Subtest: F27 local ledger verification preserves original tamper failure independently of projections
+ok 17 - F27 local ledger verification preserves original tamper failure independently of projections
+  ---
+  duration_ms: 5.061
+  type: 'test'
+  ...
+# Subtest: F27 legacy ledger refuses new append without rewriting private original records
+ok 18 - F27 legacy ledger refuses new append without rewriting private original records
+  ---
+  duration_ms: 7.2162
+  type: 'test'
+  ...
+# Subtest: F27 withheld or unreadable original ledger canary scan is unverified
+ok 19 - F27 withheld or unreadable original ledger canary scan is unverified
+  ---
+  duration_ms: 2.1853
+  type: 'test'
+  ...
+# Subtest: F27 malformed original ledger is retained and never replaced by a fresh chain
+ok 20 - F27 malformed original ledger is retained and never replaced by a fresh chain
+  ---
+  duration_ms: 3.1995
+  type: 'test'
+  ...
+# Subtest: F27 unreadable original storage cannot be reported as a valid empty chain
+ok 21 - F27 unreadable original storage cannot be reported as a valid empty chain
+  ---
+  duration_ms: 2.2611
+  type: 'test'
+  ...
+# Subtest: F27 explicit clear invalidates a held append before deleting history
+ok 22 - F27 explicit clear invalidates a held append before deleting history
+  ---
+  duration_ms: 9.8776
+  type: 'test'
+  ...
+# Subtest: F27 local ledger pending IO cannot revive on an off-on owner epoch
+ok 23 - F27 local ledger pending IO cannot revive on an off-on owner epoch
+  ---
+  duration_ms: 8.4769
+  type: 'test'
+  ...
+1..23
+# tests 23
+# suites 0
+# pass 23
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3135.5599

@@ -1,0 +1,192 @@
+﻿TAP version 13
+# Subtest: F27 activity keeps public event metadata while withholding caller text from storage, UI and export
+ok 1 - F27 activity keeps public event metadata while withholding caller text from storage, UI and export
+  ---
+  duration_ms: 4.6743
+  type: 'test'
+  ...
+# Subtest: F27 disabled activity sink withholds a new event and releases queued metadata
+ok 2 - F27 disabled activity sink withholds a new event and releases queued metadata
+  ---
+  duration_ms: 0.7099
+  type: 'test'
+  ...
+# Subtest: F27 held document callback cannot read or persist after Sentinel disposal
+ok 3 - F27 held document callback cannot read or persist after Sentinel disposal
+  ---
+  duration_ms: 1.5539
+  type: 'test'
+  ...
+# Subtest: F27 flag off and on cannot revive a held activity document callback
+ok 4 - F27 flag off and on cannot revive a held activity document callback
+  ---
+  duration_ms: 1.3285
+  type: 'test'
+  ...
+# Subtest: F27 activity storage failure never throws private text toward an outer crash reporter
+not ok 5 - F27 activity storage failure never throws private text toward an outer crash reporter
+  ---
+  duration_ms: 6.6025
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\selfHygiene.activity.test.ts:2:5178'
+  failureType: 'testCodeFailure'
+  error: |-
+    Got unwanted exception.
+    Actual message: "F27_SYNTHETIC_ACTIVITY_VALUE_8c16e402"
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  actual:
+  error: 'F27_SYNTHETIC_ACTIVITY_VALUE_8c16e402'
+  stack: |-
+    Object.context.globalState.update (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\selfHygiene.activity.test.ts:82:48)
+    AISentinel.recordEvent (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\sentinel\AISentinel.ts:147:39)
+    <anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\selfHygiene.activity.test.ts:84:44)
+    getActual (node:assert:531:5)
+    Function.doesNotThrow (node:assert:697:32)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\selfHygiene.activity.test.ts:84:16)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+  operator: 'doesNotThrow'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\selfHygiene.activity.test.ts:84:16)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F27 audit preserves useful public sequence and verification metadata
+ok 6 - F27 audit preserves useful public sequence and verification metadata
+  ---
+  duration_ms: 8.8531
+  type: 'test'
+  ...
+# Subtest: F27 audit sanitizes every caller text field before durable admission
+ok 7 - F27 audit sanitizes every caller text field before durable admission
+  ---
+  duration_ms: 0.9721
+  type: 'test'
+  ...
+# Subtest: F27 restart export withholds unsafe legacy text without rewriting signed history
+ok 8 - F27 restart export withholds unsafe legacy text without rewriting signed history
+  ---
+  duration_ms: 1.1287
+  type: 'test'
+  ...
+# Subtest: F27 disabled owned audit sink withholds emission before storage or key creation
+ok 9 - F27 disabled owned audit sink withholds emission before storage or key creation
+  ---
+  duration_ms: 0.6014
+  type: 'test'
+  ...
+# Subtest: F27 restart audit anchors never reflect unsigned extra properties
+ok 10 - F27 restart audit anchors never reflect unsigned extra properties
+  ---
+  duration_ms: 0.9883
+  type: 'test'
+  ...
+# Subtest: F27 authenticated legacy private text exports no private-content-derived hashes or signatures
+ok 11 - F27 authenticated legacy private text exports no private-content-derived hashes or signatures
+  ---
+  duration_ms: 1.5669
+  type: 'test'
+  ...
+# Subtest: F27 audit pending key lookup cannot revive after owner flag off and on
+ok 12 - F27 audit pending key lookup cannot revive after owner flag off and on
+  ---
+  duration_ms: 8.8597
+  type: 'test'
+  ...
+# Subtest: F27 audit storage exceptions expose only a fixed value-free failure
+not ok 13 - F27 audit storage exceptions expose only a fixed value-free failure
+  ---
+  duration_ms: 3.7113
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\selfHygiene.audit.test.ts:2:7590'
+  failureType: 'testCodeFailure'
+  error: |-
+    Audit storage failure reflected private text
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\selfHygiene.audit.test.ts:124:40)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F27 telemetry keeps useful public decision metadata without caller text in queue
+ok 14 - F27 telemetry keeps useful public decision metadata without caller text in queue
+  ---
+  duration_ms: 4.5625
+  type: 'test'
+  ...
+# Subtest: F27 telemetry sanitizes caller context and purges queue on sink withdrawal
+ok 15 - F27 telemetry sanitizes caller context and purges queue on sink withdrawal
+  ---
+  duration_ms: 0.7174
+  type: 'test'
+  ...
+# Subtest: F27 telemetry dispose clears retained metadata without a final send
+ok 16 - F27 telemetry dispose clears retained metadata without a final send
+  ---
+  duration_ms: 0.5055
+  type: 'test'
+  ...
+# Subtest: F27 telemetry repository settings cannot opt into collection
+ok 17 - F27 telemetry repository settings cannot opt into collection
+  ---
+  duration_ms: 0.5529
+  type: 'test'
+  ...
+# Subtest: F27 telemetry logger disposal failure is value-free and leaves no queue
+not ok 18 - F27 telemetry logger disposal failure is value-free and leaves no queue
+  ---
+  duration_ms: 2.6843
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\selfHygiene.telemetry.test.ts:2:3878'
+  failureType: 'testCodeFailure'
+  error: |-
+    Got unwanted exception.
+    Actual message: "F27_SYNTHETIC_TELEMETRY_VALUE_8c16e402"
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  actual:
+  error: 'F27_SYNTHETIC_TELEMETRY_VALUE_8c16e402'
+  stack: |-
+    Object.dispose (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\selfHygiene.telemetry.test.ts:71:78)
+    TelemetryManager.dispose (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\telemetry.ts:229:22)
+    <anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\selfHygiene.telemetry.test.ts:72:39)
+    getActual (node:assert:531:5)
+    Function.doesNotThrow (node:assert:697:32)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\selfHygiene.telemetry.test.ts:72:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+  operator: 'doesNotThrow'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\selfHygiene.telemetry.test.ts:72:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..18
+# tests 18
+# suites 0
+# pass 15
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2132.3693

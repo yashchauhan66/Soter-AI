@@ -1,0 +1,1290 @@
+﻿TAP version 13
+# Subtest: concurrent audit events retain distinct monotonic sequences
+ok 1 - concurrent audit events retain distinct monotonic sequences
+  ---
+  duration_ms: 25.9239
+  type: 'test'
+  ...
+# Subtest: legacy data migrates on append and retention checkpoints survive multiple evictions
+ok 2 - legacy data migrates on append and retention checkpoints survive multiple evictions
+  ---
+  duration_ms: 157.5098
+  type: 'test'
+  ...
+# Subtest: modified entries, removed tail, and forged checkpoint fail verification
+ok 3 - modified entries, removed tail, and forged checkpoint fail verification
+  ---
+  duration_ms: 2.5257
+  type: 'test'
+  ...
+# Subtest: already-truncated legacy data is preserved for inspection, not silently trusted
+ok 4 - already-truncated legacy data is preserved for inspection, not silently trusted
+  ---
+  duration_ms: 0.9779
+  type: 'test'
+  ...
+# Subtest: missing signing key never regenerates trust for existing data
+ok 5 - missing signing key never regenerates trust for existing data
+  ---
+  duration_ms: 0.7001
+  type: 'test'
+  ...
+# Subtest: F14-B01 lifecycle identity is controller authenticated and session bound
+ok 6 - F14-B01 lifecycle identity is controller authenticated and session bound
+  ---
+  duration_ms: 84.5503
+  type: 'test'
+  ...
+# Subtest: F14-B02 no session cannot manage owned broker
+ok 7 - F14-B02 no session cannot manage owned broker
+  ---
+  duration_ms: 20.1247
+  type: 'test'
+  ...
+# Subtest: F14-B02 wrong session cannot manage owned broker
+ok 8 - F14-B02 wrong session cannot manage owned broker
+  ---
+  duration_ms: 10.5218
+  type: 'test'
+  ...
+# Subtest: F14-B02 client token cannot manage owned broker
+ok 9 - F14-B02 client token cannot manage owned broker
+  ---
+  duration_ms: 10.5602
+  type: 'test'
+  ...
+# Subtest: F14-B02 wrong auth cannot manage owned broker
+ok 10 - F14-B02 wrong auth cannot manage owned broker
+  ---
+  duration_ms: 14.5232
+  type: 'test'
+  ...
+# Subtest: F14-B03 data credential never requires shared window state for allowed data routes
+ok 11 - F14-B03 data credential never requires shared window state for allowed data routes
+  ---
+  duration_ms: 9.802
+  type: 'test'
+  ...
+# Subtest: F14-B04 owner session is validated before any bind
+ok 12 - F14-B04 owner session is validated before any bind
+  ---
+  duration_ms: 0.7977
+  type: 'test'
+  ...
+# Subtest: F14-B05 separate windows reject each other's session even with same synthetic controller
+ok 13 - F14-B05 separate windows reject each other's session even with same synthetic controller
+  ---
+  duration_ms: 10.2391
+  type: 'test'
+  ...
+# Subtest: Command registration parity (\#4)
+    # Subtest: every declared command is registered
+    ok 1 - every declared command is registered
+      ---
+      duration_ms: 1.464
+      type: 'test'
+      ...
+    # Subtest: every registered command is declared (no orphan handlers)
+    ok 2 - every registered command is declared (no orphan handlers)
+      ---
+      duration_ms: 0.367
+      type: 'test'
+      ...
+    # Subtest: the three previously-missing commands are still registered
+    ok 3 - the three previously-missing commands are still registered
+      ---
+      duration_ms: 0.2521
+      type: 'test'
+      ...
+    1..3
+ok 14 - Command registration parity (\#4)
+  ---
+  duration_ms: 3.1523
+  type: 'suite'
+  ...
+# Subtest: AI Context Firewall commands (Phases 1–7)
+    # Subtest: all firewall commands are declared AND registered
+    ok 1 - all firewall commands are declared AND registered
+      ---
+      duration_ms: 0.2875
+      type: 'test'
+      ...
+    1..1
+ok 15 - AI Context Firewall commands (Phases 1–7)
+  ---
+  duration_ms: 0.4114
+  type: 'suite'
+  ...
+# Subtest: Workspace Trust (\#5)
+    # Subtest: declares limited untrusted-workspace support
+    ok 1 - declares limited untrusted-workspace support
+      ---
+      duration_ms: 0.182
+      type: 'test'
+      ...
+    # Subtest: gates cloud connection behind workspace trust
+    ok 2 - gates cloud connection behind workspace trust
+      ---
+      duration_ms: 0.3372
+      type: 'test'
+      ...
+    # Subtest: gates the secret vault behind workspace trust
+    ok 3 - gates the secret vault behind workspace trust
+      ---
+      duration_ms: 0.3291
+      type: 'test'
+      ...
+    1..3
+ok 16 - Workspace Trust (\#5)
+  ---
+  duration_ms: 1.1535
+  type: 'suite'
+  ...
+# Subtest: Workspace filesystem containment
+    # Subtest: canonicalizes targets and rejects symlink or junction escapes before vault writes
+    ok 1 - canonicalizes targets and rejects symlink or junction escapes before vault writes
+      ---
+      duration_ms: 0.4446
+      type: 'test'
+      ...
+    1..1
+ok 17 - Workspace filesystem containment
+  ---
+  duration_ms: 0.6669
+  type: 'suite'
+  ...
+# Subtest: Vault safety — dry-run preview + backup + confirm
+    # Subtest: migration backup is encrypted and OUTSIDE the workspace (no plaintext .bak)
+    ok 1 - migration backup is encrypted and OUTSIDE the workspace (no plaintext .bak)
+      ---
+      duration_ms: 0.8176
+      type: 'test'
+      ...
+    # Subtest: migration requires an explicit modal confirmation after previewing
+    ok 2 - migration requires an explicit modal confirmation after previewing
+      ---
+      duration_ms: 0.6293
+      type: 'test'
+      ...
+    # Subtest: vault status/preview surface metadata only — rawValue stays inside the encrypted store
+    ok 3 - vault status/preview surface metadata only — rawValue stays inside the encrypted store
+      ---
+      duration_ms: 0.4611
+      type: 'test'
+      ...
+    1..3
+ok 18 - Vault safety — dry-run preview + backup + confirm
+  ---
+  duration_ms: 2.8444
+  type: 'suite'
+  ...
+# Subtest: Ledger privacy — no raw secrets persisted (\#6)
+    # Subtest: every ledger write goes through sanitizeLedgerEntry / buildLedgerEntry
+    ok 1 - every ledger write goes through sanitizeLedgerEntry / buildLedgerEntry
+      ---
+      duration_ms: 0.2322
+      type: 'test'
+      ...
+    # Subtest: ledger store never references raw content fields
+    ok 2 - ledger store never references raw content fields
+      ---
+      duration_ms: 0.2101
+      type: 'test'
+      ...
+    1..2
+ok 19 - Ledger privacy — no raw secrets persisted (\#6)
+  ---
+  duration_ms: 0.6046
+  type: 'suite'
+  ...
+# Subtest: Telemetry contains no raw content (\#6)
+    # Subtest: telemetry never references redactedText or raw content fields
+    ok 1 - telemetry never references redactedText or raw content fields
+      ---
+      duration_ms: 0.2716
+      type: 'test'
+      ...
+    # Subtest: event payload excludes caller evidence previews and arbitrary detector metadata
+    ok 2 - event payload excludes caller evidence previews and arbitrary detector metadata
+      ---
+      duration_ms: 0.3203
+      type: 'test'
+      ...
+    1..2
+ok 20 - Telemetry contains no raw content (\#6)
+  ---
+  duration_ms: 0.7415
+  type: 'suite'
+  ...
+# Subtest: SecretStorage token hygiene (\#6)
+    # Subtest: token is stored via context.secrets, never logged
+    ok 1 - token is stored via context.secrets, never logged
+      ---
+      duration_ms: 0.5902
+      type: 'test'
+      ...
+    # Subtest: vault key and canary tokens live in SecretStorage, not globalState/logs
+    ok 2 - vault key and canary tokens live in SecretStorage, not globalState/logs
+      ---
+      duration_ms: 0.2336
+      type: 'test'
+      ...
+    1..2
+ok 21 - SecretStorage token hygiene (\#6)
+  ---
+  duration_ms: 1.0208
+  type: 'suite'
+  ...
+# Subtest: Launch readiness command surface
+    # Subtest: declares and registers launch-critical command names
+    ok 1 - declares and registers launch-critical command names
+      ---
+      duration_ms: 0.2671
+      type: 'test'
+      ...
+    # Subtest: keeps friendly launch aliases mapped to implemented scanners
+    ok 2 - keeps friendly launch aliases mapped to implemented scanners
+      ---
+      duration_ms: 0.2033
+      type: 'test'
+      ...
+    # Subtest: has build and lint scripts required by release automation
+    ok 3 - has build and lint scripts required by release automation
+      ---
+      duration_ms: 0.1451
+      type: 'test'
+      ...
+    1..3
+ok 22 - Launch readiness command surface
+  ---
+  duration_ms: 0.8236
+  type: 'suite'
+  ...
+# Subtest: Marketplace README media hygiene
+    # Subtest: preserves historical screenshot sources without presenting them as current evidence
+    ok 1 - preserves historical screenshot sources without presenting them as current evidence
+      ---
+      duration_ms: 0.7974
+      type: 'test'
+      ...
+    # Subtest: preserves the historical demo GIF while withdrawing its release reference
+    ok 2 - preserves the historical demo GIF while withdrawing its release reference
+      ---
+      duration_ms: 0.318
+      type: 'test'
+      ...
+    1..2
+ok 23 - Marketplace README media hygiene
+  ---
+  duration_ms: 1.3007
+  type: 'suite'
+  ...
+# Subtest: Local-first privacy mode
+    # Subtest: declares soterai.privacyMode with local default
+    ok 1 - declares soterai.privacyMode with local default
+      ---
+      duration_ms: 0.289
+      type: 'test'
+      ...
+    # Subtest: prevents telemetry flush in local mode and untrusted workspaces
+    ok 2 - prevents telemetry flush in local mode and untrusted workspaces
+      ---
+      duration_ms: 0.5574
+      type: 'test'
+      ...
+    # Subtest: health reports never include raw secrets or prompt text
+    ok 3 - health reports never include raw secrets or prompt text
+      ---
+      duration_ms: 0.201
+      type: 'test'
+      ...
+    # Subtest: privacy report scopes local handling and preserves same-user and unmarked-data limits
+    ok 4 - privacy report scopes local handling and preserves same-user and unmarked-data limits
+      ---
+      duration_ms: 0.2499
+      type: 'test'
+      ...
+    # Subtest: README separates local scanning from provider egress and incomplete custody
+    ok 5 - README separates local scanning from provider egress and incomplete custody
+      ---
+      duration_ms: 0.3653
+      type: 'test'
+      ...
+    # Subtest: trust checklist and product matrix lock the reviewer-facing privacy contract
+    ok 6 - trust checklist and product matrix lock the reviewer-facing privacy contract
+      ---
+      duration_ms: 0.1777
+      type: 'test'
+      ...
+    1..6
+ok 24 - Local-first privacy mode
+  ---
+  duration_ms: 3.9401
+  type: 'suite'
+  ...
+# Subtest: Clipboard safety for firewall handlers (\#1)
+    # Subtest: all firewall clipboard writes go through redactForSharing or a canary token by design
+    ok 1 - all firewall clipboard writes go through redactForSharing or a canary token by design
+      ---
+      duration_ms: 0.2473
+      type: 'test'
+      ...
+    1..1
+ok 25 - Clipboard safety for firewall handlers (\#1)
+  ---
+  duration_ms: 0.34
+  type: 'suite'
+  ...
+# Subtest: Webview hardening (\#7)
+    # Subtest: all webviews declare a Content-Security-Policy
+    ok 1 - all webviews declare a Content-Security-Policy
+      ---
+      duration_ms: 0.3526
+      type: 'test'
+      ...
+    # Subtest: webviews escape finding fields before HTML interpolation
+    ok 2 - webviews escape finding fields before HTML interpolation
+      ---
+      duration_ms: 0.1238
+      type: 'test'
+      ...
+    # Subtest: firewall info webviews disable scripts
+    ok 3 - firewall info webviews disable scripts
+      ---
+      duration_ms: 0.2437
+      type: 'test'
+      ...
+    # Subtest: dashboard message handler keeps a strict command allowlist including new actions
+    ok 4 - dashboard message handler keeps a strict command allowlist including new actions
+      ---
+      duration_ms: 0.3489
+      type: 'test'
+      ...
+    # Subtest: dashboard surfaces the 9+ trust center without overstating enforcement
+    ok 5 - dashboard surfaces the 9+ trust center without overstating enforcement
+      ---
+      duration_ms: 0.1608
+      type: 'test'
+      ...
+    1..5
+ok 26 - Webview hardening (\#7)
+  ---
+  duration_ms: 1.391
+  type: 'suite'
+  ...
+# Subtest: Enterprise policy export
+    # Subtest: exports a buyer-ready enterprise policy bundle with honest enforcement scope
+    ok 1 - exports a buyer-ready enterprise policy bundle with honest enforcement scope
+      ---
+      duration_ms: 0.2393
+      type: 'test'
+      ...
+    1..1
+ok 27 - Enterprise policy export
+  ---
+  duration_ms: 0.3138
+  type: 'suite'
+  ...
+# Subtest: Broker auto-start wiring (activation actually turns protection on)
+    # Subtest: activate() starts the broker, not just constructs one
+    ok 1 - activate() starts the broker, not just constructs one
+      ---
+      duration_ms: 0.3756
+      type: 'test'
+      ...
+    # Subtest: does not await the start, so a slow broker cannot hang activation
+    ok 2 - does not await the start, so a slow broker cannot hang activation
+      ---
+      duration_ms: 0.2225
+      type: 'test'
+      ...
+    # Subtest: exposes an opt-out that is declared, machine-scoped, and restricted
+    ok 3 - exposes an opt-out that is declared, machine-scoped, and restricted
+      ---
+      duration_ms: 0.3778
+      type: 'test'
+      ...
+    # Subtest: never fails silently — every non-started outcome notifies the user
+    ok 4 - never fails silently — every non-started outcome notifies the user
+      ---
+      duration_ms: 0.2228
+      type: 'test'
+      ...
+    # Subtest: withholds the provider key in a restricted workspace
+    ok 5 - withholds the provider key in a restricted workspace
+      ---
+      duration_ms: 0.2774
+      type: 'test'
+      ...
+    1..5
+ok 28 - Broker auto-start wiring (activation actually turns protection on)
+  ---
+  duration_ms: 1.8608
+  type: 'suite'
+  ...
+# Subtest: Local AI Broker, Safe Mode, and Memory Inspector
+    # Subtest: declares and registers every new command
+    ok 1 - declares and registers every new command
+      ---
+      duration_ms: 0.5286
+      type: 'test'
+      ...
+    # Subtest: stores broker/provider tokens in SecretStorage and fixes the host to loopback
+    ok 2 - stores broker/provider tokens in SecretStorage and fixes the host to loopback
+      ---
+      duration_ms: 0.3013
+      type: 'test'
+      ...
+    # Subtest: never injects a token or provider key into a webview
+    ok 3 - never injects a token or provider key into a webview
+      ---
+      duration_ms: 0.4626
+      type: 'test'
+      ...
+    # Subtest: redacts Memory Inspector exports and trust-gates provider configuration
+    ok 4 - redacts Memory Inspector exports and trust-gates provider configuration
+      ---
+      duration_ms: 0.2605
+      type: 'test'
+      ...
+    # Subtest: warns on raw terminals and routes users to controlled broker execution
+    ok 5 - warns on raw terminals and routes users to controlled broker execution
+      ---
+      duration_ms: 0.3131
+      type: 'test'
+      ...
+    # Subtest: surfaces extension isolation through the authenticated broker preflight
+    ok 6 - surfaces extension isolation through the authenticated broker preflight
+      ---
+      duration_ms: 0.2187
+      type: 'test'
+      ...
+    1..6
+ok 29 - Local AI Broker, Safe Mode, and Memory Inspector
+  ---
+  duration_ms: 2.4218
+  type: 'suite'
+  ...
+# Subtest: Command-palette hygiene (clutter control)
+    # Subtest: core commands are always palette-visible (not gated)
+    ok 1 - core commands are always palette-visible (not gated)
+      ---
+      duration_ms: 0.3035
+      type: 'test'
+      ...
+    # Subtest: keeps the default palette to a small set of clear, reversible newcomer workflows
+    ok 2 - keeps the default palette to a small set of clear, reversible newcomer workflows
+      ---
+      duration_ms: 0.2023
+      type: 'test'
+      ...
+    # Subtest: every non-core declared command is gated behind soterai.advancedCommands (or fully hidden)
+    ok 3 - every non-core declared command is gated behind soterai.advancedCommands (or fully hidden)
+      ---
+      duration_ms: 0.3759
+      type: 'test'
+      ...
+    # Subtest: the context key is driven by stable and experimental command visibility settings
+    ok 4 - the context key is driven by stable and experimental command visibility settings
+      ---
+      duration_ms: 0.3764
+      type: 'test'
+      ...
+    1..4
+ok 30 - Command-palette hygiene (clutter control)
+  ---
+  duration_ms: 1.5157
+  type: 'suite'
+  ...
+# Subtest: Onboarding walkthrough (UX)
+    # Subtest: contributes a Getting Started walkthrough with 3 value-first steps
+    ok 1 - contributes a Getting Started walkthrough with 3 value-first steps
+      ---
+      duration_ms: 0.2572
+      type: 'test'
+      ...
+    # Subtest: every walkthrough step points to an existing markdown media file
+    ok 2 - every walkthrough step points to an existing markdown media file
+      ---
+      duration_ms: 0.4786
+      type: 'test'
+      ...
+    # Subtest: every walkthrough command button targets a declared or built-in command
+    ok 3 - every walkthrough command button targets a declared or built-in command
+      ---
+      duration_ms: 0.2625
+      type: 'test'
+      ...
+    # Subtest: declares onWalkthrough activation and a registered openWalkthrough command
+    ok 4 - declares onWalkthrough activation and a registered openWalkthrough command
+      ---
+      duration_ms: 0.115
+      type: 'test'
+      ...
+    # Subtest: opens the walkthrough only once via a globalState onboarding flag
+    ok 5 - opens the walkthrough only once via a globalState onboarding flag
+      ---
+      duration_ms: 0.1653
+      type: 'test'
+      ...
+    1..5
+ok 31 - Onboarding walkthrough (UX)
+  ---
+  duration_ms: 1.5143
+  type: 'suite'
+  ...
+# Subtest: Live inline scanning + Quick Fixes (UX)
+    # Subtest: does not pass a ThemeIcon id as a decoration file URI
+    ok 1 - does not pass a ThemeIcon id as a decoration file URI
+      ---
+      duration_ms: 0.2402
+      type: 'test'
+      ...
+    # Subtest: declares soterai.liveScan.enabled defaulting to on and registers the scanner
+    ok 2 - declares soterai.liveScan.enabled defaulting to on and registers the scanner
+      ---
+      duration_ms: 0.2583
+      type: 'test'
+      ...
+    # Subtest: uses a debounced, local-only scan mapped to a DiagnosticCollection
+    ok 3 - uses a debounced, local-only scan mapped to a DiagnosticCollection
+      ---
+      duration_ms: 0.2085
+      type: 'test'
+      ...
+    # Subtest: skips non-file schemes, oversized files, and excluded globs
+    ok 4 - skips non-file schemes, oversized files, and excluded globs
+      ---
+      duration_ms: 0.1258
+      type: 'test'
+      ...
+    # Subtest: offers redact + copy-safe Quick Fixes and gates the internal fix command
+    ok 5 - offers redact + copy-safe Quick Fixes and gates the internal fix command
+      ---
+      duration_ms: 0.3154
+      type: 'test'
+      ...
+    # Subtest: redaction never writes raw secrets and disposes its timers
+    ok 6 - redaction never writes raw secrets and disposes its timers
+      ---
+      duration_ms: 0.2015
+      type: 'test'
+      ...
+    1..6
+ok 32 - Live inline scanning + Quick Fixes (UX)
+  ---
+  duration_ms: 1.5496
+  type: 'suite'
+  ...
+# Subtest: Clipboard / paste guard (UX)
+    # Subtest: registers scanClipboard (core) and safePaste (advanced) commands
+    ok 1 - registers scanClipboard (core) and safePaste (advanced) commands
+      ---
+      duration_ms: 0.2118
+      type: 'test'
+      ...
+    # Subtest: scans clipboard locally and offers a redacted safe version
+    ok 2 - scans clipboard locally and offers a redacted safe version
+      ---
+      duration_ms: 0.156
+      type: 'test'
+      ...
+    # Subtest: safe paste can insert a redacted version instead of the raw clipboard
+    ok 3 - safe paste can insert a redacted version instead of the raw clipboard
+      ---
+      duration_ms: 0.1085
+      type: 'test'
+      ...
+    # Subtest: never logs the raw clipboard value
+    ok 4 - never logs the raw clipboard value
+      ---
+      duration_ms: 0.0995
+      type: 'test'
+      ...
+    1..4
+ok 33 - Clipboard / paste guard (UX)
+  ---
+  duration_ms: 0.7157
+  type: 'suite'
+  ...
+# Subtest: Security search guardrails
+    # Subtest: does not use console.log in extension source
+    ok 1 - does not use console.log in extension source
+      ---
+      duration_ms: 1.5622
+      type: 'test'
+      ...
+    # Subtest: documents every child process boundary as non-shell fixed argv usage
+    ok 2 - documents every child process boundary as non-shell fixed argv usage
+      ---
+      duration_ms: 0.6697
+      type: 'test'
+      ...
+    1..2
+ok 34 - Security search guardrails
+  ---
+  duration_ms: 2.3371
+  type: 'suite'
+  ...
+# Subtest: Control Panel (consolidated sidebar toggles)
+    # Subtest: declares the control panel as a webview view in the SoterAI sidebar
+    ok 1 - declares the control panel as a webview view in the SoterAI sidebar
+      ---
+      duration_ms: 0.2155
+      type: 'test'
+      ...
+    # Subtest: registers the webview view provider with the matching viewType
+    ok 2 - registers the webview view provider with the matching viewType
+      ---
+      duration_ms: 0.1878
+      type: 'test'
+      ...
+    # Subtest: every toggle delegates to a command or setting that actually exists
+    ok 3 - every toggle delegates to a command or setting that actually exists
+      ---
+      duration_ms: 0.193
+      type: 'test'
+      ...
+    # Subtest: Phase 11: five primary workflows are allowlisted and wired to real commands
+    ok 4 - Phase 11: five primary workflows are allowlisted and wired to real commands
+      ---
+      duration_ms: 0.2009
+      type: 'test'
+      ...
+    # Subtest: uses the central protection state instead of an any-toggle ENFORCED roll-up
+    ok 5 - uses the central protection state instead of an any-toggle ENFORCED roll-up
+      ---
+      duration_ms: 0.2972
+      type: 'test'
+      ...
+    # Subtest: exposes one primary Full Protection action and persistent lockdown recovery
+    ok 6 - exposes one primary Full Protection action and persistent lockdown recovery
+      ---
+      duration_ms: 0.8069
+      type: 'test'
+      ...
+    # Subtest: resolves live-scan and MCP badges from CAPABILITY_REGISTRY (no stronger claim than registry)
+    ok 7 - resolves live-scan and MCP badges from CAPABILITY_REGISTRY (no stronger claim than registry)
+      ---
+      duration_ms: 0.5979
+      type: 'test'
+      ...
+    # Subtest: rejects webview messages outside the allowlist
+    ok 8 - rejects webview messages outside the allowlist
+      ---
+      duration_ms: 0.1446
+      type: 'test'
+      ...
+    # Subtest: never sends secrets or raw content to the webview
+    ok 9 - never sends secrets or raw content to the webview
+      ---
+      duration_ms: 0.1965
+      type: 'test'
+      ...
+    1..9
+ok 35 - Control Panel (consolidated sidebar toggles)
+  ---
+  duration_ms: 3.1225
+  type: 'suite'
+  ...
+# Subtest: F14-C01 real owned CLI binds atomically despite occupied legacy47321
+ok 36 - F14-C01 real owned CLI binds atomically despite occupied legacy47321
+  ---
+  duration_ms: 855.5049
+  type: 'test'
+  ...
+# Subtest: F14-C02 two actual windows own different bound ports and reject cross credentials
+ok 37 - F14-C02 two actual windows own different bound ports and reject cross credentials
+  ---
+  duration_ms: 1173.9176
+  type: 'test'
+  ...
+# Subtest: F14-C03 real initialization syncs canaries, restores strict mode, then closes without tokens in output
+ok 38 - F14-C03 real initialization syncs canaries, restores strict mode, then closes without tokens in output
+  ---
+  duration_ms: 876.7971
+  type: 'test'
+  ...
+# Subtest: F14-C04 parent IPC disconnect exits its own real broker with drained pipes
+ok 39 - F14-C04 parent IPC disconnect exits its own real broker with drained pipes
+  ---
+  duration_ms: 644.3236
+  type: 'test'
+  ...
+# Subtest: F15e-M01 default chunked flag reaches owned child
+ok 40 - F15e-M01 default chunked flag reaches owned child
+  ---
+  duration_ms: 83.9159
+  type: 'test'
+  ...
+# Subtest: F15e-M02 machine chunked disable survives workspace override and keeps encoding startup
+ok 41 - F15e-M02 machine chunked disable survives workspace override and keeps encoding startup
+  ---
+  duration_ms: 27.8403
+  type: 'test'
+  ...
+# Subtest: F15e-M03 chunked flag drift invalidates old routing authority
+ok 42 - F15e-M03 chunked flag drift invalidates old routing authority
+  ---
+  duration_ms: 13.0702
+  type: 'test'
+  ...
+# Subtest: F15d-M01 default deflate flag reaches owned child
+ok 43 - F15d-M01 default deflate flag reaches owned child
+  ---
+  duration_ms: 12.5276
+  type: 'test'
+  ...
+# Subtest: F15d-M02 machine deflate disable survives workspace override and keeps existing formats
+ok 44 - F15d-M02 machine deflate disable survives workspace override and keeps existing formats
+  ---
+  duration_ms: 11.1311
+  type: 'test'
+  ...
+# Subtest: F15d-M03 deflate flag drift invalidates old routing authority
+ok 45 - F15d-M03 deflate flag drift invalidates old routing authority
+  ---
+  duration_ms: 9.7024
+  type: 'test'
+  ...
+# Subtest: F15c-M01 default Brotli flag reaches owned child
+ok 46 - F15c-M01 default Brotli flag reaches owned child
+  ---
+  duration_ms: 13.4918
+  type: 'test'
+  ...
+# Subtest: F15c-M02 machine Brotli disable survives workspace override and preserves JSON/gzip startup
+ok 47 - F15c-M02 machine Brotli disable survives workspace override and preserves JSON/gzip startup
+  ---
+  duration_ms: 11.0294
+  type: 'test'
+  ...
+# Subtest: F15c-M03 Brotli flag drift invalidates old routing authority
+ok 48 - F15c-M03 Brotli flag drift invalidates old routing authority
+  ---
+  duration_ms: 9.5643
+  type: 'test'
+  ...
+# Subtest: F15b-M01 default gzip flag reaches owned child
+ok 49 - F15b-M01 default gzip flag reaches owned child
+  ---
+  duration_ms: 12.562
+  type: 'test'
+  ...
+# Subtest: F15b-M02 machine gzip disable survives workspace override while JSON startup remains available
+ok 50 - F15b-M02 machine gzip disable survives workspace override while JSON startup remains available
+  ---
+  duration_ms: 10.5991
+  type: 'test'
+  ...
+# Subtest: F15b-M03 gzip flag drift invalidates old routing authority
+ok 51 - F15b-M03 gzip flag drift invalidates old routing authority
+  ---
+  duration_ms: 10.0592
+  type: 'test'
+  ...
+# Subtest: F15a-M01 default JSON flag reaches the private owned child
+ok 52 - F15a-M01 default JSON flag reaches the private owned child
+  ---
+  duration_ms: 8.9492
+  type: 'test'
+  ...
+# Subtest: F15a-M02 machine JSON disable survives workspace override and failed initialization
+ok 53 - F15a-M02 machine JSON disable survives workspace override and failed initialization
+  ---
+  duration_ms: 6.7032
+  type: 'test'
+  ...
+# Subtest: F15a-M03 changed JSON flag invalidates existing owned routing authority
+ok 54 - F15a-M03 changed JSON flag invalidates existing owned routing authority
+  ---
+  duration_ms: 10.0055
+  type: 'test'
+  ...
+# Subtest: F14-M01 machine flag disable refuses without launch or legacy attach
+ok 55 - F14-M01 machine flag disable refuses without launch or legacy attach
+  ---
+  duration_ms: 0.4435
+  type: 'test'
+  ...
+# Subtest: F14-M02 workspace flag cannot override machine disable
+ok 56 - F14-M02 workspace flag cannot override machine disable
+  ---
+  duration_ms: 0.2947
+  type: 'test'
+  ...
+# Subtest: F14-M03 startup restores strict policy and complete canaries before healthy
+ok 57 - F14-M03 startup restores strict policy and complete canaries before healthy
+  ---
+  duration_ms: 8.5205
+  type: 'test'
+  ...
+# Subtest: F14-M04 malformed saved safe mode fails before child launch
+ok 58 - F14-M04 malformed saved safe mode fails before child launch
+  ---
+  duration_ms: 0.5724
+  type: 'test'
+  ...
+# Subtest: F14-M05 saved enterprise policy survives stop and new generation
+ok 59 - F14-M05 saved enterprise policy survives stop and new generation
+  ---
+  duration_ms: 15.1289
+  type: 'test'
+  ...
+# Subtest: F14-M06 old shared auth and memory records never attach
+ok 60 - F14-M06 old shared auth and memory records never attach
+  ---
+  duration_ms: 12.0508
+  type: 'test'
+  ...
+# Subtest: F14-M07 restricted workspace never starts provider-bearing child
+ok 61 - F14-M07 restricted workspace never starts provider-bearing child
+  ---
+  duration_ms: 0.6175
+  type: 'test'
+  ...
+# Subtest: F14-M08 lockdown refuses child creation
+ok 62 - F14-M08 lockdown refuses child creation
+  ---
+  duration_ms: 0.4313
+  type: 'test'
+  ...
+# Subtest: F14-M09 stale configured port does not determine actual owned endpoint
+ok 63 - F14-M09 stale configured port does not determine actual owned endpoint
+  ---
+  duration_ms: 15.2527
+  type: 'test'
+  ...
+# Subtest: F14-M10 provider/config drift withholds rather than falling back to old listener
+ok 64 - F14-M10 provider/config drift withholds rather than falling back to old listener
+  ---
+  duration_ms: 14.7302
+  type: 'test'
+  ...
+# Subtest: F14-M11 shutdown never disables stored policy or deletes another window auth
+ok 65 - F14-M11 shutdown never disables stored policy or deletes another window auth
+  ---
+  duration_ms: 15.4956
+  type: 'test'
+  ...
+# Subtest: F14-M12 unavailable status never probes configured fixed port
+ok 66 - F14-M12 unavailable status never probes configured fixed port
+  ---
+  duration_ms: 0.4958
+  type: 'test'
+  ...
+# Subtest: F14-M13 another window's canary SecretStorage change withdraws this owned broker
+ok 67 - F14-M13 another window's canary SecretStorage change withdraws this owned broker
+  ---
+  duration_ms: 9.064
+  type: 'test'
+  ...
+# Subtest: F14-M14 provider SecretStorage change withdraws but unrelated secret event keeps ownership
+ok 68 - F14-M14 provider SecretStorage change withdraws but unrelated secret event keeps ownership
+  ---
+  duration_ms: 9.0836
+  type: 'test'
+  ...
+# Subtest: F15f-M01 default framed flag reaches owned child
+ok 69 - F15f-M01 default framed flag reaches owned child
+  ---
+  duration_ms: 7.3417
+  type: 'test'
+  ...
+# Subtest: F15f-M02 machine framed disable survives workspace override and keeps encoding startup
+ok 70 - F15f-M02 machine framed disable survives workspace override and keeps encoding startup
+  ---
+  duration_ms: 9.954
+  type: 'test'
+  ...
+# Subtest: F15f-M03 framed flag drift invalidates old routing authority
+ok 71 - F15f-M03 framed flag drift invalidates old routing authority
+  ---
+  duration_ms: 9.0829
+  type: 'test'
+  ...
+# Subtest: F15g-M01 default multipart flag reaches owned child
+ok 72 - F15g-M01 default multipart flag reaches owned child
+  ---
+  duration_ms: 8.2993
+  type: 'test'
+  ...
+# Subtest: F15g-M02 machine multipart disable survives workspace override and keeps encoding startup
+ok 73 - F15g-M02 machine multipart disable survives workspace override and keeps encoding startup
+  ---
+  duration_ms: 9.1449
+  type: 'test'
+  ...
+# Subtest: F15g-M03 multipart flag drift invalidates old routing authority
+ok 74 - F15g-M03 multipart flag drift invalidates old routing authority
+  ---
+  duration_ms: 7.0296
+  type: 'test'
+  ...
+# Subtest: F15h-M01 default base64 flag reaches owned child
+ok 75 - F15h-M01 default base64 flag reaches owned child
+  ---
+  duration_ms: 6.9898
+  type: 'test'
+  ...
+# Subtest: F15h-M02 machine base64 disable survives workspace override and keeps encoding startup
+ok 76 - F15h-M02 machine base64 disable survives workspace override and keeps encoding startup
+  ---
+  duration_ms: 10.6081
+  type: 'test'
+  ...
+# Subtest: F15h-M03 base64 flag drift invalidates old routing authority
+ok 77 - F15h-M03 base64 flag drift invalidates old routing authority
+  ---
+  duration_ms: 9.043
+  type: 'test'
+  ...
+# Subtest: the canonical readiness doc is generated, not maintained
+    # Subtest: exists
+    ok 1 - exists
+      ---
+      duration_ms: 1.1039
+      type: 'test'
+      ...
+    # Subtest: matches what the generator produces from source right now
+    ok 2 - matches what the generator produces from source right now
+      ---
+      duration_ms: 92.4506
+      type: 'test'
+      ...
+    # Subtest: says out loud that it is generated
+    ok 3 - says out loud that it is generated
+      ---
+      duration_ms: 1.2877
+      type: 'test'
+      ...
+    1..3
+ok 78 - the canonical readiness doc is generated, not maintained
+  ---
+  duration_ms: 96.3068
+  type: 'suite'
+  ...
+# Subtest: the readiness doc states the real, current numbers
+    # Subtest: names the version being published
+    ok 1 - names the version being published
+      ---
+      duration_ms: 0.4876
+      type: 'test'
+      ...
+    # Subtest: names the license that actually ships
+    ok 2 - names the license that actually ships
+      ---
+      duration_ms: 0.2495
+      type: 'test'
+      ...
+    # Subtest: states the command count the manifest actually declares
+    ok 3 - states the command count the manifest actually declares
+      ---
+      duration_ms: 1.2743
+      type: 'test'
+      ...
+    # Subtest: states the setting and policy counts the manifest actually declares
+    ok 4 - states the setting and policy counts the manifest actually declares
+      ---
+      duration_ms: 0.6659
+      type: 'test'
+      ...
+    # Subtest: claims no ML in the packaged extension
+    ok 5 - claims no ML in the packaged extension
+      ---
+      duration_ms: 0.4686
+      type: 'test'
+      ...
+    # Subtest: keeps the permanent limitations in the document, not just in the code
+    ok 6 - keeps the permanent limitations in the document, not just in the code
+      ---
+      duration_ms: 0.3939
+      type: 'test'
+      ...
+    1..6
+ok 79 - the readiness doc states the real, current numbers
+  ---
+  duration_ms: 4.8584
+  type: 'suite'
+  ...
+# Subtest: stale documents do not contradict the shipped product
+    # Subtest: vscode-extension-marketplace-readiness.md no longer states a contradicted number
+    ok 1 - vscode-extension-marketplace-readiness.md no longer states a contradicted number
+      ---
+      duration_ms: 0.3663
+      type: 'test'
+      ...
+    # Subtest: no extension-facing document advertises a detection-rule count the source does not back
+    ok 2 - no extension-facing document advertises a detection-rule count the source does not back
+      ---
+      duration_ms: 2.276
+      type: 'test'
+      ...
+    1..2
+ok 80 - stale documents do not contradict the shipped product
+  ---
+  duration_ms: 2.8247
+  type: 'suite'
+  ...
+# Subtest: README accuracy
+    # Subtest: names only commands that exist
+    ok 1 - names only commands that exist
+      ---
+      duration_ms: 1.8053
+      type: 'test'
+      ...
+    # Subtest: names only settings that exist, with the manifest's real defaults
+    ok 2 - names only settings that exist, with the manifest's real defaults
+      ---
+      duration_ms: 0.6213
+      type: 'test'
+      ...
+    # Subtest: does not advertise a version other than the one being published
+    ok 3 - does not advertise a version other than the one being published
+      ---
+      duration_ms: 0.9819
+      type: 'test'
+      ...
+    # Subtest: points at a license file that ships in the VSIX
+    ok 4 - points at a license file that ships in the VSIX
+      ---
+      duration_ms: 0.633
+      type: 'test'
+      ...
+    # Subtest: states the real count of machine-scoped settings
+    ok 5 - states the real count of machine-scoped settings
+      ---
+      duration_ms: 0.3067
+      type: 'test'
+      ...
+    1..5
+ok 81 - README accuracy
+  ---
+  duration_ms: 5.6634
+  type: 'suite'
+  ...
+# Subtest: F27 activity keeps public event metadata while withholding caller text from storage, UI and export
+ok 82 - F27 activity keeps public event metadata while withholding caller text from storage, UI and export
+  ---
+  duration_ms: 2.9876
+  type: 'test'
+  ...
+# Subtest: F27 disabled activity sink withholds a new event and releases queued metadata
+ok 83 - F27 disabled activity sink withholds a new event and releases queued metadata
+  ---
+  duration_ms: 0.4723
+  type: 'test'
+  ...
+# Subtest: F27 held document callback cannot read or persist after Sentinel disposal
+ok 84 - F27 held document callback cannot read or persist after Sentinel disposal
+  ---
+  duration_ms: 0.9771
+  type: 'test'
+  ...
+# Subtest: F27 flag off and on cannot revive a held activity document callback
+ok 85 - F27 flag off and on cannot revive a held activity document callback
+  ---
+  duration_ms: 0.8058
+  type: 'test'
+  ...
+# Subtest: F27 activity storage failure never throws private text toward an outer crash reporter
+ok 86 - F27 activity storage failure never throws private text toward an outer crash reporter
+  ---
+  duration_ms: 0.5758
+  type: 'test'
+  ...
+# Subtest: F27 opted-in activity restart minimizes legacy owned storage before retaining a new copy
+ok 87 - F27 opted-in activity restart minimizes legacy owned storage before retaining a new copy
+  ---
+  duration_ms: 7.2307
+  type: 'test'
+  ...
+# Subtest: F27 audit preserves useful public sequence and verification metadata
+ok 88 - F27 audit preserves useful public sequence and verification metadata
+  ---
+  duration_ms: 8.7295
+  type: 'test'
+  ...
+# Subtest: F27 audit sanitizes every caller text field before durable admission
+ok 89 - F27 audit sanitizes every caller text field before durable admission
+  ---
+  duration_ms: 1.7703
+  type: 'test'
+  ...
+# Subtest: F27 restart export withholds unsafe legacy text without rewriting signed history
+ok 90 - F27 restart export withholds unsafe legacy text without rewriting signed history
+  ---
+  duration_ms: 1.0135
+  type: 'test'
+  ...
+# Subtest: F27 disabled owned audit sink withholds emission before storage or key creation
+ok 91 - F27 disabled owned audit sink withholds emission before storage or key creation
+  ---
+  duration_ms: 0.5318
+  type: 'test'
+  ...
+# Subtest: F27 restart audit anchors never reflect unsigned extra properties
+ok 92 - F27 restart audit anchors never reflect unsigned extra properties
+  ---
+  duration_ms: 0.8432
+  type: 'test'
+  ...
+# Subtest: F27 authenticated legacy private text exports no private-content-derived hashes or signatures
+ok 93 - F27 authenticated legacy private text exports no private-content-derived hashes or signatures
+  ---
+  duration_ms: 1.4663
+  type: 'test'
+  ...
+# Subtest: F27 audit pending key lookup cannot revive after owner flag off and on
+ok 94 - F27 audit pending key lookup cannot revive after owner flag off and on
+  ---
+  duration_ms: 7.3045
+  type: 'test'
+  ...
+# Subtest: F27 audit storage exceptions expose only a fixed value-free failure
+ok 95 - F27 audit storage exceptions expose only a fixed value-free failure
+  ---
+  duration_ms: 0.8519
+  type: 'test'
+  ...
+# Subtest: F27 actual loopback broker diagnostics keep public status while omitting request path and auth
+ok 96 - F27 actual loopback broker diagnostics keep public status while omitting request path and auth
+  ---
+  duration_ms: 83.8846
+  type: 'test'
+  ...
+# Subtest: F27 default-off actual broker diagnostic sink withholds success and error emissions
+ok 97 - F27 default-off actual broker diagnostic sink withholds success and error emissions
+  ---
+  duration_ms: 10.8929
+  type: 'test'
+  ...
+# Subtest: F27 actual broker callback exceptions do not escape startup or request failure
+ok 98 - F27 actual broker callback exceptions do not escape startup or request failure
+  ---
+  duration_ms: 7.6114
+  type: 'test'
+  ...
+# Subtest: F27 diagnostic emission keeps useful public code and bounded numeric metadata
+ok 99 - F27 diagnostic emission keeps useful public code and bounded numeric metadata
+  ---
+  duration_ms: 2.0182
+  type: 'test'
+  ...
+# Subtest: F27 diagnostic flag-off withholds before metadata access or callback
+ok 100 - F27 diagnostic flag-off withholds before metadata access or callback
+  ---
+  duration_ms: 0.2516
+  type: 'test'
+  ...
+# Subtest: F27 diagnostic canaries, unknown fields, error messages and caller paths are omitted
+ok 101 - F27 diagnostic canaries, unknown fields, error messages and caller paths are omitted
+  ---
+  duration_ms: 0.5647
+  type: 'test'
+  ...
+# Subtest: F27 diagnostic metadata accessors are not invoked and invalid counts are refused
+ok 102 - F27 diagnostic metadata accessors are not invoked and invalid counts are refused
+  ---
+  duration_ms: 0.6197
+  type: 'test'
+  ...
+# Subtest: F27 diagnostic callback failure is value-free and does not escape to crash reporting
+ok 103 - F27 diagnostic callback failure is value-free and does not escape to crash reporting
+  ---
+  duration_ms: 0.579
+  type: 'test'
+  ...
+# Subtest: F27 MCP unknown-tool diagnostic does not reflect caller name
+ok 104 - F27 MCP unknown-tool diagnostic does not reflect caller name
+  ---
+  duration_ms: 1.4988
+  type: 'test'
+  ...
+# Subtest: F27 MCP unknown-method diagnostic does not reflect caller method
+ok 105 - F27 MCP unknown-method diagnostic does not reflect caller method
+  ---
+  duration_ms: 0.2342
+  type: 'test'
+  ...
+# Subtest: F27 MCP detector exception is value-free and subsequent public ping still works
+ok 106 - F27 MCP detector exception is value-free and subsequent public ping still works
+  ---
+  duration_ms: 1.1564
+  type: 'test'
+  ...
+# Subtest: F27 central metadata preserves public code/decision/bounded count only
+ok 107 - F27 central metadata preserves public code/decision/bounded count only
+  ---
+  duration_ms: 2.3212
+  type: 'test'
+  ...
+# Subtest: F27 central metadata withholds arbitrary private text without hashing it
+ok 108 - F27 central metadata withholds arbitrary private text without hashing it
+  ---
+  duration_ms: 0.4445
+  type: 'test'
+  ...
+# Subtest: F27 central metadata never coerces caller objects or invokes accessors
+ok 109 - F27 central metadata never coerces caller objects or invokes accessors
+  ---
+  duration_ms: 0.3552
+  type: 'test'
+  ...
+# Subtest: F27 central metadata refuses nonfinite, fractional, negative and excessive counters
+ok 110 - F27 central metadata refuses nonfinite, fractional, negative and excessive counters
+  ---
+  duration_ms: 0.3952
+  type: 'test'
+  ...
+# Subtest: F27 owned sink is default-off and ignores repository-only opt-in
+ok 111 - F27 owned sink is default-off and ignores repository-only opt-in
+  ---
+  duration_ms: 0.5819
+  type: 'test'
+  ...
+# Subtest: F27 owned sink requires literal global true and honors global withdrawal
+ok 112 - F27 owned sink requires literal global true and honors global withdrawal
+  ---
+  duration_ms: 0.3488
+  type: 'test'
+  ...
+# Subtest: F27 telemetry keeps useful public decision metadata without caller text in queue
+ok 113 - F27 telemetry keeps useful public decision metadata without caller text in queue
+  ---
+  duration_ms: 3.8678
+  type: 'test'
+  ...
+# Subtest: F27 telemetry sanitizes caller context and purges queue on sink withdrawal
+ok 114 - F27 telemetry sanitizes caller context and purges queue on sink withdrawal
+  ---
+  duration_ms: 0.6661
+  type: 'test'
+  ...
+# Subtest: F27 telemetry dispose clears retained metadata without a final send
+ok 115 - F27 telemetry dispose clears retained metadata without a final send
+  ---
+  duration_ms: 0.4078
+  type: 'test'
+  ...
+# Subtest: F27 telemetry repository settings cannot opt into collection
+ok 116 - F27 telemetry repository settings cannot opt into collection
+  ---
+  duration_ms: 0.2541
+  type: 'test'
+  ...
+# Subtest: F27 telemetry logger disposal failure is value-free and leaves no queue
+ok 117 - F27 telemetry logger disposal failure is value-free and leaves no queue
+  ---
+  duration_ms: 0.4688
+  type: 'test'
+  ...
+1..117
+# tests 183
+# suites 26
+# pass 183
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 13207.3965

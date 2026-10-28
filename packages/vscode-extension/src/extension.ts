@@ -13,6 +13,8 @@ import { RiskTreeProvider } from "./views/RiskTreeProvider";
 import { DashboardPanel } from "./webview/DashboardPanel";
 import { ControlPanelViewProvider } from "./webview/ControlPanelViewProvider";
 import { TelemetryManager } from "./telemetry";
+import { emitOwnedDiagnostic } from "../../core/src/OwnedSinkMetadata";
+import { selfHygieneEnabled } from "./self-hygiene/SelfHygieneFlags";
 import { BrokerManager, setBrokerManager } from "./broker/BrokerManager";
 import { autoStartBroker, RETRY_START } from "./broker/autoStart";
 import { registerBrokerCommands } from "./broker/commands";
@@ -111,6 +113,7 @@ export function activate(context: vscode.ExtensionContext): void {
             event.affectsConfiguration("soterai.telemetry.redactedEvents")
             || event.affectsConfiguration("soterai.privacyMode")
             || event.affectsConfiguration("soterai.cloud.enabled")
+            || event.affectsConfiguration("soterai.lite.selfHygiene")
         ) {
             telemetry.syncPrivacyBoundary();
             refreshViews();
@@ -501,7 +504,7 @@ export function activate(context: vscode.ExtensionContext): void {
                     action === RETRY_START ? "soterai.startLocalAIBroker" : "soterai.openControlPanel",
                 );
             },
-            log: (line) => brokerLog.appendLine(`[${new Date().toISOString()}] ${line}`),
+            log: () => { emitOwnedDiagnostic(selfHygieneEnabled(), event => brokerLog.appendLine(JSON.stringify(event)), "broker_event"); },
             delay: (ms) => new Promise((resolve) => setTimeout(resolve, ms)),
         },
         { enabled: vscode.workspace.getConfiguration("soterai").get<boolean>("broker.autoStart", true) },

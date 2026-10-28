@@ -60,13 +60,14 @@ export function registerCanaryCommands(deps: FirewallDeps): void {
     };
 
     const verifyNoCanaryInLogs = async () => {
-        const jsonl = await LedgerStore.exportSafe();
         const active = await canary.loadForScan();
-        const leaked = active.filter((c) => jsonl.includes(c.token));
-        if (leaked.length) {
-            vscode.window.showErrorMessage(`[SoterAI] Canary token found in ledger export — investigate immediately.`);
+        const leaked = await LedgerStore.containsCanary(active.map(c => c.token));
+        if (leaked === undefined) {
+            vscode.window.showWarningMessage("Local ledger canary inspection is unavailable or withheld; absence is unverified.");
+        } else if (leaked) {
+            vscode.window.showErrorMessage("[SoterAI] Canary token found in original local ledger storage; review the retained history.");
         } else {
-            vscode.window.showInformationMessage("Verified: no raw canary token appears in the AI ledger/export.");
+            vscode.window.showInformationMessage("No active canary token found in this original local ledger snapshot. Other sinks were not inspected.");
         }
     };
 

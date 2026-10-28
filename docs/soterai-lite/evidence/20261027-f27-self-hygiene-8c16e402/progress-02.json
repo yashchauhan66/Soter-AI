@@ -1,0 +1,84 @@
+{
+  "feature": "F27",
+  "status": "ACTIVE_COMPONENT183_PASS_ADDITIONAL_SINK_BASELINE_FAIL_FULL_RUNNING",
+  "observedAt": "2026-10-27T13:57:52.032Z",
+  "head": "abfc347e4ae81917ff267cf1b7d80103aa428057",
+  "verified": {
+    "combinedCurrent08": "183PASS0FAIL",
+    "activityFinal02": "7PASS0FAIL",
+    "compiler03": "PASS_ACTUAL_CLOSE_BOTH_EOF",
+    "backendTypecheck01": "PASS_ACTUAL_CLOSE_BOTH_EOF",
+    "backendTests01": "PASS_ACTUAL_CLOSE_BOTH_EOF"
+  },
+  "active": {
+    "ownerPid": 16900,
+    "fullWrapperPid": 776,
+    "sourceCount": 1014,
+    "full": "STARTED_NOT_COMPLETED_NO_DUPLICATE_NO_SIGNALS"
+  },
+  "newFindings": [
+    {
+      "sink": "DashboardPanel rejection console",
+      "baseline": "dashboard-baseline-01.txt",
+      "result": "2FAIL actual synthetic callback reflects canary with flag off and on; evidence-only fixture, no frozen production edits"
+    },
+    {
+      "sink": "LedgerStore",
+      "result": "STATIC_CONFIRMED arbitrary metadata retained/exported beyond detector scrubbing; actual regression preparation pending"
+    },
+    {
+      "sink": "BrokerServer checkpoint logger",
+      "result": "LOW_STATIC_REVIEW nested logger bypasses owner selfHygiene boundary; regression pending"
+    }
+  ],
+  "pins": [
+    {
+      "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/full-inputs-01.json",
+      "bytes": 196988,
+      "sha256": "3fe5eb4189c119d0d52c235ad139ecd2a6efd3ca7623def9cae387a0dea2c70a"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/dashboard-boundary-01.test.ts",
+      "bytes": 1557,
+      "sha256": "1e95cf80d07ed246592e9be87f8273aa0b734c87ca1f6fa4f0e74286f54ff8dd"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/dashboard-baseline-01.txt",
+      "bytes": 2621,
+      "sha256": "382db29e95517d0f10f665c1cb47aef8acb76c093e939819d8a808ec16a9167e"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/dashboard-baseline-01.txt.result.json",
+      "bytes": 617,
+      "sha256": "476ae97615906b4d5105f932efa3aadb3e308de406d457d31f32c2eabdfffcb0"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/compiler-03-owned-close.json",
+      "bytes": 664,
+      "sha256": "233b95be2204ea6158573adbf92f45b01901bb0fa229182ec24400a054a25533"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/backend-typecheck-01-owned-close.json",
+      "bytes": 673,
+      "sha256": "f54264c36b49287095869a94826d89dc3bf191faef3db967bf4903c96533e773"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/backend-tests-01-owned-close.json",
+      "bytes": 669,
+      "sha256": "643bd2d3950a911a25e448c1c48fc3900aeadba5b0d492b02bbd9d7d7ce1c469"
+    }
+  ],
+  "remaining": [
+    "Fix additional confirmed sinks with regressions after preserving active frozen verification",
+    "new current full and immutable VSIX/content checks",
+    "actual F27 native/restart plus affected controls",
+    "withdrawal acceptance scoped local commits and exhaustive raw-byte proof"
+  ],
+  "limits": [
+    "LOW scripted/static independence only",
+    "No F27 native/full/artifact completion claim",
+    "F26a native06 USER_DEFERRED_NOT_RUN",
+    "original L6 HUMAN-ACTIONS STOP",
+    "No signals/push/normal-profile/real-secrets/OS changes"
+  ]
+}

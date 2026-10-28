@@ -1,6 +1,8 @@
 import * as vscode from "vscode";
 import { RedactedEvent, GuardDecision } from "@soterai/guard-core";
 import { shouldRecord, shouldRetainQueuedTelemetry, shouldSend, telemetryHoldReason, type TelemetryGateInput } from "./enterprise/telemetryGate";
+import { ownedSinkMetadata } from "../../core/src/OwnedSinkMetadata";
+import { selfHygieneEnabled } from "./self-hygiene/SelfHygieneFlags";
 
 /**
  * GAP 3 — telemetry that the user's own editor preference can switch off.
@@ -28,6 +30,8 @@ export class TelemetryManager {
     private batchInterval: NodeJS.Timeout | undefined;
     private maxQueueSize = 1000;
     private isOffline = false;
+    private disposed = false;
+    private retryTimer: NodeJS.Timeout | undefined;
     /**
      * The host's own logger, when the API exists (VS Code 1.75+). It is the
      * channel that respects the user's global preference without SoterAI having
@@ -67,7 +71,7 @@ export class TelemetryManager {
     }
 
     public static getInstance(): TelemetryManager {
-        if (!TelemetryManager.instance) {
+        if (!TelemetryManager.instance || TelemetryManager.instance.disposed) {
             TelemetryManager.instance = new TelemetryManager();
         }
         return TelemetryManager.instance;
@@ -80,30 +84,32 @@ export class TelemetryManager {
     }
 
     public trackDetection(decision: GuardDecision, textLength: number, context: string): void {
-        const config = vscode.workspace.getConfiguration("soterai");
-        const telemetryLevel = config.get<string>("telemetry.redactedEvents", "off");
+        const telemetryLevel = this.gateInput().level;
         // Apply every durable privacy choice before constructing an event. A
         // contradictory/stale configuration must not create a queue that merely
         // waits for the next flush to be purged.
-        if (!shouldRetainQueuedTelemetry(this.gateInput())) {
+        if (this.disposed || !selfHygieneEnabled() || !shouldRetainQueuedTelemetry(this.gateInput())) {
             this.queue = [];
             return;
         }
         if (!shouldRecord(telemetryLevel, decision.riskScore)) return;
+        if (!["allow", "warn", "redact", "block", "approval_required"].includes(decision.decision)
+            || !["info", "low", "medium", "high", "critical"].includes(decision.severity)
+            || !Number.isInteger(decision.riskScore) || decision.riskScore < 0 || decision.riskScore > 100) return;
+        const metadata = ownedSinkMetadata("scan_" + context, decision.decision, decision.riskScore);
 
         // Build fully redacted minimized event
         const event: RedactedEvent = {
             eventId: this.generateUUID(),
-            workspacePseudoId: this.getWorkspacePseudoId(),
+            workspacePseudoId: "local-workspace",
             policyVersion: "1.0.0",
-            detectorVersions: decision.detectorVersions,
-            eventType: `scan_${context}`,
+            detectorVersions: {},
+            eventType: metadata.code,
             decision: decision.decision,
-            categories: decision.categories,
+            categories: [],
             severity: decision.severity,
             riskScore: decision.riskScore,
-            redactedEvidencePreview: decision.evidencePreview, // minified & censored
-            contentLength: textLength,
+            contentLength: Number.isSafeInteger(textLength) && textLength >= 0 && textLength <= 2147483647 ? textLength : 0,
             localOnly: true,
             timestamp: new Date().toISOString(),
         };
@@ -120,6 +126,7 @@ export class TelemetryManager {
     }
 
     public startBatchTimer(): void {
+        if (this.disposed) return;
         if (this.batchInterval) clearInterval(this.batchInterval);
         this.batchInterval = setInterval(() => {
             this.flush();
@@ -132,13 +139,20 @@ export class TelemetryManager {
      * the truth instead of leaving a silent queue unexplained.
      */
     public holdReason(): string | undefined {
+        if (this.disposed || !selfHygieneEnabled()) return "Owned diagnostic collection is disabled.";
         return telemetryHoldReason(this.gateInput());
     }
 
     private gateInput(): TelemetryGateInput {
         const config = vscode.workspace.getConfiguration("soterai");
+        let level = "off";
+        try {
+            const inspected = config.inspect<unknown>("telemetry.redactedEvents");
+            const selected = inspected?.globalValue === undefined ? inspected?.defaultValue ?? "off" : inspected.globalValue;
+            if (selected === "batched" || selected === "high-risk-only") level = selected;
+        } catch { /* Unknown ownership never opts into telemetry. */ }
         return {
-            level: config.get<string>("telemetry.redactedEvents", "off"),
+            level,
             privacyMode: config.get<string>("privacyMode", "local"),
             cloudEnabled: config.get<boolean>("cloud.enabled", false),
             trusted: vscode.workspace.isTrusted,
@@ -149,10 +163,11 @@ export class TelemetryManager {
 
     /** Apply an opt-out immediately; disabled collection must not leave a latent queue. */
     public syncPrivacyBoundary(): void {
-        if (!shouldRetainQueuedTelemetry(this.gateInput())) this.queue = [];
+        if (this.disposed || !selfHygieneEnabled() || !shouldRetainQueuedTelemetry(this.gateInput())) this.queue = [];
     }
 
     public async flush(): Promise<void> {
+        if (this.disposed || !selfHygieneEnabled()) { this.queue = []; return; }
         if (this.queue.length === 0) return;
         const gate = this.gateInput();
         if (!shouldRetainQueuedTelemetry(gate)) {
@@ -170,7 +185,7 @@ export class TelemetryManager {
             }
         } catch {
             this.isOffline = true;
-            setTimeout(() => { this.isOffline = false; }, 60000); // Retry after 1 min
+            if (!this.disposed) this.retryTimer = setTimeout(() => { this.isOffline = false; }, 60000);
         }
     }
 
@@ -184,6 +199,11 @@ export class TelemetryManager {
      */
     private async sendEventsToCloud(events: RedactedEvent[]): Promise<boolean> {
         for (const event of events) {
+            if (this.disposed || !selfHygieneEnabled() || !shouldRetainQueuedTelemetry(this.gateInput())) {
+                this.queue = [];
+                return false;
+            }
+            if (!shouldSend(this.gateInput())) return false;
             // Redacted metadata only — no content, no secrets. The logger is the
             // user-visible record of what SoterAI *would* report, and VS Code
             // silences it entirely when the user's telemetry preference is off.
@@ -197,26 +217,15 @@ export class TelemetryManager {
         return false;
     }
 
-    private getWorkspacePseudoId(): string {
-        const folders = vscode.workspace.workspaceFolders;
-        if (!folders || folders.length === 0) return "adhoc-file";
-        const path = folders[0].uri.fsPath;
-        // Simple fast deterministically pseudo path hash
-        let hash = 0;
-        for (let i = 0; i < path.length; i++) {
-            hash = (hash << 5) - hash + path.charCodeAt(i);
-            hash |= 0;
-        }
-        return `ws-${Math.abs(hash)}`;
-    }
-
     private generateUUID(): string {
         return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
     }
 
     public dispose(): void {
+        this.disposed = true;
         if (this.batchInterval) clearInterval(this.batchInterval);
-        this.flush();
-        this.logger?.dispose();
+        if (this.retryTimer) clearTimeout(this.retryTimer);
+        this.queue = [];
+        try { this.logger?.dispose(); } catch { /* No caller exception text reaches an outer crash reporter. */ }
     }
 }

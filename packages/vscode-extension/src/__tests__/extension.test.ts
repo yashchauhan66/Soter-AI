@@ -160,8 +160,10 @@ describe("Telemetry contains no raw content (#6)", () => {
         assert.ok(!telemetrySrc.includes("redactedText"), "telemetry must not read redactedText");
         assert.ok(!/rawContent|\.content\b/.test(telemetrySrc), "telemetry must not include raw content");
     });
-    it("event payload only uses the safe redacted preview", () => {
-        assert.match(telemetrySrc, /redactedEvidencePreview:\s*decision\.evidencePreview/);
+    it("event payload excludes caller evidence previews and arbitrary detector metadata", () => {
+        assert.doesNotMatch(telemetrySrc, /redactedEvidencePreview:\s*decision\.evidencePreview/);
+        assert.doesNotMatch(telemetrySrc, /detectorVersions:\s*decision\.detectorVersions/);
+        assert.doesNotMatch(telemetrySrc, /categories:\s*decision\.categories/);
     });
 });
 

@@ -2,7 +2,7 @@
 import path from "node:path";
 import os from "node:os";
 import { BrokerServer, DEFAULT_BROKER_PORT } from "./BrokerServer";
-import { createBrokerCredentialLoader, BrokerCredentialError } from "./auth";
+import { createBrokerCredentialLoader } from "./auth";
 import { createGatewayParentGuard } from "./GatewayParentGuard";
 
 async function main(): Promise<void> {
@@ -58,6 +58,7 @@ async function main(): Promise<void> {
         openAIProviderUrl: process.env.SOTERAI_OPENAI_PROVIDER_URL,
         anthropicProviderUrl: process.env.SOTERAI_ANTHROPIC_PROVIDER_URL,
         providerApiKey: process.env.SOTERAI_PROVIDER_API_KEY,
+        selfHygiene: process.env.SOTERAI_SELF_HYGIENE === "1",
         logger: (message, metadata) => console.log(JSON.stringify({ timestamp: new Date().toISOString(), message, ...metadata })),
     });
     let shutdownPromise: Promise<void> | undefined;
@@ -74,7 +75,7 @@ async function main(): Promise<void> {
         try { process.send!({ type: "SOTERAI_BROKER_READY", version: 1, session: ownerSession, port: address.port }, (error: Error | null) => { if (error) void shutdown(); }); }
         catch { await shutdown(); }
     }
-    else console.log(JSON.stringify({ status: "ready", url: address.url, localOnly: true, auth: "required", tokenStoredAt: path.join(storageDir, "auth-token") }));
+    else console.log(JSON.stringify({ status: "ready", url: address.url, localOnly: true, auth: "required" }));
 }
 
 function parsePort(value: string | undefined): number {
@@ -84,9 +85,8 @@ function parsePort(value: string | undefined): number {
     return port;
 }
 
-void main().catch((error: unknown) => {
-    console.error(JSON.stringify({ status: "failed", message: error instanceof BrokerCredentialError ? error.message
-        : "Broker failed to start; check private storage, distinct auth credentials, port and provider configuration." }));
+void main().catch(() => {
+    console.error(JSON.stringify({ status: "failed", message: "Broker startup unavailable; check private storage, credentials, port and provider configuration." }));
     process.exitCode = 1;
     if (process.connected) process.disconnect();
 });

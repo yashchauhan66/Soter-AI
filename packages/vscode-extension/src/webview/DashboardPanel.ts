@@ -4,6 +4,8 @@ import { PolicyStore } from "../firewall/PolicyStore";
 import { LedgerStore } from "../firewall/LedgerStore";
 import { getBrokerManager } from "../broker/BrokerManager";
 import { escapeHtml, getNonce } from "../firewall/util";
+import { emitOwnedDiagnostic } from "../../../core/src/OwnedSinkMetadata";
+import { selfHygieneEnabled } from "../self-hygiene/SelfHygieneFlags";
 
 interface DashboardData {
     cloudEnabled: boolean;
@@ -54,7 +56,7 @@ export class DashboardPanel {
                 ]);
                 const cmd = typeof message?.command === "string" ? message.command : undefined;
                 if (!cmd || !knownCommands.has(cmd)) {
-                    console.warn(`[SoterAI Dashboard] Rejected unknown webview message command: ${String(message?.command)}`);
+                    emitOwnedDiagnostic(selfHygieneEnabled(), event => console.warn(JSON.stringify(event)), "event");
                     return;
                 }
                 if (this._actionPending) return;

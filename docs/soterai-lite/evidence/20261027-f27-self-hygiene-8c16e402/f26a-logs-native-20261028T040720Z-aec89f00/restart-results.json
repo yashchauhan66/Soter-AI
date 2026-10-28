@@ -1,0 +1,160 @@
+{
+  "schemaVersion": 1,
+  "phase": "restart",
+  "syntheticOnly": true,
+  "hostVersion": "1.143.1",
+  "extensionBundleSha256": "7d75cea01f70f1a3f0c892539b8b8b478c6393253111d28cc381addb58fddd53",
+  "currentDeveloperBundleSha256": "7d75cea01f70f1a3f0c892539b8b8b478c6393253111d28cc381addb58fddd53",
+  "hostProbeSha256": "4f014043b9ff4a46dadb4f29403e7f801a3e6cc429adb8ea2d99fb12bd48c251",
+  "observations": [
+    {
+      "id": "F25-N01",
+      "scope": "Restart reuses persisted keyed metadata without startup discovery, content, documents or key stores",
+      "status": "PASS"
+    },
+    {
+      "id": "F25-N02",
+      "scope": "Restart caller approvals cannot replace a fresh native owner decision",
+      "status": "PASS"
+    },
+    {
+      "id": "F25-N03",
+      "scope": "Fresh restart review preserves exact saved-log finding IDs and independently keyed ledger row IDs",
+      "status": "PASS"
+    },
+    {
+      "id": "F25-N04",
+      "scope": "Restart owner disable still withdraws the native route and fresh reenable preserves originals and public controls",
+      "status": "PASS"
+    }
+  ],
+  "passed": 4,
+  "failed": 0,
+  "notRun": 0,
+  "expectedChecks": 4,
+  "sourceDocumentCalls": 0,
+  "sourceDocumentEvents": 0,
+  "logContentReads": 24,
+  "referencedContentReads": 0,
+  "observedFileCalls": 43,
+  "caseVariantContentMatches": 24,
+  "discoveries": [
+    {
+      "maximum": 129,
+      "isolatedSyntheticDirectory": false
+    },
+    {
+      "maximum": 129,
+      "isolatedSyntheticDirectory": false
+    }
+  ],
+  "limits": {
+    "files": 128,
+    "fileBytes": 65536,
+    "totalBytes": 1048576,
+    "milliseconds": 60000,
+    "parts": 32,
+    "depth": 32,
+    "valueContainerNodes": 10000,
+    "records": 128
+  },
+  "secretStorageStores": 0,
+  "vaultKeyStores": 0,
+  "reviews": [
+    {
+      "action": "Analyze saved logs",
+      "modal": true
+    },
+    {
+      "action": "Analyze saved logs",
+      "modal": true
+    },
+    {
+      "action": "Analyze saved logs",
+      "modal": true
+    }
+  ],
+  "metadataDocuments": 3,
+  "trace": [
+    {
+      "event": "command-start-logProtectionStatus",
+      "milliseconds": 1749.7320999999997
+    },
+    {
+      "event": "command-end-logProtectionStatus",
+      "milliseconds": 1752.3938999999996,
+      "status": "OWNER_REVIEW_REQUIRED"
+    },
+    {
+      "event": "command-start-reviewLogs",
+      "milliseconds": 1771.8595
+    },
+    {
+      "event": "command-end-reviewLogs",
+      "milliseconds": 1798.5898999999995,
+      "status": "CANCELLED"
+    },
+    {
+      "event": "command-start-reviewLogs",
+      "milliseconds": 1819.4900999999995
+    },
+    {
+      "event": "command-end-reviewLogs",
+      "milliseconds": 3087.3032,
+      "status": "ANALYZED",
+      "files": 6,
+      "findings": 4
+    },
+    {
+      "event": "command-start-openHygieneExposureLedger",
+      "milliseconds": 3099.5701999999997
+    },
+    {
+      "event": "command-end-openHygieneExposureLedger",
+      "milliseconds": 3704.3308,
+      "status": "METADATA"
+    },
+    {
+      "event": "soterai-configuration-event",
+      "milliseconds": 4463.806699999999
+    },
+    {
+      "event": "command-start-reviewLogs",
+      "milliseconds": 4504.679399999999
+    },
+    {
+      "event": "command-end-reviewLogs",
+      "milliseconds": 4509.1036,
+      "status": "UNAVAILABLE"
+    },
+    {
+      "event": "soterai-configuration-event",
+      "milliseconds": 4693.0398000000005
+    },
+    {
+      "event": "command-start-reviewLogs",
+      "milliseconds": 4714.3891
+    },
+    {
+      "event": "command-end-reviewLogs",
+      "milliseconds": 5883.2662,
+      "status": "ANALYZED",
+      "files": 6,
+      "findings": 4
+    },
+    {
+      "event": "soterai-configuration-event",
+      "milliseconds": 6045.279
+    }
+  ],
+  "independence": "LOW",
+  "ownerPresence": "SCRIPTED_NATIVE_API_DECISIONS_NOT_HUMAN_REVIEW",
+  "boundaryDiscovery": "NATIVE_DISCOVERY_RESTRICTED_TO_RETAINED_SYNTHETIC_DIRECTORY_WITH_DETERMINISTIC_ADMISSION_ORDER",
+  "notTested": [
+    "Human usability/accessibility",
+    "Other extensions, normal debug consoles, arbitrary processes and transformed/prose/binary credentials",
+    "Credential validity, provider rotation, AI access or prior disclosures",
+    "Same-user unmanaged reads, process memory and independent uploads",
+    "Other platforms and remote workspaces"
+  ]
+}

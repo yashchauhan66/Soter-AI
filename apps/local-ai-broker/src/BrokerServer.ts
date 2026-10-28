@@ -1,5 +1,6 @@
 import { createServer, type IncomingMessage, type Server, type ServerResponse } from "node:http";
 import { randomUUID } from "node:crypto";
+import { emitOwnedDiagnostic, ownedSinkMetadata } from "../../../packages/core/src/OwnedSinkMetadata";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import { decodeBoundedJson, BoundedJsonError, JSON_LIMITS } from "./BoundedJson";
@@ -50,7 +51,6 @@ import {
     type GovernanceRole,
     type MemoryEvent,
     type MemoryEventKind,
-    type MemorySource,
     type MCPPermission,
     type ProcessFilesystemMode,
     type ProcessNetworkMode,
@@ -123,6 +123,8 @@ export interface BrokerServerOptions extends GatewayOptions {
     /** Administrator-owned absolute executables. Only the current Node runtime is enabled by default. */
     terminalExecutables?: Readonly<Record<string, string>>;
     logger?: (message: string, metadata?: Record<string, unknown>) => void;
+    /** Owner opt-in for minimized diagnostics; never enables raw request logging. */
+    selfHygiene?: boolean;
     canaries?: Array<Pick<Canary, "id" | "token" | "hash" | "redactedPreview">>;
     /** Extension-managed brokers wait for authenticated registry synchronization. */
     requireCanarySync?: boolean;
@@ -245,7 +247,11 @@ export class BrokerServer {
             },
             response: async text => { const scan = await scanBrokerResponse(text, { canaries: this.canaries });return this.unsafePayload(text) ? "block" : scan.decision; },
         });
-        this.checkpoints = options.checkpoint ? new FilesystemCheckpointStore(options.checkpoint) : undefined;
+        this.checkpoints = options.checkpoint ? new FilesystemCheckpointStore({ ...options.checkpoint,
+            logger: (_message, _metadata) => {
+                emitOwnedDiagnostic(options.selfHygiene, event => options.checkpoint?.logger?.(event.code, { ...event }), "event");
+            },
+        }) : undefined;
         this.server = createServer((req, res) => void this.handle(req, res));
         this.server.requestTimeout = options.requestTimeoutMs ?? 30_000;
         this.server.headersTimeout = Math.min(this.server.requestTimeout, 15_000);
@@ -337,9 +343,11 @@ export class BrokerServer {
             }
             if (req.method === "GET" && url.pathname === "/v1/gateway/status" && controller) return this.json(res, 200, this.gateway.status());
             if (req.method === "GET" && url.pathname === "/v1/events/recent") {
+                if (this.options.selfHygiene !== true) { this.events.length = 0; this.memory.clearAll(); return this.json(res, 200, { withheld: true, events: [] }); }
                 return this.json(res, 200, { events: this.events.slice(-100) });
             }
             if (req.method === "POST" && url.pathname === "/v1/events/export-redacted") {
+                if (this.options.selfHygiene !== true) { this.events.length = 0; this.memory.clearAll(); return this.json(res, 200, { withheld: true, events: [], memory: { sessions: [] } }); }
                 return this.json(res, 200, { generatedAt: new Date().toISOString(), events: this.events, memory: this.memory.exportRedacted() });
             }
             if (req.method === "GET" && url.pathname === "/v1/approvals") {
@@ -347,6 +355,7 @@ export class BrokerServer {
             }
             const memoryMatch = url.pathname.match(/^\/v1\/memory\/session\/([^/]+)$/);
             if (req.method === "GET" && memoryMatch) {
+                this.requireOwnedActivity();
                 const session = this.memory.getSession(decodeURIComponent(memoryMatch[1]));
                 if (!session) throw new HttpError(404, "session_not_found", "Memory session not found");
                 return this.json(res, 200, { session });
@@ -439,40 +448,32 @@ export class BrokerServer {
         this.json(res, 200, this.safeMode);
     }
 
-    private startMemory(res: ServerResponse, body: JsonBody): void {
-        const sessionId = stringValue(body.sessionId) ?? randomUUID();
-        const session = this.memory.startSession({ sessionId, source: "broker", tool: stringValue(body.tool), provider: stringValue(body.provider) });
+    private startMemory(res: ServerResponse, _body: JsonBody): void {
+        this.requireOwnedActivity();
+        const sessionId = randomUUID();
+        const session = this.memory.startSession({ sessionId, source: "broker" });
         this.record({ sessionId, eventType: "memory_session_started", decision: "allow", riskScore: 0, categories: [] });
         this.json(res, 201, { session });
     }
 
     private addMemoryEvent(res: ServerResponse, body: JsonBody): void {
+        this.requireOwnedActivity();
         const sessionId = requireString(body.sessionId, "sessionId");
+        if (!this.memory.getSession(sessionId)) throw new HttpError(404, "session_not_found", "Memory session not found");
         const input = body.event;
         if (!input || typeof input !== "object" || Array.isArray(input)) throw new HttpError(400, "invalid_request", "event must be an object");
         const event = input as Partial<MemoryEvent>;
+        const metadata = ownedSinkMetadata(event.kind, event.decision, event.riskScore);
         const clean = this.memory.addEvent(sessionId, {
-            eventId: stringValue(event.eventId) ?? randomUUID(),
-            timestamp: stringValue(event.timestamp) ?? new Date().toISOString(),
-            kind: (stringValue(event.kind) ?? "broker_request_scanned") as MemoryEventKind,
-            source: parseMemorySource(event.source),
-            decision: parseAction(event.decision),
-            riskScore: numberValue(event.riskScore),
-            categories: stringArray(event.categories),
-            redactedEvidence: stringValue(event.redactedEvidence),
-            requestHash: stringValue(event.requestHash),
-            responseHash: stringValue(event.responseHash),
-            filePaths: stringArray(event.filePaths),
-            protectedFileAttempt: Boolean(event.protectedFileAttempt),
-            canaryExposed: Boolean(event.canaryExposed),
-            model: stringValue(event.model),
-            provider: stringValue(event.provider),
-            contentSize: numberValue(event.contentSize),
+            eventId: randomUUID(), timestamp: new Date().toISOString(),
+            kind: (metadata.code === "event" ? "broker_request_scanned" : metadata.code) as MemoryEventKind,
+            source: "broker", decision: metadata.decision === "unknown" ? "block" : parseAction(metadata.decision), riskScore: metadata.riskScore ?? 100, categories: [],
         });
         this.json(res, 201, { event: clean });
     }
 
     private endMemory(res: ServerResponse, body: JsonBody): void {
+        this.requireOwnedActivity();
         const sessionId = requireString(body.sessionId, "sessionId");
         const session = this.memory.endSession(sessionId);
         if (!session) throw new HttpError(404, "session_not_found", "Memory session not found");
@@ -745,9 +746,19 @@ export class BrokerServer {
     }
 
     private record(input: Omit<SafeBrokerEvent, "eventId" | "timestamp" | "source" | "safeMode" | "policyVersion">): void {
-        const event: SafeBrokerEvent = { eventId: randomUUID(), timestamp: new Date().toISOString(), source: "broker", safeMode: this.safeMode.enabled, policyVersion: `safe-mode-${this.safeMode.level}`, ...input, redactedEvidence: input.redactedEvidence ? redactForSharing(input.redactedEvidence) : undefined };
+        if (this.options.selfHygiene !== true) return;
+        const metadata = ownedSinkMetadata(input.eventType, input.decision, input.riskScore);
+        const event: SafeBrokerEvent = { eventId: randomUUID(), timestamp: new Date().toISOString(), source: "broker", safeMode: this.safeMode.enabled, policyVersion: "owned-metadata-v1",
+            eventType: metadata.code, decision: metadata.decision === "unknown" ? "block" : parseAction(metadata.decision), riskScore: metadata.riskScore ?? 100, categories: [] };
         this.events.push(event);
         if (this.events.length > 1000) this.events.splice(0, this.events.length - 1000);
+    }
+
+    private requireOwnedActivity(): void {
+        if (this.options.selfHygiene !== true) {
+            this.events.length = 0; this.memory.clearAll();
+            throw new HttpError(503, "owned_activity_withheld", "Owned activity recording is disabled");
+        }
     }
 
     private enforceOrigin(req: IncomingMessage): void {
@@ -912,7 +923,7 @@ export class BrokerServer {
     }
 
     private safeLog(message: string, metadata: Record<string, unknown>): void {
-        this.options.logger?.(message, metadata);
+        emitOwnedDiagnostic(this.options.selfHygiene, event => this.options.logger?.(event.code, { ...event }), message, metadata);
     }
 }
 
@@ -1146,11 +1157,6 @@ function parseProcessNetworkMode(value: unknown): ProcessNetworkMode | undefined
 
 function parseProcessFilesystemMode(value: unknown): ProcessFilesystemMode | undefined {
     return value === "read_only_workspace" || value === "read_write_workspace" || value === "unrestricted" ? value : undefined;
-}
-
-function parseMemorySource(value: unknown): MemorySource {
-    const allowed: MemorySource[] = ["broker", "safe-context-builder", "scan-before-ai-prompt", "manual-output-scan", "git-scan", "terminal-check", "mcp-scan"];
-    return typeof value === "string" && allowed.includes(value as MemorySource) ? value as MemorySource : "broker";
 }
 
 function brokerProtectionMode(safeMode: { enabled: boolean; level: SafeModeLevel }): ProtectionMode {

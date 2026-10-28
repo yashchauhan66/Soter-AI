@@ -12,12 +12,14 @@ import { registerCheckedPowerShell } from "../terminal/commands";
 import { registerCheckedCmd } from "../terminal/cmdCommands";
 import { registerCheckedGitBash } from "../terminal/gitBashCommands";
 import type { ManagedReaderBridge } from "../terminal/CheckedPowerShellSession";
+import { LedgerStore } from "./LedgerStore";
 
 // Re-export readContextApproval so extension.ts can still import from this module.
 export { readContextApproval } from "./shared";
 
 /** Register every AI Context Firewall command. */
 export function registerFirewallCommands(context: vscode.ExtensionContext, refreshViews: () => void, reader?: ManagedReaderBridge): void {
+    LedgerStore.initialize(context);
     const vault = new VaultManager(context);
     const canary = new CanaryManager(context);
 

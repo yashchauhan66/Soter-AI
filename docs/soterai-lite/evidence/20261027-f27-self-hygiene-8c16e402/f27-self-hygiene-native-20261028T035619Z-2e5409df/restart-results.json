@@ -1,0 +1,55 @@
+{
+  "phase": "restart",
+  "extensionBundleSha256": "7d75cea01f70f1a3f0c892539b8b8b478c6393253111d28cc381addb58fddd53",
+  "observations": [
+    {
+      "id": "F27-R01",
+      "scope": "Fresh host retains prior audit bytes without creating another signing key",
+      "status": "PASS"
+    },
+    {
+      "id": "F27-R02",
+      "scope": "Fresh actual Sentinel owner minimizes legacy synthetic stored events",
+      "status": "PASS"
+    },
+    {
+      "id": "F27-R03",
+      "scope": "Fresh actual activity report exports only minimized legacy metadata",
+      "status": "PASS"
+    },
+    {
+      "id": "F27-R04",
+      "scope": "Fresh actual audit status verifies the original retained signed metadata chain",
+      "status": "PASS"
+    },
+    {
+      "id": "F27-R05",
+      "scope": "Explicit native flag withdrawal and activity clearing leave no active owned observation",
+      "status": "PASS"
+    }
+  ],
+  "passed": 5,
+  "failed": 0,
+  "notRun": 0,
+  "diagnostics": {
+    "status": "PREPARED_NATIVE_API_FIXTURE",
+    "phase": "restart",
+    "auditKeyReads": 1,
+    "auditKeyStores": 0,
+    "auditWriteCount": 0,
+    "activityWriteCount": 2,
+    "reports": 2,
+    "heldKey": false,
+    "syntheticOnly": true,
+    "productImports": false
+  },
+  "independence": "LOW_SCRIPTED_ACTUAL_NATIVE_APIS_NOT_HUMAN",
+  "auditExport": "NO_REGISTERED_EXPORT_COMMAND_COMPONENT_COVERAGE_ONLY",
+  "exclusions": [
+    "Transient JS/native processing memory",
+    "Arbitrary native crash dumps",
+    "Other extensions and unmanaged processes",
+    "Real agent or human independence",
+    "Native broker/MCP runtime controls belong to separate exact-runtime fixtures"
+  ]
+}

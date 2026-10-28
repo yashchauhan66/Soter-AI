@@ -7,6 +7,7 @@ import { brokerChildEnvironment } from "../security/childEnvironment";
 import { OwnedBrokerLifecycle, type OwnedBrokerOptions, type OwnedBrokerRequest, type OwnedBrokerSnapshot } from "./OwnedBrokerLifecycle";
 import { VaultManager } from "../firewall/VaultManager";
 import type { GatewayRegistrationLease, GatewayRegistrySource } from "./GatewayRegistryLease";
+import { selfHygieneEnabled } from "../self-hygiene/SelfHygieneFlags";
 
 export const EXPECTED_BROKER_VERSION = "0.2.0";
 export { BrokerStartFailure } from "./autoStart";
@@ -59,7 +60,7 @@ export class BrokerManager implements vscode.Disposable {
     private binding(): string {
         const config = vscode.workspace.getConfiguration("soterai");
         // Compare public routing configuration; never serialize auth material.
-        return JSON.stringify([this.enabled(), vscode.workspace.isTrusted,
+        return JSON.stringify([this.enabled(), vscode.workspace.isTrusted, selfHygieneEnabled(),
             config.get("broker.openAIProviderUrl", ""), config.get("broker.anthropicProviderUrl", ""), this.jsonEnabled(), this.gzipEnabled(), this.brotliEnabled(), this.deflateEnabled(), this.chunkedEnabled(), this.framedEnabled(), this.multipartEnabled(), this.base64Enabled(),
             this.gatewayEnabled(), this.gatewayDependencies(), this.clineSchemasEnabled(), this.claudeSchemasEnabled(), codexAdapterFlags(), this.codexResponsesEnabled(), config.get("broker.codexResponsesProviderUrl", ""), this.geminiEnabled(), this.geminiBase(), this.savedMode(), this.gatewayLease?.available() ?? true]);
     }
@@ -147,7 +148,7 @@ export class BrokerManager implements vscode.Disposable {
         const config = vscode.workspace.getConfiguration("soterai");
         const providerKey = vscode.workspace.isTrusted ? await this.context.secrets.get("soterai.providerApiKey") : undefined;
         if (!this.enabled()) throw new Error("Broker unavailable");
-        return { ...brokerChildEnvironment(process.env), SOTERAI_OPENAI_PROVIDER_URL: config.get<string>("broker.openAIProviderUrl", ""),
+        return { ...brokerChildEnvironment(process.env), SOTERAI_SELF_HYGIENE: selfHygieneEnabled() ? "1" : "0", SOTERAI_OPENAI_PROVIDER_URL: config.get<string>("broker.openAIProviderUrl", ""),
             SOTERAI_GEMINI_GENERATE_CONTENT: this.geminiEnabled() ? "1" : "0", SOTERAI_GEMINI_PROVIDER_URL: this.geminiBase(),
             SOTERAI_CODEX_RESPONSES_PROVIDER_URL: config.get<string>("broker.codexResponsesProviderUrl", ""), SOTERAI_CODEX_RESPONSES: this.codexResponsesEnabled() ? "1" : "0",
             SOTERAI_ANTHROPIC_PROVIDER_URL: config.get<string>("broker.anthropicProviderUrl", ""), SOTERAI_PROVIDER_API_KEY: providerKey, SOTERAI_GATEWAY_JSON_BODIES: this.jsonEnabled() ? "1" : "0", SOTERAI_GATEWAY_GZIP_BODIES: this.gzipEnabled() ? "1" : "0", SOTERAI_GATEWAY_BROTLI_BODIES: this.brotliEnabled() ? "1" : "0", SOTERAI_GATEWAY_DEFLATE_BODIES: this.deflateEnabled() ? "1" : "0", SOTERAI_GATEWAY_CHUNKED_BODIES: this.chunkedEnabled() ? "1" : "0", SOTERAI_GATEWAY_FRAMED_BODIES: this.framedEnabled() ? "1" : "0", SOTERAI_GATEWAY_MULTIPART_BODIES: this.multipartEnabled() ? "1" : "0", SOTERAI_GATEWAY_BASE64_BODIES: this.base64Enabled() ? "1" : "0", SOTERAI_GATEWAY_POLICY: this.gatewayEnabled() ? "1" : "0", SOTERAI_CLINE_TOOL_SCHEMAS: this.clineSchemasEnabled() ? "1" : "0", SOTERAI_CLAUDE_TOOL_SCHEMAS: this.claudeSchemasEnabled() ? "1" : "0", SOTERAI_REQUIRE_GATEWAY_SYNC: "1" };
@@ -207,8 +208,12 @@ export class BrokerManager implements vscode.Disposable {
     async rotateToken(): Promise<void> { await this.restart(); }
     async clearToken(): Promise<void> { await this.stop(); }
     async startMemorySession(): Promise<string> {
-        await this.start(); const sessionId = randomUUID();
-        await this.request("/v1/memory/session/start", { method: "POST", body: JSON.stringify({ sessionId, tool: "VS Code", provider: "SoterAI" }) });
+        if (!selfHygieneEnabled()) throw new Error("Owned activity recording is disabled.");
+        await this.start();
+        if (!selfHygieneEnabled()) throw new Error("Owned activity recording is disabled.");
+        const response = await this.request<{ session: { sessionId: string } }>("/v1/memory/session/start", { method: "POST", body: "{}" });
+        const sessionId = response?.session?.sessionId;
+        if (!selfHygieneEnabled() || typeof sessionId !== "string" || !/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/.test(sessionId)) throw new Error("Owned activity session unavailable.");
         this.memorySession = sessionId; return sessionId;
     }
     async endMemorySession(): Promise<void> {
@@ -220,6 +225,7 @@ export class BrokerManager implements vscode.Disposable {
         await this.request("/v1/memory/session/clear", { method: "POST", body: JSON.stringify({ sessionId }) }); this.memorySession = undefined;
     }
     async recordMemoryEvent(event: Record<string, unknown>): Promise<void> {
+        if (!selfHygieneEnabled()) return;
         const sessionId = this.memorySessionId ?? await this.startMemorySession();
         await this.request("/v1/memory/session/event", { method: "POST", body: JSON.stringify({ sessionId, event }) });
     }
