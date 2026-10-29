@@ -1,0 +1,32 @@
+{
+  "status": "PREPARED_READONLY_TEST_PENDING_NOT_NATIVE_AUTHORIZATION",
+  "observedAt": "2026-10-29T04:12:25.924Z",
+  "original": {
+    "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/precommit-offline-owner-01.cjs",
+    "bytes": 14721,
+    "sha256": "3455e56138c1f0856b9374391686dfeae4d08c11fec143eeccff39907dece915"
+  },
+  "candidate": {
+    "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/precommit-offline-owner-11.cjs.txt",
+    "bytes": 14761,
+    "sha256": "234add303cf73785f2ed2a68cdd98c6429d7f036d410c685149be19f6f0a0bb6"
+  },
+  "changes": [
+    [
+      "899f01c8e699e613ac5d3fc2f8066e8997938e79ecc665dfe34af3e5c4e9090b",
+      "8f7d11faa7ba03683fdbec85f95a0d2284bb126cd45c1dfc1cb02b2e3b090ced"
+    ],
+    [
+      "assert.equal(pin.root, root);",
+      "assert.equal(pin.root, state.root); assert(same(pin.root, root));"
+    ],
+    [
+      "assert.equal(envelope.payload.root, root);",
+      "assert.equal(envelope.payload.root, pin.root);"
+    ]
+  ],
+  "postAdmissionSpawnAndOracleSuffixSha256": "72c6d0e921206a4a9d904293c1b2535794c49155f5457f17f6a4a24e68556d37",
+  "spawnSuffixByteExact": true,
+  "rootChecks": "Exact signed descriptor root equals exact saved primary root; both physically same case-insensitive local Windows root. Envelope root equals signed pin root.",
+  "signalsRequested": 0
+}

@@ -9,7 +9,7 @@
   "planVersion": 1,
   "clientDate": "2026-10-13",
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
-  "scope": "F01-F10/F12-F25/F26c/F27/F29/F30 scoped DONE subject to exact recorded byte barriers; F11 optional absent NOT_TESTED/NOT_COVERED. F26a ACTIVE; explicitly approved single native06 consumed and FAILED at HP05; F26b/F28/F31b/F32/V01-V05 incomplete. F31a build-only DONE; parentF26/F31 incomplete. No human/independent/rating claim.",
+  "scope": "F01-F10/F12-F25/F26c/F27/F29/F30 scoped DONE subject to exact recorded byte barriers; F11 optional absent NOT_TESTED/NOT_COVERED. F26a ACTIVE; native07 consumed FAIL and checked storage fix currentfull4475zeroFAIL; native08 requires new explicit approval; F26b/F28/F31b/F32/V01-V05 incomplete. F31a build-only DONE; parentF26/F31 incomplete. No human/independent/rating claim.",
   "implementationConcurrency": 1,
   "activeFeature": "F26",
   "activeSubcard": "F26a",
@@ -1232,6 +1232,64 @@
       "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/native08-packet-review-01.json",
       "bytes": 6054,
       "sha256": "a72182e0017ea9546a41ad5c5d08208f4f899457d2751c12c62ea0912681c411"
+    }
+  },
+  "f26aStoragePreparationCheckpoint": {
+    "commit": "56f2ec543b5bf704ea686b4ca40e65c5094caec9",
+    "paths": 262,
+    "proof": {
+      "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/f26a-storage-preparation-byte-proof-08.json",
+      "bytes": 82243,
+      "sha256": "7112c06dddd9ea53e7e3f472dc6f115db68205e5b04aed1675ce41a583bd0bc1"
+    },
+    "native08": "EXPLICIT_FRESH_APPROVAL_REQUIRED_NOT_RUN",
+    "actualFeatureSource": "UNCOMMITTED_UNSTAGED_PENDING_REQUIRED_ACCEPTANCE"
+  },
+  "f26aNative08Authorization": {
+    "status": "CONSUMED_PRIMARY30_PASS_OFFLINE_PREFLIGHT_FAIL_RESTART_NOT_RUN",
+    "allowedAttempts": 1,
+    "approval": {
+      "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/native08-user-approval-01.json",
+      "bytes": 1063,
+      "sha256": "1b68c403e2dc682778f53e29c8025d22994dfdffd8368d56aba09e843eeacf54"
+    },
+    "materialization": {
+      "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/native08-materialization-01.json",
+      "bytes": 1507,
+      "sha256": "2ace1383e6f00de6ace4d0500211abcd6110d9779b4a9b846ba734455e21c544"
+    },
+    "consumption": {
+      "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/native08-consumption-01.json",
+      "bytes": 435,
+      "sha256": "eed777afa82e9f13359c92b943b88720a73937955de2fa383f16eef5a3d1493a"
+    },
+    "progress": {
+      "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/progress-09.json",
+      "bytes": 1306,
+      "sha256": "68f5dccc446bb00e6a2acd4111f65bef61a59330597286a4649aceab2405e28b"
+    }
+  },
+  "f26aNative09Preparation": {
+    "status": "NOT_AUTHORIZED_NOT_MATERIALIZED_NOT_RUN",
+    "proposal": {
+      "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/NATIVE09-OFFLINE-FIXTURE-PROPOSAL01.md",
+      "bytes": 4087,
+      "sha256": "ecbd4fe076d7581fa46068b25e4ad48da11a1f7b3dbae3e10292e1c9f23dcfc2"
+    },
+    "candidate": {
+      "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/native09-candidate-02.ps1.txt",
+      "bytes": 52812,
+      "sha256": "052687ac56ed8cc2c5bdae621c4b54685fb7cf24e0f03ab9992dee334e43486a"
+    },
+    "helper": {
+      "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/precommit-offline-owner-09b.cjs.txt",
+      "bytes": 14902,
+      "sha256": "ebfd7153a7aac41a88b5a46f5be7d8fad699a5d2b0e144fcb038053a4c2e62ef"
+    },
+    "progress": {
+      "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/progress-10.json",
+      "bytes": 4116,
+      "sha256": "8644a2a273790fb3cb0f656f9be3b55c50c727ff0c2248afc87fd09d5800601c"
     }
   }
 }

@@ -1,0 +1,91 @@
+'use strict';
+// Prepared fixture helper, never loaded by the product. Execute only after the
+// launcher has proved natural primary editor closure. No signals or pipe aborts.
+const fs = require('node:fs'), path = require('node:path'), crypto = require('node:crypto'), cp = require('node:child_process');
+const assert = require('node:assert/strict');
+const GIT = 'C:\\Program Files\\Git\\cmd\\git.exe';
+const GIT_SHA = 'da240fe9bc24895b3e04150a4990b8a6ff329ecabcd8f19684c2cc310da5ef3f';
+const CODE_SHA = '325fb30ba28d17fa6ba4df58043727b2469aca9d641793a65e413721b2110ec6';
+const WORKER = '67b2ef79c9d132db6ed70e8cdd9bed85e5e920359beb71532c85dceb0db20449';
+const DRIVER = '8f7d11faa7ba03683fdbec85f95a0d2284bb126cd45c1dfc1cb02b2e3b090ced';
+const CAP = 1048576 + 128 * 96 + 8192, LIMIT = 90000;
+const hash = bytes => crypto.createHash('sha256').update(bytes).digest('hex');
+const same = (a, b) => path.resolve(a).toLowerCase() === path.resolve(b).toLowerCase();
+const within = (base, file) => { const rel = path.relative(path.resolve(base), path.resolve(file)); return rel === '' || !path.isAbsolute(rel) && rel !== '..' && !rel.startsWith('..' + path.sep); };
+function ordinary(file, directory = false) {
+  const stat = fs.lstatSync(file); assert(!stat.isSymbolicLink()); assert(same(fs.realpathSync(file), file));
+  assert(directory ? stat.isDirectory() : stat.isFile() && stat.nlink === 1);
+  for (let cursor = file;;) { assert(!fs.lstatSync(cursor).isSymbolicLink()); const next = path.dirname(cursor); if (next === cursor) break; cursor = next; }
+  return stat;
+}
+function bytes(file, cap) { const before = ordinary(file); assert(before.size <= cap); const raw = fs.readFileSync(file); const after = ordinary(file);
+  assert.equal(raw.length, before.size); assert.deepEqual([after.ino, after.size, after.mtimeMs, after.ctimeMs], [before.ino, before.size, before.mtimeMs, before.ctimeMs]); return raw; }
+function fileHash(file, cap) {
+  const before = ordinary(file); assert(before.size <= cap); const fd = fs.openSync(file, 'r'), chunk = Buffer.alloc(65536), digest = crypto.createHash('sha256');
+  try { let offset = 0; for (;;) { const count = fs.readSync(fd, chunk, 0, chunk.length, offset); if (!count) break; offset += count; assert(offset <= cap); digest.update(chunk.subarray(0, count)); }
+    assert.equal(offset, before.size); const after = ordinary(file); assert.deepEqual([after.ino, after.size, after.mtimeMs, after.ctimeMs], [before.ino, before.size, before.mtimeMs, before.ctimeMs]); return digest.digest('hex'); }
+  finally { fs.closeSync(fd); chunk.fill(0); }
+}
+function fact(file) { try { const stat = ordinary(file); const raw = bytes(file, 536870912); return { present: true, bytes: raw.length, sha256: hash(raw), mode: stat.mode & 0o777 }; }
+  catch (error) { if (error.code === 'ENOENT') return { present: false, bytes: 0, sha256: null, mode: null }; throw error; } }
+function json(file, cap = 1048576) { return JSON.parse(bytes(file, cap).toString('utf8').replace(/^\uFEFF/, '')); }
+function writeNew(file, value) { const fd = fs.openSync(file, 'wx'); try { fs.writeFileSync(fd, JSON.stringify(value, null, 2) + '\n'); fs.fsyncSync(fd); } finally { fs.closeSync(fd); } }
+function head(root) { assert.equal(bytes(path.join(root, '.git', 'HEAD'), 4096).toString('utf8').trim(), 'ref: refs/heads/main');
+  try { const oid = bytes(path.join(root, '.git', 'refs', 'heads', 'main'), 4096).toString('utf8').trim(); assert.match(oid, /^[a-f0-9]{40}$/); return oid; }
+  catch (error) { if (error.code === 'ENOENT') return 'UNBORN'; throw error; } }
+function main() {
+  assert.equal(process.platform, 'win32'); assert.equal(process.argv.length, 3);
+  const inputFile = path.resolve(process.argv[2]); assert(within(__dirname, inputFile)); const input = json(inputFile);
+  assert.equal(input.schemaVersion, 1); assert.equal(input.syntheticOnly, true);
+  const parent = path.resolve(input.parent), root = path.resolve(input.root), profile = path.resolve(input.profile);
+  assert.match(parent, /^D:\\SoterAI-Lite-test-profiles\\f26a-precommit-native-[0-9TZ]+-[a-f0-9]{8}$/i);
+  assert(same(root, path.join(parent, 'workspace')) && same(profile, path.join(parent, 'profile')));
+  ordinary(parent, true); ordinary(root, true); ordinary(profile, true);
+  assert.equal(bytes(path.join(root, '.synthetic-lite-f26a-precommit-host'), 128).toString('utf8').trim(), 'synthetic-only-v1');
+  const statePath = path.join(parent, 'precommit-restart-state.json'), stateRaw = bytes(statePath, 1048576), state = JSON.parse(stateRaw);
+  assert.equal(input.primaryStateSha256, hash(stateRaw)); assert(state.schemaVersion === 1 && state.syntheticOnly === true && state.ready === true && state.phase === 'primary' && same(state.root, root));
+  assert.equal(state.driverSha256, DRIVER);
+  assert(same(input.primaryResult, path.join(parent, 'primary-results.json')));
+  const primary = json(input.primaryResult); assert(primary.phase === 'primary' && primary.passed === 30 && primary.failed === 0 && primary.notRun === 0 && primary.readyForInterphase === true);
+  assert.equal(primary.hostProbeSha256, DRIVER); assert.equal(primary.workerSha256, WORKER);
+  const code = input.code;
+  assert(code.observedExit === true && code.exitCode === 0 && code.stdoutEOF === true && code.stderrEOF === true && code.signalsRequested === 0
+    && code.pidAbsentTwice === true && code.streamsStable === true && code.ownedWindowClose === 'workbench.action.closeWindow');
+  assert(Array.isArray(code.pidAbsenceObservations) && code.pidAbsenceObservations.length === 2 && code.pidAbsenceObservations.every(row => row.pid === code.pid && row.absent === true));
+  assert(same(code.executable, 'C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe'));
+  assert.equal(fileHash(code.executable, 536870912), CODE_SHA);
+  for (const stream of code.streams) { assert(within(path.dirname(inputFile), stream.path)); const raw = bytes(stream.path, 8388608); assert.equal(raw.length, stream.bytes); assert.equal(hash(raw), stream.sha256); }
+  const source = input.codeEnvironment, env = {};
+  for (const name of ['HOME', 'USERPROFILE', 'XDG_CONFIG_HOME', 'GIT_CONFIG_GLOBAL', 'GIT_CONFIG_SYSTEM', 'GIT_CONFIG_NOSYSTEM', 'SystemRoot', 'WINDIR', 'COMSPEC'])
+    if (source[name] !== undefined) { assert.equal(typeof source[name], 'string'); env[name] = source[name]; }
+  for (const name of ['HOME', 'USERPROFILE', 'XDG_CONFIG_HOME']) assert(same(env[name], profile));
+  for (const name of ['GIT_CONFIG_GLOBAL', 'GIT_CONFIG_SYSTEM']) { assert(within(profile, env[name])); assert.equal(bytes(env[name], 4096).length, 0); }
+  assert.equal(env.GIT_CONFIG_NOSYSTEM, '1');
+  Object.assign(env, { GIT_TERMINAL_PROMPT: '0', GCM_INTERACTIVE: 'never', GIT_OPTIONAL_LOCKS: '0', GIT_PAGER: '', PAGER: '',
+    GIT_NO_LAZY_FETCH: '1', GIT_NO_REPLACE_OBJECTS: '1', GIT_PROTOCOL_FROM_USER: '0', LC_ALL: 'C', LANG: 'C' });
+  assert.equal(hash(JSON.stringify(env)), state.ownerEnvironmentSha256);
+  env.SOTERAI_F26A_ORIGINAL_ENV = 'TEST_ONLY_F26A_ORIGINAL_ENV_37b912ab';
+  assert.equal(hash(JSON.stringify(env)), state.offlineEnvironmentSha256);
+  const args = ['--no-pager', 'commit', '--quiet', '-m', 'F26a synthetic offline owner absent'];
+  assert.deepEqual(state.offlineArguments, args); assert(!args.some(value => /core[.]hookspath|no-verify|^-c$/i.test(value)));
+  const paths = { hook: path.join(root, '.git', 'hooks', 'pre-commit'), source: path.join(root, '.env.precommit-native'), index: path.join(root, '.git', 'index'),
+    customHook: path.join(root, '.synthetic hooks', 'pre-commit'), config: path.join(root, '.git', 'config') };
+  const before = {}; for (const [name, file] of Object.entries(paths)) { before[name] = fact(file); assert.deepEqual(before[name], state[name]); }
+  const headBefore = head(root); assert.equal(headBefore, state.head);
+  // Validate the actual public descriptor route without querying any listener.
+  const hookText = bytes(paths.hook, 98304).toString('utf8'), pinMatch = /--pin '([A-Za-z0-9_-]+)' --index/.exec(hookText); assert(pinMatch);
+  const pinRaw = Buffer.from(pinMatch[1], 'base64url'); assert.equal(pinRaw.toString('base64url'), pinMatch[1]); assert.equal(hash(pinRaw), state.publicPinSha256);
+  const pin = JSON.parse(pinRaw); assert.equal(pin.root, state.root); assert(same(pin.root, root)); assert.equal(pin.generation, state.generation); assert.equal(pin.workerSha256, WORKER);
+  assert(same(pin.runtime, code.executable)); assert.equal(pin.runtimeSha256, CODE_SHA); assert(within(profile, pin.descriptor));
+  assert(within(path.join(parent, 'extension', 'dist'), pin.worker)); assert.equal(fileHash(pin.worker, 2097152), WORKER);
+  const descriptor = fact(pin.descriptor); assert.deepEqual(descriptor, state.descriptor);
+  const envelope = json(pin.descriptor, 8192), endpoint = new URL(envelope.payload.endpoint);
+  assert.equal(envelope.domain, 'SoterAI-PreCommit-Descriptor-v1'); assert.equal(envelope.payload.session, state.session); assert.equal(envelope.payload.root, pin.root);
+  assert.equal(endpoint.protocol, 'http:'); assert.equal(endpoint.hostname, '127.0.0.1'); assert.equal(endpoint.pathname, '/pre-commit');
+  assert(!endpoint.username && !endpoint.password && !endpoint.search && !endpoint.hash && Number(endpoint.port) > 0);
+  assert(crypto.verify(null, Buffer.from(envelope.domain + '\0' + JSON.stringify(envelope.payload)), crypto.createPublicKey({ key: Buffer.from(pin.publicKey, 'base64'), format: 'der', type: 'spki' }), Buffer.from(envelope.signature, 'base64url')));
+  const backups = state.backupFacts.map(row => { assert.match(row.name, /^[a-f0-9]{32}[.]enc$/); const file = path.join(path.dirname(path.dirname(pin.descriptor)), 'config-backups', row.name); assert.deepEqual(fact(file), row.fact); return { file, expected: row.fact }; });
+  assert.equal(fileHash(GIT, 1048576), GIT_SHA);
+  process.stdout.write('ALL_OFFLINE_PRESPAWN_GATES_PASS_NO_GIT_OR_CODE_LAUNCHED\n');
+}
+try{main();}catch(error){process.exitCode=1;const rows=String(error.stack).split('\n').filter(x=>/^\s+at /.test(x)).slice(0,6).map(x=>/:([0-9]+):([0-9]+)\)?$/.exec(x)).filter(Boolean).map(x=>({line:Number(x[1]),column:Number(x[2])}));process.stderr.write(JSON.stringify({status:'READONLY_PREFLIGHT_REFUSED',errorName:error.name,frames:rows})+'\n');}

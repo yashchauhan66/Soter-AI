@@ -1,0 +1,22 @@
+﻿node.exe : Error: EEXIST: file already exists, open 'C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\sotera
+i-lite\evidence\20261029-f26a-resume-1a40d9e7\precommit-offline-owner-09.cjs.txt'
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Error: EEXIST: ...ner-09.cjs.txt':String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+    at Object.openSync (node:fs:562:18)
+    at Object.writeFileSync (node:fs:2440:35)
+    at put (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261029-f26a-resume-1a40
+d9e7\prepare-native09-packet-01.cjs:3:21)
+    at C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261029-f26a-resume-1a40d9e7\
+prepare-native09-packet-01.cjs:11:49
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  errno: -4075,
+  code: 'EEXIST',
+  syscall: 'open',
+  path: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261029-f26a-resum
+e-1a40d9e7\\precommit-offline-owner-09.cjs.txt'
+}

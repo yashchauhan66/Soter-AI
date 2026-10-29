@@ -1,0 +1,12 @@
+const fs=require('node:fs'),assert=require('node:assert/strict'),{own,fact,sha}=require('./storage-current-admission-09.cjs');
+const original=fs.readFileSync(own('precommit-offline-owner-01.cjs'),'utf8');
+let s=fs.readFileSync(own('precommit-offline-owner-11.cjs.txt'),'utf8');
+const before='assert(directory ? stat.isDirectory() : stat.isFile() && stat.nlink === 1);';
+const after='assert(directory ? stat.isDirectory() : stat.isFile() && (stat.nlink === 1 || same(file, GIT) && stat.nlink === 2));';
+assert.equal(s.split(before).length,2);s=s.replace(before,after);
+s=s.replaceAll('[after.ino, after.size, after.mtimeMs, after.ctimeMs], [before.ino, before.size, before.mtimeMs, before.ctimeMs]','[after.ino, after.dev, after.nlink, after.size, after.mtimeMs, after.ctimeMs], [before.ino, before.dev, before.nlink, before.size, before.mtimeMs, before.ctimeMs]');
+const at=s.indexOf('  const stdoutFile =');assert.equal(s.slice(at),original.slice(original.indexOf('  const stdoutFile =')));
+fs.writeFileSync(own('precommit-offline-owner-12.cjs.txt'),s,{flag:'wx'});
+const prefix=fs.readFileSync(own('offline-helper-after-preflight-11.cjs'),'utf8'),trailer=prefix.slice(prefix.indexOf("  process.stdout.write('ALL_OFFLINE"));
+fs.writeFileSync(own('offline-helper-after-preflight-12.cjs'),s.slice(0,at)+trailer,{flag:'wx'});
+fs.writeFileSync(own('offline-helper-review-12.json'),JSON.stringify({status:'PREPARED_READONLY_TEST_PENDING_NOT_AUTHORIZED',observedAt:new Date().toISOString(),original:fact(own('precommit-offline-owner-01.cjs')),candidate:fact(own('precommit-offline-owner-12.cjs.txt')),changes:['Diagnostic driver exact hash8f replaces stale original899 hash','Signed pin root exactly equals saved primary root and same physical local Windows root; signed envelope exactly equals pin root','Exactly installed pinned Git cmd/git.exe permits its observed two links; every other fixture file stays single-link; Git hash/size and real ancestry still required','Strengthen pre/post read comparisons with dev and nlink'],observedGitHardlinks:['\\Program Files\\Git\\cmd\\git-lfs.exe','\\Program Files\\Git\\cmd\\git.exe'],postAdmissionSpawnAndOracleSuffixSha256:sha(Buffer.from(s.slice(at))),spawnSuffixByteExact:true,signalsRequested:0},null,2)+'\n',{flag:'wx'});
