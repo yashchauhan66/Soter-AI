@@ -1,0 +1,55 @@
+{
+  "feature": "F26a",
+  "status": "NATIVE06_FAILED_APPROVAL_CONSUMED_NO_RETRY",
+  "observedAt": "2026-10-29T02:44:03.297Z",
+  "previous": {
+    "path": "docs\\soterai-lite\\evidence\\20261029-f26a-resume-1a40d9e7\\progress-02.json",
+    "bytes": 2655,
+    "sha256": "b03f1be28eabf298a42202d1d8b05392c3e4cec0a54462e9f2d47eb48b5f11f2"
+  },
+  "run": "f26a-precommit-native-20261029T023319Z-238d6ff0",
+  "approval": {
+    "path": "docs\\soterai-lite\\evidence\\20261029-f26a-resume-1a40d9e7\\native06-user-approval-01.json",
+    "bytes": 812,
+    "sha256": "64dca32309bd7c25cea2db79d0602117034e0bd77ddd4d6fbb245c98b226f069"
+  },
+  "consumption": {
+    "path": "docs\\soterai-lite\\evidence\\20261029-f26a-resume-1a40d9e7\\native06-consumption-01.json",
+    "bytes": 435,
+    "sha256": "631260c6fb14de700253300c971ce80b18bad751995cfe05bfa563e906b634da"
+  },
+  "result": {
+    "path": "docs\\soterai-lite\\evidence\\20261029-f26a-resume-1a40d9e7\\native06-chain-result-01.json",
+    "bytes": 359,
+    "sha256": "fc55dd5cc3f18c50e15bbb0cf14cc99cdf3ab34ed2ae0d345a58ac70241ca214"
+  },
+  "primary": {
+    "path": "docs\\soterai-lite\\evidence\\20261029-f26a-resume-1a40d9e7\\f26a-precommit-native-20261029T023319Z-238d6ff0\\primary-results.json",
+    "bytes": 17185,
+    "sha256": "b9e91bfa020367a0445baf69947a9ebad4703825d3c34028f3ebfd72c0858751"
+  },
+  "editorClose": {
+    "path": "docs\\soterai-lite\\evidence\\20261029-f26a-resume-1a40d9e7\\f26a-precommit-native-20261029T023319Z-238d6ff0\\primary-owned-editor-close.json",
+    "bytes": 390,
+    "sha256": "6eadc1c3281588d0f0ad9920b81e0d8b22420a9bd391b8154f786f71dc12506b"
+  },
+  "checks": {
+    "pass": 4,
+    "fail": 1,
+    "notRun": 25,
+    "restart": "NOT_RUN",
+    "offline": "NOT_RUN"
+  },
+  "failure": "F26A-HP05 AssertionError; exact production cause UNESTABLISHED",
+  "actualClosure": {
+    "codeExit": 0,
+    "wrapperExit": 1,
+    "stdoutEOF": true,
+    "stderrEOF": true,
+    "signalsRequested": 0,
+    "lateAbsenceChecks": "NOT_EXECUTED_AFTER_DRIVER_FAILURE"
+  },
+  "resourceCleanup": "6667 old disposable Node/npm cache files removed under explicit user authority; 212852375 declared bytes; all project/evidence/vendor files preserved",
+  "remaining": "Diagnose HP05; retain original34/native and20affected509/functional10/security17/withdrawal/acceptance/scoped commits+bytes. Any further native improvement requires concrete reviewed proposal and fresh explicit approval.",
+  "rating": "NOT_ISSUED"
+}

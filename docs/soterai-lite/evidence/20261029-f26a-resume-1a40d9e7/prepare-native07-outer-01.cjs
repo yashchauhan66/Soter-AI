@@ -1,0 +1,10 @@
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),own=n=>path.join(__dirname,n);
+let outer=fs.readFileSync(own('run-native06-chain-01.cjs'),'utf8');
+outer=outer.replaceAll('NATIVE06-REFRESHED-PROPOSAL01.md','NATIVE07-DIAGNOSTIC-PROPOSAL01.md').replaceAll('native06','native07').replaceAll('NATIVE06','NATIVE07').replaceAll('run-precommit-native-06.ps1','run-precommit-native-07.ps1');
+const before="const b=await guard(),a=read(own('native07-user-approval-01.json'));";
+assert.equal(outer.split(before).length,2);
+outer=outer.replace(before,"await require('./diagnostic-admission-07.cjs').guard();const b=await guard();b.newDriver=fact(own('prebuilt-native-hosts-07/lite-precommit-guard-host.js'));const a=read(own('native07-user-approval-01.json')); ");
+fs.writeFileSync(own('run-native07-chain-01.cjs'),outer,{flag:'wx'});
+const start=fs.readFileSync(own('start-native06-chain-01.ps1'),'utf8').replaceAll('native06','native07').replaceAll('NATIVE06','NATIVE07');
+fs.writeFileSync(own('start-native07-chain-01.ps1'),start,{flag:'wx'});
+console.log('Single-use native07 outer launchers prepared, not executed; fresh approval and materialization required.');

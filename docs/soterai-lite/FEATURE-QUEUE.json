@@ -9,7 +9,7 @@
   "planVersion": 1,
   "clientDate": "2026-10-13",
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
-  "scope": "F01-F10/F12-F25/F26c/F27/F29/F30 scoped DONE subject to exact recorded byte barriers; F11 optional absent NOT_TESTED/NOT_COVERED. F26a selected but native06 explicitly USER_DEFERRED; F26b/F28/F31b/F32/V01-V05 incomplete. F31a build-only DONE; parentF26/F31 incomplete. No human/independent/rating claim.",
+  "scope": "F01-F10/F12-F25/F26c/F27/F29/F30 scoped DONE subject to exact recorded byte barriers; F11 optional absent NOT_TESTED/NOT_COVERED. F26a ACTIVE; explicitly approved single native06 consumed and FAILED at HP05; F26b/F28/F31b/F32/V01-V05 incomplete. F31a build-only DONE; parentF26/F31 incomplete. No human/independent/rating claim.",
   "implementationConcurrency": 1,
   "activeFeature": "F26",
   "activeSubcard": "F26a",
@@ -29,7 +29,6 @@
       "F32"
     ],
     "deferred": [
-      "F26a native06 remains explicitly deferred; no extra-round approval",
       "F26b has no push authorization"
     ],
     "rule": "One selected implementation task at a time; all original required feature gates retained. Parent F31 cannot be DONE on F31a preparation alone."
@@ -872,8 +871,8 @@
           "requires": [
             "parent prerequisites"
           ],
-          "progressEvidence": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/progress-01.json",
-          "executionDecision": "F30 scopedDONE/source729+transition12 bytePASS. Current1036/full4464zeroFAIL/compiler/backend/newF26a20261029attempt01 VSIXd06a8740/content15fourruntime86flags/strictnativeTC/current25drivers/staticcustody+syntax PASS; original34source/bootstrap/offlinehelper/deadlines and driver899f bytes unchanged. Refreshed proposal ready; native06 remains explicitly USER_DEFERRED, unmaterialized/not executed, new explicit approval required. Initial parser-applicability preparationFAIL retained. No F26a behavioral acceptance or next dependent production."
+          "progressEvidence": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/progress-04.json",
+          "executionDecision": "Native06 consumed FAIL4PASS1FAIL25NOT_RUN; exact cause UNESTABLISHED. Diagnostic07 prepared with first-install2/privacy3/delegation3/TC08/build/syntax PASS, unchanged original34/bootstrap/deadlines/currentVSIX. Fresh explicit single-extra approval required; NOT_MATERIALIZED/NOT_RUN."
         },
         {
           "id": "F26b",
@@ -1136,8 +1135,51 @@
     "native06": "F26a_USER_DEFERRED_NOT_RUN"
   },
   "f26aLatestCheckpoint": {
-    "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/progress-01.json",
-    "bytes": 2666,
-    "sha256": "407b25f7313c301cab1afe558b98c6e39950badfba838d317a33e75b9717d776"
+    "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/progress-04.json",
+    "bytes": 4883,
+    "sha256": "b6df1f96010efe02dee19ea4e653c18a58bb4f295fb1f41b561a4c20c700da82"
+  },
+  "f26aNative06Authorization": {
+    "status": "APPROVED_SINGLE_NATIVE06_CONSUMED_FAILED_NO_RETRY",
+    "allowedAttempts": 1,
+    "approval": {
+      "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/native06-user-approval-01.json",
+      "bytes": 812,
+      "sha256": "64dca32309bd7c25cea2db79d0602117034e0bd77ddd4d6fbb245c98b226f069"
+    },
+    "materialization": {
+      "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/native06-materialization-01.json",
+      "bytes": 1527,
+      "sha256": "36d5278dc44468e63d92b35813d222a7cb6c7f867894ef510ea2ad971b711a1e"
+    },
+    "consumption": {
+      "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/native06-consumption-01.json",
+      "bytes": 435,
+      "sha256": "631260c6fb14de700253300c971ce80b18bad751995cfe05bfa563e906b634da"
+    },
+    "result": {
+      "path": "docs\\soterai-lite\\evidence\\20261029-f26a-resume-1a40d9e7\\native06-chain-result-01.json",
+      "bytes": 359,
+      "sha256": "fc55dd5cc3f18c50e15bbb0cf14cc99cdf3ab34ed2ae0d345a58ac70241ca214"
+    }
+  },
+  "f26aNative07Proposal": {
+    "status": "EXPLICIT_FRESH_APPROVAL_REQUIRED_NOT_RUN",
+    "allowedAttemptsIfApproved": 1,
+    "proposal": {
+      "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/NATIVE07-DIAGNOSTIC-PROPOSAL01.md",
+      "bytes": 4221,
+      "sha256": "5cb1a498ea8091a2a21abc341701fcb039d6ccca43c76994fc01cd14727a28cb"
+    },
+    "candidate": {
+      "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/native07-candidate-01.ps1.txt",
+      "bytes": 52783,
+      "sha256": "2988d8f30bd7c590a15a88839f1fc0e90be9e8f189cb44293ece71913c7a9cc1"
+    },
+    "review": {
+      "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/native07-packet-review-01.json",
+      "bytes": 3294,
+      "sha256": "cd2e5c76653df2cee10fa69958a90e602a11333146468ac33a5bfe4716de30d5"
+    }
   }
 }

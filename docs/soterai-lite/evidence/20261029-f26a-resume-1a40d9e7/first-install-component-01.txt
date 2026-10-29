@@ -1,0 +1,24 @@
+﻿TAP version 13
+# Subtest: first install with storage directory absent
+ok 1 - first install with storage directory absent
+  ---
+  duration_ms: 1368.0527
+  type: 'test'
+  ...
+# {"outcome":{"status":"APPLIED"},"services":1,"backupWrites":1,"trace":[{"operation":"lstatSync","status":"THREW","code":"ENOENT"},{"operation":"lstatSync","status":"THREW","code":"ENOENT"},{"operation":"lstatSync","status":"RETURNED"},{"operation":"mkdirSync","status":"RETURNED"},{"operation":"mkdirSync","status":"RETURNED"},{"operation":"lstatSync","status":"THREW","code":"ENOENT"},{"operation":"openSync","status":"RETURNED"},{"operation":"fstatSync","status":"RETURNED"},{"operation":"lstatSync","status":"RETURNED"},{"operation":"writeFileSync","status":"RETURNED"},{"operation":"ftruncateSync","status":"RETURNED"},{"operation":"closeSync","status":"RETURNED"}]}
+# Subtest: first install with storage directory present
+ok 2 - first install with storage directory present
+  ---
+  duration_ms: 156.4639
+  type: 'test'
+  ...
+# {"outcome":{"status":"APPLIED"},"services":1,"backupWrites":1,"trace":[{"operation":"lstatSync","status":"THREW","code":"ENOENT"},{"operation":"lstatSync","status":"RETURNED"},{"operation":"mkdirSync","status":"RETURNED"},{"operation":"lstatSync","status":"THREW","code":"ENOENT"},{"operation":"openSync","status":"RETURNED"},{"operation":"fstatSync","status":"RETURNED"},{"operation":"lstatSync","status":"RETURNED"},{"operation":"writeFileSync","status":"RETURNED"},{"operation":"ftruncateSync","status":"RETURNED"},{"operation":"closeSync","status":"RETURNED"}]}
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4948.725

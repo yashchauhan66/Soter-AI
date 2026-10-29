@@ -1,0 +1,34 @@
+{
+  "status": "TWO_DIAGNOSTIC_TYPING_ONLY_CORRECTIONS_NOT_NATIVE_RETRY",
+  "originalPath": "packages/vscode-extension/src/__tests__/host/litePreCommitGuard.host.ts",
+  "originalSha256": "d773858448cd4969d47d258915098519acb856f1afa28f6ca6cab2c0a8e33741",
+  "unchangedAddCallbacks": 34,
+  "reversalByteExact": true,
+  "changes": [
+    {
+      "before": "import * as vscode from \"vscode\";",
+      "after": "import * as vscode from \"vscode\";\nimport { InstallDiagnostics07 } from \"./install-diagnostics-07\";\nconst diagnostics07 = new InstallDiagnostics07();"
+    },
+    {
+      "before": "assert(!halted); const value = await vscode.commands.executeCommand(\"soterai.\" + name); safeMetadata(value); assert(value); return value;",
+      "after": "assert(!halted); diagnostics07.record(\"command-start\", { command: name }); const value = await vscode.commands.executeCommand(\"soterai.\" + name); diagnostics07.record(\"command-return\", { command: name, status: (value as {status?:unknown} | undefined)?.status }); safeMetadata(value); assert(value); return value;"
+    },
+    {
+      "before": "setupStage = \"delegated-real-observers\";",
+      "after": "setupStage = \"delegated-real-observers\";\n    diagnostics07.record(\"storage-uri\", {fileScheme:context.globalStorageUri.scheme === \"file\", authority:!!context.globalStorageUri.authority, query:!!context.globalStorageUri.query, fragment:!!context.globalStorageUri.fragment, withinWorkspace:within(root,context.globalStorageUri.fsPath)});\n    for (const operation of [\"mkdirSync\", \"lstatSync\", \"openSync\"] as const) {\n        const delegate = fs[operation] as (...args: any[]) => unknown;\n        patch(fs, operation, function (this: unknown, ...args: any[]) {\n            let target: \"storage\" | \"storage-parent\" | undefined;\n            try { if (typeof args[0] === \"string\") { if (within(context.globalStorageUri.fsPath,args[0])) target=\"storage\"; else if(samePath(dirname(context.globalStorageUri.fsPath),args[0])) target=\"storage-parent\"; } } catch {}\n            try { const value=Reflect.apply(delegate,this,args); if(target)diagnostics07.record(\"filesystem\",{operation,outcome:\"RETURNED\",target}); return value; }\n            catch(error) { if(target)diagnostics07.record(\"filesystem\",{operation,outcome:\"THREW\",target,code:(error as NodeJS.ErrnoException).code}); throw error; }\n        });\n    }\n    listeners.push(vscode.workspace.onDidChangeConfiguration(event=>{if(event.affectsConfiguration(\"soterai\"))diagnostics07.record(\"configuration-event\");}));\n    listeners.push(vscode.workspace.onDidChangeWorkspaceFolders(()=>diagnostics07.record(\"workspace-event\")));"
+    },
+    {
+      "before": "return Reflect.apply(nativeCreateServer, http, args);",
+      "after": "const server = Reflect.apply(nativeCreateServer, http, args);\n        if(options?.maxHeaderSize === 4096) {\n            diagnostics07.record(\"listener-created\");\n            server.once(\"listening\",()=>{const address=server.address();diagnostics07.record(\"listener-listening\",{loopback:!!address&&typeof address!==\"string\"&&address.address===\"127.0.0.1\"});});\n            server.once(\"close\",()=>diagnostics07.record(\"listener-close\"));\n            server.once(\"error\",(error: unknown)=>diagnostics07.record(\"listener-error\",{code:(error as NodeJS.ErrnoException).code}));\n        }\n        return server;"
+    },
+    {
+      "before": "catch (error) { observations[index].status = \"FAIL\";",
+      "after": "catch (error) { diagnostics07.frames(error); observations[index].status = \"FAIL\";"
+    },
+    {
+      "before": "children, requests: wires, commitProofs, reviews, secretStores: stores, ownerServers,",
+      "after": "children, requests: wires, commitProofs, reviews, secretStores: stores, ownerServers, diagnostics07: diagnostics07.snapshot(),"
+    }
+  ],
+  "parentTransform": "diagnostic-transform-07.json"
+}
