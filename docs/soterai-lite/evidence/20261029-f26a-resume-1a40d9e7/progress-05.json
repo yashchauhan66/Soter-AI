@@ -1,0 +1,154 @@
+{
+  "feature": "F26a",
+  "status": "NATIVE07_CONSUMED_FAILED_STORAGE_URI_BOUNDARY_IDENTIFIED",
+  "observedAt": "2026-10-29T03:11:34.467Z",
+  "previous": {
+    "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/progress-04.json",
+    "bytes": 4883,
+    "sha256": "b6df1f96010efe02dee19ea4e653c18a58bb4f295fb1f41b561a4c20c700da82"
+  },
+  "approval": {
+    "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/native07-user-approval-01.json",
+    "bytes": 1075,
+    "sha256": "7af7bbc2ebda6c4545462748fd182b747aa9c728705ea233721a3e056833bb38"
+  },
+  "consumption": {
+    "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/native07-consumption-01.json",
+    "bytes": 435,
+    "sha256": "70821e041285bec3043c9f92b9d9124cc7b16a2fc600b8a76e2fac6fa619b888"
+  },
+  "run": "f26a-precommit-native-20261029T030706Z-967393f7",
+  "result": {
+    "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/native07-chain-result-01.json",
+    "bytes": 359,
+    "sha256": "6935180b8fb1b662706c59b44a64bfcf0073a5d263a1f034fa4c8758bfe3a722"
+  },
+  "primary": {
+    "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/f26a-precommit-native-20261029T030706Z-967393f7/primary-results.json",
+    "bytes": 19557,
+    "sha256": "3645edfe6d656b297a8e70e616573941553fda289a182ec9d58451fa429c8004"
+  },
+  "editorClose": {
+    "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/f26a-precommit-native-20261029T030706Z-967393f7/primary-owned-editor-close.json",
+    "bytes": 391,
+    "sha256": "c103cf314b76007a1b469c50ddf05c67aefa3c46fdd696eb9c141d275fce6bc6"
+  },
+  "checks": {
+    "pass": 4,
+    "fail": 1,
+    "notRun": 25,
+    "restart": "NOT_RUN",
+    "offline": "NOT_RUN"
+  },
+  "diagnostics": {
+    "scope": "BOUNDED_ENUMERATED_METADATA_ONLY_NO_VALUES_OR_PATHS",
+    "rows": [
+      {
+        "event": "storage-uri",
+        "fileScheme": false,
+        "authority": false,
+        "query": false,
+        "fragment": false,
+        "withinWorkspace": false
+      },
+      {
+        "event": "command-start",
+        "command": "preCommitGuardStatus"
+      },
+      {
+        "event": "command-return",
+        "command": "preCommitGuardStatus",
+        "status": "UNAVAILABLE"
+      },
+      {
+        "event": "command-start",
+        "command": "installPreCommitGuard"
+      },
+      {
+        "event": "command-return",
+        "command": "installPreCommitGuard",
+        "status": "UNAVAILABLE"
+      },
+      {
+        "event": "command-start",
+        "command": "installPreCommitGuard"
+      },
+      {
+        "event": "command-return",
+        "command": "installPreCommitGuard",
+        "status": "UNAVAILABLE"
+      },
+      {
+        "event": "configuration-event"
+      },
+      {
+        "event": "command-start",
+        "command": "preCommitGuardStatus"
+      },
+      {
+        "event": "command-return",
+        "command": "preCommitGuardStatus",
+        "status": "OWNER_REVIEW_REQUIRED"
+      },
+      {
+        "event": "command-start",
+        "command": "installPreCommitGuard"
+      },
+      {
+        "event": "command-return",
+        "command": "installPreCommitGuard",
+        "status": "CANCELLED"
+      },
+      {
+        "event": "command-start",
+        "command": "installPreCommitGuard"
+      },
+      {
+        "event": "listener-created"
+      },
+      {
+        "event": "listener-listening",
+        "loopback": true
+      },
+      {
+        "event": "listener-close"
+      },
+      {
+        "event": "command-return",
+        "command": "installPreCommitGuard",
+        "status": "UNAVAILABLE"
+      },
+      {
+        "event": "assertion-frame",
+        "line": 608,
+        "column": 25
+      },
+      {
+        "event": "assertion-frame",
+        "line": 104,
+        "column": 5
+      },
+      {
+        "event": "assertion-frame",
+        "line": 1069,
+        "column": 7
+      },
+      {
+        "event": "assertion-frame",
+        "line": 1419,
+        "column": 9
+      },
+      {
+        "event": "assertion-frame",
+        "line": 235,
+        "column": 71
+      }
+    ],
+    "dropped": 0
+  },
+  "conclusion": "Actual context storage is not file scheme. Install returns UNAVAILABLE after real loopback listener start and close, before descriptor filesystem or backup. Production #descriptor rejects every non-file storage scheme. Existing accepted local adapters and vault explicitly handle vscode-userdata with local path checks; reproduce that desktop storage contract in component tests before a fix.",
+  "sourceChanges": 0,
+  "native08": "NOT_PROPOSED_NOT_AUTHORIZED_NOT_RUN",
+  "remaining": "Test-first local storage URI regression and checked production fix; fresh focused/compiler/full/backend/newVSIX/content/current drivers. Any further native round needs new concrete proposal and explicit approval. Original affected20families509/functional10/security17/withdrawal/acceptance/local commit bytes remain.",
+  "rating": "NOT_ISSUED"
+}

@@ -1,0 +1,157 @@
+{
+  "status": "ORIGINAL_F26A_AFFECTED_SCOPE_PREDECLARED_NOT_RUN",
+  "sourceProof": {
+    "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/full-inputs-09.json",
+    "bytes": 203545,
+    "sha256": "f3ca94a5d02afef843bc0020b18b95b8d9129b4cf7d31ead7c87af019dd10e52"
+  },
+  "families": [
+    {
+      "id": "logs",
+      "assertions": 25,
+      "phases": 2,
+      "helper": "affected-logs-01.ps1",
+      "driver": "lite-logs-host.js"
+    },
+    {
+      "id": "owned-output",
+      "assertions": 19,
+      "phases": 1,
+      "helper": "affected-owned-output-01.ps1",
+      "driver": "lite-log-vault-runtime-host.js"
+    },
+    {
+      "id": "artifact",
+      "assertions": 25,
+      "phases": 2,
+      "helper": "affected-artifact-01.ps1",
+      "driver": "lite-artifact-host.js"
+    },
+    {
+      "id": "streaming-output",
+      "assertions": 13,
+      "phases": 1,
+      "helper": "affected-streaming-output-01.ps1",
+      "driver": "lite-streaming-output-host.js"
+    },
+    {
+      "id": "vault-runtime",
+      "assertions": 12,
+      "phases": 1,
+      "helper": "affected-vault-runtime-01.ps1",
+      "driver": "lite-vault-runtime-host.js"
+    },
+    {
+      "id": "ps51",
+      "assertions": 19,
+      "phases": 2,
+      "helper": "affected-ps51-01.ps1",
+      "driver": "lite-ps51-host.js"
+    },
+    {
+      "id": "cmd",
+      "assertions": 19,
+      "phases": 2,
+      "helper": "affected-cmd-01.ps1",
+      "driver": "lite-cmd-host.js"
+    },
+    {
+      "id": "gitbash",
+      "assertions": 19,
+      "phases": 2,
+      "helper": "affected-gitbash-01.ps1",
+      "driver": "lite-gitbash-host.js"
+    },
+    {
+      "id": "history",
+      "assertions": 25,
+      "phases": 2,
+      "helper": "affected-history-01.ps1",
+      "driver": "lite-history-host.js"
+    },
+    {
+      "id": "mcp",
+      "assertions": 25,
+      "phases": 2,
+      "helper": "affected-mcp-01.ps1",
+      "driver": "lite-mcp-host.js"
+    },
+    {
+      "id": "editor",
+      "assertions": 25,
+      "phases": 2,
+      "helper": "affected-editor-01.ps1",
+      "driver": "lite-editor-host.js"
+    },
+    {
+      "id": "ci",
+      "assertions": 25,
+      "phases": 2,
+      "helper": "affected-ci-01.ps1",
+      "driver": "lite-ci-host.js"
+    },
+    {
+      "id": "service-account",
+      "assertions": 25,
+      "phases": 2,
+      "helper": "affected-service-account-01.ps1",
+      "driver": "lite-service-account-host.js"
+    },
+    {
+      "id": "registry",
+      "assertions": 25,
+      "phases": 2,
+      "helper": "affected-registry-01.ps1",
+      "driver": "lite-registry-host.js"
+    },
+    {
+      "id": "terraform",
+      "assertions": 25,
+      "phases": 2,
+      "helper": "affected-terraform-01.ps1",
+      "driver": "lite-terraform-host.js"
+    },
+    {
+      "id": "container",
+      "assertions": 25,
+      "phases": 2,
+      "helper": "affected-container-01.ps1",
+      "driver": "lite-container-host.js"
+    },
+    {
+      "id": "source",
+      "assertions": 21,
+      "phases": 2,
+      "helper": "affected-source-01.ps1",
+      "driver": "lite-source-host.js"
+    },
+    {
+      "id": "hygiene",
+      "assertions": 21,
+      "phases": 2,
+      "helper": "affected-hygiene-01.ps1",
+      "driver": "lite-hygiene-host.js"
+    },
+    {
+      "id": "vault",
+      "assertions": 10,
+      "phases": 2,
+      "helper": "affected-vault-01.ps1",
+      "driver": "lite-vault-host.js"
+    },
+    {
+      "id": "retained",
+      "assertions": 106,
+      "phases": 2,
+      "helper": "affected-retained-01.ps1",
+      "driver": "lite-broker-host.js"
+    }
+  ],
+  "assertions": 509,
+  "phases": 37,
+  "functional": 10,
+  "security": 17,
+  "rationale": "Only precommit descriptor storage admission changed in production; original20 required affected families retained. F26c/F27/F29/F30 production contracts unchanged; F29 only fixed explicit test clock. No old native results transferred to new VSIX; broad V gates retained.",
+  "native08": "NOT_AUTHORIZED_NOT_RUN",
+  "execution": "After current artifact/typecheck/full/content/current drivers and approved original34/offline owner route; serial owners/EOF, no automatic retry."
+}

@@ -1,0 +1,80 @@
+﻿TAP version 13
+# Subtest: F26a checked storage URI: file storage absent
+ok 1 - F26a checked storage URI: file storage absent
+  ---
+  duration_ms: 1522.8615
+  type: 'test'
+  ...
+# {"outcome":{"status":"APPLIED"},"services":1,"backupWrites":1,"trace":[{"operation":"lstatSync","status":"THREW","code":"ENOENT"},{"operation":"lstatSync","status":"THREW","code":"ENOENT"},{"operation":"lstatSync","status":"RETURNED"},{"operation":"mkdirSync","status":"RETURNED"},{"operation":"mkdirSync","status":"RETURNED"},{"operation":"lstatSync","status":"THREW","code":"ENOENT"},{"operation":"openSync","status":"RETURNED"},{"operation":"fstatSync","status":"RETURNED"},{"operation":"lstatSync","status":"RETURNED"},{"operation":"writeFileSync","status":"RETURNED"},{"operation":"ftruncateSync","status":"RETURNED"},{"operation":"closeSync","status":"RETURNED"}]}
+# Subtest: F26a checked storage URI: file storage present
+ok 2 - F26a checked storage URI: file storage present
+  ---
+  duration_ms: 195.3637
+  type: 'test'
+  ...
+# {"outcome":{"status":"APPLIED"},"services":1,"backupWrites":1,"trace":[{"operation":"lstatSync","status":"THREW","code":"ENOENT"},{"operation":"lstatSync","status":"RETURNED"},{"operation":"mkdirSync","status":"RETURNED"},{"operation":"lstatSync","status":"THREW","code":"ENOENT"},{"operation":"openSync","status":"RETURNED"},{"operation":"fstatSync","status":"RETURNED"},{"operation":"lstatSync","status":"RETURNED"},{"operation":"writeFileSync","status":"RETURNED"},{"operation":"ftruncateSync","status":"RETURNED"},{"operation":"closeSync","status":"RETURNED"}]}
+# Subtest: F26a checked storage URI: local desktop userdata storage absent
+ok 3 - F26a checked storage URI: local desktop userdata storage absent
+  ---
+  duration_ms: 154.7476
+  type: 'test'
+  ...
+# {"outcome":{"status":"APPLIED"},"services":1,"backupWrites":1,"trace":[{"operation":"lstatSync","status":"THREW","code":"ENOENT"},{"operation":"lstatSync","status":"THREW","code":"ENOENT"},{"operation":"lstatSync","status":"RETURNED"},{"operation":"mkdirSync","status":"RETURNED"},{"operation":"mkdirSync","status":"RETURNED"},{"operation":"lstatSync","status":"THREW","code":"ENOENT"},{"operation":"openSync","status":"RETURNED"},{"operation":"fstatSync","status":"RETURNED"},{"operation":"lstatSync","status":"RETURNED"},{"operation":"writeFileSync","status":"RETURNED"},{"operation":"ftruncateSync","status":"RETURNED"},{"operation":"closeSync","status":"RETURNED"}]}
+# Subtest: F26a checked storage URI: local desktop userdata storage present
+ok 4 - F26a checked storage URI: local desktop userdata storage present
+  ---
+  duration_ms: 114.2053
+  type: 'test'
+  ...
+# {"outcome":{"status":"APPLIED"},"services":1,"backupWrites":1,"trace":[{"operation":"lstatSync","status":"THREW","code":"ENOENT"},{"operation":"lstatSync","status":"RETURNED"},{"operation":"mkdirSync","status":"RETURNED"},{"operation":"lstatSync","status":"THREW","code":"ENOENT"},{"operation":"openSync","status":"RETURNED"},{"operation":"fstatSync","status":"RETURNED"},{"operation":"lstatSync","status":"RETURNED"},{"operation":"writeFileSync","status":"RETURNED"},{"operation":"ftruncateSync","status":"RETURNED"},{"operation":"closeSync","status":"RETURNED"}]}
+# Subtest: F26a checked storage URI: unknown storage scheme refuses
+ok 5 - F26a checked storage URI: unknown storage scheme refuses
+  ---
+  duration_ms: 84.0459
+  type: 'test'
+  ...
+# Subtest: F26a checked storage URI: userdata authority refuses
+ok 6 - F26a checked storage URI: userdata authority refuses
+  ---
+  duration_ms: 73.4537
+  type: 'test'
+  ...
+# Subtest: F26a checked storage URI: userdata query refuses
+ok 7 - F26a checked storage URI: userdata query refuses
+  ---
+  duration_ms: 71.8151
+  type: 'test'
+  ...
+# Subtest: F26a checked storage URI: userdata fragment refuses
+ok 8 - F26a checked storage URI: userdata fragment refuses
+  ---
+  duration_ms: 67.9248
+  type: 'test'
+  ...
+# Subtest: F26a checked storage URI: remote desktop userdata refuses
+ok 9 - F26a checked storage URI: remote desktop userdata refuses
+  ---
+  duration_ms: 68.5457
+  type: 'test'
+  ...
+# Subtest: F26a checked storage URI: workspace-contained storage refuses
+ok 10 - F26a checked storage URI: workspace-contained storage refuses
+  ---
+  duration_ms: 82.834
+  type: 'test'
+  ...
+# Subtest: F26a checked storage URI: noncanonical file URI path refuses
+ok 11 - F26a checked storage URI: noncanonical file URI path refuses
+  ---
+  duration_ms: 68.2013
+  type: 'test'
+  ...
+1..11
+# tests 11
+# suites 0
+# pass 11
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3943.7547

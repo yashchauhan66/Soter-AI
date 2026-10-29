@@ -1,0 +1,22 @@
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const C=require('./diagnostic-admission-07.cjs'),{own,repo,read,fact,pin,sha}=C;
+(async()=>{
+ const checked=await C.guard(),proposal=fact(own('NATIVE07-DIAGNOSTIC-PROPOSAL01.md')),candidate=fact(own('native07-candidate-01.ps1.txt'));
+ assert.equal(proposal.sha256,'5cb1a498ea8091a2a21abc341701fcb039d6ccca43c76994fc01cd14727a28cb');
+ assert.equal(candidate.sha256,'2988d8f30bd7c590a15a88839f1fc0e90be9e8f189cb44293ece71913c7a9cc1');
+ const proof=read(own('f26a-native06-failure-byte-proof-01.json'));assert.equal(proof.commit,'3d913847a363103d44fd4267d602b8bef99d6ede');assert.equal(proof.fileCount,154);assert.equal(proof.mismatches,0);assert(proof.indexEmpty);
+ const metadata=new Set(['docs/soterai-lite/ledger.md','docs/soterai-lite/FEATURE-QUEUE.json','docs/soterai-lite/NEXT-CHAT-HANDOFF-20261029-F26A.md']);
+ for(const p of proof.files)if(!metadata.has(p.path))await pin(p);
+ const prior=read(own('native07-prior-owner-observation-02.json'));assert.equal(prior.matchingProcesses.length,0);assert(Date.now()-Date.parse(prior.observedAt)<300000);
+ assert(!fs.existsSync(own('native07-consumption-01.json'))&&!fs.existsSync(own('run-precommit-native-07.ps1')));
+ const approval={status:'EXPLICIT_USER_AUTHORIZATION_ONE_F26A_NATIVE07',allowedAttempts:1,replyId:'call_14bbbce8dfbd4285814ac7d45fbea13f',exactAnswer:'Ek extra F26a diagnostic07 run allow karo',observedAt:new Date().toISOString(),proposalSha256:proposal.sha256,candidateSha256:candidate.sha256,proposal,candidate,scope:'One bounded metadata-only diagnostic native07 on same exact VSIX/original34 callbacks and deadlines; no automatic retry, no broader native-round authorization',signalsRequested:0};
+ fs.writeFileSync(own('native07-user-approval-01.json'),JSON.stringify(approval,null,2)+'\n',{flag:'wx'});
+ fs.copyFileSync(own('native07-candidate-01.ps1.txt'),own('run-precommit-native-07.ps1'),fs.constants.COPYFILE_EXCL);
+ assert.equal(sha(fs.readFileSync(own('run-precommit-native-07.ps1'))),candidate.sha256);
+ const materialization={status:'EXPLICIT_SINGLE_NATIVE07_APPROVED_EXACT_MATERIALIZATION_NOT_YET_CONSUMED',observedAt:new Date().toISOString(),approval:fact(own('native07-user-approval-01.json')),candidate,materialized:fact(own('run-precommit-native-07.ps1')),currentAdmission:checked,priorOwnerObservation:fact(own('native07-prior-owner-observation-02.json')),signalsRequested:0};
+ fs.writeFileSync(own('native07-materialization-01.json'),JSON.stringify(materialization,null,2)+'\n',{flag:'wx'});
+ const receipt=`\n\n## STEP RECEIPT F26a-NATIVE07-AUTHORIZED / exact single diagnostic packet materialized, not yet consumed\n\nUser reply call_14bbbce8dfbd4285814ac7d45fbea13f explicitly answered Ek extra F26a diagnostic07 run allow karo. Bound proposal${proposal.sha256}/candidate${candidate.sha256}/VSIXd06a8740; all nonmetadata checkpoint154facts/current1036/original34 callbacks/other24drivers/bootstrap/deadlines reverified. Prior native06 owners absent by fresh read-only observation. ${fact(own('native07-materialization-01.json')).path} sha${fact(own('native07-materialization-01.json')).sha256}; exact52783bytes materialized, approval unconsumed asofreceipt. Only ONE bounded native07; no reuse of failed06/other approvals and no automatic retry. F26a remains ACTIVE/INCOMPLETE; actual34/offline/affected509/functional10/security17/withdrawal/acceptance/featurecommits pending. All failed evidence/unrelatedwork retained; no rating/push/signals/normalprofile/realdata/OSchanges/originalL6 HUMAN-ACTIONS STOP/diskwaiver persist.\n`;
+ fs.appendFileSync(path.resolve(__dirname,'../../ledger.md'),receipt);fs.appendFileSync(path.resolve(__dirname,'../../NEXT-CHAT-HANDOFF-20261029-F26A.md'),receipt+'Inspect native07 consumption/owner/result before any launch; never duplicate this approval.\n');
+ const qp=path.resolve(__dirname,'../../FEATURE-QUEUE.json'),q=read(qp);q.f26aNative07Authorization={status:'EXPLICIT_SINGLE_APPROVED_MATERIALIZED_NOT_YET_CONSUMED',allowedAttempts:1,approval:materialization.approval,materialization:fact(own('native07-materialization-01.json'))};fs.writeFileSync(qp,JSON.stringify(q,null,2)+'\r\n');
+ console.log(JSON.stringify({status:materialization.status,approval:materialization.approval,materialized:materialization.materialized}));
+})().catch(e=>{console.error(e);process.exitCode=1;});

@@ -1,0 +1,63 @@
+{
+  "feature": "F26a",
+  "status": "FULL08_SOLE_CLOCK_FIXTURE_FAIL_RETAINED_CURRENT_FULL09_RUNNING",
+  "observedAt": "2026-10-29T03:36:36.255Z",
+  "previous": {
+    "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/progress-06.json",
+    "bytes": 2547,
+    "sha256": "dbaf2c4f2193176ed4dc2eaa09154828cfb0f7a553e6bfaccbb14003bde2fd96"
+  },
+  "failedFull": {
+    "tests": 4475,
+    "pass": 4470,
+    "fail": 1,
+    "skipped": 4,
+    "raw": {
+      "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/full-tests-08.txt",
+      "bytes": 1077813,
+      "sha256": "272fe25dce126f0c44772252c91bfa0690ab522072a3b278f8bc9fdba47edd4d"
+    },
+    "actualClose": "wrapper1/bothEOF/no signals/no deadline"
+  },
+  "failure": "F29 matching report hardcodes20261028 but omits explicit now; real clock20261029 crosses24h. Product correctly marks STALE. Only fixture now uses same explicit date as adjacent stale/future controls; assertions and UI production unchanged.",
+  "focused": {
+    "tests": 31,
+    "pass": 31,
+    "fail": 0,
+    "receipt": {
+      "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/storage-clock-focused-09.txt.result.json",
+      "bytes": 630,
+      "sha256": "cf1cb830f1b36f21ad3660aba83bb269c559ef538fc79384dc44807558105a16"
+    }
+  },
+  "sourceProof": {
+    "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/full-inputs-09.json",
+    "bytes": 203545,
+    "sha256": "f3ca94a5d02afef843bc0020b18b95b8d9129b4cf7d31ead7c87af019dd10e52"
+  },
+  "sourceCount": 1037,
+  "sourceChanges": 3,
+  "productionChanges": 1,
+  "backend": "08 closed143PASS1SKIP reused only after all unchanged source bytes except F29test clock checked",
+  "compiler09": "PASS_CLOSED",
+  "serialOwner": {
+    "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/storage-serial-owner-09.json",
+    "bytes": 423,
+    "sha256": "70805fc1822567fee95da390a998f15fde6c7f0df43381caa2ecfb9ac9cbf891"
+  },
+  "postfullOwner": {
+    "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/storage-postfull-owner-09.json",
+    "bytes": 383,
+    "sha256": "a0d8cd32150fe213f16e83a15dfce7b9eb91280b208b8d3a4ddba09de31d072b"
+  },
+  "full09": "RUNNING_NOT_YET_COMPLETE",
+  "freshVSIX": "PENDING_ATTEMPT02",
+  "native07": "CONSUMED_FAIL_NO_RETRY",
+  "native08": "NOT_PROPOSED_NOT_AUTHORIZED_NOT_RUN",
+  "affectedScope": {
+    "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/affected-scope-08.json",
+    "bytes": 4133,
+    "sha256": "d51d88b605f809c7c4526961c92ef6b2098b89e777bd71a5b5697b3e27ce1ddc"
+  },
+  "rating": "NOT_ISSUED"
+}
