@@ -1,0 +1,112 @@
+﻿TAP version 13
+# Subtest: F26b actual Git completely scans a public branch and releases only its held ALLOW
+ok 1 - F26b actual Git completely scans a public branch and releases only its held ALLOW
+  ---
+  duration_ms: 3605.03
+  type: 'test'
+  ...
+# {"fixture":"D:\\\\SoterAI-Lite-test-profiles\\\\f03-unit-temp\\\\soter-f26b-real-history-AFUbTW","status":"ALLOW","operations":["version","commits","tree","batch"],"children":[{"operation":"version","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"commits","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"tree","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"batch","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0}],"scope":"actual fixed READ_ONLY Git; manual synthetic objects; no push; no response seams"}
+# Subtest: F26b actual Git blocks a secret deleted from the proposed tip
+ok 2 - F26b actual Git blocks a secret deleted from the proposed tip
+  ---
+  duration_ms: 4681.791
+  type: 'test'
+  ...
+# {"fixture":"D:\\\\SoterAI-Lite-test-profiles\\\\f03-unit-temp\\\\soter-f26b-real-history-RpqelE","status":"BLOCK","operations":["version","commits","tree","tree","batch"],"children":[{"operation":"version","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"commits","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"tree","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"tree","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"batch","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0}],"scope":"actual fixed READ_ONLY Git; manual synthetic objects; no push; no response seams"}
+# Subtest: F26b actual Git retains the removed secret under rename and rewritten tip content
+ok 3 - F26b actual Git retains the removed secret under rename and rewritten tip content
+  ---
+  duration_ms: 4413.5955
+  type: 'test'
+  ...
+# {"fixture":"D:\\\\SoterAI-Lite-test-profiles\\\\f03-unit-temp\\\\soter-f26b-real-history-IsBCaG","status":"BLOCK","operations":["version","commits","tree","tree","tree","batch"],"children":[{"operation":"version","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"commits","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"tree","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"tree","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"tree","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"batch","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0}],"scope":"actual fixed READ_ONLY Git; manual synthetic objects; no push; no response seams"}
+# Subtest: F26b actual Git traverses both merge parents including a removed side-branch secret
+ok 4 - F26b actual Git traverses both merge parents including a removed side-branch secret
+  ---
+  duration_ms: 4226.3671
+  type: 'test'
+  ...
+# {"fixture":"D:\\\\SoterAI-Lite-test-profiles\\\\f03-unit-temp\\\\soter-f26b-real-history-Z2tyNi","status":"BLOCK","operations":["version","commits","tree","tree","tree","tree","batch"],"children":[{"operation":"version","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"commits","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"tree","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"tree","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"tree","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"tree","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"batch","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0}],"scope":"actual fixed READ_ONLY Git; manual synthetic objects; no push; no response seams"}
+# Subtest: F26b actual Git does not trust the remote tip to exclude already remote secret history
+ok 5 - F26b actual Git does not trust the remote tip to exclude already remote secret history
+  ---
+  duration_ms: 1852.6192
+  type: 'test'
+  ...
+# {"fixture":"D:\\\\SoterAI-Lite-test-profiles\\\\f03-unit-temp\\\\soter-f26b-real-history-lKD0n4","status":"BLOCK","operations":["version","commits","tree","tree","batch"],"children":[{"operation":"version","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"commits","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"tree","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"tree","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"batch","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0}],"scope":"actual fixed READ_ONLY Git; manual synthetic objects; no push; no response seams"}
+# Subtest: F26b actual Git includes every proposed branch tip and withholds a secret on the second
+ok 6 - F26b actual Git includes every proposed branch tip and withholds a secret on the second
+  ---
+  duration_ms: 2857.3832
+  type: 'test'
+  ...
+# {"fixture":"D:\\\\SoterAI-Lite-test-profiles\\\\f03-unit-temp\\\\soter-f26b-real-history-KmnRUy","status":"BLOCK","operations":["version","commits","tree","tree","batch"],"children":[{"operation":"version","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"commits","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"tree","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"tree","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"batch","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0}],"scope":"actual fixed READ_ONLY Git; manual synthetic objects; no push; no response seams"}
+# Subtest: F26b actual Git33-commit sentinel withholds before any tree or content read
+ok 7 - F26b actual Git33-commit sentinel withholds before any tree or content read
+  ---
+  duration_ms: 2029.6128
+  type: 'test'
+  ...
+# {"fixture":"D:\\\\SoterAI-Lite-test-profiles\\\\f03-unit-temp\\\\soter-f26b-real-history-9RBny8","status":"UNAVAILABLE","operations":["version","commits"],"children":[{"operation":"version","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"commits","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0}],"scope":"actual fixed READ_ONLY Git; manual synthetic objects; no push; no response seams"}
+# Subtest: F26b actual Git oversized blob withholds before a batch content read
+ok 8 - F26b actual Git oversized blob withholds before a batch content read
+  ---
+  duration_ms: 918.7259
+  type: 'test'
+  ...
+# {"fixture":"D:\\\\SoterAI-Lite-test-profiles\\\\f03-unit-temp\\\\soter-f26b-real-history-KfR4B1","status":"UNAVAILABLE","operations":["version","commits","tree"],"children":[{"operation":"version","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"commits","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"tree","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0}],"scope":"actual fixed READ_ONLY Git; manual synthetic objects; no push; no response seams"}
+# Subtest: F26b actual Git unknown extension or binary makes the whole history unavailable
+ok 9 - F26b actual Git unknown extension or binary makes the whole history unavailable
+  ---
+  duration_ms: 2529.6463
+  type: 'test'
+  ...
+# {"fixture":"D:\\\\SoterAI-Lite-test-profiles\\\\f03-unit-temp\\\\soter-f26b-real-history-CbicZS","status":"UNAVAILABLE","operations":["version","commits","tree","batch"],"children":[{"operation":"version","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"commits","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"tree","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"batch","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0}],"scope":"actual fixed READ_ONLY Git; manual synthetic objects; no push; no response seams"}
+# {"fixture":"D:\\\\SoterAI-Lite-test-profiles\\\\f03-unit-temp\\\\soter-f26b-real-history-sO0Fxm","status":"UNAVAILABLE","operations":["version","commits","tree","batch"],"children":[{"operation":"version","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"commits","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"tree","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"batch","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0}],"scope":"actual fixed READ_ONLY Git; manual synthetic objects; no push; no response seams"}
+# Subtest: F26b actual Git symlink and gitlink modes cannot be silently excluded
+ok 10 - F26b actual Git symlink and gitlink modes cannot be silently excluded
+  ---
+  duration_ms: 2655.4547
+  type: 'test'
+  ...
+# {"fixture":"D:\\\\SoterAI-Lite-test-profiles\\\\f03-unit-temp\\\\soter-f26b-real-history-D2SZHz","status":"UNAVAILABLE","operations":["version","commits","tree"],"children":[{"operation":"version","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"commits","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"tree","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0}],"scope":"actual fixed READ_ONLY Git; manual synthetic objects; no push; no response seams"}
+# {"fixture":"D:\\\\SoterAI-Lite-test-profiles\\\\f03-unit-temp\\\\soter-f26b-real-history-Tsv3Ic","status":"UNAVAILABLE","operations":["version","commits","tree"],"children":[{"operation":"version","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"commits","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"tree","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0}],"scope":"actual fixed READ_ONLY Git; manual synthetic objects; no push; no response seams"}
+# Subtest: F26b actual Git missing and malformed commit objects withhold without a clean-prefix result
+ok 11 - F26b actual Git missing and malformed commit objects withhold without a clean-prefix result
+  ---
+  duration_ms: 1610.6853
+  type: 'test'
+  ...
+# {"fixture":"D:\\\\SoterAI-Lite-test-profiles\\\\f03-unit-temp\\\\soter-f26b-real-history-zegtfe","status":"UNAVAILABLE","operations":["version","commits"],"children":[{"operation":"version","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"commits","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":128,"signal":null,"signalsRequested":0}],"scope":"actual fixed READ_ONLY Git; manual synthetic objects; no push; no response seams"}
+# {"fixture":"D:\\\\SoterAI-Lite-test-profiles\\\\f03-unit-temp\\\\soter-f26b-real-history-yD1Swd","status":"UNAVAILABLE","operations":["version","commits"],"children":[{"operation":"version","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"commits","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":128,"signal":null,"signalsRequested":0}],"scope":"actual fixed READ_ONLY Git; manual synthetic objects; no push; no response seams"}
+# Subtest: F26b actual Git malformed tree pathname withholds before blob content
+ok 12 - F26b actual Git malformed tree pathname withholds before blob content
+  ---
+  duration_ms: 1910.6553
+  type: 'test'
+  ...
+# {"fixture":"D:\\\\SoterAI-Lite-test-profiles\\\\f03-unit-temp\\\\soter-f26b-real-history-LrY50x","status":"UNAVAILABLE","operations":["version","commits","tree"],"children":[{"operation":"version","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"commits","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"tree","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0}],"scope":"actual fixed READ_ONLY Git; manual synthetic objects; no push; no response seams"}
+# Subtest: F26b actual Git ignores poisoned ambient selectors and preserves the parent environment
+ok 13 - F26b actual Git ignores poisoned ambient selectors and preserves the parent environment
+  ---
+  duration_ms: 1326.1287
+  type: 'test'
+  ...
+# {"fixture":"D:\\\\SoterAI-Lite-test-profiles\\\\f03-unit-temp\\\\soter-f26b-real-history-xPa6HA","status":"ALLOW","operations":["version","commits","tree","batch"],"children":[{"operation":"version","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"commits","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"tree","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"batch","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0}],"scope":"actual fixed READ_ONLY Git; manual synthetic objects; no push; no response seams"}
+# Subtest: F26b actual Git empty and deletion-only proposals perform no object traversal
+ok 14 - F26b actual Git empty and deletion-only proposals perform no object traversal
+  ---
+  duration_ms: 700.6508
+  type: 'test'
+  ...
+# {"fixture":"D:\\\\SoterAI-Lite-test-profiles\\\\f03-unit-temp\\\\soter-f26b-real-history-w3JFy0","status":"ALLOW","operations":["version"],"children":[{"operation":"version","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0}],"scope":"actual fixed READ_ONLY Git; manual synthetic objects; no push; no response seams"}
+# {"fixture":"D:\\\\SoterAI-Lite-test-profiles\\\\f03-unit-temp\\\\soter-f26b-real-history-nAWLxR","status":"ALLOW","operations":["version"],"children":[{"operation":"version","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0}],"scope":"actual fixed READ_ONLY Git; manual synthetic objects; no push; no response seams"}
+1..14
+# tests 14
+# suites 0
+# pass 14
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 37362.5099

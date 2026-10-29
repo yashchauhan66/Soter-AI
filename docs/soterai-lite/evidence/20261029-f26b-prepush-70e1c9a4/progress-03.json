@@ -1,0 +1,85 @@
+{
+  "status": "F26B_FULL02_SINGLE_STATIC_PARITY_FAILURE_RETAINED_CURRENT_FULL03_ACTIVE",
+  "observedAt": "2026-10-29T12:33:44.760Z",
+  "failedFull": {
+    "tests": 4750,
+    "pass": 4745,
+    "fail": 1,
+    "skipped": 4,
+    "raw": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/full-tests-02.txt",
+      "bytes": 1157585,
+      "sha256": "e2fbcecb14a7f521ce954beb49d5c28d2c6a7a3aa40fac6d85a6e5cfbe508d71"
+    },
+    "close": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/full-tests-02-owned-close.json",
+      "bytes": 617,
+      "sha256": "5c3c65c4c50cca4dfcfc2eee0c3095b35f2c7ad1081e6b35b5615b762e181a97"
+    },
+    "failure": "Static registration scanner accepts registerCommand/reg; three actual registered commands used lexical helper register.",
+    "notRegraded": true
+  },
+  "fix": "Sole production edit renames local helper register to established reg; no runtime workflow/test/oracle changes.",
+  "sourceProof": {
+    "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/full-inputs-03.json",
+    "bytes": 217853,
+    "sha256": "81fb9f8d559434242a67a316f0609a5c79c1b6b351cb783d7f3af365669f495f"
+  },
+  "sourceDelta": [
+    {
+      "path": "packages/vscode-extension/src/history-hooks/prePushCommands.ts",
+      "bytes": 1455,
+      "sha256": "a108c928c5a03b4d22e56b1d27566d328b3333d510efb8f9c8b3baa10513bc6a"
+    }
+  ],
+  "currentCompiler": {
+    "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/compiler-full-03-verification.json",
+    "bytes": 265,
+    "sha256": "ab8bccb06c0c074b842e2084ce90cfd19c42e812d348e443809c5ee63ff5ea01"
+  },
+  "currentFocused": {
+    "tests": 91,
+    "pass": 91,
+    "fail": 0,
+    "raw": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/parity-and-command-focused-03.txt",
+      "bytes": 24995,
+      "sha256": "f23522581ec015886291e2e8b9f7846bf946ea8dd77a44c21bfb3bd0de7082b9"
+    },
+    "close": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/parity-and-command-focused-03-owned-close.json",
+      "bytes": 617,
+      "sha256": "ec4961912f78f7aab4a9296acc0be8e150077457bd7ff55ed6487c4bf30f89d8"
+    }
+  },
+  "serial": {
+    "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/integrated-serial-start-03.json",
+    "bytes": 305,
+    "sha256": "d8714352690428490343ee122c1601eedaf68650a2bd57dba387df69745f5e89"
+  },
+  "postfull": {
+    "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/postfull-start-03.json",
+    "bytes": 149,
+    "sha256": "87cae2ccc3c20615557d58ed580acdcf1f646595d379976fba0cc25033a5546a"
+  },
+  "nativeSource": {
+    "fact": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/native-prepush-02.host.ts.txt",
+      "bytes": 61328,
+      "sha256": "ed484c5964cbc0692ab3ec2513ac450e5a0ed35446c048e828982acdb56afbb9"
+    },
+    "primary": 30,
+    "restart": 6,
+    "static": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/native-fixture-static-result-02.json",
+      "bytes": 5601,
+      "sha256": "06153422519245d64b8c1f9844054ccc428da04ed93e4770953738cd626434bf"
+    },
+    "execution": "NOT_RUN"
+  },
+  "nativeLaunchPrepared": "native-launch-candidate-04.ps1.txt + admission03; source03 duplicate-key parser failure retained,04 parserPASS; neither executed",
+  "agentAvailability": "Three same-lineage helpers hit usage limit after saving source/static preparations; root continues without further agents.",
+  "f26aNative09": "USER_DEFERRED_NOT_RUN",
+  "configuredPush": "NOT_AUTHORIZED_NOT_RUN",
+  "feature": "ACTIVE_INCOMPLETE"
+}

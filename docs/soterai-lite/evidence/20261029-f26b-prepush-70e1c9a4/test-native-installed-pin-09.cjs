@@ -1,0 +1,9 @@
+const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto'),assert=require('node:assert/strict');
+const own=n=>path.join(__dirname,n),read=f=>JSON.parse(fs.readFileSync(f,'utf8').replace(/^\uFEFF/,'')),b=read(own('native-launch-binding-02.json')),{ordinary,verifyRow}=require('./native-physical-admission-09.cjs');let checks=0;
+ordinary(path.resolve(__dirname,'../../../..'));checks++;ordinary(path.resolve(__dirname,'../../..'));checks++;
+const row={...b.caseFreeze,path:own(b.caseFreeze.path)};verifyRow(row);checks++;assert.throws(()=>verifyRow({...row,sha256:'0'.repeat(64)}));checks++;
+const fixture=read(own('native-physical-component-05.json')).fixture,file=path.join(fixture,'ordinary/public.txt'),bytes=fs.readFileSync(file),pin={path:file,bytes:bytes.length,sha256:crypto.createHash('sha256').update(bytes).digest('hex')};
+assert.throws(()=>verifyRow({...pin,path:path.join(fixture,'junction/public.txt')}));checks++;assert.throws(()=>verifyRow({...pin,path:path.join(fixture,'hardlink.txt')}));checks++;
+const edge=b.vendorFacts.find(row=>row.path.toLowerCase().endsWith('/msedge.dll'));assert(edge);assert.throws(()=>verifyRow(edge));checks++;verifyRow(edge,true);checks++;
+const git=b.vendorFacts.find(row=>row.path.toLowerCase()==='c:\\program files\\git\\cmd\\git.exe');assert(git);verifyRow(git,true);checks++;
+fs.writeFileSync(own('native-installed-pin-components-09.json'),JSON.stringify({status:'PASS9_CLOUD_REDIRECT_HARDLINK_HASH_AND_EXACT_INSTALLED_VENDOR_CONTROLS_NOT_GUI',checks,installedEdgeLinks:fs.lstatSync(edge.path).nlink,installedGitLinks:fs.lstatSync(git.path).nlink,unknownFileHardlinksRefused:true,existingVendorGuardReused:true,signalsRequested:0},null,2)+'\n',{flag:'wx'});console.log(JSON.stringify({status:'PASS9_NATIVE_PHYSICAL_INSTALLED_VENDOR_COMPONENTS',checks}));

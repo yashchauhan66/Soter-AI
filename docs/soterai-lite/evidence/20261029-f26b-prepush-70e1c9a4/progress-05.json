@@ -1,0 +1,186 @@
+{
+  "status": "F26B_NATIVE36_NOT_RUN_UPDATER_STARTUP_FAILURE_OFFICIAL_UPDATE_STAGED_NOT_APPLIED",
+  "observedAt": "2026-10-29T15:46:08.610Z",
+  "feature": "F26b",
+  "featureState": "ACTIVE_INCOMPLETE",
+  "releaseReady": false,
+  "previous": {
+    "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/progress-04.json",
+    "bytes": 4452,
+    "sha256": "b276ef003a21151c40a7bc01edd0a1fcd9eee0f046b8c6df63a0ab8ecaaf174e"
+  },
+  "sourceProof": {
+    "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/full-inputs-03.json",
+    "bytes": 217853,
+    "sha256": "81fb9f8d559434242a67a316f0609a5c79c1b6b351cb783d7f3af365669f495f"
+  },
+  "full": {
+    "tests": 4750,
+    "pass": 4746,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 4
+  },
+  "vsix": {
+    "status": "PACKAGED_NOT_HOST_VERIFIED",
+    "output": "packages\\soterai-lite\\soterai-lite-0.7.0-f26b-20261029-attempt01.vsix",
+    "bytes": 1747132,
+    "sha256": "6c299712aa6f8da35b32bacc12b3e4b26b9e5d26689a2fdcb7b06eadb186d12b",
+    "runId": "2026-10-29T12-38-17-803Z-83e283c8",
+    "extensionSha256": "786882b16d9010834a5b0372860f16b900750ef9df605cfec23ae763d5f1e3e1",
+    "stagedManifestSha256": "c26e60f721bf1299345e6e9f8bd0d413f17ff58c06832352337767c2d639eedd"
+  },
+  "nativeAttempt": {
+    "consumed": true,
+    "assertions": 36,
+    "pass": 0,
+    "fail": 0,
+    "notRun": 36,
+    "reason": "Actual Code exited1 before extension activation: existing vscode-updating mutex held; installer disk-full dialog later observed.",
+    "primaryClose": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/f26b-prepush-native-20261029T131104Z-610a0d25/primary-owned-editor-close.json",
+      "bytes": 390,
+      "sha256": "fb351c51c9d95555769b57e80297a5ee1b670dee3b0e2b1556e19f37e6d488ce"
+    },
+    "outerClose": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/native-component-04-owned-close.json",
+      "bytes": 612,
+      "sha256": "0dd8b4b87aaeff3d272909c491f9bb3ab505a1f21b7439cc2ff106f6dab4126b"
+    },
+    "rawStderr": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/f26b-prepush-native-20261029T131104Z-610a0d25/primary-stderr.txt",
+      "bytes": 653,
+      "sha256": "e944076874d99548d891e451c859424f57edb1fd8fb66983413b909a322b9c54"
+    },
+    "primaryPid": 7288,
+    "actualCloseAndBothEOF": true,
+    "signalsRequested": 0,
+    "pidAbsentTwice": false,
+    "streamsStable": false,
+    "automaticNativeRetry": false
+  },
+  "update": {
+    "request": "tum hi update kro mujha mera vscode me update ka option show nhi ho rha hai",
+    "replyId": "call_32cf7657e4a14763922686868049f4e0",
+    "scope": "Official VS Code application update; existing installer only. No process killing, normal-profile extension installation/settings, unrelated OS changes, Git push or F26a native09 authorization.",
+    "installerSignature": "Valid Microsoft Corporation; exact SHA retained in installer-retry-action receipts",
+    "newInstallerStarted": false,
+    "newDownload": false,
+    "oldInstalledVersion": "1.143.1",
+    "stagedTargetVersion": "1.144.0",
+    "lastObservation": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/vscode-update-recovery-evidence-01/installer-after-retry-04.json",
+      "bytes": 876,
+      "sha256": "0a06e7e43a066e372d5c6924a90883d01d21fae5746fbc72cf00b7fa95747aec"
+    },
+    "state": "NEW_CODE_STAGED_INSTALLERS_STILL_PRESENT_NOT_APPLIED_NOT_ACCEPTED",
+    "cleanupDeletedFiles": 1442,
+    "cleanupDeclaredBytes": 1326438372,
+    "lastObservedFreeBytes": 561405952,
+    "preserved": "Project/evidence, installed extensions, settings, named extension caches, current installer and vendor files",
+    "failedDiagnostic": "Sandbox CIM denied; escalated query succeeded but C: evidence write failed disk-full. Existing empty vscode-update-diagnostic-01.json retained; not a valid JSON receipt.",
+    "evidence": [
+      {
+        "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/vscode-update-recovery-evidence-01/additional-disposable-cache-inventory-03.json",
+        "bytes": 18334,
+        "sha256": "940072a62cffeb08d6ee63a6b848f53ff93254f5f49f69fc223c7159a11a70c8"
+      },
+      {
+        "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/vscode-update-recovery-evidence-01/cache-cleanup-plan-01.json",
+        "bytes": 115578,
+        "sha256": "4ccdf2b0c630f46a8692f378b489f63b23cccd5320b59c5c34364080d1503d87"
+      },
+      {
+        "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/vscode-update-recovery-evidence-01/cache-cleanup-plan-02.json",
+        "bytes": 608404,
+        "sha256": "9c1c5e73385fc69b793d42cf51e62745b6d2ad6a14983c3ca0de8c5d6d823048"
+      },
+      {
+        "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/vscode-update-recovery-evidence-01/cache-cleanup-plan-03.json",
+        "bytes": 3524,
+        "sha256": "b71512c1f7095f367d2940c755baebbf941a029e400d09fc0f9764107163613a"
+      },
+      {
+        "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/vscode-update-recovery-evidence-01/cache-cleanup-result-01.json",
+        "bytes": 364,
+        "sha256": "2e3393ad261175c53ad97aec5d95b2dfe8b734e3213006c22da8e38982dbd7f3"
+      },
+      {
+        "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/vscode-update-recovery-evidence-01/cache-cleanup-result-02.json",
+        "bytes": 2772,
+        "sha256": "12b73b2c3cb60b8ce54e790a79411d832ac18b4645be186962a6c6c90f38f265"
+      },
+      {
+        "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/vscode-update-recovery-evidence-01/cache-cleanup-result-03.json",
+        "bytes": 342,
+        "sha256": "c004d56c6383d036533a054d50c44346bdd2e0723b95108692f0b79927c35ec0"
+      },
+      {
+        "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/vscode-update-recovery-evidence-01/disk-and-dialog-diagnostic-04.json",
+        "bytes": 2805,
+        "sha256": "d449e578652ed4189d09eec56efa7f384f51ffdf97a434394c11d0b8c5362bbd"
+      },
+      {
+        "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/vscode-update-recovery-evidence-01/installer-after-retry-01.json",
+        "bytes": 2519,
+        "sha256": "93c0a12fca1435fb545589e7ddab3fb80000d184761033a4301779a998e56c0a"
+      },
+      {
+        "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/vscode-update-recovery-evidence-01/installer-after-retry-02.json",
+        "bytes": 2572,
+        "sha256": "ce931dae5b106ba507ee8da45c6fa2bd3c0333aa15b0f070a56e8a22d3b0f665"
+      },
+      {
+        "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/vscode-update-recovery-evidence-01/installer-after-retry-03.json",
+        "bytes": 2603,
+        "sha256": "b43ac0d9a216f87dfbc5cc1290cb17141973ec025768a0c801f2cc49203ea041"
+      },
+      {
+        "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/vscode-update-recovery-evidence-01/installer-after-retry-04.json",
+        "bytes": 876,
+        "sha256": "0a06e7e43a066e372d5c6924a90883d01d21fae5746fbc72cf00b7fa95747aec"
+      },
+      {
+        "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/vscode-update-recovery-evidence-01/installer-controls-before-retry-01.json",
+        "bytes": 1812,
+        "sha256": "6876d3077c76df03965c2d89d1254ba4b401e6faacc7e68c2f65533354402bc7"
+      },
+      {
+        "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/vscode-update-recovery-evidence-01/installer-progress-log-05.json",
+        "bytes": 653,
+        "sha256": "aa2203ef87aa971f904b9da4e8f981e0ecf6393629f35fab50ff0097728f4ec1"
+      },
+      {
+        "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/vscode-update-recovery-evidence-01/installer-retry-action-01.json",
+        "bytes": 780,
+        "sha256": "65622b6b20ba65f7a5bbe79f5e2b354146a49c1202e1fc34e5b3bc391e9b55b7"
+      },
+      {
+        "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/vscode-update-recovery-evidence-01/installer-retry-action-02.json",
+        "bytes": 1075,
+        "sha256": "06921cfc220d335df82aba7f5d4d46aee667ebc4e1baeff38528781d68df9f69"
+      },
+      {
+        "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/vscode-update-recovery-evidence-01/installer-retry-action-03.json",
+        "bytes": 1037,
+        "sha256": "457c62a693a1b6d92ccad176fd61ea1cca233ba0579c9cb0662fc960dbc0da89"
+      },
+      {
+        "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/vscode-update-recovery-evidence-01/installer-retry-action-04.json",
+        "bytes": 1217,
+        "sha256": "4e5ed67f36497974bf9eb9e265111c051979beea160980c25c3d2e2b2381dfa7"
+      }
+    ]
+  },
+  "f26aNative09": "USER_DEFERRED_NOT_RUN",
+  "configuredGitPush": "NOT_AUTHORIZED_NOT_RUN",
+  "remaining": [
+    "Finish and verify requested official Code update",
+    "Review installed vendor changes; fresh native binding before one bounded next attempt",
+    "Actual native36, affected509 +functional10/security17 and safe withdrawal",
+    "Concrete configured local synthetic push permission and execution",
+    "Scoped feature acceptance/commits and exact byte verification"
+  ],
+  "originalL6": "HUMAN_ACTIONS_THEN_STOP",
+  "rating": "NOT_ISSUED"
+}

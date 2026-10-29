@@ -1,0 +1,403 @@
+﻿TAP version 13
+# Subtest: F26b client actual numeric-loopback transport uses the signed pre-push route
+not ok 1 - F26b client actual numeric-loopback transport uses the signed pre-push route
+  ---
+  duration_ms: 97.8796
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\prePushClient.test.ts:2:6931'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'UNAVAILABLE'
+    - 'ALLOW'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'ALLOW'
+  actual: 'UNAVAILABLE'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\prePushClient.test.ts:86:49)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F26b client unchanged genuine artifacts and signed exact transcript remain useful
+ok 2 - F26b client unchanged genuine artifacts and signed exact transcript remain useful
+  ---
+  duration_ms: 48.7389
+  type: 'test'
+  ...
+# Subtest: F26b client exact empty and deletion transcripts are preserved rather than invented
+ok 3 - F26b client exact empty and deletion transcripts are preserved rather than invented
+  ---
+  duration_ms: 62.6216
+  type: 'test'
+  ...
+# Subtest: F26b client malformed or oversized transcripts refuse before requests
+ok 4 - F26b client malformed or oversized transcripts refuse before requests
+  ---
+  duration_ms: 16.4882
+  type: 'test'
+  ...
+# Subtest: F26b client nonce freshness and request privacy exclude worktree and ambient bytes
+ok 5 - F26b client nonce freshness and request privacy exclude worktree and ambient bytes
+  ---
+  duration_ms: 60.7602
+  type: 'test'
+  ...
+# Subtest: F26b client malformed duplicate noncanonical and over-cap pins admit no transport
+ok 6 - F26b client malformed duplicate noncanonical and over-cap pins admit no transport
+  ---
+  duration_ms: 27.0491
+  type: 'test'
+  ...
+# Subtest: F26b client matching sibling hashes cannot replace exact invocation paths
+ok 7 - F26b client matching sibling hashes cannot replace exact invocation paths
+  ---
+  duration_ms: 13.634
+  type: 'test'
+  ...
+# Subtest: F26b client missing or tampered initial artifacts refuse before transport
+ok 8 - F26b client missing or tampered initial artifacts refuse before transport
+  ---
+  duration_ms: 74.0701
+  type: 'test'
+  ...
+# Subtest: F26b client descriptor signature root generation and artifacts bind before request
+ok 9 - F26b client descriptor signature root generation and artifacts bind before request
+  ---
+  duration_ms: 101.0994
+  type: 'test'
+  ...
+# Subtest: F26b client descriptor malformed framing or forged nonloopback endpoint admits no request
+ok 10 - F26b client descriptor malformed framing or forged nonloopback endpoint admits no request
+  ---
+  duration_ms: 46.1706
+  type: 'test'
+  ...
+# Subtest: F26b client current signed BLOCK remains BLOCK and busy/outage/throws refuse
+ok 11 - F26b client current signed BLOCK remains BLOCK and busy/outage/throws refuse
+  ---
+  duration_ms: 73.138
+  type: 'test'
+  ...
+# Subtest: F26b client wrong decision root session nonce generation transcript or root identity refuses
+ok 12 - F26b client wrong decision root session nonce generation transcript or root identity refuses
+  ---
+  duration_ms: 114.7686
+  type: 'test'
+  ...
+# Subtest: F26b client foreign forged malformed or over-cap decisions cannot authorize
+ok 13 - F26b client foreign forged malformed or over-cap decisions cannot authorize
+  ---
+  duration_ms: 75.1663
+  type: 'test'
+  ...
+# Subtest: F26b client prior valid nonce replay cannot authorize a new invocation
+ok 14 - F26b client prior valid nonce replay cannot authorize a new invocation
+  ---
+  duration_ms: 47.2271
+  type: 'test'
+  ...
+# Subtest: F26b client byte-identical descriptor worker or runtime replacement during await refuses
+ok 15 - F26b client byte-identical descriptor worker or runtime replacement during await refuses
+  ---
+  duration_ms: 98.52
+  type: 'test'
+  ...
+# Subtest: F26b client changed worker runtime or descriptor bytes during await refuses
+ok 16 - F26b client changed worker runtime or descriptor bytes during await refuses
+  ---
+  duration_ms: 69.5034
+  type: 'test'
+  ...
+# Subtest: F26b client physical root replacement with same retained content revokes a held result
+ok 17 - F26b client physical root replacement with same retained content revokes a held result
+  ---
+  duration_ms: 43.4903
+  type: 'test'
+  ...
+# Subtest: F26b client monotonic whole-operation clock expiry rollback and thrown clocks refuse
+ok 18 - F26b client monotonic whole-operation clock expiry rollback and thrown clocks refuse
+  ---
+  duration_ms: 30.5434
+  type: 'test'
+  ...
+# Subtest: F26b client actual transport rejects wrong status content type duplicate and chunked response framing
+not ok 19 - F26b client actual transport rejects wrong status content type duplicate and chunked response framing
+  ---
+  duration_ms: 25.7382
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\prePushClient.test.ts:2:16966'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + []
+    - [
+    -   '/pre-push'
+    - ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: '/pre-push'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\prePushClient.test.ts:195:67)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F26b owner binds signed ephemeral IPv4 descriptor exactly once
+ok 20 - F26b owner binds signed ephemeral IPv4 descriptor exactly once
+  ---
+  duration_ms: 3128.6396
+  type: 'test'
+  ...
+# Subtest: F26b owner close before start permanently refuses startup without loading a key
+ok 21 - F26b owner close before start permanently refuses startup without loading a key
+  ---
+  duration_ms: 62.1478
+  type: 'test'
+  ...
+# Subtest: F26b owner disabled startup and later disabled requests refuse before sensitive admission
+ok 22 - F26b owner disabled startup and later disabled requests refuse before sensitive admission
+  ---
+  duration_ms: 125.7399
+  type: 'test'
+  ...
+# Subtest: F26b owner missing or unsuitable startup signing keys never create a descriptor
+ok 23 - F26b owner missing or unsuitable startup signing keys never create a descriptor
+  ---
+  duration_ms: 156.8562
+  type: 'test'
+  ...
+# Subtest: F26b owner signs a completed public ALLOW with exact captured refs digests and request binding
+ok 24 - F26b owner signs a completed public ALLOW with exact captured refs digests and request binding
+  ---
+  duration_ms: 100.1178
+  type: 'test'
+  ...
+# Subtest: F26b owner BLOCK returns fixed signed metadata without candidate content or raw failures
+ok 25 - F26b owner BLOCK returns fixed signed metadata without candidate content or raw failures
+  ---
+  duration_ms: 85.3411
+  type: 'test'
+  ...
+# Subtest: F26b owner unavailable and unconfirmed scanner outcomes cannot become ALLOW
+ok 26 - F26b owner unavailable and unconfirmed scanner outcomes cannot become ALLOW
+  ---
+  duration_ms: 143.8399
+  type: 'test'
+  ...
+# Subtest: F26b owner rejects wrong version installation session nonce and extra request authority before preparation
+ok 27 - F26b owner rejects wrong version installation session nonce and extra request authority before preparation
+  ---
+  duration_ms: 78.5569
+  type: 'test'
+  ...
+# Subtest: F26b owner rejects malformed noncanonical duplicate and invalid UTF8 request bodies before preparation
+ok 28 - F26b owner rejects malformed noncanonical duplicate and invalid UTF8 request bodies before preparation
+  ---
+  duration_ms: 79.0473
+  type: 'test'
+  ...
+# Subtest: F26b owner refuses foreign methods paths queries and route ambiguity without preparing
+ok 29 - F26b owner refuses foreign methods paths queries and route ambiguity without preparing
+  ---
+  duration_ms: 67.9674
+  type: 'test'
+  ...
+# Subtest: F26b owner requires exact numeric loopback Host and no Origin header
+ok 30 - F26b owner requires exact numeric loopback Host and no Origin header
+  ---
+  duration_ms: 71.982
+  type: 'test'
+  ...
+# Subtest: F26b owner refuses missing and unsupported content types before body admission
+ok 31 - F26b owner refuses missing and unsupported content types before body admission
+  ---
+  duration_ms: 57.3064
+  type: 'test'
+  ...
+# Subtest: F26b owner refuses duplicate Host content headers and transfer encoding without admitting work
+ok 32 - F26b owner refuses duplicate Host content headers and transfer encoding without admitting work
+  ---
+  duration_ms: 49.3176
+  type: 'test'
+  ...
+# Subtest: F26b owner refuses bodies beyond49152 bytes and excessive headers without scanning a prefix
+ok 33 - F26b owner refuses bodies beyond49152 bytes and excessive headers without scanning a prefix
+  ---
+  duration_ms: 49.6507
+  type: 'test'
+  ...
+# Subtest: F26b owner one-active noqueue response binds BUSY nonce and starts no second preparation or scanner
+ok 34 - F26b owner one-active noqueue response binds BUSY nonce and starts no second preparation or scanner
+  ---
+  duration_ms: 81.465
+  type: 'test'
+  ...
+# Subtest: F26b owner passes only captured root and literal exact transcript data into preparation
+ok 35 - F26b owner passes only captured root and literal exact transcript data into preparation
+  ---
+  duration_ms: 104.8193
+  type: 'test'
+  ...
+# Subtest: F26b owner rejects borrowed foreign-root and structural-clone refs capabilities before scanner creation
+ok 36 - F26b owner rejects borrowed foreign-root and structural-clone refs capabilities before scanner creation
+  ---
+  duration_ms: 307.8482
+  type: 'test'
+  ...
+# Subtest: F26b owner unavailable exact transcript cannot become an empty successful tree
+ok 37 - F26b owner unavailable exact transcript cannot become an empty successful tree
+  ---
+  duration_ms: 145.3887
+  type: 'test'
+  ...
+# Subtest: F26b owner changed final signing key cannot authorize a decision under either installation pin
+ok 38 - F26b owner changed final signing key cannot authorize a decision under either installation pin
+  ---
+  duration_ms: 129.5752
+  type: 'test'
+  ...
+# Subtest: F26b owner missing final key and thrown key retrieval refuse without echoing raw failures
+ok 39 - F26b owner missing final key and thrown key retrieval refuse without echoing raw failures
+  ---
+  duration_ms: 253.257
+  type: 'test'
+  ...
+# Subtest: F26b owner held final key await cannot revive after observed disable and reenable
+ok 40 - F26b owner held final key await cannot revive after observed disable and reenable
+  ---
+  duration_ms: 155.6821
+  type: 'test'
+  ...
+# Subtest: F26b owner rechecks exact refs identity and bytes after asynchronous final key loading
+ok 41 - F26b owner rechecks exact refs identity and bytes after asynchronous final key loading
+  ---
+  duration_ms: 156.1129
+  type: 'test'
+  ...
+# Subtest: F26b owner asks exact completed result release again after final key await
+ok 42 - F26b owner asks exact completed result release again after final key await
+  ---
+  duration_ms: 137.2339
+  type: 'test'
+  ...
+# Subtest: F26b owner premature scanner ALLOW cannot release while actual scanner ownership remains open
+ok 43 - F26b owner premature scanner ALLOW cannot release while actual scanner ownership remains open
+  ---
+  duration_ms: 167.0378
+  type: 'test'
+  ...
+# Subtest: F26b owner aborted transport withdraws scan and remains busy until actual closure
+ok 44 - F26b owner aborted transport withdraws scan and remains busy until actual closure
+  ---
+  duration_ms: 184.2536
+  type: 'test'
+  ...
+# Subtest: F26b owner close withdraws active scan and waits for actual natural closure
+ok 45 - F26b owner close withdraws active scan and waits for actual natural closure
+  ---
+  duration_ms: 452.6451
+  type: 'test'
+  ...
+# Subtest: F26b owner explicit close while final key is pending cannot sign a revived ALLOW
+ok 46 - F26b owner explicit close while final key is pending cannot sign a revived ALLOW
+  ---
+  duration_ms: 148.2494
+  type: 'test'
+  ...
+# Subtest: F26b owner preparation and scanner factory exceptions remain fixed refusals without raw diagnostics
+ok 47 - F26b owner preparation and scanner factory exceptions remain fixed refusals without raw diagnostics
+  ---
+  duration_ms: 216.9928
+  type: 'test'
+  ...
+# Subtest: F26b physical root identity is stable case-insensitive and contains no file contents
+ok 48 - F26b physical root identity is stable case-insensitive and contains no file contents
+  ---
+  duration_ms: 26.7792
+  type: 'test'
+  ...
+# Subtest: F26b physical identity refuses relative UNC drive-relative noncanonical control and nonstring inputs
+ok 49 - F26b physical identity refuses relative UNC drive-relative noncanonical control and nonstring inputs
+  ---
+  duration_ms: 8.8968
+  type: 'test'
+  ...
+# Subtest: F26b file or missing root cannot be converted into directory identity
+ok 50 - F26b file or missing root cannot be converted into directory identity
+  ---
+  duration_ms: 9.4884
+  type: 'test'
+  ...
+# Subtest: F26b junction root and junction ancestor refuse without following worktree contents
+ok 51 - F26b junction root and junction ancestor refuse without following worktree contents
+  ---
+  duration_ms: 20.3767
+  type: 'test'
+  ...
+# Subtest: F26b root replacement changes physical identity with unchanged directory name
+ok 52 - F26b root replacement changes physical identity with unchanged directory name
+  ---
+  duration_ms: 11.9881
+  type: 'test'
+  ...
+# Subtest: F26b genuine checked refs freeze exact transcript digest and structured updates
+ok 53 - F26b genuine checked refs freeze exact transcript digest and structured updates
+  ---
+  duration_ms: 71.7047
+  type: 'test'
+  ...
+# Subtest: F26b checked refs empty and deletion transcripts retain their exact meanings
+ok 54 - F26b checked refs empty and deletion transcripts retain their exact meanings
+  ---
+  duration_ms: 101.7043
+  type: 'test'
+  ...
+# Subtest: F26b checked refs malformed transcript flag exceptions or initially disabled admission refuse
+ok 55 - F26b checked refs malformed transcript flag exceptions or initially disabled admission refuse
+  ---
+  duration_ms: 14.3162
+  type: 'test'
+  ...
+# Subtest: F26b checked refs withdrawal latches across disable and reenable
+ok 56 - F26b checked refs withdrawal latches across disable and reenable
+  ---
+  duration_ms: 64.0031
+  type: 'test'
+  ...
+# Subtest: F26b checked refs physical root replacement permanently withdraws held authority
+ok 57 - F26b checked refs physical root replacement permanently withdraws held authority
+  ---
+  duration_ms: 61.5716
+  type: 'test'
+  ...
+# Subtest: F26b checked refs metadata changes and byte-identical replacement revoke final authority
+ok 58 - F26b checked refs metadata changes and byte-identical replacement revoke final authority
+  ---
+  duration_ms: 136.9429
+  type: 'test'
+  ...
+# Subtest: F26b checked refs sanitize ambient process credentials hooks and config authority
+ok 59 - F26b checked refs sanitize ambient process credentials hooks and config authority
+  ---
+  duration_ms: 45.8467
+  type: 'test'
+  ...
+1..59
+# tests 59
+# suites 0
+# pass 57
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 11038.0838

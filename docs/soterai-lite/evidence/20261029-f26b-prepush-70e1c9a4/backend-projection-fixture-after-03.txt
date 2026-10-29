@@ -1,0 +1,58 @@
+﻿TAP version 13
+# Subtest: F26b real controller reviewed resume replaces a valid signed prior descriptor with a new signed session
+ok 1 - F26b real controller reviewed resume replaces a valid signed prior descriptor with a new signed session
+  ---
+  duration_ms: 3208.3101
+  type: 'test'
+  ...
+# Subtest: F26b real controller preserves a tampered prior descriptor and refuses resume rather than overwriting it
+ok 2 - F26b real controller preserves a tampered prior descriptor and refuses resume rather than overwriting it
+  ---
+  duration_ms: 386.8156
+  type: 'test'
+  ...
+# Subtest: F26b real controller stale restore review preserves a newer generation record and edited hook
+ok 3 - F26b real controller stale restore review preserves a newer generation record and edited hook
+  ---
+  duration_ms: 206.1536
+  type: 'test'
+  ...
+# Subtest: F26b real controller stale record after backup retrieval cannot be overwritten by rollback bookkeeping
+ok 4 - F26b real controller stale record after backup retrieval cannot be overwritten by rollback bookkeeping
+  ---
+  duration_ms: 199.9399
+  type: 'test'
+  ...
+# Subtest: F26b real controller withdraws live status and result authority when its exact service becomes unavailable
+ok 5 - F26b real controller withdraws live status and result authority when its exact service becomes unavailable
+  ---
+  duration_ms: 739.0232
+  type: 'test'
+  ...
+# Subtest: F26b real controller cannot replace a missing signing key while resuming retained ownership
+ok 6 - F26b real controller cannot replace a missing signing key while resuming retained ownership
+  ---
+  duration_ms: 216.4661
+  type: 'test'
+  ...
+# Subtest: F26b real controller useful restore durably retains exact private journal and opaque public discoverability
+ok 7 - F26b real controller useful restore durably retains exact private journal and opaque public discoverability
+  ---
+  duration_ms: 170.4742
+  type: 'test'
+  ...
+# Subtest: F26b real controller journal-store race retains its private revision without overwriting a foreign root record
+ok 8 - F26b real controller journal-store race retains its private revision without overwriting a foreign root record
+  ---
+  duration_ms: 156.3996
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 7275.4848

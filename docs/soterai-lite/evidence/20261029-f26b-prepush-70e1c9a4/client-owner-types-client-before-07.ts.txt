@@ -1,0 +1,208 @@
+import assert from "node:assert/strict";
+import { createHash, createPublicKey, generateKeyPairSync, randomUUID, type KeyObject } from "node:crypto";
+import { mkdtemp, mkdir, writeFile, readFile, rename, lstat } from "node:fs/promises";
+import { createServer, type IncomingMessage, type ServerResponse } from "node:http";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import { test, type TestContext } from "node:test";
+import { runPrePushClient } from "../history-hooks/PrePushClient";
+import { parseHookClientPin, type HookClientPin } from "../history-hooks/PreCommitHookText";
+import { parseHookRequest, signHookDecision, signHookDescriptor, type HookDecision, type HookDescriptor, type HookRequest } from "../history-hooks/PrePushWire";
+import { prePushTranscriptDigest } from "../history-hooks/PrePushProtocol";
+import { pushRootIdentity } from "../history-hooks/PushRootSnapshot";
+
+// Real Ed25519, checked ordinary artifacts and physical directories. Injected
+// request seams are explicit; separate tests use the actual numeric-loopback
+// transport. No child, Git push, normal profile, secrets, signals or deletion.
+const options = { skip: process.platform !== "win32", timeout: 12000 };
+const TRANSCRIPT = Buffer.from("refs/heads/main " + "1".repeat(40) + " refs/heads/main " + "0".repeat(40) + "\n");
+const PRIVATE = "TEST_ONLY_F26B_CLIENT_WORKTREE_7526b18c";
+const digest = (raw: Buffer) => createHash("sha256").update(raw).digest("hex");
+interface Context { endpoint: string; request: Readonly<HookRequest>; raw: Buffer; deadline: number;
+    reply(patch?: Partial<HookDecision>, key?: KeyObject): Buffer }
+interface Settings { pin?: Buffer; transcript?: Buffer; runtime?: string; worker?: string; now?: () => number; deadline?: number;
+    request?: (context: Context) => Promise<Buffer | undefined> }
+async function fixture() {
+    const root = await mkdtemp(join(tmpdir(), "soter-f26b-client-"));
+    for (const name of ["assets", "profile", "synthetic-windows"]) await mkdir(join(root, name));
+    const worker = join(root, "assets", "pre-push-client.js"), runtime = join(root, "assets", "Code.exe"), descriptor = join(root, "profile", "endpoint.json");
+    const workerBytes = Buffer.from("// Synthetic prepush worker, never executed.\n"), runtimeBytes = Buffer.from("MZ_SYNTHETIC_F26B_RUNTIME_NEVER_EXECUTED");
+    await writeFile(worker, workerBytes, { flag: "wx" }); await writeFile(runtime, runtimeBytes, { flag: "wx" });
+    const key = generateKeyPairSync("ed25519").privateKey, generation = randomUUID(), session = randomUUID();
+    const publicKey = (createPublicKey(key).export({ format: "der", type: "spki" }) as Buffer).toString("base64");
+    const pin: HookClientPin = { version: 1, root, generation, publicKey, worker, workerSha256: digest(workerBytes), runtime,
+        runtimeSha256: digest(runtimeBytes), descriptor, systemRoot: join(root, "synthetic-windows") };
+    const signedDescriptor = (patch: Partial<HookDescriptor> = {}, signer = key) => {
+        const raw = signHookDescriptor({ version: 1, root, generation, session, endpoint: "http://127.0.0.1:43127/pre-push",
+            workerSha256: pin.workerSha256, runtimeSha256: pin.runtimeSha256, ...patch }, signer); assert(raw); return raw;
+    };
+    await writeFile(descriptor, signedDescriptor(), { flag: "wx" });
+    const requests: Context[] = [];
+    function context(endpoint: string, raw: Buffer, deadline: number, transcript = TRANSCRIPT): Context {
+        const request = parseHookRequest(raw, { generation, session }); assert(request, "Client must send canonical bound push request metadata.");
+        const identity = pushRootIdentity(root), transcriptSha256 = prePushTranscriptDigest(transcript); assert(identity && transcriptSha256);
+        return { endpoint, request, raw: Buffer.from(raw), deadline, reply(patch = {}, signer = key) {
+            const bytes = signHookDecision({ version: 1, root, generation, session, nonce: request.nonce, status: "ALLOW",
+                transcriptSha256, rootIdentity: identity, ...patch }, signer); assert(bytes); return bytes;
+        } };
+    }
+    return { root, worker, runtime, descriptor, key, generation, session, pin, requests, signedDescriptor, context,
+        rawPin: () => Buffer.from(JSON.stringify(pin)),
+        run(settings: Settings = {}) {
+            const transcript = settings.transcript ?? TRANSCRIPT;
+            return runPrePushClient(settings.pin ?? Buffer.from(JSON.stringify(pin)), transcript, {
+                runtime: settings.runtime ?? runtime, worker: settings.worker ?? worker, now: settings.now ?? (() => 1000), deadline: settings.deadline,
+                request: async (endpoint, raw, deadline) => { const value = context(endpoint, raw, deadline, transcript); requests.push(value);
+                    return settings.request ? settings.request(value) : value.reply(); }
+            });
+        } };
+}
+type Fixture = Awaited<ReturnType<typeof fixture>>;
+async function unavailable(f: Fixture, settings: Settings = {}) { assert.equal(await f.run(settings), "UNAVAILABLE"); }
+async function replaceIdentical(file: string) {
+    const before = await lstat(file), bytes = await readFile(file), incoming = file + ".incoming-" + randomUUID();
+    await writeFile(file + ".retained-" + randomUUID(), bytes, { flag: "wx" }); await writeFile(incoming, bytes, { flag: "wx" }); await rename(incoming, file);
+    assert.notEqual((await lstat(file)).ino, before.ino, "Identical replacement must change physical file identity.");
+}
+async function transportFixture(t: TestContext, response?: (context: Context, req: IncomingMessage, res: ServerResponse) => void) {
+    const f = await fixture(), paths: string[] = [];
+    const server = createServer({ maxHeaderSize: 4096 }, (req, res) => {
+        paths.push(req.url ?? ""); const chunks: Buffer[] = [];
+        req.on("data", chunk => chunks.push(Buffer.from(chunk))); req.once("end", () => {
+            const context = f.context("http://127.0.0.1:1/pre-push", Buffer.concat(chunks), performance.now() + 60000);
+            if (response) { response(context, req, res); return; }
+            const bytes = context.reply(); res.writeHead(200, { "Content-Type": "application/json", "Content-Length": String(bytes.length), "Connection": "close" }); res.end(bytes);
+        });
+    });
+    server.on("clientError", (_error, socket) => socket.end());
+    await new Promise<void>((resolve, reject) => { server.once("error", reject); server.listen(0, "127.0.0.1", resolve); });
+    t.after(async () => { await new Promise<void>(resolve => server.close(() => resolve())); });
+    const address = server.address(); assert(address && typeof address === "object" && address.address === "127.0.0.1");
+    await writeFile(f.descriptor, f.signedDescriptor({ endpoint: "http://127.0.0.1:" + address.port + "/pre-push" }));
+    return { ...f, paths, actual: () => runPrePushClient(f.rawPin(), TRANSCRIPT, { runtime: f.runtime, worker: f.worker }) };
+}
+
+test("F26b client actual numeric-loopback transport uses the signed pre-push route", options, async t => {
+    const f = await transportFixture(t); assert.equal(await f.actual(), "ALLOW"); assert.deepEqual(f.paths, ["/pre-push"]);
+});
+test("F26b client unchanged genuine artifacts and signed exact transcript remain useful", options, async () => {
+    const f = await fixture(), pin = f.rawPin(), raw = Buffer.from(TRANSCRIPT), before = new Map<string, Buffer>();
+    for (const file of [f.worker, f.runtime, f.descriptor]) before.set(file, await readFile(file));
+    assert(parseHookClientPin(pin)); assert.equal(await f.run({ pin, transcript: raw }), "ALLOW");
+    assert(pin.equals(f.rawPin()) && raw.equals(TRANSCRIPT)); assert.equal(f.requests.length, 1);
+    assert.equal(f.requests[0].endpoint, "http://127.0.0.1:43127/pre-push"); assert(f.requests[0].deadline > 1000 && f.requests[0].deadline <= 61000);
+    for (const [file, bytes] of before) assert((await readFile(file)).equals(bytes));
+});
+test("F26b client exact empty and deletion transcripts are preserved rather than invented", options, async () => {
+    for (const transcript of [Buffer.alloc(0), Buffer.from("(delete) " + "0".repeat(40) + " refs/heads/main " + "2".repeat(40) + "\n")]) {
+        const f = await fixture(); assert.equal(await f.run({ transcript }), "ALLOW");
+        assert.equal(f.requests[0].request.transcript, transcript.toString("base64url"));
+    }
+});
+test("F26b client malformed or oversized transcripts refuse before requests", options, async () => {
+    const f = await fixture();
+    for (const transcript of [Buffer.from("bad\n"), Buffer.from(TRANSCRIPT.toString().trimEnd()), Buffer.alloc(32769, 65), Buffer.from([0xff]), Buffer.concat([TRANSCRIPT, TRANSCRIPT])]) await unavailable(f, { transcript });
+    assert.equal(f.requests.length, 0);
+});
+test("F26b client nonce freshness and request privacy exclude worktree and ambient bytes", options, async () => {
+    const f = await fixture(); await writeFile(join(f.root, "private-worktree.txt"), PRIVATE, { flag: "wx" });
+    assert.equal(await f.run(), "ALLOW"); assert.equal(await f.run(), "ALLOW");
+    assert.notEqual(f.requests[0].request.nonce, f.requests[1].request.nonce);
+    for (const request of f.requests) {
+        assert.equal(Object.keys(request.request).sort().join(","), "generation,nonce,session,transcript,version");
+        assert(!request.raw.includes(Buffer.from(PRIVATE)) && !request.raw.includes(Buffer.from("private-worktree.txt")) && !request.raw.includes(Buffer.from("NODE_OPTIONS")));
+    }
+});
+test("F26b client malformed duplicate noncanonical and over-cap pins admit no transport", options, async () => {
+    const f = await fixture(), raw = f.rawPin();
+    for (const pin of [Buffer.from("{}"), Buffer.from(" " + raw), Buffer.from(raw.toString().replace('"version":1', '"version":1,"version":1')), Buffer.from([0xef, 0xbb, 0xbf, ...raw]), Buffer.alloc(12289, 32)]) await unavailable(f, { pin });
+    for (const patch of [{ version: 2 }, { worker: "relative" }, { descriptor: f.descriptor + ":stream" }, { workerSha256: "0".repeat(64) }, { runtimeSha256: "0".repeat(64) }, { publicKey: "invalid" }, { extra: true }])
+        await unavailable(f, { pin: Buffer.from(JSON.stringify({ ...f.pin, ...patch })) });
+    assert.equal(f.requests.length, 0);
+});
+test("F26b client matching sibling hashes cannot replace exact invocation paths", options, async () => {
+    const f = await fixture(), sibling = join(f.root, "assets", "sibling.js"); await writeFile(sibling, await readFile(f.worker), { flag: "wx" });
+    await unavailable(f, { worker: sibling }); await unavailable(f, { runtime: sibling }); assert.equal(f.requests.length, 0);
+});
+test("F26b client missing or tampered initial artifacts refuse before transport", options, async () => {
+    for (const kind of ["runtime", "worker", "descriptor"] as const) { const f = await fixture(); await rename(f[kind], f[kind] + ".retained"); await unavailable(f); assert.equal(f.requests.length, 0); }
+    const f = await fixture(); await writeFile(f.worker + ".before", await readFile(f.worker), { flag: "wx" }); await writeFile(f.worker, PRIVATE); await unavailable(f); assert.equal(f.requests.length, 0);
+});
+test("F26b client descriptor signature root generation and artifacts bind before request", options, async () => {
+    for (const patch of [{ root: "D:\\SyntheticForeignRoot" }, { generation: randomUUID() }, { workerSha256: "c".repeat(64) }, { runtimeSha256: "d".repeat(64) }]) {
+        const f = await fixture(); await writeFile(f.descriptor, f.signedDescriptor(patch)); await unavailable(f); assert.equal(f.requests.length, 0);
+    }
+    const f = await fixture(); await writeFile(f.descriptor, f.signedDescriptor({}, generateKeyPairSync("ed25519").privateKey)); await unavailable(f); assert.equal(f.requests.length, 0);
+});
+test("F26b client descriptor malformed framing or forged nonloopback endpoint admits no request", options, async () => {
+    for (const kind of ["malformed", "overcap", "forged"] as const) {
+        const f = await fixture(); let raw = kind === "malformed" ? Buffer.from("{") : Buffer.alloc(8193, 32);
+        if (kind === "forged") { const envelope = JSON.parse((await readFile(f.descriptor)).toString()); envelope.payload.endpoint = "http://example.invalid/pre-push"; raw = Buffer.from(JSON.stringify(envelope)); }
+        await writeFile(f.descriptor, raw); await unavailable(f); assert.equal(f.requests.length, 0);
+    }
+});
+test("F26b client current signed BLOCK remains BLOCK and busy/outage/throws refuse", options, async () => {
+    const f = await fixture(); assert.equal(await f.run({ request: async value => value.reply({ status: "BLOCK" }) }), "BLOCK");
+    for (const status of ["BUSY", "UNAVAILABLE"] as const) await unavailable(f, { request: async value => value.reply({ status }) });
+    await unavailable(f, { request: async () => undefined }); await unavailable(f, { request: async () => { throw Error(PRIVATE); } });
+});
+test("F26b client wrong decision root session nonce generation transcript or root identity refuses", options, async () => {
+    const f = await fixture();
+    for (const status of ["ALLOW", "BLOCK"] as const) for (const patch of [{ root: "D:\\ForeignSyntheticRoot" }, { session: randomUUID() }, { nonce: randomUUID() }, { generation: randomUUID() }, { transcriptSha256: "e".repeat(64) }, { rootIdentity: "f".repeat(64) }])
+        await unavailable(f, { request: async value => value.reply({ status, ...patch }) });
+});
+test("F26b client foreign forged malformed or over-cap decisions cannot authorize", options, async () => {
+    const f = await fixture(); await unavailable(f, { request: async value => value.reply({}, generateKeyPairSync("ed25519").privateKey) });
+    await unavailable(f, { request: async value => { const envelope = JSON.parse(value.reply().toString()); envelope.signature = "A".repeat(86); return Buffer.from(JSON.stringify(envelope)); } });
+    await unavailable(f, { request: async () => Buffer.from("{") }); await unavailable(f, { request: async () => Buffer.alloc(8193, 32) });
+});
+test("F26b client prior valid nonce replay cannot authorize a new invocation", options, async () => {
+    const f = await fixture(); let old: Buffer | undefined;
+    assert.equal(await f.run({ request: async value => old = value.reply() }), "ALLOW");
+    await unavailable(f, { request: async () => old }); assert.notEqual(f.requests[0].request.nonce, f.requests[1].request.nonce);
+});
+test("F26b client byte-identical descriptor worker or runtime replacement during await refuses", options, async () => {
+    for (const kind of ["runtime", "worker", "descriptor"] as const) {
+        const f = await fixture(); await unavailable(f, { request: async value => { const raw = value.reply(); await replaceIdentical(f[kind]); return raw; } });
+    }
+});
+test("F26b client changed worker runtime or descriptor bytes during await refuses", options, async () => {
+    for (const kind of ["runtime", "worker", "descriptor"] as const) {
+        const f = await fixture(); await unavailable(f, { request: async value => { const raw = value.reply(); await writeFile(f[kind] + ".before", await readFile(f[kind]), { flag: "wx" }); await writeFile(f[kind], PRIVATE); return raw; } });
+    }
+});
+test("F26b client physical root replacement with same retained content revokes a held result", options, async () => {
+    const f = await fixture(); await unavailable(f, { request: async value => {
+        const raw = value.reply(), before = f.root + ".retained-" + randomUUID(); await rename(f.root, before); await mkdir(f.root);
+        for (const name of ["assets", "profile", "synthetic-windows"]) await mkdir(join(f.root, name));
+        for (const file of [f.worker, f.runtime, f.descriptor]) await writeFile(file, await readFile(join(before, file.slice(f.root.length + 1))), { flag: "wx" });
+        return raw;
+    } });
+});
+test("F26b client monotonic whole-operation clock expiry rollback and thrown clocks refuse", options, async () => {
+    const f = await fixture(); for (const now of [() => NaN, () => Infinity, () => { throw Error(PRIVATE); }]) await unavailable(f, { now });
+    let current = 1000; await unavailable(f, { now: () => current, request: async value => { current = 61000; return value.reply(); } });
+    current = 1000; await unavailable(f, { now: () => current, request: async value => { current = 999; return value.reply(); } });
+});
+test("F26b client inherited total deadline rejects expired and nonfinite bounds before transport", options, async () => {
+    const f = await fixture();
+    for (const deadline of [NaN, Infinity, -Infinity, 1000, 999, -1]) await unavailable(f, { deadline });
+    assert.equal(f.requests.length, 0, "Invalid or exhausted stdin-owner budget cannot restart a fresh request deadline.");
+});
+test("F26b client inherited deadline shortens whole-operation authority and cannot extend sixty seconds", options, async () => {
+    const f = await fixture(); let current = 1000;
+    assert.equal(await f.run({ now: () => current, deadline: 1500, request: async value => { assert.equal(value.deadline, 1500); current = 1499; return value.reply(); } }), "ALLOW");
+    current = 1000; await unavailable(f, { now: () => current, deadline: 1500, request: async value => { current = 1500; return value.reply(); } });
+    assert.equal(await f.run({ deadline: 999999, request: async value => { assert.equal(value.deadline, 61000); return value.reply(); } }), "ALLOW");
+});
+test("F26b client actual transport rejects wrong status content type duplicate and chunked response framing", options, async t => {
+    for (const kind of ["status", "type", "duplicate", "chunked"] as const) {
+        const f = await transportFixture(t, (value, _req, res) => {
+            const raw = value.reply();
+            if (kind === "duplicate") { res.writeHead(200, ["Content-Type", "application/json", "Content-Type", "application/json", "Content-Length", String(raw.length), "Connection", "close"]); }
+            else res.writeHead(kind === "status" ? 503 : 200, { "Content-Type": kind === "type" ? "text/plain" : "application/json",
+                ...(kind === "chunked" ? {} : { "Content-Length": String(raw.length) }), "Connection": "close" });
+            res.end(raw);
+        }); assert.equal(await f.actual(), "UNAVAILABLE"); assert.deepEqual(f.paths, ["/pre-push"]);
+    }
+});

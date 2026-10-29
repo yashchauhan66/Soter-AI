@@ -1,0 +1,3 @@
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const file=path.resolve(__dirname,'../../../../packages/vscode-extension/src/__tests__/prePushHookTransaction.test.ts');let s=fs.readFileSync(file,'utf8');fs.writeFileSync(path.join(__dirname,'prePushHookTransaction.before-replay-02.test.ts.txt'),s,{flag:'wx'});
+for(const[a,b]of [['subarray(-ORIGINAL.length + 10).equals(ORIGINAL.subarray(10))','subarray(-(ORIGINAL.length - 10 + 2), -2).equals(ORIGINAL.subarray(10))'],['endsWith("exit 0\\n")','endsWith("exit 0\\n)\\n")'],['endsWith(ORIGINAL.subarray(10).toString())','endsWith(ORIGINAL.subarray(10).toString() + ")\\n")']]){assert.equal(s.split(a).length,2);s=s.replace(a,b);}fs.writeFileSync(file,s);

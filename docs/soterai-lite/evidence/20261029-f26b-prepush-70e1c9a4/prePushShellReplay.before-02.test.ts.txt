@@ -1,0 +1,32 @@
+import assert from "node:assert/strict";
+import { spawn } from "node:child_process";
+import { createHash, generateKeyPairSync } from "node:crypto";
+import { mkdtemp, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import { test } from "node:test";
+import { buildPrePushHookText } from "../history-hooks/PrePushHookText";
+const opt={skip:process.platform!=="win32",timeout:15000},key=generateKeyPairSync("ed25519").publicKey.export({format:"der",type:"spki"}).toString("base64");
+const input=Buffer.from(`HEAD ${"1".repeat(40)} refs/heads/main ${"0".repeat(40)}\n`);
+const body="command printf '%s\\n' \"$1|$2|${F26B_ORIGINAL_ENV-}|${SOTERAI_PRE_PUSH_REPLAY-absent}|${SOTERAI_PRE_PUSH_STATUS-absent}\"\n'C:/Program Files/Git/usr/bin/cat.exe'\nexit 7\n";
+const sha=(b:Buffer)=>createHash("sha256").update(b).digest("hex");
+async function run(raw:Buffer,mode:"allow"|"block"|"bad-sentinel"="allow",extra:NodeJS.ProcessEnv={},original="#!/bin/sh\n"+body){
+ const root=await mkdtemp(join(tmpdir(),"soter-f26b-replay-")),worker=join(root,"synthetic-worker.cjs"),script=join(root,"pre-push");
+ const source="const chunks=[];let bytes=0;process.stdin.on('data',b=>{bytes+=b.length;if(bytes<=32768)chunks.push(b);});process.stdin.on('end',()=>{if(bytes>32768||process.env.F26B_ORIGINAL_ENV||process.argv.slice(2).join(' ')!=='--pre-push --pin '+process.argv[5]+' --replay'){process.exitCode=1;return;}const mode="+JSON.stringify(mode)+";if(mode==='block'){process.exitCode=1;return;}process.stdout.write(Buffer.concat(chunks));if(mode!=='bad-sentinel')process.stdout.write('.');});\n";
+ await writeFile(worker,source,{flag:"wx"});
+ const pin=Buffer.from(JSON.stringify({version:1,root,generation:"a1234567-1234-4567-8123-123456789abc",publicKey:key,worker,workerSha256:sha(Buffer.from(source)),runtime:process.execPath,runtimeSha256:"b".repeat(64),descriptor:join(root,"endpoint.json"),systemRoot:process.env.SystemRoot}));
+ const text=buildPrePushHookText(Buffer.from(original),pin);assert(text);await writeFile(script,text,{flag:"wx"});
+ const env:NodeJS.ProcessEnv={SystemRoot:process.env.SystemRoot,WINDIR:process.env.WINDIR,COMSPEC:process.env.COMSPEC,TEMP:root,TMP:root,HOME:root,USERPROFILE:root,F26B_ORIGINAL_ENV:"TEST_ONLY_F26B_OWNER_ENV",...extra};
+ const child=spawn("C:\\Program Files\\Git\\usr\\bin\\sh.exe",[script,"synthetic-remote","synthetic-local-target"],{cwd:root,env,shell:false,windowsHide:true,stdio:["pipe","pipe","pipe"]});
+ child.kill=()=>{throw Error("No signals are authorized");};let out:Buffer[]=[],err:Buffer[]=[],outBytes=0,errBytes=0,outEOF=false,errEOF=false,overflow=false;
+ child.stdin.on("error",()=>{});child.stdout.on("data",b=>{outBytes+=b.length;if(outBytes<=131072)out.push(Buffer.from(b));else overflow=true;});child.stderr.on("data",b=>{errBytes+=b.length;if(errBytes<=8192)err.push(Buffer.from(b));else overflow=true;});child.stdout.on("end",()=>outEOF=true);child.stderr.on("end",()=>errEOF=true);
+ const closed=new Promise<{code:number|null;signal:NodeJS.Signals|null}>((resolve,reject)=>{child.once("error",reject);child.once("close",(code,signal)=>resolve({code,signal}));});child.stdin.end(raw);const close=await closed;
+ assert.equal(close.signal,null);assert(outEOF&&errEOF&&!overflow);return{...close,stdout:Buffer.concat(out),stderr:Buffer.concat(err),root};
+}
+test("F26b real Git shell preserves exact transcript, original args/env and original exit code",opt,async()=>{const r=await run(input);assert.equal(r.code,7);assert.equal(r.stdout.toString(),"synthetic-remote|synthetic-local-target|TEST_ONLY_F26B_OWNER_ENV|absent|absent\n"+input.toString());assert.equal(r.stderr.length,0);});
+test("F26b real shell preserves empty stdin through the bounded worker sentinel",opt,async()=>{const r=await run(Buffer.alloc(0));assert.equal(r.code,7);assert.equal(r.stdout.toString(),"synthetic-remote|synthetic-local-target|TEST_ONLY_F26B_OWNER_ENV|absent|absent\n");});
+test("F26b worker refusal prevents original hook body execution",opt,async()=>{const r=await run(input,"block");assert.equal(r.code,1);assert.equal(r.stdout.length,0);assert(r.stderr.includes(Buffer.from("SoterAI: Push withheld.")));});
+test("F26b missing replay sentinel prevents original hook body execution",opt,async()=>{const r=await run(input,"bad-sentinel");assert.equal(r.code,1);assert.equal(r.stdout.length,0);});
+test("F26b wrapper refuses caller collisions without replacing owner variables",opt,async()=>{for(const key of ["SOTERAI_PRE_PUSH_REPLAY","SOTERAI_PRE_PUSH_STATUS"]){const r=await run(input,"allow",{[key]:"TEST_ONLY_EXISTING_OWNER_VALUE"});assert.equal(r.code,1);assert.equal(r.stdout.length,0);}});
+test("F26b exact original newlines survive command substitution",opt,async()=>{const data=Buffer.concat([input,Buffer.from("\n\n")]),r=await run(data);assert.equal(r.code,7);assert(r.stdout.subarray(-data.length).equals(data));});
+test("F26b finite replay worker can refuse its byte budget without executing an original",opt,async()=>{const r=await run(Buffer.alloc(32769,65));assert.equal(r.code,1);assert.equal(r.stdout.length,0);});

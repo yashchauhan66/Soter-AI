@@ -1,0 +1,81 @@
+{
+  "status": "FOCUSED_43_PASS_REAL_READONLY_HISTORY_AND_FAKE_LIFECYCLE_NOT_FEATURE_ACCEPTANCE",
+  "observedAt": "2026-10-29T08:00:35.180Z",
+  "fakeLifecycleTests": 29,
+  "actualHistoryTests": 14,
+  "actualScans": 18,
+  "actualChildren": 64,
+  "actualChildOwnership": "ALL_ACTUAL_CLOSE_BOTH_EOF_NO_SIGNALS",
+  "operationCounts": {
+    "version": 18,
+    "commits": 16,
+    "tree": 21,
+    "batch": 9
+  },
+  "outcomes": {
+    "ALLOW": 4,
+    "BLOCK": 5,
+    "UNAVAILABLE": 9,
+    "STOP_UNCONFIRMED": 0
+  },
+  "sources": [
+    {
+      "path": "packages/vscode-extension/src/__tests__/prePushGitProcess.test.ts",
+      "bytes": 24253,
+      "sha256": "922194b066918df767b5e65d0722675e866b866ee722da5dca0b6629a00ac057"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/prePushActualHistory.test.ts",
+      "bytes": 16229,
+      "sha256": "cd9ead28e8f47abb8292ecf2089ab478d927c2eed8d2efc4a1a9f46ce9c67746"
+    }
+  ],
+  "testedProduction": [
+    {
+      "path": "packages/vscode-extension/src/history-hooks/CheckedPushRefs.ts",
+      "bytes": 2064,
+      "sha256": "c2fdbccfab1838d52719e2182a7c95a667dbf0aab19e5325720baab10308b80e"
+    },
+    {
+      "path": "packages/vscode-extension/src/history-hooks/PushRootSnapshot.ts",
+      "bytes": 1493,
+      "sha256": "fceb2a87b805c76d680095c57d28f0d571cb049ac1b659b399598c8a26174f9d"
+    },
+    {
+      "path": "packages/vscode-extension/src/history-hooks/PrePushGitProcess.ts",
+      "bytes": 9560,
+      "sha256": "11475ce96bdc76a3c98a38eb16df41be2b611a39d3a29007bf9b236e5616b093"
+    },
+    {
+      "path": "packages/vscode-extension/src/history-hooks/PrePushScan.ts",
+      "bytes": 9388,
+      "sha256": "167c41a122796b6bf9237089e837800407fe43685c573e4f5ca32bec76efd2c2"
+    }
+  ],
+  "outputHashes": {
+    "fake": "c202fe24e1ea5d3861ca99092b10835d29cfd74cdda738484e42e1f154379dc1",
+    "actual": "cdcc89212507aa8314d2369ea964768813dc4ee73e862dc9fe453f4737a9c2ce"
+  },
+  "baselines": {
+    "fake01": "SANDBOX_WORKER_SPAWN_EPERM_NO_TESTS_EXECUTED",
+    "actual01": "14_TEST_FAILURES_PROCESS_ENV_EXOTIC_OBJECT_VS_PLAIN_SNAPSHOT_ASSERTION; PRIVACY_DIAGNOSTIC_BLOCKS_REDACTED; NO_BEHAVIORAL_PASS_INFERRED",
+    "redaction": {
+      "status": "PRIVACY_REDACTED_ORIGINAL_TEST_FAILURE_UNREGRADED",
+      "originalSha256": "9447ffb9ae16f8da17023f4dafb062a44a31188ff54ce7c5987b7b9b19227ebc",
+      "originalBytes": 39249,
+      "redactedSha256": "d796738afa70f0c091857864cf42fba2761846895a59a11de591eef13189f9e4",
+      "redactedBytes": 9793,
+      "diagnosticBlocksRedacted": 14,
+      "reason": "Node assertion formatter emitted ambient environment while comparing process.env exotic object to plain spread. No raw environment is retained after redaction.",
+      "receiptNote": "Original canonical result retains original output hash; this receipt explicitly records the privacy edit. No behavioral PASS or hidden failure.",
+      "observedAt": "2026-10-29T07:57:57.271Z"
+    }
+  },
+  "seams": {
+    "fakeLifecycle": "Manual synthetic metadata with genuine checked capability; all spawn/child lifecycle events are fake",
+    "actualHistory": "Manually authored genuine loose Git objects; real installed Git; spawn observer adds assertions/ownership observations only; no response substitution"
+  },
+  "scope": "Synthetic D: roots retained; exact installed Git hash; fixed argv and minimal environment; no worktree/index scan, push, network, native09, Code, deletion or signals",
+  "limitations": "Focused tests do not establish signed endpoint/client/controller/native VSIX route, real owner push, restore, packaging, full-suite/affected acceptance, or feature DONE",
+  "signalsRequested": 0
+}

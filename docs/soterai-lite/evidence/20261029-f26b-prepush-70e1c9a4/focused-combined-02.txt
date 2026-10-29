@@ -1,0 +1,1678 @@
+﻿TAP version 13
+# Subtest: F26b hook file reads default and custom absence without creating missing parents
+ok 1 - F26b hook file reads default and custom absence without creating missing parents
+  ---
+  duration_ms: 96.4895
+  type: 'test'
+  ...
+# Subtest: F26b hook file private read returns frozen metadata actual mode and independently copied binary bytes
+ok 2 - F26b hook file private read returns frozen metadata actual mode and independently copied binary bytes
+  ---
+  duration_ms: 64.2244
+  type: 'test'
+  ...
+# Subtest: F26b hook file brand rejects clones accessors and proxies without reading caller properties
+ok 3 - F26b hook file brand rejects clones accessors and proxies without reading caller properties
+  ---
+  duration_ms: 26.5498
+  type: 'test'
+  ...
+# Subtest: F26b hook file authorized create replace and exact undo affect only the selected leaf
+ok 4 - F26b hook file authorized create replace and exact undo affect only the selected leaf
+  ---
+  duration_ms: 717.0113
+  type: 'test'
+  ...
+# Subtest: F26b hook file preserves existing private bytes and observed mode through reviewed replace and restore
+ok 5 - F26b hook file preserves existing private bytes and observed mode through reviewed replace and restore
+  ---
+  duration_ms: 323.8898
+  type: 'test'
+  ...
+# Subtest: F26b hook file foreign cloned or proxy snapshots refuse with zero filesystem I/O
+ok 6 - F26b hook file foreign cloned or proxy snapshots refuse with zero filesystem I/O
+  ---
+  duration_ms: 40.1449
+  type: 'test'
+  ...
+# Subtest: F26b hook file stale byte mode and equal-byte atomic replacement snapshots cannot overwrite owner changes
+ok 7 - F26b hook file stale byte mode and equal-byte atomic replacement snapshots cannot overwrite owner changes
+  ---
+  duration_ms: 99.6155
+  type: 'test'
+  ...
+# Subtest: F26b hook file snapshots authorize one CAS and remain stale after original bytes return
+ok 8 - F26b hook file snapshots authorize one CAS and remain stale after original bytes return
+  ---
+  duration_ms: 162.9333
+  type: 'test'
+  ...
+# Subtest: F26b hook file disabled or throwing guard is sticky and never bypassed by later reenable
+ok 9 - F26b hook file disabled or throwing guard is sticky and never bypassed by later reenable
+  ---
+  duration_ms: 28.6355
+  type: 'test'
+  ...
+# Subtest: F26b hook file captured root or git ancestor replacement withdraws the old capability
+ok 10 - F26b hook file captured root or git ancestor replacement withdraws the old capability
+  ---
+  duration_ms: 46.9647
+  type: 'test'
+  ...
+# Subtest: F26b hook file refuses parent junctions aliased roots and hardlinked leaves without touching targets
+ok 11 - F26b hook file refuses parent junctions aliased roots and hardlinked leaves without touching targets
+  ---
+  duration_ms: 38.277
+  type: 'test'
+  ...
+# Subtest: F26b hook file admits exact98304 binary bytes and refuses invalid next buffers and modes
+ok 12 - F26b hook file admits exact98304 binary bytes and refuses invalid next buffers and modes
+  ---
+  duration_ms: 88.0211
+  type: 'test'
+  ...
+# Subtest: F26b hook file rejects invalid roots and noncanonical selectors without coercion or fallback
+ok 13 - F26b hook file rejects invalid roots and noncanonical selectors without coercion or fallback
+  ---
+  duration_ms: 15.9386
+  type: 'test'
+  ...
+# Subtest: F26b hook file staged CAS preserves unknown edits cleans only owned staging and reports late withdrawal honestly
+ok 14 - F26b hook file staged CAS preserves unknown edits cleans only owned staging and reports late withdrawal honestly
+  ---
+  duration_ms: 207.3954
+  type: 'test'
+  ...
+# Subtest: F26b pre-push capability and snapshot cannot adopt the separate pre-commit leaf
+ok 15 - F26b pre-push capability and snapshot cannot adopt the separate pre-commit leaf
+  ---
+  duration_ms: 54.2449
+  type: 'test'
+  ...
+# Subtest: F26b actual Git completely scans a public branch and releases only its held ALLOW
+ok 16 - F26b actual Git completely scans a public branch and releases only its held ALLOW
+  ---
+  duration_ms: 2081.2133
+  type: 'test'
+  ...
+# {"fixture":"D:\\\\SoterAI-Lite-test-profiles\\\\f03-unit-temp\\\\soter-f26b-real-history-WILpon","status":"ALLOW","operations":["version","commits","tree","batch"],"children":[{"operation":"version","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"commits","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"tree","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"batch","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0}],"scope":"actual fixed READ_ONLY Git; manual synthetic objects; no push; no response seams"}
+# Subtest: F26b actual Git blocks a secret deleted from the proposed tip
+ok 17 - F26b actual Git blocks a secret deleted from the proposed tip
+  ---
+  duration_ms: 1423.0298
+  type: 'test'
+  ...
+# {"fixture":"D:\\\\SoterAI-Lite-test-profiles\\\\f03-unit-temp\\\\soter-f26b-real-history-L3tXw6","status":"BLOCK","operations":["version","commits","tree","tree","batch"],"children":[{"operation":"version","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"commits","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"tree","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"tree","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"batch","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0}],"scope":"actual fixed READ_ONLY Git; manual synthetic objects; no push; no response seams"}
+# Subtest: F26b actual Git retains the removed secret under rename and rewritten tip content
+ok 18 - F26b actual Git retains the removed secret under rename and rewritten tip content
+  ---
+  duration_ms: 1800.3057
+  type: 'test'
+  ...
+# {"fixture":"D:\\\\SoterAI-Lite-test-profiles\\\\f03-unit-temp\\\\soter-f26b-real-history-9z9I0I","status":"BLOCK","operations":["version","commits","tree","tree","tree","batch"],"children":[{"operation":"version","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"commits","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"tree","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"tree","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"tree","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"batch","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0}],"scope":"actual fixed READ_ONLY Git; manual synthetic objects; no push; no response seams"}
+# Subtest: F26b actual Git traverses both merge parents including a removed side-branch secret
+ok 19 - F26b actual Git traverses both merge parents including a removed side-branch secret
+  ---
+  duration_ms: 1963.8003
+  type: 'test'
+  ...
+# {"fixture":"D:\\\\SoterAI-Lite-test-profiles\\\\f03-unit-temp\\\\soter-f26b-real-history-d6h6Hr","status":"BLOCK","operations":["version","commits","tree","tree","tree","tree","batch"],"children":[{"operation":"version","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"commits","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"tree","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"tree","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"tree","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"tree","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"batch","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0}],"scope":"actual fixed READ_ONLY Git; manual synthetic objects; no push; no response seams"}
+# Subtest: F26b actual Git does not trust the remote tip to exclude already remote secret history
+ok 20 - F26b actual Git does not trust the remote tip to exclude already remote secret history
+  ---
+  duration_ms: 1301.1586
+  type: 'test'
+  ...
+# {"fixture":"D:\\\\SoterAI-Lite-test-profiles\\\\f03-unit-temp\\\\soter-f26b-real-history-Sc8vwX","status":"BLOCK","operations":["version","commits","tree","tree","batch"],"children":[{"operation":"version","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"commits","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"tree","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"tree","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"batch","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0}],"scope":"actual fixed READ_ONLY Git; manual synthetic objects; no push; no response seams"}
+# Subtest: F26b actual Git includes every proposed branch tip and withholds a secret on the second
+ok 21 - F26b actual Git includes every proposed branch tip and withholds a secret on the second
+  ---
+  duration_ms: 1356.5735
+  type: 'test'
+  ...
+# {"fixture":"D:\\\\SoterAI-Lite-test-profiles\\\\f03-unit-temp\\\\soter-f26b-real-history-cY6ak8","status":"BLOCK","operations":["version","commits","tree","tree","batch"],"children":[{"operation":"version","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"commits","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"tree","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"tree","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"batch","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0}],"scope":"actual fixed READ_ONLY Git; manual synthetic objects; no push; no response seams"}
+# Subtest: F26b actual Git33-commit sentinel withholds before any tree or content read
+ok 22 - F26b actual Git33-commit sentinel withholds before any tree or content read
+  ---
+  duration_ms: 1328.0927
+  type: 'test'
+  ...
+# {"fixture":"D:\\\\SoterAI-Lite-test-profiles\\\\f03-unit-temp\\\\soter-f26b-real-history-Hgmlku","status":"UNAVAILABLE","operations":["version","commits"],"children":[{"operation":"version","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"commits","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0}],"scope":"actual fixed READ_ONLY Git; manual synthetic objects; no push; no response seams"}
+# Subtest: F26b actual Git oversized blob withholds before a batch content read
+ok 23 - F26b actual Git oversized blob withholds before a batch content read
+  ---
+  duration_ms: 1674.1113
+  type: 'test'
+  ...
+# {"fixture":"D:\\\\SoterAI-Lite-test-profiles\\\\f03-unit-temp\\\\soter-f26b-real-history-h6SYwu","status":"UNAVAILABLE","operations":["version","commits","tree"],"children":[{"operation":"version","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"commits","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"tree","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0}],"scope":"actual fixed READ_ONLY Git; manual synthetic objects; no push; no response seams"}
+# Subtest: F26b actual Git unknown extension or binary makes the whole history unavailable
+ok 24 - F26b actual Git unknown extension or binary makes the whole history unavailable
+  ---
+  duration_ms: 3384.8615
+  type: 'test'
+  ...
+# {"fixture":"D:\\\\SoterAI-Lite-test-profiles\\\\f03-unit-temp\\\\soter-f26b-real-history-qjecKC","status":"UNAVAILABLE","operations":["version","commits","tree","batch"],"children":[{"operation":"version","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"commits","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"tree","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"batch","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0}],"scope":"actual fixed READ_ONLY Git; manual synthetic objects; no push; no response seams"}
+# {"fixture":"D:\\\\SoterAI-Lite-test-profiles\\\\f03-unit-temp\\\\soter-f26b-real-history-hyqKMF","status":"UNAVAILABLE","operations":["version","commits","tree","batch"],"children":[{"operation":"version","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"commits","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"tree","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"batch","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0}],"scope":"actual fixed READ_ONLY Git; manual synthetic objects; no push; no response seams"}
+# Subtest: F26b actual Git symlink and gitlink modes cannot be silently excluded
+ok 25 - F26b actual Git symlink and gitlink modes cannot be silently excluded
+  ---
+  duration_ms: 2518.0006
+  type: 'test'
+  ...
+# {"fixture":"D:\\\\SoterAI-Lite-test-profiles\\\\f03-unit-temp\\\\soter-f26b-real-history-1RPPAY","status":"UNAVAILABLE","operations":["version","commits","tree"],"children":[{"operation":"version","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"commits","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"tree","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0}],"scope":"actual fixed READ_ONLY Git; manual synthetic objects; no push; no response seams"}
+# {"fixture":"D:\\\\SoterAI-Lite-test-profiles\\\\f03-unit-temp\\\\soter-f26b-real-history-xvQgF5","status":"UNAVAILABLE","operations":["version","commits","tree"],"children":[{"operation":"version","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"commits","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"tree","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0}],"scope":"actual fixed READ_ONLY Git; manual synthetic objects; no push; no response seams"}
+# Subtest: F26b actual Git missing and malformed commit objects withhold without a clean-prefix result
+ok 26 - F26b actual Git missing and malformed commit objects withhold without a clean-prefix result
+  ---
+  duration_ms: 852.0134
+  type: 'test'
+  ...
+# {"fixture":"D:\\\\SoterAI-Lite-test-profiles\\\\f03-unit-temp\\\\soter-f26b-real-history-S0Y02D","status":"UNAVAILABLE","operations":["version","commits"],"children":[{"operation":"version","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"commits","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":128,"signal":null,"signalsRequested":0}],"scope":"actual fixed READ_ONLY Git; manual synthetic objects; no push; no response seams"}
+# {"fixture":"D:\\\\SoterAI-Lite-test-profiles\\\\f03-unit-temp\\\\soter-f26b-real-history-oM7pae","status":"UNAVAILABLE","operations":["version","commits"],"children":[{"operation":"version","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"commits","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":128,"signal":null,"signalsRequested":0}],"scope":"actual fixed READ_ONLY Git; manual synthetic objects; no push; no response seams"}
+# Subtest: F26b actual Git malformed tree pathname withholds before blob content
+ok 27 - F26b actual Git malformed tree pathname withholds before blob content
+  ---
+  duration_ms: 781.5443
+  type: 'test'
+  ...
+# {"fixture":"D:\\\\SoterAI-Lite-test-profiles\\\\f03-unit-temp\\\\soter-f26b-real-history-51qSU9","status":"UNAVAILABLE","operations":["version","commits","tree"],"children":[{"operation":"version","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"commits","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"tree","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0}],"scope":"actual fixed READ_ONLY Git; manual synthetic objects; no push; no response seams"}
+# Subtest: F26b actual Git ignores poisoned ambient selectors and preserves the parent environment
+ok 28 - F26b actual Git ignores poisoned ambient selectors and preserves the parent environment
+  ---
+  duration_ms: 1222.2586
+  type: 'test'
+  ...
+# {"fixture":"D:\\\\SoterAI-Lite-test-profiles\\\\f03-unit-temp\\\\soter-f26b-real-history-Gi28gC","status":"ALLOW","operations":["version","commits","tree","batch"],"children":[{"operation":"version","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"commits","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"tree","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0},{"operation":"batch","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0}],"scope":"actual fixed READ_ONLY Git; manual synthetic objects; no push; no response seams"}
+# Subtest: F26b actual Git empty and deletion-only proposals perform no object traversal
+ok 29 - F26b actual Git empty and deletion-only proposals perform no object traversal
+  ---
+  duration_ms: 500.3954
+  type: 'test'
+  ...
+# {"fixture":"D:\\\\SoterAI-Lite-test-profiles\\\\f03-unit-temp\\\\soter-f26b-real-history-HdOCsk","status":"ALLOW","operations":["version"],"children":[{"operation":"version","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0}],"scope":"actual fixed READ_ONLY Git; manual synthetic objects; no push; no response seams"}
+# {"fixture":"D:\\\\SoterAI-Lite-test-profiles\\\\f03-unit-temp\\\\soter-f26b-real-history-WJSq78","status":"ALLOW","operations":["version"],"children":[{"operation":"version","close":true,"stdoutEOF":true,"stderrEOF":true,"exit":0,"signal":null,"signalsRequested":0}],"scope":"actual fixed READ_ONLY Git; manual synthetic objects; no push; no response seams"}
+# Subtest: F26b client actual numeric-loopback transport uses the signed pre-push route
+ok 30 - F26b client actual numeric-loopback transport uses the signed pre-push route
+  ---
+  duration_ms: 84.4462
+  type: 'test'
+  ...
+# Subtest: F26b client unchanged genuine artifacts and signed exact transcript remain useful
+ok 31 - F26b client unchanged genuine artifacts and signed exact transcript remain useful
+  ---
+  duration_ms: 25.3436
+  type: 'test'
+  ...
+# Subtest: F26b client exact empty and deletion transcripts are preserved rather than invented
+ok 32 - F26b client exact empty and deletion transcripts are preserved rather than invented
+  ---
+  duration_ms: 38.4767
+  type: 'test'
+  ...
+# Subtest: F26b client malformed or oversized transcripts refuse before requests
+ok 33 - F26b client malformed or oversized transcripts refuse before requests
+  ---
+  duration_ms: 9.5553
+  type: 'test'
+  ...
+# Subtest: F26b client nonce freshness and request privacy exclude worktree and ambient bytes
+ok 34 - F26b client nonce freshness and request privacy exclude worktree and ambient bytes
+  ---
+  duration_ms: 42.0583
+  type: 'test'
+  ...
+# Subtest: F26b client malformed duplicate noncanonical and over-cap pins admit no transport
+ok 35 - F26b client malformed duplicate noncanonical and over-cap pins admit no transport
+  ---
+  duration_ms: 18.1133
+  type: 'test'
+  ...
+# Subtest: F26b client matching sibling hashes cannot replace exact invocation paths
+ok 36 - F26b client matching sibling hashes cannot replace exact invocation paths
+  ---
+  duration_ms: 11.049
+  type: 'test'
+  ...
+# Subtest: F26b client missing or tampered initial artifacts refuse before transport
+ok 37 - F26b client missing or tampered initial artifacts refuse before transport
+  ---
+  duration_ms: 45.9876
+  type: 'test'
+  ...
+# Subtest: F26b client descriptor signature root generation and artifacts bind before request
+ok 38 - F26b client descriptor signature root generation and artifacts bind before request
+  ---
+  duration_ms: 83.4107
+  type: 'test'
+  ...
+# Subtest: F26b client descriptor malformed framing or forged nonloopback endpoint admits no request
+ok 39 - F26b client descriptor malformed framing or forged nonloopback endpoint admits no request
+  ---
+  duration_ms: 32.9178
+  type: 'test'
+  ...
+# Subtest: F26b client current signed BLOCK remains BLOCK and busy/outage/throws refuse
+ok 40 - F26b client current signed BLOCK remains BLOCK and busy/outage/throws refuse
+  ---
+  duration_ms: 54.7177
+  type: 'test'
+  ...
+# Subtest: F26b client wrong decision root session nonce generation transcript or root identity refuses
+ok 41 - F26b client wrong decision root session nonce generation transcript or root identity refuses
+  ---
+  duration_ms: 95.9769
+  type: 'test'
+  ...
+# Subtest: F26b client foreign forged malformed or over-cap decisions cannot authorize
+ok 42 - F26b client foreign forged malformed or over-cap decisions cannot authorize
+  ---
+  duration_ms: 40.2249
+  type: 'test'
+  ...
+# Subtest: F26b client prior valid nonce replay cannot authorize a new invocation
+ok 43 - F26b client prior valid nonce replay cannot authorize a new invocation
+  ---
+  duration_ms: 25.3703
+  type: 'test'
+  ...
+# Subtest: F26b client byte-identical descriptor worker or runtime replacement during await refuses
+ok 44 - F26b client byte-identical descriptor worker or runtime replacement during await refuses
+  ---
+  duration_ms: 67.422
+  type: 'test'
+  ...
+# Subtest: F26b client changed worker runtime or descriptor bytes during await refuses
+ok 45 - F26b client changed worker runtime or descriptor bytes during await refuses
+  ---
+  duration_ms: 63.7151
+  type: 'test'
+  ...
+# Subtest: F26b client physical root replacement with same retained content revokes a held result
+ok 46 - F26b client physical root replacement with same retained content revokes a held result
+  ---
+  duration_ms: 25.5692
+  type: 'test'
+  ...
+# Subtest: F26b client monotonic whole-operation clock expiry rollback and thrown clocks refuse
+ok 47 - F26b client monotonic whole-operation clock expiry rollback and thrown clocks refuse
+  ---
+  duration_ms: 21.6492
+  type: 'test'
+  ...
+# Subtest: F26b client inherited total deadline rejects expired and nonfinite bounds before transport
+ok 48 - F26b client inherited total deadline rejects expired and nonfinite bounds before transport
+  ---
+  duration_ms: 8.5886
+  type: 'test'
+  ...
+# Subtest: F26b client inherited deadline shortens whole-operation authority and cannot extend sixty seconds
+ok 49 - F26b client inherited deadline shortens whole-operation authority and cannot extend sixty seconds
+  ---
+  duration_ms: 35.3875
+  type: 'test'
+  ...
+# Subtest: F26b client actual transport rejects wrong status content type duplicate and chunked response framing
+ok 50 - F26b client actual transport rejects wrong status content type duplicate and chunked response framing
+  ---
+  duration_ms: 73.0391
+  type: 'test'
+  ...
+# Subtest: F26b emitted main authorizes exact bounded stdin only through signed actual pre-push transport
+ok 51 - F26b emitted main authorizes exact bounded stdin only through signed actual pre-push transport
+  ---
+  duration_ms: 1204.8667
+  type: 'test'
+  ...
+# Subtest: F26b emitted main preserves empty and delete-only stdin with one final replay sentinel
+ok 52 - F26b emitted main preserves empty and delete-only stdin with one final replay sentinel
+  ---
+  duration_ms: 1314.4675
+  type: 'test'
+  ...
+# Subtest: F26b emitted main rejects malformed oversized incomplete and duplicate transcript before HTTP
+ok 53 - F26b emitted main rejects malformed oversized incomplete and duplicate transcript before HTTP
+  ---
+  duration_ms: 719.9139
+  type: 'test'
+  ...
+# Subtest: F26b emitted main signed refusal busy unavailable or wrong nonce emits no replay bytes
+ok 54 - F26b emitted main signed refusal busy unavailable or wrong nonce emits no replay bytes
+  ---
+  duration_ms: 2472.76
+  type: 'test'
+  ...
+# Subtest: F26b emitted main CLI grammar rejects extra missing reordered and test-override authority
+ok 55 - F26b emitted main CLI grammar rejects extra missing reordered and test-override authority
+  ---
+  duration_ms: 1036.6685
+  type: 'test'
+  ...
+# Subtest: F26b emitted main noncanonical malformed and oversized public pin data emits no output
+ok 56 - F26b emitted main noncanonical malformed and oversized public pin data emits no output
+  ---
+  duration_ms: 481.4362
+  type: 'test'
+  ...
+# Subtest: F26b emitted main waits for actual stdin EOF before authorizing or emitting replay
+ok 57 - F26b emitted main waits for actual stdin EOF before authorizing or emitting replay
+  ---
+  duration_ms: 662.8855
+  type: 'test'
+  ...
+# Subtest: F26b emitted shared main retains the legacy exact four-argument index grammar without pre-push fallback
+ok 58 - F26b emitted shared main retains the legacy exact four-argument index grammar without pre-push fallback
+  ---
+  duration_ms: 462.8277
+  type: 'test'
+  ...
+# Subtest: F26b registration and status are default-off frozen metadata without filesystem keys children or listeners
+ok 59 - F26b registration and status are default-off frozen metadata without filesystem keys children or listeners
+  ---
+  duration_ms: 424.1888
+  type: 'test'
+  ...
+# Subtest: F26b install resume restore ignore every public argument and validate completed result identity
+ok 60 - F26b install resume restore ignore every public argument and validate completed result identity
+  ---
+  duration_ms: 3.5698
+  type: 'test'
+  ...
+# Subtest: F26b completed-looking APPLIED RESUMED RESTORED results are unavailable when current rejects them
+ok 61 - F26b completed-looking APPLIED RESUMED RESTORED results are unavailable when current rejects them
+  ---
+  duration_ms: 3.4599
+  type: 'test'
+  ...
+# Subtest: F26b all mutation commands share one pending lock while status remains side effect free
+ok 62 - F26b all mutation commands share one pending lock while status remains side effect free
+  ---
+  duration_ms: 4.1414
+  type: 'test'
+  ...
+# Subtest: F26b private controller and publication errors produce fixed unavailable results and release the pending lock
+ok 63 - F26b private controller and publication errors produce fixed unavailable results and release the pending lock
+  ---
+  duration_ms: 3.3562
+  type: 'test'
+  ...
+# Subtest: F26b flag-off install and resume refuse caller overrides while explicit reviewed restore remains callable
+ok 64 - F26b flag-off install and resume refuse caller overrides while explicit reviewed restore remains callable
+  ---
+  duration_ms: 2.8531
+  type: 'test'
+  ...
+# Subtest: F26b disposed registrations suppress late success unregister every command and refuse retained handlers
+ok 65 - F26b disposed registrations suppress late success unregister every command and refuse retained handlers
+  ---
+  duration_ms: 3.1348
+  type: 'test'
+  ...
+# Subtest: F26b initial withdrawn or disposed controller cannot authenticate forged copied or cancelled lifecycle results
+ok 66 - F26b initial withdrawn or disposed controller cannot authenticate forged copied or cancelled lifecycle results
+  ---
+  duration_ms: 2.3981
+  type: 'test'
+  ...
+# Subtest: F26b actual configuration and workspace listeners withdraw controller authority without resource I/O
+ok 67 - F26b actual configuration and workspace listeners withdraw controller authority without resource I/O
+  ---
+  duration_ms: 3.8009
+  type: 'test'
+  ...
+# Subtest: F26b initial status withholds absent multiple or nonlocal roots without filesystem key child or listener access
+ok 68 - F26b initial status withholds absent multiple or nonlocal roots without filesystem key child or listener access
+  ---
+  duration_ms: 3.2773
+  type: 'test'
+  ...
+# Subtest: F26b strict owner flag accepts only global boolean true and an explicit false defeats the default
+ok 69 - F26b strict owner flag accepts only global boolean true and an explicit false defeats the default
+  ---
+  duration_ms: 2.2028
+  type: 'test'
+  ...
+# Subtest: F26b missing inspect and nonboolean defaults fail closed without using merged get values
+ok 70 - F26b missing inspect and nonboolean defaults fail closed without using merged get values
+  ---
+  duration_ms: 2.2026
+  type: 'test'
+  ...
+# Subtest: F26b workspace and folder values cannot grant or revoke the strict machine owner or boolean default
+ok 71 - F26b workspace and folder values cannot grant or revoke the strict machine owner or boolean default
+  ---
+  duration_ms: 2.6759
+  type: 'test'
+  ...
+# Subtest: F26b untrusted and remote environments cannot enable a globally approved owner hook
+ok 72 - F26b untrusted and remote environments cannot enable a globally approved owner hook
+  ---
+  duration_ms: 2.4941
+  type: 'test'
+  ...
+# Subtest: F26b configuration access and inspect errors fail closed without exposing raw diagnostics
+ok 73 - F26b configuration access and inspect errors fail closed without exposing raw diagnostics
+  ---
+  duration_ms: 4.1228
+  type: 'test'
+  ...
+# Subtest: F26b real controller reviewed resume replaces a valid signed prior descriptor with a new signed session
+ok 74 - F26b real controller reviewed resume replaces a valid signed prior descriptor with a new signed session
+  ---
+  duration_ms: 1075.4796
+  type: 'test'
+  ...
+# Subtest: F26b real controller preserves a tampered prior descriptor and refuses resume rather than overwriting it
+ok 75 - F26b real controller preserves a tampered prior descriptor and refuses resume rather than overwriting it
+  ---
+  duration_ms: 228.385
+  type: 'test'
+  ...
+# Subtest: F26b real controller stale restore review preserves a newer generation record and edited hook
+ok 76 - F26b real controller stale restore review preserves a newer generation record and edited hook
+  ---
+  duration_ms: 103.1221
+  type: 'test'
+  ...
+# Subtest: F26b real controller stale record after backup retrieval cannot be overwritten by rollback bookkeeping
+ok 77 - F26b real controller stale record after backup retrieval cannot be overwritten by rollback bookkeeping
+  ---
+  duration_ms: 125.1261
+  type: 'test'
+  ...
+# Subtest: F26b real controller withdraws live status and result authority when its exact service becomes unavailable
+ok 78 - F26b real controller withdraws live status and result authority when its exact service becomes unavailable
+  ---
+  duration_ms: 169.9501
+  type: 'test'
+  ...
+# Subtest: F26b real controller cannot replace a missing signing key while resuming retained ownership
+ok 79 - F26b real controller cannot replace a missing signing key while resuming retained ownership
+  ---
+  duration_ms: 83.7141
+  type: 'test'
+  ...
+# Subtest: F26b real controller useful restore durably retains exact private journal and opaque public discoverability
+ok 80 - F26b real controller useful restore durably retains exact private journal and opaque public discoverability
+  ---
+  duration_ms: 76.0646
+  type: 'test'
+  ...
+# Subtest: F26b real controller journal-store race retains its private revision without overwriting a foreign root record
+ok 81 - F26b real controller journal-store race retains its private revision without overwriting a foreign root record
+  ---
+  duration_ms: 77.3328
+  type: 'test'
+  ...
+# Subtest: F26b published controller status reports an active owner scan as busy
+ok 82 - F26b published controller status reports an active owner scan as busy
+  ---
+  duration_ms: 1472.0684
+  type: 'test'
+  ...
+# Subtest: F26b install unchanged projection stays live without additional discovery children
+ok 83 - F26b install unchanged projection stays live without additional discovery children
+  ---
+  duration_ms: 506.2524
+  type: 'test'
+  ...
+# Subtest: F26b install effective local hook path drift withdraws the published owner
+ok 84 - F26b install effective local hook path drift withdraws the published owner
+  ---
+  duration_ms: 396.4969
+  type: 'test'
+  ...
+# Subtest: F26b install previously empty global config cannot gain a hidden owner override
+ok 85 - F26b install previously empty global config cannot gain a hidden owner override
+  ---
+  duration_ms: 375.6309
+  type: 'test'
+  ...
+# Subtest: F26b install previously empty system config cannot gain an owner override
+ok 86 - F26b install previously empty system config cannot gain an owner override
+  ---
+  duration_ms: 376.912
+  type: 'test'
+  ...
+# Subtest: F26b install ordinary future refs and object metadata do not revoke unchanged hook configuration
+ok 87 - F26b install ordinary future refs and object metadata do not revoke unchanged hook configuration
+  ---
+  duration_ms: 384.4752
+  type: 'test'
+  ...
+# Subtest: F26b install absent explicit global source creation revokes reviewed absence
+ok 88 - F26b install absent explicit global source creation revokes reviewed absence
+  ---
+  duration_ms: 372.016
+  type: 'test'
+  ...
+# Subtest: F26b install HOME default source creation revokes reviewed absence
+ok 89 - F26b install HOME default source creation revokes reviewed absence
+  ---
+  duration_ms: 384.0203
+  type: 'test'
+  ...
+# Subtest: F26b install owner discovery environment drift cannot recapture a new source
+ok 90 - F26b install owner discovery environment drift cannot recapture a new source
+  ---
+  duration_ms: 518.3684
+  type: 'test'
+  ...
+# Subtest: F26b install explicitly disabled system configuration is a live supported projection
+ok 91 - F26b install explicitly disabled system configuration is a live supported projection
+  ---
+  duration_ms: 330.2847
+  type: 'test'
+  ...
+# Subtest: F26b install unknown implicit system search layout refuses before owner startup
+ok 92 - F26b install unknown implicit system search layout refuses before owner startup
+  ---
+  duration_ms: 71.1371
+  type: 'test'
+  ...
+# Subtest: F26b install unbound Windows HOME fallback refuses before owner startup
+ok 93 - F26b install unbound Windows HOME fallback refuses before owner startup
+  ---
+  duration_ms: 65.1391
+  type: 'test'
+  ...
+# Subtest: F26b resume unchanged projection stays live without additional discovery children
+ok 94 - F26b resume unchanged projection stays live without additional discovery children
+  ---
+  duration_ms: 321.9794
+  type: 'test'
+  ...
+# Subtest: F26b resume effective local hook path drift withdraws the published owner
+ok 95 - F26b resume effective local hook path drift withdraws the published owner
+  ---
+  duration_ms: 357.7916
+  type: 'test'
+  ...
+# Subtest: F26b resume previously empty global config cannot gain a hidden owner override
+ok 96 - F26b resume previously empty global config cannot gain a hidden owner override
+  ---
+  duration_ms: 303.4724
+  type: 'test'
+  ...
+# Subtest: F26b resume previously empty system config cannot gain an owner override
+ok 97 - F26b resume previously empty system config cannot gain an owner override
+  ---
+  duration_ms: 297.825
+  type: 'test'
+  ...
+# Subtest: F26b resume ordinary future refs and object metadata do not revoke unchanged hook configuration
+ok 98 - F26b resume ordinary future refs and object metadata do not revoke unchanged hook configuration
+  ---
+  duration_ms: 281.607
+  type: 'test'
+  ...
+# Subtest: F26b resume absent explicit global source creation revokes reviewed absence
+ok 99 - F26b resume absent explicit global source creation revokes reviewed absence
+  ---
+  duration_ms: 387.1043
+  type: 'test'
+  ...
+# Subtest: F26b resume HOME default source creation revokes reviewed absence
+ok 100 - F26b resume HOME default source creation revokes reviewed absence
+  ---
+  duration_ms: 300.2797
+  type: 'test'
+  ...
+# Subtest: F26b resume owner discovery environment drift cannot recapture a new source
+ok 101 - F26b resume owner discovery environment drift cannot recapture a new source
+  ---
+  duration_ms: 274.7838
+  type: 'test'
+  ...
+# Subtest: F26b resume explicitly disabled system configuration is a live supported projection
+ok 102 - F26b resume explicitly disabled system configuration is a live supported projection
+  ---
+  duration_ms: 274.8706
+  type: 'test'
+  ...
+# Subtest: F26b resume unknown implicit system search layout refuses before owner startup
+ok 103 - F26b resume unknown implicit system search layout refuses before owner startup
+  ---
+  duration_ms: 62.2207
+  type: 'test'
+  ...
+# Subtest: F26b resume unbound Windows HOME fallback refuses before owner startup
+ok 104 - F26b resume unbound Windows HOME fallback refuses before owner startup
+  ---
+  duration_ms: 70.2913
+  type: 'test'
+  ...
+# Subtest: F26b process pins version executable safe prefix environment and metadata-job cwd
+ok 105 - F26b process pins version executable safe prefix environment and metadata-job cwd
+  ---
+  duration_ms: 109.562
+  type: 'test'
+  ...
+# Subtest: F26b tree reader has one checked OID and fixed literal recursive NUL suffix
+ok 106 - F26b tree reader has one checked OID and fixed literal recursive NUL suffix
+  ---
+  duration_ms: 55.1448
+  type: 'test'
+  ...
+# Subtest: F26b commits reader puts distinct proposed tips only in private stdin
+ok 107 - F26b commits reader puts distinct proposed tips only in private stdin
+  ---
+  duration_ms: 55.4888
+  type: 'test'
+  ...
+# Subtest: F26b batch process sends no sizes paths or content through argv or environment
+ok 108 - F26b batch process sends no sizes paths or content through argv or environment
+  ---
+  duration_ms: 54.7323
+  type: 'test'
+  ...
+# Subtest: F26b process waits for real close after both EOFs
+ok 109 - F26b process waits for real close after both EOFs
+  ---
+  duration_ms: 60.9391
+  type: 'test'
+  ...
+# Subtest: F26b process waits for each EOF after a close0 observation
+ok 110 - F26b process waits for each EOF after a close0 observation
+  ---
+  duration_ms: 56.8604
+  type: 'test'
+  ...
+# Subtest: F26b process copies held private chunks instead of retaining caller-mutable buffers
+ok 111 - F26b process copies held private chunks instead of retaining caller-mutable buffers
+  ---
+  duration_ms: 56.0499
+  type: 'test'
+  ...
+# Subtest: F26b process rejects nonzero missing-exit and signalled fake closures
+ok 112 - F26b process rejects nonzero missing-exit and signalled fake closures
+  ---
+  duration_ms: 100.7672
+  type: 'test'
+  ...
+# Subtest: F26b process consumes bounded private stderr without returning a raw diagnostic
+ok 113 - F26b process consumes bounded private stderr without returning a raw diagnostic
+  ---
+  duration_ms: 54.9569
+  type: 'test'
+  ...
+# Subtest: F26b process withholds stderr over8192 while preserving actual child ownership
+ok 114 - F26b process withholds stderr over8192 while preserving actual child ownership
+  ---
+  duration_ms: 44.0074
+  type: 'test'
+  ...
+# Subtest: F26b process enforces each exact stdout cap independently
+ok 115 - F26b process enforces each exact stdout cap independently
+  ---
+  duration_ms: 208.1175
+  type: 'test'
+  ...
+# Subtest: F26b process admits128 unique blob IDs and the exact1MiB declared batch budget
+ok 116 - F26b process admits128 unique blob IDs and the exact1MiB declared batch budget
+  ---
+  duration_ms: 71.9839
+  type: 'test'
+  ...
+# Subtest: F26b process rejects unknown operations extra keys and route argv environment injection
+ok 117 - F26b process rejects unknown operations extra keys and route argv environment injection
+  ---
+  duration_ms: 110.6727
+  type: 'test'
+  ...
+# Subtest: F26b tree reader refuses malformed noncanonical and option-looking IDs before spawn
+ok 118 - F26b tree reader refuses malformed noncanonical and option-looking IDs before spawn
+  ---
+  duration_ms: 103.4749
+  type: 'test'
+  ...
+# Subtest: F26b process rejects malformed batch size object and aggregate budgets before spawn
+ok 119 - F26b process rejects malformed batch size object and aggregate budgets before spawn
+  ---
+  duration_ms: 110.8456
+  type: 'test'
+  ...
+# Subtest: F26b process never evaluates proxy or accessor operation array and object fields
+ok 120 - F26b process never evaluates proxy or accessor operation array and object fields
+  ---
+  duration_ms: 54.8666
+  type: 'test'
+  ...
+# Subtest: F26b process refuses checked-refs lookalikes without invoking their available accessor
+ok 121 - F26b process refuses checked-refs lookalikes without invoking their available accessor
+  ---
+  duration_ms: 27.389
+  type: 'test'
+  ...
+# Subtest: F26b process pre-start withdrawal is sticky and starts no child
+ok 122 - F26b process pre-start withdrawal is sticky and starts no child
+  ---
+  duration_ms: 25.4509
+  type: 'test'
+  ...
+# Subtest: F26b active withdrawal clears private data and stays busy until close plus both EOFs
+ok 123 - F26b active withdrawal clears private data and stays busy until close plus both EOFs
+  ---
+  duration_ms: 66.0955
+  type: 'test'
+  ...
+# Subtest: F26b process rejects expired nonfinite deadlines and unavailable guards before spawn
+ok 124 - F26b process rejects expired nonfinite deadlines and unavailable guards before spawn
+  ---
+  duration_ms: 41.0456
+  type: 'test'
+  ...
+# Subtest: F26b elapsed deadline withdraws after fake admission with a held deterministic clock
+ok 125 - F26b elapsed deadline withdraws after fake admission with a held deterministic clock
+  ---
+  duration_ms: 57.2
+  type: 'test'
+  ...
+# Subtest: F26b process never extends its60second bound to a later caller deadline
+ok 126 - F26b process never extends its60second bound to a later caller deadline
+  ---
+  duration_ms: 42.516
+  type: 'test'
+  ...
+# Subtest: F26b clock reversal or nonfinite values withhold apparently successful completion
+ok 127 - F26b clock reversal or nonfinite values withhold apparently successful completion
+  ---
+  duration_ms: 88.6927
+  type: 'test'
+  ...
+# Subtest: F26b valid guard withdrawal and later reenable cannot release buffered bytes
+ok 128 - F26b valid guard withdrawal and later reenable cannot release buffered bytes
+  ---
+  duration_ms: 45.6284
+  type: 'test'
+  ...
+# Subtest: F26b checked-refs drift blocks admission and late drift withholds completion
+ok 129 - F26b checked-refs drift blocks admission and late drift withholds completion
+  ---
+  duration_ms: 78.4947
+  type: 'test'
+  ...
+# Subtest: F26b stdout stderr and stdin errors withhold without destroying owned pipes
+ok 130 - F26b stdout stderr and stdin errors withhold without destroying owned pipes
+  ---
+  duration_ms: 70.7758
+  type: 'test'
+  ...
+# Subtest: F26b spawn throws and a no-PID spawn error return unavailable without fabricated child closure
+ok 131 - F26b spawn throws and a no-PID spawn error return unavailable without fabricated child closure
+  ---
+  duration_ms: 76.7738
+  type: 'test'
+  ...
+# Subtest: F26b an error after PID ownership retains busy until actual close and EOFs
+ok 132 - F26b an error after PID ownership retains busy until actual close and EOFs
+  ---
+  duration_ms: 43.1759
+  type: 'test'
+  ...
+# Subtest: F26b delete-only transcripts cannot request a fabricated commits traversal
+ok 133 - F26b delete-only transcripts cannot request a fabricated commits traversal
+  ---
+  duration_ms: 68.9436
+  type: 'test'
+  ...
+# Subtest: F26b restore exact existing custom hook and default absence under explicit flag-off restoration authority
+ok 134 - F26b restore exact existing custom hook and default absence under explicit flag-off restoration authority
+  ---
+  duration_ms: 24.2318
+  type: 'test'
+  ...
+# Subtest: F26b restore rejects malformed exact receipt schema and dangerous records without dependency effects
+ok 135 - F26b restore rejects malformed exact receipt schema and dangerous records without dependency effects
+  ---
+  duration_ms: 61.2128
+  type: 'test'
+  ...
+# Subtest: F26b restore checks current owned digest and exact mode before modal and preserves unknown owner state
+ok 136 - F26b restore checks current owned digest and exact mode before modal and preserves unknown owner state
+  ---
+  duration_ms: 8.4942
+  type: 'test'
+  ...
+# Subtest: F26b restore review is frozen metadata only and cancellation or disabled authority cannot retrieve or mutate
+ok 137 - F26b restore review is frozen metadata only and cancellation or disabled authority cannot retrieve or mutate
+  ---
+  duration_ms: 9.1215
+  type: 'test'
+  ...
+# Subtest: F26b restore withholds missing corrupt noncanonical mismatched and unsupported backup originals
+ok 138 - F26b restore withholds missing corrupt noncanonical mismatched and unsupported backup originals
+  ---
+  duration_ms: 42.6648
+  type: 'test'
+  ...
+# Subtest: F26b restore awaits one withdrawal after review and backup validation before exact guarded write
+ok 139 - F26b restore awaits one withdrawal after review and backup validation before exact guarded write
+  ---
+  duration_ms: 2.9159
+  type: 'test'
+  ...
+# Subtest: F26b restore rechecks early authority and reviewed owner identity after each asynchronous boundary
+ok 140 - F26b restore rechecks early authority and reviewed owner identity after each asynchronous boundary
+  ---
+  duration_ms: 12.9379
+  type: 'test'
+  ...
+# Subtest: F26b restore withdrawal uncertainty or post-withdraw owner drift is incomplete without write or retry
+ok 141 - F26b restore withdrawal uncertainty or post-withdraw owner drift is incomplete without write or retry
+  ---
+  duration_ms: 11.9214
+  type: 'test'
+  ...
+# Subtest: F26b restore uncertain sync writes and readback preserve edits and never retry even when false already mutated
+ok 142 - F26b restore uncertain sync writes and readback preserve edits and never retry even when false already mutated
+  ---
+  duration_ms: 16.6008
+  type: 'test'
+  ...
+# Subtest: F26b restore requires durable rollback save then final exact readback and retains incomplete on save uncertainty
+ok 143 - F26b restore requires durable rollback save then final exact readback and retains incomplete on save uncertainty
+  ---
+  duration_ms: 8.0331
+  type: 'test'
+  ...
+# Subtest: F26b restore has no await between final synchronous read current and success with paired immediate withdrawal
+ok 144 - F26b restore has no await between final synchronous read current and success with paired immediate withdrawal
+  ---
+  duration_ms: 3.1516
+  type: 'test'
+  ...
+# Subtest: F26b restore is one-shot including concurrent review and sanitizes dependency exceptions without extra authority
+ok 145 - F26b restore is one-shot including concurrent review and sanitizes dependency exceptions without extra authority
+  ---
+  duration_ms: 6.1776
+  type: 'test'
+  ...
+# Subtest: F26b absent-hook wrapper uses fixed scrubbed worker grammar and separate ownership marker
+ok 146 - F26b absent-hook wrapper uses fixed scrubbed worker grammar and separate ownership marker
+  ---
+  duration_ms: 21.8055
+  type: 'test'
+  ...
+# Subtest: F26b replays bounded input with a sentinel instead of unbounded shell reads
+ok 147 - F26b replays bounded input with a sentinel instead of unbounded shell reads
+  ---
+  duration_ms: 2.3232
+  type: 'test'
+  ...
+# Subtest: F26b preserves reviewed shell body once and isolates wrapper variables
+ok 148 - F26b preserves reviewed shell body once and isolates wrapper variables
+  ---
+  duration_ms: 2.5073
+  type: 'test'
+  ...
+# Subtest: F26b refuses unknown shebang, BOM, binary and malformed UTF8 originals
+ok 149 - F26b refuses unknown shebang, BOM, binary and malformed UTF8 originals
+  ---
+  duration_ms: 5.5083
+  type: 'test'
+  ...
+# Subtest: F26b refuses recursively owned, pre-commit-owned and oversized originals
+ok 150 - F26b refuses recursively owned, pre-commit-owned and oversized originals
+  ---
+  duration_ms: 3.2027
+  type: 'test'
+  ...
+# Subtest: F26b public pin validation never accepts a partial or noncanonical pin
+ok 151 - F26b public pin validation never accepts a partial or noncanonical pin
+  ---
+  duration_ms: 1.3303
+  type: 'test'
+  ...
+# Subtest: F26b owned wrapper emits only a fixed refusal and retains original buffer
+ok 152 - F26b owned wrapper emits only a fixed refusal and retains original buffer
+  ---
+  duration_ms: 2.4946
+  type: 'test'
+  ...
+# Subtest: F26b wrapper quotes apostrophes in validated native pin paths
+ok 153 - F26b wrapper quotes apostrophes in validated native pin paths
+  ---
+  duration_ms: 1.8866
+  type: 'test'
+  ...
+# Subtest: F26b hook transaction current authority is strict with no default or truthy enable fallback
+ok 154 - F26b hook transaction current authority is strict with no default or truthy enable fallback
+  ---
+  duration_ms: 31.5953
+  type: 'test'
+  ...
+# Subtest: F26b hook transaction owner cancellation precedes every key service backup record and mutation
+ok 155 - F26b hook transaction owner cancellation precedes every key service backup record and mutation
+  ---
+  duration_ms: 1.3549
+  type: 'test'
+  ...
+# Subtest: F26b hook transaction privately copies original bytes and rejects duplicate runs without new authority
+ok 156 - F26b hook transaction privately copies original bytes and rejects duplicate runs without new authority
+  ---
+  duration_ms: 5.3999
+  type: 'test'
+  ...
+# Subtest: F26b hook transaction useful absent install stores exact absence and platform-applicable mode
+ok 157 - F26b hook transaction useful absent install stores exact absence and platform-applicable mode
+  ---
+  duration_ms: 4.4685
+  type: 'test'
+  ...
+# Subtest: F26b hook transaction preserves supported original body exit7 and exact existing modes in private recovery
+ok 158 - F26b hook transaction preserves supported original body exit7 and exact existing modes in private recovery
+  ---
+  duration_ms: 5.4412
+  type: 'test'
+  ...
+# Subtest: F26b hook transaction malformed or mismatched prepared pins cannot reach backups or writes
+ok 159 - F26b hook transaction malformed or mismatched prepared pins cannot reach backups or writes
+  ---
+  duration_ms: 6.8715
+  type: 'test'
+  ...
+# Subtest: F26b hook transaction unsupported originals refuse before modal key service and backup creation
+ok 160 - F26b hook transaction unsupported originals refuse before modal key service and backup creation
+  ---
+  duration_ms: 7.3856
+  type: 'test'
+  ...
+# Subtest: F26b hook transaction preparation key errors or absent authority cannot write or fabricate cleanup ownership
+ok 161 - F26b hook transaction preparation key errors or absent authority cannot write or fabricate cleanup ownership
+  ---
+  duration_ms: 2.3919
+  type: 'test'
+  ...
+# Subtest: F26b hook transaction encrypted backup failure or nonexact readback refuses every write and withdraws once
+ok 162 - F26b hook transaction encrypted backup failure or nonexact readback refuses every write and withdraws once
+  ---
+  duration_ms: 11.5496
+  type: 'test'
+  ...
+# Subtest: F26b hook transaction durable PREPARED success is required before the first guarded write
+ok 163 - F26b hook transaction durable PREPARED success is required before the first guarded write
+  ---
+  duration_ms: 5.8851
+  type: 'test'
+  ...
+# Subtest: F26b hook transaction pre-key source identity mode or projection drift refuses before preparation
+ok 164 - F26b hook transaction pre-key source identity mode or projection drift refuses before preparation
+  ---
+  duration_ms: 3.9607
+  type: 'test'
+  ...
+# Subtest: F26b hook transaction post-prepare source identity projection and live flag races prevent first write
+ok 165 - F26b hook transaction post-prepare source identity projection and live flag races prevent first write
+  ---
+  duration_ms: 9.8053
+  type: 'test'
+  ...
+# Subtest: F26b hook transaction failed write with exact original preserved reports unavailable without overwriting it
+ok 166 - F26b hook transaction failed write with exact original preserved reports unavailable without overwriting it
+  ---
+  duration_ms: 5.6213
+  type: 'test'
+  ...
+# Subtest: F26b hook transaction failed write that nevertheless installed exact owned after bytes safely rolls back
+ok 167 - F26b hook transaction failed write that nevertheless installed exact owned after bytes safely rolls back
+  ---
+  duration_ms: 4.502
+  type: 'test'
+  ...
+# Subtest: F26b hook transaction postwrite projection and APPLIED save failures roll back only exact owned after bytes
+ok 168 - F26b hook transaction postwrite projection and APPLIED save failures roll back only exact owned after bytes
+  ---
+  duration_ms: 7.0764
+  type: 'test'
+  ...
+# Subtest: F26b hook transaction final read and current are synchronous with a paired immediate withdrawal control
+ok 169 - F26b hook transaction final read and current are synchronous with a paired immediate withdrawal control
+  ---
+  duration_ms: 5.1193
+  type: 'test'
+  ...
+# Subtest: F26b hook transaction preserves owner-edited or unknown bytes and records incomplete recovery
+ok 170 - F26b hook transaction preserves owner-edited or unknown bytes and records incomplete recovery
+  ---
+  duration_ms: 7.8116
+  type: 'test'
+  ...
+# Subtest: F26b hook transaction rollback write readback or durable-save failure remains incomplete with one cleanup attempt
+ok 171 - F26b hook transaction rollback write readback or durable-save failure remains incomplete with one cleanup attempt
+  ---
+  duration_ms: 8.9593
+  type: 'test'
+  ...
+# Subtest: F26b canonical contribution exposes four distinct native advanced push commands
+ok 172 - F26b canonical contribution exposes four distinct native advanced push commands
+  ---
+  duration_ms: 4.7845
+  type: 'test'
+  ...
+# Subtest: F26b history hook flag is independently default false restricted machine configuration
+ok 173 - F26b history hook flag is independently default false restricted machine configuration
+  ---
+  duration_ms: 2.2846
+  type: 'test'
+  ...
+# Subtest: F26b canonical activation registers push commands next to existing commit registration
+ok 174 - F26b canonical activation registers push commands next to existing commit registration
+  ---
+  duration_ms: 0.8382
+  type: 'test'
+  ...
+# Subtest: F26b owner binds signed ephemeral IPv4 descriptor exactly once
+ok 175 - F26b owner binds signed ephemeral IPv4 descriptor exactly once
+  ---
+  duration_ms: 510.4301
+  type: 'test'
+  ...
+# Subtest: F26b owner close before start permanently refuses startup without loading a key
+ok 176 - F26b owner close before start permanently refuses startup without loading a key
+  ---
+  duration_ms: 31.3433
+  type: 'test'
+  ...
+# Subtest: F26b owner disabled startup and later disabled requests refuse before sensitive admission
+ok 177 - F26b owner disabled startup and later disabled requests refuse before sensitive admission
+  ---
+  duration_ms: 77.9428
+  type: 'test'
+  ...
+# Subtest: F26b owner missing or unsuitable startup signing keys never create a descriptor
+ok 178 - F26b owner missing or unsuitable startup signing keys never create a descriptor
+  ---
+  duration_ms: 91.9533
+  type: 'test'
+  ...
+# Subtest: F26b owner signs a completed public ALLOW with exact captured refs digests and request binding
+ok 179 - F26b owner signs a completed public ALLOW with exact captured refs digests and request binding
+  ---
+  duration_ms: 63.9825
+  type: 'test'
+  ...
+# Subtest: F26b owner BLOCK returns fixed signed metadata without candidate content or raw failures
+ok 180 - F26b owner BLOCK returns fixed signed metadata without candidate content or raw failures
+  ---
+  duration_ms: 60.9073
+  type: 'test'
+  ...
+# Subtest: F26b owner unavailable and unconfirmed scanner outcomes cannot become ALLOW
+ok 181 - F26b owner unavailable and unconfirmed scanner outcomes cannot become ALLOW
+  ---
+  duration_ms: 106.2178
+  type: 'test'
+  ...
+# Subtest: F26b owner rejects wrong version installation session nonce and extra request authority before preparation
+ok 182 - F26b owner rejects wrong version installation session nonce and extra request authority before preparation
+  ---
+  duration_ms: 52.2232
+  type: 'test'
+  ...
+# Subtest: F26b owner rejects malformed noncanonical duplicate and invalid UTF8 request bodies before preparation
+ok 183 - F26b owner rejects malformed noncanonical duplicate and invalid UTF8 request bodies before preparation
+  ---
+  duration_ms: 47.8535
+  type: 'test'
+  ...
+# Subtest: F26b owner refuses foreign methods paths queries and route ambiguity without preparing
+ok 184 - F26b owner refuses foreign methods paths queries and route ambiguity without preparing
+  ---
+  duration_ms: 42.6595
+  type: 'test'
+  ...
+# Subtest: F26b owner requires exact numeric loopback Host and no Origin header
+ok 185 - F26b owner requires exact numeric loopback Host and no Origin header
+  ---
+  duration_ms: 38.2587
+  type: 'test'
+  ...
+# Subtest: F26b owner refuses missing and unsupported content types before body admission
+ok 186 - F26b owner refuses missing and unsupported content types before body admission
+  ---
+  duration_ms: 34.8799
+  type: 'test'
+  ...
+# Subtest: F26b owner refuses duplicate Host content headers and transfer encoding without admitting work
+ok 187 - F26b owner refuses duplicate Host content headers and transfer encoding without admitting work
+  ---
+  duration_ms: 40.1963
+  type: 'test'
+  ...
+# Subtest: F26b owner refuses bodies beyond49152 bytes and excessive headers without scanning a prefix
+ok 188 - F26b owner refuses bodies beyond49152 bytes and excessive headers without scanning a prefix
+  ---
+  duration_ms: 35.6166
+  type: 'test'
+  ...
+# Subtest: F26b owner one-active noqueue response binds BUSY nonce and starts no second preparation or scanner
+ok 189 - F26b owner one-active noqueue response binds BUSY nonce and starts no second preparation or scanner
+  ---
+  duration_ms: 61.4103
+  type: 'test'
+  ...
+# Subtest: F26b owner passes only captured root and literal exact transcript data into preparation
+ok 190 - F26b owner passes only captured root and literal exact transcript data into preparation
+  ---
+  duration_ms: 51.5957
+  type: 'test'
+  ...
+# Subtest: F26b owner rejects borrowed foreign-root and structural-clone refs capabilities before scanner creation
+ok 191 - F26b owner rejects borrowed foreign-root and structural-clone refs capabilities before scanner creation
+  ---
+  duration_ms: 91.7282
+  type: 'test'
+  ...
+# Subtest: F26b owner unavailable exact transcript cannot become an empty successful tree
+ok 192 - F26b owner unavailable exact transcript cannot become an empty successful tree
+  ---
+  duration_ms: 33.3034
+  type: 'test'
+  ...
+# Subtest: F26b owner changed final signing key cannot authorize a decision under either installation pin
+ok 193 - F26b owner changed final signing key cannot authorize a decision under either installation pin
+  ---
+  duration_ms: 45.2076
+  type: 'test'
+  ...
+# Subtest: F26b owner missing final key and thrown key retrieval refuse without echoing raw failures
+ok 194 - F26b owner missing final key and thrown key retrieval refuse without echoing raw failures
+  ---
+  duration_ms: 89.938
+  type: 'test'
+  ...
+# Subtest: F26b owner held final key await cannot revive after observed disable and reenable
+ok 195 - F26b owner held final key await cannot revive after observed disable and reenable
+  ---
+  duration_ms: 42.7888
+  type: 'test'
+  ...
+# Subtest: F26b owner rechecks exact refs identity and bytes after asynchronous final key loading
+ok 196 - F26b owner rechecks exact refs identity and bytes after asynchronous final key loading
+  ---
+  duration_ms: 45.3158
+  type: 'test'
+  ...
+# Subtest: F26b owner asks exact completed result release again after final key await
+ok 197 - F26b owner asks exact completed result release again after final key await
+  ---
+  duration_ms: 50.1595
+  type: 'test'
+  ...
+# Subtest: F26b owner premature scanner ALLOW cannot release while actual scanner ownership remains open
+ok 198 - F26b owner premature scanner ALLOW cannot release while actual scanner ownership remains open
+  ---
+  duration_ms: 60.8654
+  type: 'test'
+  ...
+# Subtest: F26b owner aborted transport withdraws scan and remains busy until actual closure
+ok 199 - F26b owner aborted transport withdraws scan and remains busy until actual closure
+  ---
+  duration_ms: 60.5244
+  type: 'test'
+  ...
+# Subtest: F26b owner close withdraws active scan and waits for actual natural closure
+ok 200 - F26b owner close withdraws active scan and waits for actual natural closure
+  ---
+  duration_ms: 43.037
+  type: 'test'
+  ...
+# Subtest: F26b owner explicit close while final key is pending cannot sign a revived ALLOW
+ok 201 - F26b owner explicit close while final key is pending cannot sign a revived ALLOW
+  ---
+  duration_ms: 39.7025
+  type: 'test'
+  ...
+# Subtest: F26b owner preparation and scanner factory exceptions remain fixed refusals without raw diagnostics
+ok 202 - F26b owner preparation and scanner factory exceptions remain fixed refusals without raw diagnostics
+  ---
+  duration_ms: 71.2884
+  type: 'test'
+  ...
+# Subtest: F26b accepts complete public creation and update metadata with frozen copies
+ok 203 - F26b accepts complete public creation and update metadata with frozen copies
+  ---
+  duration_ms: 13.1382
+  type: 'test'
+  ...
+# Subtest: F26b accepts empty and exact deletion transcripts without granting authority
+ok 204 - F26b accepts empty and exact deletion transcripts without granting authority
+  ---
+  duration_ms: 1.9451
+  type: 'test'
+  ...
+# Subtest: F26b enforces coherent deletion semantics
+ok 205 - F26b enforces coherent deletion semantics
+  ---
+  duration_ms: 1.2201
+  type: 'test'
+  ...
+# Subtest: F26b requires exact complete LF framing and four single-space fields
+ok 206 - F26b requires exact complete LF framing and four single-space fields
+  ---
+  duration_ms: 1.1871
+  type: 'test'
+  ...
+# Subtest: F26b rejects noncanonical SHA1, SHA256 and invalid object fields
+ok 207 - F26b rejects noncanonical SHA1, SHA256 and invalid object fields
+  ---
+  duration_ms: 1.1444
+  type: 'test'
+  ...
+# Subtest: F26b permits inert detached source expressions and Unicode branch metadata
+ok 208 - F26b permits inert detached source expressions and Unicode branch metadata
+  ---
+  duration_ms: 1.4542
+  type: 'test'
+  ...
+# Subtest: F26b refuses invalid or unsupported destination refs
+ok 209 - F26b refuses invalid or unsupported destination refs
+  ---
+  duration_ms: 1.1003
+  type: 'test'
+  ...
+# Subtest: F26b refuses duplicate, case and normalization destination aliases as a whole
+ok 210 - F26b refuses duplicate, case and normalization destination aliases as a whole
+  ---
+  duration_ms: 1.274
+  type: 'test'
+  ...
+# Subtest: F26b accepts exactly32 updates and rejects the33rd sentinel
+ok 211 - F26b accepts exactly32 updates and rejects the33rd sentinel
+  ---
+  duration_ms: 2.0129
+  type: 'test'
+  ...
+# Subtest: F26b refuses overlong source/ref fields and input budgets
+ok 212 - F26b refuses overlong source/ref fields and input budgets
+  ---
+  duration_ms: 1.3912
+  type: 'test'
+  ...
+# Subtest: F26b rejects malformed UTF8, BOM, control and invisible fields
+ok 213 - F26b rejects malformed UTF8, BOM, control and invisible fields
+  ---
+  duration_ms: 1.5626
+  type: 'test'
+  ...
+# Subtest: F26b cannot release a valid prefix before a later malformed update
+ok 214 - F26b cannot release a valid prefix before a later malformed update
+  ---
+  duration_ms: 1.0611
+  type: 'test'
+  ...
+# Subtest: F26b rejects proxies and lookalikes without executing coercion or property traps
+ok 215 - F26b rejects proxies and lookalikes without executing coercion or property traps
+  ---
+  duration_ms: 0.822
+  type: 'test'
+  ...
+# Subtest: F26b copies native Buffer bytes without invoking overridden instance methods
+ok 216 - F26b copies native Buffer bytes without invoking overridden instance methods
+  ---
+  duration_ms: 0.8588
+  type: 'test'
+  ...
+# Subtest: F26b transcript digest binds exact admitted bytes and rejects malformed input
+ok 217 - F26b transcript digest binds exact admitted bytes and rejects malformed input
+  ---
+  duration_ms: 1.2712
+  type: 'test'
+  ...
+# Subtest: F26b bounded arbitrary framing never throws or admits an invalid suffix
+ok 218 - F26b bounded arbitrary framing never throws or admits an invalid suffix
+  ---
+  duration_ms: 5.4542
+  type: 'test'
+  ...
+# Subtest: F26b complete public proposed history permits only its held completed result
+ok 219 - F26b complete public proposed history permits only its held completed result
+  ---
+  duration_ms: 573.1668
+  type: 'test'
+  ...
+# Subtest: F26b historical secret remains blocked after the proposed tip was sanitized
+ok 220 - F26b historical secret remains blocked after the proposed tip was sanitized
+  ---
+  duration_ms: 152.0924
+  type: 'test'
+  ...
+# Subtest: F26b merge-parent history cannot be omitted from the bounded scan
+ok 221 - F26b merge-parent history cannot be omitted from the bounded scan
+  ---
+  duration_ms: 185.1396
+  type: 'test'
+  ...
+# Subtest: F26b unknown suffix or unsupported blob never yields a clean-prefix ALLOW
+ok 222 - F26b unknown suffix or unsupported blob never yields a clean-prefix ALLOW
+  ---
+  duration_ms: 140.6621
+  type: 'test'
+  ...
+# Subtest: F26b binary and malformed config withhold the whole proposed history
+ok 223 - F26b binary and malformed config withhold the whole proposed history
+  ---
+  duration_ms: 228.1177
+  type: 'test'
+  ...
+# Subtest: F26b33-commit sentinel withholds instead of accepting the first32
+ok 224 - F26b33-commit sentinel withholds instead of accepting the first32
+  ---
+  duration_ms: 61.2794
+  type: 'test'
+  ...
+# Subtest: F26b traversal must contain every proposed nondeleted tip
+ok 225 - F26b traversal must contain every proposed nondeleted tip
+  ---
+  duration_ms: 64.2119
+  type: 'test'
+  ...
+# Subtest: F26b delete-only and empty transcripts avoid a fabricated object traversal
+ok 226 - F26b delete-only and empty transcripts avoid a fabricated object traversal
+  ---
+  duration_ms: 105.7307
+  type: 'test'
+  ...
+# Subtest: F26b public history honors every separate path context of a shared object
+ok 227 - F26b public history honors every separate path context of a shared object
+  ---
+  duration_ms: 113.5924
+  type: 'test'
+  ...
+# Subtest: F26b oversized blob and total data budgets withhold without a batch read
+ok 228 - F26b oversized blob and total data budgets withhold without a batch read
+  ---
+  duration_ms: 84.8853
+  type: 'test'
+  ...
+# Subtest: F26b unknown tree modes and missing objects cannot be skipped
+ok 229 - F26b unknown tree modes and missing objects cannot be skipped
+  ---
+  duration_ms: 75.0736
+  type: 'test'
+  ...
+# Subtest: F26b exact batch object SHA1 is verified before detector use
+ok 230 - F26b exact batch object SHA1 is verified before detector use
+  ---
+  duration_ms: 97.3747
+  type: 'test'
+  ...
+# Subtest: F26b unsupported Git version and malformed traversal framing fail closed
+ok 231 - F26b unsupported Git version and malformed traversal framing fail closed
+  ---
+  duration_ms: 109.6631
+  type: 'test'
+  ...
+# Subtest: F26b caller-created capability objects launch no child
+ok 232 - F26b caller-created capability objects launch no child
+  ---
+  duration_ms: 38.6049
+  type: 'test'
+  ...
+# Subtest: F26b withdrawal retains pending ownership and prevents the next child
+ok 233 - F26b withdrawal retains pending ownership and prevents the next child
+  ---
+  duration_ms: 56.0705
+  type: 'test'
+  ...
+# Subtest: F26b premature COMPLETE cannot replace actual child closure
+ok 234 - F26b premature COMPLETE cannot replace actual child closure
+  ---
+  duration_ms: 92.6026
+  type: 'test'
+  ...
+# Subtest: F26b post-result drift revokes held ALLOW and one-shot start cannot repeat
+ok 235 - F26b post-result drift revokes held ALLOW and one-shot start cannot repeat
+  ---
+  duration_ms: 84.4841
+  type: 'test'
+  ...
+# Subtest: F26b scanner output contains status only, never original paths or values
+ok 236 - F26b scanner output contains status only, never original paths or values
+  ---
+  duration_ms: 111.8508
+  type: 'test'
+  ...
+# Subtest: F26b real Git shell preserves exact transcript, original args/env and original exit code
+ok 237 - F26b real Git shell preserves exact transcript, original args/env and original exit code
+  ---
+  duration_ms: 304.9201
+  type: 'test'
+  ...
+# Subtest: F26b real shell preserves empty stdin through the bounded worker sentinel
+ok 238 - F26b real shell preserves empty stdin through the bounded worker sentinel
+  ---
+  duration_ms: 216.1875
+  type: 'test'
+  ...
+# Subtest: F26b worker refusal prevents original hook body execution
+ok 239 - F26b worker refusal prevents original hook body execution
+  ---
+  duration_ms: 185.3746
+  type: 'test'
+  ...
+# Subtest: F26b missing replay sentinel prevents original hook body execution
+ok 240 - F26b missing replay sentinel prevents original hook body execution
+  ---
+  duration_ms: 171.5522
+  type: 'test'
+  ...
+# Subtest: F26b wrapper refuses caller collisions without replacing owner variables
+ok 241 - F26b wrapper refuses caller collisions without replacing owner variables
+  ---
+  duration_ms: 120.8912
+  type: 'test'
+  ...
+# Subtest: F26b exact original newlines survive command substitution
+ok 242 - F26b exact original newlines survive command substitution
+  ---
+  duration_ms: 237.5985
+  type: 'test'
+  ...
+# Subtest: F26b finite replay worker can refuse its byte budget without executing an original
+ok 243 - F26b finite replay worker can refuse its byte budget without executing an original
+  ---
+  duration_ms: 181.4912
+  type: 'test'
+  ...
+# Subtest: F26b wire signs and verifies an exact owner descriptor
+ok 244 - F26b wire signs and verifies an exact owner descriptor
+  ---
+  duration_ms: 62.6801
+  type: 'test'
+  ...
+# Subtest: F26b wire descriptor signature requires the reviewed public key
+ok 245 - F26b wire descriptor signature requires the reviewed public key
+  ---
+  duration_ms: 18.1549
+  type: 'test'
+  ...
+# Subtest: F26b wire refuses changed descriptor fields without a fresh signature
+ok 246 - F26b wire refuses changed descriptor fields without a fresh signature
+  ---
+  duration_ms: 39.7856
+  type: 'test'
+  ...
+# Subtest: F26b wire descriptor cannot select root installation worker or runtime
+ok 247 - F26b wire descriptor cannot select root installation worker or runtime
+  ---
+  duration_ms: 50.7369
+  type: 'test'
+  ...
+# Subtest: F26b wire descriptors admit only exact loopback fixed-route URLs
+ok 248 - F26b wire descriptors admit only exact loopback fixed-route URLs
+  ---
+  duration_ms: 70.0957
+  type: 'test'
+  ...
+# Subtest: F26b wire refuses malformed non-Ed25519 and noncanonical public keys
+ok 249 - F26b wire refuses malformed non-Ed25519 and noncanonical public keys
+  ---
+  duration_ms: 72.2961
+  type: 'test'
+  ...
+# Subtest: F26b wire descriptor and decision signatures have different domains
+ok 250 - F26b wire descriptor and decision signatures have different domains
+  ---
+  duration_ms: 40.4447
+  type: 'test'
+  ...
+# Subtest: F26b wire signs and verifies each fixed decision status
+ok 251 - F26b wire signs and verifies each fixed decision status
+  ---
+  duration_ms: 16.291
+  type: 'test'
+  ...
+# Subtest: F26b wire requires exact fresh nonce session root and generation
+ok 252 - F26b wire requires exact fresh nonce session root and generation
+  ---
+  duration_ms: 11.3082
+  type: 'test'
+  ...
+# Subtest: F26b wire changed decision or index metadata cannot preserve a valid signature
+ok 253 - F26b wire changed decision or index metadata cannot preserve a valid signature
+  ---
+  duration_ms: 13.2243
+  type: 'test'
+  ...
+# Subtest: F26b wire signed envelope is finite canonical JSON with no duplicate fields
+ok 254 - F26b wire signed envelope is finite canonical JSON with no duplicate fields
+  ---
+  duration_ms: 4.4573
+  type: 'test'
+  ...
+# Subtest: F26b wire unknown envelope payload and binding fields refuse
+ok 255 - F26b wire unknown envelope payload and binding fields refuse
+  ---
+  duration_ms: 4.4073
+  type: 'test'
+  ...
+# Subtest: F26b wire invalid schema versions status UUIDs and digests refuse
+ok 256 - F26b wire invalid schema versions status UUIDs and digests refuse
+  ---
+  duration_ms: 3.2308
+  type: 'test'
+  ...
+# Subtest: F26b wire refuses accessor and coercion payloads without reading their values
+ok 257 - F26b wire refuses accessor and coercion payloads without reading their values
+  ---
+  duration_ms: 4.6336
+  type: 'test'
+  ...
+# Subtest: F26b wire non-buffer and forged-buffer frames refuse without input traps
+ok 258 - F26b wire non-buffer and forged-buffer frames refuse without input traps
+  ---
+  duration_ms: 3.9429
+  type: 'test'
+  ...
+# Subtest: F26b request binds a complete canonical transcript including empty deletion-free input
+ok 259 - F26b request binds a complete canonical transcript including empty deletion-free input
+  ---
+  duration_ms: 5.4894
+  type: 'test'
+  ...
+# Subtest: F26b request refuses malformed base64url, malformed transcript and excess raw bytes
+ok 260 - F26b request refuses malformed base64url, malformed transcript and excess raw bytes
+  ---
+  duration_ms: 10.7614
+  type: 'test'
+  ...
+# Subtest: F26b request rejects session generation nonce root and approval overrides
+ok 261 - F26b request rejects session generation nonce root and approval overrides
+  ---
+  duration_ms: 10.8181
+  type: 'test'
+  ...
+# Subtest: F26b request requires canonical finite framing and exact fields
+ok 262 - F26b request requires canonical finite framing and exact fields
+  ---
+  duration_ms: 6.3104
+  type: 'test'
+  ...
+# Subtest: F26b signatures cannot be adopted from the separate pre-commit domain
+ok 263 - F26b signatures cannot be adopted from the separate pre-commit domain
+  ---
+  duration_ms: 28.2626
+  type: 'test'
+  ...
+# Subtest: F26b physical root identity is stable case-insensitive and contains no file contents
+ok 264 - F26b physical root identity is stable case-insensitive and contains no file contents
+  ---
+  duration_ms: 24.0849
+  type: 'test'
+  ...
+# Subtest: F26b physical identity refuses relative UNC drive-relative noncanonical control and nonstring inputs
+ok 265 - F26b physical identity refuses relative UNC drive-relative noncanonical control and nonstring inputs
+  ---
+  duration_ms: 10.3054
+  type: 'test'
+  ...
+# Subtest: F26b file or missing root cannot be converted into directory identity
+ok 266 - F26b file or missing root cannot be converted into directory identity
+  ---
+  duration_ms: 10.2157
+  type: 'test'
+  ...
+# Subtest: F26b junction root and junction ancestor refuse without following worktree contents
+ok 267 - F26b junction root and junction ancestor refuse without following worktree contents
+  ---
+  duration_ms: 15.5453
+  type: 'test'
+  ...
+# Subtest: F26b root replacement changes physical identity with unchanged directory name
+ok 268 - F26b root replacement changes physical identity with unchanged directory name
+  ---
+  duration_ms: 12.4264
+  type: 'test'
+  ...
+# Subtest: F26b genuine checked refs freeze exact transcript digest and structured updates
+ok 269 - F26b genuine checked refs freeze exact transcript digest and structured updates
+  ---
+  duration_ms: 80.3978
+  type: 'test'
+  ...
+# Subtest: F26b checked refs empty and deletion transcripts retain their exact meanings
+ok 270 - F26b checked refs empty and deletion transcripts retain their exact meanings
+  ---
+  duration_ms: 92.1538
+  type: 'test'
+  ...
+# Subtest: F26b checked refs malformed transcript flag exceptions or initially disabled admission refuse
+ok 271 - F26b checked refs malformed transcript flag exceptions or initially disabled admission refuse
+  ---
+  duration_ms: 9.471
+  type: 'test'
+  ...
+# Subtest: F26b checked refs withdrawal latches across disable and reenable
+ok 272 - F26b checked refs withdrawal latches across disable and reenable
+  ---
+  duration_ms: 57.5785
+  type: 'test'
+  ...
+# Subtest: F26b checked refs physical root replacement permanently withdraws held authority
+ok 273 - F26b checked refs physical root replacement permanently withdraws held authority
+  ---
+  duration_ms: 50.8566
+  type: 'test'
+  ...
+# Subtest: F26b checked refs metadata changes and byte-identical replacement revoke final authority
+ok 274 - F26b checked refs metadata changes and byte-identical replacement revoke final authority
+  ---
+  duration_ms: 126.0863
+  type: 'test'
+  ...
+# Subtest: F26b checked refs sanitize ambient process credentials hooks and config authority
+ok 275 - F26b checked refs sanitize ambient process credentials hooks and config authority
+  ---
+  duration_ms: 40.854
+  type: 'test'
+  ...
+1..275
+# tests 275
+# suites 0
+# pass 275
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 63416.8212

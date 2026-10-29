@@ -1,0 +1,5 @@
+const fs=require('node:fs'),assert=require('node:assert/strict');const own=n=>__dirname+'/'+n;let s=fs.readFileSync(own('native-physical-admission-05.cjs'),'utf8');
+const start=s.indexOf('function verifyRow('),end=s.indexOf('function run(',start);assert(start>=0&&end>start);
+const method="function verifyRow(row,installed=false){const helper=path.resolve(__dirname,'../20261028-f29-protection-center-6c93e15a/streamed-vendor-pin-08.cjs'),binding=path.join(path.dirname(helper),'accessibility-binding-01.cjs');assert.equal(sha(fs.readFileSync(helper)),'c75755d859d04551742c375b49440f7f5a1e9bc01b350440ddb4e89a4f415b90');assert.equal(sha(fs.readFileSync(binding)),'041484fc2204b3054eb72e8f9e101c77b677b0f2f71ae08aafa0b611ca4b7fe3');return require(helper).verifyStreamedPin(row,{singleLink:!installed});}\n";
+s=s.slice(0,start)+method+s.slice(end);s=s.replaceAll('native-launch-binding-02.json','native-launch-binding-03.json').replace('b.vendorFacts.forEach(verifyRow);','b.vendorFacts.forEach(row=>verifyRow(row,true));');
+fs.writeFileSync(own('native-physical-admission-09.cjs'),s,{flag:'wx'});

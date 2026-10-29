@@ -1,0 +1,274 @@
+﻿TAP version 13
+# Subtest: F26b real controller reviewed resume replaces a valid signed prior descriptor with a new signed session
+ok 1 - F26b real controller reviewed resume replaces a valid signed prior descriptor with a new signed session
+  ---
+  duration_ms: 3811.0201
+  type: 'test'
+  ...
+# Subtest: F26b real controller preserves a tampered prior descriptor and refuses resume rather than overwriting it
+ok 2 - F26b real controller preserves a tampered prior descriptor and refuses resume rather than overwriting it
+  ---
+  duration_ms: 383.2717
+  type: 'test'
+  ...
+# Subtest: F26b real controller stale restore review preserves a newer generation record and edited hook
+ok 3 - F26b real controller stale restore review preserves a newer generation record and edited hook
+  ---
+  duration_ms: 168.1297
+  type: 'test'
+  ...
+# Subtest: F26b real controller stale record after backup retrieval cannot be overwritten by rollback bookkeeping
+ok 4 - F26b real controller stale record after backup retrieval cannot be overwritten by rollback bookkeeping
+  ---
+  duration_ms: 102.3438
+  type: 'test'
+  ...
+# Subtest: F26b real controller withdraws live status and result authority when its exact service becomes unavailable
+ok 5 - F26b real controller withdraws live status and result authority when its exact service becomes unavailable
+  ---
+  duration_ms: 161.5576
+  type: 'test'
+  ...
+# Subtest: F26b real controller cannot replace a missing signing key while resuming retained ownership
+ok 6 - F26b real controller cannot replace a missing signing key while resuming retained ownership
+  ---
+  duration_ms: 137.714
+  type: 'test'
+  ...
+# Subtest: F26b real controller useful restore durably retains exact private journal and opaque public discoverability
+ok 7 - F26b real controller useful restore durably retains exact private journal and opaque public discoverability
+  ---
+  duration_ms: 124.8174
+  type: 'test'
+  ...
+# Subtest: F26b real controller journal-store race retains its private revision without overwriting a foreign root record
+ok 8 - F26b real controller journal-store race retains its private revision without overwriting a foreign root record
+  ---
+  duration_ms: 88.3933
+  type: 'test'
+  ...
+# Subtest: F26b restore exact existing custom hook and default absence under explicit flag-off restoration authority
+ok 9 - F26b restore exact existing custom hook and default absence under explicit flag-off restoration authority
+  ---
+  duration_ms: 39.9292
+  type: 'test'
+  ...
+# Subtest: F26b restore rejects malformed exact receipt schema and dangerous records without dependency effects
+ok 10 - F26b restore rejects malformed exact receipt schema and dangerous records without dependency effects
+  ---
+  duration_ms: 68.9406
+  type: 'test'
+  ...
+# Subtest: F26b restore checks current owned digest and exact mode before modal and preserves unknown owner state
+ok 11 - F26b restore checks current owned digest and exact mode before modal and preserves unknown owner state
+  ---
+  duration_ms: 11.4538
+  type: 'test'
+  ...
+# Subtest: F26b restore review is frozen metadata only and cancellation or disabled authority cannot retrieve or mutate
+ok 12 - F26b restore review is frozen metadata only and cancellation or disabled authority cannot retrieve or mutate
+  ---
+  duration_ms: 13.4912
+  type: 'test'
+  ...
+# Subtest: F26b restore withholds missing corrupt noncanonical mismatched and unsupported backup originals
+ok 13 - F26b restore withholds missing corrupt noncanonical mismatched and unsupported backup originals
+  ---
+  duration_ms: 54.7597
+  type: 'test'
+  ...
+# Subtest: F26b restore awaits one withdrawal after review and backup validation before exact guarded write
+ok 14 - F26b restore awaits one withdrawal after review and backup validation before exact guarded write
+  ---
+  duration_ms: 3.4373
+  type: 'test'
+  ...
+# Subtest: F26b restore rechecks early authority and reviewed owner identity after each asynchronous boundary
+ok 15 - F26b restore rechecks early authority and reviewed owner identity after each asynchronous boundary
+  ---
+  duration_ms: 13.3224
+  type: 'test'
+  ...
+# Subtest: F26b restore withdrawal uncertainty or post-withdraw owner drift is incomplete without write or retry
+ok 16 - F26b restore withdrawal uncertainty or post-withdraw owner drift is incomplete without write or retry
+  ---
+  duration_ms: 11.8989
+  type: 'test'
+  ...
+# Subtest: F26b restore uncertain sync writes and readback preserve edits and never retry even when false already mutated
+ok 17 - F26b restore uncertain sync writes and readback preserve edits and never retry even when false already mutated
+  ---
+  duration_ms: 15.5448
+  type: 'test'
+  ...
+# Subtest: F26b restore requires durable rollback save then final exact readback and retains incomplete on save uncertainty
+ok 18 - F26b restore requires durable rollback save then final exact readback and retains incomplete on save uncertainty
+  ---
+  duration_ms: 10.5598
+  type: 'test'
+  ...
+# Subtest: F26b restore has no await between final synchronous read current and success with paired immediate withdrawal
+ok 19 - F26b restore has no await between final synchronous read current and success with paired immediate withdrawal
+  ---
+  duration_ms: 4.2881
+  type: 'test'
+  ...
+# Subtest: F26b restore is one-shot including concurrent review and sanitizes dependency exceptions without extra authority
+ok 20 - F26b restore is one-shot including concurrent review and sanitizes dependency exceptions without extra authority
+  ---
+  duration_ms: 8.9028
+  type: 'test'
+  ...
+# Subtest: F26b hook transaction current authority is strict with no default or truthy enable fallback
+ok 21 - F26b hook transaction current authority is strict with no default or truthy enable fallback
+  ---
+  duration_ms: 44.7407
+  type: 'test'
+  ...
+# Subtest: F26b hook transaction owner cancellation precedes every key service backup record and mutation
+ok 22 - F26b hook transaction owner cancellation precedes every key service backup record and mutation
+  ---
+  duration_ms: 2.4413
+  type: 'test'
+  ...
+# Subtest: F26b hook transaction privately copies original bytes and rejects duplicate runs without new authority
+not ok 23 - F26b hook transaction privately copies original bytes and rejects duplicate runs without new authority
+  ---
+  duration_ms: 13.6112
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\prePushHookTransaction.test.ts:2:9146'
+  failureType: 'testCodeFailure'
+  error: 'Caller Buffer mutation after construction cannot change captured original recovery bytes.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\prePushHookTransaction.test.ts:138:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F26b hook transaction useful absent install stores exact absence and platform-applicable mode
+not ok 24 - F26b hook transaction useful absent install stores exact absence and platform-applicable mode
+  ---
+  duration_ms: 5.3271
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\prePushHookTransaction.test.ts:2:9833'
+  failureType: 'testCodeFailure'
+  error: 'Absent install remains useful with the actual applicable new-file mode.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\prePushHookTransaction.test.ts:150:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F26b hook transaction preserves supported original body exit7 and exact existing modes in private recovery
+not ok 25 - F26b hook transaction preserves supported original body exit7 and exact existing modes in private recovery
+  ---
+  duration_ms: 3.9657
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\prePushHookTransaction.test.ts:2:11470'
+  failureType: 'testCodeFailure'
+  error: 'New finite prefix must preserve the original shell body and exit7 exactly.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\prePushHookTransaction.test.ts:158:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F26b hook transaction malformed or mismatched prepared pins cannot reach backups or writes
+ok 26 - F26b hook transaction malformed or mismatched prepared pins cannot reach backups or writes
+  ---
+  duration_ms: 13.2055
+  type: 'test'
+  ...
+# Subtest: F26b hook transaction unsupported originals refuse before modal key service and backup creation
+ok 27 - F26b hook transaction unsupported originals refuse before modal key service and backup creation
+  ---
+  duration_ms: 10.1176
+  type: 'test'
+  ...
+# Subtest: F26b hook transaction preparation key errors or absent authority cannot write or fabricate cleanup ownership
+ok 28 - F26b hook transaction preparation key errors or absent authority cannot write or fabricate cleanup ownership
+  ---
+  duration_ms: 3.1413
+  type: 'test'
+  ...
+# Subtest: F26b hook transaction encrypted backup failure or nonexact readback refuses every write and withdraws once
+ok 29 - F26b hook transaction encrypted backup failure or nonexact readback refuses every write and withdraws once
+  ---
+  duration_ms: 19.0705
+  type: 'test'
+  ...
+# Subtest: F26b hook transaction durable PREPARED success is required before the first guarded write
+ok 30 - F26b hook transaction durable PREPARED success is required before the first guarded write
+  ---
+  duration_ms: 8.2169
+  type: 'test'
+  ...
+# Subtest: F26b hook transaction pre-key source identity mode or projection drift refuses before preparation
+ok 31 - F26b hook transaction pre-key source identity mode or projection drift refuses before preparation
+  ---
+  duration_ms: 5.45
+  type: 'test'
+  ...
+# Subtest: F26b hook transaction post-prepare source identity projection and live flag races prevent first write
+ok 32 - F26b hook transaction post-prepare source identity projection and live flag races prevent first write
+  ---
+  duration_ms: 13.1957
+  type: 'test'
+  ...
+# Subtest: F26b hook transaction failed write with exact original preserved reports unavailable without overwriting it
+ok 33 - F26b hook transaction failed write with exact original preserved reports unavailable without overwriting it
+  ---
+  duration_ms: 5.6444
+  type: 'test'
+  ...
+# Subtest: F26b hook transaction failed write that nevertheless installed exact owned after bytes safely rolls back
+ok 34 - F26b hook transaction failed write that nevertheless installed exact owned after bytes safely rolls back
+  ---
+  duration_ms: 7.9562
+  type: 'test'
+  ...
+# Subtest: F26b hook transaction postwrite projection and APPLIED save failures roll back only exact owned after bytes
+ok 35 - F26b hook transaction postwrite projection and APPLIED save failures roll back only exact owned after bytes
+  ---
+  duration_ms: 7.3007
+  type: 'test'
+  ...
+# Subtest: F26b hook transaction final read and current are synchronous with a paired immediate withdrawal control
+ok 36 - F26b hook transaction final read and current are synchronous with a paired immediate withdrawal control
+  ---
+  duration_ms: 5.8104
+  type: 'test'
+  ...
+# Subtest: F26b hook transaction preserves owner-edited or unknown bytes and records incomplete recovery
+ok 37 - F26b hook transaction preserves owner-edited or unknown bytes and records incomplete recovery
+  ---
+  duration_ms: 11.1696
+  type: 'test'
+  ...
+# Subtest: F26b hook transaction rollback write readback or durable-save failure remains incomplete with one cleanup attempt
+ok 38 - F26b hook transaction rollback write readback or durable-save failure remains incomplete with one cleanup attempt
+  ---
+  duration_ms: 10.4648
+  type: 'test'
+  ...
+1..38
+# tests 38
+# suites 0
+# pass 35
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 8060.0402

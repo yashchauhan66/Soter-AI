@@ -1,0 +1,52 @@
+﻿TAP version 13
+# Subtest: F26b real Git shell preserves exact transcript, original args/env and original exit code
+ok 1 - F26b real Git shell preserves exact transcript, original args/env and original exit code
+  ---
+  duration_ms: 495.2994
+  type: 'test'
+  ...
+# Subtest: F26b real shell preserves empty stdin through the bounded worker sentinel
+ok 2 - F26b real shell preserves empty stdin through the bounded worker sentinel
+  ---
+  duration_ms: 525.8872
+  type: 'test'
+  ...
+# Subtest: F26b worker refusal prevents original hook body execution
+ok 3 - F26b worker refusal prevents original hook body execution
+  ---
+  duration_ms: 324.6525
+  type: 'test'
+  ...
+# Subtest: F26b missing replay sentinel prevents original hook body execution
+ok 4 - F26b missing replay sentinel prevents original hook body execution
+  ---
+  duration_ms: 495.0278
+  type: 'test'
+  ...
+# Subtest: F26b wrapper refuses caller collisions without replacing owner variables
+ok 5 - F26b wrapper refuses caller collisions without replacing owner variables
+  ---
+  duration_ms: 181.1731
+  type: 'test'
+  ...
+# Subtest: F26b exact original newlines survive command substitution
+ok 6 - F26b exact original newlines survive command substitution
+  ---
+  duration_ms: 249.0808
+  type: 'test'
+  ...
+# Subtest: F26b finite replay worker can refuse its byte budget without executing an original
+ok 7 - F26b finite replay worker can refuse its byte budget without executing an original
+  ---
+  duration_ms: 182.9429
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3163.6459

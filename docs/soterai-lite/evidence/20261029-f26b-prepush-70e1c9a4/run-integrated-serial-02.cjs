@@ -1,0 +1,23 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto'),assert=require('node:assert/strict');
+const helper=path.resolve(__dirname,'../20261027-f27-self-hygiene-8c16e402/native-owned-phase-01.cjs');
+const sha=b=>crypto.createHash('sha256').update(b).digest('hex');assert.equal(sha(fs.readFileSync(helper)),'c3ca6d3b159ecbd825a0e917a40e5c24cb9aa3aeaa76d67a3fa0fc18113dea4f');
+const {phase}=require(helper),repo=path.resolve(__dirname,'../../../..'),own=n=>path.join(__dirname,n),read=p=>JSON.parse(fs.readFileSync(p,'utf8').replace(/^\uFEFF/,'')),put=(n,v)=>fs.writeFileSync(own(n),JSON.stringify(v,null,2)+'\n',{flag:'wx'}),q=s=>"'"+s.replaceAll("'","''")+"'",results=[],keep=setInterval(()=>{},1000);
+const proof=read(own('full-inputs-02.json')),proofSha256=sha(fs.readFileSync(own('full-inputs-02.json')));
+function verify(){assert.equal(proof.files.length,proof.fileCount);for(const row of proof.files){const f=path.join(repo,row.path),s=fs.lstatSync(f);assert(s.isFile()&&!s.isSymbolicLink()&&s.nlink===1);const b=fs.readFileSync(f);assert.equal(b.length,row.bytes,row.path);assert.equal(sha(b),row.sha256,row.path);}}
+async function step(name,args,cwd=repo){verify();assert(!fs.existsSync(own(name+'.txt')));const command='& '+q(path.join(repo,'docs/soterai-lite/evidence/20261013-l0-resume-88fb9432/run-check.ps1'))+' -FilePath '+q(process.execPath)+' -ArgumentList @('+args.map(q).join(',')+') -OutputFile '+q(own(name+'.txt'))+' -WorkingDirectory '+q(cwd);
+ const r=await phase({executable:'C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe',args:['-NoLogo','-NoProfile','-NonInteractive','-ExecutionPolicy','Bypass','-EncodedCommand',Buffer.from(command,'utf16le').toString('base64')],cwd:repo,env:{...process.env,TEMP:'D:\\SoterAI-Lite-test-profiles\\f03-unit-temp',TMP:'D:\\SoterAI-Lite-test-profiles\\f03-unit-temp'},run:__dirname,name,profile:'SYNTHETIC_COMPONENT_BUILD_ONLY_NO_CODE_PUSH_OR_NATIVE09',deadlineMs:1800000});
+ const receipt=read(own(name+'.txt.result.json'));assert.equal(sha(fs.readFileSync(own(name+'.txt'))),receipt.sha256.toLowerCase());
+ const row={name,status:r.closed.code===0&&r.closed.signal===null&&receipt.exitCode===0&&!r.deadline&&!r.error&&!r.overflow&&r.close.stdoutEOF&&r.close.stderrEOF?'PASS_CLOSED_WRAPPER_AND_CANONICAL_RECEIPT':'FAIL_OR_INCOMPLETE_NO_LATER_PHASE',actualClose:true,wrapperExit:r.closed.code,innerExit:receipt.exitCode,signal:r.closed.signal,stdoutEOF:r.close.stdoutEOF,stderrEOF:r.close.stderrEOF,deadlineExceeded:r.deadline,signalsRequested:0};put(name+'-verification.json',row);results.push(row);assert.equal(row.status,'PASS_CLOSED_WRAPPER_AND_CANONICAL_RECEIPT');verify();
+}
+(async()=>{
+ verify();put('integrated-serial-start-02.json',{status:'CURRENT_F26B_SERIAL_STARTED_NOT_COMPLETED',pid:process.pid,observedAt:new Date().toISOString(),proofSha256,signalsRequested:0,native09:'USER_DEFERRED_NOT_RUN',push:'NOT_AUTHORIZED_NOT_RUN'});
+ await step('compiler-full-02',['node_modules/typescript/bin/tsc','--noEmit','-p','packages/vscode-extension/tsconfig.json']);
+ await step('focused-combined-02',['--import','tsx','--test','--test-concurrency=1',...fs.readdirSync(path.join(repo,'packages/vscode-extension/src/__tests__')).filter(n=>/^(prePush|pushRootSnapshot|checkedPrePush).*\.test\.ts$/.test(n)).sort().map(n=>'packages/vscode-extension/src/__tests__/'+n)]);
+ await step('backend-typecheck-02',['node_modules/typescript/bin/tsc','--noEmit','-p','apps/local-ai-broker/tsconfig.json']);
+ await step('backend-tests-02',['--import','tsx','--test','--test-concurrency=1','src/__tests__/**/*.test.ts'],path.join(repo,'apps/local-ai-broker'));
+ await step('full-tests-02',['--import','tsx','--test','--test-concurrency=1','../vscode-extension/src/__tests__/**/*.test.ts'],path.join(repo,'packages/soterai-lite'));
+ await step('readiness-02',['packages/vscode-extension/scripts/generate-readiness.mjs','--check']);
+ await step('package-02',['packages/soterai-lite/scripts/package.cjs','soterai-lite-0.7.0-f26b-20261029-attempt01.vsix']);
+ put('integrated-serial-result-02.json',{status:'CURRENT_F26B_SOURCE_AND_PACKAGE_PASS_CONTENT_NATIVE_PUSH_PENDING',observedAt:new Date().toISOString(),results,proofSha256,signalsRequested:0,native09:'USER_DEFERRED_NOT_RUN',push:'NOT_AUTHORIZED_NOT_RUN'});
+})().catch(error=>{put('integrated-serial-failure-02.json',{status:'FAIL_OR_INCOMPLETE_NO_LATER_PHASE_NO_AUTO_RETRY',observedAt:new Date().toISOString(),results,errorName:error instanceof Error?error.name:'UnknownFailure',message:String(error?.message).slice(0,300),signalsRequested:0});process.exitCode=1;}).finally(()=>clearInterval(keep));

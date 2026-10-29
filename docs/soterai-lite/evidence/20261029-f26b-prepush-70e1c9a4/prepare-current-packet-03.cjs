@@ -1,0 +1,24 @@
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const own=n=>path.join(__dirname,n),put=(n,s)=>fs.writeFileSync(own(n),s,{flag:'wx'});
+const proof='81fb9f8d559434242a67a316f0609a5c79c1b6b351cb783d7f3af365669f495f';
+const oldSteps="['compiler-full-02','focused-combined-02','backend-typecheck-02','backend-tests-02','full-tests-02','readiness-02','package-02']";
+const newSteps="['compiler-full-03','parity-and-command-focused-03','focused-combined-02','backend-typecheck-02','backend-tests-02','full-tests-03','readiness-03','package-03']";
+function base(s){return s.replaceAll('full-inputs-02.json','full-inputs-03.json').replaceAll('355ec5a564da2e26c6fe8e6d2d08d433dd837dd08c97b67fe7fc9bdfe3bc3be2',proof).replaceAll('integrated-serial-result-02.json','integrated-serial-result-03.json').replaceAll('content-inspection-02.json','content-inspection-03.json').replaceAll('vsix-extracted-02','vsix-extracted-03').replaceAll('full-tests-02','full-tests-03').replaceAll('readiness-02','readiness-03').replaceAll('package-02','package-03');}
+let content=fs.readFileSync(own('run-content-02.cjs'),'utf8');assert(content.includes(oldSteps));content=content.replace(oldSteps,newSteps);content=base(content).replaceAll('offline-inventory-02','offline-inventory-03');put('run-content-03.cjs',content);
+let build=base(fs.readFileSync(own('native-launch-build-drivers-02.cjs'),'utf8')).replace('serial.results.length,7','serial.results.length,8');put('native-launch-build-drivers-03.cjs',build);
+let admission=base(fs.readFileSync(own('native-launch-admission-01.ps1.txt'),'utf8'));
+admission=admission.replaceAll('FROZEN_CURRENT_F26B_IMPLEMENTATION_NOT_NATIVE_OR_PUSH_ACCEPTANCE','FROZEN_F26B_COMMAND_HELPER_PARITY_CORRECTION_NOT_NATIVE_OR_PUSH_ACCEPTANCE').replaceAll('@($taskSerial.results).Count -ne 7','@($taskSerial.results).Count -ne 8').replaceAll('Fresh closed serial7','Fresh closed serial8');
+const psOld="@('compiler-full-02','focused-combined-02','backend-typecheck-02','backend-tests-02','full-tests-03','readiness-03','package-03')",psNew="@('compiler-full-03','parity-and-command-focused-03','focused-combined-02','backend-typecheck-02','backend-tests-02','full-tests-03','readiness-03','package-03')";
+assert(admission.includes(psOld));admission=admission.replace(psOld,psNew);put('native-launch-admission-03.ps1.txt',admission);
+let candidate=fs.readFileSync(own('native-launch-candidate-01.ps1.txt'),'utf8').replaceAll('native-launch-admission-01.ps1','native-launch-admission-03.ps1');
+const vendorCheck="if(([Diagnostics.FileVersionInfo]::GetVersionInfo($CodePath)).ProductVersion -cne '1.143.1'){throw 'Pinned Code version differs.'}";
+assert(candidate.includes(vendorCheck));candidate=candidate.replace(vendorCheck,vendorCheck+"\n$taskHostReview=Read-F26BJson (Resolve-F26BRepo $taskBinding.hostReview.path);if([IO.Path]::GetFullPath($CodePath) -cne [IO.Path]::GetFullPath($taskHostReview.currentHost.executable.path)){throw 'Exact installed Code path required.'}");
+candidate=candidate.replace("@{schemaVersion=1;status='ACTUAL_F26B_PRIMARY_EDITOR_CLOSED';","@{schemaVersion=1;syntheticOnly=$true;status='ACTUAL_F26B_PRIMARY_EDITOR_CLOSED';");
+const resultMarker=" if($Phase -ceq 'primary' -and $Observed.readyForInterphase -ne $true)";
+assert(candidate.includes(resultMarker));
+candidate=candidate.replace(resultMarker," if(@($Observed.ownerListeners).Count -eq 0 -or @($Observed.ownerListeners|Where-Object{$_.listened -ne $true -or $_.loopback -ne $true}).Count -ne 0){throw 'Actual numeric-loopback owner listener observations required.'}\n if($Phase -ceq 'restart' -and @($Observed.ownerListeners|Where-Object{$_.closed -ne $true}).Count -ne 0){throw 'Actual final owner listener closure required.'}\n"+resultMarker);
+put('native-launch-candidate-03.ps1.txt',candidate);
+let affected=base(fs.readFileSync(own('affected-current-admission-02.cjs'),'utf8'));
+affected=affected.replace("const STEPS=['compiler-full-02','focused-combined-02','backend-typecheck-02','backend-tests-02','full-tests-03','readiness-03','package-03','content-02'];","const STEPS="+newSteps.slice(0,-1)+",'content-03'];").replace('STEPS.slice(0,7)','STEPS.slice(0,8)');
+assert(affected.includes("'parity-and-command-focused-03'"));put('affected-current-admission-03.cjs',affected);
+console.log(JSON.stringify({status:'PREPARED_CURRENT03_SUCCESSORS_NOT_EXECUTED',sourceProof:proof,files:['run-content-03.cjs','native-launch-build-drivers-03.cjs','native-launch-admission-03.ps1.txt','native-launch-candidate-03.ps1.txt','affected-current-admission-03.cjs'],configuredPush:'NOT_AUTHORIZED_NOT_RUN',f26aNative09:'USER_DEFERRED_NOT_RUN'}));

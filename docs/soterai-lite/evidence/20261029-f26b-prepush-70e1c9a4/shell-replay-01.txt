@@ -1,0 +1,103 @@
+﻿TAP version 13
+# Subtest: F26b real Git shell preserves exact transcript, original args/env and original exit code
+not ok 1 - F26b real Git shell preserves exact transcript, original args/env and original exit code
+  ---
+  duration_ms: 223.4694
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\prePushShellReplay.test.ts:3:2915'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    1 !== 7
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 7
+  actual: 1
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\prePushShellReplay.test.ts:26:143)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F26b real shell preserves empty stdin through the bounded worker sentinel
+not ok 2 - F26b real shell preserves empty stdin through the bounded worker sentinel
+  ---
+  duration_ms: 176.8124
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\prePushShellReplay.test.ts:3:3307'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    1 !== 7
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 7
+  actual: 1
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\prePushShellReplay.test.ts:27:138)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F26b worker refusal prevents original hook body execution
+ok 3 - F26b worker refusal prevents original hook body execution
+  ---
+  duration_ms: 177.7409
+  type: 'test'
+  ...
+# Subtest: F26b missing replay sentinel prevents original hook body execution
+ok 4 - F26b missing replay sentinel prevents original hook body execution
+  ---
+  duration_ms: 176.0384
+  type: 'test'
+  ...
+# Subtest: F26b wrapper refuses caller collisions without replacing owner variables
+ok 5 - F26b wrapper refuses caller collisions without replacing owner variables
+  ---
+  duration_ms: 135.9214
+  type: 'test'
+  ...
+# Subtest: F26b exact original newlines survive command substitution
+not ok 6 - F26b exact original newlines survive command substitution
+  ---
+  duration_ms: 174.4956
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\prePushShellReplay.test.ts:3:4521'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    1 !== 7
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 7
+  actual: 1
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\prePushShellReplay.test.ts:31:159)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F26b finite replay worker can refuse its byte budget without executing an original
+ok 7 - F26b finite replay worker can refuse its byte budget without executing an original
+  ---
+  duration_ms: 150.3734
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 4
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1984.1731

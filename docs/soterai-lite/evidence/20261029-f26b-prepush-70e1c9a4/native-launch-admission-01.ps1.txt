@@ -1,0 +1,50 @@
+# PREPARED TEXT ONLY. Materialization and exact binding review are separate.
+Set-StrictMode -Version Latest
+function Get-F26BSha([string]$File){return (Get-FileHash -LiteralPath $File -Algorithm SHA256).Hash.ToLowerInvariant()}
+function Assert-F26BFile([string]$File,[string]$Sha,[long]$Bytes=-1){
+ if($Sha -cnotmatch '^[a-f0-9]{64}$' -or -not(Test-Path -LiteralPath $File -PathType Leaf)){throw 'Missing exact bound file.'}
+ $taskItem=Get-Item -LiteralPath $File -Force
+ if($taskItem.Attributes -band [IO.FileAttributes]::ReparsePoint -or ($Bytes -ge 0 -and $taskItem.Length -ne $Bytes) -or (Get-F26BSha $File) -cne $Sha){throw ('Bound file differs: '+$File)}
+}
+function Read-F26BJson([string]$File,[long]$Cap=1048576){if((Get-Item -LiteralPath $File).Length -gt $Cap){throw 'Metadata cap exceeded.'};return Get-Content -LiteralPath $File -Raw -Encoding UTF8|ConvertFrom-Json}
+function Resolve-F26BOwn([string]$Relative){
+ $taskResolved=[IO.Path]::GetFullPath((Join-Path $PSScriptRoot $Relative));if(-not $taskResolved.StartsWith($PSScriptRoot+[IO.Path]::DirectorySeparatorChar,[StringComparison]::OrdinalIgnoreCase)){throw 'Own binding escaped evidence root.'};return $taskResolved
+}
+function Resolve-F26BRepo([string]$Relative){
+ $taskResolved=[IO.Path]::GetFullPath((Join-Path $taskRepo $Relative));if(-not $taskResolved.StartsWith($taskRepo+[IO.Path]::DirectorySeparatorChar,[StringComparison]::OrdinalIgnoreCase)){throw 'Source binding escaped repository.'};return $taskResolved
+}
+function Assert-F26BOrdinary([string]$File){for($taskCursor=[IO.Path]::GetFullPath($File);;){if((Get-Item -LiteralPath $taskCursor -Force).Attributes -band [IO.FileAttributes]::ReparsePoint){throw 'Linked input ancestry refused.'};$taskParent=Split-Path -Parent $taskCursor;if(-not $taskParent -or $taskParent -ceq $taskCursor){break};$taskCursor=$taskParent}}
+function Assert-F26BOwnFact($Fact){$taskFile=Resolve-F26BOwn $Fact.path;Assert-F26BOrdinary $taskFile;Assert-F26BFile $taskFile $Fact.sha256 $Fact.bytes;return $taskFile}
+function Assert-F26BAdmission([string]$File,[string]$ExpectedSha){
+ Assert-F26BOrdinary $File;Assert-F26BFile $File $ExpectedSha
+ $taskBinding=Read-F26BJson $File
+ if($taskBinding.schemaVersion -ne 1 -or $taskBinding.status -cne 'F26B_EXACT_CURRENT_FULL_CONTENT_NATIVE36_PREPARED_NOT_RUN_NO_PUSH'){throw 'Exact current F26b native-only binding required.'}
+ $taskProof=Read-F26BJson (Assert-F26BOwnFact $taskBinding.sourceProof)
+ if($taskProof.status -cne 'FROZEN_CURRENT_F26B_IMPLEMENTATION_NOT_NATIVE_OR_PUSH_ACCEPTANCE' -or $taskProof.fileCount -ne 1070 -or @($taskProof.files).Count -ne 1070){throw 'Exact current1070 proof required.'}
+ foreach($taskFact in $taskProof.files){$taskSourceFile=Resolve-F26BRepo $taskFact.path;Assert-F26BOrdinary $taskSourceFile;Assert-F26BFile $taskSourceFile $taskFact.sha256 $taskFact.bytes}
+ $taskSerial=Read-F26BJson (Assert-F26BOwnFact $taskBinding.serial)
+ if($taskSerial.status -cne 'CURRENT_F26B_SOURCE_AND_PACKAGE_PASS_CONTENT_NATIVE_PUSH_PENDING' -or $taskSerial.proofSha256 -cne $taskBinding.sourceProof.sha256 -or @($taskSerial.results).Count -ne 7 -or $taskSerial.signalsRequested -ne 0){throw 'Fresh closed serial7 proof required.'}
+ foreach($taskPhase in @('compiler-full-02','focused-combined-02','backend-typecheck-02','backend-tests-02','full-tests-02','readiness-02','package-02')){
+  $taskRows=@($taskSerial.results|Where-Object{$_.name -ceq $taskPhase});if($taskRows.Count -ne 1 -or $taskRows[0].status -cne 'PASS_CLOSED_WRAPPER_AND_CANONICAL_RECEIPT' -or $taskRows[0].actualClose -ne $true -or $taskRows[0].wrapperExit -ne 0 -or $taskRows[0].innerExit -ne 0 -or $taskRows[0].stdoutEOF -ne $true -or $taskRows[0].stderrEOF -ne $true -or $taskRows[0].signalsRequested -ne 0 -or $taskRows[0].deadlineExceeded -ne $false){throw 'Closed fresh phase proof differs.'}
+  $taskCanonical=Read-F26BJson (Resolve-F26BOwn ($taskPhase+'.txt.result.json'));Assert-F26BFile (Resolve-F26BOwn ($taskPhase+'.txt')) $taskCanonical.sha256.ToLowerInvariant();if($taskCanonical.exitCode -ne 0){throw 'Canonical phase failed.'}
+  $taskOwned=Read-F26BJson (Resolve-F26BOwn ($taskPhase+'-owned-close.json'));if($taskOwned.actualClose -ne $true -or $taskOwned.exitCode -ne 0 -or $null -ne $taskOwned.signal -or $taskOwned.stdoutEOF -ne $true -or $taskOwned.stderrEOF -ne $true -or $taskOwned.overflow -ne $false -or $taskOwned.streamError -ne $false -or $taskOwned.deadlineExceeded -ne $false -or $taskOwned.signalsRequested -ne 0){throw 'Real phase ownership differs.'}
+ }
+ $taskContent=Read-F26BJson (Assert-F26BOwnFact $taskBinding.content)
+ if($taskContent.status -cne 'CONTENT_AND_OFFLINE_INVENTORY_PASS_NOT_NATIVE_OR_FEATURE_ACCEPTANCE' -or $taskContent.sourceCount -ne 1070 -or $taskContent.machineSettings -ne 87 -or $taskContent.restricted -ne $true -or $taskContent.entryCount -ne 15 -or @($taskContent.entries).Count -ne 15 -or $taskContent.runtimeCount -ne 4 -or $taskContent.full.fail -ne 0 -or $taskContent.full.cancelled -ne 0){throw 'Fresh exact current content/full required.'}
+ $taskVsixFile=Resolve-F26BRepo $taskBinding.vsix.path;Assert-F26BFile $taskVsixFile $taskBinding.vsix.sha256 $taskBinding.vsix.bytes
+ if($taskContent.vsix.sha256 -cne $taskBinding.vsix.sha256 -or $taskContent.vsix.bytes -ne $taskBinding.vsix.bytes -or $taskContent.vsix.extensionSha256 -cne $taskBinding.frontendSha256){throw 'Fresh exact VSIX binding differs.'}
+ $taskExtracted=Resolve-F26BOwn $taskBinding.extractedRoot
+ foreach($taskEntry in $taskContent.entries){if($taskEntry.path.StartsWith('extension/')){$taskEntryFile=[IO.Path]::GetFullPath((Join-Path $taskExtracted $taskEntry.path.Substring(10)));if(-not $taskEntryFile.StartsWith($taskExtracted+[IO.Path]::DirectorySeparatorChar,[StringComparison]::OrdinalIgnoreCase)){throw 'Extraction escaped.'};Assert-F26BOrdinary $taskEntryFile;Assert-F26BFile $taskEntryFile $taskEntry.sha256 $taskEntry.bytes}}
+ [void](Assert-F26BOwnFact $taskBinding.driver);[void](Assert-F26BOwnFact $taskBinding.driverSource)
+ $taskFreeze=Read-F26BJson (Assert-F26BOwnFact $taskBinding.caseFreeze)
+ if(@($taskFreeze.cases|Where-Object{$_.phase -ceq 'primary'}).Count -ne 30 -or @($taskFreeze.cases|Where-Object{$_.phase -ceq 'restart'}).Count -ne 6 -or $taskFreeze.sha256 -cne $taskBinding.driverSource.sha256 -or @($taskFreeze.parseErrors).Count -ne 0 -or @($taskFreeze.diagnostics).Count -ne 0){throw 'Exact current source36 freeze required.'}
+ $taskDrivers=Read-F26BJson (Assert-F26BOwnFact $taskBinding.driverProvenance);$taskNativeRows=@($taskDrivers.drivers|Where-Object{$_.path -ceq $taskBinding.driver.path})
+ if($taskNativeRows.Count -ne 1 -or $taskNativeRows[0].sha256 -cne $taskBinding.driver.sha256 -or $taskNativeRows[0].bytes -ne $taskBinding.driver.bytes){throw 'Exact emitted driver provenance required.'}
+ foreach($taskDriver in $taskDrivers.drivers){[void](Assert-F26BOwnFact $taskDriver)}
+ $taskGuard=Read-F26BJson (Assert-F26BOwnFact $taskBinding.guard)
+ foreach($taskVendor in $taskBinding.vendorFacts){$taskVendorFile=if([IO.Path]::IsPathRooted($taskVendor.path)){$taskVendor.path}else{Resolve-F26BRepo $taskVendor.path};Assert-F26BOrdinary $taskVendorFile;Assert-F26BFile $taskVendorFile $taskVendor.sha256 $taskVendor.bytes}
+ foreach($taskFact in $taskGuard.facts){$taskGuardFile=if([IO.Path]::IsPathRooted($taskFact.path)){$taskFact.path}else{Resolve-F26BRepo $taskFact.path};Assert-F26BOrdinary $taskGuardFile;Assert-F26BFile $taskGuardFile $taskFact.sha256 $taskFact.bytes}
+ $taskHostReviewFile=Resolve-F26BRepo $taskBinding.hostReview.path;Assert-F26BFile $taskHostReviewFile $taskBinding.hostReview.sha256 $taskBinding.hostReview.bytes
+ [void](Assert-F26BOwnFact $taskBinding.admission);[void](Assert-F26BOwnFact $taskBinding.candidate)
+ return $taskBinding
+}

@@ -1,0 +1,86 @@
+// Evidence-only isolated developer bootstrap, not a shipped runtime.
+const vscode=require('vscode'),fs=require('node:fs/promises'),crypto=require('node:crypto'),path=require('node:path');
+const prefix='SOTERAI_LITE_F26B_HOOK_',evidence=process.env[prefix+'EVIDENCE'],phase=process.env[prefix+'PHASE'],profile=process.env[prefix+'PROFILE'];
+const sha=b=>crypto.createHash('sha256').update(b).digest('hex');
+const same=(a,b)=>typeof a==='string'&&typeof b==='string'&&path.resolve(a).toLowerCase()===path.resolve(b).toLowerCase();
+const writeJson=(f,v)=>fs.writeFile(f,JSON.stringify(v,null,2)+'\n',{flag:'wx'});
+const startup=async stage=>{await fs.appendFile(evidence+'.startup.jsonl',JSON.stringify({phase,timestamp:new Date().toISOString(),stage})+'\n');};
+let actual,driver;
+const diagnostic=()=>typeof driver?.setupDiagnostic==='function'?driver.setupDiagnostic():undefined;
+const close=async()=>{const state=diagnostic();if(state?.halted||state?.busyChildren||state?.timedOutChildren){await startup('STOP_UNCONFIRMED_OWNERSHIP_RETAINED_NO_CLOSE');return;}await startup('close-start');await vscode.commands.executeCommand('workbench.action.closeWindow');await startup('close-end');};
+const failure=async(stage,error)=>writeJson(evidence+'.driver-error.json',{status:'FAIL',stage,errorName:error instanceof Error?error.name:'UnknownFailure',setup:diagnostic(),scope:'F26B_COMPONENT_NATIVE_ROUTE_NOT_CONFIGURED_PUSH'});
+const jsonBuiltinPins = [
+    {
+        "relative": "package.json",
+        "bytes": 3934,
+        "sha256": "9cd153a0d6bd8f8058b5f57c3f11c203228b102ec95e7a025d0e2a5448d662d3"
+    },
+    {
+        "relative": "client/dist/node/jsonClientMain.js",
+        "bytes": 653282,
+        "sha256": "6471beebe24498a7d7c7d1803b08c475b0cf88115cf9999905a7890d3a9d75ca"
+    },
+    {
+        "relative": "server/package.json",
+        "bytes": 1154,
+        "sha256": "9f89ec8214ef426f93002d427f1669027f41bece3a2f7f23787df45d58e237c4"
+    },
+    {
+        "relative": "server/dist/node/jsonServerMain.js",
+        "bytes": 357534,
+        "sha256": "b5425799cbb01710aa2f1ca48fd215d16e9c0d0d6f86447e2faeeaf5582d61e6"
+    }
+];
+const jsonBuiltinAppRoot = "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\e646868227\\resources\\app";
+async function joinPinnedJsonBuiltin() {
+    const folders = vscode.workspace.workspaceFolders;
+    const root = folders?.length === 1 && folders[0].uri.scheme === 'file' ? folders[0].uri.fsPath : undefined;
+    if (!vscode.workspace.isTrusted || vscode.env.remoteName !== undefined || !root
+        || !/^D:\\SoterAI-Lite-test-profiles\\f26b-prepush-native-[0-9TZ]+-[a-f0-9]{8}\\workspace$/i.test(root)
+        || !same(profile, path.join(path.dirname(root), 'profile'))
+        || !same(vscode.env.appRoot, jsonBuiltinAppRoot)) throw Error('Pinned trusted local synthetic profile required.');
+    if (await fs.readFile(path.join(root, '.synthetic-lite-f26b-prepush-host'), 'utf8') !== 'synthetic-only-v1')
+        throw Error('Synthetic marker required before vendor startup.');
+    const extension = vscode.extensions.getExtension('vscode.json-language-features');
+    const expectedRoot = path.join(jsonBuiltinAppRoot, 'extensions', 'json-language-features');
+    if (!extension || extension.id !== 'vscode.json-language-features' || extension.extensionUri.scheme !== 'file'
+        || !same(extension.extensionPath, expectedRoot) || !same(await fs.realpath(extension.extensionPath), expectedRoot)
+        || extension.packageJSON?.publisher !== 'vscode' || extension.packageJSON?.name !== 'json-language-features'
+        || extension.packageJSON?.version !== '10.0.0' || extension.packageJSON?.main !== './client/dist/node/jsonClientMain')
+        throw Error('Exact installed JSON builtin required.');
+    const files = [];
+    for (const pin of jsonBuiltinPins) {
+        const file = path.join(expectedRoot, pin.relative), stat = await fs.lstat(file);
+        if (!stat.isFile() || stat.isSymbolicLink() || stat.size !== pin.bytes || !same(await fs.realpath(file), file))
+            throw Error('Pinned vendor JSON input identity differs.');
+        const raw = await fs.readFile(file);
+        if (raw.length !== pin.bytes || sha(raw) !== pin.sha256) throw Error('Pinned vendor JSON input bytes differ.');
+        files.push({ relative: pin.relative, bytes: raw.length, sha256: pin.sha256 });
+    }
+    const schemaDownload = () => vscode.workspace.getConfiguration('json').get('schemaDownload.enable');
+    if (schemaDownload() !== false) throw Error('Schema downloads must be disabled before vendor activation.');
+    const wasActive = extension.isActive;
+    await startup('json-builtin-activation-start');
+    // This vendor call starts a language-server child. Its streams/EOF are not
+    // owner/Git evidence and are never admitted by the public-Git observer.
+    await extension.activate();
+    if (!extension.isActive || schemaDownload() !== false) throw Error('JSON builtin activation/configuration incomplete.');
+    await startup('json-builtin-activation-end');
+    await writeJson(evidence + '.json-builtin-startup.json', {
+        schemaVersion: 1, scope: 'PINNED_VENDOR_JSON_STARTUP_ONLY_NOT_A_36_CASE_RESULT', phase,
+        extensionId: extension.id, appRoot: jsonBuiltinAppRoot, extensionPath: expectedRoot,
+        trustedLocalSyntheticProfile: true, schemaDownloadEnabled: false, wasActive, isActive: extension.isActive,
+        files, ordering: 'ACTIVATION_PROMISE_JOINED_BEFORE_ACTUAL_REQUIRE_DRIVER_REQUIRE_AND_ENVIRONMENT_BASELINE',
+        processEnvironmentAssignmentsByBootstrap: 0, ignoredEnvironmentKeys: 0, addedTimers: 0,
+        vendorLanguageServer: 'STARTUP_CHILD_OUTSIDE_OWNER_GIT_WITNESSES_NO_STREAM_OR_EOF_CLAIM',
+        rawVendorOutputCaptured: false, signalsRequested: 0
+    });
+}
+
+exports.activate=async function(context){
+ try{await startup('activation-enter');await joinPinnedJsonBuiltin();await startup('actual-require-start');actual=require('../dist/extension.js');await startup('actual-require-end');driver=require('./host/index.js');
+  if(typeof driver.beforeActivate!=='function')throw Error('Native beforeActivate required.');await startup('before-activate-start');await driver.beforeActivate(context);await startup('before-activate-end');await actual.activate(context);await startup('actual-activate-end');
+ }catch(error){await failure('activate',error);await close();return;}
+ setTimeout(async()=>{try{await startup('driver-run-start');await driver.run(context);await startup('driver-run-end');}catch(error){await failure('run',error);}finally{await close();}},1500);
+};
+exports.deactivate=function(...args){return typeof actual?.deactivate==='function'?actual.deactivate(...args):undefined;};

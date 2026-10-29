@@ -1,0 +1,130 @@
+﻿TAP version 13
+# Subtest: F26b wire signs and verifies an exact owner descriptor
+ok 1 - F26b wire signs and verifies an exact owner descriptor
+  ---
+  duration_ms: 216.5714
+  type: 'test'
+  ...
+# Subtest: F26b wire descriptor signature requires the reviewed public key
+ok 2 - F26b wire descriptor signature requires the reviewed public key
+  ---
+  duration_ms: 5.7319
+  type: 'test'
+  ...
+# Subtest: F26b wire refuses changed descriptor fields without a fresh signature
+ok 3 - F26b wire refuses changed descriptor fields without a fresh signature
+  ---
+  duration_ms: 4.8196
+  type: 'test'
+  ...
+# Subtest: F26b wire descriptor cannot select root installation worker or runtime
+ok 4 - F26b wire descriptor cannot select root installation worker or runtime
+  ---
+  duration_ms: 12.3358
+  type: 'test'
+  ...
+# Subtest: F26b wire descriptors admit only exact loopback fixed-route URLs
+ok 5 - F26b wire descriptors admit only exact loopback fixed-route URLs
+  ---
+  duration_ms: 2.0548
+  type: 'test'
+  ...
+# Subtest: F26b wire refuses malformed non-Ed25519 and noncanonical public keys
+ok 6 - F26b wire refuses malformed non-Ed25519 and noncanonical public keys
+  ---
+  duration_ms: 22.3093
+  type: 'test'
+  ...
+# Subtest: F26b wire descriptor and decision signatures have different domains
+ok 7 - F26b wire descriptor and decision signatures have different domains
+  ---
+  duration_ms: 2.9218
+  type: 'test'
+  ...
+# Subtest: F26b wire signs and verifies each fixed decision status
+ok 8 - F26b wire signs and verifies each fixed decision status
+  ---
+  duration_ms: 6.2703
+  type: 'test'
+  ...
+# Subtest: F26b wire requires exact fresh nonce session root and generation
+ok 9 - F26b wire requires exact fresh nonce session root and generation
+  ---
+  duration_ms: 8.2988
+  type: 'test'
+  ...
+# Subtest: F26b wire changed decision or index metadata cannot preserve a valid signature
+ok 10 - F26b wire changed decision or index metadata cannot preserve a valid signature
+  ---
+  duration_ms: 5.2512
+  type: 'test'
+  ...
+# Subtest: F26b wire signed envelope is finite canonical JSON with no duplicate fields
+ok 11 - F26b wire signed envelope is finite canonical JSON with no duplicate fields
+  ---
+  duration_ms: 3.1601
+  type: 'test'
+  ...
+# Subtest: F26b wire unknown envelope payload and binding fields refuse
+ok 12 - F26b wire unknown envelope payload and binding fields refuse
+  ---
+  duration_ms: 2.0163
+  type: 'test'
+  ...
+# Subtest: F26b wire invalid schema versions status UUIDs and digests refuse
+ok 13 - F26b wire invalid schema versions status UUIDs and digests refuse
+  ---
+  duration_ms: 1.6109
+  type: 'test'
+  ...
+# Subtest: F26b wire refuses accessor and coercion payloads without reading their values
+ok 14 - F26b wire refuses accessor and coercion payloads without reading their values
+  ---
+  duration_ms: 1.871
+  type: 'test'
+  ...
+# Subtest: F26b wire non-buffer and forged-buffer frames refuse without input traps
+ok 15 - F26b wire non-buffer and forged-buffer frames refuse without input traps
+  ---
+  duration_ms: 2.2261
+  type: 'test'
+  ...
+# Subtest: F26b request binds a complete canonical transcript including empty deletion-free input
+ok 16 - F26b request binds a complete canonical transcript including empty deletion-free input
+  ---
+  duration_ms: 6.9329
+  type: 'test'
+  ...
+# Subtest: F26b request refuses malformed base64url, malformed transcript and excess raw bytes
+ok 17 - F26b request refuses malformed base64url, malformed transcript and excess raw bytes
+  ---
+  duration_ms: 2.9453
+  type: 'test'
+  ...
+# Subtest: F26b request rejects session generation nonce root and approval overrides
+ok 18 - F26b request rejects session generation nonce root and approval overrides
+  ---
+  duration_ms: 1.7648
+  type: 'test'
+  ...
+# Subtest: F26b request requires canonical finite framing and exact fields
+ok 19 - F26b request requires canonical finite framing and exact fields
+  ---
+  duration_ms: 1.7268
+  type: 'test'
+  ...
+# Subtest: F26b signatures cannot be adopted from the separate pre-commit domain
+ok 20 - F26b signatures cannot be adopted from the separate pre-commit domain
+  ---
+  duration_ms: 14.3021
+  type: 'test'
+  ...
+1..20
+# tests 20
+# suites 0
+# pass 20
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 968.2207

@@ -1,0 +1,154 @@
+﻿TAP version 13
+# Subtest: F26b absent-hook wrapper uses fixed scrubbed worker grammar and separate ownership marker
+ok 1 - F26b absent-hook wrapper uses fixed scrubbed worker grammar and separate ownership marker
+  ---
+  duration_ms: 182.9615
+  type: 'test'
+  ...
+# Subtest: F26b replays bounded input with a sentinel instead of unbounded shell reads
+ok 2 - F26b replays bounded input with a sentinel instead of unbounded shell reads
+  ---
+  duration_ms: 6.6553
+  type: 'test'
+  ...
+# Subtest: F26b preserves reviewed shell body once and isolates wrapper variables
+ok 3 - F26b preserves reviewed shell body once and isolates wrapper variables
+  ---
+  duration_ms: 4.9445
+  type: 'test'
+  ...
+# Subtest: F26b refuses unknown shebang, BOM, binary and malformed UTF8 originals
+ok 4 - F26b refuses unknown shebang, BOM, binary and malformed UTF8 originals
+  ---
+  duration_ms: 10.2392
+  type: 'test'
+  ...
+# Subtest: F26b refuses recursively owned, pre-commit-owned and oversized originals
+ok 5 - F26b refuses recursively owned, pre-commit-owned and oversized originals
+  ---
+  duration_ms: 6.981
+  type: 'test'
+  ...
+# Subtest: F26b public pin validation never accepts a partial or noncanonical pin
+ok 6 - F26b public pin validation never accepts a partial or noncanonical pin
+  ---
+  duration_ms: 2.7728
+  type: 'test'
+  ...
+# Subtest: F26b owned wrapper emits only a fixed refusal and retains original buffer
+ok 7 - F26b owned wrapper emits only a fixed refusal and retains original buffer
+  ---
+  duration_ms: 5.7226
+  type: 'test'
+  ...
+# Subtest: F26b wrapper quotes apostrophes in validated native pin paths
+ok 8 - F26b wrapper quotes apostrophes in validated native pin paths
+  ---
+  duration_ms: 3.1951
+  type: 'test'
+  ...
+# Subtest: F26b accepts complete public creation and update metadata with frozen copies
+ok 9 - F26b accepts complete public creation and update metadata with frozen copies
+  ---
+  duration_ms: 295.2008
+  type: 'test'
+  ...
+# Subtest: F26b accepts empty and exact deletion transcripts without granting authority
+ok 10 - F26b accepts empty and exact deletion transcripts without granting authority
+  ---
+  duration_ms: 10.1862
+  type: 'test'
+  ...
+# Subtest: F26b enforces coherent deletion semantics
+ok 11 - F26b enforces coherent deletion semantics
+  ---
+  duration_ms: 6.3549
+  type: 'test'
+  ...
+# Subtest: F26b requires exact complete LF framing and four single-space fields
+ok 12 - F26b requires exact complete LF framing and four single-space fields
+  ---
+  duration_ms: 2.9789
+  type: 'test'
+  ...
+# Subtest: F26b rejects noncanonical SHA1, SHA256 and invalid object fields
+ok 13 - F26b rejects noncanonical SHA1, SHA256 and invalid object fields
+  ---
+  duration_ms: 4.1519
+  type: 'test'
+  ...
+# Subtest: F26b permits inert detached source expressions and Unicode branch metadata
+ok 14 - F26b permits inert detached source expressions and Unicode branch metadata
+  ---
+  duration_ms: 4.9284
+  type: 'test'
+  ...
+# Subtest: F26b refuses invalid or unsupported destination refs
+ok 15 - F26b refuses invalid or unsupported destination refs
+  ---
+  duration_ms: 3.8186
+  type: 'test'
+  ...
+# Subtest: F26b refuses duplicate, case and normalization destination aliases as a whole
+ok 16 - F26b refuses duplicate, case and normalization destination aliases as a whole
+  ---
+  duration_ms: 4.0634
+  type: 'test'
+  ...
+# Subtest: F26b accepts exactly32 updates and rejects the33rd sentinel
+ok 17 - F26b accepts exactly32 updates and rejects the33rd sentinel
+  ---
+  duration_ms: 5.0052
+  type: 'test'
+  ...
+# Subtest: F26b refuses overlong source/ref fields and input budgets
+ok 18 - F26b refuses overlong source/ref fields and input budgets
+  ---
+  duration_ms: 2.8262
+  type: 'test'
+  ...
+# Subtest: F26b rejects malformed UTF8, BOM, control and invisible fields
+ok 19 - F26b rejects malformed UTF8, BOM, control and invisible fields
+  ---
+  duration_ms: 2.0603
+  type: 'test'
+  ...
+# Subtest: F26b cannot release a valid prefix before a later malformed update
+ok 20 - F26b cannot release a valid prefix before a later malformed update
+  ---
+  duration_ms: 2.2411
+  type: 'test'
+  ...
+# Subtest: F26b rejects proxies and lookalikes without executing coercion or property traps
+ok 21 - F26b rejects proxies and lookalikes without executing coercion or property traps
+  ---
+  duration_ms: 4.1
+  type: 'test'
+  ...
+# Subtest: F26b copies native Buffer bytes without invoking overridden instance methods
+ok 22 - F26b copies native Buffer bytes without invoking overridden instance methods
+  ---
+  duration_ms: 2.959
+  type: 'test'
+  ...
+# Subtest: F26b transcript digest binds exact admitted bytes and rejects malformed input
+ok 23 - F26b transcript digest binds exact admitted bytes and rejects malformed input
+  ---
+  duration_ms: 5.6915
+  type: 'test'
+  ...
+# Subtest: F26b bounded arbitrary framing never throws or admits an invalid suffix
+ok 24 - F26b bounded arbitrary framing never throws or admits an invalid suffix
+  ---
+  duration_ms: 20.2324
+  type: 'test'
+  ...
+1..24
+# tests 24
+# suites 0
+# pass 24
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1787.2861

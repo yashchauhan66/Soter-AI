@@ -1,0 +1,15 @@
+const fs = require('node:fs');
+const root = 'packages/vscode-extension/src/__tests__/';
+let text = fs.readFileSync(root + 'preCommitCommands.test.ts','utf8');
+text = text.replaceAll('PreCommit','PrePush').replaceAll('preCommit','prePush').replaceAll('pre-commit','pre-push').replaceAll('F26a','F26b').replaceAll('F26A','F26B');
+text = text.replace('../history-hooks/commands', '../history-hooks/prePushCommands');
+text = text.replace(', "installGitSecretHook", "copyPrePushHookScript"', '').replace(', "installGitSecretHook"', '');
+const start = text.indexOf('test("F26b legacy copy');
+const end = text.indexOf('test("F26b completed-looking', start);
+if (start < 0 || end < start) throw Error('No exact legacy test block.');
+text = text.slice(0,start) + text.slice(end);
+text = text.replace(', ["installGitSecretHook", "install"]', '').replace('["install", "resume", "restore", "install"]','["install", "resume", "restore"]').replace('checks >= 4','checks >= 3');
+text = text.replace('install resume restore and legacy install','install resume restore').replace(' "installGitSecretHook",','');
+if (text.includes('installGitSecretHook') || text.includes('copyPrePushHookScript')) throw Error('Unexpected legacy alias.');
+fs.writeFileSync(root + 'prePushCommands.test.ts',text,{flag:'wx'});
+fs.writeFileSync('docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/command-test-derivation-01.json',JSON.stringify({source:root+'preCommitCommands.test.ts',target:root+'prePushCommands.test.ts',changes:'Separate four push commands, no legacy aliases; retained argument/identity/lifecycle/policy/no-IO oracles.'},null,2)+'\n',{flag:'wx'});

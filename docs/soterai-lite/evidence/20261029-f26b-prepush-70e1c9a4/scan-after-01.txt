@@ -1,0 +1,118 @@
+﻿TAP version 13
+# Subtest: F26b complete public proposed history permits only its held completed result
+ok 1 - F26b complete public proposed history permits only its held completed result
+  ---
+  duration_ms: 4641.6604
+  type: 'test'
+  ...
+# Subtest: F26b historical secret remains blocked after the proposed tip was sanitized
+ok 2 - F26b historical secret remains blocked after the proposed tip was sanitized
+  ---
+  duration_ms: 501.5264
+  type: 'test'
+  ...
+# Subtest: F26b merge-parent history cannot be omitted from the bounded scan
+ok 3 - F26b merge-parent history cannot be omitted from the bounded scan
+  ---
+  duration_ms: 429.4557
+  type: 'test'
+  ...
+# Subtest: F26b unknown suffix or unsupported blob never yields a clean-prefix ALLOW
+ok 4 - F26b unknown suffix or unsupported blob never yields a clean-prefix ALLOW
+  ---
+  duration_ms: 270.1831
+  type: 'test'
+  ...
+# Subtest: F26b binary and malformed config withhold the whole proposed history
+ok 5 - F26b binary and malformed config withhold the whole proposed history
+  ---
+  duration_ms: 648.4377
+  type: 'test'
+  ...
+# Subtest: F26b33-commit sentinel withholds instead of accepting the first32
+ok 6 - F26b33-commit sentinel withholds instead of accepting the first32
+  ---
+  duration_ms: 123.8698
+  type: 'test'
+  ...
+# Subtest: F26b traversal must contain every proposed nondeleted tip
+ok 7 - F26b traversal must contain every proposed nondeleted tip
+  ---
+  duration_ms: 130.5193
+  type: 'test'
+  ...
+# Subtest: F26b delete-only and empty transcripts avoid a fabricated object traversal
+ok 8 - F26b delete-only and empty transcripts avoid a fabricated object traversal
+  ---
+  duration_ms: 235.6938
+  type: 'test'
+  ...
+# Subtest: F26b public history honors every separate path context of a shared object
+ok 9 - F26b public history honors every separate path context of a shared object
+  ---
+  duration_ms: 252.6975
+  type: 'test'
+  ...
+# Subtest: F26b oversized blob and total data budgets withhold without a batch read
+ok 10 - F26b oversized blob and total data budgets withhold without a batch read
+  ---
+  duration_ms: 193.1047
+  type: 'test'
+  ...
+# Subtest: F26b unknown tree modes and missing objects cannot be skipped
+ok 11 - F26b unknown tree modes and missing objects cannot be skipped
+  ---
+  duration_ms: 156.22
+  type: 'test'
+  ...
+# Subtest: F26b exact batch object SHA1 is verified before detector use
+ok 12 - F26b exact batch object SHA1 is verified before detector use
+  ---
+  duration_ms: 217.4662
+  type: 'test'
+  ...
+# Subtest: F26b unsupported Git version and malformed traversal framing fail closed
+ok 13 - F26b unsupported Git version and malformed traversal framing fail closed
+  ---
+  duration_ms: 593.7929
+  type: 'test'
+  ...
+# Subtest: F26b caller-created capability objects launch no child
+ok 14 - F26b caller-created capability objects launch no child
+  ---
+  duration_ms: 50.8116
+  type: 'test'
+  ...
+# Subtest: F26b withdrawal retains pending ownership and prevents the next child
+ok 15 - F26b withdrawal retains pending ownership and prevents the next child
+  ---
+  duration_ms: 105.3836
+  type: 'test'
+  ...
+# Subtest: F26b premature COMPLETE cannot replace actual child closure
+ok 16 - F26b premature COMPLETE cannot replace actual child closure
+  ---
+  duration_ms: 134.0499
+  type: 'test'
+  ...
+# Subtest: F26b post-result drift revokes held ALLOW and one-shot start cannot repeat
+ok 17 - F26b post-result drift revokes held ALLOW and one-shot start cannot repeat
+  ---
+  duration_ms: 119.7862
+  type: 'test'
+  ...
+# Subtest: F26b scanner output contains status only, never original paths or values
+ok 18 - F26b scanner output contains status only, never original paths or values
+  ---
+  duration_ms: 171.8339
+  type: 'test'
+  ...
+1..18
+# tests 18
+# suites 0
+# pass 18
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 10256.2112

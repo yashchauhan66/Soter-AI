@@ -1,0 +1,49 @@
+{
+    "f26aNative09":  "USER_DEFERRED_NOT_RUN",
+    "children":  "No Git/editor/native/push child executed; Node test worker only; explicit discovery/service/artifact/root/policy/backups seams",
+    "after":  {
+                  "skip":  0,
+                  "pass":  23,
+                  "fail":  0,
+                  "receipt":  "projection-after-04.txt.result.json"
+              },
+    "before":  {
+                   "pass":  4,
+                   "fail":  6,
+                   "receipt":  "projection-before-02.txt.result.json"
+               },
+    "busyBefore":  {
+                       "pass":  0,
+                       "fail":  1,
+                       "receipt":  "projection-busy-before-01.txt.result.json"
+                   },
+    "observedAt":  "2026-10-29T08:32:34.4405482Z",
+    "sourceStable":  true,
+    "status":  "FOCUSED23_PASS_NOT_FULL_NATIVE_OR_PUSH_ACCEPTANCE",
+    "sandboxFailure":  "projection-before-01.txt",
+    "facts":  [
+                  {
+                      "path":  "packages/vscode-extension/src/history-hooks/PrePushController.ts",
+                      "sha256":  "26d88b27f0cd1927f88e8fb431bc14bb9b154be9d61f2e6f5ec9fd411de10ad7",
+                      "bytes":  31629
+                  },
+                  {
+                      "path":  "packages/vscode-extension/src/__tests__/prePushControllerProjection.review.test.ts",
+                      "sha256":  "1905070fca6a8ff938a09bf7aeedceba948d16ce52d0bad168127440cdb66659",
+                      "bytes":  15951
+                  },
+                  {
+                      "path":  "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/projection-controller-before-01.ts",
+                      "sha256":  "b8a9208fd9580597c43bcfa88df0da2a01dff6b9104ccc7dd7bf0d1e7f07d051",
+                      "bytes":  27308
+                  },
+                  {
+                      "path":  "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/projection-controller-pre-busy-01.ts",
+                      "sha256":  "7a1296996782030bd4e00382e224cbf7839c17b960fc93c5670cc29d3ca44a7a",
+                      "bytes":  31597
+                  }
+              ],
+    "systemScope":  "Explicit GIT_CONFIG_SYSTEM or GIT_CONFIG_NOSYSTEM=1; unknown implicit system layouts withheld",
+    "globalScope":  "Explicit GIT_CONFIG_GLOBAL or explicit HOME with .gitconfig and XDG git/config defaults; unbound Windows HOME fallback withheld",
+    "configuredGitPush":  "NOT_AUTHORIZED_NOT_RUN"
+}
