@@ -1,0 +1,141 @@
+{
+  "schemaVersion": 1,
+  "status": "REVIEWED_NEW_EDITOR_HOST_STATIC_ONLY_NATIVE_PENDING",
+  "observedAt": "2026-10-29T16:33:38.455Z",
+  "currentFeature": "F26b",
+  "independence": "LOW",
+  "scope": "Requested official application update; actual installed signature/hash and bounded API-name witnesses. Static review is not native behavior acceptance.",
+  "currentHost": {
+    "version": "1.144.0",
+    "fileAndProductVersionObserved": "1.144.0",
+    "commit": "2c33b50b16c472efe58357d1d2a8a5414bc23fbf",
+    "buildDate": "2026-10-27T20:18:03Z",
+    "quality": "stable",
+    "win32MutexName": "vscode",
+    "win32VersionedUpdate": true,
+    "target": "user",
+    "executable": {
+      "path": "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe",
+      "bytes": 238751552,
+      "sha256": "9f33ede68f3317402280fa997bc8963f93e67f2905e416d6bb092c03d60a37eb"
+    },
+    "applicationFiles": [
+      {
+        "path": "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\2c33b50b16\\resources\\app\\package.json",
+        "bytes": 15761,
+        "sha256": "ff2e82baa419211a9662fd7b3813bed2474034d11ee4396d58049206970b98b3"
+      },
+      {
+        "path": "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\2c33b50b16\\resources\\app\\product.json",
+        "bytes": 73538,
+        "sha256": "3eea952580361c67bd42d2c28c41baf21c5b9f1294e12701e35d1640e97600d9"
+      },
+      {
+        "path": "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\2c33b50b16\\resources\\app\\out\\mainImpl.js",
+        "bytes": 1372523,
+        "sha256": "24ef4589c6e002f7357240577e9e0901973604d1baae44d3121fc1c91b4f1186"
+      },
+      {
+        "path": "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\2c33b50b16\\resources\\app\\out\\vs\\workbench\\api\\node\\extensionHostProcess.js",
+        "bytes": 2351426,
+        "sha256": "2074cc8d484643df2d255135fa8a85a11acfdba4e537991e1e9df7da86f7d678"
+      }
+    ],
+    "extensionEngine": "^1.85.0",
+    "engineRangeAdmitsCurrentVersion": true
+  },
+  "priorReview": {
+    "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/host-version-review-proposal06.json",
+    "bytes": 11044,
+    "sha256": "8d0260e8f45fd0002fe0b1eab1d01e3448906aed9b42701013bb42cd34e939e6"
+  },
+  "apiReview": {
+    "source": {
+      "path": "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\2c33b50b16\\resources\\app\\out\\vs\\workbench\\api\\node\\extensionHostProcess.js",
+      "bytes": 2351426,
+      "sha256": "2074cc8d484643df2d255135fa8a85a11acfdba4e537991e1e9df7da86f7d678"
+    },
+    "checks": [
+      {
+        "api": "registerCommand",
+        "status": "NAME_PRESENT_STATIC_ONLY_NOT_BEHAVIOR_VERIFIED",
+        "utf16Offset": 1223055,
+        "witness": ")}registerApiCommand(t){let e=this.registerCommand(!1,t.id,async(...n)=>{let o=t.args.map((s,a)=>{if(!s.v"
+      },
+      {
+        "api": "showInformationMessage",
+        "status": "NAME_PRESENT_STATIC_ONLY_NOT_BEHAVIOR_VERIFIED",
+        "utf16Offset": 2141222,
+        "witness": "(b.onDidChangeWindowState)(I,C,D)},showInformationMessage(I,...C){return mx.showMessage(P,Tt.Info,I,C[0],C.slice"
+      },
+      {
+        "api": "showQuickPick",
+        "status": "NAME_PRESENT_STATIC_ONLY_NOT_BEHAVIOR_VERIFIED",
+        "utf16Offset": 2025915,
+        "witness": "this._workspace=d,this._commands=c}showQuickPick(d,c,u,m=ve.None){this._onDidSelectItem=void 0;let g=Pr"
+      },
+      {
+        "api": "createOutputChannel",
+        "status": "NAME_PRESENT_STATIC_ONLY_NOT_BEHAVIOR_VERIFIED",
+        "utf16Offset": 1349239,
+        "witness": ".visible=e===this.visibleChannelId}createOutputChannel(t,e,n){if(t=t.trim(),!t)throw new Error(\"illegal argum"
+      },
+      {
+        "api": "getConfiguration",
+        "status": "NAME_PRESENT_STATIC_ONLY_NOT_BEHAVIOR_VERIFIED",
+        "utf16Offset": 616760,
+        "witness": "eConfigurations.set(e,o)),o.add(n)}getConfigurations(){return this.configurationContributors}getConfigurat"
+      },
+      {
+        "api": "globalStorageUri",
+        "status": "NAME_PRESENT_STATIC_ONLY_NOT_BEHAVIOR_VERIFIED",
+        "utf16Offset": 1328426,
+        "witness": "storagePath.workspaceValue(e)},get globalStorageUri(){return c._storagePath.globalValue(e)},get extensionM"
+      },
+      {
+        "api": "storageUri",
+        "status": "NAME_PRESENT_STATIC_ONLY_NOT_BEHAVIOR_VERIFIED",
+        "utf16Offset": 1328368,
+        "witness": "sLocation,e.identifier.value)},get storageUri(){return c._storagePath.workspaceValue(e)},get globalS"
+      }
+    ],
+    "limitations": "Name presence does not prove semantics, hook behavior, storage mapping, withdrawal or affected routes. Exact native36 and affected gates remain."
+  },
+  "jsonBuiltinPins": [
+    {
+      "relative": "package.json",
+      "bytes": 3934,
+      "sha256": "9cd153a0d6bd8f8058b5f57c3f11c203228b102ec95e7a025d0e2a5448d662d3"
+    },
+    {
+      "relative": "client/dist/node/jsonClientMain.js",
+      "bytes": 653282,
+      "sha256": "6471beebe24498a7d7c7d1803b08c475b0cf88115cf9999905a7890d3a9d75ca"
+    },
+    {
+      "relative": "server/package.json",
+      "bytes": 1154,
+      "sha256": "9f89ec8214ef426f93002d427f1669027f41bece3a2f7f23787df45d58e237c4"
+    },
+    {
+      "relative": "server/dist/node/jsonServerMain.js",
+      "bytes": 357534,
+      "sha256": "b5425799cbb01710aa2f1ca48fd215d16e9c0d0d6f86447e2faeeaf5582d61e6"
+    }
+  ],
+  "officialRelease": {
+    "url": "https://code.visualstudio.com/updates/v1_144",
+    "observedVersion": "1.144.0",
+    "releaseDate": "2026-10-28",
+    "channel": "Stable",
+    "source": "Official release page browsed; no download by this helper"
+  },
+  "installedSignature": {
+    "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/vscode-update-recovery-evidence-01/installed-signature-17.json",
+    "bytes": 636,
+    "sha256": "1c569d853cab49abe7b7886b3803bb17b63a52cfcb53f7540b29e4c9953dcffb"
+  },
+  "native": "NOT_RUN_ON_NEW_HOST",
+  "f26aNative09": "USER_DEFERRED_NOT_RUN",
+  "configuredGitPush": "NOT_AUTHORIZED_NOT_RUN"
+}

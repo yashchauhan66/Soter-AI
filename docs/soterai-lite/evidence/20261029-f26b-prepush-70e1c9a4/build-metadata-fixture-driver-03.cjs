@@ -1,0 +1,23 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto'),assert=require('node:assert/strict'),esbuild=require('esbuild');
+const repo=path.resolve(__dirname,'../../../..'),own=n=>path.join(__dirname,n),sha=b=>crypto.createHash('sha256').update(b).digest('hex');
+const read=n=>JSON.parse(fs.readFileSync(own(n),'utf8').replace(/^\uFEFF/,''));
+const fact=file=>{const b=fs.readFileSync(file);return{path:path.relative(repo,file).replaceAll('\\','/'),bytes:b.length,sha256:sha(b)};};
+const check=row=>{const b=fs.readFileSync(path.resolve(repo,row.path));assert.equal(b.length,row.bytes,row.path);assert.equal(sha(b),row.sha256,row.path);};
+(async()=>{
+ const receipt=read('native-metadata-after-03.txt.result.json'),raw=fs.readFileSync(own('native-metadata-after-03.txt'));
+ assert.equal(receipt.exitCode,0);assert.equal(sha(raw),receipt.sha256.toLowerCase());assert(/^# tests 8$/m.test(raw.toString()));assert(/^# pass 8$/m.test(raw.toString()));assert(/^# fail 0$/m.test(raw.toString()));
+ const source=read('full-inputs-03.json');assert.equal(source.files.length,1070);source.files.forEach(check);
+ const freeze=read('native-fixture-static-result-03.json');assert.equal(freeze.status,'PASS_SOURCE_ONLY_NOT_EXECUTED_NO_DRIVER_EMIT');assert.equal(freeze.cases.length,36);assert.deepEqual(freeze.cases,read('native-fixture-static-result-02.json').cases);assert.equal(freeze.diagnostics.length,0);
+ const previous=read('native-driver-provenance-02.json');for(const row of [...previous.sourceInputs,...previous.auxiliaryInputs])check(row);
+ const oldRow=previous.drivers.find(row=>row.path.endsWith('/lite-prepush-guard-host.js'));assert(oldRow);const retained=previous.drivers.filter(row=>row!==oldRow);assert.equal(retained.length,24);retained.forEach(row=>check({...row,path:path.relative(repo,own(row.path)).replaceAll('\\','/')}));
+ const output=own('prebuilt-native-hosts-03');assert(!fs.existsSync(output));
+ const {parserBundleOptions}=require(path.join(repo,'packages/vscode-extension/scripts/parserBundleOptions.cjs'));
+ const built=await esbuild.build({...parserBundleOptions(repo),absWorkingDir:repo,entryPoints:{'lite-prepush-guard-host':path.relative(repo,own(freeze.input))},outdir:output,bundle:true,platform:'node',format:'cjs',external:['vscode'],tsconfig:path.join(repo,'packages/vscode-extension/tsconfig.json'),loader:{'.txt':'ts'},sourcemap:false,metafile:true,logLevel:'warning'});
+ const native={...fact(path.join(output,'lite-prepush-guard-host.js')),path:'prebuilt-native-hosts-03/lite-prepush-guard-host.js'};
+ const sourceInputs=[...previous.sourceInputs.filter(row=>!row.path.endsWith('/native-prepush-02.host.ts.txt')),...Object.keys(built.metafile.inputs).map(file=>fact(path.resolve(repo,file)))];
+ assert.equal(new Set(sourceInputs.map(row=>row.path)).size,sourceInputs.length);sourceInputs.forEach(check);source.files.forEach(check);
+ const current={...previous,status:'F26B_CURRENT1070_RETAINED24_FRESH_METADATA_FIXTURE_DRIVER_NOT_NATIVE_ACCEPTANCE',observedAt:new Date().toISOString(),entryPoints:{...previous.entryPoints,'lite-prepush-guard-host':path.relative(repo,own(freeze.input)).replaceAll('\\','/')},sourceInputs,drivers:[...retained,native],nativeDriver:native,caseFreeze:fact(own('native-fixture-static-result-03.json')),retainedNonPrecommitDrivers:24,retainedDriverBytesExact:true,buildScope:'Only corrected evidence-only HP01 metadata driver emitted; original24 driver files and all their code inputs freshly byte-verified, not rebuilt or native-accepted on new host.',metadataComponent:fact(own('native-metadata-after-03.txt')),correction:fact(own('native-metadata-fix-review-03.json'))};
+ fs.writeFileSync(own('native-driver-provenance-03.json'),JSON.stringify(current,null,2)+'\n',{flag:'wx'});
+ console.log(JSON.stringify({status:current.status,nativeDriver:native,drivers:current.drivers.length,retained24BytesExact:true,sourceCount:1070}));
+})().catch(error=>{console.error(error);process.exitCode=1;});

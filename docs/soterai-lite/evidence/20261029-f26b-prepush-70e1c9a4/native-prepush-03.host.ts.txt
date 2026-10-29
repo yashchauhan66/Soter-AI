@@ -1,0 +1,482 @@
+/** PREPARED SOURCE ONLY. F26b component native route, NOT configured-push acceptance.
+ * Actual isolated VSCode APIs, installed wrapper, fixed Git/sh and real loopback.
+ * The fixture NEVER invokes Git push. LOW independence: review choices are scripted.
+ * Launcher MUST bind the fresh current VSIX, source, four runtimes and vendor pins,
+ * retain actual primary close+bothEOF/two absence observations, then start restart.
+ */
+import * as vscode from "vscode";
+import assert from "node:assert/strict";
+import { createHash, createPublicKey, verify } from "node:crypto";
+import childProcess, { type ChildProcess, type SpawnOptions } from "node:child_process";
+import fs from "node:fs";
+import fsp from "node:fs/promises";
+import http, { type IncomingMessage, type ServerResponse } from "node:http";
+import { dirname, isAbsolute, join, relative, resolve } from "node:path";
+import type { Writable } from "node:stream";
+import { deflateSync } from "node:zlib";
+
+const GIT = "C:\\Program Files\\Git\\cmd\\git.exe", SH = "C:\\Program Files\\Git\\usr\\bin\\sh.exe";
+const GIT_SHA256 = "da240fe9bc24895b3e04150a4990b8a6ff329ecabcd8f19684c2cc310da5ef3f";
+const SH_SHA256 = "fc362aae1f217d34d02237d99527839dd6cf85b37c7a0277109400bfa0faa594";
+const PREFIX = "SOTERAI_LITE_F26B_HOOK_", FLAG = "lite.historyHooks.prePush";
+const MARKER = ".synthetic-lite-f26b-prepush-host", SOURCE = ".env.prepush-worktree-unused", RENAMED = "unused-renamed.txt";
+const CUSTOM = ".synthetic prepush hooks", PRIVATE = "sk-proj-" + "SYNTHETIC_F26B_NATIVE_PROVIDER_ONLY_VALUE".repeat(2);
+const SECRET = "API_KEY=" + PRIVATE + "\n", ORIGINAL_ENV = "TEST_ONLY_F26B_ORIGINAL_ENV_70e1c9a4";
+const RUNTIME_FILES = ["extension.js", "local-ai-broker.js", "soterai-mcp-server.js", "pre-commit-client.js"] as const;
+const COMMANDS = ["installPrePushGuard", "resumePrePushGuard", "restorePrePushGuard", "prePushGuardStatus"] as const;
+const ACTIONS = ["Review and install", "Resume reviewed owner", "Review and restore"] as const;
+const CHILD_LIMIT = 90000, STREAM_LIMIT = 1048576 + 128 * 96 + 8192, ZERO = "0".repeat(40);
+const nativeSpawn = childProcess.spawn, nativeRead = fsp.readFile, nativeReadSync = fs.readFileSync, nativeCreateServer = http.createServer;
+const restorers: Array<() => void> = [], listeners: vscode.Disposable[] = [], originalBodies = new Map<number, Buffer>();
+const children: ChildReceipt[] = [], pendingChildren: Array<Promise<Completion>> = [], wires: WireReceipt[] = [];
+const reviews: Array<{ caseId: string; action: string; modal: boolean; approved: boolean }> = [];
+const stores = { signing: 0, backupKey: 0, record: 0, recovery: 0, unrelated: 0 };
+const ownerListeners: Array<{ listened: boolean; loopback: boolean; closed: boolean }> = [];
+let root = "", profile = "", parent = "", output = "", caseId = "SETUP", setupStage = "initial";
+let phase: "primary" | "restart", approve = true, halted = false, metadataLeak = false;
+let sourceDocuments = 0, sourceDocumentEvents = 0, directWorktreeReads = 0, directObjectReads = 0, ownerServers = 0;
+let contextRef: vscode.ExtensionContext, ownerEnvironment: NodeJS.ProcessEnv = {}, parentEnvironment = "", currentPin: Pin | undefined, codeSha256 = "";
+type ChildKind = "projection" | "scan" | "client" | "hook-component";
+type ChildReceipt = { caseId: string; kind: ChildKind; operation: string; closed: boolean; code: number | null; signal: NodeJS.Signals | null;
+    stdoutEOF: boolean; stderrEOF: boolean; stdoutBytes: number; stderrBytes: number; stdoutSha256: string; stderrSha256: string;
+    signalsRequested: number; spawnFailed: boolean; streamError: boolean; overflow: boolean; timedOut: boolean; busy: boolean;
+    argumentsValid: boolean; environmentValid: boolean; parentEnvironmentUnchanged: boolean; stdinObjects: number; invalidInput: boolean };
+type Completion = { receipt: ChildReceipt; stdout: Buffer; stderr: Buffer };
+type Observation = { id: string; scope: string; status: "NOT_RUN" | "PASS" | "FAIL"; errorName?: string };
+type Fact = { present: boolean; bytes: number; sha256: string | null; mode: number | null };
+type RuntimeFact = { file: string; bytes: number; sha256: string };
+type PublicStatus = { status: "LIVE" | "OWNER_REVIEW_REQUIRED" | "UNAVAILABLE"; busy: boolean; scope: string };
+type Pin = { version: number; root: string; generation: string; publicKey: string; worker: string; workerSha256: string; runtime: string;
+    runtimeSha256: string; descriptor: string; systemRoot: string };
+type Saved = { version: number; pin: string; projectionFingerprint: string; receipt: { generation: string; hooksRelative: string; backup: string;
+    beforeDigest: string; afterDigest: string; originalPresent: boolean; originalMode?: number; mode: number }; state: string };
+type WireReceipt = { caseId: string; requestEnded: boolean; requestClosed: boolean; responseFinished: boolean; responseClosed: boolean;
+    requestValid: boolean; signatureValid: boolean; transcriptMatched: boolean; overflow: boolean; status?: string;
+    generation?: string; session?: string; nonce?: string; transcriptSha256?: string; rootIdentity?: string };
+type Tips = { public: string; removed: string; renamed: string; merge: string; secret: string; capped: string; unknown: string };
+type RestartState = { schemaVersion: 1; syntheticOnly: true; scope: "F26B_COMPONENT_NATIVE_ROUTE_NOT_CONFIGURED_PUSH"; root: string; ready: true;
+    oldFlag?: boolean; runtimeBindings: RuntimeFact[]; executionManifest: Fact; hook: Fact; config: Fact; source: Fact; head: Fact;
+    generation: string; publicPinSha256: string; recordSha256: string; descriptor: Fact; session: string; tips: Tips;
+    backupFacts: Array<{ name: string; fact: Fact }>; ownerEnvironmentSha256: string; driverSha256: string; policy: Array<{ relative: string; fact: Fact }> };
+const sha = (bytes: Uint8Array | string) => createHash("sha256").update(bytes).digest("hex");
+const environmentDigest = () => sha(JSON.stringify(Object.entries(process.env).sort(([a], [b]) => a.localeCompare(b))));
+const within = (base: string, file: string) => { const part = relative(resolve(base), resolve(file)); return part === "" || !part.startsWith("..") && !isAbsolute(part); };
+const samePath = (a: string, b: string) => resolve(a).toLowerCase() === resolve(b).toLowerCase();
+const recordKey = () => "soterai.prePush.record.v1." + sha(root.toLowerCase());
+const markerFile = () => join(root, ".git", "f26b-original-marker");
+const stateFile = () => join(parent, "prepush-restart-state.json");
+const closeReceiptFile = () => join(parent, "prepush-editor-close.json");
+const tipsFile = () => join(parent, "prepush-synthetic-tips.json");
+const configFile = () => join(root, ".git", "config");
+const BASE_CONFIG = "[core]\n repositoryformatversion = 0\n bare = false\n autocrlf = false\n";
+let tips: Tips;
+
+function safeMetadata(value: unknown): void {
+    const text = typeof value === "string" ? value : JSON.stringify(value) ?? "";
+    if (text.includes(PRIVATE) || text.includes(SECRET) || text.includes(ORIGINAL_ENV)) { metadataLeak = true; throw Error("Synthetic private content entered public metadata."); }
+}
+function patch(target: object, name: string, value: unknown): void {
+    const previous = Object.getOwnPropertyDescriptor(target, name);
+    Object.defineProperty(target, name, { configurable: true, writable: true, value });
+    restorers.push(() => previous ? Object.defineProperty(target, name, previous) : Reflect.deleteProperty(target, name));
+}
+async function until(predicate: () => boolean | Promise<boolean>, label: string, ms = 10000): Promise<void> {
+    const end = performance.now() + ms;
+    while (performance.now() < end) { if (await predicate()) return; await new Promise<void>(done => setTimeout(done, 20)); }
+    throw Error(label);
+}
+function ordinary(file: string): void {
+    assert(within(parent, file) || within(profile, file), "Fixture filesystem access escaped its retained synthetic container.");
+    assert(!fs.lstatSync(file).isSymbolicLink()); assert(samePath(fs.realpathSync(file), file));
+}
+async function fact(file: string): Promise<Fact> {
+    try { ordinary(file); const stat = await fsp.lstat(file); assert(stat.isFile() && stat.nlink === 1 && stat.size <= 536870912);
+        const bytes = await nativeRead(file); return { present: true, bytes: bytes.length, sha256: sha(bytes), mode: stat.mode & 0o777 }; }
+    catch (error) { if ((error as NodeJS.ErrnoException).code === "ENOENT") return { present: false, bytes: 0, sha256: null, mode: null }; throw error; }
+}
+function hashCode(): string {
+    const digest = createHash("sha256"), chunk = Buffer.alloc(65536), fd = fs.openSync(process.execPath, "r");
+    try { let offset = 0; for (;;) { const count = fs.readSync(fd, chunk, 0, chunk.length, offset); if (count === 0) break;
+        offset += count; assert(offset <= 536870912); digest.update(chunk.subarray(0, count)); }
+        return digest.digest("hex"); }
+    finally { fs.closeSync(fd); chunk.fill(0); }
+}
+function closed(row: ChildReceipt): void {
+    assert(row.closed && row.stdoutEOF && row.stderrEOF && !row.busy && !row.spawnFailed && !row.streamError && !row.overflow && !row.timedOut);
+    assert.equal(row.signal, null); assert.equal(row.signalsRequested, 0);
+    assert(row.argumentsValid && row.environmentValid && row.parentEnvironmentUnchanged && !row.invalidInput);
+}
+function success(row: ChildReceipt): void { closed(row); assert.equal(row.code, 0); }
+function observe(child: ChildProcess, kind: ChildKind, operation: string, argumentsValid = true, environmentValid = true): Promise<Completion> {
+    const row: ChildReceipt = { caseId, kind, operation, closed: false, code: null, signal: null, stdoutEOF: false, stderrEOF: false,
+        stdoutBytes: 0, stderrBytes: 0, stdoutSha256: "", stderrSha256: "", signalsRequested: 0, spawnFailed: false,
+        streamError: false, overflow: false, timedOut: false, busy: true, argumentsValid, environmentValid,
+        parentEnvironmentUnchanged: false, stdinObjects: 0, invalidInput: false };
+    children.push(row);
+    let finish!: (value: Completion) => void, completed = false;
+    const actual = new Promise<Completion>(done => finish = done); pendingChildren.push(actual);
+    const out: Buffer[] = [], err: Buffer[] = [], outHash = createHash("sha256"), errHash = createHash("sha256");
+    const timer = setTimeout(() => { row.timedOut = true; halted = true; }, CHILD_LIMIT);
+    child.kill = (() => { row.signalsRequested++; halted = true; throw Error("Native pre-push fixture forbids signals."); }) as typeof child.kill;
+    if (kind === "scan" && child.stdin) {
+        const end = child.stdin.end;
+        child.stdin.end = function (this: Writable, ...values: any[]) {
+            const input = typeof values[0] === "string" || Buffer.isBuffer(values[0]) ? Buffer.from(values[0]).toString("ascii") : "";
+            if (!["commits", "batch"].includes(operation) || !/^(?:[a-f0-9]{40}\n){1,128}$/.test(input)) row.invalidInput = true;
+            else row.stdinObjects = input.trimEnd().split("\n").length;
+            return Reflect.apply(end, this, values);
+        } as Writable["end"];
+    }
+    const joinClose = () => {
+        if (completed || !row.closed || !row.stdoutEOF || !row.stderrEOF) return;
+        completed = true; clearTimeout(timer); row.busy = false;
+        row.stdoutSha256 = outHash.digest("hex"); row.stderrSha256 = errHash.digest("hex");
+        row.parentEnvironmentUnchanged = environmentDigest() === parentEnvironment;
+        finish({ receipt: row, stdout: Buffer.concat(out), stderr: Buffer.concat(err) });
+    };
+    child.once("error", () => { row.spawnFailed = child.pid === undefined; row.streamError = child.pid !== undefined; halted = true; });
+    child.once("close", (code, signal) => { row.closed = true; row.code = code; row.signal = signal; joinClose(); });
+    for (const channel of ["stdout", "stderr"] as const) {
+        const stream = child[channel];
+        if (!stream) { row.streamError = true; halted = true; continue; }
+        stream.on("data", (bytes: Buffer) => {
+            if (channel === "stdout") { row.stdoutBytes += bytes.length; outHash.update(bytes); }
+            else { row.stderrBytes += bytes.length; errHash.update(bytes); }
+            if (row.stdoutBytes + row.stderrBytes > STREAM_LIMIT) { row.overflow = true; halted = true; }
+            // Raw staged bodies remain solely in the real production consumer.
+            if (kind !== "scan" && !row.overflow) (channel === "stdout" ? out : err).push(Buffer.from(bytes));
+        });
+        stream.once("end", () => { if (channel === "stdout") row.stdoutEOF = true; else row.stderrEOF = true; joinClose(); });
+        stream.once("error", () => { row.streamError = true; halted = true; });
+    }
+    // Timeout publishes STOP_UNCONFIRMED but never signals, destroys pipes or
+    // resolves actual closure. No later launch/check can advance after timeout.
+    return Promise.race([actual, new Promise<never>((_done, reject) => {
+        const watch = setInterval(() => { if (completed) clearInterval(watch); else if (row.timedOut) { clearInterval(watch); reject(Error("STOP_UNCONFIRMED")); } }, 25);
+    })]);
+}
+function minimalEnvironment(): NodeJS.ProcessEnv {
+    const env: NodeJS.ProcessEnv = {};
+    for (const key of ["HOME", "USERPROFILE", "XDG_CONFIG_HOME", "GIT_CONFIG_GLOBAL", "GIT_CONFIG_SYSTEM", "GIT_CONFIG_NOSYSTEM", "SystemRoot", "WINDIR", "COMSPEC"])
+        if (process.env[key] !== undefined) env[key] = process.env[key];
+    return { ...env, GIT_TERMINAL_PROMPT: "0", GCM_INTERACTIVE: "never", GIT_OPTIONAL_LOCKS: "0", GIT_PAGER: "", PAGER: "",
+        GIT_NO_LAZY_FETCH: "1", GIT_NO_REPLACE_OBJECTS: "1", GIT_PROTOCOL_FROM_USER: "0", LC_ALL: "C", LANG: "C" };
+}
+function assertDiscovery(env: NodeJS.ProcessEnv | undefined): void {
+    assert(env);
+    for (const key of ["HOME", "USERPROFILE", "XDG_CONFIG_HOME", "GIT_CONFIG_GLOBAL", "GIT_CONFIG_SYSTEM", "GIT_CONFIG_NOSYSTEM"])
+        assert.equal(env[key], ownerEnvironment[key]);
+    for (const key of ["PATH", "NODE_OPTIONS", "NODE_PATH", "GIT_CONFIG_COUNT", "GIT_CONFIG_PARAMETERS", "GIT_CONFIG", "GIT_DIR", "GIT_WORK_TREE"])
+        assert.equal(env[key], undefined);
+}
+async function runtimeFacts(): Promise<RuntimeFact[]> {
+    const result: RuntimeFact[] = [];
+    for (const file of RUNTIME_FILES) { const bytes = await nativeRead(join(contextRef.extensionUri.fsPath, "dist", file)); result.push({ file, bytes: bytes.length, sha256: sha(bytes) }); }
+    assert.equal(result[0].sha256, process.env[PREFIX + "BUNDLE_SHA256"]);
+    assert.equal(result[3].sha256, process.env[PREFIX + "WORKER_SHA256"]); return result;
+}
+async function backupFacts(): Promise<Array<{ name: string; fact: Fact }>> {
+    const directory = join(contextRef.globalStorageUri.fsPath, "config-backups");
+    try { const names = (await fsp.readdir(directory)).sort(); assert(names.length <= 32);
+        const result: Array<{ name: string; fact: Fact }> = [];
+        for (const name of names) { assert.match(name, /^[a-f0-9]{32}[.]enc$/); const bytes = await nativeRead(join(directory, name));
+            for (const forbidden of [PRIVATE, SECRET, ...[...originalBodies.values()].map(body => body.toString()), ...[...originalBodies.values()].map(body => body.toString("base64"))])
+                assert(!bytes.includes(Buffer.from(forbidden)), "Recovery must not retain a plaintext original in its encrypted file.");
+            result.push({ name, fact: await fact(join(directory, name)) }); }
+        return result; }
+    catch (error) { if ((error as NodeJS.ErrnoException).code === "ENOENT") return []; throw error; }
+}
+function envelope(raw: Buffer, domain: string): any {
+    assert(currentPin); assert(raw.length <= 8192);
+    const text = raw.toString("utf8"), value = JSON.parse(text); assert.equal(JSON.stringify(value), text);
+    assert.deepEqual(Object.keys(value).sort(), ["domain", "payload", "signature"]); assert.equal(value.domain, domain);
+    assert.match(value.signature, /^[A-Za-z0-9_-]{86}$/);
+    const signature = Buffer.from(value.signature, "base64url"); assert.equal(signature.toString("base64url"), value.signature);
+    assert(verify(null, Buffer.from(domain + "\0" + JSON.stringify(value.payload)), createPublicKey({ key: Buffer.from(currentPin.publicKey, "base64"), format: "der", type: "spki" }), signature));
+    assert.equal(value.payload.root, root); assert.equal(value.payload.generation, currentPin.generation); return value.payload;
+}
+async function saved(): Promise<{ raw: string; value: Saved; pin: Pin; descriptor: any }> {
+    const raw = await contextRef.secrets.get(recordKey()); assert(raw); const value = JSON.parse(raw) as Saved;
+    assert.equal(value.version, 1); assert.match(value.receipt.generation, /^[a-f0-9-]{36}$/);
+    const pinBytes = Buffer.from(value.pin, "base64"); assert.equal(pinBytes.toString("base64"), value.pin);
+    const pin = JSON.parse(pinBytes.toString("utf8")) as Pin; assert.equal(pin.root, root); assert.equal(pin.generation, value.receipt.generation);
+    assert.equal(pin.worker, join(contextRef.extensionUri.fsPath, "dist", "pre-commit-client.js")); assert.equal(pin.runtime, process.execPath);
+    assert.equal(pin.workerSha256, process.env[PREFIX + "WORKER_SHA256"]); assert(within(contextRef.globalStorageUri.fsPath, pin.descriptor));
+    currentPin = pin;
+    const descriptor = envelope(await nativeRead(pin.descriptor), "SoterAI-PrePush-Descriptor-v1");
+    assert.equal(descriptor.workerSha256, pin.workerSha256); assert.equal(pin.runtimeSha256, codeSha256); assert.equal(descriptor.runtimeSha256, codeSha256);
+    const url = new URL(descriptor.endpoint); assert.equal(url.hostname, "127.0.0.1"); assert.equal(url.pathname, "/pre-push");
+    assert(!url.username && !url.password && !url.search && !url.hash && Number(url.port) > 0); return { raw, value, pin, descriptor };
+}
+
+
+async function ownerClosed(): Promise<void> { await until(() => ownerListeners.every(row => row.closed), "Actual owner listeners did not close after withdrawal."); }
+async function policyFacts(): Promise<Array<{ relative: string; fact: Fact }>> { const result = []; for (const name of [".aiignore", ".soterai/policy.json", ".soterai/team-policy.json", ".soterai-policy.json"]) result.push({ relative: name, fact: await fact(join(root, ...name.split("/"))) }); return result; }
+function fileHash(file: string, expected: string): void {
+    assert(/^[a-f0-9]{64}$/.test(expected)); const stat = fs.lstatSync(file, { bigint: true });
+    assert(stat.isFile() && !stat.isSymbolicLink() && samePath(fs.realpathSync(file), file));
+    if (file === GIT) assert(stat.nlink === 1n || stat.nlink === 2n); else assert.equal(stat.nlink, 1n);
+    const digest = createHash("sha256"), chunk = Buffer.alloc(65536), fd = fs.openSync(file, "r");
+    try { let total = 0; for (;;) { const bytes = fs.readSync(fd, chunk, 0, chunk.length, total); if (!bytes) break; total += bytes; assert(total <= 536870912); digest.update(chunk.subarray(0, bytes)); }
+        assert.equal(digest.digest("hex"), expected); }
+    finally { fs.closeSync(fd); chunk.fill(0); }
+    const after = fs.lstatSync(file, { bigint: true }); for (const name of ["dev", "ino", "size", "mtimeNs", "ctimeNs", "birthtimeNs", "nlink"] as const) assert.equal(after[name], stat[name]);
+}
+function rootIdentity(): string {
+    const rows: string[][] = [];
+    for (let directory = root;;) { const stat = fs.lstatSync(directory, { bigint: true }); assert(stat.isDirectory() && !stat.isSymbolicLink());
+        rows.push([directory.toLowerCase(), [stat.dev, stat.ino, stat.birthtimeNs].map(v => v.toString()).join(":")]);
+        const up = dirname(directory); if (up === directory) break; directory = up; }
+    return sha(JSON.stringify(rows));
+}
+async function manualHistory(): Promise<void> {
+    await assert.rejects(fsp.lstat(join(root, ".git")), { code: "ENOENT" });
+    for (const directory of ["objects/info", "objects/pack", "refs/heads", "hooks", "info"]) await fsp.mkdir(join(root, ".git", ...directory.split("/")), { recursive: true });
+    await fsp.writeFile(configFile(), BASE_CONFIG, { flag: "wx" }); await fsp.writeFile(join(root, ".git", "HEAD"), "ref: refs/heads/main\n", { flag: "wx" });
+    await fsp.writeFile(join(root, ".git", "info", "exclude"), "", { flag: "wx" });
+    const created = new Set<string>(); let sequence = 0;
+    async function object(type: "blob" | "tree" | "commit", body: Buffer | string): Promise<string> {
+        const bytes = Buffer.from(body), raw = Buffer.concat([Buffer.from(type + " " + bytes.length + "\0"), bytes]), oid = createHash("sha1").update(raw).digest("hex");
+        if (!created.has(oid)) { await fsp.mkdir(join(root, ".git", "objects", oid.slice(0, 2)), { recursive: true });
+            await fsp.writeFile(join(root, ".git", "objects", oid.slice(0, 2), oid.slice(2)), deflateSync(raw), { flag: "wx" }); created.add(oid); } return oid;
+    }
+    async function commit(name: string, blob: string, parents: string[] = []): Promise<string> {
+        const tree = await object("tree", Buffer.concat([Buffer.from("100644 " + name + "\0"), Buffer.from(blob, "hex")])), when = 1700000000 + ++sequence;
+        return object("commit", "tree " + tree + "\n" + parents.map(p => "parent " + p + "\n").join("")
+            + "author Synthetic F26b <f26b@example.invalid> " + when + " +0000\ncommitter Synthetic F26b <f26b@example.invalid> " + when + " +0000\n\nSynthetic native " + sequence + "\n");
+    }
+    const pub = await object("blob", "Useful public example.\n"), secret = await object("blob", SECRET), unknown = await object("blob", "Public unknown format.\n");
+    const publicTip = await commit("public.txt", pub), secretTip = await commit("secret.txt", secret), removed = await commit("public.txt", pub, [secretTip]);
+    const renamed = await commit("renamed.txt", pub, [await commit("renamed.txt", secret, [secretTip])]);
+    const left = await commit("left.txt", pub, [publicTip]), side = await commit("side.txt", secret, [publicTip]), merge = await commit("merged.txt", pub, [left, side]);
+    let capped = publicTip; for (let index = 0; index < 32; index++) capped = await commit("public.txt", pub, [capped]);
+    tips = { public: publicTip, secret: secretTip, removed, renamed, merge, capped, unknown: await commit("unknown.xyz", unknown) };
+    await fsp.writeFile(join(root, ".git", "refs", "heads", "main"), publicTip + "\n", { flag: "wx" });
+    await fsp.writeFile(join(root, SOURCE), SECRET, { flag: "wx" }); // Deliberately unused worktree control.
+    await fsp.writeFile(tipsFile(), JSON.stringify(tips), { flag: "wx" });
+}
+async function call(name: typeof COMMANDS[number]): Promise<any> { assert(!halted); const value = await vscode.commands.executeCommand("soterai." + name); safeMetadata(value); assert(value); return value; }
+async function idle(): Promise<void> { await until(async () => !(await call("prePushGuardStatus") as PublicStatus).busy, "Owner remained busy."); }
+async function status(expected: PublicStatus["status"]): Promise<void> { const value = await call("prePushGuardStatus") as PublicStatus; assert.equal(value.status, expected); assert.equal(value.busy, false); }
+const hook = (hooks = ".git/hooks") => join(root, hooks, "pre-push");
+const transcript = (...oids: string[]) => Buffer.from(oids.map((oid, index) => `refs/heads/source${index} ${oid} refs/heads/target${index} ${ZERO}\n`).join(""));
+async function markerCount(): Promise<number> { try { return (await nativeRead(markerFile(), "utf8")).split("\n").filter(Boolean).length; }
+    catch (error) { if ((error as NodeJS.ErrnoException).code === "ENOENT") return 0; throw error; } }
+function original(exit: 0 | 7): Buffer {
+    const quoted = markerFile().replace(/\\/g, "/").split("'").join("'\"'\"'");
+    const bytes = Buffer.from("#!/bin/sh\ncommand printf '%s\\n' \"$1|$2|${SOTERAI_F26B_ORIGINAL_ENV-}|${SOTERAI_PRE_PUSH_REPLAY-absent}|${SOTERAI_PRE_PUSH_STATUS-absent}\"\n"
+        + "'C:/Program Files/Git/usr/bin/cat.exe'\ncommand printf '%s\\n' once >> '" + quoted + "'\nexit " + exit + "\n");
+    originalBodies.set(exit, bytes); return bytes;
+}
+async function install(hooksRelative = ".git/hooks"): Promise<void> {
+    const count = reviews.length; assert.equal((await call("installPrePushGuard")).status, "APPLIED"); assert.equal(reviews.length, count + 1);
+    assert.equal(reviews.at(-1)?.action, ACTIONS[0]); await status("LIVE"); const current = await saved();
+    assert.equal(current.value.receipt.hooksRelative, hooksRelative); assert.equal(current.value.state, "APPLIED");
+    const body = await nativeRead(hook(hooksRelative), "utf8"); assert(body.startsWith("#!/bin/sh\n# SoterAI Lite pre-push v1 " + current.pin.generation + "\n"));
+    assert(body.includes("--pre-push --pin") && body.includes("--replay") && body.includes("'C:/Program Files/Git/usr/bin/env.exe' -i "));
+    assert((await backupFacts()).some(row => row.name === current.value.receipt.backup + ".enc"));
+    assert.deepEqual(await fsp.readdir(join(root, hooksRelative)), ["pre-push"], "No plaintext sibling recovery or generated stage remains.");
+}
+async function componentHook(raw: Buffer, expected: 0 | 1 | 7, decision: "ALLOW" | "BLOCK" | "UNAVAILABLE" | "none", hooksRelative = ".git/hooks", originalExit?: 0 | 7,
+    extra: NodeJS.ProcessEnv = {}): Promise<void> {
+    assert(!halted); fileHash(SH, SH_SHA256); const beforeWire = wires.length, beforeMarker = await markerCount();
+    const hookBefore = await fact(hook(hooksRelative)), configBefore = await fact(configFile()), sourceBefore = await fact(join(root, SOURCE));
+    const args = [hook(hooksRelative), "synthetic-remote", "synthetic-local-component-target"], env = { ...ownerEnvironment, SOTERAI_F26B_ORIGINAL_ENV: ORIGINAL_ENV, ...extra };
+    const child = nativeSpawn(SH, args, { cwd: root, env, shell: false, windowsHide: true, stdio: ["pipe", "pipe", "pipe"] });
+    const promise = observe(child, "hook-component", "DIRECT_INSTALLED_HOOK_NOT_GIT_PUSH"); assert(child.stdin); child.stdin.once("error", () => {}); child.stdin.end(raw);
+    const value = await promise; closed(value.receipt); assert.equal(value.receipt.code, expected);
+    assert.deepEqual(await fact(hook(hooksRelative)), hookBefore); assert.deepEqual(await fact(configFile()), configBefore); assert.deepEqual(await fact(join(root, SOURCE)), sourceBefore);
+    if (decision === "none") assert.equal(wires.length, beforeWire);
+    else { assert.equal(wires.length, beforeWire + 1); const wire = wires.at(-1)!;
+        await until(() => wire.requestClosed && wire.responseFinished && wire.responseClosed, "Component route HTTP exchange did not close.");
+        assert.equal(wire.status, decision); assert(wire.requestValid && wire.signatureValid && wire.transcriptMatched); assert.equal(wire.transcriptSha256, sha(raw)); }
+    if (originalExit !== undefined) { assert.equal(expected, originalExit); assert.equal(await markerCount(), beforeMarker + 1);
+        assert.equal(sha(value.stdout), sha(Buffer.concat([Buffer.from("synthetic-remote|synthetic-local-component-target|" + ORIGINAL_ENV + "|absent|absent\n"), raw]))); }
+    else { assert.equal(await markerCount(), beforeMarker); assert.equal(value.stdout.length, 0); }
+    value.stdout.fill(0); value.stderr.fill(0);
+}
+async function directClient(raw: Buffer, expected: 0 | 1, decision: "ALLOW" | "BLOCK" | "none"): Promise<void> {
+    assert(currentPin && !halted); const before = wires.length;
+    const child = nativeSpawn(process.execPath, [currentPin.worker, "--pre-push", "--pin", Buffer.from(JSON.stringify(currentPin)).toString("base64url")], {
+        cwd: root, env: { SystemRoot: currentPin.systemRoot, WINDIR: currentPin.systemRoot, ELECTRON_RUN_AS_NODE: "1" }, shell: false, windowsHide: true, stdio: ["pipe", "pipe", "pipe"] });
+    const pending = observe(child, "client", "DIRECT_EXACT_FOURTH_RUNTIME_PRE_PUSH"); assert(child.stdin); child.stdin.once("error", () => {}); child.stdin.end(raw);
+    const done = await pending; closed(done.receipt); assert.equal(done.receipt.code, expected); assert.equal(done.stdout.length, 0);
+    assert.equal(wires.length - before, decision === "none" ? 0 : 1); if (decision !== "none") { const wire = wires.at(-1)!; assert.equal(wire.status, decision); assert(wire.requestValid && wire.signatureValid && wire.transcriptMatched); }
+    done.stdout.fill(0); done.stderr.fill(0);
+}
+function observeRequest(req: IncomingMessage, res: ServerResponse): void {
+    if (req.method !== "POST" || req.url !== "/pre-push") return;
+    const row: WireReceipt = { caseId, requestEnded: false, requestClosed: false, responseFinished: false, responseClosed: false, requestValid: false, signatureValid: false, transcriptMatched: false, overflow: false };
+    wires.push(row); const chunks: Buffer[] = []; let count = 0, request: any;
+    req.on("data", (chunk: Buffer) => { count += chunk.length; if (count > 49152) row.overflow = true; else chunks.push(Buffer.from(chunk)); });
+    req.once("end", () => { row.requestEnded = true; try { const body = Buffer.concat(chunks).toString("utf8"); request = JSON.parse(body); safeMetadata(body);
+        assert.equal(JSON.stringify(request), body); assert.deepEqual(Object.keys(request).sort(), ["generation", "nonce", "session", "transcript", "version"]);
+        assert.equal(req.socket.remoteAddress, "127.0.0.1"); assert.match(req.headers.host ?? "", /^127[.]0[.]0[.]1:[0-9]+$/); assert.equal(req.headers.origin, undefined);
+        assert.equal(request.version, 1); assert.equal(request.generation, currentPin?.generation); assert.match(request.session, /^[a-f0-9-]{36}$/); assert.match(request.nonce, /^[a-f0-9-]{36}$/);
+        const raw = Buffer.from(request.transcript, "base64url"); assert.equal(raw.toString("base64url"), request.transcript); assert(raw.length <= 32768);
+        row.transcriptSha256 = sha(raw); raw.fill(0); row.generation = request.generation; row.session = request.session; row.nonce = request.nonce; row.requestValid = true;
+    } catch { row.requestValid = false; } chunks.forEach(chunk => chunk.fill(0)); });
+    req.once("close", () => row.requestClosed = true);
+    const end = res.end; res.end = function (this: ServerResponse, ...values: any[]) { try { const bytes = values[0];
+        if (Buffer.isBuffer(bytes) || typeof bytes === "string") { const decision = envelope(Buffer.from(bytes), "SoterAI-PrePush-Decision-v1"); safeMetadata(decision);
+            assert(request && row.requestValid); assert.equal(decision.session, request.session); assert.equal(decision.nonce, request.nonce);
+            assert.deepEqual(Object.keys(decision).sort(), ["generation", "nonce", "root", "rootIdentity", "session", "status", "transcriptSha256", "version"]);
+            assert.match(decision.rootIdentity, /^[a-f0-9]{64}$/); assert.equal(decision.rootIdentity, rootIdentity());
+            assert(["ALLOW", "BLOCK", "UNAVAILABLE", "BUSY"].includes(decision.status)); row.signatureValid = true;
+            row.transcriptMatched = decision.transcriptSha256 === row.transcriptSha256; row.rootIdentity = decision.rootIdentity; row.status = decision.status; }
+    } catch { row.signatureValid = false; } return Reflect.apply(end, this, values); } as ServerResponse["end"];
+    res.once("finish", () => row.responseFinished = true); res.once("close", () => row.responseClosed = true);
+}
+function productOperation(args: readonly string[], options: SpawnOptions): { kind: "projection" | "scan"; operation: string } {
+    const config = ["--no-pager", "--no-optional-locks", "-c", "protocol.allow=never", "-c", "credential.helper=", "-c", "credential.interactive=false", "config", "--null", "--show-origin", "--show-scope", "--no-includes", "--get-regexp", "^(core[.]hookspath|include[.]path|includeif[.].*[.]path|extensions[.]worktreeconfig)$"];
+    if (args.length === 1 && args[0] === "--version") { assertDiscovery(options.env); return { kind: "projection", operation: "version" }; }
+    if (args[0] === "--no-pager" && args.includes("--show-origin")) { assert.deepEqual(args, config); assert.equal(options.cwd, root); assertDiscovery(options.env); return { kind: "projection", operation: "config" }; }
+    const job = options.env?.HOME; assert(job && within(profile, job));
+    const prefix = ["--no-pager", "--literal-pathspecs", "-c", "core.hooksPath=" + join(job, "empty-hooks"), "-c", "core.fsmonitor=false", "-c", "credential.helper=", "-c", "commit.gpgSign=false", "--no-lazy-fetch", "--no-replace-objects", "--no-optional-locks", "-c", "protocol.allow=never", "-c", "core.pager=", "-c", "color.ui=false", "-c", "core.attributesFile=" + join(job, "empty.gitconfig"), "-c", "gc.auto=0", "-c", "maintenance.auto=false"];
+    assert.deepEqual(args.slice(0, prefix.length), prefix); const suffix = args.slice(prefix.length);
+    for (const key of ["PATH", "NODE_OPTIONS", "NODE_PATH", "GIT_INDEX_FILE", "GIT_CONFIG_COUNT", "GIT_CONFIG_PARAMETERS", "GIT_OBJECT_DIRECTORY"]) assert.equal(options.env?.[key], undefined);
+    if (suffix.length === 1 && suffix[0] === "--version") { assert.equal(options.cwd, job); return { kind: "scan", operation: "version" }; }
+    assert.equal(options.cwd, root);
+    if (suffix[0] === "rev-list") { assert.deepEqual(suffix, ["rev-list", "--max-count=33", "--stdin", "--"]); return { kind: "scan", operation: "commits" }; }
+    if (suffix[0] === "ls-tree") { assert.equal(suffix.length, 7); assert.match(suffix[5], /^[a-f0-9]{40}$/); assert.deepEqual(suffix, ["ls-tree", "-r", "-z", "--full-tree", "--long", suffix[5], "--"]); return { kind: "scan", operation: "tree" }; }
+    assert.deepEqual(suffix, ["cat-file", "--batch"]); return { kind: "scan", operation: "batch" };
+}
+export function setupDiagnostic(): Record<string, unknown> { return { preparedSourceOnly: true, syntheticOnly: true, stage: setupStage, phase, caseId, halted,
+    busyChildren: children.filter(row => row.busy).length, timedOutChildren: children.filter(row => row.timedOut).length, scope: "F26B_COMPONENT_NATIVE_ROUTE_NOT_CONFIGURED_PUSH" }; }
+export async function beforeActivate(context: vscode.ExtensionContext): Promise<void> {
+    contextRef = context; assert.equal(process.platform, "win32"); assert.equal(vscode.workspace.workspaceFolders?.length, 1); assert(vscode.workspace.isTrusted && !vscode.env.remoteName);
+    root = vscode.workspace.workspaceFolders![0].uri.fsPath; parent = dirname(root); profile = process.env[PREFIX + "PROFILE"] ?? ""; output = process.env[PREFIX + "EVIDENCE"] ?? "";
+    const selected = process.env[PREFIX + "PHASE"]; assert(selected === "primary" || selected === "restart"); phase = selected;
+    assert.equal(process.env[PREFIX + "DRIVER_KIND"], "native-bootstrap"); assert.match(resolve(root), /^D:\\SoterAI-Lite-test-profiles\\/i); assert.match(resolve(profile), /^D:\\SoterAI-Lite-test-profiles\\/i);
+    assert(within(parent, profile) && within(parent, output) && !within(root, output) && !within(root, context.globalStorageUri.fsPath)); ordinary(root); ordinary(profile); ordinary(parent);
+    assert.equal((await nativeRead(join(root, MARKER), "utf8")).trim(), "synthetic-only-v1");
+    for (const key of ["HOME", "USERPROFILE", "XDG_CONFIG_HOME"]) assert.equal(process.env[key], profile);
+    for (const key of ["GIT_CONFIG_GLOBAL", "GIT_CONFIG_SYSTEM"]) { const file = process.env[key]; assert(file && within(profile, file)); assert.equal((await nativeRead(file)).length, 0); }
+    assert.equal(process.env.GIT_CONFIG_NOSYSTEM, "1");
+    for (const key of Object.keys(process.env)) if (/^GIT_/i.test(key)) assert(["GIT_CONFIG_GLOBAL", "GIT_CONFIG_SYSTEM", "GIT_CONFIG_NOSYSTEM"].includes(key.toUpperCase()));
+    for (const key of ["HOMEDRIVE", "HOMEPATH"]) assert.equal(process.env[key], undefined, "Unknown inherited owner search locations must be removed by isolated launcher.");
+    assert(process.env.TEMP && within(profile, process.env.TEMP)); assert(process.env.TMP && within(profile, process.env.TMP));
+    ownerEnvironment = minimalEnvironment(); parentEnvironment = environmentDigest(); codeSha256 = hashCode(); fileHash(GIT, GIT_SHA256); fileHash(SH, SH_SHA256);
+    setupStage = "manual-synthetic-loose-history";
+    if (phase === "primary") await manualHistory(); else { tips = JSON.parse(await nativeRead(tipsFile(), "utf8")); assert(Object.values(tips).every(value => typeof value === "string" && /^[a-f0-9]{40}$/.test(value))); }
+    setupStage = "delegated-real-observers";
+    patch(childProcess, "spawn", (...values: unknown[]) => { assert(!halted); const executable = values[0], args = values[1] as readonly string[], options = values[2] as SpawnOptions;
+        assert.equal(executable, GIT); assert(Array.isArray(args)); assert.equal(options.shell, false); assert.equal(options.windowsHide, true);
+        assert.equal(options.timeout, undefined); assert.equal(options.signal, undefined); assert.equal(options.killSignal, undefined);
+        const selected = productOperation(args, options), child = Reflect.apply(nativeSpawn, childProcess, values) as ChildProcess;
+        void observe(child, selected.kind, selected.operation).catch(() => { halted = true; }); return child; });
+    patch(http, "createServer", (...values: unknown[]) => { const listener = values.at(-1); if (typeof listener !== "function") return Reflect.apply(nativeCreateServer, http, values);
+        const args = values.slice(); args[args.length - 1] = function (this: unknown, req: IncomingMessage, res: ServerResponse) { observeRequest(req, res); return Reflect.apply(listener, this, [req, res]); };
+        const server = Reflect.apply(nativeCreateServer, http, args) as http.Server;
+        if ((values[0] as { maxHeaderSize?: number })?.maxHeaderSize === 4096) { ownerServers++; const row = { listened: false, loopback: false, closed: false }; ownerListeners.push(row);
+            server.once("listening", () => { row.listened = true; const address = server.address(); row.loopback = !!address && typeof address === "object" && address.address === "127.0.0.1" && address.port > 0; if (!row.loopback) halted = true; });
+            server.once("close", () => row.closed = true); } return server; });
+    const store = context.secrets.store; patch(context.secrets, "store", async (key: string, value: string) => {
+        if (key.startsWith("soterai.prePush.signing.v1.")) stores.signing++; else if (key.startsWith("soterai.configBackupKey.v1.")) stores.backupKey++;
+        else if (key.startsWith("soterai.prePush.record.v1.")) { stores.record++; safeMetadata(value); }
+        else if (/^soterai[.]prePush[.](?:recovery|receipt)[.]v1[.]/.test(key)) { stores.recovery++; safeMetadata(value); } else stores.unrelated++;
+        return store.call(context.secrets, key, value); });
+    const file = (value: unknown): string | undefined => typeof value === "string" ? value : value instanceof vscode.Uri && value.scheme === "file" ? value.fsPath : undefined;
+    const readObserved = (value: unknown) => { const selected = file(value); if (!selected) return; if ([SOURCE, RENAMED].some(name => samePath(selected, join(root, name)))) directWorktreeReads++;
+        if (within(join(root, ".git", "objects"), selected)) directObjectReads++; };
+    patch(fs, "readFileSync", (...values: unknown[]) => { readObserved(values[0]); return Reflect.apply(nativeReadSync, fs, values); });
+    patch(fsp, "readFile", (...values: unknown[]) => { readObserved(values[0]); return Reflect.apply(nativeRead, fsp, values); });
+    const open = vscode.workspace.openTextDocument; patch(vscode.workspace, "openTextDocument", async (...values: unknown[]) => { const selected = file(values[0]); if (selected && within(root, selected)) sourceDocuments++;
+        const content = (values[0] as { content?: string })?.content; if (typeof content === "string") safeMetadata(content); return Reflect.apply(open, vscode.workspace, values); });
+    listeners.push(vscode.workspace.onDidOpenTextDocument(document => { if (document.uri.scheme === "file" && within(root, document.uri.fsPath)) sourceDocumentEvents++; }));
+    patch(vscode.window, "showWarningMessage", async (message: string, options: vscode.MessageOptions, ...items: string[]) => { safeMetadata([message, options, items]); const action = items.find(item => (ACTIONS as readonly string[]).includes(item));
+        if (!action) return undefined; assert.equal(options.modal, true); reviews.push({ caseId, action, modal: true, approved: approve }); return approve ? action : undefined; });
+    for (const name of ["showInformationMessage", "showErrorMessage"]) patch(vscode.window, name, async (...values: unknown[]) => { safeMetadata(values); return undefined; });
+    setupStage = "before-real-extension-activation";
+}
+export async function run(context: vscode.ExtensionContext): Promise<void> {
+    assert.equal(context, contextRef); const configuration = vscode.workspace.getConfiguration("soterai"), initialFlag = configuration.inspect<boolean>(FLAG)?.globalValue;
+    const runtimes = await runtimeFacts(), executionManifest = await fact(join(context.extensionUri.fsPath, "package.json"));
+    const initialPolicy = await policyFacts();
+    const observations: Observation[] = [], checks: Array<{ scope: string; work(): Promise<void> }> = [];
+    let driverFailure: string | undefined, restartState: RestartState | undefined, prior: RestartState | undefined, customOriginal: Buffer | undefined, beforeCustom: Fact | undefined;
+    const add = (scope: string, work: () => Promise<void>) => checks.push({ scope, work });
+    const noEffects = () => ({ stores: { ...stores }, servers: ownerServers, wires: wires.length });
+    const privateClean = () => { assert.equal(sourceDocuments, 0); assert.equal(sourceDocumentEvents, 0); assert.equal(directWorktreeReads, 0); assert.equal(directObjectReads, 0); assert(!metadataLeak); assert.equal(environmentDigest(), parentEnvironment); };
+    const setFlag = async (value: boolean | undefined) => { await configuration.update(FLAG, value, vscode.ConfigurationTarget.Global); await idle(); };
+    if (phase === "primary") {
+        add("Exact four runtimes/four commands/default-false restricted machine setting are present", async () => {
+            assert.equal(configuration.inspect<boolean>(FLAG)?.defaultValue, false); assert(initialFlag === undefined || initialFlag === false);
+            const commands = await vscode.commands.getCommands(true), manifest = JSON.parse(await nativeRead(join(context.extensionUri.fsPath, "package.json"), "utf8"));
+            for (const name of COMMANDS) { assert(commands.includes("soterai." + name)); assert(manifest.contributes.commands.some((row: { command: string }) => row.command === "soterai." + name)); }
+            const entry = manifest.contributes.configuration.properties["soterai." + FLAG]; assert.equal(entry.default, false); assert.equal(entry.scope, "machine"); assert(manifest.capabilities.untrustedWorkspaces.restrictedConfigurations.includes("soterai." + FLAG)); privateClean();
+        });
+        add("Default-disabled install rejects caller authority without keys/backups/hook/listener", async () => { const before = noEffects(); const reply = await vscode.commands.executeCommand("soterai.installPrePushGuard", { approve: true }); assert.equal((reply as any).status, "UNAVAILABLE"); assert.deepEqual(noEffects(), before); assert(!(await fact(hook())).present); await status("UNAVAILABLE"); });
+        add("Workspace setting cannot enable the machine owner route", async () => { await configuration.update(FLAG, true, vscode.ConfigurationTarget.Workspace); await idle(); assert.equal((await call("installPrePushGuard")).status, "UNAVAILABLE"); await configuration.update(FLAG, undefined, vscode.ConfigurationTarget.Workspace); await idle(); });
+        add("Global enable and cancelled explicit install leave no recovery/signing/owner effects", async () => { await setFlag(true); const before = noEffects(); approve = false; try { assert.equal((await call("installPrePushGuard")).status, "CANCELLED"); } finally { approve = true; } assert.deepEqual(noEffects(), before); assert(!(await fact(hook())).present); await status("OWNER_REVIEW_REQUIRED"); });
+        add("Reviewed default installation creates signed live owner and encrypted absence recovery", async () => { await install(); const current = await saved(); assert.equal(current.value.receipt.originalPresent, false); assert.equal(stores.signing, 1); assert.equal(stores.backupKey, 1); });
+        add("Direct installed wrapper public history passes signed full-object component route", async () => { await componentHook(transcript(tips.public), 0, "ALLOW"); const rows = children.filter(row => row.caseId === caseId && row.kind === "scan"); assert.deepEqual(rows.map(row => row.operation), ["version", "commits", "tree", "batch"]); });
+        add("Exact packaged fourth runtime runs as actual finite Code Node child", async () => { await directClient(transcript(tips.public), 0, "ALLOW"); });
+        add("Removed historical secret is blocked although worktree and proposed tip are outside scanner authority", async () => { await componentHook(transcript(tips.removed), 1, "BLOCK"); assert(children.filter(row => row.caseId === caseId && row.operation === "tree").length >= 2); });
+        add("Renamed then overwritten historical secret is still blocked", async () => { await componentHook(transcript(tips.renamed), 1, "BLOCK"); assert(children.filter(row => row.caseId === caseId && row.operation === "tree").length >= 3); });
+        add("Both merge parents remain in scope including removed side-branch secret", async () => { await componentHook(transcript(tips.merge), 1, "BLOCK"); assert(children.filter(row => row.caseId === caseId && row.operation === "tree").length >= 4); });
+        add("Every proposed tip is scanned and a second secret branch withholds whole request", async () => { await componentHook(transcript(tips.public, tips.secret), 1, "BLOCK"); });
+        add("33-commit sentinel makes direct component route unavailable before tree/blob access", async () => { await componentHook(transcript(tips.capped), 1, "UNAVAILABLE"); assert.deepEqual(children.filter(row => row.caseId === caseId && row.kind === "scan").map(row => row.operation), ["version", "commits"]); });
+        add("Unsupported historical format withholds the whole request", async () => { await componentHook(transcript(tips.unknown), 1, "UNAVAILABLE"); });
+        add("Malformed complete transcript refuses before HTTP/scanner/original execution", async () => { await componentHook(Buffer.from(transcript(tips.public).toString().trimEnd()), 1, "none"); });
+        add("Deletion-only proposal requires live signed owner and only checked Git version", async () => { await componentHook(Buffer.from(`(delete) ${ZERO} refs/heads/main ${tips.public}\n`), 0, "ALLOW"); assert.deepEqual(children.filter(row => row.caseId === caseId && row.kind === "scan").map(row => row.operation), ["version"]); });
+        add("Cancelled restore preserves exact default installation/live owner/encrypted recovery", async () => { const before = await fact(hook()), backups = await backupFacts(), effects = noEffects(); approve = false; try { assert.equal((await call("restorePrePushGuard")).status, "CANCELLED"); } finally { approve = true; } assert.deepEqual(await fact(hook()), before); assert.deepEqual(await backupFacts(), backups); assert.deepEqual(noEffects(), effects); await status("LIVE"); });
+        add("Reviewed default restore withdraws owner and restores original absence", async () => { assert.equal((await call("restorePrePushGuard")).status, "RESTORED"); assert(!(await fact(hook())).present); await idle(); await status("OWNER_REVIEW_REQUIRED"); });
+        add("Supported local custom hooks path preserves supported original bytes/mode", async () => { await fsp.mkdir(join(root, CUSTOM)); customOriginal = original(7); await fsp.writeFile(hook(CUSTOM), customOriginal, { flag: "wx" }); beforeCustom = await fact(hook(CUSTOM)); await fsp.writeFile(configFile(), BASE_CONFIG + " hooksPath = " + CUSTOM + "\n"); });
+        add("Cancelled custom install does not alter original or encrypted recovery", async () => { const effects = noEffects(), backups = await backupFacts(); approve = false; try { assert.equal((await call("installPrePushGuard")).status, "CANCELLED"); } finally { approve = true; } assert.deepEqual(await fact(hook(CUSTOM)), beforeCustom); assert.deepEqual(await backupFacts(), backups); assert.deepEqual(noEffects(), effects); });
+        add("Reviewed custom installation backs up actual original encrypted and preserves mode", async () => { assert(beforeCustom); await install(CUSTOM); assert.equal((await fact(hook(CUSTOM))).mode, beforeCustom.mode); assert.equal((await saved()).value.receipt.originalPresent, true); await backupFacts(); });
+        add("Direct custom wrapper replays exact stdin/arguments/environment once with original exit seven", async () => { await componentHook(transcript(tips.public), 7, "ALLOW", CUSTOM, 7); });
+        add("Custom secret block prevents original execution and marker growth", async () => { await componentHook(transcript(tips.removed), 1, "BLOCK", CUSTOM); });
+        add("Caller reserved-variable collision blocks before HTTP/original execution", async () => { await componentHook(transcript(tips.public), 1, "none", CUSTOM, undefined, { SOTERAI_PRE_PUSH_REPLAY: "TEST_ONLY_EXISTING_OWNER_VALUE" }); });
+        add("Actual machine disable withdraws live owner and installed custom wrapper refuses", async () => { await setFlag(false); await status("UNAVAILABLE"); await ownerClosed(); await componentHook(transcript(tips.public), 1, "none", CUSTOM); });
+        add("Reviewed restore while disabled restores exact original bytes/mode; original direct route retains exit seven", async () => { assert.equal((await call("restorePrePushGuard")).status, "RESTORED"); assert.deepEqual(await fact(hook(CUSTOM)), beforeCustom); assert(customOriginal && (await nativeRead(hook(CUSTOM))).equals(customOriginal)); await componentHook(transcript(tips.public), 7, "none", CUSTOM, 7); });
+        add("Default effective path is re-established and fresh installation is explicitly reviewed", async () => { await fsp.writeFile(configFile(), BASE_CONFIG); await setFlag(true); await install(); });
+        add("Owner config-byte drift withdraws and blocks without stale ALLOW; exact config restored without automatic owner", async () => { const backups = await backupFacts(); await fsp.writeFile(configFile(), BASE_CONFIG + "# TEST_ONLY_F26B_CONFIG_DRIFT\n"); await until(async () => (await call("prePushGuardStatus")).status !== "LIVE", "Config drift must withdraw owner."); await idle(); await ownerClosed(); await componentHook(transcript(tips.public), 1, "none"); await fsp.writeFile(configFile(), BASE_CONFIG); await status("OWNER_REVIEW_REQUIRED"); assert.deepEqual(await backupFacts(), backups); });
+        add("Cancelled explicit resume after drift preserves old endpoint/key/backup/hook", async () => { const current = await saved(), before = await fact(hook()), effects = noEffects(), backups = await backupFacts(); approve = false; try { assert.equal((await call("resumePrePushGuard")).status, "CANCELLED"); } finally { approve = true; } assert.deepEqual(noEffects(), effects); assert.equal((await saved()).descriptor.session, current.descriptor.session); assert.deepEqual(await fact(hook()), before); assert.deepEqual(await backupFacts(), backups); });
+        add("Reviewed explicit resume creates a fresh signed session without new signing/recovery keys", async () => { const current = await saved(), keys = [stores.signing, stores.backupKey]; assert.equal((await call("resumePrePushGuard")).status, "RESUMED"); await status("LIVE"); assert.notEqual((await saved()).descriptor.session, current.descriptor.session); assert.deepEqual([stores.signing, stores.backupKey], keys); await componentHook(transcript(tips.public), 0, "ALLOW"); });
+        add("All actual direct children close/EOF/no signals; retain exact restart/withdrawal basis", async () => { await Promise.all(pendingChildren); children.forEach(closed); privateClean(); const current = await saved(); assert.deepEqual(await runtimeFacts(), runtimes); assert.deepEqual(await policyFacts(), initialPolicy); assert(ownerListeners.every(row => row.listened && row.loopback));
+            restartState = { schemaVersion: 1, syntheticOnly: true, scope: "F26B_COMPONENT_NATIVE_ROUTE_NOT_CONFIGURED_PUSH", root, ready: true, oldFlag: initialFlag,
+                runtimeBindings: runtimes, executionManifest, hook: await fact(hook()), config: await fact(configFile()), source: await fact(join(root, SOURCE)), head: await fact(join(root, ".git", "HEAD")),
+                generation: current.pin.generation, publicPinSha256: sha(Buffer.from(current.value.pin, "base64")), recordSha256: sha(current.raw), descriptor: await fact(current.pin.descriptor), session: current.descriptor.session,
+                tips, backupFacts: await backupFacts(), ownerEnvironmentSha256: sha(JSON.stringify(ownerEnvironment)), driverSha256: sha(await nativeRead(__filename)), policy: initialPolicy };
+            safeMetadata(restartState); await fsp.writeFile(stateFile(), JSON.stringify(restartState, null, 2) + "\n", { flag: "wx" }); });
+    } else {
+        add("Actual isolated restart does not auto-resume/start listener/write keys or mutate retained bytes", async () => { prior = JSON.parse(await nativeRead(stateFile(), "utf8")); assert(prior && prior.schemaVersion === 1 && prior.ready && prior.syntheticOnly && prior.root === root && prior.scope === "F26B_COMPONENT_NATIVE_ROUTE_NOT_CONFIGURED_PUSH");
+            assert.equal(children.length, 0); assert.equal(wires.length, 0); assert.equal(ownerServers, 0); assert.equal(reviews.length, 0); assert.deepEqual(stores, { signing: 0, backupKey: 0, record: 0, recovery: 0, unrelated: 0 }); await status("OWNER_REVIEW_REQUIRED");
+            assert.deepEqual(await runtimeFacts(), prior.runtimeBindings); assert.deepEqual(executionManifest, prior.executionManifest); assert.equal(sha(await nativeRead(__filename)), prior.driverSha256);
+            for (const [file, expected] of [[hook(), prior.hook], [configFile(), prior.config], [join(root, SOURCE), prior.source], [join(root, ".git", "HEAD"), prior.head]] as const) assert.deepEqual(await fact(file), expected);
+            const current = await saved(); assert.equal(sha(current.raw), prior.recordSha256); assert.equal(current.descriptor.session, prior.session); assert.deepEqual(await backupFacts(), prior.backupFacts); privateClean(); });
+        add("Launcher actual prior editor close/EOF/absence is mandatory; direct wrapper blocks before explicit owner resume", async () => { assert(prior); const close = JSON.parse(await nativeRead(closeReceiptFile(), "utf8"));
+            assert.equal(close.schemaVersion, 1); assert.equal(close.status, "ACTUAL_F26B_PRIMARY_EDITOR_CLOSED"); assert.equal(close.syntheticOnly, true); assert.equal(close.primaryStateSha256, sha(await nativeRead(stateFile())));
+            assert.equal(close.code.observedExit, true); assert.equal(close.code.exitCode, 0); assert.equal(close.code.stdoutEOF, true); assert.equal(close.code.stderrEOF, true); assert.equal(close.code.signalsRequested, 0);
+            assert.equal(close.code.pidAbsentTwice, true); assert.equal(close.code.streamsStable, true); assert.equal(close.code.ownedWindowClose, "workbench.action.closeWindow"); assert.equal(close.code.executable, process.execPath);
+            await componentHook(transcript(prior.tips.public), 1, "none"); await status("OWNER_REVIEW_REQUIRED"); });
+        add("Cancelled restart resume preserves signing/recovery/hook/descriptor and has no listener", async () => { assert(prior); const before = noEffects(); approve = false; try { assert.equal((await call("resumePrePushGuard")).status, "CANCELLED"); } finally { approve = true; }
+            assert.deepEqual(noEffects(), before); assert.equal((await saved()).descriptor.session, prior.session); assert.deepEqual(await fact(hook()), prior.hook); assert.deepEqual(await backupFacts(), prior.backupFacts); });
+        add("Explicit reviewed restart resume signs fresh session and actual component public/secret routes work", async () => { assert(prior); assert.equal((await call("resumePrePushGuard")).status, "RESUMED"); await status("LIVE");
+            const current = await saved(); assert.notEqual(current.descriptor.session, prior.session); assert.equal(current.pin.generation, prior.generation); assert.equal(sha(Buffer.from(current.value.pin, "base64")), prior.publicPinSha256);
+            assert.equal(stores.signing, 0); assert.equal(stores.backupKey, 0); assert.deepEqual(await backupFacts(), prior.backupFacts); await componentHook(transcript(prior.tips.public), 0, "ALLOW"); await componentHook(transcript(prior.tips.removed), 1, "BLOCK"); });
+        add("Cancelled restart restore leaves exact reviewed installation and live owner", async () => { assert(prior); const before = await fact(hook()), effects = noEffects(); approve = false; try { assert.equal((await call("restorePrePushGuard")).status, "CANCELLED"); } finally { approve = true; }
+            assert.deepEqual(await fact(hook()), before); assert.deepEqual(noEffects(), effects); await status("LIVE"); });
+        add("Reviewed restart restore returns exact absence/policy and safely withdraws owner; all direct children closed", async () => { assert(prior); assert.equal((await call("restorePrePushGuard")).status, "RESTORED"); assert(!(await fact(hook())).present); await idle(); await status("OWNER_REVIEW_REQUIRED");
+            await setFlag(prior.oldFlag); await ownerClosed(); await Promise.all(pendingChildren); children.forEach(closed); privateClean(); assert.deepEqual(await runtimeFacts(), runtimes); assert.deepEqual(await policyFacts(), prior.policy); });
+    }
+    assert.equal(checks.length, phase === "primary" ? 30 : 6);
+    for (let index = 0; index < checks.length; index++) observations.push({ id: "F26B-H" + (phase === "primary" ? "P" : "R") + String(index + 1).padStart(2, "0"), scope: checks[index].scope, status: "NOT_RUN" });
+    try { for (let index = 0; index < checks.length; index++) { caseId = observations[index].id; setupStage = caseId; try { assert(!halted); await checks[index].work(); observations[index].status = "PASS"; }
+        catch (error) { observations[index].status = "FAIL"; observations[index].errorName = error instanceof Error ? error.name : "UnknownFailure"; driverFailure = halted ? "STOP_UNCONFIRMED" : "NativePrePushComponentFailure"; break; } } }
+    finally { const busy = children.some(row => row.busy); if (!busy) { listeners.forEach(listener => listener.dispose()); for (const restore of restorers.reverse()) restore(); }
+        const summary = { schemaVersion: 1, phase, syntheticOnly: true, scope: "F26B_COMPONENT_NATIVE_ROUTE_NOT_CONFIGURED_PUSH", fixtureStatus: "PREPARED_NATIVE_FIXTURE_ACTUAL_RESULTS_ONLY", hostVersion: vscode.version,
+            extensionBundleSha256: runtimes[0].sha256, workerSha256: runtimes[3].sha256, runtimeBindings: runtimes, currentRuntimeBindings: await runtimeFacts(), executionManifest,
+            currentExecutionManifest: await fact(join(context.extensionUri.fsPath, "package.json")), hostProbeSha256: sha(await nativeRead(__filename)), codeSha256,
+            observations, expectedChecks: phase === "primary" ? 30 : 6, passed: observations.filter(row => row.status === "PASS").length, failed: observations.filter(row => row.status === "FAIL").length, notRun: observations.filter(row => row.status === "NOT_RUN").length,
+            children, requests: wires, reviews, secretStores: stores, ownerServers, ownerListeners, sourceDocuments, sourceDocumentEvents, directWorktreeReads, directObjectReads, metadataLeak,
+            parentEnvironmentUnchanged: environmentDigest() === parentEnvironment, driverFailure, busyChildren: children.filter(row => row.busy).length, timedOutChildren: children.filter(row => row.timedOut).length,
+            readyForInterphase: phase === "primary" && !!restartState && !driverFailure && !busy, safeWithdrawal: phase === "restart" && !driverFailure ? "REVIEWED_RESTORE_TO_ABSENCE_AND_FLAG_RESTORED" : "NOT_RUN",
+            limits: { refs: 32, commits: 32, blobs: 128, blobBytes: 65536, admittedBytes: 1048576, operationMilliseconds: 60000, fixtureChildMilliseconds: CHILD_LIMIT },
+            signalsRequested: children.reduce((sum, row) => sum + row.signalsRequested, 0), independence: "LOW", review: "SCRIPTED_NATIVE_API_DECISIONS_NOT_HUMAN_REVIEW",
+            nestedClientClosure: "NOT_INFERRED_FROM_SH;SUPPLEMENTAL_DIRECT_PACKAGED_CLIENT_CLOSE_EOF_OBSERVATION", configuredGitPush: "NOT_AUTHORIZED_NOT_RUN_REQUIRED_FOR_FEATURE_DONE",
+            notTested: ["Actual configured owner Git push or remote/local collector", "Same-user bypass/atomic OS confinement", "Human review/accessibility/usability", "Registered-value guarantee", "Other platforms/remote workspaces", "In-flight cancellation remains unit-only unless separately witnessed"] };
+        safeMetadata(summary); await fsp.writeFile(output, JSON.stringify(summary, null, 2) + "\n", { flag: "wx" }); if (busy) throw Error("STOP_UNCONFIRMED: retain editor ownership, do not close/advance."); }
+    if (driverFailure || observations.some(row => row.status !== "PASS")) throw Error("Native pre-push component incomplete.");
+}

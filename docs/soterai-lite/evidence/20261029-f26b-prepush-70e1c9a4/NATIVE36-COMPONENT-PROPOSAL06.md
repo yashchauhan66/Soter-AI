@@ -1,0 +1,9 @@
+# F26b native36: second normal improvement, corrected metadata oracle
+
+Native05 consumed on Code1.144.0: actual0PASS1FAIL29NOT_RUN/restart6NOT_RUN, Code natural0/bothEOF and outer1/bothEOF/no signals. Retain failure; never regrade it.
+
+Actual HP01 callback on the exact retained package reproduces7PASS1FAIL: it demands nonexistent entry.restricted=true. Official VS Code schema and the shipped package declare restriction using capabilities.untrustedWorkspaces.restrictedConfigurations. Correct only that assertion to check exact flag membership there. Original declared default-false/machine/four commands, all other35 callbacks, all36 IDs/scopes, deadlines/ownership/bootstrap remain unchanged and reversal byte proof is recorded. Corrected component8PASS, strict source typecheck and new evidence-only driver build PASS; prior24 driver bytes and source1070/VSIX6c299712 retained exact. No production change.
+
+One new isolated synthetic D profile, primary30+actual close/EOF/two PID absence/stable streams then restart6; exact current signed Code1.144.0 and source/artifact/vendor/driver gates before/after. Numeric loopback only, no process signals, original cancellation/outage/withdrawal oracles. No configured Git push or F26a native09 authority. Affected509+functional10/security17/configured-push/featureacceptance remain pending. LOW independence and nested shell worker closure limitations remain declared.
+
+Binding 293aa9d49b57495fea319fb7305dce7eb86c14a84e89913a46b72648cff3c4ed; candidate d60a9ed3e549edc50df890ce7bb114bc377313672f882aec5057eb42a45bf3b4; corrected driver d6edd4dad6b1bb76c066858b89bb476babc4992632bae1d719855881a6b6428c. Eligible actualattempt3, second normal improvement within the existing three-improvement limit. No automatic retry; GUI sandbox approval remains required.

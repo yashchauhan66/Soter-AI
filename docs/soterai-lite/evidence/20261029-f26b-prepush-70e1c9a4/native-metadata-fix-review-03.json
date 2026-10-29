@@ -1,0 +1,28 @@
+{
+  "status": "ONE_INVALID_FIXTURE_METADATA_ASSERTION_CORRECTED_NO_PRODUCT_OR_ORACLE_SCOPE_CHANGE",
+  "observedAt": "2026-10-29T16:48:15.452Z",
+  "baseline": "native-metadata-before-01.txt: actual7PASS1FAIL; exact package fails undefined!==true",
+  "sourceBefore": {
+    "input": "native-prepush-02.host.ts.txt",
+    "bytes": 61328,
+    "sha256": "ed484c5964cbc0692ab3ec2513ac450e5a0ed35446c048e828982acdb56afbb9"
+  },
+  "sourceAfter": {
+    "input": "native-prepush-03.host.ts.txt",
+    "bytes": 61394,
+    "sha256": "93f5dbcc87a9e383001e7857ca2f9434846bf53b4d0ee12594626ad738003e15"
+  },
+  "before": "assert.equal(entry.restricted, true);",
+  "after": "assert(manifest.capabilities.untrustedWorkspaces.restrictedConfigurations.includes(\"soterai.\" + FLAG));",
+  "reversalByteExact": true,
+  "all36ScopesByteExact": true,
+  "allOtherAssertionsByteExact": true,
+  "deadlinesAndOwnershipByteExact": true,
+  "officialReference": "https://code.visualstudio.com/api/extension-guides/workspace-trust#static-declarations",
+  "reason": "VS Code restricted settings are declared in capabilities.untrustedWorkspaces.restrictedConfigurations; the exact current packaged flag is listed there and has no entry.restricted field.",
+  "productionChanged": false,
+  "source1070AndVsixUnchanged": true,
+  "native": "NOT_RUN_ON_CORRECTED_FIXTURE",
+  "f26aNative09": "USER_DEFERRED_NOT_RUN",
+  "configuredPush": "NOT_AUTHORIZED_NOT_RUN"
+}

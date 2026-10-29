@@ -1,0 +1,58 @@
+﻿TAP version 13
+# Subtest: HP03 accepts the installed-host-specific denied workspace write and verifies owner remains disabled
+ok 1 - HP03 accepts the installed-host-specific denied workspace write and verifies owner remains disabled
+  ---
+  duration_ms: 6.7972
+  type: 'test'
+  ...
+# Subtest: HP03 rejects an unrelated generic API error
+ok 2 - HP03 rejects an unrelated generic API error
+  ---
+  duration_ms: 6.0355
+  type: 'test'
+  ...
+# Subtest: HP03 rejects a refusal for a different setting
+ok 3 - HP03 rejects a refusal for a different setting
+  ---
+  duration_ms: 2.1129
+  type: 'test'
+  ...
+# Subtest: HP03 rejects an unrelated CodeExpectedError message
+ok 4 - HP03 rejects an unrelated CodeExpectedError message
+  ---
+  duration_ms: 1.8363
+  type: 'test'
+  ...
+# Subtest: HP03 rejects an unexpectedly successful workspace write
+ok 5 - HP03 rejects an unexpectedly successful workspace write
+  ---
+  duration_ms: 3.4151
+  type: 'test'
+  ...
+# Subtest: HP03 rejects an enabled effective flag
+ok 6 - HP03 rejects an enabled effective flag
+  ---
+  duration_ms: 4.2359
+  type: 'test'
+  ...
+# Subtest: HP03 rejects a retained workspace value
+ok 7 - HP03 rejects a retained workspace value
+  ---
+  duration_ms: 4.6747
+  type: 'test'
+  ...
+# Subtest: HP03 rejects an unexpectedly live owner result
+ok 8 - HP03 rejects an unexpectedly live owner result
+  ---
+  duration_ms: 3.0556
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 812.5541

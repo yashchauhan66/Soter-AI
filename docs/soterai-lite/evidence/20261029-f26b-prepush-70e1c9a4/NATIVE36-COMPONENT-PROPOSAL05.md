@@ -1,0 +1,9 @@
+# F26b native36 component, Code 1.144.0, normal improvement round 1
+
+First actual component attempt04 failed at Code startup while the official updater was disk-full; all36 assertions NOT_RUN. Failure/owners/old binding retained. User explicitly requested the application update. Installed1.144.0 is now Microsoft-signed and exact-image verified; old updater and original owner absent. No new download/installer or process killing.
+
+This new one-use packet changes only Code version/image/application-root and builtin JSON vendor pins plus unique consumption/binding filenames. The full1070 source proof, exact VSIX6c299712, original native driver/source and all30 primary+6 restart oracles remain unchanged. Reversal of all declared launcher metadata substitutions reproduces candidate10 byte-for-byte. Current source/full/content/provenance/physical admission is required before and after native phases.
+
+One new synthetic D profile, numeric loopback only, no process signals, original deadlines/bootstrap control flow, actual child/Code natural closure + both EOF/two PID absence observations, explicit final restore/flag withdrawal. Direct installed pre-push wrapper invocation is a component route; no configured local/network Git push is authorized or run. F26a native09 remains explicitly deferred. Same-user enforcement, nested shell worker closure and independent review limitations remain. Required affected509+functional10/security17 and actual configured-push gates stay incomplete.
+
+Binding eb45611bd0aa516ee90284a0f7ce82c9eba1bca63a091ef0c6b3e6686ddc06bc; candidate 357109aff280b89179386b81e292fce8db00baa05d0b9412d72b3136988b4dbb; driver 1bee486044c88e8de64d27685a0fff0730943d40b3daceeac93e21ac17fa5d71; VSIX 6c299712aa6f8da35b32bacc12b3e4b26b9e5d26689a2fdcb7b06eadb186d12b. Eligible attempt2 after one actual startup failure; first normal improvement, within existing at-most-three limit. No automatic retry. GUI/tool sandbox approval remains required.

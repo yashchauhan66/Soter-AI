@@ -1,0 +1,76 @@
+﻿TAP version 13
+# Subtest: HP01 accepts the exact packaged false/machine/restricted-list metadata
+not ok 1 - HP01 accepts the exact packaged false/machine/restricted-list metadata
+  ---
+  duration_ms: 8.5643
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261029-f26b-prepush-70e1c9a4\\native-metadata-fixture.component-01.cjs:28:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: 'strictEqual'
+  stack: |-
+    work (evalmachine.<anonymous>:12:12)
+    async execute (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261029-f26b-prepush-70e1c9a4\native-metadata-fixture.component-01.cjs:26:62)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: HP01 rejects a changed declared default
+ok 2 - HP01 rejects a changed declared default
+  ---
+  duration_ms: 5.5116
+  type: 'test'
+  ...
+# Subtest: HP01 rejects a workspace-scoped flag
+ok 3 - HP01 rejects a workspace-scoped flag
+  ---
+  duration_ms: 5.0483
+  type: 'test'
+  ...
+# Subtest: HP01 rejects absence from the actual VS Code restricted setting list
+ok 4 - HP01 rejects absence from the actual VS Code restricted setting list
+  ---
+  duration_ms: 5.1674
+  type: 'test'
+  ...
+# Subtest: HP01 rejects a missing manifest command
+ok 5 - HP01 rejects a missing manifest command
+  ---
+  duration_ms: 6.3031
+  type: 'test'
+  ...
+# Subtest: HP01 rejects a missing registered command
+ok 6 - HP01 rejects a missing registered command
+  ---
+  duration_ms: 5.5045
+  type: 'test'
+  ...
+# Subtest: HP01 rejects an unexpected enabled initial flag
+ok 7 - HP01 rejects an unexpected enabled initial flag
+  ---
+  duration_ms: 3.5776
+  type: 'test'
+  ...
+# Subtest: HP01 rejects an unexpected API default value
+ok 8 - HP01 rejects an unexpected API default value
+  ---
+  duration_ms: 3.5677
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 7
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1548.6696

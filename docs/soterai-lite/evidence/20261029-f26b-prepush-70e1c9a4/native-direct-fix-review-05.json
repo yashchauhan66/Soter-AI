@@ -1,0 +1,51 @@
+{
+  "status": "DIRECT_FIXTURE_NOW_USES_ACTUAL_REQUIRED_CLI_GRAMMAR_AND_REPLAY_ABI_NO_PRODUCT_CHANGE",
+  "observedAt": "2026-10-29T17:25:46.499Z",
+  "native07": {
+    "primaryPass": 6,
+    "primaryFail": 1,
+    "primaryNotRun": 23,
+    "restartNotRun": 6,
+    "directChildExit": 1,
+    "directChildBothEOF": true,
+    "directChildStdoutBytes": 0,
+    "directChildStderrBytes": 0,
+    "directCaseHttpRequests": 0
+  },
+  "baseline": "Real directClient helper plus real CLI grammar with explicit process/client seams: native-direct-client-before-01.txt actual6PASS2FAIL",
+  "substitutions": [
+    [
+      "[currentPin.worker, \"--pre-push\", \"--pin\", Buffer.from(JSON.stringify(currentPin)).toString(\"base64url\")]",
+      "[currentPin.worker, \"--pre-push\", \"--pin\", Buffer.from(JSON.stringify(currentPin)).toString(\"base64url\"), \"--replay\"]"
+    ],
+    [
+      "closed(done.receipt); assert.equal(done.receipt.code, expected); assert.equal(done.stdout.length, 0);",
+      "closed(done.receipt); assert.equal(done.receipt.code, expected);\n    if (expected === 0) { assert.equal(decision, \"ALLOW\"); assert.equal(sha(done.stdout), sha(Buffer.concat([raw, Buffer.from(\".\")]))); }\n    else assert.equal(done.stdout.length, 0);"
+    ]
+  ],
+  "reversalByteExact": true,
+  "all36ScopesAndCallbackBodiesByteExact": true,
+  "allOtherHelpersByteExact": true,
+  "ownershipAndDeadlinesUnchanged": true,
+  "sourceBefore": {
+    "input": "native-prepush-04.host.ts.txt",
+    "bytes": 61810,
+    "sha256": "572343c2c5beb7c92e0e58a5f42c2178d0f9f13c0c8e1e49dc7e6755a5502b0b"
+  },
+  "sourceAfter": {
+    "input": "native-prepush-05.host.ts.txt",
+    "bytes": 61969,
+    "sha256": "74fb7de9e0b0742a93da34787842ca17ec0774fe33e3e0d6bd5772e0d1150260"
+  },
+  "productionMain": {
+    "path": "packages/vscode-extension/src/history-hooks/preCommitClientMain.ts",
+    "bytes": 3368,
+    "sha256": "f479e2cd3a8df4921f5e1015b835339ee3753a1a18b19b68d004cb282a11dce8"
+  },
+  "productionChanged": false,
+  "source1070AndVsixUnchanged": true,
+  "native08": "NOT_AUTHORIZED_NOT_MATERIALIZED_NOT_RUN",
+  "roundLimit": "Original attempt plus all three normal improvements consumed; further native improvement requires explicit new user approval.",
+  "f26aNative09": "USER_DEFERRED_NOT_RUN",
+  "configuredPush": "NOT_AUTHORIZED_NOT_RUN"
+}

@@ -1,0 +1,35 @@
+{
+  "status": "CODE11440_NATIVE05_HP01_FAIL_FIXTURE_MANIFEST_MISMATCH_UNDER_REPRODUCTION",
+  "observedAt": "2026-10-29T16:46:09.858Z",
+  "feature": "F26b",
+  "featureState": "ACTIVE_INCOMPLETE",
+  "nativeAttempt": 2,
+  "normalImprovementRound": 1,
+  "primary": {
+    "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/f26b-prepush-native-20261029T163951Z-10b64401/primary-results.json",
+    "bytes": 8607,
+    "sha256": "ab679b46936bc90b1442c68aa1ff2055f03bdcc781035c9624f4bd91999f53ef"
+  },
+  "restart6": "NOT_RUN",
+  "codeClose": {
+    "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/f26b-prepush-native-20261029T163951Z-10b64401/primary-owned-editor-close.json",
+    "bytes": 391,
+    "sha256": "4d013fcd3a56a28fe2bd24750426baa753d9154675966a79fc258ec9bec33744"
+  },
+  "outerClose": {
+    "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/native-component-05-owned-close.json",
+    "bytes": 613,
+    "sha256": "a25f7ba84af60b08572ce4ea154a5a1352ceb819ed29491c6de9dc0eb86a6b86"
+  },
+  "primaryPid": 18056,
+  "outerPid": 23860,
+  "pidAbsenceAndStabilityNotExecuted": true,
+  "signalsRequested": 0,
+  "hypothesis": "HP01 asserts entry.restricted=true; exact packaged manifest declares restriction in capabilities.untrustedWorkspaces.restrictedConfigurations and lacks entry.restricted. Reproduce actual callback against frozen manifest before fixture correction; no production change guessed.",
+  "fullSourceAndVsix": "UNCHANGED_CURRENT1070_FULL4750_ZEROFAIL_VSIX6c299712",
+  "update": "INSTALLED_CODE1.144.0_SIGNED_VERIFIED",
+  "next": "Component reproduction and preserve exact36 scopes; no automatic native retry",
+  "f26aNative09": "USER_DEFERRED_NOT_RUN",
+  "configuredPush": "NOT_AUTHORIZED_NOT_RUN",
+  "releaseReady": false
+}
