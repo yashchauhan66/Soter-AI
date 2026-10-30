@@ -1,0 +1,154 @@
+﻿TAP version 13
+# {"componentDiagnostics":true,"outcome":"UNAVAILABLE","statusCode":503,"signCalls":0,"responseBytes":11,"headers":{"content-type":"text/plain","content-length":"11","connection":"close","cache-control":"no-store"},"wire":{"caseId":"F26B-HP12","requestEnded":true,"requestClosed":true,"responseFinished":true,"responseClosed":true,"requestValid":true,"signatureValid":false,"transcriptMatched":false,"overflow":false,"transcriptSha256":"f2877e7fc880beef34c6ce039a54950f765ab6d93165c41606ef11bffcc69d1b","generation":"2aa01f59-8a84-4358-885b-740c8cd827c2","session":"31d5623a-2310-4011-88b3-ffbc32362c31","nonce":"97000519-6806-479c-a806-f8bca9d1bd32","httpStatus":503,"responseContentType":"undefined","responseContentLength":"undefined","responseConnection":"undefined","responseCacheControl":"undefined"},"assertionFailures":[{"method":"equal","message":"Expected values to be strictly equal:\\n+ actual - expected\\n\\n+ 'undefined'\\n- 'text/plain'\\n"},{"method":"equal","message":"Expected values to be strictly equal:\\n+ actual - expected\\n\\n+ undefined\\n- 'UNAVAILABLE'\\n"}]}
+# {"componentDiagnostics":true,"outcome":"ALLOW","statusCode":200,"signCalls":1,"responseBytes":379,"headers":{"content-type":"application/json","content-length":"379","connection":"close","cache-control":"no-store"},"wire":{"caseId":"F26B-HP12","requestEnded":true,"requestClosed":true,"responseFinished":true,"responseClosed":true,"requestValid":true,"signatureValid":false,"transcriptMatched":false,"overflow":false,"transcriptSha256":"f2877e7fc880beef34c6ce039a54950f765ab6d93165c41606ef11bffcc69d1b","generation":"9d84af8c-3ab9-4acd-8021-cff09771b321","session":"6c1406bf-c596-4d0a-8927-ffc041697101","nonce":"2425c62e-70d5-4df1-9495-1297f12f5a29","httpStatus":200,"responseContentType":"undefined","responseContentLength":"undefined","responseConnection":"undefined","responseCacheControl":"undefined"},"assertionFailures":[{"method":"equal","message":"Expected values to be strictly equal:\\n+ actual - expected\\n\\n+ 'undefined'\\n- 'application/json'\\n"},{"method":"equal","message":"Expected values to be strictly equal:\\n+ actual - expected\\n\\n+ undefined\\n- 'ALLOW'\\n"}]}
+# {"componentDiagnostics":true,"outcome":"BLOCK","statusCode":200,"signCalls":1,"responseBytes":379,"headers":{"content-type":"application/json","content-length":"379","connection":"close","cache-control":"no-store"},"wire":{"caseId":"F26B-HP12","requestEnded":true,"requestClosed":true,"responseFinished":true,"responseClosed":true,"requestValid":true,"signatureValid":false,"transcriptMatched":false,"overflow":false,"transcriptSha256":"f2877e7fc880beef34c6ce039a54950f765ab6d93165c41606ef11bffcc69d1b","generation":"e5aac2a2-8f3b-45c1-9805-3970a43e0ba8","session":"bef2bca0-2fb0-4d23-bbab-45fb69706ddb","nonce":"d8fddd3f-8609-4538-81a5-53f0805a685f","httpStatus":200,"responseContentType":"undefined","responseContentLength":"undefined","responseConnection":"undefined","responseCacheControl":"undefined"},"assertionFailures":[{"method":"equal","message":"Expected values to be strictly equal:\\n+ actual - expected\\n\\n+ 'undefined'\\n- 'application/json'\\n"},{"method":"equal","message":"Expected values to be strictly equal:\\n+ actual - expected\\n\\n+ undefined\\n- 'BLOCK'\\n"}]}
+# Subtest: real owner capped/unsupported scan uses exact unsigned HTTP503 refusal accepted by fixture
+not ok 1 - real owner capped/unsupported scan uses exact unsigned HTTP503 refusal accepted by fixture
+  ---
+  duration_ms: 47.2912
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261029-f26b-prepush-70e1c9a4\\native-header-fixture.component-06.cjs:42:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - 'UNAVAILABLE'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'UNAVAILABLE'
+  operator: 'strictEqual'
+  stack: |-
+    Proxy.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261029-f26b-prepush-70e1c9a4\native-header-fixture.component-06.cjs:36:184)
+    Object.componentHook (evalmachine.<anonymous>:24:16)
+    async execute (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261029-f26b-prepush-70e1c9a4\native-header-fixture.component-06.cjs:38:34)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: signed ALLOW fixture route remains required
+not ok 2 - signed ALLOW fixture route remains required
+  ---
+  duration_ms: 10.4555
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261029-f26b-prepush-70e1c9a4\\native-header-fixture.component-06.cjs:43:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - 'ALLOW'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'ALLOW'
+  operator: 'strictEqual'
+  stack: |-
+    Proxy.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261029-f26b-prepush-70e1c9a4\native-header-fixture.component-06.cjs:36:184)
+    Object.componentHook (evalmachine.<anonymous>:24:16)
+    async execute (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261029-f26b-prepush-70e1c9a4\native-header-fixture.component-06.cjs:38:34)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: signed BLOCK fixture route remains required
+not ok 3 - signed BLOCK fixture route remains required
+  ---
+  duration_ms: 36.3357
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261029-f26b-prepush-70e1c9a4\\native-header-fixture.component-06.cjs:44:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - 'BLOCK'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'BLOCK'
+  operator: 'strictEqual'
+  stack: |-
+    Proxy.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261029-f26b-prepush-70e1c9a4\native-header-fixture.component-06.cjs:36:184)
+    Object.componentHook (evalmachine.<anonymous>:24:16)
+    async execute (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261029-f26b-prepush-70e1c9a4\native-header-fixture.component-06.cjs:38:34)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: refusal with HTTP200 is rejected
+ok 4 - refusal with HTTP200 is rejected
+  ---
+  duration_ms: 12.6206
+  type: 'test'
+  ...
+# Subtest: refusal with wrong body is rejected
+ok 5 - refusal with wrong body is rejected
+  ---
+  duration_ms: 11.0109
+  type: 'test'
+  ...
+# Subtest: refusal with wrong content type is rejected
+ok 6 - refusal with wrong content type is rejected
+  ---
+  duration_ms: 8.0303
+  type: 'test'
+  ...
+# Subtest: refusal with wrong content length is rejected
+ok 7 - refusal with wrong content length is rejected
+  ---
+  duration_ms: 5.9695
+  type: 'test'
+  ...
+# Subtest: refusal with keep-alive is rejected
+ok 8 - refusal with keep-alive is rejected
+  ---
+  duration_ms: 11.2042
+  type: 'test'
+  ...
+# Subtest: refusal with cache permission is rejected
+ok 9 - refusal with cache permission is rejected
+  ---
+  duration_ms: 11.8174
+  type: 'test'
+  ...
+# Subtest: ALLOW with invalid signature is rejected
+ok 10 - ALLOW with invalid signature is rejected
+  ---
+  duration_ms: 11.6962
+  type: 'test'
+  ...
+# Subtest: ALLOW with mismatched transcript is rejected
+ok 11 - ALLOW with mismatched transcript is rejected
+  ---
+  duration_ms: 9.2002
+  type: 'test'
+  ...
+# Subtest: refusal with stdout output is rejected
+ok 12 - refusal with stdout output is rejected
+  ---
+  duration_ms: 8.9257
+  type: 'test'
+  ...
+# Subtest: actual Node writeHead direct headers do not populate getHeader cache without a socket
+ok 13 - actual Node writeHead direct headers do not populate getHeader cache without a socket
+  ---
+  duration_ms: 0.7605
+  type: 'test'
+  ...
+# Subtest: actual Node setHeader cache remains observable when explicitly populated
+ok 14 - actual Node setHeader cache remains observable when explicitly populated
+  ---
+  duration_ms: 1.1789
+  type: 'test'
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 11
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1936.5489

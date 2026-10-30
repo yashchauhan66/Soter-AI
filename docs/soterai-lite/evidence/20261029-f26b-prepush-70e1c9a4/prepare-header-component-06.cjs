@@ -1,0 +1,14 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');const own=n=>path.join(__dirname,n);let current=fs.readFileSync(own('native-refusal-fixture.component-05.cjs'),'utf8');
+const substitutions=[
+ ["input=process.env.SOTERAI_F26B_REFUSAL_SOURCE||'native-prepush-05.host.ts.txt';assert(['native-prepush-05.host.ts.txt','native-prepush-06.host.ts.txt'].includes(input));","input=process.env.SOTERAI_F26B_REFUSAL_SOURCE||'native-prepush-06.host.ts.txt';assert(['native-prepush-06.host.ts.txt','native-prepush-07.host.ts.txt'].includes(input));"],
+ ["const sha=b=>crypto.createHash('sha256').update(b).digest('hex');","const {ServerResponse}=require('node:http');\nconst sha=b=>crypto.createHash('sha256').update(b).digest('hex');"],
+ ['constructor(){super();this.destroyed=false;',"constructor(){super();this.real=new ServerResponse({method:'POST',httpVersionMajor:1,httpVersionMinor:1});this.destroyed=false;"],
+ ["writeHead(code,values){this.statusCode=options.status??code;this.headers=Object.fromEntries(Object.entries({...values,...options.headers}).map(([k,v])=>[k.toLowerCase(),v]));return this;}","writeHead(code,values){this.real.writeHead(code,values);this.statusCode=this.real.statusCode;this.headers=Object.fromEntries(Object.entries(values).map(([k,v])=>[k.toLowerCase(),v]));return this;}"],
+ ['getHeader(name){return this.headers[name.toLowerCase()];}','getHeader(name){return this.real.getHeader(name);}'],
+ ['driver.observeRequest(req,res);const observedEnd=res.end;',"driver.observeRequest(req,res);const observedWriteHead=res.writeHead;res.writeHead=function(code,values){return Reflect.apply(observedWriteHead,this,[options.status??code,{...values,...options.headers}]);};const observedEnd=res.end;"]
+];
+for(const[from,to]of substitutions){assert.equal(current.split(from).length,2,from);current=current.replace(from,to);}
+current+="\ntest('actual Node writeHead direct headers do not populate getHeader cache without a socket',()=>{const response=new ServerResponse({method:'POST',httpVersionMajor:1,httpVersionMinor:1});response.writeHead(503,{'Content-Type':'text/plain','Content-Length':'11'});assert.equal(response.statusCode,503);assert.equal(response.getHeader('Content-Type'),undefined);});\n";
+current+="test('actual Node setHeader cache remains observable when explicitly populated',()=>{const response=new ServerResponse({method:'POST',httpVersionMajor:1,httpVersionMinor:1});response.setHeader('Content-Type','text/plain');response.writeHead(503);assert.equal(response.getHeader('Content-Type'),'text/plain');});\n";
+fs.writeFileSync(own('native-header-fixture.component-06.cjs'),current,{flag:'wx'});console.log('Actual Node ServerResponse now owns header behavior; only body/process delivery remains an explicit finite seam. No socket is created.');

@@ -1,0 +1,49 @@
+{
+  "status": "FIXTURE_CAPTURES_ACTUAL_WRITEHEAD_ARGUMENTS_WITHOUT_ASSUMING_HEADER_CACHE_NO_PRODUCT_CHANGE",
+  "observedAt": "2026-10-30T04:01:19.242Z",
+  "native09": {
+    "primaryPass": 5,
+    "primaryFail": 1,
+    "primaryNotRun": 24,
+    "restartNotRun": 6,
+    "failedCase": "F26B-HP06",
+    "declaredChildren": 15,
+    "allDeclaredClosedEOF": true,
+    "codeExit": 0,
+    "outerExit": 1,
+    "actualHookExit": 0,
+    "actualHttpStatus": 200,
+    "actualObservedGetHeaderValues": "undefined for content-type/content-length/connection/cache-control",
+    "signatureCheckNotReached": true
+  },
+  "baseline": "Actual Node ServerResponse (no socket), actual production owner-service/fixture functions, explicit finite body/process/ref/scan/signing seams: native-header-before-01 actual11PASS3FAIL/14tests. Prior emulated response cached writeHead headers and missed the real API distinction.",
+  "substitutions": [
+    [
+      "    const end = res.end; res.end = function (this: ServerResponse, ...values: any[]) { try { const bytes = values[0];",
+      "    const writeHead = res.writeHead;\n    res.writeHead = function (this: ServerResponse, ...values: any[]) { try {\n        const supplied = typeof values[1] === \"string\" ? values[2] : values[1];\n        assert(supplied && typeof supplied === \"object\" && !Array.isArray(supplied));\n        const pairs = Object.entries(supplied), headers = new Map(pairs.map(([name, value]) => [name.toLowerCase(), value]));\n        assert.equal(headers.size, pairs.length); row.httpStatus = values[0]; assert(Number.isInteger(row.httpStatus));\n        row.responseContentType = String(headers.get(\"content-type\")); row.responseContentLength = String(headers.get(\"content-length\"));\n        row.responseConnection = String(headers.get(\"connection\")); row.responseCacheControl = String(headers.get(\"cache-control\"));\n    } catch { row.httpStatus = undefined; row.responseContentType = undefined; row.responseContentLength = undefined; row.responseConnection = undefined; row.responseCacheControl = undefined; }\n        return Reflect.apply(writeHead, this, values);\n    } as ServerResponse[\"writeHead\"];\n    const end = res.end; res.end = function (this: ServerResponse, ...values: any[]) { try { const bytes = values[0];"
+    ],
+    [
+      "        row.httpStatus = this.statusCode; row.responseContentType = String(this.getHeader(\"Content-Type\")); row.responseContentLength = String(this.getHeader(\"Content-Length\"));\n        row.responseConnection = String(this.getHeader(\"Connection\")); row.responseCacheControl = String(this.getHeader(\"Cache-Control\"));",
+      "        assert.equal(row.httpStatus, this.statusCode);"
+    ]
+  ],
+  "reversalByteExact": true,
+  "all36ScopesAndCallbackBodiesByteExact": true,
+  "allOtherHelpersByteExact": true,
+  "ownershipAndDeadlinesUnchanged": true,
+  "sourceBefore": {
+    "input": "native-prepush-06.host.ts.txt",
+    "bytes": 63665,
+    "sha256": "285ea53d093b5c07f2ce893b6bff085a115191f0af8eec2ead24199c8ed00891"
+  },
+  "sourceAfter": {
+    "input": "native-prepush-07.host.ts.txt",
+    "bytes": 64488,
+    "sha256": "93d06b1775555534911e387616364425f8a4b7b20b87a0b3c74533ccb9032eca"
+  },
+  "productionChanged": false,
+  "source1070AndVsixUnchanged": true,
+  "native10": "NOT_AUTHORIZED_NOT_MATERIALIZED_NOT_RUN",
+  "f26aNative09": "USER_DEFERRED_NOT_RUN",
+  "configuredPush": "NOT_AUTHORIZED_NOT_RUN"
+}
