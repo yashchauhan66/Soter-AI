@@ -1,0 +1,82 @@
+﻿TAP version 13
+# Subtest: real owner capped/unsupported scan uses exact unsigned HTTP503 refusal accepted by fixture
+ok 1 - real owner capped/unsupported scan uses exact unsigned HTTP503 refusal accepted by fixture
+  ---
+  duration_ms: 16.5352
+  type: 'test'
+  ...
+# Subtest: signed ALLOW fixture route remains required
+ok 2 - signed ALLOW fixture route remains required
+  ---
+  duration_ms: 5.0916
+  type: 'test'
+  ...
+# Subtest: signed BLOCK fixture route remains required
+ok 3 - signed BLOCK fixture route remains required
+  ---
+  duration_ms: 4.486
+  type: 'test'
+  ...
+# Subtest: refusal with HTTP200 is rejected
+ok 4 - refusal with HTTP200 is rejected
+  ---
+  duration_ms: 5.8055
+  type: 'test'
+  ...
+# Subtest: refusal with wrong body is rejected
+ok 5 - refusal with wrong body is rejected
+  ---
+  duration_ms: 3.5693
+  type: 'test'
+  ...
+# Subtest: refusal with wrong content type is rejected
+ok 6 - refusal with wrong content type is rejected
+  ---
+  duration_ms: 3.3525
+  type: 'test'
+  ...
+# Subtest: refusal with wrong content length is rejected
+ok 7 - refusal with wrong content length is rejected
+  ---
+  duration_ms: 3.6247
+  type: 'test'
+  ...
+# Subtest: refusal with keep-alive is rejected
+ok 8 - refusal with keep-alive is rejected
+  ---
+  duration_ms: 3.9224
+  type: 'test'
+  ...
+# Subtest: refusal with cache permission is rejected
+ok 9 - refusal with cache permission is rejected
+  ---
+  duration_ms: 4.0633
+  type: 'test'
+  ...
+# Subtest: ALLOW with invalid signature is rejected
+ok 10 - ALLOW with invalid signature is rejected
+  ---
+  duration_ms: 4.3002
+  type: 'test'
+  ...
+# Subtest: ALLOW with mismatched transcript is rejected
+ok 11 - ALLOW with mismatched transcript is rejected
+  ---
+  duration_ms: 4.2829
+  type: 'test'
+  ...
+# Subtest: refusal with stdout output is rejected
+ok 12 - refusal with stdout output is rejected
+  ---
+  duration_ms: 3.6172
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1131.629

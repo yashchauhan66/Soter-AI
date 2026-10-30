@@ -1,0 +1,180 @@
+{
+  "status": "NATIVE08_ACTUAL11PASS1FAIL18NOT_RUN_EXTRA_F26B09_TESTED_PROPOSAL_UNAPPROVED",
+  "observedAt": "2026-10-30T03:42:32.164Z",
+  "feature": "F26b",
+  "featureState": "ACTIVE_INCOMPLETE",
+  "native08": {
+    "approval": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/native08-user-approval-01.json",
+      "bytes": 726,
+      "sha256": "1819f5a87a749b2f7fc3234ad33362a12b33b0ba2cf95665e4618f4ccfaef235"
+    },
+    "consumption": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/native-launch-consumption-08.json",
+      "bytes": 543,
+      "sha256": "2d0638658c9fd29371dac9cc3783953db985b3984f6342fd0b316e84b90bf26d"
+    },
+    "primaryCounts": {
+      "passed": 11,
+      "failed": 1,
+      "notRun": 18
+    },
+    "restartCounts": {
+      "passed": 0,
+      "failed": 0,
+      "notRun": 6
+    },
+    "failedCase": {
+      "id": "F26B-HP12",
+      "scope": "33-commit sentinel makes direct component route unavailable before tree/blob access",
+      "status": "FAIL",
+      "errorName": "AssertionError"
+    },
+    "primaryResult": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/f26b-prepush-native-20261030T032522Z-87b1c9dd/primary-results.json",
+      "bytes": 51011,
+      "sha256": "f95b8963dfa3b2031bfeefddcbd61d7b989ed5ead949b41889f5849ab9aa162b"
+    },
+    "codeClose": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/f26b-prepush-native-20261030T032522Z-87b1c9dd/primary-owned-editor-close.json",
+      "bytes": 391,
+      "sha256": "a8040007e2d6ffb6be17e5e91bbbb60ab0e948d76207e3407f53fa0af108b6da"
+    },
+    "outerClose": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/native-component-08-owned-close.json",
+      "bytes": 613,
+      "sha256": "e234304d5f2e2e492c0da70e76cc1c1e311dac91958c7c801b71b5f3ac383ea1"
+    },
+    "followupAbsenceAndStability": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/native-final-owner-observation-08.json",
+      "bytes": 1412,
+      "sha256": "97ea85dd421535e47527dbedeaba2d71686eeddbb6bad942d4bbdc1287589cb8"
+    },
+    "declaredChildCount": 50,
+    "allDeclaredChildrenClosedAndBothEOF": true,
+    "signalsRequested": 0,
+    "capScannerOperations": [
+      "version",
+      "commits"
+    ],
+    "capCommitOutputBytes": 1353,
+    "capHookExit": 1,
+    "capHookStdoutBytes": 0,
+    "actualNativeHttpStatusAndBody": "NOT_RECORDED_NOT_RETROACTIVELY_INFERRED",
+    "listenerCloseCallback": "NOT_INFERRED_FROM_PROCESS_EXIT",
+    "hookRestore": "NOT_RUN_RETAINED_IN_SYNTHETIC_PROFILE"
+  },
+  "normalImprovementRoundsConsumed": 3,
+  "extra08": "APPROVED_SINGLE_RUN_CONSUMED",
+  "f26bNative09": "NOT_AUTHORIZED_NOT_MATERIALIZED_NOT_RUN",
+  "binding09": {
+    "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/native-launch-binding-09.json",
+    "bytes": 11192,
+    "sha256": "ab44ff537291790635b181a85d4a345a66ac1471dbc5e6bb223f83fdd7b879cb"
+  },
+  "proposal09": {
+    "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/NATIVE36-COMPONENT-PROPOSAL09.md",
+    "bytes": 2897,
+    "sha256": "82c507d579eac6974b40903a72aff25431ed839cf876d032908a2a9e2550cd14"
+  },
+  "proposalReview": {
+    "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/native-refusal-proposal-review-09.json",
+    "bytes": 1344,
+    "sha256": "8221596156ef58f262e90ebf0f191066e077594e9df71d25b9864a8865a55279"
+  },
+  "correction": {
+    "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/native-refusal-fix-review-06.json",
+    "bytes": 4211,
+    "sha256": "0e3abaf60ed4d915f6d8044656a419f4641f9357b591080fdd33c1aec585336d"
+  },
+  "component": {
+    "actualServiceAndFixtureWithExplicitSeams": true,
+    "baselineCounts": {
+      "passed": 11,
+      "failed": 1
+    },
+    "baseline": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/native-refusal-before-06.txt",
+      "bytes": 3937,
+      "sha256": "ca45be3395d598ec0b1bf93f7047d82c028756f36cc7f8fda0d63d9ec2a97db1"
+    },
+    "correctedCounts": {
+      "passed": 12,
+      "failed": 0
+    },
+    "corrected": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/native-refusal-after-06.txt",
+      "bytes": 2094,
+      "sha256": "7d3600be8b3409ed8bb8126b56a37a9e99855c99df002d260819fd0beabda494"
+    },
+    "correctedInputEnvironment": {
+      "SOTERAI_F26B_REFUSAL_SOURCE": "native-prepush-06.host.ts.txt"
+    },
+    "earlierSeamAndSandboxFailures": "Retained separate raw receipts; not native attempts or successful baseline controls."
+  },
+  "strict": {
+    "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/native-refusal-fix-static-06.txt",
+    "bytes": 236,
+    "sha256": "2d0ad97ae321cfa3b4b6ac7ac36f35764baef749b48f22e555503c6560adf565"
+  },
+  "correctedDriver": {
+    "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/prebuilt-native-hosts-06/lite-prepush-guard-host.js",
+    "bytes": 68141,
+    "sha256": "b9ebaba3f0cc891109eccfd30494ad1e9d4a59793fb29cd99ef4adff8b05928e"
+  },
+  "driverProvenance": {
+    "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/native-driver-provenance-06.json",
+    "bytes": 42329,
+    "sha256": "9fecd3d75254e741b3a2a27608bb05dd722af3070ceaa5b565bd168ac4460353"
+  },
+  "readOnlyPreapproval": {
+    "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/native-preapproval-09.txt",
+    "bytes": 499,
+    "sha256": "475bd3074694212145738ba601992b68fe6f63d9a344173a8b1f9650c5414779"
+  },
+  "preparedSyntax": {
+    "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/native-refusal-static-09.txt",
+    "bytes": 772,
+    "sha256": "a549cfd5ac8d449eab4c3e965d81f1edc1fee79fa90090d38519d7424f1b5c82"
+  },
+  "sourceProof": {
+    "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/full-inputs-03.json",
+    "bytes": 217853,
+    "sha256": "81fb9f8d559434242a67a316f0609a5c79c1b6b351cb783d7f3af365669f495f"
+  },
+  "full": {
+    "tests": 4750,
+    "pass": 4746,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 4
+  },
+  "vsix": {
+    "status": "PACKAGED_NOT_HOST_VERIFIED",
+    "output": "packages\\soterai-lite\\soterai-lite-0.7.0-f26b-20261029-attempt01.vsix",
+    "bytes": 1747132,
+    "sha256": "6c299712aa6f8da35b32bacc12b3e4b26b9e5d26689a2fdcb7b06eadb186d12b",
+    "runId": "2026-10-29T12-38-17-803Z-83e283c8",
+    "extensionSha256": "786882b16d9010834a5b0372860f16b900750ef9df605cfec23ae763d5f1e3e1",
+    "stagedManifestSha256": "c26e60f721bf1299345e6e9f8bd0d413f17ff58c06832352337767c2d639eedd"
+  },
+  "productionChanged": false,
+  "affected": {
+    "status": "NOT_RUN_NO_ACCEPTED_NATIVE36",
+    "preparedAfter08PassOnly": [
+      "prepare-affected-native08-05.cjs",
+      "run-affected-native08-05.cjs"
+    ],
+    "originalAssertions": 509,
+    "originalPhases": 37,
+    "functional": 10,
+    "security": 17,
+    "successorBindingRequired": true
+  },
+  "f26aNative09": "USER_DEFERRED_NOT_RUN",
+  "configuredGitPush": "NOT_AUTHORIZED_NOT_RUN",
+  "independence": "LOW",
+  "rating": "NOT_ISSUED",
+  "originalL6": "HUMAN_ACTIONS_THEN_STOP",
+  "signalsRequested": 0
+}

@@ -1,0 +1,55 @@
+{
+  "status": "FIXTURE_DISTINGUISHES_EXACT_UNSIGNED_503_REFUSAL_FROM_SIGNED_ALLOW_BLOCK_NO_PRODUCT_CHANGE",
+  "observedAt": "2026-10-30T03:38:11.746Z",
+  "native08": {
+    "primaryPass": 11,
+    "primaryFail": 1,
+    "primaryNotRun": 18,
+    "restartNotRun": 6,
+    "failedCase": "F26B-HP12",
+    "declaredChildren": 50,
+    "allDeclaredClosedEOF": true,
+    "codeExit": 0,
+    "outerExit": 1,
+    "actualNativeResponseStatusAndBody": "NOT_RECORDED_NO_RETROACTIVE_CLAIM"
+  },
+  "baseline": "Real owner-service path, fixture helpers and explicit HTTP/process/checked-ref/scan/signing seams: native-refusal-before-06 actual11PASS1FAIL; earlier seam/key/session/ambient failures retained separately.",
+  "substitutions": [
+    [
+      "generation?: string; session?: string; nonce?: string; transcriptSha256?: string; rootIdentity?: string };",
+      "generation?: string; session?: string; nonce?: string; transcriptSha256?: string; rootIdentity?: string;\n    httpStatus?: number; transportRefused?: boolean; responseContentType?: string; responseContentLength?: string; responseConnection?: string; responseCacheControl?: string };"
+    ],
+    [
+      "assert.equal(wire.status, decision); assert(wire.requestValid && wire.signatureValid && wire.transcriptMatched); assert.equal(wire.transcriptSha256, sha(raw));",
+      "assert.equal(wire.status, decision);\n        if (decision === \"UNAVAILABLE\") {\n            assert(wire.requestValid && wire.transportRefused && !wire.signatureValid && !wire.transcriptMatched);\n            assert.equal(wire.httpStatus, 503); assert.equal(wire.responseContentType, \"text/plain\"); assert.equal(wire.responseContentLength, \"11\");\n            assert.equal(wire.responseConnection, \"close\"); assert.equal(wire.responseCacheControl, \"no-store\");\n        } else assert(wire.requestValid && wire.signatureValid && wire.transcriptMatched);\n        assert.equal(wire.transcriptSha256, sha(raw));"
+    ],
+    [
+      "res.end = function (this: ServerResponse, ...values: any[]) { try { const bytes = values[0];",
+      "res.end = function (this: ServerResponse, ...values: any[]) { try { const bytes = values[0];\n        row.httpStatus = this.statusCode; row.responseContentType = String(this.getHeader(\"Content-Type\")); row.responseContentLength = String(this.getHeader(\"Content-Length\"));\n        row.responseConnection = String(this.getHeader(\"Connection\")); row.responseCacheControl = String(this.getHeader(\"Cache-Control\"));\n        if (this.statusCode === 503) {\n            assert(Buffer.isBuffer(bytes) || typeof bytes === \"string\"); const refusal = Buffer.from(bytes);\n            assert.equal(refusal.length, 11); assert.equal(refusal.toString(\"utf8\"), \"UNAVAILABLE\"); refusal.fill(0);\n            assert.equal(row.responseContentType, \"text/plain\"); assert.equal(row.responseContentLength, \"11\");\n            assert.equal(row.responseConnection, \"close\"); assert.equal(row.responseCacheControl, \"no-store\");\n            assert(request && row.requestValid); row.transportRefused = true; row.status = \"UNAVAILABLE\";\n            return Reflect.apply(end, this, values);\n        }\n        assert.equal(this.statusCode, 200); assert.equal(row.responseContentType, \"application/json\");"
+    ]
+  ],
+  "reversalByteExact": true,
+  "all36ScopesAndCallbackBodiesByteExact": true,
+  "allOtherHelpersByteExact": true,
+  "ownershipAndDeadlinesUnchanged": true,
+  "sourceBefore": {
+    "input": "native-prepush-05.host.ts.txt",
+    "bytes": 61969,
+    "sha256": "74fb7de9e0b0742a93da34787842ca17ec0774fe33e3e0d6bd5772e0d1150260"
+  },
+  "sourceAfter": {
+    "input": "native-prepush-06.host.ts.txt",
+    "bytes": 63665,
+    "sha256": "285ea53d093b5c07f2ce893b6bff085a115191f0af8eec2ead24199c8ed00891"
+  },
+  "productionService": {
+    "path": "packages/vscode-extension/src/history-hooks/PrePushOwnerService.ts",
+    "bytes": 13416,
+    "sha256": "2c6da334cbf797ccdafdbfe47bd684a11260ee861fe88afdf2d84fa1a25a45ec"
+  },
+  "productionChanged": false,
+  "source1070AndVsixUnchanged": true,
+  "native09": "NOT_AUTHORIZED_NOT_MATERIALIZED_NOT_RUN",
+  "f26aNative09": "USER_DEFERRED_NOT_RUN",
+  "configuredPush": "NOT_AUTHORIZED_NOT_RUN"
+}

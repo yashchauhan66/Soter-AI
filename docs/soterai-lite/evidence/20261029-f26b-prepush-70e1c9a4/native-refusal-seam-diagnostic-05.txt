@@ -1,0 +1,36 @@
+﻿TAP version 13
+# {"componentDiagnostics":true,"outcome":"ALLOW","statusCode":503,"signCalls":0,"responseBytes":11,"headers":{"content-type":"text/plain","content-length":"11","connection":"close","cache-control":"no-store"},"wire":{"caseId":"F26B-HP12","requestEnded":true,"requestClosed":true,"responseFinished":true,"responseClosed":true,"requestValid":true,"signatureValid":false,"transcriptMatched":false,"overflow":false,"transcriptSha256":"f2877e7fc880beef34c6ce039a54950f765ab6d93165c41606ef11bffcc69d1b","generation":"2497d1ab-9ecd-49d8-b821-32acd1a08da4","session":"17951616-e705-4352-83e9-337b4daa811e","nonce":"0c211e4f-fad9-47d2-91a6-75ff19ad0e7d"},"assertionFailures":[{"method":"equal","message":"Expected values to be strictly equal:\\n+ actual - expected\\n\\n+ undefined\\n- 'ALLOW'\\n"}]}
+# Subtest: signed ALLOW fixture route remains required
+not ok 1 - signed ALLOW fixture route remains required
+  ---
+  duration_ms: 23.5864
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261029-f26b-prepush-70e1c9a4\\native-refusal-fixture.component-04.cjs:42:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - 'ALLOW'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'ALLOW'
+  operator: 'strictEqual'
+  stack: |-
+    Proxy.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261029-f26b-prepush-70e1c9a4\native-refusal-fixture.component-04.cjs:35:184)
+    Object.componentHook (evalmachine.<anonymous>:24:16)
+    async execute (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261029-f26b-prepush-70e1c9a4\native-refusal-fixture.component-04.cjs:37:34)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 741.197

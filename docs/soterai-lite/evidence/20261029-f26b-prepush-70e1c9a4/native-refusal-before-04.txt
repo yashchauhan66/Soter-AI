@@ -1,0 +1,136 @@
+﻿TAP version 13
+# Subtest: real owner capped/unsupported scan uses exact unsigned HTTP503 refusal accepted by fixture
+not ok 1 - real owner capped/unsupported scan uses exact unsigned HTTP503 refusal accepted by fixture
+  ---
+  duration_ms: 20.8455
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261029-f26b-prepush-70e1c9a4\\native-refusal-fixture.component-03.cjs:39:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - 'UNAVAILABLE'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'UNAVAILABLE'
+  operator: 'strictEqual'
+  stack: |-
+    Object.componentHook (evalmachine.<anonymous>:24:16)
+    async execute (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261029-f26b-prepush-70e1c9a4\native-refusal-fixture.component-03.cjs:36:34)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: signed ALLOW fixture route remains required
+not ok 2 - signed ALLOW fixture route remains required
+  ---
+  duration_ms: 5.4726
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261029-f26b-prepush-70e1c9a4\\native-refusal-fixture.component-03.cjs:40:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - 'ALLOW'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'ALLOW'
+  operator: 'strictEqual'
+  stack: |-
+    Object.componentHook (evalmachine.<anonymous>:24:16)
+    async execute (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261029-f26b-prepush-70e1c9a4\native-refusal-fixture.component-03.cjs:36:34)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: signed BLOCK fixture route remains required
+not ok 3 - signed BLOCK fixture route remains required
+  ---
+  duration_ms: 5.0636
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261029-f26b-prepush-70e1c9a4\\native-refusal-fixture.component-03.cjs:41:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - 'BLOCK'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'BLOCK'
+  operator: 'strictEqual'
+  stack: |-
+    Object.componentHook (evalmachine.<anonymous>:24:16)
+    async execute (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261029-f26b-prepush-70e1c9a4\native-refusal-fixture.component-03.cjs:36:34)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: refusal with HTTP200 is rejected
+ok 4 - refusal with HTTP200 is rejected
+  ---
+  duration_ms: 6.865
+  type: 'test'
+  ...
+# Subtest: refusal with wrong body is rejected
+ok 5 - refusal with wrong body is rejected
+  ---
+  duration_ms: 5.41
+  type: 'test'
+  ...
+# Subtest: refusal with wrong content type is rejected
+ok 6 - refusal with wrong content type is rejected
+  ---
+  duration_ms: 4.2298
+  type: 'test'
+  ...
+# Subtest: refusal with wrong content length is rejected
+ok 7 - refusal with wrong content length is rejected
+  ---
+  duration_ms: 5.7698
+  type: 'test'
+  ...
+# Subtest: refusal with keep-alive is rejected
+ok 8 - refusal with keep-alive is rejected
+  ---
+  duration_ms: 6.8767
+  type: 'test'
+  ...
+# Subtest: refusal with cache permission is rejected
+ok 9 - refusal with cache permission is rejected
+  ---
+  duration_ms: 7.3609
+  type: 'test'
+  ...
+# Subtest: ALLOW with invalid signature is rejected
+ok 10 - ALLOW with invalid signature is rejected
+  ---
+  duration_ms: 7.376
+  type: 'test'
+  ...
+# Subtest: ALLOW with mismatched transcript is rejected
+ok 11 - ALLOW with mismatched transcript is rejected
+  ---
+  duration_ms: 5.5269
+  type: 'test'
+  ...
+# Subtest: refusal with stdout output is rejected
+ok 12 - refusal with stdout output is rejected
+  ---
+  duration_ms: 7.1751
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 9
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1499.1083

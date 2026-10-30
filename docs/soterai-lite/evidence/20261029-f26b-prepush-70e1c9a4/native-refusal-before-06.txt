@@ -1,0 +1,102 @@
+﻿TAP version 13
+# {"componentDiagnostics":true,"outcome":"UNAVAILABLE","statusCode":503,"signCalls":0,"responseBytes":11,"headers":{"content-type":"text/plain","content-length":"11","connection":"close","cache-control":"no-store"},"wire":{"caseId":"F26B-HP12","requestEnded":true,"requestClosed":true,"responseFinished":true,"responseClosed":true,"requestValid":true,"signatureValid":false,"transcriptMatched":false,"overflow":false,"transcriptSha256":"f2877e7fc880beef34c6ce039a54950f765ab6d93165c41606ef11bffcc69d1b","generation":"031dcabe-8146-4805-a00a-184911d8eebd","session":"200d6ed7-ef1b-424f-8b13-a214c3833b01","nonce":"d90095c2-26ee-4427-bc2b-b6cf3194c580"},"assertionFailures":[{"method":"equal","message":"Expected values to be strictly equal:\\n+ actual - expected\\n\\n+ undefined\\n- 'UNAVAILABLE'\\n"}]}
+# Subtest: real owner capped/unsupported scan uses exact unsigned HTTP503 refusal accepted by fixture
+not ok 1 - real owner capped/unsupported scan uses exact unsigned HTTP503 refusal accepted by fixture
+  ---
+  duration_ms: 27.2385
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261029-f26b-prepush-70e1c9a4\\native-refusal-fixture.component-05.cjs:41:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - 'UNAVAILABLE'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'UNAVAILABLE'
+  operator: 'strictEqual'
+  stack: |-
+    Proxy.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261029-f26b-prepush-70e1c9a4\native-refusal-fixture.component-05.cjs:35:184)
+    Object.componentHook (evalmachine.<anonymous>:24:16)
+    async execute (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261029-f26b-prepush-70e1c9a4\native-refusal-fixture.component-05.cjs:37:34)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: signed ALLOW fixture route remains required
+ok 2 - signed ALLOW fixture route remains required
+  ---
+  duration_ms: 6.905
+  type: 'test'
+  ...
+# Subtest: signed BLOCK fixture route remains required
+ok 3 - signed BLOCK fixture route remains required
+  ---
+  duration_ms: 5.8267
+  type: 'test'
+  ...
+# Subtest: refusal with HTTP200 is rejected
+ok 4 - refusal with HTTP200 is rejected
+  ---
+  duration_ms: 6.7276
+  type: 'test'
+  ...
+# Subtest: refusal with wrong body is rejected
+ok 5 - refusal with wrong body is rejected
+  ---
+  duration_ms: 6.7552
+  type: 'test'
+  ...
+# Subtest: refusal with wrong content type is rejected
+ok 6 - refusal with wrong content type is rejected
+  ---
+  duration_ms: 13.0087
+  type: 'test'
+  ...
+# Subtest: refusal with wrong content length is rejected
+ok 7 - refusal with wrong content length is rejected
+  ---
+  duration_ms: 7.2579
+  type: 'test'
+  ...
+# Subtest: refusal with keep-alive is rejected
+ok 8 - refusal with keep-alive is rejected
+  ---
+  duration_ms: 10.9464
+  type: 'test'
+  ...
+# Subtest: refusal with cache permission is rejected
+ok 9 - refusal with cache permission is rejected
+  ---
+  duration_ms: 19.9845
+  type: 'test'
+  ...
+# Subtest: ALLOW with invalid signature is rejected
+ok 10 - ALLOW with invalid signature is rejected
+  ---
+  duration_ms: 10.5578
+  type: 'test'
+  ...
+# Subtest: ALLOW with mismatched transcript is rejected
+ok 11 - ALLOW with mismatched transcript is rejected
+  ---
+  duration_ms: 15.1513
+  type: 'test'
+  ...
+# Subtest: refusal with stdout output is rejected
+ok 12 - refusal with stdout output is rejected
+  ---
+  duration_ms: 7.6839
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 11
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1321.788
