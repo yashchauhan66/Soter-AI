@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 1,
+  "status": "CURRENT_CODE11440_EDGE1570030_STATIC_INVENTORY_NOT_ACCESSIBILITY_ACCEPTANCE",
+  "observedAt": "2026-11-01T05:36:57.756Z",
+  "independence": "LOW_SAME_LINEAGE",
+  "browserLaunched": false,
+  "editorLaunched": false,
+  "networkRequests": 0,
+  "signals": 0,
+  "versions": {
+    "playwright": "1.61.1",
+    "axe": "4.12.1",
+    "edgeFileVersionObserved": "157.0.4341.30",
+    "codePriorPinVersion": "1.143.1",
+    "codeCurrentPinVersion": "1.144.0"
+  },
+  "pins": [
+    {
+      "path": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "bytes": 5072200,
+      "sha256": "18380f009aeddb87f011a01b991bc4e52925f77694f69760a5a9a57937f04cde"
+    },
+    {
+      "path": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\157.0.4341.30\\msedge.dll",
+      "bytes": 358125384,
+      "sha256": "90907348436b41be764d75d9177234adc0216076289a3a031e1d503d1e721b70"
+    },
+    {
+      "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\playwright\\package.json",
+      "bytes": 1559,
+      "sha256": "6b840268612656f0639fb7d68782e8353bdf11518589d30ddf66f283c2670ed5"
+    },
+    {
+      "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\playwright-core\\package.json",
+      "bytes": 876,
+      "sha256": "759e376f995bf39edd4810d699b99469bab1d7428b6fbc78d41912f367df7ba9"
+    },
+    {
+      "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\playwright-core\\lib\\coreBundle.js",
+      "bytes": 3352341,
+      "sha256": "6be5c2ea035554e9b184b1dbc7aa5e7f1fb428dd1b5c202022858dcfae9bee27"
+    },
+    {
+      "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\axe-core\\package.json",
+      "bytes": 7196,
+      "sha256": "4bbbae790b390b5d431e2c47c3bdef6396e9ece9fb6a33dd8d442784114c39ef"
+    },
+    {
+      "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\axe-core\\axe.min.js",
+      "bytes": 572599,
+      "sha256": "66a8aaa95a8b044a7fd74a5435873bf04ff65a1ca75567c921b7509742085a14"
+    },
+    {
+      "path": "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\2c33b50b16\\resources\\app\\out\\vs\\workbench\\workbench.desktop.main.js",
+      "bytes": 21739298,
+      "sha256": "0a7495121a01ec20289b6e4dc2f2b15539d062710026ff2a355feadfb2c48aaf"
+    },
+    {
+      "path": "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\2c33b50b16\\resources\\app\\extensions\\theme-defaults\\package.json",
+      "bytes": 1495,
+      "sha256": "1188ab40303da2345797c509f81c87c3e168249e50009bdec24a1ea28b515bb4"
+    },
+    {
+      "path": "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\2c33b50b16\\resources\\app\\extensions\\theme-defaults\\themes\\hc_black.json",
+      "bytes": 7191,
+      "sha256": "1551bcb764405d8dc0d8945aa16701bd0602d4c217503e4c22c1dcaf8c939e59"
+    },
+    {
+      "path": "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\2c33b50b16\\resources\\app\\extensions\\theme-defaults\\themes\\hc_light.json",
+      "bytes": 8886,
+      "sha256": "1e9f335cc039264ed7ae5b32e3c23fa6d93731dd30bcd1c3e37ce91a07ae5ed7"
+    }
+  ],
+  "staticWitnesses": {
+    "playwright": [
+      {
+        "term": "async function launchProcess(options)",
+        "offset": 331885,
+        "present": true,
+        "excerpt": "cessHandlers[handler]);\n  installedHandlers.clear();\n}\nasync function launchProcess(options) {\n  const stdio = options.stdio === \"pipe\" ? [\"ignore\", \"pipe\", \"pipe\", \"pipe\", \"pipe\"] : [\"pi"
+      },
+      {
+        "term": "taskkill /pid",
+        "offset": 335768,
+        "present": true,
+        "excerpt": "       const taskkillProcess = childProcess.spawnSync(`taskkill /pid ${spawnedProcess.pid} /T /F`, { shell: true });\n          const [stdout2, stderr2] = [taskkill"
+      },
+      {
+        "term": "async _connectOverCDPInternal",
+        "offset": 2074522,
+        "present": true,
+        "excerpt": "rogress2, params2.endpointURL, params2);\n      }\n      async _connectOverCDPInternal(progress2, endpointURL, options, onClose) {\n        let headersMap;\n        if (options.header"
+      },
+      {
+        "term": "chromeTransport.close()",
+        "offset": -1,
+        "present": false,
+        "excerpt": null
+      }
+    ],
+    "workbench": [
+      {
+        "term": "workbench.reduceMotion",
+        "offset": 6468867,
+        "present": true,
+        "excerpt": "description:d(10666,null),default:500,minimum:0},\"workbench.reduceMotion\":{type:\"string\",description:d(10675,null),enumDescriptions:[d(10678,null),d(10677,null),d(10676,nul"
+      },
+      {
+        "term": "prefers-reduced-motion",
+        "offset": 2396162,
+        "present": true,
+        "excerpt": "co-reduce-motion\")||ke(this.domNode).matchMedia(\"(prefers-reduced-motion: reduce)\").matches)return;let i=this._getRowElement(this._list.indexOf(e));if(!i)return;let n=i.get"
+      },
+      {
+        "term": "monaco-reduce-motion",
+        "offset": 2396108,
+        "present": true,
+        "excerpt": ")}_animateItemMove(e,t){if(this.domNode.closest(\".monaco-reduce-motion\")||ke(this.domNode).matchMedia(\"(prefers-reduced-motion: reduce)\").matches)return;let i=this._getRo"
+      },
+      {
+        "term": "hc-black",
+        "offset": 1133722,
+        "present": true,
+        "excerpt": "s){case\"dark\":return\"vs-dark\";case\"hcDark\":return\"hc-black\";case\"hcLight\":return\"hc-light\";default:return\"vs\"}}var kQi={ThemingContribution:\"base.contribution"
+      },
+      {
+        "term": "role",
+        "offset": 287820,
+        "present": true,
+        "excerpt": "return t.className=\"monaco-alert\",t.setAttribute(\"role\",\"alert\"),t.setAttribute(\"aria-atomic\",\"true\"),Uke.appendChild(t),t};Y3t=o(),q5i=o();let e=()=>{let"
+      },
+      {
+        "term": "treeitem",
+        "offset": 2725465,
+        "present": true,
+        "excerpt": "=>e.accessibilityProvider.getRole(t.element):()=>\"treeitem\",getAriaLabel(t){return e.accessibilityProvider.getAriaLabel(t.element)},getWidgetAriaLabel(){retur"
+      }
+    ]
+  },
+  "acceptance": {
+    "nativeTreeKeyboard": "NOT_RUN",
+    "nativeTreeHighContrast": "NOT_RUN",
+    "nativeTreeReducedMotion": "NOT_RUN",
+    "edgeAxeAdjacentShippedWebview": "NOT_RUN_UNBOUND",
+    "humanScreenReader": "NOT_RUN_HUMAN_REQUIRED_LATER",
+    "note": "No DOM mock, duplicate product instance, new renderer, old artifact PASS transfer, or native command invocation is counted as keyboard execution."
+  },
+  "prior": {
+    "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/accessibility-tooling-inventory-01.json",
+    "bytes": 6492,
+    "sha256": "33abf34b0128c45389b3b56eae5b787684d96659446cfd60c44cb7bedd5ef0d6"
+  },
+  "change": "Only four actual Code application/theme pins refreshed to explicit requested installed1.144.0; original seven non-Code tooling pins byte exact. No native/accessibility acceptance transferred.",
+  "previousInventorySha256": "bcb8a6ca60d4a543124cfa8b6228e6e16948a21dad446ecd0ea705ddc048ae33",
+  "edgePinRefresh": "installed-edge-refresh-02.json",
+  "assistantUpdatedOrDownloaded": false
+}

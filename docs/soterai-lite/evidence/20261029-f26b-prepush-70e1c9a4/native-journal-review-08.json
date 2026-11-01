@@ -1,0 +1,63 @@
+{
+  "status": "BOUNDED_METADATA_DIAGNOSTICS_ONLY_UNKNOWN_NATIVE10_TERMINATION_NOT_FIXED_OR_RETRIED",
+  "observedAt": "2026-11-01T05:33:08.705Z",
+  "substitutions": [
+    [
+      "const sha = (bytes: Uint8Array | string)",
+      "const JOURNAL_LIMIT = 1048576;\nlet journalHealthy = true, journalBytes = 0, journalRecords = 0, journalCreated = false;\nfunction journal(event: \"run-enter\" | \"case-start\" | \"case-pass\" | \"case-fail\" | \"child-start\" | \"child-close\", row?: ChildReceipt, childPid?: number): void {\n    if (!journalHealthy) return; let fd: number | undefined;\n    try {\n        assert([\"run-enter\", \"case-start\", \"case-pass\", \"case-fail\", \"child-start\", \"child-close\"].includes(event));\n        assert(phase === \"primary\" || phase === \"restart\"); const selectedCase = row?.caseId ?? caseId;\n        assert(/^(?:SETUP|F26B-H[PR][0-9]{2})$/.test(selectedCase));\n        assert(childPid === undefined || (Number.isSafeInteger(childPid) && childPid > 0));\n        if (row) { assert([\"projection\", \"scan\", \"client\", \"hook-component\"].includes(row.kind));\n            assert([\"version\", \"config\", \"commits\", \"tree\", \"batch\", \"DIRECT_EXACT_FOURTH_RUNTIME_PRE_PUSH\", \"DIRECT_INSTALLED_HOOK_NOT_GIT_PUSH\"].includes(row.operation)); }\n        const child = row ? children.indexOf(row) + 1 : null; assert(child === null || (child > 0 && child <= 8192));\n        if (event === \"child-close\") assert(row && row.closed && row.stdoutEOF && row.stderrEOF && !row.busy);\n        const payload = { schemaVersion: 1, record: journalRecords + 1, timestamp: new Date().toISOString(), event, phase, caseId: selectedCase,\n            hostPid: process.pid, child, pid: childPid ?? null, kind: row?.kind ?? null, operation: row?.operation ?? null,\n            closed: row?.closed ?? null, stdoutEOF: row?.stdoutEOF ?? null, stderrEOF: row?.stderrEOF ?? null, busy: row?.busy ?? null,\n            code: row?.code ?? null, signalPresent: row ? row.signal !== null : null, timedOut: row?.timedOut ?? null,\n            signalsRequested: row?.signalsRequested ?? 0 };\n        const raw = Buffer.from(JSON.stringify(payload) + \"\\n\");\n        assert(raw.length <= 2048 && journalBytes + raw.length <= JOURNAL_LIMIT && journalRecords < 8192);\n        const file = output + \".progress.jsonl\"; assert(output && within(parent, file) && !within(root, file));\n        if (journalCreated) { ordinary(file); const stat = fs.lstatSync(file); assert(stat.isFile() && stat.nlink === 1 && stat.size === journalBytes); }\n        fd = fs.openSync(file, journalCreated ? \"a\" : \"wx\", 0o600);\n        let offset = 0; while (offset < raw.length) { const count = fs.writeSync(fd, raw, offset, raw.length - offset); assert(count > 0); offset += count; }\n        fs.closeSync(fd); fd = undefined; journalCreated = true; journalBytes += raw.length; journalRecords++;\n    } catch { journalHealthy = false; }\n    finally { if (fd !== undefined) { try { fs.closeSync(fd); } catch { journalHealthy = false; } } }\n}\nconst sha = (bytes: Uint8Array | string)"
+    ],
+    [
+      "        finish({ receipt: row, stdout: Buffer.concat(out), stderr: Buffer.concat(err) });",
+      "        journal(\"child-close\", row, child.pid);\n        finish({ receipt: row, stdout: Buffer.concat(out), stderr: Buffer.concat(err) });"
+    ],
+    [
+      "    return Promise.race([actual, new Promise<never>((_done, reject) => {",
+      "    journal(\"child-start\", row, child.pid);\n    return Promise.race([actual, new Promise<never>((_done, reject) => {"
+    ],
+    [
+      "export async function run(context: vscode.ExtensionContext): Promise<void> {",
+      "export async function run(context: vscode.ExtensionContext): Promise<void> {\n    journal(\"run-enter\"); assert(journalHealthy, \"Bounded metadata journal unavailable.\");"
+    ],
+    [
+      "setupStage = caseId; try { assert(!halted); await checks[index].work(); observations[index].status = \"PASS\"; }",
+      "setupStage = caseId; try { journal(\"case-start\"); assert(journalHealthy, \"Bounded metadata journal unavailable.\"); assert(!halted); await checks[index].work(); observations[index].status = \"PASS\"; journal(\"case-pass\"); assert(journalHealthy, \"Bounded metadata journal unavailable.\"); }"
+    ],
+    [
+      "catch (error) { observations[index].status = \"FAIL\"; observations[index].errorName",
+      "catch (error) { journal(\"case-fail\"); observations[index].status = \"FAIL\"; observations[index].errorName"
+    ],
+    [
+      "busyChildren: children.filter(row => row.busy).length, timedOutChildren: children.filter(row => row.timedOut).length, scope:",
+      "busyChildren: children.filter(row => row.busy).length, timedOutChildren: children.filter(row => row.timedOut).length, journalHealthy, journalBytes, journalRecords, scope:"
+    ],
+    [
+      "            readyForInterphase: phase === \"primary\"",
+      "            diagnosticJournal: { healthy: journalHealthy, bytes: journalBytes, records: journalRecords, limit: JOURNAL_LIMIT },\n            readyForInterphase: phase === \"primary\""
+    ]
+  ],
+  "reversalByteExact": true,
+  "all36ScopesAndCallbackBodiesByteExact": true,
+  "allExistingBudgetAndOwnershipLogicRetained": true,
+  "additionalJournalHealthAssertionsFailClosed": true,
+  "childStartLoggingAfterAllOwnerReadersRegistered": true,
+  "childCloseLoggingOnlyAfterActualCloseAndBothEOF": true,
+  "loggingFailureNeverThrowsFromOwnerObserver": true,
+  "newTimers": 0,
+  "rawArgumentsEnvironmentBodiesKeysOrFindingsLogged": false,
+  "bytesPerPhase": 1048576,
+  "sourceBefore": {
+    "input": "native-prepush-07.host.ts.txt",
+    "bytes": 64488,
+    "sha256": "93d06b1775555534911e387616364425f8a4b7b20b87a0b3c74533ccb9032eca"
+  },
+  "sourceAfter": {
+    "input": "native-prepush-08.host.ts.txt",
+    "bytes": 67779,
+    "sha256": "a9a1fa7d15cf4e5c352eab0f6e6681ab47fc5c53b53452e0920904f9bd26dfb3"
+  },
+  "productionChanged": false,
+  "source1070AndVsixUnchanged": true,
+  "native11": "NOT_AUTHORIZED_NOT_MATERIALIZED_NOT_RUN",
+  "f26aNative09": "USER_DEFERRED_NOT_RUN",
+  "configuredPush": "NOT_AUTHORIZED_NOT_RUN"
+}

@@ -1,0 +1,70 @@
+﻿TAP version 13
+# Subtest: case progress produces parseable ordered bounded metadata with no fabricated child closure
+ok 1 - case progress produces parseable ordered bounded metadata with no fabricated child closure
+  ---
+  duration_ms: 82.55
+  type: 'test'
+  ...
+# Subtest: actual child start and actual close/bothEOF remain distinct
+ok 2 - actual child start and actual close/bothEOF remain distinct
+  ---
+  duration_ms: 12.2349
+  type: 'test'
+  ...
+# Subtest: raw args environment stdout keys and findings are not serialized
+ok 3 - raw args environment stdout keys and findings are not serialized
+  ---
+  duration_ms: 5.3292
+  type: 'test'
+  ...
+# Subtest: incomplete EOF is never recorded as child-close
+ok 4 - incomplete EOF is never recorded as child-close
+  ---
+  duration_ms: 13.5199
+  type: 'test'
+  ...
+# Subtest: invalid event and newline-bearing case identity fail before file acquisition
+ok 5 - invalid event and newline-bearing case identity fail before file acquisition
+  ---
+  duration_ms: 17.8939
+  type: 'test'
+  ...
+# Subtest: unknown operation and invalid PID are not written
+ok 6 - unknown operation and invalid PID are not written
+  ---
+  duration_ms: 15.6337
+  type: 'test'
+  ...
+# Subtest: journal cannot write into the synthetic worktree
+ok 7 - journal cannot write into the synthetic worktree
+  ---
+  duration_ms: 6.6283
+  type: 'test'
+  ...
+# Subtest: byte cap prevents additional file acquisition
+ok 8 - byte cap prevents additional file acquisition
+  ---
+  duration_ms: 28.286
+  type: 'test'
+  ...
+# Subtest: write failure never throws through child observer and closes acquired descriptor
+ok 9 - write failure never throws through child observer and closes acquired descriptor
+  ---
+  duration_ms: 76.261
+  type: 'test'
+  ...
+# Subtest: partial writes are completed; failed partial line is retained without claiming a record
+ok 10 - partial writes are completed; failed partial line is retained without claiming a record
+  ---
+  duration_ms: 58.4029
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2761.7447
