@@ -1,0 +1,35 @@
+﻿TAP version 13
+# Subtest: F28-O01: runtime and Lite manifests have parity and a restricted default-true owner flag
+ok 1 - F28-O01: runtime and Lite manifests have parity and a restricted default-true owner flag
+  ---
+  duration_ms: 12.3099
+  type: 'test'
+  ...
+# Subtest: F28-O02: machine/global values override repository attempts and inspection failure denies
+ok 2 - F28-O02: machine/global values override repository attempts and inspection failure denies
+  ---
+  duration_ms: 30.1597
+  type: 'test'
+  ...
+# Subtest: F28-O03: actual owner registration withdraws leases on config/trust and stops on dispose
+ok 3 - F28-O03: actual owner registration withdraws leases on config/trust and stops on dispose
+  ---
+  duration_ms: 9.8621
+  type: 'test'
+  ...
+# {"scope":"COMPONENT_SELECTED128_OF_SYNTHETIC4096_NOT_NATIVE_DISCOVERY","files":4096,"selectedReads":128,"secondRootPublic":true,"crossRootWithheld":true,"bytes":3474,"elapsedMilliseconds":3455.3306000000002}
+# Subtest: F28-S01: bounded reads remain usable in a 4096-file synthetic repo and two independent roots
+ok 4 - F28-S01: bounded reads remain usable in a 4096-file synthetic repo and two independent roots
+  ---
+  duration_ms: 8731.0075
+  type: 'test'
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 11096.85

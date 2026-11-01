@@ -1,0 +1,114 @@
+{
+  "status": "F28_INITIAL_CHECKED_READER_COMPONENT_CONTROLS_PASS_FULL_VSIX_NATIVE_PENDING",
+  "featureState": "ACTIVE_INCOMPLETE",
+  "observedAt": "2026-11-01T15:29:48.060Z",
+  "sourceProof": {
+    "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/full-inputs-01.json",
+    "bytes": 213094,
+    "sha256": "9716107d9fc016a0dd895da906c650763176335c7846986c0cedb8205ef7a901"
+  },
+  "sourceInputs": 1076,
+  "sourceDelta": 14,
+  "expectedRegressionBaseline": {
+    "tests": 12,
+    "pass": 5,
+    "fail": 7,
+    "skip": 0
+  },
+  "readerResourcePathControls": {
+    "tests": 31,
+    "pass": 29,
+    "fail": 0,
+    "skip": 2
+  },
+  "affectedComponents": {
+    "tests": 123,
+    "pass": 121,
+    "fail": 0,
+    "skip": 2,
+    "scope": "Before final test-only cwd correction and added stress case; fresh frozen focused/full checks pending"
+  },
+  "stress": {
+    "syntheticFiles": 4096,
+    "selectedReads": 128,
+    "secondRootPublic": true,
+    "crossRootWithheld": true,
+    "bytes": 3474,
+    "elapsedMilliseconds": 3455.3306000000002,
+    "scope": "COMPONENT_NOT_NATIVE_DISCOVERY"
+  },
+  "ownerControls": 3,
+  "evidence": [
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/start-feature-01.txt",
+      "bytes": 1744,
+      "sha256": "50d4004d2aa09b541ef0e043d4de929e371255305446fb3dbb5989c09bd242a1"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/boundary-reader-before-01.txt",
+      "bytes": 1133,
+      "sha256": "a4b35782481613e47c5ce11ca08d2511bba90fffff4ef40043d69ff0143ac3f7"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/boundary-reader-before-02.txt",
+      "bytes": 6972,
+      "sha256": "aa8756470427340eb7596042a7fe4d9f03af9f975b03f88bf18692aa8831e484"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/read-budget-before-01.txt",
+      "bytes": 2293,
+      "sha256": "d60e4321efc9460193258a3e7c1749e7b42f9d5bced3848398c0ab81798cad92"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/read-owner-before-01.txt",
+      "bytes": 4545,
+      "sha256": "e1608960b31f73a17e264fe68a125e215fad7eabd457e90ca2e72e6fd70d1838"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/reader-budget-after-01.txt",
+      "bytes": 8052,
+      "sha256": "8c1ca1d303e984a486bba0c9ae19f194433d615a0066e1a6408f496e1ae37fe1"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/reader-budget-after-02.txt",
+      "bytes": 7331,
+      "sha256": "15d7ef2e5e4a24a0c468b7dc08b15cb2e0cc3d558a565f34572c204fc28dcc68"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/reader-affected-01.txt",
+      "bytes": 29182,
+      "sha256": "814ec26bd56b8a74962ee547b0ad60fd2518807b4aeb21fb9ead3332324b48ed"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/read-owner-after-01.txt",
+      "bytes": 887,
+      "sha256": "b2477642c402a9a78f3839dfcc3fc1c210bc7c5ac55e680506dd622609c67b33"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/stress-owner-01.txt",
+      "bytes": 1360,
+      "sha256": "197580be57348926c44a4174542c1fe6bf2e727e81f5590b595a449da465b618"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/compiler-01.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/freeze-inputs-01.txt",
+      "bytes": 177,
+      "sha256": "a60dc7e1c6f4999204d7543f2d7feaef0750990b4192d975adcc324e5874989f"
+    }
+  ],
+  "f26aNative09": "USER_DEFERRED_NOT_RUN",
+  "pushAuthority": "NONE_REMAINING",
+  "pending": [
+    "Fresh frozen compiler/focused/backend/full suite",
+    "Exact new F28 VSIX/content/offline inventory",
+    "Actual F28 native scope/startup/multi-window/large workload and affected actual hosts",
+    "Retained F20 diagnostic-worker lifecycle audit",
+    "Safe withdrawal/final acceptance/source+transition commits/raw bytes"
+  ],
+  "rating": "NOT_ISSUED",
+  "releaseReady": false
+}

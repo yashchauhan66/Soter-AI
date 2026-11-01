@@ -1,0 +1,228 @@
+﻿TAP version 13
+# Subtest: F28-R01: ordinary exact-limit public file remains readable
+ok 1 - F28-R01: ordinary exact-limit public file remains readable
+  ---
+  duration_ms: 72.4626
+  type: 'test'
+  ...
+# Subtest: F28-R02: replacement file between validated path and open is withheld
+ok 2 - F28-R02: replacement file between validated path and open is withheld
+  ---
+  duration_ms: 38.4905
+  type: 'test'
+  ...
+# Subtest: F28-R03: parent replacement between validation and open is withheld
+ok 3 - F28-R03: parent replacement between validation and open is withheld
+  ---
+  duration_ms: 31.4354
+  type: 'test'
+  ...
+# Subtest: F28-R04: same-length in-place content drift during read is withheld
+ok 4 - F28-R04: same-length in-place content drift during read is withheld
+  ---
+  duration_ms: 22.1656
+  type: 'test'
+  ...
+# Subtest: F28-R05: cancellation before I/O refuses without opening a handle
+ok 5 - F28-R05: cancellation before I/O refuses without opening a handle
+  ---
+  duration_ms: 8.1979
+  type: 'test'
+  ...
+# Subtest: F28-R06: cancellation while a handle is open withholds and closes it
+not ok 6 - F28-R06: cancellation while a handle is open withholds and closes it
+  ---
+  duration_ms: 149.4016
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\boundaryReadReliability.test.ts:2:3896'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      fs.writeFile(path.join(other, "public.txt"), "public")
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\boundaryReadReliability.test.ts:70:80)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F28-R07: fractional byte limit is refused before open
+ok 7 - F28-R07: fractional byte limit is refused before open
+  ---
+  duration_ms: 10.3938
+  type: 'test'
+  ...
+# Subtest: F28-R08: oversized allocation request cannot expand the fixed reader budget
+ok 8 - F28-R08: oversized allocation request cannot expand the fixed reader budget
+  ---
+  duration_ms: 13.4199
+  type: 'test'
+  ...
+# Subtest: F28-R09: another workspace root cannot borrow this root's path
+ok 9 - F28-R09: another workspace root cannot borrow this root's path
+  ---
+  duration_ms: 33.8664
+  type: 'test'
+  ...
+# Subtest: F28-R10: a multiple-hardlink input is withheld
+ok 10 - F28-R10: a multiple-hardlink input is withheld
+  ---
+  duration_ms: 16.3359
+  type: 'test'
+  ...
+# Subtest: F28-R11: an internal directory junction is withheld
+ok 11 - F28-R11: an internal directory junction is withheld
+  ---
+  duration_ms: 10.5919
+  type: 'test'
+  ...
+# Subtest: F28-R12: malformed UTF-8 and binary inputs never produce a partial string
+ok 12 - F28-R12: malformed UTF-8 and binary inputs never produce a partial string
+  ---
+  duration_ms: 44.7722
+  type: 'test'
+  ...
+# (node:16316) ExperimentalWarning: The MockTimers API is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: F28-B01: eight leases cap unfinished work, including logically cancelled work
+ok 13 - F28-B01: eight leases cap unfinished work, including logically cancelled work
+  ---
+  duration_ms: 5.3144
+  type: 'test'
+  ...
+# Subtest: F28-B02: flag withdrawal invalidates active work and re-enable needs a fresh lease
+ok 14 - F28-B02: flag withdrawal invalidates active work and re-enable needs a fresh lease
+  ---
+  duration_ms: 0.9509
+  type: 'test'
+  ...
+# Subtest: F28-B03: elapsed clock -1 withholds
+ok 15 - F28-B03: elapsed clock -1 withholds
+  ---
+  duration_ms: 0.7353
+  type: 'test'
+  ...
+# Subtest: F28-B03: elapsed clock NaN withholds
+ok 16 - F28-B03: elapsed clock NaN withholds
+  ---
+  duration_ms: 0.5773
+  type: 'test'
+  ...
+# Subtest: F28-B03: elapsed clock Infinity withholds
+ok 17 - F28-B03: elapsed clock Infinity withholds
+  ---
+  duration_ms: 0.4914
+  type: 'test'
+  ...
+# Subtest: F28-B03: elapsed clock 5000 withholds
+ok 18 - F28-B03: elapsed clock 5000 withholds
+  ---
+  duration_ms: 0.9235
+  type: 'test'
+  ...
+# Subtest: F28-B04: an elapsed clock cannot move backwards even while still after its start
+ok 19 - F28-B04: an elapsed clock cannot move backwards even while still after its start
+  ---
+  duration_ms: 0.5159
+  type: 'test'
+  ...
+# Subtest: F28-B05: owned timer expires even when a test clock stalls
+ok 20 - F28-B05: owned timer expires even when a test clock stalls
+  ---
+  duration_ms: 7.5582
+  type: 'test'
+  ...
+# Subtest: F28-B06: unconfirmed handle closure degrades the owner and never refunds its slot
+ok 21 - F28-B06: unconfirmed handle closure degrades the owner and never refunds its slot
+  ---
+  duration_ms: 1.5441
+  type: 'test'
+  ...
+# Subtest: F28-B07: startup budget breach withdraws reads with a truthful degraded status
+ok 22 - F28-B07: startup budget breach withdraws reads with a truthful degraded status
+  ---
+  duration_ms: 1.7389
+  type: 'test'
+  ...
+# Subtest: F28-B08: independent windows own independent resource and withdrawal state
+ok 23 - F28-B08: independent windows own independent resource and withdrawal state
+  ---
+  duration_ms: 1.7002
+  type: 'test'
+  ...
+# Subtest: Workspace path containment policy
+    # Subtest: allows a file below the workspace root
+    ok 1 - allows a file below the workspace root
+      ---
+      duration_ms: 1.7502
+      type: 'test'
+      ...
+    # Subtest: rejects parent traversal outside the workspace
+    ok 2 - rejects parent traversal outside the workspace
+      ---
+      duration_ms: 0.3918
+      type: 'test'
+      ...
+    # Subtest: rejects a sibling with a shared textual prefix
+    ok 3 - rejects a sibling with a shared textual prefix
+      ---
+      duration_ms: 0.3563
+      type: 'test'
+      ...
+    # Subtest: allows separate files within each multi-root workspace independently
+    ok 4 - allows separate files within each multi-root workspace independently
+      ---
+      duration_ms: 0.5262
+      type: 'test'
+      ...
+    1..4
+ok 24 - Workspace path containment policy
+  ---
+  duration_ms: 5.1675
+  type: 'suite'
+  ...
+# Subtest: Workspace filesystem path policy
+    # Subtest: allows a normal existing workspace file and a normal output
+    ok 1 - allows a normal existing workspace file and a normal output
+      ---
+      duration_ms: 30.4756
+      type: 'test'
+      ...
+    # Subtest: rejects a symlink to a file outside the workspace
+    ok 2 - rejects a symlink to a file outside the workspace # SKIP symlink unavailable: Error: EPERM: operation not permitted, symlink 'C:\\Users\\USER\\AppData\\Local\\Temp\\soterai-link-uP3YQO\\outside.env' -> 'C:\\Users\\USER\\AppData\\Local\\Temp\\soterai-link-uP3YQO\\workspace\\.env'
+      ---
+      duration_ms: 12.986
+      type: 'test'
+      ...
+    # Subtest: rejects an internal symlink and a symlinked output target
+    ok 3 - rejects an internal symlink and a symlinked output target # SKIP symlink unavailable: Error: EPERM: operation not permitted, symlink 'C:\\Users\\USER\\AppData\\Local\\Temp\\soterai-internal-link-aMRoF4\\source.env' -> 'C:\\Users\\USER\\AppData\\Local\\Temp\\soterai-internal-link-aMRoF4\\.env'
+      ---
+      duration_ms: 9.3688
+      type: 'test'
+      ...
+    # Subtest: rejects a Windows directory junction
+    ok 4 - rejects a Windows directory junction
+      ---
+      duration_ms: 15.6543
+      type: 'test'
+      ...
+    1..4
+ok 25 - Workspace filesystem path policy
+  ---
+  duration_ms: 70.3823
+  type: 'suite'
+  ...
+1..25
+# tests 31
+# suites 2
+# pass 28
+# fail 1
+# cancelled 0
+# skipped 2
+# todo 0
+# duration_ms 2842.4082

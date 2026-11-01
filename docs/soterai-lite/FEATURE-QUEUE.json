@@ -9,7 +9,7 @@
   "planVersion": 1,
   "clientDate": "2026-10-13",
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
-  "scope": "F01-F10/F12-F25/F26c/F27/F29/F30 scoped DONE subject to exact recorded byte barriers; F11 optional absent NOT_TESTED/NOT_COVERED. F26a ACTIVE; native07 consumed FAIL and checked storage fix currentfull4475zeroFAIL; native08 requires new explicit approval; F26b/F28/F31b/F32/V01-V05 incomplete. F31a build-only DONE; parentF26/F31 incomplete. No human/independent/rating claim.",
+  "scope": "F01-F10/F12-F25/F26b/F26c/F27/F29/F30 scoped DONE with recorded byte barriers; F11 optional absent NOT_TESTED/NOT_COVERED. F26a/native09 USER_DEFERRED_INCOMPLETE; parentF26 incomplete. F28 ACTIVE; F31b/F32/V01-V05 incomplete. F31a build-only DONE; parentF31 incomplete. No human/independent/rating/release-ready claim.",
   "implementationConcurrency": 1,
   "activeFeature": "F28",
   "activeSubcard": null,
@@ -937,14 +937,14 @@
       "id": "F28",
       "title": "Path race, performance and degradation.",
       "status": "ACTIVE",
-      "result": "NOT-RUN",
+      "result": "INCOMPLETE",
       "requires": [
         "F26",
         "F27",
         "F30"
       ],
       "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
-      "executionDecision": "Selected next by existing shorter-independent-work amendment and explicit F26a09 deferral. No F28 production before actual F26b transition11 byte proof. Existing F28 path/performance/degradation contract retained; F26a/native09 and parentF26 are not accepted.",
+      "executionDecision": "Current1076 frozen inputs and exact newF28 VSIX5dac9288 pass compiler/focused124/backend/full4780=4776PASS0FAIL4privilegedsymlinkSKIP/readiness/content/offline inventory. Native30 source/strict typecheck, retained6FAIL-to6PASS cleanup guard and current26driver build PASS, actualnative0/launcher+binding pending. Source14 and feature DONE/commit byte gates pending; no current affected-host acceptance yet. F26a09 deferred/no push authority.",
       "executionDependenciesCurrent": [
         "F26b",
         "F26c",
@@ -956,7 +956,8 @@
         "F27",
         "F30"
       ],
-      "deferredDependency": "F26a USER_DEFERRED_INCOMPLETE; no F28 evidence substitutes for its required acceptance."
+      "deferredDependency": "F26a USER_DEFERRED_INCOMPLETE; no F28 evidence substitutes for its required acceptance.",
+      "progressEvidence": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/progress-03.json"
     },
     {
       "id": "F29",
@@ -1396,5 +1397,113 @@
     "commit": "6b207278feff0eae509e43a04a340f678c84c1d9",
     "paths": 96,
     "mismatches": 0
+  },
+  "f28LatestCheckpoint": {
+    "status": "F28_CURRENT_FULL4780_ZERO_FAILURES_NEW_VSIX_CONTENT26DRIVERS_PASS_NATIVE_NOT_RUN",
+    "observedAt": "2026-11-01T16:26:41.166Z",
+    "featureState": "ACTIVE_INCOMPLETE",
+    "sourceProof": {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/full-inputs-02.json",
+      "bytes": 213508,
+      "sha256": "70d3b237332ada5f7317906a8e745ff7d8f7bc2213b8c27f810a25b919b30743"
+    },
+    "sourceInputs": 1076,
+    "sourceDelta": 14,
+    "full": {
+      "tests": 4780,
+      "pass": 4776,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 4
+    },
+    "serial": {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/integrated-serial-result-02.json",
+      "bytes": 2756,
+      "sha256": "bc47bbdc41823fa03d2c44742c2fc58c24e6d72dff9b3dca2d9e768afd360b5e"
+    },
+    "postfull": {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/postfull-result-02.json",
+      "bytes": 3014,
+      "sha256": "1b10d7cc74fdbbbf24ab0a4b849bdc15b3590bae7b6f5be26d0a439607347529"
+    },
+    "content": {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/content-inspection-02.json",
+      "bytes": 3763,
+      "sha256": "d4b81cd4fefd047027e9897a716a5c958ebb2da9930f36456357dea755ff70a0"
+    },
+    "vsix": {
+      "status": "PACKAGED_NOT_HOST_VERIFIED",
+      "output": "packages\\soterai-lite\\soterai-lite-0.7.0-f28-20261101-attempt01.vsix",
+      "bytes": 1749703,
+      "sha256": "5dac9288fb259ad538ab751258f250d85a933bfb5bc8641dc32e54c01f6f047f",
+      "runId": "2026-11-01T16-14-32-640Z-7ec98bdf",
+      "extensionSha256": "3524f4f234004d81924854c756330a5d1273e0251c524d1a31fa63c3b3c784b2",
+      "stagedManifestSha256": "7f3f9378125e5153c6b3448066cdcf022d9b50f65048648aeb31ddc0f0656367"
+    },
+    "buildReceipt": "packages/soterai-lite/builds/2026-11-01T16-14-32-640Z-7ec98bdf/build-provenance.json",
+    "machineSettings": 88,
+    "entries": 15,
+    "runtimes": 4,
+    "drivers": {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/native-driver-provenance-03.json",
+      "bytes": 50075,
+      "sha256": "cc75d0bcde48869aec81e6ad55713e0b3399e6c3af0beae8afceb1e761afbfa3"
+    },
+    "nativeDriver": {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/prebuilt-native-hosts-03/lite-reliability-host.js",
+      "bytes": 37094,
+      "sha256": "753caa90fa8eee25b0261c08be0a6a65bf6e9e7d508a43afbfc7b6939ffb0b5a"
+    },
+    "native30": {
+      "primary": 25,
+      "restart": 5,
+      "concurrentPeer": 1,
+      "strictTypecheck": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/native-source-typecheck-02.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "caseFreeze": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/native-case-freeze-02.json",
+        "bytes": 5545,
+        "sha256": "d0a327128000f6e0267e38e099b19957809dc4d941d9fc310c3a82d67ca45be7"
+      },
+      "lifecycleControls": 6,
+      "originalBaselineFailures": 6,
+      "actualLaunches": 0,
+      "admission": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/current-native-admission-02.cjs",
+        "bytes": 8299,
+        "sha256": "873e553e5e2dfd1a63ba4a005f1b1cc177a60413a2ed6b29d090ef986af33417"
+      },
+      "currentAdmission": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/current-source-artifact-admission-02.txt",
+        "bytes": 270,
+        "sha256": "e1360c3c2cbe5b92d0c56970faea42b51998f1454d5692fdde99300b26a6cda4"
+      },
+      "launcher": "NOT_PREPARED",
+      "materialization": "ABSENT",
+      "consumption": "ABSENT"
+    },
+    "full01Retained": {
+      "tests": 4780,
+      "pass": 4774,
+      "fail": 2,
+      "skip": 4
+    },
+    "historicalWorkerAudit": {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/historical-worker-audit-02.json",
+      "bytes": 1652,
+      "sha256": "ce336594f8b842cc461901107c9eabe3f4afad966e1873136114fa121167314c"
+    },
+    "remaining": [
+      "Native30 PS launcher/strict validator/peer ownership/pinned vendor binding + read-only prelaunch then one authorized isolated run",
+      "Current affected actual native families +functional10/security17 baseline",
+      "Safe withdrawal/final feature acceptance/scoped source+transition commits and raw bytes"
+    ],
+    "f26aNative09": "USER_DEFERRED_NOT_RUN",
+    "configuredGitPush": "NO_REMAINING_AUTHORITY_NOT_RUN",
+    "releaseReady": false,
+    "rating": "NOT_ISSUED"
   }
 }

@@ -1,0 +1,152 @@
+﻿TAP version 13
+# Subtest: F28-R01: ordinary exact-limit public file remains readable
+ok 1 - F28-R01: ordinary exact-limit public file remains readable
+  ---
+  duration_ms: 24.6517
+  type: 'test'
+  ...
+# Subtest: F28-R02: replacement file between validated path and open is withheld
+not ok 2 - F28-R02: replacement file between validated path and open is withheld
+  ---
+  duration_ms: 23.8508
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\boundaryReadReliability.test.ts:2:1853'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  operator: 'rejects'
+  stack: |-
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\boundaryReadReliability.test.ts:32:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F28-R03: parent replacement between validation and open is withheld
+not ok 3 - F28-R03: parent replacement between validation and open is withheld
+  ---
+  duration_ms: 19.792
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\boundaryReadReliability.test.ts:2:2288'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  operator: 'rejects'
+  stack: |-
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\boundaryReadReliability.test.ts:43:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F28-R04: same-length in-place content drift during read is withheld
+not ok 4 - F28-R04: same-length in-place content drift during read is withheld
+  ---
+  duration_ms: 15.3736
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\boundaryReadReliability.test.ts:2:2780'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  operator: 'rejects'
+  stack: |-
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\boundaryReadReliability.test.ts:57:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F28-R05: cancellation before I/O refuses without opening a handle
+not ok 5 - F28-R05: cancellation before I/O refuses without opening a handle
+  ---
+  duration_ms: 10.8181
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\boundaryReadReliability.test.ts:2:3529'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  operator: 'rejects'
+  stack: |-
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\boundaryReadReliability.test.ts:62:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F28-R06: cancellation while a handle is open withholds and closes it
+not ok 6 - F28-R06: cancellation while a handle is open withholds and closes it
+  ---
+  duration_ms: 12.0069
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\boundaryReadReliability.test.ts:2:3896'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  operator: 'rejects'
+  stack: |-
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\boundaryReadReliability.test.ts:70:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F28-R07: fractional byte limit is refused before open
+not ok 7 - F28-R07: fractional byte limit is refused before open
+  ---
+  duration_ms: 11.3601
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\boundaryReadReliability.test.ts:2:4422'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  operator: 'rejects'
+  stack: |-
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\boundaryReadReliability.test.ts:73:36)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F28-R08: oversized allocation request cannot expand the fixed reader budget
+not ok 8 - F28-R08: oversized allocation request cannot expand the fixed reader budget
+  ---
+  duration_ms: 13.8816
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\boundaryReadReliability.test.ts:2:4602'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  operator: 'rejects'
+  stack: |-
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\boundaryReadReliability.test.ts:76:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F28-R09: another workspace root cannot borrow this root's path
+ok 9 - F28-R09: another workspace root cannot borrow this root's path
+  ---
+  duration_ms: 14.5168
+  type: 'test'
+  ...
+# Subtest: F28-R10: a multiple-hardlink input is withheld
+ok 10 - F28-R10: a multiple-hardlink input is withheld
+  ---
+  duration_ms: 12.866
+  type: 'test'
+  ...
+# Subtest: F28-R11: an internal directory junction is withheld
+ok 11 - F28-R11: an internal directory junction is withheld
+  ---
+  duration_ms: 13.6844
+  type: 'test'
+  ...
+# Subtest: F28-R12: malformed UTF-8 and binary inputs never produce a partial string
+ok 12 - F28-R12: malformed UTF-8 and binary inputs never produce a partial string
+  ---
+  duration_ms: 15.4673
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 5
+# fail 7
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1280.0372

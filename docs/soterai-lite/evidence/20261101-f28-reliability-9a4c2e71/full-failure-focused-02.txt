@@ -1,0 +1,179 @@
+﻿TAP version 13
+# Subtest: F28-R01: ordinary exact-limit public file remains readable
+ok 1 - F28-R01: ordinary exact-limit public file remains readable
+  ---
+  duration_ms: 99.0626
+  type: 'test'
+  ...
+# Subtest: F28-R02: replacement file between validated path and open is withheld
+ok 2 - F28-R02: replacement file between validated path and open is withheld
+  ---
+  duration_ms: 52.7464
+  type: 'test'
+  ...
+# Subtest: F28-R03: parent replacement between validation and open is withheld
+ok 3 - F28-R03: parent replacement between validation and open is withheld
+  ---
+  duration_ms: 60.1593
+  type: 'test'
+  ...
+# Subtest: F28-R04: same-length in-place content drift during read is withheld
+ok 4 - F28-R04: same-length in-place content drift during read is withheld
+  ---
+  duration_ms: 35.0111
+  type: 'test'
+  ...
+# Subtest: F28-R05: cancellation before I/O refuses without opening a handle
+ok 5 - F28-R05: cancellation before I/O refuses without opening a handle
+  ---
+  duration_ms: 13.6248
+  type: 'test'
+  ...
+# Subtest: F28-R06: cancellation while a handle is open withholds and observes its later close
+ok 6 - F28-R06: cancellation while a handle is open withholds and observes its later close
+  ---
+  duration_ms: 33.5152
+  type: 'test'
+  ...
+# Subtest: F28-R07: fractional byte limit is refused before open
+ok 7 - F28-R07: fractional byte limit is refused before open
+  ---
+  duration_ms: 12.8404
+  type: 'test'
+  ...
+# Subtest: F28-R08: oversized allocation request cannot expand the fixed reader budget
+ok 8 - F28-R08: oversized allocation request cannot expand the fixed reader budget
+  ---
+  duration_ms: 29.2849
+  type: 'test'
+  ...
+# Subtest: F28-R09: another workspace root cannot borrow this root's path
+ok 9 - F28-R09: another workspace root cannot borrow this root's path
+  ---
+  duration_ms: 60.7119
+  type: 'test'
+  ...
+# Subtest: F28-R10: a multiple-hardlink input is withheld
+ok 10 - F28-R10: a multiple-hardlink input is withheld
+  ---
+  duration_ms: 29.3969
+  type: 'test'
+  ...
+# Subtest: F28-R11: an internal directory junction is withheld
+ok 11 - F28-R11: an internal directory junction is withheld
+  ---
+  duration_ms: 17.8453
+  type: 'test'
+  ...
+# Subtest: F28-R12: malformed UTF-8 and binary inputs never produce a partial string
+ok 12 - F28-R12: malformed UTF-8 and binary inputs never produce a partial string
+  ---
+  duration_ms: 69.7556
+  type: 'test'
+  ...
+# Subtest: F28-R13: cancellation storm cannot refund slots while eight real opens are unfinished
+ok 13 - F28-R13: cancellation storm cannot refund slots while eight real opens are unfinished
+  ---
+  duration_ms: 81.656
+  type: 'test'
+  ...
+# Subtest: F28-R14: a junction used as the workspace root is withheld
+ok 14 - F28-R14: a junction used as the workspace root is withheld
+  ---
+  duration_ms: 17.1554
+  type: 'test'
+  ...
+# Subtest: F28-R15: owner flag withdrawal during I/O withholds the buffered public bytes
+ok 15 - F28-R15: owner flag withdrawal during I/O withholds the buffered public bytes
+  ---
+  duration_ms: 47.8565
+  type: 'test'
+  ...
+# Subtest: README accuracy
+    # Subtest: names only commands that exist
+    ok 1 - names only commands that exist
+      ---
+      duration_ms: 8.5255
+      type: 'test'
+      ...
+    # Subtest: names only settings that exist, with the manifest's real defaults
+    ok 2 - names only settings that exist, with the manifest's real defaults
+      ---
+      duration_ms: 5.2284
+      type: 'test'
+      ...
+    # Subtest: does not advertise a version other than the one being published
+    ok 3 - does not advertise a version other than the one being published
+      ---
+      duration_ms: 5.7227
+      type: 'test'
+      ...
+    # Subtest: points at a license file that ships in the VSIX
+    ok 4 - points at a license file that ships in the VSIX
+      ---
+      duration_ms: 10.3584
+      type: 'test'
+      ...
+    # Subtest: states the real count of machine-scoped settings
+    ok 5 - states the real count of machine-scoped settings
+      ---
+      duration_ms: 0.9272
+      type: 'test'
+      ...
+    1..5
+ok 16 - README accuracy
+  ---
+  duration_ms: 35.4072
+  type: 'suite'
+  ...
+# Subtest: Tier-2-lite off/default withdraws generation before file or policy access
+ok 17 - Tier-2-lite off/default withdraws generation before file or policy access
+  ---
+  duration_ms: 4.5224
+  type: 'test'
+  ...
+# Subtest: explicit public selection omits synthetic secrets/history/cache and generates opaque placeholders without source writes
+ok 18 - explicit public selection omits synthetic secrets/history/cache and generates opaque placeholders without source writes
+  ---
+  duration_ms: 89.7846
+  type: 'test'
+  ...
+# Subtest: hidden, credential, home/history/recovery, Docker socket and ambiguous paths are never public selections
+ok 19 - hidden, credential, home/history/recovery, Docker socket and ambiguous paths are never public selections
+  ---
+  duration_ms: 1.9671
+  type: 'test'
+  ...
+# Subtest: unknown files, protected classifications and missing policy reject the entire snapshot
+ok 20 - unknown files, protected classifications and missing policy reject the entire snapshot
+  ---
+  duration_ms: 12.7678
+  type: 'test'
+  ...
+# Subtest: hardlinks and directory aliases cannot enter a public snapshot
+ok 21 - hardlinks and directory aliases cannot enter a public snapshot
+  ---
+  duration_ms: 25.9831
+  type: 'test'
+  ...
+# Subtest: policy changes and case collisions fail closed rather than return a partial snapshot
+ok 22 - policy changes and case collisions fail closed rather than return a partial snapshot
+  ---
+  duration_ms: 50.7949
+  type: 'test'
+  ...
+# Subtest: template has offline nonroot policy, no host binds or lifecycle hooks, and explicit live-attach gaps
+ok 23 - template has offline nonroot policy, no host binds or lifecycle hooks, and explicit live-attach gaps
+  ---
+  duration_ms: 112.0203
+  type: 'test'
+  ...
+1..23
+# tests 27
+# suites 1
+# pass 27
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4691.2306

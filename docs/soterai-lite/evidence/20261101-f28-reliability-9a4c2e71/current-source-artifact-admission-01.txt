@@ -1,0 +1,32 @@
+﻿node.exe : Error: ENOENT: no such file or directory, lstat 'C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs
+\soterai-lite\evidence\20261101-f28-reliability-9a4c2e71\package-lock.json'
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Error: ENOENT: ...kage-lock.json':String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+    at Object.lstatSync (node:fs:1716:25)
+    at ordinaryFile (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261028-f29-pro
+tection-center-6c93e15a\accessibility-binding-01.cjs:13:23)
+    at Object.verifyStreamedPin (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\2026
+1028-f29-protection-center-6c93e15a\streamed-vendor-pin-08.cjs:9:15)
+    at verifyRow (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261029-f26b-prepu
+sh-70e1c9a4\native-physical-admission-14.cjs:14:506)
+    at pin (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261101-f28-reliability-
+9a4c2e71\current-native-admission-01.cjs:10:129)
+    at sources (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261101-f28-reliabil
+ity-9a4c2e71\current-native-admission-01.cjs:13:297)
+    at current (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261101-f28-reliabil
+ity-9a4c2e71\current-native-admission-01.cjs:15:14)
+    at Object.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261101-f
+28-reliability-9a4c2e71\current-native-admission-01.cjs:28:77)
+    at Module._compile (node:internal/modules/cjs/loader:1730:14)
+    at Object..js (node:internal/modules/cjs/loader:1895:10) {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'lstat',
+  path: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261101-f28-reliab
+ility-9a4c2e71\\package-lock.json'
+}

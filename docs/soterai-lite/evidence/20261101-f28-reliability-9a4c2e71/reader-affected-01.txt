@@ -1,0 +1,766 @@
+﻿TAP version 13
+# Subtest: deny globs cover dotfiles, directory descendants, roots and Windows case
+ok 1 - deny globs cover dotfiles, directory descendants, roots and Windows case
+  ---
+  duration_ms: 48.1687
+  type: 'test'
+  ...
+# Subtest: invalid policies cannot silently drop rules or negate defaults
+ok 2 - invalid policies cannot silently drop rules or negate defaults
+  ---
+  duration_ms: 10.1483
+  type: 'test'
+  ...
+# Subtest: regions merge, contain no plaintext in storage, and block changed documents
+ok 3 - regions merge, contain no plaintext in storage, and block changed documents
+  ---
+  duration_ms: 5.9687
+  type: 'test'
+  ...
+# Subtest: .aiignore and manual folder rules exclude arbitrary data before gathering
+ok 4 - .aiignore and manual folder rules exclude arbitrary data before gathering
+  ---
+  duration_ms: 605.8269
+  type: 'test'
+  ...
+# Subtest: defaults apply before reading even when Protected Workspace Mode is off
+ok 5 - defaults apply before reading even when Protected Workspace Mode is off
+  ---
+  duration_ms: 352.1061
+  type: 'test'
+  ...
+# Subtest: malformed/unreadable policy blocks its root and a repaired policy reloads
+ok 6 - malformed/unreadable policy blocks its root and a repaired policy reloads
+  ---
+  duration_ms: 124.6876
+  type: 'test'
+  ...
+# Subtest: project denies are additive; empty protectedFiles cannot remove defaults
+ok 7 - project denies are additive; empty protectedFiles cannot remove defaults
+  ---
+  duration_ms: 105.0196
+  type: 'test'
+  ...
+# Subtest: region redaction precedes selection extraction; stale edits block entire content
+ok 8 - region redaction precedes selection extraction; stale edits block entire content
+  ---
+  duration_ms: 1106.0375
+  type: 'test'
+  ...
+# Subtest: bounded reads reject hardlinks, junctions, external paths, binary and invalid UTF-8
+ok 9 - bounded reads reject hardlinks, junctions, external paths, binary and invalid UTF-8
+  ---
+  duration_ms: 80.5245
+  type: 'test'
+  ...
+# Subtest: a symlinked .aiignore fails closed
+ok 10 - a symlinked .aiignore fails closed
+  ---
+  duration_ms: 19.4418
+  type: 'test'
+  ...
+# Subtest: Git diff obeys file, custom-glob and protected-region boundaries
+ok 11 - Git diff obeys file, custom-glob and protected-region boundaries
+  ---
+  duration_ms: 1908.1414
+  type: 'test'
+  ...
+# Subtest: redacted virtual documents use opaque URIs and re-evaluate new deny rules
+ok 12 - redacted virtual documents use opaque URIs and re-evaluate new deny rules
+  ---
+  duration_ms: 83.3584
+  type: 'test'
+  ...
+# Subtest: closed-file previews retain public text around a manually protected region
+ok 13 - closed-file previews retain public text around a manually protected region
+  ---
+  duration_ms: 85.3705
+  type: 'test'
+  ...
+# Subtest: Explorer Block from AI uses clicked folder, not the active editor
+ok 14 - Explorer Block from AI uses clicked folder, not the active editor
+  ---
+  duration_ms: 26.6256
+  type: 'test'
+  ...
+# Subtest: marking a new selection after edits cannot silently clear an older protection
+ok 15 - marking a new selection after edits cannot silently clear an older protection
+  ---
+  duration_ms: 25.3747
+  type: 'test'
+  ...
+# Subtest: multi-root .aiignore rules do not bleed between identically named paths
+ok 16 - multi-root .aiignore rules do not bleed between identically named paths
+  ---
+  duration_ms: 58.9571
+  type: 'test'
+  ...
+# Subtest: corrupt manual state denies instead of silently discarding a region
+ok 17 - corrupt manual state denies instead of silently discarding a region
+  ---
+  duration_ms: 2.6649
+  type: 'test'
+  ...
+# Subtest: fake provider keys never survive a normal file into a safe context bundle
+ok 18 - fake provider keys never survive a normal file into a safe context bundle
+  ---
+  duration_ms: 480.1489
+  type: 'test'
+  ...
+# Subtest: concurrent manual rule updates preserve each deny across roots
+ok 19 - concurrent manual rule updates preserve each deny across roots
+  ---
+  duration_ms: 19.9766
+  type: 'test'
+  ...
+# Subtest: selection-only overlap removes protected bytes without losing adjacent public text
+ok 20 - selection-only overlap removes protected bytes without losing adjacent public text
+  ---
+  duration_ms: 2.7803
+  type: 'test'
+  ...
+# Subtest: accepted repository denies survive deletion, replacement and a fresh snapshot
+ok 21 - accepted repository denies survive deletion, replacement and a fresh snapshot
+  ---
+  duration_ms: 156.9209
+  type: 'test'
+  ...
+# Subtest: public policy update and save APIs cannot clear a deny; flag off withdraws sharing
+ok 22 - public policy update and save APIs cannot clear a deny; flag off withdraws sharing
+  ---
+  duration_ms: 4.6868
+  type: 'test'
+  ...
+# Subtest: relaxation ignores command arguments and the obsolete modal cannot remove a permanent deny
+ok 23 - relaxation ignores command arguments and the obsolete modal cannot remove a permanent deny
+  ---
+  duration_ms: 50.4328
+  type: 'test'
+  ...
+# Subtest: F28-R01: ordinary exact-limit public file remains readable
+ok 24 - F28-R01: ordinary exact-limit public file remains readable
+  ---
+  duration_ms: 60.0167
+  type: 'test'
+  ...
+# Subtest: F28-R02: replacement file between validated path and open is withheld
+ok 25 - F28-R02: replacement file between validated path and open is withheld
+  ---
+  duration_ms: 29.7639
+  type: 'test'
+  ...
+# Subtest: F28-R03: parent replacement between validation and open is withheld
+ok 26 - F28-R03: parent replacement between validation and open is withheld
+  ---
+  duration_ms: 33.8765
+  type: 'test'
+  ...
+# Subtest: F28-R04: same-length in-place content drift during read is withheld
+ok 27 - F28-R04: same-length in-place content drift during read is withheld
+  ---
+  duration_ms: 24.8724
+  type: 'test'
+  ...
+# Subtest: F28-R05: cancellation before I/O refuses without opening a handle
+ok 28 - F28-R05: cancellation before I/O refuses without opening a handle
+  ---
+  duration_ms: 8.6723
+  type: 'test'
+  ...
+# Subtest: F28-R06: cancellation while a handle is open withholds and observes its later close
+ok 29 - F28-R06: cancellation while a handle is open withholds and observes its later close
+  ---
+  duration_ms: 27.2969
+  type: 'test'
+  ...
+# Subtest: F28-R07: fractional byte limit is refused before open
+ok 30 - F28-R07: fractional byte limit is refused before open
+  ---
+  duration_ms: 11.6821
+  type: 'test'
+  ...
+# Subtest: F28-R08: oversized allocation request cannot expand the fixed reader budget
+ok 31 - F28-R08: oversized allocation request cannot expand the fixed reader budget
+  ---
+  duration_ms: 13.6825
+  type: 'test'
+  ...
+# Subtest: F28-R09: another workspace root cannot borrow this root's path
+ok 32 - F28-R09: another workspace root cannot borrow this root's path
+  ---
+  duration_ms: 36.8029
+  type: 'test'
+  ...
+# Subtest: F28-R10: a multiple-hardlink input is withheld
+ok 33 - F28-R10: a multiple-hardlink input is withheld
+  ---
+  duration_ms: 16.5642
+  type: 'test'
+  ...
+# Subtest: F28-R11: an internal directory junction is withheld
+ok 34 - F28-R11: an internal directory junction is withheld
+  ---
+  duration_ms: 12.6551
+  type: 'test'
+  ...
+# Subtest: F28-R12: malformed UTF-8 and binary inputs never produce a partial string
+ok 35 - F28-R12: malformed UTF-8 and binary inputs never produce a partial string
+  ---
+  duration_ms: 55.3945
+  type: 'test'
+  ...
+# Subtest: F28-R13: cancellation storm cannot refund slots while eight real opens are unfinished
+ok 36 - F28-R13: cancellation storm cannot refund slots while eight real opens are unfinished
+  ---
+  duration_ms: 81.0671
+  type: 'test'
+  ...
+# Subtest: F28-R14: a junction used as the workspace root is withheld
+ok 37 - F28-R14: a junction used as the workspace root is withheld
+  ---
+  duration_ms: 11.435
+  type: 'test'
+  ...
+# Subtest: F28-R15: owner flag withdrawal during I/O withholds the buffered public bytes
+ok 38 - F28-R15: owner flag withdrawal during I/O withholds the buffered public bytes
+  ---
+  duration_ms: 23.2294
+  type: 'test'
+  ...
+# Subtest: F18 authoritative native classification exposes no text or approval grant
+ok 39 - F18 authoritative native classification exposes no text or approval grant
+  ---
+  duration_ms: 342.3675
+  type: 'test'
+  ...
+# Subtest: F18 authoritative native write classification retains sensitive and parent-path denies
+ok 40 - F18 authoritative native write classification retains sensitive and parent-path denies
+  ---
+  duration_ms: 66.0179
+  type: 'test'
+  ...
+# Subtest: F04-C01 native consent previews exactly the masked dotenv output without opening a document before approval
+ok 41 - F04-C01 native consent previews exactly the masked dotenv output without opening a document before approval
+  ---
+  duration_ms: 128.6248
+  type: 'test'
+  ...
+# Subtest: F04-C02 public and ordinary restricted files release precisely the modal detail while persistent deny remains
+ok 42 - F04-C02 public and ordinary restricted files release precisely the modal detail while persistent deny remains
+  ---
+  duration_ms: 235.4838
+  type: 'test'
+  ...
+# Subtest: F04-C03 denying the native modal exposes no preview document and no released result text
+ok 43 - F04-C03 denying the native modal exposes no preview document and no released result text
+  ---
+  duration_ms: 66.962
+  type: 'test'
+  ...
+# Subtest: F04-C04 arbitrary command arguments cannot authorize or replace the route, recipient, preview or expiry
+ok 44 - F04-C04 arbitrary command arguments cannot authorize or replace the route, recipient, preview or expiry
+  ---
+  duration_ms: 141.8148
+  type: 'test'
+  ...
+# Subtest: F04-C05 a machine flag withdrawal withholds integration, preview and managed terminal reads and retains denies
+ok 45 - F04-C05 a machine flag withdrawal withholds integration, preview and managed terminal reads and retains denies
+  ---
+  duration_ms: 31.5306
+  type: 'test'
+  ...
+# Subtest: F04-C06 withdrawing the flag invalidates already opened safe provider views and notifies their refresh
+ok 46 - F04-C06 withdrawing the flag invalidates already opened safe provider views and notifies their refresh
+  ---
+  duration_ms: 107.2321
+  type: 'test'
+  ...
+# Subtest: F04-C07 workspace overrides cannot enable a globally disabled flag or disable the machine default
+ok 47 - F04-C07 workspace overrides cannot enable a globally disabled flag or disable the machine default
+  ---
+  duration_ms: 95.1702
+  type: 'test'
+  ...
+# Subtest: F04-C08 disabling safe consent leaves ordinary and sensitive restriction saves usable
+ok 48 - F04-C08 disabling safe consent leaves ordinary and sensitive restriction saves usable
+  ---
+  duration_ms: 50.8179
+  type: 'test'
+  ...
+# Subtest: F04-C09 recognized and manually marked sensitive files show summary-only detail and release that same summary
+ok 49 - F04-C09 recognized and manually marked sensitive files show summary-only detail and release that same summary
+  ---
+  duration_ms: 180.1616
+  type: 'test'
+  ...
+# Subtest: F04-C10 protected regions never appear in native detail and protected dotenv syntax withholds the whole schema
+ok 50 - F04-C10 protected regions never appear in native detail and protected dotenv syntax withholds the whole schema
+  ---
+  duration_ms: 183.6853
+  type: 'test'
+  ...
+# Subtest: F04-C11 binary, oversized input and safe output above 16 KiB are withheld before consent; the exact limit remains useful
+ok 51 - F04-C11 binary, oversized input and safe output above 16 KiB are withheld before consent; the exact limit remains useful
+  ---
+  duration_ms: 304.9649
+  type: 'test'
+  ...
+# Subtest: F04-C12 a cold first request enrolls additive project protection inside its own preparation and still reaches exact consent
+ok 52 - F04-C12 a cold first request enrolls additive project protection inside its own preparation and still reaches exact consent
+  ---
+  duration_ms: 227.1418
+  type: 'test'
+  ...
+# Subtest: F04-C13 explicit restriction intent expires a read while its initial policy preparation is held
+ok 53 - F04-C13 explicit restriction intent expires a read while its initial policy preparation is held
+  ---
+  duration_ms: 44.7856
+  type: 'test'
+  ...
+# (node:4444) ExperimentalWarning: The MockTimers API is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: F04 receipt previews exactly the released public text on safe-preview
+ok 54 - F04 receipt previews exactly the released public text on safe-preview
+  ---
+  duration_ms: 19.3578
+  type: 'test'
+  ...
+# Subtest: F04 receipt previews exactly the released public text on managed-read-terminal
+ok 55 - F04 receipt previews exactly the released public text on managed-read-terminal
+  ---
+  duration_ms: 1.6938
+  type: 'test'
+  ...
+# Subtest: F04 receipt previews exactly the released public text on integration-command
+ok 56 - F04 receipt previews exactly the released public text on integration-command
+  ---
+  duration_ms: 1.4931
+  type: 'test'
+  ...
+# Subtest: F04 the fallback recipient is a fixed nonempty internal label
+ok 57 - F04 the fallback recipient is a fixed nonempty internal label
+  ---
+  duration_ms: 3.408
+  type: 'test'
+  ...
+# Subtest: F04 confirmation cannot mutate the immutable reviewed output or recipient
+ok 58 - F04 confirmation cannot mutate the immutable reviewed output or recipient
+  ---
+  duration_ms: 1.5879
+  type: 'test'
+  ...
+# Subtest: F04 dotenv receipt and result mask every value including public-looking values and multiline data
+ok 59 - F04 dotenv receipt and result mask every value including public-looking values and multiline data
+  ---
+  duration_ms: 2.0014
+  type: 'test'
+  ...
+# Subtest: F04 protected multiline dotenv never previews apparent names inside masked value data
+ok 60 - F04 protected multiline dotenv never previews apparent names inside masked value data
+  ---
+  duration_ms: 1.2712
+  type: 'test'
+  ...
+# Subtest: F04 an ordinary protected region keeps useful adjacent public text in exact preview
+ok 61 - F04 an ordinary protected region keeps useful adjacent public text in exact preview
+  ---
+  duration_ms: 1.0847
+  type: 'test'
+  ...
+# Subtest: F04 marked sensitive files show only the same summary that is released
+ok 62 - F04 marked sensitive files show only the same summary that is released
+  ---
+  duration_ms: 0.9676
+  type: 'test'
+  ...
+# Subtest: F04 recognized sensitive files show only the same summary that is released
+ok 63 - F04 recognized sensitive files show only the same summary that is released
+  ---
+  duration_ms: 0.8171
+  type: 'test'
+  ...
+# Subtest: F04 managed terminal reviews its control-character-stripped payload before consent
+ok 64 - F04 managed terminal reviews its control-character-stripped payload before consent
+  ---
+  duration_ms: 1.0756
+  type: 'test'
+  ...
+# Subtest: F04 undeclared runtime surface "invented-surface" is unavailable before capture or UI
+ok 65 - F04 undeclared runtime surface "invented-surface" is unavailable before capture or UI
+  ---
+  duration_ms: 0.4692
+  type: 'test'
+  ...
+# Subtest: F04 undeclared runtime surface "" is unavailable before capture or UI
+ok 66 - F04 undeclared runtime surface "" is unavailable before capture or UI
+  ---
+  duration_ms: 0.2536
+  type: 'test'
+  ...
+# Subtest: F04 undeclared runtime surface null is unavailable before capture or UI
+ok 67 - F04 undeclared runtime surface null is unavailable before capture or UI
+  ---
+  duration_ms: 0.2663
+  type: 'test'
+  ...
+# Subtest: F04 undeclared runtime surface undefined is unavailable before capture or UI
+ok 68 - F04 undeclared runtime surface undefined is unavailable before capture or UI
+  ---
+  duration_ms: 0.2237
+  type: 'test'
+  ...
+# Subtest: F04 undeclared runtime surface {"approved":true} is unavailable before capture or UI
+ok 69 - F04 undeclared runtime surface {"approved":true} is unavailable before capture or UI
+  ---
+  duration_ms: 0.323
+  type: 'test'
+  ...
+# Subtest: F04 only boolean true authorizes a request
+ok 70 - F04 only boolean true authorizes a request
+  ---
+  duration_ms: 3.1058
+  type: 'test'
+  ...
+# Subtest: F04 changed recipient during first-capture releases no text
+ok 71 - F04 changed recipient during first-capture releases no text
+  ---
+  duration_ms: 0.618
+  type: 'test'
+  ...
+# Subtest: F04 changed recipient during confirmation releases no text
+ok 72 - F04 changed recipient during confirmation releases no text
+  ---
+  duration_ms: 0.5143
+  type: 'test'
+  ...
+# Subtest: F04 changed recipient during fresh-capture releases no text
+ok 73 - F04 changed recipient during fresh-capture releases no text
+  ---
+  duration_ms: 0.4455
+  type: 'test'
+  ...
+# Subtest: F04 recapture rejects changed workspace while preserving the original safe preview
+ok 74 - F04 recapture rejects changed workspace while preserving the original safe preview
+  ---
+  duration_ms: 0.781
+  type: 'test'
+  ...
+# Subtest: F04 recapture rejects changed relativePath while preserving the original safe preview
+ok 75 - F04 recapture rejects changed relativePath while preserving the original safe preview
+  ---
+  duration_ms: 0.4255
+  type: 'test'
+  ...
+# Subtest: F04 recapture rejects changed policyRevision while preserving the original safe preview
+ok 76 - F04 recapture rejects changed policyRevision while preserving the original safe preview
+  ---
+  duration_ms: 0.4274
+  type: 'test'
+  ...
+# Subtest: F04 recapture rejects changed fileIdentity while preserving the original safe preview
+ok 77 - F04 recapture rejects changed fileIdentity while preserving the original safe preview
+  ---
+  duration_ms: 0.3964
+  type: 'test'
+  ...
+# Subtest: F04 recapture rejects changed content while preserving the original safe preview
+ok 78 - F04 recapture rejects changed content while preserving the original safe preview
+  ---
+  duration_ms: 0.4082
+  type: 'test'
+  ...
+# Subtest: F04 recapture rejects changed regionView while preserving the original safe preview
+ok 79 - F04 recapture rejects changed regionView while preserving the original safe preview
+  ---
+  duration_ms: 0.3796
+  type: 'test'
+  ...
+# Subtest: F04 recapture rejects changed sensitive while preserving the original safe preview
+ok 80 - F04 recapture rejects changed sensitive while preserving the original safe preview
+  ---
+  duration_ms: 0.396
+  type: 'test'
+  ...
+# Subtest: F04 exactly 16 KiB of UTF-8 safe output remains useful and can be reviewed
+ok 81 - F04 exactly 16 KiB of UTF-8 safe output remains useful and can be reviewed
+  ---
+  duration_ms: 2.2933
+  type: 'test'
+  ...
+# Subtest: F04 ordinary output over 16 KiB is unavailable before confirmation
+ok 82 - F04 ordinary output over 16 KiB is unavailable before confirmation
+  ---
+  duration_ms: 3.6378
+  type: 'test'
+  ...
+# Subtest: F04 environment output over 16 KiB is unavailable before confirmation
+ok 83 - F04 environment output over 16 KiB is unavailable before confirmation
+  ---
+  duration_ms: 1.1973
+  type: 'test'
+  ...
+# Subtest: F04 oversized-original is rejected even if the alternate captured view is small and safe
+ok 84 - F04 oversized-original is rejected even if the alternate captured view is small and safe
+  ---
+  duration_ms: 0.499
+  type: 'test'
+  ...
+# Subtest: F04 binary-original is rejected even if the alternate captured view is small and safe
+ok 85 - F04 binary-original is rejected even if the alternate captured view is small and safe
+  ---
+  duration_ms: 0.2719
+  type: 'test'
+  ...
+# Subtest: F04 oversized-region is rejected even if the alternate captured view is small and safe
+ok 86 - F04 oversized-region is rejected even if the alternate captured view is small and safe
+  ---
+  duration_ms: 0.2571
+  type: 'test'
+  ...
+# Subtest: F04 binary-region is rejected even if the alternate captured view is small and safe
+ok 87 - F04 binary-region is rejected even if the alternate captured view is small and safe
+  ---
+  duration_ms: 0.4178
+  type: 'test'
+  ...
+# Subtest: F04 unsupported dotenv syntax gives an exact withheld summary and never original text
+ok 88 - F04 unsupported dotenv syntax gives an exact withheld summary and never original text
+  ---
+  duration_ms: 0.6651
+  type: 'test'
+  ...
+# Subtest: F04 the 60-second deadline resolves an unanswered capture without waiting for it
+ok 89 - F04 the 60-second deadline resolves an unanswered capture without waiting for it
+  ---
+  duration_ms: 48.0205
+  type: 'test'
+  ...
+# Subtest: F04 the 60-second deadline resolves an unanswered confirmation without waiting for it
+ok 90 - F04 the 60-second deadline resolves an unanswered confirmation without waiting for it
+  ---
+  duration_ms: 13.1839
+  type: 'test'
+  ...
+# Subtest: F04 the owned deadline expires even when the injected elapsed clock does not advance
+ok 91 - F04 the owned deadline expires even when the injected elapsed clock does not advance
+  ---
+  duration_ms: 3.5448
+  type: 'test'
+  ...
+# Subtest: F04 revoke immediately expires a request waiting on capture
+ok 92 - F04 revoke immediately expires a request waiting on capture
+  ---
+  duration_ms: 2.4214
+  type: 'test'
+  ...
+# Subtest: F04 revoke immediately expires a request waiting on confirmation
+ok 93 - F04 revoke immediately expires a request waiting on confirmation
+  ---
+  duration_ms: 1.6818
+  type: 'test'
+  ...
+# Subtest: F04 dispose immediately expires a request waiting on capture
+ok 94 - F04 dispose immediately expires a request waiting on capture
+  ---
+  duration_ms: 1.1906
+  type: 'test'
+  ...
+# Subtest: F04 dispose immediately expires a request waiting on confirmation
+ok 95 - F04 dispose immediately expires a request waiting on confirmation
+  ---
+  duration_ms: 1.3743
+  type: 'test'
+  ...
+# Subtest: F04 a late revoked approval cannot clear a newer request's busy state or grant it
+ok 96 - F04 a late revoked approval cannot clear a newer request's busy state or grant it
+  ---
+  duration_ms: 2.2016
+  type: 'test'
+  ...
+# Subtest: F04 late expired capture cannot open UI or hold a newer request busy
+ok 97 - F04 late expired capture cannot open UI or hold a newer request busy
+  ---
+  duration_ms: 2.4559
+  type: 'test'
+  ...
+# Subtest: F04 finishing an old request clears its timer instead of expiring a newer request
+ok 98 - F04 finishing an old request clears its timer instead of expiring a newer request
+  ---
+  duration_ms: 2.1886
+  type: 'test'
+  ...
+# Subtest: F04 preparation completes inside the request before content capture or approval
+ok 99 - F04 preparation completes inside the request before content capture or approval
+  ---
+  duration_ms: 1.9542
+  type: 'test'
+  ...
+# Subtest: F04 a hung preparation expires at the owned deadline and never captures content later
+ok 100 - F04 a hung preparation expires at the owned deadline and never captures content later
+  ---
+  duration_ms: 1.5877
+  type: 'test'
+  ...
+# Subtest: F04 late revoked preparation cannot clear the newer request's preparation ownership
+ok 101 - F04 late revoked preparation cannot clear the newer request's preparation ownership
+  ---
+  duration_ms: 2.8739
+  type: 'test'
+  ...
+# (node:24468) ExperimentalWarning: The MockTimers API is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: F28-B01: eight leases cap unfinished work, including logically cancelled work
+ok 102 - F28-B01: eight leases cap unfinished work, including logically cancelled work
+  ---
+  duration_ms: 4.6272
+  type: 'test'
+  ...
+# Subtest: F28-B02: flag withdrawal invalidates active work and re-enable needs a fresh lease
+ok 103 - F28-B02: flag withdrawal invalidates active work and re-enable needs a fresh lease
+  ---
+  duration_ms: 0.6947
+  type: 'test'
+  ...
+# Subtest: F28-B03: elapsed clock -1 withholds
+ok 104 - F28-B03: elapsed clock -1 withholds
+  ---
+  duration_ms: 0.5194
+  type: 'test'
+  ...
+# Subtest: F28-B03: elapsed clock NaN withholds
+ok 105 - F28-B03: elapsed clock NaN withholds
+  ---
+  duration_ms: 0.2578
+  type: 'test'
+  ...
+# Subtest: F28-B03: elapsed clock Infinity withholds
+ok 106 - F28-B03: elapsed clock Infinity withholds
+  ---
+  duration_ms: 0.2101
+  type: 'test'
+  ...
+# Subtest: F28-B03: elapsed clock 5000 withholds
+ok 107 - F28-B03: elapsed clock 5000 withholds
+  ---
+  duration_ms: 0.2122
+  type: 'test'
+  ...
+# Subtest: F28-B04: an elapsed clock cannot move backwards even while still after its start
+ok 108 - F28-B04: an elapsed clock cannot move backwards even while still after its start
+  ---
+  duration_ms: 0.4659
+  type: 'test'
+  ...
+# Subtest: F28-B05: owned timer expires even when a test clock stalls
+ok 109 - F28-B05: owned timer expires even when a test clock stalls
+  ---
+  duration_ms: 1.4817
+  type: 'test'
+  ...
+# Subtest: F28-B06: unconfirmed handle closure degrades the owner and never refunds its slot
+ok 110 - F28-B06: unconfirmed handle closure degrades the owner and never refunds its slot
+  ---
+  duration_ms: 0.6831
+  type: 'test'
+  ...
+# Subtest: F28-B07: startup budget breach withdraws reads with a truthful degraded status
+ok 111 - F28-B07: startup budget breach withdraws reads with a truthful degraded status
+  ---
+  duration_ms: 0.8202
+  type: 'test'
+  ...
+# Subtest: F28-B08: independent windows own independent resource and withdrawal state
+ok 112 - F28-B08: independent windows own independent resource and withdrawal state
+  ---
+  duration_ms: 0.723
+  type: 'test'
+  ...
+# Subtest: F28-O01: runtime and Lite manifests have parity and a restricted default-true owner flag
+ok 113 - F28-O01: runtime and Lite manifests have parity and a restricted default-true owner flag
+  ---
+  duration_ms: 6.9597
+  type: 'test'
+  ...
+# Subtest: F28-O02: machine/global values override repository attempts and inspection failure denies
+ok 114 - F28-O02: machine/global values override repository attempts and inspection failure denies
+  ---
+  duration_ms: 15.5028
+  type: 'test'
+  ...
+# Subtest: F28-O03: actual owner registration withdraws leases on config/trust and stops on dispose
+ok 115 - F28-O03: actual owner registration withdraws leases on config/trust and stops on dispose
+  ---
+  duration_ms: 7.4784
+  type: 'test'
+  ...
+# Subtest: Workspace path containment policy
+    # Subtest: allows a file below the workspace root
+    ok 1 - allows a file below the workspace root
+      ---
+      duration_ms: 1.5548
+      type: 'test'
+      ...
+    # Subtest: rejects parent traversal outside the workspace
+    ok 2 - rejects parent traversal outside the workspace
+      ---
+      duration_ms: 0.3729
+      type: 'test'
+      ...
+    # Subtest: rejects a sibling with a shared textual prefix
+    ok 3 - rejects a sibling with a shared textual prefix
+      ---
+      duration_ms: 0.2468
+      type: 'test'
+      ...
+    # Subtest: allows separate files within each multi-root workspace independently
+    ok 4 - allows separate files within each multi-root workspace independently
+      ---
+      duration_ms: 1.8339
+      type: 'test'
+      ...
+    1..4
+ok 116 - Workspace path containment policy
+  ---
+  duration_ms: 6.4123
+  type: 'suite'
+  ...
+# Subtest: Workspace filesystem path policy
+    # Subtest: allows a normal existing workspace file and a normal output
+    ok 1 - allows a normal existing workspace file and a normal output
+      ---
+      duration_ms: 75.5639
+      type: 'test'
+      ...
+    # Subtest: rejects a symlink to a file outside the workspace
+    ok 2 - rejects a symlink to a file outside the workspace # SKIP symlink unavailable: Error: EPERM: operation not permitted, symlink 'C:\\Users\\USER\\AppData\\Local\\Temp\\soterai-link-vrSe3P\\outside.env' -> 'C:\\Users\\USER\\AppData\\Local\\Temp\\soterai-link-vrSe3P\\workspace\\.env'
+      ---
+      duration_ms: 15.9239
+      type: 'test'
+      ...
+    # Subtest: rejects an internal symlink and a symlinked output target
+    ok 3 - rejects an internal symlink and a symlinked output target # SKIP symlink unavailable: Error: EPERM: operation not permitted, symlink 'C:\\Users\\USER\\AppData\\Local\\Temp\\soterai-internal-link-NSCo7h\\source.env' -> 'C:\\Users\\USER\\AppData\\Local\\Temp\\soterai-internal-link-NSCo7h\\.env'
+      ---
+      duration_ms: 13.2555
+      type: 'test'
+      ...
+    # Subtest: rejects a Windows directory junction
+    ok 4 - rejects a Windows directory junction
+      ---
+      duration_ms: 24.1845
+      type: 'test'
+      ...
+    1..4
+ok 117 - Workspace filesystem path policy
+  ---
+  duration_ms: 131.3233
+  type: 'suite'
+  ...
+1..117
+# tests 123
+# suites 2
+# pass 121
+# fail 0
+# cancelled 0
+# skipped 2
+# todo 0
+# duration_ms 14791.9612

@@ -1,0 +1,21 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');const own=n=>path.join(__dirname,n);let s=fs.readFileSync(path.resolve(__dirname,'../20261029-f26b-prepush-70e1c9a4/scoped-feature-source-git-10.cjs'),'utf8');
+const a=s.indexOf('async function preflight(){'),b=s.indexOf('(async()=>{',a);assert(a>0&&b>a);
+s=s.slice(0,a)+[
+'async function preflight(){',
+" assert.equal(sha(fs.readFileSync(git)),'da240fe9bc24895b3e04150a4990b8a6ff329ecabcd8f19684c2cc310da5ef3f');assert.equal(text(['rev-parse','--show-object-format']),'sha1');",
+" const current=require('./current-native-admission-02.cjs').current(),p=read(own('progress-03.json'));assert.equal(p.status,'F28_CURRENT_FULL4780_ZERO_FAILURES_NEW_VSIX_CONTENT26DRIVERS_PASS_NATIVE_NOT_RUN');assert.equal(current.sourceProof.sha256,p.sourceProof.sha256);assert.equal(current.vsix.sha256,p.vsix.sha256);assert.equal(current.full.pass,4776);assert.equal(p.native30.actualLaunches,0);assert.equal(p.f26aNative09,'USER_DEFERRED_NOT_RUN');",
+" for(const n of ['current-artifact-progress-03','current-source-artifact-admission-02','native-source-typecheck-02','native-lifecycle-after-02','native-driver-build-03']){const r=read(own(n+'.txt.result.json'));assert.equal(r.exitCode,0);assert.equal(sha(fs.readFileSync(own(n+'.txt'))),r.sha256.toLowerCase());}",
+" for(const n of ['native-binding-01.json','native-materialization-01.json','native-consumption-01.json'])assert(!fs.existsSync(own(n)));",
+" assert(!fs.existsSync(hooks)||fs.readdirSync(hooks).length===0);return{...p,sourceScope:[]};",
+'}',
+'',
+].join('\n')+s.slice(b);
+function one(from,to){assert.equal(s.split(from).length,2,from);s=s.replace(from,to);}
+s=s.replaceAll('empty-feature-source-hooks-10','empty-f28-preparation-hooks-01').replaceAll('f26b-source-manifest-10','f28-preparation-manifest-01').replaceAll('f26b-source-byte-proof-10','f28-preparation-byte-proof-01').replaceAll('f26b-source-body-10','f28-preparation-body-01').replaceAll('acceptance-01.json','progress-03.json').replaceAll('content-inspection-03.json','content-inspection-02.json').replaceAll('NEXT-CHAT-HANDOFF-20261029-F26B.md','NEXT-CHAT-HANDOFF-20261101-F28.md');
+one("const parentExpected='253342591e761a0c3c43c4c6dc9cb67a49d4364b';","const parentExpected='6e3e66ca812a196cf9ca8addf1bc147b6e6a0879';");
+const bs=s.indexOf('  fs.writeFileSync(own(body),'),be=s.indexOf('\n  const content=',bs);assert(bs>0&&be>bs);s=s.slice(0,bs)+'  fs.writeFileSync(own(body),'+JSON.stringify('docs(lite): retain F28 reader baselines and current artifact gates\n\nRecord current1076 inputs, full4780/4776PASS0FAIL4privilegedsymlinkSKIP and exact new VSIX5dac9288/content15/four runtimes/88 restricted settings. Retain all baseline/full/fixture failures and corrections. Native30 preparation and ownership6 controls/typecheck/current26drivers pass; no native launch/binding/materialization yet. Evidence/artifact checkpoint only: F28 source14, deferred F26a3 and unrelated work remain unstaged. F28 and all native/affected/withdrawal/source/transition gates incomplete. No push, publish or rating.\n')+",{flag:'wx'});"+s.slice(be);
+one("'PREPARED_SCOPED_F26B_SOURCE_AND_EVIDENCE_NOT_COMMITTED'","'PREPARED_SCOPED_F28_EVIDENCE_CURRENT_ARTIFACT_NOT_COMMITTED'");
+assert.equal((s.match(/scope:'F26b scoped40[^']*'/g)||[]).length,1);s=s.replace(/scope:'F26b scoped40[^']*'/,"scope:'F28 evidence/artifact/selected metadata only. Current1076/full4776PASS0FAIL4SKIP/exactVSIX5dac/content26drivers and native30 preparation with6 cleanup controls. Native0, all required actual native/affected/withdrawal/source+transition bytes pending. Product14/deferredF26a3/unrelated work preserved unstaged. F26a09 deferred/no push authority/no publish/rating.'");
+s=s.replaceAll("feature:'F26b'","feature:'F28'");one('PASS_EXACT_LOCAL_F26B_SOURCE_AND_EVIDENCE_BYTES','PASS_EXACT_LOCAL_F28_PREPARATION_EVIDENCE_BYTES_FEATURE_INCOMPLETE');one("featureState:'VERIFYING_TRANSITION_BYTE_BARRIER_PENDING'","featureState:'ACTIVE_INCOMPLETE_NATIVE_AND_AFFECTED_PENDING'");one('PROPOSAL03_CONSUMED_ONCE_PASS8_TWO_SYNTHETIC_LOCAL_FILE_PUSHES','NO_REMAINING_AUTHORITY_NOT_RUN');
+fs.writeFileSync(own('scoped-preparation-git-01.cjs'),s,{flag:'wx'});console.log('Prepared F28 evidence-only raw-byte Git transaction; source14 excluded.');

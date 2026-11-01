@@ -1,0 +1,72 @@
+{
+  "status": "F28_FULL01_TWO_COMPATIBILITY_FAILURES_REPAIRED_TARGET27_PASS_FRESH_FULL02_PENDING",
+  "observedAt": "2026-11-01T15:58:50.510Z",
+  "sourceProof": {
+    "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/full-inputs-02.json",
+    "bytes": 213508,
+    "sha256": "70d3b237332ada5f7317906a8e745ff7d8f7bc2213b8c27f810a25b919b30743"
+  },
+  "sourceInputs": 1076,
+  "changesFrom01": [
+    {
+      "path": "packages/vscode-extension/README.md",
+      "bytes": 76395,
+      "sha256": "5da02ea15e2f220045558e6a3dd7682f97ea447a323898f4dcfa1cb4bd344101"
+    },
+    {
+      "path": "packages/vscode-extension/src/security/FileSystemPathPolicy.ts",
+      "bytes": 8372,
+      "sha256": "81d2bc848c9edbeba0fddff27962eec17214d4d45d76745a5fec4183cb9a55bf"
+    }
+  ],
+  "priorFull": {
+    "tests": 4780,
+    "pass": 4774,
+    "fail": 2,
+    "skip": 4,
+    "raw": {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/full-tests-01.txt",
+      "bytes": 1166186,
+      "sha256": "e3e59dbed233b5b0bf8722de8f8b7c9a5ee0ecc7132881dbab8b2cd04ce895a3"
+    }
+  },
+  "causes": [
+    "README stale87 vs actual88 machine settings",
+    "Tier2 caller expects existing generic Unsafe diagnostic; refusal behavior already effective"
+  ],
+  "targeted": {
+    "tests": 27,
+    "pass": 27,
+    "fail": 0,
+    "skip": 0,
+    "raw": {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/full-failure-focused-02.txt",
+      "bytes": 6171,
+      "sha256": "81f54024f0a65bfbdc53eda848bb9bf9050afb917e85416241b273b0fdd56715"
+    }
+  },
+  "nativePreparation": {
+    "checks": 30,
+    "typecheck": "PASS",
+    "drivers": 26,
+    "provenance": {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/native-driver-provenance-02.json",
+      "bytes": 50496,
+      "sha256": "7c06ad7bc82b221e1682c8e07119a2cb1e52dc967d127f982b1ba97913e452f4"
+    },
+    "actualLaunches": 0
+  },
+  "historicalWorkerAudit": {
+    "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/historical-worker-audit-02.json",
+    "bytes": 1652,
+    "sha256": "ce336594f8b842cc461901107c9eabe3f4afad966e1873136114fa121167314c"
+  },
+  "remaining": [
+    "Fresh full02/current package/content",
+    "Native30 plus current affected hosts and safe withdrawal",
+    "Acceptance/source+transition commits and raw bytes"
+  ],
+  "f26aNative09": "USER_DEFERRED_NOT_RUN",
+  "configuredGitPush": "NO_REMAINING_AUTHORITY_NOT_RUN",
+  "featureState": "ACTIVE_INCOMPLETE"
+}
