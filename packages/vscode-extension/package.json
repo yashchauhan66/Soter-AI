@@ -149,6 +149,7 @@
                 "soterai.lite.artifactScanner",
                 "soterai.lite.logProtection",
                 "soterai.lite.historyHooks.preCommit",
+                "soterai.lite.historyHooks.prePush",
                 "soterai.lite.historyHooks.psReadLine",
                 "soterai.lite.selfHygiene",
                 "soterai.lite.protectionCenter",
@@ -1624,6 +1625,26 @@
                 "category": "SoterAI"
             },
             {
+                "command": "soterai.installPrePushGuard",
+                "title": "Review and Install Pre-Push Guard",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.resumePrePushGuard",
+                "title": "Resume Pre-Push Owner",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.restorePrePushGuard",
+                "title": "Restore Original Pre-Push Hook",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.prePushGuardStatus",
+                "title": "Pre-Push Owner Status",
+                "category": "SoterAI"
+            },
+            {
                 "command": "soterai.installPSReadLineHistoryGuard",
                 "title": "Review and Install PowerShell History Exclusion",
                 "category": "SoterAI"
@@ -2456,6 +2477,12 @@
                     "default": false,
                     "scope": "machine",
                     "description": "Opt in to native owner-reviewed credential-command history exclusion for a selected Windows PowerShell 5.1 / PSReadLine 2.0.0 ConsoleHost profile. Only absent, blank or ordinary comment-only originals are supported automatically. Preserves prior handler denies and public history, with conservative extra exclusions. Existing history and unknown values/encodings remain limited. Status stays Uncovered until the selected profile is actually loaded and verified. Disable stops new installs; explicit reviewed restore verifies encrypted recovery and exact owned bytes."
+                },
+                "soterai.lite.historyHooks.prePush": {
+                    "type": "boolean",
+                    "default": false,
+                    "scope": "machine",
+                    "description": "Opt in to a reviewed cooperative pre-push guard for bounded full reachable branch history. Requires the live owning editor and explicit resume after restart. Unknown data, limits and owner absence withhold pushes. Encrypted reviewed restore remains available while disabled. Commit/tag messages, deliberate bypass and final push races remain outside this blob analysis; no registered-value guarantee."
                 },
                 "soterai.lite.selfHygiene": {
                     "type": "boolean",
@@ -3694,6 +3721,22 @@
                 },
                 {
                     "command": "soterai.preCommitGuardStatus",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.installPrePushGuard",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.resumePrePushGuard",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.restorePrePushGuard",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.prePushGuardStatus",
                     "when": "soterai.advancedCommands"
                 },
                 {

@@ -68,6 +68,7 @@ import { registerRegistryScanner } from "./config-scanners/registryCommands";
 import { registerServiceAccountScanner } from "./config-scanners/serviceAccountCommands";
 import { registerHistoryScanner } from "./history/commands";
 import { registerPreCommitHooks } from "./history-hooks/commands";
+import { registerPrePushHooks } from "./history-hooks/prePushCommands";
 import { registerPSReadLineHistory } from "./history-hooks/psReadLineCommands";
 import { registerArtifactScanner } from "./artifacts/commands";
 import { registerLogProtection } from "./logs/commands";
@@ -241,6 +242,7 @@ export function activate(context: vscode.ExtensionContext): void {
     registerMcpScanner(context);
     registerHistoryScanner(context);
     registerPreCommitHooks(context);
+    registerPrePushHooks(context);
     registerPSReadLineHistory(context);
     registerArtifactScanner(context);
     registerLogProtection(context);
