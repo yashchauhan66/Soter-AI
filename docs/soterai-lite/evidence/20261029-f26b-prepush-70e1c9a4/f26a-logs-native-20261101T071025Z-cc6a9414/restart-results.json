@@ -1,0 +1,160 @@
+{
+  "schemaVersion": 1,
+  "phase": "restart",
+  "syntheticOnly": true,
+  "hostVersion": "1.144.0",
+  "extensionBundleSha256": "786882b16d9010834a5b0372860f16b900750ef9df605cfec23ae763d5f1e3e1",
+  "currentDeveloperBundleSha256": "786882b16d9010834a5b0372860f16b900750ef9df605cfec23ae763d5f1e3e1",
+  "hostProbeSha256": "4f014043b9ff4a46dadb4f29403e7f801a3e6cc429adb8ea2d99fb12bd48c251",
+  "observations": [
+    {
+      "id": "F25-N01",
+      "scope": "Restart reuses persisted keyed metadata without startup discovery, content, documents or key stores",
+      "status": "PASS"
+    },
+    {
+      "id": "F25-N02",
+      "scope": "Restart caller approvals cannot replace a fresh native owner decision",
+      "status": "PASS"
+    },
+    {
+      "id": "F25-N03",
+      "scope": "Fresh restart review preserves exact saved-log finding IDs and independently keyed ledger row IDs",
+      "status": "PASS"
+    },
+    {
+      "id": "F25-N04",
+      "scope": "Restart owner disable still withdraws the native route and fresh reenable preserves originals and public controls",
+      "status": "PASS"
+    }
+  ],
+  "passed": 4,
+  "failed": 0,
+  "notRun": 0,
+  "expectedChecks": 4,
+  "sourceDocumentCalls": 0,
+  "sourceDocumentEvents": 0,
+  "logContentReads": 24,
+  "referencedContentReads": 0,
+  "observedFileCalls": 121,
+  "caseVariantContentMatches": 24,
+  "discoveries": [
+    {
+      "maximum": 129,
+      "isolatedSyntheticDirectory": false
+    },
+    {
+      "maximum": 129,
+      "isolatedSyntheticDirectory": false
+    }
+  ],
+  "limits": {
+    "files": 128,
+    "fileBytes": 65536,
+    "totalBytes": 1048576,
+    "milliseconds": 60000,
+    "parts": 32,
+    "depth": 32,
+    "valueContainerNodes": 10000,
+    "records": 128
+  },
+  "secretStorageStores": 0,
+  "vaultKeyStores": 0,
+  "reviews": [
+    {
+      "action": "Analyze saved logs",
+      "modal": true
+    },
+    {
+      "action": "Analyze saved logs",
+      "modal": true
+    },
+    {
+      "action": "Analyze saved logs",
+      "modal": true
+    }
+  ],
+  "metadataDocuments": 3,
+  "trace": [
+    {
+      "event": "command-start-logProtectionStatus",
+      "milliseconds": 1836.2057
+    },
+    {
+      "event": "command-end-logProtectionStatus",
+      "milliseconds": 1837.3926999999999,
+      "status": "OWNER_REVIEW_REQUIRED"
+    },
+    {
+      "event": "command-start-reviewLogs",
+      "milliseconds": 1849.1274000000003
+    },
+    {
+      "event": "command-end-reviewLogs",
+      "milliseconds": 1864.2842,
+      "status": "CANCELLED"
+    },
+    {
+      "event": "command-start-reviewLogs",
+      "milliseconds": 1873.8365
+    },
+    {
+      "event": "command-end-reviewLogs",
+      "milliseconds": 2849.2100000000005,
+      "status": "ANALYZED",
+      "files": 6,
+      "findings": 4
+    },
+    {
+      "event": "command-start-openHygieneExposureLedger",
+      "milliseconds": 2854.1547000000005
+    },
+    {
+      "event": "command-end-openHygieneExposureLedger",
+      "milliseconds": 3253.5233000000003,
+      "status": "METADATA"
+    },
+    {
+      "event": "soterai-configuration-event",
+      "milliseconds": 3524.7355000000002
+    },
+    {
+      "event": "command-start-reviewLogs",
+      "milliseconds": 3541.8311
+    },
+    {
+      "event": "command-end-reviewLogs",
+      "milliseconds": 3542.5607999999997,
+      "status": "UNAVAILABLE"
+    },
+    {
+      "event": "soterai-configuration-event",
+      "milliseconds": 3669.7671000000005
+    },
+    {
+      "event": "command-start-reviewLogs",
+      "milliseconds": 3778.859
+    },
+    {
+      "event": "command-end-reviewLogs",
+      "milliseconds": 4356.3171999999995,
+      "status": "ANALYZED",
+      "files": 6,
+      "findings": 4
+    },
+    {
+      "event": "soterai-configuration-event",
+      "milliseconds": 4608.417799999999
+    }
+  ],
+  "independence": "LOW",
+  "ownerPresence": "SCRIPTED_NATIVE_API_DECISIONS_NOT_HUMAN_REVIEW",
+  "boundaryDiscovery": "NATIVE_DISCOVERY_RESTRICTED_TO_RETAINED_SYNTHETIC_DIRECTORY_WITH_DETERMINISTIC_ADMISSION_ORDER",
+  "notTested": [
+    "Human usability/accessibility",
+    "Other extensions, normal debug consoles, arbitrary processes and transformed/prose/binary credentials",
+    "Credential validity, provider rotation, AI access or prior disclosures",
+    "Same-user unmanaged reads, process memory and independent uploads",
+    "Other platforms and remote workspaces"
+  ]
+}

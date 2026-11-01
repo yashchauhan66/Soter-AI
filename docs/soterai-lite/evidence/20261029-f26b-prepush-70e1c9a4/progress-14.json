@@ -1,0 +1,123 @@
+{
+  "status": "NATIVE12_ACTUAL36_COMPONENT_PASS_AFFECTED20_PREPARED_NOT_RUN_CONFIGURED_PUSH_UNAUTHORIZED",
+  "observedAt": "2026-11-01T07:08:18.989Z",
+  "feature": "F26b",
+  "featureState": "ACTIVE_INCOMPLETE",
+  "native12": {
+    "approval": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/native12-user-approval-01.json",
+      "bytes": 733,
+      "sha256": "f463a2b6cf173911ef30553e44373281e5df9672583578476d8f951d4909986c"
+    },
+    "consumption": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/native-launch-consumption-12.json",
+      "bytes": 543,
+      "sha256": "4365a04239698bae043243eb8d05482dd6e7869515452b296c7710c7f994ae07"
+    },
+    "acceptance": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/native-component-acceptance-01.json",
+      "bytes": 1919,
+      "sha256": "995f5d4c122d0ef3d86184bf3d12d7ebd67d5b1114222bfd907a27d4d1e55c53"
+    },
+    "journalAudit": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/native12-journal-audit-01.json",
+      "bytes": 2426,
+      "sha256": "b97322fe8a8447f47f3c2cf540173a1f2200a01d6f396a3153ac22643a291706"
+    },
+    "outerClose": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/native-component-12-owned-close.json",
+      "bytes": 608,
+      "sha256": "00ffe5bf0b01442bf2a69700065546cf6860683d719099fc242f7eccff203248"
+    },
+    "run": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/f26b-prepush-native-20261101T065751Z-1999e2f2",
+    "primaryChecks": 30,
+    "restartChecks": 6,
+    "totalChecks": 36,
+    "failed": 0,
+    "notRun": 0,
+    "declaredChildren": 120,
+    "declaredChildrenAllClosedAndBothEOF": true,
+    "bothCodeNaturalExitZeroAndAbsenceTwiceAndStableStreams": true,
+    "actualSuccessMetadataExplicitNullBothPhases": true,
+    "safeWithdrawal": "REVIEWED_RESTORE_TO_ABSENCE_AND_FLAG_RESTORED",
+    "scope": "Actual scripted native API/wrapper/worker/Git/loopback component route; nested client EOF not inferred from shell, supplemental direct client observed. Not configured Git push or human review."
+  },
+  "normalImprovementRoundsConsumed": 3,
+  "extraApprovalsConsumed": [
+    "F26b native08",
+    "F26b native09",
+    "F26b native10",
+    "F26b native11",
+    "F26b native12"
+  ],
+  "automaticRetry": false,
+  "sourceProof": {
+    "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/full-inputs-03.json",
+    "bytes": 217853,
+    "sha256": "81fb9f8d559434242a67a316f0609a5c79c1b6b351cb783d7f3af365669f495f"
+  },
+  "full": {
+    "tests": 4750,
+    "pass": 4746,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 4
+  },
+  "vsix": {
+    "status": "PACKAGED_NOT_HOST_VERIFIED",
+    "output": "packages\\soterai-lite\\soterai-lite-0.7.0-f26b-20261029-attempt01.vsix",
+    "bytes": 1747132,
+    "sha256": "6c299712aa6f8da35b32bacc12b3e4b26b9e5d26689a2fdcb7b06eadb186d12b",
+    "runId": "2026-10-29T12-38-17-803Z-83e283c8",
+    "extensionSha256": "786882b16d9010834a5b0372860f16b900750ef9df605cfec23ae763d5f1e3e1",
+    "stagedManifestSha256": "c26e60f721bf1299345e6e9f8bd0d413f17ff58c06832352337767c2d639eedd"
+  },
+  "productionChanged": false,
+  "priorProgress": {
+    "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/progress-13.json",
+    "bytes": 8576,
+    "sha256": "c503d87c58ce64ccc60bb47be52afa6a962e6a70c9f3501d957f6c92a31114cb"
+  },
+  "affected": {
+    "status": "PREPARED_NOT_RUN",
+    "families": 20,
+    "originalAssertions": 509,
+    "originalPhases": 37,
+    "functional": 10,
+    "security": 17,
+    "helperCount": 23,
+    "sourceAssertionChanges": 0,
+    "preparation": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/affected-native12-preparation-09.json",
+      "bytes": 13826,
+      "sha256": "6b5b85c83133d67634001bb0bb11e1e887d504936637005daea738e2f6ba91f9"
+    },
+    "materialization": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/affected-current-materialization-09.json",
+      "bytes": 25451,
+      "sha256": "a0f3e308405eebd7771e7dbbc5c45ab83e667c15ebb6e925916ca131164714c3"
+    },
+    "packet": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/affected-packet-binding-09.json",
+      "bytes": 24006,
+      "sha256": "aef61c96c9c5b3f16131b545c648208f253bb3d447bc124873b074b46a5469df"
+    },
+    "admission": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/affected-current-admission-10.cjs",
+      "bytes": 10985,
+      "sha256": "987aea429e62adb110635116d03dd29dec5d022813e0c2c08cfe7af3566c33d9"
+    },
+    "runner": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/run-affected-native12-09.cjs",
+      "bytes": 5319,
+      "sha256": "0312ceb905c752093720cef2d84dc3a43f07e4ecd2071fea8dfe28f59f8d6509"
+    },
+    "acceptedNativeBinding": "df9c51c89296f75fdbe84aa7c21fd9383028f655b470cac8ad5c459537e87cdd"
+  },
+  "configuredGitPush": "NOT_AUTHORIZED_NOT_RUN",
+  "f26aNative09": "USER_DEFERRED_NOT_RUN",
+  "independence": "LOW",
+  "rating": "NOT_ISSUED",
+  "originalL6": "HUMAN_ACTIONS_THEN_STOP",
+  "signalsRequested": 0
+}

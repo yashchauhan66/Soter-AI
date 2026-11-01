@@ -1,0 +1,48 @@
+{
+  "status": "NATIVE36_COMPONENT_PASS_NOT_CONFIGURED_PUSH",
+  "observedAt": "2026-11-01T07:06:06.941Z",
+  "nativeChecks": 36,
+  "primaryChecks": 30,
+  "restartChecks": 6,
+  "failed": 0,
+  "notRun": 0,
+  "allOwnersClosed": true,
+  "bothEOFEverywhere": true,
+  "closureScope": "All observed declared Code/Git/direct worker owners; nested shell client closure is not inferred, as explicitly recorded by fixture supplemental direct-client observation.",
+  "phases": [
+    {
+      "phase": "primary",
+      "passed": 30,
+      "childCount": 102,
+      "listenerCount": 4,
+      "resultSha256": "a512d44897b6b3ae22ace294cbf03e633d2b4ad1729f1fc9fcc0aba9e0ab7792",
+      "closeSha256": "a3094dab8efc3a4be168f81bcb038e39a372da444acb2f8e14d5c687da4a09c1"
+    },
+    {
+      "phase": "restart",
+      "passed": 6,
+      "childCount": 18,
+      "listenerCount": 1,
+      "resultSha256": "abc0e149b433b6254dbcf14cef155e686bd422ef88678039b0a68ab999093571",
+      "closeSha256": "19ba4b814ac625c78a6fa9a489bb300e7fd16d53808ff192d9b958fa86019723"
+    }
+  ],
+  "run": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/f26b-prepush-native-20261101T065751Z-1999e2f2",
+  "bindingSha256": "df9c51c89296f75fdbe84aa7c21fd9383028f655b470cac8ad5c459537e87cdd",
+  "sourceProof": {
+    "path": "full-inputs-03.json",
+    "bytes": 217853,
+    "sha256": "81fb9f8d559434242a67a316f0609a5c79c1b6b351cb783d7f3af365669f495f"
+  },
+  "vsix": {
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-f26b-20261029-attempt01.vsix",
+    "bytes": 1747132,
+    "sha256": "6c299712aa6f8da35b32bacc12b3e4b26b9e5d26689a2fdcb7b06eadb186d12b"
+  },
+  "frontendSha256": "786882b16d9010834a5b0372860f16b900750ef9df605cfec23ae763d5f1e3e1",
+  "configuredPush": "NOT_AUTHORIZED_NOT_RUN",
+  "f26aNative09": "USER_DEFERRED_NOT_RUN",
+  "independence": "LOW",
+  "signalsRequested": 0,
+  "feature": "INCOMPLETE_REQUIRED_CONFIGURED_PUSH_AND_AFFECTED_GATES_PENDING"
+}

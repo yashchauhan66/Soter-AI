@@ -1,0 +1,60 @@
+{
+  "status": "PASS_NATIVE12_ACTUAL36_JOURNAL_AND_EXPLICIT_NULL_CROSSCHECK_NOT_PUSH_OR_FEATURE_ACCEPTANCE",
+  "observedAt": "2026-11-01T07:06:59.008Z",
+  "bindingSha256": "df9c51c89296f75fdbe84aa7c21fd9383028f655b470cac8ad5c459537e87cdd",
+  "nativeAcceptance": {
+    "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/native-component-acceptance-01.json",
+    "bytes": 1919,
+    "sha256": "995f5d4c122d0ef3d86184bf3d12d7ebd67d5b1114222bfd907a27d4d1e55c53"
+  },
+  "phases": [
+    {
+      "phase": "primary",
+      "checks": 30,
+      "children": 102,
+      "records": 265,
+      "successDriverFailureExplicitNull": true,
+      "journal": {
+        "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/f26b-prepush-native-20261101T065751Z-1999e2f2/primary.progress.jsonl",
+        "bytes": 90940,
+        "sha256": "abe1568f8eccc98204c8b87d159629132526fdd37baea3c79b5308c92dc74092"
+      },
+      "result": {
+        "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/f26b-prepush-native-20261101T065751Z-1999e2f2/primary-results.json",
+        "bytes": 97144,
+        "sha256": "a512d44897b6b3ae22ace294cbf03e633d2b4ad1729f1fc9fcc0aba9e0ab7792"
+      }
+    },
+    {
+      "phase": "restart",
+      "checks": 6,
+      "children": 18,
+      "records": 49,
+      "successDriverFailureExplicitNull": true,
+      "journal": {
+        "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/f26b-prepush-native-20261101T065751Z-1999e2f2/restart.progress.jsonl",
+        "bytes": 16724,
+        "sha256": "5b862dd298242a18702ad8a53e11324e588f6d08d167147d2f26f2d05e701b43"
+      },
+      "result": {
+        "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/f26b-prepush-native-20261101T065751Z-1999e2f2/restart-results.json",
+        "bytes": 20729,
+        "sha256": "abc0e149b433b6254dbcf14cef155e686bd422ef88678039b0a68ab999093571"
+      }
+    }
+  ],
+  "vsix": {
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-f26b-20261029-attempt01.vsix",
+    "bytes": 1747132,
+    "sha256": "6c299712aa6f8da35b32bacc12b3e4b26b9e5d26689a2fdcb7b06eadb186d12b"
+  },
+  "sourceProof": {
+    "path": "full-inputs-03.json",
+    "bytes": 217853,
+    "sha256": "81fb9f8d559434242a67a316f0609a5c79c1b6b351cb783d7f3af365669f495f"
+  },
+  "configuredPush": "NOT_AUTHORIZED_NOT_RUN",
+  "f26aNative09": "USER_DEFERRED_NOT_RUN",
+  "signalsRequested": 0,
+  "independence": "LOW"
+}

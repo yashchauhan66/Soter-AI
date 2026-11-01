@@ -1,0 +1,70 @@
+﻿TAP version 13
+# Subtest: actual collector HEAD contains a final LF and no literal backslash-n
+ok 1 - actual collector HEAD contains a final LF and no literal backslash-n
+  ---
+  duration_ms: 288.8305
+  type: 'test'
+  ...
+# Subtest: actual bare collector config has valid line framing and bare=true
+ok 2 - actual bare collector config has valid line framing and bare=true
+  ---
+  duration_ms: 33.4826
+  type: 'test'
+  ...
+# Subtest: actual working config preserves exact base bytes and appends only the fixed local remote
+ok 3 - actual working config preserves exact base bytes and appends only the fixed local remote
+  ---
+  duration_ms: 16.114
+  type: 'test'
+  ...
+# Subtest: actual synthetic original script retains real shebang/LF and one printf escape
+ok 4 - actual synthetic original script retains real shebang/LF and one printf escape
+  ---
+  duration_ms: 2.4751
+  type: 'test'
+  ...
+# Subtest: actual marker expression converts Windows separators to literal POSIX slashes
+ok 5 - actual marker expression converts Windows separators to literal POSIX slashes
+  ---
+  duration_ms: 0.3947
+  type: 'test'
+  ...
+# Subtest: actual secret object probe uses the Git blob NUL framing
+ok 6 - actual secret object probe uses the Git blob NUL framing
+  ---
+  duration_ms: 3.8908
+  type: 'test'
+  ...
+# Subtest: actual authorization entry refuses a missing explicit authority path before reading
+ok 7 - actual authorization entry refuses a missing explicit authority path before reading
+  ---
+  duration_ms: 25.0781
+  type: 'test'
+  ...
+# Subtest: actual authorization entry refuses changed authority bytes
+ok 8 - actual authorization entry refuses changed authority bytes
+  ---
+  duration_ms: 14.7968
+  type: 'test'
+  ...
+# Subtest: actual authorization entry admits the exact frozen pure authority without I/O effects
+ok 9 - actual authorization entry admits the exact frozen pure authority without I/O effects
+  ---
+  duration_ms: 14.6716
+  type: 'test'
+  ...
+# Subtest: actual authorization entry refuses broader external-network authority even with matching bytes
+ok 10 - actual authorization entry refuses broader external-network authority even with matching bytes
+  ---
+  duration_ms: 21.8199
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 487.7803

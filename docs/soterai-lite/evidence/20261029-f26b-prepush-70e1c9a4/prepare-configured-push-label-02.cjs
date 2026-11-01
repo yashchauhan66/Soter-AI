@@ -1,0 +1,9 @@
+'use strict';
+// Retain original prepared files. Correct only the new workflow failure-scope label and versioned interfaces.
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),vm=require('node:vm');const own=n=>path.join(__dirname,n),put=(n,s)=>fs.writeFileSync(own(n),s,{flag:'wx'});
+let candidate=fs.readFileSync(own('configured-push-launch-candidate-01.ps1.txt'),'utf8');const label="scope:'F26B_COMPONENT_NATIVE_ROUTE_NOT_CONFIGURED_PUSH'";assert(candidate.includes(label));candidate=candidate.replaceAll(label,"scope:'F26B_CONFIGURED_LOCAL_FILE_PUSH_TWO_INVOCATIONS_ONLY'").replaceAll('configured-push-admission-01.ps1','configured-push-admission-02.ps1');put('configured-push-launch-candidate-02.ps1.txt',candidate);
+const admission=fs.readFileSync(own('configured-push-admission-01.ps1'),'utf8').replaceAll('configured-push-readonly-admission-01.cjs','configured-push-readonly-admission-02.cjs');put('configured-push-admission-02.ps1',admission);
+const guard=fs.readFileSync(own('configured-push-readonly-admission-01.cjs'),'utf8').replaceAll('configured-push-launch-candidate-01.ps1','configured-push-launch-candidate-02.ps1');new vm.Script(guard);put('configured-push-readonly-admission-02.cjs',guard);
+put('configured-push-preflight-02.ps1',fs.readFileSync(own('configured-push-preflight-01.ps1'),'utf8'));
+put('verify-configured-push-syntax-02.ps1',fs.readFileSync(own('verify-configured-push-syntax-01.ps1'),'utf8').replaceAll('configured-push-launch-candidate-01.ps1','configured-push-launch-candidate-02.ps1').replaceAll('configured-push-admission-01.ps1','configured-push-admission-02.ps1').replaceAll('configured-push-preflight-01.ps1','configured-push-preflight-02.ps1'));
+console.log(JSON.stringify({status:'PREPARED_VERSION02_ONLY_FAILURE_SCOPE_LABEL_AND_INTERFACE_NAMES_CHANGED_ORIGINAL_FILES_RETAINED',actualGitPushes:0,authorized:false}));

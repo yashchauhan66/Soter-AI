@@ -1,0 +1,135 @@
+{
+  "status": "NATIVE36_PASS_AFFECTED_CHAIN_STARTED_PARTIAL15_326_27_AUDITED_LOCAL_PUSH_PREPARATION_ONLY",
+  "observedAt": "2026-11-01T07:36:08.687Z",
+  "feature": "F26b",
+  "featureState": "ACTIVE_INCOMPLETE",
+  "priorProgress": {
+    "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/progress-14.json",
+    "bytes": 5145,
+    "sha256": "5dfd6dcffad1fb0e5a907ea9085233199b164eec39c3e34b7025231b0e9f99fb"
+  },
+  "native36Acceptance": {
+    "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/native-component-acceptance-01.json",
+    "bytes": 1919,
+    "sha256": "995f5d4c122d0ef3d86184bf3d12d7ebd67d5b1114222bfd907a27d4d1e55c53"
+  },
+  "affected": {
+    "partialAudit": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/affected-native12-partial-audit-01.json",
+      "bytes": 67048,
+      "sha256": "e5d85c93a0b6ac548c9c316e35a02969b78523601a0ea6eb4ed61948f4d951c8"
+    },
+    "closedAuditedFamilies": 15,
+    "closedAuditedChecks": 326,
+    "closedAuditedPhases": 27,
+    "expectedFamilies": 20,
+    "expectedChecks": 509,
+    "expectedPhases": 37,
+    "functionalExpected": 10,
+    "securityBaselineExpected": 17,
+    "finalAcceptance": "NOT_YET_EMITTED",
+    "runner": "run-affected-native12-09.cjs",
+    "runnerStart": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/affected-native12-chain-start-09.json",
+      "bytes": 1118,
+      "sha256": "3f829a4bbba1553da81f5b0f9d292042345afd7c29d56bb1dac986e78a5093dd"
+    },
+    "declaredRunnerPid": 1964,
+    "ownershipNote": "Start and closed subset evidence only; check actual running exec session/chain results for current completion, do not launch another chain.",
+    "scopeMetadataLabelErratum": {
+      "originalScope": {
+        "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/affected-scope-09.json",
+        "bytes": 4695,
+        "sha256": "02ee5d09f4b7c22a6eb4d43d9e7c6c47f036228f8f5d21a8af24cb8f21656ce5"
+      },
+      "originalProse": "Exact native12 bindingc32e8857 actual acceptance36/closure required; previous failed runs are not substitutes",
+      "actualEnforcedBinding": "df9c51c89296f75fdbe84aa7c21fd9383028f655b470cac8ad5c459537e87cdd",
+      "operativeMaterializationAndAdmissionAndAcceptanceMatch": true,
+      "proseRemainsRetainedUnmodifiedDuringRun": true,
+      "limitation": "Inherited free-text scope label mentions old c32e8857; operative literal binding is df9c51c8 and only actual native12 acceptance is admitted. No old PASS transfer or changed assertion."
+    }
+  },
+  "configuredPushPreparation": {
+    "status": "SOURCE_COMPONENT_DRIVER_ONLY_NOT_AUTHORIZED_NOT_RUN",
+    "staticCases": 8,
+    "permissionPathComponents": 12,
+    "actualExtractedFunctionComponents": 10,
+    "totalComponents": 22,
+    "baseline": {
+      "tests": 12,
+      "passed": 0,
+      "failed": 12,
+      "scope": "Missing fixture helper baseline"
+    },
+    "source": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/native-configured-push-01.host.ts.txt",
+      "bytes": 59229,
+      "sha256": "b6435616ce590793d05dd2f4479d82bb85fcc8d645239c6a8d3fae4c97e4fb99"
+    },
+    "static": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/configured-push-static-result-01.json",
+      "bytes": 1886,
+      "sha256": "4535048940bf470f193a60d09081c9d7e225fc30d042e9090b307906439a06c1"
+    },
+    "admissionHelper": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/local-push-admission-01.cjs",
+      "bytes": 2837,
+      "sha256": "299e856a2d96671c5a46bf9a83fa3fa21f190880557983de8fd8cee493fd3a0b"
+    },
+    "permissionComponent": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/local-push-admission-after-01.txt",
+      "bytes": 2635,
+      "sha256": "13ba4a1c8894698d0828808d8ffa67010304f329406f525183890d60dbb5cd8a"
+    },
+    "fixtureComponent": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/configured-push-fixture-components-01.txt",
+      "bytes": 2395,
+      "sha256": "4ccd06404af4c573c2a793b3d4160f5fd5a2a068fbd11f90f84230a2ca2e0a3f"
+    },
+    "driver": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/prebuilt-configured-push-hosts-01/lite-configured-push-host.js",
+      "bytes": 60910,
+      "sha256": "b7b1b3b6ca6cc49bd6ef8b3f7ac27ac716bfa62faa0a68776035cf89aca51c62"
+    },
+    "driverProvenance": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/configured-push-driver-provenance-01.json",
+      "bytes": 2262,
+      "sha256": "e5d62a198cec3ab30d692d93e390cc78c00cc4d73357d6223be1c9c5bfb5d211"
+    },
+    "plannedActualPushes": 2,
+    "externalNetwork": false,
+    "collector": "New D synthetic profile sibling collector.git only; pure path/argv admission refuses external/UNC/other-profile targets",
+    "plannedCases": "Default/cancel/install, actual public local file push ALLOW, removed historical synthetic secret push BLOCK with collector absence checks, cancel/restore/flag/closure",
+    "launcherAdmissionBindingAndExplicitPermission": "STILL_REQUIRED_NOT_PREPARED_OR_GRANTED",
+    "actualGitPushes": 0,
+    "normalProfileWrites": 0,
+    "productionChanges": 0
+  },
+  "sourceProof": {
+    "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/full-inputs-03.json",
+    "bytes": 217853,
+    "sha256": "81fb9f8d559434242a67a316f0609a5c79c1b6b351cb783d7f3af365669f495f"
+  },
+  "full": {
+    "tests": 4750,
+    "pass": 4746,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 4
+  },
+  "vsix": {
+    "status": "PACKAGED_NOT_HOST_VERIFIED",
+    "output": "packages\\soterai-lite\\soterai-lite-0.7.0-f26b-20261029-attempt01.vsix",
+    "bytes": 1747132,
+    "sha256": "6c299712aa6f8da35b32bacc12b3e4b26b9e5d26689a2fdcb7b06eadb186d12b",
+    "runId": "2026-10-29T12-38-17-803Z-83e283c8",
+    "extensionSha256": "786882b16d9010834a5b0372860f16b900750ef9df605cfec23ae763d5f1e3e1",
+    "stagedManifestSha256": "c26e60f721bf1299345e6e9f8bd0d413f17ff58c06832352337767c2d639eedd"
+  },
+  "f26aNative09": "USER_DEFERRED_NOT_RUN",
+  "configuredGitPush": "NOT_AUTHORIZED_NOT_RUN",
+  "independence": "LOW",
+  "rating": "NOT_ISSUED",
+  "originalL6": "HUMAN_ACTIONS_THEN_STOP",
+  "signalsRequested": 0
+}
