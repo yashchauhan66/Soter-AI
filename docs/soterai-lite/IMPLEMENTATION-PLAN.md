@@ -206,3 +206,13 @@ The user has already authorized continuation while waiving the disk threshold. P
 
 No new plan approval is required by this document. This is the execution order for the user's authorized work, subject to the explicit existing resource and human-evidence gates.
 
+
+
+## Priority amendment — 29 October 2026: F26b selected
+
+The user explicitly requested “f26bko very fast complete kro” after declining F26a native09. Select F26b as the sole implementation task; preserve F26a source and exact native08 evidence as INCOMPLETE/USER_DEFERRED. This changes scheduling only. F26b must independently verify its own declared pre-push contract and shared dependencies; no F26a PASS, native09 authorization, local/network push authorization or completed prerequisite is inferred. Keep original per-feature completion, affected checks, artifact, rollback, byte-commit and L6 gates. No F26a native09 or actual Git push is run under this scheduling instruction. F26b implementation and non-push verification may proceed; any remaining actual-push permission gate needs a concrete reviewed isolated-fixture packet before asking.
+
+
+## Current checkpoint - 1 November 2026
+
+F26b scoped supported contract passes current full/native36/configured-local-push8/affected509/functional10/security17 baseline and safe withdrawal gates. Source commit `6b207278feff0eae509e43a04a340f678c84c1d9` has96 raw-byte-verified paths. DONE and next F28 selection require `evidence/20261029-f26b-prepush-70e1c9a4/f26b-transition-byte-proof-11.json` PASS. User-deferred F26a/native09 remains unrun/incomplete; parentF26 is not DONE. Continue the existing shorter-independent-first order with F28 path/performance/degradation work after the transition barrier; no F28 evidence completes F26a. Original F28 contract and final F31b/F32/V01-V05/L6 stop gates remain. Exactly two synthetic local file pushes ran under consumed Proposal03 authority; no further or external/source-project push permission and no publishing action.

@@ -11,8 +11,8 @@
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
   "scope": "F01-F10/F12-F25/F26c/F27/F29/F30 scoped DONE subject to exact recorded byte barriers; F11 optional absent NOT_TESTED/NOT_COVERED. F26a ACTIVE; native07 consumed FAIL and checked storage fix currentfull4475zeroFAIL; native08 requires new explicit approval; F26b/F28/F31b/F32/V01-V05 incomplete. F31a build-only DONE; parentF26/F31 incomplete. No human/independent/rating claim.",
   "implementationConcurrency": 1,
-  "activeFeature": "F26",
-  "activeSubcard": "F26b",
+  "activeFeature": "F28",
+  "activeSubcard": null,
   "priorityAmendment": {
     "date": "2026-10-26",
     "authority": "User requested shorter independent features first and time-consuming work later",
@@ -29,7 +29,7 @@
       "F32"
     ],
     "deferred": [
-      "F26b has no push authorization"
+      "F26a native09 USER_DEFERRED_NOT_RUN; required F26a/parentF26 gates remain incomplete"
     ],
     "rule": "One selected implementation task at a time; all original required feature gates retained. Parent F31 cannot be DONE on F31a preparation alone."
   },
@@ -872,23 +872,26 @@
             "parent prerequisites"
           ],
           "progressEvidence": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/progress-08.json",
-          "executionDecision": "CURRENT_STORAGE_FIX_PACKET_READY_NATIVE08_EXPLICIT_APPROVAL_REQUIRED; currentfull4475zeroFAIL/newexactVSIX16b37a33/content/current25drivers/vendor/syntaxPASS; actualnative08 not approved/notrun. Original required affected/withdrawal/acceptance/feature source commits remain."
+          "executionDecision": "USER_DEFERRED_NATIVE09_NOT_RUN. Prior native08 primary30 PASS, offline fixture admission refused and restart4 NOT_RUN; prepared09 remains unapproved. No generic continue/publish deadline authorizes retry. ParentF26 stays incomplete."
         },
         {
           "id": "F26b",
           "title": "pre-push",
-          "status": "VERIFYING",
-          "result": "INCOMPLETE",
+          "status": "DONE",
+          "result": "PASS_SCOPED",
           "requires": [
             "F26a"
           ],
-          "executionDecision": "All current scoped behavior gates PASS: full4750/4746PASS0FAIL4SKIP, native36, configured8 actualTWO localfile pushes publicALLOW/historicalcanaryBLOCK, affected509in37phases, functional10/security17 unchanged8BLOCKED_SCOPED9LEAK_CONFIRMED. Actual safe withdrawal/natural closure PASS. Source40 and separate transition commits/raw-byte barriers pending; no next feature yet. F26a09 deferred; external/source-project push unauthorized.",
+          "executionDecision": "Scoped F26b gates PASS: full4746PASS0FAIL4SKIP/native36/configured8TWOlocalfilepushes/affected509in37phases/functional10/security17unchanged/withdrawal. Source6b207278/96paths raw byte-exact. DONE and F28 selection take effect only after separate transition11 raw byte proof. Parent F26 and deferred F26a remain INCOMPLETE; no release-ready claim.",
           "startEvidence": {
             "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/start-checkpoint-01.json",
             "bytes": 3420,
             "sha256": "a178762fbaa32752d4ef36a638e3b6cb9e65f342aacfdc995aff9235ea1e3279"
           },
-          "progressEvidence": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/progress-20.json"
+          "progressEvidence": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/acceptance-01.json",
+          "sourceCommit": "6b207278feff0eae509e43a04a340f678c84c1d9",
+          "sourceByteProof": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/f26b-source-byte-proof-10.json",
+          "transitionByteProof": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/f26b-transition-byte-proof-11.json"
         },
         {
           "id": "F26c",
@@ -933,14 +936,27 @@
     {
       "id": "F28",
       "title": "Path race, performance and degradation.",
-      "status": "PLANNED",
+      "status": "ACTIVE",
       "result": "NOT-RUN",
       "requires": [
         "F26",
         "F27",
         "F30"
       ],
-      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "executionDecision": "Selected next by existing shorter-independent-work amendment and explicit F26a09 deferral. No F28 production before actual F26b transition11 byte proof. Existing F28 path/performance/degradation contract retained; F26a/native09 and parentF26 are not accepted.",
+      "executionDependenciesCurrent": [
+        "F26b",
+        "F26c",
+        "F27",
+        "F30"
+      ],
+      "originalRequiresPreserved": [
+        "F26",
+        "F27",
+        "F30"
+      ],
+      "deferredDependency": "F26a USER_DEFERRED_INCOMPLETE; no F28 evidence substitutes for its required acceptance."
     },
     {
       "id": "F29",
@@ -1359,61 +1375,26 @@
     "externalNetwork": "NOT_AUTHORIZED_NOT_RUN"
   },
   "f26bLatestCheckpoint": {
-    "schemaVersion": 1,
-    "feature": "F26b",
-    "status": "ALL_CURRENT_SCOPED_BEHAVIOR_GATES_PASS_SOURCE_AND_TRANSITION_BYTES_PENDING",
-    "featureState": "VERIFYING",
-    "observedAt": "2026-11-01T09:37:15.105Z",
+    "status": "SOURCE_BYTES_PASS_DONE_TRANSITION_PREPARED",
     "acceptance": {
       "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/acceptance-01.json",
       "bytes": 119594,
       "sha256": "5f197dc7d7b59c6a69585e28a2ee1615ebfa7a8d4437f0f9f5a1ddd32159bf42"
     },
-    "review": {
-      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/completion-review-01.json",
-      "bytes": 1748,
-      "sha256": "49f4cdc68d8e3a77ea22ef04dfa3546369aa3a66228ac6b5b8f4179a58c07094"
+    "sourceProof": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/f26b-source-byte-proof-10.json",
+      "bytes": 29652,
+      "sha256": "9fb8ace1f6da50a251fe6d1111a72258cf27c984f3da27bb9ea9d84585027d4b"
     },
-    "verification": {
-      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/feature-acceptance-01.txt",
-      "bytes": 422,
-      "sha256": "8da48aa776a8c65701a34fd722a5c9423c57f97c0fc257f1974b8cba1b2cfe0d"
-    },
-    "sourcePaths": 40,
-    "sourceInputs": 1070,
-    "full": {
-      "tests": 4750,
-      "pass": 4746,
-      "fail": 0,
-      "cancelled": 0,
-      "skipped": 4
-    },
-    "nativeChecks": 36,
-    "configuredPushChecks": 8,
-    "configuredLocalFilePushInvocations": 2,
-    "affectedChecks": 509,
-    "affectedPhases": 37,
-    "functionalChecks": 10,
-    "securityResiduals": {
-      "BLOCKED_SCOPED": 8,
-      "LEAK_CONFIRMED": 9
-    },
-    "vsix": {
-      "path": "packages/soterai-lite/soterai-lite-0.7.0-f26b-20261029-attempt01.vsix",
-      "bytes": 1747132,
-      "sha256": "6c299712aa6f8da35b32bacc12b3e4b26b9e5d26689a2fdcb7b06eadb186d12b"
-    },
-    "sourceScope": {
-      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/feature-source-scope-02.json",
-      "bytes": 12319,
-      "sha256": "897ac9d1f3e3b551180299afc1ad386d091ad4eabffb47436b38e0b38c397cbf"
-    },
-    "f26aNative09": "USER_DEFERRED_NOT_RUN",
-    "remaining": [
-      "Scoped source commit + exhaustive raw Git bytes",
-      "Separate DONE transition commit + exhaustive raw Git bytes"
-    ],
-    "releaseReady": false,
-    "rating": "NOT_ISSUED"
+    "next": "F28_AFTER_TRANSITION_BYTES",
+    "f26aNative09": "USER_DEFERRED_NOT_RUN"
+  },
+  "f26bSourceByteBarrier": {
+    "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/f26b-source-byte-proof-10.json",
+    "bytes": 29652,
+    "sha256": "9fb8ace1f6da50a251fe6d1111a72258cf27c984f3da27bb9ea9d84585027d4b",
+    "commit": "6b207278feff0eae509e43a04a340f678c84c1d9",
+    "paths": 96,
+    "mismatches": 0
   }
 }
