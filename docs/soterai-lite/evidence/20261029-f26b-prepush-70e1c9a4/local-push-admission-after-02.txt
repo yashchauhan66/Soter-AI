@@ -1,0 +1,94 @@
+﻿TAP version 13
+# Subtest: exact one-run two-invocation authority admits only the canonical local collector
+ok 1 - exact one-run two-invocation authority admits only the canonical local collector
+  ---
+  duration_ms: 6.4925
+  type: 'test'
+  ...
+# Subtest: first public and second blocked-secret command vectors are fixed and file-only
+ok 2 - first public and second blocked-secret command vectors are fixed and file-only
+  ---
+  duration_ms: 1.3452
+  type: 'test'
+  ...
+# Subtest: wrong invocation order or a third push is refused
+ok 3 - wrong invocation order or a third push is refused
+  ---
+  duration_ms: 28.4171
+  type: 'test'
+  ...
+# Subtest: normal profile paths and traversal aliases are refused
+ok 4 - normal profile paths and traversal aliases are refused
+  ---
+  duration_ms: 8.6933
+  type: 'test'
+  ...
+# Subtest: UNC remote URLs and a collector in another profile are refused
+ok 5 - UNC remote URLs and a collector in another profile are refused
+  ---
+  duration_ms: 1.9062
+  type: 'test'
+  ...
+# Subtest: zero malformed uppercase or shell-bearing object IDs are refused
+ok 6 - zero malformed uppercase or shell-bearing object IDs are refused
+  ---
+  duration_ms: 1.9083
+  type: 'test'
+  ...
+# Subtest: unapproved targets tags and ref expressions are refused
+ok 7 - unapproved targets tags and ref expressions are refused
+  ---
+  duration_ms: 1.07
+  type: 'test'
+  ...
+# Subtest: broader attempt counts and external-network authority are refused
+ok 8 - broader attempt counts and external-network authority are refused
+  ---
+  duration_ms: 0.8976
+  type: 'test'
+  ...
+# Subtest: missing or changed source VSIX acceptance and binding identity are refused
+ok 9 - missing or changed source VSIX acceptance and binding identity are refused
+  ---
+  duration_ms: 2.0864
+  type: 'test'
+  ...
+# Subtest: authorization paths must equal the canonical current fixture paths
+ok 10 - authorization paths must equal the canonical current fixture paths
+  ---
+  duration_ms: 1.0355
+  type: 'test'
+  ...
+# Subtest: local remote configuration is deterministic ASCII with one local path only
+ok 11 - local remote configuration is deterministic ASCII with one local path only
+  ---
+  duration_ms: 1.1997
+  type: 'test'
+  ...
+# Subtest: read-only collector object probe remains fixed to the canonical local collector
+ok 12 - read-only collector object probe remains fixed to the canonical local collector
+  ---
+  duration_ms: 0.5043
+  type: 'test'
+  ...
+# Subtest: lowercase VS Code fsPath drive matches exact uppercase launcher authority only
+ok 13 - lowercase VS Code fsPath drive matches exact uppercase launcher authority only
+  ---
+  duration_ms: 0.5964
+  type: 'test'
+  ...
+# Subtest: drive canonicalization grants no alternate drive path profile or traversal
+ok 14 - drive canonicalization grants no alternate drive path profile or traversal
+  ---
+  duration_ms: 1.5915
+  type: 'test'
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 14
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 95.6915

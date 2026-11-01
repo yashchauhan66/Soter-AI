@@ -1,0 +1,76 @@
+{
+  "status": "FAIL_BEFORE_ACTIVATE_INITIAL_PRECONDITIONS_DRIVE_CASE_MISMATCH_REPRODUCED_NO_PUSH",
+  "observedAt": "2026-11-01T09:18:09.726Z",
+  "run": "f26b-configured-push-20261101T091129Z-87d5a86b",
+  "approval": {
+    "path": "configured-push-user-approval-02.json",
+    "bytes": 854,
+    "sha256": "e19a8c1e1ffc4800219a1bdcfd6d45319de8c44b21632e61e72409bc9db48157"
+  },
+  "consumption": {
+    "path": "configured-push-consumption-02.json",
+    "bytes": 565,
+    "sha256": "eec2a4f3347ce5111ed5413a68df044806f7709395cf44ca8844143a4a1fa207"
+  },
+  "outerClose": {
+    "path": "configured-push-02-owned-close.json",
+    "bytes": 613,
+    "sha256": "97805a07a1e393a59c7e1692ddfc9ec8df53c48957cae9360ce21c908ce9cea4"
+  },
+  "codeClose": {
+    "path": "f26b-configured-push-20261101T091129Z-87d5a86b/primary-owned-editor-close.json",
+    "bytes": 391,
+    "sha256": "d38544f12e20fdba25f8fd018d94b16e3531306fffd5dbfb610e7b9686ad8a46"
+  },
+  "startup": {
+    "path": "f26b-configured-push-20261101T091129Z-87d5a86b/primary.startup.jsonl",
+    "bytes": 711,
+    "sha256": "3c43be8b9eef21c4cce06c7e39d80a8b727a82d34af4f19cc52587e40f5485cd"
+  },
+  "driverError": {
+    "path": "f26b-configured-push-20261101T091129Z-87d5a86b/primary.driver-error.json",
+    "bytes": 509,
+    "sha256": "65cdb63c62f40ae8327b2d4768291b4f08e9f09ff38358a5ae69b53b0f455d1f"
+  },
+  "postFailureOwnerObservation": {
+    "path": "configured-push-failure-owner-observation-02.json",
+    "bytes": 2541,
+    "sha256": "974a02f60120f933ab5cb3d945dd0ab445ae00f2bad6789c7d1160a7199c297d"
+  },
+  "actualPushInvocations": 0,
+  "nativeChecks": "ALL_8_NOT_RUN_BEFORE_DRIVER_RUN",
+  "nativeAssertionLocation": "INITIAL_PRECONDITION_ONLY_NO_MESSAGE_OR_STACK_RECORDED",
+  "rootCauseEvidence": "Current launcher authority uses uppercase D:. Actual retained accepted native12 driver on exact same Code used lowercase d: URI fsPath. Actual extracted authority entry fails the upper/lower authority-file equality; pure path helper also rejects lowercase d:. Both meaningful reproductions fail old and pass corrected. This identifies matching precondition defects; a further actual run must confirm native resolution.",
+  "priorNative12Root": "d:\\SoterAI-Lite-test-profiles\\f26b-prepush-native-20261101T065751Z-1999e2f2\\workspace",
+  "currentAuthorityRoot": "D:\\SoterAI-Lite-test-profiles\\f26b-configured-push-20261101T091129Z-87d5a86b\\workspace",
+  "componentsBefore": {
+    "pure": {
+      "tests": 14,
+      "pass": 13,
+      "fail": 1
+    },
+    "actualExtracted": {
+      "tests": 12,
+      "pass": 11,
+      "fail": 1
+    }
+  },
+  "componentsAfter": {
+    "pure": {
+      "tests": 14,
+      "pass": 14,
+      "fail": 0
+    },
+    "actualExtracted": {
+      "tests": 12,
+      "pass": 12,
+      "fail": 0
+    }
+  },
+  "correction": "Canonicalize ONLY initial D:/d: drive letter for authority path/root/collector comparisons; no path traversal or other spelling/profile/drive expansion. Original native8 checks unchanged; driver rebuilt; product unchanged.",
+  "priorApproval": "CONSUMED_NO_AUTOMATIC_RETRY",
+  "sourceScopeAuditErratum": "full-inputs03.files and deltaFrom02 carry current prePushCommands a108c928, while inherited delta row retained b997c0b8. Proposed source scope02 selects current authoritative files by exact delta path list; all1070 byte verified,40 proposed sources exclude3 deferred F26a files. Original source-scope01 mismatch retained; no source change.",
+  "f26aNative09": "USER_DEFERRED_NOT_RUN",
+  "externalNetwork": "NOT_AUTHORIZED_NOT_RUN",
+  "signalsRequested": 0
+}

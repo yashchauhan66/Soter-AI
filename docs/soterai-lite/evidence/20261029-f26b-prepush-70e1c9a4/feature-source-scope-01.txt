@@ -1,0 +1,37 @@
+﻿node.exe : node:assert:95
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (node:assert:95:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  throw new AssertionError(obj);
+  ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 'a108c928c5a03b4d22e56b1d27566d328b3333d510efb8f9c8b3baa10513bc6a'
+- 'b997c0b84bbdb22c89beef084178fa67837b672c34f3aa9d9aaa7481d59ec0c4'
+
+    at C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261029-f26b-prepush-70e1c9a4
+\prepare-feature-source-scope-01.cjs:7:372
+    at Array.map (<anonymous>)
+    at Object.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261029-f
+26b-prepush-70e1c9a4\prepare-feature-source-scope-01.cjs:7:115)
+    at Module._compile (node:internal/modules/cjs/loader:1730:14)
+    at Object..js (node:internal/modules/cjs/loader:1895:10)
+    at Module.load (node:internal/modules/cjs/loader:1465:32)
+    at Function._load (node:internal/modules/cjs/loader:1282:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'a108c928c5a03b4d22e56b1d27566d328b3333d510efb8f9c8b3baa10513bc6a',
+  expected: 'b997c0b84bbdb22c89beef084178fa67837b672c34f3aa9d9aaa7481d59ec0c4',
+  operator: 'strictEqual'
+}
+
+Node.js v22.16.0

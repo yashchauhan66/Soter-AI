@@ -1,0 +1,139 @@
+﻿TAP version 13
+# Subtest: exact one-run two-invocation authority admits only the canonical local collector
+ok 1 - exact one-run two-invocation authority admits only the canonical local collector
+  ---
+  duration_ms: 9.6338
+  type: 'test'
+  ...
+# Subtest: first public and second blocked-secret command vectors are fixed and file-only
+ok 2 - first public and second blocked-secret command vectors are fixed and file-only
+  ---
+  duration_ms: 2.6956
+  type: 'test'
+  ...
+# Subtest: wrong invocation order or a third push is refused
+ok 3 - wrong invocation order or a third push is refused
+  ---
+  duration_ms: 35.769
+  type: 'test'
+  ...
+# Subtest: normal profile paths and traversal aliases are refused
+ok 4 - normal profile paths and traversal aliases are refused
+  ---
+  duration_ms: 10.0436
+  type: 'test'
+  ...
+# Subtest: UNC remote URLs and a collector in another profile are refused
+ok 5 - UNC remote URLs and a collector in another profile are refused
+  ---
+  duration_ms: 3.4368
+  type: 'test'
+  ...
+# Subtest: zero malformed uppercase or shell-bearing object IDs are refused
+ok 6 - zero malformed uppercase or shell-bearing object IDs are refused
+  ---
+  duration_ms: 2.4199
+  type: 'test'
+  ...
+# Subtest: unapproved targets tags and ref expressions are refused
+ok 7 - unapproved targets tags and ref expressions are refused
+  ---
+  duration_ms: 1.7212
+  type: 'test'
+  ...
+# Subtest: broader attempt counts and external-network authority are refused
+ok 8 - broader attempt counts and external-network authority are refused
+  ---
+  duration_ms: 1.6706
+  type: 'test'
+  ...
+# Subtest: missing or changed source VSIX acceptance and binding identity are refused
+ok 9 - missing or changed source VSIX acceptance and binding identity are refused
+  ---
+  duration_ms: 2.8428
+  type: 'test'
+  ...
+# Subtest: authorization paths must equal the canonical current fixture paths
+ok 10 - authorization paths must equal the canonical current fixture paths
+  ---
+  duration_ms: 1.628
+  type: 'test'
+  ...
+# Subtest: local remote configuration is deterministic ASCII with one local path only
+ok 11 - local remote configuration is deterministic ASCII with one local path only
+  ---
+  duration_ms: 1.9582
+  type: 'test'
+  ...
+# Subtest: read-only collector object probe remains fixed to the canonical local collector
+ok 12 - read-only collector object probe remains fixed to the canonical local collector
+  ---
+  duration_ms: 0.8977
+  type: 'test'
+  ...
+# Subtest: lowercase VS Code fsPath drive matches exact uppercase launcher authority only
+not ok 13 - lowercase VS Code fsPath drive matches exact uppercase launcher authority only
+  ---
+  duration_ms: 0.9846
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261029-f26b-prepush-70e1c9a4\\local-push-drive-before.component-01.cjs:20:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Got unwanted exception.
+    Actual message: "The expression evaluated to a falsy value:
+    
+      assert(/^D:\\SoterAI-Lite-test-profiles\\f26b-configured-push-[0-9]{8}T[0-9]{6}Z-[a-f0-9]{8}\\workspace$/.test(root))
+    "
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  actual:
+    generatedMessage: true
+    actual: false
+    expected: true
+    operator: '=='
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert(/^D:\\SoterAI-Lite-test-profiles\\f26b-configured-push-[0-9]{8}T[0-9]{6}Z-[a-f0-9]{8}\\workspace$/.test(root))
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    locations (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261029-f26b-prepush-70e1c9a4\local-push-admission-01.cjs:5:111)
+    Object.authorizeLocalPush (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261029-f26b-prepush-70e1c9a4\local-push-admission-01.cjs:7:63)
+    C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261029-f26b-prepush-70e1c9a4\local-push-drive-before.component-01.cjs:20:194
+    getActual (node:assert:531:5)
+    Function.doesNotThrow (node:assert:697:32)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261029-f26b-prepush-70e1c9a4\local-push-drive-before.component-01.cjs:20:175)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+  operator: 'doesNotThrow'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261029-f26b-prepush-70e1c9a4\local-push-drive-before.component-01.cjs:20:175)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: drive canonicalization grants no alternate drive path profile or traversal
+ok 14 - drive canonicalization grants no alternate drive path profile or traversal
+  ---
+  duration_ms: 1.1703
+  type: 'test'
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 13
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 118.1163

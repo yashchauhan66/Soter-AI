@@ -1,0 +1,106 @@
+﻿TAP version 13
+# Subtest: actual collector HEAD contains a final LF and no literal backslash-n
+ok 1 - actual collector HEAD contains a final LF and no literal backslash-n
+  ---
+  duration_ms: 152.4443
+  type: 'test'
+  ...
+# Subtest: actual bare collector config has valid line framing and bare=true
+ok 2 - actual bare collector config has valid line framing and bare=true
+  ---
+  duration_ms: 17.3281
+  type: 'test'
+  ...
+# Subtest: actual working config preserves exact base bytes and appends only the fixed local remote
+ok 3 - actual working config preserves exact base bytes and appends only the fixed local remote
+  ---
+  duration_ms: 15.3582
+  type: 'test'
+  ...
+# Subtest: actual synthetic original script retains real shebang/LF and one printf escape
+ok 4 - actual synthetic original script retains real shebang/LF and one printf escape
+  ---
+  duration_ms: 2.4184
+  type: 'test'
+  ...
+# Subtest: actual marker expression converts Windows separators to literal POSIX slashes
+ok 5 - actual marker expression converts Windows separators to literal POSIX slashes
+  ---
+  duration_ms: 0.3686
+  type: 'test'
+  ...
+# Subtest: actual secret object probe uses the Git blob NUL framing
+ok 6 - actual secret object probe uses the Git blob NUL framing
+  ---
+  duration_ms: 3.6218
+  type: 'test'
+  ...
+# Subtest: actual authorization entry refuses a missing explicit authority path before reading
+ok 7 - actual authorization entry refuses a missing explicit authority path before reading
+  ---
+  duration_ms: 24.1473
+  type: 'test'
+  ...
+# Subtest: actual authorization entry refuses changed authority bytes
+ok 8 - actual authorization entry refuses changed authority bytes
+  ---
+  duration_ms: 12.0366
+  type: 'test'
+  ...
+# Subtest: actual authorization entry admits the exact frozen pure authority without I/O effects
+ok 9 - actual authorization entry admits the exact frozen pure authority without I/O effects
+  ---
+  duration_ms: 11.3652
+  type: 'test'
+  ...
+# Subtest: actual authorization entry refuses broader external-network authority even with matching bytes
+ok 10 - actual authorization entry refuses broader external-network authority even with matching bytes
+  ---
+  duration_ms: 16.0257
+  type: 'test'
+  ...
+# Subtest: actual admission accepts lower-drive fsPath against exact uppercase launcher authority filename and JSON
+not ok 11 - actual admission accepts lower-drive fsPath against exact uppercase launcher authority filename and JSON
+  ---
+  duration_ms: 13.7453
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261029-f26b-prepush-70e1c9a4\\configured-push-drive-before.component-01.cjs:26:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'D:\\SoterAI-Lite-test-profiles\\f26b-configured-push-20261101T000000Z-1234abcd\\local-push-authorization.json'
+    - 'd:\\SoterAI-Lite-test-profiles\\f26b-configured-push-20261101T000000Z-1234abcd\\local-push-authorization.json'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'd:\\SoterAI-Lite-test-profiles\\f26b-configured-push-20261101T000000Z-1234abcd\\local-push-authorization.json'
+  actual: 'D:\\SoterAI-Lite-test-profiles\\f26b-configured-push-20261101T000000Z-1234abcd\\local-push-authorization.json'
+  operator: 'strictEqual'
+  stack: |-
+    admitConfiguredPush (evalmachine.<anonymous>:5:12)
+    admit (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261029-f26b-prepush-70e1c9a4\configured-push-drive-before.component-01.cjs:20:872)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261029-f26b-prepush-70e1c9a4\configured-push-drive-before.component-01.cjs:26:146)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: actual lower-drive admission still refuses a different profile with matching file digest
+ok 12 - actual lower-drive admission still refuses a different profile with matching file digest
+  ---
+  duration_ms: 23.3084
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 11
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 344.6374
