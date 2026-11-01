@@ -1,0 +1,42 @@
+{
+  "status": "FIXTURE_SUCCESS_OUTCOME_EXPLICIT_NULL_ONLY_NOT_NATIVE_ACCEPTANCE",
+  "observedAt": "2026-11-01T06:19:50.532Z",
+  "substitution": [
+    "driverFailure, busyChildren:",
+    "driverFailure: driverFailure ?? null, busyChildren:"
+  ],
+  "reversalByteExact": true,
+  "all36ScopesAndCallbackBodiesByteExact": true,
+  "strictLauncherValidatorUnchanged": true,
+  "journalAndOwnershipAndBudgetLogicByteExact": true,
+  "baseline": {
+    "tests": 10,
+    "passed": 9,
+    "failed": 1
+  },
+  "cause": "Undefined driverFailure is omitted by JSON.stringify on success; unchanged PowerShell strict validator requires that property. Producer now serializes explicit null; failure strings unchanged.",
+  "sourceBefore": {
+    "input": "native-prepush-08.host.ts.txt",
+    "bytes": 67779,
+    "sha256": "a9a1fa7d15cf4e5c352eab0f6e6681ab47fc5c53b53452e0920904f9bd26dfb3"
+  },
+  "sourceAfter": {
+    "input": "native-prepush-09.host.ts.txt",
+    "bytes": 67802,
+    "sha256": "970659366dd13349e89a4b4f865e3d7954280234578335d8052a0f790e989b2d"
+  },
+  "productionChanged": false,
+  "source1070AndVsixUnchanged": true,
+  "native11Actual": {
+    "primary": {
+      "passed": 30,
+      "failed": 0,
+      "notRun": 0
+    },
+    "restart": "NOT_RUN",
+    "root": "FAIL_REQUIRED_PROPERTY_MISSING"
+  },
+  "native12": "NOT_AUTHORIZED_NOT_MATERIALIZED_NOT_RUN",
+  "f26aNative09": "USER_DEFERRED_NOT_RUN",
+  "configuredPush": "NOT_AUTHORIZED_NOT_RUN"
+}

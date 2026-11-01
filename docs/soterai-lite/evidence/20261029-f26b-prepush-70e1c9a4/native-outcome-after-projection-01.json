@@ -1,0 +1,14 @@
+{
+  "scope": "SIMULATED_SERIALIZATION_COMPONENT_ONLY_NOT_NATIVE_ACCEPTANCE",
+  "input": "native-prepush-09.host.ts.txt",
+  "expression": "driverFailure ?? null",
+  "success": {
+    "driverFailure": null
+  },
+  "ordinaryFailure": {
+    "driverFailure": "NativePrePushComponentFailure"
+  },
+  "busyFailure": {
+    "driverFailure": "STOP_UNCONFIRMED"
+  }
+}

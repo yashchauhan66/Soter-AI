@@ -1,0 +1,5 @@
+$ErrorActionPreference='Stop'
+$taskNames=@('native-launch-candidate-18.ps1.txt','native-launch-admission-15.ps1','native-preflight-13.ps1')
+foreach($taskName in $taskNames){$taskTokens=$null;$taskErrors=$null;[void][Management.Automation.Language.Parser]::ParseFile((Join-Path $PSScriptRoot $taskName),[ref]$taskTokens,[ref]$taskErrors);if($taskErrors.Count){throw ('Prepared PowerShell syntax failed: '+$taskName)}}
+foreach($taskName in @('native-launch-candidate-18.ps1','native-launch-materialization-12.json','native-launch-consumption-12.json','native12-user-approval-01.json')){if(Test-Path -LiteralPath (Join-Path $PSScriptRoot $taskName)){throw 'Unapproved native12 executable/authority unexpectedly present.'}}
+[ordered]@{status='PASS_PREPARED_PS3_NODE2_SYNTAX_ONLY_NOT_NATIVE';powershellFiles=$taskNames;nodeFiles=@('native-physical-admission-21.cjs','run-native-component-12.cjs');nodeParseEvidence='prepare-native-outcome-proposal-12.cjs new vm.Script without evaluation';materializationAbsent=$true;consumptionAbsent=$true;native12Runs=0;f26aNative09='USER_DEFERRED_NOT_RUN';configuredPush='NOT_AUTHORIZED_NOT_RUN';signalsRequested=0}|ConvertTo-Json -Depth 5
