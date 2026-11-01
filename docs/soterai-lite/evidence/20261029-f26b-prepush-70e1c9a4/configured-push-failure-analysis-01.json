@@ -1,0 +1,64 @@
+{
+  "status": "FAIL_ACTIVATION_ROOT_PREFIX_MISMATCH_BEFORE_DRIVER_OR_PRODUCT_REQUIRE_NO_PUSH",
+  "observedAt": "2026-11-01T09:05:27.404Z",
+  "run": "f26b-configured-push-20261101T081622Z-c6f6d008",
+  "approval": {
+    "path": "configured-push-user-approval-01.json",
+    "bytes": 842,
+    "sha256": "77f33bac73dbe777279e626ae247e1fbeeeec4ec20d7cc0ea015985b50031d3e"
+  },
+  "consumption": {
+    "path": "configured-push-consumption-01.json",
+    "bytes": 565,
+    "sha256": "a2010042776df10d73f4a98f5a6ae71c15714bf3a10be9b5ba333699cb636ae8"
+  },
+  "failure": {
+    "path": "configured-push-failure-01.json",
+    "bytes": 326,
+    "sha256": "2c4091bf8127f851a83d34853c1fbea1b5a5c21e3bfa49b2d51f44c391d4d333"
+  },
+  "outerClose": {
+    "path": "configured-push-01-owned-close.json",
+    "bytes": 613,
+    "sha256": "0a0cd94ea733f1945adc35e21166ca4ca34c0ef23eb10951396f0ec96579336e"
+  },
+  "codeClose": {
+    "path": "f26b-configured-push-20261101T081622Z-c6f6d008/primary-owned-editor-close.json",
+    "bytes": 391,
+    "sha256": "80c2b6fa3723ae6a33a2a5345d3d2895d877b1e843fb6c4b82a93c3d399a0793"
+  },
+  "postFailureOwnerObservation": {
+    "path": "configured-push-failure-owner-observation-01.json",
+    "bytes": 2541,
+    "sha256": "f9df7d7846ec2fe742deeb6a7037413b8aa2ba689f1f4b34b225a6aa41200c99"
+  },
+  "startup": {
+    "path": "f26b-configured-push-20261101T081622Z-c6f6d008/primary.startup.jsonl",
+    "bytes": 246,
+    "sha256": "ef2544a3bb98927e1458673bcd7de577b9f8d480f929cebc264be237134e90ad"
+  },
+  "bootstrap": {
+    "path": "configured-push-failed-executed-bootstrap-01.cjs.txt",
+    "bytes": 6759,
+    "sha256": "44ccd0f940064272ed50f80662e360e7c7f4208d65656be6f8e412973710d7f8"
+  },
+  "actualPushInvocations": 0,
+  "nativeChecks": "ALL_8_NOT_RUN_NO_DRIVER_RESULT",
+  "rootCause": "Actual bootstrap still requires f26b-prepush-native prefix. New exact approved profile is f26b-configured-push. First local synthetic identity condition rejects it before JSON builtin/product/driver require.",
+  "reproductionBefore": {
+    "tests": 11,
+    "pass": 8,
+    "fail": 3
+  },
+  "correctionAfter": {
+    "tests": 11,
+    "pass": 11,
+    "fail": 0
+  },
+  "correctionScope": "One bootstrap directory prefix plus unique successor evidence/authority interfaces; assertions8/driver/VSIX/vendor/startup sequence/ownership budgets unchanged.",
+  "priorApproval": "CONSUMED_NO_AUTOMATIC_RETRY",
+  "f26aNative09": "USER_DEFERRED_NOT_RUN",
+  "externalNetwork": "NOT_AUTHORIZED_NOT_RUN",
+  "sourceRepositoryPush": "NOT_AUTHORIZED_NOT_RUN",
+  "signalsRequested": 0
+}

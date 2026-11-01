@@ -1,0 +1,5 @@
+$ErrorActionPreference='Stop'
+$taskNames=@('configured-push-launch-candidate-04.ps1.txt','configured-push-admission-04.ps1','configured-push-preflight-04.ps1')
+foreach($taskName in $taskNames){$taskTokens=$null;$taskErrors=$null;[void][Management.Automation.Language.Parser]::ParseFile((Join-Path $PSScriptRoot $taskName),[ref]$taskTokens,[ref]$taskErrors);if($taskErrors.Count){throw ('Prepared configured-push syntax failed: '+$taskName)}}
+foreach($taskName in @('configured-push-launch-candidate-04.ps1','configured-push-materialization-02.json','configured-push-consumption-02.json')){if(Test-Path -LiteralPath (Join-Path $PSScriptRoot $taskName)){throw 'Unapproved configured-push executable/authority unexpectedly present.'}}
+[ordered]@{status='PASS_CONFIGURED_PUSH_PS3_SYNTAX_ONLY_NOT_AUTHORIZATION_OR_NATIVE';powershellFiles=3;executableCandidateAbsent=$true;materializationAbsent=$true;consumptionAbsent=$true;actualGitPushes=0;f26aNative09='USER_DEFERRED_NOT_RUN';signalsRequested=0}|ConvertTo-Json

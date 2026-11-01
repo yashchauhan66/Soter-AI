@@ -1,0 +1,76 @@
+﻿TAP version 13
+# Subtest: actual bootstrap admits only current configured-push profile and joins pinned JSON builtin
+ok 1 - actual bootstrap admits only current configured-push profile and joins pinned JSON builtin
+  ---
+  duration_ms: 21.0201
+  type: 'test'
+  ...
+# Subtest: actual configured-push bootstrap rejects old component profile prefix
+ok 2 - actual configured-push bootstrap rejects old component profile prefix
+  ---
+  duration_ms: 2.7344
+  type: 'test'
+  ...
+# Subtest: actual bootstrap rejects another drive
+ok 3 - actual bootstrap rejects another drive
+  ---
+  duration_ms: 1.7609
+  type: 'test'
+  ...
+# Subtest: actual bootstrap rejects wrong profile sibling
+ok 4 - actual bootstrap rejects wrong profile sibling
+  ---
+  duration_ms: 1.9632
+  type: 'test'
+  ...
+# Subtest: actual bootstrap rejects untrusted workspace
+ok 5 - actual bootstrap rejects untrusted workspace
+  ---
+  duration_ms: 1.7806
+  type: 'test'
+  ...
+# Subtest: actual bootstrap rejects remote workspace
+ok 6 - actual bootstrap rejects remote workspace
+  ---
+  duration_ms: 2.1017
+  type: 'test'
+  ...
+# Subtest: actual bootstrap rejects multiple workspace folders
+ok 7 - actual bootstrap rejects multiple workspace folders
+  ---
+  duration_ms: 1.9768
+  type: 'test'
+  ...
+# Subtest: actual bootstrap rejects wrong synthetic marker
+ok 8 - actual bootstrap rejects wrong synthetic marker
+  ---
+  duration_ms: 1.7327
+  type: 'test'
+  ...
+# Subtest: actual bootstrap rejects schema downloads
+ok 9 - actual bootstrap rejects schema downloads
+  ---
+  duration_ms: 21.3637
+  type: 'test'
+  ...
+# Subtest: actual bootstrap rejects changed vendor input bytes
+ok 10 - actual bootstrap rejects changed vendor input bytes
+  ---
+  duration_ms: 4.8215
+  type: 'test'
+  ...
+# Subtest: actual success receipt grants no environment assignment or child EOF claim
+ok 11 - actual success receipt grants no environment assignment or child EOF claim
+  ---
+  duration_ms: 12.4939
+  type: 'test'
+  ...
+1..11
+# tests 11
+# suites 0
+# pass 11
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 83.7469

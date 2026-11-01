@@ -1,0 +1,46 @@
+{
+  "status": "ROOT_REVIEWED_F26B_LOCAL_PUSH8_TWO_INVOCATIONS",
+  "observedAt": "2026-11-01T08:13:03.523Z",
+  "allowedAttempts": 1,
+  "allowedPushInvocations": 2,
+  "bindingSha256": "2a4e483e33af070120396a78fcec4cd137aba449f7d7d556e3b797c62c66456a",
+  "candidateSha256": "e84035f2ac218db3e79289c0eef969954bdb3759e3d8ac2f756f4d6e7f0fd6b4",
+  "executableCandidate": {
+    "path": "configured-push-launch-candidate-03.ps1",
+    "bytes": 29866,
+    "sha256": "e84035f2ac218db3e79289c0eef969954bdb3759e3d8ac2f756f4d6e7f0fd6b4"
+  },
+  "userApproval": {
+    "kind": "EXPLICIT_USER_ONE_F26B_LOCAL_SYNTHETIC_PUSH_FIXTURE",
+    "reply": "Ek bounded local-push fixture allow karo",
+    "questionItemId": "call_3b8a40f7e1704b0aabf8f75fee5ff3ae",
+    "recordedAt": "2026-11-01T08:13:03.517Z",
+    "allowedFixtureRuns": 1,
+    "allowedPushInvocations": 2,
+    "configuredPushAuthorized": true,
+    "externalNetworkAuthorized": false,
+    "sourceRepositoryPushAuthorized": false,
+    "proposal": {
+      "path": "CONFIGURED-LOCAL-PUSH-PROPOSAL01.md",
+      "bytes": 3693,
+      "sha256": "4b76de05749f6c882680141672f2da21416cbb431d428c6edcd83adfb07753c1"
+    },
+    "bindingSha256": "2a4e483e33af070120396a78fcec4cd137aba449f7d7d556e3b797c62c66456a",
+    "f26aNative09": "USER_DEFERRED_NOT_RUN",
+    "consumed": false,
+    "consumptionScope": "At this receipt only; configured-push-consumption-01.json becomes authoritative at launch."
+  },
+  "proposal": {
+    "path": "CONFIGURED-LOCAL-PUSH-PROPOSAL01.md",
+    "bytes": 3693,
+    "sha256": "4b76de05749f6c882680141672f2da21416cbb431d428c6edcd83adfb07753c1"
+  },
+  "configuredPushAuthorized": true,
+  "externalNetworkAuthorized": false,
+  "sourceRepositoryPushAuthorized": false,
+  "f26aNative09": "USER_DEFERRED_NOT_RUN",
+  "native36AcceptanceSha256": "995f5d4c122d0ef3d86184bf3d12d7ebd67d5b1114222bfd907a27d4d1e55c53",
+  "affectedAcceptanceSha256": "e8266b353dd2098c85eed328f0a973546825bcfebe6ae6539cdfeb65a02b90e7",
+  "authorization": "One new synthetic D fixture, exactly publicALLOW and historical synthetic canaryBLOCK local file pushes to its sibling collector.git. No external/network/source-repository push or further retry.",
+  "signalsRequested": 0
+}

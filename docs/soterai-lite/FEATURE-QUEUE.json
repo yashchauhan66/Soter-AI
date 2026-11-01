@@ -882,13 +882,13 @@
           "requires": [
             "F26a"
           ],
-          "executionDecision": "F26B_COMPONENT49_AND_COMPILER_PASS_INCOMPLETE_NO_PUSH; all original required gates retained. F26a09 and all pushes unapproved.",
+          "executionDecision": "Native36 and affected509/37+functional10/security17 unchanged8BLOCKED_SCOPED9LEAK_CONFIRMED PASS. Approved first configured-push fixture failed activation before driver/product require: zero actual pushes/all8NOT_RUN. Root-prefix correction Proposal02 prepared45 component controls/syntax/admission PASS; fresh ONE additional fixture/TWO local file pushes permission required; source/feature byte gates pending. F26a09 explicitly deferred; external/source-repo push unauthorized.",
           "startEvidence": {
             "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/start-checkpoint-01.json",
             "bytes": 3420,
             "sha256": "a178762fbaa32752d4ef36a638e3b6cb9e65f342aacfdc995aff9235ea1e3279"
           },
-          "progressEvidence": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/progress-01.json"
+          "progressEvidence": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/progress-18.json"
         },
         {
           "id": "F26c",
@@ -1338,5 +1338,37 @@
     },
     "f26a": "USER_DEFERRED_INCOMPLETE",
     "pushAuthority": "NONE_NO_GIT_PUSH_LOCAL_OR_NETWORK_AUTHORIZED"
+  },
+  "f26bConfiguredLocalPushDecision": {
+    "status": "PRIOR_SINGLE_FIXTURE_APPROVAL_CONSUMED_ZERO_PUSHES_NEW_PROPOSAL02_UNAPPROVED",
+    "firstApproval": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/configured-push-user-approval-01.json",
+      "bytes": 842,
+      "sha256": "77f33bac73dbe777279e626ae247e1fbeeeec4ec20d7cc0ea015985b50031d3e"
+    },
+    "consumption": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/configured-push-consumption-01.json",
+      "bytes": 565,
+      "sha256": "a2010042776df10d73f4a98f5a6ae71c15714bf3a10be9b5ba333699cb636ae8"
+    },
+    "failureAnalysis": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/configured-push-failure-analysis-01.json",
+      "bytes": 2560,
+      "sha256": "1115f6d18cffaf5e598b946b8c8a13211b8999fc90f5dbd0b22d5a2c495a8c2f"
+    },
+    "proposal": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/CONFIGURED-LOCAL-PUSH-PROPOSAL02.md",
+      "bytes": 3029,
+      "sha256": "ec5010a3dcaa616a4cc696984d3ccd8e4d0cf4f2fb9ff4f507a5364ce7f685bd"
+    },
+    "binding": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/configured-push-binding-02.json",
+      "bytes": 8080,
+      "sha256": "dcb6330d5d2af9ab64083df75407145c3c185526898a25ec2ccfb50ffe8ea674"
+    },
+    "actualPushes": 0,
+    "freshApprovalRequired": true,
+    "externalNetworkAuthorized": false,
+    "sourceRepositoryPushAuthorized": false
   }
 }
