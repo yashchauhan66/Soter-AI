@@ -153,7 +153,8 @@
                 "soterai.lite.historyHooks.psReadLine",
                 "soterai.lite.selfHygiene",
                 "soterai.lite.protectionCenter",
-                "soterai.lite.setupVerification"
+                "soterai.lite.setupVerification",
+                "soterai.lite.reliability"
             ]
         }
     },
@@ -1682,6 +1683,11 @@
                 "title": "Verify my setup",
                 "category": "SoterAI",
                 "icon": "$(beaker)"
+            },
+            {
+                "command": "soterai.readReliabilityStatus",
+                "title": "Managed Read Reliability Status",
+                "category": "SoterAI"
             }
         ],
         "viewsContainers": {
@@ -2501,6 +2507,12 @@
                     "default": true,
                     "scope": "machine",
                     "description": "Offer owner-triggered synthetic local component checks and current artifact/configuration-bound timestamps in Protection Center. No real workspace scan, tool launch, login or automatic broker start. Missing, stale or withdrawn evidence stays NOT_TESTED; local checks do not verify live AI-tool routes or establish a coverage score. Disable withdraws checks/presentation while retaining saved protection."
+                },
+                "soterai.lite.reliability": {
+                    "type": "boolean",
+                    "default": true,
+                    "scope": "machine",
+                    "description": "Keep bounded managed reader identity checks enabled. File/parent changes, cancellation, size/time limits or resource failures withhold reads. Turning this off withdraws shared managed reads; it does not restore unchecked originals. SoterAI cannot prevent arbitrary same-user filesystem access or every path race."
                 }
             }
         },
@@ -3766,6 +3778,10 @@
                 {
                     "command": "soterai.verifySetup",
                     "when": "false"
+                },
+                {
+                    "command": "soterai.readReliabilityStatus",
+                    "when": "soterai.advancedCommands"
                 }
             ],
             "view/item/context": [

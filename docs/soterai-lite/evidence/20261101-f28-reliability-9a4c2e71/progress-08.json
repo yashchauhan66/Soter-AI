@@ -1,0 +1,73 @@
+{
+  "status": "F28_CURRENT_SCOPED_GATES_PASS_SOURCE_AND_TRANSITION_BYTES_PENDING",
+  "observedAt": "2026-11-02T07:36:02.251Z",
+  "acceptance": {
+    "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/acceptance-01.json",
+    "bytes": 103979,
+    "sha256": "3a598a322e6ad742faa47ac8f076505b28e02c0ff90665cbe8bc8ea59026c2b2"
+  },
+  "sourceProof": {
+    "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/full-inputs-02.json",
+    "bytes": 213508,
+    "sha256": "70d3b237332ada5f7317906a8e745ff7d8f7bc2213b8c27f810a25b919b30743"
+  },
+  "vsix": {
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-f28-20261101-attempt01.vsix",
+    "bytes": 1749703,
+    "sha256": "5dac9288fb259ad538ab751258f250d85a933bfb5bc8641dc32e54c01f6f047f"
+  },
+  "sourcePaths": 14,
+  "excludedF26aPaths": 3,
+  "full": {
+    "tests": 4780,
+    "pass": 4776,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 4
+  },
+  "native30": 30,
+  "affected": {
+    "families": 20,
+    "checks": 509,
+    "phases": 37,
+    "functional": 10,
+    "security": 17,
+    "residuals": {
+      "BLOCKED_SCOPED": 8,
+      "LEAK_CONFIRMED": 9
+    },
+    "acceptance": {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-acceptance-01.json",
+      "bytes": 97164,
+      "sha256": "dd9eb811d709c6db28aef1cb0b2a145f40b6c1087e4734ca6f84b911de3ce2f5"
+    }
+  },
+  "recovery": {
+    "consumption": {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-chain-consumption-03.json",
+      "bytes": 1643,
+      "sha256": "887f824a2f73152c89ab46fac6e1299661994c931e39b8a6c66cf857976421d4"
+    },
+    "rootResult": {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-chain-result-03.json",
+      "bytes": 15501,
+      "sha256": "a46fd85d38831bec2d85efddeb103300771225771ba902382ac7b0eb6bef64cc"
+    },
+    "execToolReportedCompletion": {
+      "sessionId": 88463,
+      "exitCode": 0,
+      "observed": "Actual unified execution completion response; no separate claim about unreported controller-pipe EOF"
+    }
+  },
+  "sourceReview": {
+    "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f28-final-source-review-02.md",
+    "bytes": 2677,
+    "sha256": "08a3dac8c859dd1d832dd1ec81fda2195e629134433bba8a598062b9d4649752"
+  },
+  "sourceCommit": "PENDING",
+  "transitionCommit": "PENDING",
+  "historicalF28InterruptedChain": "ORIGINAL_CLOSE_EOF_UNCONFIRMED_EXCLUDED_NOT_REGRADED",
+  "historicalF20Withdrawal": "UNCONFIRMED",
+  "f26aNative09": "USER_DEFERRED_NOT_RUN",
+  "releaseReady": false
+}

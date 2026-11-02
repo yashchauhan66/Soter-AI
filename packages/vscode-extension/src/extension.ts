@@ -15,6 +15,7 @@ import { ControlPanelViewProvider } from "./webview/ControlPanelViewProvider";
 import { TelemetryManager } from "./telemetry";
 import { emitOwnedDiagnostic } from "../../core/src/OwnedSinkMetadata";
 import { selfHygieneEnabled } from "./self-hygiene/SelfHygieneFlags";
+import { registerReadReliability } from "./security/ReadReliabilityOwner";
 import { registerProtectionCenter, type ProtectionCenterHandle } from "./protection-center/ProtectionCenter";
 import { protectionCenterEnabled } from "./protection-center/ProtectionCenterFlags";
 import {registerSetupVerification,type SetupVerificationHandle} from "./setup-verification/SetupVerification";
@@ -110,6 +111,7 @@ let autoVaultMigration: AutoVaultMigration;
 let fileReadSentinel: FileReadSentinel;
 
 export function activate(context: vscode.ExtensionContext): void {
+    const readReliability = registerReadReliability(context);
     extensionContext = context;
     const telemetry = TelemetryManager.getInstance();
     telemetry.syncPrivacyBoundary();
@@ -523,6 +525,7 @@ export function activate(context: vscode.ExtensionContext): void {
     ).finally(() => {
         void updateStatusBar();
     });
+    readReliability.finishStartup();
 }
 
 async function updateBrokerStatus(): Promise<void> {

@@ -275,3 +275,12 @@ Use **Verify my setup** under Protection Center → Coverage. It exercises the p
 Results show the current artifact/configuration binding and last check time. Missing, partial, mismatched, cancelled, withdrawn or older-than-five-minute results cannot become a current PASS; a previous-session record is not reused as current evidence. Storage failure withholds the new result. PASS describes only the named synthetic component checks. All live surfaces and AI-tool routes remain NOT_TESTED/Uncovered here; no coverage score, real-agent or independent-review claim is created.
 
 `soterai.lite.setupVerification` is a restricted machine setting, enabled by default. Turning it off withdraws these checks and their presentation while retaining saved denies, approvals/recovery rules and existing broker ownership. No normal-profile install, login or extra software is required for the advertised local checks.
+
+
+### Managed read reliability
+
+The machine setting `soterai.lite.reliability` defaults on. The existing shared managed reader captures file and parent-directory identities, checks its opened descriptor, then rechecks identities and containment before returning text. It rejects links, multiple hardlinks, changed or unsupported files and noncanonical aliases. Turning the setting off withdraws these reads rather than restoring unchecked originals. Use **Managed Read Reliability Status** in the advanced palette to inspect availability.
+
+Each read has a fixed five-second elapsed budget, at most1MiB admitted bytes and eight unfinished reads per extension host. Cancellation or expiry withholds output immediately; unfinished I/O retains its slot until its real handle closure is observed. Unknown handle closure or an activation-body budget breach withholds new shared reads until the window is reloaded. Existing consent, whole-scan and gateway/stream limits also remain effective; partial or unavailable work is not a passing scan. Startup-body measurement does not include extension-module loading.
+
+These checks detect observed path/content changes and bound managed work. Portable path APIs do not eliminate every check-to-use race, and unrelated same-user file reads, other tools, transformed secrets and already released output remain outside this guarantee. Linux, macOS, remote workspaces and privileged symlink behavior remain NOT_TESTED unless exact evidence says otherwise.

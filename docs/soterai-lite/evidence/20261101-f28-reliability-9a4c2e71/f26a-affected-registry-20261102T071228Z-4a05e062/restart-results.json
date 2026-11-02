@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 1,
+  "phase": "restart",
+  "syntheticOnly": true,
+  "hostVersion": "1.144.0",
+  "extensionBundleSha256": "3524f4f234004d81924854c756330a5d1273e0251c524d1a31fa63c3b3c784b2",
+  "currentDeveloperBundleSha256": "3524f4f234004d81924854c756330a5d1273e0251c524d1a31fa63c3b3c784b2",
+  "hostProbeSha256": "8798c3a07df2770e3f06460105238ff0b65c225fd58ee6013a0fe9d9745c6633",
+  "observations": [
+    {
+      "id": "F22D-N01",
+      "scope": "Restart reuses keys/ledger and keeps exact masked source without startup read",
+      "status": "PASS"
+    },
+    {
+      "id": "F22D-N02",
+      "scope": "No stale family finding authority survives restart",
+      "status": "PASS"
+    },
+    {
+      "id": "F22D-N03",
+      "scope": "Actual canonical encrypted backup command recovers Registry after restart disclosure",
+      "status": "PASS"
+    },
+    {
+      "id": "F22D-N04",
+      "scope": "Fresh native review reestablishes two metadata findings after explicit recovery",
+      "status": "PASS"
+    }
+  ],
+  "passed": 4,
+  "failed": 0,
+  "notRun": 0,
+  "sourceDocumentCalls": 0,
+  "sourceDocumentEvents": 0,
+  "secretStorageStores": 0,
+  "reviews": [
+    {
+      "action": "Restore raw values",
+      "safe": true
+    },
+    {
+      "action": "Analyze saved project files",
+      "safe": true
+    }
+  ],
+  "metadataDocuments": 2,
+  "trace": [
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 1045.3028999999997
+    },
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 1304.8630000000003
+    },
+    {
+      "event": "command-start-registrySecretScannerStatus",
+      "milliseconds": 1821.732
+    },
+    {
+      "event": "command-end-registrySecretScannerStatus",
+      "milliseconds": 1823.9984000000004,
+      "status": "OWNER_REVIEW_REQUIRED"
+    },
+    {
+      "event": "command-start-reviewRegistrySecretVault",
+      "milliseconds": 1826.9703
+    },
+    {
+      "event": "command-end-reviewRegistrySecretVault",
+      "milliseconds": 1828.6153000000004,
+      "status": "REVIEW_FILES_FIRST"
+    },
+    {
+      "event": "command-start-restoreFileFromBackup",
+      "milliseconds": 1828.8590999999997
+    },
+    {
+      "event": "command-end-restoreFileFromBackup",
+      "milliseconds": 2355.5018,
+      "status": "VOID"
+    },
+    {
+      "event": "command-start-reviewRegistrySecrets",
+      "milliseconds": 2390.0813
+    },
+    {
+      "event": "command-end-reviewRegistrySecrets",
+      "milliseconds": 2928.8186000000005,
+      "status": "ANALYZED",
+      "files": 1,
+      "findings": 2
+    },
+    {
+      "event": "command-start-openHygieneExposureLedger",
+      "milliseconds": 2928.8477000000003
+    },
+    {
+      "event": "command-end-openHygieneExposureLedger",
+      "milliseconds": 3377.5526,
+      "status": "METADATA"
+    }
+  ],
+  "independence": "LOW",
+  "ownerPresence": "SCRIPTED_NATIVE_API_DECISIONS_NOT_HUMAN_REVIEW",
+  "notTested": [
+    "Registry uploads/client execution/account validity",
+    "Unsupported INI behavior/external references/home profiles",
+    "Human usability/accessibility",
+    "Live credentials or provider rotation",
+    "OS custody/unmanaged native reads/uploads"
+  ]
+}

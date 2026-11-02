@@ -1,0 +1,2045 @@
+{
+  "status": "PASS_CURRENT_F28_AFFECTED20_509_37_FUNCTIONAL10_SECURITY17_BASELINE",
+  "observedAt": "2026-11-02T07:33:58.480Z",
+  "native30BindingSha256": "6ad782a541704d8da93321093d479f5947684371802818b711802ded0587a8b3",
+  "sourceProof": {
+    "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/full-inputs-02.json",
+    "bytes": 213508,
+    "sha256": "70d3b237332ada5f7317906a8e745ff7d8f7bc2213b8c27f810a25b919b30743"
+  },
+  "vsix": {
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-f28-20261101-attempt01.vsix",
+    "bytes": 1749703,
+    "sha256": "5dac9288fb259ad538ab751258f250d85a933bfb5bc8641dc32e54c01f6f047f"
+  },
+  "frontendSha256": "3524f4f234004d81924854c756330a5d1273e0251c524d1a31fa63c3b3c784b2",
+  "families": [
+    {
+      "id": "logs",
+      "checks": 25,
+      "run": "f26a-logs-native-20261101T173851Z-e9f2e1a5",
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 21,
+          "driverSha256": "4f014043b9ff4a46dadb4f29403e7f801a3e6cc429adb8ea2d99fb12bd48c251",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-logs-native-20261101T173851Z-e9f2e1a5/primary-results.json",
+            "bytes": 16671,
+            "sha256": "27504b84521458795ff794afbfd97a6c1aafb1b9241ca2ed8c0259dbc718b9b0"
+          }
+        },
+        {
+          "phase": "restart",
+          "checks": 4,
+          "driverSha256": "4f014043b9ff4a46dadb4f29403e7f801a3e6cc429adb8ea2d99fb12bd48c251",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-logs-native-20261101T173851Z-e9f2e1a5/restart-results.json",
+            "bytes": 4329,
+            "sha256": "c67d459e032b335dcdbf93dca2b90034bb5b3ceb2297cd12e51eb1d27dc866e0"
+          }
+        }
+      ]
+    },
+    {
+      "id": "owned-output",
+      "checks": 19,
+      "run": "f26a-owned-output-native-20261102T013417Z-3534aa70",
+      "phases": [
+        {
+          "phase": "single",
+          "checks": 19,
+          "driverSha256": "d6bf835ca26e390eeb4b5af5006bca1ae710d6156a045eaa791ccea2713512b8",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-owned-output-native-20261102T013417Z-3534aa70/single-results.json",
+            "bytes": 18419,
+            "sha256": "44f0bf5c55eb4a80ba04363641151054f42520bb54c4875d542a29e0772b48fd"
+          }
+        }
+      ]
+    },
+    {
+      "id": "artifact",
+      "checks": 25,
+      "run": "f26a-artifact-native-20261102T013628Z-132a6dbe",
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 21,
+          "driverSha256": "6540e23b5c1b7898fec45ede212502d971460bb0cfac2a55bc160873eb6e9a12",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-artifact-native-20261102T013628Z-132a6dbe/primary-results.json",
+            "bytes": 14770,
+            "sha256": "b5f74057f4c232f54565f8463a4b8057a39964d3c4e6db3f2a5c78ebefaec0b6"
+          }
+        },
+        {
+          "phase": "restart",
+          "checks": 4,
+          "driverSha256": "6540e23b5c1b7898fec45ede212502d971460bb0cfac2a55bc160873eb6e9a12",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-artifact-native-20261102T013628Z-132a6dbe/restart-results.json",
+            "bytes": 3858,
+            "sha256": "6b6e50589d1e25ba14ffd4192e16c2dc7f78c4838e059a4d5527b0875dc2aa78"
+          }
+        }
+      ]
+    },
+    {
+      "id": "streaming-output",
+      "checks": 13,
+      "run": "f26a-streaming-output-native-20261102T013844Z-d59f1fd4",
+      "phases": [
+        {
+          "phase": "single",
+          "checks": 13,
+          "driverSha256": "25f981d467639de9e910e9765e71ca9e13f630cd9062cfd08c96d8ad4d1e9f9d",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-streaming-output-native-20261102T013844Z-d59f1fd4/single-results.json",
+            "bytes": 5557,
+            "sha256": "0af41c340da8aef1001c68c651283a3073e4fbcc10388343335b7457b094e1cd"
+          }
+        }
+      ]
+    },
+    {
+      "id": "vault-runtime",
+      "checks": 12,
+      "run": "f26a-vault-runtime-native-20261102T014004Z-039ba588",
+      "phases": [
+        {
+          "phase": "single",
+          "checks": 12,
+          "driverSha256": "79eadfbe075cfee1f4e2afd46ef9b60fdbb9c59c68b5ade4e2558fb8d46ac661",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-vault-runtime-native-20261102T014004Z-039ba588/single-results.json",
+            "bytes": 5641,
+            "sha256": "8ef3fd750b9854d25c195a788210c63760771d014bdeeb960070140a901a1603"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ps51",
+      "checks": 19,
+      "run": "f26a-ps51-native-20261102T014135Z-32d76c4b",
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 16,
+          "driverSha256": "4ace212abaa62e358203f62a959751484f70f2ff596c3fd7601a3d3f35054a78",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-ps51-native-20261102T014135Z-32d76c4b/primary-results.json",
+            "bytes": 6511,
+            "sha256": "e4b2d5df57abce6b1cc3309a40596fadaa350f31a17dd85907ac6622853175b0"
+          }
+        },
+        {
+          "phase": "restart",
+          "checks": 3,
+          "driverSha256": "4ace212abaa62e358203f62a959751484f70f2ff596c3fd7601a3d3f35054a78",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-ps51-native-20261102T014135Z-32d76c4b/restart-results.json",
+            "bytes": 2082,
+            "sha256": "9a52eba99c7629f5ed89aec3881caa144d095b3c2b6cccb9ca32a30f76b0f20b"
+          }
+        }
+      ]
+    },
+    {
+      "id": "cmd",
+      "checks": 19,
+      "run": "f26a-cmd-native-20261102T014344Z-e03101e8",
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 16,
+          "driverSha256": "1fa4a1f7530492704242083f7c71fe159b50856bde4525808b55ff324809cb86",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-cmd-native-20261102T014344Z-e03101e8/primary-results.json",
+            "bytes": 6108,
+            "sha256": "b32aa976545e75359f9201770f4fc8ce31a5695c6f1b2afc2f558aab99ff2253"
+          }
+        },
+        {
+          "phase": "restart",
+          "checks": 3,
+          "driverSha256": "1fa4a1f7530492704242083f7c71fe159b50856bde4525808b55ff324809cb86",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-cmd-native-20261102T014344Z-e03101e8/restart-results.json",
+            "bytes": 2079,
+            "sha256": "3001a18fbd328efdd40c8dc44bb6064201f64c940872109b0d1745c3ff9e3b1a"
+          }
+        }
+      ]
+    },
+    {
+      "id": "gitbash",
+      "checks": 19,
+      "run": "f26a-gitbash-native-20261102T014542Z-79b2fc69",
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 16,
+          "driverSha256": "525d6efc1523dde42f3c98cf39c63f15e49692611d51777a53af795eca9d65d1",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-gitbash-native-20261102T014542Z-79b2fc69/primary-results.json",
+            "bytes": 6835,
+            "sha256": "9fa40ba2042ba9a75fe315d0ffe6ea707cd57d15b54bf77af1aef03861bcf3e5"
+          }
+        },
+        {
+          "phase": "restart",
+          "checks": 3,
+          "driverSha256": "525d6efc1523dde42f3c98cf39c63f15e49692611d51777a53af795eca9d65d1",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-gitbash-native-20261102T014542Z-79b2fc69/restart-results.json",
+            "bytes": 2093,
+            "sha256": "c07953e35f1f693493dec4ae0e88cd446a07db0c0173b0560bf8e07510dadc44"
+          }
+        }
+      ]
+    },
+    {
+      "id": "history",
+      "checks": 25,
+      "run": "f26a-history-native-20261102T014747Z-a60d4290",
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 21,
+          "driverSha256": "a10fcf723b1edeb480572c1339cecbcd2ef2baa34c0892cb43ed3b057735efd5",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-history-native-20261102T014747Z-a60d4290/primary-results.json",
+            "bytes": 37218,
+            "sha256": "5d0a745757477acb46eab52499ce2e3266ee42d37cb42424c7a303483364a484"
+          }
+        },
+        {
+          "phase": "restart",
+          "checks": 4,
+          "driverSha256": "a10fcf723b1edeb480572c1339cecbcd2ef2baa34c0892cb43ed3b057735efd5",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-history-native-20261102T014747Z-a60d4290/restart-results.json",
+            "bytes": 7155,
+            "sha256": "5ab803ef7c4e0dafb4e4b72e227796ffe9abfe756a4bb4325d60251daf932edf"
+          }
+        }
+      ]
+    },
+    {
+      "id": "mcp",
+      "checks": 25,
+      "run": "f26a-mcp-native-20261102T070112Z-ec335897",
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 21,
+          "driverSha256": "829d01302e7b859ac77bfbc1f40cb866fd40be95981ace5924c63e407cfcbc65",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-mcp-native-20261102T070112Z-ec335897/primary-results.json",
+            "bytes": 16665,
+            "sha256": "dd894a43ecd8691bdc6b4d93ddb2533775bfcc3928736cae2b0620bf5adc076a"
+          }
+        },
+        {
+          "phase": "restart",
+          "checks": 4,
+          "driverSha256": "829d01302e7b859ac77bfbc1f40cb866fd40be95981ace5924c63e407cfcbc65",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-mcp-native-20261102T070112Z-ec335897/restart-results.json",
+            "bytes": 3492,
+            "sha256": "cefda6e968cdb5a0c2ce8dc8844412d57aa8a6dc88394c92a849b1d39305489f"
+          }
+        }
+      ]
+    },
+    {
+      "id": "editor",
+      "checks": 25,
+      "run": "f26a-affected-editor-20261102T070318Z-2a6987ee",
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 21,
+          "driverSha256": "e3cbb70a89ffee3e2611c4d98e378a9824b19210c3bc0e7e8dbb48ae845a0510",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-editor-20261102T070318Z-2a6987ee/primary-results.json",
+            "bytes": 16778,
+            "sha256": "2f96e4cc7e2e0e59e3dac9d15a5570328a0bd89c6f6d6f13af6f77742b77b935"
+          }
+        },
+        {
+          "phase": "restart",
+          "checks": 4,
+          "driverSha256": "e3cbb70a89ffee3e2611c4d98e378a9824b19210c3bc0e7e8dbb48ae845a0510",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-editor-20261102T070318Z-2a6987ee/restart-results.json",
+            "bytes": 3030,
+            "sha256": "a4e54b7b15b67c0ff3fc2305ba422899ff5a389870e8a6ffdea9dd2d7cd9697e"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ci",
+      "checks": 25,
+      "run": "f26a-affected-ci-20261102T070700Z-26eb70d7",
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 21,
+          "driverSha256": "9391d251d03b06476dcdb21c0169c0ccad29b827dcc7ceef2eb25804a7c30b51",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-ci-20261102T070700Z-26eb70d7/primary-results.json",
+            "bytes": 15927,
+            "sha256": "125dc28c3736bec2cba9c32616d4319aa1d20fdd042508dd06b06b2bdb426172"
+          }
+        },
+        {
+          "phase": "restart",
+          "checks": 4,
+          "driverSha256": "9391d251d03b06476dcdb21c0169c0ccad29b827dcc7ceef2eb25804a7c30b51",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-ci-20261102T070700Z-26eb70d7/restart-results.json",
+            "bytes": 3138,
+            "sha256": "ff4cc607a259a02ee4345cac1803a85221ca58db58b4bdbeb8648e48d247040c"
+          }
+        }
+      ]
+    },
+    {
+      "id": "service-account",
+      "checks": 25,
+      "run": "f26a-affected-service-account-20261102T070953Z-7cbd7a66",
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 21,
+          "driverSha256": "c7348717fdfead8fd7d9583d953a470a8da50aad63a3bb99f60211e6f2682f0b",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-service-account-20261102T070953Z-7cbd7a66/primary-results.json",
+            "bytes": 16633,
+            "sha256": "dbef1f664909ef6cd5c780004bcef7155b38ca4396b548c63fe5ed6494fd1c9f"
+          }
+        },
+        {
+          "phase": "restart",
+          "checks": 4,
+          "driverSha256": "c7348717fdfead8fd7d9583d953a470a8da50aad63a3bb99f60211e6f2682f0b",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-service-account-20261102T070953Z-7cbd7a66/restart-results.json",
+            "bytes": 3309,
+            "sha256": "8f1a00b5c35b43694f5b4d209700321383f7e0d34d3a442578cc53545788d54e"
+          }
+        }
+      ]
+    },
+    {
+      "id": "registry",
+      "checks": 25,
+      "run": "f26a-affected-registry-20261102T071228Z-4a05e062",
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 21,
+          "driverSha256": "8798c3a07df2770e3f06460105238ff0b65c225fd58ee6013a0fe9d9745c6633",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-registry-20261102T071228Z-4a05e062/primary-results.json",
+            "bytes": 15602,
+            "sha256": "29d28dfce5c1534c733f3f3a3cf00819e407d71f43bc59298682b6e9754fed64"
+          }
+        },
+        {
+          "phase": "restart",
+          "checks": 4,
+          "driverSha256": "8798c3a07df2770e3f06460105238ff0b65c225fd58ee6013a0fe9d9745c6633",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-registry-20261102T071228Z-4a05e062/restart-results.json",
+            "bytes": 3173,
+            "sha256": "9cf1a698422bd6df77a6cd3f3cf7c58c896b48564a3f5d9cdbf7ace2cdf26cf6"
+          }
+        }
+      ]
+    },
+    {
+      "id": "terraform",
+      "checks": 25,
+      "run": "f26a-affected-terraform-20261102T071500Z-d76ea620",
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 21,
+          "driverSha256": "56baeb6b5c28e25691bca0ea9213c186edc2dce83fa815ac3bed323778ce72b5",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-terraform-20261102T071500Z-d76ea620/primary-results.json",
+            "bytes": 15638,
+            "sha256": "256e6b3777b18a78e8cde25c9c9cc11aa7fa619ee5b636545f784d461fb1c285"
+          }
+        },
+        {
+          "phase": "restart",
+          "checks": 4,
+          "driverSha256": "56baeb6b5c28e25691bca0ea9213c186edc2dce83fa815ac3bed323778ce72b5",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-terraform-20261102T071500Z-d76ea620/restart-results.json",
+            "bytes": 3466,
+            "sha256": "d9ef4fedf7618f10b471353f86287f6fe1fe2c0c0a2bb396e114b40408edb8e7"
+          }
+        }
+      ]
+    },
+    {
+      "id": "container",
+      "checks": 25,
+      "run": "f26a-affected-container-20261102T071714Z-6dcd697a",
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 21,
+          "driverSha256": "c7b475a18a921ffeebc0a2f315b14cdee92b9a06264c79ec23229b794794415d",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-container-20261102T071714Z-6dcd697a/primary-results.json",
+            "bytes": 15301,
+            "sha256": "7e88f1179ea24976160ea518f403ed7e747b47008f8bd2845a653371b8d592d0"
+          }
+        },
+        {
+          "phase": "restart",
+          "checks": 4,
+          "driverSha256": "c7b475a18a921ffeebc0a2f315b14cdee92b9a06264c79ec23229b794794415d",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-container-20261102T071714Z-6dcd697a/restart-results.json",
+            "bytes": 3451,
+            "sha256": "4ccd45fb10d5fc866c93140736d19e4bca8cd770763728d49d39c34540de960c"
+          }
+        }
+      ]
+    },
+    {
+      "id": "source",
+      "checks": 21,
+      "run": "f26a-affected-source-20261102T071925Z-d0a526d6",
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 18,
+          "driverSha256": "05f022d000f2842765e7791a6ce72ea055c11c4324a90d4d8336bd2b0db3972b",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-source-20261102T071925Z-d0a526d6/primary-results.json",
+            "bytes": 10607,
+            "sha256": "fd75263bb322236ca413db5e3f5d4406d1b47848d4dfd286aae9cc325621da4d"
+          }
+        },
+        {
+          "phase": "restart",
+          "checks": 3,
+          "driverSha256": "05f022d000f2842765e7791a6ce72ea055c11c4324a90d4d8336bd2b0db3972b",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-source-20261102T071925Z-d0a526d6/restart-results.json",
+            "bytes": 2263,
+            "sha256": "dac33475af7f2aef6ae7e513ab96f87034fdeae45a5f4a90f7a180db3463f24d"
+          }
+        }
+      ]
+    },
+    {
+      "id": "hygiene",
+      "checks": 21,
+      "run": "f26a-affected-hygiene-20261102T072125Z-2c5d8b49",
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 18,
+          "driverSha256": "ce2e25225165ad53f524f4a02048560014a3ac79190b87a58c541249e6a2f16a",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-hygiene-20261102T072125Z-2c5d8b49/primary-results.json",
+            "bytes": 8920,
+            "sha256": "fbd3ba3e8da90ba11d15c283d9eea411696d989f17412331af29a7100a42bcac"
+          }
+        },
+        {
+          "phase": "restart",
+          "checks": 3,
+          "driverSha256": "ce2e25225165ad53f524f4a02048560014a3ac79190b87a58c541249e6a2f16a",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-hygiene-20261102T072125Z-2c5d8b49/restart-results.json",
+            "bytes": 1989,
+            "sha256": "8d92e97fc97f0feb772dcbea4f652862dc9cb79e7743891c8ea898703d327b2d"
+          }
+        }
+      ]
+    },
+    {
+      "id": "vault",
+      "checks": 10,
+      "run": "f26a-affected-vault-20261102T072314Z-8cc12b73",
+      "phases": [
+        {
+          "phase": "save",
+          "checks": 6,
+          "driverSha256": "2b98b5e9943812e100d1dbcd160dffa8a015cbce06405e1397f3bc071062dcd4",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-vault-20261102T072314Z-8cc12b73/save-results.json",
+            "bytes": 5892,
+            "sha256": "bc25cea52f79db7d0570ad6afbc250103b42ad0a425beb9e52d02c9a8b5cf8dc"
+          }
+        },
+        {
+          "phase": "reload",
+          "checks": 4,
+          "driverSha256": "2b98b5e9943812e100d1dbcd160dffa8a015cbce06405e1397f3bc071062dcd4",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-vault-20261102T072314Z-8cc12b73/reload-results.json",
+            "bytes": 5843,
+            "sha256": "93db7cf2a9b10ec611b60d626320df5dce33bea68213452177c6ad863090cb04"
+          }
+        }
+      ]
+    },
+    {
+      "id": "retained",
+      "checks": 106,
+      "run": "f26a-retained-native-20261102T072501Z-ce583298",
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 103,
+          "driverSha256": "3a2277b1a567c8fed5b699cc96c04146ef29fb27cfed6963bf8406f7f764d504",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-retained-native-20261102T072501Z-ce583298/primary-results.json",
+            "bytes": 15895,
+            "sha256": "27eac64635cd1061af714f2054e5388297a89f31d3c7cc3c70fca003fbd20d7d"
+          }
+        },
+        {
+          "phase": "restart",
+          "checks": 3,
+          "driverSha256": "3a2277b1a567c8fed5b699cc96c04146ef29fb27cfed6963bf8406f7f764d504",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-retained-native-20261102T072501Z-ce583298/restart-results.json",
+            "bytes": 1239,
+            "sha256": "88f0bcd1ea62eb4bed7d36b4497ae14ea8144ee70b5e1776c82b5a2fc2bad1c2"
+          }
+        }
+      ]
+    }
+  ],
+  "familyCount": 20,
+  "nativeChecks": 509,
+  "phases": 37,
+  "functionalChecks": 10,
+  "securityBaselineCases": 17,
+  "securityChanged": 0,
+  "residuals": {
+    "BLOCKED_SCOPED": 8,
+    "LEAK_CONFIRMED": 9
+  },
+  "scopeIdentity": {
+    "scope": {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-scope-01.json",
+      "bytes": 4780,
+      "sha256": "d931e0883207e13af4034d05f93333713ca4cba34458ce987f1b4eaaa0b68bf8"
+    },
+    "actualEnforcedBinding": "6ad782a541704d8da93321093d479f5947684371802818b711802ded0587a8b3",
+    "originalScenariosPreserved": true
+  },
+  "functionalSecurityContinuation": null,
+  "closureScope": "Every declared Code/helper/outer wrapper observed natural exit0 and both EOF; nested unobserved child EOF is not inferred.",
+  "configuredPush": "NOT_AUTHORIZED_NOT_RUN",
+  "f26aNative09": "USER_DEFERRED_NOT_RUN",
+  "signalsRequested": 0,
+  "independence": "LOW",
+  "evidence": [
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-logs-f28-01-stdout.bin",
+      "bytes": 1910,
+      "sha256": "83b81040163447cdf0b876beef97ae607ecbf75eb343b4cb1979667fa26427d3"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-logs-f28-01-stderr.bin",
+      "bytes": 616,
+      "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-logs-f28-01.txt",
+      "bytes": 193,
+      "sha256": "bef0433b513b0a0475a672d1282f448ed1db90a4b96bcc5b8b1e4055397a569f"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-logs-f28-01.txt.result.json",
+      "bytes": 1913,
+      "sha256": "c4beb2cbb3e2f93d9c24e24334e6c1d75e73973b5d2e0892552b775e4e345000"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-logs-f28-01-result.json",
+      "bytes": 620,
+      "sha256": "ad52068525c7b05b745ec1e12f15999bf091efb629dc2ee4695f40dbdf3901ce"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-logs-f28-01-owned-close.json",
+      "bytes": 619,
+      "sha256": "29e9191faf2d692b048c279a6d697eab5c558bbb1459a695487745d9050a4c87"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-logs-native-20261101T173851Z-e9f2e1a5/primary-results.json",
+      "bytes": 16671,
+      "sha256": "27504b84521458795ff794afbfd97a6c1aafb1b9241ca2ed8c0259dbc718b9b0"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-logs-native-20261101T173851Z-e9f2e1a5/primary-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-logs-native-20261101T173851Z-e9f2e1a5/primary-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "23366b62877e558ad6855210a35d27bc2b302d7c4b4ab4adec98d1e7b6df6eac"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-logs-native-20261101T173851Z-e9f2e1a5/restart-results.json",
+      "bytes": 4329,
+      "sha256": "c67d459e032b335dcdbf93dca2b90034bb5b3ceb2297cd12e51eb1d27dc866e0"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-logs-native-20261101T173851Z-e9f2e1a5/restart-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-logs-native-20261101T173851Z-e9f2e1a5/restart-helper-pipe-ownership.json",
+      "bytes": 530,
+      "sha256": "45eea4a54fd27197a3d2346b57d81b4d069509cc12743e6489c63b8beba56b38"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-logs-native-20261101T173851Z-e9f2e1a5/summary.json",
+      "bytes": 1118,
+      "sha256": "e816eb77f73804078e67c29241cddf4e26e9994d36004ad9aadae9f8634f2166"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-logs-native-20261101T173851Z-e9f2e1a5/freeze.json",
+      "bytes": 4735,
+      "sha256": "c1133cd04a895ac3624f114a3ad3eee03df60c71001aa7d609b8912eb872bb5b"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-owned-output-f28-02-stdout.bin",
+      "bytes": 1937,
+      "sha256": "9c3bfd8a63027b867631a92c6215035609d996289e73a20b49982ca85ba04077"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-owned-output-f28-02-stderr.bin",
+      "bytes": 616,
+      "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-owned-output-f28-02.txt",
+      "bytes": 201,
+      "sha256": "ac85f9d496008ccb4569a85a1368e5849c9bcb6439a1241104afb58ada874362"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-owned-output-f28-02.txt.result.json",
+      "bytes": 1940,
+      "sha256": "2052d451db0f7f8061a7f06309b57c748af0424a3921178064b84bc410d482c7"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-owned-output-f28-02-result.json",
+      "bytes": 644,
+      "sha256": "5bf06330ab13bb444ee48d5e51d371c2ee8a652a4ad98f4ed5ccc25db53786d9"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-owned-output-f28-02-owned-close.json",
+      "bytes": 619,
+      "sha256": "a9ce3e876a76af55f96112286ddc53924bc6c4634795e05108a415f9f57545e7"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-owned-output-native-20261102T013417Z-3534aa70/single-results.json",
+      "bytes": 18419,
+      "sha256": "44f0bf5c55eb4a80ba04363641151054f42520bb54c4875d542a29e0772b48fd"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-owned-output-native-20261102T013417Z-3534aa70/single-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-owned-output-native-20261102T013417Z-3534aa70/single-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "1b1f515b4a3776052fbfc5e3383c8a37e8cb319a07aaf12ac0af9d1f09f5baad"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-owned-output-native-20261102T013417Z-3534aa70/summary.json",
+      "bytes": 759,
+      "sha256": "e775641ee2244e1e94ceba3bd5df9dd39a8255037d5045538bed9e49695b477c"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-owned-output-native-20261102T013417Z-3534aa70/freeze.json",
+      "bytes": 4767,
+      "sha256": "fb0dcbdbd033985b6cc99a0f8f0b0d1ec97852384c42fc89e7ac35189e5d7e50"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-artifact-f28-02-stdout.bin",
+      "bytes": 1922,
+      "sha256": "65401cbbdcb40216cab05ae6c78aba3457ecee860bad4c9109c64daed6db7583"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-artifact-f28-02-stderr.bin",
+      "bytes": 616,
+      "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-artifact-f28-02.txt",
+      "bytes": 197,
+      "sha256": "814794f3cbe5ceb3c639d9017b32fe8ae9fa1f2282542cc8d9635fa7742def48"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-artifact-f28-02.txt.result.json",
+      "bytes": 1925,
+      "sha256": "00650c2ba7de37eef545fcc2f47f24879739bc535f2350d72472295d4c9748c7"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-artifact-f28-02-result.json",
+      "bytes": 667,
+      "sha256": "6d57f3543f6c50ce95679a4543ef453e505a1f8dbe7640ad6d6d482a29fe6c2f"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-artifact-f28-02-owned-close.json",
+      "bytes": 619,
+      "sha256": "53ab5358df462eb8bb58ac96c7543389ce735d34aedced024dd416ec0e7c7331"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-artifact-native-20261102T013628Z-132a6dbe/primary-results.json",
+      "bytes": 14770,
+      "sha256": "b5f74057f4c232f54565f8463a4b8057a39964d3c4e6db3f2a5c78ebefaec0b6"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-artifact-native-20261102T013628Z-132a6dbe/primary-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-artifact-native-20261102T013628Z-132a6dbe/primary-helper-pipe-ownership.json",
+      "bytes": 530,
+      "sha256": "78670908055dcae45ae23bdf087e7d27529ddc14fd1e947278dae54a09428f2a"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-artifact-native-20261102T013628Z-132a6dbe/restart-results.json",
+      "bytes": 3858,
+      "sha256": "6b6e50589d1e25ba14ffd4192e16c2dc7f78c4838e059a4d5527b0875dc2aa78"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-artifact-native-20261102T013628Z-132a6dbe/restart-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-artifact-native-20261102T013628Z-132a6dbe/restart-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "60b956cf3cd68415c7c15d0481edd0b6758a9c6770afd7141ec7d914235c53d6"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-artifact-native-20261102T013628Z-132a6dbe/summary.json",
+      "bytes": 1126,
+      "sha256": "2b79412c86c10d44bd99d7fb4eb5cb38a226536ef6ebf9d25ff95dced185ed6f"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-artifact-native-20261102T013628Z-132a6dbe/freeze.json",
+      "bytes": 4767,
+      "sha256": "22e9594f80d5a1efdcb5551eb77c7b8c0b903f04023254eb8567c70d52035dca"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-streaming-output-f28-02-stdout.bin",
+      "bytes": 1946,
+      "sha256": "7572ae5487a9c1d5e1bc127b8a9686ec9a2686462a443bce6b63df24527da240"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-streaming-output-f28-02-stderr.bin",
+      "bytes": 616,
+      "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-streaming-output-f28-02.txt",
+      "bytes": 205,
+      "sha256": "0cede4c43f104750d2826bfba905c5f6f11a41b2a966922d9d9f8a1b920c3eaa"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-streaming-output-f28-02.txt.result.json",
+      "bytes": 1949,
+      "sha256": "d093bed4e5e794a3b835e4ae4f593682693a891f9b625d5e62651406641d96ef"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-streaming-output-f28-02-result.json",
+      "bytes": 656,
+      "sha256": "73caabafc1364681fdcb1c7dc97dc51175cb35293d90abf07ad22c17ac9662f5"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-streaming-output-f28-02-owned-close.json",
+      "bytes": 619,
+      "sha256": "d0e9d34542050da92535f7ecb706d24494f158eea0e3e236e2a2f4c11e2d0b95"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-streaming-output-native-20261102T013844Z-d59f1fd4/single-results.json",
+      "bytes": 5557,
+      "sha256": "0af41c340da8aef1001c68c651283a3073e4fbcc10388343335b7457b094e1cd"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-streaming-output-native-20261102T013844Z-d59f1fd4/single-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-streaming-output-native-20261102T013844Z-d59f1fd4/single-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "82de032871309a25d6e7c42185ff97ee3a726aaa1d52b3b13b32d53a4523f7a4"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-streaming-output-native-20261102T013844Z-d59f1fd4/summary.json",
+      "bytes": 763,
+      "sha256": "e8fe5272530177aff8ac3981ea6132cc490c4eb885c4682a42a5f66b3acd600b"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-streaming-output-native-20261102T013844Z-d59f1fd4/freeze.json",
+      "bytes": 4799,
+      "sha256": "2c9e9f5e4c8b72087ab59e46d3dd53759510a9800a04d4010d237f08c3517c8f"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-vault-runtime-f28-02-stdout.bin",
+      "bytes": 1937,
+      "sha256": "445013d97694ceff2254d2b09783a82a6cdacfbdd3d74bdc77a955f597750cb2"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-vault-runtime-f28-02-stderr.bin",
+      "bytes": 616,
+      "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-vault-runtime-f28-02.txt",
+      "bytes": 202,
+      "sha256": "8d56722818bb33dcec57e5f4c7f433fd3d66aa59647311c693df9451c7f496f0"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-vault-runtime-f28-02.txt.result.json",
+      "bytes": 1940,
+      "sha256": "d54390f62e290e0773cc5e8cad7931900b58bab812b3b0fc19964657c1a18224"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-vault-runtime-f28-02-result.json",
+      "bytes": 647,
+      "sha256": "9d59d894829e9eb0e1784c2976f27477998906c5ba9b1958c4d53a02db04447e"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-vault-runtime-f28-02-owned-close.json",
+      "bytes": 619,
+      "sha256": "1eb336ef34d6c1b11a95fbc59cbc6422007cf4815d5880e3c33ffafb2b8cdc29"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-vault-runtime-native-20261102T014004Z-039ba588/single-results.json",
+      "bytes": 5641,
+      "sha256": "8ef3fd750b9854d25c195a788210c63760771d014bdeeb960070140a901a1603"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-vault-runtime-native-20261102T014004Z-039ba588/single-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-vault-runtime-native-20261102T014004Z-039ba588/single-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "90c87ec37d3589c4a2666899508b30bea1e3f2804d4619db41b1b542edc7c002"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-vault-runtime-native-20261102T014004Z-039ba588/summary.json",
+      "bytes": 760,
+      "sha256": "47ee7834fd60d2504cbd484c75f8d72fe434cb374be5ed248f0daa699665eda7"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-vault-runtime-native-20261102T014004Z-039ba588/freeze.json",
+      "bytes": 4775,
+      "sha256": "4603b25d24e12fa8a9fd79f803377bf19004b3436fdc3508a6b6d1cb0108e66d"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-ps51-f28-02-stdout.bin",
+      "bytes": 1910,
+      "sha256": "fb63c6c9c32df609e4dc58a6ce608a72c2da9b034791e4b2c3176c8393369da9"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-ps51-f28-02-stderr.bin",
+      "bytes": 616,
+      "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-ps51-f28-02.txt",
+      "bytes": 193,
+      "sha256": "247e5b36cf4293551e09939d3595900c9819061042fe4f13aca1697c6e02095a"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-ps51-f28-02.txt.result.json",
+      "bytes": 1913,
+      "sha256": "84fb54878652d4702858a4b2dabe7f9484876f04a734a475f8010d89f1203b56"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-ps51-f28-02-result.json",
+      "bytes": 620,
+      "sha256": "4222e56e645e935944d87e156752a23b5b5016cb1fcde73158df2a96f90158cb"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-ps51-f28-02-owned-close.json",
+      "bytes": 619,
+      "sha256": "8b0b1f86c8f685b58d3dce5f8fe1e42136ec325d58d85045c89dbaf10a87b9d7"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-ps51-native-20261102T014135Z-32d76c4b/primary-results.json",
+      "bytes": 6511,
+      "sha256": "e4b2d5df57abce6b1cc3309a40596fadaa350f31a17dd85907ac6622853175b0"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-ps51-native-20261102T014135Z-32d76c4b/primary-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-ps51-native-20261102T014135Z-32d76c4b/primary-helper-pipe-ownership.json",
+      "bytes": 530,
+      "sha256": "e7c3139cef17557c822c5f9222098da5988f22259bf316a7c681351e6519ced9"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-ps51-native-20261102T014135Z-32d76c4b/restart-results.json",
+      "bytes": 2082,
+      "sha256": "9a52eba99c7629f5ed89aec3881caa144d095b3c2b6cccb9ca32a30f76b0f20b"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-ps51-native-20261102T014135Z-32d76c4b/restart-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-ps51-native-20261102T014135Z-32d76c4b/restart-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "32bec650e3233af04832415c9543fe84158fd5d13fd47517ce87e832e3d37c0b"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-ps51-native-20261102T014135Z-32d76c4b/summary.json",
+      "bytes": 1118,
+      "sha256": "16d0fc8064fc6a3d62ef1edaffbad1a0266ffa5ef414192baa6212ca233273c1"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-ps51-native-20261102T014135Z-32d76c4b/freeze.json",
+      "bytes": 4735,
+      "sha256": "52b3fd2e077213c54e8e0dff8b76e71b7cca4469f0e2f59ab2d295864dfe8296"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-cmd-f28-02-stdout.bin",
+      "bytes": 1907,
+      "sha256": "21ce939dc7a0d748792dde5b2f649023bb7613db1a4a23967501d7d8da25fcfd"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-cmd-f28-02-stderr.bin",
+      "bytes": 616,
+      "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-cmd-f28-02.txt",
+      "bytes": 192,
+      "sha256": "fe88c5f26a0542e7cfda357d8fc34e418df2ec5caeb38a761ada52f4d1d2761b"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-cmd-f28-02.txt.result.json",
+      "bytes": 1910,
+      "sha256": "9b975e3cf05140851dbae60f86cfbbcb9d9cee395fb0bbc1e8cccdedd6fb55e8"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-cmd-f28-02-result.json",
+      "bytes": 617,
+      "sha256": "5b1930e090adeba3caa2af599ed71790f34aab3eee6cfedb1057d99d44f52c77"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-cmd-f28-02-owned-close.json",
+      "bytes": 619,
+      "sha256": "16e806f806b66a26f419318bed6703095636a9f0fbb1736bec778cd01638b85f"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-cmd-native-20261102T014344Z-e03101e8/primary-results.json",
+      "bytes": 6108,
+      "sha256": "b32aa976545e75359f9201770f4fc8ce31a5695c6f1b2afc2f558aab99ff2253"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-cmd-native-20261102T014344Z-e03101e8/primary-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-cmd-native-20261102T014344Z-e03101e8/primary-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "1797da17efef56538ec49fe4ea79d1434bdb1b216ab2789687c8be52aa580fd2"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-cmd-native-20261102T014344Z-e03101e8/restart-results.json",
+      "bytes": 2079,
+      "sha256": "3001a18fbd328efdd40c8dc44bb6064201f64c940872109b0d1745c3ff9e3b1a"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-cmd-native-20261102T014344Z-e03101e8/restart-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-cmd-native-20261102T014344Z-e03101e8/restart-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "d749ec631589e20ffbab17c6ae63bde209312a2fb2be6397a0324d2642556969"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-cmd-native-20261102T014344Z-e03101e8/summary.json",
+      "bytes": 1116,
+      "sha256": "3abf9b867ce828d76c1b3eb6d6ba6377705bb8d9f8aeabef76ecc63759acb765"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-cmd-native-20261102T014344Z-e03101e8/freeze.json",
+      "bytes": 4727,
+      "sha256": "ce09c9469fa9fb77d1a8f9ffc83999b86f9469ce9dc9029f4ee47e186514504c"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-gitbash-f28-02-stdout.bin",
+      "bytes": 1919,
+      "sha256": "e6aceb3f4865df81183d028277c532cf95990de94ded0e6809d47c9b547096d8"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-gitbash-f28-02-stderr.bin",
+      "bytes": 616,
+      "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-gitbash-f28-02.txt",
+      "bytes": 196,
+      "sha256": "e679409a50c98a42d02d6196ce837ccf74c08305f7818c295d8780e0f4757d40"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-gitbash-f28-02.txt.result.json",
+      "bytes": 1922,
+      "sha256": "05cde64d9318a64fe84168f390fb35931f295127fdcf411c177e25ce45f45ca0"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-gitbash-f28-02-result.json",
+      "bytes": 629,
+      "sha256": "c1e882c43aa8b2704721ac0583fbff539303d9fb141e07bc9059d61f90e110ed"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-gitbash-f28-02-owned-close.json",
+      "bytes": 619,
+      "sha256": "fa4683ba076692046fc42c8fadf7c2a4dd9305efcb4e460078730829ff9f2a86"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-gitbash-native-20261102T014542Z-79b2fc69/primary-results.json",
+      "bytes": 6835,
+      "sha256": "9fa40ba2042ba9a75fe315d0ffe6ea707cd57d15b54bf77af1aef03861bcf3e5"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-gitbash-native-20261102T014542Z-79b2fc69/primary-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-gitbash-native-20261102T014542Z-79b2fc69/primary-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "bb8546d7905bf71becfb13cf0fec8af653b7c81a9f2115f751595851bf98707e"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-gitbash-native-20261102T014542Z-79b2fc69/restart-results.json",
+      "bytes": 2093,
+      "sha256": "c07953e35f1f693493dec4ae0e88cd446a07db0c0173b0560bf8e07510dadc44"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-gitbash-native-20261102T014542Z-79b2fc69/restart-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-gitbash-native-20261102T014542Z-79b2fc69/restart-helper-pipe-ownership.json",
+      "bytes": 530,
+      "sha256": "89bf6911bb43bdd8fe44698a331ef33e2a84d261f52703e6fe8b991e99c56c1c"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-gitbash-native-20261102T014542Z-79b2fc69/summary.json",
+      "bytes": 1124,
+      "sha256": "830e1e4479a2ed9eaddf00f132dd5ef717b2348de5e1f0c76a9637dd87a7e45e"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-gitbash-native-20261102T014542Z-79b2fc69/freeze.json",
+      "bytes": 4759,
+      "sha256": "a748b0fb0772906fd6db1324a8c607edfb81debe448ea495a924b607d2a32f1a"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-history-f28-02-stdout.bin",
+      "bytes": 1919,
+      "sha256": "a741e838b25ffc43e7f6112a45c36738138fdc3dd238d3ff9e3735afb65e666e"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-history-f28-02-stderr.bin",
+      "bytes": 616,
+      "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-history-f28-02.txt",
+      "bytes": 196,
+      "sha256": "be0c0e922083ffd95d05e6412521d562ce60f90c6c131b8647cce5e28885505f"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-history-f28-02.txt.result.json",
+      "bytes": 1922,
+      "sha256": "39480833608f987852c20e7bebfccc388a2637b5da870b38dcf1db867872ee93"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-history-f28-02-result.json",
+      "bytes": 629,
+      "sha256": "f614364dc78fcbbe9b3bf040fb2c6c9ee874f61d82ad608fe404c49614d15473"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-history-f28-02-owned-close.json",
+      "bytes": 619,
+      "sha256": "6c6f265829363ae62dc5a861d8e023ca66bf273613f36533d94d1ab88a303392"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-history-native-20261102T014747Z-a60d4290/primary-results.json",
+      "bytes": 37218,
+      "sha256": "5d0a745757477acb46eab52499ce2e3266ee42d37cb42424c7a303483364a484"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-history-native-20261102T014747Z-a60d4290/primary-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-history-native-20261102T014747Z-a60d4290/primary-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "9f2a5d2c10ca488b8cd46c060debb83b1f0a9ab84952cc1ca02a3bd89fb669e4"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-history-native-20261102T014747Z-a60d4290/restart-results.json",
+      "bytes": 7155,
+      "sha256": "5ab803ef7c4e0dafb4e4b72e227796ffe9abfe756a4bb4325d60251daf932edf"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-history-native-20261102T014747Z-a60d4290/restart-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-history-native-20261102T014747Z-a60d4290/restart-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "e40b70eaaaf093dfcdf6e84fb5e37533b86f5a1064d40683925903743f7075d1"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-history-native-20261102T014747Z-a60d4290/summary.json",
+      "bytes": 1124,
+      "sha256": "f67817a44de866879ca72101cec0798d4abb2e80f2a5445e1b5597edf7a0dfa5"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-history-native-20261102T014747Z-a60d4290/freeze.json",
+      "bytes": 4759,
+      "sha256": "bb880392e33e8753f4c3e972a50ec941f0eca6f720883da552f803c1664d4de8"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-mcp-f28-03-stdout.bin",
+      "bytes": 1907,
+      "sha256": "1244d01ec0157a2b33cd2cb845e8886def2f9b231ba52b1fde64209eb07ed8c2"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-mcp-f28-03-stderr.bin",
+      "bytes": 616,
+      "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-mcp-f28-03.txt",
+      "bytes": 192,
+      "sha256": "535637f47511e9ce08b47fb284589820a839b8aaba85f04f920b6c4751e1a6fa"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-mcp-f28-03.txt.result.json",
+      "bytes": 1910,
+      "sha256": "cc36b1b66baf73172bddc397af88ad0e1cd15087f648966cbd3a1e9cb07f715f"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-mcp-f28-03-result.json",
+      "bytes": 617,
+      "sha256": "42c1ded5c799d7bf6651ba4f2cbfe1ce1ac118957c45ef85f3ba0df2dbbab12c"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-mcp-f28-03-owned-close.json",
+      "bytes": 619,
+      "sha256": "af527091497773e397b7252e1123b3ea02e23661fc616153e1e2f2ea0c47f09e"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-mcp-native-20261102T070112Z-ec335897/primary-results.json",
+      "bytes": 16665,
+      "sha256": "dd894a43ecd8691bdc6b4d93ddb2533775bfcc3928736cae2b0620bf5adc076a"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-mcp-native-20261102T070112Z-ec335897/primary-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-mcp-native-20261102T070112Z-ec335897/primary-helper-pipe-ownership.json",
+      "bytes": 530,
+      "sha256": "c173ff72b31266ca2c50d779c4c189b0d1025a83214b5f6bb835834268c2cc8d"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-mcp-native-20261102T070112Z-ec335897/restart-results.json",
+      "bytes": 3492,
+      "sha256": "cefda6e968cdb5a0c2ce8dc8844412d57aa8a6dc88394c92a849b1d39305489f"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-mcp-native-20261102T070112Z-ec335897/restart-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-mcp-native-20261102T070112Z-ec335897/restart-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "3974678489275565ce2070a1c19f4923f16a94d5382030aebba21c9d3cef831d"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-mcp-native-20261102T070112Z-ec335897/summary.json",
+      "bytes": 1116,
+      "sha256": "54af1b90a2c729429505ddce63aa8b8a200c5b80fb6158ef6a56e68a3e0e58bd"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-mcp-native-20261102T070112Z-ec335897/freeze.json",
+      "bytes": 4727,
+      "sha256": "d866a7c43f6572ac35582150c37e5502a3edf3a07f345f975a710f514884411e"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-editor-f28-03-stdout.bin",
+      "bytes": 1916,
+      "sha256": "2c999e8e0a5ebacf8c5e5283b85ac1ef012d674998f9e5b5092ac1a5a3b4e75c"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-editor-f28-03-stderr.bin",
+      "bytes": 616,
+      "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-editor-f28-03.txt",
+      "bytes": 197,
+      "sha256": "17946754582b0ef786060583e1130ed38f382bbda3f9091122f8db0992c2a53d"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-editor-f28-03.txt.result.json",
+      "bytes": 1919,
+      "sha256": "29218a7fbd3875c45f0ccf2c9095240bc3c10939f4e78e6e215dd602cbffb0a9"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-editor-f28-03-result.json",
+      "bytes": 628,
+      "sha256": "fc374746fe302b5af48964b56bf63648896486054f1b68ae54625e7ec97211ce"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-editor-f28-03-owned-close.json",
+      "bytes": 618,
+      "sha256": "ab7a8d31bced0f5fcf6aa23af7968182b1057f2f5d3891824662eb30c8bfdefa"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-editor-20261102T070318Z-2a6987ee/primary-results.json",
+      "bytes": 16778,
+      "sha256": "2f96e4cc7e2e0e59e3dac9d15a5570328a0bd89c6f6d6f13af6f77742b77b935"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-editor-20261102T070318Z-2a6987ee/primary-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-editor-20261102T070318Z-2a6987ee/primary-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "b4ed161ccc47a64393ecafd6249f5ff725504120cb8489289496df1fa4a9f0b7"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-editor-20261102T070318Z-2a6987ee/restart-results.json",
+      "bytes": 3030,
+      "sha256": "a4e54b7b15b67c0ff3fc2305ba422899ff5a389870e8a6ffdea9dd2d7cd9697e"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-editor-20261102T070318Z-2a6987ee/restart-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-editor-20261102T070318Z-2a6987ee/restart-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "a5ccf943105d80122b1129d0e3a51c0456a1994200ddf7c2ab4b5e115c7516f5"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-editor-20261102T070318Z-2a6987ee/summary.json",
+      "bytes": 1126,
+      "sha256": "c12d7ab20aa8b86c124291432c0a00f2230d0bbe1483538a1d86a4e7ba256e57"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-editor-20261102T070318Z-2a6987ee/freeze.json",
+      "bytes": 4767,
+      "sha256": "fecf7f11f24ef4788e80d7b0e8ffae312969b90784b19c2e5bd219cf8b288389"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-ci-f28-03-stdout.bin",
+      "bytes": 1904,
+      "sha256": "43db9e437f496ab8c23abc6beef1ee268a3cbb7317477e85121d4093098d013f"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-ci-f28-03-stderr.bin",
+      "bytes": 616,
+      "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-ci-f28-03.txt",
+      "bytes": 189,
+      "sha256": "d1da2433d4ee5192696be164546d3d554b7513d77a47bb5383109d0886b0d429"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-ci-f28-03.txt.result.json",
+      "bytes": 1907,
+      "sha256": "e761d5820d2ca747a3f9b5f8f8b6c7ab775d1932be9756528d14809e008d6bd3"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-ci-f28-03-result.json",
+      "bytes": 616,
+      "sha256": "e2b39ea87db005b559c7650ab8cf18be850b528ffa34ac3c8bc6c5bf5a5f6b2b"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-ci-f28-03-owned-close.json",
+      "bytes": 619,
+      "sha256": "e7f2b3012f3cefbcde81ae3af55ffa98aeb3f27dd4c57a2f2587907bdbeecb7f"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-ci-20261102T070700Z-26eb70d7/primary-results.json",
+      "bytes": 15927,
+      "sha256": "125dc28c3736bec2cba9c32616d4319aa1d20fdd042508dd06b06b2bdb426172"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-ci-20261102T070700Z-26eb70d7/primary-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-ci-20261102T070700Z-26eb70d7/primary-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "fcf0c50d4d8fd45055cf2d305edfac109d38e68023458846a944526ccf43b971"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-ci-20261102T070700Z-26eb70d7/restart-results.json",
+      "bytes": 3138,
+      "sha256": "ff4cc607a259a02ee4345cac1803a85221ca58db58b4bdbeb8648e48d247040c"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-ci-20261102T070700Z-26eb70d7/restart-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-ci-20261102T070700Z-26eb70d7/restart-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "121d500e84a4a6a73da24d49176308e38173abdcd03ba201c461e9a95da37107"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-ci-20261102T070700Z-26eb70d7/summary.json",
+      "bytes": 1118,
+      "sha256": "777f4fb21f71484a582d879bb0f50c15e47122c6c5baa6483dc4dcb068a4766a"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-ci-20261102T070700Z-26eb70d7/freeze.json",
+      "bytes": 4731,
+      "sha256": "f31e46e4d09824aa40dd1007152fb3c5da10d57b1a46d3ef91c5b0f82cd6714c"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-service-account-f28-03-stdout.bin",
+      "bytes": 1943,
+      "sha256": "ca5160bda8a85ab49ec0b7df9769800a9411efa79f3c8f933384d58330f6d706"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-service-account-f28-03-stderr.bin",
+      "bytes": 616,
+      "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-service-account-f28-03.txt",
+      "bytes": 215,
+      "sha256": "c5b02756dbbb847b33a55427e3ed1b35705ffefb680b0ee07fc0510f7f482170"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-service-account-f28-03.txt.result.json",
+      "bytes": 1946,
+      "sha256": "9b21f1e794fcfb4c8a7b4014086d56d4bb8d5aad6aaefda1fb93b176b2811582"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-service-account-f28-03-result.json",
+      "bytes": 655,
+      "sha256": "6a10b074ee43c5890ee45cd4768a69dcc7559661e1ad0e416b8f5e3a40987668"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-service-account-f28-03-owned-close.json",
+      "bytes": 619,
+      "sha256": "e2b431e9a55c0de2c4c2ed40647cb86d27f04f6dc111be6c5149c6d53a8a28f7"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-service-account-20261102T070953Z-7cbd7a66/primary-results.json",
+      "bytes": 16633,
+      "sha256": "dbef1f664909ef6cd5c780004bcef7155b38ca4396b548c63fe5ed6494fd1c9f"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-service-account-20261102T070953Z-7cbd7a66/primary-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-service-account-20261102T070953Z-7cbd7a66/primary-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "17fc344838758ffc4eae9dc29e0f12e9ca763751ba1571599c524e90cd2232b0"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-service-account-20261102T070953Z-7cbd7a66/restart-results.json",
+      "bytes": 3309,
+      "sha256": "8f1a00b5c35b43694f5b4d209700321383f7e0d34d3a442578cc53545788d54e"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-service-account-20261102T070953Z-7cbd7a66/restart-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-service-account-20261102T070953Z-7cbd7a66/restart-helper-pipe-ownership.json",
+      "bytes": 530,
+      "sha256": "fcb94eb66d279839dc82d69cd1a37a3146091063df8a708b3bfa23eea27c7f87"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-service-account-20261102T070953Z-7cbd7a66/summary.json",
+      "bytes": 1144,
+      "sha256": "7bcff532194c537a3e38c665f779996f42dbe18e8d812fc5f03c5d1597294451"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-service-account-20261102T070953Z-7cbd7a66/freeze.json",
+      "bytes": 4848,
+      "sha256": "291d92263fcb6e5686d5038a1de375e8a506c1f5ef9152eff7206c038a9be588"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-registry-f28-03-stdout.bin",
+      "bytes": 1922,
+      "sha256": "5d2436f8acf3100602945a7a2ee1d9597805b1f34e6bf3e62b96c2584de347c4"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-registry-f28-03-stderr.bin",
+      "bytes": 616,
+      "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-registry-f28-03.txt",
+      "bytes": 201,
+      "sha256": "640d93a73f64ce3d33e6a358a8827dda0c4a1dcacb3cbd4fe88f6508d0e05d2b"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-registry-f28-03.txt.result.json",
+      "bytes": 1925,
+      "sha256": "fa29823645c2bbac4d920c5130cc931d69adee9b26174a9edbf39b39092e5563"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-registry-f28-03-result.json",
+      "bytes": 634,
+      "sha256": "bb76f50dbc5dd13479dd429379657288db848986d28112a394cc3b7d4fb7b214"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-registry-f28-03-owned-close.json",
+      "bytes": 619,
+      "sha256": "621e219834e36991be756f65372f36f4f9a0e924c95590fe974e04ae9c4644e6"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-registry-20261102T071228Z-4a05e062/primary-results.json",
+      "bytes": 15602,
+      "sha256": "29d28dfce5c1534c733f3f3a3cf00819e407d71f43bc59298682b6e9754fed64"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-registry-20261102T071228Z-4a05e062/primary-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-registry-20261102T071228Z-4a05e062/primary-helper-pipe-ownership.json",
+      "bytes": 530,
+      "sha256": "2df699499f63a5d75810746d09a4192663135cc15d8251666e7e6b9f37baf91c"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-registry-20261102T071228Z-4a05e062/restart-results.json",
+      "bytes": 3173,
+      "sha256": "9cf1a698422bd6df77a6cd3f3cf7c58c896b48564a3f5d9cdbf7ace2cdf26cf6"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-registry-20261102T071228Z-4a05e062/restart-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-registry-20261102T071228Z-4a05e062/restart-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "3843e4a65c315ae6e5113285fba2f1b2b10be03e97d9fc4915cc378fc2df2e6c"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-registry-20261102T071228Z-4a05e062/summary.json",
+      "bytes": 1130,
+      "sha256": "a3805908ab327183af84dd6779a66a5858820224668945759abbaff2d31f4a65"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-registry-20261102T071228Z-4a05e062/freeze.json",
+      "bytes": 4785,
+      "sha256": "cfc2c00ae2c44b92fe9cb7e8775b48b6ac00a2fb29586e01a3d3e68f85fe9fa6"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-terraform-f28-03-stdout.bin",
+      "bytes": 1925,
+      "sha256": "eda67dcd15e9314d62ef3ee7f774d1d5c142aa90f9d9060a311fb5e6943a7cf2"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-terraform-f28-03-stderr.bin",
+      "bytes": 616,
+      "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-terraform-f28-03.txt",
+      "bytes": 203,
+      "sha256": "9eda9890a7f0aa1fd3e5276fbcbbf632cb988fc0915b2ef9cc60b80798304af0"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-terraform-f28-03.txt.result.json",
+      "bytes": 1928,
+      "sha256": "7fd06cb33f4218df9ecbfd4be0bdfe124dc75a80fdbbb3fb56d04bd90e6d6e51"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-terraform-f28-03-result.json",
+      "bytes": 637,
+      "sha256": "48f86a3eeccdd4f9a8196529c24411998da9e85adb7472f4bbe1c7ff9c0b9ffc"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-terraform-f28-03-owned-close.json",
+      "bytes": 619,
+      "sha256": "9fb349736784be5dc2fdba6675f50f0adfcaa16ffea2c06af34f88108123267e"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-terraform-20261102T071500Z-d76ea620/primary-results.json",
+      "bytes": 15638,
+      "sha256": "256e6b3777b18a78e8cde25c9c9cc11aa7fa619ee5b636545f784d461fb1c285"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-terraform-20261102T071500Z-d76ea620/primary-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-terraform-20261102T071500Z-d76ea620/primary-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "e6f965d4d0ec5d89e68de6c119fd3ac172db30533ad9e90bb0cf71ff04c9e9a1"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-terraform-20261102T071500Z-d76ea620/restart-results.json",
+      "bytes": 3466,
+      "sha256": "d9ef4fedf7618f10b471353f86287f6fe1fe2c0c0a2bb396e114b40408edb8e7"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-terraform-20261102T071500Z-d76ea620/restart-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-terraform-20261102T071500Z-d76ea620/restart-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "f5efb43a01f166be0931a8e5569927dd881101b50179ee63f8b562c0cc1e4752"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-terraform-20261102T071500Z-d76ea620/summary.json",
+      "bytes": 1132,
+      "sha256": "1d3937f8ea779650dfb1e5c0f06e854057aa523bfd4064c173833442f76f6beb"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-terraform-20261102T071500Z-d76ea620/freeze.json",
+      "bytes": 4794,
+      "sha256": "619a609c4cbe9d41a63829db8d7bfdb41f232581de78be8979e328218a3f6e51"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-container-f28-03-stdout.bin",
+      "bytes": 1925,
+      "sha256": "165a855a2fc5d7b38c06c6ab4f9006b2008fd489434dd20c9a7c7afc93136618"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-container-f28-03-stderr.bin",
+      "bytes": 616,
+      "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-container-f28-03.txt",
+      "bytes": 203,
+      "sha256": "657c11ccbcf7dd539322d87e3fc5c2a41534e1951f5cb12c795285db51fc1249"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-container-f28-03.txt.result.json",
+      "bytes": 1928,
+      "sha256": "b19c324b8611679368b4f8a05e01c2906a3abb3ad8101762ede148da0cbd6cb2"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-container-f28-03-result.json",
+      "bytes": 637,
+      "sha256": "852122958f8dacef168a1303577c1dca6e3cdf6186d76fa46445df6f9fe9cd4f"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-container-f28-03-owned-close.json",
+      "bytes": 619,
+      "sha256": "d41522a99bdc2025ae74b8c5a7aff02b47f125b0d79e65891adc46e0639dd96e"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-container-20261102T071714Z-6dcd697a/primary-results.json",
+      "bytes": 15301,
+      "sha256": "7e88f1179ea24976160ea518f403ed7e747b47008f8bd2845a653371b8d592d0"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-container-20261102T071714Z-6dcd697a/primary-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-container-20261102T071714Z-6dcd697a/primary-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "cce482e3d8720180f080bddb4b46751241ef75a2444d55c02fd0eb21d64c60af"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-container-20261102T071714Z-6dcd697a/restart-results.json",
+      "bytes": 3451,
+      "sha256": "4ccd45fb10d5fc866c93140736d19e4bca8cd770763728d49d39c34540de960c"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-container-20261102T071714Z-6dcd697a/restart-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-container-20261102T071714Z-6dcd697a/restart-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "bfde98d63b5f318a38be65a998926bb1d8ec04e4f2d139f1a8ff60a8931933d4"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-container-20261102T071714Z-6dcd697a/summary.json",
+      "bytes": 1132,
+      "sha256": "963f1634d51dfccbf1ef704afebbb106622ed7c3a05213cf0a4a3900f749e5f1"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-container-20261102T071714Z-6dcd697a/freeze.json",
+      "bytes": 4794,
+      "sha256": "c05d35ebabccaddcc9129b0b5fd48faacf96911bae6e0b5d8bb91a1a84d43f74"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-source-f28-03-stdout.bin",
+      "bytes": 1916,
+      "sha256": "8dfae88646110926d1e1460565ef9d5a31fe6dcd1a3d9edac45c3116dc0d45c2"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-source-f28-03-stderr.bin",
+      "bytes": 616,
+      "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-source-f28-03.txt",
+      "bytes": 207,
+      "sha256": "f6c40e6bcbf84b14a205cb635abb7adcdb5b8209cf52c2617f3dd7a7753fdab8"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-source-f28-03.txt.result.json",
+      "bytes": 1919,
+      "sha256": "63858dbde6c91befa5568ed01bc41d47a1d520a90d755a5597f230b5425bf8cb"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-source-f28-03-result.json",
+      "bytes": 628,
+      "sha256": "4613e923b199fd36bf0a424e13cd49da5cd8966bfbc41ac4f32cbcf46389dff3"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-source-f28-03-owned-close.json",
+      "bytes": 619,
+      "sha256": "0b177590effd4a8c7060d1267c325bb92eb6f8048499669d8923e6799ebff56c"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-source-20261102T071925Z-d0a526d6/primary-results.json",
+      "bytes": 10607,
+      "sha256": "fd75263bb322236ca413db5e3f5d4406d1b47848d4dfd286aae9cc325621da4d"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-source-20261102T071925Z-d0a526d6/primary-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-source-20261102T071925Z-d0a526d6/primary-helper-pipe-ownership.json",
+      "bytes": 530,
+      "sha256": "a670bcb89b43ff7f8e7ebbbffbf6f0b5345d4b39a76b35dee1934686eaaaa5f9"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-source-20261102T071925Z-d0a526d6/restart-results.json",
+      "bytes": 2263,
+      "sha256": "dac33475af7f2aef6ae7e513ab96f87034fdeae45a5f4a90f7a180db3463f24d"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-source-20261102T071925Z-d0a526d6/restart-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-source-20261102T071925Z-d0a526d6/restart-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "bfa6d0f75db1aec1e0d2cffa0b22d96ebf42504017f79774c7233255856026f8"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-source-20261102T071925Z-d0a526d6/summary.json",
+      "bytes": 1126,
+      "sha256": "07db0404b07f20353273b19052a3aae61cb75a11ed1846baef4be6fa441a2015"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-source-20261102T071925Z-d0a526d6/freeze.json",
+      "bytes": 4768,
+      "sha256": "ea5e3d353e6aa8cad17e24365c838575278b49066bde4d3a40b569ffb974bb27"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-hygiene-f28-03-stdout.bin",
+      "bytes": 1919,
+      "sha256": "9632cdf8c401a754c67d97db4704a200cd888b756b8a13d4743248523e17ef94"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-hygiene-f28-03-stderr.bin",
+      "bytes": 616,
+      "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-hygiene-f28-03.txt",
+      "bytes": 208,
+      "sha256": "6803f25364e7c34e3f92ee464df845def37afbfa8e45a04598495bab02e317f8"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-hygiene-f28-03.txt.result.json",
+      "bytes": 1922,
+      "sha256": "a827a6c53e2d550d49aed5fd03dfb85655217cf71c8cf600e0ea77080b2ea6e5"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-hygiene-f28-03-result.json",
+      "bytes": 631,
+      "sha256": "c09ae728a20fc2157528c459687b19f750945f753836bfd6765d969d0a614941"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-hygiene-f28-03-owned-close.json",
+      "bytes": 619,
+      "sha256": "ad899d1bfa341e7af1ec35080f5349911c3257efda96facdf638b7767c804aa0"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-hygiene-20261102T072125Z-2c5d8b49/primary-results.json",
+      "bytes": 8920,
+      "sha256": "fbd3ba3e8da90ba11d15c283d9eea411696d989f17412331af29a7100a42bcac"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-hygiene-20261102T072125Z-2c5d8b49/primary-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-hygiene-20261102T072125Z-2c5d8b49/primary-helper-pipe-ownership.json",
+      "bytes": 530,
+      "sha256": "f283ef516bbbee6bfa535de7701dbfaf7f38155a6e928040892ec780a3342826"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-hygiene-20261102T072125Z-2c5d8b49/restart-results.json",
+      "bytes": 1989,
+      "sha256": "8d92e97fc97f0feb772dcbea4f652862dc9cb79e7743891c8ea898703d327b2d"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-hygiene-20261102T072125Z-2c5d8b49/restart-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-hygiene-20261102T072125Z-2c5d8b49/restart-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "1b98f873676d68db873384da3b982d84b75a13a2d7e3e7551c6e188a4eeeeba9"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-hygiene-20261102T072125Z-2c5d8b49/summary.json",
+      "bytes": 1128,
+      "sha256": "bc11324cc8abfbef6a1e3b2be0cf6092d7a67b37d8fc16ddb59e3e8b26a0655c"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-hygiene-20261102T072125Z-2c5d8b49/freeze.json",
+      "bytes": 4776,
+      "sha256": "f8f7a4c8398c36cd86850ca1f6b06990a1952b95c66c597ebe45e1193e029d33"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-vault-f28-03-stdout.bin",
+      "bytes": 1913,
+      "sha256": "265ff610c47e13f9b6823d8d3d5fa6c6024728912a746da2486bfa58b4e6ea67"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-vault-f28-03-stderr.bin",
+      "bytes": 616,
+      "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-vault-f28-03.txt",
+      "bytes": 206,
+      "sha256": "1bb06825432f2b24e3656447dd658cc64a53ebdf1b5d7da3772e4336d3bf30f1"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-vault-f28-03.txt.result.json",
+      "bytes": 1916,
+      "sha256": "42952356c57da152f88401347cdd7fed5e40dd6e423b43be624a48f2e2bb3679"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-vault-f28-03-result.json",
+      "bytes": 625,
+      "sha256": "42592a9a0291cfbc43328fed2faedb0c6f45a73d7fc44dbda113aebc370ed6ab"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-vault-f28-03-owned-close.json",
+      "bytes": 619,
+      "sha256": "5f888df5ccbdb6a036409a7d3ce308134a8b155f86c1c2b4ab3a62faa968bfc5"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-vault-20261102T072314Z-8cc12b73/save-results.json",
+      "bytes": 5892,
+      "sha256": "bc25cea52f79db7d0570ad6afbc250103b42ad0a425beb9e52d02c9a8b5cf8dc"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-vault-20261102T072314Z-8cc12b73/save-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-vault-20261102T072314Z-8cc12b73/save-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "0aab60d0f2b64d27eb22a7d9e8c162b580717ffacc91c513bf5bbe54b36e5c83"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-vault-20261102T072314Z-8cc12b73/reload-results.json",
+      "bytes": 5843,
+      "sha256": "93db7cf2a9b10ec611b60d626320df5dce33bea68213452177c6ad863090cb04"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-vault-20261102T072314Z-8cc12b73/reload-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-vault-20261102T072314Z-8cc12b73/reload-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "392671e9764fd1d514051da65d620a0dca9af4aa1e97e696a3a72e417d9101ca"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-vault-20261102T072314Z-8cc12b73/summary.json",
+      "bytes": 1115,
+      "sha256": "db295b3f2748dea6658b9d880e93eb9a36061667deedf46b6dc12f25b056b9d9"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-affected-vault-20261102T072314Z-8cc12b73/freeze.json",
+      "bytes": 4794,
+      "sha256": "92f908119866459139c2d0663d825959d3f14e76fdc29ce9df663b8b489e6775"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-retained-f28-03-stdout.bin",
+      "bytes": 1920,
+      "sha256": "d61683f98f675012459fdfb1d6dd464c8bf11963675807499652592c769084cc"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-retained-f28-03-stderr.bin",
+      "bytes": 616,
+      "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-retained-f28-03.txt",
+      "bytes": 207,
+      "sha256": "72b209648c477195f6574fa122d162a0da50bce100ef048e07ecb164cf1fef40"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-retained-f28-03.txt.result.json",
+      "bytes": 1923,
+      "sha256": "1d93b5041c1ceebbb9be0298a3c03a0ebcd5252bbb6d3c113d138047ad735df8"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-retained-f28-03-result.json",
+      "bytes": 632,
+      "sha256": "0414bcef18c55d559ac72c3b82b1b52dd9409f76f0939ec59476b989feefd427"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-retained-f28-03-owned-close.json",
+      "bytes": 619,
+      "sha256": "e56df203eb80bd8ffd0c51d5967a2d4bd166007535e87316316a77afb2e41731"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-retained-native-20261102T072501Z-ce583298/primary-results.json",
+      "bytes": 15895,
+      "sha256": "27eac64635cd1061af714f2054e5388297a89f31d3c7cc3c70fca003fbd20d7d"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-retained-native-20261102T072501Z-ce583298/primary-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-retained-native-20261102T072501Z-ce583298/primary-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "1145948e8cf30a1db8af422d7affead118b1bd3b39bb653dd48927e6ccba5829"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-retained-native-20261102T072501Z-ce583298/restart-results.json",
+      "bytes": 1239,
+      "sha256": "88f0bcd1ea62eb4bed7d36b4497ae14ea8144ee70b5e1776c82b5a2fc2bad1c2"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-retained-native-20261102T072501Z-ce583298/restart-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-retained-native-20261102T072501Z-ce583298/restart-helper-pipe-ownership.json",
+      "bytes": 530,
+      "sha256": "4fb2f27a01a0c831080ca471136c6245ef7a725369688b668968430a2376010d"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-retained-native-20261102T072501Z-ce583298/summary.json",
+      "bytes": 1128,
+      "sha256": "8ffadce249c1e1d06e2c3c816e87638b42fd5024078737f095ac4c95438b399f"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-retained-native-20261102T072501Z-ce583298/freeze.json",
+      "bytes": 4805,
+      "sha256": "0564e767a24ba1f8eeab081e950035b7c9421846f8e86a9ad8f12db34aacd953"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-chain-result-03.json",
+      "bytes": 15501,
+      "sha256": "a46fd85d38831bec2d85efddeb103300771225771ba902382ac7b0eb6bef64cc"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-functional-security-f28-03-stdout.bin",
+      "bytes": 1552,
+      "sha256": "b35c7bdab07806472472320dafa74531ace101a2d6e08bbbf9cae88327c1cc7e"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-functional-security-f28-03-stderr.bin",
+      "bytes": 616,
+      "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-functional-security-f28-03.txt",
+      "bytes": 4466,
+      "sha256": "a5e39e4f094a4db9fa1f00371656eea4306ffec1416459e1785fd4a0d37ffc95"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-functional-security-f28-03.txt.result.json",
+      "bytes": 1555,
+      "sha256": "14182dcc17c0c08c0efd203fd210a84ad1e656ca54074863a8f9b26103ec47ee"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-functional-security-f28-03-result.json",
+      "bytes": 666,
+      "sha256": "edaa4e0df6ebd6dffef3e97183872e305ecc94a0c195a70625db65af242e3409"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-functional-security-f28-03-owned-close.json",
+      "bytes": 619,
+      "sha256": "1af84f0620dc395c5f29a4bcb01fff785c1c50924e559126e1aedb4b198fe1ed"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-20261102T072744Z-df259bf494ca4254af0b6c1bba761706/functional/privacy-20261102T072841Z-0ab1559a/functional-results.json",
+      "bytes": 2168,
+      "sha256": "2758fe69e3c62dbc69a3a4103872ad7b8f9f01e8a39c96623a6d3f0a459a21ba"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-20261102T072744Z-df259bf494ca4254af0b6c1bba761706/security/host-20261102T073116Z-62cdc7e8f2be4c109c60749177ad73cf/live-host.json",
+      "bytes": 4878,
+      "sha256": "2b41f00edfe673db562940f0260de21b1df2aa8bf5989aa9146ead44a575d6e6"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-20261102T072744Z-df259bf494ca4254af0b6c1bba761706/affected-summary-01.json",
+      "bytes": 1193,
+      "sha256": "99a976815b2bbc3b418f8440f2e51e021f09139200338af6c6d71f0966ef6074"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-20261102T072744Z-df259bf494ca4254af0b6c1bba761706/security-comparison-01.json",
+      "bytes": 4057,
+      "sha256": "6001be1152f608707391e5d2771c01f5a8e486bdb9f0ed7d20fe7a3a10243be1"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-20261102T072744Z-df259bf494ca4254af0b6c1bba761706/functional/privacy-20261102T072841Z-0ab1559a/owned-editor-close.json",
+      "bytes": 204,
+      "sha256": "32327d9714634ed4cdf5f66824622f7e27c691c7f771b358393032c624b422aa"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-20261102T072744Z-df259bf494ca4254af0b6c1bba761706/security/host-20261102T073116Z-62cdc7e8f2be4c109c60749177ad73cf/owned-editor-close.json",
+      "bytes": 205,
+      "sha256": "b365b0107ee8d16978a1dca9c912954bccc86a17e4312c8ba2a1cd4fd923d930"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-20261102T072744Z-df259bf494ca4254af0b6c1bba761706/functional/privacy-20261102T072841Z-0ab1559a/helper-pipe-ownership.json",
+      "bytes": 530,
+      "sha256": "f0ff957250ea86b179d8960a6f4f59c955c4caf87b0af08f4d6d385c892a7f38"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-20261102T072744Z-df259bf494ca4254af0b6c1bba761706/security/host-20261102T073116Z-62cdc7e8f2be4c109c60749177ad73cf/helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "403e5602399d74d34958a60510347916a031789f48d3b5a9d4f43f1f8de873ca"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-20261102T072744Z-df259bf494ca4254af0b6c1bba761706/functional-launch-01.txt.result.json",
+      "bytes": 2117,
+      "sha256": "5c5159920f33f6892d14cdcd4a9666a099c49d5cbb6195a25e56730782b00dc0"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-20261102T072744Z-df259bf494ca4254af0b6c1bba761706/functional-launch-01.txt",
+      "bytes": 3271,
+      "sha256": "3356f6a5e88806534c589a5725683d07b81fe58bc15672417011e8799a2f2462"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-20261102T072744Z-df259bf494ca4254af0b6c1bba761706/security-launch-01.txt.result.json",
+      "bytes": 2148,
+      "sha256": "246663edd11275fa6f96b29b7763b9749ee9bd7645b43c2eb64d8316c403d1d5"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-20261102T072744Z-df259bf494ca4254af0b6c1bba761706/security-launch-01.txt",
+      "bytes": 3314,
+      "sha256": "8d42ac24b88fdc1685495fa0caf06755bfe08f2b5d6193f7f4424589ef79542d"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-continuation-binding-02.json",
+      "bytes": 5333,
+      "sha256": "9b769cc37e5189b027502df33ec94010712fa10741e9bf5fd789623438db213d"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/owned-output-driver-provenance-01.json",
+      "bytes": 7907,
+      "sha256": "d3ed9415fbd939505cbef442acf56c998bd46f9803f98f5b3286e2fa4e92d6a1"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-chain-consumption-02.json",
+      "bytes": 1162,
+      "sha256": "f224d0e4519931f288dcc6dc204a8f7684ee932666dd5af3ed806117b0c51310"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-recovery-binding-03.json",
+      "bytes": 4416,
+      "sha256": "4c516b43bcd9f78d3310361d7264da18273566063708e785b2dcd039fcdbf4d5"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-recovery-user-approval-03.json",
+      "bytes": 709,
+      "sha256": "520bb4b39ccdfd8e151f74dda15b8dad839408ad4fe991eb257fda56cd8bc84f"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-recovery-absence-01.json",
+      "bytes": 1441,
+      "sha256": "13c355cd36de086b18df920b56425cc8c83016dcd4e2d03ea4a0efe781e8b6a6"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-chain-consumption-03.json",
+      "bytes": 1643,
+      "sha256": "887f824a2f73152c89ab46fac6e1299661994c931e39b8a6c66cf857976421d4"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-chain-failure-01.json",
+      "bytes": 1768,
+      "sha256": "a0c132df15c301904ba4a42ad52c266dd0d552a18f0532d236d4c42d443e90e4"
+    }
+  ]
+}
