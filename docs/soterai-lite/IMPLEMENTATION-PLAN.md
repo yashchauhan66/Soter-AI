@@ -216,3 +216,8 @@ The user explicitly requested “f26bko very fast complete kro” after declinin
 ## Current checkpoint - 1 November 2026
 
 F26b scoped supported contract passes current full/native36/configured-local-push8/affected509/functional10/security17 baseline and safe withdrawal gates. Source commit `6b207278feff0eae509e43a04a340f678c84c1d9` has96 raw-byte-verified paths. DONE and next F28 selection require `evidence/20261029-f26b-prepush-70e1c9a4/f26b-transition-byte-proof-11.json` PASS. User-deferred F26a/native09 remains unrun/incomplete; parentF26 is not DONE. Continue the existing shorter-independent-first order with F28 path/performance/degradation work after the transition barrier; no F28 evidence completes F26a. Original F28 contract and final F31b/F32/V01-V05/L6 stop gates remain. Exactly two synthetic local file pushes ran under consumed Proposal03 authority; no further or external/source-project push permission and no publishing action.
+
+
+## Current checkpoint - 2 November 2026
+
+F28 supported scoped acceptance/source14 byte gates pass at 3c3f6e0567c2398d9fda8c614122697cebc0b335. DONE takes effect after evidence/20261101-f28-reliability-9a4c2e71/f28-transition-byte-proof-01.json PASS. Resume required F26a next before F31b/F32/V01-V05, retaining its explicit native09 defer until a refreshed reviewed proposal is explicitly authorized. No schedule or scope replacement, no release-ready/publish/rating claim; original L6 HUMAN-ACTIONS and STOP remains.
