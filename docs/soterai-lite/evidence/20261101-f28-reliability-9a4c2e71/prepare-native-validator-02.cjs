@@ -1,0 +1,7 @@
+'use strict';const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');const own=n=>path.join(__dirname,n);let s=fs.readFileSync(own('native-launch-candidate-01.ps1.txt'),'utf8');function one(a,b){assert.equal(s.split(a).length,2,a);s=s.replace(a,b);}
+one("  $taskPeer=$Observed.peerChildren[0];",[
+"  $taskOpenCount=if($Phase -ceq 'primary'){2}else{0};if($Observed.sourceHandleOpens -ne $taskOpenCount -or $Observed.sourceHandleCloses -ne $taskOpenCount){throw 'Both actual delayed source handles must close.'}",
+"  $taskPeer=$Observed.peerChildren[0];$taskPeerKeys=@('pid','closed','code','signal','stdoutEOF','stderrEOF','overflow','streamError','profile','streams','signalsRequested');if(@(Compare-Object @($taskPeer.PSObject.Properties.Name|Sort-Object) @($taskPeerKeys|Sort-Object)).Count -ne 0){throw 'Complete peer metadata including explicit null signal required.'};if(@($taskPeer.streams).Count -ne 2 -or @($taskPeer.streams.channel|Sort-Object -Unique).Count -ne 2){throw 'Both distinct peer streams required.'};",
+].join('\n'));
+one(" }elseif($Observed.safeWithdrawal -cne 'ORIGINAL_FLAG_RESTORED_NO_PENDING_READS'", " }elseif($Observed.sourceHandleOpens -ne 0 -or $Observed.sourceHandleCloses -ne 0 -or $Observed.safeWithdrawal -cne 'ORIGINAL_FLAG_RESTORED_NO_PENDING_READS'");
+fs.writeFileSync(own('native-launch-candidate-02.ps1.txt'),s,{flag:'wx'});console.log('Prepared strict explicit-null peer/dual-stream/exact delayed-handle validator. All30 assertions and owned Code loop unchanged; no execution.');

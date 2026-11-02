@@ -1,0 +1,147 @@
+{
+  "status": "PARTIAL_ACTUAL_CLOSED_F28_FAMILIES_VERIFIED_NOT_FINAL_ACCEPTANCE",
+  "observedAt": "2026-11-02T01:29:31.644Z",
+  "families": [
+    {
+      "id": "logs",
+      "checks": 25,
+      "phases": 2,
+      "run": "f26a-logs-native-20261101T173851Z-e9f2e1a5"
+    }
+  ],
+  "completedFamilies": 1,
+  "checks": 25,
+  "phases": 2,
+  "expected": {
+    "families": 20,
+    "checks": 509,
+    "phases": 37,
+    "functional": 10,
+    "security": 17
+  },
+  "pending": [
+    "artifact",
+    "streaming-output",
+    "vault-runtime",
+    "ps51",
+    "cmd",
+    "gitbash",
+    "history",
+    "mcp",
+    "editor",
+    "ci",
+    "service-account",
+    "registry",
+    "terraform",
+    "container",
+    "source",
+    "hygiene",
+    "vault",
+    "retained"
+  ],
+  "failed": [
+    {
+      "id": "owned-output",
+      "result": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-owned-output-f28-01-result.json",
+        "bytes": 633,
+        "sha256": "4f8537ed76ea824ba364d2c54470e508f617101642c71dabd23d9f6ef755caad"
+      }
+    }
+  ],
+  "vsix": {
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-f28-20261101-attempt01.vsix",
+    "bytes": 1749703,
+    "sha256": "5dac9288fb259ad538ab751258f250d85a933bfb5bc8641dc32e54c01f6f047f"
+  },
+  "sourceProof": {
+    "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/full-inputs-02.json",
+    "bytes": 213508,
+    "sha256": "70d3b237332ada5f7317906a8e745ff7d8f7bc2213b8c27f810a25b919b30743"
+  },
+  "native30Acceptance": {
+    "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/native-acceptance-03.json",
+    "bytes": 2929,
+    "sha256": "9f0068678383d8b815cec892e9c47c148cebed272553438b569c08d4d50c385f"
+  },
+  "feature": "ACTIVE_INCOMPLETE_AFFECTED_FINAL_AND_SOURCE_TRANSITION_BYTES_PENDING",
+  "f26aNative09": "USER_DEFERRED_NOT_RUN",
+  "signalsRequested": 0,
+  "evidence": [
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-logs-f28-01-result.json",
+      "bytes": 620,
+      "sha256": "ad52068525c7b05b745ec1e12f15999bf091efb629dc2ee4695f40dbdf3901ce"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-logs-f28-01-stdout.bin",
+      "bytes": 1910,
+      "sha256": "83b81040163447cdf0b876beef97ae607ecbf75eb343b4cb1979667fa26427d3"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-logs-f28-01-stderr.bin",
+      "bytes": 616,
+      "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-logs-f28-01-owned-close.json",
+      "bytes": 619,
+      "sha256": "29e9191faf2d692b048c279a6d697eab5c558bbb1459a695487745d9050a4c87"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-logs-f28-01.txt",
+      "bytes": 193,
+      "sha256": "bef0433b513b0a0475a672d1282f448ed1db90a4b96bcc5b8b1e4055397a569f"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-logs-f28-01.txt.result.json",
+      "bytes": 1913,
+      "sha256": "c4beb2cbb3e2f93d9c24e24334e6c1d75e73973b5d2e0892552b775e4e345000"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-logs-native-20261101T173851Z-e9f2e1a5/primary-results.json",
+      "bytes": 16671,
+      "sha256": "27504b84521458795ff794afbfd97a6c1aafb1b9241ca2ed8c0259dbc718b9b0"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-logs-native-20261101T173851Z-e9f2e1a5/primary-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-logs-native-20261101T173851Z-e9f2e1a5/primary-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "23366b62877e558ad6855210a35d27bc2b302d7c4b4ab4adec98d1e7b6df6eac"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-logs-native-20261101T173851Z-e9f2e1a5/restart-results.json",
+      "bytes": 4329,
+      "sha256": "c67d459e032b335dcdbf93dca2b90034bb5b3ceb2297cd12e51eb1d27dc866e0"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-logs-native-20261101T173851Z-e9f2e1a5/restart-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-logs-native-20261101T173851Z-e9f2e1a5/restart-helper-pipe-ownership.json",
+      "bytes": 530,
+      "sha256": "45eea4a54fd27197a3d2346b57d81b4d069509cc12743e6489c63b8beba56b38"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-logs-native-20261101T173851Z-e9f2e1a5/summary.json",
+      "bytes": 1118,
+      "sha256": "e816eb77f73804078e67c29241cddf4e26e9994d36004ad9aadae9f8634f2166"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f26a-logs-native-20261101T173851Z-e9f2e1a5/freeze.json",
+      "bytes": 4735,
+      "sha256": "c1133cd04a895ac3624f114a3ad3eee03df60c71001aa7d609b8912eb872bb5b"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-owned-output-f28-01-result.json",
+      "bytes": 633,
+      "sha256": "4f8537ed76ea824ba364d2c54470e508f617101642c71dabd23d9f6ef755caad"
+    }
+  ]
+}

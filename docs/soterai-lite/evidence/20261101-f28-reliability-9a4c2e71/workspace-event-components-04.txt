@@ -1,0 +1,46 @@
+﻿TAP version 13
+# Subtest: Baseline count-only completion precedes the real confirmation event
+ok 1 - Baseline count-only completion precedes the real confirmation event
+  ---
+  duration_ms: 118.8656
+  type: 'test'
+  ...
+# Subtest: Actual extracted changeFolders waits for the matching event
+ok 2 - Actual extracted changeFolders waits for the matching event
+  ---
+  duration_ms: 22.4837
+  type: 'test'
+  ...
+# Subtest: Optimistic count without confirmation cannot pass
+ok 3 - Optimistic count without confirmation cannot pass
+  ---
+  duration_ms: 14.8258
+  type: 'test'
+  ...
+# Subtest: Refused update cannot pass and disposes subscription
+ok 4 - Refused update cannot pass and disposes subscription
+  ---
+  duration_ms: 11.0388
+  type: 'test'
+  ...
+# Subtest: Wrong added URI event cannot satisfy confirmation
+ok 5 - Wrong added URI event cannot satisfy confirmation
+  ---
+  duration_ms: 15.7997
+  type: 'test'
+  ...
+# Subtest: All thirty frozen scenario identities and original withholding assertions retained
+ok 6 - All thirty frozen scenario identities and original withholding assertions retained
+  ---
+  duration_ms: 3.3709
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 205.6033

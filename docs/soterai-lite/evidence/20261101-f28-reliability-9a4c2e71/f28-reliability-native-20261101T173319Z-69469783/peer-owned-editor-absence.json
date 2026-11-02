@@ -1,0 +1,43 @@
+{
+    "status":  "PASS_DECLARED_PEER_CODE_NATURAL_CLOSE_BOTH_EOF_ABSENCE_TWICE",
+    "observations":  [
+                         {
+                             "pid":  23156,
+                             "observedAt":  "2026-11-01T17:34:25.8395224Z",
+                             "absent":  true
+                         },
+                         {
+                             "pid":  23156,
+                             "observedAt":  "2026-11-01T17:34:26.1033410Z",
+                             "absent":  true
+                         }
+                     ],
+    "signalsRequested":  0,
+    "allDescendantEOF":  "NOT_INFERRED",
+    "child":  {
+                  "pid":  23156,
+                  "closed":  true,
+                  "code":  0,
+                  "signal":  null,
+                  "stdoutEOF":  true,
+                  "stderrEOF":  true,
+                  "overflow":  false,
+                  "streamError":  false,
+                  "profile":  "d:\\SoterAI-Lite-test-profiles\\f28-reliability-native-20261101T173319Z-69469783\\peer-profile",
+                  "streams":  [
+                                  {
+                                      "channel":  "stdout",
+                                      "bytes":  1249,
+                                      "sha256":  "d5c0349365c79c37dc1a3ce3abe0656e6b90a9d8e1498fedb2e55520001308d2",
+                                      "file":  "d:\\SoterAI-Lite-test-profiles\\f28-reliability-native-20261101T173319Z-69469783\\peer-stdout.bin"
+                                  },
+                                  {
+                                      "channel":  "stderr",
+                                      "bytes":  300,
+                                      "sha256":  "4c5145de0c0be746b3edf79b965f147c5462c3a5889b69d46e3d6229a627ef47",
+                                      "file":  "d:\\SoterAI-Lite-test-profiles\\f28-reliability-native-20261101T173319Z-69469783\\peer-stderr.bin"
+                                  }
+                              ],
+                  "signalsRequested":  0
+              }
+}

@@ -1,0 +1,28 @@
+﻿powershell.exe : node:internal/modules/esm/get_format:219
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (node:internal/modules/esm/get_format:219:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  throw new ERR_UNKNOWN_FILE_EXTENSION(ext, filepath);
+        ^
+
+TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".txt" for C:\Users\USER\OneDrive\Desktop\Ai-Agent-Secur
+ity-Guard\docs\soterai-lite\evidence\20261101-f28-reliability-9a4c2e71\native-bootstrap-02.cjs.txt
+    at Object.getFileProtocolModuleFormat [as file:] (node:internal/modules/esm/get_format:219:9)
+    at defaultGetFormat (node:internal/modules/esm/get_format:245:36)
+    at checkSyntax (node:internal/main/check_syntax:69:20) {
+  code: 'ERR_UNKNOWN_FILE_EXTENSION'
+}
+
+Node.js v22.16.0
+Prepared native bootstrap syntax refused.
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261101-f28-reliability-9a4c2e71\
+native-launcher-syntax-02.ps1:16 char:25
++ ... ASTEXITCODE -ne 0){throw 'Prepared native bootstrap syntax refused.'}
++                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (Prepared native...syntax refused.:String) [], RuntimeException
+    + FullyQualifiedErrorId : Prepared native bootstrap syntax refused.
+ 

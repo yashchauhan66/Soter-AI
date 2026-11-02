@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "status": "F28_NATIVE30_PASS_CURRENT_AFFECTED_AND_FEATURE_BYTES_PENDING",
+  "observedAt": "2026-11-01T17:37:27.081Z",
+  "acceptance": {
+    "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/native-acceptance-03.json",
+    "bytes": 2929,
+    "sha256": "9f0068678383d8b815cec892e9c47c148cebed272553438b569c08d4d50c385f"
+  },
+  "binding": {
+    "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/native-binding-03.json",
+    "bytes": 13221,
+    "sha256": "6ad782a541704d8da93321093d479f5947684371802818b711802ded0587a8b3"
+  },
+  "driver": {
+    "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/prebuilt-native-hosts-05/lite-reliability-host.js",
+    "bytes": 37612,
+    "sha256": "9a84eadfdd178e7c9518c632ee99e09c93ce86c62591dba331c1cf02457b5c07"
+  },
+  "sourceProof": {
+    "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/full-inputs-02.json",
+    "bytes": 213508,
+    "sha256": "70d3b237332ada5f7317906a8e745ff7d8f7bc2213b8c27f810a25b919b30743"
+  },
+  "vsix": {
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-f28-20261101-attempt01.vsix",
+    "bytes": 1749703,
+    "sha256": "5dac9288fb259ad538ab751258f250d85a933bfb5bc8641dc32e54c01f6f047f"
+  },
+  "native": {
+    "attempts": 3,
+    "normalImprovementRoundsConsumed": 2,
+    "primary": 25,
+    "restart": 5,
+    "total": 30,
+    "failed": 0,
+    "notRun": 0,
+    "concurrentPeer": 1,
+    "measurements": [
+      {
+        "kind": "ACTIVATION_BODY_EXCLUDES_MODULE_LOADING",
+        "milliseconds": 280.8587000000007
+      },
+      {
+        "kind": "WITHDRAWN_OPEN_SLOT_RETAINED",
+        "activeReads": 1
+      },
+      {
+        "kind": "OWNED_FIVE_SECOND_TIMER_WITHHELD_IO_STILL_OWNED",
+        "milliseconds": 4963.820699999998
+      },
+      {
+        "kind": "ACTUAL_PACKAGED_COMMAND_SELECTED128_OF4096",
+        "selected": 128,
+        "bulkSyntheticFiles": 4096,
+        "milliseconds": 10589.291799999999,
+        "budgetMilliseconds": 60000
+      }
+    ],
+    "delayedFileHandles": {
+      "opened": 2,
+      "closed": 2
+    },
+    "originalFlagRestored": true
+  },
+  "priorFailures": [
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/native-failure-01.json",
+      "bytes": 268,
+      "sha256": "8800c924f739792531d42ea4a709e24482c9413da79cb6caf836348660738c24"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/native-failure-02.json",
+      "bytes": 268,
+      "sha256": "2ecf2d6d3735d8ceb0f2c92a0504ef5a696fa189ba0a23a13224956cb0d5da00"
+    }
+  ],
+  "affected": {
+    "families": 20,
+    "checks": 509,
+    "phases": 37,
+    "functional": 10,
+    "security": 17,
+    "status": "PREPARED_NOT_RUN"
+  },
+  "historicalF20FixtureWithdrawal": "STILL_UNCONFIRMED",
+  "f26aNative09": "USER_DEFERRED_NOT_RUN",
+  "configuredGitPush": "NO_REMAINING_AUTHORITY_NOT_RUN",
+  "sourceCommit": "NOT_DONE",
+  "transitionBytes": "NOT_DONE",
+  "releaseReady": false,
+  "signalsRequested": 0,
+  "independence": "LOW_SCRIPTED_NATIVE"
+}

@@ -1,0 +1,21 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');const own=n=>path.join(__dirname,n);
+let s=fs.readFileSync(own('scoped-native30-checkpoint-git-02.cjs'),'utf8');
+for(const name of ['empty-f28-native30-hooks','f28-native30-checkpoint-manifest','f28-native30-checkpoint-byte-proof','f28-native30-checkpoint-body'])s=s.replaceAll(name+'-02',name+'-03');
+const start=s.indexOf('function checkpointFile('),end=s.indexOf('\n\n(async()=>',start);assert(start>0&&end>start);
+s=s.slice(0,start)+`function checkpointFile(relative){
+ const local=path.relative(__dirname,path.resolve(repo,relative)).split(path.sep).join('/'),parts=local.split('/');
+ if(parts.length>1)return /^(f28-reliability-native-|prebuilt-native-hosts-|vsix-extracted-|owned-output-driver-01$)/.test(parts[0]) || ['f26a-logs-native-20261101T173851Z-e9f2e1a5','f26a-owned-output-native-20261101T174822Z-8569e639'].includes(parts[0]);
+ return !/^affected-.*-f28-02/.test(local)&&!/^affected-chain-(result|failure)-02/.test(local);
+}`+s.slice(end);
+s=s.replaceAll('Affected509/37 chain is active and not accepted; exclude all live affected family streams/directories','Affected original chain logs25PASS/owned-output12PASS7FAIL is closed and retained. Fixture-only8 controls, typecheck/build/admission PASS; third normal round continuation active and not accepted. Exclude its live affected family streams/directories');
+s=s.replaceAll('Active affected family streams/directories excluded; affected509/37 final acceptance pending.','Original closed failure and logs evidence retained; active continuation streams/directories excluded; affected509/37 final acceptance pending.');
+fs.writeFileSync(own('scoped-native30-checkpoint-git-03.cjs'),s,{flag:'wx'});
+const test=`'use strict';
+const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),assert=require('node:assert/strict'),test=require('node:test');
+const repo=path.resolve(__dirname,'../../../..'),raw=fs.readFileSync(path.join(__dirname,'scoped-native30-checkpoint-git-03.cjs'),'utf8'),from=raw.indexOf('function checkpointFile('),to=raw.indexOf('\\n\\n(async()=>',from),fn=vm.runInNewContext(raw.slice(from,to)+';checkpointFile',{path,repo,__dirname});
+const rows=[['affected-owned-output-f28-02-stdout.bin',false],['affected-owned-output-f28-02-result.json',false],['affected-chain-failure-02.json',false],['affected-chain-result-02.json',false],['f26a-owned-output-native-new/single-results.json',false],['f26a-logs-native-20261101T173851Z-e9f2e1a5/summary.json',true],['f26a-owned-output-native-20261101T174822Z-8569e639/single-results.json',true],['affected-chain-failure-01.json',true],['affected-owned-output-f28-01-result.json',true],['owned-output-driver-01/lite-log-vault-runtime-host.js',true],['progress-05.json',true]];
+for(const [file,want]of rows)test(file,()=>assert.equal(fn(path.relative(repo,path.join(__dirname,file))),want));
+`;
+fs.writeFileSync(own('checkpoint-filter-components-03.test.cjs'),test,{flag:'wx'});
+console.log('Prepared immutable closed-evidence checkpoint; live continuation excluded. No Git mutation.');

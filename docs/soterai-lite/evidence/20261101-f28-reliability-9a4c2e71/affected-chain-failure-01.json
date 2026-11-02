@@ -1,0 +1,51 @@
+{
+  "status": "FAIL_OR_INCOMPLETE_NO_AUTOMATIC_RETRY",
+  "observedAt": "2026-11-01T17:51:49.156Z",
+  "results": [
+    {
+      "name": "affected-logs-f28-01",
+      "status": "PASS_CLOSED_WRAPPER_ROOT_AGGREGATION_PENDING",
+      "observedAt": "2026-11-01T17:45:20.290Z",
+      "actualClose": true,
+      "wrapperExit": 0,
+      "innerExit": 0,
+      "signal": null,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "deadlineExceeded": false,
+      "signalsRequested": 0,
+      "directories": [
+        "f26a-logs-native-20261101T173851Z-e9f2e1a5"
+      ],
+      "close": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-logs-f28-01-owned-close.json",
+        "bytes": 619,
+        "sha256": "29e9191faf2d692b048c279a6d697eab5c558bbb1459a695487745d9050a4c87"
+      }
+    },
+    {
+      "name": "affected-owned-output-f28-01",
+      "status": "FAIL_OR_INCOMPLETE_NO_LATER_PHASE",
+      "observedAt": "2026-11-01T17:51:49.148Z",
+      "actualClose": true,
+      "wrapperExit": 1,
+      "innerExit": 1,
+      "signal": null,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "deadlineExceeded": false,
+      "signalsRequested": 0,
+      "directories": [
+        "f26a-owned-output-native-20261101T174822Z-8569e639"
+      ],
+      "close": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-owned-output-f28-01-owned-close.json",
+        "bytes": 619,
+        "sha256": "a733c6bda368528c9fb14a83a8fd55481841a3e2934dfea4299434cbed5d406e"
+      }
+    }
+  ],
+  "errorName": "AssertionError",
+  "message": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'FAIL_OR_INCOMPLETE_NO_LATER_PHASE'\n- 'PASS_CLOSED_WRAPPER_ROOT_AGGREGATION_PENDING'\n",
+  "signalsRequested": 0
+}

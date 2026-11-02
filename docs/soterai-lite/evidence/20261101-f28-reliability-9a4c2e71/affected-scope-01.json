@@ -1,0 +1,174 @@
+{
+  "schemaVersion": 1,
+  "status": "F28_AFFECTED20_509_37_PREDECLARED_NOT_RUN",
+  "sourceProof": {
+    "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/full-inputs-02.json",
+    "bytes": 213508,
+    "sha256": "70d3b237332ada5f7317906a8e745ff7d8f7bc2213b8c27f810a25b919b30743"
+  },
+  "families": [
+    {
+      "id": "logs",
+      "assertions": 25,
+      "phases": 2,
+      "helper": "affected-logs-01.ps1",
+      "driver": "lite-logs-host.js"
+    },
+    {
+      "id": "owned-output",
+      "assertions": 19,
+      "phases": 1,
+      "helper": "affected-owned-output-01.ps1",
+      "driver": "lite-log-vault-runtime-host.js"
+    },
+    {
+      "id": "artifact",
+      "assertions": 25,
+      "phases": 2,
+      "helper": "affected-artifact-01.ps1",
+      "driver": "lite-artifact-host.js"
+    },
+    {
+      "id": "streaming-output",
+      "assertions": 13,
+      "phases": 1,
+      "helper": "affected-streaming-output-01.ps1",
+      "driver": "lite-streaming-output-host.js"
+    },
+    {
+      "id": "vault-runtime",
+      "assertions": 12,
+      "phases": 1,
+      "helper": "affected-vault-runtime-01.ps1",
+      "driver": "lite-vault-runtime-host.js"
+    },
+    {
+      "id": "ps51",
+      "assertions": 19,
+      "phases": 2,
+      "helper": "affected-ps51-01.ps1",
+      "driver": "lite-ps51-host.js"
+    },
+    {
+      "id": "cmd",
+      "assertions": 19,
+      "phases": 2,
+      "helper": "affected-cmd-01.ps1",
+      "driver": "lite-cmd-host.js"
+    },
+    {
+      "id": "gitbash",
+      "assertions": 19,
+      "phases": 2,
+      "helper": "affected-gitbash-01.ps1",
+      "driver": "lite-gitbash-host.js"
+    },
+    {
+      "id": "history",
+      "assertions": 25,
+      "phases": 2,
+      "helper": "affected-history-01.ps1",
+      "driver": "lite-history-host.js"
+    },
+    {
+      "id": "mcp",
+      "assertions": 25,
+      "phases": 2,
+      "helper": "affected-mcp-01.ps1",
+      "driver": "lite-mcp-host.js"
+    },
+    {
+      "id": "editor",
+      "assertions": 25,
+      "phases": 2,
+      "helper": "affected-editor-01.ps1",
+      "driver": "lite-editor-host.js"
+    },
+    {
+      "id": "ci",
+      "assertions": 25,
+      "phases": 2,
+      "helper": "affected-ci-01.ps1",
+      "driver": "lite-ci-host.js"
+    },
+    {
+      "id": "service-account",
+      "assertions": 25,
+      "phases": 2,
+      "helper": "affected-service-account-01.ps1",
+      "driver": "lite-service-account-host.js"
+    },
+    {
+      "id": "registry",
+      "assertions": 25,
+      "phases": 2,
+      "helper": "affected-registry-01.ps1",
+      "driver": "lite-registry-host.js"
+    },
+    {
+      "id": "terraform",
+      "assertions": 25,
+      "phases": 2,
+      "helper": "affected-terraform-01.ps1",
+      "driver": "lite-terraform-host.js"
+    },
+    {
+      "id": "container",
+      "assertions": 25,
+      "phases": 2,
+      "helper": "affected-container-01.ps1",
+      "driver": "lite-container-host.js"
+    },
+    {
+      "id": "source",
+      "assertions": 21,
+      "phases": 2,
+      "helper": "affected-source-01.ps1",
+      "driver": "lite-source-host.js"
+    },
+    {
+      "id": "hygiene",
+      "assertions": 21,
+      "phases": 2,
+      "helper": "affected-hygiene-01.ps1",
+      "driver": "lite-hygiene-host.js"
+    },
+    {
+      "id": "vault",
+      "assertions": 10,
+      "phases": 2,
+      "helper": "affected-vault-01.ps1",
+      "driver": "lite-vault-host.js"
+    },
+    {
+      "id": "retained",
+      "assertions": 106,
+      "phases": 2,
+      "helper": "affected-retained-01.ps1",
+      "driver": "lite-broker-host.js"
+    }
+  ],
+  "assertions": 509,
+  "phases": 37,
+  "functional": 10,
+  "security": 17,
+  "driverInventory": "native-driver-provenance-05.json",
+  "driverBuild": "Original24 drivers/source bytes retained exactly; one corrected metadata-only F26b driver freshly emitted. All current-host affected routes remain NOT_RUN.",
+  "currentArtifact": "Exact current F26b VSIX6c299712/content03;87 restricted machine flags/four runtimes; no historical acceptance transfer",
+  "deferred": {
+    "feature": "F26a",
+    "family": "precommit",
+    "status": "USER_DEFERRED_UNVERIFIED",
+    "operations": [
+      "native09",
+      "offline owner Git helper",
+      "restart4"
+    ],
+    "substitute": false,
+    "completionBlocked": true
+  },
+  "componentGate": "Current F28 native03 binding 6ad782a541704d8da93321093d479f5947684371802818b711802ded0587a8b3 actual30, peer/primary/restart closure and original-flag restore required. No prior PASS transfer.",
+  "configuredPush": "NOT_AUTHORIZED_NOT_RUN",
+  "execution": "Prepared only; no launches by this author; serial each original helper with actualclose/bothEOF/no signals; root aggregation and policy-preserving withdrawal remain required",
+  "hostVersion": "1.144.0"
+}

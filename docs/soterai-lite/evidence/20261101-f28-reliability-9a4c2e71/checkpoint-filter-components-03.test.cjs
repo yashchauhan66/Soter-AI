@@ -1,0 +1,5 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),assert=require('node:assert/strict'),test=require('node:test');
+const repo=path.resolve(__dirname,'../../../..'),raw=fs.readFileSync(path.join(__dirname,'scoped-native30-checkpoint-git-03.cjs'),'utf8'),from=raw.indexOf('function checkpointFile('),to=raw.indexOf('\n\n(async()=>',from),fn=vm.runInNewContext(raw.slice(from,to)+';checkpointFile',{path,repo,__dirname});
+const rows=[['affected-owned-output-f28-02-stdout.bin',false],['affected-owned-output-f28-02-result.json',false],['affected-chain-failure-02.json',false],['affected-chain-result-02.json',false],['f26a-owned-output-native-new/single-results.json',false],['f26a-logs-native-20261101T173851Z-e9f2e1a5/summary.json',true],['f26a-owned-output-native-20261101T174822Z-8569e639/single-results.json',true],['affected-chain-failure-01.json',true],['affected-owned-output-f28-01-result.json',true],['owned-output-driver-01/lite-log-vault-runtime-host.js',true],['progress-05.json',true]];
+for(const [file,want]of rows)test(file,()=>assert.equal(fn(path.relative(repo,path.join(__dirname,file))),want));

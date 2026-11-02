@@ -1,0 +1,58 @@
+﻿TAP version 13
+# Subtest: actual app helper waits through observer delay beyond the former 650ms window
+ok 1 - actual app helper waits through observer delay beyond the former 650ms window
+  ---
+  duration_ms: 13.6576
+  type: 'test'
+  ...
+# Subtest: actual app helper missing acknowledgement is finite at the existing 5s handshake bound
+ok 2 - actual app helper missing acknowledgement is finite at the existing 5s handshake bound
+  ---
+  duration_ms: 12.9178
+  type: 'test'
+  ...
+# Subtest: actual app helper refuses malformed acknowledgement and expires without accepting it
+ok 3 - actual app helper refuses malformed acknowledgement and expires without accepting it
+  ---
+  duration_ms: 8.3863
+  type: 'test'
+  ...
+# Subtest: actual app helper does not mask non-absence filesystem errors
+ok 4 - actual app helper does not mask non-absence filesystem errors
+  ---
+  duration_ms: 3.7485
+  type: 'test'
+  ...
+# Subtest: actual host helper waits for asynchronous pre-completion assertions before exclusive acknowledgement
+ok 5 - actual host helper waits for asynchronous pre-completion assertions before exclusive acknowledgement
+  ---
+  duration_ms: 157.9173
+  type: 'test'
+  ...
+# Subtest: actual host helper never acknowledges a failed pending-output assertion
+ok 6 - actual host helper never acknowledges a failed pending-output assertion
+  ---
+  duration_ms: 19.0704
+  type: 'test'
+  ...
+# Subtest: actual host helper propagates failed acknowledgement writes rather than claiming observation
+ok 7 - actual host helper propagates failed acknowledgement writes rather than claiming observation
+  ---
+  duration_ms: 16.4196
+  type: 'test'
+  ...
+# Subtest: all original assertions and 19 scope descriptions remain; original lifecycle deadlines remain
+ok 8 - all original assertions and 19 scope descriptions remain; original lifecycle deadlines remain
+  ---
+  duration_ms: 4.3442
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 970.61

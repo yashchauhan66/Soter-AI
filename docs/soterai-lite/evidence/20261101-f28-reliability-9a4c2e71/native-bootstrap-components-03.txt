@@ -1,0 +1,94 @@
+﻿TAP version 13
+# Subtest: Actual extracted bootstrap accepts exact synthetic primary profile and pinned local vendor bytes
+ok 1 - Actual extracted bootstrap accepts exact synthetic primary profile and pinned local vendor bytes
+  ---
+  duration_ms: 90.7277
+  type: 'test'
+  ...
+# Subtest: Actual extracted bootstrap accepts exact synthetic restart profile and pinned local vendor bytes
+ok 2 - Actual extracted bootstrap accepts exact synthetic restart profile and pinned local vendor bytes
+  ---
+  duration_ms: 16.101
+  type: 'test'
+  ...
+# Subtest: Actual extracted bootstrap accepts exact synthetic peer profile and pinned local vendor bytes
+ok 3 - Actual extracted bootstrap accepts exact synthetic peer profile and pinned local vendor bytes
+  ---
+  duration_ms: 19.7881
+  type: 'test'
+  ...
+# Subtest: Actual extracted bootstrap refuses wrong fixture prefix before vendor activation
+ok 4 - Actual extracted bootstrap refuses wrong fixture prefix before vendor activation
+  ---
+  duration_ms: 3.3
+  type: 'test'
+  ...
+# Subtest: Actual extracted bootstrap refuses outside synthetic scope before vendor activation
+ok 5 - Actual extracted bootstrap refuses outside synthetic scope before vendor activation
+  ---
+  duration_ms: 2.1285
+  type: 'test'
+  ...
+# Subtest: Actual extracted bootstrap refuses untrusted before vendor activation
+ok 6 - Actual extracted bootstrap refuses untrusted before vendor activation
+  ---
+  duration_ms: 2.1245
+  type: 'test'
+  ...
+# Subtest: Actual extracted bootstrap refuses remote before vendor activation
+ok 7 - Actual extracted bootstrap refuses remote before vendor activation
+  ---
+  duration_ms: 2.6238
+  type: 'test'
+  ...
+# Subtest: Actual extracted bootstrap refuses wrong main profile before vendor activation
+ok 8 - Actual extracted bootstrap refuses wrong main profile before vendor activation
+  ---
+  duration_ms: 1.4672
+  type: 'test'
+  ...
+# Subtest: Actual extracted bootstrap refuses wrong peer profile before vendor activation
+ok 9 - Actual extracted bootstrap refuses wrong peer profile before vendor activation
+  ---
+  duration_ms: 1.9477
+  type: 'test'
+  ...
+# Subtest: Actual extracted bootstrap refuses unknown phase before vendor activation
+ok 10 - Actual extracted bootstrap refuses unknown phase before vendor activation
+  ---
+  duration_ms: 2.4133
+  type: 'test'
+  ...
+# Subtest: Actual extracted bootstrap refuses missing marker before vendor activation
+ok 11 - Actual extracted bootstrap refuses missing marker before vendor activation
+  ---
+  duration_ms: 2.1083
+  type: 'test'
+  ...
+# Subtest: Actual extracted bootstrap refuses schema downloads enabled before vendor activation
+ok 12 - Actual extracted bootstrap refuses schema downloads enabled before vendor activation
+  ---
+  duration_ms: 23.8332
+  type: 'test'
+  ...
+# Subtest: Actual extracted bootstrap refuses wrong app root before vendor activation
+ok 13 - Actual extracted bootstrap refuses wrong app root before vendor activation
+  ---
+  duration_ms: 1.5986
+  type: 'test'
+  ...
+# Subtest: Actual extracted bootstrap refuses vendor bytes drift before vendor activation
+ok 14 - Actual extracted bootstrap refuses vendor bytes drift before vendor activation
+  ---
+  duration_ms: 10.957
+  type: 'test'
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 14
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 350.6931

@@ -1,0 +1,17 @@
+{
+  "status": "STATIC_INSTALLED_VENDOR_CONFIRMS_OPTIMISTIC_STATE_BEFORE_ACCEPT_EVENT_NOT_NATIVE_CAUSE_PROOF",
+  "observedAt": "2026-11-01T17:29:51.891Z",
+  "vendor": {
+    "path": "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\2c33b50b16\\resources\\app\\out\\vs\\workbench\\api\\node\\extensionHostProcess.js",
+    "sha256": "2074cc8d484643df2d255135fa8a85a11acfdba4e537991e1e9df7da86f7d678"
+  },
+  "excerpt": "updateWorkspaceFolders(t,e,n,...o){let i=[];if(Array.isArray(o)&&o.forEach(c=>{y.isUri(c.uri)&&!i.some(u=>GI(u.uri,c.uri,this._extHostFileSystemInfo))&&i.push({uri:c.uri,name:c.name||Ry(c.uri)})}),this._unconfirmedWorkspace||[e,n].some(c=>typeof c!=\"number\"||c<0)||n===0&&i.length===0)return!1;let s=this._actualWorkspace?this._actualWorkspace.workspaceFolders:[];if(e+n>s.length)return!1;let a=s.slice(0);a.splice(e,n,...i.map(c=>({uri:c.uri,name:c.name||Ry(c.uri),index:void 0})));for(let c=0;c<a.length;c++){let u=a[c];if(a.some((m,g)=>g!==c&&GI(u.uri,m.uri,this._extHostFileSystemInfo)))return!1}a.forEach((c,u)=>c.index=u);let{added:l,removed:d}=O8(s,a,ite,this._extHostFileSystemInfo);if(l.length===0&&d.length===0)return!1;if(this._proxy){let c=t.displayName||t.name;this._proxy.$updateWorkspaceFolders(c,e,n,i).then(void 0,u=>{this._unconfirmedWorkspace=void 0;let m={source:{identifier:t.identifier,label:t.displayName||t.name}};this._messageService.$showMessage(h4.Error,p(9250,null,c,u.toString()),m,[])})}return this.trySetWorkspaceFolders(a),!0}getWorkspaceFolder(t,e){if(this._actualWorkspace)return this._actualWorkspace.getWorkspaceFolder(t,e)}async getWorkspaceFolder2(t,e){if(await this._barrier.wait(),!!this._actualWorkspace)return this._actualWorkspace.getWorkspaceFolder(t,e)}async resolveWorkspaceFolder(t){if(await this._barrier.wait(),!!this._actualWorkspace)return this._actualWorkspace.resolveWorkspaceFolder(t)}getPath(){if(!this._actualWorkspace)return;let{folders:t}=this._actualWorkspace;if(t.length!==0)return t[0].uri.fsPath}getRelativePath(t,e){let n,o=\"\";if(typeof t==\"string\"?(n=y.file(t),o=t):typeof t<\"u\"&&(n=t,o=t.fsPath),!n)return o;let i=this.getWorkspaceFolder(n,!0);if(!i)return o;typeof e>\"u\"&&this._actualWorkspace&&(e=this._actualWorkspace.folders.length>1);let s=Dy(i.uri,n);return e&&i.name&&(s=`${i.name}/${s}`),s}trySetWorkspaceFolders(t){this._actualWorkspace&&(this._unconfirmedWorkspace=jI.toExtHostWorkspace({id:this._actualWorkspace.id,name:this._actualWorkspace.name,configuration:this._actualWorkspace.configuration,folders:t,isUntitled:this._actualWorkspace.isUntitled},this._actualWorkspace,void 0,this._extHostFileSystemInfo).workspace||void 0)}$acceptWorkspaceData(t){let{workspace:e,added:n,removed:o}=jI.toExtHostWorkspace(t,this._confirmedWorkspace,this._unconfirmedWorkspace,this._extHostFileSystemInfo);this._confirmedWorkspace=e||void 0,this._unconfirmedWorkspace=void 0,this._onDidChangeWorkspace.fire(Object.freeze({added:n,removed:o}))}",
+  "actualNative02": {
+    "passed": 10,
+    "failed": 1,
+    "notRun": 14,
+    "restart": "NOT_RUN",
+    "fileRaceOldExists": false
+  },
+  "diagnosticLimit": "Original native result lacks failing subassertion; pending folder event is a source-supported hypothesis, not proved sole cause."
+}

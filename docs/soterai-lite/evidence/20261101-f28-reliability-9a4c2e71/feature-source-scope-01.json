@@ -1,0 +1,110 @@
+{
+  "status": "F28_SCOPED_SOURCE14_CURRENT_BYTES_PREPARED_NOT_COMMITTED",
+  "observedAt": "2026-11-01T17:41:50.203Z",
+  "sourceProof": {
+    "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/full-inputs-02.json",
+    "bytes": 213508,
+    "sha256": "70d3b237332ada5f7317906a8e745ff7d8f7bc2213b8c27f810a25b919b30743"
+  },
+  "priorProof": {
+    "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/full-inputs-03.json",
+    "bytes": 217853,
+    "sha256": "81fb9f8d559434242a67a316f0609a5c79c1b6b351cb783d7f3af365669f495f"
+  },
+  "intermediateProof": {
+    "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/full-inputs-01.json",
+    "bytes": 213094,
+    "sha256": "9716107d9fc016a0dd895da906c650763176335c7846986c0cedb8205ef7a901"
+  },
+  "fileCount": 14,
+  "files": [
+    {
+      "path": "docs/vscode-extension-readiness.md",
+      "bytes": 3811,
+      "sha256": "3a045db5c47748dd30bb28a845ff60596c84712f5129ac7f94b6c7f9dd0ff12f"
+    },
+    {
+      "path": "packages/soterai-lite/README.md",
+      "bytes": 70397,
+      "sha256": "06b50986d956e35f197621c578917018dbd95807605e2645d9939a9023855837"
+    },
+    {
+      "path": "packages/soterai-lite/package.json",
+      "bytes": 137095,
+      "sha256": "b2140ef4de867c84e642907371475c6754cc47aad0ec443e9f1c865a5df83f5e"
+    },
+    {
+      "path": "packages/vscode-extension/README.md",
+      "bytes": 76395,
+      "sha256": "5da02ea15e2f220045558e6a3dd7682f97ea447a323898f4dcfa1cb4bd344101"
+    },
+    {
+      "path": "packages/vscode-extension/package.json",
+      "bytes": 169375,
+      "sha256": "9c3a6770d212d96858c639aaefc29fe82dbe38331f1e31ca4b478db741e7ce13"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/boundaryReadReliability.test.ts",
+      "bytes": 8410,
+      "sha256": "afa8b04f210e749d62e5d4f3f41e5580d1d5cb2aaceaafc4279263132a4f0eea"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/readReliabilityBudget.test.ts",
+      "bytes": 4346,
+      "sha256": "960158748a44ac90b01634df9415678f49ff6413ba52da0a7eef202875b82056"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/readReliabilityOwner.test.ts",
+      "bytes": 3615,
+      "sha256": "5b2f7104d5dba2b1421fe5aaa5fe15cd48336a2c5dc8a3770adaf5cfdc50c06b"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/readReliabilityStress.test.ts",
+      "bytes": 2483,
+      "sha256": "e48a89a5d1fd3ba08ddb193b0d8cf29fc42372f2bc8006ce9b1d3a18ebfa1bf5"
+    },
+    {
+      "path": "packages/vscode-extension/src/ai-boundary/readFile.ts",
+      "bytes": 2808,
+      "sha256": "d0b7efacf28a835bb8277d9d9becb2610b85381907edfa4846438221306787f1"
+    },
+    {
+      "path": "packages/vscode-extension/src/extension.ts",
+      "bytes": 37384,
+      "sha256": "aef318550a22927a3975b1a8b212111a94c4bc91cc62007a0e1ef030c4844885"
+    },
+    {
+      "path": "packages/vscode-extension/src/security/FileSystemPathPolicy.ts",
+      "bytes": 8372,
+      "sha256": "81d2bc848c9edbeba0fddff27962eec17214d4d45d76745a5fec4183cb9a55bf"
+    },
+    {
+      "path": "packages/vscode-extension/src/security/ReadReliability.ts",
+      "bytes": 4300,
+      "sha256": "179bb575096ebe1cf50bbba1c036e56b687215acb50a8bfcd108eafb7ea7284a"
+    },
+    {
+      "path": "packages/vscode-extension/src/security/ReadReliabilityOwner.ts",
+      "bytes": 1796,
+      "sha256": "88ee0ebeae24e2c7b7d27c9aaf26a30e639fcfddc28de09e8be068699495a371"
+    }
+  ],
+  "excludedF26aSources": [
+    {
+      "path": "packages/vscode-extension/src/history-hooks/PreCommitController.ts",
+      "bytes": 27240,
+      "sha256": "f4c58c2e161acbf0317b85df076d5a32ef9226972e90c20f47cb0e4727efb769"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/preCommitStorageUri.review.test.ts",
+      "bytes": 8530,
+      "sha256": "cce9d6f366342eea22a1e3263c7d1f241bfcb871111db8c110a73479b1ce87d0"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/protectionCenter.model.test.ts",
+      "bytes": 6964,
+      "sha256": "4d5b511c3f2d05b29b0a78108ef944541181ae27e03adce4899ce033bf07c3b6"
+    }
+  ],
+  "scope": "Only F28 production/test/user notes/readiness changes derived by authoritative frozen files versus prior F26b tested source, following the actual02-to01-toF26b proof chain. Delta paths verified; files rows provide current bytes. Preparation01 failed its1070 guard on intermediate1076 proof, created no source scope or Git mutation and is retained. This is not feature acceptance or proof scoped HEAD alone reproduces the entire VSIX."
+}
