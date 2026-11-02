@@ -1,0 +1,362 @@
+{
+  "status": "TEXT_ONLY_UNBOUND_NOT_EXECUTABLE_NATIVE09_SUCCESSORS_NO_APPROVAL_OR_NATIVE_COVERAGE",
+  "observedAt": "2026-11-02T07:21:04.636Z",
+  "originalCandidate": {
+    "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/native09-candidate-02.ps1.txt",
+    "bytes": 52812,
+    "sha256": "052687ac56ed8cc2c5bdae621c4b54685fb7cf24e0f03ab9992dee334e43486a"
+  },
+  "originalHelper": {
+    "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/precommit-offline-owner-09b.cjs.txt",
+    "bytes": 14902,
+    "sha256": "ebfd7153a7aac41a88b5a46f5be7d8fad699a5d2b0e144fcb038053a4c2e62ef"
+  },
+  "candidate": {
+    "path": "docs/soterai-lite/evidence/20261102-f26a-native09-preparation/native09-launcher-UNBOUND-01.ps1.txt",
+    "bytes": 52890,
+    "sha256": "15428718fa774c8a704c55da65b009bb18fbea6c3e70029116d54a32f6b8c67a"
+  },
+  "helper": {
+    "path": "docs/soterai-lite/evidence/20261102-f26a-native09-preparation/native09-offline-owner-UNBOUND-01.cjs.txt",
+    "bytes": 15007,
+    "sha256": "fad1e6cc9ef56624e1ac5db928c9936b7f074e4d49ff6cd7c8053df732d64374"
+  },
+  "original34Freeze": {
+    "path": "docs/soterai-lite/evidence/20261102-f26a-native09-preparation/original-native34-freeze-01.json",
+    "bytes": 6238,
+    "sha256": "96c822673ea43cd246bb116b8232cefd86d9ab5448f0793d11e16455552dca6a"
+  },
+  "candidateChanges": [
+    {
+      "before": "# Additional exact helper custody before any helper invocation.\nAssert-F26AFile (Join-Path $taskRepo 'docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/storage-current-admission-09.cjs') '67af1525d6ada1815b5e0c16fa635253dfdd03dcfe9d17720a848cfc21accb47' 8877\nAssert-F26AFile (Join-Path $taskRepo 'docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/host-current-binding-08.ps1') '9c28c4505bf6dc8c286de660392b31b0d821e13c8716597e57ea7e4c6294dd01' 560\nAssert-F26AFile (Join-Path $taskRepo 'docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/artifact-binding-08.ps1') 'ede7c06819fcd9b3ab6b8ad98f11cc99dd18c65f68a47d4c13a3e2f8fc2ed3a9' 4225\nAssert-F26AFile (Join-Path $taskRepo 'docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/current-admission-01.cjs') 'd08a7dbff02038918fd62ae58c06bf4daeaddc358583ffb7a29c7190a1a06ce1' 3985\nAssert-F26AFile (Join-Path $taskRepo 'docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/precommit-offline-owner-09b.cjs') 'ebfd7153a7aac41a88b5a46f5be7d8fad699a5d2b0e144fcb038053a4c2e62ef' 14902\nAssert-F26AFile (Join-Path $taskRepo 'docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/current-native-guard-02.cjs') '84421b6aba10fd2b72a7c2069e21d0537da84f4ca68a2b491ec6b86637503c83' 8259\n",
+      "after": "# UNBOUND text-only successor helper custody. All future helpers require new exact-byte binding.\nAssert-F26AFile (Join-Path $PSScriptRoot 'native09-current-admission-UNBOUND-01.cjs') '__UNBOUND_CURRENT_GUARD_SHA256__' 0\nAssert-F26AFile (Join-Path $PSScriptRoot 'native09-host-current-binding-UNBOUND-01.ps1') '__UNBOUND_HOST_HELPER_SHA256__' 0\nAssert-F26AFile (Join-Path $PSScriptRoot 'native09-artifact-binding-UNBOUND-01.ps1') '__UNBOUND_ARTIFACT_HELPER_SHA256__' 0\nAssert-F26AFile (Join-Path $taskRepo 'docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/current-native-admission-05.cjs') '251638db0be53eb3e79f808316e08c9d192e0eca10741fbc8484fb8353f3e368' 8293\nAssert-F26AFile (Join-Path $PSScriptRoot 'native09-offline-owner-UNBOUND-01.cjs') '__UNBOUND_OFFLINE_HELPER_SHA256__' 0\nAssert-F26AFile (Join-Path $taskRepo 'docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/native-physical-admission-14.cjs') '6d8aba0bdc97360823f92af00ec5f27d5f05c27389214724e37d53a0e6b5a11d' 3547\n",
+      "occurrences": 1,
+      "afterPositions": [
+        2886
+      ]
+    },
+    {
+      "before": "16b37a33f203158756f46b3effc54e4fbffdd1a1e2a679d8f239138e3f7d7c18",
+      "after": "5dac9288fb259ad538ab751258f250d85a933bfb5bc8641dc32e54c01f6f047f",
+      "occurrences": 1,
+      "afterPositions": [
+        537
+      ]
+    },
+    {
+      "before": "831acd4b52ba7ac888e1030b79f0ccf16956ff3f2efcd9e8f49cdff479e34a0a",
+      "after": "3524f4f234004d81924854c756330a5d1273e0251c524d1a31fa63c3b3c784b2",
+      "occurrences": 1,
+      "afterPositions": [
+        618
+      ]
+    },
+    {
+      "before": "67b2ef79c9d132db6ed70e8cdd9bed85e5e920359beb71532c85dceb0db20449",
+      "after": "36e04d01bb9b38f8e402020318cc1d8d1a6d66176ec2be8c1630fbe6d012cacb",
+      "occurrences": 1,
+      "afterPositions": [
+        705
+      ]
+    },
+    {
+      "before": "8f7d11faa7ba03683fdbec85f95a0d2284bb126cd45c1dfc1cb02b2e3b090ced",
+      "after": "__UNBOUND_SUPPLEMENTARY_DRIVER_SHA256__",
+      "occurrences": 1,
+      "afterPositions": [
+        792
+      ]
+    },
+    {
+      "before": "325fb30ba28d17fa6ba4df58043727b2469aca9d641793a65e413721b2110ec6",
+      "after": "9f33ede68f3317402280fa997bc8963f93e67f2905e416d6bb092c03d60a37eb",
+      "occurrences": 1,
+      "afterPositions": [
+        852
+      ]
+    },
+    {
+      "before": "238249784",
+      "after": "238751552",
+      "occurrences": 2,
+      "afterPositions": [
+        4913,
+        31676
+      ]
+    },
+    {
+      "before": "1.143.1",
+      "after": "1.144.0",
+      "occurrences": 1,
+      "afterPositions": [
+        34634
+      ]
+    },
+    {
+      "before": "packages/soterai-lite/soterai-lite-0.7.0-f26a-20261029-attempt02.vsix",
+      "after": "packages/soterai-lite/soterai-lite-0.7.0-f28-20261101-attempt01.vsix",
+      "occurrences": 1,
+      "afterPositions": [
+        4364
+      ]
+    },
+    {
+      "before": "Join-Path $PSScriptRoot 'vsix-extracted-09/extension'",
+      "after": "Join-Path $taskRepo 'docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/vsix-extracted-02/extension'",
+      "occurrences": 1,
+      "afterPositions": [
+        4526
+      ]
+    },
+    {
+      "before": "prebuilt-native-hosts-09/lite-precommit-guard-host.js",
+      "after": "supplementary-prebuilt-hosts-01/lite-precommit-guard-host.js",
+      "occurrences": 2,
+      "afterPositions": [
+        4707,
+        6025
+      ]
+    },
+    {
+      "before": "$_.path -ceq 'supplementary-prebuilt-hosts-01/lite-precommit-guard-host.js'",
+      "after": "$_.path -ceq 'docs/soterai-lite/evidence/20261102-f26a-native09-preparation/supplementary-prebuilt-hosts-01/lite-precommit-guard-host.js'",
+      "occurrences": 1,
+      "afterPositions": [
+        6011
+      ]
+    },
+    {
+      "before": "precommit-offline-owner-09b.cjs",
+      "after": "native09-offline-owner-UNBOUND-01.cjs",
+      "occurrences": 1,
+      "afterPositions": [
+        1308
+      ]
+    },
+    {
+      "before": "native-host-freeze-02.json",
+      "after": "original-native34-freeze-01.json",
+      "occurrences": 2,
+      "afterPositions": [
+        5082,
+        5399
+      ]
+    },
+    {
+      "before": "native-driver-provenance-09.json",
+      "after": "supplementary-precommit-driver-provenance-01.json",
+      "occurrences": 2,
+      "afterPositions": [
+        5226,
+        5915
+      ]
+    },
+    {
+      "before": "6009609cebcb75e194eda092666ff920ad2f4e76ceda6457a3c0232d1491415e",
+      "after": "__UNBOUND_SUPPLEMENTARY_PROVENANCE_SHA256__",
+      "occurrences": 2,
+      "afterPositions": [
+        5279,
+        33290
+      ]
+    },
+    {
+      "before": "BUILT_CURRENT1037_DRIVERS25_NOT_NATIVE_ACCEPTANCE",
+      "after": "F26A_CURRENT1076_SUPPLEMENTARY_DRIVER1_PREPARED_NOT_NATIVE_ACCEPTANCE",
+      "occurrences": 1,
+      "afterPositions": [
+        6214
+      ]
+    },
+    {
+      "before": "@($taskProvenance.drivers).Count -ne 25",
+      "after": "@($taskProvenance.drivers).Count -ne 1",
+      "occurrences": 1,
+      "afterPositions": [
+        6289
+      ]
+    },
+    {
+      "before": "Current21-driver provenance",
+      "after": "Current one supplementary driver provenance",
+      "occurrences": 1,
+      "afterPositions": [
+        6431
+      ]
+    },
+    {
+      "before": "host-current-binding-08.ps1",
+      "after": "native09-host-current-binding-UNBOUND-01.ps1",
+      "occurrences": 1,
+      "afterPositions": [
+        6532
+      ]
+    },
+    {
+      "before": "artifact-binding-08.ps1",
+      "after": "native09-artifact-binding-UNBOUND-01.ps1",
+      "occurrences": 1,
+      "afterPositions": [
+        6607
+      ]
+    },
+    {
+      "before": "native-current-binding-09.json",
+      "after": "native09-current-binding-UNBOUND-01.json",
+      "occurrences": 2,
+      "afterPositions": [
+        30904,
+        31094
+      ]
+    },
+    {
+      "before": "1795ad43eb9c19d9038d32bfa46ceae4d04fc4456538ea7413b6b601df8bf512",
+      "after": "__UNBOUND_NATIVE09_BINDING_SHA256__",
+      "occurrences": 1,
+      "afterPositions": [
+        30948
+      ]
+    },
+    {
+      "before": " 217804",
+      "after": " 0",
+      "occurrences": 1,
+      "afterPositions": [
+        30984
+      ]
+    },
+    {
+      "before": "FRESH1037_FULL09_COMPILER09_BUILD09_ATTEMPT02_BOUND_NATIVE_NOT_RUN",
+      "after": "F26A_CURRENT1076_NATIVE09_BOUND_NOT_AUTHORIZED_NOT_RUN",
+      "occurrences": 1,
+      "afterPositions": [
+        31178
+      ]
+    },
+    {
+      "before": "$taskCurrentBinding.fileCount -ne 1037",
+      "after": "$taskCurrentBinding.fileCount -ne 1076",
+      "occurrences": 1,
+      "afterPositions": [
+        31238
+      ]
+    },
+    {
+      "before": "Fresh current990 binding required.",
+      "after": "Current1076 exact F26a supplementary binding required.",
+      "occurrences": 1,
+      "afterPositions": [
+        31285
+      ]
+    },
+    {
+      "before": "NATIVE09-OFFLINE-FIXTURE-PROPOSAL01.md",
+      "after": "NATIVE09-CURRENT-ARTIFACT-PROPOSAL-UNBOUND-01.md",
+      "occurrences": 1,
+      "afterPositions": [
+        7636
+      ]
+    },
+    {
+      "before": "native06",
+      "after": "native09",
+      "occurrences": 3,
+      "afterPositions": [
+        7182,
+        7708,
+        7894
+      ]
+    },
+    {
+      "before": "# PREPARED_NOT_EXECUTED. Every Code/Git launch is owned; no signals or pipe aborts.",
+      "after": "throw 'UNBOUND_NOT_EXECUTABLE_F26A_NATIVE09: source/transition proofs, supplementary driver, current helpers and fresh explicit approval are pending.'\n# PREPARED_NOT_EXECUTED. Every Code/Git launch is owned; no signals or pipe aborts.",
+      "occurrences": 1,
+      "afterPositions": [
+        404
+      ]
+    }
+  ],
+  "helperChanges": [
+    {
+      "before": "325fb30ba28d17fa6ba4df58043727b2469aca9d641793a65e413721b2110ec6",
+      "after": "9f33ede68f3317402280fa997bc8963f93e67f2905e416d6bb092c03d60a37eb",
+      "occurrences": 1
+    },
+    {
+      "before": "67b2ef79c9d132db6ed70e8cdd9bed85e5e920359beb71532c85dceb0db20449",
+      "after": "36e04d01bb9b38f8e402020318cc1d8d1a6d66176ec2be8c1630fbe6d012cacb",
+      "occurrences": 1
+    },
+    {
+      "before": "8f7d11faa7ba03683fdbec85f95a0d2284bb126cd45c1dfc1cb02b2e3b090ced",
+      "after": "__UNBOUND_SUPPLEMENTARY_DRIVER_SHA256__",
+      "occurrences": 1
+    }
+  ],
+  "bootstrapByteExact": true,
+  "launcherReversalByteExact": true,
+  "helperReversalByteExact": true,
+  "offlineSpawnOwnershipAndOracleSuffixByteExact": true,
+  "originalDeadlines": [
+    "TotalSeconds -lt 300",
+    "ElapsedMilliseconds -lt 2000",
+    "TotalSeconds -lt 120",
+    "ElapsedMilliseconds -lt 2000"
+  ],
+  "successorDeadlines": [
+    "TotalSeconds -lt 300",
+    "ElapsedMilliseconds -lt 2000",
+    "TotalSeconds -lt 120",
+    "ElapsedMilliseconds -lt 2000"
+  ],
+  "original34AssertionsUnchanged": true,
+  "currentSourceProof": {
+    "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/full-inputs-02.json",
+    "bytes": 213508,
+    "sha256": "70d3b237332ada5f7317906a8e745ff7d8f7bc2213b8c27f810a25b919b30743"
+  },
+  "currentArtifact": {
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-f28-20261101-attempt01.vsix",
+    "bytes": 1749703,
+    "sha256": "5dac9288fb259ad538ab751258f250d85a933bfb5bc8641dc32e54c01f6f047f"
+  },
+  "currentCodePinFromExistingReview": {
+    "path": "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe",
+    "bytes": 238751552,
+    "sha256": "9f33ede68f3317402280fa997bc8963f93e67f2905e416d6bb092c03d60a37eb"
+  },
+  "currentWorkerPin": {
+    "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/vsix-extracted-02/extension/dist/pre-commit-client.js",
+    "bytes": 24512,
+    "sha256": "36e04d01bb9b38f8e402020318cc1d8d1a6d66176ec2be8c1630fbe6d012cacb"
+  },
+  "unresolvedFields": [
+    "__UNBOUND_ARTIFACT_HELPER_SHA256__",
+    "__UNBOUND_CURRENT_GUARD_SHA256__",
+    "__UNBOUND_HOST_HELPER_SHA256__",
+    "__UNBOUND_NATIVE09_BINDING_SHA256__",
+    "__UNBOUND_OFFLINE_HELPER_SHA256__",
+    "__UNBOUND_SUPPLEMENTARY_DRIVER_SHA256__",
+    "__UNBOUND_SUPPLEMENTARY_PROVENANCE_SHA256__"
+  ],
+  "missingBindingInputs": [
+    "Actual F28 source commit and source byte proof",
+    "Actual F28 DONE transition and transition byte proof",
+    "Fresh strict diagnostic host receipt",
+    "Fresh one-driver build and separate provenance",
+    "Native09 current admission and host/artifact binding helpers",
+    "Current native09 binding, exact helper/provenance sizes and hashes",
+    "Root-reviewed result validator/outer runner/prior-owner observations",
+    "Reviewable new proposal and byte-verified evidence checkpoint",
+    "Fresh explicit ONE native09 approval superseding the saved defer"
+  ],
+  "current26DriverOrSourceFilesModified": 0,
+  "sourceChanges": 0,
+  "builds": 0,
+  "typechecks": 0,
+  "nativeLaunches": 0,
+  "signalsRequested": 0,
+  "native09": "EXPLICIT_USER_DEFERRED_NOT_RUN",
+  "executableLauncherOrOfflineHelperMaterialized": false,
+  "limitation": "The unconditional refusals and unresolved fields must remain until a separate fully reviewed bound successor is prepared after F28 DONE; no old approval or native outcome transfers."
+}
