@@ -1,0 +1,12 @@
+'use strict';
+const fs=require('node:fs'),assert=require('node:assert/strict'),C=require('./native09-current-admission-01.cjs'),{own,read,fact}=C;
+const file=C.repo+'/docs/soterai-lite/FEATURE-QUEUE.json',queue=read(file),sub=queue.features.find(x=>x.id==='F26').subcards.find(x=>x.id==='F26a');
+const prior=sub.executionDecision;assert.equal(typeof prior,'object');assert.equal(prior.status,'NATIVE12_ONE_EXTRA_DECISION_ASKED_NOT_AUTHORIZED_NOT_RUN');
+const previousText=Object.keys(prior).filter(k=>/^\d+$/.test(k)).sort((a,b)=>Number(a)-Number(b)).map(k=>prior[k]).join('');assert(previousText.startsWith('ACTIVE/INCOMPLETE: native11'));
+const pending=read(own('native12-user-decision-pending-01.json'));assert.equal(pending.userApproval,false);assert.equal(pending.native12Launches,0);
+for(const n of ['native12-user-approval-01.json','native12-consumption-01.json','run-precommit-native12-current-01.ps1'])assert(!fs.existsSync(own(n)),n);
+sub.executionDecision='ACTIVE/INCOMPLETE: native11 primary30/offline PASS, restart1PASS1FAIL2NOT_RUN. Guarded offline cwd correction/component19/syntax/preapproval PASS; native12 ONE extra decision asked, not authorized/not run. Checkpoint5901a05b/131 exact paths; source3 and parentF26 completion pending.';
+sub.native12PendingDecision={status:pending.status,checkpoint:pending.checkpoint,decisionEvidence:fact(own('native12-user-decision-pending-01.json')),approvalRequired:true,native12:'NOT_AUTHORIZED_NOT_RUN'};
+fs.writeFileSync(file,JSON.stringify(queue,null,2)+'\n');
+const result={status:'PASS_PENDING_METADATA_RECONCILED_NATIVE12_NOT_AUTHORIZED_NOT_RUN',observedAt:new Date().toISOString(),previousExecutionText:previousText,correction:'Keep executionDecision as text; separate structured native12PendingDecision. Earlier string object spread was metadata-only; no product/fixture/test/authority changed.',queue:fact(file),approval:false,native12Launches:0,featureComplete:false};
+fs.writeFileSync(own('native12-pending-state-review-02.json'),JSON.stringify(result,null,2)+'\n',{flag:'wx'});console.log(JSON.stringify({status:result.status,native12Launches:0,approval:false}));

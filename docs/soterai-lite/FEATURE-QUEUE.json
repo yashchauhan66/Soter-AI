@@ -9,10 +9,10 @@
   "planVersion": 1,
   "clientDate": "2026-10-13",
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
-  "scope": "F01-F10/F12-F25/F26b/F26c/F27/F29/F30 scoped DONE with recorded byte barriers; F11 optional absent NOT_TESTED/NOT_COVERED. F26a native11 primary30+offlinePASS/restartHR02caseFAIL; native12 extra decision pending, INCOMPLETE; parentF26 incomplete. F28 scoped DONE after transition bytes; required F26a resume selected; F31b/F32/V01-V05 incomplete. F31a build-only DONE; parentF31 incomplete. No human/independent/rating/release-ready claim.",
+  "scope": "F01-F10/F12-F25/F26b/F26c/F27/F29/F30 scoped DONE with recorded byte barriers; F11 optional absent NOT_TESTED/NOT_COVERED. F26a native11 primary30+offlinePASS/restartHR02caseFAIL; native12 extra decision pending, INCOMPLETE; parentF26 incomplete. F28 scoped DONE after transition bytes; required F26a resume selected; F31b/F32/V01-V05 incomplete. F31a build-only DONE; parentF31 incomplete. No human/independent/rating/release-ready claim. Owner 2Nov final F26a native12 failed; F26a USER_SKIPPED/INCOMPLETE/unsupported and no further native runs, F31b selected after skip byte barrier; original F26 requirement remains incomplete.",
   "implementationConcurrency": 1,
-  "activeFeature": "F26",
-  "activeSubcard": "F26a",
+  "activeFeature": "F31",
+  "activeSubcard": "F31b",
   "priorityAmendment": {
     "date": "2026-10-26",
     "authority": "User requested shorter independent features first and time-consuming work later",
@@ -857,7 +857,7 @@
     {
       "id": "F26",
       "title": "Optional Git/history hooks.",
-      "status": "ACTIVE",
+      "status": "PLANNED",
       "result": "INCOMPLETE",
       "requires": [
         "F25"
@@ -866,13 +866,45 @@
         {
           "id": "F26a",
           "title": "pre-commit",
-          "status": "ACTIVE",
+          "status": "PLANNED",
           "result": "INCOMPLETE",
           "requires": [
             "parent prerequisites"
           ],
-          "progressEvidence": "docs/soterai-lite/evidence/20261102-f26a-native09-preparation/progress-04.json",
-          "executionDecision": "ACTIVE/INCOMPLETE: native11 actualprimary30+offlinePASS/phase540PASS, restart1PASS1FAIL2NOT_RUN. Exact retained HR02 replay identifies D:/d: cwd spelling mismatch; drive-only input correction19 component controls/syntax/preapprovalPASS. Native12 extra approval absent/no executable/not run; source3+parentF26 completion still pending."
+          "progressEvidence": "docs/soterai-lite/evidence/20261102-f26a-native09-preparation/native12-final-reconciliation-01.json",
+          "executionDecision": "Final native12 consumed once and failed with missing primary result; Code0/wrapper1/bothEOF/no deadline. User call_3d1ca86cdb034f82a9ea32aa1bc401ab explicitly permits skip/delete if incomplete: reversible SKIP selected, source/evidence retained, no further F26a native runs, no DONE/supported claim.",
+          "native12PendingDecision": {
+            "status": "NATIVE12_ONE_EXTRA_DECISION_ASKED_NOT_AUTHORIZED_NOT_RUN",
+            "checkpoint": "5901a05b6b040334ad9c3e83c9ba474df35be3a6",
+            "decisionEvidence": {
+              "path": "docs/soterai-lite/evidence/20261102-f26a-native09-preparation/native12-user-decision-pending-01.json",
+              "bytes": 1239,
+              "sha256": "2e8e7d227e97427efd6bacb1713825b5bb9c4d54d9645836471a68cff70ec010"
+            },
+            "approvalRequired": true,
+            "native12": "NOT_AUTHORIZED_NOT_RUN",
+            "historical": true,
+            "supersededBy": "native12FinalDecision"
+          },
+          "native12FinalDecision": {
+            "approval": {
+              "path": "docs/soterai-lite/evidence/20261102-f26a-native09-preparation/native12-user-approval-01.json",
+              "bytes": 1788,
+              "sha256": "05611c74b3ce60678c34fb09328e7434eed202c18b88834a0adf68521470b469"
+            },
+            "allowedAttempts": 1,
+            "finalAttempt": true,
+            "ifIncomplete": "SKIP_WITH_RETAINED_EVIDENCE_NO_FALSE_DONE_NO_RETRY",
+            "consumed": true,
+            "outcome": {
+              "path": "docs/soterai-lite/evidence/20261102-f26a-native09-preparation/native12-final-reconciliation-01.json",
+              "bytes": 5257,
+              "sha256": "5286c28ea8fc56ac01e0479c329ee454263dfe56952aebbebd5a5055f0b6b7db"
+            },
+            "furtherAttemptsAllowed": 0
+          },
+          "executionState": "USER_SKIPPED_FINAL_ATTEMPT_EXHAUSTED",
+          "supported": false
         },
         {
           "id": "F26b",
@@ -912,7 +944,8 @@
         }
       ],
       "completionRule": "All required subcards pass individually before parent DONE",
-      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "executionState": "SUPPORTED_SUBCARDS_F26B_F26C_DONE_F26A_USER_SKIPPED"
     },
     {
       "id": "F27",
@@ -1037,7 +1070,7 @@
         {
           "id": "F31b",
           "title": "Final exact-package readiness, honest claims, shipped notices/privacy/SBOM and audits",
-          "status": "PLANNED",
+          "status": "ACTIVE",
           "result": "NOT-RUN",
           "requires": [
             "F26",
@@ -1047,7 +1080,26 @@
             "F30",
             "F31a"
           ],
-          "scope": "All original F31 final-object packaging and readiness requirements retained; early detached SBOM does not complete this subcard."
+          "scope": "All original F31 final-object packaging and readiness requirements retained; early detached SBOM does not complete this subcard.",
+          "originalRequiresPreserved": [
+            "F26",
+            "F27",
+            "F28",
+            "F29",
+            "F30",
+            "F31a"
+          ],
+          "executionDependenciesCurrent": [
+            "F26b",
+            "F26c",
+            "F27",
+            "F28",
+            "F29",
+            "F30",
+            "F31a"
+          ],
+          "userSkippedDependency": "F26a remains INCOMPLETE/unsupported; parent F26 is not DONE. Owner explicitly permits progression after final failed attempt, not an acceptance substitution.",
+          "startCondition": "No F31b production until actual f26a-native12-final-skip-byte-proof-01.json PASS; retain original BUSL owner choice and F31b original contract for supported scope."
         }
       ],
       "completionRule": "Both F31a and F31b pass their declared scope; all required earlier runtime features pass before parent DONE",
@@ -1122,6 +1174,14 @@
       "requestedFeatureRetained": true,
       "requiredBehaviorReclassified": false,
       "queueNormalization": "Late reconciliation of proposed linear F12 dependency; catalog unchanged"
+    },
+    "F26a": {
+      "reason": "Explicit owner final-attempt instruction: skip or delete if incomplete; final native12 missing result. Reversible skip, no further runs or false DONE.",
+      "recordedAt": "2026-11-02T15:00:49.146Z",
+      "evidence": "docs/soterai-lite/evidence/20261102-f26a-native09-preparation/native12-final-reconciliation-01.json",
+      "retainedOriginalRequirement": true,
+      "countsAsDone": false,
+      "advertisedSupport": false
     }
   },
   "f26cLatestCheckpoint": {

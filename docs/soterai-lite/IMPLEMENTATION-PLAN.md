@@ -221,3 +221,8 @@ F26b scoped supported contract passes current full/native36/configured-local-pus
 ## Current checkpoint - 2 November 2026
 
 F28 supported scoped acceptance/source14 byte gates pass at 3c3f6e0567c2398d9fda8c614122697cebc0b335. DONE takes effect after evidence/20261101-f28-reliability-9a4c2e71/f28-transition-byte-proof-01.json PASS. Resume required F26a next before F31b/F32/V01-V05, retaining its explicit native09 defer until a refreshed reviewed proposal is explicitly authorized. No schedule or scope replacement, no release-ready/publish/rating claim; original L6 HUMAN-ACTIONS and STOP remains.
+
+
+## Owner final-attempt amendment - 2 November 2026
+
+User call_3d1ca86cdb034f82a9ea32aa1bc401ab allowed ONE LAST F26a native12 attempt and explicitly instructed skip or delete if incomplete. Native12 actual missing primary result/Code0/wrapper1/bothEOF; offline/restart NOT_RUN. Choose reversible skip: F26a stays INCOMPLETE/unsupported, source and all failures retained, no further F26a native runs. Parent F26 is not DONE; F26b/F26c scoped DONE stand. This owner exception permits F31b supported-scope progression after the scoped final-skip byte barrier; original F26 prerequisite/catalog requirement remains named unmet, not silently accepted. F31b must exclude pre-commit supported claims and preserve recovery access for existing owned hooks. Remaining order F31b -> F32 -> unchanged V01-V05; no replacement plan, rating or original L6 HUMAN-ACTIONS/STOP bypass.
