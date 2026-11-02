@@ -1,0 +1,76 @@
+﻿TAP version 13
+# Subtest: current reviewed local profile joins exact JSON builtin before driver environment baseline
+ok 1 - current reviewed local profile joins exact JSON builtin before driver environment baseline
+  ---
+  duration_ms: 51.8798
+  type: 'test'
+  ...
+# Subtest: other app root is refused before vendor activation
+ok 2 - other app root is refused before vendor activation
+  ---
+  duration_ms: 5.4243
+  type: 'test'
+  ...
+# Subtest: untrusted workspace is refused
+ok 3 - untrusted workspace is refused
+  ---
+  duration_ms: 2.6107
+  type: 'test'
+  ...
+# Subtest: remote context is refused
+ok 4 - remote context is refused
+  ---
+  duration_ms: 3.6208
+  type: 'test'
+  ...
+# Subtest: different profile is refused
+ok 5 - different profile is refused
+  ---
+  duration_ms: 2.7329
+  type: 'test'
+  ...
+# Subtest: incorrect synthetic marker is refused
+ok 6 - incorrect synthetic marker is refused
+  ---
+  duration_ms: 2.6385
+  type: 'test'
+  ...
+# Subtest: incorrect builtin identity is refused
+ok 7 - incorrect builtin identity is refused
+  ---
+  duration_ms: 2.9951
+  type: 'test'
+  ...
+# Subtest: changed public vendor bytes are refused
+ok 8 - changed public vendor bytes are refused
+  ---
+  duration_ms: 18.4512
+  type: 'test'
+  ...
+# Subtest: changed vendor size is refused
+ok 9 - changed vendor size is refused
+  ---
+  duration_ms: 5.4969
+  type: 'test'
+  ...
+# Subtest: schema downloads must remain off
+ok 10 - schema downloads must remain off
+  ---
+  duration_ms: 23.3397
+  type: 'test'
+  ...
+# Subtest: uncompleted builtin activation is refused
+ok 11 - uncompleted builtin activation is refused
+  ---
+  duration_ms: 23.9607
+  type: 'test'
+  ...
+1..11
+# tests 11
+# suites 0
+# pass 11
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 170.3798

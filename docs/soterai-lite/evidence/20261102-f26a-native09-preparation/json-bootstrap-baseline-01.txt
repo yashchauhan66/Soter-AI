@@ -1,0 +1,244 @@
+﻿TAP version 13
+# Subtest: current reviewed local profile joins exact JSON builtin before driver environment baseline
+not ok 1 - current reviewed local profile joins exact JSON builtin before driver environment baseline
+  ---
+  duration_ms: 10.4152
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261102-f26a-native09-preparation\\json-bootstrap-component-01.cjs:23:1'
+  failureType: 'testCodeFailure'
+  error: 'Pinned trusted local synthetic profile required.'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Object.joinPinnedJsonBuiltin (evalmachine.<anonymous>:30:65)
+    invoke (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261102-f26a-native09-preparation\json-bootstrap-component-01.cjs:21:16)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261102-f26a-native09-preparation\json-bootstrap-component-01.cjs:23:128)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: other app root is refused before vendor activation
+ok 2 - other app root is refused before vendor activation
+  ---
+  duration_ms: 4.1346
+  type: 'test'
+  ...
+# Subtest: untrusted workspace is refused
+ok 3 - untrusted workspace is refused
+  ---
+  duration_ms: 1.4985
+  type: 'test'
+  ...
+# Subtest: remote context is refused
+ok 4 - remote context is refused
+  ---
+  duration_ms: 1.3892
+  type: 'test'
+  ...
+# Subtest: different profile is refused
+ok 5 - different profile is refused
+  ---
+  duration_ms: 1.2683
+  type: 'test'
+  ...
+# Subtest: incorrect synthetic marker is refused
+not ok 6 - incorrect synthetic marker is refused
+  ---
+  duration_ms: 5.267
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261102-f26a-native09-preparation\\json-bootstrap-component-01.cjs:28:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /Synthetic marker/. Input:
+    
+    'Error: Pinned trusted local synthetic profile required.'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+  error: 'Pinned trusted local synthetic profile required.'
+  stack: |-
+    Object.joinPinnedJsonBuiltin (evalmachine.<anonymous>:30:65)
+    invoke (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261102-f26a-native09-preparation\json-bootstrap-component-01.cjs:21:16)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261102-f26a-native09-preparation\json-bootstrap-component-01.cjs:28:65)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  operator: 'rejects'
+  stack: |-
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: incorrect builtin identity is refused
+not ok 7 - incorrect builtin identity is refused
+  ---
+  duration_ms: 2.1238
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261102-f26a-native09-preparation\\json-bootstrap-component-01.cjs:29:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /Exact installed JSON builtin/. Input:
+    
+    'Error: Pinned trusted local synthetic profile required.'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+  error: 'Pinned trusted local synthetic profile required.'
+  stack: |-
+    Object.joinPinnedJsonBuiltin (evalmachine.<anonymous>:30:65)
+    invoke (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261102-f26a-native09-preparation\json-bootstrap-component-01.cjs:21:16)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261102-f26a-native09-preparation\json-bootstrap-component-01.cjs:29:65)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  operator: 'rejects'
+  stack: |-
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: changed public vendor bytes are refused
+not ok 8 - changed public vendor bytes are refused
+  ---
+  duration_ms: 1.7523
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261102-f26a-native09-preparation\\json-bootstrap-component-01.cjs:30:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /Pinned vendor JSON input bytes/. Input:
+    
+    'Error: Pinned trusted local synthetic profile required.'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+  error: 'Pinned trusted local synthetic profile required.'
+  stack: |-
+    Object.joinPinnedJsonBuiltin (evalmachine.<anonymous>:30:65)
+    invoke (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261102-f26a-native09-preparation\json-bootstrap-component-01.cjs:21:16)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261102-f26a-native09-preparation\json-bootstrap-component-01.cjs:30:67)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  operator: 'rejects'
+  stack: |-
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: changed vendor size is refused
+not ok 9 - changed vendor size is refused
+  ---
+  duration_ms: 2.3935
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261102-f26a-native09-preparation\\json-bootstrap-component-01.cjs:31:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /Pinned vendor JSON input identity/. Input:
+    
+    'Error: Pinned trusted local synthetic profile required.'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+  error: 'Pinned trusted local synthetic profile required.'
+  stack: |-
+    Object.joinPinnedJsonBuiltin (evalmachine.<anonymous>:30:65)
+    invoke (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261102-f26a-native09-preparation\json-bootstrap-component-01.cjs:21:16)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261102-f26a-native09-preparation\json-bootstrap-component-01.cjs:31:58)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  operator: 'rejects'
+  stack: |-
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: schema downloads must remain off
+not ok 10 - schema downloads must remain off
+  ---
+  duration_ms: 2.158
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261102-f26a-native09-preparation\\json-bootstrap-component-01.cjs:32:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /Schema downloads/. Input:
+    
+    'Error: Pinned trusted local synthetic profile required.'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+  error: 'Pinned trusted local synthetic profile required.'
+  stack: |-
+    Object.joinPinnedJsonBuiltin (evalmachine.<anonymous>:30:65)
+    invoke (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261102-f26a-native09-preparation\json-bootstrap-component-01.cjs:21:16)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261102-f26a-native09-preparation\json-bootstrap-component-01.cjs:32:60)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  operator: 'rejects'
+  stack: |-
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: uncompleted builtin activation is refused
+not ok 11 - uncompleted builtin activation is refused
+  ---
+  duration_ms: 1.7942
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261102-f26a-native09-preparation\\json-bootstrap-component-01.cjs:33:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /activation\/configuration incomplete/. Input:
+    
+    'Error: Pinned trusted local synthetic profile required.'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+  error: 'Pinned trusted local synthetic profile required.'
+  stack: |-
+    Object.joinPinnedJsonBuiltin (evalmachine.<anonymous>:30:65)
+    invoke (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261102-f26a-native09-preparation\json-bootstrap-component-01.cjs:21:16)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261102-f26a-native09-preparation\json-bootstrap-component-01.cjs:33:69)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  operator: 'rejects'
+  stack: |-
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..11
+# tests 11
+# suites 0
+# pass 4
+# fail 7
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 78.7969

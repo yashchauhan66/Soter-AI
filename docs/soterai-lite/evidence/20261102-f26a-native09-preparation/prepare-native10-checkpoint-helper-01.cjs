@@ -1,0 +1,25 @@
+'use strict';
+const fs=require('node:fs'),assert=require('node:assert/strict'),{own}=require('./native09-current-admission-01.cjs');
+let text=fs.readFileSync(own('scoped-native09-preparation-git-01.cjs'),'utf8');
+const begin=text.indexOf('async function preflight(){'),end=text.indexOf('function checkpointFile',begin);assert(begin>0&&end>begin);
+const preflight=String.raw`async function preflight(){
+ assert.equal(sha(fs.readFileSync(git)),'da240fe9bc24895b3e04150a4990b8a6ff329ecabcd8f19684c2cc310da5ef3f');assert.equal(text(['rev-parse','--show-object-format']),'sha1');
+ const b=read(own('native09-current-binding-01.json'));assert.equal(sha(fs.readFileSync(own('native09-current-binding-01.json'))),'9a6e8cac4f1ef74618565faf9c4bb5c6f71e0f36b2f7c6f755996d685d131616');
+ assert.equal(b.fileCount,1076);assert.equal(b.nativeOracles.total,34);
+ const source=read(path.resolve(repo,b.sourceProof.path));assert.equal(sha(fs.readFileSync(path.resolve(repo,b.sourceProof.path))),b.sourceProof.sha256);assert.equal(source.files.length,1076);
+ for(const row of source.files){const file=ordinary(row.path),raw=fs.readFileSync(file);assert.equal(raw.length,row.bytes);assert.equal(sha(raw),row.sha256,row.path);}
+ for(const n of ['supplementary-native-typecheck-01','supplementary-driver-build-01','json-bootstrap-corrected-01','native10-bootstrap-admission-01','native10-syntax-01','native10-final-syntax-02','native10-current-preapproval-02','native09-postfailure-owners-01']){const r=read(own(n+'.txt.result.json'));assert.equal(r.exitCode,0,n);assert.equal(sha(fs.readFileSync(own(n+'.txt'))),r.sha256.toLowerCase());}
+ const failed=read(own('native09-chain-result-01.json'));assert.equal(failed.status,'FAIL_OR_INCOMPLETE_NO_AUTOMATIC_RETRY');assert.equal(failed.wrapperExit,1);assert.equal(failed.innerExit,1);assert.equal(failed.actualClose,true);assert.equal(failed.stdoutEOF,true);assert.equal(failed.stderrEOF,true);assert.equal(failed.signalsRequested,0);
+ const helper=fact(path.relative(repo,own('native10-bootstrap-admission-01.cjs')).replaceAll('\\','/')),pin="Assert-F26AFile (Join-Path $PSScriptRoot 'native10-bootstrap-admission-01.cjs') '"+helper.sha256+"' "+helper.bytes+"\n";
+ assert.equal(fs.readFileSync(own('native10-current-candidate-02.ps1.txt'),'utf8').replace(pin,''),fs.readFileSync(own('native10-current-candidate-01.ps1.txt'),'utf8'));
+ for(const n of ['native10-user-approval-01.json','native10-consumption-01.json','run-precommit-native10-current-01.ps1'])assert(!fs.existsSync(own(n)),n);
+ assert.equal(read(own('progress-02.json')).status,'F26A_NATIVE09_FAIL_CURRENT_JSON_ROOT_FIX_NATIVE10_READY_NOT_AUTHORIZED');
+ return{...b,sourceScope:[]};
+}
+`;
+text=text.slice(0,begin)+preflight+text.slice(end);
+for(const[a,z]of [['f26a-native09-preparation-manifest-01.json','f26a-native10-json-fix-manifest-01.json'],['f26a-native09-preparation-byte-proof-01.json','f26a-native10-json-fix-byte-proof-01.json'],['f26a-native09-preparation-body-01.txt','f26a-native10-json-fix-body-01.txt'],['empty-f26a-native09-preparation-hooks-01','empty-f26a-native10-json-fix-hooks-01'],['60a24c6b827dd562c275363ca9946367b3ce3ebd','2ec232e8b28a6670c7651022833fc99710fce176'],['PASS_EXACT_LOCAL_F26A_NATIVE09_PREPARATION_BYTES_FEATURE_INCOMPLETE','PASS_EXACT_LOCAL_F26A_NATIVE10_JSON_FIX_BYTES_FEATURE_INCOMPLETE'],['PREPARED_SCOPED_F26A_NATIVE09_CURRENT_PACKET_NOT_COMMITTED','PREPARED_SCOPED_F26A_NATIVE10_JSON_FIX_NOT_COMMITTED'],['ACTIVE_INCOMPLETE_F26A_NATIVE09_EXPLICITLY_DEFERRED_PREPARATION_ONLY','ACTIVE_INCOMPLETE_NATIVE09_FAILED_NATIVE10_EXTRA_APPROVAL_PENDING'],["f26aNative09:'USER_DEFERRED_NOT_RUN'","f26aNative09:'CONSUMED_ONCE_FAILED_BEFORE_DRIVER_NO_RETRY'"]])text=text.replaceAll(a,z);
+const body='docs(lite): retain failed F26a native09 and verified JSON-root correction\n\nOriginal34 remain UNVERIFIED; Code natural0/bothEOF and outer1/bothEOF. Single stale bootstrap appRoot corrected with exact-function11PASS from baseline4PASS7FAIL; four already-current vendor hashes unchanged. Fresh current1076/admission/syntax/preapproval PASS; no product change or native10 launch. ONE extra native10 decision required; no automatic retry, push, publish or rating.\n';
+const bodyRe=/fs\.writeFileSync\(own\(body\),[\s\S]*?\{flag:'wx'\}\);/;assert(bodyRe.test(text));text=text.replace(bodyRe,'fs.writeFileSync(own(body),'+JSON.stringify(body)+",{flag:'wx'});");
+text=text.replace(/scope:'F26a current native09 test preparation[^\n]+/,'scope:'+JSON.stringify('F26a failed native09 current attempt and JSON bootstrap root correction evidence/selected metadata only. No source staged;1076 frozen source bytes and successful fresh canonical current preapproval revalidated without repeating unchanged vendor verification during evidence-only Git work. Original34 not accepted, native10 extra approval absent/no executable. Preserve unrelated work and historical closure gaps; no release-ready/push/publish/rating.')+'};');
+fs.writeFileSync(own('scoped-native10-json-fix-git-01.cjs'),text,{flag:'wx'});console.log('PREPARED_TEXT_ONLY_NO_GIT_ACTION');

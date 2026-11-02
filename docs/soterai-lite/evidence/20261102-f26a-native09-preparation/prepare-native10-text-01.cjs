@@ -1,0 +1,20 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),{own,read,sha,fact}=require('./native09-current-admission-01.cjs');
+const put=(n,v)=>fs.writeFileSync(own(n),typeof v==='string'?v:JSON.stringify(v,null,2)+'\n',{flag:'wx'});
+const old=fs.readFileSync(own('native09-current-candidate-01.ps1.txt'),'utf8');
+const review=read(path.resolve(__dirname,'../20261029-f26b-prepush-70e1c9a4/host-version-review-code1144-01.json'));
+const appRoot=path.dirname(review.currentHost.applicationFiles.find(x=>path.basename(x.path)==='package.json').path);
+const expression=/const jsonBuiltinAppRoot = ("[^\r\n]+");/g,match=[...old.matchAll(expression)];assert.equal(match.length,1);const prior=JSON.parse(match[0][1]);assert.notEqual(prior,appRoot);
+let candidate=old.replace(match[0][0],'const jsonBuiltinAppRoot = '+JSON.stringify(appRoot)+';');
+const replacements=[['native09-user-approval-01.json','native10-user-approval-01.json'],['native09-consumption-01.json','native10-consumption-01.json'],['EXPLICIT_USER_AUTHORIZATION_ONE_F26A_NATIVE09','EXPLICIT_USER_AUTHORIZATION_ONE_F26A_NATIVE10'],['SINGLE_APPROVED_F26A_NATIVE09_CONSUMED_NO_AUTO_RETRY','SINGLE_APPROVED_F26A_NATIVE10_CONSUMED_NO_AUTO_RETRY'],['NATIVE09-CURRENT-ARTIFACT-PROPOSAL01.md','NATIVE10-CURRENT-JSON-PINS-PROPOSAL01.md']];
+for(const[a,z]of replacements){assert(candidate.includes(a),a);candidate=candidate.replaceAll(a,z);}
+const call="$taskBootstrapAdmission=Join-Path $PSScriptRoot 'native10-bootstrap-admission-01.cjs'\n& 'C:\\Program Files\\nodejs\\node.exe' $taskBootstrapAdmission\nif($LASTEXITCODE -ne 0){throw 'Current JSON bootstrap admission failed before Code/profile/Git.'}\n";
+const insert='$taskOfflineExpected=Get-F26ASha';assert(candidate.includes(insert));candidate=candidate.replace(insert,call+insert);
+put('native10-current-candidate-01.ps1.txt',candidate);
+let reverse=candidate.replace(call,'');for(const[a,z]of [...replacements].reverse())reverse=reverse.replaceAll(z,a);reverse=reverse.replace('const jsonBuiltinAppRoot = '+JSON.stringify(appRoot)+';',match[0][0]);assert.equal(reverse,old);
+const stop=candidate.indexOf('$taskApprovalFile=');assert(stop>0);const pre=candidate.slice(0,stop).replaceAll('native09-offline-owner-01.cjs','native09-offline-owner-01.cjs.txt');put('native10-current-preapproval-01.ps1',pre+"Write-Output 'CURRENT_F26A_NATIVE10_PREAPPROVAL_PASS_NO_CODE_PROFILE_OR_GIT_LAUNCH'\n");
+let runner=fs.readFileSync(own('run-native09-current-chain-01.cjs'),'utf8');for(const[a,z]of [...replacements,['run-precommit-native09-current-01.ps1','run-precommit-native10-current-01.ps1'],['native09-run-01','native10-run-01'],['native09-chain-start-01.json','native10-chain-start-01.json'],['native09-chain-result-01.json','native10-chain-result-01.json'],['native09-chain-failure-01.json','native10-chain-failure-01.json'],['APPROVED_NATIVE09_WRAPPER_CLOSED_PASS_ROOT_AGGREGATION_PENDING','APPROVED_NATIVE10_WRAPPER_CLOSED_PASS_ROOT_AGGREGATION_PENDING']])runner=runner.replaceAll(a,z);put('run-native10-current-chain-01.cjs',runner);
+put('native10-text-delta-01.json',{status:'TEXT_ONLY_NOT_AUTHORIZED_NOT_RUN',observedAt:new Date().toISOString(),original:fact(own('native09-current-candidate-01.ps1.txt')),candidate:fact(own('native10-current-candidate-01.ps1.txt')),priorAppRoot:prior,currentAppRoot:appRoot,onlyBootstrapDelta:'One jsonBuiltinAppRoot literal; all four existing reviewed JSON pin bytes/sizes are already current and unchanged',outsideBootstrapDeltas:'Versioned one-attempt authority/evidence names plus read-only pre-Code bootstrap-pin admission',fullReversalExact:true,original34AndDriverUnchanged:true,nativeLaunches:0,signalsRequested:0});
+// Fresh observation only; the failed run and original evidence remain unchanged.
+put('native10-prior-owners-01.ps1',fs.readFileSync(own('native09-prior-owners-01.ps1'),'utf8').replaceAll('native09-prior-owner-observation-01.json','native10-prior-owner-observation-01.json'));
+console.log(JSON.stringify({status:'TEXT_ONLY_NATIVE10_PREPARED_NO_AUTHORIZATION_OR_LAUNCH',appRoot,candidate:fact(own('native10-current-candidate-01.ps1.txt'))}));

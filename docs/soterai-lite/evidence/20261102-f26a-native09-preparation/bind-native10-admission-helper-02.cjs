@@ -1,0 +1,10 @@
+'use strict';
+const fs=require('node:fs'),assert=require('node:assert/strict'),C=require('./native09-current-admission-01.cjs'),{own,fact}=C;
+const helper=fact(own('native10-bootstrap-admission-01.cjs')),source=fs.readFileSync(own('native10-current-candidate-01.ps1.txt'),'utf8'),marker="$taskBootstrapAdmission=Join-Path";
+assert.equal(source.split(marker).length,2);const pin="Assert-F26AFile (Join-Path $PSScriptRoot 'native10-bootstrap-admission-01.cjs') '"+helper.sha256+"' "+helper.bytes+"\n";
+const candidate=source.replace(marker,pin+marker);assert.equal(candidate.replace(pin,''),source);
+fs.writeFileSync(own('native10-current-candidate-02.ps1.txt'),candidate,{flag:'wx'});
+const stop=candidate.indexOf('$taskApprovalFile=');assert(stop>0);const pre=candidate.slice(0,stop).replaceAll('native09-offline-owner-01.cjs','native09-offline-owner-01.cjs.txt');
+fs.writeFileSync(own('native10-current-preapproval-02.ps1'),pre+"Write-Output 'CURRENT_F26A_NATIVE10_PREAPPROVAL_PASS_NO_CODE_PROFILE_OR_GIT_LAUNCH'\n",{flag:'wx'});
+fs.writeFileSync(own('native10-helper-custody-02.json'),JSON.stringify({status:'TEXT_ONLY_NOT_AUTHORIZED',helper,candidate:fact(own('native10-current-candidate-02.ps1.txt')),delta:'One exact hash/size custody assertion for the new read-only prelaunch helper; bootstrap/native34/runner unchanged',byteReversalExact:true},null,2)+'\n',{flag:'wx'});
+console.log(JSON.stringify({status:'TEXT_ONLY_HELPER_CUSTODY_BOUND',helper,candidate:fact(own('native10-current-candidate-02.ps1.txt'))}));
