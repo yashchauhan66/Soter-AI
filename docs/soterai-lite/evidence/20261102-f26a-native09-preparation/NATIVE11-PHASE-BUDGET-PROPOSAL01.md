@@ -1,0 +1,23 @@
+# One native11 attempt with an explicitly changed Code phase budget
+
+**Native10 remains FAIL/INCOMPLETE under its original300-second Code phase budget.** Its actual primary result contains30PASS/0FAIL/0NOT_RUN, with174 declared children naturally closed/bothEOF and zero child timeouts; the root partial audit also verified the original IDs/scopes, environment/runtime identities and retained D result bytes. Driver timestamps13:16:23.786→13:22:23.466 give359.68 seconds. Code18160 eventually closed naturally0/bothEOF, but its phase receipt retains `timedOut:true`. The root chain closed1/bothEOF; offline owner-absent Git and restart4 did not run. Later absence/stable-stream observations do not turn that failed phase budget into PASS.
+
+The cause of the aggregate runtime is **UNKNOWN**. There are no per-child timings establishing a cause. Thirty passing assertions and174 closed children do not prove a product operation exceeded its own deadline, nor explain the six-minute aggregate. This proposal does not change product code or claim a performance fix.
+
+Proposed scope: **ONE extra isolated native11 attempt with the shared primary/restart Code phase wall bound changed from300 to540 seconds.** It reexecutes original primary30, then requires actual closed-editor offline owner-absent Git evidence and original restart4. The original300 budget is being changed explicitly; it is not represented as unchanged or retrospectively satisfied.
+
+Only one shared `while` literal changes from `$taskTimer.Elapsed.TotalSeconds -lt 300` to540, plus fresh native11 authority/consumption/proposal/output names and corresponding metadata labels. Product operation60000ms, child90000ms, offline Git90000ms, offline-helper120s, pipe-drain2000ms and root outer1200000ms remain unchanged. The unchanged20-minute outer bound still applies; completing every phase under540 seconds is not guaranteed. All original34 assertions, driver, actual Git/HTTP observations, approved-hook/flag/recovery checks and no-signals/retained-ownership behavior remain.
+
+Exact TEXT candidate: `native11-current-candidate-01.ps1.txt`,53294 bytes/SHA256 `d2cbb1a04f50bc114ad8a28afd36c56ecea943e37d4c444066bd0eeb6782a320`.
+
+Prepared root runner: `run-native11-current-chain-01.cjs`,3730 bytes/SHA256 `cbe7b4ab426b15529535a272ec747a54830962b4e85ea655647c99872a36c044`.
+
+Prepared read-only prefix: `native11-current-preapproval-01.ps1`,7649 bytes/SHA256 `730029d52e8aa3a0a3ca660bfd74473602a10cb54d5ea6c566ce3afd111f9f22`. It uses exact offline-helper TXT bytes and stops before approval/profile creation. No prepared file has been invoked by this preparation.
+
+`native11-text-delta-01.json` records full candidate/runner/preapproval text reversal. The actual bootstrap is byte-identical to native10, including current2c33 application root and four already-reviewed JSON pins. The exact pinned `native10-bootstrap-admission-01.cjs` still inspects the preserved native10 base before Code/profile/Git; that base and native11 bootstrap are byte-identical. Current artifact-binding/metadata/physical/vendor guards remain unchanged. No old native10 file is altered.
+
+Unchanged exact inputs: current1076 proof `70d3b237332ada5f7317906a8e745ff7d8f7bc2213b8c27f810a25b919b30743`; VSIX `5dac9288fb259ad538ab751258f250d85a933bfb5bc8641dc32e54c01f6f047f`; original34 diagnostic driver `8f7d11faa7ba03683fdbec85f95a0d2284bb126cd45c1dfc1cb02b2e3b090ced`; offline helper `73317aa89fd8bcdc937f56d737656b2ee93fcab7127ec058a2be02945eb7941a`.
+
+Native11 is **NOT_AUTHORIZED/NOT_MATERIALIZED/NOT_RUN**. Main-agent syntax/component/current admission, exact evidence checkpoint/raw-byte proof and fresh prior-owner observations are still required before the permission step. Fresh explicit user approval must cover both **ONE additional round and the540-second primary/restart fixture budget**. Plan:67's three-round limit and individually consumed native10 approval do not authorize another attempt. The eventual exclusive approval must bind this exact proposal/candidate; executable `run-precommit-native11-current-01.ps1`, `native11-user-approval-01.json` and `native11-consumption-01.json` remain absent. No automatic retry or old approval reuse.
+
+Synthetic data/new isolated D profile and numeric-loopback only. Preserve failed native10 evidence, old synthetic hook/flag/recovery records and unrelated work. No real secrets, normal profile, downloads/login, process signals/killing, OS changes, Git push/publish/tag or rating. F26a remains incomplete until actual34/offline/withdrawal and its remaining scoped acceptance/commit-byte gates pass; original L6 HUMAN-ACTIONS/STOP remains.
