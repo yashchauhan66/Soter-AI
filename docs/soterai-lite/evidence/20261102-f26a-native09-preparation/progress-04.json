@@ -1,0 +1,53 @@
+{
+  "status": "F26A_NATIVE11_PRIMARY30_OFFLINE_PASS_HR02_CASE_FAIL_NATIVE12_READY_NOT_AUTHORIZED",
+  "observedAt": "2026-11-02T14:30:00.571Z",
+  "partial": {
+    "path": "docs/soterai-lite/evidence/20261102-f26a-native09-preparation/native11-partial-acceptance-01.json",
+    "bytes": 15245,
+    "sha256": "91c721cfeef413d412a8521cf609b5494b34524bd36e871dd354b06a81dc648b"
+  },
+  "native11": "ONE_APPROVAL_CONSUMED_ONCE_OVERALL_INCOMPLETE",
+  "primary30": "PASS_174_DECLARED_CHILDREN_NATURAL_CLOSE_BOTH_EOF_PHASE540_PASS_242073MS_DRIVER",
+  "offline": "ACTUAL_OWNER_ABSENT_BLOCKED_PASS",
+  "restart": {
+    "pass": 1,
+    "fail": 1,
+    "notRun": 2
+  },
+  "fixtureCause": "Exact HR02 assertion reproduces offline.owner.cwd D: versus primary/restart root d:, identical suffix; actual failed evidence untouched",
+  "components": {
+    "exactHR02ReplayAndPathControls": 9,
+    "exactExtractedPowerShellGuard": 7,
+    "exactRunnerProposalControls": 3,
+    "total": 19,
+    "scope": "Components only; trailing HR02 ownerCommit/status are seams, not new native coverage"
+  },
+  "candidate": {
+    "path": "docs/soterai-lite/evidence/20261102-f26a-native09-preparation/native12-current-candidate-01.ps1.txt",
+    "bytes": 53731,
+    "sha256": "57951923ebce4985bd28f01eb2fac5976e8266c9e67c6b94748b644204eb46e5"
+  },
+  "proposal": {
+    "path": "docs/soterai-lite/evidence/20261102-f26a-native09-preparation/NATIVE12-OFFLINE-ROOT-CASE-PROPOSAL01.md",
+    "bytes": 3304,
+    "sha256": "4f7f47e420c2a9383917a7934279751f00584ab27d7982902bff098dbffb25e8"
+  },
+  "runner": {
+    "path": "docs/soterai-lite/evidence/20261102-f26a-native09-preparation/run-native12-current-chain-01.cjs",
+    "bytes": 3730,
+    "sha256": "65569fb7ee66949ebf65912ef2c8f741621f0cd9f341274d0b494c53148f18aa"
+  },
+  "original34DriverBootstrapOfflineHelperUnchanged": true,
+  "rootFix": "Offline input root takes exact primary state root only after strict full-suffix/drive-only equivalence validation",
+  "fixturePhaseSeconds": 540,
+  "productOperationMs": 60000,
+  "childMs": 90000,
+  "offlineGitMs": 90000,
+  "rootOuterMs": 1200000,
+  "sourceCount": 1076,
+  "sourceChanges": 0,
+  "native12": "EXPLICIT_EXTRA_APPROVAL_REQUIRED_TEXT_ONLY_NOT_RUN",
+  "featureComplete": false,
+  "releaseReady": false,
+  "signalsRequested": 0
+}

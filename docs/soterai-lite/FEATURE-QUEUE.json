@@ -9,7 +9,7 @@
   "planVersion": 1,
   "clientDate": "2026-10-13",
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
-  "scope": "F01-F10/F12-F25/F26b/F26c/F27/F29/F30 scoped DONE with recorded byte barriers; F11 optional absent NOT_TESTED/NOT_COVERED. F26a/native09 USER_DEFERRED_INCOMPLETE; parentF26 incomplete. F28 scoped DONE after transition bytes; required F26a resume selected; F31b/F32/V01-V05 incomplete. F31a build-only DONE; parentF31 incomplete. No human/independent/rating/release-ready claim.",
+  "scope": "F01-F10/F12-F25/F26b/F26c/F27/F29/F30 scoped DONE with recorded byte barriers; F11 optional absent NOT_TESTED/NOT_COVERED. F26a native11 primary30+offlinePASS/restartHR02caseFAIL; native12 extra decision pending, INCOMPLETE; parentF26 incomplete. F28 scoped DONE after transition bytes; required F26a resume selected; F31b/F32/V01-V05 incomplete. F31a build-only DONE; parentF31 incomplete. No human/independent/rating/release-ready claim.",
   "implementationConcurrency": 1,
   "activeFeature": "F26",
   "activeSubcard": "F26a",
@@ -871,8 +871,8 @@
           "requires": [
             "parent prerequisites"
           ],
-          "progressEvidence": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/progress-08.json",
-          "executionDecision": "Selected required F26a resume after F28 transition bytes. Prior explicit native09 defer remains effective until refreshed concrete packet and explicit extra-run approval. No F28/native/affected result substitutes for original34 precommit assertions. Preserve three source files and parentF26 incomplete."
+          "progressEvidence": "docs/soterai-lite/evidence/20261102-f26a-native09-preparation/progress-04.json",
+          "executionDecision": "ACTIVE/INCOMPLETE: native11 actualprimary30+offlinePASS/phase540PASS, restart1PASS1FAIL2NOT_RUN. Exact retained HR02 replay identifies D:/d: cwd spelling mismatch; drive-only input correction19 component controls/syntax/preapprovalPASS. Native12 extra approval absent/no executable/not run; source3+parentF26 completion still pending."
         },
         {
           "id": "F26b",
@@ -1486,5 +1486,34 @@
     },
     "native11": "TEXT_ONLY_NOT_AUTHORIZED_NOT_MATERIALIZED_NOT_RUN",
     "proposedFixturePhaseSeconds": 540
+  },
+  "f26aNative11DecisionPending": {
+    "path": "docs/soterai-lite/evidence/20261102-f26a-native09-preparation/native11-decision-pending-01.json",
+    "bytes": 1256,
+    "sha256": "9a6ea53ec8ee4476b90b90c5f81e62402cb57ef09ef0d598e8d09c6e08a6ad9f",
+    "status": "NATIVE11_ONE_EXTRA_AND_PHASE540_DECISION_ASKED_NOT_APPROVED",
+    "checkpoint": "5933b2f4248a250d193119639dd650dfca1ba80d"
+  },
+  "f26aCurrentNative12Preparation": {
+    "path": "docs/soterai-lite/evidence/20261102-f26a-native09-preparation/progress-04.json",
+    "bytes": 2289,
+    "sha256": "ad06b96735a4e3f3b72e668b7c57ca18c759478b1a91828d989e4f5e30c73ad3",
+    "status": "F26A_NATIVE11_PRIMARY30_OFFLINE_PASS_HR02_CASE_FAIL_NATIVE12_READY_NOT_AUTHORIZED",
+    "candidate": {
+      "path": "docs/soterai-lite/evidence/20261102-f26a-native09-preparation/native12-current-candidate-01.ps1.txt",
+      "bytes": 53731,
+      "sha256": "57951923ebce4985bd28f01eb2fac5976e8266c9e67c6b94748b644204eb46e5"
+    },
+    "proposal": {
+      "path": "docs/soterai-lite/evidence/20261102-f26a-native09-preparation/NATIVE12-OFFLINE-ROOT-CASE-PROPOSAL01.md",
+      "bytes": 3304,
+      "sha256": "4f7f47e420c2a9383917a7934279751f00584ab27d7982902bff098dbffb25e8"
+    },
+    "runner": {
+      "path": "docs/soterai-lite/evidence/20261102-f26a-native09-preparation/run-native12-current-chain-01.cjs",
+      "bytes": 3730,
+      "sha256": "65569fb7ee66949ebf65912ef2c8f741621f0cd9f341274d0b494c53148f18aa"
+    },
+    "native12": "EXPLICIT_EXTRA_APPROVAL_REQUIRED_TEXT_ONLY_NOT_RUN"
   }
 }

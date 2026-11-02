@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 1,
+  "status": "ACTUAL_OWNER_ABSENT_BLOCKED",
+  "syntheticOnly": true,
+  "primaryStateSha256": "8bcf2361dc1e8656684156f972e80653f87e402bc7aec79a87a3279b0e10c2cb",
+  "generation": "e82a86cb-7604-40ee-8a3f-c11ade6d6982",
+  "code": {
+    "pidAbsentTwice": true,
+    "timedOut": false,
+    "streams": [
+      {
+        "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261102-f26a-native09-preparation\\f26a-precommit-native-20261102T140059Z-3bd8bf22\\primary-stdout.txt",
+        "sha256": "f635f484fdb62fe3c903e9bc70f7aaad908e713d0f3d19ad21a18601bbf614c2",
+        "bytes": 1237
+      },
+      {
+        "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261102-f26a-native09-preparation\\f26a-precommit-native-20261102T140059Z-3bd8bf22\\primary-stderr.txt",
+        "sha256": "cef0469d83e6b79e3d6e5fca3cb318ae356e8e1a200ed0ce876ae0b4102023cc",
+        "bytes": 300
+      }
+    ],
+    "signalsRequested": 0,
+    "pid": 17984,
+    "executable": "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe",
+    "exitCode": 0,
+    "streamsStable": true,
+    "observedExit": true,
+    "stderrEOF": true,
+    "ownedWindowClose": "workbench.action.closeWindow",
+    "pidAbsenceObservations": [
+      {
+        "pid": 17984,
+        "observedAt": "2026-11-02T14:06:47.5125278Z",
+        "absent": true
+      },
+      {
+        "pid": 17984,
+        "observedAt": "2026-11-02T14:06:47.7784616Z",
+        "absent": true
+      }
+    ],
+    "stdoutEOF": true
+  },
+  "owner": {
+    "executable": "C:\\Program Files\\Git\\cmd\\git.exe",
+    "executableSha256": "da240fe9bc24895b3e04150a4990b8a6ff329ecabcd8f19684c2cc310da5ef3f",
+    "args": [
+      "--no-pager",
+      "commit",
+      "--quiet",
+      "-m",
+      "F26a synthetic offline owner absent"
+    ],
+    "cwd": "D:\\SoterAI-Lite-test-profiles\\f26a-precommit-native-20261102T140059Z-3bd8bf22\\workspace",
+    "environmentSha256": "4bfc0aba55a548b340f5f264c7224781bdb6a67749b22df7b6d9b74c52110118",
+    "pid": 15536,
+    "closed": true,
+    "exitCode": 1,
+    "signal": null,
+    "stdoutEOF": true,
+    "stderrEOF": true,
+    "timedOut": false,
+    "signalsRequested": 0,
+    "overflow": false,
+    "streamError": false,
+    "spawnFailed": false,
+    "ownerArgumentsHaveNoHooksOverride": true,
+    "nestedClientClosure": "NOT_INFERRED_FROM_OWNER_GIT",
+    "stdout": {
+      "path": "D:\\SoterAI-Lite-test-profiles\\f26a-precommit-native-20261102T140059Z-3bd8bf22\\precommit-owner-absent-stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stderr": {
+      "path": "D:\\SoterAI-Lite-test-profiles\\f26a-precommit-native-20261102T140059Z-3bd8bf22\\precommit-owner-absent-stderr.bin",
+      "bytes": 78,
+      "sha256": "272033995c6c1344301c7d445cccdf4a09d9accad88b78c4fe68156292fa9a3b"
+    }
+  },
+  "headBefore": "c9d01f01d6ba41a2822ee786a4890311f98087b2",
+  "headAfter": "c9d01f01d6ba41a2822ee786a4890311f98087b2",
+  "sourceBefore": {
+    "present": true,
+    "bytes": 59,
+    "sha256": "bb3646d14c59c98c0b8c4cc4c236e764ad8790e1b1d17ca4ee4a252df5bc4408",
+    "mode": 438
+  },
+  "sourceAfter": {
+    "present": true,
+    "bytes": 59,
+    "sha256": "bb3646d14c59c98c0b8c4cc4c236e764ad8790e1b1d17ca4ee4a252df5bc4408",
+    "mode": 438
+  },
+  "indexBefore": {
+    "present": true,
+    "bytes": 153,
+    "sha256": "b8de556583103f02ec3907bad10a2977ea44591c92499d10d937ed9c4e70e799",
+    "mode": 438
+  },
+  "indexAfter": {
+    "present": true,
+    "bytes": 153,
+    "sha256": "b8de556583103f02ec3907bad10a2977ea44591c92499d10d937ed9c4e70e799",
+    "mode": 438
+  },
+  "hookBefore": {
+    "present": true,
+    "bytes": 1723,
+    "sha256": "9fa3566394cca464d894cb543a4746edb0c1053a6cbdcdf7674b1f9190211f19",
+    "mode": 438
+  },
+  "hookAfter": {
+    "present": true,
+    "bytes": 1723,
+    "sha256": "9fa3566394cca464d894cb543a4746edb0c1053a6cbdcdf7674b1f9190211f19",
+    "mode": 438
+  }
+}

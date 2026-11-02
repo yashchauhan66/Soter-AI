@@ -1,0 +1,13 @@
+'use strict';
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict'),C=require('./native09-current-admission-01.cjs'),{own,read,sha,fact}=C;
+const old=fs.readFileSync(own('run-native11-current-chain-01.cjs'),'utf8');assert.equal(sha(Buffer.from(old)),'cbe7b4ab426b15529535a272ec747a54830962b4e85ea655647c99872a36c044');
+const before='NATIVE10-CURRENT-JSON-PINS-PROPOSAL01.md',after='NATIVE11-PHASE-BUDGET-PROPOSAL01.md';assert.equal(old.split(before).length,2);const fixed=old.replace(before,after);assert.equal(fixed.replace(after,before),old);new vm.Script(fixed);
+const expression=text=>{const a=text.indexOf('assert.equal(a.proposalSha256,');assert(a>0);const z=text.indexOf(';',a);return text.slice(a,z+1);};
+const currentSha=sha(fs.readFileSync(own(after))),context=declared=>vm.createContext({assert,fs,sha,own,a:{proposalSha256:declared}});
+assert.throws(()=>new vm.Script(expression(old)).runInContext(context(currentSha)),{name:'AssertionError'});
+new vm.Script(expression(fixed)).runInContext(context(currentSha));
+assert.throws(()=>new vm.Script(expression(fixed)).runInContext(context('0'.repeat(64))),{name:'AssertionError'});
+for(const n of ['native11-consumption-01.json','native11-chain-start-01.json','native11-chain-failure-01.json'])assert(!fs.existsSync(own(n)),n);
+fs.writeFileSync(own('run-native11-current-chain-02.cjs'),fixed,{flag:'wx'});
+const result={status:'PASS_PRELAUNCH_RUNNER_PROPOSAL_REFERENCE_CONTROLS3_NO_NATIVE',observedAt:new Date().toISOString(),original:fact(own('run-native11-current-chain-01.cjs')),successor:fact(own('run-native11-current-chain-02.cjs')),proposal:fact(own(after)),delta:'One proposal filename only, full byte reversal exact. Original proposal-listed runner remains retained; use successor02 for the approved same candidate/run/scope.',oldMismatchReproduced:true,currentApprovedProposalPass:true,incorrectApprovalRejected:true,originalCandidateUnchanged:true,fixturePhaseSeconds:540,rootDeadlineMs:1200000,nativeLaunches:0,signalsRequested:0};
+fs.writeFileSync(own('native11-runner-reference-review-02.json'),JSON.stringify(result,null,2)+'\n',{flag:'wx'});console.log(JSON.stringify(result));

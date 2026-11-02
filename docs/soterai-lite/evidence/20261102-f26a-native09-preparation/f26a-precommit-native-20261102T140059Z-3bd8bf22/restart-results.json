@@ -1,0 +1,207 @@
+{
+  "schemaVersion": 1,
+  "phase": "restart",
+  "syntheticOnly": true,
+  "fixtureStatus": "PREPARED_NATIVE_FIXTURE_ACTUAL_RESULTS_ONLY",
+  "hostVersion": "1.144.0",
+  "extensionBundleSha256": "3524f4f234004d81924854c756330a5d1273e0251c524d1a31fa63c3b3c784b2",
+  "workerSha256": "36e04d01bb9b38f8e402020318cc1d8d1a6d66176ec2be8c1630fbe6d012cacb",
+  "runtimeBindings": [
+    {
+      "file": "extension.js",
+      "bytes": 1938307,
+      "sha256": "3524f4f234004d81924854c756330a5d1273e0251c524d1a31fa63c3b3c784b2"
+    },
+    {
+      "file": "local-ai-broker.js",
+      "bytes": 326860,
+      "sha256": "24c633aff86713f35133e6c103299a24bc2a4df0a6726c90462283ce9030b744"
+    },
+    {
+      "file": "soterai-mcp-server.js",
+      "bytes": 230255,
+      "sha256": "bac10b399ee9e28c069c72eae3254f2e84da155b2bcb2dc48467487d74845138"
+    },
+    {
+      "file": "pre-commit-client.js",
+      "bytes": 24512,
+      "sha256": "36e04d01bb9b38f8e402020318cc1d8d1a6d66176ec2be8c1630fbe6d012cacb"
+    }
+  ],
+  "currentRuntimeBindings": [
+    {
+      "file": "extension.js",
+      "bytes": 1938307,
+      "sha256": "3524f4f234004d81924854c756330a5d1273e0251c524d1a31fa63c3b3c784b2"
+    },
+    {
+      "file": "local-ai-broker.js",
+      "bytes": 326860,
+      "sha256": "24c633aff86713f35133e6c103299a24bc2a4df0a6726c90462283ce9030b744"
+    },
+    {
+      "file": "soterai-mcp-server.js",
+      "bytes": 230255,
+      "sha256": "bac10b399ee9e28c069c72eae3254f2e84da155b2bcb2dc48467487d74845138"
+    },
+    {
+      "file": "pre-commit-client.js",
+      "bytes": 24512,
+      "sha256": "36e04d01bb9b38f8e402020318cc1d8d1a6d66176ec2be8c1630fbe6d012cacb"
+    }
+  ],
+  "executionManifest": {
+    "present": true,
+    "bytes": 346968,
+    "sha256": "041b78a707ac45be1bf8c3fbfab7c05aefb9da8f632789160e428175731596ea",
+    "mode": 438
+  },
+  "currentExecutionManifest": {
+    "present": true,
+    "bytes": 346968,
+    "sha256": "041b78a707ac45be1bf8c3fbfab7c05aefb9da8f632789160e428175731596ea",
+    "mode": 438
+  },
+  "hostProbeSha256": "8f7d11faa7ba03683fdbec85f95a0d2284bb126cd45c1dfc1cb02b2e3b090ced",
+  "codeSha256": "9f33ede68f3317402280fa997bc8963f93e67f2905e416d6bb092c03d60a37eb",
+  "observations": [
+    {
+      "id": "F26A-HR01",
+      "scope": "Restart does not auto-resume query create key or mutate exact retained installation bytes",
+      "status": "PASS"
+    },
+    {
+      "id": "F26A-HR02",
+      "scope": "Launcher actual closed-editor and offline owner commit receipt proves unavailable owner without stale ALLOW",
+      "status": "FAIL",
+      "errorName": "AssertionError"
+    },
+    {
+      "id": "F26A-HR03",
+      "scope": "Cancelled explicit resume leaves the retained key backup hook and old signed endpoint unchanged",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "F26A-HR04",
+      "scope": "Reviewed resume signs a fresh session and commits public staged data; unknown hook owner edit is preserved INCOMPLETE",
+      "status": "NOT_RUN"
+    }
+  ],
+  "expectedChecks": 4,
+  "passed": 1,
+  "failed": 1,
+  "notRun": 2,
+  "children": [],
+  "requests": [],
+  "commitProofs": [],
+  "reviews": [],
+  "secretStores": {
+    "signing": 0,
+    "backupKey": 0,
+    "record": 0,
+    "unrelated": 0
+  },
+  "ownerServers": 0,
+  "diagnostics07": {
+    "scope": "BOUNDED_ENUMERATED_METADATA_ONLY_NO_VALUES_OR_PATHS",
+    "rows": [
+      {
+        "event": "storage-uri",
+        "fileScheme": false,
+        "authority": false,
+        "query": false,
+        "fragment": false,
+        "withinWorkspace": false
+      },
+      {
+        "event": "command-start",
+        "command": "preCommitGuardStatus"
+      },
+      {
+        "event": "command-return",
+        "command": "preCommitGuardStatus",
+        "status": "OWNER_REVIEW_REQUIRED"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "assertion-frame",
+        "line": 1334,
+        "column": 29
+      },
+      {
+        "event": "assertion-frame",
+        "line": 1419,
+        "column": 9
+      },
+      {
+        "event": "assertion-frame",
+        "line": 235,
+        "column": 71
+      }
+    ],
+    "dropped": 0
+  },
+  "sourceDocuments": 0,
+  "sourceDocumentEvents": 0,
+  "directWorktreeReads": 0,
+  "directObjectReads": 0,
+  "metadataLeak": false,
+  "parentEnvironmentUnchanged": true,
+  "driverFailure": "NativePreCommitGuardFailure",
+  "busyChildren": 0,
+  "timedOutChildren": 0,
+  "readyForInterphase": false,
+  "interphaseEvidence": "NOT_RUN",
+  "nestedClientClosure": "NOT_INFERRED_FROM_OWNER_GIT;ADDITIONAL_DIRECT_PACKAGED_CLIENT_CLOSE_EOF_CONTROLS",
+  "limits": {
+    "stagedEntries": 128,
+    "blobBytes": 65536,
+    "admittedBytes": 1048576,
+    "operationMilliseconds": 60000,
+    "fixtureChildMilliseconds": 90000
+  },
+  "independence": "LOW",
+  "ownerPresence": "SCRIPTED_NATIVE_API_DECISIONS_NOT_HUMAN_REVIEW",
+  "notTested": [
+    "Same-user bypass or atomic OS confinement",
+    "Human review accessibility/usability",
+    "Registered-value guarantee or credential validity",
+    "Other platforms/remote workspaces",
+    "Held-result withdrawal is UNIT_ONLY unless separately witnessed in actual native receipt"
+  ]
+}
