@@ -1,0 +1,32 @@
+{
+  "status": "EXACT_ORIGINAL_SHA256_TEXT_BYTES_RECOVERED_CORRUPTED_FILE_PRESERVED",
+  "observedAt": "2026-11-02T06:30:50.876Z",
+  "originalCorrupt": {
+    "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-mcp-f28-02.txt",
+    "bytes": 192,
+    "sha256": "5d89f056865052bcb89c910d2d62872e029fb273c3db03f8968a52a41593c1b5"
+  },
+  "originalReceipt": {
+    "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-mcp-f28-02.txt.result.json",
+    "bytes": 1910,
+    "sha256": "34def924499b50db959712db2a51bedbb1873a7778add91f434a488f535ee5f6"
+  },
+  "originalWrapperClose": {
+    "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-mcp-f28-02-owned-close.json",
+    "bytes": 619,
+    "sha256": "d34a03083923c1e291b17c69adbbf6dd697c378d5bf627836faa9f7cc6a4d609"
+  },
+  "originalWrapperStdout": {
+    "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-mcp-f28-02-stdout.bin",
+    "bytes": 1907,
+    "sha256": "fce9b27dc3b849b14f9e36f79f3ccbdca1e736e9c0bf0a18c67663ea10edaf4d"
+  },
+  "recovered": {
+    "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-mcp-f28-02-recovered-01.txt",
+    "bytes": 192,
+    "sha256": "b593b361a9b58cddcae64b07129af27a38a61b9394914be80fdc3a466be4f6f1"
+  },
+  "expectedSha256": "b593b361a9b58cddcae64b07129af27a38a61b9394914be80fdc3a466be4f6f1",
+  "method": "Re-encode the deterministic helper output line from the retained exact run path and original helper source; accept only exact original length and SHA256 already recorded in canonical receipt and closed wrapper stdout. Original zero-filled file unchanged. No native rerun or assertion regrading.",
+  "causeOfZeroFilledFile": "UNKNOWN_NOT_ATTRIBUTED"
+}

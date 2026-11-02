@@ -1,0 +1,9 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),C=require('./affected-current-admission-02.cjs');const{own,read,pin,sha,fact}=C;
+const completedIds=['logs','owned-output','artifact','streaming-output','vault-runtime','ps51','cmd','gitbash','history'];
+const familyName=id=>'affected-'+id+'-f28-'+(id==='logs'?'01':completedIds.includes(id)?'02':'03');
+function recovery(){const r=read(own('affected-recovery-binding-03.json'));assert.equal(r.status,'F28_RECOVERY_PROPOSAL_ONE_EXTRA_CHAIN_NOT_AUTHORIZED');assert.equal(r.allowedAttempts,1);assert.equal(r.gate,'EXPLICIT_EXTRA_ROUND_APPROVAL_REQUIRED');for(const p of r.inputs)pin(p);assert.deepEqual(r.completedIds,completedIds);assert.equal(r.completedChecks,176);assert.equal(r.remainingChecks,333);assert.equal(r.f26aNative09,'USER_DEFERRED_NOT_RUN');return r;}
+function guard(options={}){const b=C.guard(options),r=recovery();assert.deepEqual(r.sourceProof,b.sourceProof);assert.deepEqual(r.vsix,b.vsix);const audit=read(own('affected-partial-audit-06.json'));assert.equal(audit.checks,176);assert.equal(audit.completedFamilies,9);assert.equal(audit.failed.length,0);assert.equal(audit.pending.length,11);return b;}
+function approved(){const b=recovery(),a=read(own('affected-recovery-user-approval-03.json'));assert.equal(a.status,'EXPLICIT_ONE_BOUNDED_F28_RECOVERY_APPROVAL');assert.equal(a.bindingSha256,fact(own('affected-recovery-binding-03.json')).sha256);assert.equal(a.proposalSha256,fact(own('AFFECTED-RECOVERY-PROPOSAL03.md')).sha256);assert.equal(a.allowedAttempts,1);return a;}
+module.exports={...C,completedIds,familyName,recovery,guard,approved};
+if(require.main===module)try{guard({component:true});console.log(JSON.stringify({status:'PASS_READ_ONLY_F28_RECOVERY_PREAPPROVAL_NO_NATIVE_RUN',reuseChecks:176,remainingChecks:333,remainingFamilies:11,additionalRoundAuthorized:false}));}catch(e){console.error(e);process.exitCode=1;}

@@ -1,0 +1,6 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');const own=n=>path.join(__dirname,n);
+function replace(s,a,b){assert(s.includes(a),a);return s.replaceAll(a,b);}
+let partial=fs.readFileSync(own('audit-affected-partial-01.cjs'),'utf8');partial=replace(partial,"require('./affected-current-admission-01.cjs')","require('./affected-current-admission-02.cjs')");partial=replace(partial,"read(own('affected-current-materialization-01.json'))","C.materialization()");partial=replace(partial,"'affected-'+f.id+'-f28-01'","C.familyName(f.id)");fs.writeFileSync(own('audit-affected-partial-02.cjs'),partial,{flag:'wx'});
+let final=fs.readFileSync(own('verify-affected-current-02.cjs'),'utf8');final=replace(final,'await C.guard({component:true});for(const row of evidence.values())pin(row);',"await C.guard({component:true});take(own('affected-continuation-binding-02.json'));take(own('owned-output-driver-provenance-01.json'));take(own('affected-chain-consumption-02.json'));take(own('affected-chain-failure-01.json'));for(const row of evidence.values())pin(row);");fs.writeFileSync(own('verify-affected-current-03.cjs'),final,{flag:'wx'});
+console.log('Prepared current partial auditor and final verifier including original failure and supplemental fixture custody; no rerun or acceptance.');

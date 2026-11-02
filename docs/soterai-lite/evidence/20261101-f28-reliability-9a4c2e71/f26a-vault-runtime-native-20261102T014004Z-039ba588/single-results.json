@@ -1,0 +1,180 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-11-02T01:40:48.216Z",
+  "phase": "single",
+  "syntheticOnly": true,
+  "workspace": "d:\\SoterAI-Lite-test-profiles\\f26a-vault-runtime-native-20261102T014004Z-039ba588\\workspace",
+  "declaredProfilePath": "D:\\SoterAI-Lite-test-profiles\\f26a-vault-runtime-native-20261102T014004Z-039ba588\\profile",
+  "hostVersion": "1.144.0",
+  "extensionMode": "Development",
+  "extensionBundleSha256": "3524f4f234004d81924854c756330a5d1273e0251c524d1a31fa63c3b3c784b2",
+  "currentDeveloperBundleSha256": "3524f4f234004d81924854c756330a5d1273e0251c524d1a31fa63c3b3c784b2",
+  "hostProbeSha256": "79eadfbe075cfee1f4e2afd46ef9b60fdbb9c59c68b5ade4e2558fb8d46ac661",
+  "observations": [
+    {
+      "id": "F09-H01",
+      "scope": "Actual packaged native activation, registered commands and task provider are present in the owned isolated profile.",
+      "status": "PASS"
+    },
+    {
+      "id": "F09-H02",
+      "scope": "Native owner configuration cancellation stores no descriptor and starts no application.",
+      "status": "PASS"
+    },
+    {
+      "id": "F09-H03",
+      "scope": "Existing F06 native migration creates real SecretStorage-backed ciphertext and on-disk placeholders without source TextDocuments.",
+      "status": "PASS"
+    },
+    {
+      "id": "F09-H04",
+      "scope": "Native setup stores strict public descriptor metadata selecting only DATABASE_URL with literal public arguments.",
+      "status": "PASS"
+    },
+    {
+      "id": "F09-H05",
+      "scope": "VS Code fetchTasks invokes the actual provider and returns ID-only CustomExecution tasks without process/env options.",
+      "status": "PASS"
+    },
+    {
+      "id": "F09-H06",
+      "scope": "Fresh owner run cancellation completes the actual task without spawning an owned job.",
+      "status": "PASS"
+    },
+    {
+      "id": "F09-H07",
+      "scope": "Actual registered task injects a fake selected value, excludes unselected/ambient values and releases only finalized masked output.",
+      "status": "PASS"
+    },
+    {
+      "id": "F09-H08",
+      "scope": "An actual provider task preserves natural nonzero exit through native task completion.",
+      "status": "PASS"
+    },
+    {
+      "id": "F09-H09",
+      "scope": "An actual inline debug session injects the selected value, masks output and rejects source evaluation capabilities.",
+      "status": "PASS"
+    },
+    {
+      "id": "F09-H10",
+      "scope": "Native terminate acknowledges cooperative stop while the finite app still lives and emits termination only after actual close.",
+      "status": "PASS"
+    },
+    {
+      "id": "F09-H11",
+      "scope": "Machine withdrawal stops an owned finite task, withholds pending output, blocks setup and preserves ciphertext and saved restrictions.",
+      "status": "PASS"
+    },
+    {
+      "id": "F09-H12",
+      "scope": "Managed safe read and status retain masking and value-free metadata after native task/debug lifecycles; no original source document opens.",
+      "status": "PASS"
+    }
+  ],
+  "passed": 12,
+  "failed": 0,
+  "notRun": 0,
+  "reviews": [
+    {
+      "action": "Migrate securely",
+      "modal": true,
+      "detailBytes": 476
+    },
+    {
+      "action": "Run selected app",
+      "modal": true,
+      "detailBytes": 563
+    },
+    {
+      "action": "Run selected app",
+      "modal": true,
+      "detailBytes": 563
+    },
+    {
+      "action": "Run selected app",
+      "modal": true,
+      "detailBytes": 568
+    },
+    {
+      "action": "Run selected app",
+      "modal": true,
+      "detailBytes": 564
+    },
+    {
+      "action": "Run selected app",
+      "modal": true,
+      "detailBytes": 566
+    },
+    {
+      "action": "Run selected app",
+      "modal": true,
+      "detailBytes": 565
+    },
+    {
+      "action": "Allow safe read once",
+      "modal": true,
+      "detailBytes": 38
+    }
+  ],
+  "sourceDocumentCalls": 0,
+  "sourceDocumentEvents": 0,
+  "secretStorageApi": {
+    "keyGets": 69,
+    "keyStores": 1
+  },
+  "taskRuns": [
+    {
+      "descriptorId": "75051686-6c65-4918-a0a4-48d2e3a8d019",
+      "closed": true,
+      "taskEnded": true,
+      "exitCode": 1,
+      "outputBytes": 0,
+      "safe": true
+    },
+    {
+      "descriptorId": "75051686-6c65-4918-a0a4-48d2e3a8d019",
+      "closed": true,
+      "taskEnded": true,
+      "exitCode": 0,
+      "outputBytes": 48,
+      "safe": true
+    },
+    {
+      "descriptorId": "2cdecebf-c8ed-40da-9b55-980455da2451",
+      "closed": true,
+      "taskEnded": true,
+      "exitCode": 7,
+      "outputBytes": 48,
+      "safe": true
+    },
+    {
+      "descriptorId": "5ba23767-cad8-4542-826c-c03df471b784",
+      "closed": true,
+      "taskEnded": true,
+      "exitCode": 0,
+      "outputBytes": 38,
+      "safe": true
+    }
+  ],
+  "debugRuns": [
+    {
+      "descriptorId": "3619bcfc-e287-4c11-a4eb-a6ae141d241f",
+      "terminated": true,
+      "outputEvents": 2,
+      "exitedEvents": 1,
+      "safe": true
+    },
+    {
+      "descriptorId": "93455009-b541-4ed7-9cae-4cb5f1c2ffb7",
+      "terminated": true,
+      "outputEvents": 1,
+      "exitedEvents": 1,
+      "safe": true
+    }
+  ],
+  "independence": "LOW",
+  "ownerPresence": "SCRIPTED_NATIVE_API_DECISIONS_NOT_HUMAN_REVIEW",
+  "identityScope": "Unchanged packaged runtime in a unique isolated native developer window; no installed-VSIX lifecycle claim.",
+  "limitation": "Owned finite Node app/task/inline debug lifecycle only. Application proof receipts contain constant booleans, not values or value hashes. Selected app can inspect/transmit/write its values; no OS confinement, source debugger, external agent, native shell or gateway interception proof."
+}
