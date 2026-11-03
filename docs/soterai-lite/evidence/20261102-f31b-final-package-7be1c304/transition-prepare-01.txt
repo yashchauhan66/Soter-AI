@@ -1,0 +1,35 @@
+﻿node.exe : AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (AssertionError ...strictly equal::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+47806 !== 46991
+
+    at Object.verifyStreamedPin (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\2026
+1028-f29-protection-center-6c93e15a\streamed-vendor-pin-08.cjs:9:88)
+    at verifyRow (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261029-f26b-prepu
+sh-70e1c9a4\native-physical-admission-14.cjs:14:506)
+    at Object.pin (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261102-f31b-fina
+l-package-7be1c304\current-native-admission-06.cjs:8:41)
+    at localPin (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261102-f31b-final-
+package-7be1c304\finalize-feature-acceptance-03.cjs:26:113)
+    at Object.verify (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261102-f31b-f
+inal-package-7be1c304\finalize-feature-acceptance-03.cjs:117:10)
+    at preflight (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261102-f31b-final
+-package-7be1c304\scoped-transition-git-01.cjs:53:66)
+    at C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261102-f31b-final-package-7b
+e1c304\scoped-transition-git-01.cjs:76:105
+    at Object.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261102-f
+31b-final-package-7be1c304\scoped-transition-git-01.cjs:119:3)
+    at Module._compile (node:internal/modules/cjs/loader:1730:14)
+    at Object..js (node:internal/modules/cjs/loader:1895:10) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 47806,
+  expected: 46991,
+  operator: 'strictEqual'
+}

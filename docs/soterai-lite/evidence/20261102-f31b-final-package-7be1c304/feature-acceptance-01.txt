@@ -1,0 +1,29 @@
+﻿node.exe : Error: ENOENT: no such file or directory, open 'C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\
+soterai-lite\evidence\20261102-f31b-final-package-7be1c304\package-components-06.txt.result.json'
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Error: ENOENT: ...xt.result.json':String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+    at Object.readFileSync (node:fs:442:20)
+    at read (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261102-f31b-final-pack
+age-7be1c304\current-native-admission-06.cjs:4:102)
+    at canonical (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261102-f31b-final
+-package-7be1c304\finalize-feature-acceptance-02.cjs:22:45)
+    at verify (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261102-f31b-final-pa
+ckage-7be1c304\finalize-feature-acceptance-02.cjs:100:28)
+    at Object.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261102-f
+31b-final-package-7be1c304\finalize-feature-acceptance-02.cjs:146:27)
+    at Module._compile (node:internal/modules/cjs/loader:1730:14)
+    at Object..js (node:internal/modules/cjs/loader:1895:10)
+    at Module.load (node:internal/modules/cjs/loader:1465:32)
+    at Function._load (node:internal/modules/cjs/loader:1282:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14) {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261102-f31b-final
+-package-7be1c304\\package-components-06.txt.result.json'
+}

@@ -9,10 +9,10 @@
   "planVersion": 1,
   "clientDate": "2026-10-13",
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
-  "scope": "F01-F10/F12-F25/F26b/F26c/F27/F29/F30 scoped DONE with recorded byte barriers; F11 optional absent NOT_TESTED/NOT_COVERED. F26a native11 primary30+offlinePASS/restartHR02caseFAIL; native12 extra decision pending, INCOMPLETE; parentF26 incomplete. F28 scoped DONE after transition bytes; required F26a resume selected; F31b/F32/V01-V05 incomplete. F31a build-only DONE; parentF31 incomplete. No human/independent/rating/release-ready claim. Owner 2Nov final F26a native12 failed; F26a USER_SKIPPED/INCOMPLETE/unsupported and no further native runs, F31b selected after skip byte barrier; original F26 requirement remains incomplete.",
+  "scope": "Supported earlier scoped features and F31a DONE. F31b scoped packaging/audit-work DONE only after transition bytes;42 build findings remediationOPEN, no risk acceptance/clean audit/release readiness. F26a owner-skipped INCOMPLETE/unsupported/no further native runs; parentF26 and globalF31 readiness remain INCOMPLETE. F32 ACTIVE only after transition bytes, V01-V05 unchanged/pending, originalL6 HUMAN-ACTIONS STOP/no rating/publication.",
   "implementationConcurrency": 1,
-  "activeFeature": "F31",
-  "activeSubcard": "F31b",
+  "activeFeature": "F32",
+  "activeSubcard": null,
   "priorityAmendment": {
     "date": "2026-10-26",
     "authority": "User requested shorter independent features first and time-consuming work later",
@@ -1045,7 +1045,7 @@
     {
       "id": "F31",
       "title": "Marketplace-ready package preparation.",
-      "status": "ACTIVE",
+      "status": "VERIFYING",
       "result": "INCOMPLETE",
       "requires": [
         "F25"
@@ -1070,8 +1070,8 @@
         {
           "id": "F31b",
           "title": "Final exact-package readiness, honest claims, shipped notices/privacy/SBOM and audits",
-          "status": "ACTIVE",
-          "result": "NOT-RUN",
+          "status": "DONE",
+          "result": "PASS_SCOPED",
           "requires": [
             "F26",
             "F27",
@@ -1099,21 +1099,61 @@
             "F31a"
           ],
           "userSkippedDependency": "F26a remains INCOMPLETE/unsupported; parent F26 is not DONE. Owner explicitly permits progression after final failed attempt, not an acceptance substitution.",
-          "startCondition": "No F31b production until actual f26a-native12-final-skip-byte-proof-01.json PASS; retain original BUSL owner choice and F31b original contract for supported scope."
+          "startCondition": "No F31b production until actual f26a-native12-final-skip-byte-proof-01.json PASS; retain original BUSL owner choice and F31b original contract for supported scope.",
+          "acceptanceEvidence": {
+            "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/feature-acceptance-01.json",
+            "bytes": 12610,
+            "sha256": "9ce861b797fd6ed8697e0f5fe045960b79467942f5619ace5bdbaaf1de9cc161"
+          },
+          "sourceCommit": "730b01d95ee89b62c58ef0a5ace3991b549107e3",
+          "sourceByteProof": {
+            "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/scoped-f31b-source-checkpoint-03-byte-proof.json",
+            "bytes": 268305,
+            "sha256": "a1d4a12f3706962b1365488a6f41e54668da911960fd5f62eee07694ca678d2b"
+          },
+          "transitionByteProofRequired": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/f31b-transition-byte-proof-01.json",
+          "completionCondition": "Scoped package/audit-work DONE takes effect only after actual transition-byte-proof01 PASS. No clean audit, remediation, current-Edge, installed lifecycle, independent or publication readiness acceptance.",
+          "verification": "Full4783=4779PASS0FAIL4SKIP; package46/manifest559 separate; backend exact reuse; exactVSIX6231159d18entries4runtimes; accepted175native+functional10/security17baseline8blocked9leaks; declared withdrawal; one external claims-only refresh. Audit COMPLETE_WITH_KNOWN_BUILD_FINDINGS42=17HIGH19MODERATE6LOW; remediationOPEN/riskNOT_GRANTED. Unexecuted permutation subcases and historical closure gaps retained.",
+          "dependencyAudit": {
+            "status": "COMPLETE_WITH_KNOWN_BUILD_FINDINGS",
+            "report": {
+              "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/advisory-detail-result-review-01.json",
+              "bytes": 269561,
+              "sha256": "2d0a41c4986c149ec10cdc194de93d266f005af20ce101c40c43255a219ec6d2"
+            },
+            "findings": 42,
+            "high": 17,
+            "moderate": 19,
+            "low": 6,
+            "remediation": "OPEN",
+            "riskAcceptance": "NOT_GRANTED",
+            "cleanAudit": false
+          }
         }
       ],
       "completionRule": "Both F31a and F31b pass their declared scope; all required earlier runtime features pass before parent DONE",
-      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "packagingSubcardsCompleteWithinSupportedScope": true,
+      "remaining": "Original earlier F26a inventory remains unmet/owner-skipped; known builder remediation and F32/final/human/publication readiness are not accepted."
     },
     {
       "id": "F32",
       "title": "Install, upgrade and removal lifecycle.",
-      "status": "PLANNED",
+      "status": "ACTIVE",
       "result": "NOT-RUN",
       "requires": [
         "F31"
       ],
-      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "originalRequiresPreserved": [
+        "F31"
+      ],
+      "executionDependenciesCurrent": [
+        "F31a",
+        "F31b"
+      ],
+      "ownerException": "Owner final-attempt F26a skip and explicit repeated F31b→F32→final requests permit supported-scope progression without calling parentF26/F31 global readiness complete. Original requires remain recorded.",
+      "startCondition": "No F32 production before actual f31b-transition-byte-proof-01.json PASS; actual installed-only lifecycle and its own feature flags/tests/newVSIX/affected checks/source bytes remain mandatory."
     }
   ],
   "finalGates": [
@@ -1575,5 +1615,20 @@
       "sha256": "65569fb7ee66949ebf65912ef2c8f741621f0cd9f341274d0b494c53148f18aa"
     },
     "native12": "EXPLICIT_EXTRA_APPROVAL_REQUIRED_TEXT_ONLY_NOT_RUN"
+  },
+  "f31bLatestCheckpoint": {
+    "acceptance": {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/feature-acceptance-01.json",
+      "bytes": 12610,
+      "sha256": "9ce861b797fd6ed8697e0f5fe045960b79467942f5619ace5bdbaaf1de9cc161"
+    },
+    "sourceProof": {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/scoped-f31b-source-checkpoint-03-byte-proof.json",
+      "bytes": 268305,
+      "sha256": "a1d4a12f3706962b1365488a6f41e54668da911960fd5f62eee07694ca678d2b"
+    },
+    "transitionByteProofRequired": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/f31b-transition-byte-proof-01.json",
+    "next": "F32_AFTER_TRANSITION_BYTES",
+    "releaseReady": false
   }
 }

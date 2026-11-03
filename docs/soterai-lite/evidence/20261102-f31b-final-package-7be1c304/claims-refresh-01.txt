@@ -1,0 +1,24 @@
+﻿node.exe : Error: ENOSPC: no space left on device, write
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Error: ENOSPC: ...n device, write:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+    at Object.writeSync (node:fs:924:3)
+    at Object.writeFileSync (node:fs:2446:26)
+    at claimsRefresh (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261102-f31b-f
+inal-package-7be1c304\finalize-feature-acceptance-01.cjs:65:6)
+    at Object.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261102-f
+31b-final-package-7be1c304\finalize-feature-acceptance-01.cjs:143:38)
+    at Module._compile (node:internal/modules/cjs/loader:1730:14)
+    at Object..js (node:internal/modules/cjs/loader:1895:10)
+    at Module.load (node:internal/modules/cjs/loader:1465:32)
+    at Function._load (node:internal/modules/cjs/loader:1282:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24) {
+  errno: -4055,
+  syscall: 'write',
+  code: 'ENOSPC'
+}

@@ -226,3 +226,8 @@ F28 supported scoped acceptance/source14 byte gates pass at 3c3f6e0567c2398d9fda
 ## Owner final-attempt amendment - 2 November 2026
 
 User call_3d1ca86cdb034f82a9ea32aa1bc401ab allowed ONE LAST F26a native12 attempt and explicitly instructed skip or delete if incomplete. Native12 actual missing primary result/Code0/wrapper1/bothEOF; offline/restart NOT_RUN. Choose reversible skip: F26a stays INCOMPLETE/unsupported, source and all failures retained, no further F26a native runs. Parent F26 is not DONE; F26b/F26c scoped DONE stand. This owner exception permits F31b supported-scope progression after the scoped final-skip byte barrier; original F26 prerequisite/catalog requirement remains named unmet, not silently accepted. F31b must exclude pre-commit supported claims and preserve recovery access for existing owned hooks. Remaining order F31b -> F32 -> unchanged V01-V05; no replacement plan, rating or original L6 HUMAN-ACTIONS/STOP bypass.
+
+
+## Current supported checkpoint - 3 November 2026
+
+F31b package/audit-work acceptance passes with known42 build findings; remediationOPEN/no risk acceptance/no clean result. Source730b01d9 has832 exact paths including18 source paths. Scoped DONE and nextF32 take effect only after docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/f31b-transition-byte-proof-01.json PASS. Preserve original F26a requirement as owner-skipped INCOMPLETE/unsupported/no more native attempts, parentF26/globalF31 readiness incomplete. The owner explicitly requests F31b then F32 then unchanged V01-V05; current F32 execution dependencies are F31a/F31b supported scopes while original F31 prerequisite remains recorded. No lifecycle/human/publication completion or rating inferred. OriginalL6 HUMAN-ACTIONS STOP remains.

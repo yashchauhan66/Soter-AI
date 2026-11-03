@@ -1,0 +1,348 @@
+// INERT PROPOSED TEST SOURCE — NOT_EXECUTED. F31b byte barrier still required.
+// Intended future location: src/__tests__/removalCoordinator.test.ts in the
+// canonical vscode-extension package; the import below resolves only there.
+// This specifies the existing F32 lifecycle contract, not a replacement plan.
+// No VS Code/native/process/filesystem fixture, configuration or key access.
+// Native transaction, adapter ownership, broker EOF and installed-only lifecycle
+// checks remain their own necessary integration tests; doubles cannot prove them.
+//
+// Minimal proposed production API:
+// export type RemovalAction = the14 fixed IDs in AUTO/MANUAL below;
+// export interface RemovalOwner {
+//   readonly root:string; readonly local:boolean; readonly trusted:boolean;
+//   readonly revision:number; // monotonic owner/session/config/trust epoch
+// }
+// export interface RemovalDependencies {
+//   owner(): RemovalOwner | undefined;
+//   probe(id:RemovalAction, owner:RemovalOwner):Promise<unknown>;
+//   confirmSummary(items:readonly {id:RemovalAction;status:string}[]):Promise<boolean>;
+//   restore(id:RemovalAction):Promise<unknown>; // code-owned map to native reviewed command; NO arguments/grants
+//   stopBroker():Promise<unknown>; // await manager.stop(), return manager.ownedSnapshot()
+// }
+// export class RemovalCoordinator {
+//   constructor(deps:RemovalDependencies);
+//   run(...untrustedCallerArgs:unknown[]):Promise<RemovalReport>; // arguments ignored
+//   dispose():void;
+// }
+// RemovalReport: {status:'COMPLETE'|'INCOMPLETE'|'CANCELLED'|'BUSY',
+//   actions:readonly {id:RemovalAction,status:'RESTORED'|'NOT_APPLICABLE'|
+//      'PENDING'|'CANCELLED'|'MANUAL_RECOVERY'}[],
+//   broker:'STOPPED'|'PENDING'|'NOT_REQUESTED'}; fixed safe fields/reasons only.
+//
+// probe ABSENT: {state:'ABSENT'} is an adapter-confirmed absence, never a guess
+// from a missing Memento/UNAVAILABLE status. OWNED metadata is
+// {state:'OWNED',schemaVersion:1,root,receiptFingerprint:<64 lowercase hex>};
+// corrupt/foreign/unreadable/unknown metadata stays PENDING. Adapter probes do
+// not decrypt backups or discover/read normal vendor configuration. Dedicated
+// profile probes account for retained on-disk recovery, and PSReadLine uses its
+// checked metadata journal rather than the obsolete Memento as authority.
+// Re-probe exact metadata before a reviewed restore; re-probe ABSENT afterwards.
+// Existing per-route native confirmation remains final authority. Restoration
+// may remain unavailable with withdrawn flags; coordinator never enables them.
+// Broker stop is last, only once no owned/pending/manual route needs recovery.
+// COMPLETE covers only the declared known routes, not arbitrary external edits.
+
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import {
+    RemovalCoordinator,
+    type RemovalAction, type RemovalDependencies, type RemovalOwner,
+} from '../lifecycle/RemovalCoordinator';
+
+const AUTO = [
+    'checkedPowerShell', 'checkedCmd', 'checkedGitBash', 'secureEditorAssociation',
+    'codexCli', 'codexIde', 'geminiCli', 'preCommit', 'prePush', 'psReadLine',
+] as const;
+const MANUAL = ['cline', 'claude', 'legacyBroker', 'legacyAIConfigs'] as const;
+const ALL: readonly RemovalAction[] = [...AUTO, ...MANUAL];
+const PRIVATE = 'SYNTHETIC_ONLY_F32_PRIVATE_DO_NOT_COPY_e3c91a';
+const ROOT = 'file:///D:/Synthetic-F32/workspace';
+const OTHER = 'file:///D:/Synthetic-F32/other';
+const owns = (root = ROOT, fingerprint = 'a'.repeat(64)) => ({
+    state: 'OWNED', schemaVersion: 1, root, receiptFingerprint: fingerprint,
+});
+function deferred<T>() {
+    let resolve!: (value:T) => void;
+    const promise = new Promise<T>(done => { resolve = done; });
+    return { promise, resolve };
+}
+async function bounded<T>(work:Promise<T>):Promise<T> {
+    let timer:ReturnType<typeof setTimeout> | undefined;
+    try {
+        return await Promise.race([work, new Promise<never>((_, reject) => {
+            timer = setTimeout(() => reject(Error('Proposed coordinator did not reach the bounded fixture stage.')), 1000);
+        })]);
+    } finally { if (timer) clearTimeout(timer); }
+}
+function fixture() {
+    let owner:RemovalOwner | undefined = { root:ROOT, local:true, trusted:true, revision:1 };
+    const probes = new Map<RemovalAction, unknown>(ALL.map(id => [id, { state:'ABSENT' }]));
+    const calls = { probes:[] as RemovalAction[], restores:[] as unknown[][],
+        summaries:[] as unknown[], stops:0, forbidden:0 };
+    const retained = Object.freeze({ policy:'saved-deny', ciphertext:'opaque-ciphertext', backup:'retained-opaque-backup' });
+    const flags = Object.freeze({ preCommit:false, prePush:false, psReadLine:false });
+    const hooks = {
+        async probe(id:RemovalAction):Promise<unknown> { return probes.get(id); },
+        async review():Promise<boolean> { return true; },
+        async restore(id:RemovalAction):Promise<unknown> {
+            probes.set(id, { state:'ABSENT' }); return { status:id.startsWith('checked') || id === 'secureEditorAssociation' ? 'SAVED' : 'RESTORED' };
+        },
+        async stop():Promise<unknown> { return { state:'stopped' }; },
+    };
+    const deps:RemovalDependencies = {
+        owner:() => owner,
+        async probe(id, captured) {
+            assert(ALL.includes(id)); assert.equal(captured.root, owner?.root);
+            calls.probes.push(id); return hooks.probe(id);
+        },
+        async confirmSummary(items) { calls.summaries.push(items); return hooks.review(); },
+        async restore(...args:unknown[]) {
+            calls.restores.push(args); assert.equal(args.length, 1, 'No approval/path/diff/token arguments may be forwarded.');
+            assert(AUTO.includes(args[0] as typeof AUTO[number]), 'Only fixed safe automatic actions may execute.');
+            return hooks.restore(args[0] as RemovalAction);
+        },
+        async stopBroker() { calls.stops++; return hooks.stop(); },
+    };
+    // No such capability belongs to the pure coordinator. Access is a failure.
+    for (const key of ['secrets', 'decrypt', 'policyStore', 'rawBackupRestore', 'configuration', 'executeCommand']) {
+        Object.defineProperty(deps, key, { get() { calls.forbidden++; throw Error(PRIVATE); } });
+    }
+    const coordinator = new RemovalCoordinator(deps);
+    return { coordinator, probes, calls, hooks, retained, flags,
+        setOwner(next:RemovalOwner | undefined) { owner = next; },
+        changeOwner(delta:Partial<RemovalOwner>) { assert(owner); owner = { ...owner, ...delta }; },
+        run:(...args:unknown[]) => bounded(coordinator.run(...args)),
+    };
+}
+type F = ReturnType<typeof fixture>;
+function status(report:Awaited<ReturnType<RemovalCoordinator['run']>>, id:RemovalAction) {
+    const rows = report.actions.filter(row => row.id === id); assert.equal(rows.length, 1); return rows[0].status;
+}
+function safe(value:unknown) { assert(!JSON.stringify(value).includes(PRIVATE), 'No caller, receipt or exception details may leak.'); }
+function untouched(f:F) {
+    assert.deepEqual(f.retained, { policy:'saved-deny', ciphertext:'opaque-ciphertext', backup:'retained-opaque-backup' });
+    assert.deepEqual(f.flags, { preCommit:false, prePush:false, psReadLine:false }); assert.equal(f.calls.forbidden, 0);
+}
+
+test('F32-C01 constructor is inert; confirmed absence makes no restore or disclosure calls', async () => {
+    const f = fixture(); assert.deepEqual(f.calls, { probes:[], restores:[], summaries:[], stops:0, forbidden:0 });
+    const result = await f.run();
+    assert.equal(result.status, 'COMPLETE'); assert(ALL.every(id => status(result, id) === 'NOT_APPLICABLE'));
+    assert.equal(f.calls.restores.length, 0); assert.equal(result.broker, 'STOPPED'); untouched(f);
+});
+
+test('F32-C02 probes use only the fixed reviewed action registry', async () => {
+    const f = fixture(); await f.run(); assert.deepEqual(f.calls.probes, ALL);
+    assert(f.calls.summaries.every(value => !JSON.stringify(value).includes('restoreFileFromBackup'))); untouched(f);
+});
+
+test('F32-C03 caller paths approvals command IDs getters and raw values confer no authority', async () => {
+    const f = fixture(); let touched = 0;
+    const forged = { approved:true, path:PRIVATE, command:'soterai.restoreFileFromBackup', actions:['rawVaultRestore'] };
+    Object.defineProperty(forged, 'authority', { get() { touched++; throw Error(PRIVATE); } });
+    const result = await f.run(forged, PRIVATE, () => { touched++; });
+    assert.equal(touched, 0); assert.equal(f.calls.restores.length, 0); assert.deepEqual(f.calls.probes, ALL);
+    safe(result); safe(f.calls.summaries); untouched(f);
+});
+
+test('F32-C04 corrupt metadata is pending rather than absent', async () => {
+    const f = fixture(); f.probes.set('checkedCmd', { state:'CORRUPT', contents:PRIVATE });
+    const result = await f.run(); assert.equal(status(result, 'checkedCmd'), 'PENDING');
+    assert.equal(result.status, 'INCOMPLETE'); assert.equal(f.calls.restores.length, 0); assert.equal(f.calls.stops, 0); safe(result);
+});
+
+test('F32-C05 a valid-looking receipt for another root cannot authorize restore', async () => {
+    const f = fixture(); f.probes.set('codexCli', owns(OTHER));
+    const result = await f.run(); assert.equal(status(result, 'codexCli'), 'PENDING');
+    assert.equal(f.calls.restores.length, 0); assert.equal(result.status, 'INCOMPLETE'); untouched(f);
+});
+
+test('F32-C06 unknown schema and malformed fingerprint remain pending', async () => {
+    const f = fixture(); f.probes.set('codexIde', { ...owns(), schemaVersion:99 });
+    f.probes.set('geminiCli', { ...owns(), receiptFingerprint:PRIVATE });
+    const result = await f.run(); assert.equal(status(result, 'codexIde'), 'PENDING');
+    assert.equal(status(result, 'geminiCli'), 'PENDING'); assert.equal(f.calls.restores.length, 0); safe(result);
+});
+
+test('F32-C07 unreadable probe error is fixed pending metadata without raw exception disclosure', async () => {
+    const f = fixture(); f.hooks.probe = async id => { if (id === 'prePush') throw Error(PRIVATE); return { state:'ABSENT' }; };
+    const result = await f.run(); assert.equal(status(result, 'prePush'), 'PENDING'); assert.equal(result.status, 'INCOMPLETE'); safe(result);
+});
+
+test('F32-C08 aggregate approval does not bypass the native transaction cancellation', async () => {
+    const f = fixture(); f.probes.set('prePush', owns());
+    f.hooks.restore = async () => ({ status:'CANCELLED' });
+    const result = await f.run({ approved:true }); assert.deepEqual(f.calls.restores, [['prePush']]);
+    assert.equal(status(result, 'prePush'), 'CANCELLED'); assert.equal(result.status, 'CANCELLED');
+    assert.equal(f.calls.stops, 0); assert.deepEqual(f.probes.get('prePush'), owns()); untouched(f);
+});
+
+test('F32-C09 cancelling the initial summary issues no restore or stop', async () => {
+    const f = fixture(); f.probes.set('checkedPowerShell', owns()); f.hooks.review = async () => false;
+    const result = await f.run(); assert.equal(result.status, 'CANCELLED');
+    assert.equal(f.calls.restores.length, 0); assert.equal(f.calls.stops, 0); untouched(f);
+});
+
+test('F32-C10 owned restores run serially and broker stop waits for all completed postconditions', async () => {
+    const f = fixture(), entered = deferred<void>(), release = deferred<void>(), trace:string[] = [];
+    f.probes.set('checkedPowerShell', owns()); f.probes.set('checkedCmd', owns());
+    f.hooks.restore = async id => {
+        trace.push('start:' + id);
+        if (id === 'checkedPowerShell') { entered.resolve(); await release.promise; }
+        f.probes.set(id, { state:'ABSENT' }); trace.push('end:' + id); return { status:'SAVED' };
+    };
+    f.hooks.stop = async () => { trace.push('broker'); return { state:'stopped' }; };
+    const pending = f.run(); await bounded(entered.promise);
+    assert.deepEqual(trace, ['start:checkedPowerShell']); release.resolve();
+    const result = await pending; assert.equal(result.status, 'COMPLETE');
+    assert.deepEqual(trace, ['start:checkedPowerShell', 'end:checkedPowerShell', 'start:checkedCmd', 'end:checkedCmd', 'broker']);
+});
+
+test('F32-C11 a concurrent command reports BUSY without another review or write', async () => {
+    const f = fixture(), entered = deferred<void>(), release = deferred<boolean>();
+    f.hooks.review = async () => { entered.resolve(); return release.promise; };
+    const pending = f.run(); await bounded(entered.promise); const second = await f.run({ approved:true });
+    assert.equal(second.status, 'BUSY'); assert.equal(f.calls.summaries.length, 1); assert.equal(f.calls.restores.length, 0);
+    release.resolve(false); await pending;
+});
+
+test('F32-C12 disposed or unavailable local trusted owner cannot discover receipts or start a change', async () => {
+    for (const unavailable of ['disposed', 'missing', 'remote', 'untrusted'] as const) {
+        const f = fixture();
+        if (unavailable === 'disposed') { f.coordinator.dispose(); f.coordinator.dispose(); }
+        if (unavailable === 'missing') f.setOwner(undefined);
+        if (unavailable === 'remote') f.changeOwner({ local:false });
+        if (unavailable === 'untrusted') f.changeOwner({ trusted:false });
+        const result = await f.run(); assert.equal(result.status, 'INCOMPLETE');
+        assert.equal(f.calls.probes.length, 0); assert.equal(f.calls.restores.length, 0); assert.equal(f.calls.stops, 0);
+    }
+});
+
+test('F32-C13 disposal while summary is open invalidates its later approval', async () => {
+    const f = fixture(); f.probes.set('codexCli', owns());
+    f.hooks.review = async () => { f.coordinator.dispose(); return true; };
+    const result = await f.run(); assert.equal(result.status, 'INCOMPLETE'); assert.equal(f.calls.restores.length, 0); assert.equal(f.calls.stops, 0);
+});
+
+test('F32-C14 workspace change during summary or after the first transaction stops further actions', async () => {
+    for (const stage of ['summary', 'transaction'] as const) {
+        const f = fixture(); f.probes.set('checkedPowerShell', owns()); f.probes.set('checkedCmd', owns());
+        if (stage === 'summary') f.hooks.review = async () => { f.changeOwner({ root:OTHER }); return true; };
+        else f.hooks.restore = async id => { f.probes.set(id, { state:'ABSENT' }); f.changeOwner({ root:OTHER }); return { status:'SAVED' }; };
+        const result = await f.run(); assert.equal(result.status, 'INCOMPLETE');
+        assert.equal(f.calls.restores.length, stage === 'summary' ? 0 : 1); assert.equal(f.calls.stops, 0);
+    }
+});
+
+test('F32-C15 trust withdrawal during summary or after one transaction withholds later changes', async () => {
+    for (const stage of ['summary', 'transaction'] as const) {
+        const f = fixture(); f.probes.set('checkedPowerShell', owns()); f.probes.set('secureEditorAssociation', owns());
+        if (stage === 'summary') f.hooks.review = async () => { f.changeOwner({ trusted:false }); return true; };
+        else f.hooks.restore = async id => { f.probes.set(id, { state:'ABSENT' }); f.changeOwner({ trusted:false }); return { status:'SAVED' }; };
+        const result = await f.run(); assert.equal(result.status, 'INCOMPLETE');
+        assert.equal(f.calls.restores.length, stage === 'summary' ? 0 : 1); assert.equal(f.calls.stops, 0); untouched(f);
+    }
+});
+
+test('F32-C16 settings or route-flag epoch drift invalidates review without enabling flags', async () => {
+    const f = fixture(); f.probes.set('preCommit', owns());
+    f.hooks.review = async () => { f.changeOwner({ revision:2 }); return true; };
+    const result = await f.run(); assert.equal(result.status, 'INCOMPLETE'); assert.equal(f.calls.restores.length, 0); untouched(f);
+});
+
+test('F32-C17 receipt changes after summary cannot reuse the previous ownership review', async () => {
+    const f = fixture(); f.probes.set('psReadLine', owns());
+    f.hooks.review = async () => { f.probes.set('psReadLine', owns(ROOT, 'b'.repeat(64))); return true; };
+    const result = await f.run(); assert.equal(status(result, 'psReadLine'), 'PENDING'); assert.equal(result.status, 'INCOMPLETE');
+    assert.equal(f.calls.restores.length, 0); assert.equal(f.calls.stops, 0);
+});
+
+test('F32-C18 a success status with a remaining owned receipt is incomplete', async () => {
+    const f = fixture(); f.probes.set('codexIde', owns()); f.hooks.restore = async () => ({ status:'RESTORED' });
+    const result = await f.run(); assert.equal(status(result, 'codexIde'), 'PENDING'); assert.equal(result.status, 'INCOMPLETE');
+    assert.equal(f.calls.stops, 0); assert.deepEqual(f.probes.get('codexIde'), owns());
+});
+
+test('F32-C19 terminal and association SAVED are accepted only with absent postconditions', async () => {
+    const f = fixture(); f.probes.set('checkedPowerShell', owns()); f.probes.set('secureEditorAssociation', owns());
+    const result = await f.run(); assert.equal(status(result, 'checkedPowerShell'), 'RESTORED');
+    assert.equal(status(result, 'secureEditorAssociation'), 'RESTORED'); assert.equal(result.status, 'COMPLETE'); untouched(f);
+});
+
+test('F32-C20 disabled optional routes retain reviewed restore access; no grant or flag writes', async () => {
+    const f = fixture(); for (const id of ['preCommit', 'prePush', 'psReadLine', 'geminiCli'] as const) f.probes.set(id, owns());
+    const result = await f.run(); assert.equal(result.status, 'COMPLETE');
+    for (const id of ['preCommit', 'prePush', 'psReadLine', 'geminiCli'] as const) assert.equal(status(result, id), 'RESTORED');
+    assert.deepEqual(f.calls.restores.map(args => args[0]), ['geminiCli', 'preCommit', 'prePush', 'psReadLine']); untouched(f);
+});
+
+test('F32-C21 a void legacy-style completion is never treated as restore success', async () => {
+    const f = fixture(); f.probes.set('codexCli', owns()); f.hooks.restore = async () => undefined;
+    const result = await f.run(); assert.equal(status(result, 'codexCli'), 'PENDING'); assert.equal(result.status, 'INCOMPLETE'); assert.equal(f.calls.stops, 0);
+});
+
+test('F32-C22 unknown changed unavailable and arbitrary truthy outcomes stay pending', async () => {
+    const f = fixture(); const ids = ['checkedCmd', 'codexCli', 'codexIde', 'prePush'] as const;
+    ids.forEach(id => f.probes.set(id, owns()));
+    const answers:Record<string, unknown> = { checkedCmd:{status:'CHANGED'}, codexCli:{status:'UNAVAILABLE'}, codexIde:{status:'OK'}, prePush:true };
+    f.hooks.restore = async id => answers[id]; const result = await f.run();
+    assert.equal(result.status, 'INCOMPLETE'); assert(ids.every(id => status(result, id) === 'PENDING')); assert.equal(f.calls.stops, 0);
+});
+
+test('F32-C23 thrown restore errors preserve receipt and report no private details', async () => {
+    const f = fixture(); f.probes.set('prePush', owns()); f.hooks.restore = async () => { throw Error(PRIVATE); };
+    const result = await f.run(); assert.equal(result.status, 'INCOMPLETE'); assert.equal(status(result, 'prePush'), 'PENDING');
+    assert.deepEqual(f.probes.get('prePush'), owns()); safe(result); untouched(f);
+});
+
+test('F32-C24 cancellation after a completed restore keeps that result and stops subsequent actions', async () => {
+    const f = fixture(); for (const id of ['checkedPowerShell', 'checkedCmd', 'checkedGitBash'] as const) f.probes.set(id, owns());
+    f.hooks.restore = async id => { if (id === 'checkedCmd') return { status:'CANCELLED' }; f.probes.set(id, { state:'ABSENT' }); return { status:'SAVED' }; };
+    const result = await f.run(); assert.equal(status(result, 'checkedPowerShell'), 'RESTORED');
+    assert.equal(status(result, 'checkedCmd'), 'CANCELLED'); assert.equal(status(result, 'checkedGitBash'), 'PENDING');
+    assert.equal(result.status, 'CANCELLED'); assert.deepEqual(f.calls.restores, [['checkedPowerShell'], ['checkedCmd']]); assert.equal(f.calls.stops, 0);
+});
+
+test('F32-C25 prior plaintext-capable Cline Claude and legacy backups require manual recovery', async () => {
+    const f = fixture(); MANUAL.forEach(id => f.probes.set(id, owns())); const result = await f.run();
+    assert.equal(result.status, 'INCOMPLETE'); assert(MANUAL.every(id => status(result, id) === 'MANUAL_RECOVERY'));
+    assert.equal(f.calls.restores.length, 0); assert.equal(f.calls.stops, 0); untouched(f);
+});
+
+test('F32-C26 policy ciphertext recovery and private probe extras stay outside coordinator output', async () => {
+    const f = fixture(); f.probes.set('prePush', { ...owns(), rawValue:PRIVATE, ciphertext:PRIVATE, backupContents:PRIVATE });
+    const result = await f.run(); safe(result); safe(f.calls.summaries); untouched(f);
+    assert.equal(f.calls.forbidden, 0); // whether extra fields are refused or ignored, they never become authority/output
+});
+
+test('F32-C27 exact broker stopped snapshot completes only after reviewed restores and reprobes', async () => {
+    const f = fixture(); f.probes.set('codexCli', owns()); let restored = false;
+    f.hooks.restore = async id => { f.probes.set(id, { state:'ABSENT' }); restored = true; return { status:'RESTORED' }; };
+    f.hooks.stop = async () => { assert(restored); assert.deepEqual(f.probes.get('codexCli'), { state:'ABSENT' }); return { state:'stopped' }; };
+    const result = await f.run(); assert.equal(result.status, 'COMPLETE'); assert.equal(result.broker, 'STOPPED'); assert.equal(f.calls.stops, 1);
+});
+
+test('F32-C28 observed exit with STOP_UNCONFIRMED cannot become safe removal success', async () => {
+    const f = fixture(); f.hooks.stop = async () => ({ state:'STOP_UNCONFIRMED', observedExit:true, exitCode:0, stdoutEOF:false, stderrEOF:true });
+    const result = await f.run(); assert.equal(result.status, 'INCOMPLETE'); assert.equal(result.broker, 'PENDING');
+    assert.equal(f.calls.stops, 1); untouched(f);
+});
+
+test('F32-C29 thrown broker stop leaves shutdown pending without retry kill or restart capability', async () => {
+    const f = fixture(); f.hooks.stop = async () => { throw Error(PRIVATE); };
+    const result = await f.run(); assert.equal(result.status, 'INCOMPLETE'); assert.equal(result.broker, 'PENDING');
+    assert.equal(f.calls.stops, 1); safe(result); untouched(f);
+});
+
+test('F32-C30 missing broker snapshot cannot infer stopped from exit zero or a truthy return', async () => {
+    const f = fixture(); f.hooks.stop = async () => ({ exitCode:0, actualClose:true, stdoutEOF:true, stderrEOF:true });
+    const result = await f.run(); assert.equal(result.status, 'INCOMPLETE'); assert.equal(result.broker, 'PENDING');
+    assert.equal(f.calls.stops, 1);
+});
+
+// Deliberate boundary: these30 proposed unit cases do NOT verify original
+// settings null/undefined semantics, native per-route modal implementations,
+// actual broker close/EOF, vault/profile file ownership, installed VSIX startup,
+// upgrade, restricted trust, disable/uninstall, onboarding timing or humans.
+// Existing adapter/profile/owned-lifecycle tests and the F32 installed-only
+// fixtures must supply those facts after F31b completes its required barrier.
