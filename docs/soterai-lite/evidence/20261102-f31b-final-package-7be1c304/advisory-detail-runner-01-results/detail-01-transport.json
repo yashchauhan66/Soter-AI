@@ -1,0 +1,127 @@
+{
+  "id": "GHSA-253c-mchw-3w2r",
+  "endpoint": "https://api.osv.dev/v1/vulns/GHSA-253c-mchw-3w2r",
+  "method": "GET",
+  "startedAt": "2026-11-03T02:51:27.047Z",
+  "statusCode": 200,
+  "contentType": "application/json",
+  "contentEncoding": "",
+  "requestClose": true,
+  "responseClose": true,
+  "responseEnd": true,
+  "responseComplete": true,
+  "timedOut": false,
+  "overflow": false,
+  "aborted": false,
+  "error": null,
+  "elapsedMs": 867.2264999999998,
+  "finishedAt": "2026-11-03T02:51:27.912Z",
+  "retainedBytes": 3902,
+  "observedBytes": 3902,
+  "rawResponse": {
+    "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/advisory-detail-runner-01-results/detail-01-response.bin",
+    "bytes": 3902,
+    "sha256": "4d947913075fef88cb5ae8d6093c2fd78a3e070933b7f8e01a1e06a2f1c9dfa0"
+  },
+  "interpretation": {
+    "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+    "id": "GHSA-253c-mchw-3w2r",
+    "modified": "2026-09-29T18:15:04.692324591Z",
+    "published": "2026-09-29T17:57:56Z",
+    "withdrawn": null,
+    "summary": "markdown-it linkify: true has two quadratic paths, so a few hundred KB of markdown blocks the event loop for tens of seconds",
+    "aliases": [],
+    "severity": [
+      {
+        "type": "CVSS_V4",
+        "score": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N"
+      }
+    ],
+    "databaseSpecificSeverity": "MODERATE",
+    "affected": [
+      {
+        "package": {
+          "name": "markdown-it",
+          "ecosystem": "npm",
+          "purl": "pkg:npm/markdown-it"
+        },
+        "ranges": [
+          {
+            "type": "SEMVER",
+            "events": [
+              {
+                "introduced": "15.0.0"
+              },
+              {
+                "fixed": "15.0.1"
+              }
+            ]
+          }
+        ],
+        "listedVersions": [
+          "15.0.0"
+        ],
+        "severity": [],
+        "databaseSpecificSeverity": null
+      },
+      {
+        "package": {
+          "name": "markdown-it",
+          "ecosystem": "npm",
+          "purl": "pkg:npm/markdown-it"
+        },
+        "ranges": [
+          {
+            "type": "SEMVER",
+            "events": [
+              {
+                "introduced": "0"
+              },
+              {
+                "fixed": "14.3.1"
+              }
+            ]
+          }
+        ],
+        "listedVersions": [],
+        "severity": [],
+        "databaseSpecificSeverity": null
+      }
+    ],
+    "references": [
+      {
+        "type": "WEB",
+        "url": "https://github.com/markdown-it/markdown-it/security/advisories/GHSA-253c-mchw-3w2r"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/markdown-it/markdown-it/commit/09fa07118dda4c953f058848f53dae88395618ca"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/markdown-it/markdown-it/commit/aaadcfa6d817b3c5f89afb49d97c7b797a6dd4fd"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/markdown-it/markdown-it/commit/ad70f6b7cff64bee10e42a774147112480ca0d49"
+      },
+      {
+        "type": "PACKAGE",
+        "url": "https://github.com/markdown-it/markdown-it"
+      }
+    ],
+    "associations": [
+      {
+        "name": "markdown-it",
+        "version": "14.3.0",
+        "ecosystem": "npm",
+        "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+        "recordPackageMatch": true,
+        "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+      }
+    ],
+    "missingSeverity": false,
+    "noGuessedSeverityOrFixedVersion": true,
+    "releaseReady": false
+  }
+}

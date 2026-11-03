@@ -1,0 +1,182 @@
+{
+  "id": "GHSA-xhq7-xmqj-769h",
+  "endpoint": "https://api.osv.dev/v1/vulns/GHSA-xhq7-xmqj-769h",
+  "method": "GET",
+  "startedAt": "2026-11-03T02:51:50.684Z",
+  "statusCode": 200,
+  "contentType": "application/json",
+  "contentEncoding": "",
+  "requestClose": true,
+  "responseClose": true,
+  "responseEnd": true,
+  "responseComplete": true,
+  "timedOut": false,
+  "overflow": false,
+  "aborted": false,
+  "error": null,
+  "elapsedMs": 546.3143999999993,
+  "finishedAt": "2026-11-03T02:51:51.229Z",
+  "retainedBytes": 3849,
+  "observedBytes": 3849,
+  "rawResponse": {
+    "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/advisory-detail-runner-01-results/detail-41-response.bin",
+    "bytes": 3849,
+    "sha256": "74a6464608435666ac16d483743073085d70804dbf1dc5d1f2db506662095341"
+  },
+  "interpretation": {
+    "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+    "id": "GHSA-xhq7-xmqj-769h",
+    "modified": "2026-10-23T21:45:04.902389903Z",
+    "published": "2026-10-23T21:39:34Z",
+    "withdrawn": null,
+    "summary": "fast-uri vulnerable to improper path equivalence in relative reference normalization",
+    "aliases": [
+      "CVE-2026-110095"
+    ],
+    "severity": [
+      {
+        "type": "CVSS_V3",
+        "score": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N"
+      }
+    ],
+    "databaseSpecificSeverity": "LOW",
+    "affected": [
+      {
+        "package": {
+          "name": "fast-uri",
+          "ecosystem": "npm",
+          "purl": "pkg:npm/fast-uri"
+        },
+        "ranges": [
+          {
+            "type": "SEMVER",
+            "events": [
+              {
+                "introduced": "0"
+              },
+              {
+                "fixed": "2.4.8"
+              }
+            ]
+          }
+        ],
+        "listedVersions": [],
+        "severity": [],
+        "databaseSpecificSeverity": null
+      },
+      {
+        "package": {
+          "name": "fast-uri",
+          "ecosystem": "npm",
+          "purl": "pkg:npm/fast-uri"
+        },
+        "ranges": [
+          {
+            "type": "SEMVER",
+            "events": [
+              {
+                "introduced": "3.0.0"
+              },
+              {
+                "fixed": "3.1.9"
+              }
+            ]
+          }
+        ],
+        "listedVersions": [],
+        "severity": [],
+        "databaseSpecificSeverity": null
+      },
+      {
+        "package": {
+          "name": "fast-uri",
+          "ecosystem": "npm",
+          "purl": "pkg:npm/fast-uri"
+        },
+        "ranges": [
+          {
+            "type": "SEMVER",
+            "events": [
+              {
+                "introduced": "4.0.0"
+              },
+              {
+                "fixed": "4.2.3"
+              }
+            ]
+          }
+        ],
+        "listedVersions": [],
+        "severity": [],
+        "databaseSpecificSeverity": null
+      }
+    ],
+    "references": [
+      {
+        "type": "WEB",
+        "url": "https://github.com/fastify/fast-uri/security/advisories/GHSA-xhq7-xmqj-769h"
+      },
+      {
+        "type": "ADVISORY",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-110095"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/fastify/fast-uri/commit/048bbd0a252971be86d6579f0dfc87f8de5b9c47"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/fastify/fast-uri/commit/52774a5c35df36b0bbe439cd4c12c3dc0e50e3b9"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/fastify/fast-uri/commit/7c19f8b97ec51f1f20b4e3d9d5820cb8d5176058"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/fastify/fast-uri/commit/9eb8759a9825c046f57f7f695f1944bc39b88abd"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/fastify/fast-uri/commit/acc5c5d60c4209571789496e1732468911c7e12a"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/fastify/fast-uri/commit/b110a3571c37dfcf9d1c72ce2e2e178c78d1a424"
+      },
+      {
+        "type": "WEB",
+        "url": "https://cna.openjsf.org/security-advisories.html"
+      },
+      {
+        "type": "PACKAGE",
+        "url": "https://github.com/fastify/fast-uri"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/fastify/fast-uri/releases/tag/v2.4.8"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/fastify/fast-uri/releases/tag/v3.1.9"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/fastify/fast-uri/releases/tag/v4.2.3"
+      }
+    ],
+    "associations": [
+      {
+        "name": "fast-uri",
+        "version": "3.1.5",
+        "ecosystem": "npm",
+        "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+        "recordPackageMatch": true,
+        "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+      }
+    ],
+    "missingSeverity": false,
+    "noGuessedSeverityOrFixedVersion": true,
+    "releaseReady": false
+  }
+}

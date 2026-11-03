@@ -1,0 +1,14 @@
+'use strict';
+const fs = require('node:fs');
+const path = require('node:path');
+const assert = require('node:assert/strict');
+const vm = require('node:vm');
+const original = fs.readFileSync(path.join(__dirname, 'prepare-round03-01.cjs'), 'utf8');
+const bad = "assert(log.includes('Failed to allocate memory')&&log.includes('renderer process gone (reason: oom')));";
+const good = "const memoryError=log.includes('Failed to allocate memory');const rendererOOM=log.includes('renderer process gone (reason: oom');assert.equal(memoryError&&rendererOOM,true);";
+assert.equal(original.split(bad).length, 2);
+const corrected = original.replace(bad, good);
+new vm.Script(corrected);
+const target = path.join(__dirname, 'prepare-round03-02.generated.cjs');
+fs.writeFileSync(target, corrected, { flag: 'wx' });
+require(target);

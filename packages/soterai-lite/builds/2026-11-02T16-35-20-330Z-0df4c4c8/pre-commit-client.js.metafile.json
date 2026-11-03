@@ -1,0 +1,425 @@
+{
+  "inputs": {
+    "packages/vscode-extension/src/history-hooks/PreCommitProtocol.ts": {
+      "bytes": 5279,
+      "imports": [
+        {
+          "path": "node:util",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "packages/vscode-extension/src/history-hooks/HookIndexSnapshot.ts": {
+      "bytes": 6210,
+      "imports": [
+        {
+          "path": "node:crypto",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:fs",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:path",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:util",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "packages/vscode-extension/src/history-hooks/PreCommitProtocol.ts",
+          "kind": "import-statement",
+          "original": "./PreCommitProtocol"
+        }
+      ],
+      "format": "esm"
+    },
+    "packages/vscode-extension/src/history-hooks/PreCommitHookText.ts": {
+      "bytes": 5060,
+      "imports": [
+        {
+          "path": "node:crypto",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:path",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:util",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "packages/vscode-extension/src/history-hooks/PreCommitWire.ts": {
+      "bytes": 8056,
+      "imports": [
+        {
+          "path": "node:crypto",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:util",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:path",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "packages/vscode-extension/src/history-hooks/PreCommitClient.ts": {
+      "bytes": 9710,
+      "imports": [
+        {
+          "path": "node:crypto",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:fs",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:http",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:path",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "packages/vscode-extension/src/history-hooks/HookIndexSnapshot.ts",
+          "kind": "import-statement",
+          "original": "./HookIndexSnapshot"
+        },
+        {
+          "path": "packages/vscode-extension/src/history-hooks/PreCommitHookText.ts",
+          "kind": "import-statement",
+          "original": "./PreCommitHookText"
+        },
+        {
+          "path": "packages/vscode-extension/src/history-hooks/PreCommitWire.ts",
+          "kind": "import-statement",
+          "original": "./PreCommitWire"
+        }
+      ],
+      "format": "esm"
+    },
+    "packages/vscode-extension/src/history-hooks/PrePushProtocol.ts": {
+      "bytes": 3205,
+      "imports": [
+        {
+          "path": "node:crypto",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:util",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "packages/vscode-extension/src/history-hooks/PushRootSnapshot.ts": {
+      "bytes": 1493,
+      "imports": [
+        {
+          "path": "node:crypto",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:fs",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:path",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "packages/vscode-extension/src/history-hooks/PrePushWire.ts": {
+      "bytes": 8309,
+      "imports": [
+        {
+          "path": "packages/vscode-extension/src/history-hooks/PrePushProtocol.ts",
+          "kind": "import-statement",
+          "original": "./PrePushProtocol"
+        },
+        {
+          "path": "node:crypto",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:util",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:path",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "packages/vscode-extension/src/history-hooks/PrePushClient.ts": {
+      "bytes": 7498,
+      "imports": [
+        {
+          "path": "node:crypto",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:http",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "packages/vscode-extension/src/history-hooks/PreCommitClient.ts",
+          "kind": "import-statement",
+          "original": "./PreCommitClient"
+        },
+        {
+          "path": "packages/vscode-extension/src/history-hooks/PreCommitHookText.ts",
+          "kind": "import-statement",
+          "original": "./PreCommitHookText"
+        },
+        {
+          "path": "packages/vscode-extension/src/history-hooks/PrePushProtocol.ts",
+          "kind": "import-statement",
+          "original": "./PrePushProtocol"
+        },
+        {
+          "path": "packages/vscode-extension/src/history-hooks/PushRootSnapshot.ts",
+          "kind": "import-statement",
+          "original": "./PushRootSnapshot"
+        },
+        {
+          "path": "packages/vscode-extension/src/history-hooks/PrePushWire.ts",
+          "kind": "import-statement",
+          "original": "./PrePushWire"
+        },
+        {
+          "path": "packages/vscode-extension/src/history-hooks/PreCommitClient.ts",
+          "kind": "import-statement",
+          "original": "./PreCommitClient"
+        }
+      ],
+      "format": "esm"
+    },
+    "packages/vscode-extension/src/history-hooks/preCommitClientMain.ts": {
+      "bytes": 3368,
+      "imports": [
+        {
+          "path": "packages/vscode-extension/src/history-hooks/PreCommitClient.ts",
+          "kind": "import-statement",
+          "original": "./PreCommitClient"
+        },
+        {
+          "path": "packages/vscode-extension/src/history-hooks/PrePushClient.ts",
+          "kind": "import-statement",
+          "original": "./PrePushClient"
+        },
+        {
+          "path": "packages/vscode-extension/src/history-hooks/PrePushProtocol.ts",
+          "kind": "import-statement",
+          "original": "./PrePushProtocol"
+        }
+      ],
+      "format": "esm"
+    }
+  },
+  "outputs": {
+    "packages/soterai-lite/builds/2026-11-02T16-35-20-330Z-0df4c4c8/dist/pre-commit-client.js": {
+      "imports": [
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:fs",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:http",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:path",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:fs",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:path",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:util",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:util",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:path",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:util",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:util",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:path",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:http",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:util",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:fs",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:path",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:util",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:path",
+          "kind": "require-call",
+          "external": true
+        }
+      ],
+      "exports": [],
+      "entryPoint": "packages/vscode-extension/src/history-hooks/preCommitClientMain.ts",
+      "inputs": {
+        "packages/vscode-extension/src/history-hooks/PreCommitClient.ts": {
+          "bytesInOutput": 4356
+        },
+        "packages/vscode-extension/src/history-hooks/HookIndexSnapshot.ts": {
+          "bytesInOutput": 2979
+        },
+        "packages/vscode-extension/src/history-hooks/PreCommitProtocol.ts": {
+          "bytesInOutput": 1379
+        },
+        "packages/vscode-extension/src/history-hooks/PreCommitHookText.ts": {
+          "bytesInOutput": 1707
+        },
+        "packages/vscode-extension/src/history-hooks/PreCommitWire.ts": {
+          "bytesInOutput": 3197
+        },
+        "packages/vscode-extension/src/history-hooks/PrePushClient.ts": {
+          "bytesInOutput": 3286
+        },
+        "packages/vscode-extension/src/history-hooks/PrePushProtocol.ts": {
+          "bytesInOutput": 1555
+        },
+        "packages/vscode-extension/src/history-hooks/PushRootSnapshot.ts": {
+          "bytesInOutput": 745
+        },
+        "packages/vscode-extension/src/history-hooks/PrePushWire.ts": {
+          "bytesInOutput": 3199
+        },
+        "packages/vscode-extension/src/history-hooks/preCommitClientMain.ts": {
+          "bytesInOutput": 1621
+        }
+      },
+      "bytes": 24512
+    }
+  }
+}

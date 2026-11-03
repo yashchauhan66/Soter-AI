@@ -1,5 +1,9 @@
 # Changelog
 
+- Prepare a win32-x64 pre-release candidate with the complete owner-selected BUSL1.1 terms, privacy statement, recomputed third-party notices and embedded noncircular SBOM. Detached inventory binds actual archive/runtime/source/asset bytes. Offline inventory is not current advisory or legal approval; final native/lifecycle/human gates remain pending.
+- Exclude pre-commit from this Lite release after the owner's final verification attempt remained incomplete. New install/resume refuses even when its compatibility flag is enabled; reviewed existing-hook restore remains available. No F26a supported/DONE claim or further native run.
+- Declare virtual/remote workspaces unsupported and clarify limited trust and managed-route privacy. Preserve extension identity, version, settings and saved recovery.
+
 - Add bounded owner-reviewed build/artifact/source-map/copy scanning and strict machine withdrawal of artifact analysis/public release. Reuse private keyed exposure metadata and canonical source/text placeholders. Maps and mapping-URL files are withheld from publication with reviewed exclusion/rebuild guidance; originals and evidence stay intact. No build/reference execution, cleanup or past-copy recall.
 
 - Add native owner-reviewed bounded read-only local Git history scanning with strict machine withdrawal, a separate keyed historical metadata domain and manual rotation/removal guidance. No history rewrite, network, startup scan or original TextDocument; capped/unsupported results remain partial or withheld.

@@ -1,0 +1,139 @@
+{
+  "id": "GHSA-f72v-6w45-q472",
+  "endpoint": "https://api.osv.dev/v1/vulns/GHSA-f72v-6w45-q472",
+  "method": "GET",
+  "startedAt": "2026-11-03T02:51:37.923Z",
+  "statusCode": 200,
+  "contentType": "application/json",
+  "contentEncoding": "",
+  "requestClose": true,
+  "responseClose": true,
+  "responseEnd": true,
+  "responseComplete": true,
+  "timedOut": false,
+  "overflow": false,
+  "aborted": false,
+  "error": null,
+  "elapsedMs": 550.6463000000003,
+  "finishedAt": "2026-11-03T02:51:38.473Z",
+  "retainedBytes": 3156,
+  "observedBytes": 3156,
+  "rawResponse": {
+    "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/advisory-detail-runner-01-results/detail-20-response.bin",
+    "bytes": 3156,
+    "sha256": "5aab93f777d2964415ab62a444953a333a463144146faa6ebf41331361929d57"
+  },
+  "interpretation": {
+    "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+    "id": "GHSA-f72v-6w45-q472",
+    "modified": "2026-10-23T22:30:04.094314933Z",
+    "published": "2026-10-23T22:12:57Z",
+    "withdrawn": null,
+    "summary": "undici vulnerable to Subresource Integrity bypass via non-lowercase algorithm tokens",
+    "aliases": [
+      "CVE-2026-109841"
+    ],
+    "severity": [
+      {
+        "type": "CVSS_V3",
+        "score": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:H/A:N"
+      }
+    ],
+    "databaseSpecificSeverity": "MODERATE",
+    "affected": [
+      {
+        "package": {
+          "name": "undici",
+          "ecosystem": "npm",
+          "purl": "pkg:npm/undici"
+        },
+        "ranges": [
+          {
+            "type": "SEMVER",
+            "events": [
+              {
+                "introduced": "7.15.0"
+              },
+              {
+                "fixed": "7.30.1"
+              }
+            ]
+          }
+        ],
+        "listedVersions": [],
+        "severity": [],
+        "databaseSpecificSeverity": null
+      },
+      {
+        "package": {
+          "name": "undici",
+          "ecosystem": "npm",
+          "purl": "pkg:npm/undici"
+        },
+        "ranges": [
+          {
+            "type": "SEMVER",
+            "events": [
+              {
+                "introduced": "8.0.0"
+              },
+              {
+                "fixed": "8.12.2"
+              }
+            ]
+          }
+        ],
+        "listedVersions": [],
+        "severity": [],
+        "databaseSpecificSeverity": null
+      }
+    ],
+    "references": [
+      {
+        "type": "WEB",
+        "url": "https://github.com/nodejs/undici/security/advisories/GHSA-f72v-6w45-q472"
+      },
+      {
+        "type": "ADVISORY",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-109841"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/nodejs/undici/commit/18bc8a1e09d15bc45815154a289dcf6fd5254d00"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/nodejs/undici/commit/4f7ef6806e532ab9e29ccd6229b1b9d241e1b1f0"
+      },
+      {
+        "type": "WEB",
+        "url": "https://cna.openjsf.org/security-advisories.html"
+      },
+      {
+        "type": "PACKAGE",
+        "url": "https://github.com/nodejs/undici"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/nodejs/undici/releases/tag/v7.30.1"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/nodejs/undici/releases/tag/v8.12.2"
+      }
+    ],
+    "associations": [
+      {
+        "name": "undici",
+        "version": "7.29.0",
+        "ecosystem": "npm",
+        "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+        "recordPackageMatch": true,
+        "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+      }
+    ],
+    "missingSeverity": false,
+    "noGuessedSeverityOrFixedVersion": true,
+    "releaseReady": false
+  }
+}

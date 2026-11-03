@@ -1,0 +1,135 @@
+{
+  "id": "GHSA-vfgh-jcmw-g37q",
+  "endpoint": "https://api.osv.dev/v1/vulns/GHSA-vfgh-jcmw-g37q",
+  "method": "GET",
+  "startedAt": "2026-11-03T02:51:47.285Z",
+  "statusCode": 200,
+  "contentType": "application/json",
+  "contentEncoding": "",
+  "requestClose": true,
+  "responseClose": true,
+  "responseEnd": true,
+  "responseComplete": true,
+  "timedOut": false,
+  "overflow": false,
+  "aborted": false,
+  "error": null,
+  "elapsedMs": 544.8145000000004,
+  "finishedAt": "2026-11-03T02:51:47.828Z",
+  "retainedBytes": 7846,
+  "observedBytes": 7846,
+  "rawResponse": {
+    "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/advisory-detail-runner-01-results/detail-35-response.bin",
+    "bytes": 7846,
+    "sha256": "137bee64849982328c768f7cc18af1375c26eb62ed48477222ded082f6b5eb56"
+  },
+  "interpretation": {
+    "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+    "id": "GHSA-vfgh-jcmw-g37q",
+    "modified": "2026-10-20T20:15:05.220039200Z",
+    "published": "2026-10-20T20:08:19Z",
+    "withdrawn": null,
+    "summary": "markdown-it: Quadratic-time denial of service in inline HTML parsing with html enabled",
+    "aliases": [
+      "CVE-2026-111766"
+    ],
+    "severity": [
+      {
+        "type": "CVSS_V3",
+        "score": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L"
+      }
+    ],
+    "databaseSpecificSeverity": "LOW",
+    "affected": [
+      {
+        "package": {
+          "name": "markdown-it",
+          "ecosystem": "npm",
+          "purl": "pkg:npm/markdown-it"
+        },
+        "ranges": [
+          {
+            "type": "SEMVER",
+            "events": [
+              {
+                "introduced": "0"
+              },
+              {
+                "fixed": "14.3.3"
+              }
+            ]
+          }
+        ],
+        "listedVersions": [],
+        "severity": [],
+        "databaseSpecificSeverity": null
+      },
+      {
+        "package": {
+          "name": "markdown-it",
+          "ecosystem": "npm",
+          "purl": "pkg:npm/markdown-it"
+        },
+        "ranges": [
+          {
+            "type": "SEMVER",
+            "events": [
+              {
+                "introduced": "15.0.0"
+              },
+              {
+                "fixed": "15.0.3"
+              }
+            ]
+          }
+        ],
+        "listedVersions": [],
+        "severity": [],
+        "databaseSpecificSeverity": null
+      }
+    ],
+    "references": [
+      {
+        "type": "WEB",
+        "url": "https://github.com/markdown-it/markdown-it/security/advisories/GHSA-vfgh-jcmw-g37q"
+      },
+      {
+        "type": "ADVISORY",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-111766"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/markdown-it/markdown-it/commit/928bc8c11ded60181c0e7fc5aa954eec582e8e79"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/markdown-it/markdown-it/commit/d99f48839d37af6fd8a2617516c43dab90755503"
+      },
+      {
+        "type": "PACKAGE",
+        "url": "https://github.com/markdown-it/markdown-it"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/markdown-it/markdown-it/releases/tag/14.3.3"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/markdown-it/markdown-it/releases/tag/15.0.3"
+      }
+    ],
+    "associations": [
+      {
+        "name": "markdown-it",
+        "version": "14.3.0",
+        "ecosystem": "npm",
+        "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+        "recordPackageMatch": true,
+        "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+      }
+    ],
+    "missingSeverity": false,
+    "noGuessedSeverityOrFixedVersion": true,
+    "releaseReady": false
+  }
+}

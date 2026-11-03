@@ -1,0 +1,143 @@
+{
+  "id": "GHSA-2883-xcg3-v3hh",
+  "endpoint": "https://api.osv.dev/v1/vulns/GHSA-2883-xcg3-v3hh",
+  "method": "GET",
+  "startedAt": "2026-11-03T02:51:27.920Z",
+  "statusCode": 200,
+  "contentType": "application/json",
+  "contentEncoding": "",
+  "requestClose": true,
+  "responseClose": true,
+  "responseEnd": true,
+  "responseComplete": true,
+  "timedOut": false,
+  "overflow": false,
+  "aborted": false,
+  "error": null,
+  "elapsedMs": 577.3137000000006,
+  "finishedAt": "2026-11-03T02:51:28.497Z",
+  "retainedBytes": 3370,
+  "observedBytes": 3370,
+  "rawResponse": {
+    "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/advisory-detail-runner-01-results/detail-02-response.bin",
+    "bytes": 3370,
+    "sha256": "5687366dab62a45766558b38018f95cbbf9476ac6e1c9944bf94671a7f973281"
+  },
+  "interpretation": {
+    "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+    "id": "GHSA-2883-xcg3-v3hh",
+    "modified": "2026-09-08T21:30:05.575808098Z",
+    "published": "2026-09-08T21:24:51Z",
+    "withdrawn": null,
+    "summary": "js-yaml: maxTotalMergeKeys does not limit CPU use for empty merge sources",
+    "aliases": [
+      "CVE-2026-84375"
+    ],
+    "severity": [
+      {
+        "type": "CVSS_V3",
+        "score": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+      }
+    ],
+    "databaseSpecificSeverity": "HIGH",
+    "affected": [
+      {
+        "package": {
+          "name": "js-yaml",
+          "ecosystem": "npm",
+          "purl": "pkg:npm/js-yaml"
+        },
+        "ranges": [
+          {
+            "type": "SEMVER",
+            "events": [
+              {
+                "introduced": "4.0.0"
+              },
+              {
+                "fixed": "4.3.2"
+              }
+            ]
+          }
+        ],
+        "listedVersions": [],
+        "severity": [],
+        "databaseSpecificSeverity": null
+      },
+      {
+        "package": {
+          "name": "js-yaml",
+          "ecosystem": "npm",
+          "purl": "pkg:npm/js-yaml"
+        },
+        "ranges": [
+          {
+            "type": "SEMVER",
+            "events": [
+              {
+                "introduced": "3.0.0"
+              },
+              {
+                "fixed": "3.15.2"
+              }
+            ]
+          }
+        ],
+        "listedVersions": [],
+        "severity": [],
+        "databaseSpecificSeverity": null
+      }
+    ],
+    "references": [
+      {
+        "type": "WEB",
+        "url": "https://github.com/nodeca/js-yaml/security/advisories/GHSA-2883-xcg3-v3hh"
+      },
+      {
+        "type": "ADVISORY",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-84375"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/nodeca/js-yaml/pull/797"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/nodeca/js-yaml/commit/3485bc06ff8a0251505f44a00414d90df2466639"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/nodeca/js-yaml/commit/6a8e05f9a485188ed730ac81e81ae221352ef480"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/nodeca/js-yaml/commit/d90b6612a5a84385bdcb556c44578eac76dc0f6b"
+      },
+      {
+        "type": "PACKAGE",
+        "url": "https://github.com/nodeca/js-yaml"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/nodeca/js-yaml/releases/tag/3.15.2"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/nodeca/js-yaml/releases/tag/4.3.2"
+      }
+    ],
+    "associations": [
+      {
+        "name": "js-yaml",
+        "version": "4.3.1",
+        "ecosystem": "npm",
+        "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+        "recordPackageMatch": true,
+        "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+      }
+    ],
+    "missingSeverity": false,
+    "noGuessedSeverityOrFixedVersion": true,
+    "releaseReady": false
+  }
+}

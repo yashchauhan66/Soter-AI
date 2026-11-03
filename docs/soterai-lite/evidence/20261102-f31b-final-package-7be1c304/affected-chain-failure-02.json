@@ -1,0 +1,30 @@
+{
+  "status": "FAIL_OR_INCOMPLETE_NO_AUTOMATIC_RETRY",
+  "observedAt": "2026-11-02T17:05:16.123Z",
+  "results": [
+    {
+      "name": "affected-retained-f31b-02",
+      "status": "FAIL_OR_INCOMPLETE_NO_LATER_PHASE",
+      "observedAt": "2026-11-02T17:05:16.116Z",
+      "actualClose": true,
+      "wrapperExit": 1,
+      "innerExit": 1,
+      "signal": null,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "deadlineExceeded": false,
+      "signalsRequested": 0,
+      "directories": [
+        "f26a-retained-native-20261102T170314Z-9290fb35"
+      ],
+      "close": {
+        "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/affected-retained-f31b-02-owned-close.json",
+        "bytes": 619,
+        "sha256": "c252e6152373777002e2abd4608338d09053ec0a2b201ba58533257316bd50d9"
+      }
+    }
+  ],
+  "errorName": "AssertionError",
+  "message": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'FAIL_OR_INCOMPLETE_NO_LATER_PHASE'\n- 'PASS_CLOSED_WRAPPER_ROOT_AGGREGATION_PENDING'\n",
+  "signalsRequested": 0
+}

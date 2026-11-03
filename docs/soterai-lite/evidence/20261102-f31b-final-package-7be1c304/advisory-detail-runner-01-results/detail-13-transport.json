@@ -1,0 +1,139 @@
+{
+  "id": "GHSA-55wc-3pg8-jfw6",
+  "endpoint": "https://api.osv.dev/v1/vulns/GHSA-55wc-3pg8-jfw6",
+  "method": "GET",
+  "startedAt": "2026-11-03T02:51:33.933Z",
+  "statusCode": 200,
+  "contentType": "application/json",
+  "contentEncoding": "",
+  "requestClose": true,
+  "responseClose": true,
+  "responseEnd": true,
+  "responseComplete": true,
+  "timedOut": false,
+  "overflow": false,
+  "aborted": false,
+  "error": null,
+  "elapsedMs": 537.7097999999987,
+  "finishedAt": "2026-11-03T02:51:34.470Z",
+  "retainedBytes": 3201,
+  "observedBytes": 3201,
+  "rawResponse": {
+    "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/advisory-detail-runner-01-results/detail-13-response.bin",
+    "bytes": 3201,
+    "sha256": "ef455c132fc32cc1b1975a1719ccfc0cd787117940c11fd7a85b3b46a00b4755"
+  },
+  "interpretation": {
+    "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+    "id": "GHSA-55wc-3pg8-jfw6",
+    "modified": "2026-10-27T19:15:22.392692308Z",
+    "published": "2026-10-27T19:02:10Z",
+    "withdrawn": null,
+    "summary": "undici vulnerable to Denial of Service via unhandled exception in the decompress interceptor",
+    "aliases": [
+      "CVE-2026-87029"
+    ],
+    "severity": [
+      {
+        "type": "CVSS_V3",
+        "score": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H"
+      }
+    ],
+    "databaseSpecificSeverity": "MODERATE",
+    "affected": [
+      {
+        "package": {
+          "name": "undici",
+          "ecosystem": "npm",
+          "purl": "pkg:npm/undici"
+        },
+        "ranges": [
+          {
+            "type": "SEMVER",
+            "events": [
+              {
+                "introduced": "7.15.0"
+              },
+              {
+                "fixed": "7.30.1"
+              }
+            ]
+          }
+        ],
+        "listedVersions": [],
+        "severity": [],
+        "databaseSpecificSeverity": null
+      },
+      {
+        "package": {
+          "name": "undici",
+          "ecosystem": "npm",
+          "purl": "pkg:npm/undici"
+        },
+        "ranges": [
+          {
+            "type": "SEMVER",
+            "events": [
+              {
+                "introduced": "8.0.0"
+              },
+              {
+                "fixed": "8.12.2"
+              }
+            ]
+          }
+        ],
+        "listedVersions": [],
+        "severity": [],
+        "databaseSpecificSeverity": null
+      }
+    ],
+    "references": [
+      {
+        "type": "WEB",
+        "url": "https://github.com/nodejs/undici/security/advisories/GHSA-55wc-3pg8-jfw6"
+      },
+      {
+        "type": "ADVISORY",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-87029"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/nodejs/undici/commit/63cba7712ca012b2603c6aeeb4c72d8692332cd0"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/nodejs/undici/commit/f851f315db1f2acce0ea668f88d9d0fa61c8420c"
+      },
+      {
+        "type": "WEB",
+        "url": "https://cna.openjsf.org/security-advisories.html"
+      },
+      {
+        "type": "PACKAGE",
+        "url": "https://github.com/nodejs/undici"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/nodejs/undici/releases/tag/v7.30.1"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/nodejs/undici/releases/tag/v8.12.2"
+      }
+    ],
+    "associations": [
+      {
+        "name": "undici",
+        "version": "7.29.0",
+        "ecosystem": "npm",
+        "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+        "recordPackageMatch": true,
+        "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+      }
+    ],
+    "missingSeverity": false,
+    "noGuessedSeverityOrFixedVersion": true,
+    "releaseReady": false
+  }
+}

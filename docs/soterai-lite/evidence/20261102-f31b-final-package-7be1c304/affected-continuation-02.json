@@ -1,0 +1,57 @@
+{
+  "status": "PREPARED_F31B_NORMAL_IMPROVEMENT_ROUND02_NO_SOURCE_OR_ORACLE_CHANGE_NOT_RUN",
+  "observedAt": "2026-11-02T17:01:47.556Z",
+  "normalImprovementRound": 2,
+  "binding": {
+    "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/native-binding-01.json",
+    "bytes": 19953,
+    "sha256": "c653a5714a58a6c633dc0bee58984e8e08da2b59737bd58fa5c39a3a8668bfbe"
+  },
+  "sourceProof": {
+    "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/full-inputs-04.json",
+    "bytes": 223544,
+    "sha256": "221bd5c7b0ad1753365b6ae3526c77db2b02f0192a3be41bfe0bfed9240c5e99"
+  },
+  "vsix": {
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-f31b-20261102-attempt03.vsix",
+    "bytes": 1735938,
+    "sha256": "6231159d484a70b284945a61cd8d341b13f809336427c5a57debd807759c688c"
+  },
+  "runner": {
+    "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/run-affected-05.cjs",
+    "bytes": 4830,
+    "sha256": "41302a72b87cf51984a2fd7dbbc0e37b1c4ac5cb68c1619ddd11baa486c6b152"
+  },
+  "observer": {
+    "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/observe-prior-owner-02.ps1",
+    "bytes": 1579,
+    "sha256": "2c00c70e94d298376c20e091b69dc13ffd5bb6cd92310e5a9e3751990f71205c"
+  },
+  "failure": {
+    "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/affected-chain-failure-01.json",
+    "bytes": 2469,
+    "sha256": "303809945278fb0088f8c35bf673fcc9ce09df39a6365fd9ee9232fc0d8b1833"
+  },
+  "priorAccepted": [
+    "ps51",
+    "editor"
+  ],
+  "mcpOriginal": {
+    "result": {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/f26a-mcp-native-20261102T165632Z-d98c17f4/primary-results.json",
+      "bytes": 1183,
+      "sha256": "21c34e32ebbc932de22110ea65632e5d90fa326b07a944530a69bd163a0f5fe3"
+    },
+    "stderr": {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/f26a-mcp-native-20261102T165632Z-d98c17f4/primary-stderr.txt",
+      "bytes": 96636,
+      "sha256": "13911c96b61b58ecb501e377b2156d1490ceeafe0a515c2c4662f035e0538191"
+    },
+    "acceptedAssertions": 0,
+    "observedRenderer": "OOM",
+    "causeLimit": "Renderer OOM and initial driver failure observed; exact thrown configuration-RPC cause uninstrumented. No product failure/pass inferred."
+  },
+  "scope": "First execute previously unrun retained106 and functional10/security17, then ONE unchanged MCP25 fresh-profile retry. Original assertions/bootstrap/300s phase/outer deadlines/vendor pins/source1098/exact VSIX unchanged. No automatic further retry.",
+  "f26a": "USER_SKIPPED_NO_ORIGINAL34_HOST_RUN",
+  "signalsRequested": 0
+}

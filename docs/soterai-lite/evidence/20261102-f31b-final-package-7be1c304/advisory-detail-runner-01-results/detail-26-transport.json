@@ -1,0 +1,143 @@
+{
+  "id": "GHSA-pmjh-fq2x-6v4x",
+  "endpoint": "https://api.osv.dev/v1/vulns/GHSA-pmjh-fq2x-6v4x",
+  "method": "GET",
+  "startedAt": "2026-11-03T02:51:42.023Z",
+  "statusCode": 200,
+  "contentType": "application/json",
+  "contentEncoding": "",
+  "requestClose": true,
+  "responseClose": true,
+  "responseEnd": true,
+  "responseComplete": true,
+  "timedOut": false,
+  "overflow": false,
+  "aborted": false,
+  "error": null,
+  "elapsedMs": 608.0479999999989,
+  "finishedAt": "2026-11-03T02:51:42.630Z",
+  "retainedBytes": 2556,
+  "observedBytes": 2556,
+  "rawResponse": {
+    "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/advisory-detail-runner-01-results/detail-26-response.bin",
+    "bytes": 2556,
+    "sha256": "035db4f2c52c257c9fb60614833d43b2b06c2e06da2895c8bb427f137967bf91"
+  },
+  "interpretation": {
+    "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+    "id": "GHSA-pmjh-fq2x-6v4x",
+    "modified": "2026-09-29T18:30:41.164240105Z",
+    "published": "2026-09-29T18:22:34Z",
+    "withdrawn": null,
+    "summary": "undici vulnerable to Denial of Service via orphaned RetryHandler response body",
+    "aliases": [
+      "CVE-2026-18149"
+    ],
+    "severity": [
+      {
+        "type": "CVSS_V3",
+        "score": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H"
+      }
+    ],
+    "databaseSpecificSeverity": "MODERATE",
+    "affected": [
+      {
+        "package": {
+          "name": "undici",
+          "ecosystem": "npm",
+          "purl": "pkg:npm/undici"
+        },
+        "ranges": [
+          {
+            "type": "SEMVER",
+            "events": [
+              {
+                "introduced": "7.11.0"
+              },
+              {
+                "fixed": "7.29.1"
+              }
+            ]
+          }
+        ],
+        "listedVersions": [],
+        "severity": [],
+        "databaseSpecificSeverity": null
+      },
+      {
+        "package": {
+          "name": "undici",
+          "ecosystem": "npm",
+          "purl": "pkg:npm/undici"
+        },
+        "ranges": [
+          {
+            "type": "SEMVER",
+            "events": [
+              {
+                "introduced": "8.0.0"
+              },
+              {
+                "fixed": "8.10.2"
+              }
+            ]
+          }
+        ],
+        "listedVersions": [],
+        "severity": [],
+        "databaseSpecificSeverity": null
+      }
+    ],
+    "references": [
+      {
+        "type": "WEB",
+        "url": "https://github.com/nodejs/undici/security/advisories/GHSA-pmjh-fq2x-6v4x"
+      },
+      {
+        "type": "ADVISORY",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-18149"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/nodejs/undici/commit/3c6726599cea8646384dde846c97d630da472a74"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/nodejs/undici/commit/e905b5b87e6953bcc542af90557b2fee5b7b5974"
+      },
+      {
+        "type": "WEB",
+        "url": "https://hackerone.com/reports/3892751"
+      },
+      {
+        "type": "WEB",
+        "url": "https://cna.openjsf.org/security-advisories.html"
+      },
+      {
+        "type": "PACKAGE",
+        "url": "https://github.com/nodejs/undici"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/nodejs/undici/releases/tag/v7.29.1"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/nodejs/undici/releases/tag/v8.10.2"
+      }
+    ],
+    "associations": [
+      {
+        "name": "undici",
+        "version": "7.29.0",
+        "ecosystem": "npm",
+        "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+        "recordPackageMatch": true,
+        "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+      }
+    ],
+    "missingSeverity": false,
+    "noGuessedSeverityOrFixedVersion": true,
+    "releaseReady": false
+  }
+}

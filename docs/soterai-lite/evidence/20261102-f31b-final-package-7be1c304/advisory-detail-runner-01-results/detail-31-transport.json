@@ -1,0 +1,178 @@
+{
+  "id": "GHSA-r53p-7pc4-xj5r",
+  "endpoint": "https://api.osv.dev/v1/vulns/GHSA-r53p-7pc4-xj5r",
+  "method": "GET",
+  "startedAt": "2026-11-03T02:51:44.878Z",
+  "statusCode": 200,
+  "contentType": "application/json",
+  "contentEncoding": "",
+  "requestClose": true,
+  "responseClose": true,
+  "responseEnd": true,
+  "responseComplete": true,
+  "timedOut": false,
+  "overflow": false,
+  "aborted": false,
+  "error": null,
+  "elapsedMs": 594.7057999999997,
+  "finishedAt": "2026-11-03T02:51:45.472Z",
+  "retainedBytes": 3908,
+  "observedBytes": 3908,
+  "rawResponse": {
+    "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/advisory-detail-runner-01-results/detail-31-response.bin",
+    "bytes": 3908,
+    "sha256": "a983a72b7d68e959108c2d27c706879b146e405b7b5eba2ad8c87d3030c0e981"
+  },
+  "interpretation": {
+    "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+    "id": "GHSA-r53p-7pc4-xj5r",
+    "modified": "2026-09-29T18:30:41.154532067Z",
+    "published": "2026-09-29T18:22:07Z",
+    "withdrawn": null,
+    "summary": "undici vulnerable to downstream response splitting via retry interceptor",
+    "aliases": [
+      "CVE-2026-18540"
+    ],
+    "severity": [
+      {
+        "type": "CVSS_V3",
+        "score": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N"
+      }
+    ],
+    "databaseSpecificSeverity": "LOW",
+    "affected": [
+      {
+        "package": {
+          "name": "undici",
+          "ecosystem": "npm",
+          "purl": "pkg:npm/undici"
+        },
+        "ranges": [
+          {
+            "type": "SEMVER",
+            "events": [
+              {
+                "introduced": "0"
+              },
+              {
+                "fixed": "6.28.1"
+              }
+            ]
+          }
+        ],
+        "listedVersions": [],
+        "severity": [],
+        "databaseSpecificSeverity": null
+      },
+      {
+        "package": {
+          "name": "undici",
+          "ecosystem": "npm",
+          "purl": "pkg:npm/undici"
+        },
+        "ranges": [
+          {
+            "type": "SEMVER",
+            "events": [
+              {
+                "introduced": "7.0.0"
+              },
+              {
+                "fixed": "7.29.1"
+              }
+            ]
+          }
+        ],
+        "listedVersions": [],
+        "severity": [],
+        "databaseSpecificSeverity": null
+      },
+      {
+        "package": {
+          "name": "undici",
+          "ecosystem": "npm",
+          "purl": "pkg:npm/undici"
+        },
+        "ranges": [
+          {
+            "type": "SEMVER",
+            "events": [
+              {
+                "introduced": "8.0.0"
+              },
+              {
+                "fixed": "8.10.2"
+              }
+            ]
+          }
+        ],
+        "listedVersions": [],
+        "severity": [],
+        "databaseSpecificSeverity": null
+      }
+    ],
+    "references": [
+      {
+        "type": "WEB",
+        "url": "https://github.com/nodejs/undici/security/advisories/GHSA-r53p-7pc4-xj5r"
+      },
+      {
+        "type": "ADVISORY",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-18540"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/nodejs/undici/commit/0160a719063fb0a77f4fdf9500b9166b91e14329"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/nodejs/undici/commit/cd8af90b38ae33c2838d54a2d629774122effe95"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/nodejs/undici/commit/ce31bc824b578008faae5d3350da66c1b5f71548"
+      },
+      {
+        "type": "WEB",
+        "url": "https://hackerone.com/reports/3900104"
+      },
+      {
+        "type": "WEB",
+        "url": "https://hackerone.com/reports/3900615"
+      },
+      {
+        "type": "WEB",
+        "url": "https://cna.openjsf.org/security-advisories.html"
+      },
+      {
+        "type": "PACKAGE",
+        "url": "https://github.com/nodejs/undici"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/nodejs/undici/releases/tag/v6.28.1"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/nodejs/undici/releases/tag/v7.29.1"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/nodejs/undici/releases/tag/v8.10.2"
+      }
+    ],
+    "associations": [
+      {
+        "name": "undici",
+        "version": "7.29.0",
+        "ecosystem": "npm",
+        "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+        "recordPackageMatch": true,
+        "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+      }
+    ],
+    "missingSeverity": false,
+    "noGuessedSeverityOrFixedVersion": true,
+    "releaseReady": false
+  }
+}

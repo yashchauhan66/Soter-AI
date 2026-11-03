@@ -1,0 +1,28 @@
+﻿node.exe : C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261102-f31b-final-packag
+e-7be1c304\prepare-continuation-02.cjs:5
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (C:\Users\USER\O...uation-02.cjs:5:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+const failed=own('f26a-mcp-native-20261102T165632Z-d98c17f4'),result=read(path.join(failed,'primary-results.json'));ass
+ert.equal(result.observations.length,0);assert.equal(result.driverFailure,'NativeMcpDriverFailure');assert(fs.readFileS
+ync(path.join(failed,'primary-stderr.txt'),'utf8').includes('renderer process gone (reason: oom')));
+                                                                                                                       
+                                                                                                                       
+                                                                                                  ^
+
+SyntaxError: Unexpected token ')'
+    at wrapSafe (node:internal/modules/cjs/loader:1662:18)
+    at Module._compile (node:internal/modules/cjs/loader:1704:20)
+    at Object..js (node:internal/modules/cjs/loader:1895:10)
+    at Module.load (node:internal/modules/cjs/loader:1465:32)
+    at Function._load (node:internal/modules/cjs/loader:1282:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49
+
+Node.js v22.16.0

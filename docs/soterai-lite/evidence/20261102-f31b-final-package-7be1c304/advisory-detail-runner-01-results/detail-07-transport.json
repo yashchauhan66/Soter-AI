@@ -1,0 +1,104 @@
+{
+  "id": "GHSA-3g3m-2fjr-6pw4",
+  "endpoint": "https://api.osv.dev/v1/vulns/GHSA-3g3m-2fjr-6pw4",
+  "method": "GET",
+  "startedAt": "2026-11-03T02:51:30.669Z",
+  "statusCode": 200,
+  "contentType": "application/json",
+  "contentEncoding": "",
+  "requestClose": true,
+  "responseClose": true,
+  "responseEnd": true,
+  "responseComplete": true,
+  "timedOut": false,
+  "overflow": false,
+  "aborted": false,
+  "error": null,
+  "elapsedMs": 559.6277000000009,
+  "finishedAt": "2026-11-03T02:51:31.228Z",
+  "retainedBytes": 4356,
+  "observedBytes": 4356,
+  "rawResponse": {
+    "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/advisory-detail-runner-01-results/detail-07-response.bin",
+    "bytes": 4356,
+    "sha256": "1d7352e528922c42580e407c0b947b72c0441059f0b981d66dfc423334d050de"
+  },
+  "interpretation": {
+    "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+    "id": "GHSA-3g3m-2fjr-6pw4",
+    "modified": "2026-10-30T23:15:04.503965732Z",
+    "published": "2026-10-30T23:09:11Z",
+    "withdrawn": null,
+    "summary": "Glob: AbortSignal cancellation bypass allows post-timeout filesystem traversal",
+    "aliases": [
+      "CVE-2026-118773"
+    ],
+    "severity": [
+      {
+        "type": "CVSS_V4",
+        "score": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N"
+      }
+    ],
+    "databaseSpecificSeverity": "MODERATE",
+    "affected": [
+      {
+        "package": {
+          "name": "glob",
+          "ecosystem": "npm",
+          "purl": "pkg:npm/glob"
+        },
+        "ranges": [
+          {
+            "type": "SEMVER",
+            "events": [
+              {
+                "introduced": "9.0.0"
+              },
+              {
+                "fixed": "14.0.2"
+              }
+            ]
+          }
+        ],
+        "listedVersions": [],
+        "severity": [],
+        "databaseSpecificSeverity": null
+      }
+    ],
+    "references": [
+      {
+        "type": "WEB",
+        "url": "https://github.com/isaacs/node-glob/security/advisories/GHSA-3g3m-2fjr-6pw4"
+      },
+      {
+        "type": "ADVISORY",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-118773"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/isaacs/node-glob/commit/4682e8c9babee1b385202ede36389634e12076d7"
+      },
+      {
+        "type": "PACKAGE",
+        "url": "https://github.com/isaacs/node-glob"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/isaacs/node-glob/releases/tag/v14.0.2"
+      }
+    ],
+    "associations": [
+      {
+        "name": "glob",
+        "version": "13.0.6",
+        "ecosystem": "npm",
+        "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+        "recordPackageMatch": true,
+        "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+      }
+    ],
+    "missingSeverity": false,
+    "noGuessedSeverityOrFixedVersion": true,
+    "releaseReady": false
+  }
+}

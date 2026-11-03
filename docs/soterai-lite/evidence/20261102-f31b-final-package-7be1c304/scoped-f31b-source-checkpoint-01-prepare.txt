@@ -1,0 +1,52 @@
+﻿node.exe : <ref *1> Error: spawnSync C:\Program Files\Git\cmd\git.exe EPERM
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (<ref *1> Error:...d\git.exe EPERM:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+    at Object.spawnSync (node:internal/child_process:1120:20)
+    at spawnSync (node:child_process:868:24)
+    at Object.execFileSync (node:child_process:911:15)
+    at run (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261102-f31b-final-packa
+ge-7be1c304\scoped-f31b-source-checkpoint-01.cjs:25:15)
+    at text (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261102-f31b-final-pack
+age-7be1c304\scoped-f31b-source-checkpoint-01.cjs:30:22)
+    at preflight (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261102-f31b-final
+-package-7be1c304\scoped-f31b-source-checkpoint-01.cjs:100:18)
+    at C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261102-f31b-final-package-7b
+e1c304\scoped-f31b-source-checkpoint-01.cjs:210:25
+    at Object.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261102-f
+31b-final-package-7be1c304\scoped-f31b-source-checkpoint-01.cjs:276:3)
+    at Module._compile (node:internal/modules/cjs/loader:1730:14)
+    at Object..js (node:internal/modules/cjs/loader:1895:10) {
+  errno: -4048,
+  code: 'EPERM',
+  syscall: 'spawnSync C:\\Program Files\\Git\\cmd\\git.exe',
+  path: 'C:\\Program Files\\Git\\cmd\\git.exe',
+  spawnargs: [
+    '--git-dir=C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\.git',
+    '--work-tree=C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard',
+    '-c',
+    'core.hooksPath=C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261102
+-f31b-final-package-7be1c304\\empty-f31b-source-checkpoint-hooks-01',
+    '-c',
+    'core.fsmonitor=false',
+    '-c',
+    'commit.gpgSign=false',
+    '-c',
+    'gc.auto=0',
+    '-c',
+    'maintenance.auto=false',
+    'rev-parse',
+    '--show-object-format'
+  ],
+  error: [Circular *1],
+  status: null,
+  signal: null,
+  output: null,
+  pid: 0,
+  stdout: undefined,
+  stderr: undefined
+}

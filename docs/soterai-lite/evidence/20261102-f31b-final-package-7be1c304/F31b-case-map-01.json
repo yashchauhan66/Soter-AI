@@ -1,0 +1,1119 @@
+{
+  "schemaVersion": 1,
+  "status": "F31B_CASE_MAP18_SCOPED_OBSERVED_CONTROLS_GAPS_AND_ADVISORY_REVIEW_REQUIRED",
+  "observedAt": "2026-11-03T02:44:53.285Z",
+  "feature": "F31b",
+  "featureComplete": false,
+  "releaseReady": false,
+  "nextFeatureSelected": false,
+  "independence": "LOW_SAME_LINEAGE_EVIDENCE_MAPPING_NOT_INDEPENDENT_ACCEPTANCE",
+  "sourceProof": {
+    "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/full-inputs-04.json",
+    "bytes": 223544,
+    "sha256": "221bd5c7b0ad1753365b6ae3526c77db2b02f0192a3be41bfe0bfed9240c5e99"
+  },
+  "artifact": {
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-f31b-20261102-attempt03.vsix",
+    "bytes": 1735938,
+    "sha256": "6231159d484a70b284945a61cd8d341b13f809336427c5a57debd807759c688c"
+  },
+  "caseCount": 18,
+  "cases": [
+    {
+      "id": "B01",
+      "subject": "Deterministic noncircular embedded metadata",
+      "status": "OBSERVED_SCOPED_CONTROLS_AND_OBJECT_FACTS",
+      "implementation": [
+        "packages/soterai-lite/scripts/release-metadata.cjs:createEmbeddedMetadata"
+      ],
+      "controlRefs": [
+        "PKG021"
+      ],
+      "established": [
+        "Same admitted synthetic graph twice produces identical SBOM/notices; no timestamp/serialNumber/final-VSIX property.",
+        "Actual embedded SBOM binds immutable build-receipt SHA and runtime/source inventory; final archive SHA is detached."
+      ],
+      "gaps": []
+    },
+    {
+      "id": "B02",
+      "subject": "Runtime/source graph changes bind different facts",
+      "status": "OBSERVED_SCOPED_CONTROLS_AND_OBJECT_FACTS",
+      "implementation": [
+        "packages/soterai-lite/scripts/release-metadata.cjs:createEmbeddedMetadata"
+      ],
+      "controlRefs": [
+        "PKG022"
+      ],
+      "established": [
+        "Runtime digest and source-input digest mutations change metadata. Production object recomputation checks current actual source/runtime hashes."
+      ],
+      "gaps": []
+    },
+    {
+      "id": "B03",
+      "subject": "Missing/tampered runtime/input/provenance refusal",
+      "status": "OBSERVED_SCOPED_CONTROLS_AND_OBJECT_FACTS",
+      "implementation": [
+        "packages/soterai-lite/scripts/audit-release.cjs:inspectProvenance",
+        "packages/soterai-lite/scripts/release-metadata.cjs:createEmbeddedMetadata"
+      ],
+      "controlRefs": [
+        "PKG023",
+        "PKG003",
+        "PKG004",
+        "PKG009",
+        "PKG010",
+        "PKG014",
+        "PKG027"
+      ],
+      "established": [
+        "Missing/duplicate runtime, runtime byte mismatch, missing/changed input and invalid provenance hash are refused. Legacy controls exercise shared provenance logic; they are not new final-mode permutations."
+      ],
+      "gaps": []
+    },
+    {
+      "id": "B04",
+      "subject": "Actual bundled libraries, repeated inputs and versions",
+      "status": "PARTIAL_NAMED_UNVERIFIED_SUBCASES",
+      "implementation": [
+        "packages/soterai-lite/scripts/audit-release.cjs:inspectProvenance/packageRoot",
+        "packages/soterai-lite/scripts/release-metadata.cjs:createEmbeddedMetadata"
+      ],
+      "controlRefs": [
+        "PKG024",
+        "PKG001"
+      ],
+      "established": [
+        "Production18 archive has exactly @babel/parser7.29.7 MIT, jsonc-parser3.3.1 MIT, yaml2.9.0 ISC as bundled library components.",
+        "Actual source-input grouping records bundled runtimes and package-root identity; no unbundled workspace dependency is called embedded."
+      ],
+      "gaps": [
+        "No focused fixture proves repeated nested package-version merging across different roots/runtimes.",
+        "Two roots with identical package name/version conservatively refuse unique notice matching; successful acceptance for that future graph is not claimed."
+      ]
+    },
+    {
+      "id": "B05",
+      "subject": "Complete exact notices and component identity",
+      "status": "PARTIAL_NAMED_UNVERIFIED_SUBCASES",
+      "implementation": [
+        "packages/soterai-lite/scripts/audit-release.cjs:inspectProvenance",
+        "packages/soterai-lite/scripts/release-metadata.cjs:createEmbeddedMetadata"
+      ],
+      "controlRefs": [
+        "PKG025",
+        "PKG029",
+        "PKG024",
+        "PKG012",
+        "PKG013"
+      ],
+      "established": [
+        "Missing/unknown notices, mismatched notice-component identity and changed notice text are refused by final metadata controls; complete production notices are bound and recomputed.",
+        "Source explicitly rejects metadata.name differing from its node_modules package-root tail."
+      ],
+      "gaps": [
+        "No focused actual negative fixture mutates package.json name versus package path; code review alone is not dynamic coverage of that guard."
+      ]
+    },
+    {
+      "id": "B06",
+      "subject": "Dependency/path/notice resource boundaries",
+      "status": "PARTIAL_NAMED_UNVERIFIED_SUBCASES",
+      "implementation": [
+        "packages/soterai-lite/scripts/audit-release.cjs:ordinary/read/codeInput",
+        "packages/soterai-lite/scripts/release-metadata.cjs:createEmbeddedMetadata"
+      ],
+      "controlRefs": [
+        "PKG026",
+        "PKG011"
+      ],
+      "established": [
+        "Absolute source path and over256KiB notice text are refused; shared auditor rejects a .env input selector before reading."
+      ],
+      "gaps": [
+        "Linked dependency/input and excessive component/notice-count guards are implemented but have no named focused executed controls in package46."
+      ]
+    },
+    {
+      "id": "B07",
+      "subject": "Strict valid final archive and final inventory",
+      "status": "OBSERVED_SCOPED_CONTROLS_AND_OBJECT_FACTS",
+      "implementation": [
+        "packages/soterai-lite/scripts/audit-release.cjs:auditFinalRelease/verifyFinal"
+      ],
+      "controlRefs": [
+        "PKG030"
+      ],
+      "established": [
+        "Synthetic valid final18 archive recomputes embedded metadata/notices and keeps releaseReadyfalse.",
+        "Current production attempt03 has strict18 entries/four runtimes/final archive SHA and complete detached inventory."
+      ],
+      "gaps": []
+    },
+    {
+      "id": "B08",
+      "subject": "Missing/extra/alias/malformed/oversized archive refusal",
+      "status": "PARTIAL_NAMED_UNVERIFIED_SUBCASES",
+      "implementation": [
+        "packages/soterai-lite/scripts/audit-release.cjs:archive/auditFinalRelease"
+      ],
+      "controlRefs": [
+        "PKG031",
+        "PKG005",
+        "PKG006",
+        "PKG015",
+        "PKG016"
+      ],
+      "established": [
+        "New final-mode controls reject missing privacy and an extra map.",
+        "Legacy shared ZIP controls reject aliases, truncation and oversized entries; strict final18 allowlist and bounded parsing remain active."
+      ],
+      "gaps": [
+        "No exhaustive final-mode duplicate/case-alias/malformed/truncated/oversized matrix was executed separately for each new SBOM/privacy/notices asset."
+      ]
+    },
+    {
+      "id": "B09",
+      "subject": "Recomputed component/runtime/notice consistency",
+      "status": "OBSERVED_SCOPED_CONTROLS_AND_OBJECT_FACTS",
+      "implementation": [
+        "packages/soterai-lite/scripts/audit-release.cjs:inspectProvenance/verifyFinal"
+      ],
+      "controlRefs": [
+        "PKG032",
+        "PKG039",
+        "PKG025",
+        "PKG029",
+        "PKG004"
+      ],
+      "established": [
+        "Well-formed changed SBOM, post-receipt bundled source drift and changed notice bytes are detected; independent archive SHA does not substitute for provenance consistency.",
+        "Runtime mismatch is dynamically covered through shared legacy auditor; current final object exact runtime bytes are recomputed."
+      ],
+      "gaps": []
+    },
+    {
+      "id": "B10",
+      "subject": "Actual platform/pre-release XML",
+      "status": "OBSERVED_SCOPED_CONTROLS_AND_OBJECT_FACTS",
+      "implementation": [
+        "packages/soterai-lite/scripts/audit-release.cjs:finalXml/verifyFinal",
+        "packages/soterai-lite/scripts/package.cjs:packageBuild"
+      ],
+      "controlRefs": [
+        "PKG033",
+        "PKG034",
+        "PKG042",
+        "PKG043",
+        "PKG044",
+        "PKG007"
+      ],
+      "established": [
+        "Actual vsce output is win32-x64 with one real PreRelease=true property. Preview/missing property, duplicate attribute, comment-only property, unclosed tail, second root and undeclared entity controls refuse."
+      ],
+      "gaps": []
+    },
+    {
+      "id": "B11",
+      "subject": "Identity, immutable manifest and virtual-workspace declaration",
+      "status": "OBSERVED_SCOPED_CONTROLS_AND_OBJECT_FACTS",
+      "implementation": [
+        "packages/soterai-lite/scripts/audit-release.cjs:verifyFinal",
+        "packages/soterai-lite/scripts/build.cjs",
+        "packages/vscode-extension/package.json",
+        "packages/soterai-lite/package.json"
+      ],
+      "controlRefs": [
+        "PKG035",
+        "PKG008"
+      ],
+      "established": [
+        "Final virtual-workspace mutation refuses; actual canonical build copying preserves virtualWorkspaces.supportedfalse and limited-trust declaration.",
+        "Current archive identity/version/main/four runtimes match immutable build/package receipts; shared legacy wrong-publisher control refuses."
+      ],
+      "gaps": []
+    },
+    {
+      "id": "B12",
+      "subject": "Trust and owner-required pre-commit release exclusion",
+      "status": "PARTIAL_NAMED_UNVERIFIED_SUBCASES",
+      "implementation": [
+        "packages/vscode-extension/src/history-hooks/commands.ts:registerPreCommitHooks",
+        "packages/soterai-lite/scripts/audit-release.cjs:verifyFinal",
+        "packages/vscode-extension/package.json"
+      ],
+      "controlRefs": [
+        "PKG036"
+      ],
+      "established": [
+        "Final package cannot remove unsupportedFeatures[preCommit]. Three actual full-suite F31b command controls refuse new grants despite flags/caller arguments, retain reviewed recovery, and refuse unreadable metadata without leaking its error.",
+        "Limited-trust/virtual declarations are current packaged facts."
+      ],
+      "gaps": [
+        "Actual installed restricted-workspace transition, disable/uninstall and aggregate removal are F32 NOT_RUN; package declarations alone cannot prove them."
+      ]
+    },
+    {
+      "id": "B13",
+      "subject": "Exclusive output and immutable attempt custody",
+      "status": "PARTIAL_NAMED_UNVERIFIED_SUBCASES",
+      "implementation": [
+        "packages/soterai-lite/scripts/package.cjs:parents/stable/packageBuild",
+        "packages/soterai-lite/scripts/release-metadata.cjs:createEmbeddedMetadata"
+      ],
+      "controlRefs": [
+        "PKG027",
+        "PKG041"
+      ],
+      "established": [
+        "Existing output sentinel is preserved after overwrite refusal; invalid provenance hash/duplicate source input refuse.",
+        "Three unique retained production attempts preserve failures01/02 and accepted03; COPYFILE_EXCL and exclusive new stage/assets paths are implemented."
+      ],
+      "gaps": [
+        "No named focused executed linked/outside output-parent or preexisting report collision negative control in package46."
+      ]
+    },
+    {
+      "id": "B14",
+      "subject": "Owner-selected complete BUSL and third-party notices",
+      "status": "OBSERVED_SCOPED_CONTROLS_AND_OBJECT_FACTS",
+      "implementation": [
+        "packages/soterai-lite/LICENSE.md",
+        "packages/soterai-lite/scripts/audit-release.cjs:verifyFinal",
+        "packages/soterai-lite/scripts/release-metadata.cjs:createEmbeddedMetadata"
+      ],
+      "controlRefs": [
+        "PKG037",
+        "PKG024",
+        "PKG025",
+        "PKG029"
+      ],
+      "established": [
+        "Short BUSL summary refuses; current shipped full4493-byte terms equal owner-selected historical SHA50850df5...a253.",
+        "Actual shipped complete third-party notice bytes are bound to admitted three-library graph. No legal approval is inferred."
+      ],
+      "gaps": []
+    },
+    {
+      "id": "B15",
+      "subject": "No invented results, safe metadata/log contents",
+      "status": "PARTIAL_NAMED_UNVERIFIED_SUBCASES",
+      "implementation": [
+        "packages/soterai-lite/scripts/release-metadata.cjs:createEmbeddedMetadata",
+        "packages/soterai-lite/scripts/audit-release.cjs:auditFinalRelease",
+        "packages/soterai-lite/PRIVACY.md"
+      ],
+      "controlRefs": [
+        "PKG028",
+        "PKG017",
+        "PKG001"
+      ],
+      "established": [
+        "Metadata explicitly leaves native/advisory/legal authority outside itself and releaseReadyfalse; absolute fixture root is absent from shared auditor reports.",
+        "Authorized advisory response is now REVIEW_REQUIRED, never a clean audit; native actual scope and missing human gates are retained separately."
+      ],
+      "gaps": [
+        "No explicit synthetic environment/token sentinel injection-and-log/SBOM/inventory absence test was executed in package46. Real credentials were not inspected by this mapping."
+      ]
+    },
+    {
+      "id": "B16",
+      "subject": "Installed pinned packager integration",
+      "status": "OBSERVED_SCOPED_CONTROLS_AND_OBJECT_FACTS",
+      "implementation": [
+        "packages/soterai-lite/scripts/__tests__/release-package.test.cjs",
+        "packages/soterai-lite/scripts/package.cjs:packageBuild"
+      ],
+      "controlRefs": [
+        "PKG040",
+        "PKG045",
+        "PKG046"
+      ],
+      "established": [
+        "Three actual vsce component controls inspect real final18/pre-release output, production files allowlist and preservation of reviewed README relative-link bytes.",
+        "Synthetic stages/runtimes only; this is installed packager use, not Code installed-VSIX lifecycle."
+      ],
+      "gaps": []
+    },
+    {
+      "id": "B17",
+      "subject": "Actual final production package and affected object checks",
+      "status": "OBSERVED_SCOPED_CONTROLS_AND_OBJECT_FACTS",
+      "implementation": [
+        "packages/soterai-lite/scripts/package.cjs",
+        "packages/soterai-lite/scripts/audit-release.cjs"
+      ],
+      "controlRefs": [],
+      "established": [
+        "Current unique attempt03 VSIX6231159d...c688c/1735938 bytes has actual package04 natural0/bothEOF, strict content03 receipt,18 entries/four runtimes/88 settings and immutable graph1098.",
+        "Current affected chain03 wrappers closed successfully; accepted-root aggregation and withdrawal are recorded separately below, not inferred from old objects."
+      ],
+      "gaps": []
+    },
+    {
+      "id": "B18",
+      "subject": "Claims, privacy, unsupported boundaries and content drift",
+      "status": "PARTIAL_NAMED_UNVERIFIED_SUBCASES",
+      "implementation": [
+        "docs/soterai-lite/README-CLAIMS.md",
+        "packages/soterai-lite/README.md",
+        "packages/soterai-lite/PRIVACY.md",
+        "docs/soterai-lite/PUBLISHING-RUNBOOK.md",
+        "packages/soterai-lite/scripts/audit-release.cjs:verifyFinal"
+      ],
+      "controlRefs": [
+        "PKG038",
+        "PKG040",
+        "PKG045",
+        "PKG046"
+      ],
+      "established": [
+        "README source drift refuses; production README bytes survive actual vsce packaging unchanged.",
+        "README retains pre-commit unsupported/PS7 absent/unmanaged9leaks/same-user/other-extension/platform/human limits; privacy documents automatic scans, filenames/retention, separate provider traffic/telemetry and recovery.",
+        "Fresh manifest-reference559 checks and source claims review are distinct from full4783 and package46; repeated references do not add test counts."
+      ],
+      "gaps": [
+        "README-CLAIMS still labels some current packaging/route checks pending; do not read it as comprehensive current per-tool acceptance.",
+        "Positive/negative universal-claims mutation corpus and all final-tool/class/catalog checks remain V01/V02; authenticated human trials and independent exact-object review remain V05/L7."
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "id": "PKG001",
+      "tapOrdinal": 1,
+      "title": "exact synthetic artifact yields inventory and actual bundled-component SBOM; readiness stays incomplete",
+      "result": "PASS",
+      "run": "package-components-06",
+      "kind": "LEGACY_SHARED_AUDITOR_CONTROL"
+    },
+    {
+      "id": "PKG002",
+      "tapOrdinal": 2,
+      "title": "artifact SHA mismatch refuses before archive contents are accepted",
+      "result": "PASS",
+      "run": "package-components-06",
+      "kind": "LEGACY_SHARED_AUDITOR_CONTROL"
+    },
+    {
+      "id": "PKG003",
+      "tapOrdinal": 3,
+      "title": "missing runtime cannot yield inventory success",
+      "result": "PASS",
+      "run": "package-components-06",
+      "kind": "LEGACY_SHARED_AUDITOR_CONTROL"
+    },
+    {
+      "id": "PKG004",
+      "tapOrdinal": 4,
+      "title": "runtime bytes must agree with build provenance",
+      "result": "PASS",
+      "run": "package-components-06",
+      "kind": "LEGACY_SHARED_AUDITOR_CONTROL"
+    },
+    {
+      "id": "PKG005",
+      "tapOrdinal": 5,
+      "title": "source maps and evidence are not accepted as release entries",
+      "result": "PASS",
+      "run": "package-components-06",
+      "kind": "LEGACY_SHARED_AUDITOR_CONTROL"
+    },
+    {
+      "id": "PKG006",
+      "tapOrdinal": 6,
+      "title": "case alias entries are refused",
+      "result": "PASS",
+      "run": "package-components-06",
+      "kind": "LEGACY_SHARED_AUDITOR_CONTROL"
+    },
+    {
+      "id": "PKG007",
+      "tapOrdinal": 7,
+      "title": "platform must be explicitly win32-x64",
+      "result": "PASS",
+      "run": "package-components-06",
+      "kind": "LEGACY_SHARED_AUDITOR_CONTROL"
+    },
+    {
+      "id": "PKG008",
+      "tapOrdinal": 8,
+      "title": "manifest identity must match build provenance",
+      "result": "PASS",
+      "run": "package-components-06",
+      "kind": "LEGACY_SHARED_AUDITOR_CONTROL"
+    },
+    {
+      "id": "PKG009",
+      "tapOrdinal": 9,
+      "title": "missing build input cannot become a complete SBOM",
+      "result": "PASS",
+      "run": "package-components-06",
+      "kind": "LEGACY_SHARED_AUDITOR_CONTROL"
+    },
+    {
+      "id": "PKG010",
+      "tapOrdinal": 10,
+      "title": "changed build input is refused",
+      "result": "PASS",
+      "run": "package-components-06",
+      "kind": "LEGACY_SHARED_AUDITOR_CONTROL"
+    },
+    {
+      "id": "PKG011",
+      "tapOrdinal": 11,
+      "title": "repository selector input paths outside code inventory are refused before reading",
+      "result": "PASS",
+      "run": "package-components-06",
+      "kind": "LEGACY_SHARED_AUDITOR_CONTROL"
+    },
+    {
+      "id": "PKG012",
+      "tapOrdinal": 12,
+      "title": "unknown license is visible INCOMPLETE without inventing approval",
+      "result": "PASS",
+      "run": "package-components-06",
+      "kind": "LEGACY_SHARED_AUDITOR_CONTROL"
+    },
+    {
+      "id": "PKG013",
+      "tapOrdinal": 13,
+      "title": "missing notice is visible INCOMPLETE",
+      "result": "PASS",
+      "run": "package-components-06",
+      "kind": "LEGACY_SHARED_AUDITOR_CONTROL"
+    },
+    {
+      "id": "PKG014",
+      "tapOrdinal": 14,
+      "title": "duplicate runtime provenance is rejected",
+      "result": "PASS",
+      "run": "package-components-06",
+      "kind": "LEGACY_SHARED_AUDITOR_CONTROL"
+    },
+    {
+      "id": "PKG015",
+      "tapOrdinal": 15,
+      "title": "truncated ZIP is a failure, never a partially successful inventory",
+      "result": "PASS",
+      "run": "package-components-06",
+      "kind": "LEGACY_SHARED_AUDITOR_CONTROL"
+    },
+    {
+      "id": "PKG016",
+      "tapOrdinal": 16,
+      "title": "archive entry with excessive expanded size is refused",
+      "result": "PASS",
+      "run": "package-components-06",
+      "kind": "LEGACY_SHARED_AUDITOR_CONTROL"
+    },
+    {
+      "id": "PKG017",
+      "tapOrdinal": 17,
+      "title": "deterministic SBOM and report do not include current timestamps or guessed results",
+      "result": "PASS",
+      "run": "package-components-06",
+      "kind": "LEGACY_SHARED_AUDITOR_CONTROL"
+    },
+    {
+      "id": "PKG018",
+      "tapOrdinal": 18,
+      "title": "actual vsce canonical lowercase readme and changelog names are accepted without allowing aliases",
+      "result": "PASS",
+      "run": "package-components-06",
+      "kind": "LEGACY_SHARED_AUDITOR_CONTROL"
+    },
+    {
+      "id": "PKG019",
+      "tapOrdinal": 19,
+      "title": "actual shared code input root is admitted: packages/core/src/pathContainment.ts",
+      "result": "PASS",
+      "run": "package-components-06",
+      "kind": "LEGACY_SHARED_AUDITOR_CONTROL"
+    },
+    {
+      "id": "PKG020",
+      "tapOrdinal": 20,
+      "title": "actual shared code input root is admitted: packages/detectors/dist/secrets.js",
+      "result": "PASS",
+      "run": "package-components-06",
+      "kind": "LEGACY_SHARED_AUDITOR_CONTROL"
+    },
+    {
+      "id": "PKG021",
+      "tapOrdinal": 21,
+      "title": "B01 deterministic embedded metadata and complete notices for the same admitted inventory",
+      "result": "PASS",
+      "run": "package-components-06",
+      "kind": "F31B_FINAL_PACKAGE_OR_METADATA_CONTROL"
+    },
+    {
+      "id": "PKG022",
+      "tapOrdinal": 22,
+      "title": "B02 source and runtime changes alter their embedded inventory digest",
+      "result": "PASS",
+      "run": "package-components-06",
+      "kind": "F31B_FINAL_PACKAGE_OR_METADATA_CONTROL"
+    },
+    {
+      "id": "PKG023",
+      "tapOrdinal": 23,
+      "title": "B03 missing or duplicate runtimes never produce a complete embedded SBOM",
+      "result": "PASS",
+      "run": "package-components-06",
+      "kind": "F31B_FINAL_PACKAGE_OR_METADATA_CONTROL"
+    },
+    {
+      "id": "PKG024",
+      "tapOrdinal": 24,
+      "title": "B04 unknown or missing library notice is refused rather than called a clean license audit",
+      "result": "PASS",
+      "run": "package-components-06",
+      "kind": "F31B_FINAL_PACKAGE_OR_METADATA_CONTROL"
+    },
+    {
+      "id": "PKG025",
+      "tapOrdinal": 25,
+      "title": "B05 mismatched notice component identity is refused",
+      "result": "PASS",
+      "run": "package-components-06",
+      "kind": "F31B_FINAL_PACKAGE_OR_METADATA_CONTROL"
+    },
+    {
+      "id": "PKG026",
+      "tapOrdinal": 26,
+      "title": "B06 absolute paths and oversized notice text cannot enter embedded release metadata",
+      "result": "PASS",
+      "run": "package-components-06",
+      "kind": "F31B_FINAL_PACKAGE_OR_METADATA_CONTROL"
+    },
+    {
+      "id": "PKG027",
+      "tapOrdinal": 27,
+      "title": "B13 invalid provenance hashes and duplicate source inventory refuse",
+      "result": "PASS",
+      "run": "package-components-06",
+      "kind": "F31B_FINAL_PACKAGE_OR_METADATA_CONTROL"
+    },
+    {
+      "id": "PKG028",
+      "tapOrdinal": 28,
+      "title": "B15 metadata has no invented native, advisory, legal or release-ready result",
+      "result": "PASS",
+      "run": "package-components-06",
+      "kind": "F31B_FINAL_PACKAGE_OR_METADATA_CONTROL"
+    },
+    {
+      "id": "PKG029",
+      "tapOrdinal": 29,
+      "title": "B05 changed notice text refuses even when the component and declared license stay unchanged",
+      "result": "PASS",
+      "run": "package-components-06",
+      "kind": "F31B_FINAL_PACKAGE_OR_METADATA_CONTROL"
+    },
+    {
+      "id": "PKG030",
+      "tapOrdinal": 30,
+      "title": "B07 valid final18 archive recomputes embedded metadata/notices and keeps readiness false",
+      "result": "PASS",
+      "run": "package-components-06",
+      "kind": "F31B_FINAL_PACKAGE_OR_METADATA_CONTROL"
+    },
+    {
+      "id": "PKG031",
+      "tapOrdinal": 31,
+      "title": "B08 missing privacy and unexpected map entries both refuse",
+      "result": "PASS",
+      "run": "package-components-06",
+      "kind": "F31B_FINAL_PACKAGE_OR_METADATA_CONTROL"
+    },
+    {
+      "id": "PKG032",
+      "tapOrdinal": 32,
+      "title": "B09 well-formed but changed SBOM refuses independently of archive SHA",
+      "result": "PASS",
+      "run": "package-components-06",
+      "kind": "F31B_FINAL_PACKAGE_OR_METADATA_CONTROL"
+    },
+    {
+      "id": "PKG033",
+      "tapOrdinal": 33,
+      "title": "B10 preview without actual pre-release XML property refuses",
+      "result": "PASS",
+      "run": "package-components-06",
+      "kind": "F31B_FINAL_PACKAGE_OR_METADATA_CONTROL"
+    },
+    {
+      "id": "PKG034",
+      "tapOrdinal": 34,
+      "title": "B10 duplicate XML values and comment-only pre-release properties cannot pass",
+      "result": "PASS",
+      "run": "package-components-06",
+      "kind": "F31B_FINAL_PACKAGE_OR_METADATA_CONTROL"
+    },
+    {
+      "id": "PKG035",
+      "tapOrdinal": 35,
+      "title": "B11 unsupported virtual-workspace declaration must survive packaging",
+      "result": "PASS",
+      "run": "package-components-06",
+      "kind": "F31B_FINAL_PACKAGE_OR_METADATA_CONTROL"
+    },
+    {
+      "id": "PKG036",
+      "tapOrdinal": 36,
+      "title": "B12 pre-commit exclusion cannot be removed from final package metadata",
+      "result": "PASS",
+      "run": "package-components-06",
+      "kind": "F31B_FINAL_PACKAGE_OR_METADATA_CONTROL"
+    },
+    {
+      "id": "PKG037",
+      "tapOrdinal": 37,
+      "title": "B14 complete selected BUSL terms are required byte-for-byte",
+      "result": "PASS",
+      "run": "package-components-06",
+      "kind": "F31B_FINAL_PACKAGE_OR_METADATA_CONTROL"
+    },
+    {
+      "id": "PKG038",
+      "tapOrdinal": 38,
+      "title": "B18 post-package asset source drift refuses",
+      "result": "PASS",
+      "run": "package-components-06",
+      "kind": "F31B_FINAL_PACKAGE_OR_METADATA_CONTROL"
+    },
+    {
+      "id": "PKG039",
+      "tapOrdinal": 39,
+      "title": "B09 changed bundled source cannot be hidden by internally coherent embedded metadata",
+      "result": "PASS",
+      "run": "package-components-06",
+      "kind": "F31B_FINAL_PACKAGE_OR_METADATA_CONTROL"
+    },
+    {
+      "id": "PKG040",
+      "tapOrdinal": 40,
+      "title": "B16 installed vsce actually emits final18 entries and the pre-release platform property",
+      "result": "PASS",
+      "run": "package-components-06",
+      "kind": "F31B_FINAL_PACKAGE_OR_METADATA_CONTROL"
+    },
+    {
+      "id": "PKG041",
+      "tapOrdinal": 41,
+      "title": "B13 existing final output is never overwritten",
+      "result": "PASS",
+      "run": "package-components-06",
+      "kind": "F31B_FINAL_PACKAGE_OR_METADATA_CONTROL"
+    },
+    {
+      "id": "PKG042",
+      "tapOrdinal": 42,
+      "title": "B10 malformed final XML refuses unclosed tail",
+      "result": "PASS",
+      "run": "package-components-06",
+      "kind": "F31B_FINAL_PACKAGE_OR_METADATA_CONTROL"
+    },
+    {
+      "id": "PKG043",
+      "tapOrdinal": 43,
+      "title": "B10 malformed final XML refuses second document root",
+      "result": "PASS",
+      "run": "package-components-06",
+      "kind": "F31B_FINAL_PACKAGE_OR_METADATA_CONTROL"
+    },
+    {
+      "id": "PKG044",
+      "tapOrdinal": 44,
+      "title": "B10 malformed final XML refuses undeclared entity",
+      "result": "PASS",
+      "run": "package-components-06",
+      "kind": "F31B_FINAL_PACKAGE_OR_METADATA_CONTROL"
+    },
+    {
+      "id": "PKG045",
+      "tapOrdinal": 45,
+      "title": "B16 actual production files allowlist ships all18 final entries",
+      "result": "PASS",
+      "run": "package-components-06",
+      "kind": "F31B_FINAL_PACKAGE_OR_METADATA_CONTROL"
+    },
+    {
+      "id": "PKG046",
+      "tapOrdinal": 46,
+      "title": "B16 preserves reviewed README relative-link bytes with GitHub repository metadata",
+      "result": "PASS",
+      "run": "package-components-06",
+      "kind": "F31B_FINAL_PACKAGE_OR_METADATA_CONTROL"
+    }
+  ],
+  "countBoundary": {
+    "package": {
+      "tests": 46,
+      "pass": 46,
+      "fail": 0,
+      "skipped": 0
+    },
+    "full": {
+      "tests": 4783,
+      "pass": 4779,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 4,
+      "todo": 0
+    },
+    "manifestTargeted": {
+      "tests": 559,
+      "pass": 559,
+      "fail": 0
+    },
+    "rule": "Control IDs are references into one actual package46 run, not new executions. A control may support multiple cases but is counted once. Full/manifest/package counts are separate and never summed as unique tests."
+  },
+  "releaseWithdrawalCommands": {
+    "titles": [
+      "F31b excluded Lite release cannot install or resume pre-commit even with the machine flag and caller approval",
+      "F31b excluded Lite release retains explicit owned-hook recovery while disabled",
+      "F31b unreadable release capability refuses new pre-commit grants without leaking metadata errors"
+    ],
+    "evidence": {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/unit-shard-05-02-stdout.bin",
+      "bytes": 181936,
+      "sha256": "0137cfa175f3e8df8df3509cf537e5c917b4dd9ffe6390207d6a57cbdb6bbd14"
+    },
+    "fullSuiteIncluded": true,
+    "extraUniqueTestCount": 0
+  },
+  "bundledComponents": [
+    {
+      "name": "@babel/parser",
+      "version": "7.29.7",
+      "license": "MIT",
+      "status": "METADATA_AND_NOTICE_PRESENT_NOT_LEGAL_APPROVAL"
+    },
+    {
+      "name": "jsonc-parser",
+      "version": "3.3.1",
+      "license": "MIT",
+      "status": "METADATA_AND_NOTICE_PRESENT_NOT_LEGAL_APPROVAL"
+    },
+    {
+      "name": "yaml",
+      "version": "2.9.0",
+      "license": "ISC",
+      "status": "METADATA_AND_NOTICE_PRESENT_NOT_LEGAL_APPROVAL"
+    }
+  ],
+  "native": {
+    "currentChain": {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/affected-chain-result-03.json",
+      "bytes": 2485,
+      "sha256": "78704428822acfb3dc24a1c4495930fd62a92d863b7e5a23b4ff3eb34924e8a6"
+    },
+    "rootAcceptance": {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/affected-acceptance-01.json",
+      "bytes": 27923,
+      "sha256": "b366fafa3c409bdc55b53cb83d6c5ca9b87a0fe1972cd9c392ba807a6b8f804a"
+    },
+    "markedOwnerAbsence": {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/post-owner-absence-01.json",
+      "bytes": 1106,
+      "sha256": "09558ac781f814ca742972dcaea6ff2c3d692cffc77ca569e2e2a09aae0669df"
+    },
+    "original34Precommit": "USER_SKIPPED_INCOMPLETE_NO_RETRY",
+    "installedVsixLifecycle": "F32_NOT_RUN",
+    "counts": {
+      "affectedChecks": 175,
+      "affectedPhases": 8,
+      "functional": 10,
+      "securityBaseline": 17,
+      "blockedScoped": 8,
+      "confirmedLeaks": 9
+    }
+  },
+  "advisory": {
+    "status": "REVIEW_REQUIRED_ADVISORY_IDS_FOUND",
+    "gate": "REVIEW_REQUIRED_ADVISORY_IDS_FOUND",
+    "requests": 8,
+    "queries": 284,
+    "completedBatches": 8,
+    "distinctAdvisoryIds": 42,
+    "otherLockfileVersionRecordsUnaudited": 745,
+    "detailRequests": 0,
+    "paginationRequests": 0,
+    "retryRequests": 0,
+    "exposureAssessment": "UNRESOLVED_IDS_ARE_NOT_42_CONFIRMED_EXPLOITABLE_VSIX_FINDINGS",
+    "cleanAuditClaim": false
+  },
+  "historicalOwnerGaps": [
+    "Original outer exec84707 close/EOF UNCONFIRMED; Node21856 absent twice does not establish historical exit/EOF.",
+    "Original monolithic full01 close/EOF/TAP UNVERIFIED; corrected accepted shards are separate evidence.",
+    "Earlier F20/interrupted F28 and unobserved nested/vendor descendant closure remain separately UNCONFIRMED."
+  ],
+  "remaining": [
+    "Review/resolve current advisory and required unaudited dependency scope before F31b DONE.",
+    "Named unexecuted subcases above remain unverified; no perfect or complete permutation coverage claim.",
+    "Scoped source/evidence commit and raw byte proof pending; all unrelated changes preserved.",
+    "F32 installed-only lifecycle, V01/V02 final corpus, V03/V04 docs/reviewer packet, original V05/L6 HUMAN-ACTIONS and STOP.",
+    "Required human/different-vendor evidence precedes L7/final rating; no publish/push/tag authority."
+  ],
+  "checksPerformedByMapper": "Read-only current source/hash/owned-close/TAP/receipt consistency checks. No tests, product changes, Git writes, network or native launches.",
+  "evidence": [
+    {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/package-components-06-stdout.bin",
+      "bytes": 12929,
+      "sha256": "e29eb02757e09b2c946203d05954cc6670ea5630276f11f29fa259c317bfa925"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/package-components-06-stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/package-components-06-owned-close.json",
+      "bytes": 617,
+      "sha256": "62a7e625d97952c2fafd12dca9172dc003d6042e30ee71d1849ec8ab22fb4054"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/package-04-stdout.bin",
+      "bytes": 4274,
+      "sha256": "d9a7c0a4be151d5bc500a7186ecedf1fad6231a9a5af2eb876060e011b065c57"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/package-04-stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/package-04-owned-close.json",
+      "bytes": 614,
+      "sha256": "a9f6a3ae14d6208ce87fee1f75546bed74b2462ec4c2a89aa2a4d00bfddbac3e"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/content-03.txt",
+      "bytes": 260,
+      "sha256": "969f5d7d01b40c4b9e0376f7decd8420be4abf8f92951a0899dc36b3d5e47b76"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/content-03.txt.result.json",
+      "bytes": 436,
+      "sha256": "fb7f1ad96162c2faed9faccc20ead4ea2f47984a2a5b3165bd0c157f5bda0a82"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/manifest-components-03-stdout.bin",
+      "bytes": 135069,
+      "sha256": "48fb021d503865d9069dc8b3bbe7129741579d884654d52916e90660a0855094"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/manifest-components-03-stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/manifest-components-03-owned-close.json",
+      "bytes": 619,
+      "sha256": "df34d8502923362f1f783b4b88a4042fd85d5fef980e8cc8ae2f41c108eda9ae"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/full-inputs-04.json",
+      "bytes": 223544,
+      "sha256": "221bd5c7b0ad1753365b6ae3526c77db2b02f0192a3be41bfe0bfed9240c5e99"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/full-suite-acceptance-04.json",
+      "bytes": 40919,
+      "sha256": "24726fdaab8099259ea2005d2d88bafce50f8c7bc581f9120cb9ff6c998b56a3"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/backend-byte-reuse-01.json",
+      "bytes": 99767,
+      "sha256": "b3121ea5c36e722c42bdd3c3b439e4d0c2f9ab14e8a110555b6044212505929c"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/content-inspection-02.json",
+      "bytes": 7165,
+      "sha256": "bf93f31670e979414c464be5caea8ad48bc58cc200c4b477af60b52d69cd4b0d"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/native-binding-01.json",
+      "bytes": 19953,
+      "sha256": "c653a5714a58a6c633dc0bee58984e8e08da2b59737bd58fa5c39a3a8668bfbe"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/affected-chain-result-03.json",
+      "bytes": 2485,
+      "sha256": "78704428822acfb3dc24a1c4495930fd62a92d863b7e5a23b4ff3eb34924e8a6"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/interrupted-full-owner-observation-01.json",
+      "bytes": 2470,
+      "sha256": "f4e8ef5c1ed6ad71c447fc8a2bcb91dc6c847f0415fc2e586bd04c2403c4b46c"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/feature-source-scope01.json",
+      "bytes": 9034,
+      "sha256": "7fcf4bd4332f0bb489194bd50c7ac0c6b417b112b136d12f4bbc96eee7ce142f"
+    },
+    {
+      "path": "packages/soterai-lite/scripts/__tests__/audit-release.test.cjs",
+      "bytes": 9462,
+      "sha256": "8d2cef02fd7553d6aae84b44ec8b042903ab856b708000787d04b72e0c94dad0"
+    },
+    {
+      "path": "packages/soterai-lite/scripts/__tests__/release-metadata.test.cjs",
+      "bytes": 3902,
+      "sha256": "7329c42b7b813bb3fa99059afd2e69503c52abd697e752d96285ff8fb0510e17"
+    },
+    {
+      "path": "packages/soterai-lite/scripts/__tests__/release-package.test.cjs",
+      "bytes": 12571,
+      "sha256": "1d980b62554aa9dca58aac1bd141549dd2420f661653231db2c4c91e0d39230d"
+    },
+    {
+      "path": "packages/soterai-lite/scripts/audit-release.cjs",
+      "bytes": 22126,
+      "sha256": "f0dc2161199167deb079697b1d8f965d248ac063461d23210ece9a20d2f1c97e"
+    },
+    {
+      "path": "packages/soterai-lite/scripts/package.cjs",
+      "bytes": 5847,
+      "sha256": "373cde6a86a48c0e192f0a425b4b76c15d74d94ff47093e69d65ac8aaca9d713"
+    },
+    {
+      "path": "packages/soterai-lite/scripts/release-metadata.cjs",
+      "bytes": 6036,
+      "sha256": "649503dd30f6704dcfb4ebde983a483f785cf0e768a82b3d3394da7226719be7"
+    },
+    {
+      "path": "docs/soterai-lite/README-CLAIMS.md",
+      "bytes": 3435,
+      "sha256": "73e408a25f45deaef680f411565364ce3d239f0b906b3f7eae0d08c74da5a894"
+    },
+    {
+      "path": "packages/soterai-lite/README.md",
+      "bytes": 6095,
+      "sha256": "eb7cb10e90f0f07709dbf17fbc70848c04271b4e3e67a691a3c83ba9ef221a19"
+    },
+    {
+      "path": "packages/soterai-lite/PRIVACY.md",
+      "bytes": 4991,
+      "sha256": "a91e28e25cb3fed9e8c525a4048dc6f0c0612a36105034d9723299dfa84284ce"
+    },
+    {
+      "path": "docs/soterai-lite/PUBLISHING-RUNBOOK.md",
+      "bytes": 8248,
+      "sha256": "114d1b23c4d02f5322ad5449d3845770e8098b40b0e4e826913f88eee75f49e3"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261102-release-gate-readiness/F31B-ACCEPTANCE-SPEC-01.md",
+      "bytes": 12655,
+      "sha256": "0fb5cb62b4a82219a4e0048ba8792fc41c9647ea1a1c76a850f06cdcec080bdf"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/offline-inventory-02/release-inventory.json",
+      "bytes": 118413,
+      "sha256": "ec588579d7116664699e233c438c03b952962109d95686475c31d1cdf40802b1"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/offline-inventory-02/sbom.cdx.json",
+      "bytes": 3989,
+      "sha256": "5a25d26e5af23dcadc6d245943e52f88d158e90922de19f91ee0127e5cf59a32"
+    },
+    {
+      "path": "packages/soterai-lite/soterai-lite-0.7.0-f31b-20261102-attempt03.vsix",
+      "bytes": 1735938,
+      "sha256": "6231159d484a70b284945a61cd8d341b13f809336427c5a57debd807759c688c"
+    },
+    {
+      "path": "packages/soterai-lite/builds/2026-11-02T16-43-45-355Z-3d422280/build-provenance.json",
+      "bytes": 120825,
+      "sha256": "2df88d128dd376f237bc17a995b7e0fc7ab48ad406768d8e0aaab208c64ceb5b"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/unit-shard-05-02-stdout.bin",
+      "bytes": 181936,
+      "sha256": "0137cfa175f3e8df8df3509cf537e5c917b4dd9ffe6390207d6a57cbdb6bbd14"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/unit-shard-05-02-owned-close.json",
+      "bytes": 619,
+      "sha256": "902a85edb514e4c3e8af75f6014a57d6d8a026ccf84e684ed11e191c685b1b5f"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/affected-functional-security-f31b-03-stdout.bin",
+      "bytes": 1560,
+      "sha256": "8fcd382ce47aca5c923d51e6a9b819dc98c53b01de0aa8e436d937e6c391ef59"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/affected-functional-security-f31b-03-stderr.bin",
+      "bytes": 616,
+      "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/affected-functional-security-f31b-03-owned-close.json",
+      "bytes": 619,
+      "sha256": "40d1c1e2f7431c77ea806d43dcb608fcadf4bbdd09f45b620dbb2bbac6a87e5b"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/affected-mcp-f31b-03-stdout.bin",
+      "bytes": 1917,
+      "sha256": "bebe8fc72f26e80f32f49d714ba0bb12eb115558301be038d133efbdf7eb4630"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/affected-mcp-f31b-03-stderr.bin",
+      "bytes": 616,
+      "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/affected-mcp-f31b-03-owned-close.json",
+      "bytes": 618,
+      "sha256": "159319a9932494f890685212a7ee3f1bd3790dc618246074d80870069ccb09c5"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/affected-retained-f31b-03-stdout.bin",
+      "bytes": 1930,
+      "sha256": "e812dc34e3dffc3256b927c92c68ca06731fd4435ee7086a7596b9d844198f03"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/affected-retained-f31b-03-stderr.bin",
+      "bytes": 616,
+      "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/affected-retained-f31b-03-owned-close.json",
+      "bytes": 618,
+      "sha256": "fbac0f8715a0fe27f0339e0d053a72edc97ac690e7390b9ef9b43266fb32b39a"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/affected-acceptance-01.json",
+      "bytes": 27923,
+      "sha256": "b366fafa3c409bdc55b53cb83d6c5ca9b87a0fe1972cd9c392ba807a6b8f804a"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/post-owner-absence-01.json",
+      "bytes": 1106,
+      "sha256": "09558ac781f814ca742972dcaea6ff2c3d692cffc77ca569e2e2a09aae0669df"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/advisory-run-01.txt",
+      "bytes": 3770,
+      "sha256": "a2e7236e0526a1bf3ccdc32e8222ae27b4a928f852357f3803c6996481599c34"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/advisory-run-01.txt.result.json",
+      "bytes": 477,
+      "sha256": "8a88995337a0a24930fc8477749b9cd90ba8453580e9253389e75b4adf72eb97"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/advisory-runner-01-results/summary.json",
+      "bytes": 4898,
+      "sha256": "796f49c7e7a43cee0ea9ca2ef310cbaf1c7b0da40ffd83cd3efb7b872211caa0"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/advisory-preparation-01.json",
+      "bytes": 373968,
+      "sha256": "619dd0ae81cd10c8276e417b00b96f9731fd1f5ea29318e0d381cdad28236a77"
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+﻿TAP version 13
+# Subtest: B01 deterministic embedded metadata and complete notices for the same admitted inventory
+ok 1 - B01 deterministic embedded metadata and complete notices for the same admitted inventory
+  ---
+  duration_ms: 30.677
+  type: 'test'
+  ...
+# Subtest: B02 source and runtime changes alter their embedded inventory digest
+ok 2 - B02 source and runtime changes alter their embedded inventory digest
+  ---
+  duration_ms: 1.5139
+  type: 'test'
+  ...
+# Subtest: B03 missing or duplicate runtimes never produce a complete embedded SBOM
+ok 3 - B03 missing or duplicate runtimes never produce a complete embedded SBOM
+  ---
+  duration_ms: 1.2062
+  type: 'test'
+  ...
+# Subtest: B04 unknown or missing library notice is refused rather than called a clean license audit
+ok 4 - B04 unknown or missing library notice is refused rather than called a clean license audit
+  ---
+  duration_ms: 0.8265
+  type: 'test'
+  ...
+# Subtest: B05 mismatched notice component identity is refused
+ok 5 - B05 mismatched notice component identity is refused
+  ---
+  duration_ms: 0.6604
+  type: 'test'
+  ...
+# Subtest: B06 absolute paths and oversized notice text cannot enter embedded release metadata
+ok 6 - B06 absolute paths and oversized notice text cannot enter embedded release metadata
+  ---
+  duration_ms: 1.2266
+  type: 'test'
+  ...
+# Subtest: B13 invalid provenance hashes and duplicate source inventory refuse
+ok 7 - B13 invalid provenance hashes and duplicate source inventory refuse
+  ---
+  duration_ms: 0.8637
+  type: 'test'
+  ...
+# Subtest: B15 metadata has no invented native, advisory, legal or release-ready result
+ok 8 - B15 metadata has no invented native, advisory, legal or release-ready result
+  ---
+  duration_ms: 0.4427
+  type: 'test'
+  ...
+# Subtest: B05 changed notice text refuses even when the component and declared license stay unchanged
+ok 9 - B05 changed notice text refuses even when the component and declared license stay unchanged
+  ---
+  duration_ms: 0.7622
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 176.4973

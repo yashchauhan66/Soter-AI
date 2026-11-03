@@ -1,0 +1,104 @@
+{
+  "id": "GHSA-g3hv-75wg-m249",
+  "endpoint": "https://api.osv.dev/v1/vulns/GHSA-g3hv-75wg-m249",
+  "method": "GET",
+  "startedAt": "2026-11-03T02:51:39.007Z",
+  "statusCode": 200,
+  "contentType": "application/json",
+  "contentEncoding": "",
+  "requestClose": true,
+  "responseClose": true,
+  "responseEnd": true,
+  "responseComplete": true,
+  "timedOut": false,
+  "overflow": false,
+  "aborted": false,
+  "error": null,
+  "elapsedMs": 542.3912999999993,
+  "finishedAt": "2026-11-03T02:51:39.548Z",
+  "retainedBytes": 2494,
+  "observedBytes": 2494,
+  "rawResponse": {
+    "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/advisory-detail-runner-01-results/detail-22-response.bin",
+    "bytes": 2494,
+    "sha256": "1f4075a2c88ffdf0ae7f0018341554c09720289a7981df0c6d3f4a64cf338f23"
+  },
+  "interpretation": {
+    "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+    "id": "GHSA-g3hv-75wg-m249",
+    "modified": "2026-10-30T23:15:07.420159385Z",
+    "published": "2026-10-30T23:09:55Z",
+    "withdrawn": null,
+    "summary": "minimatch has potential denial of service via globparts amplification",
+    "aliases": [
+      "CVE-2026-118764"
+    ],
+    "severity": [
+      {
+        "type": "CVSS_V4",
+        "score": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N"
+      }
+    ],
+    "databaseSpecificSeverity": "MODERATE",
+    "affected": [
+      {
+        "package": {
+          "name": "minimatch",
+          "ecosystem": "npm",
+          "purl": "pkg:npm/minimatch"
+        },
+        "ranges": [
+          {
+            "type": "SEMVER",
+            "events": [
+              {
+                "introduced": "0"
+              },
+              {
+                "fixed": "11.0.1"
+              }
+            ]
+          }
+        ],
+        "listedVersions": [],
+        "severity": [],
+        "databaseSpecificSeverity": null
+      }
+    ],
+    "references": [
+      {
+        "type": "WEB",
+        "url": "https://github.com/isaacs/minimatch/security/advisories/GHSA-g3hv-75wg-m249"
+      },
+      {
+        "type": "ADVISORY",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-118764"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/isaacs/minimatch/commit/77a0f5c4b80bdc641c3c930a1d9edf5ad2db57f8"
+      },
+      {
+        "type": "PACKAGE",
+        "url": "https://github.com/isaacs/minimatch"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/isaacs/minimatch/releases/tag/v11.0.1"
+      }
+    ],
+    "associations": [
+      {
+        "name": "minimatch",
+        "version": "10.2.5",
+        "ecosystem": "npm",
+        "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+        "recordPackageMatch": true,
+        "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+      }
+    ],
+    "missingSeverity": false,
+    "noGuessedSeverityOrFixedVersion": true,
+    "releaseReady": false
+  }
+}

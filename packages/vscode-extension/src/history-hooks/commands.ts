@@ -5,8 +5,16 @@ import { preCommitHooksEnabled } from "./PreCommitFlags";
 export function registerPreCommitHooks(context: vscode.ExtensionContext): PreCommitController {
     const controller = new PreCommitController(context); let pending = false, disposed = false;
     const denied = () => Object.freeze({ status: "UNAVAILABLE" as const });
+    // A released Lite capability can withdraw new grants while leaving reviewed
+    // recovery callable. Caller arguments and the machine flag cannot undo it.
+    const releaseExcluded = (): boolean => {
+        try {
+            const excluded: unknown = context.extension?.packageJSON?.soteraiLiteRelease?.unsupportedFeatures;
+            return excluded !== undefined && (!Array.isArray(excluded) || excluded.includes("preCommit"));
+        } catch { return true; }
+    };
     const reg = (id: string, method: "install" | "resume" | "restore") => context.subscriptions.push(vscode.commands.registerCommand(id, async () => {
-        if (disposed || pending || (method !== "restore" && !preCommitHooksEnabled())) return denied();
+        if (disposed || pending || (method !== "restore" && (releaseExcluded() || !preCommitHooksEnabled()))) return denied();
         pending = true;
         try {
             const result = await controller[method]();

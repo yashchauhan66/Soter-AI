@@ -23,6 +23,32 @@ function fixed(value: any, status: string): void {
     assert.deepEqual(Reflect.ownKeys(value), ["status"]); assert.equal(value.status, status); safe(value);
 }
 function deferred<T>() { let resolve!: (value: T) => void; const promise = new Promise<T>(done => { resolve = done; }); return { promise, resolve }; }
+
+test("F31b excluded Lite release cannot install or resume pre-commit even with the machine flag and caller approval", async t => {
+    const f = await fixture(t); f.flag(true); let grants = 0;
+    Object.defineProperty(f.context, "extension", { configurable: true, value: { packageJSON: { soteraiLiteRelease: { unsupportedFeatures: ["preCommit"] } } } });
+    t.mock.method(f.PreCommitController.prototype, "install", async () => { grants++; return success("APPLIED") as any; });
+    t.mock.method(f.PreCommitController.prototype, "resume", async () => { grants++; return success("RESUMED") as any; });
+    t.mock.method(f.PreCommitController.prototype, "current", () => true);
+    for (const name of ["installPreCommitGuard", "installGitSecretHook", "resumePreCommitGuard"]) fixed(await f.call(name, { approved: true, enabled: true, unsupportedFeatures: [], root: PRIVATE }), "UNAVAILABLE");
+    assert.equal(grants, 0); f.noIO();
+});
+
+test("F31b excluded Lite release retains explicit owned-hook recovery while disabled", async t => {
+    const f = await fixture(t); f.flag(false); let restores = 0; const restored = success("RESTORED");
+    Object.defineProperty(f.context, "extension", { configurable: true, value: { packageJSON: { soteraiLiteRelease: { unsupportedFeatures: ["preCommit"] } } } });
+    t.mock.method(f.PreCommitController.prototype, "restore", async (...args: unknown[]) => { assert.deepEqual(args, []); restores++; return restored as any; });
+    t.mock.method(f.PreCommitController.prototype, "current", (value: unknown) => value === restored);
+    assert.equal(await f.call("restorePreCommitGuard", { root: PRIVATE, approved: true }), restored); assert.equal(restores, 1); f.noIO();
+});
+
+test("F31b unreadable release capability refuses new pre-commit grants without leaking metadata errors", async t => {
+    const f = await fixture(t); f.flag(true); let grants = 0;
+    Object.defineProperty(f.context, "extension", { configurable: true, get() { throw Error(PRIVATE); } });
+    t.mock.method(f.PreCommitController.prototype, "install", async () => { grants++; return success("APPLIED") as any; });
+    t.mock.method(f.PreCommitController.prototype, "current", () => true);
+    fixed(await f.call("installPreCommitGuard"), "UNAVAILABLE"); assert.equal(grants, 0); f.noIO(); safe(stub.capturedText());
+});
 async function bounded<T>(promise: PromiseLike<T>): Promise<T> {
     let timer: ReturnType<typeof setTimeout> | undefined;
     try { return await Promise.race([Promise.resolve(promise), new Promise<never>((_, reject) => {

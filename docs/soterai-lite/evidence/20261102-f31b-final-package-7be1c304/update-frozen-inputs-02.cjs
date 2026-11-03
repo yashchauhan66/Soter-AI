@@ -1,0 +1,9 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto'),assert=require('node:assert/strict');
+const repo=path.resolve(__dirname,'../../../..'),own=n=>path.join(__dirname,n),sha=b=>crypto.createHash('sha256').update(b).digest('hex'),read=p=>JSON.parse(fs.readFileSync(p,'utf8').replace(/^\uFEFF/,''));
+const fact=p=>{const file=path.join(repo,p);for(let current=file;;current=path.dirname(current)){assert(!fs.lstatSync(current).isSymbolicLink());if(current===repo)break;}const stat=fs.lstatSync(file);assert(stat.isFile()&&stat.nlink===1);const raw=fs.readFileSync(file);return{path:p,bytes:raw.length,sha256:sha(raw)};};
+const previous=read(own('full-inputs-01.json'));assert.equal(sha(fs.readFileSync(own('full-inputs-01.json'))),'0983fbda53866c08de8defd791d76744b8b77662eb36fc9eaffdb7b676aa1f1d');
+const files=previous.files.map(x=>fact(x.path)),before=new Map(previous.files.map(x=>[x.path,x])),deltaFrom01=files.filter(x=>before.get(x.path).sha256!==x.sha256);assert.deepEqual(deltaFrom01.map(x=>x.path),['packages/vscode-extension/src/__tests__/preCommitCommands.test.ts']);
+const old=read(path.join(repo,previous.priorFullProof.path)),oldMap=new Map(old.files.map(x=>[x.path,x]));
+const value={...previous,observedAt:new Date().toISOString(),files,delta:files.filter(x=>oldMap.get(x.path)?.sha256!==x.sha256),deltaFrom01,previousProof:fact(path.relative(repo,own('full-inputs-01.json')).replaceAll('\\','/')),reason:'Compiler01 TS7006 in new release-withdrawal test callback; explicit unknown annotation only. Runtime/metadata/assets unchanged. Failed compiler and old source proof retained.'};
+fs.writeFileSync(own('full-inputs-02.json'),JSON.stringify(value,null,2)+'\n',{flag:'wx'});console.log(JSON.stringify({status:value.status,fileCount:files.length,delta:value.delta.length,deltaFrom01:deltaFrom01.length,sha256:sha(fs.readFileSync(own('full-inputs-02.json')))}));

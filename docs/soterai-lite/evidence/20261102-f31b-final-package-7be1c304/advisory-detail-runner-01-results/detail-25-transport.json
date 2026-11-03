@@ -1,0 +1,170 @@
+{
+  "id": "GHSA-jqff-g426-hqxp",
+  "endpoint": "https://api.osv.dev/v1/vulns/GHSA-jqff-g426-hqxp",
+  "method": "GET",
+  "startedAt": "2026-11-03T02:51:41.359Z",
+  "statusCode": 200,
+  "contentType": "application/json",
+  "contentEncoding": "",
+  "requestClose": true,
+  "responseClose": true,
+  "responseEnd": true,
+  "responseComplete": true,
+  "timedOut": false,
+  "overflow": false,
+  "aborted": false,
+  "error": null,
+  "elapsedMs": 658.4831000000013,
+  "finishedAt": "2026-11-03T02:51:42.017Z",
+  "retainedBytes": 3624,
+  "observedBytes": 3624,
+  "rawResponse": {
+    "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/advisory-detail-runner-01-results/detail-25-response.bin",
+    "bytes": 3624,
+    "sha256": "4d5b1555ddb5d8d76ade7a15d253313f348bbc6328510918b3414184729695c6"
+  },
+  "interpretation": {
+    "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+    "id": "GHSA-jqff-g426-hqxp",
+    "modified": "2026-09-10T03:50:54.467662526Z",
+    "published": "2026-09-02T15:41:53Z",
+    "withdrawn": null,
+    "summary": "fast-uri vulnerable to host confusion via percent-encoded scheme normalization",
+    "aliases": [
+      "CVE-2026-76172"
+    ],
+    "severity": [
+      {
+        "type": "CVSS_V3",
+        "score": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N"
+      }
+    ],
+    "databaseSpecificSeverity": "HIGH",
+    "affected": [
+      {
+        "package": {
+          "name": "fast-uri",
+          "ecosystem": "npm",
+          "purl": "pkg:npm/fast-uri"
+        },
+        "ranges": [
+          {
+            "type": "SEMVER",
+            "events": [
+              {
+                "introduced": "2.3.1"
+              },
+              {
+                "fixed": "2.4.5"
+              }
+            ]
+          }
+        ],
+        "listedVersions": [],
+        "severity": [],
+        "databaseSpecificSeverity": null
+      },
+      {
+        "package": {
+          "name": "fast-uri",
+          "ecosystem": "npm",
+          "purl": "pkg:npm/fast-uri"
+        },
+        "ranges": [
+          {
+            "type": "SEMVER",
+            "events": [
+              {
+                "introduced": "3.0.0"
+              },
+              {
+                "fixed": "3.1.6"
+              }
+            ]
+          }
+        ],
+        "listedVersions": [],
+        "severity": [],
+        "databaseSpecificSeverity": null
+      },
+      {
+        "package": {
+          "name": "fast-uri",
+          "ecosystem": "npm",
+          "purl": "pkg:npm/fast-uri"
+        },
+        "ranges": [
+          {
+            "type": "SEMVER",
+            "events": [
+              {
+                "introduced": "4.0.0"
+              },
+              {
+                "fixed": "4.1.3"
+              }
+            ]
+          }
+        ],
+        "listedVersions": [],
+        "severity": [],
+        "databaseSpecificSeverity": null
+      }
+    ],
+    "references": [
+      {
+        "type": "WEB",
+        "url": "https://github.com/fastify/fast-uri/security/advisories/GHSA-jqff-g426-hqxp"
+      },
+      {
+        "type": "ADVISORY",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76172"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/fastify/fast-uri/commit/37f3417c82994279656854f83ce938acd81c3862"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/fastify/fast-uri/commit/a941e626411f576f8d90883231e57b6c9d0ff98b"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/fastify/fast-uri/commit/c6a74bfd9d8c6b0df5362b3c7ae88d8021cb1e39"
+      },
+      {
+        "type": "WEB",
+        "url": "https://cna.openjsf.org/security-advisories.html"
+      },
+      {
+        "type": "PACKAGE",
+        "url": "https://github.com/fastify/fast-uri"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/fastify/fast-uri/releases/tag/v2.4.5"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/fastify/fast-uri/releases/tag/v3.1.6"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/fastify/fast-uri/releases/tag/v4.1.3"
+      }
+    ],
+    "associations": [
+      {
+        "name": "fast-uri",
+        "version": "3.1.5",
+        "ecosystem": "npm",
+        "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+        "recordPackageMatch": true,
+        "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+      }
+    ],
+    "missingSeverity": false,
+    "noGuessedSeverityOrFixedVersion": true,
+    "releaseReady": false
+  }
+}

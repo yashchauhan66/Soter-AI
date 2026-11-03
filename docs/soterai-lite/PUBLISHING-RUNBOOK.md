@@ -1,16 +1,26 @@
 # SoterAI Lite publishing runbook — owner actions, preparation only
 
-Status on26October2026: **NOT READY TO PUBLISH**. F31a provides offline inventory and a detached SBOM. F26a and other required features, F31b final package work, lifecycle and human/independent gates remain incomplete. No command here authorizes the agent to publish, push, tag, log in, install tools or use credentials.
+Status on2November2026: **NOT READY TO PUBLISH**. F31b adds final-package production and audit to F31a's legacy inventory utility. Current package/native, installed lifecycle and human/independent gates must still be accepted for the exact release object. F26a pre-commit is owner-skipped, incomplete and unsupported; it must not be advertised as accepted. No command here authorizes the agent to publish, push, tag, log in, install tools or use credentials.
 
 ## Prepare the final object
 
 1. Finish required feature/native/lifecycle gates and original L6 human acceptance. Keep all known unmanaged leaks and unsupported platforms visible. Do not promote mocked, stale or unavailable evidence to supported behavior.
 2. Finalize `release-identity.json`: owner-controlled publisher, package name/ID, version, repository and support links. Current local identity `soterai.soterai-ide-guard` is not proof of marketplace ownership. An identity change needs storage/vault migration and renewed tests.
 3. Finish F31b: derive README from final README-CLAIMS and supported-tool/version evidence; include full applicable project/third-party notices, privacy statement, changelog and icon. Explain telemetry default, local processing, routed provider traffic, retained ciphertext/metadata, opt-in operations and removal/recovery limits. Record Linux/macOS/remote as NOT_TESTED unless separately accepted.
-4. Package a **new uniquely named win32-x64 pre-release VSIX** using the existing local pinned builder. Installed `@vscode/vsce`3.9.2 supports `target` and `preRelease`; F31b must wire the latter explicitly before building. `preview:true` alone does not establish the pre-release channel. Verify the actual VSIX manifest's target and pre-release property, entry hashes and shipped assets. Preserve every older candidate. See the official [VS Code packaging/platform and pre-release guide](https://code.visualstudio.com/api/working-with-extensions/publishing-extension).
-5. Generate an SBOM from that exact VSIX and its retained immutable build provenance. F31a inventories the dependencies actually present in bundled source inputs, not every development dependency. Detached output is **not already embedded**: F31b must include the reviewed SBOM/notices in a new final VSIX and rebind/retest its final hash. The early auditor's15-entry allowlist must be explicitly extended and tested for those new shipped documents.
+4. Package a **new uniquely named win32-x64 pre-release VSIX** using `node packages/soterai-lite/scripts/package.cjs <NEW_BASENAME.vsix>` from the repository root. The producer requests both `target:'win32-x64'` and `preRelease:true` from installed pinned vsce. `preview:true` alone does not establish the channel. The final auditor verifies the actual XML property, exact18 entries, four runtime hashes and shipped assets. Preserve every older candidate and immutable build attempt. See the official [VS Code packaging/platform and pre-release guide](https://code.visualstudio.com/api/working-with-extensions/publishing-extension).
+5. The producer derives embedded `SBOM.cdx.json` and complete `THIRD-PARTY-NOTICES.md` from the admitted runtime/source graph and immutable build-receipt digest **before** packaging. Embedded data has no eventual archive hash or self hash. After packaging, the detached `final-release-inventory.json` seals the final VSIX and every asset; `package-receipt.json` binds their source bytes. Do not edit embedded metadata and repeatedly rebuild to chase a circular archive hash. The legacy15-entry and final18-entry contracts remain separate.
 
-## Offline inventory command
+## Final offline verification
+
+The producer automatically calls `auditFinalRelease` and stores its detached inventory beside the immutable `build-provenance.json`. For an independent local recheck, prepare a new reviewed JSON request with these fields: `repoRoot`, `vsixPath`, exact lowercase `expectedSha256`, `buildReceiptPath`, and `packageReceiptPath`. Both receipts must refer to the same immutable `packages/soterai-lite/builds/<attempt>/` directory. Use absolute local paths in this private request; they are not embedded in the archive or exported inventory. From the repository root:
+
+```powershell
+node -e 'const fs=require("node:fs"); const api=require("./packages/soterai-lite/scripts/audit-release.cjs"); const request=JSON.parse(fs.readFileSync(process.argv[1],"utf8").replace(/^\uFEFF/,"")); api.auditFinalRelease(request).then(r=>console.log(JSON.stringify({status:r.report.status,artifact:r.report.artifact,entries:r.report.entries.length,runtimes:r.report.runtimes.length,releaseReady:r.report.releaseReady}))).catch(e=>{console.error(e.message);process.exitCode=1;});' '<NEW_REVIEWED_REQUEST.json>'
+```
+
+Retain the request and raw output privately with the release evidence. A passing final audit reports `PASS_FINAL_OFFLINE_PACKAGE_NOT_RELEASE_READY`,18entries/fourruntimes and `releaseReady:false`; it is not native, human, legal or advisory acceptance.
+
+## Legacy F31a inventory command
 
 From the repository root, with the existing installed dependencies:
 
@@ -18,7 +28,7 @@ From the repository root, with the existing installed dependencies:
 node packages/soterai-lite/scripts/audit-release.cjs --vsix <EXACT_VSIX_PATH> --sha256 <LOWERCASE_SHA256> --receipt <IMMUTABLE_BUILD_PROVENANCE_JSON> --out <NEW_WORKSPACE_OUTPUT_DIRECTORY>
 ```
 
-The output directory's parent must exist; overwrites and linked/outside parents refuse. `release-inventory.json` and `sbom.cdx.json` contain hashes/metadata, not source contents or absolute local paths. Missing/tampered runtime/source inputs, unsupported entries/target and archive bounds fail. Unknown license metadata/notices remain INCOMPLETE. A metadata/notice match is not legal approval or proof every notice already ships. Resolve licensing with the owner and retain the findings; do not silently replace an unknown license.
+This CLI intentionally uses the legacy15-entry contract and will reject a final18-entry VSIX. Use the explicit final API above for new release packages. Its output directory's parent must exist; overwrites and linked/outside parents refuse. `release-inventory.json` and `sbom.cdx.json` contain hashes/metadata, not source contents or absolute local paths. Missing/tampered runtime/source inputs, unsupported entries/target and archive bounds fail. Unknown license metadata/notices remain INCOMPLETE. A metadata/notice match is not legal approval. Resolve licensing with the owner and retain findings; do not silently replace an unknown license.
 
 The tool performs **no network vulnerability audit**. An authorized current advisory/lockfile audit, review of findings and final license/notice reconciliation remain F31b gates. No download or clean-audit assertion is inferred from offline inventory success. The tool always returns `releaseReady:false` and supplies no product protection score.
 

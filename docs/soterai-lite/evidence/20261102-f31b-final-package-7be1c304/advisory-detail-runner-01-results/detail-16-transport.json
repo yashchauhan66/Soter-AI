@@ -1,0 +1,108 @@
+{
+  "id": "GHSA-6pq8-jhm2-2vcw",
+  "endpoint": "https://api.osv.dev/v1/vulns/GHSA-6pq8-jhm2-2vcw",
+  "method": "GET",
+  "startedAt": "2026-11-03T02:51:35.595Z",
+  "statusCode": 200,
+  "contentType": "application/json",
+  "contentEncoding": "",
+  "requestClose": true,
+  "responseClose": true,
+  "responseEnd": true,
+  "responseComplete": true,
+  "timedOut": false,
+  "overflow": false,
+  "aborted": false,
+  "error": null,
+  "elapsedMs": 594.9449999999997,
+  "finishedAt": "2026-11-03T02:51:36.189Z",
+  "retainedBytes": 14304,
+  "observedBytes": 14304,
+  "rawResponse": {
+    "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/advisory-detail-runner-01-results/detail-16-response.bin",
+    "bytes": 14304,
+    "sha256": "8c3b8a0e2cfa09343c8f6eac19eedb03303d5326c9bc047f2a9fee246fd364fe"
+  },
+  "interpretation": {
+    "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+    "id": "GHSA-6pq8-jhm2-2vcw",
+    "modified": "2026-10-27T16:15:05.324423680Z",
+    "published": "2026-10-27T16:10:55Z",
+    "withdrawn": null,
+    "summary": "qs : qs.stringify with arrayFormat 'comma' throws an uncaught TypeError on array elements carrying a non-callable own toString (DoS)",
+    "aliases": [
+      "CVE-2026-110816"
+    ],
+    "severity": [
+      {
+        "type": "CVSS_V3",
+        "score": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
+      },
+      {
+        "type": "CVSS_V4",
+        "score": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N"
+      }
+    ],
+    "databaseSpecificSeverity": "MODERATE",
+    "affected": [
+      {
+        "package": {
+          "name": "qs",
+          "ecosystem": "npm",
+          "purl": "pkg:npm/qs"
+        },
+        "ranges": [
+          {
+            "type": "SEMVER",
+            "events": [
+              {
+                "introduced": "6.7.0"
+              },
+              {
+                "fixed": "6.16.1"
+              }
+            ]
+          }
+        ],
+        "listedVersions": [],
+        "severity": [],
+        "databaseSpecificSeverity": null
+      }
+    ],
+    "references": [
+      {
+        "type": "WEB",
+        "url": "https://github.com/ljharb/qs/security/advisories/GHSA-6pq8-jhm2-2vcw"
+      },
+      {
+        "type": "ADVISORY",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-110816"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/ljharb/qs/commit/a952e7519338ef0cfb25694a2988848f93333727"
+      },
+      {
+        "type": "PACKAGE",
+        "url": "https://github.com/ljharb/qs"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/ljharb/qs/releases/tag/v6.16.1"
+      }
+    ],
+    "associations": [
+      {
+        "name": "qs",
+        "version": "6.15.3",
+        "ecosystem": "npm",
+        "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+        "recordPackageMatch": true,
+        "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+      }
+    ],
+    "missingSeverity": false,
+    "noGuessedSeverityOrFixedVersion": true,
+    "releaseReady": false
+  }
+}

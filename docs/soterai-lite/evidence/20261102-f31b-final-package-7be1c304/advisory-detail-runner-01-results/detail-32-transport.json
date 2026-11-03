@@ -1,0 +1,139 @@
+{
+  "id": "GHSA-r7fv-28h4-cvq7",
+  "endpoint": "https://api.osv.dev/v1/vulns/GHSA-r7fv-28h4-cvq7",
+  "method": "GET",
+  "startedAt": "2026-11-03T02:51:45.476Z",
+  "statusCode": 200,
+  "contentType": "application/json",
+  "contentEncoding": "",
+  "requestClose": true,
+  "responseClose": true,
+  "responseEnd": true,
+  "responseComplete": true,
+  "timedOut": false,
+  "overflow": false,
+  "aborted": false,
+  "error": null,
+  "elapsedMs": 592.3864999999969,
+  "finishedAt": "2026-11-03T02:51:46.067Z",
+  "retainedBytes": 3234,
+  "observedBytes": 3234,
+  "rawResponse": {
+    "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/advisory-detail-runner-01-results/detail-32-response.bin",
+    "bytes": 3234,
+    "sha256": "50ba73a67866050e3244c7a6ed508875e428c40c7cf83166fec2616af101f477"
+  },
+  "interpretation": {
+    "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+    "id": "GHSA-r7fv-28h4-cvq7",
+    "modified": "2026-10-20T14:45:03.780912898Z",
+    "published": "2026-10-20T14:34:50Z",
+    "withdrawn": null,
+    "summary": "markdown-it: Quadratic complexity in smartquotes with unmatched closing quotes",
+    "aliases": [
+      "CVE-2026-111759"
+    ],
+    "severity": [
+      {
+        "type": "CVSS_V3",
+        "score": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+      }
+    ],
+    "databaseSpecificSeverity": "HIGH",
+    "affected": [
+      {
+        "package": {
+          "name": "markdown-it",
+          "ecosystem": "npm",
+          "purl": "pkg:npm/markdown-it"
+        },
+        "ranges": [
+          {
+            "type": "SEMVER",
+            "events": [
+              {
+                "introduced": "15.0.0"
+              },
+              {
+                "fixed": "15.0.2"
+              }
+            ]
+          }
+        ],
+        "listedVersions": [],
+        "severity": [],
+        "databaseSpecificSeverity": null
+      },
+      {
+        "package": {
+          "name": "markdown-it",
+          "ecosystem": "npm",
+          "purl": "pkg:npm/markdown-it"
+        },
+        "ranges": [
+          {
+            "type": "SEMVER",
+            "events": [
+              {
+                "introduced": "0"
+              },
+              {
+                "fixed": "14.3.2"
+              }
+            ]
+          }
+        ],
+        "listedVersions": [],
+        "severity": [],
+        "databaseSpecificSeverity": null
+      }
+    ],
+    "references": [
+      {
+        "type": "WEB",
+        "url": "https://github.com/markdown-it/markdown-it/security/advisories/GHSA-r7fv-28h4-cvq7"
+      },
+      {
+        "type": "ADVISORY",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-111759"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/markdown-it/markdown-it/commit/1b379c1b6d0522421bd1a51b77337c79af2c8670"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/markdown-it/markdown-it/commit/cf27366035edf9196667110c47d9d67b030a4152"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/markdown-it/markdown-it/commit/daf5a3c32303e5d9de01b12eeb725fb5990b8162"
+      },
+      {
+        "type": "PACKAGE",
+        "url": "https://github.com/markdown-it/markdown-it"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/markdown-it/markdown-it/releases/tag/14.3.2"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/markdown-it/markdown-it/releases/tag/15.0.2"
+      }
+    ],
+    "associations": [
+      {
+        "name": "markdown-it",
+        "version": "14.3.0",
+        "ecosystem": "npm",
+        "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+        "recordPackageMatch": true,
+        "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+      }
+    ],
+    "missingSeverity": false,
+    "noGuessedSeverityOrFixedVersion": true,
+    "releaseReady": false
+  }
+}

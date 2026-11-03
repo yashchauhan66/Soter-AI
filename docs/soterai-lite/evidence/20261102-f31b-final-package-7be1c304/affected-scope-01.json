@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "status": "F31B_AFFECTED_SCOPE_PREDECLARED_NOT_RUN",
+  "sourceProof": {
+    "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/full-inputs-02.json",
+    "bytes": 216721,
+    "sha256": "93a4db7dbd00908b4d81638e1f9a05453fdea08c6422813d13b720fbfab0056b"
+  },
+  "families": [
+    {
+      "id": "ps51",
+      "assertions": 19,
+      "phases": 2,
+      "helper": "affected-ps51-01.ps1",
+      "driver": "lite-ps51-host.js"
+    },
+    {
+      "id": "editor",
+      "assertions": 25,
+      "phases": 2,
+      "helper": "affected-editor-01.ps1",
+      "driver": "lite-editor-host.js"
+    },
+    {
+      "id": "mcp",
+      "assertions": 25,
+      "phases": 2,
+      "helper": "affected-mcp-01.ps1",
+      "driver": "lite-mcp-host.js"
+    },
+    {
+      "id": "retained",
+      "assertions": 106,
+      "phases": 2,
+      "helper": "affected-retained-01.ps1",
+      "driver": "lite-broker-host.js"
+    }
+  ],
+  "assertions": 175,
+  "phases": 8,
+  "functional": 10,
+  "security": 17,
+  "driverInventory": "native-driver-provenance-05.json",
+  "driverBuild": "Original24 drivers/source bytes retained exactly; one corrected metadata-only F26b driver freshly emitted. All current-host affected routes remain NOT_RUN.",
+  "currentArtifact": "Exact current F26b VSIX6c299712/content03;87 restricted machine flags/four runtimes; no historical acceptance transfer",
+  "deferred": {
+    "feature": "F26a",
+    "family": "precommit",
+    "status": "USER_DEFERRED_UNVERIFIED",
+    "operations": [
+      "native09",
+      "offline owner Git helper",
+      "restart4"
+    ],
+    "substitute": false,
+    "completionBlocked": true
+  },
+  "componentGate": "Current F28 native03 binding 6ad782a541704d8da93321093d479f5947684371802818b711802ded0587a8b3 actual30, peer/primary/restart closure and original-flag restore required. No prior PASS transfer.",
+  "configuredPush": "NOT_AUTHORIZED_NOT_RUN",
+  "execution": "Prepared only; no launches by this author; serial each original helper with actualclose/bothEOF/no signals; root aggregation and policy-preserving withdrawal remain required",
+  "hostVersion": "1.144.0",
+  "totalAssertions": 202,
+  "totalPhases": 10,
+  "originalFullScope": {
+    "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-scope-01.json",
+    "bytes": 4780,
+    "sha256": "d931e0883207e13af4034d05f93333713ca4cba34458ce987f1b4eaaa0b68bf8"
+  },
+  "remaining": "Complete final V01/V02 integrated/tool/catalog corpus retained; this intermediate package checks affected reader/editor/terminal/proxy/MCP plus original functional/security baseline. No F26a34.",
+  "f26a": "USER_SKIPPED_INCOMPLETE_NO_MORE_HOST_NATIVE_RUNS"
+}

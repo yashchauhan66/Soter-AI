@@ -1,0 +1,112 @@
+{
+  "id": "GHSA-xcx6-jx8p-x3h5",
+  "endpoint": "https://api.osv.dev/v1/vulns/GHSA-xcx6-jx8p-x3h5",
+  "method": "GET",
+  "startedAt": "2026-11-03T02:51:50.110Z",
+  "statusCode": 200,
+  "contentType": "application/json",
+  "contentEncoding": "",
+  "requestClose": true,
+  "responseClose": true,
+  "responseEnd": true,
+  "responseComplete": true,
+  "timedOut": false,
+  "overflow": false,
+  "aborted": false,
+  "error": null,
+  "elapsedMs": 569.3852000000006,
+  "finishedAt": "2026-11-03T02:51:50.678Z",
+  "retainedBytes": 2005,
+  "observedBytes": 2005,
+  "rawResponse": {
+    "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/advisory-detail-runner-01-results/detail-40-response.bin",
+    "bytes": 2005,
+    "sha256": "130dd6fce6ef5d1efea65f668753b76304b02b7b9e986c5a7133b09a0017b151"
+  },
+  "interpretation": {
+    "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+    "id": "GHSA-xcx6-jx8p-x3h5",
+    "modified": "2026-10-23T22:30:05.010413241Z",
+    "published": "2026-10-23T22:16:44Z",
+    "withdrawn": null,
+    "summary": "MSAL Node authorization code flow may disclose parameters to an attacker-controlled endpoint",
+    "aliases": [
+      "CVE-2026-109461"
+    ],
+    "severity": [
+      {
+        "type": "CVSS_V3",
+        "score": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N"
+      }
+    ],
+    "databaseSpecificSeverity": "HIGH",
+    "affected": [
+      {
+        "package": {
+          "name": "@azure/msal-node",
+          "ecosystem": "npm",
+          "purl": "pkg:npm/%40azure/msal-node"
+        },
+        "ranges": [
+          {
+            "type": "SEMVER",
+            "events": [
+              {
+                "introduced": "5.0.0-beta.0"
+              },
+              {
+                "fixed": "7.1.0"
+              }
+            ]
+          }
+        ],
+        "listedVersions": [],
+        "severity": [],
+        "databaseSpecificSeverity": null
+      }
+    ],
+    "references": [
+      {
+        "type": "WEB",
+        "url": "https://github.com/AzureAD/microsoft-authentication-library-for-js/security/advisories/GHSA-xcx6-jx8p-x3h5"
+      },
+      {
+        "type": "ADVISORY",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-109461"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/AzureAD/microsoft-authentication-library-for-js/pull/8901"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/AzureAD/microsoft-authentication-library-for-js/commit/f550958586475dbfeb1cd44be14a2d653728850e"
+      },
+      {
+        "type": "PACKAGE",
+        "url": "https://github.com/AzureAD/microsoft-authentication-library-for-js"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/AzureAD/microsoft-authentication-library-for-js/releases/tag/msal-node-v7.1.0"
+      },
+      {
+        "type": "WEB",
+        "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-109461"
+      }
+    ],
+    "associations": [
+      {
+        "name": "@azure/msal-node",
+        "version": "5.3.1",
+        "ecosystem": "npm",
+        "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+        "recordPackageMatch": true,
+        "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+      }
+    ],
+    "missingSeverity": false,
+    "noGuessedSeverityOrFixedVersion": true,
+    "releaseReady": false
+  }
+}

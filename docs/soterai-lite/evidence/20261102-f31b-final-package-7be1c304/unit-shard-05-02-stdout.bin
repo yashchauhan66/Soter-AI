@@ -1,0 +1,4571 @@
+TAP version 13
+# Subtest: F02-P01 curated credential registry has 200+ distinct valid patterns and real matching samples
+ok 1 - F02-P01 curated credential registry has 200+ distinct valid patterns and real matching samples
+  ---
+  duration_ms: 28.2072
+  type: 'test'
+  ...
+# Subtest: F02-P02 independent credential/public corpus distinguishes exact names and paths
+ok 2 - F02-P02 independent credential/public corpus distinguishes exact names and paths
+  ---
+  duration_ms: 105.8284
+  type: 'test'
+  ...
+# Subtest: F02-P03 stack presets add config sensitivity without discarding accepted patterns
+ok 3 - F02-P03 stack presets add config sensitivity without discarding accepted patterns
+  ---
+  duration_ms: 13.7671
+  type: 'test'
+  ...
+# Subtest: F02-P04 schema rejects missing future unknown non-object and weakening fields
+ok 4 - F02-P04 schema rejects missing future unknown non-object and weakening fields
+  ---
+  duration_ms: 0.8319
+  type: 'test'
+  ...
+# Subtest: F02-P05 bytes counts syntax and duplicate JSON keys are bounded/rejected
+ok 5 - F02-P05 bytes counts syntax and duplicate JSON keys are bounded/rejected
+  ---
+  duration_ms: 1.717
+  type: 'test'
+  ...
+# Subtest: F02-P06 additive import retains strongest file sensitivity and protected regions
+ok 6 - F02-P06 additive import retains strongest file sensitivity and protected regions
+  ---
+  duration_ms: 3.455
+  type: 'test'
+  ...
+# Subtest: F02-P07 NFC case and separators are conservative without allowing traversal
+ok 7 - F02-P07 NFC case and separators are conservative without allowing traversal
+  ---
+  duration_ms: 0.7141
+  type: 'test'
+  ...
+# Subtest: F02-P08 portable export round-trips exact restrictions with no source-content channel
+ok 8 - F02-P08 portable export round-trips exact restrictions with no source-content channel
+  ---
+  duration_ms: 7.0419
+  type: 'test'
+  ...
+# Subtest: F02-P09 same-key envelope preserves metadata and causes old readers to fail closed
+ok 9 - F02-P09 same-key envelope preserves metadata and causes old readers to fail closed
+  ---
+  duration_ms: 3.9011
+  type: 'test'
+  ...
+# Subtest: F02-P10 deterministic parser fuzz keeps malformed paths/version types unavailable
+ok 10 - F02-P10 deterministic parser fuzz keeps malformed paths/version types unavailable
+  ---
+  duration_ms: 5.3904
+  type: 'test'
+  ...
+# Subtest: F02-P11 compact export near the byte ceiling stays importable
+ok 11 - F02-P11 compact export near the byte ceiling stays importable
+  ---
+  duration_ms: 12.426
+  type: 'test'
+  ...
+# Subtest: F02-P12 canonical Unicode expansion cannot accept a non-exportable stored envelope
+ok 12 - F02-P12 canonical Unicode expansion cannot accept a non-exportable stored envelope
+  ---
+  duration_ms: 23.1346
+  type: 'test'
+  ...
+# Subtest: F25 aggregate JSON-body framing preserves cross-channel arrival matching starting in stdout
+ok 13 - F25 aggregate JSON-body framing preserves cross-channel arrival matching starting in stdout
+  ---
+  duration_ms: 26.7648
+  type: 'test'
+  ...
+# Subtest: F25 aggregate JSON-body framing preserves cross-channel arrival matching starting in stderr
+ok 14 - F25 aggregate JSON-body framing preserves cross-channel arrival matching starting in stderr
+  ---
+  duration_ms: 5.6266
+  type: 'test'
+  ...
+# Subtest: F25 canonical aggregate framing admits32 candidate lines and withholds33 atomically
+ok 15 - F25 canonical aggregate framing admits32 candidate lines and withholds33 atomically
+  ---
+  duration_ms: 23.3226
+  type: 'test'
+  ...
+# Subtest: F25 aggregate line framing preserves independent matcher refusal for a dense fully escaped input
+ok 16 - F25 aggregate line framing preserves independent matcher refusal for a dense fully escaped input
+  ---
+  duration_ms: 6.1526
+  type: 'test'
+  ...
+# Subtest: F25 unknown completed-log framing modes cannot silently opt into unframed release
+ok 17 - F25 unknown completed-log framing modes cannot silently opt into unframed release
+  ---
+  duration_ms: 0.4379
+  type: 'test'
+  ...
+# Subtest: F25 canonical framing keeps normalized public Windows locations useful in both modes
+ok 18 - F25 canonical framing keeps normalized public Windows locations useful in both modes
+  ---
+  duration_ms: 3.0825
+  type: 'test'
+  ...
+# Subtest: F25 saved-log registration and status create no startup saved-log read, child, key or document
+ok 19 - F25 saved-log registration and status create no startup saved-log read, child, key or document
+  ---
+  duration_ms: 407.5886
+  type: 'test'
+  ...
+# Subtest: F25 a new controller rejects forged, copied and cancelled result authority
+ok 20 - F25 a new controller rejects forged, copied and cancelled result authority
+  ---
+  duration_ms: 6.3063
+  type: 'test'
+  ...
+# Subtest: F25 native owner cancellation ignores public approval, content and paths before any key or content read
+ok 21 - F25 native owner cancellation ignores public approval, content and paths before any key or content read
+  ---
+  duration_ms: 15.8297
+  type: 'test'
+  ...
+# Subtest: F25 one native owner prompt remains pending while status is side effect free and another review is refused
+ok 22 - F25 one native owner prompt remains pending while status is side effect free and another review is refused
+  ---
+  duration_ms: 11.0427
+  type: 'test'
+  ...
+# Subtest: F25 public review arguments never reach the controller and only current metadata becomes a JSON document
+ok 23 - F25 public review arguments never reach the controller and only current metadata becomes a JSON document
+  ---
+  duration_ms: 8.7668
+  type: 'test'
+  ...
+# Subtest: F25 an analyzed-looking result rejected by current never opens a metadata document
+ok 24 - F25 an analyzed-looking result rejected by current never opens a metadata document
+  ---
+  duration_ms: 3.7702
+  type: 'test'
+  ...
+# Subtest: F25 cancellation is returned to the caller without creating a document
+ok 25 - F25 cancellation is returned to the caller without creating a document
+  ---
+  duration_ms: 4.2165
+  type: 'test'
+  ...
+# Subtest: F25 command registration permits one pending review even when a controller review is awaiting
+ok 26 - F25 command registration permits one pending review even when a controller review is awaiting
+  ---
+  duration_ms: 4.4092
+  type: 'test'
+  ...
+# Subtest: F25 a completed cancelled review releases the command guard for a fresh native flow
+ok 27 - F25 a completed cancelled review releases the command guard for a fresh native flow
+  ---
+  duration_ms: 5.1473
+  type: 'test'
+  ...
+# Subtest: F25 private controller errors produce a static unavailable result and release the pending guard
+ok 28 - F25 private controller errors produce a static unavailable result and release the pending guard
+  ---
+  duration_ms: 5.4019
+  type: 'test'
+  ...
+# Subtest: F25 metadata-document failure is sanitized and never displays a partial document
+ok 29 - F25 metadata-document failure is sanitized and never displays a partial document
+  ---
+  duration_ms: 5.4733
+  type: 'test'
+  ...
+# Subtest: F25 authority is checked again after opening metadata and before display
+ok 30 - F25 authority is checked again after opening metadata and before display
+  ---
+  duration_ms: 4.5525
+  type: 'test'
+  ...
+# Subtest: F25 disable then reenable cannot display a withdrawn metadata result waiting on a document
+ok 31 - F25 disable then reenable cannot display a withdrawn metadata result waiting on a document
+  ---
+  duration_ms: 4.7719
+  type: 'test'
+  ...
+# Subtest: F25 workspace replacement withdraws pending metadata authority
+ok 32 - F25 workspace replacement withdraws pending metadata authority
+  ---
+  duration_ms: 4.7842
+  type: 'test'
+  ...
+# Subtest: F25 disposing command subscriptions suppresses a late review result and unregisters both commands
+ok 33 - F25 disposing command subscriptions suppresses a late review result and unregisters both commands
+  ---
+  duration_ms: 4.0608
+  type: 'test'
+  ...
+# Subtest: F25 disposing subscriptions during document creation prevents late display
+ok 34 - F25 disposing subscriptions during document creation prevents late display
+  ---
+  duration_ms: 3.8153
+  type: 'test'
+  ...
+# Subtest: F25 owner disable refuses public review arguments before calling the controller
+ok 35 - F25 owner disable refuses public review arguments before calling the controller
+  ---
+  duration_ms: 5.1557
+  type: 'test'
+  ...
+# Subtest: F25 strict saved-log flag rejects nonboolean global enable values and an owner disable
+ok 36 - F25 strict saved-log flag rejects nonboolean global enable values and an owner disable
+  ---
+  duration_ms: 9.6591
+  type: 'test'
+  ...
+# Subtest: F25 workspace and folder flag values have no power to change the owner or boolean default
+ok 37 - F25 workspace and folder flag values have no power to change the owner or boolean default
+  ---
+  duration_ms: 5.2322
+  type: 'test'
+  ...
+# Subtest: F25 strict saved-log default accepts only booleans and ignores the merged workspace get fallback
+ok 38 - F25 strict saved-log default accepts only booleans and ignores the merged workspace get fallback
+  ---
+  duration_ms: 4.564
+  type: 'test'
+  ...
+# Subtest: F25 untrusted and remote workspaces cannot enable saved-log, and configuration errors fail closed
+ok 39 - F25 untrusted and remote workspaces cannot enable saved-log, and configuration errors fail closed
+  ---
+  duration_ms: 5.2075
+  type: 'test'
+  ...
+# Subtest: F25 initial controller status withholds on absent, multiple or nonlocal workspace roots without IO
+ok 40 - F25 initial controller status withholds on absent, multiple or nonlocal workspace roots without IO
+  ---
+  duration_ms: 4.1126
+  type: 'test'
+  ...
+# Subtest: F25 disposing a real initial controller permanently withdraws status and forged result authority
+ok 41 - F25 disposing a real initial controller permanently withdraws status and forged result authority
+  ---
+  duration_ms: 3.975
+  type: 'test'
+  ...
+# Subtest: F25 both manifests contribute only the two advanced saved-log commands and the restricted machine flag
+ok 42 - F25 both manifests contribute only the two advanced saved-log commands and the restricted machine flag
+  ---
+  duration_ms: 4.7284
+  type: 'test'
+  ...
+# Subtest: F25 revoked publication during metadata creation returns unavailable to the command caller
+ok 43 - F25 revoked publication during metadata creation returns unavailable to the command caller
+  ---
+  duration_ms: 3.844
+  type: 'test'
+  ...
+# Subtest: F25 revoked publication during native display cannot return stale analyzed metadata
+ok 44 - F25 revoked publication during native display cannot return stale analyzed metadata
+  ---
+  duration_ms: 4.3269
+  type: 'test'
+  ...
+# Subtest: F25 an invalid analyzed-looking controller result is withheld from the command return
+ok 45 - F25 an invalid analyzed-looking controller result is withheld from the command return
+  ---
+  duration_ms: 4.3738
+  type: 'test'
+  ...
+# Subtest: F25 a current partial saved-log result remains visibly incomplete in returned and displayed metadata
+ok 46 - F25 a current partial saved-log result remains visibly incomplete in returned and displayed metadata
+  ---
+  duration_ms: 4.0141
+  type: 'test'
+  ...
+# Subtest: F25 public stack traces preserve useful failure text, numeric locations and exact saved text
+ok 47 - F25 public stack traces preserve useful failure text, numeric locations and exact saved text
+  ---
+  duration_ms: 32.4944
+  type: 'test'
+  ...
+# Subtest: F25 public TAP failures and diagnostics remain useful without evaluating test syntax
+ok 48 - F25 public TAP failures and diagnostics remain useful without evaluating test syntax
+  ---
+  duration_ms: 6.5481
+  type: 'test'
+  ...
+# Subtest: F25 ordinary non-JSON log lines containing braces are supported text
+ok 49 - F25 ordinary non-JSON log lines containing braces are supported text
+  ---
+  duration_ms: 1.6584
+  type: 'test'
+  ...
+# Subtest: F25 empty saved log and renamed plain output are explicit useful text controls
+ok 50 - F25 empty saved log and renamed plain output are explicit useful text controls
+  ---
+  duration_ms: 3.1623
+  type: 'test'
+  ...
+# Subtest: F25 static credential assignments in old fixture logs reach canonical keyed findings
+ok 51 - F25 static credential assignments in old fixture logs reach canonical keyed findings
+  ---
+  duration_ms: 10.269
+  type: 'test'
+  ...
+# Subtest: F25 nested actual and expected JSON fields expose decoded private semantic strings to the canonical analyzer
+ok 52 - F25 nested actual and expected JSON fields expose decoded private semantic strings to the canonical analyzer
+  ---
+  duration_ms: 6.4192
+  type: 'test'
+  ...
+# Subtest: F25 JSON Unicode escapes are decoded before canonical credential recognition
+ok 53 - F25 JSON Unicode escapes are decoded before canonical credential recognition
+  ---
+  duration_ms: 2.5976
+  type: 'test'
+  ...
+# Subtest: F25 a registered value split across nested JSON leaves is caught by canonical semantic composition
+ok 54 - F25 a registered value split across nested JSON leaves is caught by canonical semantic composition
+  ---
+  duration_ms: 6.0761
+  type: 'test'
+  ...
+# Subtest: F25 raw and one-layer encoded registrations remain detectable when split between JSON leaves
+ok 55 - F25 raw and one-layer encoded registrations remain detectable when split between JSON leaves
+  ---
+  duration_ms: 26.6488
+  type: 'test'
+  ...
+# Subtest: F25 public structured failures retain strings in document order while ignoring numeric and boolean scalars
+ok 56 - F25 public structured failures retain strings in document order while ignoring numeric and boolean scalars
+  ---
+  duration_ms: 4.0043
+  type: 'test'
+  ...
+# Subtest: F25 JSON arrays of public strings are supported without coercing nonstring nodes
+ok 57 - F25 JSON arrays of public strings are supported without coercing nonstring nodes
+  ---
+  duration_ms: 2.2485
+  type: 'test'
+  ...
+# Subtest: F25 JSONL supports bounded complete records and preserves nested failure strings
+ok 58 - F25 JSONL supports bounded complete records and preserves nested failure strings
+  ---
+  duration_ms: 2.2835
+  type: 'test'
+  ...
+# Subtest: F25 semantic matching spans JSONL record boundaries within one reviewed operation
+ok 59 - F25 semantic matching spans JSONL record boundaries within one reviewed operation
+  ---
+  duration_ms: 1.606
+  type: 'test'
+  ...
+# Subtest: F25 a malformed late JSONL record withholds earlier private views atomically
+ok 60 - F25 a malformed late JSONL record withholds earlier private views atomically
+  ---
+  duration_ms: 1.8556
+  type: 'test'
+  ...
+# Subtest: F25 declared and structured-looking malformed JSON cannot silently become plain text
+ok 61 - F25 declared and structured-looking malformed JSON cannot silently become plain text
+  ---
+  duration_ms: 2.233
+  type: 'test'
+  ...
+# Subtest: F25 strict JSON rejects comments trailing commas nonfinite numbers and concatenated roots
+ok 62 - F25 strict JSON rejects comments trailing commas nonfinite numbers and concatenated roots
+  ---
+  duration_ms: 1.8715
+  type: 'test'
+  ...
+# Subtest: F25 duplicate decoded JSON keys at any depth cannot hide a competing private value
+ok 63 - F25 duplicate decoded JSON keys at any depth cannot hide a competing private value
+  ---
+  duration_ms: 1.5695
+  type: 'test'
+  ...
+# Subtest: F25 duplicate keys in a later JSONL record withhold the whole reviewed operation
+ok 64 - F25 duplicate keys in a later JSONL record withhold the whole reviewed operation
+  ---
+  duration_ms: 2.6023
+  type: 'test'
+  ...
+# Subtest: F25 the complete structured operation admits32 semantic strings and withholds a33rd
+ok 65 - F25 the complete structured operation admits32 semantic strings and withholds a33rd
+  ---
+  duration_ms: 9.2856
+  type: 'test'
+  ...
+# Subtest: F25 JSONL admits128 nonempty records but withholds a129th even when there are no strings
+ok 66 - F25 JSONL admits128 nonempty records but withholds a129th even when there are no strings
+  ---
+  duration_ms: 13.4451
+  type: 'test'
+  ...
+# Subtest: F25 JSON container nesting is bounded at32 before recursive parsing can exhaust the stack
+ok 67 - F25 JSON container nesting is bounded at32 before recursive parsing can exhaust the stack
+  ---
+  duration_ms: 6.2025
+  type: 'test'
+  ...
+# Subtest: F25 JSON node work is independently bounded at10000 even when no semantic strings exist
+ok 68 - F25 JSON node work is independently bounded at10000 even when no semantic strings exist
+  ---
+  duration_ms: 83.9254
+  type: 'test'
+  ...
+# Subtest: F25 raw input admission measures exact UTF8 bytes with an inclusive64KiB limit
+ok 69 - F25 raw input admission measures exact UTF8 bytes with an inclusive64KiB limit
+  ---
+  duration_ms: 6.2613
+  type: 'test'
+  ...
+# Subtest: F25 raw JSON and JSONL size caps apply before decoding or returning earlier values
+ok 70 - F25 raw JSON and JSONL size caps apply before decoding or returning earlier values
+  ---
+  duration_ms: 3.8877
+  type: 'test'
+  ...
+# Subtest: F25 raw and JSON-decoded unsupported controls never become private analysis views
+ok 71 - F25 raw and JSON-decoded unsupported controls never become private analysis views
+  ---
+  duration_ms: 3.5853
+  type: 'test'
+  ...
+# Subtest: F25 malformed JavaScript Unicode and escaped lone surrogates withhold instead of replacement repair
+ok 72 - F25 malformed JavaScript Unicode and escaped lone surrogates withhold instead of replacement repair
+  ---
+  duration_ms: 2.2579
+  type: 'test'
+  ...
+# Subtest: F25 source identifiers reject traversal aliases Windows streams devices absolute paths and control spellings
+ok 73 - F25 source identifiers reject traversal aliases Windows streams devices absolute paths and control spellings
+  ---
+  duration_ms: 2.053
+  type: 'test'
+  ...
+# Subtest: F25 recognized secret-bearing filenames are withheld without returning their path or value
+ok 74 - F25 recognized secret-bearing filenames are withheld without returning their path or value
+  ---
+  duration_ms: 1.5447
+  type: 'test'
+  ...
+# Subtest: F25 reference-looking fields remain inert private strings and never become source paths
+ok 75 - F25 reference-looking fields remain inert private strings and never become source paths
+  ---
+  duration_ms: 2.2565
+  type: 'test'
+  ...
+# Subtest: F25 JSON keys and referenced labels cannot inject private or unsafe source identifiers
+ok 76 - F25 JSON keys and referenced labels cannot inject private or unsafe source identifiers
+  ---
+  duration_ms: 1.6352
+  type: 'test'
+  ...
+# Subtest: F25 deterministic view IDs retain no state from a prior private operation
+ok 77 - F25 deterministic view IDs retain no state from a prior private operation
+  ---
+  duration_ms: 2.3603
+  type: 'test'
+  ...
+# Subtest: F25 unknown input types with coercion hooks fail closed without invoking caller code
+ok 78 - F25 unknown input types with coercion hooks fail closed without invoking caller code
+  ---
+  duration_ms: 1.8018
+  type: 'test'
+  ...
+# Subtest: F25 log construction and status do not discover, read content, create a key, open originals or launch a process
+ok 79 - F25 log construction and status do not discover, read content, create a key, open originals or launch a process
+  ---
+  duration_ms: 66.4818
+  type: 'test'
+  ...
+# Subtest: F25 native log cancellation precedes canonical content reads and analyzer-key creation
+ok 80 - F25 native log cancellation precedes canonical content reads and analyzer-key creation
+  ---
+  duration_ms: 17.2326
+  type: 'test'
+  ...
+# Subtest: F25 approved log source review publishes exact keyed metadata and canonical possible-exposure rows
+ok 81 - F25 approved log source review publishes exact keyed metadata and canonical possible-exposure rows
+  ---
+  duration_ms: 232.6717
+  type: 'test'
+  ...
+# Subtest: F25 saved-log findings use a disjoint key domain from current-file historical and artifact analysis
+ok 82 - F25 saved-log findings use a disjoint key domain from current-file historical and artifact analysis
+  ---
+  duration_ms: 164.6013
+  type: 'test'
+  ...
+# Subtest: F25 saved logs in generated folders and renamed retained reports exclude Git objects and dependencies
+ok 83 - F25 saved logs in generated folders and renamed retained reports exclude Git objects and dependencies
+  ---
+  duration_ms: 696.6344
+  type: 'test'
+  ...
+# Subtest: F25 nested JSONL failure strings remain private and reference-looking locations are never followed
+ok 84 - F25 nested JSONL failure strings remain private and reference-looking locations are never followed
+  ---
+  duration_ms: 159.7
+  type: 'test'
+  ...
+# Subtest: F25 malformed late JSONL records and binary saved logs withhold earlier private candidates atomically
+ok 85 - F25 malformed late JSONL records and binary saved logs withhold earlier private candidates atomically
+  ---
+  duration_ms: 176.4005
+  type: 'test'
+  ...
+# Subtest: F25 structured assignment leaves do not concatenate unrelated public locations into candidates
+ok 86 - F25 structured assignment leaves do not concatenate unrelated public locations into candidates
+  ---
+  duration_ms: 139.1231
+  type: 'test'
+  ...
+# Subtest: F25 structured nested password retains exact canonical value identity without serialization framing
+ok 87 - F25 structured nested password retains exact canonical value identity without serialization framing
+  ---
+  duration_ms: 154.0272
+  type: 'test'
+  ...
+# Subtest: F25 structured digit-leading credential key retains exact canonical value identity without serialization framing
+ok 88 - F25 structured digit-leading credential key retains exact canonical value identity without serialization framing
+  ---
+  duration_ms: 150.1529
+  type: 'test'
+  ...
+# Subtest: F25 structured escaped credential key retains exact canonical value identity without serialization framing
+ok 89 - F25 structured escaped credential key retains exact canonical value identity without serialization framing
+  ---
+  duration_ms: 162.5817
+  type: 'test'
+  ...
+# Subtest: F25 structured array credential ownership retains exact canonical value identity without serialization framing
+ok 90 - F25 structured array credential ownership retains exact canonical value identity without serialization framing
+  ---
+  duration_ms: 176.4153
+  type: 'test'
+  ...
+# Subtest: F25 structured quoted multiline value retains exact canonical value identity without serialization framing
+ok 91 - F25 structured quoted multiline value retains exact canonical value identity without serialization framing
+  ---
+  duration_ms: 260.3019
+  type: 'test'
+  ...
+# Subtest: F25 structured credential templates and Stripe public controls stay excluded
+ok 92 - F25 structured credential templates and Stripe public controls stay excluded
+  ---
+  duration_ms: 196.5753
+  type: 'test'
+  ...
+# Subtest: F25 malformed UTF8 admissions consume the raw aggregate budget before a later public read
+ok 93 - F25 malformed UTF8 admissions consume the raw aggregate budget before a later public read
+  ---
+  duration_ms: 868.9616
+  type: 'test'
+  ...
+# Subtest: F25 public log control remains useful with vault mode disabled and no vault key
+ok 94 - F25 public log control remains useful with vault mode disabled and no vault key
+  ---
+  duration_ms: 157.3094
+  type: 'test'
+  ...
+# Subtest: F25 owner log and hygiene flags fail closed despite repository enables
+ok 95 - F25 owner log and hygiene flags fail closed despite repository enables
+  ---
+  duration_ms: 5.8398
+  type: 'test'
+  ...
+# Subtest: F25 untrusted, remote, absent and multiple workspace roots refuse before key or content
+ok 96 - F25 untrusted, remote, absent and multiple workspace roots refuse before key or content
+  ---
+  duration_ms: 3.1699
+  type: 'test'
+  ...
+# Subtest: F25 disable and reenable during native approval stay revoked before content or key
+ok 97 - F25 disable and reenable during native approval stay revoked before content or key
+  ---
+  duration_ms: 7.3152
+  type: 'test'
+  ...
+# Subtest: F25 actual owner-policy drift during native approval cannot authorize log reads
+ok 98 - F25 actual owner-policy drift during native approval cannot authorize log reads
+  ---
+  duration_ms: 9.3124
+  type: 'test'
+  ...
+# Subtest: F25 withdrawal immediately after analyzer creation prevents subsequent private content reads
+ok 99 - F25 withdrawal immediately after analyzer creation prevents subsequent private content reads
+  ---
+  duration_ms: 36.652
+  type: 'test'
+  ...
+# Subtest: F25 root replacement during a private await cannot publish log metadata
+ok 100 - F25 root replacement during a private await cannot publish log metadata
+  ---
+  duration_ms: 37.9662
+  type: 'test'
+  ...
+# Subtest: F25 source changes after private analysis withhold the entire result and pending ledger findings
+ok 101 - F25 source changes after private analysis withhold the entire result and pending ledger findings
+  ---
+  duration_ms: 129.4928
+  type: 'test'
+  ...
+# Subtest: F25 trust drift after a private analysis suppresses findings and subsequent publication
+ok 102 - F25 trust drift after a private analysis suppresses findings and subsequent publication
+  ---
+  duration_ms: 97.4632
+  type: 'test'
+  ...
+# Subtest: F25 analyzer-key replacement during a private await discards pending candidates
+ok 103 - F25 analyzer-key replacement during a private await discards pending candidates
+  ---
+  duration_ms: 41.8421
+  type: 'test'
+  ...
+# Subtest: F25 native approval expiry and monotonic clock reversal cannot publish log findings
+ok 104 - F25 native approval expiry and monotonic clock reversal cannot publish log findings
+  ---
+  duration_ms: 96.9187
+  type: 'test'
+  ...
+# Subtest: F25 one pending owner modal retains busy state and permits no second review
+ok 105 - F25 one pending owner modal retains busy state and permits no second review
+  ---
+  duration_ms: 140.6466
+  type: 'test'
+  ...
+# Subtest: F25 disposal during an owner modal refuses the late native action before content or key
+ok 106 - F25 disposal during an owner modal refuses the late native action before content or key
+  ---
+  duration_ms: 5.7897
+  type: 'test'
+  ...
+# Subtest: F25 failed canonical ledger persistence returns generic unavailable with no current finding authority
+ok 107 - F25 failed canonical ledger persistence returns generic unavailable with no current finding authority
+  ---
+  duration_ms: 169.9327
+  type: 'test'
+  ...
+# Subtest: F25 file-count sentinel and byte caps remain PARTIAL rather than a clean log claim
+ok 108 - F25 file-count sentinel and byte caps remain PARTIAL rather than a clean log claim
+  ---
+  duration_ms: 19456.8065
+  type: 'test'
+  ...
+# Subtest: F25 oversized regular log is skipped explicitly without reading more than the admitted file budget
+ok 109 - F25 oversized regular log is skipped explicitly without reading more than the admitted file budget
+  ---
+  duration_ms: 82.2059
+  type: 'test'
+  ...
+# Subtest: F25 aggregate admitted content never exceeds one MiB even when every individual log fits
+ok 110 - F25 aggregate admitted content never exceeds one MiB even when every individual log fits
+  ---
+  duration_ms: 2692.3678
+  type: 'test'
+  ...
+# Subtest: F25 forged discovery outside the captured root and unsupported URI schemes grant no log read
+ok 111 - F25 forged discovery outside the captured root and unsupported URI schemes grant no log read
+  ---
+  duration_ms: 24.5028
+  type: 'test'
+  ...
+# Subtest: F25 multiple hardlinks and a retained synthetic junction cannot provide log content authority
+ok 112 - F25 multiple hardlinks and a retained synthetic junction cannot provide log content authority
+  ---
+  duration_ms: 29.4136
+  type: 'test'
+  ...
+# Subtest: F25 invalid ADS and Windows device discovery paths are rejected without analysis or disclosed path errors
+ok 113 - F25 invalid ADS and Windows device discovery paths are rejected without analysis or disclosed path errors
+  ---
+  duration_ms: 19.5769
+  type: 'test'
+  ...
+# Subtest: F25 published result authority stays withdrawn after disable, source restoration or root reenable
+ok 114 - F25 published result authority stays withdrawn after disable, source restoration or root reenable
+  ---
+  duration_ms: 380.8004
+  type: 'test'
+  ...
+# Subtest: F25 observed key change withdraws published authority synchronously before delayed key validation
+ok 115 - F25 observed key change withdraws published authority synchronously before delayed key validation
+  ---
+  duration_ms: 180.7726
+  type: 'test'
+  ...
+# Subtest: F25 ordinary policy and editor files coexist with a supported log without blocking private review
+ok 116 - F25 ordinary policy and editor files coexist with a supported log without blocking private review
+  ---
+  duration_ms: 205.3015
+  type: 'test'
+  ...
+# Subtest: F25-O01 useful completed public task and lifecycle output preserves both channels and actual nonzero exit
+ok 117 - F25-O01 useful completed public task and lifecycle output preserves both channels and actual nonzero exit
+  ---
+  duration_ms: 13.5028
+  type: 'test'
+  ...
+# Subtest: F25-O02 authority withdrawn after COMPLETE but before the await continuation suppresses both native sinks
+ok 118 - F25-O02 authority withdrawn after COMPLETE but before the await continuation suppresses both native sinks
+  ---
+  duration_ms: 4.0356
+  type: 'test'
+  ...
+# Subtest: F25-O03 task withdrawal from the stdout listener prevents the following stderr write
+ok 119 - F25-O03 task withdrawal from the stdout listener prevents the following stderr write
+  ---
+  duration_ms: 1.4395
+  type: 'test'
+  ...
+# Subtest: F25-O04 lifecycle withdrawal from the stdout event listener prevents the following stderr event
+ok 120 - F25-O04 lifecycle withdrawal from the stdout event listener prevents the following stderr event
+  ---
+  duration_ms: 3.7531
+  type: 'test'
+  ...
+# Subtest: F25-O05 throwing final release guards withhold candidate output and exception text
+ok 121 - F25-O05 throwing final release guards withhold candidate output and exception text
+  ---
+  duration_ms: 4.3257
+  type: 'test'
+  ...
+# Subtest: F25-O06 a completed structural job without a release guard fails closed at both native sinks
+ok 122 - F25-O06 a completed structural job without a release guard fails closed at both native sinks
+  ---
+  duration_ms: 2.898
+  type: 'test'
+  ...
+# Subtest: F25-O07 each native release check receives the exact completed output capability
+ok 123 - F25-O07 each native release check receives the exact completed output capability
+  ---
+  duration_ms: 1.895
+  type: 'test'
+  ...
+# Subtest: F25-O08 completed jobs release collector authority exactly once after native delivery
+ok 124 - F25-O08 completed jobs release collector authority exactly once after native delivery
+  ---
+  duration_ms: 2.4479
+  type: 'test'
+  ...
+# Subtest: F25-P01 plain provider URLs retain COMPLETE masking with and without an explicit registration
+ok 125 - F25-P01 plain provider URLs retain COMPLETE masking with and without an explicit registration
+  ---
+  duration_ms: 341.8927
+  type: 'test'
+  ...
+# Subtest: F25-P02 a malformed late JSON property containing a provider withholds original structured content
+ok 126 - F25-P02 a malformed late JSON property containing a provider withholds original structured content
+  ---
+  duration_ms: 7.4474
+  type: 'test'
+  ...
+# Subtest: F25-P03 duplicate decoded JSON names containing a provider remain atomic WITHHELD inputs
+ok 127 - F25-P03 duplicate decoded JSON names containing a provider remain atomic WITHHELD inputs
+  ---
+  duration_ms: 8.9437
+  type: 'test'
+  ...
+# Subtest: F25-P04 valid nested provider JSON retains COMPLETE sanitized output
+ok 128 - F25-P04 valid nested provider JSON retains COMPLETE sanitized output
+  ---
+  duration_ms: 7.0088
+  type: 'test'
+  ...
+# Subtest: F25-P05 ANSI and CRLF normalized valid provider JSON preserves strict admission and COMPLETE masks
+ok 129 - F25-P05 ANSI and CRLF normalized valid provider JSON preserves strict admission and COMPLETE masks
+  ---
+  duration_ms: 7.8313
+  type: 'test'
+  ...
+# Subtest: F25-P06 valid public JSON stays useful after the same ANSI UTF8 and CRLF normalization
+ok 130 - F25-P06 valid public JSON stays useful after the same ANSI UTF8 and CRLF normalization
+  ---
+  duration_ms: 7.7438
+  type: 'test'
+  ...
+# Subtest: F25-P07 ANSI normalized malformed provider JSON still withholds before any fallback release
+ok 131 - F25-P07 ANSI normalized malformed provider JSON still withholds before any fallback release
+  ---
+  duration_ms: 3.1767
+  type: 'test'
+  ...
+# Subtest: F25-J01 exact public completion stays releasable after close with useful channels and nonzero exit
+ok 132 - F25-J01 exact public completion stays releasable after close with useful channels and nonzero exit
+  ---
+  duration_ms: 277.0273
+  type: 'test'
+  ...
+# Subtest: F25-J02 output clones unknown objects and another job completion cannot borrow final authority
+ok 133 - F25-J02 output clones unknown objects and another job completion cannot borrow final authority
+  ---
+  duration_ms: 13.1357
+  type: 'test'
+  ...
+# Subtest: F25-J03 an observed live-guard withdrawal after completion stays revoked after reenable
+ok 134 - F25-J03 an observed live-guard withdrawal after completion stays revoked after reenable
+  ---
+  duration_ms: 8.7888
+  type: 'test'
+  ...
+# Subtest: F25-J04 a throwing completion guard is generic and permanently revokes held output
+ok 135 - F25-J04 a throwing completion guard is generic and permanently revokes held output
+  ---
+  duration_ms: 3.9707
+  type: 'test'
+  ...
+# Subtest: F25-J05 post-completion disposal revokes exact output without signalling the closed child
+ok 136 - F25-J05 post-completion disposal revokes exact output without signalling the closed child
+  ---
+  duration_ms: 3.5364
+  type: 'test'
+  ...
+# Subtest: F25-J06 a legacy completion without an explicit live guard grants no final output authority
+ok 137 - F25-J06 a legacy completion without an explicit live guard grants no final output authority
+  ---
+  duration_ms: 4.0353
+  type: 'test'
+  ...
+# Subtest: F25-J07 complete registry output filtering does not inject an unselected registration
+ok 138 - F25-J07 complete registry output filtering does not inject an unselected registration
+  ---
+  duration_ms: 4.8575
+  type: 'test'
+  ...
+# Subtest: F25-J08 structured escaped leaves compose an unselected registration before output release
+ok 139 - F25-J08 structured escaped leaves compose an unselected registration before output release
+  ---
+  duration_ms: 12.9198
+  type: 'test'
+  ...
+# Subtest: F25-J09 interleaved escaped registration fragments retain arrival framing through actual job integration
+ok 140 - F25-J09 interleaved escaped registration fragments retain arrival framing through actual job integration
+  ---
+  duration_ms: 8.3795
+  type: 'test'
+  ...
+# Subtest: F25-J10 an additional output registry cannot remove selected-value output protection
+ok 141 - F25-J10 an additional output registry cannot remove selected-value output protection
+  ---
+  duration_ms: 5.0575
+  type: 'test'
+  ...
+# Subtest: F25-J11 cancellation after completion revokes held output without changing the final snapshot or signalling
+ok 142 - F25-J11 cancellation after completion revokes held output without changing the final snapshot or signalling
+  ---
+  duration_ms: 3.8984
+  type: 'test'
+  ...
+# Subtest: F25-R01 real canonical runtime preserves public output and nonzero completion without changing source
+ok 143 - F25-R01 real canonical runtime preserves public output and nonzero completion without changing source
+  ---
+  duration_ms: 1302.7721
+  type: 'test'
+  ...
+# Subtest: F25-R02 the complete current-window registry masks unselected output while IPC contains selected values only
+ok 144 - F25-R02 the complete current-window registry masks unselected output while IPC contains selected values only
+  ---
+  duration_ms: 250.5671
+  type: 'test'
+  ...
+# Subtest: F25-R03 unavailable complete registry refuses before spawning without selected-only fallback
+ok 145 - F25-R03 unavailable complete registry refuses before spawning without selected-only fallback
+  ---
+  duration_ms: 35.7502
+  type: 'test'
+  ...
+# Subtest: F25-R04 selected guard withdrawal during held complete-registry acquisition prevents launch
+ok 146 - F25-R04 selected guard withdrawal during held complete-registry acquisition prevents launch
+  ---
+  duration_ms: 38.9031
+  type: 'test'
+  ...
+# Subtest: F25-R05 machine log protection withdrawal during registry acquisition prevents launch after reenable
+ok 147 - F25-R05 machine log protection withdrawal during registry acquisition prevents launch after reenable
+  ---
+  duration_ms: 33.7376
+  type: 'test'
+  ...
+# Subtest: F25-R06 complete registry stays live across COMPLETE and is disposed with final job authority
+ok 148 - F25-R06 complete registry stays live across COMPLETE and is disposed with final job authority
+  ---
+  duration_ms: 383.8019
+  type: 'test'
+  ...
+# Subtest: F25-R07 late complete-registry withdrawal revokes held output and cannot be reenabled
+ok 149 - F25-R07 late complete-registry withdrawal revokes held output and cannot be reenabled
+  ---
+  duration_ms: 314.6641
+  type: 'test'
+  ...
+# Subtest: F25-R08 late selected source authority withdrawal still revokes output after complete-registry acquisition
+ok 150 - F25-R08 late selected source authority withdrawal still revokes output after complete-registry acquisition
+  ---
+  duration_ms: 234.6003
+  type: 'test'
+  ...
+# Subtest: F25-R09 runtime disposal releases retained completed registry leases and held output authority
+ok 151 - F25-R09 runtime disposal releases retained completed registry leases and held output authority
+  ---
+  duration_ms: 219.1323
+  type: 'test'
+  ...
+# Subtest: F25-R10 registry post-use validation failure retains and cooperatively stops any created owned job
+ok 152 - F25-R10 registry post-use validation failure retains and cooperatively stops any created owned job
+  ---
+  duration_ms: 112.6774
+  type: 'test'
+  ...
+# Subtest: F25-L01 construction and availability create no output or early publication authority
+ok 153 - F25-L01 construction and availability create no output or early publication authority
+  ---
+  duration_ms: 359.5143
+  type: 'test'
+  ...
+# Subtest: F25-L02 public stdout, compiler warnings and an ordinary nonzero error stack remain useful
+ok 154 - F25-L02 public stdout, compiler warnings and an ordinary nonzero error stack remain useful
+  ---
+  duration_ms: 13.3698
+  type: 'test'
+  ...
+# Subtest: F25-L03 public test and TAP output preserves assertions, totals and exit status
+ok 155 - F25-L03 public test and TAP output preserves assertions, totals and exit status
+  ---
+  duration_ms: 8.0948
+  type: 'test'
+  ...
+# Subtest: F25-L04 an empty completed operation has one exact immutable result capability
+ok 156 - F25-L04 an empty completed operation has one exact immutable result capability
+  ---
+  duration_ms: 3.4056
+  type: 'test'
+  ...
+# Subtest: F25-L05 every byte split of raw stays buffered until whole-channel redaction
+ok 157 - F25-L05 every byte split of raw stays buffered until whole-channel redaction
+  ---
+  duration_ms: 99.7531
+  type: 'test'
+  ...
+# Subtest: F25-L05 every byte split of base64 padded stays buffered until whole-channel redaction
+ok 158 - F25-L05 every byte split of base64 padded stays buffered until whole-channel redaction
+  ---
+  duration_ms: 110.5812
+  type: 'test'
+  ...
+# Subtest: F25-L05 every byte split of base64 unpadded stays buffered until whole-channel redaction
+ok 159 - F25-L05 every byte split of base64 unpadded stays buffered until whole-channel redaction
+  ---
+  duration_ms: 104.2229
+  type: 'test'
+  ...
+# Subtest: F25-L05 every byte split of base64url padded stays buffered until whole-channel redaction
+ok 160 - F25-L05 every byte split of base64url padded stays buffered until whole-channel redaction
+  ---
+  duration_ms: 107.0694
+  type: 'test'
+  ...
+# Subtest: F25-L05 every byte split of base64url unpadded stays buffered until whole-channel redaction
+ok 161 - F25-L05 every byte split of base64url unpadded stays buffered until whole-channel redaction
+  ---
+  duration_ms: 106.9416
+  type: 'test'
+  ...
+# Subtest: F25-L05 every byte split of hex lowercase stays buffered until whole-channel redaction
+ok 162 - F25-L05 every byte split of hex lowercase stays buffered until whole-channel redaction
+  ---
+  duration_ms: 106.6303
+  type: 'test'
+  ...
+# Subtest: F25-L05 every byte split of hex uppercase stays buffered until whole-channel redaction
+ok 163 - F25-L05 every byte split of hex uppercase stays buffered until whole-channel redaction
+  ---
+  duration_ms: 101.9844
+  type: 'test'
+  ...
+# Subtest: F25-L05 every byte split of hex mixed case stays buffered until whole-channel redaction
+ok 164 - F25-L05 every byte split of hex mixed case stays buffered until whole-channel redaction
+  ---
+  duration_ms: 103.9581
+  type: 'test'
+  ...
+# Subtest: F25-L05 every byte split of percent full stays buffered until whole-channel redaction
+ok 165 - F25-L05 every byte split of percent full stays buffered until whole-channel redaction
+  ---
+  duration_ms: 370.2109
+  type: 'test'
+  ...
+# Subtest: F25-L05 every byte split of percent partial stays buffered until whole-channel redaction
+ok 166 - F25-L05 every byte split of percent partial stays buffered until whole-channel redaction
+  ---
+  duration_ms: 105.3308
+  type: 'test'
+  ...
+# Subtest: F25-L05 every byte split of JSON quoted stays buffered until whole-channel redaction
+ok 167 - F25-L05 every byte split of JSON quoted stays buffered until whole-channel redaction
+  ---
+  duration_ms: 131.1435
+  type: 'test'
+  ...
+# Subtest: F25-L05 every byte split of JSON string body stays buffered until whole-channel redaction
+ok 168 - F25-L05 every byte split of JSON string body stays buffered until whole-channel redaction
+  ---
+  duration_ms: 117.0231
+  type: 'test'
+  ...
+# Subtest: F25-L06 a raw known value in an error stack masks both nonempty channels and retains the actual error exit
+ok 169 - F25-L06 a raw known value in an error stack masks both nonempty channels and retains the actual error exit
+  ---
+  duration_ms: 3.7255
+  type: 'test'
+  ...
+# Subtest: F25-L07 interleaved stdout and stderr fragments cannot reconstruct a registration outside the filter
+ok 170 - F25-L07 interleaved stdout and stderr fragments cannot reconstruct a registration outside the filter
+  ---
+  duration_ms: 5.6201
+  type: 'test'
+  ...
+# Subtest: F25-L08 public Unicode bytes, CRLF, SGR and OSC follow the established F08 normalization
+ok 171 - F25-L08 public Unicode bytes, CRLF, SGR and OSC follow the established F08 normalization
+  ---
+  duration_ms: 4.0022
+  type: 'test'
+  ...
+# Subtest: F25-L09 invalid UTF8, unfinished controls and terminal rewriting withhold every earlier prefix
+ok 172 - F25-L09 invalid UTF8, unfinished controls and terminal rewriting withhold every earlier prefix
+  ---
+  duration_ms: 12.369
+  type: 'test'
+  ...
+# Subtest: F25-L10 public structured JSON preserves ordinary string leaves and both channels
+ok 173 - F25-L10 public structured JSON preserves ordinary string leaves and both channels
+  ---
+  duration_ms: 6.8479
+  type: 'test'
+  ...
+# Subtest: F25-L11 registrations split across JSON string leaves are caught after semantic decoding
+ok 174 - F25-L11 registrations split across JSON string leaves are caught after semantic decoding
+  ---
+  duration_ms: 426.6537
+  type: 'test'
+  ...
+# Subtest: F25-L12 JSON Unicode escapes may split one registration across several semantic leaves
+ok 175 - F25-L12 JSON Unicode escapes may split one registration across several semantic leaves
+  ---
+  duration_ms: 3.3107
+  type: 'test'
+  ...
+# Subtest: F25-L13 a short registration that occurs in the canonical mask forces conservative withholding
+ok 176 - F25-L13 a short registration that occurs in the canonical mask forces conservative withholding
+  ---
+  duration_ms: 12.4286
+  type: 'test'
+  ...
+# Subtest: F25-L14 a semantic-leaf match cannot release a marker that itself contains a registration
+ok 177 - F25-L14 a semantic-leaf match cannot release a marker that itself contains a registration
+  ---
+  duration_ms: 6.5388
+  type: 'test'
+  ...
+# Subtest: F25-L15 malformed or duplicate structured JSON never falls back to public plain-text release
+ok 178 - F25-L15 malformed or duplicate structured JSON never falls back to public plain-text release
+  ---
+  duration_ms: 15.5386
+  type: 'test'
+  ...
+# Subtest: F25-L16 the inclusive semantic string-part limit admits32 leaves and withholds33
+ok 179 - F25-L16 the inclusive semantic string-part limit admits32 leaves and withholds33
+  ---
+  duration_ms: 10.6338
+  type: 'test'
+  ...
+# Subtest: F25-L17 the inclusive semantic depth limit admits32 levels and withholds33
+ok 180 - F25-L17 the inclusive semantic depth limit admits32 levels and withholds33
+  ---
+  duration_ms: 4.1994
+  type: 'test'
+  ...
+# Subtest: F25-L18 the inclusive semantic node budget admits10000 nodes and withholds10001
+ok 181 - F25-L18 the inclusive semantic node budget admits10000 nodes and withholds10001
+  ---
+  duration_ms: 127.1817
+  type: 'test'
+  ...
+# Subtest: F25-L19 exact128KiB public input remains useful while one extra byte withholds both channels
+ok 182 - F25-L19 exact128KiB public input remains useful while one extra byte withholds both channels
+  ---
+  duration_ms: 1317.7784
+  type: 'test'
+  ...
+# Subtest: F25-L20 stdout and stderr share the same128KiB operation budget
+ok 183 - F25-L20 stdout and stderr share the same128KiB operation budget
+  ---
+  duration_ms: 411.7367
+  type: 'test'
+  ...
+# Subtest: F25-L21 exactly4096 chunks are admitted and chunk4097 withdraws atomically
+ok 184 - F25-L21 exactly4096 chunks are admitted and chunk4097 withdraws atomically
+  ---
+  duration_ms: 185.8833
+  type: 'test'
+  ...
+# Subtest: F25-L22 input overflow is sticky even if later bytes and the final exit look harmless
+ok 185 - F25-L22 input overflow is sticky even if later bytes and the final exit look harmless
+  ---
+  duration_ms: 2.4124
+  type: 'test'
+  ...
+# Subtest: F25-L23 disabling before any content is sticky when the callback is later reenabled
+ok 186 - F25-L23 disabling before any content is sticky when the callback is later reenabled
+  ---
+  duration_ms: 2.5397
+  type: 'test'
+  ...
+# Subtest: F25-L24 an observed flag disable during collection withholds prior content after reenable
+ok 187 - F25-L24 an observed flag disable during collection withholds prior content after reenable
+  ---
+  duration_ms: 1.9671
+  type: 'test'
+  ...
+# Subtest: F25-L25 a completed result held before UI publication loses release authority on disable
+ok 188 - F25-L25 a completed result held before UI publication loses release authority on disable
+  ---
+  duration_ms: 2.1411
+  type: 'test'
+  ...
+# Subtest: F25-L26 cloned, deserialized and other-operation completions have no release authority
+ok 189 - F25-L26 cloned, deserialized and other-operation completions have no release authority
+  ---
+  duration_ms: 5.0322
+  type: 'test'
+  ...
+# Subtest: F25-L27 cancellation before or during collection permanently withholds that operation
+ok 190 - F25-L27 cancellation before or during collection permanently withholds that operation
+  ---
+  duration_ms: 2.2046
+  type: 'test'
+  ...
+# Subtest: F25-L28 cancellation after completion revokes the exact held report
+ok 191 - F25-L28 cancellation after completion revokes the exact held report
+  ---
+  duration_ms: 1.6556
+  type: 'test'
+  ...
+# Subtest: F25-L29 disposal before or during collection permanently withholds that operation
+ok 192 - F25-L29 disposal before or during collection permanently withholds that operation
+  ---
+  duration_ms: 1.7049
+  type: 'test'
+  ...
+# Subtest: F25-L30 disposal after completion prevents an exact held report from being displayed
+ok 193 - F25-L30 disposal after completion prevents an exact held report from being displayed
+  ---
+  duration_ms: 2.1381
+  type: 'test'
+  ...
+# Subtest: F25-L31 callback exceptions are generic and permanently withdraw collection or held publication
+ok 194 - F25-L31 callback exceptions are generic and permanently withdraw collection or held publication
+  ---
+  duration_ms: 2.422
+  type: 'test'
+  ...
+# Subtest: F25-L32 nonboolean enable callbacks cannot authorize collection
+ok 195 - F25-L32 nonboolean enable callbacks cannot authorize collection
+  ---
+  duration_ms: 2.6916
+  type: 'test'
+  ...
+# Subtest: F25-L33 invalid runtime channel or byte inputs fail closed without echoing their contents
+ok 196 - F25-L33 invalid runtime channel or byte inputs fail closed without echoing their contents
+  ---
+  duration_ms: 3.6277
+  type: 'test'
+  ...
+# Subtest: F25-L34 nonfinite, fractional or out-of-int32 exit values withhold instead of inventing success
+ok 197 - F25-L34 nonfinite, fractional or out-of-int32 exit values withhold instead of inventing success
+  ---
+  duration_ms: 11.287
+  type: 'test'
+  ...
+# Subtest: F25-L35 ordinary Windows stack locations retain their literal backslashes
+ok 198 - F25-L35 ordinary Windows stack locations retain their literal backslashes
+  ---
+  duration_ms: 3.7049
+  type: 'test'
+  ...
+# Subtest: F25-L36 line-framing cap admits32 JSON-body lines and atomically withholds a33rd
+ok 199 - F25-L36 line-framing cap admits32 JSON-body lines and atomically withholds a33rd
+  ---
+  duration_ms: 47.903
+  type: 'test'
+  ...
+# Subtest: F10-O01 absent vault permits useful empty-registry output without creating storage or a key
+ok 200 - F10-O01 absent vault permits useful empty-registry output without creating storage or a key
+  ---
+  duration_ms: 128.9065
+  type: 'test'
+  ...
+# Subtest: F10-O02 a safely absent storage directory remains absent during empty-registry filtering
+ok 201 - F10-O02 a safely absent storage directory remains absent during empty-registry filtering
+  ---
+  duration_ms: 71.8153
+  type: 'test'
+  ...
+# Subtest: F10-O03 real encrypted current registrations mask raw and every representative one-layer encoding
+ok 202 - F10-O03 real encrypted current registrations mask raw and every representative one-layer encoding
+  ---
+  duration_ms: 698.5224
+  type: 'test'
+  ...
+# Subtest: F10-O04 long registrations preserve unrelated public Unicode/nonzero output
+ok 203 - F10-O04 long registrations preserve unrelated public Unicode/nonzero output
+  ---
+  duration_ms: 127.1721
+  type: 'test'
+  ...
+# Subtest: F10-O05 any short private registration conservatively masks each nonempty completed channel
+ok 204 - F10-O05 any short private registration conservatively masks each nonempty completed channel
+  ---
+  duration_ms: 229.0123
+  type: 'test'
+  ...
+# Subtest: F10-O06 short and whole-marker replacement collisions withhold instead of returning a private substring
+ok 205 - F10-O06 short and whole-marker replacement collisions withhold instead of returning a private substring
+  ---
+  duration_ms: 318.8126
+  type: 'test'
+  ...
+# Subtest: F10-O07 all legacy/current-root values register while other-root values remain excluded
+ok 206 - F10-O07 all legacy/current-root values register while other-root values remain excluded
+  ---
+  duration_ms: 264.6474
+  type: 'test'
+  ...
+# Subtest: F10-O08 partially bound entries are unavailable rather than silently omitted
+ok 207 - F10-O08 partially bound entries are unavailable rather than silently omitted
+  ---
+  duration_ms: 85.259
+  type: 'test'
+  ...
+# Subtest: F10-O09 existing ciphertext with a missing or different existing key never regenerates a key
+ok 208 - F10-O09 existing ciphertext with a missing or different existing key never regenerates a key
+  ---
+  duration_ms: 90.0361
+  type: 'test'
+  ...
+# Subtest: F10-O10 absent current cipher with retained vault-pending.json cannot downgrade to an empty registry
+ok 209 - F10-O10 absent current cipher with retained vault-pending.json cannot downgrade to an empty registry
+  ---
+  duration_ms: 33.9636
+  type: 'test'
+  ...
+# Subtest: F10-O10 absent current cipher with retained vault-source-0123456789abcdef0123456789abcdef.json cannot downgrade to an empty registry
+ok 210 - F10-O10 absent current cipher with retained vault-source-0123456789abcdef0123456789abcdef.json cannot downgrade to an empty registry
+  ---
+  duration_ms: 39.7878
+  type: 'test'
+  ...
+# Subtest: F10-O10 absent current cipher with retained vault-generation-a3427b36-46ba-4d84-82e5-c5dfb5ba5dd1.enc cannot downgrade to an empty registry
+ok 211 - F10-O10 absent current cipher with retained vault-generation-a3427b36-46ba-4d84-82e5-c5dfb5ba5dd1.enc cannot downgrade to an empty registry
+  ---
+  duration_ms: 33.5733
+  type: 'test'
+  ...
+# Subtest: F10-O10 absent current cipher with retained vault-mutation.lock cannot downgrade to an empty registry
+ok 212 - F10-O10 absent current cipher with retained vault-mutation.lock cannot downgrade to an empty registry
+  ---
+  duration_ms: 35.7311
+  type: 'test'
+  ...
+# Subtest: F10-O10 absent current cipher with retained write-a3427b36-46ba-4d84-82e5-c5dfb5ba5dd1.enc cannot downgrade to an empty registry
+ok 213 - F10-O10 absent current cipher with retained write-a3427b36-46ba-4d84-82e5-c5dfb5ba5dd1.enc cannot downgrade to an empty registry
+  ---
+  duration_ms: 41.2909
+  type: 'test'
+  ...
+# Subtest: F10-O10 absent current cipher with retained vault-unknown-recovery.enc cannot downgrade to an empty registry
+ok 214 - F10-O10 absent current cipher with retained vault-unknown-recovery.enc cannot downgrade to an empty registry
+  ---
+  duration_ms: 38.1041
+  type: 'test'
+  ...
+# Subtest: F10-O11 pending recovery also blocks an otherwise valid encrypted current vault
+ok 215 - F10-O11 pending recovery also blocks an otherwise valid encrypted current vault
+  ---
+  duration_ms: 35.9068
+  type: 'test'
+  ...
+# Subtest: F10-O12 malformed strict vault schemas/JSON cannot return a partial usable registry
+ok 216 - F10-O12 malformed strict vault schemas/JSON cannot return a partial usable registry
+  ---
+  duration_ms: 186.4065
+  type: 'test'
+  ...
+# Subtest: F10-O13 one-value bytes exhaustion rejects the complete private registry
+ok 217 - F10-O13 one-value bytes exhaustion rejects the complete private registry
+  ---
+  duration_ms: 59.7757
+  type: 'test'
+  ...
+# Subtest: F10-O13 unique registration count exhaustion rejects the complete private registry
+ok 218 - F10-O13 unique registration count exhaustion rejects the complete private registry
+  ---
+  duration_ms: 86.803
+  type: 'test'
+  ...
+# Subtest: F10-O13 total registration bytes exhaustion rejects the complete private registry
+ok 219 - F10-O13 total registration bytes exhaustion rejects the complete private registry
+  ---
+  duration_ms: 74.4608
+  type: 'test'
+  ...
+# Subtest: F10-O13 derived variant bytes exhaustion rejects the complete private registry
+ok 220 - F10-O13 derived variant bytes exhaustion rejects the complete private registry
+  ---
+  duration_ms: 81.8962
+  type: 'test'
+  ...
+# Subtest: F10-O14 removing a captured cipher revokes permanently rather than falling back to an empty registry
+ok 221 - F10-O14 removing a captured cipher revokes permanently rather than falling back to an empty registry
+  ---
+  duration_ms: 100.9238
+  type: 'test'
+  ...
+# Subtest: F10-O15 changed ciphertext revokes even when the existing key still decrypts it
+ok 222 - F10-O15 changed ciphertext revokes even when the existing key still decrypts it
+  ---
+  duration_ms: 101.6513
+  type: 'test'
+  ...
+# Subtest: F10-O16 late pending migration revokes a filter before any buffered prefix is released
+ok 223 - F10-O16 late pending migration revokes a filter before any buffered prefix is released
+  ---
+  duration_ms: 102.9211
+  type: 'test'
+  ...
+# Subtest: F10-O17 key-change epoch revokes even if a later lookup would return the old key again
+ok 224 - F10-O17 key-change epoch revokes even if a later lookup would return the old key again
+  ---
+  duration_ms: 103.0084
+  type: 'test'
+  ...
+# Subtest: F10-O18 an existing raw policy-file edit revokes without relying on an owner-session event
+ok 225 - F10-O18 an existing raw policy-file edit revokes without relying on an owner-session event
+  ---
+  duration_ms: 172.4678
+  type: 'test'
+  ...
+# Subtest: F10-O19 saved effective policy drift revokes pending output
+ok 226 - F10-O19 saved effective policy drift revokes pending output
+  ---
+  duration_ms: 108.6869
+  type: 'test'
+  ...
+# Subtest: F10-O20 loss of exact workspace membership revokes a filter
+ok 227 - F10-O20 loss of exact workspace membership revokes a filter
+  ---
+  duration_ms: 177.4235
+  type: 'test'
+  ...
+# Subtest: F10-O21 lite.vaultMode withdrawal/re-enable is sticky for an already prepared filter
+ok 228 - F10-O21 lite.vaultMode withdrawal/re-enable is sticky for an already prepared filter
+  ---
+  duration_ms: 237.8829
+  type: 'test'
+  ...
+# Subtest: F10-O21 lite.secretMatching withdrawal/re-enable is sticky for an already prepared filter
+ok 229 - F10-O21 lite.secretMatching withdrawal/re-enable is sticky for an already prepared filter
+  ---
+  duration_ms: 211.0683
+  type: 'test'
+  ...
+# Subtest: F10-O21 lite.outputRedactor withdrawal/re-enable is sticky for an already prepared filter
+ok 230 - F10-O21 lite.outputRedactor withdrawal/re-enable is sticky for an already prepared filter
+  ---
+  duration_ms: 227.7246
+  type: 'test'
+  ...
+# Subtest: F10-O21 lite.ps51Terminal withdrawal/re-enable is sticky for an already prepared filter
+ok 231 - F10-O21 lite.ps51Terminal withdrawal/re-enable is sticky for an already prepared filter
+  ---
+  duration_ms: 214.9041
+  type: 'test'
+  ...
+# Subtest: F10-O22 cancel permanently withholds buffered output and cannot be replayed
+ok 232 - F10-O22 cancel permanently withholds buffered output and cannot be replayed
+  ---
+  duration_ms: 92.6849
+  type: 'test'
+  ...
+# Subtest: F10-O22 dispose permanently withholds buffered output and cannot be replayed
+ok 233 - F10-O22 dispose permanently withholds buffered output and cannot be replayed
+  ---
+  duration_ms: 83.5058
+  type: 'test'
+  ...
+# Subtest: F10-O23 enabled false/throw and lost trust cannot downgrade private output protection
+ok 234 - F10-O23 enabled false/throw and lost trust cannot downgrade private output protection
+  ---
+  duration_ms: 84.7241
+  type: 'test'
+  ...
+# Subtest: F10-O24 an enabled callback reentrantly calling cancel cannot release final output
+ok 235 - F10-O24 an enabled callback reentrantly calling cancel cannot release final output
+  ---
+  duration_ms: 98.6262
+  type: 'test'
+  ...
+# Subtest: F10-O24 an enabled callback reentrantly calling dispose cannot release final output
+ok 236 - F10-O24 an enabled callback reentrantly calling dispose cannot release final output
+  ---
+  duration_ms: 99.1201
+  type: 'test'
+  ...
+# Subtest: F10-O25 pending drift during the second existing-key read is rechecked before filter return
+ok 237 - F10-O25 pending drift during the second existing-key read is rechecked before filter return
+  ---
+  duration_ms: 54.3308
+  type: 'test'
+  ...
+# Subtest: F10-O25 ciphertext drift during the second existing-key read is rechecked before filter return
+ok 238 - F10-O25 ciphertext drift during the second existing-key read is rechecked before filter return
+  ---
+  duration_ms: 51.4867
+  type: 'test'
+  ...
+# Subtest: F10-O26 a configuration change while a key read is held cannot return a stale filter
+ok 239 - F10-O26 a configuration change while a key read is held cannot return a stale filter
+  ---
+  duration_ms: 51.6213
+  type: 'test'
+  ...
+# Subtest: F10-O27 normal public output-file creation does not confuse directory mtime with identity
+ok 240 - F10-O27 normal public output-file creation does not confuse directory mtime with identity
+  ---
+  duration_ms: 125.3685
+  type: 'test'
+  ...
+# Subtest: F10-O28 roots must be the exact current local workspace folder without authority/query/fragment
+ok 241 - F10-O28 roots must be the exact current local workspace folder without authority/query/fragment
+  ---
+  duration_ms: 15.2136
+  type: 'test'
+  ...
+# Subtest: F10-O29 registry/filter progress serialization exposes no values, value hashes, key, cipher or source
+ok 242 - F10-O29 registry/filter progress serialization exposes no values, value hashes, key, cipher or source
+  ---
+  duration_ms: 90.3058
+  type: 'test'
+  ...
+# Subtest: F10-O30 invalid final UTF-8 and unsupported editing controls retain F08 whole-output withholding
+ok 243 - F10-O30 invalid final UTF-8 and unsupported editing controls retain F08 whole-output withholding
+  ---
+  duration_ms: 211.3173
+  type: 'test'
+  ...
+# Subtest: F10-OR-root-malformed complete malformed binding withholds instead of omitting a registry entry
+ok 244 - F10-OR-root-malformed complete malformed binding withholds instead of omitting a registry entry
+  ---
+  duration_ms: 90.0323
+  type: 'test'
+  ...
+# Subtest: F10-OR-root-non-file complete malformed binding withholds instead of omitting a registry entry
+ok 245 - F10-OR-root-non-file complete malformed binding withholds instead of omitting a registry entry
+  ---
+  duration_ms: 52.6635
+  type: 'test'
+  ...
+# Subtest: F10-OR-source-malformed complete malformed binding withholds instead of omitting a registry entry
+ok 246 - F10-OR-source-malformed complete malformed binding withholds instead of omitting a registry entry
+  ---
+  duration_ms: 52.6565
+  type: 'test'
+  ...
+# Subtest: F10-OR-source-outside-root complete malformed binding withholds instead of omitting a registry entry
+ok 247 - F10-OR-source-outside-root complete malformed binding withholds instead of omitting a registry entry
+  ---
+  duration_ms: 59.2904
+  type: 'test'
+  ...
+# Subtest: F10-OR-source-authority complete malformed binding withholds instead of omitting a registry entry
+ok 248 - F10-OR-source-authority complete malformed binding withholds instead of omitting a registry entry
+  ---
+  duration_ms: 50.856
+  type: 'test'
+  ...
+# Subtest: F10-OR-source-query complete malformed binding withholds instead of omitting a registry entry
+ok 249 - F10-OR-source-query complete malformed binding withholds instead of omitting a registry entry
+  ---
+  duration_ms: 53.0108
+  type: 'test'
+  ...
+# Subtest: F10-OR-source-fragment complete malformed binding withholds instead of omitting a registry entry
+ok 250 - F10-OR-source-fragment complete malformed binding withholds instead of omitting a registry entry
+  ---
+  duration_ms: 49.6227
+  type: 'test'
+  ...
+# Subtest: F10-OR-other-root-mismatched-source complete malformed binding withholds instead of omitting a registry entry
+ok 251 - F10-OR-other-root-mismatched-source complete malformed binding withholds instead of omitting a registry entry
+  ---
+  duration_ms: 144.909
+  type: 'test'
+  ...
+# Subtest: F10-OR-valid-other-root current registry masks while valid other-project metadata is excluded without source reads
+ok 252 - F10-OR-valid-other-root current registry masks while valid other-project metadata is excluded without source reads
+  ---
+  duration_ms: 227.4331
+  type: 'test'
+  ...
+# Subtest: manifest assets
+    # Subtest: declares at least the icons and walkthrough pages
+    ok 1 - declares at least the icons and walkthrough pages
+      ---
+      duration_ms: 1.4666
+      type: 'test'
+      ...
+    # Subtest: every declared asset exists on disk
+    ok 2 - every declared asset exists on disk
+      ---
+      duration_ms: 2.4872
+      type: 'test'
+      ...
+    # Subtest: no declared asset is excluded from the VSIX by .vscodeignore
+    ok 3 - no declared asset is excluded from the VSIX by .vscodeignore
+      ---
+      duration_ms: 4.321
+      type: 'test'
+      ...
+    # Subtest: the activity-bar icon is maskable, not a raster or a filled glyph
+    ok 4 - the activity-bar icon is maskable, not a raster or a filled glyph
+      ---
+      duration_ms: 2.1613
+      type: 'test'
+      ...
+    1..4
+ok 253 - manifest assets
+  ---
+  duration_ms: 12.0571
+  type: 'suite'
+  ...
+# Subtest: marketplace icon
+    # Subtest: points at the one approved brand mark
+    ok 1 - points at the one approved brand mark
+      ---
+      duration_ms: 0.3198
+      type: 'test'
+      ...
+    # Subtest: is collected by the asset walker, so the existence and .vscodeignore checks cover it
+    ok 2 - is collected by the asset walker, so the existence and .vscodeignore checks cover it
+      ---
+      duration_ms: 0.1578
+      type: 'test'
+      ...
+    # Subtest: is a real PNG with transparency, square, and big enough for the gallery
+    ok 3 - is a real PNG with transparency, square, and big enough for the gallery
+      ---
+      duration_ms: 4.2849
+      type: 'test'
+      ...
+    # Subtest: has not drifted from the website's copy of the same logo
+    ok 4 - has not drifted from the website's copy of the same logo
+      ---
+      duration_ms: 5.2467
+      type: 'test'
+      ...
+    1..4
+ok 254 - marketplace icon
+  ---
+  duration_ms: 10.6134
+  type: 'suite'
+  ...
+# Subtest: walkthrough media
+    # Subtest: ships no page the manifest does not reference
+    ok 1 - ships no page the manifest does not reference
+      ---
+      duration_ms: 0.6818
+      type: 'test'
+      ...
+    # Subtest: has one page per contributed step
+    ok 2 - has one page per contributed step
+      ---
+      duration_ms: 0.4068
+      type: 'test'
+      ...
+    1..2
+ok 255 - walkthrough media
+  ---
+  duration_ms: 1.3053
+  type: 'suite'
+  ...
+# Subtest: gallery banner
+    # Subtest: is the saffron brand colour on a light banner
+    ok 1 - is the saffron brand colour on a light banner
+      ---
+      duration_ms: 0.1697
+      type: 'test'
+      ...
+    1..1
+ok 256 - gallery banner
+  ---
+  duration_ms: 0.2645
+  type: 'suite'
+  ...
+# Subtest: stored MCP deny-list blocks SoterAI preflight before broker contact
+ok 257 - stored MCP deny-list blocks SoterAI preflight before broker contact
+  ---
+  duration_ms: 23.2163
+  type: 'test'
+  ...
+# Subtest: strict policy is passed to preflight and runtime tool name is distinct from server
+ok 258 - strict policy is passed to preflight and runtime tool name is distinct from server
+  ---
+  duration_ms: 16.9553
+  type: 'test'
+  ...
+# Subtest: JSON primitives and arrays never reach MCP preflight as argument objects
+ok 259 - JSON primitives and arrays never reach MCP preflight as argument objects
+  ---
+  duration_ms: 17.8805
+  type: 'test'
+  ...
+# Subtest: concurrent canary creation retains every token and rotation publishes complete state
+ok 260 - concurrent canary creation retains every token and rotation publishes complete state
+  ---
+  duration_ms: 15.679
+  type: 'test'
+  ...
+# Subtest: corrupt canary storage does not silently become an empty monitoring registry
+ok 261 - corrupt canary storage does not silently become an empty monitoring registry
+  ---
+  duration_ms: 6.2436
+  type: 'test'
+  ...
+# Subtest: BrokerManager synchronizes canaries on owned startup and new generation after registry changes
+ok 262 - BrokerManager synchronizes canaries on owned startup and new generation after registry changes
+  ---
+  duration_ms: 92.5541
+  type: 'test'
+  ...
+# Subtest: F22h canonical Mcp planner is explicitly selected and Mcp records require checkpoint restoration
+ok 263 - F22h canonical Mcp planner is explicitly selected and Mcp records require checkpoint restoration
+  ---
+  duration_ms: 42.472
+  type: 'test'
+  ...
+# Subtest: F22h Mcp analysis exposes only keyed metadata and rejects other declared families
+ok 264 - F22h Mcp analysis exposes only keyed metadata and rejects other declared families
+  ---
+  duration_ms: 17.552
+  type: 'test'
+  ...
+# Subtest: F22h cancellation precedes canonical source capture/key creation and no original document is opened
+ok 265 - F22h cancellation precedes canonical source capture/key creation and no original document is opened
+  ---
+  duration_ms: 39.0998
+  type: 'test'
+  ...
+# Subtest: F22h reviewed Mcp migration and checkpoint disclosure restore exact bytes without invalid per-entry fallback
+ok 266 - F22h reviewed Mcp migration and checkpoint disclosure restore exact bytes without invalid per-entry fallback
+  ---
+  duration_ms: 1355.8069
+  type: 'test'
+  ...
+# Subtest: F22h strict family machine flag/dependencies withdraw while repository enable grants no authority
+ok 267 - F22h strict family machine flag/dependencies withdraw while repository enable grants no authority
+  ---
+  duration_ms: 3.7064
+  type: 'test'
+  ...
+# Subtest: F22h family discovery admits public Mcp controls and does not evaluate config commands
+ok 268 - F22h family discovery admits public Mcp controls and does not evaluate config commands
+  ---
+  duration_ms: 356.1235
+  type: 'test'
+  ...
+# Subtest: F22h unsupported/malformed input withholds complete findings and metadata export stays value-free
+ok 269 - F22h unsupported/malformed input withholds complete findings and metadata export stays value-free
+  ---
+  duration_ms: 381.4482
+  type: 'test'
+  ...
+# Subtest: F22h guarded Mcp migration API refuses disabled family before creating a vault key
+ok 270 - F22h guarded Mcp migration API refuses disabled family before creating a vault key
+  ---
+  duration_ms: 5.8203
+  type: 'test'
+  ...
+# Subtest: F22h late flag withdrawal/lease expiry prevents migration and checkpoint disclosure writes
+ok 271 - F22h late flag withdrawal/lease expiry prevents migration and checkpoint disclosure writes
+  ---
+  duration_ms: 1481.0458
+  type: 'test'
+  ...
+# Subtest: F22h post-migration metadata failure retains valid masked Mcp and encrypted recovery without plaintext rollback
+ok 272 - F22h post-migration metadata failure retains valid masked Mcp and encrypted recovery without plaintext rollback
+  ---
+  duration_ms: 1313.5807
+  type: 'test'
+  ...
+# Subtest: F22h interrupted Mcp write remains incomplete and canonical safe recovery finishes quoted placeholders
+ok 273 - F22h interrupted Mcp write remains incomplete and canonical safe recovery finishes quoted placeholders
+  ---
+  duration_ms: 1459.8604
+  type: 'test'
+  ...
+# Subtest: F22h unknown encrypted entry restore modes fail closed before any per-entry mutation
+ok 274 - F22h unknown encrypted entry restore modes fail closed before any per-entry mutation
+  ---
+  duration_ms: 1107.6689
+  type: 'test'
+  ...
+# Subtest: F22h metadata failure after approved Mcp disclosure reports INCOMPLETE without claiming plaintext stayed masked
+ok 275 - F22h metadata failure after approved Mcp disclosure reports INCOMPLETE without claiming plaintext stayed masked
+  ---
+  duration_ms: 1390.6835
+  type: 'test'
+  ...
+# Subtest: F22h bounded mcp config discovery deduplicates repeated matches in the finite query
+ok 276 - F22h bounded mcp config discovery deduplicates repeated matches in the finite query
+  ---
+  duration_ms: 362.6572
+  type: 'test'
+  ...
+# Subtest: F22h raw discovery cap remains partial with at most128 public files analyzed
+ok 277 - F22h raw discovery cap remains partial with at most128 public files analyzed
+  ---
+  duration_ms: 24884.4863
+  type: 'test'
+  ...
+# Subtest: F22h repository settings cannot enable a machine-disabled scanner or weaken saved denies
+ok 278 - F22h repository settings cannot enable a machine-disabled scanner or weaken saved denies
+  ---
+  duration_ms: 950.6956
+  type: 'test'
+  ...
+# Subtest: F22h project Codex TOML uses canonical checkpoint custody and exact CRLF recovery
+ok 279 - F22h project Codex TOML uses canonical checkpoint custody and exact CRLF recovery
+  ---
+  duration_ms: 1368.6757
+  type: 'test'
+  ...
+# Subtest: F22h TOML exposure analysis derives format from admitted project paths and exposes keyed metadata only
+ok 280 - F22h TOML exposure analysis derives format from admitted project paths and exposes keyed metadata only
+  ---
+  duration_ms: 7.2422
+  type: 'test'
+  ...
+# Subtest: F22h reviewed source drift invalidates mutation without replacing newer owner bytes
+ok 281 - F22h reviewed source drift invalidates mutation without replacing newer owner bytes
+  ---
+  duration_ms: 278.0898
+  type: 'test'
+  ...
+# Subtest: F22h unresolved MCP references and public server labels remain data without creating a vault key
+ok 282 - F22h unresolved MCP references and public server labels remain data without creating a vault key
+  ---
+  duration_ms: 200.5194
+  type: 'test'
+  ...
+# Subtest: F22h Mcp commands register without startup scan, authentication or key creation
+ok 283 - F22h Mcp commands register without startup scan, authentication or key creation
+  ---
+  duration_ms: 52.7149
+  type: 'test'
+  ...
+# Subtest: F22h selected config command uses actual native file picker and ignores caller paths/content/approval
+ok 284 - F22h selected config command uses actual native file picker and ignores caller paths/content/approval
+  ---
+  duration_ms: 19.3464
+  type: 'test'
+  ...
+# Subtest: F22h file picker cancellation and forged finding objects grant no read or mutation
+ok 285 - F22h file picker cancellation and forged finding objects grant no read or mutation
+  ---
+  duration_ms: 9.8828
+  type: 'test'
+  ...
+# Subtest: F22h migration and disclosure restoration use only actual current ordinal selections
+ok 286 - F22h migration and disclosure restoration use only actual current ordinal selections
+  ---
+  duration_ms: 8.5381
+  type: 'test'
+  ...
+# Subtest: F22h one pending native config flow and machine flag withdrawal invalidate late picker
+ok 287 - F22h one pending native config flow and machine flag withdrawal invalidate late picker
+  ---
+  duration_ms: 10.3126
+  type: 'test'
+  ...
+# Subtest: F22h manifests contribute machine/restricted family flag, five advanced commands with a fixed parse-only build dependency
+ok 288 - F22h manifests contribute machine/restricted family flag, five advanced commands with a fixed parse-only build dependency
+  ---
+  duration_ms: 11.8271
+  type: 'test'
+  ...
+# Subtest: F22h JSONC parser uses an exact installed dependency pin in both build manifests and lock
+ok 289 - F22h JSONC parser uses an exact installed dependency pin in both build manifests and lock
+  ---
+  duration_ms: 26.7569
+  type: 'test'
+  ...
+# Subtest: F22h strict MCP flag uses only boolean owner/default values while repository enable is powerless
+ok 290 - F22h strict MCP flag uses only boolean owner/default values while repository enable is powerless
+  ---
+  duration_ms: 15.2712
+  type: 'test'
+  ...
+# Subtest: F22h finite project MCP JSONC/TOML paths and discovery exclude arbitrary settings or configs
+ok 291 - F22h finite project MCP JSONC/TOML paths and discovery exclude arbitrary settings or configs
+  ---
+  duration_ms: 516.2157
+  type: 'test'
+  ...
+# Subtest: F22h JSONC env headers URL and adjacent/inline args yield private whole-string checkpoint candidates
+ok 292 - F22h JSONC env headers URL and adjacent/inline args yield private whole-string checkpoint candidates
+  ---
+  duration_ms: 40.3153
+  type: 'test'
+  ...
+# Subtest: F22h JSONC exact server labels public configs and whole finite variable references stay unchanged
+ok 293 - F22h JSONC exact server labels public configs and whole finite variable references stay unchanged
+  ---
+  duration_ms: 7.6321
+  type: 'test'
+  ...
+# Subtest: F22h JSONC root prompt input password booleans are public while password/credential defaults are private
+ok 294 - F22h JSONC root prompt input password booleans are public while password/credential defaults are private
+  ---
+  duration_ms: 10.069
+  type: 'test'
+  ...
+# Subtest: F22h JSONC multiline private-key spans preserve CRLF and exact quoted replacement bytes
+ok 295 - F22h JSONC multiline private-key spans preserve CRLF and exact quoted replacement bytes
+  ---
+  duration_ms: 5.296
+  type: 'test'
+  ...
+# Subtest: F22h JSONC canonical line/block credential comments remain idempotent without concealing unsupported comment credentials
+ok 296 - F22h JSONC canonical line/block credential comments remain idempotent without concealing unsupported comment credentials
+  ---
+  duration_ms: 16.3424
+  type: 'test'
+  ...
+# Subtest: F22h JSONC duplicate decoded keys malformed syntax and unsupported roots withhold complete plans
+ok 297 - F22h JSONC duplicate decoded keys malformed syntax and unsupported roots withhold complete plans
+  ---
+  duration_ms: 10.4155
+  type: 'test'
+  ...
+# Subtest: F22h JSONC structural exceptions never admit credential collections or nonstring adjacent arguments
+ok 298 - F22h JSONC structural exceptions never admit credential collections or nonstring adjacent arguments
+  ---
+  duration_ms: 11.7182
+  type: 'test'
+  ...
+# Subtest: F22h TOML Codex tables quoted labels dotted keys inline tables headers URLs and arguments mask whole values
+ok 299 - F22h TOML Codex tables quoted labels dotted keys inline tables headers URLs and arguments mask whole values
+  ---
+  duration_ms: 12.2288
+  type: 'test'
+  ...
+# Subtest: F22h TOML basic literal and multiline strings retain public CRLF bytes and private-key checkpoint spans
+ok 300 - F22h TOML basic literal and multiline strings retain public CRLF bytes and private-key checkpoint spans
+  ---
+  duration_ms: 9.2446
+  type: 'test'
+  ...
+# Subtest: F22h TOML public controls and exact environment/header bearer references remain unresolved names
+ok 301 - F22h TOML public controls and exact environment/header bearer references remain unresolved names
+  ---
+  duration_ms: 3.6618
+  type: 'test'
+  ...
+# Subtest: F22h TOML duplicates decoded names collisions table redefinitions and unsupported dates/array tables withhold
+ok 302 - F22h TOML duplicates decoded names collisions table redefinitions and unsupported dates/array tables withhold
+  ---
+  duration_ms: 10.4222
+  type: 'test'
+  ...
+# Subtest: F22h TOML canonical credential comments mask exact spans and remain idempotent
+ok 303 - F22h TOML canonical credential comments mask exact spans and remain idempotent
+  ---
+  duration_ms: 5.3309
+  type: 'test'
+  ...
+# Subtest: F22h mixed unknown expressions unsupported reference collections and nonstring TOML args withhold
+ok 304 - F22h mixed unknown expressions unsupported reference collections and nonstring TOML args withhold
+  ---
+  duration_ms: 21.1192
+  type: 'test'
+  ...
+# Subtest: F22h exact structural reference exceptions do not extend into env lookalikes or relax Editor expressions
+ok 305 - F22h exact structural reference exceptions do not extend into env lookalikes or relax Editor expressions
+  ---
+  duration_ms: 15.6261
+  type: 'test'
+  ...
+# Subtest: F22h decoded known-value residual copies in public names scalars and comments refuse complete plans
+ok 306 - F22h decoded known-value residual copies in public names scalars and comments refuse complete plans
+  ---
+  duration_ms: 12.9577
+  type: 'test'
+  ...
+# Subtest: F22h UTF8 controls text nesting lexical/node and candidate budgets refuse without value-bearing errors
+ok 307 - F22h UTF8 controls text nesting lexical/node and candidate budgets refuse without value-bearing errors
+  ---
+  duration_ms: 107.0639
+  type: 'test'
+  ...
+# Subtest: F22h fixed formats generation and repeated known values retain private custody with no example text
+ok 308 - F22h fixed formats generation and repeated known values retain private custody with no example text
+  ---
+  duration_ms: 13.397
+  type: 'test'
+  ...
+# Subtest: F22h deterministic JSONC/TOML corpus preserves public arguments and is idempotent
+ok 309 - F22h deterministic JSONC/TOML corpus preserves public arguments and is idempotent
+  ---
+  duration_ms: 286.8186
+  type: 'test'
+  ...
+# Subtest: F22h review prompt-input exceptions require a real root array and remain independent of default/password order
+ok 310 - F22h review prompt-input exceptions require a real root array and remain independent of default/password order
+  ---
+  duration_ms: 340.2683
+  type: 'test'
+  ...
+# Subtest: F22h review TOML quoted dotted names stay distinct from real dotted paths and nested server tables
+ok 311 - F22h review TOML quoted dotted names stay distinct from real dotted paths and nested server tables
+  ---
+  duration_ms: 19.0269
+  type: 'test'
+  ...
+# Subtest: F22h review TOML inline/dotted collisions withhold while implicit parent headers and disjoint inline dotted fields work
+ok 312 - F22h review TOML inline/dotted collisions withhold while implicit parent headers and disjoint inline dotted fields work
+  ---
+  duration_ms: 19.0608
+  type: 'test'
+  ...
+# Subtest: F22h review TOML numeric lexical rules distinguish finite public values from malformed radix prefixes and separators
+ok 313 - F22h review TOML numeric lexical rules distinguish finite public values from malformed radix prefixes and separators
+  ---
+  duration_ms: 19.5259
+  type: 'test'
+  ...
+# Subtest: F22h review TOML quoted hashes multiline CRLF and basic-string continuations preserve exact private spans
+ok 314 - F22h review TOML quoted hashes multiline CRLF and basic-string continuations preserve exact private spans
+  ---
+  duration_ms: 6.6726
+  type: 'test'
+  ...
+# Subtest: F22h review TOML decoded continuation residuals withhold without treating quoted hashes as comments
+ok 315 - F22h review TOML decoded continuation residuals withhold without treating quoted hashes as comments
+  ---
+  duration_ms: 7.2067
+  type: 'test'
+  ...
+# Subtest: F22h review exact marker/reference controls never conceal complete known values in decoded property names
+ok 316 - F22h review exact marker/reference controls never conceal complete known values in decoded property names
+  ---
+  duration_ms: 15.8028
+  type: 'test'
+  ...
+# Subtest: F22h review TOML reference declarations require exact server paths even when quoted path lookalikes are present
+ok 317 - F22h review TOML reference declarations require exact server paths even when quoted path lookalikes are present
+  ---
+  duration_ms: 9.2754
+  type: 'test'
+  ...
+# Subtest: F14-C01 real owned CLI binds atomically despite occupied legacy47321
+ok 318 - F14-C01 real owned CLI binds atomically despite occupied legacy47321
+  ---
+  duration_ms: 1022.5082
+  type: 'test'
+  ...
+# Subtest: F14-C02 two actual windows own different bound ports and reject cross credentials
+ok 319 - F14-C02 two actual windows own different bound ports and reject cross credentials
+  ---
+  duration_ms: 1849.1911
+  type: 'test'
+  ...
+# Subtest: F14-C03 real initialization syncs canaries, restores strict mode, then closes without tokens in output
+ok 320 - F14-C03 real initialization syncs canaries, restores strict mode, then closes without tokens in output
+  ---
+  duration_ms: 1489.3469
+  type: 'test'
+  ...
+# Subtest: F14-C04 parent IPC disconnect exits its own real broker with drained pipes
+ok 321 - F14-C04 parent IPC disconnect exits its own real broker with drained pipes
+  ---
+  duration_ms: 2076.5523
+  type: 'test'
+  ...
+# Subtest: F14-L01 port0 and distinct private credentials never enter argv or snapshots
+ok 322 - F14-L01 port0 and distinct private credentials never enter argv or snapshots
+  ---
+  duration_ms: 132.2574
+  type: 'test'
+  ...
+# Subtest: F14-L02 simultaneous start calls own one launch
+ok 323 - F14-L02 simultaneous start calls own one launch
+  ---
+  duration_ms: 9.4665
+  type: 'test'
+  ...
+# Subtest: F14-L03 independent window instances never reuse credentials or sessions
+ok 324 - F14-L03 independent window instances never reuse credentials or sessions
+  ---
+  duration_ms: 9.3303
+  type: 'test'
+  ...
+# Subtest: F14-L04 no port probe or shared token attachment before private ready
+ok 325 - F14-L04 no port probe or shared token attachment before private ready
+  ---
+  duration_ms: 5.7342
+  type: 'test'
+  ...
+# Subtest: F14-L05 malformed READY missing withholds readiness
+ok 326 - F14-L05 malformed READY missing withholds readiness
+  ---
+  duration_ms: 4.4432
+  type: 'test'
+  ...
+# Subtest: F14-L05 malformed READY array withholds readiness
+ok 327 - F14-L05 malformed READY array withholds readiness
+  ---
+  duration_ms: 4.1012
+  type: 'test'
+  ...
+# Subtest: F14-L05 malformed READY wrong type withholds readiness
+ok 328 - F14-L05 malformed READY wrong type withholds readiness
+  ---
+  duration_ms: 3.1484
+  type: 'test'
+  ...
+# Subtest: F14-L05 malformed READY wrong session withholds readiness
+ok 329 - F14-L05 malformed READY wrong session withholds readiness
+  ---
+  duration_ms: 3.7628
+  type: 'test'
+  ...
+# Subtest: F14-L05 malformed READY unknown version withholds readiness
+ok 330 - F14-L05 malformed READY unknown version withholds readiness
+  ---
+  duration_ms: 4.0935
+  type: 'test'
+  ...
+# Subtest: F14-L05 malformed READY port zero withholds readiness
+ok 331 - F14-L05 malformed READY port zero withholds readiness
+  ---
+  duration_ms: 4.6414
+  type: 'test'
+  ...
+# Subtest: F14-L05 malformed READY port overflow withholds readiness
+ok 332 - F14-L05 malformed READY port overflow withholds readiness
+  ---
+  duration_ms: 3.1651
+  type: 'test'
+  ...
+# Subtest: F14-L05 malformed READY port string withholds readiness
+ok 333 - F14-L05 malformed READY port string withholds readiness
+  ---
+  duration_ms: 2.9883
+  type: 'test'
+  ...
+# Subtest: F14-L05 malformed READY port float withholds readiness
+ok 334 - F14-L05 malformed READY port float withholds readiness
+  ---
+  duration_ms: 3.3736
+  type: 'test'
+  ...
+# Subtest: F14-L05 malformed READY extra secret field withholds readiness
+ok 335 - F14-L05 malformed READY extra secret field withholds readiness
+  ---
+  duration_ms: 3.6678
+  type: 'test'
+  ...
+# Subtest: F14-L06 lifecycle identity uses separate controller token and exact session header
+ok 336 - F14-L06 lifecycle identity uses separate controller token and exact session header
+  ---
+  duration_ms: 8.5011
+  type: 'test'
+  ...
+# Subtest: F14-L07 initialization must complete before data credentials publish
+ok 337 - F14-L07 initialization must complete before data credentials publish
+  ---
+  duration_ms: 4.5762
+  type: 'test'
+  ...
+# Subtest: F14-L08 initialization failure requests STOP and never publishes
+ok 338 - F14-L08 initialization failure requests STOP and never publishes
+  ---
+  duration_ms: 5.3174
+  type: 'test'
+  ...
+# Subtest: F14-L09 disabled flag refuses before prepare or launch
+ok 339 - F14-L09 disabled flag refuses before prepare or launch
+  ---
+  duration_ms: 0.8565
+  type: 'test'
+  ...
+# Subtest: F14-L10 config drift refuses public requests and startup reuse
+ok 340 - F14-L10 config drift refuses public requests and startup reuse
+  ---
+  duration_ms: 5.0176
+  type: 'test'
+  ...
+# Subtest: F14-L11 stop while prepare is held prevents late child launch
+ok 341 - F14-L11 stop while prepare is held prevents late child launch
+  ---
+  duration_ms: 3.8791
+  type: 'test'
+  ...
+# Subtest: F14-L12 stop before READY cannot become healthy later
+ok 342 - F14-L12 stop before READY cannot become healthy later
+  ---
+  duration_ms: 4.4324
+  type: 'test'
+  ...
+# Subtest: F14-L13 unconfirmed stop retains ownership and blocks replacement
+ok 343 - F14-L13 unconfirmed stop retains ownership and blocks replacement
+  ---
+  duration_ms: 33.651
+  type: 'test'
+  ...
+# Subtest: F14-L14 exit without close and drained pipes is not release
+ok 344 - F14-L14 exit without close and drained pipes is not release
+  ---
+  duration_ms: 25.4882
+  type: 'test'
+  ...
+# Subtest: F14-L15 close without both pipe EOF retains ownership
+ok 345 - F14-L15 close without both pipe EOF retains ownership
+  ---
+  duration_ms: 31.3502
+  type: 'test'
+  ...
+# Subtest: F14-L16 completed restart changes session, port ownership and credentials
+ok 346 - F14-L16 completed restart changes session, port ownership and credentials
+  ---
+  duration_ms: 5.6466
+  type: 'test'
+  ...
+# Subtest: F14-L17 dispose prevents future starts without process signaling
+ok 347 - F14-L17 dispose prevents future starts without process signaling
+  ---
+  duration_ms: 3.62
+  type: 'test'
+  ...
+# Subtest: F14-L18 request refuses absolute URL/traversal/query/user header override
+ok 348 - F14-L18 request refuses absolute URL/traversal/query/user header override
+  ---
+  duration_ms: 5.8777
+  type: 'test'
+  ...
+# Subtest: F14-L19 no raw child output or error text reaches state
+ok 349 - F14-L19 no raw child output or error text reaches state
+  ---
+  duration_ms: 4.152
+  type: 'test'
+  ...
+# Subtest: F14-L20 withdrawal invalidates credentials immediately
+ok 350 - F14-L20 withdrawal invalidates credentials immediately
+  ---
+  duration_ms: 3.5695
+  type: 'test'
+  ...
+# Subtest: F14-L21 stale child events cannot erase a newer generation
+ok 351 - F14-L21 stale child events cannot erase a newer generation
+  ---
+  duration_ms: 10.2227
+  type: 'test'
+  ...
+# Subtest: F14-L22 unexpected owned exit invalidates credentials and never adopts a listener
+ok 352 - F14-L22 unexpected owned exit invalidates credentials and never adopts a listener
+  ---
+  duration_ms: 4.9819
+  type: 'test'
+  ...
+# Subtest: F14-L23 authenticated identity wrong session refuses startup
+ok 353 - F14-L23 authenticated identity wrong session refuses startup
+  ---
+  duration_ms: 8.0525
+  type: 'test'
+  ...
+# Subtest: F14-L23 authenticated identity wrong version refuses startup
+ok 354 - F14-L23 authenticated identity wrong version refuses startup
+  ---
+  duration_ms: 3.8779
+  type: 'test'
+  ...
+# Subtest: F14-L23 authenticated identity not ready refuses startup
+ok 355 - F14-L23 authenticated identity not ready refuses startup
+  ---
+  duration_ms: 3.1238
+  type: 'test'
+  ...
+# Subtest: F14-L24 outage invalidates owned endpoint without adopting another listener
+ok 356 - F14-L24 outage invalidates owned endpoint without adopting another listener
+  ---
+  duration_ms: 3.9478
+  type: 'test'
+  ...
+# Subtest: F14-L25 late response after withdrawal is withheld
+ok 357 - F14-L25 late response after withdrawal is withheld
+  ---
+  duration_ms: 4.3386
+  type: 'test'
+  ...
+# Subtest: F14-L26 startup deadline with held initialization requests STOP and refuses late publication
+ok 358 - F14-L26 startup deadline with held initialization requests STOP and refuses late publication
+  ---
+  duration_ms: 29.7301
+  type: 'test'
+  ...
+# Subtest: F15e-M01 default chunked flag reaches owned child
+ok 359 - F15e-M01 default chunked flag reaches owned child
+  ---
+  duration_ms: 104.2393
+  type: 'test'
+  ...
+# Subtest: F15e-M02 machine chunked disable survives workspace override and keeps encoding startup
+ok 360 - F15e-M02 machine chunked disable survives workspace override and keeps encoding startup
+  ---
+  duration_ms: 35.7267
+  type: 'test'
+  ...
+# Subtest: F15e-M03 chunked flag drift invalidates old routing authority
+ok 361 - F15e-M03 chunked flag drift invalidates old routing authority
+  ---
+  duration_ms: 50.4625
+  type: 'test'
+  ...
+# Subtest: F15d-M01 default deflate flag reaches owned child
+ok 362 - F15d-M01 default deflate flag reaches owned child
+  ---
+  duration_ms: 35.8582
+  type: 'test'
+  ...
+# Subtest: F15d-M02 machine deflate disable survives workspace override and keeps existing formats
+ok 363 - F15d-M02 machine deflate disable survives workspace override and keeps existing formats
+  ---
+  duration_ms: 34.9387
+  type: 'test'
+  ...
+# Subtest: F15d-M03 deflate flag drift invalidates old routing authority
+ok 364 - F15d-M03 deflate flag drift invalidates old routing authority
+  ---
+  duration_ms: 37.9952
+  type: 'test'
+  ...
+# Subtest: F15c-M01 default Brotli flag reaches owned child
+ok 365 - F15c-M01 default Brotli flag reaches owned child
+  ---
+  duration_ms: 29.3372
+  type: 'test'
+  ...
+# Subtest: F15c-M02 machine Brotli disable survives workspace override and preserves JSON/gzip startup
+ok 366 - F15c-M02 machine Brotli disable survives workspace override and preserves JSON/gzip startup
+  ---
+  duration_ms: 35.6464
+  type: 'test'
+  ...
+# Subtest: F15c-M03 Brotli flag drift invalidates old routing authority
+ok 367 - F15c-M03 Brotli flag drift invalidates old routing authority
+  ---
+  duration_ms: 41.8337
+  type: 'test'
+  ...
+# Subtest: F15b-M01 default gzip flag reaches owned child
+ok 368 - F15b-M01 default gzip flag reaches owned child
+  ---
+  duration_ms: 43.6664
+  type: 'test'
+  ...
+# Subtest: F15b-M02 machine gzip disable survives workspace override while JSON startup remains available
+ok 369 - F15b-M02 machine gzip disable survives workspace override while JSON startup remains available
+  ---
+  duration_ms: 61.4393
+  type: 'test'
+  ...
+# Subtest: F15b-M03 gzip flag drift invalidates old routing authority
+ok 370 - F15b-M03 gzip flag drift invalidates old routing authority
+  ---
+  duration_ms: 30.4858
+  type: 'test'
+  ...
+# Subtest: F15a-M01 default JSON flag reaches the private owned child
+ok 371 - F15a-M01 default JSON flag reaches the private owned child
+  ---
+  duration_ms: 23.9357
+  type: 'test'
+  ...
+# Subtest: F15a-M02 machine JSON disable survives workspace override and failed initialization
+ok 372 - F15a-M02 machine JSON disable survives workspace override and failed initialization
+  ---
+  duration_ms: 94.1152
+  type: 'test'
+  ...
+# Subtest: F15a-M03 changed JSON flag invalidates existing owned routing authority
+ok 373 - F15a-M03 changed JSON flag invalidates existing owned routing authority
+  ---
+  duration_ms: 48.837
+  type: 'test'
+  ...
+# Subtest: F14-M01 machine flag disable refuses without launch or legacy attach
+ok 374 - F14-M01 machine flag disable refuses without launch or legacy attach
+  ---
+  duration_ms: 6.6411
+  type: 'test'
+  ...
+# Subtest: F14-M02 workspace flag cannot override machine disable
+ok 375 - F14-M02 workspace flag cannot override machine disable
+  ---
+  duration_ms: 1.2038
+  type: 'test'
+  ...
+# Subtest: F14-M03 startup restores strict policy and complete canaries before healthy
+ok 376 - F14-M03 startup restores strict policy and complete canaries before healthy
+  ---
+  duration_ms: 36.7194
+  type: 'test'
+  ...
+# Subtest: F14-M04 malformed saved safe mode fails before child launch
+ok 377 - F14-M04 malformed saved safe mode fails before child launch
+  ---
+  duration_ms: 3.3253
+  type: 'test'
+  ...
+# Subtest: F14-M05 saved enterprise policy survives stop and new generation
+ok 378 - F14-M05 saved enterprise policy survives stop and new generation
+  ---
+  duration_ms: 116.5424
+  type: 'test'
+  ...
+# Subtest: F14-M06 old shared auth and memory records never attach
+ok 379 - F14-M06 old shared auth and memory records never attach
+  ---
+  duration_ms: 52.2985
+  type: 'test'
+  ...
+# Subtest: F14-M07 restricted workspace never starts provider-bearing child
+ok 380 - F14-M07 restricted workspace never starts provider-bearing child
+  ---
+  duration_ms: 1.7818
+  type: 'test'
+  ...
+# Subtest: F14-M08 lockdown refuses child creation
+ok 381 - F14-M08 lockdown refuses child creation
+  ---
+  duration_ms: 1.5065
+  type: 'test'
+  ...
+# Subtest: F14-M09 stale configured port does not determine actual owned endpoint
+ok 382 - F14-M09 stale configured port does not determine actual owned endpoint
+  ---
+  duration_ms: 31.8079
+  type: 'test'
+  ...
+# Subtest: F14-M10 provider/config drift withholds rather than falling back to old listener
+ok 383 - F14-M10 provider/config drift withholds rather than falling back to old listener
+  ---
+  duration_ms: 81.0845
+  type: 'test'
+  ...
+# Subtest: F14-M11 shutdown never disables stored policy or deletes another window auth
+ok 384 - F14-M11 shutdown never disables stored policy or deletes another window auth
+  ---
+  duration_ms: 44.7529
+  type: 'test'
+  ...
+# Subtest: F14-M12 unavailable status never probes configured fixed port
+ok 385 - F14-M12 unavailable status never probes configured fixed port
+  ---
+  duration_ms: 0.9912
+  type: 'test'
+  ...
+# Subtest: F14-M13 another window's canary SecretStorage change withdraws this owned broker
+ok 386 - F14-M13 another window's canary SecretStorage change withdraws this owned broker
+  ---
+  duration_ms: 25.7414
+  type: 'test'
+  ...
+# Subtest: F14-M14 provider SecretStorage change withdraws but unrelated secret event keeps ownership
+ok 387 - F14-M14 provider SecretStorage change withdraws but unrelated secret event keeps ownership
+  ---
+  duration_ms: 23.9016
+  type: 'test'
+  ...
+# Subtest: F15f-M01 default framed flag reaches owned child
+ok 388 - F15f-M01 default framed flag reaches owned child
+  ---
+  duration_ms: 30.2337
+  type: 'test'
+  ...
+# Subtest: F15f-M02 machine framed disable survives workspace override and keeps encoding startup
+ok 389 - F15f-M02 machine framed disable survives workspace override and keeps encoding startup
+  ---
+  duration_ms: 27.2467
+  type: 'test'
+  ...
+# Subtest: F15f-M03 framed flag drift invalidates old routing authority
+ok 390 - F15f-M03 framed flag drift invalidates old routing authority
+  ---
+  duration_ms: 23.9466
+  type: 'test'
+  ...
+# Subtest: F15g-M01 default multipart flag reaches owned child
+ok 391 - F15g-M01 default multipart flag reaches owned child
+  ---
+  duration_ms: 22.8635
+  type: 'test'
+  ...
+# Subtest: F15g-M02 machine multipart disable survives workspace override and keeps encoding startup
+ok 392 - F15g-M02 machine multipart disable survives workspace override and keeps encoding startup
+  ---
+  duration_ms: 27.9333
+  type: 'test'
+  ...
+# Subtest: F15g-M03 multipart flag drift invalidates old routing authority
+ok 393 - F15g-M03 multipart flag drift invalidates old routing authority
+  ---
+  duration_ms: 21.6035
+  type: 'test'
+  ...
+# Subtest: F15h-M01 default base64 flag reaches owned child
+ok 394 - F15h-M01 default base64 flag reaches owned child
+  ---
+  duration_ms: 28.6728
+  type: 'test'
+  ...
+# Subtest: F15h-M02 machine base64 disable survives workspace override and keeps encoding startup
+ok 395 - F15h-M02 machine base64 disable survives workspace override and keeps encoding startup
+  ---
+  duration_ms: 31.159
+  type: 'test'
+  ...
+# Subtest: F15h-M03 base64 flag drift invalidates old routing authority
+ok 396 - F15h-M03 base64 flag drift invalidates old routing authority
+  ---
+  duration_ms: 31.2137
+  type: 'test'
+  ...
+# Subtest: F26a discovery rejects disabled and forged contexts before properties or any worker
+ok 397 - F26a discovery rejects disabled and forged contexts before properties or any worker
+  ---
+  duration_ms: 300.1501
+  type: 'test'
+  ...
+# Subtest: F26a discovery admits useful public default and supported local custom selections
+ok 398 - F26a discovery admits useful public default and supported local custom selections
+  ---
+  duration_ms: 926.4804
+  type: 'test'
+  ...
+# Subtest: F26a discovery withholds complete projections containing unsupported scopes includes duplicates or malformed data
+ok 399 - F26a discovery withholds complete projections containing unsupported scopes includes duplicates or malformed data
+  ---
+  duration_ms: 740.0832
+  type: 'test'
+  ...
+# Subtest: F26a discovery verifies exact pinned version before creating a config query
+ok 400 - F26a discovery verifies exact pinned version before creating a config query
+  ---
+  duration_ms: 313.2897
+  type: 'test'
+  ...
+# Subtest: F26a discovery delegates only sequential version and config with the same context deadline and clock
+ok 401 - F26a discovery delegates only sequential version and config with the same context deadline and clock
+  ---
+  duration_ms: 271.2852
+  type: 'test'
+  ...
+# Subtest: F26a discovery fingerprint is stable for exact root projection and changes for path raw origin or root
+ok 402 - F26a discovery fingerprint is stable for exact root projection and changes for path raw origin or root
+  ---
+  duration_ms: 788.8491
+  type: 'test'
+  ...
+# Subtest: F26a discovery premature worker COMPLETE cannot advance or release before owned closure
+ok 403 - F26a discovery premature worker COMPLETE cannot advance or release before owned closure
+  ---
+  duration_ms: 295.8478
+  type: 'test'
+  ...
+# Subtest: F26a discovery active withdrawal returns STOP and retains busy until the held worker naturally closes
+ok 404 - F26a discovery active withdrawal returns STOP and retains busy until the held worker naturally closes
+  ---
+  duration_ms: 127.0469
+  type: 'test'
+  ...
+# Subtest: F26a discovery is one shot and pre-start withdrawal creates no worker
+ok 405 - F26a discovery is one shot and pre-start withdrawal creates no worker
+  ---
+  duration_ms: 230.9365
+  type: 'test'
+  ...
+# Subtest: F26a discovery final release requires exact result identity and sticky live nonreentrant authority
+ok 406 - F26a discovery final release requires exact result identity and sticky live nonreentrant authority
+  ---
+  duration_ms: 687.9723
+  type: 'test'
+  ...
+# Subtest: F26a discovery enforces one aggregate deadline bad-clock refusal and independent phase caps
+ok 407 - F26a discovery enforces one aggregate deadline bad-clock refusal and independent phase caps
+  ---
+  duration_ms: 393.1842
+  type: 'test'
+  ...
+# Subtest: F26a discovery propagates closed transport refusal without accepting a partial projection
+ok 408 - F26a discovery propagates closed transport refusal without accepting a partial projection
+  ---
+  duration_ms: 446.5232
+  type: 'test'
+  ...
+# Subtest: F26a owner environment preserves exact permitted discovery context and fixed noninteractive controls
+ok 409 - F26a owner environment preserves exact permitted discovery context and fixed noninteractive controls
+  ---
+  duration_ms: 31.5683
+  type: 'test'
+  ...
+# Subtest: F26a owner environment accepts usable HOME or USERPROFILE without inventing another profile
+ok 410 - F26a owner environment accepts usable HOME or USERPROFILE without inventing another profile
+  ---
+  duration_ms: 4.477
+  type: 'test'
+  ...
+# Subtest: F26a owner environment preserves explicit global system selectors and NOSYSTEM1 as current owner context
+ok 411 - F26a owner environment preserves explicit global system selectors and NOSYSTEM1 as current owner context
+  ---
+  duration_ms: 2.2375
+  type: 'test'
+  ...
+# Subtest: F26a owner environment accepts only exact NOSYSTEM1 rather than truthy coercion
+ok 412 - F26a owner environment accepts only exact NOSYSTEM1 rather than truthy coercion
+  ---
+  duration_ms: 3.3719
+  type: 'test'
+  ...
+# Subtest: F26a owner environment rejects every other ambient Git selector or command injection
+ok 413 - F26a owner environment rejects every other ambient Git selector or command injection
+  ---
+  duration_ms: 2.8749
+  type: 'test'
+  ...
+# Subtest: F26a owner environment catches case-insensitive Git injection and case-ambiguous discovery names
+ok 414 - F26a owner environment catches case-insensitive Git injection and case-ambiguous discovery names
+  ---
+  duration_ms: 3.586
+  type: 'test'
+  ...
+# Subtest: F26a owner environment omits PATH Node startup credentials and generic values without mutating them
+ok 415 - F26a owner environment omits PATH Node startup credentials and generic values without mutating them
+  ---
+  duration_ms: 4.9436
+  type: 'test'
+  ...
+# Subtest: F26a owner environment refuses invalid canonical Windows discovery and runtime paths
+ok 416 - F26a owner environment refuses invalid canonical Windows discovery and runtime paths
+  ---
+  duration_ms: 10.6607
+  type: 'test'
+  ...
+# Subtest: F26a owner environment validates optional HOMEDRIVE and HOMEPATH literally
+ok 417 - F26a owner environment validates optional HOMEDRIVE and HOMEPATH literally
+  ---
+  duration_ms: 4.2897
+  type: 'test'
+  ...
+# Subtest: F26a owner environment requires a plain own record without accessors symbols or inherited authority
+ok 418 - F26a owner environment requires a plain own record without accessors symbols or inherited authority
+  ---
+  duration_ms: 4.2587
+  type: 'test'
+  ...
+# Subtest: F26a owner environment refuses proxies and nonstring values without coercion
+ok 419 - F26a owner environment refuses proxies and nonstring values without coercion
+  ---
+  duration_ms: 2.4208
+  type: 'test'
+  ...
+# Subtest: F26a owner environment is pure projection even when every permitted config file is nonexistent
+ok 420 - F26a owner environment is pure projection even when every permitted config file is nonexistent
+  ---
+  duration_ms: 1.8172
+  type: 'test'
+  ...
+# Subtest: F26a owner transport version uses pinned executable exact args owner env and private-job cwd
+ok 421 - F26a owner transport version uses pinned executable exact args owner env and private-job cwd
+  ---
+  duration_ms: 204.191
+  type: 'test'
+  ...
+# Subtest: F26a owner transport config preserves exact selected projection args without empty-hook override
+ok 422 - F26a owner transport config preserves exact selected projection args without empty-hook override
+  ---
+  duration_ms: 93.119
+  type: 'test'
+  ...
+# Subtest: F26a owner transport permits config exit1 only for empty stdout and stderr
+ok 423 - F26a owner transport permits config exit1 only for empty stdout and stderr
+  ---
+  duration_ms: 112.8505
+  type: 'test'
+  ...
+# Subtest: F26a owner transport requires close and both actual EOFs regardless of observation order
+ok 424 - F26a owner transport requires close and both actual EOFs regardless of observation order
+  ---
+  duration_ms: 122.4746
+  type: 'test'
+  ...
+# Subtest: F26a owner transport rejects nonzero missing-exit and signalled closures
+ok 425 - F26a owner transport rejects nonzero missing-exit and signalled closures
+  ---
+  duration_ms: 144.1834
+  type: 'test'
+  ...
+# Subtest: F26a owner transport any stderr withholds and overflow retains ownership without signals
+ok 426 - F26a owner transport any stderr withholds and overflow retains ownership without signals
+  ---
+  duration_ms: 183.9494
+  type: 'test'
+  ...
+# Subtest: F26a owner transport exact4096 and65536 stdout caps pass while one extra byte withdraws
+ok 427 - F26a owner transport exact4096 and65536 stdout caps pass while one extra byte withdraws
+  ---
+  duration_ms: 270.2967
+  type: 'test'
+  ...
+# Subtest: F26a owner transport privately copies chunks before caller buffers can change
+ok 428 - F26a owner transport privately copies chunks before caller buffers can change
+  ---
+  duration_ms: 192.0438
+  type: 'test'
+  ...
+# Subtest: F26a owner transport only exact operation strings are accepted without coercion
+ok 429 - F26a owner transport only exact operation strings are accepted without coercion
+  ---
+  duration_ms: 99.6716
+  type: 'test'
+  ...
+# Subtest: F26a owner transport refuses forged contexts without invoking available accessors
+ok 430 - F26a owner transport refuses forged contexts without invoking available accessors
+  ---
+  duration_ms: 87.328
+  type: 'test'
+  ...
+# Subtest: F26a owner transport is one shot and pre-start withdrawal never schedules a child
+ok 431 - F26a owner transport is one shot and pre-start withdrawal never schedules a child
+  ---
+  duration_ms: 198.6028
+  type: 'test'
+  ...
+# Subtest: F26a owner transport active withdrawal retains busy until close plus both EOFs
+ok 432 - F26a owner transport active withdrawal retains busy until close plus both EOFs
+  ---
+  duration_ms: 143.4148
+  type: 'test'
+  ...
+# Subtest: F26a owner transport refuses expired nonfinite deadlines and disabled guards before spawn
+ok 433 - F26a owner transport refuses expired nonfinite deadlines and disabled guards before spawn
+  ---
+  duration_ms: 101.8996
+  type: 'test'
+  ...
+# Subtest: F26a owner transport elapsed bad and reversed clocks cannot renew its60second bound
+ok 434 - F26a owner transport elapsed bad and reversed clocks cannot renew its60second bound
+  ---
+  duration_ms: 232.1251
+  type: 'test'
+  ...
+# Subtest: F26a owner transport final guard callback expiry or reentrant withdrawal cannot release bytes
+ok 435 - F26a owner transport final guard callback expiry or reentrant withdrawal cannot release bytes
+  ---
+  duration_ms: 197.1047
+  type: 'test'
+  ...
+# Subtest: F26a owner transport context drift blocks admission or withholds a held completion
+ok 436 - F26a owner transport context drift blocks admission or withholds a held completion
+  ---
+  duration_ms: 222.8167
+  type: 'test'
+  ...
+# Subtest: F26a owner transport thrown spawn and no-PID error do not invent live ownership
+ok 437 - F26a owner transport thrown spawn and no-PID error do not invent live ownership
+  ---
+  duration_ms: 133.7069
+  type: 'test'
+  ...
+# Subtest: F26a owner transport errors after PID ownership wait for natural close and both EOFs
+ok 438 - F26a owner transport errors after PID ownership wait for natural close and both EOFs
+  ---
+  duration_ms: 148.9563
+  type: 'test'
+  ...
+# Subtest: actual synthetic node environment admits its genuine native object and rejects forged authority
+ok 439 - actual synthetic node environment admits its genuine native object and rejects forged authority
+  ---
+  duration_ms: 755.7731
+  type: 'test'
+  ...
+# Subtest: actual synthetic code-node environment admits its genuine native object and rejects forged authority
+ok 440 - actual synthetic code-node environment admits its genuine native object and rejects forged authority
+  ---
+  duration_ms: 1968.9975
+  type: 'test'
+  ...
+# Subtest: F26a owner projection empty bytes selects only frozen default hooks metadata
+ok 441 - F26a owner projection empty bytes selects only frozen default hooks metadata
+  ---
+  duration_ms: 24.4355
+  type: 'test'
+  ...
+# Subtest: F26a owner projection accepts one exact local relative config-origin frame
+ok 442 - F26a owner projection accepts one exact local relative config-origin frame
+  ---
+  duration_ms: 2.3877
+  type: 'test'
+  ...
+# Subtest: F26a owner projection accepts the exact canonical absolute local config origin
+ok 443 - F26a owner projection accepts the exact canonical absolute local config origin
+  ---
+  duration_ms: 1.7147
+  type: 'test'
+  ...
+# Subtest: F26a owner projection preserves literal in-root git custom spaces and Unicode components
+ok 444 - F26a owner projection preserves literal in-root git custom spaces and Unicode components
+  ---
+  duration_ms: 2.3521
+  type: 'test'
+  ...
+# Subtest: F26a owner projection refuses nonlocal scopes instead of pretending the default is active
+ok 445 - F26a owner projection refuses nonlocal scopes instead of pretending the default is active
+  ---
+  duration_ms: 2.0119
+  type: 'test'
+  ...
+# Subtest: F26a owner projection refuses every include worktree or unrecognized queried key
+ok 446 - F26a owner projection refuses every include worktree or unrecognized queried key
+  ---
+  duration_ms: 2.2881
+  type: 'test'
+  ...
+# Subtest: F26a owner projection withholds duplicates mixed records and seventeenth records as a whole
+ok 447 - F26a owner projection withholds duplicates mixed records and seventeenth records as a whole
+  ---
+  duration_ms: 2.8278
+  type: 'test'
+  ...
+# Subtest: F26a owner projection binds local origin to exact root config without aliases or siblings
+ok 448 - F26a owner projection binds local origin to exact root config without aliases or siblings
+  ---
+  duration_ms: 2.3139
+  type: 'test'
+  ...
+# Subtest: F26a owner projection refuses absolute outside empty or noncanonical hooks paths
+ok 449 - F26a owner projection refuses absolute outside empty or noncanonical hooks paths
+  ---
+  duration_ms: 2.8976
+  type: 'test'
+  ...
+# Subtest: F26a owner projection refuses device ADS short-alias trailing and control components
+ok 450 - F26a owner projection refuses device ADS short-alias trailing and control components
+  ---
+  duration_ms: 4.3482
+  type: 'test'
+  ...
+# Subtest: F26a owner projection requires exact separators complete records and final EOF
+ok 451 - F26a owner projection requires exact separators complete records and final EOF
+  ---
+  duration_ms: 2.6064
+  type: 'test'
+  ...
+# Subtest: F26a owner projection fatally rejects malformed UTF8 BOM and raw bytes beyond64KiB
+ok 452 - F26a owner projection fatally rejects malformed UTF8 BOM and raw bytes beyond64KiB
+  ---
+  duration_ms: 1.7561
+  type: 'test'
+  ...
+# Subtest: F26a owner projection refuses coercion proxies and nonBuffer views before caller traps
+ok 453 - F26a owner projection refuses coercion proxies and nonBuffer views before caller traps
+  ---
+  duration_ms: 1.71
+  type: 'test'
+  ...
+# Subtest: F26a owner projection is pure metadata and does not require root or config files to exist
+ok 454 - F26a owner projection is pure metadata and does not require root or config files to exist
+  ---
+  duration_ms: 1.3483
+  type: 'test'
+  ...
+# Subtest: Control Panel plain-language content
+    # Subtest: every always-visible string avoids internal vocabulary
+    ok 1 - every always-visible string avoids internal vocabulary
+      ---
+      duration_ms: 9.0653
+      type: 'test'
+      ...
+    # Subtest: task labels and hints avoid internal vocabulary too
+    ok 2 - task labels and hints avoid internal vocabulary too
+      ---
+      duration_ms: 3.7503
+      type: 'test'
+      ...
+    # Subtest: summaries stay short enough to read at a glance
+    ok 3 - summaries stay short enough to read at a glance
+      ---
+      duration_ms: 1.3032
+      type: 'test'
+      ...
+    # Subtest: keeps the honest caveat rather than deleting it
+    ok 4 - keeps the honest caveat rather than deleting it
+      ---
+      duration_ms: 2.2465
+      type: 'test'
+      ...
+    # Subtest: never claims a level stronger than the capability registry allows
+    ok 5 - never claims a level stronger than the capability registry allows
+      ---
+      duration_ms: 1.0308
+      type: 'test'
+      ...
+    # Subtest: shows no protection badge for a control that is off
+    ok 6 - shows no protection badge for a control that is off
+      ---
+      duration_ms: 0.779
+      type: 'test'
+      ...
+    # Subtest: only claims enforcement for Safe Mode while local checking is actually running
+    ok 7 - only claims enforcement for Safe Mode while local checking is actually running
+      ---
+      duration_ms: 0.5344
+      type: 'test'
+      ...
+    1..7
+ok 455 - Control Panel plain-language content
+  ---
+  duration_ms: 22.6491
+  type: 'suite'
+  ...
+# Subtest: Control Panel privacy boundary
+    # Subtest: states that local mode keeps scan data on this device
+    ok 1 - states that local mode keeps scan data on this device
+      ---
+      duration_ms: 1.1895
+      type: 'test'
+      ...
+    # Subtest: does not imply cloud transfer merely because cloud is configured
+    ok 2 - does not imply cloud transfer merely because cloud is configured
+      ---
+      duration_ms: 0.8027
+      type: 'test'
+      ...
+    # Subtest: makes optional metadata collection explicit without claiming content upload
+    ok 3 - makes optional metadata collection explicit without claiming content upload
+      ---
+      duration_ms: 0.972
+      type: 'test'
+      ...
+    # Subtest: states that an untrusted workspace cannot send
+    ok 4 - states that an untrusted workspace cannot send
+      ---
+      duration_ms: 0.5347
+      type: 'test'
+      ...
+    1..4
+ok 456 - Control Panel privacy boundary
+  ---
+  duration_ms: 4.6632
+  type: 'suite'
+  ...
+# Subtest: Control Panel primary action
+    # Subtest: offers exactly one action for every reachable state
+    ok 1 - offers exactly one action for every reachable state
+      ---
+      duration_ms: 2.1975
+      type: 'test'
+      ...
+    # Subtest: offers a way out of lockdown
+    ok 2 - offers a way out of lockdown
+      ---
+      duration_ms: 1.3545
+      type: 'test'
+      ...
+    # Subtest: offers the automatic setup when nothing can be blocked yet
+    ok 3 - offers the automatic setup when nothing can be blocked yet
+      ---
+      duration_ms: 0.3006
+      type: 'test'
+      ...
+    # Subtest: guides an untrusted workspace without offering automatic changes
+    ok 4 - guides an untrusted workspace without offering automatic changes
+      ---
+      duration_ms: 0.6568
+      type: 'test'
+      ...
+    # Subtest: does not push more setup when everything supported is already on
+    ok 5 - does not push more setup when everything supported is already on
+      ---
+      duration_ms: 0.4544
+      type: 'test'
+      ...
+    # Subtest: does not offer a no-op full-protection action when all visible controls are on
+    ok 6 - does not offer a no-op full-protection action when all visible controls are on
+      ---
+      duration_ms: 0.3097
+      type: 'test'
+      ...
+    # Subtest: every action it can emit is allowlisted by the provider
+    ok 7 - every action it can emit is allowlisted by the provider
+      ---
+      duration_ms: 4.5251
+      type: 'test'
+      ...
+    # Subtest: puts the highest-value protection flows first and secondary checks behind disclosure
+    ok 8 - puts the highest-value protection flows first and secondary checks behind disclosure
+      ---
+      duration_ms: 2.4305
+      type: 'test'
+      ...
+    # Subtest: task icons are real line icons, not emoji
+    ok 9 - task icons are real line icons, not emoji
+      ---
+      duration_ms: 0.5814
+      type: 'test'
+      ...
+    1..9
+ok 457 - Control Panel primary action
+  ---
+  duration_ms: 13.712
+  type: 'suite'
+  ...
+# Subtest: S1 a modified .env enters the bundle through the synthetic `git diff` item
+ok 458 - S1 a modified .env enters the bundle through the synthetic `git diff` item
+  ---
+  duration_ms: 1792.9544
+  type: 'test'
+  ...
+# Subtest: S2 custom data in a protected file survives the diff path
+ok 459 - S2 custom data in a protected file survives the diff path
+  ---
+  duration_ms: 613.1397
+  type: 'test'
+  ...
+# Subtest: S3 a protected file open in the active editor is excluded
+ok 460 - S3 a protected file open in the active editor is excluded
+  ---
+  duration_ms: 554.3804
+  type: 'test'
+  ...
+# Subtest: S4 out-of-the-box (guard never enabled) a .env tab reaches the bundle
+ok 461 - S4 out-of-the-box (guard never enabled) a .env tab reaches the bundle
+  ---
+  duration_ms: 710.5273
+  type: 'test'
+  ...
+# Subtest: S5 inline keys redact automatically; custom data needs a manual region deny
+ok 462 - S5 inline keys redact automatically; custom data needs a manual region deny
+  ---
+  duration_ms: 3937.9296
+  type: 'test'
+  ...
+# Subtest: S6 sensitive summaries omit env var names and values
+ok 463 - S6 sensitive summaries omit env var names and values
+  ---
+  duration_ms: 25.1615
+  type: 'test'
+  ...
+# Subtest: S7 known encoded keys redact automatically; custom homoglyph data uses a manual file deny
+ok 464 - S7 known encoded keys redact automatically; custom homoglyph data uses a manual file deny
+  ---
+  duration_ms: 7836.0834
+  type: 'test'
+  ...
+# Subtest: S8 hostile README and agent-config fixtures are quarantined
+ok 465 - S8 hostile README and agent-config fixtures are quarantined
+  ---
+  duration_ms: 834.7298
+  type: 'test'
+  ...
+# Subtest: S9 alias paths into the denied set
+ok 466 - S9 alias paths into the denied set
+  ---
+  duration_ms: 1642.5866
+  type: 'test'
+  ...
+# Subtest: S10 a copy of .env under an unprotected name
+ok 467 - S10 a copy of .env under an unprotected name
+  ---
+  duration_ms: 892.7259
+  type: 'test'
+  ...
+# Subtest: S11 no canary reached a recorded VS Code sink
+ok 468 - S11 no canary reached a recorded VS Code sink
+  ---
+  duration_ms: 8.2065
+  type: 'test'
+  ...
+# Subtest: H1 leak oracle finds a canary in every encoding it claims to cover
+ok 469 - H1 leak oracle finds a canary in every encoding it claims to cover
+  ---
+  duration_ms: 13.6815
+  type: 'test'
+  ...
+# Subtest: H2 fixture plants all canaries on disk
+ok 470 - H2 fixture plants all canaries on disk
+  ---
+  duration_ms: 1507.2564
+  type: 'test'
+  ...
+# Subtest: H3 `vscode` resolves to the stub and modules under test load
+ok 471 - H3 `vscode` resolves to the stub and modules under test load
+  ---
+  duration_ms: 811.4231
+  type: 'test'
+  ...
+# Subtest: H4 @soterai/guard-core resolves to a dist newer than its sources
+ok 472 - H4 @soterai/guard-core resolves to a dist newer than its sources
+  ---
+  duration_ms: 43.266
+  type: 'test'
+  ...
+# Subtest: H5 git is available (several scenarios shell out to it)
+ok 473 - H5 git is available (several scenarios shell out to it)
+  ---
+  duration_ms: 91.409
+  type: 'test'
+  ...
+# Subtest: G6 automatic setup: flag disabled means no controller calls, setting writes or success
+ok 474 - G6 automatic setup: flag disabled means no controller calls, setting writes or success
+  ---
+  duration_ms: 7.652
+  type: 'test'
+  ...
+# Subtest: G6 direct full setup: flag disabled means no controller calls, setting writes or success
+ok 475 - G6 direct full setup: flag disabled means no controller calls, setting writes or success
+  ---
+  duration_ms: 193.7837
+  type: 'test'
+  ...
+# Subtest: G6 automatic setup: disclosure rejected means no controller calls, setting writes or success
+ok 476 - G6 automatic setup: disclosure rejected means no controller calls, setting writes or success
+  ---
+  duration_ms: 0.7423
+  type: 'test'
+  ...
+# Subtest: G6 direct full setup: disclosure rejected means no controller calls, setting writes or success
+ok 477 - G6 direct full setup: disclosure rejected means no controller calls, setting writes or success
+  ---
+  duration_ms: 69.2589
+  type: 'test'
+  ...
+# Subtest: G6 automatic positive control: accepted disclosure permits synthetic managed setup
+ok 478 - G6 automatic positive control: accepted disclosure permits synthetic managed setup
+  ---
+  duration_ms: 4.2575
+  type: 'test'
+  ...
+# Subtest: G6 direct full positive control: accepted disclosure reaches the synthetic controller
+ok 479 - G6 direct full positive control: accepted disclosure reaches the synthetic controller
+  ---
+  duration_ms: 48.6439
+  type: 'test'
+  ...
+# Subtest: G6 flag withdrawal during either entry-point disclosure prevents subsequent mutations
+ok 480 - G6 flag withdrawal during either entry-point disclosure prevents subsequent mutations
+  ---
+  duration_ms: 51.3747
+  type: 'test'
+  ...
+# Subtest: G6 local handling report preserves unmarked, same-user and provider-routing limits
+ok 481 - G6 local handling report preserves unmarked, same-user and provider-routing limits
+  ---
+  duration_ms: 4.3774
+  type: 'test'
+  ...
+# Subtest: G6 prompt positive control: public text remains and a recognized fake credential is replaced
+ok 482 - G6 prompt positive control: public text remains and a recognized fake credential is replaced
+  ---
+  duration_ms: 68.0265
+  type: 'test'
+  ...
+# Subtest: G6 generated prompt states unmarked-data limits without an unconditional privacy proof
+ok 483 - G6 generated prompt states unmarked-data limits without an unconditional privacy proof
+  ---
+  duration_ms: 11.039
+  type: 'test'
+  ...
+# Subtest: G6 synthetic capability positive control: authorized and denied scope checks actually run
+ok 484 - G6 synthetic capability positive control: authorized and denied scope checks actually run
+  ---
+  duration_ms: 137.6988
+  type: 'test'
+  ...
+# Subtest: G6 synthetic capability result labels simulation and does not claim deployed verified protection
+ok 485 - G6 synthetic capability result labels simulation and does not claim deployed verified protection
+  ---
+  duration_ms: 49.9026
+  type: 'test'
+  ...
+# Subtest: VD-01 unlock uses the actual scoped confirmation guard: disabled
+ok 486 - VD-01 unlock uses the actual scoped confirmation guard: disabled
+  ---
+  duration_ms: 171.4364
+  type: 'test'
+  ...
+# Subtest: VD-01 unlock uses the actual scoped confirmation guard: cancel
+ok 487 - VD-01 unlock uses the actual scoped confirmation guard: cancel
+  ---
+  duration_ms: 70.2477
+  type: 'test'
+  ...
+# Subtest: VD-01 unlock uses the actual scoped confirmation guard: withdraw-during-dialog
+ok 488 - VD-01 unlock uses the actual scoped confirmation guard: withdraw-during-dialog
+  ---
+  duration_ms: 36.9717
+  type: 'test'
+  ...
+# Subtest: VD-01 unlock uses the actual scoped confirmation guard: confirmed
+ok 489 - VD-01 unlock uses the actual scoped confirmation guard: confirmed
+  ---
+  duration_ms: 44.6008
+  type: 'test'
+  ...
+# Subtest: VD-02 actual manual checker gives bounded public and high-risk recommendations
+ok 490 - VD-02 actual manual checker gives bounded public and high-risk recommendations
+  ---
+  duration_ms: 71.9115
+  type: 'test'
+  ...
+# Subtest: project privacy withholds risky original overrides through the actual manual checker
+ok 491 - project privacy withholds risky original overrides through the actual manual checker
+  ---
+  duration_ms: 32.0753
+  type: 'test'
+  ...
+# Subtest: project privacy overrides raw-reveal settings through the real policy adapter
+ok 492 - project privacy overrides raw-reveal settings through the real policy adapter
+  ---
+  duration_ms: 60.0003
+  type: 'test'
+  ...
+# Subtest: VD-02 actual file-scan callback does not certify safety or third-party enforcement
+ok 493 - VD-02 actual file-scan callback does not certify safety or third-party enforcement
+  ---
+  duration_ms: 75.1331
+  type: 'test'
+  ...
+# Subtest: VD-03 retired marketplace artwork stays historical, excluded and unreferenced by release README
+ok 494 - VD-03 retired marketplace artwork stays historical, excluded and unreferenced by release README
+  ---
+  duration_ms: 10.1446
+  type: 'test'
+  ...
+# Subtest: unknown policy versions cannot appear loaded and withdrawal preserves unavailable state
+ok 495 - unknown policy versions cannot appear loaded and withdrawal preserves unavailable state
+  ---
+  duration_ms: 42.1176
+  type: 'test'
+  ...
+# Subtest: release claim checks detect their unsupported examples as a positive control
+ok 496 - release claim checks detect their unsupported examples as a positive control
+  ---
+  duration_ms: 3.9673
+  type: 'test'
+  ...
+# Subtest: canonical release UI and docs avoid the identified unconditional confidentiality claims
+ok 497 - canonical release UI and docs avoid the identified unconditional confidentiality claims
+  ---
+  duration_ms: 25.8602
+  type: 'test'
+  ...
+# Subtest: palette names describe managed setup and preview without claiming full protection or observed model traffic
+ok 498 - palette names describe managed setup and preview without claiming full protection or observed model traffic
+  ---
+  duration_ms: 3.5033
+  type: 'test'
+  ...
+# Subtest: pending synthetic transport releases output only with current authority: grant
+ok 499 - pending synthetic transport releases output only with current authority: grant
+  ---
+  duration_ms: 10.7979
+  type: 'test'
+  ...
+# Subtest: pending synthetic transport releases output only with current authority: reference
+ok 500 - pending synthetic transport releases output only with current authority: reference
+  ---
+  duration_ms: 2.7415
+  type: 'test'
+  ...
+# Subtest: pending synthetic transport releases output only with current authority: expired
+ok 501 - pending synthetic transport releases output only with current authority: expired
+  ---
+  duration_ms: 3.8885
+  type: 'test'
+  ...
+# Subtest: pending synthetic transport releases output only with current authority: flag-off
+ok 502 - pending synthetic transport releases output only with current authority: flag-off
+  ---
+  duration_ms: 1.6127
+  type: 'test'
+  ...
+# Subtest: pending synthetic transport releases output only with current authority: none
+ok 503 - pending synthetic transport releases output only with current authority: none
+  ---
+  duration_ms: 19.8952
+  type: 'test'
+  ...
+# Subtest: release guard withdrawal refuses capability issuance rather than using legacy release
+ok 504 - release guard withdrawal refuses capability issuance rather than using legacy release
+  ---
+  duration_ms: 2.0208
+  type: 'test'
+  ...
+# Subtest: VO01: one-time reference releases its authorized public response exactly once
+ok 505 - VO01: one-time reference releases its authorized public response exactly once
+  ---
+  duration_ms: 6.4742
+  type: 'test'
+  ...
+# Subtest: VO01: one-time result still withheld after revoke
+ok 506 - VO01: one-time result still withheld after revoke
+  ---
+  duration_ms: 1.4017
+  type: 'test'
+  ...
+# Subtest: VO01: one-time result still withheld after clear
+ok 507 - VO01: one-time result still withheld after clear
+  ---
+  duration_ms: 2.1864
+  type: 'test'
+  ...
+# Subtest: VO01: one-time result still withheld after reference-expiry
+ok 508 - VO01: one-time result still withheld after reference-expiry
+  ---
+  duration_ms: 2.8068
+  type: 'test'
+  ...
+# Subtest: used reference lease rejects a copied object and wrong workspace/operation
+ok 509 - used reference lease rejects a copied object and wrong workspace/operation
+  ---
+  duration_ms: 1.0755
+  type: 'test'
+  ...
+# Subtest: used reference revalidation withholds value-changed
+ok 510 - used reference revalidation withholds value-changed
+  ---
+  duration_ms: 0.9864
+  type: 'test'
+  ...
+# Subtest: used reference revalidation withholds inventory-disabled
+ok 511 - used reference revalidation withholds inventory-disabled
+  ---
+  duration_ms: 0.7089
+  type: 'test'
+  ...
+# Subtest: used reference revalidation withholds revoked-during-read
+ok 512 - used reference revalidation withholds revoked-during-read
+  ---
+  duration_ms: 0.5782
+  type: 'test'
+  ...
+# Subtest: verification withdrawal refuses before creating evidence or launching a host: -ExpandedDependencyChecks:$false
+ok 513 - verification withdrawal refuses before creating evidence or launching a host: -ExpandedDependencyChecks:$false
+  ---
+  duration_ms: 2285.597
+  type: 'test'
+  ...
+# Subtest: verification withdrawal refuses before creating evidence or launching a host: -NoProcessTermination:$false
+ok 514 - verification withdrawal refuses before creating evidence or launching a host: -NoProcessTermination:$false
+  ---
+  duration_ms: 1843.2556
+  type: 'test'
+  ...
+# Subtest: verification withdrawal refuses before creating evidence or launching a host: -DisableUniqueEvidence
+ok 515 - verification withdrawal refuses before creating evidence or launching a host: -DisableUniqueEvidence
+  ---
+  duration_ms: 3978.163
+  type: 'test'
+  ...
+# Subtest: verification PowerShell parses successfully as a positive control
+ok 516 - verification PowerShell parses successfully as a positive control
+  ---
+  duration_ms: 1303.2486
+  type: 'test'
+  ...
+# Subtest: A05/A13 property: valid relative paths normalize idempotently and preserve segment identity
+ok 517 - A05/A13 property: valid relative paths normalize idempotently and preserve segment identity
+  ---
+  duration_ms: 34.8244
+  type: 'test'
+  ...
+# Subtest: A01/A05 property: traversal, absolute paths, control characters and empty segments fail with valid controls
+ok 518 - A01/A05 property: traversal, absolute paths, control characters and empty segments fail with valid controls
+  ---
+  duration_ms: 38.0726
+  type: 'test'
+  ...
+# Subtest: A05 property: deny globs retain literal identity, root anchoring and folder descendant semantics
+ok 519 - A05 property: deny globs retain literal identity, root anchoring and folder descendant semantics
+  ---
+  duration_ms: 36.0306
+  type: 'test'
+  ...
+# Subtest: A13 property: invalid deny syntax and parser limits cannot become an empty accepted policy
+ok 520 - A13 property: invalid deny syntax and parser limits cannot become an empty accepted policy
+  ---
+  duration_ms: 21.8296
+  type: 'test'
+  ...
+# Subtest: A05/A13 property: accepted rule union is monotone, idempotent and isolated from caller mutation
+ok 521 - A05/A13 property: accepted rule union is monotone, idempotent and isolated from caller mutation
+  ---
+  duration_ms: 115.4899
+  type: 'test'
+  ...
+# Subtest: A05/A13 property: malformed stored rule and region families fail while a valid region remains accepted
+ok 522 - A05/A13 property: malformed stored rule and region families fail while a valid region remains accepted
+  ---
+  duration_ms: 26.3413
+  type: 'test'
+  ...
+# Subtest: A05/A22 property: exact-region masking preserves public controls and any revision change withholds the file
+ok 523 - A05/A22 property: exact-region masking preserves public controls and any revision change withholds the file
+  ---
+  duration_ms: 11.7932
+  type: 'test'
+  ...
+# Subtest: A13 property: project-policy defaults reject malformed enums, bound durations and require explicit raw-content opt-in
+ok 524 - A13 property: project-policy defaults reject malformed enums, bound durations and require explicit raw-content opt-in
+  ---
+  duration_ms: 2.8885
+  type: 'test'
+  ...
+# Subtest: F10-P01 exported inclusive grammar/runtime limits remain exact and frozen
+ok 525 - F10-P01 exported inclusive grammar/runtime limits remain exact and frozen
+  ---
+  duration_ms: 28.6227
+  type: 'test'
+  ...
+# Subtest: F10-P02 exact location/version/date forms accept case-insensitive command names and whitespace
+ok 526 - F10-P02 exact location/version/date forms accept case-insensitive command names and whitespace
+  ---
+  duration_ms: 6.2566
+  type: 'test'
+  ...
+# Subtest: F10-P03 directory aliases default to dot and preserve a literal relative directory
+ok 527 - F10-P03 directory aliases default to dot and preserve a literal relative directory
+  ---
+  duration_ms: 7.0107
+  type: 'test'
+  ...
+# Subtest: F10-P04 write aliases preserve empty/quoted literal operands without inventing shell evaluation
+ok 528 - F10-P04 write aliases preserve empty/quoted literal operands without inventing shell evaluation
+  ---
+  duration_ms: 2.8498
+  type: 'test'
+  ...
+# Subtest: F10-P05 punctuation inside a complete quoted token is literal data
+ok 529 - F10-P05 punctuation inside a complete quoted token is literal data
+  ---
+  duration_ms: 3.0015
+  type: 'test'
+  ...
+# Subtest: F10-P06 doubled single quotes decode once while exact Unicode/case remain unchanged
+ok 530 - F10-P06 doubled single quotes decode once while exact Unicode/case remain unchanged
+  ---
+  duration_ms: 3.3937
+  type: 'test'
+  ...
+# Subtest: F10-P07 content aliases and the exact path options produce only approved-reader plans
+ok 531 - F10-P07 content aliases and the exact path options produce only approved-reader plans
+  ---
+  duration_ms: 3.7476
+  type: 'test'
+  ...
+# Subtest: F10-P08 head and tail use frozen safe-view line transforms with default ten
+ok 532 - F10-P08 head and tail use frozen safe-view line transforms with default ten
+  ---
+  duration_ms: 2.8283
+  type: 'test'
+  ...
+# Subtest: F10-P09 search aliases produce literal substring plans and only declared flag forms
+ok 533 - F10-P09 search aliases produce literal substring plans and only declared flag forms
+  ---
+  duration_ms: 2.7174
+  type: 'test'
+  ...
+# Subtest: F10-P10 copy aliases retain the source and new destination without raw Copy-Item semantics
+ok 534 - F10-P10 copy aliases retain the source and new destination without raw Copy-Item semantics
+  ---
+  duration_ms: 3.8359
+  type: 'test'
+  ...
+# Subtest: F10-P11 declared env forms preserve only a requested name, never a value expansion or assignment
+ok 535 - F10-P11 declared env forms preserve only a requested name, never a value expansion or assignment
+  ---
+  duration_ms: 2.999
+  type: 'test'
+  ...
+# Subtest: F10-P12 Git forms are only fixed status and diff-stat metadata operations
+ok 536 - F10-P12 Git forms are only fixed status and diff-stat metadata operations
+  ---
+  duration_ms: 3.0005
+  type: 'test'
+  ...
+# Subtest: F10-P13 fixed forms reject extra tokens rather than execute a supported prefix
+ok 537 - F10-P13 fixed forms reject extra tokens rather than execute a supported prefix
+  ---
+  duration_ms: 2.4235
+  type: 'test'
+  ...
+# Subtest: F10-P14 unknown commands, options and unimplemented parameter orderings refuse atomically
+ok 538 - F10-P14 unknown commands, options and unimplemented parameter orderings refuse atomically
+  ---
+  duration_ms: 3.2182
+  type: 'test'
+  ...
+# Subtest: F10-P15 whole chains, pipelines, redirection and expression/control syntax never yield a partial plan
+ok 539 - F10-P15 whole chains, pipelines, redirection and expression/control syntax never yield a partial plan
+  ---
+  duration_ms: 2.9824
+  type: 'test'
+  ...
+# Subtest: F10-P16 native interpreter, module-qualified and absolute executable forms have no dispatcher fallback
+ok 540 - F10-P16 native interpreter, module-qualified and absolute executable forms have no dispatcher fallback
+  ---
+  duration_ms: 2.9789
+  type: 'test'
+  ...
+# Subtest: F10-P17 every path-bearing form rejects absolute, provider, traversal, wildcard and control paths
+ok 541 - F10-P17 every path-bearing form rejects absolute, provider, traversal, wildcard and control paths
+  ---
+  duration_ms: 3.8343
+  type: 'test'
+  ...
+# Subtest: F10-P18 incomplete or concatenated quote fragments cannot be repaired into another command
+ok 542 - F10-P18 incomplete or concatenated quote fragments cannot be repaired into another command
+  ---
+  duration_ms: 2.4102
+  type: 'test'
+  ...
+# Subtest: F10-P19 backticks, unquoted dollars and double-quoted interpolation reject even in otherwise useful forms
+ok 543 - F10-P19 backticks, unquoted dollars and double-quoted interpolation reject even in otherwise useful forms
+  ---
+  duration_ms: 2.4187
+  type: 'test'
+  ...
+# Subtest: F10-P20 exact Unicode survives while lone UTF-16 surrogates never become replacement text
+ok 544 - F10-P20 exact Unicode survives while lone UTF-16 surrogates never become replacement text
+  ---
+  duration_ms: 1.7577
+  type: 'test'
+  ...
+# Subtest: F10-P21 command control bytes reject in unquoted and quoted positions
+ok 545 - F10-P21 command control bytes reject in unquoted and quoted positions
+  ---
+  duration_ms: 1.7063
+  type: 'test'
+  ...
+# Subtest: F10-P22 the token budget counts the command and is inclusive at thirty-two
+ok 546 - F10-P22 the token budget counts the command and is inclusive at thirty-two
+  ---
+  duration_ms: 3.0574
+  type: 'test'
+  ...
+# Subtest: F10-P23 individual token UTF-8 bytes are inclusive and are not measured as UTF-16 units
+ok 547 - F10-P23 individual token UTF-8 bytes are inclusive and are not measured as UTF-16 units
+  ---
+  duration_ms: 3.0814
+  type: 'test'
+  ...
+# Subtest: F10-P24 whole-command bytes are inclusive without exhausting any token or count budget
+ok 548 - F10-P24 whole-command bytes are inclusive without exhausting any token or count budget
+  ---
+  duration_ms: 5.4812
+  type: 'test'
+  ...
+# Subtest: F10-P25 literal search needles fit exactly two hundred fifty-six UTF-8 bytes
+ok 549 - F10-P25 literal search needles fit exactly two hundred fifty-six UTF-8 bytes
+  ---
+  duration_ms: 2.8875
+  type: 'test'
+  ...
+# Subtest: F10-P26 head/tail decimal counts are canonical and remain within one through one hundred
+ok 550 - F10-P26 head/tail decimal counts are canonical and remain within one through one hundred
+  ---
+  duration_ms: 4.468
+  type: 'test'
+  ...
+# Subtest: F10-P27 bounded sleep accepts canonical zero through two thousand milliseconds only
+ok 551 - F10-P27 bounded sleep accepts canonical zero through two thousand milliseconds only
+  ---
+  duration_ms: 2.0137
+  type: 'test'
+  ...
+# Subtest: F10-P28 copying onto the same source and unsupported env/history/body requests refuse
+ok 552 - F10-P28 copying onto the same source and unsupported env/history/body requests refuse
+  ---
+  duration_ms: 2.5923
+  type: 'test'
+  ...
+# Subtest: F10-P29 invalid input types reject without coercion or input-bearing exceptions
+ok 553 - F10-P29 invalid input types reject without coercion or input-bearing exceptions
+  ---
+  duration_ms: 2.0469
+  type: 'test'
+  ...
+# Subtest: F10-P30 every returned array/line object is deeply frozen and fresh per parse
+ok 554 - F10-P30 every returned array/line object is deeply frozen and fresh per parse
+  ---
+  duration_ms: 2.1066
+  type: 'test'
+  ...
+# Subtest: F10-P31 deterministic quoted-token fuzz preserves literal identity and refuses incomplete input
+ok 555 - F10-P31 deterministic quoted-token fuzz preserves literal identity and refuses incomplete input
+  ---
+  duration_ms: 11.6978
+  type: 'test'
+  ...
+# Subtest: F10-T01 exported local help explains declared checks and bypass limits without invoking the session
+ok 556 - F10-T01 exported local help explains declared checks and bypass limits without invoking the session
+  ---
+  duration_ms: 38.4379
+  type: 'test'
+  ...
+# Subtest: F10-T02 input stays hidden before submission and only the completed sanitized result is emitted
+ok 557 - F10-T02 input stays hidden before submission and only the completed sanitized result is emitted
+  ---
+  duration_ms: 6.9048
+  type: 'test'
+  ...
+# Subtest: F10-T03 a CRLF pair submits a whole line once whether delivered together or in split callbacks
+ok 558 - F10-T03 a CRLF pair submits a whole line once whether delivered together or in split callbacks
+  ---
+  duration_ms: 5.3601
+  type: 'test'
+  ...
+# Subtest: F10-T04-BS backspace removes exactly one Unicode scalar without exposing surrogate fragments
+ok 559 - F10-T04-BS backspace removes exactly one Unicode scalar without exposing surrogate fragments
+  ---
+  duration_ms: 3.1414
+  type: 'test'
+  ...
+# Subtest: F10-T04-DEL backspace removes exactly one Unicode scalar without exposing surrogate fragments
+ok 560 - F10-T04-DEL backspace removes exactly one Unicode scalar without exposing surrogate fragments
+  ---
+  duration_ms: 2.8883
+  type: 'test'
+  ...
+# Subtest: F10-T05 the inclusive 4096-byte input limit is measured in UTF8 rather than UTF16 units
+ok 561 - F10-T05 the inclusive 4096-byte input limit is measured in UTF8 rather than UTF16 units
+  ---
+  duration_ms: 8.3251
+  type: 'test'
+  ...
+# Subtest: F10-T06 a UTF8 overflow invalidates the whole line through enter and the next line starts cleanly
+ok 562 - F10-T06 a UTF8 overflow invalidates the whole line through enter and the next line starts cleanly
+  ---
+  duration_ms: 5.085
+  type: 'test'
+  ...
+# Subtest: F10-T07-00 unsupported controls invalidate the whole current line instead of dropping a dangerous fragment
+ok 563 - F10-T07-00 unsupported controls invalidate the whole current line instead of dropping a dangerous fragment
+  ---
+  duration_ms: 4.0081
+  type: 'test'
+  ...
+# Subtest: F10-T07-01 unsupported controls invalidate the whole current line instead of dropping a dangerous fragment
+ok 564 - F10-T07-01 unsupported controls invalidate the whole current line instead of dropping a dangerous fragment
+  ---
+  duration_ms: 4.3817
+  type: 'test'
+  ...
+# Subtest: F10-T07-1a unsupported controls invalidate the whole current line instead of dropping a dangerous fragment
+ok 565 - F10-T07-1a unsupported controls invalidate the whole current line instead of dropping a dangerous fragment
+  ---
+  duration_ms: 4.2955
+  type: 'test'
+  ...
+# Subtest: F10-T07-09 unsupported controls invalidate the whole current line instead of dropping a dangerous fragment
+ok 566 - F10-T07-09 unsupported controls invalidate the whole current line instead of dropping a dangerous fragment
+  ---
+  duration_ms: 5.997
+  type: 'test'
+  ...
+# Subtest: F10-T07-1b5b41 unsupported controls invalidate the whole current line instead of dropping a dangerous fragment
+ok 567 - F10-T07-1b5b41 unsupported controls invalidate the whole current line instead of dropping a dangerous fragment
+  ---
+  duration_ms: 3.6356
+  type: 'test'
+  ...
+# Subtest: F10-T08 malformed UTF16 input is rejected as a whole rather than lossy UTF8 replacement
+ok 568 - F10-T08 malformed UTF16 input is rejected as a whole rather than lossy UTF8 replacement
+  ---
+  duration_ms: 4.7586
+  type: 'test'
+  ...
+# Subtest: F10-T09 local clear/help operate without session execution or raw command history
+ok 569 - F10-T09 local clear/help operate without session execution or raw command history
+  ---
+  duration_ms: 6.4757
+  type: 'test'
+  ...
+# Subtest: F10-T10 Ctrl+C clears partial hidden input and revokes the session without executing its remainder
+ok 570 - F10-T10 Ctrl+C clears partial hidden input and revokes the session without executing its remainder
+  ---
+  duration_ms: 3.361
+  type: 'test'
+  ...
+# Subtest: F10-T11 one held command blocks programmatic and typed submissions without queuing them
+ok 571 - F10-T11 one held command blocks programmatic and typed submissions without queuing them
+  ---
+  duration_ms: 3.1388
+  type: 'test'
+  ...
+# Subtest: F10-T12 Ctrl+C requests cancellation while BUSY and retains the pending operation until actual completion
+ok 572 - F10-T12 Ctrl+C requests cancellation while BUSY and retains the pending operation until actual completion
+  ---
+  duration_ms: 2.9056
+  type: 'test'
+  ...
+# Subtest: F10-T13 completed normalized stdout/stderr use CRLF and retain nonzero status without raw input echo
+ok 573 - F10-T13 completed normalized stdout/stderr use CRLF and retain nonzero status without raw input echo
+  ---
+  duration_ms: 3.3663
+  type: 'test'
+  ...
+# Subtest: F10-T14 WITHHELD results and thrown input-bearing errors emit only fixed explanations
+ok 574 - F10-T14 WITHHELD results and thrown input-bearing errors emit only fixed explanations
+  ---
+  duration_ms: 9.4116
+  type: 'test'
+  ...
+# Subtest: F10-T15 close disposes the owned session but onDidClose waits for a held command's actual completion
+ok 575 - F10-T15 close disposes the owned session but onDidClose waits for a held command's actual completion
+  ---
+  duration_ms: 4.9191
+  type: 'test'
+  ...
+# Subtest: F10-T16 an unresolved close remains visibly STOP_UNCONFIRMED rather than claiming a child exit
+ok 576 - F10-T16 an unresolved close remains visibly STOP_UNCONFIRMED rather than claiming a child exit
+  ---
+  duration_ms: 1141.0812
+  type: 'test'
+  ...
+# Subtest: F10-T17 close without owned work emits one close and never invokes a session command
+ok 577 - F10-T17 close without owned work emits one close and never invokes a session command
+  ---
+  duration_ms: 2.1386
+  type: 'test'
+  ...
+# Subtest: F10-TR01 same-turn Ctrl+C withdraws the reserved run before deferred session execution
+ok 578 - F10-TR01 same-turn Ctrl+C withdraws the reserved run before deferred session execution
+  ---
+  duration_ms: 9.2762
+  type: 'test'
+  ...
+# Subtest: F10-TR02 same-turn close withdraws the reserved run before deferred session execution
+ok 579 - F10-TR02 same-turn close withdraws the reserved run before deferred session execution
+  ---
+  duration_ms: 1.1211
+  type: 'test'
+  ...
+# Subtest: F10-TR03-ascii programmatic run refuses over-4096-byte input before the trusted session
+ok 580 - F10-TR03-ascii programmatic run refuses over-4096-byte input before the trusted session
+  ---
+  duration_ms: 0.5782
+  type: 'test'
+  ...
+# Subtest: F10-TR03-utf8 programmatic run refuses over-4096-byte input before the trusted session
+ok 581 - F10-TR03-utf8 programmatic run refuses over-4096-byte input before the trusted session
+  ---
+  duration_ms: 0.6153
+  type: 'test'
+  ...
+# Subtest: F10-TR04-NUL programmatic run rejects the whole control-bearing line without repairing it
+ok 582 - F10-TR04-NUL programmatic run rejects the whole control-bearing line without repairing it
+  ---
+  duration_ms: 1.2791
+  type: 'test'
+  ...
+# Subtest: F10-TR04-TAB programmatic run rejects the whole control-bearing line without repairing it
+ok 583 - F10-TR04-TAB programmatic run rejects the whole control-bearing line without repairing it
+  ---
+  duration_ms: 0.505
+  type: 'test'
+  ...
+# Subtest: F10-TR04-ESC programmatic run rejects the whole control-bearing line without repairing it
+ok 584 - F10-TR04-ESC programmatic run rejects the whole control-bearing line without repairing it
+  ---
+  duration_ms: 0.4678
+  type: 'test'
+  ...
+# Subtest: F10-TR04-CR programmatic run rejects the whole control-bearing line without repairing it
+ok 585 - F10-TR04-CR programmatic run rejects the whole control-bearing line without repairing it
+  ---
+  duration_ms: 0.3519
+  type: 'test'
+  ...
+# Subtest: F10-TR04-LF programmatic run rejects the whole control-bearing line without repairing it
+ok 586 - F10-TR04-LF programmatic run rejects the whole control-bearing line without repairing it
+  ---
+  duration_ms: 0.85
+  type: 'test'
+  ...
+# Subtest: F10-TR04-LS programmatic run rejects the whole control-bearing line without repairing it
+ok 587 - F10-TR04-LS programmatic run rejects the whole control-bearing line without repairing it
+  ---
+  duration_ms: 0.8143
+  type: 'test'
+  ...
+# Subtest: F10-TR05-high programmatic run refuses malformed UTF16 before lossy UTF8 conversion
+ok 588 - F10-TR05-high programmatic run refuses malformed UTF16 before lossy UTF8 conversion
+  ---
+  duration_ms: 0.9984
+  type: 'test'
+  ...
+# Subtest: F10-TR05-low programmatic run refuses malformed UTF16 before lossy UTF8 conversion
+ok 589 - F10-TR05-low programmatic run refuses malformed UTF16 before lossy UTF8 conversion
+  ---
+  duration_ms: 0.6557
+  type: 'test'
+  ...
+# Subtest: F10-TR06-null programmatic run refuses nonstrings without coercion or session execution
+ok 590 - F10-TR06-null programmatic run refuses nonstrings without coercion or session execution
+  ---
+  duration_ms: 0.4643
+  type: 'test'
+  ...
+# Subtest: F10-TR06-object programmatic run refuses nonstrings without coercion or session execution
+ok 591 - F10-TR06-object programmatic run refuses nonstrings without coercion or session execution
+  ---
+  duration_ms: 0.2692
+  type: 'test'
+  ...
+# Subtest: F10-TR07-ascii programmatic admission preserves inclusive valid 4096-byte strings for the parser
+ok 592 - F10-TR07-ascii programmatic admission preserves inclusive valid 4096-byte strings for the parser
+  ---
+  duration_ms: 0.4983
+  type: 'test'
+  ...
+# Subtest: F10-TR07-utf8 programmatic admission preserves inclusive valid 4096-byte strings for the parser
+ok 593 - F10-TR07-utf8 programmatic admission preserves inclusive valid 4096-byte strings for the parser
+  ---
+  duration_ms: 0.3143
+  type: 'test'
+  ...
+# Subtest: F10-W01 fixed encoded script and literal JSON stdin never interpolate public arguments into argv
+ok 594 - F10-W01 fixed encoded script and literal JSON stdin never interpolate public arguments into argv
+  ---
+  duration_ms: 87.847
+  type: 'test'
+  ...
+# Subtest: F10-W02 fresh validated child environment excludes credentials, search paths, home, preload and proxy values
+ok 595 - F10-W02 fresh validated child environment excludes credentials, search paths, home, preload and proxy values
+  ---
+  duration_ms: 8.1462
+  type: 'test'
+  ...
+# Subtest: F10-W03 malformed inherited temp and locale values are omitted instead of forwarded
+ok 596 - F10-W03 malformed inherited temp and locale values are omitted instead of forwarded
+  ---
+  duration_ms: 7.1785
+  type: 'test'
+  ...
+# Subtest: F10-W04-read invalid operation blocks before any process or protocol write
+ok 597 - F10-W04-read invalid operation blocks before any process or protocol write
+  ---
+  duration_ms: 4.9186
+  type: 'test'
+  ...
+# Subtest: F10-W04-unknown-action invalid operation blocks before any process or protocol write
+ok 598 - F10-W04-unknown-action invalid operation blocks before any process or protocol write
+  ---
+  duration_ms: 3.7099
+  type: 'test'
+  ...
+# Subtest: F10-W04-extra-property invalid operation blocks before any process or protocol write
+ok 599 - F10-W04-extra-property invalid operation blocks before any process or protocol write
+  ---
+  duration_ms: 3.7814
+  type: 'test'
+  ...
+# Subtest: F10-W04-non-array invalid operation blocks before any process or protocol write
+ok 600 - F10-W04-non-array invalid operation blocks before any process or protocol write
+  ---
+  duration_ms: 4.6949
+  type: 'test'
+  ...
+# Subtest: F10-W04-non-string invalid operation blocks before any process or protocol write
+ok 601 - F10-W04-non-string invalid operation blocks before any process or protocol write
+  ---
+  duration_ms: 4.7386
+  type: 'test'
+  ...
+# Subtest: F10-W04-control invalid operation blocks before any process or protocol write
+ok 602 - F10-W04-control invalid operation blocks before any process or protocol write
+  ---
+  duration_ms: 5.9041
+  type: 'test'
+  ...
+# Subtest: F10-W04-long-arg invalid operation blocks before any process or protocol write
+ok 603 - F10-W04-long-arg invalid operation blocks before any process or protocol write
+  ---
+  duration_ms: 4.6918
+  type: 'test'
+  ...
+# Subtest: F10-W04-many-args invalid operation blocks before any process or protocol write
+ok 604 - F10-W04-many-args invalid operation blocks before any process or protocol write
+  ---
+  duration_ms: 4.099
+  type: 'test'
+  ...
+# Subtest: F10-W04-large-request invalid operation blocks before any process or protocol write
+ok 605 - F10-W04-large-request invalid operation blocks before any process or protocol write
+  ---
+  duration_ms: 4.4536
+  type: 'test'
+  ...
+# Subtest: F10-W04-absolute-list invalid operation blocks before any process or protocol write
+ok 606 - F10-W04-absolute-list invalid operation blocks before any process or protocol write
+  ---
+  duration_ms: 4.5121
+  type: 'test'
+  ...
+# Subtest: F10-W04-parent-list invalid operation blocks before any process or protocol write
+ok 607 - F10-W04-parent-list invalid operation blocks before any process or protocol write
+  ---
+  duration_ms: 3.924
+  type: 'test'
+  ...
+# Subtest: F10-W04-sleep-bound invalid operation blocks before any process or protocol write
+ok 608 - F10-W04-sleep-bound invalid operation blocks before any process or protocol write
+  ---
+  duration_ms: 5.25
+  type: 'test'
+  ...
+# Subtest: F10-W04-location-args invalid operation blocks before any process or protocol write
+ok 609 - F10-W04-location-args invalid operation blocks before any process or protocol write
+  ---
+  duration_ms: 3.6834
+  type: 'test'
+  ...
+# Subtest: F10-W05 an invalid id is not copied into safe snapshots or completion metadata
+ok 610 - F10-W05 an invalid id is not copied into safe snapshots or completion metadata
+  ---
+  duration_ms: 6.8463
+  type: 'test'
+  ...
+# Subtest: F10-W06 disabled or throwing guard and cancellation before start prevent spawn
+ok 611 - F10-W06 disabled or throwing guard and cancellation before start prevent spawn
+  ---
+  duration_ms: 24.0587
+  type: 'test'
+  ...
+# Subtest: F10-W07 start is single-use and no buffered raw chunk appears in snapshots or completion early
+ok 612 - F10-W07 start is single-use and no buffered raw chunk appears in snapshots or completion early
+  ---
+  duration_ms: 15.8977
+  type: 'test'
+  ...
+# Subtest: F10-W08 exit and both drained EOFs cannot release output before actual close
+ok 613 - F10-W08 exit and both drained EOFs cannot release output before actual close
+  ---
+  duration_ms: 7.7262
+  type: 'test'
+  ...
+# Subtest: F10-W09 real F08 output filtering masks ANSI and encoded values across byte chunks
+ok 614 - F10-W09 real F08 output filtering masks ANSI and encoded values across byte chunks
+  ---
+  duration_ms: 27.1341
+  type: 'test'
+  ...
+# Subtest: F10-W10 invalid final UTF8 and terminal rewriting withhold previously buffered public output
+ok 615 - F10-W10 invalid final UTF8 and terminal rewriting withhold previously buffered public output
+  ---
+  duration_ms: 82.205
+  type: 'test'
+  ...
+# Subtest: F10-W11 overflow drains discarded stdout and stderr without releasing an undecided prefix
+ok 616 - F10-W11 overflow drains discarded stdout and stderr without releasing an undecided prefix
+  ---
+  duration_ms: 8.6326
+  type: 'test'
+  ...
+# Subtest: F10-W12 chunk budget overflow abandons output even under the byte limit
+ok 617 - F10-W12 chunk budget overflow abandons output even under the byte limit
+  ---
+  duration_ms: 155.299
+  type: 'test'
+  ...
+# Subtest: F10-W13 cancellation after spawn retains the child until natural close and never calls kill
+ok 618 - F10-W13 cancellation after spawn retains the child until natural close and never calls kill
+  ---
+  duration_ms: 29.3926
+  type: 'test'
+  ...
+# Subtest: F10-W14 thirty-second timeout waits for close and withholds output through the stop grace
+ok 619 - F10-W14 thirty-second timeout waits for close and withholds output through the stop grace
+  ---
+  duration_ms: 4.8958
+  type: 'test'
+  ...
+# Subtest: F10-W15 withdrawal is sticky after reenable and later discarded bytes are still drained
+ok 620 - F10-W15 withdrawal is sticky after reenable and later discarded bytes are still drained
+  ---
+  duration_ms: 8.6931
+  type: 'test'
+  ...
+# Subtest: F10-W16 spawn failure is BLOCKED while a post-spawn error is never treated as child exit
+ok 621 - F10-W16 spawn failure is BLOCKED while a post-spawn error is never treated as child exit
+  ---
+  duration_ms: 8.1039
+  type: 'test'
+  ...
+# Subtest: F10-W17-stdin missing pipe retains actual-close ownership and drains every available output pipe
+ok 622 - F10-W17-stdin missing pipe retains actual-close ownership and drains every available output pipe
+  ---
+  duration_ms: 3.6458
+  type: 'test'
+  ...
+# Subtest: F10-W17-stdout missing pipe retains actual-close ownership and drains every available output pipe
+ok 623 - F10-W17-stdout missing pipe retains actual-close ownership and drains every available output pipe
+  ---
+  duration_ms: 3.1315
+  type: 'test'
+  ...
+# Subtest: F10-W17-stderr missing pipe retains actual-close ownership and drains every available output pipe
+ok 624 - F10-W17-stderr missing pipe retains actual-close ownership and drains every available output pipe
+  ---
+  duration_ms: 4.4483
+  type: 'test'
+  ...
+# Subtest: F10-W18 stdin and output stream errors are withheld and do not imply that a live child exited
+ok 625 - F10-W18 stdin and output stream errors are withheld and do not imply that a live child exited
+  ---
+  duration_ms: 10.9879
+  type: 'test'
+  ...
+# Subtest: F10-W19 premature stream/child close without EOF cannot release a later public suffix
+ok 626 - F10-W19 premature stream/child close without EOF cannot release a later public suffix
+  ---
+  duration_ms: 3.7842
+  type: 'test'
+  ...
+# Subtest: F10-W20 structural output failures never fall back to raw buffered text
+ok 627 - F10-W20 structural output failures never fall back to raw buffered text
+  ---
+  duration_ms: 5.2115
+  type: 'test'
+  ...
+# Subtest: F10-W21 actual pinned finite PowerShell reports version 5.1 through completed UTF8 output
+ok 628 - F10-W21 actual pinned finite PowerShell reports version 5.1 through completed UTF8 output
+  ---
+  duration_ms: 1010.557
+  type: 'test'
+  ...
+# Subtest: F10-W22 actual pinned finite PowerShell preserves quoted public Unicode without script or argument interpolation
+ok 629 - F10-W22 actual pinned finite PowerShell preserves quoted public Unicode without script or argument interpolation
+  ---
+  duration_ms: 1197.8504
+  type: 'test'
+  ...
+# Subtest: F10-W23 cancellation of a finite real sleep waits for its own natural close and withholds output
+ok 630 - F10-W23 cancellation of a finite real sleep waits for its own natural close and withholds output
+  ---
+  duration_ms: 1574.7683
+  type: 'test'
+  ...
+# Subtest: F26c canonical pattern projection is frozen public data with all detector classes
+ok 631 - F26c canonical pattern projection is frozen public data with all detector classes
+  ---
+  duration_ms: 39.2766
+  type: 'test'
+  ...
+# Subtest: F26c default/off/missing/invalid opt-in produces no executable profile text
+ok 632 - F26c default/off/missing/invalid opt-in produces no executable profile text
+  ---
+  duration_ms: 13.9345
+  type: 'test'
+  ...
+# Subtest: F26c refuses noncanonical generations instead of interpolating caller code
+ok 633 - F26c refuses noncanonical generations instead of interpolating caller code
+  ---
+  duration_ms: 1.7304
+  type: 'test'
+  ...
+# Subtest: F26c rejects proxy/accessor/coercion options without executing them
+ok 634 - F26c rejects proxy/accessor/coercion options without executing them
+  ---
+  duration_ms: 1.4465
+  type: 'test'
+  ...
+# Subtest: F26c generated callback is deterministic ASCII with bounded decisions and exact enum returns
+ok 635 - F26c generated callback is deterministic ASCII with bounded decisions and exact enum returns
+  ---
+  duration_ms: 2.0725
+  type: 'test'
+  ...
+# Subtest: F26c projection directly embeds every unchanged canonical regex without secret values
+ok 636 - F26c projection directly embeds every unchanged canonical regex without secret values
+  ---
+  duration_ms: 4.7554
+  type: 'test'
+  ...
+# Subtest: F26c accepts absent empty and ordinary comment-only profile inputs
+ok 637 - F26c accepts absent empty and ordinary comment-only profile inputs
+  ---
+  duration_ms: 3.5164
+  type: 'test'
+  ...
+# Subtest: F26c preserves original UTF8 bytes including BOM and final comment without newline
+ok 638 - F26c preserves original UTF8 bytes including BOM and final comment without newline
+  ---
+  duration_ms: 3.1821
+  type: 'test'
+  ...
+# Subtest: F26c rejects executable profile syntax including flow, multiline comments and here-strings
+ok 639 - F26c rejects executable profile syntax including flow, multiline comments and here-strings
+  ---
+  duration_ms: 1.8224
+  type: 'test'
+  ...
+# Subtest: F26c refuses requires, signed, owned and ambiguous comment profiles
+ok 640 - F26c refuses requires, signed, owned and ambiguous comment profiles
+  ---
+  duration_ms: 1.8464
+  type: 'test'
+  ...
+# Subtest: F26c no duplicate hook insertion and opt-out does not return a modified buffer
+ok 641 - F26c no duplicate hook insertion and opt-out does not return a modified buffer
+  ---
+  duration_ms: 1.7126
+  type: 'test'
+  ...
+# Subtest: F26c rejects malformed UTF8, nonbuffers and bounded oversized profile inputs
+ok 642 - F26c rejects malformed UTF8, nonbuffers and bounded oversized profile inputs
+  ---
+  duration_ms: 1.4749
+  type: 'test'
+  ...
+# Subtest: F26c generated profile has explicit limitation notice and no history-read/rewrite command
+ok 643 - F26c generated profile has explicit limitation notice and no history-read/rewrite command
+  ---
+  duration_ms: 2.077
+  type: 'test'
+  ...
+# Subtest: F26a client allows only reviewed artifacts signed current owner and exact genuine index metadata
+ok 644 - F26a client allows only reviewed artifacts signed current owner and exact genuine index metadata
+  ---
+  duration_ms: 214.731
+  type: 'test'
+  ...
+# Subtest: F26a client creates a fresh nonce for each invocation and never sends body findings or environment
+ok 645 - F26a client creates a fresh nonce for each invocation and never sends body findings or environment
+  ---
+  duration_ms: 145.0885
+  type: 'test'
+  ...
+# Subtest: F26a client honors an exact selected alternative index instead of a public default fallback
+ok 646 - F26a client honors an exact selected alternative index instead of a public default fallback
+  ---
+  duration_ms: 134.6011
+  type: 'test'
+  ...
+# Subtest: F26a client explicit empty invalid missing and outside index selectors refuse without a request
+ok 647 - F26a client explicit empty invalid missing and outside index selectors refuse without a request
+  ---
+  duration_ms: 155.4363
+  type: 'test'
+  ...
+# Subtest: F26a client malformed noncanonical duplicate and oversized pins refuse before any request
+ok 648 - F26a client malformed noncanonical duplicate and oversized pins refuse before any request
+  ---
+  duration_ms: 98.0002
+  type: 'test'
+  ...
+# Subtest: F26a client invalid pin versions paths hashes and signing key cannot borrow real files
+ok 649 - F26a client invalid pin versions paths hashes and signing key cannot borrow real files
+  ---
+  duration_ms: 117.4824
+  type: 'test'
+  ...
+# Subtest: F26a client exact runtime and worker invocation paths cannot be replaced by same-byte siblings
+ok 650 - F26a client exact runtime and worker invocation paths cannot be replaced by same-byte siblings
+  ---
+  duration_ms: 82.5792
+  type: 'test'
+  ...
+# Subtest: F26a client missing or changed initial artifacts refuse before owner request
+ok 651 - F26a client missing or changed initial artifacts refuse before owner request
+  ---
+  duration_ms: 274.7722
+  type: 'test'
+  ...
+# Subtest: F26a client descriptor key root installation and artifact bindings must all verify before request
+ok 652 - F26a client descriptor key root installation and artifact bindings must all verify before request
+  ---
+  duration_ms: 417.1522
+  type: 'test'
+  ...
+# Subtest: F26a client descriptor framing and8192 byte cap withhold malformed endpoint metadata
+ok 653 - F26a client descriptor framing and8192 byte cap withhold malformed endpoint metadata
+  ---
+  duration_ms: 232.001
+  type: 'test'
+  ...
+# Subtest: F26a client verified current BLOCK remains useful while BUSY unavailable empty and thrown transport refuse
+ok 654 - F26a client verified current BLOCK remains useful while BUSY unavailable empty and thrown transport refuse
+  ---
+  duration_ms: 151.0493
+  type: 'test'
+  ...
+# Subtest: F26a client rejects wrong signed decision nonce session root and installation generation
+ok 655 - F26a client rejects wrong signed decision nonce session root and installation generation
+  ---
+  duration_ms: 127.0621
+  type: 'test'
+  ...
+# Subtest: F26a client rejects signed decisions with different index digest or identity including BLOCK
+ok 656 - F26a client rejects signed decisions with different index digest or identity including BLOCK
+  ---
+  duration_ms: 138.5029
+  type: 'test'
+  ...
+# Subtest: F26a client foreign forged malformed and oversized decision signatures cannot authorize
+ok 657 - F26a client foreign forged malformed and oversized decision signatures cannot authorize
+  ---
+  duration_ms: 147.3682
+  type: 'test'
+  ...
+# Subtest: F26a client signed prior nonce replay cannot authorize a later invocation
+ok 658 - F26a client signed prior nonce replay cannot authorize a later invocation
+  ---
+  duration_ms: 107.7659
+  type: 'test'
+  ...
+# Subtest: F26a client final synchronous index recapture rejects changed bytes and same-byte replacement
+ok 659 - F26a client final synchronous index recapture rejects changed bytes and same-byte replacement
+  ---
+  duration_ms: 577.9864
+  type: 'test'
+  ...
+# Subtest: F26a client descriptor restart byte drift and same-byte identity replacement revoke held decisions
+ok 660 - F26a client descriptor restart byte drift and same-byte identity replacement revoke held decisions
+  ---
+  duration_ms: 294.1342
+  type: 'test'
+  ...
+# Subtest: F26a client final runtime and worker hashes and identities reject await-time artifact replacement
+ok 661 - F26a client final runtime and worker hashes and identities reject await-time artifact replacement
+  ---
+  duration_ms: 385.0761
+  type: 'test'
+  ...
+# Subtest: F26a client monotonic whole-operation deadline rejects expiry reversal and nonfinite clocks
+ok 662 - F26a client monotonic whole-operation deadline rejects expiry reversal and nonfinite clocks
+  ---
+  duration_ms: 424.9286
+  type: 'test'
+  ...
+# Subtest: F26a client worker2MiB cap is inclusive and refuses larger actual pinned files before request
+ok 663 - F26a client worker2MiB cap is inclusive and refuses larger actual pinned files before request
+  ---
+  duration_ms: 194.3612
+  type: 'test'
+  ...
+# Subtest: F26a minimal pre-commit client bundles the canonical index parser without owner Git or editor authority
+ok 664 - F26a minimal pre-commit client bundles the canonical index parser without owner Git or editor authority
+  ---
+  duration_ms: 68.8413
+  type: 'test'
+  ...
+# Subtest: F26a absolute client deadline settles unavailable and closes its exact active streaming HTTP ownership
+ok 665 - F26a absolute client deadline settles unavailable and closes its exact active streaming HTTP ownership
+  ---
+  duration_ms: 205.7249
+  type: 'test'
+  ...
+# Subtest: F31b excluded Lite release cannot install or resume pre-commit even with the machine flag and caller approval
+ok 666 - F31b excluded Lite release cannot install or resume pre-commit even with the machine flag and caller approval
+  ---
+  duration_ms: 603.3783
+  type: 'test'
+  ...
+# Subtest: F31b excluded Lite release retains explicit owned-hook recovery while disabled
+ok 667 - F31b excluded Lite release retains explicit owned-hook recovery while disabled
+  ---
+  duration_ms: 6.2258
+  type: 'test'
+  ...
+# Subtest: F31b unreadable release capability refuses new pre-commit grants without leaking metadata errors
+ok 668 - F31b unreadable release capability refuses new pre-commit grants without leaking metadata errors
+  ---
+  duration_ms: 4.3515
+  type: 'test'
+  ...
+# Subtest: F26a registration and status are default-off frozen metadata without filesystem keys children or listeners
+ok 669 - F26a registration and status are default-off frozen metadata without filesystem keys children or listeners
+  ---
+  duration_ms: 5.8199
+  type: 'test'
+  ...
+# Subtest: F26a install resume restore and legacy install ignore every public argument and validate completed result identity
+ok 670 - F26a install resume restore and legacy install ignore every public argument and validate completed result identity
+  ---
+  duration_ms: 5.7135
+  type: 'test'
+  ...
+# Subtest: F26a legacy copy gives fixed owning-editor guidance without clipboard access or executable hook text
+ok 671 - F26a legacy copy gives fixed owning-editor guidance without clipboard access or executable hook text
+  ---
+  duration_ms: 4.3647
+  type: 'test'
+  ...
+# Subtest: F26a completed-looking APPLIED RESUMED RESTORED results are unavailable when current rejects them
+ok 672 - F26a completed-looking APPLIED RESUMED RESTORED results are unavailable when current rejects them
+  ---
+  duration_ms: 4.7993
+  type: 'test'
+  ...
+# Subtest: F26a all mutation commands share one pending lock while status remains side effect free
+ok 673 - F26a all mutation commands share one pending lock while status remains side effect free
+  ---
+  duration_ms: 4.5662
+  type: 'test'
+  ...
+# Subtest: F26a private controller and publication errors produce fixed unavailable results and release the pending lock
+ok 674 - F26a private controller and publication errors produce fixed unavailable results and release the pending lock
+  ---
+  duration_ms: 4.3556
+  type: 'test'
+  ...
+# Subtest: F26a flag-off install and resume refuse caller overrides while explicit reviewed restore remains callable
+ok 675 - F26a flag-off install and resume refuse caller overrides while explicit reviewed restore remains callable
+  ---
+  duration_ms: 5.2804
+  type: 'test'
+  ...
+# Subtest: F26a disposed registrations suppress late success unregister every command and refuse retained handlers
+ok 676 - F26a disposed registrations suppress late success unregister every command and refuse retained handlers
+  ---
+  duration_ms: 4.9795
+  type: 'test'
+  ...
+# Subtest: F26a initial withdrawn or disposed controller cannot authenticate forged copied or cancelled lifecycle results
+ok 677 - F26a initial withdrawn or disposed controller cannot authenticate forged copied or cancelled lifecycle results
+  ---
+  duration_ms: 3.3947
+  type: 'test'
+  ...
+# Subtest: F26a actual configuration and workspace listeners withdraw controller authority without resource I/O
+ok 678 - F26a actual configuration and workspace listeners withdraw controller authority without resource I/O
+  ---
+  duration_ms: 3.4975
+  type: 'test'
+  ...
+# Subtest: F26a initial status withholds absent multiple or nonlocal roots without filesystem key child or listener access
+ok 679 - F26a initial status withholds absent multiple or nonlocal roots without filesystem key child or listener access
+  ---
+  duration_ms: 4.4121
+  type: 'test'
+  ...
+# Subtest: F26a strict owner flag accepts only global boolean true and an explicit false defeats the default
+ok 680 - F26a strict owner flag accepts only global boolean true and an explicit false defeats the default
+  ---
+  duration_ms: 4.712
+  type: 'test'
+  ...
+# Subtest: F26a missing inspect and nonboolean defaults fail closed without using merged get values
+ok 681 - F26a missing inspect and nonboolean defaults fail closed without using merged get values
+  ---
+  duration_ms: 8.2476
+  type: 'test'
+  ...
+# Subtest: F26a workspace and folder values cannot grant or revoke the strict machine owner or boolean default
+ok 682 - F26a workspace and folder values cannot grant or revoke the strict machine owner or boolean default
+  ---
+  duration_ms: 11.1048
+  type: 'test'
+  ...
+# Subtest: F26a untrusted and remote environments cannot enable a globally approved owner hook
+ok 683 - F26a untrusted and remote environments cannot enable a globally approved owner hook
+  ---
+  duration_ms: 5.4695
+  type: 'test'
+  ...
+# Subtest: F26a configuration access and inspect errors fail closed without exposing raw diagnostics
+ok 684 - F26a configuration access and inspect errors fail closed without exposing raw diagnostics
+  ---
+  duration_ms: 5.9557
+  type: 'test'
+  ...
+# Subtest: F26a real controller reviewed resume replaces a valid signed prior descriptor with a new signed session
+ok 685 - F26a real controller reviewed resume replaces a valid signed prior descriptor with a new signed session
+  ---
+  duration_ms: 1308.054
+  type: 'test'
+  ...
+# Subtest: F26a real controller preserves a tampered prior descriptor and refuses resume rather than overwriting it
+ok 686 - F26a real controller preserves a tampered prior descriptor and refuses resume rather than overwriting it
+  ---
+  duration_ms: 204.8868
+  type: 'test'
+  ...
+# Subtest: F26a real controller stale restore review preserves a newer generation record and edited hook
+ok 687 - F26a real controller stale restore review preserves a newer generation record and edited hook
+  ---
+  duration_ms: 126.4823
+  type: 'test'
+  ...
+# Subtest: F26a real controller stale record after backup retrieval cannot be overwritten by rollback bookkeeping
+ok 688 - F26a real controller stale record after backup retrieval cannot be overwritten by rollback bookkeeping
+  ---
+  duration_ms: 100.4539
+  type: 'test'
+  ...
+# Subtest: F26a real controller withdraws live status and result authority when its exact service becomes unavailable
+ok 689 - F26a real controller withdraws live status and result authority when its exact service becomes unavailable
+  ---
+  duration_ms: 109.296
+  type: 'test'
+  ...
+# Subtest: F26a real controller cannot replace a missing signing key while resuming retained ownership
+ok 690 - F26a real controller cannot replace a missing signing key while resuming retained ownership
+  ---
+  duration_ms: 88.5927
+  type: 'test'
+  ...
+# Subtest: F26a real controller useful restore durably retains exact private journal and opaque public discoverability
+ok 691 - F26a real controller useful restore durably retains exact private journal and opaque public discoverability
+  ---
+  duration_ms: 108.7263
+  type: 'test'
+  ...
+# Subtest: F26a real controller journal-store race retains its private revision without overwriting a foreign root record
+ok 692 - F26a real controller journal-store race retains its private revision without overwriting a foreign root record
+  ---
+  duration_ms: 115.2877
+  type: 'test'
+  ...
+# Subtest: F26a final scan release observes withdrawal invoked inside an otherwise true owner callback
+ok 693 - F26a final scan release observes withdrawal invoked inside an otherwise true owner callback
+  ---
+  duration_ms: 1155.6117
+  type: 'test'
+  ...
+# Subtest: F26a final scan release observes withdrawal invoked inside an otherwise valid clock callback
+ok 694 - F26a final scan release observes withdrawal invoked inside an otherwise valid clock callback
+  ---
+  duration_ms: 238.8659
+  type: 'test'
+  ...
+# Subtest: F26a final scan release charges time elapsed inside the owner validity callback
+ok 695 - F26a final scan release charges time elapsed inside the owner validity callback
+  ---
+  duration_ms: 221.8129
+  type: 'test'
+  ...
+# Subtest: F26a final scan release charges time spent recapturing genuine effective-index metadata
+ok 696 - F26a final scan release charges time spent recapturing genuine effective-index metadata
+  ---
+  duration_ms: 239.5692
+  type: 'test'
+  ...
+# Subtest: F26a process close join observes withdrawal invoked inside its otherwise true owner callback
+ok 697 - F26a process close join observes withdrawal invoked inside its otherwise true owner callback
+  ---
+  duration_ms: 122.7576
+  type: 'test'
+  ...
+# Subtest: F26a process close join observes withdrawal invoked inside its otherwise valid clock callback
+ok 698 - F26a process close join observes withdrawal invoked inside its otherwise valid clock callback
+  ---
+  duration_ms: 120.6745
+  type: 'test'
+  ...
+# Subtest: F26a process close join charges elapsed time inside its owner validity callback
+ok 699 - F26a process close join charges elapsed time inside its owner validity callback
+  ---
+  duration_ms: 108.5596
+  type: 'test'
+  ...
+# Subtest: F26a process close join charges elapsed time inside genuine effective-index recapture
+ok 700 - F26a process close join charges elapsed time inside genuine effective-index recapture
+  ---
+  duration_ms: 113.0912
+  type: 'test'
+  ...
+# Subtest: F26a process pins version executable safe prefix environment and metadata-job cwd
+ok 701 - F26a process pins version executable safe prefix environment and metadata-job cwd
+  ---
+  duration_ms: 193.9766
+  type: 'test'
+  ...
+# Subtest: F26a entries process uses the actual checked root and literal stage-NUL suffix
+ok 702 - F26a entries process uses the actual checked root and literal stage-NUL suffix
+  ---
+  duration_ms: 102.0295
+  type: 'test'
+  ...
+# Subtest: F26a sizes process puts validated IDs only in private stdin with a fixed batch-check suffix
+ok 703 - F26a sizes process puts validated IDs only in private stdin with a fixed batch-check suffix
+  ---
+  duration_ms: 114.9598
+  type: 'test'
+  ...
+# Subtest: F26a batch process sends no sizes paths or content through argv or environment
+ok 704 - F26a batch process sends no sizes paths or content through argv or environment
+  ---
+  duration_ms: 105.186
+  type: 'test'
+  ...
+# Subtest: F26a process waits for real close after both EOFs
+ok 705 - F26a process waits for real close after both EOFs
+  ---
+  duration_ms: 114.2996
+  type: 'test'
+  ...
+# Subtest: F26a process waits for each EOF after a close0 observation
+ok 706 - F26a process waits for each EOF after a close0 observation
+  ---
+  duration_ms: 113.4171
+  type: 'test'
+  ...
+# Subtest: F26a process copies held private chunks instead of retaining caller-mutable buffers
+ok 707 - F26a process copies held private chunks instead of retaining caller-mutable buffers
+  ---
+  duration_ms: 125.8885
+  type: 'test'
+  ...
+# Subtest: F26a process rejects nonzero missing-exit and signalled fake closures
+ok 708 - F26a process rejects nonzero missing-exit and signalled fake closures
+  ---
+  duration_ms: 268.4427
+  type: 'test'
+  ...
+# Subtest: F26a process consumes bounded private stderr without returning a raw diagnostic
+ok 709 - F26a process consumes bounded private stderr without returning a raw diagnostic
+  ---
+  duration_ms: 123.5447
+  type: 'test'
+  ...
+# Subtest: F26a process withholds stderr over8192 while preserving actual child ownership
+ok 710 - F26a process withholds stderr over8192 while preserving actual child ownership
+  ---
+  duration_ms: 102.5129
+  type: 'test'
+  ...
+# Subtest: F26a process enforces each exact stdout cap independently
+ok 711 - F26a process enforces each exact stdout cap independently
+  ---
+  duration_ms: 433.8125
+  type: 'test'
+  ...
+# Subtest: F26a process admits128 unique size IDs and the exact1MiB declared batch budget
+ok 712 - F26a process admits128 unique size IDs and the exact1MiB declared batch budget
+  ---
+  duration_ms: 156.6957
+  type: 'test'
+  ...
+# Subtest: F26a process rejects unknown operations extra keys and route argv environment injection
+ok 713 - F26a process rejects unknown operations extra keys and route argv environment injection
+  ---
+  duration_ms: 449.1671
+  type: 'test'
+  ...
+# Subtest: F26a process rejects malformed duplicate empty oversized and option-looking OID arrays
+ok 714 - F26a process rejects malformed duplicate empty oversized and option-looking OID arrays
+  ---
+  duration_ms: 291.7103
+  type: 'test'
+  ...
+# Subtest: F26a process rejects malformed batch size object and aggregate budgets before spawn
+ok 715 - F26a process rejects malformed batch size object and aggregate budgets before spawn
+  ---
+  duration_ms: 257.8588
+  type: 'test'
+  ...
+# Subtest: F26a process never evaluates accessor operation array or object fields
+ok 716 - F26a process never evaluates accessor operation array or object fields
+  ---
+  duration_ms: 111.6827
+  type: 'test'
+  ...
+# Subtest: F26a process refuses checked-index lookalikes without invoking their available accessor
+ok 717 - F26a process refuses checked-index lookalikes without invoking their available accessor
+  ---
+  duration_ms: 61.8766
+  type: 'test'
+  ...
+# Subtest: F26a process pre-start withdrawal is sticky and starts no child
+ok 718 - F26a process pre-start withdrawal is sticky and starts no child
+  ---
+  duration_ms: 61.365
+  type: 'test'
+  ...
+# Subtest: F26a active withdrawal clears private data and stays busy until close plus both EOFs
+ok 719 - F26a active withdrawal clears private data and stays busy until close plus both EOFs
+  ---
+  duration_ms: 134.5579
+  type: 'test'
+  ...
+# Subtest: F26a process rejects expired nonfinite deadlines and unavailable guards before spawn
+ok 720 - F26a process rejects expired nonfinite deadlines and unavailable guards before spawn
+  ---
+  duration_ms: 106.2444
+  type: 'test'
+  ...
+# Subtest: F26a elapsed deadline withdraws after fake admission with a held deterministic clock
+ok 721 - F26a elapsed deadline withdraws after fake admission with a held deterministic clock
+  ---
+  duration_ms: 93.8139
+  type: 'test'
+  ...
+# Subtest: F26a process never extends its60second bound to a later caller deadline
+ok 722 - F26a process never extends its60second bound to a later caller deadline
+  ---
+  duration_ms: 91.2498
+  type: 'test'
+  ...
+# Subtest: F26a clock reversal or nonfinite values withhold apparently successful completion
+ok 723 - F26a clock reversal or nonfinite values withhold apparently successful completion
+  ---
+  duration_ms: 206.0359
+  type: 'test'
+  ...
+# Subtest: F26a valid guard withdrawal and later reenable cannot release buffered bytes
+ok 724 - F26a valid guard withdrawal and later reenable cannot release buffered bytes
+  ---
+  duration_ms: 159.8518
+  type: 'test'
+  ...
+# Subtest: F26a checked-index drift blocks admission and late drift withholds completion
+ok 725 - F26a checked-index drift blocks admission and late drift withholds completion
+  ---
+  duration_ms: 214.8555
+  type: 'test'
+  ...
+# Subtest: F26a stdout stderr and stdin errors withhold without destroying owned pipes
+ok 726 - F26a stdout stderr and stdin errors withhold without destroying owned pipes
+  ---
+  duration_ms: 185.5281
+  type: 'test'
+  ...
+# Subtest: F26a spawn throws and a no-PID spawn error return unavailable without fabricated child closure
+ok 727 - F26a spawn throws and a no-PID spawn error return unavailable without fabricated child closure
+  ---
+  duration_ms: 258.6116
+  type: 'test'
+  ...
+# Subtest: F26a an error after PID ownership retains busy until actual close and EOFs
+ok 728 - F26a an error after PID ownership retains busy until actual close and EOFs
+  ---
+  duration_ms: 115.5827
+  type: 'test'
+  ...
+1..728
+# tests 752
+# suites 7
+# pass 752
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 204000.1652

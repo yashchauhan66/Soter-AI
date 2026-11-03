@@ -1,0 +1,131 @@
+{
+  "id": "GHSA-gfr2-rv44-r23c",
+  "endpoint": "https://api.osv.dev/v1/vulns/GHSA-gfr2-rv44-r23c",
+  "method": "GET",
+  "startedAt": "2026-11-03T02:51:39.554Z",
+  "statusCode": 200,
+  "contentType": "application/json",
+  "contentEncoding": "",
+  "requestClose": true,
+  "responseClose": true,
+  "responseEnd": true,
+  "responseComplete": true,
+  "timedOut": false,
+  "overflow": false,
+  "aborted": false,
+  "error": null,
+  "elapsedMs": 512.6503999999986,
+  "finishedAt": "2026-11-03T02:51:40.064Z",
+  "retainedBytes": 5476,
+  "observedBytes": 5476,
+  "rawResponse": {
+    "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/advisory-detail-runner-01-results/detail-23-response.bin",
+    "bytes": 5476,
+    "sha256": "8b6dc66cfef00e5c8db0bf79d29d6e36dbaaafa68a6b565779248ca2c15e897d"
+  },
+  "interpretation": {
+    "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+    "id": "GHSA-gfr2-rv44-r23c",
+    "modified": "2026-10-20T20:45:05.953469039Z",
+    "published": "2026-10-20T20:28:44Z",
+    "withdrawn": null,
+    "summary": "markdown-it: Quadratic-time rendering of a single multi-line link reference definition with default options (regression since 14.0)",
+    "aliases": [
+      "CVE-2026-111758"
+    ],
+    "severity": [
+      {
+        "type": "CVSS_V3",
+        "score": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+      }
+    ],
+    "databaseSpecificSeverity": "HIGH",
+    "affected": [
+      {
+        "package": {
+          "name": "markdown-it",
+          "ecosystem": "npm",
+          "purl": "pkg:npm/markdown-it"
+        },
+        "ranges": [
+          {
+            "type": "SEMVER",
+            "events": [
+              {
+                "introduced": "14.1.0"
+              },
+              {
+                "fixed": "14.3.3"
+              }
+            ]
+          }
+        ],
+        "listedVersions": [],
+        "severity": [],
+        "databaseSpecificSeverity": null
+      },
+      {
+        "package": {
+          "name": "markdown-it",
+          "ecosystem": "npm",
+          "purl": "pkg:npm/markdown-it"
+        },
+        "ranges": [
+          {
+            "type": "SEMVER",
+            "events": [
+              {
+                "introduced": "15.0.0"
+              },
+              {
+                "fixed": "15.0.3"
+              }
+            ]
+          }
+        ],
+        "listedVersions": [],
+        "severity": [],
+        "databaseSpecificSeverity": null
+      }
+    ],
+    "references": [
+      {
+        "type": "WEB",
+        "url": "https://github.com/markdown-it/markdown-it/security/advisories/GHSA-gfr2-rv44-r23c"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/markdown-it/markdown-it/commit/48fbc465812c440020c663f040ab22deaf8f1eca"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/markdown-it/markdown-it/commit/d99f48839d37af6fd8a2617516c43dab90755503"
+      },
+      {
+        "type": "PACKAGE",
+        "url": "https://github.com/markdown-it/markdown-it"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/markdown-it/markdown-it/releases/tag/14.3.3"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/markdown-it/markdown-it/releases/tag/15.0.3"
+      }
+    ],
+    "associations": [
+      {
+        "name": "markdown-it",
+        "version": "14.3.0",
+        "ecosystem": "npm",
+        "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+        "recordPackageMatch": true,
+        "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+      }
+    ],
+    "missingSeverity": false,
+    "noGuessedSeverityOrFixedVersion": true,
+    "releaseReady": false
+  }
+}

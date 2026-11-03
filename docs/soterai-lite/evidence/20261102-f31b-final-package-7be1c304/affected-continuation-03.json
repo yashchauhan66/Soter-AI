@@ -1,0 +1,64 @@
+{
+  "status": "PREPARED_NORMAL_ROUND03_SAME_ORACLES_DEADLINES_SOURCE_OBJECT_NO_NATIVE_RUN",
+  "observedAt": "2026-11-03T02:17:27.549Z",
+  "normalImprovementRound": 3,
+  "binding": {
+    "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/native-binding-01.json",
+    "bytes": 19953,
+    "sha256": "c653a5714a58a6c633dc0bee58984e8e08da2b59737bd58fa5c39a3a8668bfbe"
+  },
+  "sourceProof": {
+    "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/full-inputs-04.json",
+    "bytes": 223544,
+    "sha256": "221bd5c7b0ad1753365b6ae3526c77db2b02f0192a3be41bfe0bfed9240c5e99"
+  },
+  "vsix": {
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-f31b-20261102-attempt03.vsix",
+    "bytes": 1735938,
+    "sha256": "6231159d484a70b284945a61cd8d341b13f809336427c5a57debd807759c688c"
+  },
+  "runner": {
+    "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/run-affected-06.cjs",
+    "bytes": 4830,
+    "sha256": "d1815b2f085d19264d5f00c7ae19aa352714e7433a162f9a5b98c8c578886873"
+  },
+  "observer": {
+    "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/observe-prior-owner-03.ps1",
+    "bytes": 1851,
+    "sha256": "71af453da58d08924177327ce9a72e15543d8fea7ee45fac915d5fd5ecd9f6c6"
+  },
+  "priorFailures": [
+    {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/affected-chain-failure-01.json",
+      "bytes": 2469,
+      "sha256": "303809945278fb0088f8c35bf673fcc9ce09df39a6365fd9ee9232fc0d8b1833"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/affected-chain-failure-02.json",
+      "bytes": 1056,
+      "sha256": "aceea546915ad3224ddb1568cf039969cff78baf1a5796a27da5d8dcfd62cde9"
+    }
+  ],
+  "retainedPrimary": {
+    "passed": 102,
+    "failed": 1,
+    "id": "F14-H11",
+    "peerLog": {
+      "path": "D:/SoterAI-Lite-test-profiles/f26a-retained-native-20261102T170314Z-9290fb35/peer-profile/logs/20261102T223348/main.log",
+      "bytes": 2762,
+      "sha256": "f95c1a2e9e91697fbd065d086bdd0f0908f00bd563b35a9c5498f19fb3738972"
+    },
+    "observedFailure": "Peer Code failed memory allocation/renderer OOM before peer-ready receipt; precise allocation cause unconfirmed, no product blame/pass inferred."
+  },
+  "priorAccepted": [
+    "ps51",
+    "editor"
+  ],
+  "sequence": [
+    "functional10_security17",
+    "mcp25",
+    "retained106"
+  ],
+  "changes": "Ordering and fresh normal-round identity only. Same original assertions/bootstrap/drivers/phase deadlines/exact object. Each failed family has had only ONE actual attempt. No F26a original34, OS change, signals, push or new dependency query.",
+  "signalsRequested": 0
+}

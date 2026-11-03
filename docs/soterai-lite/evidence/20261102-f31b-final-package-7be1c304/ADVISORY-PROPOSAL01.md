@@ -1,0 +1,29 @@
+# F31b bounded public-metadata advisory proposal
+
+Preparation only, 3 November 2026. **NOT_AUTHORIZED / NOT_RUN.** This proposal neither authorizes requests nor establishes a clean advisory, lockfile, native, human or release result. F26a remains skipped and unsupported. No product/proof/fixture is changed.
+
+The exact candidate is `soterai-lite-0.7.0-f31b-20261102-attempt03.vsix`, 1,735,938 bytes, SHA256 `6231159d484a70b284945a61cd8d341b13f809336427c5a57debd807759c688c`. Source proof04 has 1,098 records and SHA256 `221bd5c7b0ad1753365b6ae3526c77db2b02f0192a3be41bfe0bfed9240c5e99`. Frozen `advisory-preparation-01.json` SHA256 `619dd0ae81cd10c8276e417b00b96f9731fd1f5ea29318e0d381cdad28236a77` enumerates the exact public metadata and request bodies. Root lockfile SHA256 is `04da44b8f4f1ff42fbabc545188e2a688f2573c73cf4d22c83880c3b0c99bf86`.
+
+## Proposed one-run authority
+
+Permit one invocation of the reviewed `advisory-runner-01.cjs --run`, with **at most eight initial POST requests** to the single fixed endpoint `https://api.osv.dev/v1/querybatch`. There are 284 unique public npm name/version pairs across 298 installed package instances: the three actually bundled runtime libraries and the installed dependency/optional/peer closure of vsce, esbuild, TypeScript, tsx, yauzl, yazl and sax. Exact eight body hashes are already frozen in advisory-preparation01. Batches contain at most 40 queries, no more than 65,536 body bytes each (prepared maximum 3,287; total 20,758).
+
+Only `package.name`, `package.ecosystem` (`npm`) and `version` leave the machine. No source text, paths, hashes, lockfile content, logs, environment values, npm/auth configuration, tokens, cookies or authentication are sent. The runner reads no environment/config/auth state and invokes no npm command, package script, download, login or host. Built-in HTTPS uses normal OS DNS/TLS for the fixed host, with no explicit proxy or credential configuration.
+
+Each request has a 20-second absolute deadline and a 2 MiB retained-response ceiling; the request chain has a 180-second outer bound. Redirects, retries, alternative hosts, advisory-detail requests, pagination requests and follow-ups are prohibited. A failure stops subsequent requests; unused requests remain NOT_RUN. Raw bounded response bytes, request-body hashes, response status/closure metadata and a qualified summary remain under a new exclusive `advisory-runner-01-results` directory. An oversized response retains only its bounded prefix and remains INCOMPLETE. No evidence is overwritten or deleted.
+
+## Admission and exact approval
+
+`node <P>/advisory-runner-01.cjs --validate` performs read-only validation and prints a small receipt; it creates neither consumption nor network evidence. It pins the proposal and preparation bytes, exact VSIX, proof and all 1,098 frozen records, root lockfile, source inventory and all 298 package metadata records, then reconstructs the exact public query list/body hashes.
+
+`--run` refuses before any request unless `<P>/advisory-runner-01-user-approval.json` contains a fresh, explicit, ONE-run owner decision. The owner-facing answer offered for this exact proposal is **"Ek bounded 8-request OSV metadata run allow karo"**. Generic continue is insufficient. The approval schema is exported by the inert runner's `approvalTemplate` helper; it requires the actual decision reference and verbatim answer, valid UTC timestamps with at most a one-hour lifetime, exact preparation/proposal/runner path+SHA256, and the fixed request scope. It is a locally retained attestation of the actual owner reply, not cryptographic proof of who authored a file. No approval file is created during preparation.
+
+After fresh pin/approval checks, the runner exclusively creates `advisory-runner-01-consumption.json` **before** networking. An existing consumption or output directory refuses; an interrupted/failed consumed run grants no retry. The runner rechecks its approval and pinned data immediately before exclusive consumption. Main reviews the final proposal/runner/test hashes and asks for fresh owner approval only after local controls and validation are complete.
+
+## Findings and remaining scope
+
+Wrong result count, malformed/unsupported response, pagination, transport/deadline/size failure or missing closure remain **INCOMPLETE**. Any returned advisory IDs require review. Eight valid complete responses covering all284 queries with zero matching IDs yield **CURRENT_ADVISORY_QUERY_COMPLETE_NO_MATCHES_IN_DECLARED_SCOPE**. This is precise current lookup evidence for the declared scope, not a vulnerability-free, global clean-audit or release-ready claim. No IDs are silently promoted into severity, affected-range, exploitability or remediation conclusions. Detail/pagination review needs a separately bounded proposal/authority; none is authorized here.
+
+The 34 uninstalled optional/platform entries are explicitly listed in preparation01. Required metadata missing0 and installed lock-version mismatches0 are metadata facts, not integrity/security approval. **745 other root-lockfile version records remain outside this Lite runtime/build scope and unaudited**; this is not a full monorepo lockfile audit. Manifest hashing does not authenticate complete package payloads, tarballs or native binaries. The declared-scope advisory lookup remains INCOMPLETE before execution or on incomplete responses; valid zero-match completion receives the qualified status above, while any matching IDs require findings review. Global release/human gates and `releaseReady:false` remain separate.
+
+No publish/push/tag, real provider payload, native rerun, normal profile change, process signal or OS/VM action is included. Original L6 HUMAN-ACTIONS and STOP remains unchanged. Same-lineage preparation has LOW independence.

@@ -1,0 +1,318 @@
+﻿TAP version 13
+# Subtest: missing approval cannot consume or request
+ok 1 - missing approval cannot consume or request
+  ---
+  duration_ms: 3.8667
+  type: 'test'
+  ...
+# Subtest: generic continue cannot consume or request
+ok 2 - generic continue cannot consume or request
+  ---
+  duration_ms: 2.6447
+  type: 'test'
+  ...
+# Subtest: authority refuses unapproved status before consume/request
+ok 3 - authority refuses unapproved status before consume/request
+  ---
+  duration_ms: 0.5791
+  type: 'test'
+  ...
+# Subtest: authority refuses multiple runs before consume/request
+ok 4 - authority refuses multiple runs before consume/request
+  ---
+  duration_ms: 2.074
+  type: 'test'
+  ...
+# Subtest: authority refuses missing decision reference before consume/request
+ok 5 - authority refuses missing decision reference before consume/request
+  ---
+  duration_ms: 0.6513
+  type: 'test'
+  ...
+# Subtest: authority refuses expired approval before consume/request
+ok 6 - authority refuses expired approval before consume/request
+  ---
+  duration_ms: 0.6777
+  type: 'test'
+  ...
+# Subtest: authority refuses future approval before consume/request
+ok 7 - authority refuses future approval before consume/request
+  ---
+  duration_ms: 0.3638
+  type: 'test'
+  ...
+# Subtest: authority refuses more than one hour before consume/request
+ok 8 - authority refuses more than one hour before consume/request
+  ---
+  duration_ms: 0.3524
+  type: 'test'
+  ...
+# Subtest: authority refuses wrong metadata before consume/request
+ok 9 - authority refuses wrong metadata before consume/request
+  ---
+  duration_ms: 0.9107
+  type: 'test'
+  ...
+# Subtest: authority refuses wrong proposal before consume/request
+ok 10 - authority refuses wrong proposal before consume/request
+  ---
+  duration_ms: 1.0949
+  type: 'test'
+  ...
+# Subtest: authority refuses wrong runner before consume/request
+ok 11 - authority refuses wrong runner before consume/request
+  ---
+  duration_ms: 0.6554
+  type: 'test'
+  ...
+# Subtest: authority refuses changed endpoint before consume/request
+ok 12 - authority refuses changed endpoint before consume/request
+  ---
+  duration_ms: 0.4435
+  type: 'test'
+  ...
+# Subtest: authority refuses ninth request before consume/request
+ok 13 - authority refuses ninth request before consume/request
+  ---
+  duration_ms: 0.2495
+  type: 'test'
+  ...
+# Subtest: authority refuses retry permission before consume/request
+ok 14 - authority refuses retry permission before consume/request
+  ---
+  duration_ms: 0.2795
+  type: 'test'
+  ...
+# Subtest: authority refuses redirect permission before consume/request
+ok 15 - authority refuses redirect permission before consume/request
+  ---
+  duration_ms: 0.2269
+  type: 'test'
+  ...
+# Subtest: authority refuses detail/pagination permission before consume/request
+ok 16 - authority refuses detail/pagination permission before consume/request
+  ---
+  duration_ms: 0.2448
+  type: 'test'
+  ...
+# Subtest: authority refuses authentication before consume/request
+ok 17 - authority refuses authentication before consume/request
+  ---
+  duration_ms: 0.2363
+  type: 'test'
+  ...
+# Subtest: authority refuses extra approval field before consume/request
+ok 18 - authority refuses extra approval field before consume/request
+  ---
+  duration_ms: 0.2077
+  type: 'test'
+  ...
+# Subtest: one valid exact approval consumes before injected request
+ok 19 - one valid exact approval consumes before injected request
+  ---
+  duration_ms: 1.7281
+  type: 'test'
+  ...
+# Subtest: exclusive consumption refusal makes zero requests
+ok 20 - exclusive consumption refusal makes zero requests
+  ---
+  duration_ms: 1.3384
+  type: 'test'
+  ...
+# Subtest: canonical public identities deduplicate nested same-version copies without sending paths
+ok 21 - canonical public identities deduplicate nested same-version copies without sending paths
+  ---
+  duration_ms: 27.9363
+  type: 'test'
+  ...
+# Subtest: non-package names cannot become outbound public identities
+ok 22 - non-package names cannot become outbound public identities
+  ---
+  duration_ms: 0.35
+  type: 'test'
+  ...
+# Subtest: prepared exact284 batch bodies match hashes; changed body or count refuses
+ok 23 - prepared exact284 batch bodies match hashes; changed body or count refuses
+  ---
+  duration_ms: 41.1415
+  type: 'test'
+  ...
+# Subtest: wrong result count remains incomplete
+ok 24 - wrong result count remains incomplete
+  ---
+  duration_ms: 1.3553
+  type: 'test'
+  ...
+# Subtest: pagination remains incomplete with no invented missing results
+ok 25 - pagination remains incomplete with no invented missing results
+  ---
+  duration_ms: 0.4083
+  type: 'test'
+  ...
+# Subtest: returned advisory IDs require review; no severity/remediation invented
+ok 26 - returned advisory IDs require review; no severity/remediation invented
+  ---
+  duration_ms: 0.3932
+  type: 'test'
+  ...
+# Subtest: valid empty result is scoped no-IDs evidence, not a global clean assertion
+ok 27 - valid empty result is scoped no-IDs evidence, not a global clean assertion
+  ---
+  duration_ms: 0.3189
+  type: 'test'
+  ...
+# Subtest: response refuses redirect
+ok 28 - response refuses redirect
+  ---
+  duration_ms: 0.2263
+  type: 'test'
+  ...
+# Subtest: response refuses HTTP failure
+ok 29 - response refuses HTTP failure
+  ---
+  duration_ms: 0.2313
+  type: 'test'
+  ...
+# Subtest: response refuses deadline
+ok 30 - response refuses deadline
+  ---
+  duration_ms: 0.1784
+  type: 'test'
+  ...
+# Subtest: response refuses oversize
+ok 31 - response refuses oversize
+  ---
+  duration_ms: 0.1736
+  type: 'test'
+  ...
+# Subtest: response refuses no response end
+ok 32 - response refuses no response end
+  ---
+  duration_ms: 0.2643
+  type: 'test'
+  ...
+# Subtest: response refuses incomplete response
+ok 33 - response refuses incomplete response
+  ---
+  duration_ms: 0.1859
+  type: 'test'
+  ...
+# Subtest: response refuses abort
+ok 34 - response refuses abort
+  ---
+  duration_ms: 0.2925
+  type: 'test'
+  ...
+# Subtest: response refuses stream error
+ok 35 - response refuses stream error
+  ---
+  duration_ms: 0.2024
+  type: 'test'
+  ...
+# Subtest: response refuses non-JSON type
+ok 36 - response refuses non-JSON type
+  ---
+  duration_ms: 0.1928
+  type: 'test'
+  ...
+# Subtest: response refuses unexpected compression
+ok 37 - response refuses unexpected compression
+  ---
+  duration_ms: 0.5864
+  type: 'test'
+  ...
+# Subtest: response refuses missing request close
+not ok 38 - response refuses missing request close
+  ---
+  duration_ms: 3.4617
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261102-f31b-final-package-7be1c304\\advisory-controls-01.test.cjs:81:4'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'NO_ADVISORY_IDS_REPORTED_SCOPE_ONLY_NOT_A_CLEAN_AUDIT'
+    - 'INCOMPLETE'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'INCOMPLETE'
+  actual: 'NO_ADVISORY_IDS_REPORTED_SCOPE_ONLY_NOT_A_CLEAN_AUDIT'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261102-f31b-final-package-7be1c304\advisory-controls-01.test.cjs:81:87)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: response refuses missing response close
+not ok 39 - response refuses missing response close
+  ---
+  duration_ms: 0.675
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261102-f31b-final-package-7be1c304\\advisory-controls-01.test.cjs:81:4'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'NO_ADVISORY_IDS_REPORTED_SCOPE_ONLY_NOT_A_CLEAN_AUDIT'
+    - 'INCOMPLETE'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'INCOMPLETE'
+  actual: 'NO_ADVISORY_IDS_REPORTED_SCOPE_ONLY_NOT_A_CLEAN_AUDIT'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261102-f31b-final-package-7be1c304\advisory-controls-01.test.cjs:81:87)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: malformed JSON, invalid UTF8 and non-object result refuse
+ok 40 - malformed JSON, invalid UTF8 and non-object result refuse
+  ---
+  duration_ms: 0.8092
+  type: 'test'
+  ...
+# Subtest: oversize raw response refuses even without overflow metadata
+ok 41 - oversize raw response refuses even without overflow metadata
+  ---
+  duration_ms: 0.3793
+  type: 'test'
+  ...
+# Subtest: missing batch or incomplete batch remains incomplete in aggregation
+ok 42 - missing batch or incomplete batch remains incomplete in aggregation
+  ---
+  duration_ms: 0.7547
+  type: 'test'
+  ...
+# Subtest: valid full empty set gets precise current declared-scope status and retains global limits
+ok 43 - valid full empty set gets precise current declared-scope status and retains global limits
+  ---
+  duration_ms: 0.2557
+  type: 'test'
+  ...
+# Subtest: one advisory batch prevents no-match aggregate and requires findings review
+ok 44 - one advisory batch prevents no-match aggregate and requires findings review
+  ---
+  duration_ms: 0.4238
+  type: 'test'
+  ...
+1..44
+# tests 44
+# suites 0
+# pass 42
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 190.2049

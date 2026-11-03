@@ -35,6 +35,13 @@ proprietary.
 | `n8n-nodes-soterai` | `packages/integrations/n8n` | MIT | npm |
 | `soterai-ide-guard` | `packages/vscode-extension` | BUSL-1.1 | VS Code Marketplace, Open VSX |
 
+For the new Lite extension at `packages/soterai-lite`, the owner explicitly
+selected preservation of the existing extension's BUSL-1.1 terms on2November2026.
+Its complete `LICENSE.md` retains the original parameters, terms and covenants;
+bundled third-party components retain their own notices. This records the new
+Lite component's selected terms, not a publication or a change to earlier
+published versions or the root license.
+
 Browser-extension builds distributed through the Microsoft Edge Add-ons store
 are governed by that store's listing terms; the source in `apps/extension` is
 proprietary.

@@ -4,4 +4,4 @@ SoterAI can find raw secrets in sensitive project files such as `.env`, private-
 
 Review every finding before any change is made. When you approve migration, SoterAI stores encrypted recovery data outside your project and replaces raw values on disk with safe placeholders.
 
-That means AI tools and CLI agents that read files directly see placeholders instead of secret values.
+After a successful migration, direct readers see placeholders for the selected migrated values in those current saved files. Other copies, values not detected or selected, inherited environments and independent same-user processes remain outside this protection.

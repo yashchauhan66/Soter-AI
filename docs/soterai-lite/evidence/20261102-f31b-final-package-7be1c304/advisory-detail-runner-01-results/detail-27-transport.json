@@ -1,0 +1,181 @@
+{
+  "id": "GHSA-q2hr-2g5m-vwhr",
+  "endpoint": "https://api.osv.dev/v1/vulns/GHSA-q2hr-2g5m-vwhr",
+  "method": "GET",
+  "startedAt": "2026-11-03T02:51:42.636Z",
+  "statusCode": 200,
+  "contentType": "application/json",
+  "contentEncoding": "",
+  "requestClose": true,
+  "responseClose": true,
+  "responseEnd": true,
+  "responseComplete": true,
+  "timedOut": false,
+  "overflow": false,
+  "aborted": false,
+  "error": null,
+  "elapsedMs": 612.0367000000006,
+  "finishedAt": "2026-11-03T02:51:43.246Z",
+  "retainedBytes": 5950,
+  "observedBytes": 5950,
+  "rawResponse": {
+    "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/advisory-detail-runner-01-results/detail-27-response.bin",
+    "bytes": 5950,
+    "sha256": "3f3da62dcf8a241628f0873336d8fab4334a3bfdcff3ff91359cb4c8350a6283"
+  },
+  "interpretation": {
+    "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+    "id": "GHSA-q2hr-2g5m-vwhr",
+    "modified": "2026-09-30T00:00:03.849541183Z",
+    "published": "2026-09-29T23:45:39Z",
+    "withdrawn": null,
+    "summary": "brace-expansion: Quadratic-time expansion of the `{a},b}` rewrite causes CPU denial of service",
+    "aliases": [
+      "CVE-2026-102277"
+    ],
+    "severity": [
+      {
+        "type": "CVSS_V3",
+        "score": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
+      }
+    ],
+    "databaseSpecificSeverity": "MODERATE",
+    "affected": [
+      {
+        "package": {
+          "name": "brace-expansion",
+          "ecosystem": "npm",
+          "purl": "pkg:npm/brace-expansion"
+        },
+        "ranges": [
+          {
+            "type": "SEMVER",
+            "events": [
+              {
+                "introduced": "4.0.0"
+              },
+              {
+                "fixed": "5.0.12"
+              }
+            ]
+          }
+        ],
+        "listedVersions": [],
+        "severity": [],
+        "databaseSpecificSeverity": null
+      },
+      {
+        "package": {
+          "name": "brace-expansion",
+          "ecosystem": "npm",
+          "purl": "pkg:npm/brace-expansion"
+        },
+        "ranges": [
+          {
+            "type": "SEMVER",
+            "events": [
+              {
+                "introduced": "3.0.0"
+              },
+              {
+                "fixed": "3.0.9"
+              }
+            ]
+          }
+        ],
+        "listedVersions": [],
+        "severity": [],
+        "databaseSpecificSeverity": null
+      },
+      {
+        "package": {
+          "name": "brace-expansion",
+          "ecosystem": "npm",
+          "purl": "pkg:npm/brace-expansion"
+        },
+        "ranges": [
+          {
+            "type": "SEMVER",
+            "events": [
+              {
+                "introduced": "2.0.0"
+              },
+              {
+                "fixed": "2.1.7"
+              }
+            ]
+          }
+        ],
+        "listedVersions": [],
+        "severity": [],
+        "databaseSpecificSeverity": null
+      },
+      {
+        "package": {
+          "name": "brace-expansion",
+          "ecosystem": "npm",
+          "purl": "pkg:npm/brace-expansion"
+        },
+        "ranges": [
+          {
+            "type": "SEMVER",
+            "events": [
+              {
+                "introduced": "0"
+              },
+              {
+                "fixed": "1.1.21"
+              }
+            ]
+          }
+        ],
+        "listedVersions": [],
+        "severity": [],
+        "databaseSpecificSeverity": null
+      }
+    ],
+    "references": [
+      {
+        "type": "WEB",
+        "url": "https://github.com/juliangruber/brace-expansion/security/advisories/GHSA-q2hr-2g5m-vwhr"
+      },
+      {
+        "type": "ADVISORY",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-102277"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/juliangruber/brace-expansion/commit/33a5ef17b8d800bbfa8c52b14c39043b6aac1a96"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/juliangruber/brace-expansion/commit/bdff773f98e5988616b7039cc9b508df5d640b22"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/juliangruber/brace-expansion/commit/c55e67d8d8b1c56a2474afff15c2891166b2d364"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/juliangruber/brace-expansion/commit/ffdfa3e3806bed17c0874b8f1439b084de354a7e"
+      },
+      {
+        "type": "PACKAGE",
+        "url": "https://github.com/juliangruber/brace-expansion"
+      }
+    ],
+    "associations": [
+      {
+        "name": "brace-expansion",
+        "version": "5.0.9",
+        "ecosystem": "npm",
+        "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+        "recordPackageMatch": true,
+        "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+      }
+    ],
+    "missingSeverity": false,
+    "noGuessedSeverityOrFixedVersion": true,
+    "releaseReady": false
+  }
+}

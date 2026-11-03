@@ -1,0 +1,26 @@
+{
+  "status": "AUTHORED_CHECKPOINT03_NO_PREPARE_COMMIT_GIT_NATIVE_EXECUTION",
+  "observedAt": "2026-11-03T02:53:06.797Z",
+  "previous": {
+    "name": "scoped-f31b-source-checkpoint-02.cjs",
+    "sha256": "4631289401c064c006f6b21a002f31c05c196cc40d0e00371c5a417a0429170c"
+  },
+  "helper": {
+    "name": "scoped-f31b-source-checkpoint-03.cjs",
+    "bytes": 23425,
+    "sha256": "ea36f9baffe3fbde59934911fc6ac7a697026abc4af29b1aa4896a7d176b9f7f"
+  },
+  "admission": {
+    "name": "scoped-f31b-source-checkpoint-03-admission.cjs",
+    "bytes": 10088,
+    "sha256": "b6f67c8667677fd7f836286d6ea0a59d61c3c4713cb4615f2d7b40791118a36d"
+  },
+  "syntaxOnly": "Two vm.Script parses; neither helper nor admission function executed.",
+  "parent": "0affcdd0a46ff0e5d6921b69356303b7dd6d22b4",
+  "sourceCount": 18,
+  "featureComplete": false,
+  "nextFeatureSelected": false,
+  "nativeAdmission": "CLOSED_FOR_CHANGED_EDGE_VENDOR_BYTES",
+  "freezeCondition": "Root waits until all detail/evidence writers close; helper then requires stable snapshots and accepted closure evidence.",
+  "rationale": "Retaining already accepted evidence in a local INCOMPLETE checkpoint does not launch or test the updated vendor. Historical tested binding and drift remain separate immutable facts."
+}

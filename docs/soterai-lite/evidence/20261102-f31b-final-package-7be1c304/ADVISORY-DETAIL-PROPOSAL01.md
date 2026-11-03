@@ -1,0 +1,25 @@
+# F31b exact42 advisory-detail follow-up proposal
+
+Preparation only, 3 November2026. **NOT_AUTHORIZED / NOT_RUN.** Prior ONE eight-request permission was consumed; it authorizes no follow-up. No new product/source/proof/fixture or network action is included in preparing this proposal.
+
+The authorized initial OSV query returned42 unique GHSA IDs across nine installed build-tool package versions. The three actually embedded runtime libraries returned no matching IDs in that lookup. `advisory-result-review-01.json` SHA256 `b496c352b997769ecee4c5cf7b6fbcf9e6dc5a43d9fd812e2c237147617f49ab` binds every positional query/result, original approval/consumption, raw response and transport closure. The fixed candidate remains VSIX SHA256 `6231159d484a70b284945a61cd8d341b13f809336427c5a57debd807759c688c`; source proof04 SHA256 `221bd5c7b0ad1753365b6ae3526c77db2b02f0192a3be41bfe0bfed9240c5e99`; initial public metadata SHA256 `619dd0ae81cd10c8276e417b00b96f9731fd1f5ea29318e0d381cdad28236a77`.
+
+## Proposed ONE detail run
+
+Permit one reviewed `advisory-detail-runner-01.cjs --run` invocation, at most42 sequential **GET** requests, one per exact already-observed GHSA ID, to the fixed `https://api.osv.dev/v1/vulns/{id}` endpoint. The ID list is derived only from the pinned raw-result review and matched against the original eight bounded responses. No new package/version search is proposed. Only a public advisory ID is placed in the fixed HTTPS path. No source, paths, hashes, credentials, cookies, auth headers, environment values, lockfile, npm/auth configuration or logs are sent.
+
+Absolute deadline10seconds/request, raw response ceiling1MiB/request, outer request-chain budget8minutes. Explicit TLS certificate verification remains enabled. No redirects, retries, pagination, alternative hosts, advisory-reference URL visits, downloaded code, installations or credentials are allowed. OS DNS/TLS for this fixed host remains normal platform behavior. Failure stops later requests, which remain NOT_RUN. Raw bounded responses and transport end/complete/request-close/response-close metadata are retained in a new exclusive `advisory-detail-runner-01-results` directory; no older evidence is overwritten or deleted.
+
+Expected records can provide affected ecosystems/package names, ranges/events/listed versions, published/modified/withdrawn data, severity vectors or explicit database labels, summaries and reference strings. The runner captures these as untrusted public metadata; it neither follows references, executes anything nor guesses a CVSS score, fixed version, exploitability or accepted risk. An ID/package disagreement or absent severity is reported explicitly for triage. Affected/fixed event data is recorded as supplied, without invented semver conclusions.
+
+## Fresh owner authority and validation
+
+The exact owner-facing offered answer is **"Ek bounded 42-advisory OSV detail run allow karo"**. Generic continue and the earlier eight-request approval refuse. `<P>/advisory-detail-runner-01-user-approval.json` must record the actual new owner decision/reference with that verbatim answer, fresh UTC issue/expiry no more than one hour apart, one-run status, and exact preparation/review/proposal/runner hashes plus the fixed scope and ID-list digest. The exported `approvalTemplate` builds only a template; preparation creates no approval. A locally retained decision attestation does not cryptographically authenticate a person.
+
+`--validate` performs read-only source/artifact/lock/package-metadata and original-response pin checks, reconstructs the exact42-ID schedule, prints its digest/paths/hashes and creates no network results. Main reviews final files and obtains the new explicit owner answer before any `--run` invocation. Immediately before networking, the runner repeats current input/approval checks and exclusively creates `advisory-detail-runner-01-consumption.json`. Existing consumption/output refuses; an interrupted or failed consumed attempt supplies no retry authority.
+
+## Required interpretation
+
+Transport, count/ID, malformed record, size, deadline or missing closure failures remain INCOMPLETE. Valid complete records yield **DETAIL_RECORDS_CAPTURED_FINDINGS_TRIAGE_REQUIRED**. No clean-audit or release-ready claim follows. The nine build-tool package versions and all42 ID associations require explicit affected/fixed/severity/reference review against actual use before the F31b dependency findings gate can pass. Withdrawn advisories, missing severity, unmatched package associations and unsupported range forms remain named rather than guessed away.
+
+The34 uninstalled optional packages and745 unrelated root-lockfile version records remain outside this declared Lite build/runtime scope. No full-monorepo, vulnerability-free, legal, human, independent, native or publication acceptance is inferred. No product update, dependency replacement, download/login, push/publish/tag, host/normal-profile/process/OS/VM action is included. F26a stays skipped/unsupported; original L6 HUMAN-ACTIONS and STOP remains. Same-lineage preparation has LOW independence.

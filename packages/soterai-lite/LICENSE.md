@@ -1,64 +1,93 @@
-SoterAI IDE Guard is licensed under the Business Source License 1.1.
+Business Source License 1.1
 
-This package is part of the SoterAI monorepo and is governed by the repository's
-root LICENSE file. The full, authoritative license text lives at the repository
-root:
+Parameters
 
-    https://github.com/soterai/soterai-guard/blob/main/LICENSE
+Licensor:             Yash Chauhan
+Licensed Work:        SoterAI — AI Security Command Layer
+                      The Licensed Work is (c) 2026 Yash Chauhan.
+Additional Use Grant: You may use the Licensed Work for development,
+                      testing, evaluation, and other NON-PRODUCTION
+                      purposes free of charge. You may also use it in
+                      production for INTERNAL purposes within a single
+                      entity. You may NOT use the Licensed Work, in whole
+                      or in part, to provide a commercial hosted or managed
+                      service that offers AI-security, prompt-injection
+                      detection, or guardrail functionality to third
+                      parties, nor to build a competing product, without a
+                      separate commercial license from the Licensor.
+Change Date:          2030-06-25
+Change License:       Apache License, Version 2.0
 
-Summary (non-binding — the root LICENSE controls):
+For information about alternative licensing arrangements for the Licensed
+Work, please contact the Licensor.
 
-  License:       Business Source License 1.1
-  Licensor:      Yash Chauhan
-  Licensed Work: SoterAI — AI Security Command Layer, (c) 2026 Yash Chauhan
-  Change Date:   2030-06-25
-  Change License: Apache License, Version 2.0
+-----------------------------------------------------------------------------
 
-  Additional Use Grant: Free for development, testing, evaluation, and other
-  non-production use, and for internal production use within a single entity.
-  Providing a commercial hosted/managed AI-security service to third parties,
-  or building a competing product, requires a separate commercial license.
+Terms
 
+The Licensor hereby grants you the right to copy, modify, create derivative
+works, redistribute, and make non-production use of the Licensed Work. The
+Licensor may make an Additional Use Grant, above, permitting limited
+production use.
 
-Third-party component bundled by the source scanner: @babel/parser 7.29.7
+Effective on the Change Date, or the fourth anniversary of the first publicly
+available distribution of a specific version of the Licensed Work under this
+License, whichever comes first, the Licensor hereby grants you rights under
+the terms of the Change License, and the rights granted in the paragraph
+above terminate.
 
-The following MIT permission applies to that component. SoterAI's own license
-above is unchanged.
+If your use of the Licensed Work does not comply with the requirements
+currently in effect as described in this License, you must purchase a
+commercial license from the Licensor, its affiliated entities, or authorized
+resellers, or you must refrain from using the Licensed Work.
 
-Copyright (C) 2012-2014 by various contributors (see AUTHORS)
+All copies of the original and modified Licensed Work, and derivative works
+of the Licensed Work, are subject to this License. This License applies
+separately for each version of the Licensed Work and the Change Date may vary
+for each version of the Licensed Work released by Licensor.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+You must conspicuously display this License on each original or modified copy
+of the Licensed Work. If you receive the Licensed Work in original or modified
+form from a third party, the terms and conditions set forth in this License
+apply to your use of that work.
 
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
+Any use of the Licensed Work in violation of this License will automatically
+terminate your rights under this License for the current and all other
+versions of the Licensed Work.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
+This License does not grant you any right in any trademark or logo of
+Licensor or its affiliates (provided that you may use a trademark or logo of
+Licensor as expressly required by this License).
 
-Third-party component bundled by the container scanner: yaml 2.9.0
+TO THE EXTENT PERMITTED BY APPLICABLE LAW, THE LICENSED WORK IS PROVIDED ON
+AN "AS IS" BASIS. LICENSOR HEREBY DISCLAIMS ALL WARRANTIES AND CONDITIONS,
+EXPRESS OR IMPLIED, INCLUDING (WITHOUT LIMITATION) WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, AND
+TITLE.
 
-The following ISC permission applies to that component. SoterAI's own license above is unchanged.
+MariaDB hereby grants you permission to use this License's text to license
+your works, and to refer to it using the trademark "Business Source License",
+as long as you comply with the Covenants of Licensor below.
 
-Copyright Eemeli Aro <eemeli@gmail.com>
+-----------------------------------------------------------------------------
 
-Permission to use, copy, modify, and/or distribute this software for any purpose
-with or without fee is hereby granted, provided that the above copyright notice
-and this permission notice appear in all copies.
+Covenants of Licensor
 
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND
-FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS
-OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
-TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
-THIS SOFTWARE.
+In consideration of the right to use this License's text and the "Business
+Source License" name and trademark, Licensor covenants to MariaDB, and to all
+other recipients of the licensed work to be provided by Licensor:
+
+1. To specify as the Change License the GPL Version 2.0 or any later version,
+   or a license that is compatible with GPL Version 2.0 or a later version,
+   where "compatible" means that software provided under the Change License can
+   be included in a program with software provided under GPL Version 2.0 or a
+   later version. Licensor may specify additional Change Licenses without
+   limitation.
+
+2. To either: (a) specify an additional grant of rights to use that does not
+   impose any additional restriction on the right granted in this License, as
+   the Additional Use Grant; or (b) insert the text "None".
+
+3. To specify a Change Date.
+
+4. Not to modify this License in any other way.

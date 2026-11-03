@@ -1,0 +1,363 @@
+TAP version 13
+# Subtest: exact synthetic artifact yields inventory and actual bundled-component SBOM; readiness stays incomplete
+ok 1 - exact synthetic artifact yields inventory and actual bundled-component SBOM; readiness stays incomplete
+  ---
+  duration_ms: 156.9291
+  type: 'test'
+  ...
+# Subtest: artifact SHA mismatch refuses before archive contents are accepted
+ok 2 - artifact SHA mismatch refuses before archive contents are accepted
+  ---
+  duration_ms: 24.3386
+  type: 'test'
+  ...
+# Subtest: missing runtime cannot yield inventory success
+ok 3 - missing runtime cannot yield inventory success
+  ---
+  duration_ms: 39.1775
+  type: 'test'
+  ...
+# Subtest: runtime bytes must agree with build provenance
+ok 4 - runtime bytes must agree with build provenance
+  ---
+  duration_ms: 39.5417
+  type: 'test'
+  ...
+# Subtest: source maps and evidence are not accepted as release entries
+ok 5 - source maps and evidence are not accepted as release entries
+  ---
+  duration_ms: 45.6187
+  type: 'test'
+  ...
+# Subtest: case alias entries are refused
+ok 6 - case alias entries are refused
+  ---
+  duration_ms: 33.917
+  type: 'test'
+  ...
+# Subtest: platform must be explicitly win32-x64
+ok 7 - platform must be explicitly win32-x64
+  ---
+  duration_ms: 33.6581
+  type: 'test'
+  ...
+# Subtest: manifest identity must match build provenance
+ok 8 - manifest identity must match build provenance
+  ---
+  duration_ms: 42.213
+  type: 'test'
+  ...
+# Subtest: missing build input cannot become a complete SBOM
+ok 9 - missing build input cannot become a complete SBOM
+  ---
+  duration_ms: 38.3798
+  type: 'test'
+  ...
+# Subtest: changed build input is refused
+ok 10 - changed build input is refused
+  ---
+  duration_ms: 37.5618
+  type: 'test'
+  ...
+# Subtest: repository selector input paths outside code inventory are refused before reading
+ok 11 - repository selector input paths outside code inventory are refused before reading
+  ---
+  duration_ms: 37.4036
+  type: 'test'
+  ...
+# Subtest: unknown license is visible INCOMPLETE without inventing approval
+ok 12 - unknown license is visible INCOMPLETE without inventing approval
+  ---
+  duration_ms: 73.7301
+  type: 'test'
+  ...
+# Subtest: missing notice is visible INCOMPLETE
+ok 13 - missing notice is visible INCOMPLETE
+  ---
+  duration_ms: 52.4338
+  type: 'test'
+  ...
+# Subtest: duplicate runtime provenance is rejected
+ok 14 - duplicate runtime provenance is rejected
+  ---
+  duration_ms: 34.5247
+  type: 'test'
+  ...
+# Subtest: truncated ZIP is a failure, never a partially successful inventory
+ok 15 - truncated ZIP is a failure, never a partially successful inventory
+  ---
+  duration_ms: 21.6569
+  type: 'test'
+  ...
+# Subtest: archive entry with excessive expanded size is refused
+ok 16 - archive entry with excessive expanded size is refused
+  ---
+  duration_ms: 134.5712
+  type: 'test'
+  ...
+# Subtest: deterministic SBOM and report do not include current timestamps or guessed results
+ok 17 - deterministic SBOM and report do not include current timestamps or guessed results
+  ---
+  duration_ms: 133.0812
+  type: 'test'
+  ...
+# Subtest: actual vsce canonical lowercase readme and changelog names are accepted without allowing aliases
+ok 18 - actual vsce canonical lowercase readme and changelog names are accepted without allowing aliases
+  ---
+  duration_ms: 70.1451
+  type: 'test'
+  ...
+# Subtest: actual shared code input root is admitted: packages/core/src/pathContainment.ts
+ok 19 - actual shared code input root is admitted: packages/core/src/pathContainment.ts
+  ---
+  duration_ms: 84.9589
+  type: 'test'
+  ...
+# Subtest: actual shared code input root is admitted: packages/detectors/dist/secrets.js
+ok 20 - actual shared code input root is admitted: packages/detectors/dist/secrets.js
+  ---
+  duration_ms: 71.4167
+  type: 'test'
+  ...
+# Subtest: B01 deterministic embedded metadata and complete notices for the same admitted inventory
+ok 21 - B01 deterministic embedded metadata and complete notices for the same admitted inventory
+  ---
+  duration_ms: 39.827
+  type: 'test'
+  ...
+# Subtest: B02 source and runtime changes alter their embedded inventory digest
+ok 22 - B02 source and runtime changes alter their embedded inventory digest
+  ---
+  duration_ms: 3.188
+  type: 'test'
+  ...
+# Subtest: B03 missing or duplicate runtimes never produce a complete embedded SBOM
+ok 23 - B03 missing or duplicate runtimes never produce a complete embedded SBOM
+  ---
+  duration_ms: 2.1527
+  type: 'test'
+  ...
+# Subtest: B04 unknown or missing library notice is refused rather than called a clean license audit
+ok 24 - B04 unknown or missing library notice is refused rather than called a clean license audit
+  ---
+  duration_ms: 1.1575
+  type: 'test'
+  ...
+# Subtest: B05 mismatched notice component identity is refused
+ok 25 - B05 mismatched notice component identity is refused
+  ---
+  duration_ms: 0.7253
+  type: 'test'
+  ...
+# Subtest: B06 absolute paths and oversized notice text cannot enter embedded release metadata
+ok 26 - B06 absolute paths and oversized notice text cannot enter embedded release metadata
+  ---
+  duration_ms: 1.4193
+  type: 'test'
+  ...
+# Subtest: B13 invalid provenance hashes and duplicate source inventory refuse
+ok 27 - B13 invalid provenance hashes and duplicate source inventory refuse
+  ---
+  duration_ms: 1.8767
+  type: 'test'
+  ...
+# Subtest: B15 metadata has no invented native, advisory, legal or release-ready result
+ok 28 - B15 metadata has no invented native, advisory, legal or release-ready result
+  ---
+  duration_ms: 0.8475
+  type: 'test'
+  ...
+# Subtest: B05 changed notice text refuses even when the component and declared license stay unchanged
+ok 29 - B05 changed notice text refuses even when the component and declared license stay unchanged
+  ---
+  duration_ms: 1.0375
+  type: 'test'
+  ...
+# Subtest: B07 valid final18 archive recomputes embedded metadata/notices and keeps readiness false
+ok 30 - B07 valid final18 archive recomputes embedded metadata/notices and keeps readiness false
+  ---
+  duration_ms: 489.1327
+  type: 'test'
+  ...
+# Subtest: B08 missing privacy and unexpected map entries both refuse
+ok 31 - B08 missing privacy and unexpected map entries both refuse
+  ---
+  duration_ms: 457.4867
+  type: 'test'
+  ...
+# Subtest: B09 well-formed but changed SBOM refuses independently of archive SHA
+ok 32 - B09 well-formed but changed SBOM refuses independently of archive SHA
+  ---
+  duration_ms: 351.5008
+  type: 'test'
+  ...
+# Subtest: B10 preview without actual pre-release XML property refuses
+ok 33 - B10 preview without actual pre-release XML property refuses
+  ---
+  duration_ms: 239.9992
+  type: 'test'
+  ...
+# Subtest: B10 duplicate XML values and comment-only pre-release properties cannot pass
+ok 34 - B10 duplicate XML values and comment-only pre-release properties cannot pass
+  ---
+  duration_ms: 460.7902
+  type: 'test'
+  ...
+# Subtest: B11 unsupported virtual-workspace declaration must survive packaging
+ok 35 - B11 unsupported virtual-workspace declaration must survive packaging
+  ---
+  duration_ms: 215.8529
+  type: 'test'
+  ...
+# Subtest: B12 pre-commit exclusion cannot be removed from final package metadata
+ok 36 - B12 pre-commit exclusion cannot be removed from final package metadata
+  ---
+  duration_ms: 259.3074
+  type: 'test'
+  ...
+# Subtest: B14 complete selected BUSL terms are required byte-for-byte
+ok 37 - B14 complete selected BUSL terms are required byte-for-byte
+  ---
+  duration_ms: 252.5665
+  type: 'test'
+  ...
+# Subtest: B18 post-package asset source drift refuses
+ok 38 - B18 post-package asset source drift refuses
+  ---
+  duration_ms: 223.7722
+  type: 'test'
+  ...
+# Subtest: B09 changed bundled source cannot be hidden by internally coherent embedded metadata
+ok 39 - B09 changed bundled source cannot be hidden by internally coherent embedded metadata
+  ---
+  duration_ms: 180.9045
+  type: 'test'
+  ...
+#  WARNING  Neither a .vscodeignore file nor a "files" property in package.json was found. To ensure only necessary files are included in your extension, add a .vscodeignore file or specify the "files" property in package.json. More info: https://aka.ms/vscode-vscodeignore
+#  INFO  Files included in the VSIX:
+# package-candidate.vsix
+# ├─ [Content_Types].xml 
+# ├─ extension.vsixmanifest 
+# └─ extension/
+#    ├─ LICENSE.md [4.39 KB]
+#    ├─ PRIVACY.md [0.03 KB]
+#    ├─ SBOM.cdx.json [2.33 KB]
+#    ├─ THIRD-PARTY-NOTICES.md [0.29 KB]
+#    ├─ changelog.md [8.6 KB]
+#    ├─ package.json [0.8 KB]
+#    ├─ readme.md [5.95 KB]
+#    ├─ dist/
+#    │  ├─ extension.js [0.02 KB]
+#    │  ├─ local-ai-broker.js [0.02 KB]
+#    │  ├─ pre-commit-client.js [0.02 KB]
+#    │  └─ soterai-mcp-server.js [0.02 KB]
+#    └─ media/
+#       ├─ icon.svg [0.04 KB]
+#       ├─ logo_circle_whiter.png [0.05 KB]
+#       └─ walkthrough/
+#          ├─ demo.md [0.05 KB]
+#          ├─ integrate.md [0.05 KB]
+#          └─ vault.md [0.05 KB]
+#  DONE  Packaged: D:\\SoterAI-Lite-test-profiles\\f03-unit-temp\\soterai-f31b-synthetic-Qns5CR\\packages\\soterai-lite\\builds\\synthetic\\package-candidate.vsix (18 files, 7.06 KB)
+# Subtest: B16 installed vsce actually emits final18 entries and the pre-release platform property
+ok 40 - B16 installed vsce actually emits final18 entries and the pre-release platform property
+  ---
+  duration_ms: 4753.7557
+  type: 'test'
+  ...
+# Subtest: B13 existing final output is never overwritten
+ok 41 - B13 existing final output is never overwritten
+  ---
+  duration_ms: 50.5626
+  type: 'test'
+  ...
+# Subtest: B10 malformed final XML refuses unclosed tail
+ok 42 - B10 malformed final XML refuses unclosed tail
+  ---
+  duration_ms: 194.2059
+  type: 'test'
+  ...
+# Subtest: B10 malformed final XML refuses second document root
+ok 43 - B10 malformed final XML refuses second document root
+  ---
+  duration_ms: 166.5973
+  type: 'test'
+  ...
+# Subtest: B10 malformed final XML refuses undeclared entity
+ok 44 - B10 malformed final XML refuses undeclared entity
+  ---
+  duration_ms: 173.2678
+  type: 'test'
+  ...
+#  INFO  Files included in the VSIX:
+# package-candidate.vsix
+# ├─ [Content_Types].xml 
+# ├─ extension.vsixmanifest 
+# └─ extension/
+#    ├─ LICENSE.md [4.39 KB]
+#    ├─ PRIVACY.md [0.03 KB]
+#    ├─ SBOM.cdx.json [2.33 KB]
+#    ├─ THIRD-PARTY-NOTICES.md [0.29 KB]
+#    ├─ changelog.md [8.6 KB]
+#    ├─ package.json [1.15 KB]
+#    ├─ readme.md [5.95 KB]
+#    ├─ dist/
+#    │  ├─ extension.js [0.02 KB]
+#    │  ├─ local-ai-broker.js [0.02 KB]
+#    │  ├─ pre-commit-client.js [0.02 KB]
+#    │  └─ soterai-mcp-server.js [0.02 KB]
+#    └─ media/
+#       ├─ icon.svg [0.04 KB]
+#       ├─ logo_circle_whiter.png [0.05 KB]
+#       └─ walkthrough/
+#          ├─ demo.md [0.05 KB]
+#          ├─ integrate.md [0.05 KB]
+#          └─ vault.md [0.05 KB]
+#  DONE  Packaged: D:\\SoterAI-Lite-test-profiles\\f03-unit-temp\\soterai-f31b-synthetic-lYAyuc\\packages\\soterai-lite\\builds\\synthetic\\package-candidate.vsix (18 files, 7.21 KB)
+# Subtest: B16 actual production files allowlist ships all18 final entries
+ok 45 - B16 actual production files allowlist ships all18 final entries
+  ---
+  duration_ms: 688.314
+  type: 'test'
+  ...
+#  WARNING  Neither a .vscodeignore file nor a "files" property in package.json was found. To ensure only necessary files are included in your extension, add a .vscodeignore file or specify the "files" property in package.json. More info: https://aka.ms/vscode-vscodeignore
+#  INFO  Files included in the VSIX:
+# package-candidate.vsix
+# ├─ [Content_Types].xml 
+# ├─ extension.vsixmanifest 
+# └─ extension/
+#    ├─ LICENSE.md [4.39 KB]
+#    ├─ PRIVACY.md [0.03 KB]
+#    ├─ SBOM.cdx.json [2.33 KB]
+#    ├─ THIRD-PARTY-NOTICES.md [0.29 KB]
+#    ├─ changelog.md [8.6 KB]
+#    ├─ package.json [0.83 KB]
+#    ├─ readme.md [5.95 KB]
+#    ├─ dist/
+#    │  ├─ extension.js [0.02 KB]
+#    │  ├─ local-ai-broker.js [0.02 KB]
+#    │  ├─ pre-commit-client.js [0.02 KB]
+#    │  └─ soterai-mcp-server.js [0.02 KB]
+#    └─ media/
+#       ├─ icon.svg [0.04 KB]
+#       ├─ logo_circle_whiter.png [0.05 KB]
+#       └─ walkthrough/
+#          ├─ demo.md [0.05 KB]
+#          ├─ integrate.md [0.05 KB]
+#          └─ vault.md [0.05 KB]
+#  DONE  Packaged: D:\\SoterAI-Lite-test-profiles\\f03-unit-temp\\soterai-f31b-synthetic-QoKDGC\\packages\\soterai-lite\\builds\\synthetic\\package-candidate.vsix (18 files, 7.11 KB)
+# Subtest: B16 preserves reviewed README relative-link bytes with GitHub repository metadata
+ok 46 - B16 preserves reviewed README relative-link bytes with GitHub repository metadata
+  ---
+  duration_ms: 539.4318
+  type: 'test'
+  ...
+1..46
+# tests 46
+# suites 0
+# pass 46
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 11575.8584

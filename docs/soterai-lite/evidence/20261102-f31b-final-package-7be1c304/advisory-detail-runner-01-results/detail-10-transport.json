@@ -1,0 +1,104 @@
+{
+  "id": "GHSA-4mjr-xmp4-gh2g",
+  "endpoint": "https://api.osv.dev/v1/vulns/GHSA-4mjr-xmp4-gh2g",
+  "method": "GET",
+  "startedAt": "2026-11-03T02:51:32.303Z",
+  "statusCode": 200,
+  "contentType": "application/json",
+  "contentEncoding": "",
+  "requestClose": true,
+  "responseClose": true,
+  "responseEnd": true,
+  "responseComplete": true,
+  "timedOut": false,
+  "overflow": false,
+  "aborted": false,
+  "error": null,
+  "elapsedMs": 536.1152000000002,
+  "finishedAt": "2026-11-03T02:51:32.839Z",
+  "retainedBytes": 7708,
+  "observedBytes": 7708,
+  "rawResponse": {
+    "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/advisory-detail-runner-01-results/detail-10-response.bin",
+    "bytes": 7708,
+    "sha256": "16a233125a8a6fd5659748b0610e6228665dfcd889a8bf520ce102e16e651a7d"
+  },
+  "interpretation": {
+    "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+    "id": "GHSA-4mjr-xmp4-gh2g",
+    "modified": "2026-09-10T03:51:14.991984096Z",
+    "published": "2026-09-02T14:45:13Z",
+    "withdrawn": null,
+    "summary": "qs: Denial of Service via Attacker Controlled isBuffer",
+    "aliases": [
+      "CVE-2026-82417"
+    ],
+    "severity": [
+      {
+        "type": "CVSS_V3",
+        "score": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
+      },
+      {
+        "type": "CVSS_V4",
+        "score": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N"
+      }
+    ],
+    "databaseSpecificSeverity": "MODERATE",
+    "affected": [
+      {
+        "package": {
+          "name": "qs",
+          "ecosystem": "npm",
+          "purl": "pkg:npm/qs"
+        },
+        "ranges": [
+          {
+            "type": "SEMVER",
+            "events": [
+              {
+                "introduced": "2.2.5"
+              },
+              {
+                "fixed": "6.16.0"
+              }
+            ]
+          }
+        ],
+        "listedVersions": [],
+        "severity": [],
+        "databaseSpecificSeverity": null
+      }
+    ],
+    "references": [
+      {
+        "type": "WEB",
+        "url": "https://github.com/ljharb/qs/security/advisories/GHSA-4mjr-xmp4-gh2g"
+      },
+      {
+        "type": "ADVISORY",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82417"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/ljharb/qs/commit/e83d321ffafb38cf210683ac31714fce6ce1c6c6"
+      },
+      {
+        "type": "PACKAGE",
+        "url": "https://github.com/ljharb/qs"
+      }
+    ],
+    "associations": [
+      {
+        "name": "qs",
+        "version": "6.15.3",
+        "ecosystem": "npm",
+        "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+        "recordPackageMatch": true,
+        "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+      }
+    ],
+    "missingSeverity": false,
+    "noGuessedSeverityOrFixedVersion": true,
+    "releaseReady": false
+  }
+}

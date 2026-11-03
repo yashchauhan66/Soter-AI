@@ -1,0 +1,190 @@
+﻿TAP version 13
+# Subtest: missing new detail approval cannot request or consume
+ok 1 - missing new detail approval cannot request or consume
+  ---
+  duration_ms: 12.5066
+  type: 'test'
+  ...
+# Subtest: detail authority refuses old eight-query authority before callbacks
+ok 2 - detail authority refuses old eight-query authority before callbacks
+  ---
+  duration_ms: 34.6894
+  type: 'test'
+  ...
+# Subtest: detail authority refuses generic continue before callbacks
+ok 3 - detail authority refuses generic continue before callbacks
+  ---
+  duration_ms: 0.9949
+  type: 'test'
+  ...
+# Subtest: detail authority refuses changed42-ID digest before callbacks
+ok 4 - detail authority refuses changed42-ID digest before callbacks
+  ---
+  duration_ms: 1.6975
+  type: 'test'
+  ...
+# Subtest: detail authority refuses changed reviewed runner before callbacks
+ok 5 - detail authority refuses changed reviewed runner before callbacks
+  ---
+  duration_ms: 8.3401
+  type: 'test'
+  ...
+# Subtest: detail authority refuses 43rd request before callbacks
+ok 6 - detail authority refuses 43rd request before callbacks
+  ---
+  duration_ms: 1.2883
+  type: 'test'
+  ...
+# Subtest: detail authority refuses alternative endpoint before callbacks
+ok 7 - detail authority refuses alternative endpoint before callbacks
+  ---
+  duration_ms: 0.8916
+  type: 'test'
+  ...
+# Subtest: detail authority refuses followed references before callbacks
+ok 8 - detail authority refuses followed references before callbacks
+  ---
+  duration_ms: 0.7932
+  type: 'test'
+  ...
+# Subtest: detail authority refuses redirects/retries before callbacks
+ok 9 - detail authority refuses redirects/retries before callbacks
+  ---
+  duration_ms: 2.3175
+  type: 'test'
+  ...
+# Subtest: detail authority refuses expired approval before callbacks
+ok 10 - detail authority refuses expired approval before callbacks
+  ---
+  duration_ms: 2.1262
+  type: 'test'
+  ...
+# Subtest: valid exact new detail approval consumes before callback
+ok 11 - valid exact new detail approval consumes before callback
+  ---
+  duration_ms: 9.8145
+  type: 'test'
+  ...
+# Subtest: existing exclusive consumption blocks callback
+ok 12 - existing exclusive consumption blocks callback
+  ---
+  duration_ms: 1.9622
+  type: 'test'
+  ...
+# Subtest: exact42 IDs derive from retained284 raw-result mapping
+ok 13 - exact42 IDs derive from retained284 raw-result mapping
+  ---
+  duration_ms: 32.4819
+  type: 'test'
+  ...
+# Subtest: record preserves explicit vector, fixed events and references without following or interpreting them
+ok 14 - record preserves explicit vector, fixed events and references without following or interpreting them
+  ---
+  duration_ms: 9.0525
+  type: 'test'
+  ...
+# Subtest: absent severity is named and no numeric severity or fixed version invented
+ok 15 - absent severity is named and no numeric severity or fixed version invented
+  ---
+  duration_ms: 1.2435
+  type: 'test'
+  ...
+# Subtest: withdrawn record remains explicit findings-review evidence
+ok 16 - withdrawn record remains explicit findings-review evidence
+  ---
+  duration_ms: 0.8715
+  type: 'test'
+  ...
+# Subtest: package disagreement remains named for triage
+ok 17 - package disagreement remains named for triage
+  ---
+  duration_ms: 0.8113
+  type: 'test'
+  ...
+# Subtest: record refuses wrong ID
+ok 18 - record refuses wrong ID
+  ---
+  duration_ms: 0.7499
+  type: 'test'
+  ...
+# Subtest: record refuses malformed range event
+ok 19 - record refuses malformed range event
+  ---
+  duration_ms: 0.9642
+  type: 'test'
+  ...
+# Subtest: record refuses pagination
+ok 20 - record refuses pagination
+  ---
+  duration_ms: 0.6299
+  type: 'test'
+  ...
+# Subtest: record refuses wrong affected shape
+ok 21 - record refuses wrong affected shape
+  ---
+  duration_ms: 0.4568
+  type: 'test'
+  ...
+# Subtest: transport refuses redirect
+ok 22 - transport refuses redirect
+  ---
+  duration_ms: 0.4606
+  type: 'test'
+  ...
+# Subtest: transport refuses deadline
+ok 23 - transport refuses deadline
+  ---
+  duration_ms: 0.3728
+  type: 'test'
+  ...
+# Subtest: transport refuses oversize
+ok 24 - transport refuses oversize
+  ---
+  duration_ms: 0.3527
+  type: 'test'
+  ...
+# Subtest: transport refuses missing request close
+ok 25 - transport refuses missing request close
+  ---
+  duration_ms: 0.3103
+  type: 'test'
+  ...
+# Subtest: transport refuses missing response close
+ok 26 - transport refuses missing response close
+  ---
+  duration_ms: 0.3072
+  type: 'test'
+  ...
+# Subtest: transport refuses incomplete response
+ok 27 - transport refuses incomplete response
+  ---
+  duration_ms: 0.3427
+  type: 'test'
+  ...
+# Subtest: transport refuses compressed body
+ok 28 - transport refuses compressed body
+  ---
+  duration_ms: 0.4202
+  type: 'test'
+  ...
+# Subtest: invalid UTF8, malformed JSON and raw size above1MiB refuse
+ok 29 - invalid UTF8, malformed JSON and raw size above1MiB refuse
+  ---
+  duration_ms: 2.7885
+  type: 'test'
+  ...
+# Subtest: complete detail records still require findings triage; partial or wrong IDs incomplete
+ok 30 - complete detail records still require findings triage; partial or wrong IDs incomplete
+  ---
+  duration_ms: 1.3322
+  type: 'test'
+  ...
+1..30
+# tests 30
+# suites 0
+# pass 30
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 340.8999

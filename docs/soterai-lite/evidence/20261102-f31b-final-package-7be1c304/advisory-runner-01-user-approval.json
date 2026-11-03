@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "status": "USER_APPROVED_ONE_BOUNDED_OSV_RUN",
+  "runCount": 1,
+  "decision": {
+    "reference": "call_f74ee63d4c374ee3ae6b552a3b847b42",
+    "answer": "Ek bounded 8-request OSV metadata run allow karo"
+  },
+  "approvedAt": "2026-11-03T02:36:29.341Z",
+  "expiresAt": "2026-11-03T03:36:29.341Z",
+  "metadata": {
+    "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/advisory-preparation-01.json",
+    "sha256": "619dd0ae81cd10c8276e417b00b96f9731fd1f5ea29318e0d381cdad28236a77"
+  },
+  "proposal": {
+    "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/ADVISORY-PROPOSAL01.md",
+    "sha256": "8aaee73d8e1d4533bdab0c0f5756a3eae6a83a9ca43be7f855be126c6a589cb1"
+  },
+  "runner": {
+    "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/advisory-runner-01.cjs",
+    "sha256": "f51e6296db100c644e78b310881e8c6a06a00e322f775881e7bb9821194628d6"
+  },
+  "scope": {
+    "endpoint": "https://api.osv.dev/v1/querybatch",
+    "method": "POST",
+    "maxInitialRequests": 8,
+    "totalUniqueQueries": 284,
+    "maxQueriesPerBatch": 40,
+    "maxBodyBytes": 65536,
+    "requestDeadlineMs": 20000,
+    "chainDeadlineMs": 180000,
+    "maxResponseBytes": 2097152,
+    "retries": 0,
+    "redirects": false,
+    "followups": false,
+    "authentication": false,
+    "cookies": false
+  }
+}

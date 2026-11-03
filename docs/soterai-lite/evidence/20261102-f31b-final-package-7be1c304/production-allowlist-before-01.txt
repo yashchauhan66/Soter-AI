@@ -1,0 +1,50 @@
+﻿TAP version 13
+#  INFO  Files included in the VSIX:
+# package-candidate.vsix
+# ├─ [Content_Types].xml 
+# ├─ extension.vsixmanifest 
+# └─ extension/
+#    ├─ LICENSE.md [4.39 KB]
+#    ├─ changelog.md [4 KB]
+#    ├─ package.json [1.08 KB]
+#    ├─ readme.md [23.52 KB]
+#    ├─ dist/
+#    │  ├─ extension.js [0.02 KB]
+#    │  ├─ local-ai-broker.js [0.02 KB]
+#    │  ├─ pre-commit-client.js [0.02 KB]
+#    │  └─ soterai-mcp-server.js [0.02 KB]
+#    └─ media/
+#       ├─ icon.svg [0.04 KB]
+#       ├─ logo_circle_whiter.png [0.05 KB]
+#       └─ walkthrough/
+#          ├─ demo.md [0.05 KB]
+#          ├─ integrate.md [0.05 KB]
+#          └─ vault.md [0.05 KB]
+#  DONE  Packaged: C:\\Users\\USER\\AppData\\Local\\Temp\\soterai-f31b-synthetic-90KSTF\\packages\\soterai-lite\\builds\\synthetic\\package-candidate.vsix (15 files, 5.71 KB)
+# Subtest: F31b actual production files allowlist ships all18 final entries
+not ok 1 - F31b actual production files allowlist ships all18 final entries
+  ---
+  duration_ms: 4457.2681
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261102-f31b-final-package-7be1c304\\production-allowlist-review-01.test.cjs:4:1'
+  failureType: 'testCodeFailure'
+  error: 'Missing archive entry/runtime'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    demand (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\audit-release.cjs:13:42)
+    archive (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\audit-release.cjs:43:2)
+    async auditRelease (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\audit-release.cjs:113:113)
+    async Object.packageBuild (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\soterai-lite\scripts\package.cjs:34:16)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261102-f31b-final-package-7be1c304\production-allowlist-review-01.test.cjs:8:68)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4750.7479

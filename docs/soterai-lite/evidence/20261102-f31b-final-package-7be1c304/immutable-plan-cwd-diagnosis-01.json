@@ -1,0 +1,25 @@
+{
+  "status": "LAUNCHER_CWD_CONFIG_DEFECT_REPRODUCED_NO_PRODUCT_OR_TEST_SOURCE_CHANGE",
+  "observedAt": "2026-11-02T16:22:20.076Z",
+  "facts": [
+    {
+      "name": "immutable-plan-root-before-01",
+      "closeSha256": "489cebfe72dc023287ada432c8272077e98e2be39194d2f2859a9a8dcca61de5",
+      "stdoutSha256": "16b378fd3ed00a38ae035b5bcf282ec562ee0a6f4fef647c7015020b656538e0",
+      "exitCode": 1
+    },
+    {
+      "name": "immutable-plan-lite-before-01",
+      "closeSha256": "95e906987704dbf70c931b082d35da433669d9deb5bac63e88640244906e7bd8",
+      "stdoutSha256": "cd136fd354f9afb6418c72f6700f03cc5a66034780ffea35654a68d6460e5663",
+      "exitCode": 0
+    }
+  ],
+  "sourceProofSha256": "93a4db7dbd00908b4d81638e1f9a05453fdea08c6422813d13b720fbfab0056b",
+  "rootConfig": "module esnext; tsx emitted nonthrowing assignment for frozen object",
+  "liteConfig": "inherits extension commonjs strict; original frozen mutation assertion passes",
+  "acceptedReuse": "Shards01-05 actual complete passing assertions under retained original root cwd; exact1088 source bytes unchanged. No failed shard is reused. Overall result is explicitly sharded, not canonical monolithic.",
+  "next": "Unchanged all48 files in failed shard06 and remaining07-08 under Lite cwd, new03 names; then readiness/package02 under Lite cwd.",
+  "f26a": "USER_SKIPPED_NO_NATIVE_RETRY",
+  "releaseReady": false
+}

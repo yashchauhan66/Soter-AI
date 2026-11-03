@@ -1,0 +1,30 @@
+﻿
+[main 2026-11-03T02:25:09.583Z] [node-compile-cache] main: packaged cache enabled (status: enabled, configured: C:\Users\USER\AppData\Local\Programs\Microsoft VS Code\2c33b50b16\resources\app\node-compile-cache\main, active: C:\Users\USER\AppData\Local\Programs\Microsoft VS Code\2c33b50b16\resources\app\node-compile-cache\main\v24.22.1-x64-60e4fe36)
+[main 2026-11-03T02:25:09.821Z] StorageMainService: creating application shared storage
+[main 2026-11-03T02:25:09.939Z] [shared storage] Creating shared storage database at ':memory:' (wasCreated: true)
+[main 2026-11-03T02:25:09.939Z] [shared storage] Initializing fallback application storage (path: in-memory)
+[main 2026-11-03T02:25:10.082Z] [shared storage] Fallback application storage initialized with 3 items
+[main 2026-11-03T02:25:10.083Z] update#setState disabled
+[main 2026-11-03T02:25:10.084Z] update#ctor - updates are disabled by the environment
+[RemoteAgentHost] Reconciling: desired=[], current=[]
+Started local extension host with pid 16440.
+[AccountPolicyGate] apply: state=inactive, reason=undefined, isRestricted=false
+[RemoteAgentHost] Reconciling: desired=[], current=[]
+Started initializing default profile extensions in extensions installation folder. file:///d%3A/SoterAI-Lite-test-profiles/soterai-security-review-3bf55fc5fd3d47abb2cd09837bc58b38/extensions
+Completed initializing default profile extensions in extensions installation folder. file:///d%3A/SoterAI-Lite-test-profiles/soterai-security-review-3bf55fc5fd3d47abb2cd09837bc58b38/extensions
+Loading development extension at d:\SoterAI-Lite-test-profiles\f26c-security-snapshot-aefd5e65bf0b4cc293470926ef5343d4
+Settings Sync: Account status changed from uninitialized to unavailable
+[AccountPolicyGate] apply: state=inactive, reason=undefined, isRestricted=false
+{"syntheticReview":"completed","scopedBlocks":8,"confirmedLeaks":9}
+[main 2026-11-03T02:25:32.768Z] Extension host with pid 16440 exited with code: 0, signal: unknown.
+
+[main 2026-11-03T02:25:09.944Z] Error: Error mutex already exists
+    at Zs.installMutex (file:///C:/Users/USER/AppData/Local/Programs/Microsoft%20VS%20Code/2c33b50b16/resources/app/out/mainImpl.js:164:30373)
+[main 2026-11-03T02:25:12.460Z] updateWindowsJumpList#setJumpList unexpected result: error
+Via 'product.json#extensionEnabledApiProposals' extension 'github.vscode-pull-request-github' wants API proposal 'agentsWindowActivation' but that proposal DOES NOT EXIST. Likely, the proposal has been finalized (check 'vscode.d.ts') or was abandoned.
+[CloudSandboxApi] No 'github' session with scopes [read:user, user:email, repo, workflow]
+(node:16440) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+(Use `Code --trace-deprecation ...` to show where the warning was created)
+
+Per-run evidence at C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261102-f31b-final-package-7be1c304\affected-20261103T022011Z-c4deedbd54f14a5fb556fd715c9caffd\security\host-20261103T022440Z-463687a3160b4b249f18295705c2fcae
+Synthetic lab retained at D:\SoterAI-Lite-test-profiles\soterai-security-review-3bf55fc5fd3d47abb2cd09837bc58b38

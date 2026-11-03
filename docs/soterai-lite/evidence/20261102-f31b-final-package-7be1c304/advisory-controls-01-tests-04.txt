@@ -1,0 +1,274 @@
+﻿TAP version 13
+# Subtest: missing approval cannot consume or request
+ok 1 - missing approval cannot consume or request
+  ---
+  duration_ms: 5.6848
+  type: 'test'
+  ...
+# Subtest: generic continue cannot consume or request
+ok 2 - generic continue cannot consume or request
+  ---
+  duration_ms: 5.2451
+  type: 'test'
+  ...
+# Subtest: authority refuses unapproved status before consume/request
+ok 3 - authority refuses unapproved status before consume/request
+  ---
+  duration_ms: 0.8063
+  type: 'test'
+  ...
+# Subtest: authority refuses multiple runs before consume/request
+ok 4 - authority refuses multiple runs before consume/request
+  ---
+  duration_ms: 0.6641
+  type: 'test'
+  ...
+# Subtest: authority refuses missing decision reference before consume/request
+ok 5 - authority refuses missing decision reference before consume/request
+  ---
+  duration_ms: 0.8751
+  type: 'test'
+  ...
+# Subtest: authority refuses expired approval before consume/request
+ok 6 - authority refuses expired approval before consume/request
+  ---
+  duration_ms: 0.8552
+  type: 'test'
+  ...
+# Subtest: authority refuses future approval before consume/request
+ok 7 - authority refuses future approval before consume/request
+  ---
+  duration_ms: 0.6794
+  type: 'test'
+  ...
+# Subtest: authority refuses more than one hour before consume/request
+ok 8 - authority refuses more than one hour before consume/request
+  ---
+  duration_ms: 0.575
+  type: 'test'
+  ...
+# Subtest: authority refuses wrong metadata before consume/request
+ok 9 - authority refuses wrong metadata before consume/request
+  ---
+  duration_ms: 2.3076
+  type: 'test'
+  ...
+# Subtest: authority refuses wrong proposal before consume/request
+ok 10 - authority refuses wrong proposal before consume/request
+  ---
+  duration_ms: 1.629
+  type: 'test'
+  ...
+# Subtest: authority refuses wrong runner before consume/request
+ok 11 - authority refuses wrong runner before consume/request
+  ---
+  duration_ms: 0.7229
+  type: 'test'
+  ...
+# Subtest: authority refuses changed endpoint before consume/request
+ok 12 - authority refuses changed endpoint before consume/request
+  ---
+  duration_ms: 0.4895
+  type: 'test'
+  ...
+# Subtest: authority refuses ninth request before consume/request
+ok 13 - authority refuses ninth request before consume/request
+  ---
+  duration_ms: 0.3591
+  type: 'test'
+  ...
+# Subtest: authority refuses retry permission before consume/request
+ok 14 - authority refuses retry permission before consume/request
+  ---
+  duration_ms: 0.3569
+  type: 'test'
+  ...
+# Subtest: authority refuses redirect permission before consume/request
+ok 15 - authority refuses redirect permission before consume/request
+  ---
+  duration_ms: 0.6374
+  type: 'test'
+  ...
+# Subtest: authority refuses detail/pagination permission before consume/request
+ok 16 - authority refuses detail/pagination permission before consume/request
+  ---
+  duration_ms: 0.3255
+  type: 'test'
+  ...
+# Subtest: authority refuses authentication before consume/request
+ok 17 - authority refuses authentication before consume/request
+  ---
+  duration_ms: 0.4001
+  type: 'test'
+  ...
+# Subtest: authority refuses extra approval field before consume/request
+ok 18 - authority refuses extra approval field before consume/request
+  ---
+  duration_ms: 0.2815
+  type: 'test'
+  ...
+# Subtest: one valid exact approval consumes before injected request
+ok 19 - one valid exact approval consumes before injected request
+  ---
+  duration_ms: 2.1734
+  type: 'test'
+  ...
+# Subtest: exclusive consumption refusal makes zero requests
+ok 20 - exclusive consumption refusal makes zero requests
+  ---
+  duration_ms: 0.9659
+  type: 'test'
+  ...
+# Subtest: canonical public identities deduplicate nested same-version copies without sending paths
+ok 21 - canonical public identities deduplicate nested same-version copies without sending paths
+  ---
+  duration_ms: 40.5655
+  type: 'test'
+  ...
+# Subtest: non-package names cannot become outbound public identities
+ok 22 - non-package names cannot become outbound public identities
+  ---
+  duration_ms: 0.5934
+  type: 'test'
+  ...
+# Subtest: prepared exact284 batch bodies match hashes; changed body or count refuses
+ok 23 - prepared exact284 batch bodies match hashes; changed body or count refuses
+  ---
+  duration_ms: 39.08
+  type: 'test'
+  ...
+# Subtest: wrong result count remains incomplete
+ok 24 - wrong result count remains incomplete
+  ---
+  duration_ms: 1.3805
+  type: 'test'
+  ...
+# Subtest: pagination remains incomplete with no invented missing results
+ok 25 - pagination remains incomplete with no invented missing results
+  ---
+  duration_ms: 0.7132
+  type: 'test'
+  ...
+# Subtest: returned advisory IDs require review; no severity/remediation invented
+ok 26 - returned advisory IDs require review; no severity/remediation invented
+  ---
+  duration_ms: 0.5335
+  type: 'test'
+  ...
+# Subtest: valid empty result is scoped no-IDs evidence, not a global clean assertion
+ok 27 - valid empty result is scoped no-IDs evidence, not a global clean assertion
+  ---
+  duration_ms: 0.4208
+  type: 'test'
+  ...
+# Subtest: response refuses redirect
+ok 28 - response refuses redirect
+  ---
+  duration_ms: 0.4017
+  type: 'test'
+  ...
+# Subtest: response refuses HTTP failure
+ok 29 - response refuses HTTP failure
+  ---
+  duration_ms: 0.2471
+  type: 'test'
+  ...
+# Subtest: response refuses deadline
+ok 30 - response refuses deadline
+  ---
+  duration_ms: 0.3176
+  type: 'test'
+  ...
+# Subtest: response refuses oversize
+ok 31 - response refuses oversize
+  ---
+  duration_ms: 0.2972
+  type: 'test'
+  ...
+# Subtest: response refuses no response end
+ok 32 - response refuses no response end
+  ---
+  duration_ms: 0.3479
+  type: 'test'
+  ...
+# Subtest: response refuses incomplete response
+ok 33 - response refuses incomplete response
+  ---
+  duration_ms: 0.4032
+  type: 'test'
+  ...
+# Subtest: response refuses abort
+ok 34 - response refuses abort
+  ---
+  duration_ms: 0.2958
+  type: 'test'
+  ...
+# Subtest: response refuses stream error
+ok 35 - response refuses stream error
+  ---
+  duration_ms: 0.5479
+  type: 'test'
+  ...
+# Subtest: response refuses non-JSON type
+ok 36 - response refuses non-JSON type
+  ---
+  duration_ms: 0.555
+  type: 'test'
+  ...
+# Subtest: response refuses unexpected compression
+ok 37 - response refuses unexpected compression
+  ---
+  duration_ms: 0.4772
+  type: 'test'
+  ...
+# Subtest: response refuses missing request close
+ok 38 - response refuses missing request close
+  ---
+  duration_ms: 0.3874
+  type: 'test'
+  ...
+# Subtest: response refuses missing response close
+ok 39 - response refuses missing response close
+  ---
+  duration_ms: 0.3574
+  type: 'test'
+  ...
+# Subtest: malformed JSON, invalid UTF8 and non-object result refuse
+ok 40 - malformed JSON, invalid UTF8 and non-object result refuse
+  ---
+  duration_ms: 1.2994
+  type: 'test'
+  ...
+# Subtest: oversize raw response refuses even without overflow metadata
+ok 41 - oversize raw response refuses even without overflow metadata
+  ---
+  duration_ms: 0.3939
+  type: 'test'
+  ...
+# Subtest: missing batch or incomplete batch remains incomplete in aggregation
+ok 42 - missing batch or incomplete batch remains incomplete in aggregation
+  ---
+  duration_ms: 0.8101
+  type: 'test'
+  ...
+# Subtest: valid full empty set gets precise current declared-scope status and retains global limits
+ok 43 - valid full empty set gets precise current declared-scope status and retains global limits
+  ---
+  duration_ms: 0.6212
+  type: 'test'
+  ...
+# Subtest: one advisory batch prevents no-match aggregate and requires findings review
+ok 44 - one advisory batch prevents no-match aggregate and requires findings review
+  ---
+  duration_ms: 0.5962
+  type: 'test'
+  ...
+1..44
+# tests 44
+# suites 0
+# pass 44
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 203.5584

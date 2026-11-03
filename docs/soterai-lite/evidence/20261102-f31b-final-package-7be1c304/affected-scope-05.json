@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "status": "F31B_AFFECTED_SCOPE_PREDECLARED_NOT_RUN",
+  "sourceProof": {
+    "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/full-inputs-04.json",
+    "bytes": 223544,
+    "sha256": "221bd5c7b0ad1753365b6ae3526c77db2b02f0192a3be41bfe0bfed9240c5e99"
+  },
+  "families": [
+    {
+      "id": "ps51",
+      "assertions": 19,
+      "phases": 2,
+      "helper": "affected-ps51-05.ps1",
+      "driver": "lite-ps51-host.js"
+    },
+    {
+      "id": "editor",
+      "assertions": 25,
+      "phases": 2,
+      "helper": "affected-editor-05.ps1",
+      "driver": "lite-editor-host.js"
+    },
+    {
+      "id": "mcp",
+      "assertions": 25,
+      "phases": 2,
+      "helper": "affected-mcp-05.ps1",
+      "driver": "lite-mcp-host.js"
+    },
+    {
+      "id": "retained",
+      "assertions": 106,
+      "phases": 2,
+      "helper": "affected-retained-05.ps1",
+      "driver": "lite-broker-host.js"
+    }
+  ],
+  "assertions": 175,
+  "phases": 8,
+  "functional": 10,
+  "security": 17,
+  "driverInventory": "affected-driver-provenance-03.json",
+  "driverBuild": "Fresh four selected drivers; exact original driver bytes and source/auxiliary graph verified unchanged. No native result inferred.",
+  "currentArtifact": "Fresh F31b attempt03 with unchanged four runtimes; strict18-entry content02/current1098 graph required.",
+  "deferred": {
+    "feature": "F26a",
+    "family": "precommit",
+    "status": "USER_SKIPPED_INCOMPLETE_UNSUPPORTED_NO_RETRY",
+    "originalAssertions": 34,
+    "substitute": false,
+    "completionBlocked": true
+  },
+  "componentGate": "Current full1088/actual complete sharded TAP/compiler/readiness/new VSIX/strict18entry content gates; no F28 native30 transfer.",
+  "configuredPush": "NOT_AUTHORIZED_NOT_RUN",
+  "execution": "Prepared only; no launches by this author; serial each original helper with actualclose/bothEOF/no signals; root aggregation and policy-preserving withdrawal remain required",
+  "hostVersion": "1.144.0",
+  "totalAssertions": 202,
+  "totalPhases": 10,
+  "originalFullScope": {
+    "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-scope-01.json",
+    "bytes": 4780,
+    "sha256": "d931e0883207e13af4034d05f93333713ca4cba34458ce987f1b4eaaa0b68bf8"
+  },
+  "remaining": "Complete final V01/V02 integrated/tool/catalog corpus retained; this intermediate package checks affected reader/editor/terminal/proxy/MCP plus original functional/security baseline. No F26a34.",
+  "f26a": "USER_SKIPPED_INCOMPLETE_NO_MORE_HOST_NATIVE_RUNS",
+  "contentVerification": "Actual content03 PASS; failed content02 regex-string escape receipt retained without extraction writes. Corrected parser validates raw TAP rows and all frozen closures, assertions unchanged."
+}

@@ -1,0 +1,5256 @@
+{
+  "status": "DETAIL_RECORDS_CAPTURED_FINDINGS_TRIAGE_REQUIRED",
+  "expectedRecords": 42,
+  "capturedRecords": 42,
+  "findingsGate": "TRIAGE_REQUIRED_NOT_PASS",
+  "otherLockfileVersionRecordsUnaudited": 745,
+  "referenceVisits": 0,
+  "retryRequests": 0,
+  "paginationRequests": 0,
+  "releaseReady": false,
+  "observedAt": "2026-11-03T02:51:51.781Z",
+  "pins": {
+    "metadata": {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/advisory-preparation-01.json",
+      "sha256": "619dd0ae81cd10c8276e417b00b96f9731fd1f5ea29318e0d381cdad28236a77"
+    },
+    "queryReview": {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/advisory-result-review-01.json",
+      "sha256": "b496c352b997769ecee4c5cf7b6fbcf9e6dc5a43d9fd812e2c237147617f49ab"
+    },
+    "proposal": {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/ADVISORY-DETAIL-PROPOSAL01.md",
+      "sha256": "3cb1423835b721964b3a9c3de38aadff4f4e0865da87ac134c81baf03c4182c4"
+    },
+    "runner": {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/advisory-detail-runner-01.cjs",
+      "sha256": "7380af14affb0383d3881d942a0e1b08ffda0e6febabe4d34e78ecfbc9d06d64"
+    }
+  },
+  "idListSha256": "2cc11d838a8f17ef69cf67d93771b5f3a208ac93059b6fb6f1f4eace7d9afaba",
+  "artifact": {
+    "name": "soterai-lite-0.7.0-f31b-20261102-attempt03.vsix",
+    "bytes": 1735938,
+    "sha256": "6231159d484a70b284945a61cd8d341b13f809336427c5a57debd807759c688c"
+  },
+  "requestAttempts": 42,
+  "remaining": [],
+  "records": [
+    {
+      "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+      "id": "GHSA-253c-mchw-3w2r",
+      "modified": "2026-09-29T18:15:04.692324591Z",
+      "published": "2026-09-29T17:57:56Z",
+      "withdrawn": null,
+      "summary": "markdown-it linkify: true has two quadratic paths, so a few hundred KB of markdown blocks the event loop for tens of seconds",
+      "aliases": [],
+      "severity": [
+        {
+          "type": "CVSS_V4",
+          "score": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N"
+        }
+      ],
+      "databaseSpecificSeverity": "MODERATE",
+      "affected": [
+        {
+          "package": {
+            "name": "markdown-it",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/markdown-it"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "15.0.0"
+                },
+                {
+                  "fixed": "15.0.1"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [
+            "15.0.0"
+          ],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "markdown-it",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/markdown-it"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "0"
+                },
+                {
+                  "fixed": "14.3.1"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        }
+      ],
+      "references": [
+        {
+          "type": "WEB",
+          "url": "https://github.com/markdown-it/markdown-it/security/advisories/GHSA-253c-mchw-3w2r"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/markdown-it/markdown-it/commit/09fa07118dda4c953f058848f53dae88395618ca"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/markdown-it/markdown-it/commit/aaadcfa6d817b3c5f89afb49d97c7b797a6dd4fd"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/markdown-it/markdown-it/commit/ad70f6b7cff64bee10e42a774147112480ca0d49"
+        },
+        {
+          "type": "PACKAGE",
+          "url": "https://github.com/markdown-it/markdown-it"
+        }
+      ],
+      "associations": [
+        {
+          "name": "markdown-it",
+          "version": "14.3.0",
+          "ecosystem": "npm",
+          "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+          "recordPackageMatch": true,
+          "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+        }
+      ],
+      "missingSeverity": false,
+      "noGuessedSeverityOrFixedVersion": true,
+      "releaseReady": false
+    },
+    {
+      "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+      "id": "GHSA-2883-xcg3-v3hh",
+      "modified": "2026-09-08T21:30:05.575808098Z",
+      "published": "2026-09-08T21:24:51Z",
+      "withdrawn": null,
+      "summary": "js-yaml: maxTotalMergeKeys does not limit CPU use for empty merge sources",
+      "aliases": [
+        "CVE-2026-84375"
+      ],
+      "severity": [
+        {
+          "type": "CVSS_V3",
+          "score": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        }
+      ],
+      "databaseSpecificSeverity": "HIGH",
+      "affected": [
+        {
+          "package": {
+            "name": "js-yaml",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/js-yaml"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "4.0.0"
+                },
+                {
+                  "fixed": "4.3.2"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "js-yaml",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/js-yaml"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "3.0.0"
+                },
+                {
+                  "fixed": "3.15.2"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        }
+      ],
+      "references": [
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodeca/js-yaml/security/advisories/GHSA-2883-xcg3-v3hh"
+        },
+        {
+          "type": "ADVISORY",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-84375"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodeca/js-yaml/pull/797"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodeca/js-yaml/commit/3485bc06ff8a0251505f44a00414d90df2466639"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodeca/js-yaml/commit/6a8e05f9a485188ed730ac81e81ae221352ef480"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodeca/js-yaml/commit/d90b6612a5a84385bdcb556c44578eac76dc0f6b"
+        },
+        {
+          "type": "PACKAGE",
+          "url": "https://github.com/nodeca/js-yaml"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodeca/js-yaml/releases/tag/3.15.2"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodeca/js-yaml/releases/tag/4.3.2"
+        }
+      ],
+      "associations": [
+        {
+          "name": "js-yaml",
+          "version": "4.3.1",
+          "ecosystem": "npm",
+          "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+          "recordPackageMatch": true,
+          "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+        }
+      ],
+      "missingSeverity": false,
+      "noGuessedSeverityOrFixedVersion": true,
+      "releaseReady": false
+    },
+    {
+      "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+      "id": "GHSA-2gqq-gqf2-x968",
+      "modified": "2026-09-29T18:28:11.302166457Z",
+      "published": "2026-09-29T18:18:51Z",
+      "withdrawn": null,
+      "summary": "undici vulnerable to response truncation via oversized chunked responses in the dump interceptor",
+      "aliases": [
+        "CVE-2026-84947"
+      ],
+      "severity": [
+        {
+          "type": "CVSS_V3",
+          "score": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N"
+        }
+      ],
+      "databaseSpecificSeverity": "LOW",
+      "affected": [
+        {
+          "package": {
+            "name": "undici",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/undici"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "7.1.0"
+                },
+                {
+                  "fixed": "7.29.1"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "undici",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/undici"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "8.0.0"
+                },
+                {
+                  "fixed": "8.10.2"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        }
+      ],
+      "references": [
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/security/advisories/GHSA-2gqq-gqf2-x968"
+        },
+        {
+          "type": "ADVISORY",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-84947"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/commit/21693f406f0142f3504192e9f9b022dcf84782ae"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/commit/6d583124e7cf60b640097d64144ed633cc450584"
+        },
+        {
+          "type": "WEB",
+          "url": "https://cna.openjsf.org/security-advisories.html"
+        },
+        {
+          "type": "PACKAGE",
+          "url": "https://github.com/nodejs/undici"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/releases/tag/v7.29.1"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/releases/tag/v8.10.2"
+        }
+      ],
+      "associations": [
+        {
+          "name": "undici",
+          "version": "7.29.0",
+          "ecosystem": "npm",
+          "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+          "recordPackageMatch": true,
+          "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+        }
+      ],
+      "missingSeverity": false,
+      "noGuessedSeverityOrFixedVersion": true,
+      "releaseReady": false
+    },
+    {
+      "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+      "id": "GHSA-2jfj-6hjv-fm6j",
+      "modified": "2026-09-29T18:30:41.174435110Z",
+      "published": "2026-09-29T18:19:58Z",
+      "withdrawn": null,
+      "summary": "undici vulnerable to cross-user cookie disclosure via Set-Cookie caching in shared caches",
+      "aliases": [
+        "CVE-2026-84933"
+      ],
+      "severity": [
+        {
+          "type": "CVSS_V3",
+          "score": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:L/A:N"
+        }
+      ],
+      "databaseSpecificSeverity": "MODERATE",
+      "affected": [
+        {
+          "package": {
+            "name": "undici",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/undici"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "7.0.0"
+                },
+                {
+                  "fixed": "7.29.1"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "undici",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/undici"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "8.0.0"
+                },
+                {
+                  "fixed": "8.10.2"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        }
+      ],
+      "references": [
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/security/advisories/GHSA-2jfj-6hjv-fm6j"
+        },
+        {
+          "type": "ADVISORY",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-84933"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/commit/b6c5a00252c37da9dd2db9bead053bb843e1f988"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/commit/cb75bbb34224a968b4ad80cab8b7aba5e0b3b28a"
+        },
+        {
+          "type": "WEB",
+          "url": "https://cna.openjsf.org/security-advisories.html"
+        },
+        {
+          "type": "PACKAGE",
+          "url": "https://github.com/nodejs/undici"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/releases/tag/v7.29.1"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/releases/tag/v8.10.2"
+        }
+      ],
+      "associations": [
+        {
+          "name": "undici",
+          "version": "7.29.0",
+          "ecosystem": "npm",
+          "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+          "recordPackageMatch": true,
+          "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+        }
+      ],
+      "missingSeverity": false,
+      "noGuessedSeverityOrFixedVersion": true,
+      "releaseReady": false
+    },
+    {
+      "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+      "id": "GHSA-2m5v-pch6-74hx",
+      "modified": "2026-10-27T19:15:22.407771210Z",
+      "published": "2026-10-27T19:02:26Z",
+      "withdrawn": null,
+      "summary": "undici vulnerable to TLS certificate validation bypass via dropped tls options in Agent",
+      "aliases": [
+        "CVE-2026-109383"
+      ],
+      "severity": [
+        {
+          "type": "CVSS_V3",
+          "score": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N"
+        }
+      ],
+      "databaseSpecificSeverity": "HIGH",
+      "affected": [
+        {
+          "package": {
+            "name": "undici",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/undici"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "4.0.0"
+                },
+                {
+                  "fixed": "6.29.1"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "undici",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/undici"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "7.0.0"
+                },
+                {
+                  "fixed": "7.30.1"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "undici",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/undici"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "8.0.0"
+                },
+                {
+                  "fixed": "8.12.2"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        }
+      ],
+      "references": [
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/security/advisories/GHSA-2m5v-pch6-74hx"
+        },
+        {
+          "type": "ADVISORY",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-109383"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/commit/04cb74b1db131ff8f5b4557dce811cbf5f4664b4"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/commit/8c59f6b302898cb2e9b0f7962cd7212b6e597c9f"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/commit/f75eac00ac177f7b2e6c8bfbd52d4113164286e6"
+        },
+        {
+          "type": "WEB",
+          "url": "https://cna.openjsf.org/security-advisories.html"
+        },
+        {
+          "type": "PACKAGE",
+          "url": "https://github.com/nodejs/undici"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/releases/tag/v6.29.1"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/releases/tag/v7.30.1"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/releases/tag/v8.12.2"
+        }
+      ],
+      "associations": [
+        {
+          "name": "undici",
+          "version": "7.29.0",
+          "ecosystem": "npm",
+          "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+          "recordPackageMatch": true,
+          "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+        }
+      ],
+      "missingSeverity": false,
+      "noGuessedSeverityOrFixedVersion": true,
+      "releaseReady": false
+    },
+    {
+      "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+      "id": "GHSA-333x-w4r6-6crp",
+      "modified": "2026-10-23T21:45:04.900311356Z",
+      "published": "2026-10-23T21:36:40Z",
+      "withdrawn": null,
+      "summary": "fast-uri vulnerable to scheme injection via an unescaped first-segment colon in suffix references",
+      "aliases": [
+        "CVE-2026-110725"
+      ],
+      "severity": [
+        {
+          "type": "CVSS_V3",
+          "score": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N"
+        }
+      ],
+      "databaseSpecificSeverity": "LOW",
+      "affected": [
+        {
+          "package": {
+            "name": "fast-uri",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/fast-uri"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "0"
+                },
+                {
+                  "fixed": "2.4.8"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "fast-uri",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/fast-uri"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "3.0.0"
+                },
+                {
+                  "fixed": "3.1.9"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "fast-uri",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/fast-uri"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "4.0.0"
+                },
+                {
+                  "fixed": "4.2.3"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        }
+      ],
+      "references": [
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/security/advisories/GHSA-333x-w4r6-6crp"
+        },
+        {
+          "type": "ADVISORY",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-110725"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/commit/39e6493c1356f30a0084171627eb266786e1620e"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/commit/a9b8d67353630aab053cd727cf629023dd018d2b"
+        },
+        {
+          "type": "WEB",
+          "url": "https://cna.openjsf.org/security-advisories.html"
+        },
+        {
+          "type": "PACKAGE",
+          "url": "https://github.com/fastify/fast-uri"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/releases/tag/v2.4.8"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/releases/tag/v3.1.9"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/releases/tag/v4.2.3"
+        }
+      ],
+      "associations": [
+        {
+          "name": "fast-uri",
+          "version": "3.1.5",
+          "ecosystem": "npm",
+          "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+          "recordPackageMatch": true,
+          "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+        }
+      ],
+      "missingSeverity": false,
+      "noGuessedSeverityOrFixedVersion": true,
+      "releaseReady": false
+    },
+    {
+      "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+      "id": "GHSA-3g3m-2fjr-6pw4",
+      "modified": "2026-10-30T23:15:04.503965732Z",
+      "published": "2026-10-30T23:09:11Z",
+      "withdrawn": null,
+      "summary": "Glob: AbortSignal cancellation bypass allows post-timeout filesystem traversal",
+      "aliases": [
+        "CVE-2026-118773"
+      ],
+      "severity": [
+        {
+          "type": "CVSS_V4",
+          "score": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N"
+        }
+      ],
+      "databaseSpecificSeverity": "MODERATE",
+      "affected": [
+        {
+          "package": {
+            "name": "glob",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/glob"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "9.0.0"
+                },
+                {
+                  "fixed": "14.0.2"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        }
+      ],
+      "references": [
+        {
+          "type": "WEB",
+          "url": "https://github.com/isaacs/node-glob/security/advisories/GHSA-3g3m-2fjr-6pw4"
+        },
+        {
+          "type": "ADVISORY",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-118773"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/isaacs/node-glob/commit/4682e8c9babee1b385202ede36389634e12076d7"
+        },
+        {
+          "type": "PACKAGE",
+          "url": "https://github.com/isaacs/node-glob"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/isaacs/node-glob/releases/tag/v14.0.2"
+        }
+      ],
+      "associations": [
+        {
+          "name": "glob",
+          "version": "13.0.6",
+          "ecosystem": "npm",
+          "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+          "recordPackageMatch": true,
+          "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+        }
+      ],
+      "missingSeverity": false,
+      "noGuessedSeverityOrFixedVersion": true,
+      "releaseReady": false
+    },
+    {
+      "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+      "id": "GHSA-3wwx-pv8p-q78v",
+      "modified": "2026-09-28T22:00:08.266327162Z",
+      "published": "2026-09-28T21:42:37Z",
+      "withdrawn": null,
+      "summary": "undici vulnerable to Denial of Service via unhandled error in WebSocket permessage-deflate decompression",
+      "aliases": [
+        "CVE-2026-85024"
+      ],
+      "severity": [
+        {
+          "type": "CVSS_V3",
+          "score": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        }
+      ],
+      "databaseSpecificSeverity": "MODERATE",
+      "affected": [
+        {
+          "package": {
+            "name": "undici",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/undici"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "6.25.0"
+                },
+                {
+                  "fixed": "6.28.1"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "undici",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/undici"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "7.28.0"
+                },
+                {
+                  "fixed": "7.29.1"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "undici",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/undici"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "8.1.0"
+                },
+                {
+                  "fixed": "8.10.2"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        }
+      ],
+      "references": [
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/security/advisories/GHSA-3wwx-pv8p-q78v"
+        },
+        {
+          "type": "ADVISORY",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-85024"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/commit/07c60d9c7099a910451244afe42861bbdbdd974c"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/commit/4411a238a98e8791da5fff10cc9e3578a7668ed6"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/commit/63cf698b611fecc6ee0a17b185b930051e4b982f"
+        },
+        {
+          "type": "WEB",
+          "url": "https://cna.openjsf.org/security-advisories.html"
+        },
+        {
+          "type": "PACKAGE",
+          "url": "https://github.com/nodejs/undici"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/releases/tag/v6.28.1"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/releases/tag/v7.29.1"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/releases/tag/v8.10.2"
+        }
+      ],
+      "associations": [
+        {
+          "name": "undici",
+          "version": "7.29.0",
+          "ecosystem": "npm",
+          "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+          "recordPackageMatch": true,
+          "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+        }
+      ],
+      "missingSeverity": false,
+      "noGuessedSeverityOrFixedVersion": true,
+      "releaseReady": false
+    },
+    {
+      "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+      "id": "GHSA-3xpg-4rpp-hhhm",
+      "modified": "2026-09-29T18:30:41.143057118Z",
+      "published": "2026-09-29T18:20:37Z",
+      "withdrawn": null,
+      "summary": "undici vulnerable to Denial of Service via unbounded decompression of compressed responses",
+      "aliases": [
+        "CVE-2026-84890"
+      ],
+      "severity": [
+        {
+          "type": "CVSS_V3",
+          "score": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        }
+      ],
+      "databaseSpecificSeverity": "MODERATE",
+      "affected": [
+        {
+          "package": {
+            "name": "undici",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/undici"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "7.15.0"
+                },
+                {
+                  "fixed": "7.29.1"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "undici",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/undici"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "8.0.0"
+                },
+                {
+                  "fixed": "8.10.2"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        }
+      ],
+      "references": [
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/security/advisories/GHSA-3xpg-4rpp-hhhm"
+        },
+        {
+          "type": "ADVISORY",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-84890"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/commit/2c7d7e1227043c644c4c32cfd1e276f4fd4fcb11"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/commit/7aac7f12f757844763c8b8f1ab6e305e80d55838"
+        },
+        {
+          "type": "WEB",
+          "url": "https://cna.openjsf.org/security-advisories.html"
+        },
+        {
+          "type": "PACKAGE",
+          "url": "https://github.com/nodejs/undici"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/releases/tag/v7.29.1"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/releases/tag/v8.10.2"
+        }
+      ],
+      "associations": [
+        {
+          "name": "undici",
+          "version": "7.29.0",
+          "ecosystem": "npm",
+          "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+          "recordPackageMatch": true,
+          "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+        }
+      ],
+      "missingSeverity": false,
+      "noGuessedSeverityOrFixedVersion": true,
+      "releaseReady": false
+    },
+    {
+      "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+      "id": "GHSA-4mjr-xmp4-gh2g",
+      "modified": "2026-09-10T03:51:14.991984096Z",
+      "published": "2026-09-02T14:45:13Z",
+      "withdrawn": null,
+      "summary": "qs: Denial of Service via Attacker Controlled isBuffer",
+      "aliases": [
+        "CVE-2026-82417"
+      ],
+      "severity": [
+        {
+          "type": "CVSS_V3",
+          "score": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
+        },
+        {
+          "type": "CVSS_V4",
+          "score": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N"
+        }
+      ],
+      "databaseSpecificSeverity": "MODERATE",
+      "affected": [
+        {
+          "package": {
+            "name": "qs",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/qs"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "2.2.5"
+                },
+                {
+                  "fixed": "6.16.0"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        }
+      ],
+      "references": [
+        {
+          "type": "WEB",
+          "url": "https://github.com/ljharb/qs/security/advisories/GHSA-4mjr-xmp4-gh2g"
+        },
+        {
+          "type": "ADVISORY",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82417"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/ljharb/qs/commit/e83d321ffafb38cf210683ac31714fce6ce1c6c6"
+        },
+        {
+          "type": "PACKAGE",
+          "url": "https://github.com/ljharb/qs"
+        }
+      ],
+      "associations": [
+        {
+          "name": "qs",
+          "version": "6.15.3",
+          "ecosystem": "npm",
+          "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+          "recordPackageMatch": true,
+          "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+        }
+      ],
+      "missingSeverity": false,
+      "noGuessedSeverityOrFixedVersion": true,
+      "releaseReady": false
+    },
+    {
+      "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+      "id": "GHSA-4qv8-2p9j-2685",
+      "modified": "2026-10-23T22:30:04.104974737Z",
+      "published": "2026-10-23T22:13:29Z",
+      "withdrawn": null,
+      "summary": "undici vulnerable to Denial of Service via unbounded memory in the EventSource parser",
+      "aliases": [
+        "CVE-2026-109924"
+      ],
+      "severity": [
+        {
+          "type": "CVSS_V3",
+          "score": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        }
+      ],
+      "databaseSpecificSeverity": "MODERATE",
+      "affected": [
+        {
+          "package": {
+            "name": "undici",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/undici"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "6.5.0"
+                },
+                {
+                  "fixed": "6.29.1"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "undici",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/undici"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "7.0.0"
+                },
+                {
+                  "fixed": "7.30.1"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "undici",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/undici"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "8.0.0"
+                },
+                {
+                  "fixed": "8.12.2"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        }
+      ],
+      "references": [
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/security/advisories/GHSA-4qv8-2p9j-2685"
+        },
+        {
+          "type": "ADVISORY",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-109924"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/commit/299162740d5f39120092277e70efacb4d151c1c6"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/commit/789ef26461c648480433846607154f52d74ec9ab"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/commit/c43b23fdc6b37e1283d4347408bb16800f867d9e"
+        },
+        {
+          "type": "WEB",
+          "url": "https://cna.openjsf.org/security-advisories.html"
+        },
+        {
+          "type": "PACKAGE",
+          "url": "https://github.com/nodejs/undici"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/releases/tag/v6.29.1"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/releases/tag/v7.30.1"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/releases/tag/v8.12.2"
+        }
+      ],
+      "associations": [
+        {
+          "name": "undici",
+          "version": "7.29.0",
+          "ecosystem": "npm",
+          "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+          "recordPackageMatch": true,
+          "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+        }
+      ],
+      "missingSeverity": false,
+      "noGuessedSeverityOrFixedVersion": true,
+      "releaseReady": false
+    },
+    {
+      "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+      "id": "GHSA-4w7w-5xrc-9h26",
+      "modified": "2026-10-27T19:15:22.403656345Z",
+      "published": "2026-10-27T19:02:31Z",
+      "withdrawn": null,
+      "summary": "undici vulnerable to cache poisoning and cross-user disclosure via cross-origin redirects",
+      "aliases": [
+        "CVE-2026-109829"
+      ],
+      "severity": [
+        {
+          "type": "CVSS_V3",
+          "score": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N"
+        }
+      ],
+      "databaseSpecificSeverity": "HIGH",
+      "affected": [
+        {
+          "package": {
+            "name": "undici",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/undici"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "7.0.0"
+                },
+                {
+                  "fixed": "7.30.1"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "undici",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/undici"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "8.0.0"
+                },
+                {
+                  "fixed": "8.12.2"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        }
+      ],
+      "references": [
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/security/advisories/GHSA-4w7w-5xrc-9h26"
+        },
+        {
+          "type": "ADVISORY",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-109829"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/commit/26c2bfb3def0b67241ce878e80657ed5d6c3efa8"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/commit/b20b82ad80a405a12b6ce1f341bcd418de390aa0"
+        },
+        {
+          "type": "WEB",
+          "url": "https://cna.openjsf.org/security-advisories.html"
+        },
+        {
+          "type": "PACKAGE",
+          "url": "https://github.com/nodejs/undici"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/releases/tag/v7.30.1"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/releases/tag/v8.12.2"
+        }
+      ],
+      "associations": [
+        {
+          "name": "undici",
+          "version": "7.29.0",
+          "ecosystem": "npm",
+          "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+          "recordPackageMatch": true,
+          "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+        }
+      ],
+      "missingSeverity": false,
+      "noGuessedSeverityOrFixedVersion": true,
+      "releaseReady": false
+    },
+    {
+      "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+      "id": "GHSA-55wc-3pg8-jfw6",
+      "modified": "2026-10-27T19:15:22.392692308Z",
+      "published": "2026-10-27T19:02:10Z",
+      "withdrawn": null,
+      "summary": "undici vulnerable to Denial of Service via unhandled exception in the decompress interceptor",
+      "aliases": [
+        "CVE-2026-87029"
+      ],
+      "severity": [
+        {
+          "type": "CVSS_V3",
+          "score": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        }
+      ],
+      "databaseSpecificSeverity": "MODERATE",
+      "affected": [
+        {
+          "package": {
+            "name": "undici",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/undici"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "7.15.0"
+                },
+                {
+                  "fixed": "7.30.1"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "undici",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/undici"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "8.0.0"
+                },
+                {
+                  "fixed": "8.12.2"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        }
+      ],
+      "references": [
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/security/advisories/GHSA-55wc-3pg8-jfw6"
+        },
+        {
+          "type": "ADVISORY",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-87029"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/commit/63cba7712ca012b2603c6aeeb4c72d8692332cd0"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/commit/f851f315db1f2acce0ea668f88d9d0fa61c8420c"
+        },
+        {
+          "type": "WEB",
+          "url": "https://cna.openjsf.org/security-advisories.html"
+        },
+        {
+          "type": "PACKAGE",
+          "url": "https://github.com/nodejs/undici"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/releases/tag/v7.30.1"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/releases/tag/v8.12.2"
+        }
+      ],
+      "associations": [
+        {
+          "name": "undici",
+          "version": "7.29.0",
+          "ecosystem": "npm",
+          "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+          "recordPackageMatch": true,
+          "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+        }
+      ],
+      "missingSeverity": false,
+      "noGuessedSeverityOrFixedVersion": true,
+      "releaseReady": false
+    },
+    {
+      "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+      "id": "GHSA-5jgf-p345-68v8",
+      "modified": "2026-09-10T03:51:15.083681721Z",
+      "published": "2026-09-02T15:44:30Z",
+      "withdrawn": null,
+      "summary": "fast-uri vulnerable to host confusion via skipped IDN canonicalization on scheme-relative references",
+      "aliases": [
+        "CVE-2026-75931"
+      ],
+      "severity": [
+        {
+          "type": "CVSS_V3",
+          "score": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N"
+        }
+      ],
+      "databaseSpecificSeverity": "HIGH",
+      "affected": [
+        {
+          "package": {
+            "name": "fast-uri",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/fast-uri"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "2.4.2"
+                },
+                {
+                  "fixed": "2.4.5"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "fast-uri",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/fast-uri"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "3.1.3"
+                },
+                {
+                  "fixed": "3.1.6"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "fast-uri",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/fast-uri"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "4.0.1"
+                },
+                {
+                  "fixed": "4.1.3"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        }
+      ],
+      "references": [
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/security/advisories/GHSA-5jgf-p345-68v8"
+        },
+        {
+          "type": "ADVISORY",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75931"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/commit/0256bc8d1f28b5d0ac657faf67e2411a189dfcb5"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/commit/444ecdad447db2cc23c4d422acc6f0daa6fa8eef"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/commit/4e4ebd8b245f6ca16e448203559eea3e545453a3"
+        },
+        {
+          "type": "WEB",
+          "url": "https://cna.openjsf.org/security-advisories.html"
+        },
+        {
+          "type": "PACKAGE",
+          "url": "https://github.com/fastify/fast-uri"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/releases/tag/v2.4.5"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/releases/tag/v3.1.6"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/releases/tag/v4.1.3"
+        }
+      ],
+      "associations": [
+        {
+          "name": "fast-uri",
+          "version": "3.1.5",
+          "ecosystem": "npm",
+          "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+          "recordPackageMatch": true,
+          "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+        }
+      ],
+      "missingSeverity": false,
+      "noGuessedSeverityOrFixedVersion": true,
+      "releaseReady": false
+    },
+    {
+      "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+      "id": "GHSA-6j4f-fj2g-mc7p",
+      "modified": "2026-09-30T00:00:03.836613572Z",
+      "published": "2026-09-29T23:44:58Z",
+      "withdrawn": null,
+      "summary": "brace-expansion: DoS via uncontrolled recursion in parseCommaParts causing stack exhaustion",
+      "aliases": [
+        "CVE-2026-102276"
+      ],
+      "severity": [
+        {
+          "type": "CVSS_V3",
+          "score": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        }
+      ],
+      "databaseSpecificSeverity": "HIGH",
+      "affected": [
+        {
+          "package": {
+            "name": "brace-expansion",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/brace-expansion"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "4.0.0"
+                },
+                {
+                  "fixed": "5.0.10"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "brace-expansion",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/brace-expansion"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "3.0.0"
+                },
+                {
+                  "fixed": "3.0.7"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "brace-expansion",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/brace-expansion"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "2.0.0"
+                },
+                {
+                  "fixed": "2.1.5"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "brace-expansion",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/brace-expansion"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "0"
+                },
+                {
+                  "fixed": "1.1.19"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        }
+      ],
+      "references": [
+        {
+          "type": "WEB",
+          "url": "https://github.com/juliangruber/brace-expansion/security/advisories/GHSA-6j4f-fj2g-mc7p"
+        },
+        {
+          "type": "ADVISORY",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-102276"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/juliangruber/brace-expansion/commit/0bcbfc0a5928c3073d48f42999d1ce4fc1c42fbc"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/juliangruber/brace-expansion/commit/316359e6019c39b3254c8ba8e25dc586a480652c"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/juliangruber/brace-expansion/commit/5171e681c0922b7ae8bfaf9a331e309107be6edc"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/juliangruber/brace-expansion/commit/6735c94873ca570bcdd6a0690033bdd3126379d3"
+        },
+        {
+          "type": "PACKAGE",
+          "url": "https://github.com/juliangruber/brace-expansion"
+        }
+      ],
+      "associations": [
+        {
+          "name": "brace-expansion",
+          "version": "5.0.9",
+          "ecosystem": "npm",
+          "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+          "recordPackageMatch": true,
+          "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+        }
+      ],
+      "missingSeverity": false,
+      "noGuessedSeverityOrFixedVersion": true,
+      "releaseReady": false
+    },
+    {
+      "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+      "id": "GHSA-6pq8-jhm2-2vcw",
+      "modified": "2026-10-27T16:15:05.324423680Z",
+      "published": "2026-10-27T16:10:55Z",
+      "withdrawn": null,
+      "summary": "qs : qs.stringify with arrayFormat 'comma' throws an uncaught TypeError on array elements carrying a non-callable own toString (DoS)",
+      "aliases": [
+        "CVE-2026-110816"
+      ],
+      "severity": [
+        {
+          "type": "CVSS_V3",
+          "score": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
+        },
+        {
+          "type": "CVSS_V4",
+          "score": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N"
+        }
+      ],
+      "databaseSpecificSeverity": "MODERATE",
+      "affected": [
+        {
+          "package": {
+            "name": "qs",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/qs"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "6.7.0"
+                },
+                {
+                  "fixed": "6.16.1"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        }
+      ],
+      "references": [
+        {
+          "type": "WEB",
+          "url": "https://github.com/ljharb/qs/security/advisories/GHSA-6pq8-jhm2-2vcw"
+        },
+        {
+          "type": "ADVISORY",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-110816"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/ljharb/qs/commit/a952e7519338ef0cfb25694a2988848f93333727"
+        },
+        {
+          "type": "PACKAGE",
+          "url": "https://github.com/ljharb/qs"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/ljharb/qs/releases/tag/v6.16.1"
+        }
+      ],
+      "associations": [
+        {
+          "name": "qs",
+          "version": "6.15.3",
+          "ecosystem": "npm",
+          "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+          "recordPackageMatch": true,
+          "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+        }
+      ],
+      "missingSeverity": false,
+      "noGuessedSeverityOrFixedVersion": true,
+      "releaseReady": false
+    },
+    {
+      "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+      "id": "GHSA-8436-99hf-9mmv",
+      "modified": "2026-09-29T18:28:12.530229215Z",
+      "published": "2026-09-29T18:16:28Z",
+      "withdrawn": null,
+      "summary": "undici vulnerable to caching and replay of unsafe HTTP method responses",
+      "aliases": [
+        "CVE-2026-85008"
+      ],
+      "severity": [
+        {
+          "type": "CVSS_V3",
+          "score": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N"
+        }
+      ],
+      "databaseSpecificSeverity": "LOW",
+      "affected": [
+        {
+          "package": {
+            "name": "undici",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/undici"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "7.0.0"
+                },
+                {
+                  "fixed": "7.29.1"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "undici",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/undici"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "8.0.0"
+                },
+                {
+                  "fixed": "8.10.2"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        }
+      ],
+      "references": [
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/security/advisories/GHSA-8436-99hf-9mmv"
+        },
+        {
+          "type": "ADVISORY",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-85008"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/commit/2be07bf97b3022e0324142d31f99f6e019d815e3"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/commit/b61d9432bac7caac51273ad209862e4c0bf935ae"
+        },
+        {
+          "type": "WEB",
+          "url": "https://cna.openjsf.org/security-advisories.html"
+        },
+        {
+          "type": "PACKAGE",
+          "url": "https://github.com/nodejs/undici"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/releases/tag/v7.29.1"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/releases/tag/v8.10.2"
+        }
+      ],
+      "associations": [
+        {
+          "name": "undici",
+          "version": "7.29.0",
+          "ecosystem": "npm",
+          "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+          "recordPackageMatch": true,
+          "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+        }
+      ],
+      "missingSeverity": false,
+      "noGuessedSeverityOrFixedVersion": true,
+      "releaseReady": false
+    },
+    {
+      "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+      "id": "GHSA-9fm3-97px-rjf6",
+      "modified": "2026-10-27T19:15:22.400702743Z",
+      "published": "2026-10-27T19:02:15Z",
+      "withdrawn": null,
+      "summary": "undici WebSocket client vulnerable to Denial of Service via unbounded automatic PONG buffering",
+      "aliases": [
+        "CVE-2026-109932"
+      ],
+      "severity": [
+        {
+          "type": "CVSS_V3",
+          "score": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        }
+      ],
+      "databaseSpecificSeverity": "MODERATE",
+      "affected": [
+        {
+          "package": {
+            "name": "undici",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/undici"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "5.15.0"
+                },
+                {
+                  "fixed": "6.29.1"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "undici",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/undici"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "7.0.0"
+                },
+                {
+                  "fixed": "7.30.1"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "undici",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/undici"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "8.0.0"
+                },
+                {
+                  "fixed": "8.12.2"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        }
+      ],
+      "references": [
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/security/advisories/GHSA-9fm3-97px-rjf6"
+        },
+        {
+          "type": "ADVISORY",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-109932"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/commit/39f93e142df03e559fe7c3d1fc7fba9beee2c185"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/commit/53944624462b6797560288c55dbd8c66857bb495"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/commit/b217373bb024cd93f85eb5b3ffd25684855f60f8"
+        },
+        {
+          "type": "WEB",
+          "url": "https://cna.openjsf.org/security-advisories.html"
+        },
+        {
+          "type": "PACKAGE",
+          "url": "https://github.com/nodejs/undici"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/releases/tag/v6.29.1"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/releases/tag/v7.30.1"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/releases/tag/v8.12.2"
+        }
+      ],
+      "associations": [
+        {
+          "name": "undici",
+          "version": "7.29.0",
+          "ecosystem": "npm",
+          "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+          "recordPackageMatch": true,
+          "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+        }
+      ],
+      "missingSeverity": false,
+      "noGuessedSeverityOrFixedVersion": true,
+      "releaseReady": false
+    },
+    {
+      "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+      "id": "GHSA-f65p-4m7j-42xc",
+      "modified": "2026-09-10T03:51:15.292437844Z",
+      "published": "2026-09-02T15:43:30Z",
+      "withdrawn": null,
+      "summary": "fast-uri vulnerable to server-side request forgery via malformed IPv6 normalization",
+      "aliases": [
+        "CVE-2026-75975"
+      ],
+      "severity": [
+        {
+          "type": "CVSS_V3",
+          "score": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N"
+        }
+      ],
+      "databaseSpecificSeverity": "HIGH",
+      "affected": [
+        {
+          "package": {
+            "name": "fast-uri",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/fast-uri"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "2.3.1"
+                },
+                {
+                  "fixed": "2.4.5"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "fast-uri",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/fast-uri"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "3.0.0"
+                },
+                {
+                  "fixed": "3.1.6"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "fast-uri",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/fast-uri"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "4.0.0"
+                },
+                {
+                  "fixed": "4.1.3"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        }
+      ],
+      "references": [
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/security/advisories/GHSA-f65p-4m7j-42xc"
+        },
+        {
+          "type": "ADVISORY",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75975"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/commit/3728465caacef4b16bc84b7d14760f1c8fe41595"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/commit/607bfbe953f28a14c2e06ae64aff38c81ca2937f"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/commit/9161eded1ff55fad9d9714c6ad6c0f0283547799"
+        },
+        {
+          "type": "WEB",
+          "url": "https://cna.openjsf.org/security-advisories.html"
+        },
+        {
+          "type": "PACKAGE",
+          "url": "https://github.com/fastify/fast-uri"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/releases/tag/v2.4.5"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/releases/tag/v3.1.6"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/releases/tag/v4.1.3"
+        }
+      ],
+      "associations": [
+        {
+          "name": "fast-uri",
+          "version": "3.1.5",
+          "ecosystem": "npm",
+          "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+          "recordPackageMatch": true,
+          "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+        }
+      ],
+      "missingSeverity": false,
+      "noGuessedSeverityOrFixedVersion": true,
+      "releaseReady": false
+    },
+    {
+      "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+      "id": "GHSA-f72v-6w45-q472",
+      "modified": "2026-10-23T22:30:04.094314933Z",
+      "published": "2026-10-23T22:12:57Z",
+      "withdrawn": null,
+      "summary": "undici vulnerable to Subresource Integrity bypass via non-lowercase algorithm tokens",
+      "aliases": [
+        "CVE-2026-109841"
+      ],
+      "severity": [
+        {
+          "type": "CVSS_V3",
+          "score": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:H/A:N"
+        }
+      ],
+      "databaseSpecificSeverity": "MODERATE",
+      "affected": [
+        {
+          "package": {
+            "name": "undici",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/undici"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "7.15.0"
+                },
+                {
+                  "fixed": "7.30.1"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "undici",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/undici"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "8.0.0"
+                },
+                {
+                  "fixed": "8.12.2"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        }
+      ],
+      "references": [
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/security/advisories/GHSA-f72v-6w45-q472"
+        },
+        {
+          "type": "ADVISORY",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-109841"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/commit/18bc8a1e09d15bc45815154a289dcf6fd5254d00"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/commit/4f7ef6806e532ab9e29ccd6229b1b9d241e1b1f0"
+        },
+        {
+          "type": "WEB",
+          "url": "https://cna.openjsf.org/security-advisories.html"
+        },
+        {
+          "type": "PACKAGE",
+          "url": "https://github.com/nodejs/undici"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/releases/tag/v7.30.1"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/releases/tag/v8.12.2"
+        }
+      ],
+      "associations": [
+        {
+          "name": "undici",
+          "version": "7.29.0",
+          "ecosystem": "npm",
+          "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+          "recordPackageMatch": true,
+          "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+        }
+      ],
+      "missingSeverity": false,
+      "noGuessedSeverityOrFixedVersion": true,
+      "releaseReady": false
+    },
+    {
+      "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+      "id": "GHSA-fph4-wmhf-6fwf",
+      "modified": "2026-09-10T03:50:54.420840001Z",
+      "published": "2026-09-02T15:42:39Z",
+      "withdrawn": null,
+      "summary": "fast-uri vulnerable to server-side request forgery via repeated hostname percent-decoding",
+      "aliases": [
+        "CVE-2026-75899"
+      ],
+      "severity": [
+        {
+          "type": "CVSS_V3",
+          "score": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N"
+        }
+      ],
+      "databaseSpecificSeverity": "HIGH",
+      "affected": [
+        {
+          "package": {
+            "name": "fast-uri",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/fast-uri"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "2.4.1"
+                },
+                {
+                  "fixed": "2.4.5"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "fast-uri",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/fast-uri"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "3.1.2"
+                },
+                {
+                  "fixed": "3.1.6"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "fast-uri",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/fast-uri"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "4.0.0"
+                },
+                {
+                  "fixed": "4.1.3"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        }
+      ],
+      "references": [
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/security/advisories/GHSA-fph4-wmhf-6fwf"
+        },
+        {
+          "type": "ADVISORY",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75899"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/commit/2642290672e7211c990aaed3749c2ce667d0af4f"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/commit/8c15dbe94ec50bb8e595791ebb42c35cef0fd304"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/commit/ae92a4c5d8c4b6c9e447f048d5fcbde7eebd5514"
+        },
+        {
+          "type": "WEB",
+          "url": "https://cna.openjsf.org/security-advisories.html"
+        },
+        {
+          "type": "PACKAGE",
+          "url": "https://github.com/fastify/fast-uri"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/releases/tag/v2.4.5"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/releases/tag/v3.1.6"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/releases/tag/v4.1.3"
+        }
+      ],
+      "associations": [
+        {
+          "name": "fast-uri",
+          "version": "3.1.5",
+          "ecosystem": "npm",
+          "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+          "recordPackageMatch": true,
+          "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+        }
+      ],
+      "missingSeverity": false,
+      "noGuessedSeverityOrFixedVersion": true,
+      "releaseReady": false
+    },
+    {
+      "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+      "id": "GHSA-g3hv-75wg-m249",
+      "modified": "2026-10-30T23:15:07.420159385Z",
+      "published": "2026-10-30T23:09:55Z",
+      "withdrawn": null,
+      "summary": "minimatch has potential denial of service via globparts amplification",
+      "aliases": [
+        "CVE-2026-118764"
+      ],
+      "severity": [
+        {
+          "type": "CVSS_V4",
+          "score": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N"
+        }
+      ],
+      "databaseSpecificSeverity": "MODERATE",
+      "affected": [
+        {
+          "package": {
+            "name": "minimatch",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/minimatch"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "0"
+                },
+                {
+                  "fixed": "11.0.1"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        }
+      ],
+      "references": [
+        {
+          "type": "WEB",
+          "url": "https://github.com/isaacs/minimatch/security/advisories/GHSA-g3hv-75wg-m249"
+        },
+        {
+          "type": "ADVISORY",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-118764"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/isaacs/minimatch/commit/77a0f5c4b80bdc641c3c930a1d9edf5ad2db57f8"
+        },
+        {
+          "type": "PACKAGE",
+          "url": "https://github.com/isaacs/minimatch"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/isaacs/minimatch/releases/tag/v11.0.1"
+        }
+      ],
+      "associations": [
+        {
+          "name": "minimatch",
+          "version": "10.2.5",
+          "ecosystem": "npm",
+          "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+          "recordPackageMatch": true,
+          "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+        }
+      ],
+      "missingSeverity": false,
+      "noGuessedSeverityOrFixedVersion": true,
+      "releaseReady": false
+    },
+    {
+      "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+      "id": "GHSA-gfr2-rv44-r23c",
+      "modified": "2026-10-20T20:45:05.953469039Z",
+      "published": "2026-10-20T20:28:44Z",
+      "withdrawn": null,
+      "summary": "markdown-it: Quadratic-time rendering of a single multi-line link reference definition with default options (regression since 14.0)",
+      "aliases": [
+        "CVE-2026-111758"
+      ],
+      "severity": [
+        {
+          "type": "CVSS_V3",
+          "score": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        }
+      ],
+      "databaseSpecificSeverity": "HIGH",
+      "affected": [
+        {
+          "package": {
+            "name": "markdown-it",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/markdown-it"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "14.1.0"
+                },
+                {
+                  "fixed": "14.3.3"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "markdown-it",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/markdown-it"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "15.0.0"
+                },
+                {
+                  "fixed": "15.0.3"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        }
+      ],
+      "references": [
+        {
+          "type": "WEB",
+          "url": "https://github.com/markdown-it/markdown-it/security/advisories/GHSA-gfr2-rv44-r23c"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/markdown-it/markdown-it/commit/48fbc465812c440020c663f040ab22deaf8f1eca"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/markdown-it/markdown-it/commit/d99f48839d37af6fd8a2617516c43dab90755503"
+        },
+        {
+          "type": "PACKAGE",
+          "url": "https://github.com/markdown-it/markdown-it"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/markdown-it/markdown-it/releases/tag/14.3.3"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/markdown-it/markdown-it/releases/tag/15.0.3"
+        }
+      ],
+      "associations": [
+        {
+          "name": "markdown-it",
+          "version": "14.3.0",
+          "ecosystem": "npm",
+          "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+          "recordPackageMatch": true,
+          "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+        }
+      ],
+      "missingSeverity": false,
+      "noGuessedSeverityOrFixedVersion": true,
+      "releaseReady": false
+    },
+    {
+      "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+      "id": "GHSA-hrr3-gc8f-f4qj",
+      "modified": "2026-09-30T00:00:04.426165475Z",
+      "published": "2026-09-29T23:54:25Z",
+      "withdrawn": null,
+      "summary": "fast-uri vulnerable to inconsistent host case normalization via percent-encoded octets",
+      "aliases": [
+        "CVE-2026-86472"
+      ],
+      "severity": [
+        {
+          "type": "CVSS_V3",
+          "score": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:N"
+        }
+      ],
+      "databaseSpecificSeverity": "MODERATE",
+      "affected": [
+        {
+          "package": {
+            "name": "fast-uri",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/fast-uri"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "0"
+                },
+                {
+                  "fixed": "2.4.7"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "fast-uri",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/fast-uri"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "3.0.0"
+                },
+                {
+                  "fixed": "3.1.8"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "fast-uri",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/fast-uri"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "4.0.0"
+                },
+                {
+                  "fixed": "4.1.5"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        }
+      ],
+      "references": [
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/security/advisories/GHSA-hrr3-gc8f-f4qj"
+        },
+        {
+          "type": "ADVISORY",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-86472"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/commit/5dabb86732aa2a7655e258719970e61e12b6b4d1"
+        },
+        {
+          "type": "WEB",
+          "url": "https://cna.openjsf.org/security-advisories.html"
+        },
+        {
+          "type": "PACKAGE",
+          "url": "https://github.com/fastify/fast-uri"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/releases/tag/v2.4.7"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/releases/tag/v3.1.8"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/releases/tag/v4.1.5"
+        }
+      ],
+      "associations": [
+        {
+          "name": "fast-uri",
+          "version": "3.1.5",
+          "ecosystem": "npm",
+          "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+          "recordPackageMatch": true,
+          "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+        }
+      ],
+      "missingSeverity": false,
+      "noGuessedSeverityOrFixedVersion": true,
+      "releaseReady": false
+    },
+    {
+      "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+      "id": "GHSA-jqff-g426-hqxp",
+      "modified": "2026-09-10T03:50:54.467662526Z",
+      "published": "2026-09-02T15:41:53Z",
+      "withdrawn": null,
+      "summary": "fast-uri vulnerable to host confusion via percent-encoded scheme normalization",
+      "aliases": [
+        "CVE-2026-76172"
+      ],
+      "severity": [
+        {
+          "type": "CVSS_V3",
+          "score": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N"
+        }
+      ],
+      "databaseSpecificSeverity": "HIGH",
+      "affected": [
+        {
+          "package": {
+            "name": "fast-uri",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/fast-uri"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "2.3.1"
+                },
+                {
+                  "fixed": "2.4.5"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "fast-uri",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/fast-uri"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "3.0.0"
+                },
+                {
+                  "fixed": "3.1.6"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "fast-uri",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/fast-uri"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "4.0.0"
+                },
+                {
+                  "fixed": "4.1.3"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        }
+      ],
+      "references": [
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/security/advisories/GHSA-jqff-g426-hqxp"
+        },
+        {
+          "type": "ADVISORY",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76172"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/commit/37f3417c82994279656854f83ce938acd81c3862"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/commit/a941e626411f576f8d90883231e57b6c9d0ff98b"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/commit/c6a74bfd9d8c6b0df5362b3c7ae88d8021cb1e39"
+        },
+        {
+          "type": "WEB",
+          "url": "https://cna.openjsf.org/security-advisories.html"
+        },
+        {
+          "type": "PACKAGE",
+          "url": "https://github.com/fastify/fast-uri"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/releases/tag/v2.4.5"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/releases/tag/v3.1.6"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/releases/tag/v4.1.3"
+        }
+      ],
+      "associations": [
+        {
+          "name": "fast-uri",
+          "version": "3.1.5",
+          "ecosystem": "npm",
+          "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+          "recordPackageMatch": true,
+          "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+        }
+      ],
+      "missingSeverity": false,
+      "noGuessedSeverityOrFixedVersion": true,
+      "releaseReady": false
+    },
+    {
+      "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+      "id": "GHSA-pmjh-fq2x-6v4x",
+      "modified": "2026-09-29T18:30:41.164240105Z",
+      "published": "2026-09-29T18:22:34Z",
+      "withdrawn": null,
+      "summary": "undici vulnerable to Denial of Service via orphaned RetryHandler response body",
+      "aliases": [
+        "CVE-2026-18149"
+      ],
+      "severity": [
+        {
+          "type": "CVSS_V3",
+          "score": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        }
+      ],
+      "databaseSpecificSeverity": "MODERATE",
+      "affected": [
+        {
+          "package": {
+            "name": "undici",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/undici"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "7.11.0"
+                },
+                {
+                  "fixed": "7.29.1"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "undici",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/undici"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "8.0.0"
+                },
+                {
+                  "fixed": "8.10.2"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        }
+      ],
+      "references": [
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/security/advisories/GHSA-pmjh-fq2x-6v4x"
+        },
+        {
+          "type": "ADVISORY",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-18149"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/commit/3c6726599cea8646384dde846c97d630da472a74"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/commit/e905b5b87e6953bcc542af90557b2fee5b7b5974"
+        },
+        {
+          "type": "WEB",
+          "url": "https://hackerone.com/reports/3892751"
+        },
+        {
+          "type": "WEB",
+          "url": "https://cna.openjsf.org/security-advisories.html"
+        },
+        {
+          "type": "PACKAGE",
+          "url": "https://github.com/nodejs/undici"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/releases/tag/v7.29.1"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/releases/tag/v8.10.2"
+        }
+      ],
+      "associations": [
+        {
+          "name": "undici",
+          "version": "7.29.0",
+          "ecosystem": "npm",
+          "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+          "recordPackageMatch": true,
+          "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+        }
+      ],
+      "missingSeverity": false,
+      "noGuessedSeverityOrFixedVersion": true,
+      "releaseReady": false
+    },
+    {
+      "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+      "id": "GHSA-q2hr-2g5m-vwhr",
+      "modified": "2026-09-30T00:00:03.849541183Z",
+      "published": "2026-09-29T23:45:39Z",
+      "withdrawn": null,
+      "summary": "brace-expansion: Quadratic-time expansion of the `{a},b}` rewrite causes CPU denial of service",
+      "aliases": [
+        "CVE-2026-102277"
+      ],
+      "severity": [
+        {
+          "type": "CVSS_V3",
+          "score": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
+        }
+      ],
+      "databaseSpecificSeverity": "MODERATE",
+      "affected": [
+        {
+          "package": {
+            "name": "brace-expansion",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/brace-expansion"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "4.0.0"
+                },
+                {
+                  "fixed": "5.0.12"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "brace-expansion",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/brace-expansion"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "3.0.0"
+                },
+                {
+                  "fixed": "3.0.9"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "brace-expansion",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/brace-expansion"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "2.0.0"
+                },
+                {
+                  "fixed": "2.1.7"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "brace-expansion",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/brace-expansion"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "0"
+                },
+                {
+                  "fixed": "1.1.21"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        }
+      ],
+      "references": [
+        {
+          "type": "WEB",
+          "url": "https://github.com/juliangruber/brace-expansion/security/advisories/GHSA-q2hr-2g5m-vwhr"
+        },
+        {
+          "type": "ADVISORY",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-102277"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/juliangruber/brace-expansion/commit/33a5ef17b8d800bbfa8c52b14c39043b6aac1a96"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/juliangruber/brace-expansion/commit/bdff773f98e5988616b7039cc9b508df5d640b22"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/juliangruber/brace-expansion/commit/c55e67d8d8b1c56a2474afff15c2891166b2d364"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/juliangruber/brace-expansion/commit/ffdfa3e3806bed17c0874b8f1439b084de354a7e"
+        },
+        {
+          "type": "PACKAGE",
+          "url": "https://github.com/juliangruber/brace-expansion"
+        }
+      ],
+      "associations": [
+        {
+          "name": "brace-expansion",
+          "version": "5.0.9",
+          "ecosystem": "npm",
+          "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+          "recordPackageMatch": true,
+          "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+        }
+      ],
+      "missingSeverity": false,
+      "noGuessedSeverityOrFixedVersion": true,
+      "releaseReady": false
+    },
+    {
+      "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+      "id": "GHSA-qhr7-859c-m2p7",
+      "modified": "2026-09-30T00:00:04.402763332Z",
+      "published": "2026-09-29T23:45:17Z",
+      "withdrawn": null,
+      "summary": "brace-expansion: DoS via uncontrolled recursion on nested brace groups causing stack exhaustion",
+      "aliases": [
+        "CVE-2026-102278"
+      ],
+      "severity": [
+        {
+          "type": "CVSS_V3",
+          "score": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        }
+      ],
+      "databaseSpecificSeverity": "HIGH",
+      "affected": [
+        {
+          "package": {
+            "name": "brace-expansion",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/brace-expansion"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "4.0.0"
+                },
+                {
+                  "fixed": "5.0.11"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "brace-expansion",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/brace-expansion"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "3.0.0"
+                },
+                {
+                  "fixed": "3.0.8"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "brace-expansion",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/brace-expansion"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "2.0.0"
+                },
+                {
+                  "fixed": "2.1.6"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "brace-expansion",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/brace-expansion"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "0"
+                },
+                {
+                  "fixed": "1.1.20"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        }
+      ],
+      "references": [
+        {
+          "type": "WEB",
+          "url": "https://github.com/juliangruber/brace-expansion/security/advisories/GHSA-qhr7-859c-m2p7"
+        },
+        {
+          "type": "ADVISORY",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-102278"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/juliangruber/brace-expansion/commit/1efee7c397c191da6287a78ec19512476a966a7b"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/juliangruber/brace-expansion/commit/935d78f32f335b2ff76578e5c5e877d31ae9888c"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/juliangruber/brace-expansion/commit/de84f144e9816f30e25fc8179e2e1249ab6df0db"
+        },
+        {
+          "type": "PACKAGE",
+          "url": "https://github.com/juliangruber/brace-expansion"
+        }
+      ],
+      "associations": [
+        {
+          "name": "brace-expansion",
+          "version": "5.0.9",
+          "ecosystem": "npm",
+          "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+          "recordPackageMatch": true,
+          "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+        }
+      ],
+      "missingSeverity": false,
+      "noGuessedSeverityOrFixedVersion": true,
+      "releaseReady": false
+    },
+    {
+      "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+      "id": "GHSA-qrxm-fqhp-jwvm",
+      "modified": "2026-10-27T19:15:22.403573595Z",
+      "published": "2026-10-27T19:02:21Z",
+      "withdrawn": null,
+      "summary": "undici vulnerable to Denial of Service via TLS 1.2 certificate-changing renegotiation",
+      "aliases": [
+        "CVE-2026-87018"
+      ],
+      "severity": [
+        {
+          "type": "CVSS_V3",
+          "score": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        }
+      ],
+      "databaseSpecificSeverity": "HIGH",
+      "affected": [
+        {
+          "package": {
+            "name": "undici",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/undici"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "4.2.1"
+                },
+                {
+                  "fixed": "6.29.1"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "undici",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/undici"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "7.0.0"
+                },
+                {
+                  "fixed": "7.30.1"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "undici",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/undici"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "8.0.0"
+                },
+                {
+                  "fixed": "8.12.2"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        }
+      ],
+      "references": [
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/security/advisories/GHSA-qrxm-fqhp-jwvm"
+        },
+        {
+          "type": "ADVISORY",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-87018"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/commit/12cfd96c3f430897656e3edc1c5e02be8c1cd309"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/commit/b40fbfc0651703cf9fa9f6ced68b679f28d8bb28"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/commit/e257e9f8fb42eedd50727b9cf65e548c8925e4a8"
+        },
+        {
+          "type": "WEB",
+          "url": "https://cna.openjsf.org/security-advisories.html"
+        },
+        {
+          "type": "PACKAGE",
+          "url": "https://github.com/nodejs/undici"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/releases/tag/v6.29.1"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/releases/tag/v7.30.1"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/releases/tag/v8.12.2"
+        }
+      ],
+      "associations": [
+        {
+          "name": "undici",
+          "version": "7.29.0",
+          "ecosystem": "npm",
+          "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+          "recordPackageMatch": true,
+          "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+        }
+      ],
+      "missingSeverity": false,
+      "noGuessedSeverityOrFixedVersion": true,
+      "releaseReady": false
+    },
+    {
+      "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+      "id": "GHSA-qw65-cvwx-89v3",
+      "modified": "2026-09-28T21:45:03.859117836Z",
+      "published": "2026-09-28T21:24:39Z",
+      "withdrawn": null,
+      "summary": "fast-uri vulnerable to authority injection via an unvalidated port in serialize",
+      "aliases": [
+        "CVE-2026-84292"
+      ],
+      "severity": [
+        {
+          "type": "CVSS_V3",
+          "score": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N"
+        }
+      ],
+      "databaseSpecificSeverity": "HIGH",
+      "affected": [
+        {
+          "package": {
+            "name": "fast-uri",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/fast-uri"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "0"
+                },
+                {
+                  "fixed": "2.4.6"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "fast-uri",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/fast-uri"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "3.0.0"
+                },
+                {
+                  "fixed": "3.1.7"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "fast-uri",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/fast-uri"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "4.0.0"
+                },
+                {
+                  "fixed": "4.1.4"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        }
+      ],
+      "references": [
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/security/advisories/GHSA-qw65-cvwx-89v3"
+        },
+        {
+          "type": "ADVISORY",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-84292"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/commit/820e8478dd7da3d09f187bfaf35d50b71f67b8b4"
+        },
+        {
+          "type": "WEB",
+          "url": "https://cna.openjsf.org/security-advisories.html"
+        },
+        {
+          "type": "PACKAGE",
+          "url": "https://github.com/fastify/fast-uri"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/releases/tag/v2.4.6"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/releases/tag/v3.1.7"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/releases/tag/v4.1.4"
+        }
+      ],
+      "associations": [
+        {
+          "name": "fast-uri",
+          "version": "3.1.5",
+          "ecosystem": "npm",
+          "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+          "recordPackageMatch": true,
+          "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+        }
+      ],
+      "missingSeverity": false,
+      "noGuessedSeverityOrFixedVersion": true,
+      "releaseReady": false
+    },
+    {
+      "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+      "id": "GHSA-r53p-7pc4-xj5r",
+      "modified": "2026-09-29T18:30:41.154532067Z",
+      "published": "2026-09-29T18:22:07Z",
+      "withdrawn": null,
+      "summary": "undici vulnerable to downstream response splitting via retry interceptor",
+      "aliases": [
+        "CVE-2026-18540"
+      ],
+      "severity": [
+        {
+          "type": "CVSS_V3",
+          "score": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N"
+        }
+      ],
+      "databaseSpecificSeverity": "LOW",
+      "affected": [
+        {
+          "package": {
+            "name": "undici",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/undici"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "0"
+                },
+                {
+                  "fixed": "6.28.1"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "undici",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/undici"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "7.0.0"
+                },
+                {
+                  "fixed": "7.29.1"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "undici",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/undici"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "8.0.0"
+                },
+                {
+                  "fixed": "8.10.2"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        }
+      ],
+      "references": [
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/security/advisories/GHSA-r53p-7pc4-xj5r"
+        },
+        {
+          "type": "ADVISORY",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-18540"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/commit/0160a719063fb0a77f4fdf9500b9166b91e14329"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/commit/cd8af90b38ae33c2838d54a2d629774122effe95"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/commit/ce31bc824b578008faae5d3350da66c1b5f71548"
+        },
+        {
+          "type": "WEB",
+          "url": "https://hackerone.com/reports/3900104"
+        },
+        {
+          "type": "WEB",
+          "url": "https://hackerone.com/reports/3900615"
+        },
+        {
+          "type": "WEB",
+          "url": "https://cna.openjsf.org/security-advisories.html"
+        },
+        {
+          "type": "PACKAGE",
+          "url": "https://github.com/nodejs/undici"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/releases/tag/v6.28.1"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/releases/tag/v7.29.1"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/releases/tag/v8.10.2"
+        }
+      ],
+      "associations": [
+        {
+          "name": "undici",
+          "version": "7.29.0",
+          "ecosystem": "npm",
+          "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+          "recordPackageMatch": true,
+          "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+        }
+      ],
+      "missingSeverity": false,
+      "noGuessedSeverityOrFixedVersion": true,
+      "releaseReady": false
+    },
+    {
+      "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+      "id": "GHSA-r7fv-28h4-cvq7",
+      "modified": "2026-10-20T14:45:03.780912898Z",
+      "published": "2026-10-20T14:34:50Z",
+      "withdrawn": null,
+      "summary": "markdown-it: Quadratic complexity in smartquotes with unmatched closing quotes",
+      "aliases": [
+        "CVE-2026-111759"
+      ],
+      "severity": [
+        {
+          "type": "CVSS_V3",
+          "score": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        }
+      ],
+      "databaseSpecificSeverity": "HIGH",
+      "affected": [
+        {
+          "package": {
+            "name": "markdown-it",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/markdown-it"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "15.0.0"
+                },
+                {
+                  "fixed": "15.0.2"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "markdown-it",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/markdown-it"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "0"
+                },
+                {
+                  "fixed": "14.3.2"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        }
+      ],
+      "references": [
+        {
+          "type": "WEB",
+          "url": "https://github.com/markdown-it/markdown-it/security/advisories/GHSA-r7fv-28h4-cvq7"
+        },
+        {
+          "type": "ADVISORY",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-111759"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/markdown-it/markdown-it/commit/1b379c1b6d0522421bd1a51b77337c79af2c8670"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/markdown-it/markdown-it/commit/cf27366035edf9196667110c47d9d67b030a4152"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/markdown-it/markdown-it/commit/daf5a3c32303e5d9de01b12eeb725fb5990b8162"
+        },
+        {
+          "type": "PACKAGE",
+          "url": "https://github.com/markdown-it/markdown-it"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/markdown-it/markdown-it/releases/tag/14.3.2"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/markdown-it/markdown-it/releases/tag/15.0.2"
+        }
+      ],
+      "associations": [
+        {
+          "name": "markdown-it",
+          "version": "14.3.0",
+          "ecosystem": "npm",
+          "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+          "recordPackageMatch": true,
+          "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+        }
+      ],
+      "missingSeverity": false,
+      "noGuessedSeverityOrFixedVersion": true,
+      "releaseReady": false
+    },
+    {
+      "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+      "id": "GHSA-rfgv-xxqx-mfg5",
+      "modified": "2026-09-29T18:30:41.167602268Z",
+      "published": "2026-09-29T18:21:33Z",
+      "withdrawn": null,
+      "summary": "undici vulnerable to Denial of Service via unrequested WebSocket subprotocol",
+      "aliases": [
+        "CVE-2026-19534"
+      ],
+      "severity": [
+        {
+          "type": "CVSS_V3",
+          "score": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        }
+      ],
+      "databaseSpecificSeverity": "HIGH",
+      "affected": [
+        {
+          "package": {
+            "name": "undici",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/undici"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "6.7.0"
+                },
+                {
+                  "fixed": "6.28.1"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "undici",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/undici"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "7.0.0"
+                },
+                {
+                  "fixed": "7.29.1"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "undici",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/undici"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "8.0.0"
+                },
+                {
+                  "fixed": "8.10.2"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        }
+      ],
+      "references": [
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/security/advisories/GHSA-rfgv-xxqx-mfg5"
+        },
+        {
+          "type": "ADVISORY",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-19534"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/commit/2af0faf88b906d3127a360c3ac75164c0f95e5a5"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/commit/6615e0175e9b635bcd2e3e87a47daa82f6f5b728"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/commit/66e12816064cf3068f63bd134748b7fc4e779bad"
+        },
+        {
+          "type": "WEB",
+          "url": "https://cna.openjsf.org/security-advisories.html"
+        },
+        {
+          "type": "PACKAGE",
+          "url": "https://github.com/nodejs/undici"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/releases/tag/v6.28.1"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/releases/tag/v7.29.1"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/releases/tag/v8.10.2"
+        }
+      ],
+      "associations": [
+        {
+          "name": "undici",
+          "version": "7.29.0",
+          "ecosystem": "npm",
+          "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+          "recordPackageMatch": true,
+          "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+        }
+      ],
+      "missingSeverity": false,
+      "noGuessedSeverityOrFixedVersion": true,
+      "releaseReady": false
+    },
+    {
+      "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+      "id": "GHSA-rx4f-c7p8-82vq",
+      "modified": "2026-09-29T18:15:04.711653428Z",
+      "published": "2026-09-29T18:10:32Z",
+      "withdrawn": null,
+      "summary": "undici vulnerable to Denial of Service via WebSocketStream unclean close",
+      "aliases": [
+        "CVE-2026-85014"
+      ],
+      "severity": [
+        {
+          "type": "CVSS_V3",
+          "score": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        }
+      ],
+      "databaseSpecificSeverity": "MODERATE",
+      "affected": [
+        {
+          "package": {
+            "name": "undici",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/undici"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "7.0.0"
+                },
+                {
+                  "fixed": "7.29.1"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "undici",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/undici"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "8.0.0"
+                },
+                {
+                  "fixed": "8.10.2"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        }
+      ],
+      "references": [
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/security/advisories/GHSA-rx4f-c7p8-82vq"
+        },
+        {
+          "type": "ADVISORY",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-85014"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/commit/1858656ebb1e919311c1f31613dfd581b7214349"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/commit/662d0ea671fe64139e79533c913fce412765e1d7"
+        },
+        {
+          "type": "WEB",
+          "url": "https://cna.openjsf.org/security-advisories.html"
+        },
+        {
+          "type": "PACKAGE",
+          "url": "https://github.com/nodejs/undici"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/releases/tag/v7.29.1"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/releases/tag/v8.10.2"
+        }
+      ],
+      "associations": [
+        {
+          "name": "undici",
+          "version": "7.29.0",
+          "ecosystem": "npm",
+          "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+          "recordPackageMatch": true,
+          "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+        }
+      ],
+      "missingSeverity": false,
+      "noGuessedSeverityOrFixedVersion": true,
+      "releaseReady": false
+    },
+    {
+      "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+      "id": "GHSA-vfgh-jcmw-g37q",
+      "modified": "2026-10-20T20:15:05.220039200Z",
+      "published": "2026-10-20T20:08:19Z",
+      "withdrawn": null,
+      "summary": "markdown-it: Quadratic-time denial of service in inline HTML parsing with html enabled",
+      "aliases": [
+        "CVE-2026-111766"
+      ],
+      "severity": [
+        {
+          "type": "CVSS_V3",
+          "score": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L"
+        }
+      ],
+      "databaseSpecificSeverity": "LOW",
+      "affected": [
+        {
+          "package": {
+            "name": "markdown-it",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/markdown-it"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "0"
+                },
+                {
+                  "fixed": "14.3.3"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "markdown-it",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/markdown-it"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "15.0.0"
+                },
+                {
+                  "fixed": "15.0.3"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        }
+      ],
+      "references": [
+        {
+          "type": "WEB",
+          "url": "https://github.com/markdown-it/markdown-it/security/advisories/GHSA-vfgh-jcmw-g37q"
+        },
+        {
+          "type": "ADVISORY",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-111766"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/markdown-it/markdown-it/commit/928bc8c11ded60181c0e7fc5aa954eec582e8e79"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/markdown-it/markdown-it/commit/d99f48839d37af6fd8a2617516c43dab90755503"
+        },
+        {
+          "type": "PACKAGE",
+          "url": "https://github.com/markdown-it/markdown-it"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/markdown-it/markdown-it/releases/tag/14.3.3"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/markdown-it/markdown-it/releases/tag/15.0.3"
+        }
+      ],
+      "associations": [
+        {
+          "name": "markdown-it",
+          "version": "14.3.0",
+          "ecosystem": "npm",
+          "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+          "recordPackageMatch": true,
+          "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+        }
+      ],
+      "missingSeverity": false,
+      "noGuessedSeverityOrFixedVersion": true,
+      "releaseReady": false
+    },
+    {
+      "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+      "id": "GHSA-w293-vg96-wgc3",
+      "modified": "2026-09-29T18:28:14.915098573Z",
+      "published": "2026-09-29T18:17:15Z",
+      "withdrawn": null,
+      "summary": "undici vulnerable to TLS certificate validation bypass via dropped connect options in BalancedPool",
+      "aliases": [
+        "CVE-2026-84961"
+      ],
+      "severity": [
+        {
+          "type": "CVSS_V3",
+          "score": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N"
+        }
+      ],
+      "databaseSpecificSeverity": "HIGH",
+      "affected": [
+        {
+          "package": {
+            "name": "undici",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/undici"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "7.24.1"
+                },
+                {
+                  "fixed": "7.29.1"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "undici",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/undici"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "8.0.0"
+                },
+                {
+                  "fixed": "8.10.2"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        }
+      ],
+      "references": [
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/security/advisories/GHSA-w293-vg96-wgc3"
+        },
+        {
+          "type": "ADVISORY",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-84961"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/commit/8f5868fbdbc8f1146dfc1bcd1f2d117790141390"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/commit/f690157d728508652fef14673630c71515123e96"
+        },
+        {
+          "type": "WEB",
+          "url": "https://cna.openjsf.org/security-advisories.html"
+        },
+        {
+          "type": "PACKAGE",
+          "url": "https://github.com/nodejs/undici"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/releases/tag/v7.29.1"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/releases/tag/v8.10.2"
+        }
+      ],
+      "associations": [
+        {
+          "name": "undici",
+          "version": "7.29.0",
+          "ecosystem": "npm",
+          "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+          "recordPackageMatch": true,
+          "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+        }
+      ],
+      "missingSeverity": false,
+      "noGuessedSeverityOrFixedVersion": true,
+      "releaseReady": false
+    },
+    {
+      "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+      "id": "GHSA-w74x-v6f9-j3xg",
+      "modified": "2026-10-23T21:45:04.896137439Z",
+      "published": "2026-10-23T21:41:36Z",
+      "withdrawn": null,
+      "summary": "fast-uri vulnerable to URI scheme spoofing via percent-encoded scheme decoding",
+      "aliases": [
+        "CVE-2026-110306"
+      ],
+      "severity": [
+        {
+          "type": "CVSS_V3",
+          "score": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N"
+        }
+      ],
+      "databaseSpecificSeverity": "MODERATE",
+      "affected": [
+        {
+          "package": {
+            "name": "fast-uri",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/fast-uri"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "0"
+                },
+                {
+                  "fixed": "2.4.8"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "fast-uri",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/fast-uri"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "3.0.0"
+                },
+                {
+                  "fixed": "3.1.9"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "fast-uri",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/fast-uri"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "4.0.0"
+                },
+                {
+                  "fixed": "4.2.3"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        }
+      ],
+      "references": [
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/security/advisories/GHSA-w74x-v6f9-j3xg"
+        },
+        {
+          "type": "ADVISORY",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-110306"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/commit/39933a1f1422986f14e2d844f552238feb40f5d4"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/commit/597f254c86d151568511eeb9a1df761fd12520b3"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/commit/e60e716f41d1d73717e2d803d20b68d2c6d20a0f"
+        },
+        {
+          "type": "WEB",
+          "url": "https://cna.openjsf.org/security-advisories.html"
+        },
+        {
+          "type": "PACKAGE",
+          "url": "https://github.com/fastify/fast-uri"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/releases/tag/v2.4.8"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/releases/tag/v3.1.9"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/releases/tag/v4.2.3"
+        }
+      ],
+      "associations": [
+        {
+          "name": "fast-uri",
+          "version": "3.1.5",
+          "ecosystem": "npm",
+          "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+          "recordPackageMatch": true,
+          "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+        }
+      ],
+      "missingSeverity": false,
+      "noGuessedSeverityOrFixedVersion": true,
+      "releaseReady": false
+    },
+    {
+      "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+      "id": "GHSA-wjr9-j795-jxcr",
+      "modified": "2026-10-23T21:45:04.892054666Z",
+      "published": "2026-10-23T21:37:59Z",
+      "withdrawn": null,
+      "summary": "fast-uri vulnerable to host confusion via unchecked WHATWG host canonicalization",
+      "aliases": [
+        "CVE-2026-110180"
+      ],
+      "severity": [
+        {
+          "type": "CVSS_V3",
+          "score": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:N"
+        }
+      ],
+      "databaseSpecificSeverity": "MODERATE",
+      "affected": [
+        {
+          "package": {
+            "name": "fast-uri",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/fast-uri"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "2.4.2"
+                },
+                {
+                  "fixed": "2.4.8"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "fast-uri",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/fast-uri"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "3.1.3"
+                },
+                {
+                  "fixed": "3.1.9"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "fast-uri",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/fast-uri"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "4.0.1"
+                },
+                {
+                  "fixed": "4.2.3"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        }
+      ],
+      "references": [
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/security/advisories/GHSA-wjr9-j795-jxcr"
+        },
+        {
+          "type": "ADVISORY",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-110180"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/commit/58c183d0b168ad87f98773266444ce1f6375803a"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/commit/ddfc6a51122dfce0365655f04479fc3adb7f6b3c"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/commit/f6d46dfeab025d0c440485f4ae29fa4f14707646"
+        },
+        {
+          "type": "WEB",
+          "url": "https://cna.openjsf.org/security-advisories.html"
+        },
+        {
+          "type": "PACKAGE",
+          "url": "https://github.com/fastify/fast-uri"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/releases/tag/v2.4.8"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/releases/tag/v3.1.9"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/releases/tag/v4.2.3"
+        }
+      ],
+      "associations": [
+        {
+          "name": "fast-uri",
+          "version": "3.1.5",
+          "ecosystem": "npm",
+          "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+          "recordPackageMatch": true,
+          "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+        }
+      ],
+      "missingSeverity": false,
+      "noGuessedSeverityOrFixedVersion": true,
+      "releaseReady": false
+    },
+    {
+      "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+      "id": "GHSA-x5fp-wj9c-mxmx",
+      "modified": "2026-09-10T03:50:54.569331980Z",
+      "published": "2026-09-02T14:46:57Z",
+      "withdrawn": null,
+      "summary": "qs array-limit bypass via bracket-key comma parsing",
+      "aliases": [
+        "CVE-2026-82562"
+      ],
+      "severity": [
+        {
+          "type": "CVSS_V3",
+          "score": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L"
+        },
+        {
+          "type": "CVSS_V4",
+          "score": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N"
+        }
+      ],
+      "databaseSpecificSeverity": "MODERATE",
+      "affected": [
+        {
+          "package": {
+            "name": "qs",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/qs"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "6.14.2"
+                },
+                {
+                  "fixed": "6.16.0"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        }
+      ],
+      "references": [
+        {
+          "type": "WEB",
+          "url": "https://github.com/ljharb/qs/security/advisories/GHSA-w7fw-mjwx-w883"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/ljharb/qs/security/advisories/GHSA-x5fp-wj9c-mxmx"
+        },
+        {
+          "type": "ADVISORY",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82562"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/ljharb/qs/commit/8859c37470e11b42b547b275e4e9bd0bc8cc5464"
+        },
+        {
+          "type": "PACKAGE",
+          "url": "https://github.com/ljharb/qs"
+        }
+      ],
+      "associations": [
+        {
+          "name": "qs",
+          "version": "6.15.3",
+          "ecosystem": "npm",
+          "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+          "recordPackageMatch": true,
+          "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+        }
+      ],
+      "missingSeverity": false,
+      "noGuessedSeverityOrFixedVersion": true,
+      "releaseReady": false
+    },
+    {
+      "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+      "id": "GHSA-xcx6-jx8p-x3h5",
+      "modified": "2026-10-23T22:30:05.010413241Z",
+      "published": "2026-10-23T22:16:44Z",
+      "withdrawn": null,
+      "summary": "MSAL Node authorization code flow may disclose parameters to an attacker-controlled endpoint",
+      "aliases": [
+        "CVE-2026-109461"
+      ],
+      "severity": [
+        {
+          "type": "CVSS_V3",
+          "score": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N"
+        }
+      ],
+      "databaseSpecificSeverity": "HIGH",
+      "affected": [
+        {
+          "package": {
+            "name": "@azure/msal-node",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/%40azure/msal-node"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "5.0.0-beta.0"
+                },
+                {
+                  "fixed": "7.1.0"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        }
+      ],
+      "references": [
+        {
+          "type": "WEB",
+          "url": "https://github.com/AzureAD/microsoft-authentication-library-for-js/security/advisories/GHSA-xcx6-jx8p-x3h5"
+        },
+        {
+          "type": "ADVISORY",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-109461"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/AzureAD/microsoft-authentication-library-for-js/pull/8901"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/AzureAD/microsoft-authentication-library-for-js/commit/f550958586475dbfeb1cd44be14a2d653728850e"
+        },
+        {
+          "type": "PACKAGE",
+          "url": "https://github.com/AzureAD/microsoft-authentication-library-for-js"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/AzureAD/microsoft-authentication-library-for-js/releases/tag/msal-node-v7.1.0"
+        },
+        {
+          "type": "WEB",
+          "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-109461"
+        }
+      ],
+      "associations": [
+        {
+          "name": "@azure/msal-node",
+          "version": "5.3.1",
+          "ecosystem": "npm",
+          "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+          "recordPackageMatch": true,
+          "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+        }
+      ],
+      "missingSeverity": false,
+      "noGuessedSeverityOrFixedVersion": true,
+      "releaseReady": false
+    },
+    {
+      "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+      "id": "GHSA-xhq7-xmqj-769h",
+      "modified": "2026-10-23T21:45:04.902389903Z",
+      "published": "2026-10-23T21:39:34Z",
+      "withdrawn": null,
+      "summary": "fast-uri vulnerable to improper path equivalence in relative reference normalization",
+      "aliases": [
+        "CVE-2026-110095"
+      ],
+      "severity": [
+        {
+          "type": "CVSS_V3",
+          "score": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N"
+        }
+      ],
+      "databaseSpecificSeverity": "LOW",
+      "affected": [
+        {
+          "package": {
+            "name": "fast-uri",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/fast-uri"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "0"
+                },
+                {
+                  "fixed": "2.4.8"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "fast-uri",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/fast-uri"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "3.0.0"
+                },
+                {
+                  "fixed": "3.1.9"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "fast-uri",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/fast-uri"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "4.0.0"
+                },
+                {
+                  "fixed": "4.2.3"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        }
+      ],
+      "references": [
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/security/advisories/GHSA-xhq7-xmqj-769h"
+        },
+        {
+          "type": "ADVISORY",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-110095"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/commit/048bbd0a252971be86d6579f0dfc87f8de5b9c47"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/commit/52774a5c35df36b0bbe439cd4c12c3dc0e50e3b9"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/commit/7c19f8b97ec51f1f20b4e3d9d5820cb8d5176058"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/commit/9eb8759a9825c046f57f7f695f1944bc39b88abd"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/commit/acc5c5d60c4209571789496e1732468911c7e12a"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/commit/b110a3571c37dfcf9d1c72ce2e2e178c78d1a424"
+        },
+        {
+          "type": "WEB",
+          "url": "https://cna.openjsf.org/security-advisories.html"
+        },
+        {
+          "type": "PACKAGE",
+          "url": "https://github.com/fastify/fast-uri"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/releases/tag/v2.4.8"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/releases/tag/v3.1.9"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/fastify/fast-uri/releases/tag/v4.2.3"
+        }
+      ],
+      "associations": [
+        {
+          "name": "fast-uri",
+          "version": "3.1.5",
+          "ecosystem": "npm",
+          "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+          "recordPackageMatch": true,
+          "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+        }
+      ],
+      "missingSeverity": false,
+      "noGuessedSeverityOrFixedVersion": true,
+      "releaseReady": false
+    },
+    {
+      "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+      "id": "GHSA-xjj6-f33q-929c",
+      "modified": "2026-10-23T22:30:05.007687918Z",
+      "published": "2026-10-23T22:14:31Z",
+      "withdrawn": null,
+      "summary": "undici vulnerable to Denial of Service via unhandled error on excessive content-encodings",
+      "aliases": [
+        "CVE-2026-109869"
+      ],
+      "severity": [
+        {
+          "type": "CVSS_V3",
+          "score": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        }
+      ],
+      "databaseSpecificSeverity": "HIGH",
+      "affected": [
+        {
+          "package": {
+            "name": "undici",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/undici"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "6.23.0"
+                },
+                {
+                  "fixed": "6.29.1"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "undici",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/undici"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "7.18.0"
+                },
+                {
+                  "fixed": "7.30.1"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        },
+        {
+          "package": {
+            "name": "undici",
+            "ecosystem": "npm",
+            "purl": "pkg:npm/undici"
+          },
+          "ranges": [
+            {
+              "type": "SEMVER",
+              "events": [
+                {
+                  "introduced": "8.0.0"
+                },
+                {
+                  "fixed": "8.12.2"
+                }
+              ]
+            }
+          ],
+          "listedVersions": [],
+          "severity": [],
+          "databaseSpecificSeverity": null
+        }
+      ],
+      "references": [
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/security/advisories/GHSA-xjj6-f33q-929c"
+        },
+        {
+          "type": "ADVISORY",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-109869"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/commit/07ded4941b1e72afec862958c3b8ddf468f3b429"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/commit/1325a87dfb3492f8e87e6b0a84b3bda4e82e3436"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/commit/b5084c7dc239172d75c336b1cd51ddac023938a5"
+        },
+        {
+          "type": "WEB",
+          "url": "https://cna.openjsf.org/security-advisories.html"
+        },
+        {
+          "type": "PACKAGE",
+          "url": "https://github.com/nodejs/undici"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/releases/tag/v6.29.1"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/releases/tag/v7.30.1"
+        },
+        {
+          "type": "WEB",
+          "url": "https://github.com/nodejs/undici/releases/tag/v8.12.2"
+        }
+      ],
+      "associations": [
+        {
+          "name": "undici",
+          "version": "7.29.0",
+          "ecosystem": "npm",
+          "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+          "recordPackageMatch": true,
+          "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+        }
+      ],
+      "missingSeverity": false,
+      "noGuessedSeverityOrFixedVersion": true,
+      "releaseReady": false
+    }
+  ]
+}

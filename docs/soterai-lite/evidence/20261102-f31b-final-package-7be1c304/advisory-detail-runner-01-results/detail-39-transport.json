@@ -1,0 +1,108 @@
+{
+  "id": "GHSA-x5fp-wj9c-mxmx",
+  "endpoint": "https://api.osv.dev/v1/vulns/GHSA-x5fp-wj9c-mxmx",
+  "method": "GET",
+  "startedAt": "2026-11-03T02:51:49.554Z",
+  "statusCode": 200,
+  "contentType": "application/json",
+  "contentEncoding": "",
+  "requestClose": true,
+  "responseClose": true,
+  "responseEnd": true,
+  "responseComplete": true,
+  "timedOut": false,
+  "overflow": false,
+  "aborted": false,
+  "error": null,
+  "elapsedMs": 551.9091000000008,
+  "finishedAt": "2026-11-03T02:51:50.105Z",
+  "retainedBytes": 2860,
+  "observedBytes": 2860,
+  "rawResponse": {
+    "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/advisory-detail-runner-01-results/detail-39-response.bin",
+    "bytes": 2860,
+    "sha256": "16cb923c5be0cc404e6d35613a2c91f23ab48092e6b941ef53fea66cb217c2f3"
+  },
+  "interpretation": {
+    "status": "ADVISORY_DETAILS_CAPTURED_REVIEW_REQUIRED",
+    "id": "GHSA-x5fp-wj9c-mxmx",
+    "modified": "2026-09-10T03:50:54.569331980Z",
+    "published": "2026-09-02T14:46:57Z",
+    "withdrawn": null,
+    "summary": "qs array-limit bypass via bracket-key comma parsing",
+    "aliases": [
+      "CVE-2026-82562"
+    ],
+    "severity": [
+      {
+        "type": "CVSS_V3",
+        "score": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L"
+      },
+      {
+        "type": "CVSS_V4",
+        "score": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N"
+      }
+    ],
+    "databaseSpecificSeverity": "MODERATE",
+    "affected": [
+      {
+        "package": {
+          "name": "qs",
+          "ecosystem": "npm",
+          "purl": "pkg:npm/qs"
+        },
+        "ranges": [
+          {
+            "type": "SEMVER",
+            "events": [
+              {
+                "introduced": "6.14.2"
+              },
+              {
+                "fixed": "6.16.0"
+              }
+            ]
+          }
+        ],
+        "listedVersions": [],
+        "severity": [],
+        "databaseSpecificSeverity": null
+      }
+    ],
+    "references": [
+      {
+        "type": "WEB",
+        "url": "https://github.com/ljharb/qs/security/advisories/GHSA-w7fw-mjwx-w883"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/ljharb/qs/security/advisories/GHSA-x5fp-wj9c-mxmx"
+      },
+      {
+        "type": "ADVISORY",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82562"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/ljharb/qs/commit/8859c37470e11b42b547b275e4e9bd0bc8cc5464"
+      },
+      {
+        "type": "PACKAGE",
+        "url": "https://github.com/ljharb/qs"
+      }
+    ],
+    "associations": [
+      {
+        "name": "qs",
+        "version": "6.15.3",
+        "ecosystem": "npm",
+        "scope": "BUILD_OR_VERIFICATION_CLOSURE",
+        "recordPackageMatch": true,
+        "versionRangeAssessment": "NOT_COMPUTED_REQUIRES_TRIAGE"
+      }
+    ],
+    "missingSeverity": false,
+    "noGuessedSeverityOrFixedVersion": true,
+    "releaseReady": false
+  }
+}
