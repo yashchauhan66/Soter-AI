@@ -1,0 +1,80 @@
+{
+    "schemaVersion":  1,
+    "feature":  "F32",
+    "status":  "BROKER_CUSTODY_14_PURE_CONTROLS_PASS_NOT_NATIVE",
+    "observedAt":  "2026-11-04T01:50:48.4708566Z",
+    "ownerLibrary":  {
+                         "path":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261103-f32-lifecycle-2e95d6a4\\installed-owner-custody-proposed-04.ps1",
+                         "sha256":  "8b0815d4544972cdbfdbde32455fefccff44830abf86667e3a5b74f4a3c1315c",
+                         "bytes":  28874
+                     },
+    "brokerLibrary":  {
+                          "path":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261103-f32-lifecycle-2e95d6a4\\installed-broker-custody-proposed-02.ps1",
+                          "sha256":  "f41678be42ff361f3ba606530224a90cb45c047b623298908412f03850941152",
+                          "bytes":  24262
+                      },
+    "controls":  [
+                     {
+                         "id":  "B01-exact-current-script",
+                         "pass":  true
+                     },
+                     {
+                         "id":  "B02-one-script-is-required",
+                         "pass":  true
+                     },
+                     {
+                         "id":  "B03-extra-argv-refused",
+                         "pass":  true
+                     },
+                     {
+                         "id":  "B04-flag-form-is-not-script",
+                         "pass":  true
+                     },
+                     {
+                         "id":  "B05-other-executable-refused",
+                         "pass":  true
+                     },
+                     {
+                         "id":  "B06-other-profile-script-refused",
+                         "pass":  true
+                     },
+                     {
+                         "id":  "B07-parent-traversal-refused",
+                         "pass":  true
+                     },
+                     {
+                         "id":  "B08-UNC-script-refused",
+                         "pass":  true
+                     },
+                     {
+                         "id":  "B09-Windows-path-case-accepted",
+                         "pass":  true
+                     },
+                     {
+                         "id":  "B10-public-profile-flag-not-script",
+                         "pass":  true
+                     },
+                     {
+                         "id":  "B11-JSON-object-copy-retains-real-keys",
+                         "pass":  true
+                     },
+                     {
+                         "id":  "B12-ordered-derived-copy-retains-real-keys",
+                         "pass":  true
+                     },
+                     {
+                         "id":  "B13-derived-top-level-copy-does-not-rewrite-parent",
+                         "pass":  true
+                     },
+                     {
+                         "id":  "B14-quoted-owned-spawn-argv",
+                         "pass":  true
+                     }
+                 ],
+    "forbiddenCimCalls":  0,
+    "forbiddenListenerCalls":  0,
+    "codeLaunches":  0,
+    "networkRequests":  0,
+    "signalsRequested":  0,
+    "scope":  "Pure exact argv/path and immutable binding-copy controls. No actual broker, process tree, listener, heartbeat, protocol watcher, token, install or pipe EOF observed."
+}

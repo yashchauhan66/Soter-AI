@@ -1,0 +1,64 @@
+﻿TAP version 13
+# Subtest: IR01 actual one-product CLI inventory admits exactly current identity/version
+ok 1 - IR01 actual one-product CLI inventory admits exactly current identity/version
+  ---
+  duration_ms: 7.5025
+  type: 'test'
+  ...
+# Subtest: IR02 inventory before install or after uninstall must actually be empty
+ok 2 - IR02 inventory before install or after uninstall must actually be empty
+  ---
+  duration_ms: 8.7927
+  type: 'test'
+  ...
+# Subtest: IR03 extra extension, duplicate, old version and banner cannot prove installed inventory
+ok 3 - IR03 extra extension, duplicate, old version and banner cannot prove installed inventory
+  ---
+  duration_ms: 2.372
+  type: 'test'
+  ...
+# Subtest: IR04 duplicate top-level and escaped JSON key aliases refuse admission
+ok 4 - IR04 duplicate top-level and escaped JSON key aliases refuse admission
+  ---
+  duration_ms: 4.5778
+  type: 'test'
+  ...
+# Subtest: IR05 repeated keys in separate objects and array strings are not false duplicate failures
+ok 5 - IR05 repeated keys in separate objects and array strings are not false duplicate failures
+  ---
+  duration_ms: 1.105
+  type: 'test'
+  ...
+# Subtest: IR06 actual exact current VSIX admits four unchanged runtime payloads
+ok 6 - IR06 actual exact current VSIX admits four unchanged runtime payloads
+  ---
+  duration_ms: 609.054
+  type: 'test'
+  ...
+# Subtest: IR07 genuine retained old archive admits real0.6.3 and three runtimes
+ok 7 - IR07 genuine retained old archive admits real0.6.3 and three runtimes
+  ---
+  duration_ms: 527.0185
+  type: 'test'
+  ...
+# Subtest: IR08 archive identity/version/runtime count and content pins cannot be substituted
+ok 8 - IR08 archive identity/version/runtime count and content pins cannot be substituted
+  ---
+  duration_ms: 1064.3107
+  type: 'test'
+  ...
+# Subtest: IR09 reviewed successor preserves original runner except one broker helper binding
+ok 9 - IR09 reviewed successor preserves original runner except one broker helper binding
+  ---
+  duration_ms: 10.72
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2816.32

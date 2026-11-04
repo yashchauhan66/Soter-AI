@@ -1,0 +1,3441 @@
+TAP version 13
+# (node:17888) ExperimentalWarning: The MockTimers API is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: F28-B01: eight leases cap unfinished work, including logically cancelled work
+ok 1 - F28-B01: eight leases cap unfinished work, including logically cancelled work
+  ---
+  duration_ms: 5.3951
+  type: 'test'
+  ...
+# Subtest: F28-B02: flag withdrawal invalidates active work and re-enable needs a fresh lease
+ok 2 - F28-B02: flag withdrawal invalidates active work and re-enable needs a fresh lease
+  ---
+  duration_ms: 0.8092
+  type: 'test'
+  ...
+# Subtest: F28-B03: elapsed clock -1 withholds
+ok 3 - F28-B03: elapsed clock -1 withholds
+  ---
+  duration_ms: 0.3918
+  type: 'test'
+  ...
+# Subtest: F28-B03: elapsed clock NaN withholds
+ok 4 - F28-B03: elapsed clock NaN withholds
+  ---
+  duration_ms: 0.4174
+  type: 'test'
+  ...
+# Subtest: F28-B03: elapsed clock Infinity withholds
+ok 5 - F28-B03: elapsed clock Infinity withholds
+  ---
+  duration_ms: 0.2286
+  type: 'test'
+  ...
+# Subtest: F28-B03: elapsed clock 5000 withholds
+ok 6 - F28-B03: elapsed clock 5000 withholds
+  ---
+  duration_ms: 0.2865
+  type: 'test'
+  ...
+# Subtest: F28-B04: an elapsed clock cannot move backwards even while still after its start
+ok 7 - F28-B04: an elapsed clock cannot move backwards even while still after its start
+  ---
+  duration_ms: 0.5524
+  type: 'test'
+  ...
+# Subtest: F28-B05: owned timer expires even when a test clock stalls
+ok 8 - F28-B05: owned timer expires even when a test clock stalls
+  ---
+  duration_ms: 1.7841
+  type: 'test'
+  ...
+# Subtest: F28-B06: unconfirmed handle closure degrades the owner and never refunds its slot
+ok 9 - F28-B06: unconfirmed handle closure degrades the owner and never refunds its slot
+  ---
+  duration_ms: 0.8693
+  type: 'test'
+  ...
+# Subtest: F28-B07: startup budget breach withdraws reads with a truthful degraded status
+ok 10 - F28-B07: startup budget breach withdraws reads with a truthful degraded status
+  ---
+  duration_ms: 0.9729
+  type: 'test'
+  ...
+# Subtest: F28-B08: independent windows own independent resource and withdrawal state
+ok 11 - F28-B08: independent windows own independent resource and withdrawal state
+  ---
+  duration_ms: 0.9396
+  type: 'test'
+  ...
+# Subtest: F28-O01: runtime and Lite manifests have parity and a restricted default-true owner flag
+ok 12 - F28-O01: runtime and Lite manifests have parity and a restricted default-true owner flag
+  ---
+  duration_ms: 6.9323
+  type: 'test'
+  ...
+# Subtest: F28-O02: machine/global values override repository attempts and inspection failure denies
+ok 13 - F28-O02: machine/global values override repository attempts and inspection failure denies
+  ---
+  duration_ms: 18.7432
+  type: 'test'
+  ...
+# Subtest: F28-O03: actual owner registration withdraws leases on config/trust and stops on dispose
+ok 14 - F28-O03: actual owner registration withdraws leases on config/trust and stops on dispose
+  ---
+  duration_ms: 6.7039
+  type: 'test'
+  ...
+# {"scope":"COMPONENT_SELECTED128_OF_SYNTHETIC4096_NOT_NATIVE_DISCOVERY","files":4096,"selectedReads":128,"secondRootPublic":true,"crossRootWithheld":true,"bytes":3474,"elapsedMilliseconds":2705.6132000000002}
+# Subtest: F28-S01: bounded reads remain usable in a 4096-file synthetic repo and two independent roots
+ok 15 - F28-S01: bounded reads remain usable in a 4096-file synthetic repo and two independent roots
+  ---
+  duration_ms: 6155.25
+  type: 'test'
+  ...
+# Subtest: the canonical readiness doc is generated, not maintained
+    # Subtest: exists
+    ok 1 - exists
+      ---
+      duration_ms: 1.2667
+      type: 'test'
+      ...
+    # Subtest: matches what the generator produces from source right now
+    ok 2 - matches what the generator produces from source right now
+      ---
+      duration_ms: 88.1682
+      type: 'test'
+      ...
+    # Subtest: says out loud that it is generated
+    ok 3 - says out loud that it is generated
+      ---
+      duration_ms: 0.5265
+      type: 'test'
+      ...
+    1..3
+ok 16 - the canonical readiness doc is generated, not maintained
+  ---
+  duration_ms: 91.9068
+  type: 'suite'
+  ...
+# Subtest: the readiness doc states the real, current numbers
+    # Subtest: names the version being published
+    ok 1 - names the version being published
+      ---
+      duration_ms: 0.3846
+      type: 'test'
+      ...
+    # Subtest: names the license that actually ships
+    ok 2 - names the license that actually ships
+      ---
+      duration_ms: 0.2576
+      type: 'test'
+      ...
+    # Subtest: states the command count the manifest actually declares
+    ok 3 - states the command count the manifest actually declares
+      ---
+      duration_ms: 0.2555
+      type: 'test'
+      ...
+    # Subtest: states the setting and policy counts the manifest actually declares
+    ok 4 - states the setting and policy counts the manifest actually declares
+      ---
+      duration_ms: 0.3405
+      type: 'test'
+      ...
+    # Subtest: claims no ML in the packaged extension
+    ok 5 - claims no ML in the packaged extension
+      ---
+      duration_ms: 0.3543
+      type: 'test'
+      ...
+    # Subtest: keeps the permanent limitations in the document, not just in the code
+    ok 6 - keeps the permanent limitations in the document, not just in the code
+      ---
+      duration_ms: 0.3184
+      type: 'test'
+      ...
+    1..6
+ok 17 - the readiness doc states the real, current numbers
+  ---
+  duration_ms: 2.677
+  type: 'suite'
+  ...
+# Subtest: stale documents do not contradict the shipped product
+    # Subtest: vscode-extension-marketplace-readiness.md no longer states a contradicted number
+    ok 1 - vscode-extension-marketplace-readiness.md no longer states a contradicted number
+      ---
+      duration_ms: 0.3675
+      type: 'test'
+      ...
+    # Subtest: no extension-facing document advertises a detection-rule count the source does not back
+    ok 2 - no extension-facing document advertises a detection-rule count the source does not back
+      ---
+      duration_ms: 13.9471
+      type: 'test'
+      ...
+    1..2
+ok 18 - stale documents do not contradict the shipped product
+  ---
+  duration_ms: 14.6082
+  type: 'suite'
+  ...
+# Subtest: README accuracy
+    # Subtest: names only commands that exist
+    ok 1 - names only commands that exist
+      ---
+      duration_ms: 2.2048
+      type: 'test'
+      ...
+    # Subtest: names only settings that exist, with the manifest's real defaults
+    ok 2 - names only settings that exist, with the manifest's real defaults
+      ---
+      duration_ms: 0.8267
+      type: 'test'
+      ...
+    # Subtest: does not advertise a version other than the one being published
+    ok 3 - does not advertise a version other than the one being published
+      ---
+      duration_ms: 1.2645
+      type: 'test'
+      ...
+    # Subtest: points at a license file that ships in the VSIX
+    ok 4 - points at a license file that ships in the VSIX
+      ---
+      duration_ms: 5.8244
+      type: 'test'
+      ...
+    # Subtest: states the real count of machine-scoped settings
+    not ok 5 - states the real count of machine-scoped settings
+      ---
+      duration_ms: 3.5426
+      type: 'test'
+      location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\readme-accuracy.test.ts:2:4778'
+      failureType: 'testCodeFailure'
+      error: |-
+        README claims 88 machine-scoped settings, the manifest declares 89
+        
+        88 !== 89
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: 89
+      actual: 88
+      operator: 'strictEqual'
+      stack: |-
+        TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\readme-accuracy.test.ts:121:16)
+        Test.runInAsyncScope (node:async_hooks:214:14)
+        Test.run (node:internal/test_runner/test:1047:25)
+        Suite.processPendingSubtests (node:internal/test_runner/test:744:18)
+        Test.postRun (node:internal/test_runner/test:1173:19)
+        Test.run (node:internal/test_runner/test:1101:12)
+        async Suite.processPendingSubtests (node:internal/test_runner/test:744:7)
+      ...
+    1..5
+not ok 19 - README accuracy
+  ---
+  duration_ms: 15.4307
+  type: 'suite'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\readme-accuracy.test.ts:2:1855'
+  failureType: 'subtestsFailed'
+  error: '1 subtest failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: F32-I01 inventory construction is inert without metadata reads keys writes or discovery
+ok 20 - F32-I01 inventory construction is inert without metadata reads keys writes or discovery
+  ---
+  duration_ms: 232.9332
+  type: 'test'
+  ...
+# Subtest: F32-I02 empty known journals and ordinary project settings establish scoped absence for all fixed actions
+ok 21 - F32-I02 empty known journals and ordinary project settings establish scoped absence for all fixed actions
+  ---
+  duration_ms: 35.4876
+  type: 'test'
+  ...
+# Subtest: F32-I03 three exact terminal receipts bind owner and stable opaque fingerprints
+ok 22 - F32-I03 three exact terminal receipts bind owner and stable opaque fingerprints
+  ---
+  duration_ms: 16.2748
+  type: 'test'
+  ...
+# Subtest: F32-I04 checked terminal names without receipts are ambiguous rather than absent
+ok 23 - F32-I04 checked terminal names without receipts are ambiguous rather than absent
+  ---
+  duration_ms: 6.6948
+  type: 'test'
+  ...
+# Subtest: F32-I05 foreign malformed PREPARED and changed terminal metadata cannot erase recovery
+ok 24 - F32-I05 foreign malformed PREPARED and changed terminal metadata cannot erase recovery
+  ---
+  duration_ms: 11.4474
+  type: 'test'
+  ...
+# Subtest: F32-I06 secure-editor associations require both exact receipt and current owned mappings
+ok 25 - F32-I06 secure-editor associations require both exact receipt and current owned mappings
+  ---
+  duration_ms: 8.9612
+  type: 'test'
+  ...
+# Subtest: F32-I07 foreign and unknown editor-association receipts remain pending even with ordinary current mappings
+ok 26 - F32-I07 foreign and unknown editor-association receipts remain pending even with ordinary current mappings
+  ---
+  duration_ms: 5.7362
+  type: 'test'
+  ...
+# Subtest: F32-I08 dedicated profiles recover from private metadata despite missing Mementos without opening config text
+ok 27 - F32-I08 dedicated profiles recover from private metadata despite missing Mementos without opening config text
+  ---
+  duration_ms: 108.4133
+  type: 'test'
+  ...
+# Subtest: F32-I09 live dedicated configs without recovery and saved receipts with missing config stay pending
+ok 28 - F32-I09 live dedicated configs without recovery and saved receipts with missing config stay pending
+  ---
+  duration_ms: 40.724
+  type: 'test'
+  ...
+# Subtest: F32-I10 retained recovery after config removal is evidence rather than a live route when no Memento remains
+ok 29 - F32-I10 retained recovery after config removal is evidence rather than a live route when no Memento remains
+  ---
+  duration_ms: 95.2519
+  type: 'test'
+  ...
+# Subtest: F32-I11 foreign malformed and multiple dedicated live profiles cannot choose ownership by guesswork
+ok 30 - F32-I11 foreign malformed and multiple dedicated live profiles cannot choose ownership by guesswork
+  ---
+  duration_ms: 125.3106
+  type: 'test'
+  ...
+# Subtest: F32-I12 dedicated discovery is bounded and refuses linked profile directories
+ok 31 - F32-I12 dedicated discovery is bounded and refuses linked profile directories
+  ---
+  duration_ms: 85.2412
+  type: 'test'
+  ...
+# Subtest: F32-I13 genuine local vscode-userdata storage works while foreign storage URI components refuse
+ok 32 - F32-I13 genuine local vscode-userdata storage works while foreign storage URI components refuse
+  ---
+  duration_ms: 34.0651
+  type: 'test'
+  ...
+# Subtest: F32-I14 either Gemini settings or environment presence prevents a false absent inventory
+ok 33 - F32-I14 either Gemini settings or environment presence prevents a false absent inventory
+  ---
+  duration_ms: 12.8597
+  type: 'test'
+  ...
+# Subtest: F32-I15 PSReadLine uses the actual checked metadata journal and ignores obsolete Memento authority
+ok 34 - F32-I15 PSReadLine uses the actual checked metadata journal and ignores obsolete Memento authority
+  ---
+  duration_ms: 19.8477
+  type: 'test'
+  ...
+# Subtest: F32-I16 malformed and over8KiB PSReadLine journals are pending without raw-profile reads
+ok 35 - F32-I16 malformed and over8KiB PSReadLine journals are pending without raw-profile reads
+  ---
+  duration_ms: 11.5578
+  type: 'test'
+  ...
+# Subtest: F32-I17 valid live hook metadata is owned and completed ROLLED_BACK metadata is not a live grant
+ok 36 - F32-I17 valid live hook metadata is owned and completed ROLLED_BACK metadata is not a live grant
+  ---
+  duration_ms: 19.0194
+  type: 'test'
+  ...
+# Subtest: F32-I18 undefined hook records establish scoped absence; malformed foreign records and key errors stay pending
+ok 37 - F32-I18 undefined hook records establish scoped absence; malformed foreign records and key errors stay pending
+  ---
+  duration_ms: 9.2124
+  type: 'test'
+  ...
+# Subtest: F32-I19 manual vendor receipts produce opaque hints while legacy backup presence stays pending
+ok 38 - F32-I19 manual vendor receipts produce opaque hints while legacy backup presence stays pending
+  ---
+  duration_ms: 8.7457
+  type: 'test'
+  ...
+# Subtest: F32-I20 stale foreign untrusted remote or multiple-root owner requests cannot inspect recovery
+ok 39 - F32-I20 stale foreign untrusted remote or multiple-root owner requests cannot inspect recovery
+  ---
+  duration_ms: 3.4571
+  type: 'test'
+  ...
+# Subtest: F32-I21 folder or global checked-profile settings without a receipt remain pending in a one-folder workspace
+ok 40 - F32-I21 folder or global checked-profile settings without a receipt remain pending in a one-folder workspace
+  ---
+  duration_ms: 11.6757
+  type: 'test'
+  ...
+# Subtest: F32-I22 folder or global secure-editor associations cannot disappear from empty known recovery
+ok 41 - F32-I22 folder or global secure-editor associations cannot disappear from empty known recovery
+  ---
+  duration_ms: 5.6905
+  type: 'test'
+  ...
+# Subtest: F07-R01 registered hex inside a public URL path retains source coordinates
+ok 42 - F07-R01 registered hex inside a public URL path retains source coordinates
+  ---
+  duration_ms: 8.4188
+  type: 'test'
+  ...
+# Subtest: F07-R02 mixed-case hex in a URL query remains recognized
+ok 43 - F07-R02 mixed-case hex in a URL query remains recognized
+  ---
+  duration_ms: 1.2875
+  type: 'test'
+  ...
+# Subtest: F07-R03 hex in a URL path split across explicit request parts maps every original part
+ok 44 - F07-R03 hex in a URL path split across explicit request parts maps every original part
+  ---
+  duration_ms: 1.0771
+  type: 'test'
+  ...
+# Subtest: F07-R04 base64 value in a URL path is recognized without network parsing
+ok 45 - F07-R04 base64 value in a URL path is recognized without network parsing
+  ---
+  duration_ms: 0.7808
+  type: 'test'
+  ...
+# Subtest: F07-R05 base64 query value remains a strict canonical positive control
+ok 46 - F07-R05 base64 query value remains a strict canonical positive control
+  ---
+  duration_ms: 2.7009
+  type: 'test'
+  ...
+# Subtest: F07-R04 base64url value in a URL path is recognized without network parsing
+ok 47 - F07-R04 base64url value in a URL path is recognized without network parsing
+  ---
+  duration_ms: 0.5215
+  type: 'test'
+  ...
+# Subtest: F07-R05 base64url query value remains a strict canonical positive control
+ok 48 - F07-R05 base64url query value remains a strict canonical positive control
+  ---
+  duration_ms: 0.77
+  type: 'test'
+  ...
+# Subtest: F07-R06 hex embedded inside a JSON URL string remains one-layer recognition
+ok 49 - F07-R06 hex embedded inside a JSON URL string remains one-layer recognition
+  ---
+  duration_ms: 0.8548
+  type: 'test'
+  ...
+# Subtest: F07-R07 partial JSON Unicode escaping is recognized at original string coordinates
+ok 50 - F07-R07 partial JSON Unicode escaping is recognized at original string coordinates
+  ---
+  duration_ms: 0.9508
+  type: 'test'
+  ...
+# Subtest: F07-R08 JSON decoding never recursively interprets a decoded literal escape
+ok 51 - F07-R08 JSON decoding never recursively interprets a decoded literal escape
+  ---
+  duration_ms: 1.7205
+  type: 'test'
+  ...
+# Subtest: F07-R09 malformed UTF-8 hex cannot invent a registered replacement character
+ok 52 - F07-R09 malformed UTF-8 hex cannot invent a registered replacement character
+  ---
+  duration_ms: 0.546
+  type: 'test'
+  ...
+# Subtest: F07-R09 malformed UTF-8 base64 cannot invent a registered replacement character
+ok 53 - F07-R09 malformed UTF-8 base64 cannot invent a registered replacement character
+  ---
+  duration_ms: 0.408
+  type: 'test'
+  ...
+# Subtest: F07-R09 malformed UTF-8 base64url cannot invent a registered replacement character
+ok 54 - F07-R09 malformed UTF-8 base64url cannot invent a registered replacement character
+  ---
+  duration_ms: 0.3157
+  type: 'test'
+  ...
+# Subtest: F07-R10 extra base64 padding is not repaired into a canonical registered value
+ok 55 - F07-R10 extra base64 padding is not repaired into a canonical registered value
+  ---
+  duration_ms: 0.2426
+  type: 'test'
+  ...
+# Subtest: F07-R11 duplicate registration input at the frozen total-byte bound remains usable
+ok 56 - F07-R11 duplicate registration input at the frozen total-byte bound remains usable
+  ---
+  duration_ms: 19.4934
+  type: 'test'
+  ...
+# Subtest: F07-R12 duplicate registration input above the total-byte bound withholds rather than looping unbounded
+ok 57 - F07-R12 duplicate registration input above the total-byte bound withholds rather than looping unbounded
+  ---
+  duration_ms: 14.514
+  type: 'test'
+  ...
+# Subtest: F07-R13 a short encoded value occupying one explicit part stays recognizable beside unrelated alphabetic parts
+ok 58 - F07-R13 a short encoded value occupying one explicit part stays recognizable beside unrelated alphabetic parts
+  ---
+  duration_ms: 1.1503
+  type: 'test'
+  ...
+# Subtest: F07-M01 public exports retain the frozen inclusive budgets and entropy-policy descriptor
+ok 59 - F07-M01 public exports retain the frozen inclusive budgets and entropy-policy descriptor
+  ---
+  duration_ms: 5.2115
+  type: 'test'
+  ...
+# Subtest: F07-M02 raw exact registrations match useful surrounding text and return source-safe coordinates
+ok 60 - F07-M02 raw exact registrations match useful surrounding text and return source-safe coordinates
+  ---
+  duration_ms: 10.2068
+  type: 'test'
+  ...
+# Subtest: F07-M03 base64 padded has a paired registered-secret and public-control outcome
+ok 61 - F07-M03 base64 padded has a paired registered-secret and public-control outcome
+  ---
+  duration_ms: 3.4424
+  type: 'test'
+  ...
+# Subtest: F07-M03 base64 unpadded has a paired registered-secret and public-control outcome
+ok 62 - F07-M03 base64 unpadded has a paired registered-secret and public-control outcome
+  ---
+  duration_ms: 0.9505
+  type: 'test'
+  ...
+# Subtest: F07-M03 base64url padded has a paired registered-secret and public-control outcome
+ok 63 - F07-M03 base64url padded has a paired registered-secret and public-control outcome
+  ---
+  duration_ms: 1.1976
+  type: 'test'
+  ...
+# Subtest: F07-M03 base64url unpadded has a paired registered-secret and public-control outcome
+ok 64 - F07-M03 base64url unpadded has a paired registered-secret and public-control outcome
+  ---
+  duration_ms: 1.9652
+  type: 'test'
+  ...
+# Subtest: F07-M03 lowercase hex has a paired registered-secret and public-control outcome
+ok 65 - F07-M03 lowercase hex has a paired registered-secret and public-control outcome
+  ---
+  duration_ms: 1.0043
+  type: 'test'
+  ...
+# Subtest: F07-M03 uppercase hex has a paired registered-secret and public-control outcome
+ok 66 - F07-M03 uppercase hex has a paired registered-secret and public-control outcome
+  ---
+  duration_ms: 0.5788
+  type: 'test'
+  ...
+# Subtest: F07-M03 mixed-case hex has a paired registered-secret and public-control outcome
+ok 67 - F07-M03 mixed-case hex has a paired registered-secret and public-control outcome
+  ---
+  duration_ms: 0.9161
+  type: 'test'
+  ...
+# Subtest: F07-M04 canonical URL escaping matches without case-folding raw registered bytes
+ok 68 - F07-M04 canonical URL escaping matches without case-folding raw registered bytes
+  ---
+  duration_ms: 2.1241
+  type: 'test'
+  ...
+# Subtest: F07-M04 full uppercase URL escaping matches without case-folding raw registered bytes
+ok 69 - F07-M04 full uppercase URL escaping matches without case-folding raw registered bytes
+  ---
+  duration_ms: 2.4051
+  type: 'test'
+  ...
+# Subtest: F07-M04 full lowercase URL escaping matches without case-folding raw registered bytes
+ok 70 - F07-M04 full lowercase URL escaping matches without case-folding raw registered bytes
+  ---
+  duration_ms: 2.2049
+  type: 'test'
+  ...
+# Subtest: F07-M04 partial URL escaping matches without case-folding raw registered bytes
+ok 71 - F07-M04 partial URL escaping matches without case-folding raw registered bytes
+  ---
+  duration_ms: 1.3522
+  type: 'test'
+  ...
+# Subtest: F07-M05 URL plus is literal plus and is never repaired into a space
+ok 72 - F07-M05 URL plus is literal plus and is never repaired into a space
+  ---
+  duration_ms: 0.9039
+  type: 'test'
+  ...
+# Subtest: F07-M06 valid JSON quoted preserves exact semantic registered bytes
+ok 73 - F07-M06 valid JSON quoted preserves exact semantic registered bytes
+  ---
+  duration_ms: 0.9225
+  type: 'test'
+  ...
+# Subtest: F07-M06 valid JSON string-body preserves exact semantic registered bytes
+ok 74 - F07-M06 valid JSON string-body preserves exact semantic registered bytes
+  ---
+  duration_ms: 0.597
+  type: 'test'
+  ...
+# Subtest: F07-M06 valid JSON partial Unicode preserves exact semantic registered bytes
+ok 75 - F07-M06 valid JSON partial Unicode preserves exact semantic registered bytes
+  ---
+  duration_ms: 0.848
+  type: 'test'
+  ...
+# Subtest: F07-M06 valid JSON surrogate pair preserves exact semantic registered bytes
+ok 76 - F07-M06 valid JSON surrogate pair preserves exact semantic registered bytes
+  ---
+  duration_ms: 0.8526
+  type: 'test'
+  ...
+# Subtest: F07-M07 an unrelated malformed escape cannot suppress a later raw or canonical registered form
+ok 77 - F07-M07 an unrelated malformed escape cannot suppress a later raw or canonical registered form
+  ---
+  duration_ms: 1.0637
+  type: 'test'
+  ...
+# Subtest: F07-M08 invalid UTF-8 encoded bytes never become replacement-character registered matches
+ok 78 - F07-M08 invalid UTF-8 encoded bytes never become replacement-character registered matches
+  ---
+  duration_ms: 3.1819
+  type: 'test'
+  ...
+# Subtest: F07-M09 neither case folding, Unicode normalization nor whitespace removal invents a registered match
+ok 79 - F07-M09 neither case folding, Unicode normalization nor whitespace removal invents a registered match
+  ---
+  duration_ms: 1.7113
+  type: 'test'
+  ...
+# Subtest: F07-M10 short registration of 1 Unicode scalars matches explicit whole groups only
+ok 80 - F07-M10 short registration of 1 Unicode scalars matches explicit whole groups only
+  ---
+  duration_ms: 1.2056
+  type: 'test'
+  ...
+# Subtest: F07-M10 short registration of 7 Unicode scalars matches explicit whole groups only
+ok 81 - F07-M10 short registration of 7 Unicode scalars matches explicit whole groups only
+  ---
+  duration_ms: 0.6875
+  type: 'test'
+  ...
+# Subtest: F07-M10 short registration of 7 Unicode scalars matches explicit whole groups only
+ok 82 - F07-M10 short registration of 7 Unicode scalars matches explicit whole groups only
+  ---
+  duration_ms: 0.6743
+  type: 'test'
+  ...
+# Subtest: F07-M11 eight Unicode scalars can match a substring even when their UTF-16 width is sixteen
+ok 83 - F07-M11 eight Unicode scalars can match a substring even when their UTF-16 width is sixteen
+  ---
+  duration_ms: 0.3496
+  type: 'test'
+  ...
+# Subtest: F07-M12 all representative raw/encoded/escaped split positions are local to the explicit request
+ok 84 - F07-M12 all representative raw/encoded/escaped split positions are local to the explicit request
+  ---
+  duration_ms: 147.0878
+  type: 'test'
+  ...
+# Subtest: F07-M13 a Unicode scalar may straddle explicit parts without making the joined input invalid
+ok 85 - F07-M13 a Unicode scalar may straddle explicit parts without making the joined input invalid
+  ---
+  duration_ms: 0.4309
+  type: 'test'
+  ...
+# Subtest: F07-M14 separate calls never accumulate, reorder or remove separators from requests
+ok 86 - F07-M14 separate calls never accumulate, reorder or remove separators from requests
+  ---
+  duration_ms: 1.2281
+  type: 'test'
+  ...
+# Subtest: F07-M15 duplicate registrations retain their first opaque ID and overlapping registrations each match
+ok 87 - F07-M15 duplicate registrations retain their first opaque ID and overlapping registrations each match
+  ---
+  duration_ms: 0.9044
+  type: 'test'
+  ...
+# Subtest: F07-M16 explicit placeholder and low-entropy registrations override heuristic allowlists
+ok 88 - F07-M16 explicit placeholder and low-entropy registrations override heuristic allowlists
+  ---
+  duration_ms: 0.7155
+  type: 'test'
+  ...
+# Subtest: F07-M17 invalid construction or request input is typed WITHHELD without partial matches or secret-bearing errors
+ok 89 - F07-M17 invalid construction or request input is typed WITHHELD without partial matches or secret-bearing errors
+  ---
+  duration_ms: 0.9765
+  type: 'test'
+  ...
+# Subtest: F07-M18 unique registration count is inclusive and duplicates do not spend unique-registration budget
+ok 90 - F07-M18 unique registration count is inclusive and duplicates do not spend unique-registration budget
+  ---
+  duration_ms: 5.3075
+  type: 'test'
+  ...
+# Subtest: F07-M19 each registered value's UTF-8 byte bound is inclusive
+ok 91 - F07-M19 each registered value's UTF-8 byte bound is inclusive
+  ---
+  duration_ms: 1.174
+  type: 'test'
+  ...
+# Subtest: F07-M20 registered total bytes are inclusive and overflow cannot leave an earlier usable registration
+ok 92 - F07-M20 registered total bytes are inclusive and overflow cannot leave an earlier usable registration
+  ---
+  duration_ms: 13.1786
+  type: 'test'
+  ...
+# Subtest: F07-M21 explicit-part and joined-input limits are inclusive and withhold all partial matches on overflow
+ok 93 - F07-M21 explicit-part and joined-input limits are inclusive and withhold all partial matches on overflow
+  ---
+  duration_ms: 31.9387
+  type: 'test'
+  ...
+# Subtest: F07-M22 every raw occurrence fits the returned-match limit exactly; the next occurrence withholds all matches
+ok 94 - F07-M22 every raw occurrence fits the returned-match limit exactly; the next occurrence withholds all matches
+  ---
+  duration_ms: 25.8547
+  type: 'test'
+  ...
+# Subtest: F07-M23 charged search-work exhaustion returns WITHHELD rather than an early partial match
+ok 95 - F07-M23 charged search-work exhaustion returns WITHHELD rather than an early partial match
+  ---
+  duration_ms: 9.4453
+  type: 'test'
+  ...
+# Subtest: F07-M24 provider recognition is distinct from registered values and preserves safe source coordinates
+ok 96 - F07-M24 provider recognition is distinct from registered values and preserves safe source coordinates
+  ---
+  duration_ms: 3.9649
+  type: 'test'
+  ...
+# Subtest: F07-M25 assignment entropy requires the frozen length and character-class gates
+ok 97 - F07-M25 assignment entropy requires the frozen length and character-class gates
+  ---
+  duration_ms: 15.549
+  type: 'test'
+  ...
+# Subtest: F07-M26 one decoding layer does not recognize a nested encoding of an unformatted registered value
+ok 98 - F07-M26 one decoding layer does not recognize a nested encoding of an unformatted registered value
+  ---
+  duration_ms: 1.4333
+  type: 'test'
+  ...
+# Subtest: F07-M27 deterministic positive/negative fuzz preserves exact value identity and source spans
+ok 99 - F07-M27 deterministic positive/negative fuzz preserves exact value identity and source spans
+  ---
+  duration_ms: 21.9158
+  type: 'test'
+  ...
+# Subtest: F07-M28 derived-variant exhaustion is independent of registration count, value bytes and registered total
+ok 100 - F07-M28 derived-variant exhaustion is independent of registration count, value bytes and registered total
+  ---
+  duration_ms: 18.5065
+  type: 'test'
+  ...
+# Subtest: F07-M29 decoded-candidate count is inclusive and overflow discards earlier registered matches
+ok 101 - F07-M29 decoded-candidate count is inclusive and overflow discards earlier registered matches
+  ---
+  duration_ms: 4.5511
+  type: 'test'
+  ...
+# Subtest: F07-M30 overlapping original-source decoded views spend the decoded-byte budget without an input overflow
+ok 102 - F07-M30 overlapping original-source decoded views spend the decoded-byte budget without an input overflow
+  ---
+  duration_ms: 1142.2255
+  type: 'test'
+  ...
+# Subtest: F07-M31 serializing a valid or invalid registry exposes neither values nor their derived spellings
+ok 103 - F07-M31 serializing a valid or invalid registry exposes neither values nor their derived spellings
+  ---
+  duration_ms: 0.5904
+  type: 'test'
+  ...
+# Subtest: F07-M32 nonzero unused base64 pad bits are rejected in padded and unpadded spellings
+ok 104 - F07-M32 nonzero unused base64 pad bits are rejected in padded and unpadded spellings
+  ---
+  duration_ms: 1.6789
+  type: 'test'
+  ...
+# Subtest: F07-M33 padding inserted inside encoded secret bytes or given the wrong count is not repaired
+ok 105 - F07-M33 padding inserted inside encoded secret bytes or given the wrong count is not repaired
+  ---
+  duration_ms: 0.954
+  type: 'test'
+  ...
+# Subtest: F07-M34 canonical provider detection also applies to one-layer encoded original-source views
+ok 106 - F07-M34 canonical provider detection also applies to one-layer encoded original-source views
+  ---
+  duration_ms: 2.0088
+  type: 'test'
+  ...
+# Subtest: F07-M35 entropy recognition uses decoded semantic credential keys while public keys remain negative
+ok 107 - F07-M35 entropy recognition uses decoded semantic credential keys while public keys remain negative
+  ---
+  duration_ms: 2.3019
+  type: 'test'
+  ...
+# Subtest: F22d canonical Registry planner is explicitly selected and Registry records require checkpoint restoration
+ok 108 - F22d canonical Registry planner is explicitly selected and Registry records require checkpoint restoration
+  ---
+  duration_ms: 31.8258
+  type: 'test'
+  ...
+# Subtest: F22d Registry analysis exposes only keyed metadata and rejects other declared families
+ok 109 - F22d Registry analysis exposes only keyed metadata and rejects other declared families
+  ---
+  duration_ms: 13.5937
+  type: 'test'
+  ...
+# Subtest: F22d cancellation precedes canonical source capture/key creation and no original document is opened
+ok 110 - F22d cancellation precedes canonical source capture/key creation and no original document is opened
+  ---
+  duration_ms: 42.7286
+  type: 'test'
+  ...
+# Subtest: F22d reviewed Registry migration and checkpoint disclosure restore exact bytes without invalid per-entry fallback
+ok 111 - F22d reviewed Registry migration and checkpoint disclosure restore exact bytes without invalid per-entry fallback
+  ---
+  duration_ms: 1319.6874
+  type: 'test'
+  ...
+# Subtest: F22d strict family machine flag/dependencies withdraw while repository enable grants no authority
+ok 112 - F22d strict family machine flag/dependencies withdraw while repository enable grants no authority
+  ---
+  duration_ms: 3.0083
+  type: 'test'
+  ...
+# Subtest: F22d family discovery admits public Registry controls and does not evaluate config commands
+ok 113 - F22d family discovery admits public Registry controls and does not evaluate config commands
+  ---
+  duration_ms: 287.6589
+  type: 'test'
+  ...
+# Subtest: F22d unsupported/malformed input withholds complete findings and metadata export stays value-free
+ok 114 - F22d unsupported/malformed input withholds complete findings and metadata export stays value-free
+  ---
+  duration_ms: 279.9113
+  type: 'test'
+  ...
+# Subtest: F22d guarded Registry migration API refuses disabled family before creating a vault key
+ok 115 - F22d guarded Registry migration API refuses disabled family before creating a vault key
+  ---
+  duration_ms: 4.1571
+  type: 'test'
+  ...
+# Subtest: F22d late flag withdrawal/lease expiry prevents migration and checkpoint disclosure writes
+ok 116 - F22d late flag withdrawal/lease expiry prevents migration and checkpoint disclosure writes
+  ---
+  duration_ms: 963.7576
+  type: 'test'
+  ...
+# Subtest: F22d post-migration metadata failure retains valid masked Registry and encrypted recovery without plaintext rollback
+ok 117 - F22d post-migration metadata failure retains valid masked Registry and encrypted recovery without plaintext rollback
+  ---
+  duration_ms: 901.2991
+  type: 'test'
+  ...
+# Subtest: F22d interrupted Registry write remains incomplete and canonical safe recovery finishes quoted placeholders
+ok 118 - F22d interrupted Registry write remains incomplete and canonical safe recovery finishes quoted placeholders
+  ---
+  duration_ms: 1179.5093
+  type: 'test'
+  ...
+# Subtest: F22d unknown encrypted entry restore modes fail closed before any per-entry mutation
+ok 119 - F22d unknown encrypted entry restore modes fail closed before any per-entry mutation
+  ---
+  duration_ms: 802.4689
+  type: 'test'
+  ...
+# Subtest: F22d metadata failure after approved Registry disclosure reports INCOMPLETE without claiming plaintext stayed masked
+ok 120 - F22d metadata failure after approved Registry disclosure reports INCOMPLETE without claiming plaintext stayed masked
+  ---
+  duration_ms: 1267.4943
+  type: 'test'
+  ...
+# Subtest: F22d bounded discovery combines separate family query results and deduplicates repeated matches
+ok 121 - F22d bounded discovery combines separate family query results and deduplicates repeated matches
+  ---
+  duration_ms: 406.0689
+  type: 'test'
+  ...
+# Subtest: F22d raw discovery cap remains partial with at most128 public files analyzed
+ok 122 - F22d raw discovery cap remains partial with at most128 public files analyzed
+  ---
+  duration_ms: 19096.9069
+  type: 'test'
+  ...
+# Subtest: F22d container commands register without startup scan, deployment or key creation
+ok 123 - F22d container commands register without startup scan, deployment or key creation
+  ---
+  duration_ms: 26.3685
+  type: 'test'
+  ...
+# Subtest: F22d selected config command uses actual native file picker and ignores caller paths/content/approval
+ok 124 - F22d selected config command uses actual native file picker and ignores caller paths/content/approval
+  ---
+  duration_ms: 6.5449
+  type: 'test'
+  ...
+# Subtest: F22d file picker cancellation and forged finding objects grant no read or mutation
+ok 125 - F22d file picker cancellation and forged finding objects grant no read or mutation
+  ---
+  duration_ms: 3.8222
+  type: 'test'
+  ...
+# Subtest: F22d migration and disclosure restoration use only actual current ordinal selections
+ok 126 - F22d migration and disclosure restoration use only actual current ordinal selections
+  ---
+  duration_ms: 4.245
+  type: 'test'
+  ...
+# Subtest: F22d one pending native config flow and machine flag withdrawal invalidate late picker
+ok 127 - F22d one pending native config flow and machine flag withdrawal invalidate late picker
+  ---
+  duration_ms: 3.9208
+  type: 'test'
+  ...
+# Subtest: F22d manifests contribute machine/restricted family flag, five advanced commands without new runtime dependency
+ok 128 - F22d manifests contribute machine/restricted family flag, five advanced commands without new runtime dependency
+  ---
+  duration_ms: 5.4196
+  type: 'test'
+  ...
+# Subtest: F22d maps only exact project npmrc/pypirc basenames with bounded canonical relative paths
+ok 129 - F22d maps only exact project npmrc/pypirc basenames with bounded canonical relative paths
+  ---
+  duration_ms: 168.9862
+  type: 'test'
+  ...
+# Subtest: F22d scoped npm tokens and quoted credentials preserve public registry settings and harmless arrays
+ok 130 - F22d scoped npm tokens and quoted credentials preserve public registry settings and harmless arrays
+  ---
+  duration_ms: 12.4668
+  type: 'test'
+  ...
+# Subtest: F22d credentialed URLs remove original userinfo while retaining public origin/path and exact private representation
+ok 131 - F22d credentialed URLs remove original userinfo while retaining public origin/path and exact private representation
+  ---
+  duration_ms: 4.0757
+  type: 'test'
+  ...
+# Subtest: F22d npm base64 password and composite Basic auth decode privately and replace with canonical encoded markers
+ok 132 - F22d npm base64 password and composite Basic auth decode privately and replace with canonical encoded markers
+  ---
+  duration_ms: 5.6917
+  type: 'test'
+  ...
+# Subtest: F22d pypirc sections/multiline credentials preserve index names and the public token username convention
+ok 133 - F22d pypirc sections/multiline credentials preserve index names and the public token username convention
+  ---
+  duration_ms: 2.8644
+  type: 'test'
+  ...
+# Subtest: F22d actual npm/pypirc comments and npm escapes are handled without treating URLs as comments
+ok 134 - F22d actual npm/pypirc comments and npm escapes are handled without treating URLs as comments
+  ---
+  duration_ms: 17.5968
+  type: 'test'
+  ...
+# Subtest: F22d bare env references/protected markers remain controls while mixed fallback/interpolation/external references withhold
+ok 135 - F22d bare env references/protected markers remain controls while mixed fallback/interpolation/external references withhold
+  ---
+  duration_ms: 9.4633
+  type: 'test'
+  ...
+# Subtest: F22d duplicate fields/sections, malformed syntax, npm sections and credential arrays withhold
+ok 136 - F22d duplicate fields/sections, malformed syntax, npm sections and credential arrays withhold
+  ---
+  duration_ms: 11.9369
+  type: 'test'
+  ...
+# Subtest: F22d noncanonical/binary Basic auth, ambiguous URL credentials and unsupported schemes withhold
+ok 137 - F22d noncanonical/binary Basic auth, ambiguous URL credentials and unsupported schemes withhold
+  ---
+  duration_ms: 9.0774
+  type: 'test'
+  ...
+# Subtest: F22d text/candidate/line/UTF8/generation limits fail without value-bearing diagnostics
+ok 138 - F22d text/candidate/line/UTF8/generation limits fail without value-bearing diagnostics
+  ---
+  duration_ms: 20.4172
+  type: 'test'
+  ...
+# Subtest: F22d residual originals refuse before writes and CRLF original spans remain exact
+ok 139 - F22d residual originals refuse before writes and CRLF original spans remain exact
+  ---
+  duration_ms: 4.393
+  type: 'test'
+  ...
+# Subtest: F22d deterministic static npm corpus keeps public settings and makes every replacement idempotent
+ok 140 - F22d deterministic static npm corpus keeps public settings and makes every replacement idempotent
+  ---
+  duration_ms: 113.9422
+  type: 'test'
+  ...
+# Subtest: F22d public registry scopes/host labels never turn ordinary settings into credential values
+ok 141 - F22d public registry scopes/host labels never turn ordinary settings into credential values
+  ---
+  duration_ms: 1.8556
+  type: 'test'
+  ...
+# Subtest: F32-C01 constructor is inert; confirmed absence makes no restore or disclosure calls
+ok 142 - F32-C01 constructor is inert; confirmed absence makes no restore or disclosure calls
+  ---
+  duration_ms: 6.7676
+  type: 'test'
+  ...
+# Subtest: F32-C02 probes use only the fixed reviewed action registry
+ok 143 - F32-C02 probes use only the fixed reviewed action registry
+  ---
+  duration_ms: 2.3989
+  type: 'test'
+  ...
+# Subtest: F32-C03 caller paths approvals command IDs getters and raw values confer no authority
+ok 144 - F32-C03 caller paths approvals command IDs getters and raw values confer no authority
+  ---
+  duration_ms: 3.2184
+  type: 'test'
+  ...
+# Subtest: F32-C04 corrupt metadata is pending rather than absent
+ok 145 - F32-C04 corrupt metadata is pending rather than absent
+  ---
+  duration_ms: 0.9005
+  type: 'test'
+  ...
+# Subtest: F32-C05 a valid-looking receipt for another root cannot authorize restore
+ok 146 - F32-C05 a valid-looking receipt for another root cannot authorize restore
+  ---
+  duration_ms: 1.0935
+  type: 'test'
+  ...
+# Subtest: F32-C06 unknown schema and malformed fingerprint remain pending
+ok 147 - F32-C06 unknown schema and malformed fingerprint remain pending
+  ---
+  duration_ms: 1.085
+  type: 'test'
+  ...
+# Subtest: F32-C07 unreadable probe error is fixed pending metadata without raw exception disclosure
+ok 148 - F32-C07 unreadable probe error is fixed pending metadata without raw exception disclosure
+  ---
+  duration_ms: 1.1564
+  type: 'test'
+  ...
+# Subtest: F32-C08 aggregate approval does not bypass the native transaction cancellation
+ok 149 - F32-C08 aggregate approval does not bypass the native transaction cancellation
+  ---
+  duration_ms: 1.1497
+  type: 'test'
+  ...
+# Subtest: F32-C09 cancelling the initial summary issues no restore or stop
+ok 150 - F32-C09 cancelling the initial summary issues no restore or stop
+  ---
+  duration_ms: 1.4039
+  type: 'test'
+  ...
+# Subtest: F32-C10 owned restores run serially and broker stop waits for all completed postconditions
+ok 151 - F32-C10 owned restores run serially and broker stop waits for all completed postconditions
+  ---
+  duration_ms: 4.0514
+  type: 'test'
+  ...
+# Subtest: F32-C11 a concurrent command reports BUSY without another review or write
+ok 152 - F32-C11 a concurrent command reports BUSY without another review or write
+  ---
+  duration_ms: 1.0465
+  type: 'test'
+  ...
+# Subtest: F32-C12 disposed or unavailable local trusted owner cannot discover receipts or start a change
+ok 153 - F32-C12 disposed or unavailable local trusted owner cannot discover receipts or start a change
+  ---
+  duration_ms: 0.5775
+  type: 'test'
+  ...
+# Subtest: F32-C13 disposal while summary is open invalidates its later approval
+ok 154 - F32-C13 disposal while summary is open invalidates its later approval
+  ---
+  duration_ms: 0.8984
+  type: 'test'
+  ...
+# Subtest: F32-C14 workspace change during summary or after the first transaction stops further actions
+ok 155 - F32-C14 workspace change during summary or after the first transaction stops further actions
+  ---
+  duration_ms: 2.4486
+  type: 'test'
+  ...
+# Subtest: F32-C15 trust withdrawal during summary or after one transaction withholds later changes
+ok 156 - F32-C15 trust withdrawal during summary or after one transaction withholds later changes
+  ---
+  duration_ms: 1.5249
+  type: 'test'
+  ...
+# Subtest: F32-C16 settings or route-flag epoch drift invalidates review without enabling flags
+ok 157 - F32-C16 settings or route-flag epoch drift invalidates review without enabling flags
+  ---
+  duration_ms: 0.8333
+  type: 'test'
+  ...
+# Subtest: F32-C17 receipt changes after summary cannot reuse the previous ownership review
+ok 158 - F32-C17 receipt changes after summary cannot reuse the previous ownership review
+  ---
+  duration_ms: 0.9746
+  type: 'test'
+  ...
+# Subtest: F32-C18 a success status with a remaining owned receipt is incomplete
+ok 159 - F32-C18 a success status with a remaining owned receipt is incomplete
+  ---
+  duration_ms: 0.8734
+  type: 'test'
+  ...
+# Subtest: F32-C19 terminal and association SAVED are accepted only with absent postconditions
+ok 160 - F32-C19 terminal and association SAVED are accepted only with absent postconditions
+  ---
+  duration_ms: 2.5871
+  type: 'test'
+  ...
+# Subtest: F32-C20 disabled optional routes retain reviewed restore access; no grant or flag writes
+ok 161 - F32-C20 disabled optional routes retain reviewed restore access; no grant or flag writes
+  ---
+  duration_ms: 2.9613
+  type: 'test'
+  ...
+# Subtest: F32-C21 a void legacy-style completion is never treated as restore success
+ok 162 - F32-C21 a void legacy-style completion is never treated as restore success
+  ---
+  duration_ms: 1.3171
+  type: 'test'
+  ...
+# Subtest: F32-C22 unknown changed unavailable and arbitrary truthy outcomes stay pending
+ok 163 - F32-C22 unknown changed unavailable and arbitrary truthy outcomes stay pending
+  ---
+  duration_ms: 1.2384
+  type: 'test'
+  ...
+# Subtest: F32-C23 thrown restore errors preserve receipt and report no private details
+ok 164 - F32-C23 thrown restore errors preserve receipt and report no private details
+  ---
+  duration_ms: 1.2333
+  type: 'test'
+  ...
+# Subtest: F32-C24 cancellation after a completed restore keeps that result and stops subsequent actions
+ok 165 - F32-C24 cancellation after a completed restore keeps that result and stops subsequent actions
+  ---
+  duration_ms: 3.2601
+  type: 'test'
+  ...
+# Subtest: F32-C25 prior plaintext-capable Cline Claude and legacy backups require manual recovery
+ok 166 - F32-C25 prior plaintext-capable Cline Claude and legacy backups require manual recovery
+  ---
+  duration_ms: 0.8041
+  type: 'test'
+  ...
+# Subtest: F32-C26 policy ciphertext recovery and private probe extras stay outside coordinator output
+ok 167 - F32-C26 policy ciphertext recovery and private probe extras stay outside coordinator output
+  ---
+  duration_ms: 0.8736
+  type: 'test'
+  ...
+# Subtest: F32-C27 exact broker stopped snapshot completes only after reviewed restores and reprobes
+ok 168 - F32-C27 exact broker stopped snapshot completes only after reviewed restores and reprobes
+  ---
+  duration_ms: 2.0038
+  type: 'test'
+  ...
+# Subtest: F32-C28 observed exit with STOP_UNCONFIRMED cannot become safe removal success
+ok 169 - F32-C28 observed exit with STOP_UNCONFIRMED cannot become safe removal success
+  ---
+  duration_ms: 1.6264
+  type: 'test'
+  ...
+# Subtest: F32-C29 thrown broker stop leaves shutdown pending without retry kill or restart capability
+ok 170 - F32-C29 thrown broker stop leaves shutdown pending without retry kill or restart capability
+  ---
+  duration_ms: 1.047
+  type: 'test'
+  ...
+# Subtest: F32-C30 missing broker snapshot cannot infer stopped from exit zero or a truthy return
+ok 171 - F32-C30 missing broker snapshot cannot infer stopped from exit zero or a truthy return
+  ---
+  duration_ms: 0.9869
+  type: 'test'
+  ...
+# Subtest: F32-C31 an owned route appearing during an empty summary prevents completed removal
+ok 172 - F32-C31 an owned route appearing during an empty summary prevents completed removal
+  ---
+  duration_ms: 1.2726
+  type: 'test'
+  ...
+# Subtest: F32-C32 a route created while broker stop is pending cannot yield completed removal
+ok 173 - F32-C32 a route created while broker stop is pending cannot yield completed removal
+  ---
+  duration_ms: 1.1447
+  type: 'test'
+  ...
+# Subtest: marketplace listing links
+    # Subtest: declares every field the listing sidebar renders
+    ok 1 - declares every field the listing sidebar renders
+      ---
+      duration_ms: 1.3709
+      type: 'test'
+      ...
+    # Subtest: uses https everywhere, so no link downgrades the connection
+    ok 2 - uses https everywhere, so no link downgrades the connection
+      ---
+      duration_ms: 0.2408
+      type: 'test'
+      ...
+    # Subtest: points its own links at the apex domain the publisher verifies
+    ok 3 - points its own links at the apex domain the publisher verifies
+      ---
+      duration_ms: 0.2587
+      type: 'test'
+      ...
+    # Subtest: keeps the repository and issue links on the same repo
+    ok 4 - keeps the repository and issue links on the same repo
+      ---
+      duration_ms: 0.4074
+      type: 'test'
+      ...
+    1..4
+ok 174 - marketplace listing links
+  ---
+  duration_ms: 3.7512
+  type: 'suite'
+  ...
+# Subtest: README links header
+    # Subtest: offers a way to the site, the docs, support, and the issue tracker
+    ok 1 - offers a way to the site, the docs, support, and the issue tracker
+      ---
+      duration_ms: 0.3802
+      type: 'test'
+      ...
+    # Subtest: agrees with the manifest instead of drifting from it
+    ok 2 - agrees with the manifest instead of drifting from it
+      ---
+      duration_ms: 0.2181
+      type: 'test'
+      ...
+    # Subtest: uses https so the marketplace page never links out over http
+    ok 3 - uses https so the marketplace page never links out over http
+      ---
+      duration_ms: 0.2643
+      type: 'test'
+      ...
+    1..3
+ok 175 - README links header
+  ---
+  duration_ms: 1.4358
+  type: 'suite'
+  ...
+# Subtest: Control Panel resource links
+    # Subtest: allowlists every link action, or the button is dead
+    ok 1 - allowlists every link action, or the button is dead
+      ---
+      duration_ms: 0.2845
+      type: 'test'
+      ...
+    # Subtest: takes the destination from the hardcoded table, never from the message
+    ok 2 - takes the destination from the hardcoded table, never from the message
+      ---
+      duration_ms: 0.4358
+      type: 'test'
+      ...
+    # Subtest: opens only https destinations already named in the README
+    ok 3 - opens only https destinations already named in the README
+      ---
+      duration_ms: 0.514
+      type: 'test'
+      ...
+    1..3
+ok 176 - Control Panel resource links
+  ---
+  duration_ms: 1.6244
+  type: 'suite'
+  ...
+# Subtest: review evidence refuses overwrite and preserves earlier bytes
+ok 177 - review evidence refuses overwrite and preserves earlier bytes
+  ---
+  duration_ms: 11.9384
+  type: 'test'
+  ...
+# Subtest: disabled recording cannot fall back to legacy shared output
+ok 178 - disabled recording cannot fall back to legacy shared output
+  ---
+  duration_ms: 5.5869
+  type: 'test'
+  ...
+# Subtest: existing review observation records either outcome; a prior expected leak is not required
+ok 179 - existing review observation records either outcome; a prior expected leak is not required
+  ---
+  duration_ms: 0.5554
+  type: 'test'
+  ...
+# Subtest: safe Git accepts only versions with boolean fsmonitor support
+ok 180 - safe Git accepts only versions with boolean fsmonitor support
+  ---
+  duration_ms: 2.1676
+  type: 'test'
+  ...
+# Subtest: Git launch policy excludes ambient credentials and configuration inputs
+ok 181 - Git launch policy excludes ambient credentials and configuration inputs
+  ---
+  duration_ms: 4.226
+  type: 'test'
+  ...
+# Subtest: missing Git fails closed with a usable message
+ok 182 - missing Git fails closed with a usable message
+  ---
+  duration_ms: 17.9327
+  type: 'test'
+  ...
+# Subtest: Windows Git global override uses an explicit empty file, with benign configuration controls
+ok 183 - Windows Git global override uses an explicit empty file, with benign configuration controls
+  ---
+  duration_ms: 698.0629
+  type: 'test'
+  ...
+# Subtest: protected ' syntax cannot reinterpret multiline value data as schema names
+ok 184 - protected ' syntax cannot reinterpret multiline value data as schema names
+  ---
+  duration_ms: 27.824
+  type: 'test'
+  ...
+# Subtest: protected " syntax cannot reinterpret multiline value data as schema names
+ok 185 - protected " syntax cannot reinterpret multiline value data as schema names
+  ---
+  duration_ms: 12.9834
+  type: 'test'
+  ...
+# Subtest: protected ` syntax cannot reinterpret multiline value data as schema names
+ok 186 - protected ` syntax cannot reinterpret multiline value data as schema names
+  ---
+  duration_ms: 5.3146
+  type: 'test'
+  ...
+# Subtest: an ordinary protected region preserves approved adjacent public text
+ok 187 - an ordinary protected region preserves approved adjacent public text
+  ---
+  duration_ms: 23.09
+  type: 'test'
+  ...
+# Subtest: the approval service builds the conservative view from original and region snapshots
+ok 188 - the approval service builds the conservative view from original and region snapshots
+  ---
+  duration_ms: 13.8807
+  type: 'test'
+  ...
+# Subtest: actual adapter withholds dotenv names when a protected region changes quote syntax
+ok 189 - actual adapter withholds dotenv names when a protected region changes quote syntax
+  ---
+  duration_ms: 160.2084
+  type: 'test'
+  ...
+# Subtest: custom project sensitive classification never receives an ordinary approved view
+ok 190 - custom project sensitive classification never receives an ordinary approved view
+  ---
+  duration_ms: 507.6391
+  type: 'test'
+  ...
+# Subtest: composition rollback withdraws safe reads while keeping the parent privacy flag enabled
+ok 191 - composition rollback withdraws safe reads while keeping the parent privacy flag enabled
+  ---
+  duration_ms: 7.7974
+  type: 'test'
+  ...
+# Subtest: F17 review exact result schema refuses originals/unknown kinds/oversized release
+ok 192 - F17 review exact result schema refuses originals/unknown kinds/oversized release
+  ---
+  duration_ms: 3.3953
+  type: 'test'
+  ...
+# Subtest: F17 review preinitialize, spoofed fields and duplicate pending IDs reach no additional reader
+ok 193 - F17 review preinitialize, spoofed fields and duplicate pending IDs reach no additional reader
+  ---
+  duration_ms: 33.6045
+  type: 'test'
+  ...
+# Subtest: F17 review cancellation is request-bound and no late public text is released
+ok 194 - F17 review cancellation is request-bound and no late public text is released
+  ---
+  duration_ms: 11.7205
+  type: 'test'
+  ...
+# Subtest: F17 review pending queue is bounded and EOF aborts every active read
+ok 195 - F17 review pending queue is bounded and EOF aborts every active read
+  ---
+  duration_ms: 9.6765
+  type: 'test'
+  ...
+# Subtest: F17 review malformed and oversized frames resynchronize without executing a valid tail
+ok 196 - F17 review malformed and oversized frames resynchronize without executing a valid tail
+  ---
+  duration_ms: 10.2352
+  type: 'test'
+  ...
+# Subtest: F17 review synchronous route exceptions are fixed errors and transport survives
+ok 197 - F17 review synchronous route exceptions are fixed errors and transport survives
+  ---
+  duration_ms: 6.5435
+  type: 'test'
+  ...
+# Subtest: F17 aborting an active F04 review promptly withholds a late approval
+ok 198 - F17 aborting an active F04 review promptly withholds a late approval
+  ---
+  duration_ms: 32.8985
+  type: 'test'
+  ...
+# Subtest: F17 already aborted requests never capture or review content
+ok 199 - F17 already aborted requests never capture or review content
+  ---
+  duration_ms: 1.4132
+  type: 'test'
+  ...
+# Subtest: F17 safe path schema rejects caller approval, absolute paths, aliases and unsupported fields
+ok 200 - F17 safe path schema rejects caller approval, absolute paths, aliases and unsupported fields
+  ---
+  duration_ms: 12.2671
+  type: 'test'
+  ...
+# Subtest: F17 connection schema accepts only the fixed local route and private session shape
+ok 201 - F17 connection schema accepts only the fixed local route and private session shape
+  ---
+  duration_ms: 9.543
+  type: 'test'
+  ...
+# Subtest: F17 actual HTTP bridge public control binds a server-owned recipient
+ok 202 - F17 actual HTTP bridge public control binds a server-owned recipient
+  ---
+  duration_ms: 105.974
+  type: 'test'
+  ...
+# Subtest: F17 actual bridge reuses safe-view reader: ordinary saved deny with approval
+ok 203 - F17 actual bridge reuses safe-view reader: ordinary saved deny with approval
+  ---
+  duration_ms: 30.7408
+  type: 'test'
+  ...
+# Subtest: F17 actual bridge reuses safe-view reader: env names only
+ok 204 - F17 actual bridge reuses safe-view reader: env names only
+  ---
+  duration_ms: 13.7345
+  type: 'test'
+  ...
+# Subtest: F17 actual bridge reuses safe-view reader: marked sensitive
+ok 205 - F17 actual bridge reuses safe-view reader: marked sensitive
+  ---
+  duration_ms: 11.9667
+  type: 'test'
+  ...
+# Subtest: F17 invalid auth and session never reach the native reader
+ok 206 - F17 invalid auth and session never reach the native reader
+  ---
+  duration_ms: 21.6129
+  type: 'test'
+  ...
+# Subtest: F17 flag withdrawal while native confirmation waits releases no output
+ok 207 - F17 flag withdrawal while native confirmation waits releases no output
+  ---
+  duration_ms: 18.7617
+  type: 'test'
+  ...
+# Subtest: F17 explicit session rotation invalidates pending and prior clients
+ok 208 - F17 explicit session rotation invalidates pending and prior clients
+  ---
+  duration_ms: 31.2236
+  type: 'test'
+  ...
+# Subtest: F17 client cancellation propagates to the actual host read and withholds late data
+ok 209 - F17 client cancellation propagates to the actual host read and withholds late data
+  ---
+  duration_ms: 21.9003
+  type: 'test'
+  ...
+# Subtest: F17 actual bridge malformed/oversize/unknown fields return fixed errors with no read
+ok 210 - F17 actual bridge malformed/oversize/unknown fields return fixed errors with no read
+  ---
+  duration_ms: 32.3532
+  type: 'test'
+  ...
+# Subtest: F17 actual bridge outage has no original-file fallback
+ok 211 - F17 actual bridge outage has no original-file fallback
+  ---
+  duration_ms: 12.8363
+  type: 'test'
+  ...
+# Subtest: F17 actual stdio route advertises and dispatches the safe reader
+ok 212 - F17 actual stdio route advertises and dispatches the safe reader
+  ---
+  duration_ms: 6.69
+  type: 'test'
+  ...
+# Subtest: LiveScanner exclude globs actually exclude
+    # Subtest: matches every shipped default exclude against a path it must skip
+    ok 1 - matches every shipped default exclude against a path it must skip
+      ---
+      duration_ms: 3.084
+      type: 'test'
+      ...
+    # Subtest: matches a top-level path with the leading **/ segment absent
+    ok 2 - matches a top-level path with the leading **/ segment absent
+      ---
+      duration_ms: 0.391
+      type: 'test'
+      ...
+    # Subtest: does not over-match source files that must still be scanned
+    ok 3 - does not over-match source files that must still be scanned
+      ---
+      duration_ms: 0.4079
+      type: 'test'
+      ...
+    # Subtest: treats an uncompilable pattern as non-matching instead of throwing
+    ok 4 - treats an uncompilable pattern as non-matching instead of throwing
+      ---
+      duration_ms: 0.5491
+      type: 'test'
+      ...
+    # Subtest: stays in sync with LiveScanner.ts
+    ok 5 - stays in sync with LiveScanner.ts
+      ---
+      duration_ms: 2.6485
+      type: 'test'
+      ...
+    1..5
+ok 213 - LiveScanner exclude globs actually exclude
+  ---
+  duration_ms: 9.1915
+  type: 'suite'
+  ...
+# Subtest: configuration scope — a workspace cannot disable protection
+    # Subtest: soterai.protection.enabled is machine-scoped
+    ok 1 - soterai.protection.enabled is machine-scoped
+      ---
+      duration_ms: 0.8522
+      type: 'test'
+      ...
+    # Subtest: soterai.liveScan.enabled is machine-scoped
+    ok 2 - soterai.liveScan.enabled is machine-scoped
+      ---
+      duration_ms: 0.2377
+      type: 'test'
+      ...
+    # Subtest: soterai.sentinel.enabled is machine-scoped
+    ok 3 - soterai.sentinel.enabled is machine-scoped
+      ---
+      duration_ms: 0.4124
+      type: 'test'
+      ...
+    # Subtest: soterai.protectedWorkspace.enabled is machine-scoped
+    ok 4 - soterai.protectedWorkspace.enabled is machine-scoped
+      ---
+      duration_ms: 0.2284
+      type: 'test'
+      ...
+    # Subtest: soterai.mcpFirewall.strictMode is machine-scoped
+    ok 5 - soterai.mcpFirewall.strictMode is machine-scoped
+      ---
+      duration_ms: 0.3212
+      type: 'test'
+      ...
+    # Subtest: soterai.broker.openAIProviderUrl is machine-scoped
+    ok 6 - soterai.broker.openAIProviderUrl is machine-scoped
+      ---
+      duration_ms: 0.1167
+      type: 'test'
+      ...
+    # Subtest: soterai.broker.anthropicProviderUrl is machine-scoped
+    ok 7 - soterai.broker.anthropicProviderUrl is machine-scoped
+      ---
+      duration_ms: 0.0858
+      type: 'test'
+      ...
+    # Subtest: soterai.broker.port is machine-scoped
+    ok 8 - soterai.broker.port is machine-scoped
+      ---
+      duration_ms: 0.0823
+      type: 'test'
+      ...
+    # Subtest: soterai.cloud.enabled is machine-scoped
+    ok 9 - soterai.cloud.enabled is machine-scoped
+      ---
+      duration_ms: 0.0809
+      type: 'test'
+      ...
+    # Subtest: soterai.cloud.baseUrl is machine-scoped
+    ok 10 - soterai.cloud.baseUrl is machine-scoped
+      ---
+      duration_ms: 0.0829
+      type: 'test'
+      ...
+    # Subtest: soterai.privacyMode is machine-scoped
+    ok 11 - soterai.privacyMode is machine-scoped
+      ---
+      duration_ms: 0.1985
+      type: 'test'
+      ...
+    # Subtest: soterai.policy.mode is machine-scoped
+    ok 12 - soterai.policy.mode is machine-scoped
+      ---
+      duration_ms: 0.1058
+      type: 'test'
+      ...
+    # Subtest: soterai.audit.storeRawPrompts is machine-scoped
+    ok 13 - soterai.audit.storeRawPrompts is machine-scoped
+      ---
+      duration_ms: 0.0729
+      type: 'test'
+      ...
+    # Subtest: soterai.telemetry.redactedEvents is machine-scoped
+    ok 14 - soterai.telemetry.redactedEvents is machine-scoped
+      ---
+      duration_ms: 0.0715
+      type: 'test'
+      ...
+    # Subtest: soterai.sensitiveContext.allowRawReveal is machine-scoped
+    ok 15 - soterai.sensitiveContext.allowRawReveal is machine-scoped
+      ---
+      duration_ms: 0.1058
+      type: 'test'
+      ...
+    # Subtest: soterai.sensitiveContext.requireApproval is machine-scoped
+    ok 16 - soterai.sensitiveContext.requireApproval is machine-scoped
+      ---
+      duration_ms: 0.0709
+      type: 'test'
+      ...
+    # Subtest: soterai.sensitiveContext.defaultAction is machine-scoped
+    ok 17 - soterai.sensitiveContext.defaultAction is machine-scoped
+      ---
+      duration_ms: 0.068
+      type: 'test'
+      ...
+    # Subtest: soterai.sensitiveContext.ttlMinutes is machine-scoped
+    ok 18 - soterai.sensitiveContext.ttlMinutes is machine-scoped
+      ---
+      duration_ms: 0.0695
+      type: 'test'
+      ...
+    # Subtest: soterai.scan.remoteEscalation is machine-scoped
+    ok 19 - soterai.scan.remoteEscalation is machine-scoped
+      ---
+      duration_ms: 0.0646
+      type: 'test'
+      ...
+    # Subtest: soterai.terminal.protectionMode is machine-scoped
+    ok 20 - soterai.terminal.protectionMode is machine-scoped
+      ---
+      duration_ms: 0.0802
+      type: 'test'
+      ...
+    # Subtest: soterai.terminal.warnOnRawTerminalOpen is machine-scoped
+    ok 21 - soterai.terminal.warnOnRawTerminalOpen is machine-scoped
+      ---
+      duration_ms: 0.0677
+      type: 'test'
+      ...
+    # Subtest: soterai.sentinel.retentionDays is machine-scoped
+    ok 22 - soterai.sentinel.retentionDays is machine-scoped
+      ---
+      duration_ms: 0.0678
+      type: 'test'
+      ...
+    # Subtest: soterai.dependencyGuard.osvMode is machine-scoped
+    ok 23 - soterai.dependencyGuard.osvMode is machine-scoped
+      ---
+      duration_ms: 0.0733
+      type: 'test'
+      ...
+    # Subtest: soterai.secretInterceptor.enabled is machine-scoped
+    ok 24 - soterai.secretInterceptor.enabled is machine-scoped
+      ---
+      duration_ms: 0.0688
+      type: 'test'
+      ...
+    # Subtest: declares the same keys as restricted in untrusted workspaces
+    ok 25 - declares the same keys as restricted in untrusted workspaces
+      ---
+      duration_ms: 0.1907
+      type: 'test'
+      ...
+    # Subtest: keeps the untrusted-workspace support level declared
+    ok 26 - keeps the untrusted-workspace support level declared
+      ---
+      duration_ms: 0.1204
+      type: 'test'
+      ...
+    # Subtest: never writes a machine-scoped key to Workspace or WorkspaceFolder
+    ok 27 - never writes a machine-scoped key to Workspace or WorkspaceFolder
+      ---
+      duration_ms: 217.7501
+      type: 'test'
+      ...
+    1..27
+ok 214 - configuration scope — a workspace cannot disable protection
+  ---
+  duration_ms: 222.9755
+  type: 'suite'
+  ...
+# Subtest: F18 sealed ticket round trip encrypts all private connection material
+ok 215 - F18 sealed ticket round trip encrypts all private connection material
+  ---
+  duration_ms: 23.1977
+  type: 'test'
+  ...
+# Subtest: F18 corrupted ticket/wrong user key returns unavailable without private exceptions
+ok 216 - F18 corrupted ticket/wrong user key returns unavailable without private exceptions
+  ---
+  duration_ms: 3.274
+  type: 'test'
+  ...
+# Subtest: F18 malformed, oversized and unknown ticket versions never call the decryptor
+ok 217 - F18 malformed, oversized and unknown ticket versions never call the decryptor
+  ---
+  duration_ms: 2.2074
+  type: 'test'
+  ...
+# Subtest: F18 decrypted connection schema refuses nonloopback, unknown fields and stale-format payloads
+ok 218 - F18 decrypted connection schema refuses nonloopback, unknown fields and stale-format payloads
+  ---
+  duration_ms: 2.2536
+  type: 'test'
+  ...
+# Subtest: F18 OS protection outage produces no ticket or echoed source capability
+ok 219 - F18 OS protection outage produces no ticket or echoed source capability
+  ---
+  duration_ms: 1.9264
+  type: 'test'
+  ...
+# Subtest: F18 actual Windows CurrentUser DPAPI private pipe round trip
+ok 220 - F18 actual Windows CurrentUser DPAPI private pipe round trip
+  ---
+  duration_ms: 1378.1051
+  type: 'test'
+  ...
+# Subtest: SecretReferenceManager
+    # Subtest: creates opaque refs without embedding raw values
+    ok 1 - creates opaque refs without embedding raw values
+      ---
+      duration_ms: 3.7019
+      type: 'test'
+      ...
+    # Subtest: enforces lookup, expiry, revocation, workspace, operation, and one-time scopes
+    ok 2 - enforces lookup, expiry, revocation, workspace, operation, and one-time scopes
+      ---
+      duration_ms: 226.9758
+      type: 'test'
+      ...
+    1..2
+ok 221 - SecretReferenceManager
+  ---
+  duration_ms: 232.4219
+  type: 'suite'
+  ...
+# Subtest: SensitiveContextRedactor
+    # Subtest: redacts env secrets into useful secret refs and strips raw values
+    ok 1 - redacts env secrets into useful secret refs and strips raw values
+      ---
+      duration_ms: 2.9138
+      type: 'test'
+      ...
+    # Subtest: redacts private keys, webhook URLs, India PII, and preserves benign text
+    ok 2 - redacts private keys, webhook URLs, India PII, and preserves benign text
+      ---
+      duration_ms: 0.9429
+      type: 'test'
+      ...
+    # Subtest: does not false-redact benign version-like text
+    ok 3 - does not false-redact benign version-like text
+      ---
+      duration_ms: 0.7097
+      type: 'test'
+      ...
+    1..3
+ok 222 - SensitiveContextRedactor
+  ---
+  duration_ms: 4.9406
+  type: 'suite'
+  ...
+# Subtest: CapabilityBroker
+    # Subtest: allows approved safe operations and never returns raw secrets
+    ok 1 - allows approved safe operations and never returns raw secrets
+      ---
+      duration_ms: 0.9467
+      type: 'test'
+      ...
+    # Subtest: blocks denied, malicious, expired, and unapproved operations with sanitized errors
+    ok 2 - blocks denied, malicious, expired, and unapproved operations with sanitized errors
+      ---
+      duration_ms: 227.1251
+      type: 'test'
+      ...
+    1..2
+ok 223 - CapabilityBroker
+  ---
+  duration_ms: 228.6131
+  type: 'suite'
+  ...
+# Subtest: LLM context and output filtering
+    # Subtest: builds a safe LLM contract without raw secrets and resists override text
+    ok 1 - builds a safe LLM contract without raw secrets and resists override text
+      ---
+      duration_ms: 1.1885
+      type: 'test'
+      ...
+    # Subtest: blocks requests for secrets and redacts secret-like model output
+    ok 2 - blocks requests for secrets and redacts secret-like model output
+      ---
+      duration_ms: 18.7526
+      type: 'test'
+      ...
+    1..2
+ok 224 - LLM context and output filtering
+  ---
+  duration_ms: 20.5222
+  type: 'suite'
+  ...
+# Subtest: Policy file parser
+    # Subtest: loads safe defaults, denies reveal, and applies enterprise lock
+    ok 1 - loads safe defaults, denies reveal, and applies enterprise lock
+      ---
+      duration_ms: 0.6063
+      type: 'test'
+      ...
+    # Subtest: requiresApproval defaults on and reflects policy
+    ok 2 - requiresApproval defaults on and reflects policy
+      ---
+      duration_ms: 0.1934
+      type: 'test'
+      ...
+    1..2
+ok 225 - Policy file parser
+  ---
+  duration_ms: 0.9561
+  type: 'suite'
+  ...
+# Subtest: SecretReferenceManager — swappable value store (SecretStorage boundary)
+    # Subtest: stores raw values only in the injected store, never in the record map
+    ok 1 - stores raw values only in the injected store, never in the record map
+      ---
+      duration_ms: 0.7698
+      type: 'test'
+      ...
+    # Subtest: one-time ref cannot be used twice even under concurrent lookups (no TOCTOU double-spend)
+    ok 2 - one-time ref cannot be used twice even under concurrent lookups (no TOCTOU double-spend)
+      ---
+      duration_ms: 0.4128
+      type: 'test'
+      ...
+    1..2
+ok 226 - SecretReferenceManager — swappable value store (SecretStorage boundary)
+  ---
+  duration_ms: 1.3245
+  type: 'suite'
+  ...
+# Subtest: concurrent persistent writes keep an ID-only inventory before both values
+ok 227 - concurrent persistent writes keep an ID-only inventory before both values
+  ---
+  duration_ms: 10.2722
+  type: 'test'
+  ...
+# Subtest: activation recovery purges known entries without retrieving values
+ok 228 - activation recovery purges known entries without retrieving values
+  ---
+  duration_ms: 1.7394
+  type: 'test'
+  ...
+# Subtest: failed value writes retain recovery IDs and sanitize storage errors
+ok 229 - failed value writes retain recovery IDs and sanitize storage errors
+  ---
+  duration_ms: 2.5877
+  type: 'test'
+  ...
+# Subtest: malformed inventory closes all operations before SecretStorage access
+ok 230 - malformed inventory closes all operations before SecretStorage access
+  ---
+  duration_ms: 1.9561
+  type: 'test'
+  ...
+# Subtest: failed purge preserves inventory for a fresh-session retry
+ok 231 - failed purge preserves inventory for a fresh-session retry
+  ---
+  duration_ms: 1.762
+  type: 'test'
+  ...
+# Subtest: invalid reference lifetimes are rejected before storing any value
+ok 232 - invalid reference lifetimes are rejected before storing any value
+  ---
+  duration_ms: 1.4405
+  type: 'test'
+  ...
+# Subtest: expired references delete backing values even without a subsequent lookup
+ok 233 - expired references delete backing values even without a subsequent lookup
+  ---
+  duration_ms: 57.795
+  type: 'test'
+  ...
+# Subtest: inventory flag withdrawal denies runtime creation and reads while cleanup remains available
+ok 234 - inventory flag withdrawal denies runtime creation and reads while cleanup remains available
+  ---
+  duration_ms: 1.0432
+  type: 'test'
+  ...
+# Subtest: clearing while persistence is pending prevents a usable reference
+ok 235 - clearing while persistence is pending prevents a usable reference
+  ---
+  duration_ms: 0.9512
+  type: 'test'
+  ...
+# Subtest: F07-I01 matching flag withdrawal withholds every input with constant safe text
+ok 236 - F07-I01 matching flag withdrawal withholds every input with constant safe text
+  ---
+  duration_ms: 2.5255
+  type: 'test'
+  ...
+# Subtest: F07-I02 a throwing matching flag cannot expose the response or callback error value
+ok 237 - F07-I02 a throwing matching flag cannot expose the response or callback error value
+  ---
+  duration_ms: 0.5325
+  type: 'test'
+  ...
+# Subtest: F07-I03 invalid registrations cause typed withholding without partial matches or thrown values
+ok 238 - F07-I03 invalid registrations cause typed withholding without partial matches or thrown values
+  ---
+  duration_ms: 4.2457
+  type: 'test'
+  ...
+# Subtest: F07-I04 registration count and byte limits are enforced before a benign response is released
+ok 239 - F07-I04 registration count and byte limits are enforced before a benign response is released
+  ---
+  duration_ms: 25.1185
+  type: 'test'
+  ...
+# Subtest: F07-I05 JSON part, depth and node budget exhaustion withholds the complete response
+ok 240 - F07-I05 JSON part, depth and node budget exhaustion withholds the complete response
+  ---
+  duration_ms: 332.5431
+  type: 'test'
+  ...
+# Subtest: F07-I06 exact raw and canonical one-layer encodings redact the whole response
+ok 241 - F07-I06 exact raw and canonical one-layer encodings redact the whole response
+  ---
+  duration_ms: 9.55
+  type: 'test'
+  ...
+# Subtest: F07-I07 mixed hex and partial URL/JSON spelling still redact the entire response
+ok 242 - F07-I07 mixed hex and partial URL/JSON spelling still redact the entire response
+  ---
+  duration_ms: 3.8758
+  type: 'test'
+  ...
+# Subtest: F07-I08 ordered JSON string leaves match split raw and partial URL copies without joining across calls
+ok 243 - F07-I08 ordered JSON string leaves match split raw and partial URL copies without joining across calls
+  ---
+  duration_ms: 19.0712
+  type: 'test'
+  ...
+# Subtest: F07-I09 short registrations match whole explicit leaves or groups while ordinary prose stays useful
+ok 244 - F07-I09 short registrations match whole explicit leaves or groups while ordinary prose stays useful
+  ---
+  duration_ms: 2.9391
+  type: 'test'
+  ...
+# Subtest: F07-I10 exact case and Unicode are retained without normalizing unrelated public text
+ok 245 - F07-I10 exact case and Unicode are retained without normalizing unrelated public text
+  ---
+  duration_ms: 2.695
+  type: 'test'
+  ...
+# Subtest: F07-I11 malformed unrelated escapes cannot suppress raw registered matching
+ok 246 - F07-I11 malformed unrelated escapes cannot suppress raw registered matching
+  ---
+  duration_ms: 2.2427
+  type: 'test'
+  ...
+# Subtest: F07-I12-flag-off capability withholding returns no body and honestly audits the transport as sent
+ok 247 - F07-I12-flag-off capability withholding returns no body and honestly audits the transport as sent
+  ---
+  duration_ms: 4.3503
+  type: 'test'
+  ...
+# Subtest: F07-I12-flag-throws capability withholding returns no body and honestly audits the transport as sent
+ok 248 - F07-I12-flag-throws capability withholding returns no body and honestly audits the transport as sent
+  ---
+  duration_ms: 0.8255
+  type: 'test'
+  ...
+# Subtest: F07-I12-json-budget capability withholding returns no body and honestly audits the transport as sent
+ok 249 - F07-I12-json-budget capability withholding returns no body and honestly audits the transport as sent
+  ---
+  duration_ms: 3.3647
+  type: 'test'
+  ...
+# Subtest: F07-I12-legacy-unsafe-request capability withholding returns no body and honestly audits the transport as sent
+ok 250 - F07-I12-legacy-unsafe-request capability withholding returns no body and honestly audits the transport as sent
+  ---
+  duration_ms: 1.141
+  type: 'test'
+  ...
+# Subtest: F07-I13 mediated split/encoded reflection is wholly redacted after exactly one approved transport
+ok 251 - F07-I13 mediated split/encoded reflection is wholly redacted after exactly one approved transport
+  ---
+  duration_ms: 4.0637
+  type: 'test'
+  ...
+# Subtest: F07-I14 a clean mediated response preserves the public body and honest sent audit
+ok 252 - F07-I14 a clean mediated response preserves the public body and honest sent audit
+  ---
+  duration_ms: 1.2539
+  type: 'test'
+  ...
+# Subtest: extension security benchmark evidence
+    # Subtest: uses a balanced, unique, multi-surface corpus
+    ok 1 - uses a balanced, unique, multi-surface corpus
+      ---
+      duration_ms: 1.3188
+      type: 'test'
+      ...
+    # Subtest: contains only explicit synthetic fixtures and no private-key body
+    ok 2 - contains only explicit synthetic fixtures and no private-key body
+      ---
+      duration_ms: 0.4199
+      type: 'test'
+      ...
+    # Subtest: publishes machine-readable results with honest scope
+    ok 3 - publishes machine-readable results with honest scope
+      ---
+      duration_ms: 3.4461
+      type: 'test'
+      ...
+    1..3
+ok 253 - extension security benchmark evidence
+  ---
+  duration_ms: 6.5654
+  type: 'suite'
+  ...
+# Subtest: F27 activity keeps public event metadata while withholding caller text from storage, UI and export
+ok 254 - F27 activity keeps public event metadata while withholding caller text from storage, UI and export
+  ---
+  duration_ms: 3.2343
+  type: 'test'
+  ...
+# Subtest: F27 disabled activity sink withholds a new event and releases queued metadata
+ok 255 - F27 disabled activity sink withholds a new event and releases queued metadata
+  ---
+  duration_ms: 1.5698
+  type: 'test'
+  ...
+# Subtest: F27 held document callback cannot read or persist after Sentinel disposal
+ok 256 - F27 held document callback cannot read or persist after Sentinel disposal
+  ---
+  duration_ms: 1.2084
+  type: 'test'
+  ...
+# Subtest: F27 flag off and on cannot revive a held activity document callback
+ok 257 - F27 flag off and on cannot revive a held activity document callback
+  ---
+  duration_ms: 1.0123
+  type: 'test'
+  ...
+# Subtest: F27 activity storage failure never throws private text toward an outer crash reporter
+ok 258 - F27 activity storage failure never throws private text toward an outer crash reporter
+  ---
+  duration_ms: 0.6522
+  type: 'test'
+  ...
+# Subtest: F27 opted-in activity restart minimizes legacy owned storage before retaining a new copy
+ok 259 - F27 opted-in activity restart minimizes legacy owned storage before retaining a new copy
+  ---
+  duration_ms: 6.3924
+  type: 'test'
+  ...
+# Subtest: F27 failed activity opt-in is value-free and cannot leave observation enabled
+ok 260 - F27 failed activity opt-in is value-free and cannot leave observation enabled
+  ---
+  duration_ms: 1.3696
+  type: 'test'
+  ...
+# Subtest: F27 audit preserves useful public sequence and verification metadata
+ok 261 - F27 audit preserves useful public sequence and verification metadata
+  ---
+  duration_ms: 15.4124
+  type: 'test'
+  ...
+# Subtest: F27 audit sanitizes every caller text field before durable admission
+ok 262 - F27 audit sanitizes every caller text field before durable admission
+  ---
+  duration_ms: 2.179
+  type: 'test'
+  ...
+# Subtest: F27 restart export withholds unsafe legacy text without rewriting signed history
+ok 263 - F27 restart export withholds unsafe legacy text without rewriting signed history
+  ---
+  duration_ms: 2.4767
+  type: 'test'
+  ...
+# Subtest: F27 disabled owned audit sink withholds emission before storage or key creation
+ok 264 - F27 disabled owned audit sink withholds emission before storage or key creation
+  ---
+  duration_ms: 0.8717
+  type: 'test'
+  ...
+# Subtest: F27 restart audit anchors never reflect unsigned extra properties
+ok 265 - F27 restart audit anchors never reflect unsigned extra properties
+  ---
+  duration_ms: 1.7427
+  type: 'test'
+  ...
+# Subtest: F27 authenticated legacy private text exports no private-content-derived hashes or signatures
+ok 266 - F27 authenticated legacy private text exports no private-content-derived hashes or signatures
+  ---
+  duration_ms: 2.8375
+  type: 'test'
+  ...
+# Subtest: F27 audit pending key lookup cannot revive after owner flag off and on
+ok 267 - F27 audit pending key lookup cannot revive after owner flag off and on
+  ---
+  duration_ms: 14.6736
+  type: 'test'
+  ...
+# Subtest: F27 audit storage exceptions expose only a fixed value-free failure
+ok 268 - F27 audit storage exceptions expose only a fixed value-free failure
+  ---
+  duration_ms: 1.6001
+  type: 'test'
+  ...
+# Subtest: F27 actual loopback broker diagnostics keep public status while omitting request path and auth
+ok 269 - F27 actual loopback broker diagnostics keep public status while omitting request path and auth
+  ---
+  duration_ms: 94.6034
+  type: 'test'
+  ...
+# Subtest: F27 default-off actual broker diagnostic sink withholds success and error emissions
+ok 270 - F27 default-off actual broker diagnostic sink withholds success and error emissions
+  ---
+  duration_ms: 12.7121
+  type: 'test'
+  ...
+# Subtest: F27 actual broker callback exceptions do not escape startup or request failure
+ok 271 - F27 actual broker callback exceptions do not escape startup or request failure
+  ---
+  duration_ms: 9.4512
+  type: 'test'
+  ...
+# Subtest: F27 nested checkpoint diagnostic boundary obeys owner flag false
+ok 272 - F27 nested checkpoint diagnostic boundary obeys owner flag false
+  ---
+  duration_ms: 8.5443
+  type: 'test'
+  ...
+# Subtest: F27 nested checkpoint diagnostic boundary obeys owner flag true
+ok 273 - F27 nested checkpoint diagnostic boundary obeys owner flag true
+  ---
+  duration_ms: 4.1603
+  type: 'test'
+  ...
+# Subtest: F27 nested checkpoint logger exceptions cannot escape to owned crash reporting
+ok 274 - F27 nested checkpoint logger exceptions cannot escape to owned crash reporting
+  ---
+  duration_ms: 5.0162
+  type: 'test'
+  ...
+# Subtest: F27 broker retained activity metadata obeys owner flag false
+ok 275 - F27 broker retained activity metadata obeys owner flag false
+  ---
+  duration_ms: 0.9569
+  type: 'test'
+  ...
+# Subtest: F27 broker retained activity metadata obeys owner flag true
+ok 276 - F27 broker retained activity metadata obeys owner flag true
+  ---
+  duration_ms: 0.7254
+  type: 'test'
+  ...
+# Subtest: F27 actual loopback memory inspector owns IDs and withholds caller metadata on export
+ok 277 - F27 actual loopback memory inspector owns IDs and withholds caller metadata on export
+  ---
+  duration_ms: 32.3318
+  type: 'test'
+  ...
+# Subtest: F27 default-off loopback memory inspector refuses retention and labels withheld export
+ok 278 - F27 default-off loopback memory inspector refuses retention and labels withheld export
+  ---
+  duration_ms: 18.5983
+  type: 'test'
+  ...
+# Subtest: F27 memory events cannot auto-create caller-named sessions
+ok 279 - F27 memory events cannot auto-create caller-named sessions
+  ---
+  duration_ms: 19.3672
+  type: 'test'
+  ...
+# Subtest: F27 actual dashboard rejection with owner flag false withholds caller text
+ok 280 - F27 actual dashboard rejection with owner flag false withholds caller text
+  ---
+  duration_ms: 2.6536
+  type: 'test'
+  ...
+# Subtest: F27 actual dashboard rejection with owner flag true withholds caller text
+ok 281 - F27 actual dashboard rejection with owner flag true withholds caller text
+  ---
+  duration_ms: 0.5426
+  type: 'test'
+  ...
+# Subtest: F27 diagnostic emission keeps useful public code and bounded numeric metadata
+ok 282 - F27 diagnostic emission keeps useful public code and bounded numeric metadata
+  ---
+  duration_ms: 2.7708
+  type: 'test'
+  ...
+# Subtest: F27 diagnostic flag-off withholds before metadata access or callback
+ok 283 - F27 diagnostic flag-off withholds before metadata access or callback
+  ---
+  duration_ms: 0.2769
+  type: 'test'
+  ...
+# Subtest: F27 diagnostic canaries, unknown fields, error messages and caller paths are omitted
+ok 284 - F27 diagnostic canaries, unknown fields, error messages and caller paths are omitted
+  ---
+  duration_ms: 0.2828
+  type: 'test'
+  ...
+# Subtest: F27 diagnostic metadata accessors are not invoked and invalid counts are refused
+ok 285 - F27 diagnostic metadata accessors are not invoked and invalid counts are refused
+  ---
+  duration_ms: 0.2889
+  type: 'test'
+  ...
+# Subtest: F27 diagnostic callback failure is value-free and does not escape to crash reporting
+ok 286 - F27 diagnostic callback failure is value-free and does not escape to crash reporting
+  ---
+  duration_ms: 0.2145
+  type: 'test'
+  ...
+# Subtest: F27 local ledger owner-off withholds persistence
+ok 287 - F27 local ledger owner-off withholds persistence
+  ---
+  duration_ms: 2.6977
+  type: 'test'
+  ...
+# Subtest: F27 local ledger owner-on retains public decisions but no arbitrary caller text
+ok 288 - F27 local ledger owner-on retains public decisions but no arbitrary caller text
+  ---
+  duration_ms: 13.2495
+  type: 'test'
+  ...
+# Subtest: F27 local ledger legacy export and views withhold private fields without rewriting old chain
+ok 289 - F27 local ledger legacy export and views withhold private fields without rewriting old chain
+  ---
+  duration_ms: 6.2337
+  type: 'test'
+  ...
+# Subtest: F27 local ledger verification preserves original tamper failure independently of projections
+ok 290 - F27 local ledger verification preserves original tamper failure independently of projections
+  ---
+  duration_ms: 1.9121
+  type: 'test'
+  ...
+# Subtest: F27 legacy ledger refuses new append without rewriting private original records
+ok 291 - F27 legacy ledger refuses new append without rewriting private original records
+  ---
+  duration_ms: 2.8388
+  type: 'test'
+  ...
+# Subtest: F27 withheld or unreadable original ledger canary scan is unverified
+ok 292 - F27 withheld or unreadable original ledger canary scan is unverified
+  ---
+  duration_ms: 0.9974
+  type: 'test'
+  ...
+# Subtest: F27 malformed original ledger is retained and never replaced by a fresh chain
+ok 293 - F27 malformed original ledger is retained and never replaced by a fresh chain
+  ---
+  duration_ms: 1.2079
+  type: 'test'
+  ...
+# Subtest: F27 unreadable original storage cannot be reported as a valid empty chain
+ok 294 - F27 unreadable original storage cannot be reported as a valid empty chain
+  ---
+  duration_ms: 1.0198
+  type: 'test'
+  ...
+# Subtest: F27 explicit clear invalidates a held append before deleting history
+ok 295 - F27 explicit clear invalidates a held append before deleting history
+  ---
+  duration_ms: 4.7072
+  type: 'test'
+  ...
+# Subtest: F27 local ledger pending IO cannot revive on an off-on owner epoch
+ok 296 - F27 local ledger pending IO cannot revive on an off-on owner epoch
+  ---
+  duration_ms: 4.4926
+  type: 'test'
+  ...
+# Subtest: F27 MCP unknown-tool diagnostic does not reflect caller name
+ok 297 - F27 MCP unknown-tool diagnostic does not reflect caller name
+  ---
+  duration_ms: 1.437
+  type: 'test'
+  ...
+# Subtest: F27 MCP unknown-method diagnostic does not reflect caller method
+ok 298 - F27 MCP unknown-method diagnostic does not reflect caller method
+  ---
+  duration_ms: 0.2349
+  type: 'test'
+  ...
+# Subtest: F27 MCP detector exception is value-free and subsequent public ping still works
+ok 299 - F27 MCP detector exception is value-free and subsequent public ping still works
+  ---
+  duration_ms: 1.3752
+  type: 'test'
+  ...
+# Subtest: F27 central metadata preserves public code/decision/bounded count only
+ok 300 - F27 central metadata preserves public code/decision/bounded count only
+  ---
+  duration_ms: 3.3433
+  type: 'test'
+  ...
+# Subtest: F27 central metadata withholds arbitrary private text without hashing it
+ok 301 - F27 central metadata withholds arbitrary private text without hashing it
+  ---
+  duration_ms: 0.4352
+  type: 'test'
+  ...
+# Subtest: F27 central metadata never coerces caller objects or invokes accessors
+ok 302 - F27 central metadata never coerces caller objects or invokes accessors
+  ---
+  duration_ms: 0.3477
+  type: 'test'
+  ...
+# Subtest: F27 central metadata refuses nonfinite, fractional, negative and excessive counters
+ok 303 - F27 central metadata refuses nonfinite, fractional, negative and excessive counters
+  ---
+  duration_ms: 0.5694
+  type: 'test'
+  ...
+# Subtest: F27 owned sink is default-off and ignores repository-only opt-in
+ok 304 - F27 owned sink is default-off and ignores repository-only opt-in
+  ---
+  duration_ms: 0.6858
+  type: 'test'
+  ...
+# Subtest: F27 owned sink requires literal global true and honors global withdrawal
+ok 305 - F27 owned sink requires literal global true and honors global withdrawal
+  ---
+  duration_ms: 0.6682
+  type: 'test'
+  ...
+# Subtest: F27 telemetry keeps useful public decision metadata without caller text in queue
+ok 306 - F27 telemetry keeps useful public decision metadata without caller text in queue
+  ---
+  duration_ms: 4.611
+  type: 'test'
+  ...
+# Subtest: F27 telemetry sanitizes caller context and purges queue on sink withdrawal
+ok 307 - F27 telemetry sanitizes caller context and purges queue on sink withdrawal
+  ---
+  duration_ms: 0.6592
+  type: 'test'
+  ...
+# Subtest: F27 telemetry dispose clears retained metadata without a final send
+ok 308 - F27 telemetry dispose clears retained metadata without a final send
+  ---
+  duration_ms: 0.3733
+  type: 'test'
+  ...
+# Subtest: F27 telemetry repository settings cannot opt into collection
+ok 309 - F27 telemetry repository settings cannot opt into collection
+  ---
+  duration_ms: 0.4065
+  type: 'test'
+  ...
+# Subtest: F27 telemetry logger disposal failure is value-free and leaves no queue
+ok 310 - F27 telemetry logger disposal failure is value-free and leaves no queue
+  ---
+  duration_ms: 0.5521
+  type: 'test'
+  ...
+# Subtest: sensitive-file list has not been re-forked
+    # Subtest: no extension module re-declares the secret-file globs
+    not ok 1 - no extension module re-declares the secret-file globs
+      ---
+      duration_ms: 79.8096
+      type: 'test'
+      location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\sensitive-file-list-drift.test.ts:2:1656'
+      failureType: 'testCodeFailure'
+      error: |-
+        these files hardcode a secret-file glob instead of importing SENSITIVE_FILE_GLOBS from @soterai/guard-core:
+        lifecycle/RecoveryInventory.ts
+        + actual - expected
+        
+        + [
+        +   'lifecycle/RecoveryInventory.ts'
+        + ]
+        - []
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected:
+      actual:
+        0: 'lifecycle/RecoveryInventory.ts'
+      operator: 'deepStrictEqual'
+      stack: |-
+        TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\sensitive-file-list-drift.test.ts:60:16)
+        Test.runInAsyncScope (node:async_hooks:214:14)
+        Test.run (node:internal/test_runner/test:1047:25)
+        Test.start (node:internal/test_runner/test:944:17)
+        node:internal/test_runner/test:1440:71
+        node:internal/per_context/primordials:483:82
+        new Promise (<anonymous>)
+        new SafePromise (node:internal/per_context/primordials:451:29)
+        node:internal/per_context/primordials:483:9
+        Array.map (<anonymous>)
+      ...
+    # Subtest: the proactive guards import the canonical list
+    ok 2 - the proactive guards import the canonical list
+      ---
+      duration_ms: 3.2253
+      type: 'test'
+      ...
+    1..2
+not ok 311 - sensitive-file list has not been re-forked
+  ---
+  duration_ms: 85.1828
+  type: 'suite'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\sensitive-file-list-drift.test.ts:2:1582'
+  failureType: 'subtestsFailed'
+  error: '1 subtest failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: sensitive marking commits deny and classification in one logical policy write
+ok 312 - sensitive marking commits deny and classification in one logical policy write
+  ---
+  duration_ms: 165.1807
+  type: 'test'
+  ...
+# Subtest: a failed policy save leaves no partial new record or success notification
+ok 313 - a failed policy save leaves no partial new record or success notification
+  ---
+  duration_ms: 12.3647
+  type: 'test'
+  ...
+# Subtest: marking revokes a pending review even when persistence fails
+ok 314 - marking revokes a pending review even when persistence fails
+  ---
+  duration_ms: 41.6151
+  type: 'test'
+  ...
+# Subtest: reads begun during a pending sensitive save are withheld, while public work continues
+ok 315 - reads begun during a pending sensitive save are withheld, while public work continues
+  ---
+  duration_ms: 57.7258
+  type: 'test'
+  ...
+# Subtest: upgrading a deny at the rule limit preserves its slot and strongest treatment
+ok 316 - upgrading a deny at the rule limit preserves its slot and strongest treatment
+  ---
+  duration_ms: 53.6702
+  type: 'test'
+  ...
+# Subtest: invalid sensitive flags and corrupt legacy records fail closed
+ok 317 - invalid sensitive flags and corrupt legacy records fail closed
+  ---
+  duration_ms: 8.8787
+  type: 'test'
+  ...
+# Subtest: legacy marks migrate before release and survive loss of the legacy record
+ok 318 - legacy marks migrate before release and survive loss of the legacy record
+  ---
+  duration_ms: 114.6895
+  type: 'test'
+  ...
+# Subtest: migration write failure withholds managed reads and retains legacy metadata
+ok 319 - migration write failure withholds managed reads and retains legacy metadata
+  ---
+  duration_ms: 11.7985
+  type: 'test'
+  ...
+# Subtest: concurrent roots retain every sensitive and ordinary deny
+ok 320 - concurrent roots retain every sensitive and ordinary deny
+  ---
+  duration_ms: 16.4695
+  type: 'test'
+  ...
+# Subtest: sensitivity changes the immutable policy revision and additive merges cannot downgrade it
+ok 321 - sensitivity changes the immutable policy revision and additive merges cannot downgrade it
+  ---
+  duration_ms: 12.6613
+  type: 'test'
+  ...
+# Subtest: generic deny relaxation cannot select or clear a sensitive entry
+ok 322 - generic deny relaxation cannot select or clear a sensitive entry
+  ---
+  duration_ms: 23.4957
+  type: 'test'
+  ...
+# Subtest: dedicated rollback flag withdraws the reader while retaining denies and masking defaults
+ok 323 - dedicated rollback flag withdraws the reader while retaining denies and masking defaults
+  ---
+  duration_ms: 14.2362
+  type: 'test'
+  ...
+# Subtest: F22e canonical ServiceAccount planner is explicitly selected and ServiceAccount records require checkpoint restoration
+ok 324 - F22e canonical ServiceAccount planner is explicitly selected and ServiceAccount records require checkpoint restoration
+  ---
+  duration_ms: 16.8868
+  type: 'test'
+  ...
+# Subtest: F22e ServiceAccount analysis exposes only keyed metadata and rejects other declared families
+ok 325 - F22e ServiceAccount analysis exposes only keyed metadata and rejects other declared families
+  ---
+  duration_ms: 9.0887
+  type: 'test'
+  ...
+# Subtest: F22e cancellation precedes canonical source capture/key creation and no original document is opened
+ok 326 - F22e cancellation precedes canonical source capture/key creation and no original document is opened
+  ---
+  duration_ms: 32.1
+  type: 'test'
+  ...
+# Subtest: F22e reviewed ServiceAccount migration and checkpoint disclosure restore exact bytes without invalid per-entry fallback
+ok 327 - F22e reviewed ServiceAccount migration and checkpoint disclosure restore exact bytes without invalid per-entry fallback
+  ---
+  duration_ms: 1109.9233
+  type: 'test'
+  ...
+# Subtest: F22e strict family machine flag/dependencies withdraw while repository enable grants no authority
+ok 328 - F22e strict family machine flag/dependencies withdraw while repository enable grants no authority
+  ---
+  duration_ms: 3.1388
+  type: 'test'
+  ...
+# Subtest: F22e family discovery admits public ServiceAccount controls and does not evaluate config commands
+ok 329 - F22e family discovery admits public ServiceAccount controls and does not evaluate config commands
+  ---
+  duration_ms: 325.1885
+  type: 'test'
+  ...
+# Subtest: F22e unsupported/malformed input withholds complete findings and metadata export stays value-free
+ok 330 - F22e unsupported/malformed input withholds complete findings and metadata export stays value-free
+  ---
+  duration_ms: 276.5986
+  type: 'test'
+  ...
+# Subtest: F22e guarded ServiceAccount migration API refuses disabled family before creating a vault key
+ok 331 - F22e guarded ServiceAccount migration API refuses disabled family before creating a vault key
+  ---
+  duration_ms: 4.5229
+  type: 'test'
+  ...
+# Subtest: F22e late flag withdrawal/lease expiry prevents migration and checkpoint disclosure writes
+ok 332 - F22e late flag withdrawal/lease expiry prevents migration and checkpoint disclosure writes
+  ---
+  duration_ms: 975.3247
+  type: 'test'
+  ...
+# Subtest: F22e post-migration metadata failure retains valid masked ServiceAccount and encrypted recovery without plaintext rollback
+ok 333 - F22e post-migration metadata failure retains valid masked ServiceAccount and encrypted recovery without plaintext rollback
+  ---
+  duration_ms: 988.4759
+  type: 'test'
+  ...
+# Subtest: F22e interrupted ServiceAccount write remains incomplete and canonical safe recovery finishes quoted placeholders
+ok 334 - F22e interrupted ServiceAccount write remains incomplete and canonical safe recovery finishes quoted placeholders
+  ---
+  duration_ms: 1037.5836
+  type: 'test'
+  ...
+# Subtest: F22e unknown encrypted entry restore modes fail closed before any per-entry mutation
+ok 335 - F22e unknown encrypted entry restore modes fail closed before any per-entry mutation
+  ---
+  duration_ms: 889.9847
+  type: 'test'
+  ...
+# Subtest: F22e metadata failure after approved ServiceAccount disclosure reports INCOMPLETE without claiming plaintext stayed masked
+ok 336 - F22e metadata failure after approved ServiceAccount disclosure reports INCOMPLETE without claiming plaintext stayed masked
+  ---
+  duration_ms: 1143.65
+  type: 'test'
+  ...
+# Subtest: F22e bounded JSON discovery deduplicates repeated matches in the single finite query
+ok 337 - F22e bounded JSON discovery deduplicates repeated matches in the single finite query
+  ---
+  duration_ms: 303.2785
+  type: 'test'
+  ...
+# Subtest: F22e raw discovery cap remains partial with at most128 public files analyzed
+ok 338 - F22e raw discovery cap remains partial with at most128 public files analyzed
+  ---
+  duration_ms: 17331.505
+  type: 'test'
+  ...
+# Subtest: F22e service-account commands register without startup scan, authentication or key creation
+ok 339 - F22e service-account commands register without startup scan, authentication or key creation
+  ---
+  duration_ms: 23.0778
+  type: 'test'
+  ...
+# Subtest: F22e selected config command uses actual native file picker and ignores caller paths/content/approval
+ok 340 - F22e selected config command uses actual native file picker and ignores caller paths/content/approval
+  ---
+  duration_ms: 6.078
+  type: 'test'
+  ...
+# Subtest: F22e file picker cancellation and forged finding objects grant no read or mutation
+ok 341 - F22e file picker cancellation and forged finding objects grant no read or mutation
+  ---
+  duration_ms: 3.8592
+  type: 'test'
+  ...
+# Subtest: F22e migration and disclosure restoration use only actual current ordinal selections
+ok 342 - F22e migration and disclosure restoration use only actual current ordinal selections
+  ---
+  duration_ms: 5.1452
+  type: 'test'
+  ...
+# Subtest: F22e one pending native config flow and machine flag withdrawal invalidate late picker
+ok 343 - F22e one pending native config flow and machine flag withdrawal invalidate late picker
+  ---
+  duration_ms: 5.1601
+  type: 'test'
+  ...
+# Subtest: F22e manifests contribute machine/restricted family flag, five advanced commands without new runtime dependency
+ok 344 - F22e manifests contribute machine/restricted family flag, five advanced commands without new runtime dependency
+  ---
+  duration_ms: 5.5889
+  type: 'test'
+  ...
+# Subtest: F22e only canonical saved JSON paths are classified
+ok 345 - F22e only canonical saved JSON paths are classified
+  ---
+  duration_ms: 180.8617
+  type: 'test'
+  ...
+# Subtest: F22e escaped multiline private key masks while public Google schema and endpoints remain useful
+ok 346 - F22e escaped multiline private key masks while public Google schema and endpoints remain useful
+  ---
+  duration_ms: 9.1532
+  type: 'test'
+  ...
+# Subtest: F22e authorized user and nested credentials use actual fields without inheriting public parent labels
+ok 347 - F22e authorized user and nested credentials use actual fields without inheriting public parent labels
+  ---
+  duration_ms: 3.7409
+  type: 'test'
+  ...
+# Subtest: F22e ordinary public JSON, key identifiers, public PEM and harmless near-matches stay useful
+ok 348 - F22e ordinary public JSON, key identifiers, public PEM and harmless near-matches stay useful
+  ---
+  duration_ms: 2.0966
+  type: 'test'
+  ...
+# Subtest: F22e public field names never exempt recognized provider secrets or private material
+ok 349 - F22e public field names never exempt recognized provider secrets or private material
+  ---
+  duration_ms: 1.6232
+  type: 'test'
+  ...
+# Subtest: F22e credential URLs and credential query scalars are replaced whole without exposing userinfo
+ok 350 - F22e credential URLs and credential query scalars are replaced whole without exposing userinfo
+  ---
+  duration_ms: 1.8193
+  type: 'test'
+  ...
+# Subtest: F22e escaped duplicate names and malformed/JSONC syntax refuse without plaintext diagnostics
+ok 351 - F22e escaped duplicate names and malformed/JSONC syntax refuse without plaintext diagnostics
+  ---
+  duration_ms: 9.0851
+  type: 'test'
+  ...
+# Subtest: F22e external credential files, external-account sources and nonstring credential material refuse
+ok 352 - F22e external credential files, external-account sources and nonstring credential material refuse
+  ---
+  duration_ms: 4.6661
+  type: 'test'
+  ...
+# Subtest: F22e exact references and protected markers are controls; mixed markers/templates refuse
+ok 353 - F22e exact references and protected markers are controls; mixed markers/templates refuse
+  ---
+  duration_ms: 5.6854
+  type: 'test'
+  ...
+# Subtest: F22e exact escaped source spans and CRLF restoration bytes remain private and repeat migration is empty
+ok 354 - F22e exact escaped source spans and CRLF restoration bytes remain private and repeat migration is empty
+  ---
+  duration_ms: 2.8723
+  type: 'test'
+  ...
+# Subtest: F22e UTF8, control, size, depth, candidate and generation limits refuse without original values
+ok 355 - F22e UTF8, control, size, depth, candidate and generation limits refuse without original values
+  ---
+  duration_ms: 19.3745
+  type: 'test'
+  ...
+# Subtest: F22e repeated private values under a public field are all replaced and credential-bearing names withhold
+ok 356 - F22e repeated private values under a public field are all replaced and credential-bearing names withhold
+  ---
+  duration_ms: 3.9234
+  type: 'test'
+  ...
+# Subtest: F22e deterministic nested JSON corpus keeps public structure and round-trip masked JSON valid
+ok 357 - F22e deterministic nested JSON corpus keeps public structure and round-trip masked JSON valid
+  ---
+  duration_ms: 128.9097
+  type: 'test'
+  ...
+# Subtest: F22e decoded escaped residual in a public scalar withholds the entire plan
+ok 358 - F22e decoded escaped residual in a public scalar withholds the entire plan
+  ---
+  duration_ms: 1.4304
+  type: 'test'
+  ...
+# Subtest: F22e decoded escaped residual in a property name withholds the entire plan
+ok 359 - F22e decoded escaped residual in a property name withholds the entire plan
+  ---
+  duration_ms: 1.5963
+  type: 'test'
+  ...
+# Subtest: F30 actual production matcher preserves a public control and masks synthetic raw/base64 values
+ok 360 - F30 actual production matcher preserves a public control and masks synthetic raw/base64 values
+  ---
+  duration_ms: 14.4866
+  type: 'test'
+  ...
+# Subtest: F30 permissive mutation fails secret-negative controls
+ok 361 - F30 permissive mutation fails secret-negative controls
+  ---
+  duration_ms: 0.3863
+  type: 'test'
+  ...
+# Subtest: F30 a collector that withholds everything cannot pass its public control
+ok 362 - F30 a collector that withholds everything cannot pass its public control
+  ---
+  duration_ms: 0.2481
+  type: 'test'
+  ...
+# Subtest: F30 withdrawn production matcher returns WITHHELD instead of PASS
+ok 363 - F30 withdrawn production matcher returns WITHHELD instead of PASS
+  ---
+  duration_ms: 0.2826
+  type: 'test'
+  ...
+# Subtest: F30 private exception text is absent from synthetic report
+ok 364 - F30 private exception text is absent from synthetic report
+  ---
+  duration_ms: 0.3602
+  type: 'test'
+  ...
+# Subtest: F30 companion identities bind all three exact ordinary bundled runtimes
+ok 365 - F30 companion identities bind all three exact ordinary bundled runtimes
+  ---
+  duration_ms: 14.581
+  type: 'test'
+  ...
+# Subtest: F30 runtime replacement mismatches captured activation bytes
+ok 366 - F30 runtime replacement mismatches captured activation bytes
+  ---
+  duration_ms: 12.9759
+  type: 'test'
+  ...
+# Subtest: F30 missing runtime or non-dist path cannot supply a matching artifact
+ok 367 - F30 missing runtime or non-dist path cannot supply a matching artifact
+  ---
+  duration_ms: 5.5795
+  type: 'test'
+  ...
+# Subtest: F30 bounded runtime admission refuses an oversized file before reading
+ok 368 - F30 bounded runtime admission refuses an oversized file before reading
+  ---
+  duration_ms: 7.1267
+  type: 'test'
+  ...
+# Subtest: F30 vscode-extension registers one fixed command and restricted-machine flag
+ok 369 - F30 vscode-extension registers one fixed command and restricted-machine flag
+  ---
+  duration_ms: 2.8995
+  type: 'test'
+  ...
+# Subtest: F30 soterai-lite registers one fixed command and restricted-machine flag
+ok 370 - F30 soterai-lite registers one fixed command and restricted-machine flag
+  ---
+  duration_ms: 1.3856
+  type: 'test'
+  ...
+# Subtest: F30 native Center action uses its fixed verify command without paths
+ok 371 - F30 native Center action uses its fixed verify command without paths
+  ---
+  duration_ms: 0.2005
+  type: 'test'
+  ...
+# Subtest: F30 coverage offers its real owner action while results are still missing
+ok 372 - F30 coverage offers its real owner action while results are still missing
+  ---
+  duration_ms: 1.1771
+  type: 'test'
+  ...
+# Subtest: F30 machine flag ignores repository values and rejects malformed globals
+ok 373 - F30 machine flag ignores repository values and rejects malformed globals
+  ---
+  duration_ms: 14.2041
+  type: 'test'
+  ...
+# Subtest: F30 native command is registered and rejects all forwarded inputs
+ok 374 - F30 native command is registered and rejects all forwarded inputs
+  ---
+  duration_ms: 222.9378
+  type: 'test'
+  ...
+# Subtest: F30 missing loaded identity cannot run a gateway test or create green state
+ok 375 - F30 missing loaded identity cannot run a gateway test or create green state
+  ---
+  duration_ms: 4.934
+  type: 'test'
+  ...
+# Subtest: F30 flag-off and untrusted contexts preserve stored policy without requests
+ok 376 - F30 flag-off and untrusted contexts preserve stored policy without requests
+  ---
+  duration_ms: 2.351
+  type: 'test'
+  ...
+# Subtest: F30 disposal removes its command and invalidates cached presentation
+ok 377 - F30 disposal removes its command and invalidates cached presentation
+  ---
+  duration_ms: 1.9102
+  type: 'test'
+  ...
+# Subtest: F30 completed command releases its owner before a pending native notification is dismissed
+ok 378 - F30 completed command releases its owner before a pending native notification is dismissed
+  ---
+  duration_ms: 101.867
+  type: 'test'
+  ...
+# Subtest: F30 notification rejection does not discard a committed current self-check
+ok 379 - F30 notification rejection does not discard a committed current self-check
+  ---
+  duration_ms: 20.9903
+  type: 'test'
+  ...
+# Subtest: F30 synchronous notification failure does not discard a committed current self-check
+ok 380 - F30 synchronous notification failure does not discard a committed current self-check
+  ---
+  duration_ms: 23.7773
+  type: 'test'
+  ...
+# Subtest: F30 complete production output controls pass with exact finite ids
+ok 381 - F30 complete production output controls pass with exact finite ids
+  ---
+  duration_ms: 2.8218
+  type: 'test'
+  ...
+# Subtest: F30 public positive-control failure cannot become green
+ok 382 - F30 public positive-control failure cannot become green
+  ---
+  duration_ms: 0.4781
+  type: 'test'
+  ...
+# Subtest: F30 duplicate/missing output checks cannot become green
+ok 383 - F30 duplicate/missing output checks cannot become green
+  ---
+  duration_ms: 0.3044
+  type: 'test'
+  ...
+# Subtest: F30 skipped or extra output metadata does not substitute for an oracle
+ok 384 - F30 skipped or extra output metadata does not substitute for an oracle
+  ---
+  duration_ms: 0.2349
+  type: 'test'
+  ...
+# Subtest: F30 complete actual gateway collector and six fixed controls pass
+ok 385 - F30 complete actual gateway collector and six fixed controls pass
+  ---
+  duration_ms: 0.3993
+  type: 'test'
+  ...
+# Subtest: F30 gateway statusPASS with failed public collector is FAIL
+ok 386 - F30 gateway statusPASS with failed public collector is FAIL
+  ---
+  duration_ms: 0.2635
+  type: 'test'
+  ...
+# Subtest: F30 partial/duplicate gateway result is NOT_TESTED
+ok 387 - F30 partial/duplicate gateway result is NOT_TESTED
+  ---
+  duration_ms: 0.3125
+  type: 'test'
+  ...
+# Subtest: F30 foreign getters cannot execute while parsing a result
+ok 388 - F30 foreign getters cannot execute while parsing a result
+  ---
+  duration_ms: 0.2502
+  type: 'test'
+  ...
+# Subtest: F30 finite report binds actual artifact/configuration and its timestamp
+ok 389 - F30 finite report binds actual artifact/configuration and its timestamp
+  ---
+  duration_ms: 2.3798
+  type: 'test'
+  ...
+# Subtest: F30 stale/future/mismatched evidence never returns CURRENT
+ok 390 - F30 stale/future/mismatched evidence never returns CURRENT
+  ---
+  duration_ms: 1.3256
+  type: 'test'
+  ...
+# Subtest: F30 malformed/extra/private stored fields are rejected
+ok 391 - F30 malformed/extra/private stored fields are rejected
+  ---
+  duration_ms: 1.6932
+  type: 'test'
+  ...
+# Subtest: F30 local component success never invents tool routing or unmanaged-surface coverage
+ok 392 - F30 local component success never invents tool routing or unmanaged-surface coverage
+  ---
+  duration_ms: 0.6767
+  type: 'test'
+  ...
+# Subtest: F30 missing raw component results remain explicitly NOT_TESTED
+ok 393 - F30 missing raw component results remain explicitly NOT_TESTED
+  ---
+  duration_ms: 0.2972
+  type: 'test'
+  ...
+# Subtest: F30 stored status objects are never coerced or executed
+ok 394 - F30 stored status objects are never coerced or executed
+  ---
+  duration_ms: 0.4056
+  type: 'test'
+  ...
+# Subtest: F30 native coordinator saves bounded actual results and current binding
+ok 395 - F30 native coordinator saves bounded actual results and current binding
+  ---
+  duration_ms: 6.1081
+  type: 'test'
+  ...
+# Subtest: F30 disabled coordinator executes no self-test or storage action
+ok 396 - F30 disabled coordinator executes no self-test or storage action
+  ---
+  duration_ms: 0.3377
+  type: 'test'
+  ...
+# Subtest: F30 flag withdrawal during an await prevents publication and save
+ok 397 - F30 flag withdrawal during an await prevents publication and save
+  ---
+  duration_ms: 0.3714
+  type: 'test'
+  ...
+# Subtest: F30 configuration binding drift withholds a completed operation
+ok 398 - F30 configuration binding drift withholds a completed operation
+  ---
+  duration_ms: 0.3266
+  type: 'test'
+  ...
+# Subtest: F30 storage failure returns fixed metadata and does not display a current pass
+ok 399 - F30 storage failure returns fixed metadata and does not display a current pass
+  ---
+  duration_ms: 0.6976
+  type: 'test'
+  ...
+# Subtest: F30 a second activation cannot overlap the first self-test
+ok 400 - F30 a second activation cannot overlap the first self-test
+  ---
+  duration_ms: 0.5175
+  type: 'test'
+  ...
+# Subtest: F30 cancellation withholds report writes
+ok 401 - F30 cancellation withholds report writes
+  ---
+  duration_ms: 0.2803
+  type: 'test'
+  ...
+# Subtest: F30 disposal prevents later commands and clears current report
+ok 402 - F30 disposal prevents later commands and clears current report
+  ---
+  duration_ms: 0.4782
+  type: 'test'
+  ...
+# Subtest: F22a canonical source planner is explicit and legacy callers do not silently change syntax
+ok 403 - F22a canonical source planner is explicit and legacy callers do not silently change syntax
+  ---
+  duration_ms: 33.3965
+  type: 'test'
+  ...
+# Subtest: F22a source analysis uses only HMAC metadata and rejects unsupported formats or environment mode
+ok 404 - F22a source analysis uses only HMAC metadata and rejects unsupported formats or environment mode
+  ---
+  duration_ms: 13.6591
+  type: 'test'
+  ...
+# Subtest: F22a source registration/controller has no startup read or key and cancellation precedes private capture
+ok 405 - F22a source registration/controller has no startup read or key and cancellation precedes private capture
+  ---
+  duration_ms: 36.8584
+  type: 'test'
+  ...
+# Subtest: F22a source scan, reviewed vault and exact escaped disclosure restore preserve saved deny without env output
+ok 406 - F22a source scan, reviewed vault and exact escaped disclosure restore preserve saved deny without env output
+  ---
+  duration_ms: 1201.8485
+  type: 'test'
+  ...
+# Subtest: F22a source flag obeys strict machine authority and dependencies, ignoring workspace enable
+ok 407 - F22a source flag obeys strict machine authority and dependencies, ignoring workspace enable
+  ---
+  duration_ms: 3.7358
+  type: 'test'
+  ...
+# Subtest: F22a unsupported selected format, malformed and dynamic source do not produce a clean result
+ok 408 - F22a unsupported selected format, malformed and dynamic source do not produce a clean result
+  ---
+  duration_ms: 157.2868
+  type: 'test'
+  ...
+# Subtest: F22a workspace discovery is source-specific and public source is useful without evaluation
+ok 409 - F22a workspace discovery is source-specific and public source is useful without evaluation
+  ---
+  duration_ms: 304.1569
+  type: 'test'
+  ...
+# Subtest: F22a source or owner policy drift while consent is pending refuses without records
+ok 410 - F22a source or owner policy drift while consent is pending refuses without records
+  ---
+  duration_ms: 25.1527
+  type: 'test'
+  ...
+# Subtest: F22a source flag withdrawal and operation expiry during vault review prevent late writes
+ok 411 - F22a source flag withdrawal and operation expiry during vault review prevent late writes
+  ---
+  duration_ms: 252.1595
+  type: 'test'
+  ...
+# Subtest: F22a safe source exposure export and metadata failure retain no originals in results
+ok 412 - F22a safe source exposure export and metadata failure retain no originals in results
+  ---
+  duration_ms: 809.1909
+  type: 'test'
+  ...
+# Subtest: F22a source syntax remains bound for source filenames beginning with dotenv-like prefixes
+ok 413 - F22a source syntax remains bound for source filenames beginning with dotenv-like prefixes
+  ---
+  duration_ms: 191.7743
+  type: 'test'
+  ...
+# Subtest: F22a source commands register with no scan, key or caller authority
+ok 414 - F22a source commands register with no scan, key or caller authority
+  ---
+  duration_ms: 23.717
+  type: 'test'
+  ...
+# Subtest: F22a source command selects actual native file and ignores URI/content/approval carriers
+ok 415 - F22a source command selects actual native file and ignores URI/content/approval carriers
+  ---
+  duration_ms: 5.8474
+  type: 'test'
+  ...
+# Subtest: F22a source picker cancellation and forged finding item grant nothing
+ok 416 - F22a source picker cancellation and forged finding item grant nothing
+  ---
+  duration_ms: 3.3545
+  type: 'test'
+  ...
+# Subtest: F22a source action uses only selected current ordinal and restoration has separate action
+ok 417 - F22a source action uses only selected current ordinal and restoration has separate action
+  ---
+  duration_ms: 3.351
+  type: 'test'
+  ...
+# Subtest: F22a pending source picker cannot overlap or survive machine flag withdrawal
+ok 418 - F22a pending source picker cannot overlap or survive machine flag withdrawal
+  ---
+  duration_ms: 3.3549
+  type: 'test'
+  ...
+# Subtest: F22a manifest contributes machine/restricted flag and advanced commands with activation registration
+ok 419 - F22a manifest contributes machine/restricted flag and advanced commands with activation registration
+  ---
+  duration_ms: 4.8578
+  type: 'test'
+  ...
+# Subtest: F22a syntax mapping admits only declared local relative source formats
+ok 420 - F22a syntax mapping admits only declared local relative source formats
+  ---
+  duration_ms: 164.1108
+  type: 'test'
+  ...
+# Subtest: F22a parses literal declarations/properties/member assignments and preserves public code
+ok 421 - F22a parses literal declarations/properties/member assignments and preserves public code
+  ---
+  duration_ms: 16.8828
+  type: 'test'
+  ...
+# Subtest: F22a TS annotations and JSX attribute literals use the matching fixed parser syntax
+ok 422 - F22a TS annotations and JSX attribute literals use the matching fixed parser syntax
+  ---
+  duration_ms: 16.5374
+  type: 'test'
+  ...
+# Subtest: F22a standalone provider strings are detected while imports, regex literals and public templates remain
+ok 423 - F22a standalone provider strings are detected while imports, regex literals and public templates remain
+  ---
+  duration_ms: 3.6308
+  type: 'test'
+  ...
+# Subtest: F22a decoded escaped logical values preserve exact source representation for disclosure restore
+ok 424 - F22a decoded escaped logical values preserve exact source representation for disclosure restore
+  ---
+  duration_ms: 2.3094
+  type: 'test'
+  ...
+# Subtest: F22a no-substitution multiline templates and canonical comment candidates round trip
+ok 425 - F22a no-substitution multiline templates and canonical comment candidates round trip
+  ---
+  duration_ms: 13.4089
+  type: 'test'
+  ...
+# Subtest: F22a malformed and secret-bearing interpolated source refuses with generic errors and no execution
+ok 426 - F22a malformed and secret-bearing interpolated source refuses with generic errors and no execution
+  ---
+  duration_ms: 5.4398
+  type: 'test'
+  ...
+# Subtest: F22a bounded input, syntax/generation, candidate and AST work budgets refuse safely
+ok 427 - F22a bounded input, syntax/generation, candidate and AST work budgets refuse safely
+  ---
+  duration_ms: 16.4956
+  type: 'test'
+  ...
+# Subtest: F22a a remaining original in an unselected source span withholds migration
+ok 428 - F22a a remaining original in an unselected source span withholds migration
+  ---
+  duration_ms: 5.6481
+  type: 'test'
+  ...
+# Subtest: F22a source ownership handles transparent TS wrappers and fallback literals without borrowing unrelated names
+ok 429 - F22a source ownership handles transparent TS wrappers and fallback literals without borrowing unrelated names
+  ---
+  duration_ms: 5.8692
+  type: 'test'
+  ...
+# Subtest: F22a unsupported computed credentials and invalid cooked strings withhold with no raw error
+ok 430 - F22a unsupported computed credentials and invalid cooked strings withhold with no raw error
+  ---
+  duration_ms: 8.8373
+  type: 'test'
+  ...
+# Subtest: F22a comments and repeated selected values retain independent exact source positions
+ok 431 - F22a comments and repeated selected values retain independent exact source positions
+  ---
+  duration_ms: 3.892
+  type: 'test'
+  ...
+# Subtest: F22a masked source is valid and idempotent, exact original returns only through private restore plan
+ok 432 - F22a masked source is valid and idempotent, exact original returns only through private restore plan
+  ---
+  duration_ms: 4.1985
+  type: 'test'
+  ...
+# Subtest: F22a standalone credentials inside tagged templates are explicitly unsupported
+ok 433 - F22a standalone credentials inside tagged templates are explicitly unsupported
+  ---
+  duration_ms: 2.8905
+  type: 'test'
+  ...
+# Subtest: F22a AST budget and non-source relative paths refuse without parser diagnostics
+ok 434 - F22a AST budget and non-source relative paths refuse without parser diagnostics
+  ---
+  duration_ms: 183.9859
+  type: 'test'
+  ...
+# Subtest: F26a staged generic public text, Markdown, logs and extensionless notes have useful clean outcomes
+ok 435 - F26a staged generic public text, Markdown, logs and extensionless notes have useful clean outcomes
+  ---
+  duration_ms: 460.4133
+  type: 'test'
+  ...
+# Subtest: F26a staged empty generic blobs and normal Unicode remain clean
+ok 436 - F26a staged empty generic blobs and normal Unicode remain clean
+  ---
+  duration_ms: 4.1162
+  type: 'test'
+  ...
+# Subtest: F26a staged recognized provider fixtures use the canonical matcher with an empty registration set
+ok 437 - F26a staged recognized provider fixtures use the canonical matcher with an empty registration set
+  ---
+  duration_ms: 6.136
+  type: 'test'
+  ...
+# Subtest: F26a staged empty-registration recognition covers canonical credential-context entropy
+ok 438 - F26a staged empty-registration recognition covers canonical credential-context entropy
+  ---
+  duration_ms: 4.9876
+  type: 'test'
+  ...
+# Subtest: F26a staged low-entropy opaque text is an explicit unregistered negative control
+ok 439 - F26a staged low-entropy opaque text is an explicit unregistered negative control
+  ---
+  duration_ms: 1.6926
+  type: 'test'
+  ...
+# Subtest: F26a staged canonical single-layer base64 provider recognition has a public control
+ok 440 - F26a staged canonical single-layer base64 provider recognition has a public control
+  ---
+  duration_ms: 2.2826
+  type: 'test'
+  ...
+# Subtest: F26a staged canonical single-layer base64url provider recognition has a public control
+ok 441 - F26a staged canonical single-layer base64url provider recognition has a public control
+  ---
+  duration_ms: 2.0748
+  type: 'test'
+  ...
+# Subtest: F26a staged canonical single-layer hex provider recognition has a public control
+ok 442 - F26a staged canonical single-layer hex provider recognition has a public control
+  ---
+  duration_ms: 1.9161
+  type: 'test'
+  ...
+# Subtest: F26a staged canonical single-layer URL provider recognition has a public control
+ok 443 - F26a staged canonical single-layer URL provider recognition has a public control
+  ---
+  duration_ms: 5.6354
+  type: 'test'
+  ...
+# Subtest: F26a staged canonical single-layer JSON Unicode string provider recognition has a public control
+ok 444 - F26a staged canonical single-layer JSON Unicode string provider recognition has a public control
+  ---
+  duration_ms: 5.0946
+  type: 'test'
+  ...
+# Subtest: F26a staged dotenv static credential names supply canonical context without a vault registration
+ok 445 - F26a staged dotenv static credential names supply canonical context without a vault registration
+  ---
+  duration_ms: 13.2515
+  type: 'test'
+  ...
+# Subtest: F26a staged dotenv public values, exact templates and existing protected markers remain clean
+ok 446 - F26a staged dotenv public values, exact templates and existing protected markers remain clean
+  ---
+  duration_ms: 3.309
+  type: 'test'
+  ...
+# Subtest: F26a staged src/owner.js uses the declared canonical source grammar and credential context
+ok 447 - F26a staged src/owner.js uses the declared canonical source grammar and credential context
+  ---
+  duration_ms: 9.916
+  type: 'test'
+  ...
+# Subtest: F26a staged src/owner.ts uses the declared canonical source grammar and credential context
+ok 448 - F26a staged src/owner.ts uses the declared canonical source grammar and credential context
+  ---
+  duration_ms: 8.7917
+  type: 'test'
+  ...
+# Subtest: F26a staged src/view.jsx uses the declared canonical source grammar and credential context
+ok 449 - F26a staged src/view.jsx uses the declared canonical source grammar and credential context
+  ---
+  duration_ms: 5.5515
+  type: 'test'
+  ...
+# Subtest: F26a staged src/view.tsx uses the declared canonical source grammar and credential context
+ok 450 - F26a staged src/view.tsx uses the declared canonical source grammar and credential context
+  ---
+  duration_ms: 3.7269
+  type: 'test'
+  ...
+# Subtest: F26a staged src/owner.mjs uses the declared canonical source grammar and credential context
+ok 451 - F26a staged src/owner.mjs uses the declared canonical source grammar and credential context
+  ---
+  duration_ms: 3.9198
+  type: 'test'
+  ...
+# Subtest: F26a staged src/owner.cjs uses the declared canonical source grammar and credential context
+ok 452 - F26a staged src/owner.cjs uses the declared canonical source grammar and credential context
+  ---
+  duration_ms: 2.9782
+  type: 'test'
+  ...
+# Subtest: F26a staged public source and direct environment references remain parse-only clean controls
+ok 453 - F26a staged public source and direct environment references remain parse-only clean controls
+  ---
+  duration_ms: 3.9521
+  type: 'test'
+  ...
+# Subtest: F26a staged escaped source password literals are classified after fixed-parser decoding
+ok 454 - F26a staged escaped source password literals are classified after fixed-parser decoding
+  ---
+  duration_ms: 3.1564
+  type: 'test'
+  ...
+# Subtest: F26a staged recognized config.json reuses canonical family credential context
+ok 455 - F26a staged recognized config.json reuses canonical family credential context
+  ---
+  duration_ms: 4.2051
+  type: 'test'
+  ...
+# Subtest: F26a staged recognized credentials/service-account.json reuses canonical family credential context
+ok 456 - F26a staged recognized credentials/service-account.json reuses canonical family credential context
+  ---
+  duration_ms: 2.0466
+  type: 'test'
+  ...
+# Subtest: F26a staged recognized compose.yml reuses canonical family credential context
+ok 457 - F26a staged recognized compose.yml reuses canonical family credential context
+  ---
+  duration_ms: 13.478
+  type: 'test'
+  ...
+# Subtest: F26a staged recognized Dockerfile reuses canonical family credential context
+ok 458 - F26a staged recognized Dockerfile reuses canonical family credential context
+  ---
+  duration_ms: 3.3145
+  type: 'test'
+  ...
+# Subtest: F26a staged recognized infra/production.tfvars reuses canonical family credential context
+ok 459 - F26a staged recognized infra/production.tfvars reuses canonical family credential context
+  ---
+  duration_ms: 4.2199
+  type: 'test'
+  ...
+# Subtest: F26a staged recognized infra/production.tfvars.json reuses canonical family credential context
+ok 460 - F26a staged recognized infra/production.tfvars.json reuses canonical family credential context
+  ---
+  duration_ms: 1.8831
+  type: 'test'
+  ...
+# Subtest: F26a staged recognized .npmrc reuses canonical family credential context
+ok 461 - F26a staged recognized .npmrc reuses canonical family credential context
+  ---
+  duration_ms: 6.0091
+  type: 'test'
+  ...
+# Subtest: F26a staged recognized .pypirc reuses canonical family credential context
+ok 462 - F26a staged recognized .pypirc reuses canonical family credential context
+  ---
+  duration_ms: 2.8245
+  type: 'test'
+  ...
+# Subtest: F26a staged recognized .github/workflows/build.yml reuses canonical family credential context
+ok 463 - F26a staged recognized .github/workflows/build.yml reuses canonical family credential context
+  ---
+  duration_ms: 7.566
+  type: 'test'
+  ...
+# Subtest: F26a staged recognized .vscode/tasks.json reuses canonical family credential context
+ok 464 - F26a staged recognized .vscode/tasks.json reuses canonical family credential context
+  ---
+  duration_ms: 8.806
+  type: 'test'
+  ...
+# Subtest: F26a staged recognized mcp.json reuses canonical family credential context
+ok 465 - F26a staged recognized mcp.json reuses canonical family credential context
+  ---
+  duration_ms: 3.9168
+  type: 'test'
+  ...
+# Subtest: F26a staged recognized mcp.toml reuses canonical family credential context
+ok 466 - F26a staged recognized mcp.toml reuses canonical family credential context
+  ---
+  duration_ms: 6.2355
+  type: 'test'
+  ...
+# Subtest: F26a staged JSON Unicode-escaped credential names and values are semantic private inputs
+ok 467 - F26a staged JSON Unicode-escaped credential names and values are semantic private inputs
+  ---
+  duration_ms: 2.9022
+  type: 'test'
+  ...
+# Subtest: F26a staged public JSON identifiers, public keys and exact placeholders remain clean
+ok 468 - F26a staged public JSON identifiers, public keys and exact placeholders remain clean
+  ---
+  duration_ms: 3.1103
+  type: 'test'
+  ...
+# Subtest: F26a staged declared malformed JSON and late source syntax errors withhold earlier matching prefixes
+ok 469 - F26a staged declared malformed JSON and late source syntax errors withhold earlier matching prefixes
+  ---
+  duration_ms: 5.6878
+  type: 'test'
+  ...
+# Subtest: F26a staged duplicate decoded JSON fields and nonfinite numbers are unavailable atomically
+ok 470 - F26a staged duplicate decoded JSON fields and nonfinite numbers are unavailable atomically
+  ---
+  duration_ms: 3.9965
+  type: 'test'
+  ...
+# Subtest: F26a staged unsupported source credential computations do not fall back to raw-prefix classification
+ok 471 - F26a staged unsupported source credential computations do not fall back to raw-prefix classification
+  ---
+  duration_ms: 4.7091
+  type: 'test'
+  ...
+# Subtest: F26a staged unsupported source formats and foreign YAML remain unavailable
+ok 472 - F26a staged unsupported source formats and foreign YAML remain unavailable
+  ---
+  duration_ms: 3.3987
+  type: 'test'
+  ...
+# Subtest: F26a staged known config family parse failures are unavailable despite an earlier provider canary
+ok 473 - F26a staged known config family parse failures are unavailable despite an earlier provider canary
+  ---
+  duration_ms: 6.2585
+  type: 'test'
+  ...
+# Subtest: F26a staged raw-byte size admission is inclusive at64KiB for ASCII and multibyte public text
+ok 474 - F26a staged raw-byte size admission is inclusive at64KiB for ASCII and multibyte public text
+  ---
+  duration_ms: 24.719
+  type: 'test'
+  ...
+# Subtest: F26a staged oversize and invalid late bytes withhold whole matching prefixes without truncation
+ok 475 - F26a staged oversize and invalid late bytes withhold whole matching prefixes without truncation
+  ---
+  duration_ms: 2.2798
+  type: 'test'
+  ...
+# Subtest: F26a staged canonical matcher work exhaustion becomes unavailable rather than a partial clean result
+ok 476 - F26a staged canonical matcher work exhaustion becomes unavailable rather than a partial clean result
+  ---
+  duration_ms: 25.3611
+  type: 'test'
+  ...
+# Subtest: F26a staged fatal UTF8 admission rejects overlong truncated surrogate and out-of-range encodings
+ok 477 - F26a staged fatal UTF8 admission rejects overlong truncated surrogate and out-of-range encodings
+  ---
+  duration_ms: 4.3427
+  type: 'test'
+  ...
+# Subtest: F26a staged unsupported controls and bidi characters are unavailable on otherwise clean and matching input
+ok 478 - F26a staged unsupported controls and bidi characters are unavailable on otherwise clean and matching input
+  ---
+  duration_ms: 3.0545
+  type: 'test'
+  ...
+# Subtest: F26a staged decoded JSON unsafe controls and lone surrogates cannot become clean or partial candidates
+ok 479 - F26a staged decoded JSON unsafe controls and lone surrogates cannot become clean or partial candidates
+  ---
+  duration_ms: 2.3665
+  type: 'test'
+  ...
+# Subtest: F26a staged unsafe source paths never grant format or content admission
+ok 480 - F26a staged unsafe source paths never grant format or content admission
+  ---
+  duration_ms: 2.6547
+  type: 'test'
+  ...
+# Subtest: F26a staged source identity and blob runtime types reject coercion without invoking caller hooks
+ok 481 - F26a staged source identity and blob runtime types reject coercion without invoking caller hooks
+  ---
+  duration_ms: 2.3039
+  type: 'test'
+  ...
+# Subtest: F26a staged request-local decisions retain no earlier candidate and no caller Buffer ownership
+ok 482 - F26a staged request-local decisions retain no earlier candidate and no caller Buffer ownership
+  ---
+  duration_ms: 2.9522
+  type: 'test'
+  ...
+# Subtest: F26a staged parsing does not evaluate source or follow config references and never reads files or starts children
+ok 483 - F26a staged parsing does not evaluate source or follow config references and never reads files or starts children
+  ---
+  duration_ms: 7.8535
+  type: 'test'
+  ...
+1..483
+# tests 542
+# suites 17
+# pass 540
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 105224.4003

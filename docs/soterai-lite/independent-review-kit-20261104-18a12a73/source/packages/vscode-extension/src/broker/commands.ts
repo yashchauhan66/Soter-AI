@@ -1,0 +1,651 @@
+import * as vscode from "vscode";
+import { confirmScopedChange } from "../security/ScopedConfirmation";
+import * as path from "path";
+import { generateSafeModePolicy, redactForSharing } from "@soterai/guard-core";
+import { BrokerManager } from "./BrokerManager";
+import { describeAgentSurfaces } from "../agent/status";
+import { escapeHtml, showInfoWebview } from "../firewall/util";
+import {
+    DEFAULT_INTEGRATION_CANDIDATES,
+    applyProposedChange,
+    detectIntegrationConfigs,
+    healthCheckBroker,
+    proposeBrokerRewrite,
+    restoreFromBackup,
+    streamSmokeTest,
+    type FileIO,
+    type HttpIO,
+    type ProposedChange,
+} from "./IntegrationAdapter";
+import { EncryptedBackupSink } from "./EncryptedBackupSink";
+import type { RoutingSetupResult } from "../protection/AutomaticIDEProtection";
+import { operationalCoverage, reviewCoverageForSetup } from "../security/CoverageDisclosure";
+
+/** globalState key holding {path, backupPath} pairs written by secureAllAI. */
+const SECURE_BACKUPS_KEY = "soterai.secureAllAI.backups";
+
+/** Keywords the broker's extension-isolation policy substring-matches. */
+const CAPABILITY_KEYWORDS = ["workspace", "filesystem", "terminal", "network", "mcp", "debug", "scm"];
+
+function routingOwnerGuard(manager: BrokerManager): () => void {
+    const lease = manager.ownedSnapshot();
+    const verify = () => {
+        const current = manager.ownedSnapshot();
+        if (lease.state !== "healthy" || !lease.session || !lease.port || current.state !== "healthy"
+            || current.session !== lease.session || current.port !== lease.port || current.url !== lease.url) {
+            throw new Error("Owned broker session changed; review routing setup again.");
+        }
+    };
+    verify(); return verify;
+}
+function guardedRoutingFiles(io: FileIO, verify: () => void): FileIO {
+    return {
+        async readText(file) { verify(); const value = await io.readText(file); verify(); return value; },
+        async writeText(file, text) { verify(); await io.writeText(file, text); verify(); },
+        async exists(file) { verify(); const value = await io.exists(file); verify(); return value; },
+    };
+}
+function guardedRoutingHttp(io: HttpIO, verify: () => void): HttpIO {
+    return {
+        async get(url, headers) { verify(); const value = await io.get(url, headers); verify(); return value; },
+        async post(url, body, headers) { verify(); const value = await io.post(url, body, headers); verify(); return value; },
+    };
+}
+
+interface BrokerEvent {
+    eventId: string;
+    sessionId?: string;
+    timestamp: string;
+    eventType: string;
+    decision: string;
+    riskScore: number;
+    categories: string[];
+    redactedEvidence?: string;
+    contentHash?: string;
+}
+
+interface TerminalPreview {
+    action: string;
+    executable?: string;
+    args?: string[];
+    riskScore: number;
+    categories: string[];
+    reasonCodes: string[];
+    explanation: string;
+    coverageLevel: string;
+    deterministic: boolean;
+}
+
+interface TerminalExecuteResponse {
+    analysis: TerminalPreview;
+    result: {
+        exitCode: number;
+        stdout: string;
+        stderr: string;
+    };
+}
+
+interface RuntimeCapabilitySummary {
+    agent: string;
+    effectiveRiskScore: number;
+    effectiveRisk: string;
+    unsupportedWarnings: string[];
+    summaryLines: string[];
+}
+
+interface ExtensionIsolationSummary {
+    action: string;
+    riskScore: number;
+    findings: Array<{
+        id: string;
+        action: string;
+        riskScore: number;
+        categories: string[];
+        recommendation: string;
+    }>;
+    workspaceRecommendations: string[];
+    explanation: string;
+}
+
+export function registerBrokerCommands(context: vscode.ExtensionContext, manager: BrokerManager, refresh: () => void): void {
+    const reg = (id: string, handler: (...args: any[]) => any) => context.subscriptions.push(vscode.commands.registerCommand(id, handler));
+    const started = async () => { const status = await manager.start(); refresh(); return status; };
+
+    reg("soterai.secureAllAI", async (): Promise<RoutingSetupResult> => {
+        const result = (status: RoutingSetupResult["status"], counts: Partial<RoutingSetupResult> = {}): RoutingSetupResult => ({
+            status, changedConfigs: 0, verifiedTools: 0, failedTools: 0, unsupportedConfigs: 0, ...counts,
+        });
+        try {
+            if (!vscode.workspace.isTrusted) return result("unavailable");
+            if (!(await reviewCoverageForSetup())) return result(vscode.workspace.getConfiguration("soterai").get("hardening.coverageDisclosure", true) ? "cancelled" : "unavailable");
+            const s = await started(); // start broker first (health gate)
+            const verifyOwner = routingOwnerGuard(manager);
+            const home = require("os").homedir();
+            const nodeFs: FileIO = guardedRoutingFiles({
+                readText: async (p: string) => { try { return await require("fs/promises").readFile(p, "utf8"); } catch { return null; } },
+                writeText: async (p: string, c: string) => require("fs/promises").writeFile(p, c, "utf8"),
+                exists: async (p: string) => { try { await require("fs/promises").access(p); return true; } catch { return false; } },
+            }, verifyOwner);
+            const nodeHttp: HttpIO = guardedRoutingHttp({
+                get: async (url: string, headers?: Record<string, string>) => { const r = await fetch(url, { headers }); return { status: r.status, body: await r.text() }; },
+                post: async (url: string, body: string, headers?: Record<string, string>) => { const r = await fetch(url, { method: "POST", body, headers: { "content-type": "application/json", ...headers } }); return { status: r.status, body: await r.text() }; },
+            }, verifyOwner);
+            const { discoverAllAiTools, buildSecurePlan, executeSecurePlan } = await import("./AutoSecureEngine");
+            // Relative candidates (".env", ".claude/settings.json") must be
+            // anchored to the open workspace, never the extension host's cwd.
+            const workspaceRoot = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
+            const discovered = await discoverAllAiTools(nodeFs, home, workspaceRoot);
+
+            // Read every existing config's text into memory for planning (no writes yet).
+            const ioFiles: Record<string, string> = {};
+            for (const d of discovered) for (const c of d.configs) { const t = await nodeFs.readText(c.path); if (t !== null) ioFiles[c.path] = t; }
+            verifyOwner();
+            const brokerPort = manager.port;
+            const plan = buildSecurePlan(discovered, ioFiles, brokerPort);
+
+            if (plan.proposed.length === 0 && plan.monitorOnly.length === 0 && plan.unsupported.length === 0) {
+                vscode.window.showInformationMessage("SoterAI: no AI tool configs found to secure on this machine.");
+                return result("unchanged");
+            }
+            if (plan.proposed.length === 0) {
+                // Nothing writable: say so plainly instead of opening a
+                // "Secure Everything" prompt that would do nothing.
+                const detail = plan.unsupported.map((u) => `• ${u.reason}`).join("\n");
+                vscode.window.showWarningMessage(
+                    `SoterAI found AI tooling but nothing it can safely re-route automatically.` +
+                    (detail ? `\n${detail}` : "") +
+                    (plan.monitorOnly.length ? `\nMonitor-only: ${plan.monitorOnly.join(", ")}` : ""),
+                );
+                return result(plan.unsupported.length ? "unavailable" : "unchanged", { unsupportedConfigs: plan.unsupported.length });
+            }
+            const pick = await vscode.window.showInformationMessage(
+                `🛡️ SoterAI found ${plan.proposed.length} tool config(s) to secure` +
+                `${plan.monitorOnly.length ? ` + ${plan.monitorOnly.length} monitor-only` : ""}` +
+                `${plan.unsupported.length ? ` + ${plan.unsupported.length} left unchanged` : ""}.\n` +
+                plan.summaryLines.slice(0, 6).join("\n") + (plan.summaryLines.length > 6 ? `\n…and ${plan.summaryLines.length - 6} more` : "") +
+                `\n\nEach file is backed up first; use "SoterAI: Restore AI Configs" to undo.`,
+                { modal: true }, "Apply scoped routing changes", "Cancel",
+            );
+            if (pick !== "Apply scoped routing changes") return result("cancelled", { unsupportedConfigs: plan.unsupported.length });
+
+            const brokerToken = await manager.getClientToken();
+            verifyOwner();
+            const outcome = await executeSecurePlan(
+                plan, discovered, nodeFs, nodeHttp, true, `${s.url}/health`,
+                new EncryptedBackupSink(context), brokerToken,
+            );
+            verifyOwner();
+            // Persist backup pointers so restore works in a later session.
+            const restorable = outcome.applied.filter((a) => a.applied && a.backupPath);
+            if (restorable.length > 0) {
+                const saved = context.globalState.get<Array<{ path: string; backupPath: string }>>(SECURE_BACKUPS_KEY, []);
+                const merged = new Map(saved.map((item) => [item.path, item]));
+                for (const item of restorable) if (!merged.has(item.path)) merged.set(item.path, { path: item.path, backupPath: item.backupPath });
+                await context.globalState.update(SECURE_BACKUPS_KEY, [...merged.values()]);
+            }
+            refresh();
+            const verif = outcome.verified.map((v) => `${v.ok ? "✅" : "⚠️"} ${v.toolId}: ${v.detail}`).join("\n");
+            const unsup = outcome.unsupported.map((u) => `⚠️ ${u.reason}`).join("\n");
+            const message = [outcome.headline, operationalCoverage("broker routing configured; smoke checks only"), verif, unsup].filter(Boolean).join("\n");
+            const anyFailed = outcome.verified.some((v) => !v.ok);
+            if (anyFailed) vscode.window.showWarningMessage(message);
+            else vscode.window.showInformationMessage(message);
+            return result(!outcome.brokerOnline || outcome.applied.some((a) => !a.applied) ? "failed" : "applied", {
+                changedConfigs: outcome.applied.filter((a) => a.applied).length,
+                verifiedTools: outcome.verified.filter((v) => v.ok).length,
+                failedTools: outcome.verified.filter((v) => !v.ok).length,
+                unsupportedConfigs: outcome.unsupported.length,
+            });
+        } catch (e) {
+            void vscode.window.showErrorMessage("Secure My AI did not finish. Review broker status and retry.");
+            return result("failed");
+        }
+    });
+    reg("soterai.restoreAIConfigs", async () => {
+        const saved = context.globalState.get<Array<{ path: string; backupPath: string }>>(SECURE_BACKUPS_KEY, []);
+        if (saved.length === 0) {
+            vscode.window.showInformationMessage("SoterAI: no AI config backups recorded — nothing to restore.");
+            return;
+        }
+        const pick = await vscode.window.showWarningMessage(
+            `Restore ${saved.length} AI config file(s) from SoterAI backups? Current contents will be overwritten:\n` +
+            saved.map((s) => `• ${s.path}`).join("\n"),
+            { modal: true }, "Restore",
+        );
+        if (pick !== "Restore") return;
+        const fsp = require("fs/promises");
+        const nodeFs: FileIO = {
+            readText: async (p: string) => { try { return await fsp.readFile(p, "utf8"); } catch { return null; } },
+            writeText: async (p: string, c: string) => fsp.writeFile(p, c, "utf8"),
+            exists: async (p: string) => { try { await fsp.access(p); return true; } catch { return false; } },
+        };
+        const { restoreAll } = await import("./AutoSecureEngine");
+        const result = await restoreAll(
+            saved.map((s) => ({ path: s.path, backupPath: s.backupPath, applied: true })),
+            nodeFs,
+            new EncryptedBackupSink(context),
+        );
+        if (result.failed.length === 0) await context.globalState.update(SECURE_BACKUPS_KEY, []);
+        vscode.window.showInformationMessage(
+            `SoterAI restored ${result.restored} config(s).` +
+            (result.failed.length ? ` Failed (backup missing): ${result.failed.join(", ")}` : ""),
+        );
+    });
+    reg("soterai.startLocalAIBroker", async () => { const s = await started(); vscode.window.showInformationMessage(`SoterAI Local AI Broker running at ${s.url} (authenticated, local-only).`); return s; });
+    reg("soterai.stopLocalAIBroker", async () => { await manager.stop(); refresh(); const owned = manager.ownedSnapshot(); vscode.window.showInformationMessage(owned.state === "STOP_UNCONFIRMED" ? "Owned broker shutdown is unconfirmed; replacement withheld." : "SoterAI Local AI Broker stopped."); return owned; });
+    reg("soterai.restartLocalAIBroker", async () => { const s = await manager.restart(); refresh(); vscode.window.showInformationMessage(`SoterAI Local AI Broker restarted at ${s.url}.`); return s; });
+    reg("soterai.showBrokerStatus", async () => {
+        const s = await manager.status();
+        vscode.window.showInformationMessage(s.running ? `Broker running at ${s.url}; Safe Mode ${s.safeMode?.enabled ? s.safeMode.level : "off"}; Memory ${s.memorySessionId ? "active" : "idle"}.` : `Broker stopped (configured URL ${s.url}).`);
+        return s;
+    });
+    reg("soterai.runGatewaySelfTest", async () => {
+        try {
+            await started();
+            const report = await manager.request<{ status: "PASS" | "FAIL"; version: number; checks: Array<{ id: string; status: string }>; independence: string }>("/v1/gateway/self-test", { method: "POST", body: "{}" }, 15000);
+            if (report.version !== 1 || !["PASS", "FAIL"].includes(report.status) || report.independence !== "LOW" || report.checks?.length !== 6) throw Error("Self-test unavailable");
+            vscode.window.showInformationMessage(`Gateway loopback self-test: ${report.status} (${report.checks.filter(row => row.status === "PASS").length}/6). Synthetic local transport checks only; real tool routing and independent review remain unverified.`);
+            return report;
+        } catch {
+            vscode.window.showWarningMessage("Gateway loopback self-test unavailable; review broker status and gateway policy settings.");
+            return { status: "UNAVAILABLE", independence: "LOW" };
+        } finally { refresh(); }
+    });
+    reg("soterai.showRuntimeCapabilitySummary", async () => {
+        await started();
+        const workspaceRoots = vscode.workspace.workspaceFolders?.map((folder) => folder.uri.fsPath) ?? [];
+        const installedAIExtensions = vscode.extensions.all
+            .filter((extension) => /ai|copilot|claude|cursor|codeium|continue|tabnine/i.test(`${extension.id} ${extension.packageJSON?.displayName ?? ""} ${extension.packageJSON?.description ?? ""}`))
+            .map((extension) => extension.id);
+        const summary = await manager.request<RuntimeCapabilitySummary>("/v1/preflight/runtime-capabilities", {
+            method: "POST",
+            body: JSON.stringify({
+                agentName: "VS Code",
+                integrationType: "vscode-extension",
+                workspaceTrusted: vscode.workspace.isTrusted,
+                workspaceRoots,
+                terminalEnabled: true,
+                networkReach: "unknown",
+                installedAIExtensions,
+                sandbox: "disabled",
+            }),
+        });
+        const rows = summary.summaryLines.map((line) => `<li>${escapeHtml(line)}</li>`).join("");
+        const warnings = summary.unsupportedWarnings.map((line) => `<li>${escapeHtml(line)}</li>`).join("");
+        showInfoWebview(
+            "soteraiRuntimeCapabilities",
+            "SoterAI: Runtime Capability Summary",
+            `<h1>Runtime Capability Summary</h1><p>Effective risk: <strong>${escapeHtml(summary.effectiveRisk.toUpperCase())}</strong> (${escapeHtml(String(summary.effectiveRiskScore))}).</p><ul>${rows}</ul><h2>Agent-callable tools</h2><p>${escapeHtml(describeAgentSurfaces())}</p><h2>Unsupported or detection-only routes</h2><ul>${warnings || "<li>No unsupported warnings reported by this preflight.</li>"}</ul><p class="note">This is a broker-authenticated preflight summary. It does not claim OS-wide interception.</p>`,
+        );
+    });
+    reg("soterai.showExtensionIsolationSummary", async () => {
+        await started();
+        // The broker's decision only substring-matches these capability keywords
+        // against the joined text, so sending the full stringified
+        // `capabilities`/`contributes` payload is pure bulk. A single
+        // marketplace extension can carry hundreds of KB of contributed
+        // menus/views, and a machine with many extensions blew past the
+        // broker's 1MB request-body limit — the command crashed instead of
+        // reporting. Emitting the keywords that ARE present preserves the exact
+        // decision while keeping the body a few KB.
+        const extensions = vscode.extensions.all.slice(0, 500).map((extension) => {
+            const raw = JSON.stringify([
+                extension.packageJSON?.capabilities ?? {},
+                extension.packageJSON?.contributes ?? {},
+                extension.packageJSON?.activationEvents ?? [],
+            ]).toLowerCase();
+            return {
+                id: extension.id,
+                publisher: typeof extension.packageJSON?.publisher === "string" ? extension.packageJSON.publisher : undefined,
+                displayName: typeof extension.packageJSON?.displayName === "string" ? extension.packageJSON.displayName : undefined,
+                verifiedPublisher: Boolean(extension.packageJSON?.publisher),
+                activationEvents: [],
+                capabilities: CAPABILITY_KEYWORDS.filter((keyword) => raw.includes(keyword)),
+                aiLike: /ai|copilot|claude|cursor|codeium|continue|tabnine|agent/i.test(`${extension.id} ${extension.packageJSON?.displayName ?? ""} ${extension.packageJSON?.description ?? ""}`),
+            };
+        });
+        const summary = await manager.request<ExtensionIsolationSummary>("/v1/preflight/extension-isolation", {
+            method: "POST",
+            body: JSON.stringify({
+                extensions,
+                workspaceTrusted: vscode.workspace.isTrusted,
+                trustedPublishers: ["microsoft", "ms-vscode", "github"],
+            }),
+        });
+        const findings = summary.findings
+            .filter((finding) => finding.action !== "ALLOW")
+            .sort((a, b) => b.riskScore - a.riskScore)
+            .slice(0, 25)
+            .map((finding) => `<tr><td>${escapeHtml(finding.id)}</td><td>${escapeHtml(finding.action)}</td><td>${escapeHtml(String(finding.riskScore))}</td><td>${escapeHtml(finding.categories.join(", "))}</td><td>${escapeHtml(finding.recommendation)}</td></tr>`)
+            .join("");
+        const recommendations = summary.workspaceRecommendations.map((line) => `<li>${escapeHtml(line)}</li>`).join("");
+        showInfoWebview(
+            "soteraiExtensionIsolation",
+            "SoterAI: Extension Isolation Summary",
+            `<h1>Extension Isolation Summary</h1><p>Decision: <strong>${escapeHtml(summary.action)}</strong> (${escapeHtml(String(summary.riskScore))}).</p><table><tr><th>Extension</th><th>Action</th><th>Risk</th><th>Categories</th><th>Recommendation</th></tr>${findings || "<tr><td colspan=\"5\">No risky extension isolation findings.</td></tr>"}</table><h2>Recommendations</h2><ul>${recommendations}</ul><p class="note">${escapeHtml(summary.explanation)}</p>`,
+        );
+    });
+    reg("soterai.configureAIBroker", async () => {
+        if (!vscode.workspace.isTrusted) return void vscode.window.showWarningMessage("Provider routing configuration requires a trusted workspace. Local scanning remains available.");
+        const config = vscode.workspace.getConfiguration("soterai");
+        const openAI = await vscode.window.showInputBox({ title: "OpenAI-compatible upstream endpoint", value: config.get("broker.openAIProviderUrl", ""), placeHolder: "https://api.openai.com/v1/chat/completions" });
+        const anthropic = await vscode.window.showInputBox({ title: "Anthropic-compatible upstream endpoint", value: config.get("broker.anthropicProviderUrl", ""), placeHolder: "https://api.anthropic.com/v1/messages" });
+        const key = await vscode.window.showInputBox({ title: "Provider API key (stored in SecretStorage)", password: true });
+        await config.update("broker.openAIProviderUrl", openAI ?? "", vscode.ConfigurationTarget.Global);
+        await config.update("broker.anthropicProviderUrl", anthropic ?? "", vscode.ConfigurationTarget.Global);
+        if (key) await context.secrets.store("soterai.providerApiKey", key);
+        vscode.window.showInformationMessage("Broker configuration saved locally. Restart the broker to apply it.");
+    });
+    reg("soterai.copyOpenAIBrokerUrl", async () => { await started(); await vscode.env.clipboard.writeText(`${manager.url}/v1/ai/openai-compatible`); vscode.window.showInformationMessage("Current session OpenAI-compatible broker base URL copied. Review client setup again after restart."); });
+    reg("soterai.copyAnthropicBrokerUrl", async () => { await started(); await vscode.env.clipboard.writeText(`${manager.url}/v1/ai/anthropic-compatible`); vscode.window.showInformationMessage("Current session Anthropic-compatible broker base URL copied. Review client setup again after restart."); });
+    reg("soterai.testBrokerProtection", async () => {
+        await started();
+        const result = await manager.request<{ decision: string; redacted: boolean }>("/v1/scan", { method: "POST", body: JSON.stringify({ content: "OPENAI_API_KEY=sk-proj-1234567890abcdefghijklmnopqrstuv" }) });
+        if (result.decision === "allow" && !result.redacted) throw new Error("Broker self-test did not protect the test secret");
+        vscode.window.showInformationMessage(`Broker protection self-test passed (${result.decision}).`);
+    });
+    reg("soterai.runControlledTerminalCommand", async () => {
+        await started();
+        const command = await vscode.window.showInputBox({
+            title: "SoterAI Controlled Terminal",
+            prompt: "Runs only broker-approved read-only commands through fixed argv execution.",
+            placeHolder: "git status --short",
+            ignoreFocusOut: true,
+        });
+        if (!command) return;
+        const preview = await manager.request<TerminalPreview>("/v1/terminal/preview", { method: "POST", body: JSON.stringify({ command }) });
+        if (preview.action !== "ALLOW") {
+            vscode.window.showWarningMessage(`Controlled terminal blocked this command (${preview.reasonCodes.join(", ") || "policy"}).`);
+            return;
+        }
+        const operation = [preview.executable ?? "command", `${preview.args?.length ?? 0} arg(s)`].join(" ");
+        const proceed = await vscode.window.showWarningMessage(
+            `Run broker-approved controlled terminal operation: ${operation}? Coverage ${preview.coverageLevel}.`,
+            { modal: true },
+            "Run",
+        );
+        if (proceed !== "Run") return;
+        const executed = await manager.request<TerminalExecuteResponse>(
+            "/v1/terminal/execute",
+            { method: "POST", body: JSON.stringify({ command }) },
+            35_000,
+        );
+        const output = [
+            `SoterAI Controlled Terminal`,
+            `decision=${executed.analysis.action}`,
+            `coverage=${executed.analysis.coverageLevel}`,
+            `riskScore=${executed.analysis.riskScore}`,
+            `exitCode=${executed.result.exitCode}`,
+            "",
+            "stdout:",
+            executed.result.stdout || "(empty)",
+            "",
+            "stderr:",
+            executed.result.stderr || "(empty)",
+        ].join("\n");
+        const doc = await vscode.workspace.openTextDocument({ content: redactForSharing(output), language: "text" });
+        await vscode.window.showTextDocument(doc);
+    });
+    reg("soterai.rotateBrokerToken", async () => { await manager.rotateToken(); vscode.window.showInformationMessage("Local broker token rotated. It was not displayed or logged."); });
+    reg("soterai.clearBrokerToken", async () => { await manager.clearToken(); refresh(); vscode.window.showInformationMessage("Local broker token cleared; a new token will be generated on next start."); });
+
+    const setSafeMode = async (enabled: boolean, level?: string) => {
+        await started();
+        await manager.request(enabled ? "/v1/safe-mode/enable" : "/v1/safe-mode/disable", { method: "POST", body: JSON.stringify({ level }) });
+        await context.globalState.update("soterai.safeMode", enabled ? { enabled, level } : { enabled: false, level });
+        refresh();
+    };
+    reg("soterai.enableAISafeMode", async () => {
+        const level = await vscode.window.showQuickPick(["developer", "strict", "enterprise"], { title: "Enable AI Safe Mode", placeHolder: "Choose a protection level" });
+        if (!level) return;
+        await setSafeMode(true, level);
+        vscode.window.showInformationMessage(`SoterAI AI Safe Mode enabled (${level}).`);
+    });
+    reg("soterai.disableAISafeMode", async () => {
+        if (!(await confirmScopedChange("Disable broker AI Safe Mode? Managed filtering will be reduced; retained repository denies remain."))) return;
+        await setSafeMode(false); vscode.window.showInformationMessage("SoterAI AI Safe Mode disabled.");
+    });
+    reg("soterai.showAISafeModeRules", async () => {
+        const status = await manager.status();
+        const level = (status.safeMode?.level === "strict" || status.safeMode?.level === "enterprise") ? status.safeMode.level : "developer";
+        const rules = generateSafeModePolicy(level).rules.map((rule) => `<li>${escapeHtml(rule)}</li>`).join("");
+        showInfoWebview("soteraiSafeModeRules", "SoterAI: AI Safe Mode Rules", `<h1>AI Safe Mode — ${escapeHtml(level)}</h1><ul>${rules}</ul><p class="note">Safe Mode governs SoterAI-routed context and brokered traffic. It cannot observe AI traffic that bypasses SoterAI.</p>`);
+    });
+    reg("soterai.configureSafeMode", () => vscode.commands.executeCommand("soterai.enableAISafeMode"));
+
+    reg("soterai.startAIMemorySession", async () => { const id = await manager.startMemorySession(); refresh(); vscode.window.showInformationMessage(`AI Memory session started (${id.slice(0, 8)}…).`); });
+    reg("soterai.endAIMemorySession", async () => { await manager.endMemorySession(); refresh(); vscode.window.showInformationMessage("AI Memory session ended."); });
+    reg("soterai.clearAIMemorySession", async () => { await manager.clearMemorySession(); refresh(); vscode.window.showInformationMessage("AI Memory session cleared."); });
+    const loadExport = async () => { await started(); return manager.request<{ events: BrokerEvent[]; memory: { sessions: Array<Record<string, unknown>> } }>("/v1/events/export-redacted", { method: "POST" }); };
+    reg("soterai.openAIMemoryInspector", async () => {
+        const data = await loadExport();
+        const rows = data.events.slice().reverse().map((e) => `<tr><td>${escapeHtml(e.timestamp)}</td><td>${escapeHtml(e.eventType)}</td><td><span class="badge ${escapeHtml(e.decision)}">${escapeHtml(e.decision)}</span></td><td>${escapeHtml(e.riskScore)}</td><td>${escapeHtml(e.categories.join(", "))}</td><td>${escapeHtml(e.redactedEvidence ?? "")}</td></tr>`).join("");
+        showInfoWebview("soteraiMemoryInspector", "SoterAI: AI Memory Inspector", `<h1>AI Memory Inspector</h1><p>${data.memory.sessions.length} broker/SoterAI memory session(s). Brokered and manual events are labeled by event type.</p><table><tr><th>Time</th><th>Event</th><th>Decision</th><th>Risk</th><th>Categories</th><th>Redacted evidence</th></tr>${rows || "<tr><td colspan=\"6\">No memory events yet.</td></tr>"}</table><p class="note">Hashes, metadata, and redacted evidence only. This does not reveal what bypassing third-party extensions read internally.</p>`);
+    });
+    reg("soterai.exportAIMemoryReport", async () => {
+        const data = await loadExport();
+        const safe = redactForSharing(JSON.stringify(data, null, 2));
+        const doc = await vscode.workspace.openTextDocument({ content: safe, language: "json" });
+        await vscode.window.showTextDocument(doc);
+    });
+    reg("soterai.showWhatAISaw", () => vscode.commands.executeCommand("soterai.openAIMemoryInspector"));
+    reg("soterai.showBlockedAIContext", async () => {
+        const data = await loadExport();
+        const blocked = data.events.filter((e) => e.decision === "block" || e.eventType.includes("blocked"));
+        const doc = await vscode.workspace.openTextDocument({ content: redactForSharing(JSON.stringify(blocked, null, 2)), language: "json" });
+        await vscode.window.showTextDocument(doc);
+    });
+    reg("soterai.compareAIResponseWithContext", () => vscode.commands.executeCommand("soterai.compareOutputAgainstContext"));
+
+    const recentEvents = async () => (await manager.request<{ events: BrokerEvent[] }>("/v1/events/recent", { method: "GET" })).events;
+    reg("soterai.reviewPendingAIApproval", async () => {
+        const pending = (await recentEvents()).filter((e) => e.decision === "approval_required" && e.contentHash);
+        if (!pending.length) return void vscode.window.showInformationMessage("No pending local AI approvals.");
+        const chosen = await vscode.window.showQuickPick(pending.map((e) => ({ label: `${e.eventType} — ${e.contentHash!.slice(0, 12)}…`, detail: e.redactedEvidence, event: e })), { title: "Pending AI approvals" });
+        if (chosen) await approve(chosen.event, "once", "approve");
+    });
+    const approve = async (event: BrokerEvent, scope: string, outcome: string) => {
+        const request = Object.freeze({ sessionId: event.sessionId, contentHash: event.contentHash, scope, outcome });
+        if (outcome === "approve" && (!request.sessionId || !request.contentHash || !/^[a-f0-9]{64}$/.test(request.contentHash) || scope !== "once"
+            || !(await confirmScopedChange(`Approve one brokered use?\nSession: ${request.sessionId}\nContent SHA-256: ${request.contentHash}\nScope: one use; expires five minutes after broker acceptance. Caller session is not an independently authenticated agent identity.`)))) return false;
+        await manager.request("/v1/approvals", { method: "POST", body: JSON.stringify(request) });
+        return true;
+    };
+    reg("soterai.approveAIContextOnce", async () => {
+        const event = (await recentEvents()).slice().reverse().find((e) => e.decision === "approval_required" && e.contentHash && e.sessionId);
+        if (!event) return void vscode.window.showInformationMessage("No pending approval to approve.");
+        if (await approve(event, "once", "approve")) vscode.window.showInformationMessage("Broker approval saved for this session and content hash; independent user presence remains UNTESTED.");
+    });
+    reg("soterai.denyAIContext", async () => {
+        const event = (await recentEvents()).slice().reverse().find((e) => e.decision === "approval_required" && e.contentHash && e.sessionId);
+        if (!event) return void vscode.window.showInformationMessage("No pending approval to deny.");
+        await approve(event, "once", "deny");
+        vscode.window.showInformationMessage("AI context denied.");
+    });
+    reg("soterai.showActiveAIApprovals", async () => {
+        const data = await manager.request<{ approvals: unknown[] }>("/v1/approvals", { method: "GET" });
+        const doc = await vscode.workspace.openTextDocument({ content: JSON.stringify(data, null, 2), language: "json" });
+        await vscode.window.showTextDocument(doc);
+    });
+    reg("soterai.clearAIApprovals", async () => { await manager.request("/v1/approvals/clear", { method: "POST" }); vscode.window.showInformationMessage("Local AI approvals cleared."); });
+
+    // ── Phase 7: Integration usability (never silent write) ──────────────────
+    const lastBackupKey = "soterai.integration.lastBackup";
+    const workspaceFileIO = (): FileIO => {
+        const folder = vscode.workspace.workspaceFolders?.[0];
+        return {
+            async readText(rel: string) {
+                if (!folder) return null;
+                try {
+                    const uri = vscode.Uri.file(path.isAbsolute(rel) ? rel : path.join(folder.uri.fsPath, rel));
+                    return new TextDecoder().decode(await vscode.workspace.fs.readFile(uri));
+                } catch {
+                    return null;
+                }
+            },
+            async writeText(rel: string, content: string) {
+                if (!folder) throw new Error("No workspace open");
+                const uri = vscode.Uri.file(path.isAbsolute(rel) ? rel : path.join(folder.uri.fsPath, rel));
+                await vscode.workspace.fs.writeFile(uri, new TextEncoder().encode(content));
+            },
+            async exists(rel: string) {
+                if (!folder) return false;
+                try {
+                    const uri = vscode.Uri.file(path.isAbsolute(rel) ? rel : path.join(folder.uri.fsPath, rel));
+                    await vscode.workspace.fs.stat(uri);
+                    return true;
+                } catch {
+                    return false;
+                }
+            },
+        };
+    };
+    const fetchHttpIO = (): HttpIO => ({
+        async get(url, headers) {
+            const res = await fetch(url, { headers });
+            return { status: res.status, body: await res.text() };
+        },
+        async post(url, body, headers) {
+            const res = await fetch(url, { method: "POST", headers, body });
+            return { status: res.status, body: await res.text() };
+        },
+    });
+
+    reg("soterai.setupBrokerIntegration", async () => {
+        if (!vscode.workspace.isTrusted) {
+            return void vscode.window.showWarningMessage("Broker integration setup requires a trusted workspace.");
+        }
+        const folder = vscode.workspace.workspaceFolders?.[0];
+        if (!folder) return void vscode.window.showErrorMessage("Open a workspace first.");
+
+        // Start local checking FIRST. The Control Panel bills this command as
+        // "Needed before SoterAI can block anything", and it used to return
+        // without starting the broker whenever no client config was found — so
+        // the one button the panel points a new user at achieved nothing on a
+        // workspace with no AI config. Everything below is about pointing a
+        // client at the broker; the broker itself must come up either way.
+        const status = await started();
+        const verifyOwner = routingOwnerGuard(manager);
+        const brokerUp = status.running && status.state === "healthy";
+
+        const io = guardedRoutingFiles(workspaceFileIO(), verifyOwner);
+        const candidates = DEFAULT_INTEGRATION_CANDIDATES.map((rel) => path.join(folder.uri.fsPath, rel));
+        const detected = await detectIntegrationConfigs(candidates, io);
+        if (detected.length === 0) {
+            // No config to rewrite, but local checking is now running: say what
+            // was actually achieved, and hand over the URL so the user can point
+            // any client at it manually.
+            const message = brokerUp
+                ? `Local checking is ON at ${manager.url}. No AI client config was found in this workspace to point at it automatically, so nothing was rewritten. Commands like "Run a command safely" and "Check what I copied" are enforced from now on.`
+                : `Local checking could not start (broker state: ${status.state}). SoterAI can still warn, but it cannot block until the broker is healthy.`;
+            const choice = await vscode.window.showInformationMessage(
+                message,
+                ...(brokerUp ? ["Copy broker URL", "Run self-test"] : ["Show broker status"]),
+            );
+            if (choice === "Copy broker URL") {
+                await vscode.env.clipboard.writeText(manager.url);
+                vscode.window.showInformationMessage(`Broker URL copied: ${manager.url}`);
+            } else if (choice === "Run self-test") {
+                await vscode.commands.executeCommand("soterai.testBrokerProtection");
+            } else if (choice === "Show broker status") {
+                await vscode.commands.executeCommand("soterai.showBrokerStatus");
+            }
+            return;
+        }
+
+        const pick = await vscode.window.showQuickPick(
+            detected.map((d) => ({
+                label: path.basename(d.path),
+                description: d.kind,
+                detail: `${d.path}${d.currentBaseUrl ? ` · ${d.currentBaseUrl}` : ""}`,
+                config: d,
+            })),
+            { title: "SoterAI: Setup Broker Integration (review before write)", ignoreFocusOut: true },
+        );
+        if (!pick) return;
+
+        const current = await io.readText(pick.config.path);
+        if (current === null) return void vscode.window.showErrorMessage("Could not read config file.");
+        const change = proposeBrokerRewrite(pick.config.path, current, pick.config.kind, manager.port);
+        verifyOwner();
+
+        const doc = await vscode.workspace.openTextDocument({
+            content: [
+                "SoterAI proposed broker integration diff (NOT YET APPLIED)",
+                `Path: ${change.path}`,
+                `Summary: ${change.summary}`,
+                `Broker URL: ${change.brokerBaseUrl}`,
+                "",
+                "--- BEFORE ---",
+                change.before,
+                "",
+                "--- AFTER ---",
+                change.after,
+                "",
+                "Honesty: STRONG enforcement applies only to traffic that uses the broker after this config.",
+                "Setup itself is usability, not universal protection. Never silent write.",
+            ].join("\n"),
+            language: "diff",
+        });
+        await vscode.window.showTextDocument(doc, { preview: true });
+
+        const approve = await vscode.window.showWarningMessage(
+            `Apply broker URL to ${path.basename(change.path)}? A backup will be written first.`,
+            { modal: true },
+            "Apply with backup",
+        );
+        if (approve !== "Apply with backup") {
+            vscode.window.showInformationMessage("No changes written (approval required).");
+            return;
+        }
+
+        verifyOwner();
+        const result = await applyProposedChange(change, io, true, new EncryptedBackupSink(context));
+        verifyOwner();
+        if (!result.applied) {
+            vscode.window.showErrorMessage(`Apply failed: ${result.reason ?? "unknown"}`);
+            return;
+        }
+        await context.globalState.update(lastBackupKey, { path: result.path, backupPath: result.backupPath, at: Date.now() });
+        vscode.window.showInformationMessage("Broker URL applied. An encrypted backup is stored outside your workspace.");
+
+        verifyOwner();
+        const health = await healthCheckBroker(manager.port, guardedRoutingHttp(fetchHttpIO(), verifyOwner));
+        const token = await manager.getClientToken();
+        verifyOwner();
+        const smoke = await streamSmokeTest(manager.port, token, guardedRoutingHttp(fetchHttpIO(), verifyOwner));
+        verifyOwner();
+        showInfoWebview(
+            "soteraiIntegrationSetup",
+            "SoterAI: Integration Setup Result",
+            `<h1>Broker Integration Setup</h1>
+            <p><strong>Applied:</strong> ${escapeHtml(result.path)}</p>
+            <p><strong>Backup:</strong> encrypted, in extension global storage (not in your workspace)</p>
+            <p><strong>Health:</strong> ${escapeHtml(health.detail)}</p>
+            <p><strong>Stream smoke:</strong> ${escapeHtml(smoke.detail)}</p>
+            <p class="note">STRONG only for traffic that uses the broker after this config. Use <code>SoterAI: Restore Broker Integration</code> for one-click restore.</p>`,
+        );
+    });
+
+    reg("soterai.restoreBrokerIntegration", async () => {
+        const last = context.globalState.get<{ path: string; backupPath: string }>(lastBackupKey);
+        if (!last?.path || !last?.backupPath) {
+            return void vscode.window.showInformationMessage("No integration backup recorded in this session.");
+        }
+        const approve = await vscode.window.showWarningMessage(
+            `Restore ${path.basename(last.path)} from backup?`,
+            { modal: true },
+            "Restore",
+        );
+        if (approve !== "Restore") {
+            vscode.window.showInformationMessage("Restore cancelled — no write.");
+            return;
+        }
+        const result = await restoreFromBackup(last.path, last.backupPath, workspaceFileIO(), true, new EncryptedBackupSink(context));
+        if (!result.restored) {
+            vscode.window.showErrorMessage(`Restore failed: ${result.reason ?? "unknown"}`);
+            return;
+        }
+        vscode.window.showInformationMessage(`Restored ${path.basename(last.path)} from backup.`);
+    });
+}

@@ -1,0 +1,23 @@
+﻿{"phase":"compiler-owned-01","observedAt":"2026-11-03T08:47:41.080Z","pid":13472,"actualClose":true,"exitCode":2,"signal":null,"stdoutEOF":true,"stderrEOF":true,"overflow":false,"streamError":false,"deadlineExceeded":false,"signalsRequested":0,"streams":[{"name":"stdout","bytes":1654,"observedBytes":1654,"sha256":"3ee3c6dbf6f62fbe82081f4ca60cb69f30d6461f4e3533828e37e28818586416"},{"name":"stderr","bytes":0,"observedBytes":0,"sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}]}
+node.exe : AssertionError [ERR_ASSERTION]: compiler-owned-01
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (AssertionError ...mpiler-owned-01:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+2 !== 0
+
+    at run (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261103-f32-lifecycle-2e
+95d6a4\run-integrated-01.cjs:34:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261103-f32-lifecycle-2
+e95d6a4\run-integrated-01.cjs:38:3 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 2,
+  expected: 0,
+  operator: 'strictEqual'
+}

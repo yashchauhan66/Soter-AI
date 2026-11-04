@@ -492,6 +492,8 @@ describe("Command-palette hygiene (clutter control)", () => {
         "soterai.openReport",
         // One discoverable entry point contains the project privacy actions.
         "soterai.openProjectPrivacy",
+        // Recovery must remain discoverable before the owner removes Lite.
+        "soterai.restoreChangesBeforeRemoval",
     ];
     const palette: Array<{ command: string; when?: string }> = pkg.contributes.menus?.commandPalette ?? [];
     const gated = new Map(palette.map((e) => [e.command, e.when]));
@@ -503,13 +505,14 @@ describe("Command-palette hygiene (clutter control)", () => {
     });
 
     it("keeps the default palette to a small set of clear, reversible newcomer workflows", () => {
-        assert.strictEqual(core.length, 17);
+        assert.strictEqual(core.length, 18);
         assert.ok(core.includes("soterai.blockSelectionFromAI"), "manual text protection must be discoverable");
         assert.ok(core.includes("soterai.autoMigrateWorkspace"), "vault migration must be discoverable");
         assert.ok(core.includes("soterai.secureAllAI"), "AI routing must be discoverable");
         assert.ok(core.includes("soterai.restoreAIConfigs"), "the reversible route must remain discoverable");
         assert.ok(core.includes("soterai.openReport"), "the one route to every report must be discoverable");
         assert.ok(core.includes("soterai.openProjectPrivacy"), "project restrictions and approved reads must be discoverable");
+        assert.ok(core.includes("soterai.restoreChangesBeforeRemoval"), "reviewed removal recovery must be discoverable");
     });
 
     it("every non-core declared command is gated behind soterai.advancedCommands (or fully hidden)", () => {

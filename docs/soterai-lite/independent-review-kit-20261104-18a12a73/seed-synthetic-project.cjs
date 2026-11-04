@@ -1,0 +1,3 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const base=path.resolve(process.argv[2]||'');assert(process.argv.length===3&&path.isAbsolute(process.argv[2]));assert(!fs.existsSync(base));assert(/(?:^|[\\/])soterai-review-synthetic-[a-zA-Z0-9-]+$/.test(base));assert(fs.lstatSync(path.dirname(base)).isDirectory());fs.mkdirSync(base);fs.writeFileSync(path.join(base,'public.txt'),'PUBLIC_REVIEW_CONTROL_7BE61\n',{flag:'wx'});fs.writeFileSync(path.join(base,'.env'),'FAKE_API_KEY=SOTERAI_SYNTHETIC_REVIEW_ONLY_7BE61\nPUBLIC_REVIEW_MODE=fixture\n',{flag:'wx'});console.log(JSON.stringify({status:'SYNTHETIC_FIXTURE_CREATED_NO_PRODUCT_TEST_RUN',path:base,files:['public.txt','.env']}));

@@ -1,0 +1,37 @@
+{
+    "schemaVersion":  1,
+    "feature":  "F32",
+    "status":  "STATIC_LOCAL_INSTALLER_PLATFORM_RULE_ONLY_NOT_NATIVE_PASS",
+    "observedAt":  "2026-11-03T14:23:53.6775413Z",
+    "vendor":  {
+                   "path":  "C:/Users/USER/AppData/Local/Programs/Microsoft VS Code/261c84cb1e/resources/app/out/vs/code/node/cliProcessMain.js",
+                   "bytes":  784666,
+                   "sha256":  "109dd5d51a06b836b8ca0cfc7abce66d22b2953b41d7a297de4ece7eaac2bfb6"
+               },
+    "snippets":  [
+                     {
+                         "needle":  "constructor(t,e,n=\"undefined\")",
+                         "offset":  401551,
+                         "source":  "constructor(t,e,n=\"undefined\"){this.identifier=t;this.version=e;this.targetPlatform=n;this.id=t.id}static create(t){let e=t.manifest?t.manifest.version:t.version,n=t.manifest?t.targetPlatform:t.properties.targetPlatform;return new i(t.identifier,e,n)}static parse(t){let e=qI.exec(t);return e\u0026\u0026e[1]\u0026\u0026e[2]?new i({id:e[1]},e[2],e[4]||void 0):null}toString(){return`${this.id}-${this.version}${this.targetPlatform!==\"undefined\"?`-${this.targetPlatform}`:\"\"}`}equals(t){return t instanceof i?Q(this,t)\u0026\u0026this.version===t.version\u0026\u0026this.targetPlatform===t.targetPlatform:!1}},GI=/^([^.]+\\..+)@((prerelease)|"
+                     },
+                     {
+                         "needle":  "async function sc(i)",
+                         "offset":  536085,
+                         "source":  "async function sc(i){let t;try{t=await oc(i,\"extension/package.json\")}catch(e){throw Ks(e)}try{return JSON.parse(t.toString(\"utf8\"))}catch{throw new be(f(4273,null),\"Invalid\")}}var ar=class extends _{constructor(e,n,r,o,s,a,l){super();this.fileService=n;this.extensionGalleryService=r;this.extensionSignatureVerificationService=o;this.telemetryService=s;this.uriIdentityService=a;this.logService=l;this.extensionsDownloadDir=e.extensionsDownloadLocation,this.extensionsTrashDir=a.extUri.joinPath(e.extensionsDownloadLocation,\".trash\"),this.cache=20,this.cleanUpPromise=this.cleanUp()}static{this.Sign"
+                     },
+                     {
+                         "needle":  "createInstallExtensionTask(e,n,r){let o=n instanceof E?new at({id:Mt(e.publisher,e.name)},e.version)",
+                         "offset":  554151,
+                         "source":  "createInstallExtensionTask(e,n,r){let o=n instanceof E?new at({id:Mt(e.publisher,e.name)},e.version):at.create(n);return this.instantiationService.createInstance(Hs,o,e,n,r,(s,a)=\u003e{if(n instanceof E)return this.extractVSIX(o,n,r,a);let l=this.extractingGalleryExtensions.get(o.toString());return l||(this.extractingGalleryExtensions.set(o.toString(),l=this.downloadAndExtractGalleryExtension(o,n,s,r,a)),l.finally(()=\u003ethis.extractingGalleryExtensions.delete(o.toString()))),l},this.extensionsScanner)}createUninstallExtensionTask(e,n){return new dp(e,n,this.extensionsProfileScannerService)}async dow"
+                     },
+                     {
+                         "needle":  "let c={installedTimestamp:Date.now(),targetPlatform:e.targetPlatform}",
+                         "offset":  562754,
+                         "source":  "let c={installedTimestamp:Date.now(),targetPlatform:e.targetPlatform};try{c.size=await Nl(a,this.fileService)}catch(d){this.logService.warn(`Error while getting the size of the extracted extension : ${a.fsPath}`,z(d))}try{await this.extensionsScannerService.updateManifestMetadata(a,c)}catch(d){throw this.telemetryService.publicLog2(\"extension:extract\",{extensionId:e.id,code:`${ve(d)}`}),Le(d,\"UpdateMetadata\")}if(o.isCancellationRequested)throw new ae;try{this.logService.trace(`Started renaming the extension from ${a.fsPath} to ${l.fsPath}`),await this.rename(a.fsPath,l.fsPath),this.logService."
+                     }
+                 ],
+    "rule":  "For a local VSIX URI task the ExtensionKey has no supplied targetPlatform; constructor defaults to string undefined; extracted __metadata.targetPlatform is that string for old and current local installs.",
+    "artifactPlatform":  "Current win32-x64 VSIX XML platform remains separate immutable content admission; old XML has no TargetPlatform attribute.",
+    "noSourceOrNativeExecution":  true,
+    "signalsRequested":  0
+}

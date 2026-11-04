@@ -1,0 +1,324 @@
+﻿TAP version 13
+# Subtest: F32-R01 registration is inert and exposes only the fixed recovery command with default-true machine flag
+ok 1 - F32-R01 registration is inert and exposes only the fixed recovery command with default-true machine flag
+  ---
+  duration_ms: 158.7444
+  type: 'test'
+  ...
+# Subtest: F32-R02 every safe owned action dispatches its exact existing native command without arguments
+ok 2 - F32-R02 every safe owned action dispatches its exact existing native command without arguments
+  ---
+  duration_ms: 13.2778
+  type: 'test'
+  ...
+# Subtest: F32-R03 forged approval paths arbitrary commands getters and action IDs are ignored
+ok 3 - F32-R03 forged approval paths arbitrary commands getters and action IDs are ignored
+  ---
+  duration_ms: 8.3142
+  type: 'test'
+  ...
+# Subtest: F32-R04 summary requires a native modal and cancellation issues no restore or stop
+ok 4 - F32-R04 summary requires a native modal and cancellation issues no restore or stop
+  ---
+  duration_ms: 4.1354
+  type: 'test'
+  ...
+# Subtest: F32-R05 summary approval preserves the separate native route cancellation
+ok 5 - F32-R05 summary approval preserves the separate native route cancellation
+  ---
+  duration_ms: 5.0384
+  type: 'test'
+  ...
+# Subtest: F32-R06 workspace overrides cannot enable recovery when the restricted machine flag is globally false
+ok 6 - F32-R06 workspace overrides cannot enable recovery when the restricted machine flag is globally false
+  ---
+  duration_ms: 2.8272
+  type: 'test'
+  ...
+# Subtest: F32-R07 a workspace false override cannot replace a true machine/default recovery choice
+ok 7 - F32-R07 a workspace false override cannot replace a true machine/default recovery choice
+  ---
+  duration_ms: 7.9352
+  type: 'test'
+  ...
+# Subtest: F32-R08 missing multi-root remote virtual and untrusted workspaces have no probe or mutation authority
+ok 8 - F32-R08 missing multi-root remote virtual and untrusted workspaces have no probe or mutation authority
+  ---
+  duration_ms: 4.0556
+  type: 'test'
+  ...
+# Subtest: F32-R09 URI impostors UNC authority and noncanonical parent-segment roots are refused
+ok 9 - F32-R09 URI impostors UNC authority and noncanonical parent-segment roots are refused
+  ---
+  duration_ms: 3.2958
+  type: 'test'
+  ...
+# Subtest: F32-R10 concurrent invocation returns BUSY without duplicate modal probes or native writes
+ok 10 - F32-R10 concurrent invocation returns BUSY without duplicate modal probes or native writes
+  ---
+  duration_ms: 7.0419
+  type: 'test'
+  ...
+# Subtest: F32-R11 off then on configuration events invalidate an already-open summary
+ok 11 - F32-R11 off then on configuration events invalidate an already-open summary
+  ---
+  duration_ms: 7.2349
+  type: 'test'
+  ...
+# Subtest: F32-R12 workspace away-and-back events cannot reuse an earlier identical-URI review
+ok 12 - F32-R12 workspace away-and-back events cannot reuse an earlier identical-URI review
+  ---
+  duration_ms: 5.6432
+  type: 'test'
+  ...
+# Subtest: F32-R13 a trust-change event revokes pending review even when the current trusted value is true again
+ok 13 - F32-R13 a trust-change event revokes pending review even when the current trusted value is true again
+  ---
+  duration_ms: 4.2212
+  type: 'test'
+  ...
+# Subtest: F32-R14 subscription disposal removes the command and invalidates captured pending callbacks
+ok 14 - F32-R14 subscription disposal removes the command and invalidates captured pending callbacks
+  ---
+  duration_ms: 5.0401
+  type: 'test'
+  ...
+# Subtest: F32-R15 probes bind only the current canonical owner and foreign corrupt errors stay pending without contents
+ok 15 - F32-R15 probes bind only the current canonical owner and foreign corrupt errors stay pending without contents
+  ---
+  duration_ms: 4.4998
+  type: 'test'
+  ...
+# Subtest: F32-R16 plaintext-capable manual routes never dispatch legacy or raw restore commands
+ok 16 - F32-R16 plaintext-capable manual routes never dispatch legacy or raw restore commands
+  ---
+  duration_ms: 3.8388
+  type: 'test'
+  ...
+# Subtest: F32-R17 void wrong-success and throwing native results cannot erase pending recovery or disclose exceptions
+ok 17 - F32-R17 void wrong-success and throwing native results cannot erase pending recovery or disclose exceptions
+  ---
+  duration_ms: 7.6696
+  type: 'test'
+  ...
+# Subtest: F32-R18 only an exact stopped service snapshot completes; unconfirmed exit void and throw remain pending
+ok 18 - F32-R18 only an exact stopped service snapshot completes; unconfirmed exit void and throw remain pending
+  ---
+  duration_ms: 20.3631
+  type: 'test'
+  ...
+# Subtest: F32-R19 flag withdrawal during metadata probing prevents summary and all mutation
+ok 19 - F32-R19 flag withdrawal during metadata probing prevents summary and all mutation
+  ---
+  duration_ms: 4.9652
+  type: 'test'
+  ...
+# Subtest: F32-R20 owner epoch drift during a native transaction stops later routes and broker shutdown
+ok 20 - F32-R20 owner epoch drift during a native transaction stops later routes and broker shutdown
+  ---
+  duration_ms: 4.0071
+  type: 'test'
+  ...
+# Subtest: F32-R21 a pending nonmodal completion notice cannot block the fixed removal report
+ok 21 - F32-R21 a pending nonmodal completion notice cannot block the fixed removal report
+  ---
+  duration_ms: 5.2555
+  type: 'test'
+  ...
+# Subtest: README accuracy
+    # Subtest: names only commands that exist
+    ok 1 - names only commands that exist
+      ---
+      duration_ms: 5.0569
+      type: 'test'
+      ...
+    # Subtest: names only settings that exist, with the manifest's real defaults
+    ok 2 - names only settings that exist, with the manifest's real defaults
+      ---
+      duration_ms: 2.0042
+      type: 'test'
+      ...
+    # Subtest: does not advertise a version other than the one being published
+    ok 3 - does not advertise a version other than the one being published
+      ---
+      duration_ms: 2.6831
+      type: 'test'
+      ...
+    # Subtest: points at a license file that ships in the VSIX
+    ok 4 - points at a license file that ships in the VSIX
+      ---
+      duration_ms: 4.0223
+      type: 'test'
+      ...
+    # Subtest: states the real count of machine-scoped settings
+    ok 5 - states the real count of machine-scoped settings
+      ---
+      duration_ms: 1.5275
+      type: 'test'
+      ...
+    1..5
+ok 22 - README accuracy
+  ---
+  duration_ms: 19.1874
+  type: 'suite'
+  ...
+# Subtest: F32-I01 inventory construction is inert without metadata reads keys writes or discovery
+ok 23 - F32-I01 inventory construction is inert without metadata reads keys writes or discovery
+  ---
+  duration_ms: 341.9465
+  type: 'test'
+  ...
+# Subtest: F32-I02 empty known journals and ordinary project settings establish scoped absence for all fixed actions
+ok 24 - F32-I02 empty known journals and ordinary project settings establish scoped absence for all fixed actions
+  ---
+  duration_ms: 41.199
+  type: 'test'
+  ...
+# Subtest: F32-I03 three exact terminal receipts bind owner and stable opaque fingerprints
+ok 25 - F32-I03 three exact terminal receipts bind owner and stable opaque fingerprints
+  ---
+  duration_ms: 29.4402
+  type: 'test'
+  ...
+# Subtest: F32-I04 checked terminal names without receipts are ambiguous rather than absent
+ok 26 - F32-I04 checked terminal names without receipts are ambiguous rather than absent
+  ---
+  duration_ms: 13.2406
+  type: 'test'
+  ...
+# Subtest: F32-I05 foreign malformed PREPARED and changed terminal metadata cannot erase recovery
+ok 27 - F32-I05 foreign malformed PREPARED and changed terminal metadata cannot erase recovery
+  ---
+  duration_ms: 18.7623
+  type: 'test'
+  ...
+# Subtest: F32-I06 secure-editor associations require both exact receipt and current owned mappings
+ok 28 - F32-I06 secure-editor associations require both exact receipt and current owned mappings
+  ---
+  duration_ms: 12.2108
+  type: 'test'
+  ...
+# Subtest: F32-I07 foreign and unknown editor-association receipts remain pending even with ordinary current mappings
+ok 29 - F32-I07 foreign and unknown editor-association receipts remain pending even with ordinary current mappings
+  ---
+  duration_ms: 9.3039
+  type: 'test'
+  ...
+# Subtest: F32-I08 dedicated profiles recover from private metadata despite missing Mementos without opening config text
+ok 30 - F32-I08 dedicated profiles recover from private metadata despite missing Mementos without opening config text
+  ---
+  duration_ms: 135.9494
+  type: 'test'
+  ...
+# Subtest: F32-I09 live dedicated configs without recovery and saved receipts with missing config stay pending
+ok 31 - F32-I09 live dedicated configs without recovery and saved receipts with missing config stay pending
+  ---
+  duration_ms: 45.7969
+  type: 'test'
+  ...
+# Subtest: F32-I10 retained recovery after config removal is evidence rather than a live route when no Memento remains
+ok 32 - F32-I10 retained recovery after config removal is evidence rather than a live route when no Memento remains
+  ---
+  duration_ms: 109.7199
+  type: 'test'
+  ...
+# Subtest: F32-I11 foreign malformed and multiple dedicated live profiles cannot choose ownership by guesswork
+ok 33 - F32-I11 foreign malformed and multiple dedicated live profiles cannot choose ownership by guesswork
+  ---
+  duration_ms: 146.5372
+  type: 'test'
+  ...
+# Subtest: F32-I12 dedicated discovery is bounded and refuses linked profile directories
+ok 34 - F32-I12 dedicated discovery is bounded and refuses linked profile directories
+  ---
+  duration_ms: 97.2735
+  type: 'test'
+  ...
+# Subtest: F32-I13 genuine local vscode-userdata storage works while foreign storage URI components refuse
+ok 35 - F32-I13 genuine local vscode-userdata storage works while foreign storage URI components refuse
+  ---
+  duration_ms: 43.0718
+  type: 'test'
+  ...
+# Subtest: F32-I14 either Gemini settings or environment presence prevents a false absent inventory
+ok 36 - F32-I14 either Gemini settings or environment presence prevents a false absent inventory
+  ---
+  duration_ms: 18.3738
+  type: 'test'
+  ...
+# Subtest: F32-I15 PSReadLine uses the actual checked metadata journal and ignores obsolete Memento authority
+ok 37 - F32-I15 PSReadLine uses the actual checked metadata journal and ignores obsolete Memento authority
+  ---
+  duration_ms: 24.4571
+  type: 'test'
+  ...
+# Subtest: F32-I16 malformed and over8KiB PSReadLine journals are pending without raw-profile reads
+ok 38 - F32-I16 malformed and over8KiB PSReadLine journals are pending without raw-profile reads
+  ---
+  duration_ms: 14.9411
+  type: 'test'
+  ...
+# Subtest: F32-I17 valid live hook metadata is owned and completed ROLLED_BACK metadata is not a live grant
+ok 39 - F32-I17 valid live hook metadata is owned and completed ROLLED_BACK metadata is not a live grant
+  ---
+  duration_ms: 24.0047
+  type: 'test'
+  ...
+# Subtest: F32-I18 undefined hook records establish scoped absence; malformed foreign records and key errors stay pending
+ok 40 - F32-I18 undefined hook records establish scoped absence; malformed foreign records and key errors stay pending
+  ---
+  duration_ms: 12.724
+  type: 'test'
+  ...
+# Subtest: F32-I19 manual vendor receipts produce opaque hints while legacy backup presence stays pending
+ok 41 - F32-I19 manual vendor receipts produce opaque hints while legacy backup presence stays pending
+  ---
+  duration_ms: 14.3685
+  type: 'test'
+  ...
+# Subtest: F32-I20 stale foreign untrusted remote or multiple-root owner requests cannot inspect recovery
+ok 42 - F32-I20 stale foreign untrusted remote or multiple-root owner requests cannot inspect recovery
+  ---
+  duration_ms: 4.8452
+  type: 'test'
+  ...
+# Subtest: F32-I21 folder or global checked-profile settings without a receipt remain pending in a one-folder workspace
+ok 43 - F32-I21 folder or global checked-profile settings without a receipt remain pending in a one-folder workspace
+  ---
+  duration_ms: 18.4326
+  type: 'test'
+  ...
+# Subtest: F32-I22 folder or global secure-editor associations cannot disappear from empty known recovery
+ok 44 - F32-I22 folder or global secure-editor associations cannot disappear from empty known recovery
+  ---
+  duration_ms: 8.4087
+  type: 'test'
+  ...
+# Subtest: sensitive-file list has not been re-forked
+    # Subtest: no extension module re-declares the secret-file globs
+    ok 1 - no extension module re-declares the secret-file globs
+      ---
+      duration_ms: 61.3958
+      type: 'test'
+      ...
+    # Subtest: the proactive guards import the canonical list
+    ok 2 - the proactive guards import the canonical list
+      ---
+      duration_ms: 2.0101
+      type: 'test'
+      ...
+    1..2
+ok 45 - sensitive-file list has not been re-forked
+  ---
+  duration_ms: 64.8361
+  type: 'suite'
+  ...
+1..45
+# tests 50
+# suites 2
+# pass 50
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3887.0332

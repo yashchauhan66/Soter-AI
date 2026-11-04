@@ -1,0 +1,15 @@
+{
+  "name": "f32-installed-observer",
+  "displayName": "F32 isolated installed lifecycle observer",
+  "publisher": "soterai-fixture",
+  "version": "0.0.1",
+  "private": true,
+  "engines": { "vscode": "^1.85.0" },
+  "main": "./observer.cjs",
+  "activationEvents": ["onStartupFinished"],
+  "extensionKind": ["workspace"],
+  "capabilities": {
+    "untrustedWorkspaces": { "supported": true },
+    "virtualWorkspaces": { "supported": false }
+  }
+}

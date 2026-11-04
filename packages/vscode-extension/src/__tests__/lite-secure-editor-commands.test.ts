@@ -382,6 +382,28 @@ test("F05-C15 association cancellation, persistence failure and undo conflict ne
     assert.deepEqual(await stub.commands.executeCommand("soterai.undoSecureEditorAssociation"), { status: "FAILED" }); assert.deepEqual(associations, conflicted);
 });
 
+test("F32 secure association undo remains native reviewed after the editor flag is withdrawn", async () => {
+    instance(); const before = structuredClone(associations);
+    assert.deepEqual(await stub.commands.executeCommand("soterai.configureSecureEditorAssociation"), { status: "SAVED" });
+    setFlag(false); const reviews = nativeDiffs.length;
+    assert.deepEqual(await stub.commands.executeCommand("soterai.configureSecureEditorAssociation"), { status: "UNAVAILABLE" });
+    ownerApproval = false;
+    assert.deepEqual(await stub.commands.executeCommand("soterai.undoSecureEditorAssociation"), { status: "CANCELLED" });
+    assert.equal(associations["**/.env"], VIEW_TYPE);
+    ownerApproval = true;
+    assert.deepEqual(await stub.commands.executeCommand("soterai.undoSecureEditorAssociation"), { status: "SAVED" });
+    assert.deepEqual(associations, before); assert.equal(nativeDiffs.length, reviews + 2);
+});
+
+test("F32 secure association recovery cannot undo a foreign or changed project mapping with the editor flag off", async () => {
+    instance();
+    assert.deepEqual(await stub.commands.executeCommand("soterai.configureSecureEditorAssociation"), { status: "SAVED" });
+    setFlag(false); associations["**/.env"] = "another.editor";
+    const before = structuredClone(associations), writes = associationUpdates.length;
+    assert.deepEqual(await stub.commands.executeCommand("soterai.undoSecureEditorAssociation"), { status: "FAILED" });
+    assert.deepEqual(associations, before); assert.equal(associationUpdates.length, writes);
+});
+
 test("F05-C16 encrypted recovery opens despite invalid partial original bytes; reviewed recovery save excludes concurrent edits", async () => {
     const actual = instance(), { document, view } = await open(); await edit(view); const recovery = await backup(document, "partial-write-recovery");
     view.dispose(); document.dispose(); await write(".env", Buffer.from([0xff, 0xfe, 0x00, 0x61]));

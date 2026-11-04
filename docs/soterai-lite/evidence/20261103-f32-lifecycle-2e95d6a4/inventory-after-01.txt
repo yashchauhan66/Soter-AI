@@ -1,0 +1,130 @@
+﻿TAP version 13
+# Subtest: F32-I01 inventory construction is inert without metadata reads keys writes or discovery
+ok 1 - F32-I01 inventory construction is inert without metadata reads keys writes or discovery
+  ---
+  duration_ms: 1220.9578
+  type: 'test'
+  ...
+# Subtest: F32-I02 empty known journals and ordinary project settings establish scoped absence for all fixed actions
+ok 2 - F32-I02 empty known journals and ordinary project settings establish scoped absence for all fixed actions
+  ---
+  duration_ms: 161.6703
+  type: 'test'
+  ...
+# Subtest: F32-I03 three exact terminal receipts bind owner and stable opaque fingerprints
+ok 3 - F32-I03 three exact terminal receipts bind owner and stable opaque fingerprints
+  ---
+  duration_ms: 124.3538
+  type: 'test'
+  ...
+# Subtest: F32-I04 checked terminal names without receipts are ambiguous rather than absent
+ok 4 - F32-I04 checked terminal names without receipts are ambiguous rather than absent
+  ---
+  duration_ms: 56.518
+  type: 'test'
+  ...
+# Subtest: F32-I05 foreign malformed PREPARED and changed terminal metadata cannot erase recovery
+ok 5 - F32-I05 foreign malformed PREPARED and changed terminal metadata cannot erase recovery
+  ---
+  duration_ms: 71.685
+  type: 'test'
+  ...
+# Subtest: F32-I06 secure-editor associations require both exact receipt and current owned mappings
+ok 6 - F32-I06 secure-editor associations require both exact receipt and current owned mappings
+  ---
+  duration_ms: 44.4648
+  type: 'test'
+  ...
+# Subtest: F32-I07 foreign and unknown editor-association receipts remain pending even with ordinary current mappings
+ok 7 - F32-I07 foreign and unknown editor-association receipts remain pending even with ordinary current mappings
+  ---
+  duration_ms: 30.4249
+  type: 'test'
+  ...
+# Subtest: F32-I08 dedicated profiles recover from private metadata despite missing Mementos without opening config text
+ok 8 - F32-I08 dedicated profiles recover from private metadata despite missing Mementos without opening config text
+  ---
+  duration_ms: 352.8617
+  type: 'test'
+  ...
+# Subtest: F32-I09 live dedicated configs without recovery and saved receipts with missing config stay pending
+ok 9 - F32-I09 live dedicated configs without recovery and saved receipts with missing config stay pending
+  ---
+  duration_ms: 495.5465
+  type: 'test'
+  ...
+# Subtest: F32-I10 retained recovery after config removal is evidence rather than a live route when no Memento remains
+ok 10 - F32-I10 retained recovery after config removal is evidence rather than a live route when no Memento remains
+  ---
+  duration_ms: 222.6126
+  type: 'test'
+  ...
+# Subtest: F32-I11 foreign malformed and multiple dedicated live profiles cannot choose ownership by guesswork
+ok 11 - F32-I11 foreign malformed and multiple dedicated live profiles cannot choose ownership by guesswork
+  ---
+  duration_ms: 496.0854
+  type: 'test'
+  ...
+# Subtest: F32-I12 dedicated discovery is bounded and refuses linked profile directories
+ok 12 - F32-I12 dedicated discovery is bounded and refuses linked profile directories
+  ---
+  duration_ms: 181.0717
+  type: 'test'
+  ...
+# Subtest: F32-I13 genuine local vscode-userdata storage works while foreign storage URI components refuse
+ok 13 - F32-I13 genuine local vscode-userdata storage works while foreign storage URI components refuse
+  ---
+  duration_ms: 83.1291
+  type: 'test'
+  ...
+# Subtest: F32-I14 either Gemini settings or environment presence prevents a false absent inventory
+ok 14 - F32-I14 either Gemini settings or environment presence prevents a false absent inventory
+  ---
+  duration_ms: 33.6303
+  type: 'test'
+  ...
+# Subtest: F32-I15 PSReadLine uses the actual checked metadata journal and ignores obsolete Memento authority
+ok 15 - F32-I15 PSReadLine uses the actual checked metadata journal and ignores obsolete Memento authority
+  ---
+  duration_ms: 49.7152
+  type: 'test'
+  ...
+# Subtest: F32-I16 malformed and over8KiB PSReadLine journals are pending without raw-profile reads
+ok 16 - F32-I16 malformed and over8KiB PSReadLine journals are pending without raw-profile reads
+  ---
+  duration_ms: 24.7861
+  type: 'test'
+  ...
+# Subtest: F32-I17 valid live hook metadata is owned and completed ROLLED_BACK metadata is not a live grant
+ok 17 - F32-I17 valid live hook metadata is owned and completed ROLLED_BACK metadata is not a live grant
+  ---
+  duration_ms: 65.5738
+  type: 'test'
+  ...
+# Subtest: F32-I18 undefined hook records establish scoped absence; malformed foreign records and key errors stay pending
+ok 18 - F32-I18 undefined hook records establish scoped absence; malformed foreign records and key errors stay pending
+  ---
+  duration_ms: 25.866
+  type: 'test'
+  ...
+# Subtest: F32-I19 manual vendor receipts produce opaque hints while legacy backup presence stays pending
+ok 19 - F32-I19 manual vendor receipts produce opaque hints while legacy backup presence stays pending
+  ---
+  duration_ms: 29.3153
+  type: 'test'
+  ...
+# Subtest: F32-I20 stale foreign untrusted remote or multiple-root owner requests cannot inspect recovery
+ok 20 - F32-I20 stale foreign untrusted remote or multiple-root owner requests cannot inspect recovery
+  ---
+  duration_ms: 9.3188
+  type: 'test'
+  ...
+1..20
+# tests 20
+# suites 0
+# pass 20
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4839.3549

@@ -76,6 +76,9 @@ import { registerLogProtection } from "./logs/commands";
 import { registerMcpScanner } from "./config-scanners/mcpCommands";
 import { registerEditorScanner } from "./config-scanners/editorCommands";
 import { registerCiScanner } from "./config-scanners/ciCommands";
+import { RecoveryInventory } from "./lifecycle/RecoveryInventory";
+import { registerLifecycleRecovery } from "./lifecycle/commands";
+import { stopOwnedLifecycle } from "./lifecycle/OwnedLifecycleStop";
 
 // Single consolidated status-bar item. It replaces the earlier six separate
 // items (main, firewall, broker, safe mode, memory, runtime) — those states now
@@ -257,6 +260,26 @@ export function activate(context: vscode.ExtensionContext): void {
     registerCodexCliAdapter(context, managedReader, brokerManager);
     registerCodexIdeAdapter(context, managedReader, brokerManager);
     registerGeminiCliAdapter(context, managedReader, brokerManager);
+    const recoveryInventory = new RecoveryInventory(context);
+    registerLifecycleRecovery(context, {
+        probe: (id, owner) => recoveryInventory.probe(id, owner),
+        stopBroker: () => stopOwnedLifecycle({
+            async withdraw() {
+                await (await import("./terminal/gitBashCommands")).stopCheckedGitBash();
+                await (await import("./terminal/cmdCommands")).stopCheckedCmd();
+                await (await import("./terminal/commands")).stopCheckedPowerShell();
+                await (await import("./vault-runtime/commands")).stopVaultRuntime();
+            },
+            async snapshots() {
+                const terminals = [];
+                for (const command of ["soterai.checkedPowerShellStatus", "soterai.checkedCmdStatus", "soterai.checkedGitBashStatus"]) {
+                    terminals.push(await vscode.commands.executeCommand(command));
+                }
+                return { terminals, vault: await vscode.commands.executeCommand("soterai.vaultAppStatus") };
+            },
+            async stopBroker() { await brokerManager.stop(); return brokerManager.ownedSnapshot(); },
+        }),
+    });
     registerSentinelCommands(context, sentinel);
     registerPermissionCommands(context, permissionStore);
     registerWorkspaceGuardCommands(context, workspaceGuard);

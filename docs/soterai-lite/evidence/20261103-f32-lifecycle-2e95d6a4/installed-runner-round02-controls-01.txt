@@ -1,0 +1,100 @@
+﻿TAP version 13
+# Subtest: IR01 actual one-product CLI inventory admits exactly current identity/version
+ok 1 - IR01 actual one-product CLI inventory admits exactly current identity/version
+  ---
+  duration_ms: 8.6175
+  type: 'test'
+  ...
+# Subtest: IR02 inventory before install or after uninstall must actually be empty
+ok 2 - IR02 inventory before install or after uninstall must actually be empty
+  ---
+  duration_ms: 6.1988
+  type: 'test'
+  ...
+# Subtest: IR03 extra extension, duplicate, old version and banner cannot prove installed inventory
+ok 3 - IR03 extra extension, duplicate, old version and banner cannot prove installed inventory
+  ---
+  duration_ms: 1.9377
+  type: 'test'
+  ...
+# Subtest: IR04 duplicate top-level and escaped JSON key aliases refuse admission
+ok 4 - IR04 duplicate top-level and escaped JSON key aliases refuse admission
+  ---
+  duration_ms: 1.6328
+  type: 'test'
+  ...
+# Subtest: IR05 repeated keys in separate objects and array strings are not false duplicate failures
+ok 5 - IR05 repeated keys in separate objects and array strings are not false duplicate failures
+  ---
+  duration_ms: 0.64
+  type: 'test'
+  ...
+# Subtest: IR06 actual exact current VSIX admits four unchanged runtime payloads
+ok 6 - IR06 actual exact current VSIX admits four unchanged runtime payloads
+  ---
+  duration_ms: 513.1252
+  type: 'test'
+  ...
+# Subtest: IR07 genuine retained old archive admits real0.6.3 and three runtimes
+ok 7 - IR07 genuine retained old archive admits real0.6.3 and three runtimes
+  ---
+  duration_ms: 614.4851
+  type: 'test'
+  ...
+# Subtest: IR08 archive identity/version/runtime count and content pins cannot be substituted
+ok 8 - IR08 archive identity/version/runtime count and content pins cannot be substituted
+  ---
+  duration_ms: 794.9808
+  type: 'test'
+  ...
+# Subtest: IR09 reviewed successor preserves original runner except one broker helper binding
+ok 9 - IR09 reviewed successor preserves original runner except one broker helper binding
+  ---
+  duration_ms: 6.9395
+  type: 'test'
+  ...
+# Subtest: IR10 actual retained failed01 has emptycompleted, initialchildexit1/bothEOF and rootexit1
+ok 10 - IR10 actual retained failed01 has emptycompleted, initialchildexit1/bothEOF and rootexit1
+  ---
+  duration_ms: 30.0793
+  type: 'test'
+  ...
+# Subtest: IR11 failed root cannot be silently reused for next explicit round
+ok 11 - IR11 failed root cannot be silently reused for next explicit round
+  ---
+  duration_ms: 6.7505
+  type: 'test'
+  ...
+# Subtest: IR12 absent prior authority or changed consumed/admission bytes refuses next round
+ok 12 - IR12 absent prior authority or changed consumed/admission bytes refuses next round
+  ---
+  duration_ms: 4.0906
+  type: 'test'
+  ...
+# Subtest: IR13 next artifact/source cannot inherit old failure authority for different inputs
+ok 13 - IR13 next artifact/source cannot inherit old failure authority for different inputs
+  ---
+  duration_ms: 12.5232
+  type: 'test'
+  ...
+# Subtest: IR14 another failure path or changed child/outer evidence cannot authorize round02
+ok 14 - IR14 another failure path or changed child/outer evidence cannot authorize round02
+  ---
+  duration_ms: 27.7914
+  type: 'test'
+  ...
+# Subtest: IR15 strict custody stays04 and only identical vendor receipt is copied to D bindings
+ok 15 - IR15 strict custody stays04 and only identical vendor receipt is copied to D bindings
+  ---
+  duration_ms: 1.109
+  type: 'test'
+  ...
+1..15
+# tests 15
+# suites 0
+# pass 15
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2270.8594

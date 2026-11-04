@@ -1,0 +1,304 @@
+﻿TAP version 13
+# Subtest: O01 empty owned routes still withdraw before broker stop and recheck after stop
+not ok 1 - O01 empty owned routes still withdraw before broker stop and recheck after stop
+  ---
+  duration_ms: 24.5341
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\ownedLifecycleStop.test.ts:2:2921'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\lifecycle\\OwnedLifecycleStop' imported from C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\ownedLifecycleStop.test.ts"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:860:10)
+    defaultResolve (node:internal/modules/esm/resolve:984:11)
+    nextResolve (node:internal/modules/esm/hooks:748:28)
+    resolveBase (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:8141)
+    async resolveDirectory (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:9221)
+    async resolve2 (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:11932)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
+    async handleMessage (node:internal/modules/esm/worker:199:18)
+  ...
+# Subtest: O02 accepts only actual terminal/current vault terminal states without retaining metadata
+not ok 2 - O02 accepts only actual terminal/current vault terminal states without retaining metadata
+  ---
+  duration_ms: 11.5444
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\ownedLifecycleStop.test.ts:2:3360'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\lifecycle\\OwnedLifecycleStop' imported from C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\ownedLifecycleStop.test.ts"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:860:10)
+    defaultResolve (node:internal/modules/esm/resolve:984:11)
+    nextResolve (node:internal/modules/esm/hooks:748:28)
+    resolveBase (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:8141)
+    async resolveDirectory (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:9221)
+    async resolve2 (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:11932)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
+    async handleMessage (node:internal/modules/esm/worker:199:18)
+  ...
+# Subtest: O03 awaits natural withdrawal completion before observing status or touching broker
+not ok 3 - O03 awaits natural withdrawal completion before observing status or touching broker
+  ---
+  duration_ms: 9.3617
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\ownedLifecycleStop.test.ts:2:4006'
+  failureType: 'unhandledRejection'
+  error: "Cannot find module 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\lifecycle\\OwnedLifecycleStop' imported from C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\ownedLifecycleStop.test.ts"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:860:10)
+    defaultResolve (node:internal/modules/esm/resolve:984:11)
+    nextResolve (node:internal/modules/esm/hooks:748:28)
+    resolveBase (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:8141)
+    async resolveDirectory (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:9221)
+    async resolve2 (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:11932)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
+    async handleMessage (node:internal/modules/esm/worker:199:18)
+  ...
+# Subtest: O04 withdrawal rejection withholds status/broker calls and all private error text
+not ok 4 - O04 withdrawal rejection withholds status/broker calls and all private error text
+  ---
+  duration_ms: 10.6042
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\ownedLifecycleStop.test.ts:2:4447'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\lifecycle\\OwnedLifecycleStop' imported from C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\ownedLifecycleStop.test.ts"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:860:10)
+    defaultResolve (node:internal/modules/esm/resolve:984:11)
+    nextResolve (node:internal/modules/esm/hooks:748:28)
+    resolveBase (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:8141)
+    async resolveDirectory (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:9221)
+    async resolve2 (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:11932)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
+    async handleMessage (node:internal/modules/esm/worker:199:18)
+  ...
+# Subtest: O05 current worker READY/RUNNING/cancel-pending/unknown states never authorize broker stop
+not ok 5 - O05 current worker READY/RUNNING/cancel-pending/unknown states never authorize broker stop
+  ---
+  duration_ms: 10.8312
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\ownedLifecycleStop.test.ts:2:4791'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\lifecycle\\OwnedLifecycleStop' imported from C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\ownedLifecycleStop.test.ts"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:860:10)
+    defaultResolve (node:internal/modules/esm/resolve:984:11)
+    nextResolve (node:internal/modules/esm/hooks:748:28)
+    resolveBase (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:8141)
+    async resolveDirectory (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:9221)
+    async resolve2 (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:11932)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
+    async handleMessage (node:internal/modules/esm/worker:199:18)
+  ...
+# Subtest: O06 open terminals, unsaved ownership and recovered PID metadata remain unconfirmed
+not ok 6 - O06 open terminals, unsaved ownership and recovered PID metadata remain unconfirmed
+  ---
+  duration_ms: 10.097
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\ownedLifecycleStop.test.ts:2:5306'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\lifecycle\\OwnedLifecycleStop' imported from C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\ownedLifecycleStop.test.ts"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:860:10)
+    defaultResolve (node:internal/modules/esm/resolve:984:11)
+    nextResolve (node:internal/modules/esm/hooks:748:28)
+    resolveBase (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:8141)
+    async resolveDirectory (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:9221)
+    async resolve2 (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:11932)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
+    async handleMessage (node:internal/modules/esm/worker:199:18)
+  ...
+# Subtest: O07 current vault ready/running/stop-requested/unverified and invented FAILED states withhold stop
+not ok 7 - O07 current vault ready/running/stop-requested/unverified and invented FAILED states withhold stop
+  ---
+  duration_ms: 9.749
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\ownedLifecycleStop.test.ts:2:6006'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\lifecycle\\OwnedLifecycleStop' imported from C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\ownedLifecycleStop.test.ts"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:860:10)
+    defaultResolve (node:internal/modules/esm/resolve:984:11)
+    nextResolve (node:internal/modules/esm/hooks:748:28)
+    resolveBase (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:8141)
+    async resolveDirectory (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:9221)
+    async resolve2 (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:11932)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
+    async handleMessage (node:internal/modules/esm/worker:199:18)
+  ...
+# Subtest: O08 malformed root/status/row/array metadata conservatively withholds broker stop
+not ok 8 - O08 malformed root/status/row/array metadata conservatively withholds broker stop
+  ---
+  duration_ms: 7.6676
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\ownedLifecycleStop.test.ts:2:6494'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\lifecycle\\OwnedLifecycleStop' imported from C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\ownedLifecycleStop.test.ts"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:860:10)
+    defaultResolve (node:internal/modules/esm/resolve:984:11)
+    nextResolve (node:internal/modules/esm/hooks:748:28)
+    resolveBase (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:8141)
+    async resolveDirectory (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:9221)
+    async resolve2 (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:11932)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
+    async handleMessage (node:internal/modules/esm/worker:199:18)
+  ...
+# Subtest: O09 metadata accessors are rejected without invoking getters at any ownership layer
+not ok 9 - O09 metadata accessors are rejected without invoking getters at any ownership layer
+  ---
+  duration_ms: 8.8889
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\ownedLifecycleStop.test.ts:2:7503'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\lifecycle\\OwnedLifecycleStop' imported from C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\ownedLifecycleStop.test.ts"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:860:10)
+    defaultResolve (node:internal/modules/esm/resolve:984:11)
+    nextResolve (node:internal/modules/esm/hooks:748:28)
+    resolveBase (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:8141)
+    async resolveDirectory (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:9221)
+    async resolve2 (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:11932)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
+    async handleMessage (node:internal/modules/esm/worker:199:18)
+  ...
+# Subtest: O10 throwing metadata proxies are contained and cannot expose error text or authorize stop
+not ok 10 - O10 throwing metadata proxies are contained and cannot expose error text or authorize stop
+  ---
+  duration_ms: 8.7297
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\ownedLifecycleStop.test.ts:2:8491'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\lifecycle\\OwnedLifecycleStop' imported from C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\ownedLifecycleStop.test.ts"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:860:10)
+    defaultResolve (node:internal/modules/esm/resolve:984:11)
+    nextResolve (node:internal/modules/esm/hooks:748:28)
+    resolveBase (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:8141)
+    async resolveDirectory (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:9221)
+    async resolve2 (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:11932)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
+    async handleMessage (node:internal/modules/esm/worker:199:18)
+  ...
+# Subtest: O11 successful broker call alone is insufficient without exact stopped data state
+not ok 11 - O11 successful broker call alone is insufficient without exact stopped data state
+  ---
+  duration_ms: 8.1068
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\ownedLifecycleStop.test.ts:2:9065'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\lifecycle\\OwnedLifecycleStop' imported from C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\ownedLifecycleStop.test.ts"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:860:10)
+    defaultResolve (node:internal/modules/esm/resolve:984:11)
+    nextResolve (node:internal/modules/esm/hooks:748:28)
+    resolveBase (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:8141)
+    async resolveDirectory (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:9221)
+    async resolve2 (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:11932)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
+    async handleMessage (node:internal/modules/esm/worker:199:18)
+  ...
+# Subtest: O12 new current worker during awaited broker withdrawal prevents a stopped lifecycle report
+not ok 12 - O12 new current worker during awaited broker withdrawal prevents a stopped lifecycle report
+  ---
+  duration_ms: 10.416
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\ownedLifecycleStop.test.ts:2:9871'
+  failureType: 'unhandledRejection'
+  error: "Cannot find module 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\lifecycle\\OwnedLifecycleStop' imported from C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\ownedLifecycleStop.test.ts"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:860:10)
+    defaultResolve (node:internal/modules/esm/resolve:984:11)
+    nextResolve (node:internal/modules/esm/hooks:748:28)
+    resolveBase (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:8141)
+    async resolveDirectory (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:9221)
+    async resolve2 (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:11932)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
+    async handleMessage (node:internal/modules/esm/worker:199:18)
+  ...
+# Subtest: O13 new vault work, recovered rows or status failure after broker stop withholds completion
+not ok 13 - O13 new vault work, recovered rows or status failure after broker stop withholds completion
+  ---
+  duration_ms: 8.6057
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\ownedLifecycleStop.test.ts:2:10524'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\lifecycle\\OwnedLifecycleStop' imported from C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\ownedLifecycleStop.test.ts"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:860:10)
+    defaultResolve (node:internal/modules/esm/resolve:984:11)
+    nextResolve (node:internal/modules/esm/hooks:748:28)
+    resolveBase (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:8141)
+    async resolveDirectory (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:9221)
+    async resolve2 (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:11932)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
+    async handleMessage (node:internal/modules/esm/worker:199:18)
+  ...
+# Subtest: O14 initial snapshot failure is conservative and extra caller paths/arguments provide no authority
+not ok 14 - O14 initial snapshot failure is conservative and extra caller paths/arguments provide no authority
+  ---
+  duration_ms: 8.4663
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\ownedLifecycleStop.test.ts:2:11279'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\lifecycle\\OwnedLifecycleStop' imported from C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\ownedLifecycleStop.test.ts"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:860:10)
+    defaultResolve (node:internal/modules/esm/resolve:984:11)
+    nextResolve (node:internal/modules/esm/hooks:748:28)
+    resolveBase (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:8141)
+    async resolveDirectory (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:9221)
+    async resolve2 (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:11932)
+    async nextResolve (node:internal/modules/esm/hooks:748:22)
+    async Hooks.resolve (node:internal/modules/esm/hooks:240:24)
+    async handleMessage (node:internal/modules/esm/worker:199:18)
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 0
+# fail 14
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2083.0631

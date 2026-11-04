@@ -1,5 +1,7 @@
 # Changelog
 
+- Add a native **Restore changes before removal** review for recorded project changes. Existing per-action confirmations remain required; ambiguous/manual recovery and unconfirmed shutdown stay pending. Recovery retains policy, vault values and encrypted backups, supports reviewed terminal/editor setting undo after feature withdrawal, and preserves failed vault shutdown ownership across retries. Actual installed-only lifecycle verification remains pending.
+
 - Prepare a win32-x64 pre-release candidate with the complete owner-selected BUSL1.1 terms, privacy statement, recomputed third-party notices and embedded noncircular SBOM. Detached inventory binds actual archive/runtime/source/asset bytes. Offline inventory is not current advisory or legal approval; final native/lifecycle/human gates remain pending.
 - Exclude pre-commit from this Lite release after the owner's final verification attempt remained incomplete. New install/resume refuses even when its compatibility flag is enabled; reviewed existing-hook restore remains available. No F26a supported/DONE claim or further native run.
 - Declare virtual/remote workspaces unsupported and clarify limited trust and managed-route privacy. Preserve extension identity, version, settings and saved recovery.

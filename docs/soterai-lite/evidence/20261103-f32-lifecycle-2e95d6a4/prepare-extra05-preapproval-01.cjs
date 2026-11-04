@@ -1,0 +1,16 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto'),assert=require('node:assert/strict'),net=require('node:net');
+const own=n=>path.join(__dirname,n),sha=b=>crypto.createHash('sha256').update(b).digest('hex'),fact=f=>{const b=fs.readFileSync(f);return{path:path.resolve(f),bytes:b.length,sha256:sha(b)}};
+(async()=>{
+ const proposal=fact(own('TRUST-DIAGNOSTIC-PROPOSAL05.md'));assert.equal(proposal.sha256,'638be8e15e37c44386bddbf378dc13f14814dc9b63ef9fab968eee667b3ea801');
+ const runner=fact(own('run-installed-lifecycle-proposed-05.cjs'));assert.equal(runner.sha256,'a461f800b75ea1fa4216249faec48255636835beda1001209476abd28d06872c');
+ const gui=fact(own('native-owned-gui-phase-proposed-05.cjs'));assert.equal(gui.sha256,'c87d2d00775e182ae4afa0178d43b419a38c166fb64716423733de4a8a629580');
+ assert(!fs.existsSync(own('installed-extra05-user-approval.json'))&&!fs.existsSync(own('installed-extra05-consumed.json'))&&!fs.existsSync(own('installed-extra05-admission.json')));
+ const servers=[],ports=[];try{for(let i=0;i<9;i++){const s=net.createServer();await new Promise((res,rej)=>{s.once('error',rej);s.listen(0,'127.0.0.1',res);});servers.push(s);const p=s.address().port;assert(p!==47321);ports.push(p);}}finally{await Promise.all(servers.map(s=>new Promise(res=>s.close(res))));}assert.equal(new Set(ports).size,9);
+ const options={runRoot:'D:\\SoterAI-Lite-test-profiles\\f32-installed-'+new Date().toISOString().replace(/[-:.]/g,'').replace(/\d{3}Z$/,'Z')+'-'+crypto.randomBytes(4).toString('hex'),debugPorts:ports.slice(0,8),configuredBrokerPort:ports[8],syntheticCanary:'SOTERAI_F32_SYNTHETIC_'+crypto.randomBytes(8).toString('hex').toUpperCase()};
+ const a=require('./prepare-installed-extra05-admission-proposed-01.cjs').makeAdmission(options),r=require(runner.path);r.verifyPreviousRound(a);r.verifyPreviousRound02(a);r.verifyPreviousRound03(a);r.verifyInstallerSize(a,r.inspectVsix(a.currentVsix,'0.7.0',4),r.inspectVsix(a.oldVsix,'0.6.3',3));
+ assert.throws(()=>r.verifyExtraApproval(a));assert.equal(a.extraApproval,undefined);assert.equal(a.fixtures.guiHelper.sha256,gui.sha256);
+ const candidate=own('installed-extra05-candidate-admission-01.json.txt');fs.writeFileSync(candidate,JSON.stringify(a,null,2)+'\n',{flag:'wx'});
+ const report={feature:'F32',status:'EXTRA05_CONCRETE_PREPARED_NOT_AUTHORIZED_NOT_RUN',observedAt:new Date().toISOString(),proposal,runner,gui,candidate:fact(candidate),options,sourceProof:a.sourceProof,vsix:a.currentVsix,allThreeFailedHistories:'ACTUAL_BYTES_AND_CLOSE_STREAMS_REVERIFIED',installer:'EXACT_CURRENT_AND_OLD_ARCHIVE_XML_SIZE_QUALIFIED',missingApprovalRefused:true,normalRoundsConsumed:3,maxNormalRounds:3,extraAttemptsApproved:0,extraNativeLaunches:0,signalsRequested:0,executionAfterApproval:'Materialize exact candidate plus actual explicit approval fact, rerun final admission/current vendor and wait for affected suite actual safe withdrawal before any new GUI host.'};
+ fs.writeFileSync(own('extra05-preapproval-01.json'),JSON.stringify(report,null,2)+'\n',{flag:'wx'});console.log(JSON.stringify({status:report.status,receipt:fact(own('extra05-preapproval-01.json')),candidate:report.candidate,runRoot:options.runRoot}));
+})().catch(e=>{console.error(e);process.exitCode=1;});

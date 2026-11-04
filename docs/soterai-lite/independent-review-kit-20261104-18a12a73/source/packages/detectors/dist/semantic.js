@@ -1,0 +1,101 @@
+import { normalizeForDetection } from "./normalize";
+let registeredModel = null;
+export function registerSemanticModel(model) {
+    registeredModel = model;
+}
+/* ------------------------------------------------------------------ */
+/* Heuristic engine                                                    */
+/* ------------------------------------------------------------------ */
+// Weighted lexicon: words that carry injection *intent*, not just one keyword.
+const INTENT_TERMS = [
+    // Authority-override / instruction-hijack verbs
+    [/\b(ignor\w*|disregard\w*|forget|override|bypass|disable|circumvent|suppress)\b/gi, 16, "override-verb"],
+    // Credential / config extraction nouns
+    [/\b(api[\s_-]?keys?|access[\s_-]?tokens?|credentials?|passwords?|secrets?|private[\s_-]?keys?)\b/gi, 14, "credential-noun"],
+    // Target = the model's own instructions/prompt (a hallmark of injection)
+    [/\b(system[\s_-]?prompt|developer[\s_-]?message|initial[\s_-]?instructions?|hidden[\s_-]?(?:prompt|instructions?)|(?:governing|standing|existing|prior|original)[\s_-]?(?:rules|instructions|guidelines|constraints|directives)|your[\s_-]?(?:rules|instructions|guidelines|constraints))\b/gi, 18, "prompt-target"],
+    // Persona / unconstrained-mode jailbreak phrasing
+    [/\b(dan\b|do anything now|jailbreak|no (?:ethics|restrictions|limits|filters)|unfiltered|uncensored|act as (?:an? )?(?:evil|unrestricted|uncensored))\b/gi, 18, "jailbreak-persona"],
+    // Exfiltration verbs pointed at the above nouns
+    [/\b(reveal|show|print|leak|display|dump|expose|list|output|repeat|echo|extract)\b/gi, 12, "exfil-verb"],
+    // Role reassignment: "you are now / pretend to be" outside a quoted code comment
+    [/\b(you are now|from now on you|pretend (?:to be|you are)|imagine you are|simulate being|assume the role)\b/gi, 15, "role-reassign"],
+    // Hidden instructions sourced from attacker-controlled files/tool output.
+    [/\b(hidden|embedded|concealed|internal)\s+(?:system\s+)?(?:instructions?|prompt|directives?|rules?)\b/gi, 18, "indirect-instruction-target"],
+    [/\b(extract|recover|follow|execute|obey|apply)\b[^\n]{0,80}\b(?:instructions?|directives?|prompt|rules?)\b/gi, 14, "instruction-execution"],
+    // "in this hypothetical/fictional scenario ... provide instructions to make X"
+    [/\b(hypothetical|fictional|for (?:a )?(?:story|novel|movie|game)|academic purposes?)\b/gi, 8, "fiction-frame"],
+];
+// Novelty multipliers: combinations the regex tables don't encode on their own.
+const COMBO_BOOSTS = [
+    { need: ["override-verb", "prompt-target"], boost: 22, label: "override-the-system-prompt" },
+    { need: ["exfil-verb", "credential-noun"], boost: 20, label: "exfiltrate-credentials" },
+    { need: ["jailbreak-persona", "override-verb"], boost: 18, label: "persona-plus-override" },
+    { need: ["fiction-frame", "credential-noun"], boost: 14, label: "framed-credential-request" },
+    { need: ["indirect-instruction-target", "instruction-execution"], boost: 24, label: "indirect-instruction-execution" },
+];
+/** Score one (already normalized) view. */
+function scoreView(text) {
+    if (!text || text.trim().length < 6)
+        return { score: 0, signals: [] };
+    const fired = new Map();
+    for (const [re, weight, label] of INTENT_TERMS) {
+        const matches = text.match(re);
+        if (!matches)
+            continue;
+        // Diminishing returns: first hit counts full, repeats add 0.25x each.
+        const repeats = Math.min(matches.length - 1, 3);
+        fired.set(label, Math.max(fired.get(label) ?? 0, weight + repeats * weight * 0.25));
+    }
+    let score = 0;
+    for (const w of fired.values())
+        score += w;
+    const labels = Array.from(fired.keys());
+    for (const combo of COMBO_BOOSTS) {
+        if (combo.need.every((n) => labels.includes(n))) {
+            score = Math.min(100, score + combo.boost);
+            labels.push(combo.label);
+        }
+    }
+    // Length-gated confidence: a single hit on a huge document is weaker evidence
+    // than the same hit in a short prompt.
+    if (text.length > 4000 && labels.length <= 1)
+        score = Math.round(score * 0.7);
+    return { score: Math.min(100, Math.round(score)), signals: labels };
+}
+/** Public entry: score raw (possibly obfuscated) text against every view. */
+export function semanticInjectionScore(rawText) {
+    const views = normalizeForDetection(rawText);
+    if (!views.length)
+        return { score: 0, signals: [] };
+    let best = { score: 0, signals: [] };
+    for (const view of views) {
+        // Prefer a registered neural model when present, else heuristic.
+        const scored = registeredModel?.(view) ?? scoreView(view);
+        if (scored.score > best.score)
+            best = scored;
+    }
+    return best;
+}
+/**
+ * Emit a DetectorFinding when the semantic score crosses the threshold.
+ * Default threshold 55 — high enough that a lone benign keyword ("show me how
+ * jwt works") stays below it, low enough to catch real paraphrased jailbreaks.
+ */
+export function detectSemanticInjection(rawText, threshold = 55) {
+    const { score, signals } = semanticInjectionScore(rawText);
+    if (score < threshold)
+        return [];
+    return [
+        {
+            type: "prompt_injection_semantic",
+            label: "Semantic prompt-injection (paraphrase-resistant)",
+            severity: score >= 75 ? "high" : "medium",
+            score,
+            start: 0,
+            end: Math.min(rawText.length, 200),
+            match: rawText.slice(0, 200),
+            message: `Paraphrase-resistant injection intent (signals: ${signals.slice(0, 4).join(", ") || "combined"}).`,
+        },
+    ];
+}

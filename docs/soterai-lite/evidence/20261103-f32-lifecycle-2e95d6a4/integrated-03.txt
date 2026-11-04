@@ -1,0 +1,28 @@
+﻿{"phase":"compiler-owned-03","observedAt":"2026-11-03T14:05:42.528Z","pid":2644,"actualClose":true,"exitCode":0,"signal":null,"stdoutEOF":true,"stderrEOF":true,"overflow":false,"streamError":false,"deadlineExceeded":false,"signalsRequested":0,"streams":[{"name":"stdout","bytes":0,"observedBytes":0,"sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},{"name":"stderr","bytes":0,"observedBytes":0,"sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}]}
+{"phase":"unit-shard-03-03","observedAt":"2026-11-03T14:08:09.099Z","pid":14072,"actualClose":true,"exitCode":0,"signal":null,"stdoutEOF":true,"stderrEOF":true,"overflow":false,"streamError":false,"deadlineExceeded":false,"signalsRequested":0,"streams":[{"name":"stdout","bytes":147699,"observedBytes":147699,"sha256":"ff5243c1d74803402b80cacc2442e62b13a3a6cc44006cba061508258922071a"},{"name":"stderr","bytes":0,"observedBytes":0,"sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}]}
+{"phase":"unit-shard-04-03","observedAt":"2026-11-03T14:10:24.853Z","pid":18744,"actualClose":true,"exitCode":0,"signal":null,"stdoutEOF":true,"stderrEOF":true,"overflow":false,"streamError":false,"deadlineExceeded":false,"signalsRequested":0,"streams":[{"name":"stdout","bytes":181790,"observedBytes":181790,"sha256":"a14e6e83af66384cae92f1b2fc8e3b250611db46d225aa72e91dc326277fe036"},{"name":"stderr","bytes":0,"observedBytes":0,"sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}]}
+{"phase":"unit-shard-05-03","observedAt":"2026-11-03T14:13:03.230Z","pid":9292,"actualClose":true,"exitCode":0,"signal":null,"stdoutEOF":true,"stderrEOF":true,"overflow":false,"streamError":false,"deadlineExceeded":false,"signalsRequested":0,"streams":[{"name":"stdout","bytes":189196,"observedBytes":189196,"sha256":"46b62f41af30bda50af9b7421f59e96ddbd89c79a01233bf3be5c4005cfadea0"},{"name":"stderr","bytes":0,"observedBytes":0,"sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}]}
+{"phase":"unit-shard-06-03","observedAt":"2026-11-03T14:15:22.212Z","pid":5988,"actualClose":true,"exitCode":0,"signal":null,"stdoutEOF":true,"stderrEOF":true,"overflow":false,"streamError":false,"deadlineExceeded":false,"signalsRequested":0,"streams":[{"name":"stdout","bytes":184172,"observedBytes":184172,"sha256":"2e6ed81c3963f909978ef6ad77570f80fbca9e434dbc05bc8f56b233b5e63440"},{"name":"stderr","bytes":0,"observedBytes":0,"sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}]}
+{"phase":"unit-shard-07-03","observedAt":"2026-11-03T14:17:08.527Z","pid":4108,"actualClose":true,"exitCode":1,"signal":null,"stdoutEOF":true,"stderrEOF":true,"overflow":false,"streamError":false,"deadlineExceeded":false,"signalsRequested":0,"streams":[{"name":"stdout","bytes":131237,"observedBytes":131237,"sha256":"81b228c024aca7b21c59b2668690323abe443dfa2299b720b4e2ff9a391225ae"},{"name":"stderr","bytes":0,"observedBytes":0,"sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}]}
+node.exe : AssertionError [ERR_ASSERTION]: unit-shard-07-03
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (AssertionError ...nit-shard-07-03:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+1 !== 0
+
+    at run (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261103-f32-lifecycle-2e
+95d6a4\run-integrated-03.cjs:34:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261103-f32-lifecycle-2
+e95d6a4\run-integrated-03.cjs:60:12 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 1,
+  expected: 0,
+  operator: 'strictEqual'
+}

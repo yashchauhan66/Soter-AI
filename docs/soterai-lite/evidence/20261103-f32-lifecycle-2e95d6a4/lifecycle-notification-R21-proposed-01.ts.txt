@@ -1,0 +1,33 @@
+// INERT snippet for lifecycleRecoveryCommands.test.ts, appended after R20.
+// Uses existing test/fixture/deferred/bounded helpers. NOT_EXECUTED here.
+// First capture failure against the frozen awaiting-notification implementation.
+test("F32-R21 a pending nonmodal completion notice cannot block the fixed removal report", async t => {
+    const f = await fixture(t);
+    const noticeOpened = deferred<void>(), noticeDismissed = deferred<undefined>();
+    let noticeSettled = false;
+    t.mock.method(stub.window, "showInformationMessage", ((message: string, ...rest: unknown[]) => {
+        f.calls.ui.push({ kind: "showInformationMessage", message, rest });
+        assert(!modal(rest), "A fixed completion notice must remain nonmodal.");
+        noticeOpened.resolve();
+        return noticeDismissed.promise.then(value => { noticeSettled = true; return value; });
+    }) as typeof stub.window.showInformationMessage);
+    const work = f.invoke();
+    try {
+        await bounded(noticeOpened.promise);
+        // Keep the actual notice promise pending through report resolution.
+        // No Escape/click/dismissal may make the command look responsive.
+        const result = await work;
+        assert.equal(noticeSettled, false);
+        assert.equal(result.status, "COMPLETE");
+        assert.equal(result.broker, "STOPPED");
+        assert.equal(result.actions.length, 14);
+        assert(result.actions.every(row => row.status === "NOT_APPLICABLE"));
+        assert.equal(f.calls.stops, 1);
+        f.noIO();
+    } finally {
+        // Release only after the success/failure assertion, to retain the exact
+        // observed hang while avoiding a dangling fixture promise on cleanup.
+        noticeDismissed.resolve(undefined);
+        await work.catch(() => undefined);
+    }
+});

@@ -1,0 +1,100 @@
+﻿TAP version 13
+# Subtest: MF01 exact reviewed installer serialization accepted with original artifact hash retained
+ok 1 - MF01 exact reviewed installer serialization accepted with original artifact hash retained
+  ---
+  duration_ms: 12.4613
+  type: 'test'
+  ...
+# Subtest: MF02 rejects changed product field main even with valid installer metadata
+ok 2 - MF02 rejects changed product field main even with valid installer metadata
+  ---
+  duration_ms: 9.72
+  type: 'test'
+  ...
+# Subtest: MF02 rejects changed product field version even with valid installer metadata
+ok 3 - MF02 rejects changed product field version even with valid installer metadata
+  ---
+  duration_ms: 11.803
+  type: 'test'
+  ...
+# Subtest: MF02 rejects changed product field activationEvents even with valid installer metadata
+ok 4 - MF02 rejects changed product field activationEvents even with valid installer metadata
+  ---
+  duration_ms: 7.998
+  type: 'test'
+  ...
+# Subtest: MF03 rejects arbitrary additional installer metadata authority
+ok 5 - MF03 rejects arbitrary additional installer metadata authority
+  ---
+  duration_ms: 8.9307
+  type: 'test'
+  ...
+# Subtest: MF04 rejects timestamp outside actual CLI interval on either side
+ok 6 - MF04 rejects timestamp outside actual CLI interval on either side
+  ---
+  duration_ms: 36.3956
+  type: 'test'
+  ...
+# Subtest: MF05 rejects platform and extracted-size mismatches
+ok 7 - MF05 rejects platform and extracted-size mismatches
+  ---
+  duration_ms: 14.6528
+  type: 'test'
+  ...
+# Subtest: MF06 rejects JSON duplicate fields before parser normalization
+ok 8 - MF06 rejects JSON duplicate fields before parser normalization
+  ---
+  duration_ms: 7.7028
+  type: 'test'
+  ...
+# Subtest: MF07 refuses generic pretty print relaxation and appended newline
+ok 9 - MF07 refuses generic pretty print relaxation and appended newline
+  ---
+  duration_ms: 16.595
+  type: 'test'
+  ...
+# Subtest: MF08 rejects changed original artifact bytes even when parsed fields agree
+ok 10 - MF08 rejects changed original artifact bytes even when parsed fields agree
+  ---
+  duration_ms: 7.8098
+  type: 'test'
+  ...
+# Subtest: MF09 refuses original artifact with unreviewed metadata
+ok 11 - MF09 refuses original artifact with unreviewed metadata
+  ---
+  duration_ms: 7.427
+  type: 'test'
+  ...
+# Subtest: SQ01 primary source keeps owned receipts and defers the complete aggregate to restart
+ok 12 - SQ01 primary source keeps owned receipts and defers the complete aggregate to restart
+  ---
+  duration_ms: 0.8506
+  type: 'test'
+  ...
+# Subtest: SQ02 prior seed uses actual old void public API and current upgrade never recreates deny
+ok 13 - SQ02 prior seed uses actual old void public API and current upgrade never recreates deny
+  ---
+  duration_ms: 0.9521
+  type: 'test'
+  ...
+# Subtest: SQ03 old and current native migration prompts are distinct actual contracts
+ok 14 - SQ03 old and current native migration prompts are distinct actual contracts
+  ---
+  duration_ms: 1.6124
+  type: 'test'
+  ...
+# Subtest: SQ04 distinct scenario retention paths are bound rather than sharing top-level files
+ok 15 - SQ04 distinct scenario retention paths are bound rather than sharing top-level files
+  ---
+  duration_ms: 1.0321
+  type: 'test'
+  ...
+1..15
+# tests 15
+# suites 0
+# pass 15
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 319.3381

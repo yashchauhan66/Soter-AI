@@ -1,0 +1,25 @@
+{
+  "status": "INERT_EXACT_COMMAND_TEST_COPY_PLUS_R21_ONLY_IMPORT_RELOCATION",
+  "originalSha256": "06bd9d12366926dd30b6f694c00547b483cb5dd4994eb21f97cfe1c41f0a6e7d",
+  "snippetSha256": "5f931748cdfcc6dcc174f9b26defecd50cebfe4e150554b9be5acd7da1c1afc3",
+  "output": "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/lifecycle-notification-before-01.test.cts",
+  "outputSha256": "fec45c26f6b76c11b5f1fd4086e8ce276c96e8aab65fdb42799358cd81853f37",
+  "rewrites": [
+    [
+      "./phase2/register.mjs",
+      "src/__tests__/phase2/register.mjs"
+    ],
+    [
+      "./phase2/vscode-stub",
+      "src/__tests__/phase2/vscode-stub.ts"
+    ],
+    [
+      "../lifecycle/RemovalCoordinator",
+      "src/lifecycle/RemovalCoordinator.ts"
+    ],
+    [
+      "../lifecycle/commands",
+      "src/lifecycle/commands.ts"
+    ]
+  ]
+}

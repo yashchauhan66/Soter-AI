@@ -1,0 +1,70 @@
+﻿TAP version 13
+# Subtest: BO01 public healthy status is reduced to fixed metadata without raw result or token
+ok 1 - BO01 public healthy status is reduced to fixed metadata without raw result or token
+  ---
+  duration_ms: 4.0801
+  type: 'test'
+  ...
+# Subtest: BO02 irrelevant private getter is never evaluated or serialized
+ok 2 - BO02 irrelevant private getter is never evaluated or serialized
+  ---
+  duration_ms: 0.485
+  type: 'test'
+  ...
+# Subtest: BO03 healthy requires exact owner status/version/running fields
+ok 3 - BO03 healthy requires exact owner status/version/running fields
+  ---
+  duration_ms: 4.2417
+  type: 'test'
+  ...
+# Subtest: BO04 only exact numeric private loopback endpoint is admitted; never legacy47321
+ok 4 - BO04 only exact numeric private loopback endpoint is admitted; never legacy47321
+  ---
+  duration_ms: 28.7127
+  type: 'test'
+  ...
+# Subtest: BO05 void malformed and accessor status cannot become owner evidence
+ok 5 - BO05 void malformed and accessor status cannot become owner evidence
+  ---
+  duration_ms: 2.8089
+  type: 'test'
+  ...
+# Subtest: BO06 unconfirmed or retained generation cannot be reported stopped
+ok 6 - BO06 unconfirmed or retained generation cannot be reported stopped
+  ---
+  duration_ms: 1.1676
+  type: 'test'
+  ...
+# Subtest: BO07 exact public stopped snapshot has no residual session or private fields
+ok 7 - BO07 exact public stopped snapshot has no residual session or private fields
+  ---
+  duration_ms: 0.6367
+  type: 'test'
+  ...
+# Subtest: BO08 actual start and external custody must precede I12; stopped observation follows it
+ok 8 - BO08 actual start and external custody must precede I12; stopped observation follows it
+  ---
+  duration_ms: 1.1881
+  type: 'test'
+  ...
+# Subtest: BO09 synthetic settings bind a safe configured port while owner uses its actual IPC port
+ok 9 - BO09 synthetic settings bind a safe configured port while owner uses its actual IPC port
+  ---
+  duration_ms: 1.4275
+  type: 'test'
+  ...
+# Subtest: BO10 fixture cannot repair a failed aggregate by separately stopping or restarting broker
+ok 10 - BO10 fixture cannot repair a failed aggregate by separately stopping or restarting broker
+  ---
+  duration_ms: 1.9286
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 215.3519

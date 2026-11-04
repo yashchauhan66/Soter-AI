@@ -1,0 +1,90 @@
+{
+  "feature": "F32",
+  "status": "PASS_CURRENT_VENDOR_INSTALLED_SIZE_INCLUDES_EXACT_VSIXMANIFEST",
+  "observedAt": "2026-11-04T02:06:52.174Z",
+  "vendorReceiptSha256": "a6c503f070e1f637386cfa5d06bbd03409a041325d9a267959a6a3f8307bbe71",
+  "currentVsixSha256": "e2ce3dc44d45b5e160ab0f95d713a9434a9ea7d610ce7abd2bf2500abe89d649",
+  "oldVsixSha256": "dcbcd9738cb480616cf4d3aa66d1a1ac2287e1754aa7307dea7ac23fee7c3677",
+  "priorAdmission": {
+    "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261103-f32-lifecycle-2e95d6a4\\installed-admission-02.json",
+    "bytes": 7877,
+    "sha256": "f00ec728a897490467d3b9576b600ab2127555b249b37f0079129a7defc8dd19"
+  },
+  "current": {
+    "vsix": {
+      "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\soterai-lite\\soterai-lite-0.7.0-f32-20261103-attempt01.vsix",
+      "bytes": 1742100,
+      "sha256": "e2ce3dc44d45b5e160ab0f95d713a9434a9ea7d610ce7abd2bf2500abe89d649"
+    },
+    "payloadUncompressedBytes": 3664488,
+    "archiveXml": {
+      "entry": "extension.vsixmanifest",
+      "bytes": 3594,
+      "sha256": "f9b5e2fae42d7476639893d4e6585c51409085ddb8b6d4f618c1a0c55939afdd"
+    },
+    "vendorInstalledSize": 3668082
+  },
+  "old": {
+    "vsix": {
+      "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\soterai-ide-guard-0.6.3.vsix",
+      "bytes": 4446653,
+      "sha256": "dcbcd9738cb480616cf4d3aa66d1a1ac2287e1754aa7307dea7ac23fee7c3677"
+    },
+    "payloadUncompressedBytes": 5462987,
+    "archiveXml": {
+      "entry": "extension.vsixmanifest",
+      "bytes": 3525,
+      "sha256": "e20e3298f1e4609782798440070aa6e9bf344434fb9af501c8f328765fe0d36d"
+    },
+    "vendorInstalledSize": 5466512
+  },
+  "actualInstalledManifest": {
+    "path": "D:\\SoterAI-Lite-test-profiles\\f32-installed-20261104T015946Z-f3ae857e\\extensions-primary\\soterai.soterai-ide-guard-0.7.0\\package.json",
+    "bytes": 121491,
+    "sha256": "a6fe97d6d0666d7f5d9f93e1bcd4ca0d7ab20a07730c22e9b9dae2c66879c74a"
+  },
+  "actualInstalledVsixManifest": {
+    "path": "D:\\SoterAI-Lite-test-profiles\\f32-installed-20261104T015946Z-f3ae857e\\extensions-primary\\soterai.soterai-ide-guard-0.7.0\\.vsixmanifest",
+    "bytes": 3594,
+    "sha256": "f9b5e2fae42d7476639893d4e6585c51409085ddb8b6d4f618c1a0c55939afdd"
+  },
+  "before": {
+    "status": "FAIL_REPRODUCED_EXACT_NATIVE_INPUT",
+    "failure": {
+      "name": "AssertionError",
+      "actual": 3668082,
+      "expected": 3664488,
+      "operator": "strictEqual"
+    }
+  },
+  "after": {
+    "status": "PASS_EXACT_FUNCTION_SAME_NATIVE_INPUT_ONLY_EXPLICIT_XML_SIZE_ADDED",
+    "result": {
+      "originalSha256": "341bc42e0e04344ea7030f3663e28b70765489716a2ee0ddf5e405b1e4dd6da2",
+      "installedSha256": "a6fe97d6d0666d7f5d9f93e1bcd4ca0d7ab20a07730c22e9b9dae2c66879c74a",
+      "installerOnlyFields": [
+        "installedTimestamp",
+        "targetPlatform",
+        "size"
+      ],
+      "installedTimestamp": 1793757650143,
+      "targetPlatform": "undefined",
+      "size": 3668082
+    }
+  },
+  "vendorSource": {
+    "path": "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\261c84cb1e\\resources\\app\\out\\vs\\code\\node\\cliProcessMain.js",
+    "bytes": 784666,
+    "sha256": "109dd5d51a06b836b8ca0cfc7abce66d22b2953b41d7a297de4ece7eaac2bfb6",
+    "fileLinkCount": 1
+  },
+  "witnesses": [
+    {
+      "utf16Offset": 357075,
+      "snippet": "or{constructor(e,n){super(e);this.code=n;this.name=n}},eo=W(\"extensionManagementService\");var S2=W(\"IGlobalExtensionEnablementService\"),x2=W(\"IExtensionTipsService\"),bn=W(\"IAllowedExtensionsService\");async function Nl(i,t){let e;try{e=await t.resolve(i)}catch(n){if(n.fileOperationResult===1)return 0;throw n}return e.children?(await Promise.all(e.children.map(r=>Nl(r.resource,t)))).reduce((r,o)=>r+o,0):e.size??0}var I2=md(4205,\"Extensions\"),b2=md(4222,\"Preferences\"),_s=\"extens"
+    }
+  ],
+  "nativeLaunches": 0,
+  "signalsRequested": 0,
+  "scope": "Actual retained installation metadata plus exact local old/current archive XML. No product API/confirmation or assertion bypass."
+}

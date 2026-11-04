@@ -1,0 +1,11 @@
+'use strict';
+const fs = require('node:fs'), path = require('node:path'), assert = require('node:assert/strict');
+let source = fs.readFileSync(path.join(__dirname, 'installed-owner-custody-proposed-02.ps1'), 'utf8');
+const lines = source.split('\n').filter(line => line.includes('if($taskBinding.runRoot -cnotmatch '));
+assert.equal(lines.length, 2);
+const literal = line => { const start = line.indexOf("'"); return line.slice(start, line.indexOf("'", start + 1) + 1); };
+assert.notEqual(literal(lines[0]), literal(lines[1]));
+const corrected = lines[1].replace(literal(lines[1]), literal(lines[0]));
+assert.equal(source.split(lines[1]).length - 1, 1); source = source.replace(lines[1], corrected);
+source = '# Successor03: initial root regex is byte-identical to the existing checked phase-root regex.\n' + source;
+fs.writeFileSync(path.join(__dirname, 'installed-owner-custody-proposed-03.ps1'), source, { flag: 'wx' });

@@ -1,0 +1,7 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto'),assert=require('node:assert/strict');
+const helper=path.resolve(__dirname,'../20261027-f27-self-hygiene-8c16e402/native-owned-phase-01.cjs'),sha=b=>crypto.createHash('sha256').update(b).digest('hex');
+assert.equal(sha(fs.readFileSync(helper)),'c3ca6d3b159ecbd825a0e917a40e5c24cb9aa3aeaa76d67a3fa0fc18113dea4f');
+const driver=path.join(__dirname,'run-scripted-benchmarks-proposed-01.cjs');assert.equal(sha(fs.readFileSync(driver)),'7a58609651689921005d2ad30dcaa3f6a7b7dee24a924be3b5bdd68a13d5f107');
+const keep=setInterval(()=>{},1000);
+require(helper).phase({executable:process.execPath,args:[driver,'--run','e0b7677479089dfdfe7a2d64baa0ce7f66e4a9600c1094fcde96152101829f24'],cwd:path.resolve(__dirname,'../../../..'),env:{SystemRoot:'C:\\Windows',WINDIR:'C:\\Windows',PATH:'C:\\Windows\\System32;C:\\Program Files\\nodejs',TEMP:__dirname,TMP:__dirname},run:__dirname,name:'scripted-benchmarks-01',profile:'SYNTHETIC_V02_COMPONENT_DRYRUN_NO_MODEL_OR_NETWORK',deadlineMs:180000}).then(r=>{assert.equal(r.closed.code,0);assert.equal(r.closed.signal,null);assert(r.close.actualClose&&r.close.stdoutEOF&&r.close.stderrEOF&&!r.deadline&&!r.error&&!r.overflow);console.log('Owned scripted benchmark phase closed0/bothEOF; inspect actual scoped result and human gaps.');}).catch(e=>{console.error(e);process.exitCode=1;}).finally(()=>clearInterval(keep));

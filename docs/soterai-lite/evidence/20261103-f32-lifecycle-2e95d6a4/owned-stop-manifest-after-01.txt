@@ -1,0 +1,106 @@
+﻿TAP version 13
+# Subtest: F32 vscode-extension exposes reviewed removal and a restricted machine recovery flag
+ok 1 - F32 vscode-extension exposes reviewed removal and a restricted machine recovery flag
+  ---
+  duration_ms: 8.8858
+  type: 'test'
+  ...
+# Subtest: F32 soterai-lite exposes reviewed removal and a restricted machine recovery flag
+ok 2 - F32 soterai-lite exposes reviewed removal and a restricted machine recovery flag
+  ---
+  duration_ms: 4.1492
+  type: 'test'
+  ...
+# Subtest: O01 empty owned routes still withdraw before broker stop and recheck after stop
+ok 3 - O01 empty owned routes still withdraw before broker stop and recheck after stop
+  ---
+  duration_ms: 199.349
+  type: 'test'
+  ...
+# Subtest: O02 accepts only actual terminal/current vault terminal states without retaining metadata
+ok 4 - O02 accepts only actual terminal/current vault terminal states without retaining metadata
+  ---
+  duration_ms: 4.696
+  type: 'test'
+  ...
+# Subtest: O03 awaits natural withdrawal completion before observing status or touching broker
+ok 5 - O03 awaits natural withdrawal completion before observing status or touching broker
+  ---
+  duration_ms: 5.6408
+  type: 'test'
+  ...
+# Subtest: O04 withdrawal rejection withholds status/broker calls and all private error text
+ok 6 - O04 withdrawal rejection withholds status/broker calls and all private error text
+  ---
+  duration_ms: 3.148
+  type: 'test'
+  ...
+# Subtest: O05 current worker READY/RUNNING/cancel-pending/unknown states never authorize broker stop
+ok 7 - O05 current worker READY/RUNNING/cancel-pending/unknown states never authorize broker stop
+  ---
+  duration_ms: 11.2285
+  type: 'test'
+  ...
+# Subtest: O06 open terminals, unsaved ownership and recovered PID metadata remain unconfirmed
+ok 8 - O06 open terminals, unsaved ownership and recovered PID metadata remain unconfirmed
+  ---
+  duration_ms: 8.0842
+  type: 'test'
+  ...
+# Subtest: O07 current vault ready/running/stop-requested/unverified and invented FAILED states withhold stop
+ok 9 - O07 current vault ready/running/stop-requested/unverified and invented FAILED states withhold stop
+  ---
+  duration_ms: 7.9602
+  type: 'test'
+  ...
+# Subtest: O08 malformed root/status/row/array metadata conservatively withholds broker stop
+ok 10 - O08 malformed root/status/row/array metadata conservatively withholds broker stop
+  ---
+  duration_ms: 17.7247
+  type: 'test'
+  ...
+# Subtest: O09 metadata accessors are rejected without invoking getters at any ownership layer
+ok 11 - O09 metadata accessors are rejected without invoking getters at any ownership layer
+  ---
+  duration_ms: 7.7494
+  type: 'test'
+  ...
+# Subtest: O10 throwing metadata proxies are contained and cannot expose error text or authorize stop
+ok 12 - O10 throwing metadata proxies are contained and cannot expose error text or authorize stop
+  ---
+  duration_ms: 4.8624
+  type: 'test'
+  ...
+# Subtest: O11 successful broker call alone is insufficient without exact stopped data state
+ok 13 - O11 successful broker call alone is insufficient without exact stopped data state
+  ---
+  duration_ms: 15.1177
+  type: 'test'
+  ...
+# Subtest: O12 new current worker during awaited broker withdrawal prevents a stopped lifecycle report
+ok 14 - O12 new current worker during awaited broker withdrawal prevents a stopped lifecycle report
+  ---
+  duration_ms: 2.2691
+  type: 'test'
+  ...
+# Subtest: O13 new vault work, recovered rows or status failure after broker stop withholds completion
+ok 15 - O13 new vault work, recovered rows or status failure after broker stop withholds completion
+  ---
+  duration_ms: 6.9384
+  type: 'test'
+  ...
+# Subtest: O14 initial snapshot failure is conservative and extra caller paths/arguments provide no authority
+ok 16 - O14 initial snapshot failure is conservative and extra caller paths/arguments provide no authority
+  ---
+  duration_ms: 3.9437
+  type: 'test'
+  ...
+1..16
+# tests 16
+# suites 0
+# pass 16
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1560.6754

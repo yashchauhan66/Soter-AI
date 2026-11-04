@@ -1,0 +1,102 @@
+{
+    "schemaVersion":  1,
+    "feature":  "F32",
+    "status":  "PURE_CUSTODY_16_PASS_ORIGINAL_REGEX_FAILURE_REPRODUCED_NOT_NATIVE",
+    "observedAt":  "2026-11-03T14:24:03.4725684Z",
+    "originalSource":  {
+                           "path":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261103-f32-lifecycle-2e95d6a4\\installed-owner-custody-proposed-02.ps1",
+                           "sha256":  "c1cc31cde552f20db22ba0a8ae2bcd3f187afbf72ee5040e5aa8a8ad809aacaa",
+                           "bytes":  28787
+                       },
+    "originalFailure":  "Pure custody control failed: P02-root-positive-2",
+    "currentSource":  {
+                          "path":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261103-f32-lifecycle-2e95d6a4\\installed-owner-custody-proposed-04.ps1",
+                          "sha256":  "8b0815d4544972cdbfdbde32455fefccff44830abf86667e3a5b74f4a3c1315c",
+                          "bytes":  28874
+                      },
+    "controlSource":  {
+                          "path":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261103-f32-lifecycle-2e95d6a4\\owner-custody-pure-controls-01.ps1",
+                          "sha256":  "299fc5154d4ff9ac8cfbb7bf4284e3837327b58ac184b2355b39dad70da6c7b8",
+                          "bytes":  3503
+                      },
+    "currentResult":  {
+                          "status":  "PURE_CUSTODY_CONTROLS_PASS_NOT_NATIVE",
+                          "sourcePath":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261103-f32-lifecycle-2e95d6a4\\installed-owner-custody-proposed-04.ps1",
+                          "controls":  [
+                                           {
+                                               "id":  "P01-two-root-guards",
+                                               "pass":  true
+                                           },
+                                           {
+                                               "id":  "P02-root-positive-1",
+                                               "pass":  true
+                                           },
+                                           {
+                                               "id":  "P03-root-foreign-1",
+                                               "pass":  true
+                                           },
+                                           {
+                                               "id":  "P02-root-positive-2",
+                                               "pass":  true
+                                           },
+                                           {
+                                               "id":  "P03-root-foreign-2",
+                                               "pass":  true
+                                           },
+                                           {
+                                               "id":  "P04-child-profile",
+                                               "pass":  true
+                                           },
+                                           {
+                                               "id":  "P05-sibling-refused",
+                                               "pass":  true
+                                           },
+                                           {
+                                               "id":  "P06-parent-traversal-refused",
+                                               "pass":  true
+                                           },
+                                           {
+                                               "id":  "P07-UNC-refused",
+                                               "pass":  true
+                                           },
+                                           {
+                                               "id":  "P08-Windows-quote-parser",
+                                               "pass":  true
+                                           },
+                                           {
+                                               "id":  "P09-profile-equals-form",
+                                               "pass":  true
+                                           },
+                                           {
+                                               "id":  "P10-profile-two-argument-form",
+                                               "pass":  true
+                                           },
+                                           {
+                                               "id":  "P11-profile-duplicate-refused",
+                                               "pass":  true
+                                           },
+                                           {
+                                               "id":  "P12-profile-suffix-refused",
+                                               "pass":  true
+                                           },
+                                           {
+                                               "id":  "P13-profile-foreign-refused",
+                                               "pass":  true
+                                           },
+                                           {
+                                               "id":  "P14-malformed-quote-refused",
+                                               "pass":  true
+                                           }
+                                       ],
+                          "processQueries":  0,
+                          "listenerQueries":  0,
+                          "helperTokenObservations":  0,
+                          "launches":  0,
+                          "signalsRequested":  0
+                      },
+    "forbiddenCimCalls":  0,
+    "forbiddenListenerCalls":  0,
+    "codeLaunches":  0,
+    "helperTokenObservations":  0,
+    "scope":  "Pure source parser, regex, path and Windows argv controls only. No native owner, listener, process token, host, install, network or physical EOF check."
+}

@@ -10,7 +10,14 @@ import { VaultTaskTerminal, VaultDebugAdapter } from "./VaultSurfaces";
 
 const TYPE = "soterai-vault";
 let active: VaultRuntime | undefined;
-export async function stopVaultRuntime(): Promise<void> { const runtime = active; active = undefined; if (runtime) await runtime.shutdown(); }
+export async function stopVaultRuntime(): Promise<void> {
+    const runtime = active;
+    if (runtime) {
+        await runtime.shutdown();
+        // A failed journal check must remain a withdrawal obligation on retry.
+        if (active === runtime) active = undefined;
+    }
+}
 function definition(value: vscode.TaskDefinition): value is vscode.TaskDefinition & { descriptorId: string } {
     return value?.type === TYPE && typeof value.descriptorId === "string" && Object.keys(value).length === 2;
 }

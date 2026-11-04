@@ -1,0 +1,104 @@
+﻿TAP version 13
+# node:assert:95
+#   throw new AssertionError(obj);
+#   ^
+# AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+# 20428382 !== -1
+#     at exactSlice (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261103-f32-lifecycle-2e95d6a4\\installed-trust-static-controls-proposed-05.test.cjs:8:65)
+#     at Object.<anonymous> (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261103-f32-lifecycle-2e95d6a4\\installed-trust-static-controls-proposed-05.test.cjs:13:22)
+#     at Module._compile (node:internal/modules/cjs/loader:1730:14)
+#     at Object..js (node:internal/modules/cjs/loader:1895:10)
+#     at Module.load (node:internal/modules/cjs/loader:1465:32)
+#     at Function._load (node:internal/modules/cjs/loader:1282:12)
+#     at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+#     at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+#     at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+#     at node:internal/main/run_main_module:36:49 {
+#   generatedMessage: true,
+#   code: 'ERR_ASSERTION',
+#   actual: 20428382,
+#   expected: -1,
+#   operator: 'strictEqual'
+# }
+# Node.js v22.16.0
+# Subtest: docs\\soterai-lite\\evidence\\20261103-f32-lifecycle-2e95d6a4\\installed-trust-static-controls-proposed-05.test.cjs
+not ok 1 - docs\\soterai-lite\\evidence\\20261103-f32-lifecycle-2e95d6a4\\installed-trust-static-controls-proposed-05.test.cjs
+  ---
+  duration_ms: 291.3776
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261103-f32-lifecycle-2e95d6a4\\installed-trust-static-controls-proposed-05.test.cjs:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: G01 exact retained GUI contract selects explicit visible Code only without launching
+ok 2 - G01 exact retained GUI contract selects explicit visible Code only without launching
+  ---
+  duration_ms: 12.7917
+  type: 'test'
+  ...
+# Subtest: G02 Node, CLI argument and wrong executable hash cannot obtain GUI visibility
+ok 3 - G02 Node, CLI argument and wrong executable hash cannot obtain GUI visibility
+  ---
+  duration_ms: 20.5915
+  type: 'test'
+  ...
+# Subtest: G03 normal profile, wrong workspace, extra env and longer deadline refuse GUI authority
+ok 4 - G03 normal profile, wrong workspace, extra env and longer deadline refuse GUI authority
+  ---
+  duration_ms: 22.512
+  type: 'test'
+  ...
+# Subtest: G04 product development path, tests path and trust bypass arguments are refused
+ok 5 - G04 product development path, tests path and trust bypass arguments are refused
+  ---
+  duration_ms: 15.7422
+  type: 'test'
+  ...
+# Subtest: G05 original pipe ownership, deadline and actual close code remains byte-identical after visibility metadata reversal
+ok 6 - G05 original pipe ownership, deadline and actual close code remains byte-identical after visibility metadata reversal
+  ---
+  duration_ms: 2.9693
+  type: 'test'
+  ...
+# Subtest: G06 successor retains all three actual failed rounds and rejects a forged third failure
+ok 7 - G06 successor retains all three actual failed rounds and rejects a forged third failure
+  ---
+  duration_ms: 170.7317
+  type: 'test'
+  ...
+# Subtest: G07 no extra user approval means no run authority or consumption
+ok 8 - G07 no extra user approval means no run authority or consumption
+  ---
+  duration_ms: 8.704
+  type: 'test'
+  ...
+# Subtest: G08 all original assertion IDs, titles and phases remain unchanged
+ok 9 - G08 all original assertion IDs, titles and phases remain unchanged
+  ---
+  duration_ms: 5.2524
+  type: 'test'
+  ...
+# Subtest: G09 renderer diagnostics retain only stage/line/column with private message and path omitted
+ok 10 - G09 renderer diagnostics retain only stage/line/column with private message and path omitted
+  ---
+  duration_ms: 1.1684
+  type: 'test'
+  ...
+# Subtest: G10 strict root/port admission cannot reuse failed root or duplicate debug port
+ok 11 - G10 strict root/port admission cannot reuse failed root or duplicate debug port
+  ---
+  duration_ms: 20.3946
+  type: 'test'
+  ...
+1..11
+# tests 11
+# suites 0
+# pass 10
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 513.4468

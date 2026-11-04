@@ -1,0 +1,49 @@
+{
+    "schemaVersion":  1,
+    "feature":  "F32",
+    "status":  "PURE_LATE_OBSERVER_CONTROLS_PASS_NOT_NATIVE",
+    "library":  {
+                    "path":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261103-f32-lifecycle-2e95d6a4\\installed-broker-custody-proposed-02.ps1",
+                    "sha256":  "f41678be42ff361f3ba606530224a90cb45c047b623298908412f03850941152",
+                    "bytes":  24262
+                },
+    "controls":  [
+                     {
+                         "id":  "late-valid-observer",
+                         "pass":  true,
+                         "actualError":  null,
+                         "events":  [
+                                        "fresh-tree",
+                                        "broker-admitted",
+                                        "absence-model"
+                                    ]
+                     },
+                     {
+                         "id":  "observer-never-present",
+                         "pass":  true,
+                         "actualError":  "F32 public observer must be within the admitted exact-profile Code tree.",
+                         "events":  [
+                                        "fresh-tree"
+                                    ]
+                     },
+                     {
+                         "id":  "wrong-root",
+                         "pass":  true,
+                         "actualError":  "F32 exact current Code custody required before broker observation.",
+                         "events":  [
+                                        "fresh-tree"
+                                    ]
+                     },
+                     {
+                         "id":  "syntax-errors-zero",
+                         "pass":  true
+                     },
+                     {
+                         "id":  "no-live-query",
+                         "pass":  true
+                     }
+                 ],
+    "failed":  0,
+    "forbiddenLiveCalls":  0,
+    "scope":  "Pure receipt/tree readiness model with real Read-F32BrokerBinding and watcher orchestration. Broker process/listener/absence calls replaced by controlled functions; no native coverage."
+}

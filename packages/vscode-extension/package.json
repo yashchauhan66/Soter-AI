@@ -158,7 +158,8 @@
                 "soterai.lite.selfHygiene",
                 "soterai.lite.protectionCenter",
                 "soterai.lite.setupVerification",
-                "soterai.lite.reliability"
+                "soterai.lite.reliability",
+                "soterai.lite.lifecycleRecovery"
             ]
         }
     },
@@ -1692,6 +1693,11 @@
                 "command": "soterai.readReliabilityStatus",
                 "title": "Managed Read Reliability Status",
                 "category": "SoterAI"
+            },
+            {
+                "command": "soterai.restoreChangesBeforeRemoval",
+                "title": "Restore changes before removal",
+                "category": "SoterAI"
             }
         ],
         "viewsContainers": {
@@ -2517,6 +2523,12 @@
                     "default": true,
                     "scope": "machine",
                     "description": "Keep bounded managed reader identity checks enabled. File/parent changes, cancellation, size/time limits or resource failures withhold reads. Turning this off withdraws shared managed reads; it does not restore unchecked originals. SoterAI cannot prevent arbitrary same-user filesystem access or every path race."
+                },
+                "soterai.lite.lifecycleRecovery": {
+                    "type": "boolean",
+                    "default": true,
+                    "scope": "machine",
+                    "description": "Offer a native review of recorded project changes before removal. Existing per-action confirmations remain required. Unknown or manual recovery stays pending; policy, vault values and encrypted backups are retained. Repository overrides are ignored. Disable withdraws this coordinator without changing saved protection or recovery."
                 }
             }
         },

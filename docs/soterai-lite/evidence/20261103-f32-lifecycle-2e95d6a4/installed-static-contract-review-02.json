@@ -1,0 +1,121 @@
+{
+    "schemaVersion":  1,
+    "feature":  "F32",
+    "status":  "STATIC_CONTRACT_REVIEW_ONLY_NOT_NATIVE_OR_COMPONENT_PASS",
+    "observedAt":  "2026-11-03T14:07:21.9064840Z",
+    "currentVendor":  {
+                          "path":  "C:/Users/USER/AppData/Local/Programs/Microsoft VS Code/261c84cb1e/resources/app/out/vs/code/node/cliProcessMain.js",
+                          "bytes":  784666,
+                          "sha256":  "109dd5d51a06b836b8ca0cfc7abce66d22b2953b41d7a297de4ece7eaac2bfb6",
+                          "snippets":  [
+                                           {
+                                               "needle":  "async function Nl(",
+                                               "offset":  357075,
+                                               "source":  "async function Nl(i,t){let e;try{e=await t.resolve(i)}catch(n){if(n.fileOperationResult===1)return 0;throw n}return e.children?(await Promise.all(e.children.map(r=\u003eNl(r.resource,t)))).reduce((r,o)=\u003er+o,0):e.size??0}var I2=md(4205,\"Extensions\"),b2=md(4222,\"Preferences\"),_s=\"extensions.allowed\",Qg=\"extensions.verifySignature\",Jg=\"extensions.requestTimeout\";It.as(nn.Configuration).registerConfiguration({id:\"extensions\",order:30,title:f(4221,null),type:\"object\",properties:{[_s]:{type:\"object\",markdownDescription:f(4211,null),default:\"*\",defaultSnippets:[{body:{},description:f(4216,null)},{body:{\"*\":!0},description:f("
+                                           },
+                                           {
+                                               "needle":  "async updateManifestMetadata(e,n)",
+                                               "offset":  485308,
+                                               "source":  "async updateManifestMetadata(e,n){let r=j(e,\"package.json\"),o=(await this.fileService.readFile(r)).value.toString(),s=JSON.parse(o);s.__metadata={...s.__metadata,...n},await this.fileService.writeFile(j(e,\"package.json\"),D.fromString(JSON.stringify(s,null,\"\t\")))}async initializeDefaultProfileExtensions(){try{await this.extensionsProfileScannerService.scanProfileExtensions(this.userDataProfilesService.defaultProfile.extensionsResource,{bailOutWhenFileNotFound:!0})}catch(e){if(e instanceof ii\u0026\u0026e.code===\"ERROR_PROFILE_NOT_FOUND\")await this.doInitializeDefaultProfileExtensions();else throw e}}async doInitializeDefaul"
+                                           },
+                                           {
+                                               "needle":  "let c={installedTimestamp:Date.now(),targetPlatform:e.targetPlatform}",
+                                               "offset":  562754,
+                                               "source":  "let c={installedTimestamp:Date.now(),targetPlatform:e.targetPlatform};try{c.size=await Nl(a,this.fileService)}catch(d){this.logService.warn(`Error while getting the size of the extracted extension : ${a.fsPath}`,z(d))}try{await this.extensionsScannerService.updateManifestMetadata(a,c)}catch(d){throw this.telemetryService.publicLog2(\"extension:extract\",{extensionId:e.id,code:`${ve(d)}`}),Le(d,\"UpdateMetadata\")}if(o.isCancellationRequested)throw new ae;try{this.logService.trace(`Started renaming the extension from ${a.fsPath} to ${l.fsPath}`),await this.rename(a.fsPath,l.fsPath),this.logService.info(\"Renamed to\",l."
+                                           }
+                                       ]
+                      },
+    "currentSources":  [
+                           {
+                               "path":  "packages/vscode-extension/src/firewall/VaultManager.ts",
+                               "bytes":  51412,
+                               "sha256":  "1a7fdbc1070903ce724939dd08dc6a6ca3d40894d89ec6fcd2a497dea1e7e189"
+                           },
+                           {
+                               "path":  "packages/vscode-extension/src/ai-boundary/commands.ts",
+                               "bytes":  9911,
+                               "sha256":  "8a7841a09dda523349eae4508852be6bf919f5fb5603160b47ee2153742e4ed5"
+                           },
+                           {
+                               "path":  "packages/vscode-extension/src/ai-boundary/policy.ts",
+                               "bytes":  7599,
+                               "sha256":  "7cf26ee806520ecb6ad1a02cfe4059af353bc048375a16dc4c2e4b56580ecb58"
+                           },
+                           {
+                               "path":  "packages/vscode-extension/src/terminal/commands.ts",
+                               "bytes":  12011,
+                               "sha256":  "c1de52aadc5ef70960853dd34874a2fb343bb6b249c8c877bd4fae047477fb11"
+                           },
+                           {
+                               "path":  "packages/vscode-extension/src/lifecycle/OwnedLifecycleStop.ts",
+                               "bytes":  2725,
+                               "sha256":  "5c4e8f5d0c9cb647b9dbd95550f12711440b0299c7b514e9f52b76b18a8571c2"
+                           }
+                       ],
+    "oldVsix":  {
+                    "path":  "packages/vscode-extension/soterai-ide-guard-0.6.3.vsix",
+                    "bytes":  4446653,
+                    "sha256":  "dcbcd9738cb480616cf4d3aa66d1a1ac2287e1754aa7307dea7ac23fee7c3677",
+                    "payloadUncompressedBytes":  5462987,
+                    "entries":  [
+                                    {
+                                        "entry":  "extension/package.json",
+                                        "bytes":  86988,
+                                        "sha256":  "3ac2fbb73cd27cbd90317e6bf17c86c23379ad03b741836e592b19f116fc1b92"
+                                    },
+                                    {
+                                        "entry":  "extension/dist/extension.js",
+                                        "bytes":  590790,
+                                        "sha256":  "7746177a904ec5579938aa9282486680febde0129334b8c47941588de6069c53"
+                                    },
+                                    {
+                                        "entry":  "extension/dist/local-ai-broker.js",
+                                        "bytes":  234968,
+                                        "sha256":  "dac4bb46d29904ca3d7c9e1183bd8329acc1ddf46225b4b0d7f06259ab8f1f09"
+                                    },
+                                    {
+                                        "entry":  "extension/dist/soterai-mcp-server.js",
+                                        "bytes":  200506,
+                                        "sha256":  "09cb074d9f52692fe455b986bf1b8056b0e6462f22c0f617351f4639e0f1b093"
+                                    }
+                                ],
+                    "contractSnippets":  [
+                                             {
+                                                 "needle":  "r(\"soterai.blockFromAI\",async",
+                                                 "offset":  577224,
+                                                 "source":  "r(\"soterai.blockFromAI\",async i=\u003e{let a=n(i);await we(a.uri);let d=(await z.workspace.fs.stat(a.uri)).type===z.FileType.Directory?\"folder\":\"file\";await ar(a.root,p=\u003e(p.paths.some(g=\u003eg.kind===d\u0026\u0026g.pattern===a.rel)||p.paths.push({kind:d,pattern:a.rel}),p)),s()}),r(\"soterai.blockGlobFromAI\",async i=\u003e{let c=(i||z.window.activeTextEditor?n(i):void 0)?.folder??await z.window.showWorkspaceFolderPick();if(!c)return;let d=await z.window.showInputBox({title:\"Block a pattern from SoterAI context\",prompt:\"Deny glob, e.g. reports/** or *.pem. .aiignore supports the same syntax.\",validateInput:l=\u003e{try{xo(l);return}catch{return\"Use *, ** or ?. Neg"
+                                             },
+                                             {
+                                                 "needle":  "r(\"soterai.openRedactedPreview\",async",
+                                                 "offset":  579537,
+                                                 "source":  "r(\"soterai.openRedactedPreview\",async i=\u003e{let a=n(i),c=await z.workspace.openTextDocument(e.createUri(a.uri));await z.window.showTextDocument(c,{preview:!0})})}var Ut,Vt,Zi,ft,Cp,Rp,ea,Ne,Ji,qo,Xi;function Pb(){Xi||(Xi=setTimeout(()=\u003e{Xi=void 0,Yo()},2e3))}var Nn,Tp=!1,Qi,Ko,Mn;function Ob(t){ea=t;let e=Pt.getInstance();e.syncPrivacyBoundary(),t.subscriptions.push(T.workspace.onDidChangeConfiguration(l=\u003e{(l.affectsConfiguration(\"soterai.telemetry.redactedEvents\")||l.affectsConfiguration(\"soterai.privacyMode\")||l.affectsConfiguration(\"soterai.cloud.enabled\"))\u0026\u0026(e.syncPrivacyBoundary(),c())}));let o=()=\u003e{let l=T.workspace.getConfigura"
+                                             },
+                                             {
+                                                 "needle":  "async writeEncryptedBackup(",
+                                                 "offset":  299630,
+                                                 "source":  "async writeEncryptedBackup(e,o){await j.workspace.fs.createDirectory(this.backupDir());let r=await this.getOrCreateKey(),n=await(0,me.encryptVault)(JSON.stringify({file:e.toString(),savedAt:new Date().toISOString(),content:o}),r);await j.workspace.fs.writeFile(this.backupUri(e),new TextEncoder().encode(n))}async restoreFromBackup(e){try{await we(e);let o=await j.workspace.fs.readFile(this.backupUri(e)),r=await this.getOrCreateKey(),n=await(0,me.decryptVault)(new TextDecoder().decode(o),r),s=JSON.parse(n);if(typeof s.content!=\"string\")return!1;let i=new TextDecoder().decode(await j.workspace.fs.readFile(e));return this.assertDocument"
+                                             },
+                                             {
+                                                 "needle":  "async migrateLocked(",
+                                                 "offset":  297477,
+                                                 "source":  "async migrateLocked(e){await we(e);let o=new TextDecoder().decode(await j.workspace.fs.readFile(e)),r=(0,me.extractVaultCandidates)(o);if(r.length===0)return 0;let n=j.workspace.asRelativePath(e),s=await this.readVault();for(let d of r){let p=await(0,me.buildVaultMetadata)(d,n);s.entries=s.entries.filter(g=\u003e!(g.placeholder===p.placeholder\u0026\u0026g.originalFile===n)),s.entries.push({...p,rawValue:d.rawValue})}if(await this.writeEncryptedBackup(e,o),this.assertDocumentReady(e,o),await we(e),new TextDecoder().decode(await j.workspace.fs.readFile(e))!==o)throw new Error(\"File changed during migration; retry after edits finish.\");await this.wr"
+                                             },
+                                             {
+                                                 "needle":  "Migrate ${l.candidates.length} secret(s) from ${l.file}",
+                                                 "offset":  305279,
+                                                 "source":  "Migrate ${l.candidates.length} secret(s) from ${l.file} into the protected vault? An encrypted backup (outside the workspace) will be created.`,{modal:!0},\"Migrate \u0026 Backup\")!==\"Migrate \u0026 Backup\")return;let k=await r.migrate(g);await se.append({eventId:`mig_${Date.now()}`,workspacePseudoId:await lt(),eventType:\"vault_migrated\",action:\"redact\",severity:\"high\",riskScore:50,categories:[\"secret\"],filePaths:[l.file],policyVersion:String((await B.load()).version),redactedEvidencePreview:`${k} secret(s) vaulted`}),be.window.showInformationMessage(`Migrated ${k} secret(s) to the vault. Encrypted backup saved outside the workspace (SoterAI: "
+                                             }
+                                         ],
+                    "previewOmissionMarkerPresent":  true,
+                    "restrictProjectFileAbsent":  true,
+                    "generationCipherAbsent":  true,
+                    "noProductCodeExecuted":  true
+                },
+    "limits":  [
+                   "No source execution, installed test or vendor launch",
+                   "Installer metadata rule applies only to exact pinned reviewed cliProcessMain.js",
+                   "Unknown installer metadata is refused; no broad normalization",
+                   "Actual setup and upgrade remain NOT_RUN"
+               ],
+    "signalsRequested":  0
+}

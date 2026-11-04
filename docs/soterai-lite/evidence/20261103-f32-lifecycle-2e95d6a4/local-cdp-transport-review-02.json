@@ -1,0 +1,229 @@
+{
+  "schemaVersion": 1,
+  "feature": "F32",
+  "status": "PINNED_CDP_ATTACH_DISCONNECT_STATIC_REVIEW_NATIVE_NOT_RUN",
+  "observedAt": "2026-11-03T14:25:15.751Z",
+  "independence": "LOW_SAME_LINEAGE_SOURCE_REVIEW",
+  "publicVendorObservation": {
+    "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261103-f32-lifecycle-2e95d6a4\\public-vendor-observation-02.json",
+    "bytes": 119570,
+    "sha256": "a6c503f070e1f637386cfa5d06bbd03409a041325d9a267959a6a3f8307bbe71"
+  },
+  "packageVersions": [
+    {
+      "name": "playwright",
+      "version": "1.61.1",
+      "installedFileCount": 62,
+      "manifest": {
+        "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\playwright\\package.json",
+        "bytes": 1559,
+        "sha256": "6b840268612656f0639fb7d68782e8353bdf11518589d30ddf66f283c2670ed5",
+        "fileLinkCount": 1
+      }
+    },
+    {
+      "name": "playwright-core",
+      "version": "1.61.1",
+      "installedFileCount": 106,
+      "manifest": {
+        "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\playwright-core\\package.json",
+        "bytes": 876,
+        "sha256": "759e376f995bf39edd4810d699b99469bab1d7428b6fbc78d41912f367df7ba9",
+        "fileLinkCount": 1
+      }
+    }
+  ],
+  "entry": {
+    "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\playwright\\index.js",
+    "bytes": 648,
+    "sha256": "4e98f65f0a9d9bcab8cffc0c5cfdd87fd3f5b0be74fc494ff166a466b204cd44",
+    "fileLinkCount": 1
+  },
+  "sourceFilesRead": [
+    {
+      "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\playwright\\index.js",
+      "bytes": 648,
+      "sha256": "4e98f65f0a9d9bcab8cffc0c5cfdd87fd3f5b0be74fc494ff166a466b204cd44",
+      "fileLinkCount": 1
+    },
+    {
+      "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\playwright-core\\index.js",
+      "bytes": 697,
+      "sha256": "a58fb2cec4293e7dcf73c58a179898a4f3986666451a19da4e731fa3af63265b",
+      "fileLinkCount": 1
+    },
+    {
+      "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\playwright-core\\lib\\bootstrap.js",
+      "bytes": 3481,
+      "sha256": "97ffe165e8e45f1b51a713b3f380d383e4e183727135fe9a5e045ec62e9310ab",
+      "fileLinkCount": 1
+    },
+    {
+      "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\playwright-core\\lib\\coreBundle.js",
+      "bytes": 3352341,
+      "sha256": "6be5c2ea035554e9b184b1dbc7aa5e7f1fb428dd1b5c202022858dcfae9bee27",
+      "fileLinkCount": 1
+    }
+  ],
+  "witnesses": [
+    {
+      "source": {
+        "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\playwright\\index.js",
+        "bytes": 648,
+        "sha256": "4e98f65f0a9d9bcab8cffc0c5cfdd87fd3f5b0be74fc494ff166a466b204cd44",
+        "fileLinkCount": 1
+      },
+      "token": "module.exports = require('playwright-core');",
+      "utf16Offset": 603,
+      "snippet": "module.exports = require('playwright-core');",
+      "status": "STATIC_SOURCE_WITNESS_ONLY_NOT_A_NATIVE_BEHAVIOR_RESULT"
+    },
+    {
+      "source": {
+        "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\playwright-core\\index.js",
+        "bytes": 697,
+        "sha256": "a58fb2cec4293e7dcf73c58a179898a4f3986666451a19da4e731fa3af63265b",
+        "fileLinkCount": 1
+      },
+      "token": "require('./lib/bootstrap');",
+      "utf16Offset": 602,
+      "snippet": "require('./lib/bootstrap');\nmodule.exports = require('./lib/coreBundle').inprocess.playwright;\n",
+      "status": "STATIC_SOURCE_WITNESS_ONLY_NOT_A_NATIVE_BEHAVIOR_RESULT"
+    },
+    {
+      "source": {
+        "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\playwright-core\\index.js",
+        "bytes": 697,
+        "sha256": "a58fb2cec4293e7dcf73c58a179898a4f3986666451a19da4e731fa3af63265b",
+        "fileLinkCount": 1
+      },
+      "token": "module.exports = require('./lib/coreBundle').inprocess.playwright;",
+      "utf16Offset": 630,
+      "snippet": "module.exports = require('./lib/coreBundle').inprocess.playwright;",
+      "status": "STATIC_SOURCE_WITNESS_ONLY_NOT_A_NATIVE_BEHAVIOR_RESULT"
+    },
+    {
+      "source": {
+        "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\playwright-core\\lib\\bootstrap.js",
+        "bytes": 3481,
+        "sha256": "97ffe165e8e45f1b51a713b3f380d383e4e183727135fe9a5e045ec62e9310ab",
+        "fileLinkCount": 1
+      },
+      "token": "if (process.env.PW_INSTRUMENT_MODULES)",
+      "utf16Offset": 395,
+      "snippet": "if (process.env.PW_INSTRUMENT_MODULES) {\n  const Module = require(\"module\");\n  const originalLoad = Module._load;\n  const root = { name: \"<root>\", selfMs: 0, totalMs: 0, childrenMs: 0, children: [] };\n  let current = root;\n  const stack = [];\n  Module._load = function(request, _parent, _isMain) {\n    const node = { name: request, selfMs",
+      "status": "STATIC_SOURCE_WITNESS_ONLY_NOT_A_NATIVE_BEHAVIOR_RESULT"
+    },
+    {
+      "source": {
+        "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\playwright-core\\lib\\coreBundle.js",
+        "bytes": 3352341,
+        "sha256": "6be5c2ea035554e9b184b1dbc7aa5e7f1fb428dd1b5c202022858dcfae9bee27",
+        "fileLinkCount": 1
+      },
+      "token": "async _connectOverCDPInternal(progress2, endpointURL, options, onClose)",
+      "utf16Offset": 2074522,
+      "snippet": "async _connectOverCDPInternal(progress2, endpointURL, options, onClose) {\n        let headersMap;\n        if (options.headers)\n          headersMap = headersArrayToObject(options.headers, false);\n        if (!headersMap)\n          headersMap = { \"User-Agent\": getUserAgent() };\n        else if (headersMap && !Object.keys(headersMap).some((key) => key.toLowerCase() === \"user-agent\"))\n          headersMap[\"User-Agent\"] = getUserAgent();\n        const channel = isChromiumChannelName(endpointURL) ? endpointURL : void 0;\n        if (channel)\n          endpointURL = await resolveChannelEndpoint(progress2, endpointURL);\n        let wsEndpoint;\n        let chromeTransport;\n        try {\n          wsEndpoint = await urlToWSEndpoint(progress2, endpointURL, headersMap);\n          chromeTransport = await WebSocketTransport.connect(progress2, wsEndpoint, { headers: headersMap, followRedirects: true, debugLogHeader: \"x-playwright-debug-log\" });\n        } catch (e) {\n          if (channel)\n            throw new Error(`Could not connect to ${channel}.\n${remoteDebuggingHint(channel)}`);\n          throw e;\n        }\n        const closeAndWait = async () => await chromeTransport.closeAndWait();\n        return this._connectOverCDPImpl(progress2, chromeTransport, closeAndWait, options, onClose);\n      }\n      async _connectOverCDPImpl(progress2, transport, closeAndWait, options, onClose) {\n        let artifactsDir;\n        const tempDirectories = [];\n        if (options.artifactsDir) {\n          artifactsDir = options.artifactsDir;\n        } else {\n          artifactsDir = await progress2.race(import_fs27.default.promises.mkdtemp(ARTIFACTS_FOLDER2));\n          temp",
+      "status": "STATIC_SOURCE_WITNESS_ONLY_NOT_A_NATIVE_BEHAVIOR_RESULT"
+    },
+    {
+      "source": {
+        "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\playwright-core\\lib\\coreBundle.js",
+        "bytes": 3352341,
+        "sha256": "6be5c2ea035554e9b184b1dbc7aa5e7f1fb428dd1b5c202022858dcfae9bee27",
+        "fileLinkCount": 1
+      },
+      "token": "const closeAndWait = async () => await chromeTransport.closeAndWait();",
+      "utf16Offset": 2075645,
+      "snippet": "const closeAndWait = async () => await chromeTransport.closeAndWait();\n        return this._connectOverCDPImpl(progress2, chromeTransport, closeAndWait, options, onClose);\n      }\n      async _connect",
+      "status": "STATIC_SOURCE_WITNESS_ONLY_NOT_A_NATIVE_BEHAVIOR_RESULT"
+    },
+    {
+      "source": {
+        "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\playwright-core\\lib\\coreBundle.js",
+        "bytes": 3352341,
+        "sha256": "6be5c2ea035554e9b184b1dbc7aa5e7f1fb428dd1b5c202022858dcfae9bee27",
+        "fileLinkCount": 1
+      },
+      "token": "const doClose = async () => {\n          await closeAndWait();\n          await doCleanup();",
+      "utf16Offset": 2076424,
+      "snippet": "const doClose = async () => {\n          await closeAndWait();\n          await doCleanup();\n        };\n        try {\n          const browserProcess = { close: doClose, kill: doClose };\n          const persistent = {\n            noDefaultViewport: true,\n            ...opt",
+      "status": "STATIC_SOURCE_WITNESS_ONLY_NOT_A_NATIVE_BEHAVIOR_RESULT"
+    },
+    {
+      "source": {
+        "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\playwright-core\\lib\\coreBundle.js",
+        "bytes": 3352341,
+        "sha256": "6be5c2ea035554e9b184b1dbc7aa5e7f1fb428dd1b5c202022858dcfae9bee27",
+        "fileLinkCount": 1
+      },
+      "token": "const browserProcess = { close: doClose, kill: doClose };",
+      "utf16Offset": 2076550,
+      "snippet": "const browserProcess = { close: doClose, kill: doClose };\n          const persistent = {\n            noDefaultViewport: true,\n            ...options.noDefaults ? { acceptDownloads: \"internal-browser-default\" } : {}\n          };\n          const browserOptions = {\n            slowMo: options.slowMo,\n            name: \"chromium\",\n            browserType: \"chromium\",\n            persistent,\n            browserProcess,\n            protocolLogger: helper.debugProtocolLogger(),\n            browserLogsCollector: new RecentLogsCollector(),\n            artifactsDir,\n            downloadsPath: options.downloadsPath || artifactsDir,\n            tracesDir: options.tracesDir || artifactsDir,\n            originalLaunchOptions: {},\n            noDefaults: options",
+      "status": "STATIC_SOURCE_WITNESS_ONLY_NOT_A_NATIVE_BEHAVIOR_RESULT"
+    },
+    {
+      "source": {
+        "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\playwright-core\\lib\\coreBundle.js",
+        "bytes": 3352341,
+        "sha256": "6be5c2ea035554e9b184b1dbc7aa5e7f1fb428dd1b5c202022858dcfae9bee27",
+        "fileLinkCount": 1
+      },
+      "token": "this._ws.once(\"close\", f)",
+      "utf16Offset": 1947062,
+      "snippet": " */\n            );\n          }\n          return transport;\n        } catch (error) {\n          await transport.closeAndWait();\n          throw error;\n        }\n      }\n      send(message) {\n        this._ws.send(JSON.stringify(message));\n      }\n      close() {\n        this._progress?.log(`<ws disconnecting> ${this._logUrl}`);\n        this._ws.close();\n      }\n      async closeAndWait() {\n        if (this._ws.readyState === ws.CLOSED)\n          return;\n        const promise = new Promise((f) => this._ws.once(\"close\", f));\n        this.close();\n        await promise;\n      }\n    };\n  }\n});\n\n// packages/playwright-core/src/server/browserType.ts\nfunction copyTestHooks(from, to) {",
+      "status": "STATIC_SOURCE_WITNESS_ONLY_NOT_A_NATIVE_BEHAVIOR_RESULT"
+    },
+    {
+      "source": {
+        "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\playwright-core\\lib\\coreBundle.js",
+        "bytes": 3352341,
+        "sha256": "6be5c2ea035554e9b184b1dbc7aa5e7f1fb428dd1b5c202022858dcfae9bee27",
+        "fileLinkCount": 1
+      },
+      "token": "await this.options.browserProcess.close();",
+      "utf16Offset": 2473119,
+      "snippet": "race(this._close(options));\n      }\n      async _close(options) {\n        if (!this._startedClosing) {\n          if (options.reason)\n            this._closeReason = options.reason;\n          this._startedClosing = true;\n          await this.options.browserProcess.close();\n        }\n        if (this.isConnected())\n          await new Promise((x) => this.once(_Browser.Events.Disconnected, x));\n      }\n      async killForTests(progress2) {\n        await progress2.race(this.options.browserProcess.kill());\n      }\n    };\n",
+      "status": "STATIC_SOURCE_WITNESS_ONLY_NOT_A_NATIVE_BEHAVIOR_RESULT"
+    },
+    {
+      "source": {
+        "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\playwright-core\\lib\\coreBundle.js",
+        "bytes": 3352341,
+        "sha256": "6be5c2ea035554e9b184b1dbc7aa5e7f1fb428dd1b5c202022858dcfae9bee27",
+        "fileLinkCount": 1
+      },
+      "token": "if (this._shouldCloseConnectionOnClose)",
+      "utf16Offset": 2862870,
+      "snippet": "await this.close();\n      }\n      async close(options = {}) {\n        this._closeReason = options.reason;\n        try {\n          if (this._shouldCloseConnectionOnClose)\n            this._connection.close();\n          else\n            await this._channel.close(options);\n          await this._closedPromise;\n        } catch (e) {\n          if (isTargetClosedError2(e))\n            return;\n          throw e;\n        }\n      }\n      _didClose() {\n        this._isConnected = false;\n        this.emit(Events.Browser.Disconnected, this);\n      }\n    };",
+      "status": "STATIC_SOURCE_WITNESS_ONLY_NOT_A_NATIVE_BEHAVIOR_RESULT"
+    },
+    {
+      "source": {
+        "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\playwright-core\\lib\\coreBundle.js",
+        "bytes": 3352341,
+        "sha256": "6be5c2ea035554e9b184b1dbc7aa5e7f1fb428dd1b5c202022858dcfae9bee27",
+        "fileLinkCount": 1
+      },
+      "token": "followRedirects: true, debugLogHeader: \"x-playwright-debug-log\"",
+      "utf16Offset": 2075398,
+      "snippet": " wsEndpoint = await urlToWSEndpoint(progress2, endpointURL, headersMap);\n          chromeTransport = await WebSocketTransport.connect(progress2, wsEndpoint, { headers: headersMap, followRedirects: true, debugLogHeader: \"x-playwright-debug-log\" });\n        } catch (e) {\n          if (channel)\n            throw new Error(`Could not connect to ${channel}.\n${remoteDebuggingHint(channel)}`);\n          thr",
+      "status": "STATIC_SOURCE_WITNESS_ONLY_NOT_A_NATIVE_BEHAVIOR_RESULT"
+    }
+  ],
+  "reviewedAttachClosePath": "playwright/index.js -> playwright-core/index.js -> bundled inprocess Chromium CDP attach. CDP _connectOverCDPImpl supplies browserProcess.close and browserProcess.kill as the same doClose closure; it invokes transport.closeAndWait plus scoped artifact cleanup. Browser server close delegates browserProcess.close; WebSocketTransport closes its own socket and waits for close. No OS child process kill is on this inspected attached-browser closure.",
+  "limits": [
+    "Library launch, browser server, tests and other paths contain process-launch/kill capabilities. Those are not invoked or admitted by this attach-only review.",
+    "Full installed playwright/playwright-core file graph was hashed twice, not every dynamic code path executed or behavior proven.",
+    "PW_INSTRUMENT_MODULES enables a module-load hook in bootstrap. Scrubbed fixture environment must not set it; no require hook is part of the fixture.",
+    "Current bundled CDP helper explicitly permits WebSocket redirects. Numeric initial endpoint plus ownership of current vendor Code listener is the admitted cooperative-vendor boundary, not a general library enforcement of loopback at every redirect.",
+    "For stricter transport admission, the driver should perform a bounded no-redirect loopback /json/version lookup, validate returned ws URL exact numeric127.0.0.1/sameport/no credentials, and declare remaining internal WebSocket redirect behavior. Do not claim no possible redirects or external requests from source review alone.",
+    "No browser, process, listener, CDP request, keyboard interaction, token or SecretStorage read ran in this static review."
+  ],
+  "hostLaunches": 0,
+  "processQueries": 0,
+  "listenerQueries": 0,
+  "networkRequests": 0,
+  "signalsRequested": 0,
+  "admission": "ROOT_FRESH_SOURCE_VSIX_SIGNATURE_VENDOR_BINDING_AND_READ_ONLY_OWNER_CUSTODY_REQUIRED"
+}

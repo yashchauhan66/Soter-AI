@@ -1,0 +1,277 @@
+﻿TAP version 13
+# Subtest: F32-C01 constructor is inert; confirmed absence makes no restore or disclosure calls
+ok 1 - F32-C01 constructor is inert; confirmed absence makes no restore or disclosure calls
+  ---
+  duration_ms: 15.3876
+  type: 'test'
+  ...
+# Subtest: F32-C02 probes use only the fixed reviewed action registry
+ok 2 - F32-C02 probes use only the fixed reviewed action registry
+  ---
+  duration_ms: 4.9384
+  type: 'test'
+  ...
+# Subtest: F32-C03 caller paths approvals command IDs getters and raw values confer no authority
+not ok 3 - F32-C03 caller paths approvals command IDs getters and raw values confer no authority
+  ---
+  duration_ms: 22.6044
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\removalCoordinator.test.ts:2:5412'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    ... Skipped lines
+    
+      [
+        'checkedPowerShell',
+        'checkedCmd',
+        'checkedGitBash',
+        'secureEditorAssociation',
+    ...
+        'legacyAIConfigs',
+    +   'checkedPowerShell',
+    +   'checkedCmd',
+    +   'checkedGitBash',
+    +   'secureEditorAssociation',
+    +   'codexCli',
+    +   'codexIde',
+    +   'geminiCli',
+    +   'preCommit',
+    +   'prePush',
+    +   'psReadLine',
+    +   'cline',
+    +   'claude',
+    +   'legacyBroker',
+    +   'legacyAIConfigs'
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'checkedPowerShell'
+    1: 'checkedCmd'
+    2: 'checkedGitBash'
+    3: 'secureEditorAssociation'
+    4: 'codexCli'
+    5: 'codexIde'
+    6: 'geminiCli'
+    7: 'preCommit'
+    8: 'prePush'
+    9: 'psReadLine'
+    10: 'cline'
+    11: 'claude'
+    12: 'legacyBroker'
+    13: 'legacyAIConfigs'
+  actual:
+    0: 'checkedPowerShell'
+    1: 'checkedCmd'
+    2: 'checkedGitBash'
+    3: 'secureEditorAssociation'
+    4: 'codexCli'
+    5: 'codexIde'
+    6: 'geminiCli'
+    7: 'preCommit'
+    8: 'prePush'
+    9: 'psReadLine'
+    10: 'cline'
+    11: 'claude'
+    12: 'legacyBroker'
+    13: 'legacyAIConfigs'
+    14: 'checkedPowerShell'
+    15: 'checkedCmd'
+    16: 'checkedGitBash'
+    17: 'secureEditorAssociation'
+    18: 'codexCli'
+    19: 'codexIde'
+    20: 'geminiCli'
+    21: 'preCommit'
+    22: 'prePush'
+    23: 'psReadLine'
+    24: 'cline'
+    25: 'claude'
+    26: 'legacyBroker'
+    27: 'legacyAIConfigs'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\removalCoordinator.test.ts:145:80)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F32-C04 corrupt metadata is pending rather than absent
+ok 4 - F32-C04 corrupt metadata is pending rather than absent
+  ---
+  duration_ms: 2.9449
+  type: 'test'
+  ...
+# Subtest: F32-C05 a valid-looking receipt for another root cannot authorize restore
+ok 5 - F32-C05 a valid-looking receipt for another root cannot authorize restore
+  ---
+  duration_ms: 3.4301
+  type: 'test'
+  ...
+# Subtest: F32-C06 unknown schema and malformed fingerprint remain pending
+ok 6 - F32-C06 unknown schema and malformed fingerprint remain pending
+  ---
+  duration_ms: 2.9419
+  type: 'test'
+  ...
+# Subtest: F32-C07 unreadable probe error is fixed pending metadata without raw exception disclosure
+ok 7 - F32-C07 unreadable probe error is fixed pending metadata without raw exception disclosure
+  ---
+  duration_ms: 3.3085
+  type: 'test'
+  ...
+# Subtest: F32-C08 aggregate approval does not bypass the native transaction cancellation
+ok 8 - F32-C08 aggregate approval does not bypass the native transaction cancellation
+  ---
+  duration_ms: 3.4205
+  type: 'test'
+  ...
+# Subtest: F32-C09 cancelling the initial summary issues no restore or stop
+ok 9 - F32-C09 cancelling the initial summary issues no restore or stop
+  ---
+  duration_ms: 3.6167
+  type: 'test'
+  ...
+# Subtest: F32-C10 owned restores run serially and broker stop waits for all completed postconditions
+ok 10 - F32-C10 owned restores run serially and broker stop waits for all completed postconditions
+  ---
+  duration_ms: 6.2847
+  type: 'test'
+  ...
+# Subtest: F32-C11 a concurrent command reports BUSY without another review or write
+ok 11 - F32-C11 a concurrent command reports BUSY without another review or write
+  ---
+  duration_ms: 5.4522
+  type: 'test'
+  ...
+# Subtest: F32-C12 disposed or unavailable local trusted owner cannot discover receipts or start a change
+ok 12 - F32-C12 disposed or unavailable local trusted owner cannot discover receipts or start a change
+  ---
+  duration_ms: 1.4238
+  type: 'test'
+  ...
+# Subtest: F32-C13 disposal while summary is open invalidates its later approval
+ok 13 - F32-C13 disposal while summary is open invalidates its later approval
+  ---
+  duration_ms: 2.2028
+  type: 'test'
+  ...
+# Subtest: F32-C14 workspace change during summary or after the first transaction stops further actions
+ok 14 - F32-C14 workspace change during summary or after the first transaction stops further actions
+  ---
+  duration_ms: 4.8584
+  type: 'test'
+  ...
+# Subtest: F32-C15 trust withdrawal during summary or after one transaction withholds later changes
+ok 15 - F32-C15 trust withdrawal during summary or after one transaction withholds later changes
+  ---
+  duration_ms: 5.1968
+  type: 'test'
+  ...
+# Subtest: F32-C16 settings or route-flag epoch drift invalidates review without enabling flags
+ok 16 - F32-C16 settings or route-flag epoch drift invalidates review without enabling flags
+  ---
+  duration_ms: 2.2411
+  type: 'test'
+  ...
+# Subtest: F32-C17 receipt changes after summary cannot reuse the previous ownership review
+ok 17 - F32-C17 receipt changes after summary cannot reuse the previous ownership review
+  ---
+  duration_ms: 2.2335
+  type: 'test'
+  ...
+# Subtest: F32-C18 a success status with a remaining owned receipt is incomplete
+ok 18 - F32-C18 a success status with a remaining owned receipt is incomplete
+  ---
+  duration_ms: 2.3446
+  type: 'test'
+  ...
+# Subtest: F32-C19 terminal and association SAVED are accepted only with absent postconditions
+ok 19 - F32-C19 terminal and association SAVED are accepted only with absent postconditions
+  ---
+  duration_ms: 4.7441
+  type: 'test'
+  ...
+# Subtest: F32-C20 disabled optional routes retain reviewed restore access; no grant or flag writes
+ok 20 - F32-C20 disabled optional routes retain reviewed restore access; no grant or flag writes
+  ---
+  duration_ms: 24.1822
+  type: 'test'
+  ...
+# Subtest: F32-C21 a void legacy-style completion is never treated as restore success
+ok 21 - F32-C21 a void legacy-style completion is never treated as restore success
+  ---
+  duration_ms: 2.5773
+  type: 'test'
+  ...
+# Subtest: F32-C22 unknown changed unavailable and arbitrary truthy outcomes stay pending
+ok 22 - F32-C22 unknown changed unavailable and arbitrary truthy outcomes stay pending
+  ---
+  duration_ms: 4.929
+  type: 'test'
+  ...
+# Subtest: F32-C23 thrown restore errors preserve receipt and report no private details
+ok 23 - F32-C23 thrown restore errors preserve receipt and report no private details
+  ---
+  duration_ms: 3.5028
+  type: 'test'
+  ...
+# Subtest: F32-C24 cancellation after a completed restore keeps that result and stops subsequent actions
+ok 24 - F32-C24 cancellation after a completed restore keeps that result and stops subsequent actions
+  ---
+  duration_ms: 3.7622
+  type: 'test'
+  ...
+# Subtest: F32-C25 prior plaintext-capable Cline Claude and legacy backups require manual recovery
+ok 25 - F32-C25 prior plaintext-capable Cline Claude and legacy backups require manual recovery
+  ---
+  duration_ms: 7.0971
+  type: 'test'
+  ...
+# Subtest: F32-C26 policy ciphertext recovery and private probe extras stay outside coordinator output
+ok 26 - F32-C26 policy ciphertext recovery and private probe extras stay outside coordinator output
+  ---
+  duration_ms: 1.9065
+  type: 'test'
+  ...
+# Subtest: F32-C27 exact broker stopped snapshot completes only after reviewed restores and reprobes
+ok 27 - F32-C27 exact broker stopped snapshot completes only after reviewed restores and reprobes
+  ---
+  duration_ms: 2.9564
+  type: 'test'
+  ...
+# Subtest: F32-C28 observed exit with STOP_UNCONFIRMED cannot become safe removal success
+ok 28 - F32-C28 observed exit with STOP_UNCONFIRMED cannot become safe removal success
+  ---
+  duration_ms: 1.823
+  type: 'test'
+  ...
+# Subtest: F32-C29 thrown broker stop leaves shutdown pending without retry kill or restart capability
+ok 29 - F32-C29 thrown broker stop leaves shutdown pending without retry kill or restart capability
+  ---
+  duration_ms: 1.8831
+  type: 'test'
+  ...
+# Subtest: F32-C30 missing broker snapshot cannot infer stopped from exit zero or a truthy return
+ok 30 - F32-C30 missing broker snapshot cannot infer stopped from exit zero or a truthy return
+  ---
+  duration_ms: 2.8542
+  type: 'test'
+  ...
+# Subtest: F32-C31 an owned route appearing during an empty summary prevents completed removal
+ok 31 - F32-C31 an owned route appearing during an empty summary prevents completed removal
+  ---
+  duration_ms: 3.0469
+  type: 'test'
+  ...
+1..31
+# tests 31
+# suites 0
+# pass 30
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1338.3637

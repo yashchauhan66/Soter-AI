@@ -35,7 +35,7 @@ export class CheckedPowerShellProfile {
     #busy = false;
     #views = new Map<string, string>();
     #scheme = "soterai-ps51-profile-" + randomUUID();
-    constructor(context: vscode.ExtensionContext, enabled: () => boolean) {
+    constructor(context: vscode.ExtensionContext, enabled: () => boolean, private readonly restoreEnabled: () => boolean = enabled) {
         this.#context = context; this.#enabled = enabled;
         context.subscriptions.push(vscode.workspace.registerTextDocumentContentProvider(this.#scheme, {
             provideTextDocumentContent: uri => this.#views.get(uri.toString()) ?? "Profile preview expired.",
@@ -43,7 +43,7 @@ export class CheckedPowerShellProfile {
     }
     configure(root: vscode.Uri): Promise<Result> { return this.#change(root, false); }
     restore(root: vscode.Uri): Promise<Result> { return this.#change(root, true); }
-    #available(): boolean { try { return this.#enabled() === true; } catch { return false; } }
+    #available(restore = false): boolean { try { return (restore ? this.restoreEnabled : this.#enabled)() === true; } catch { return false; } }
     #target(): vscode.ConfigurationTarget {
         return (vscode.workspace.workspaceFolders?.length ?? 0) > 1 && vscode.workspace.workspaceFile?.scheme === "file"
             ? vscode.ConfigurationTarget.WorkspaceFolder : vscode.ConfigurationTarget.Workspace;
@@ -58,7 +58,7 @@ export class CheckedPowerShellProfile {
         return uri;
     }
     async #change(root: vscode.Uri, restore: boolean): Promise<Result> {
-        if (this.#busy || !this.#available()) return { status: "UNAVAILABLE" };
+        if (this.#busy || !this.#available(restore)) return { status: "UNAVAILABLE" };
         this.#busy = true;
         try {
             const identity = managedRootIdentity(root), target = this.#target(), before = this.#read(root, target);
@@ -73,29 +73,29 @@ export class CheckedPowerShellProfile {
             if (!restore && equal(before, prior(PROFILE_NAME))) return { status: "UNAVAILABLE" }; // No prior value is owned to restore.
             if (restore && !equal(before, prior(PROFILE_NAME)) && !(record!.phase === "PREPARED" && equal(before, record!.before))) throw new Error();
             const next = restore ? record!.before : prior(PROFILE_NAME);
-            const fresh = () => this.#available() && managedRootIdentity(root) === identity && this.#target() === target
+            const fresh = () => this.#available(restore) && managedRootIdentity(root) === identity && this.#target() === target
                 && equal(this.#read(root, target), before) && equal(this.#context.workspaceState.get(PROFILE_STATE), raw);
             this.#views.clear(); const oldUri = this.#view(before), nextUri = this.#view(next);
             await vscode.commands.executeCommand("vscode.diff", oldUri, nextUri, "Review project terminal profile");
-            if (!fresh()) return { status: this.#available() ? "FAILED" : "UNAVAILABLE" };
+            if (!fresh()) return { status: this.#available(restore) ? "FAILED" : "UNAVAILABLE" };
             const action = restore ? "Restore previous terminal profile" : "Use checked PowerShell profile";
             if (await vscode.window.showWarningMessage("Apply this terminal profile change to the selected project?", { modal: true,
                 detail: "Only terminal.integrated.defaultProfile.windows changes. Checked commands require managed review; other terminals remain outside these checks." }, action) !== action) return { status: "CANCELLED" };
-            if (!fresh()) return { status: this.#available() ? "FAILED" : "UNAVAILABLE" };
+            if (!fresh()) return { status: this.#available(restore) ? "FAILED" : "UNAVAILABLE" };
             const prepared: Receipt = restore ? { ...record!, phase: "PREPARED" }
                 : { schemaVersion: 1, root: root.toString(), target, phase: "PREPARED", before, after: PROFILE_NAME };
             await this.#context.workspaceState.update(PROFILE_STATE, prepared);
-            const bound = () => this.#available() && managedRootIdentity(root) === identity && this.#target() === target
+            const bound = () => this.#available(restore) && managedRootIdentity(root) === identity && this.#target() === target
                 && equal(this.#context.workspaceState.get(PROFILE_STATE), prepared);
             if (!bound() || !equal(this.#read(root, target), before)) throw new Error();
             if (!equal(before, next)) await vscode.workspace.getConfiguration("terminal.integrated", root).update(SETTING, next.present ? next.value : undefined, target);
             if (!bound() || !equal(this.#read(root, target), next)) throw new Error();
             const final = restore ? undefined : { ...prepared, phase: "APPLIED" as const };
             await this.#context.workspaceState.update(PROFILE_STATE, final);
-            if (!this.#available() || managedRootIdentity(root) !== identity || this.#target() !== target || !equal(this.#read(root, target), next)
+            if (!this.#available(restore) || managedRootIdentity(root) !== identity || this.#target() !== target || !equal(this.#read(root, target), next)
                 || !equal(this.#context.workspaceState.get(PROFILE_STATE), final)) throw new Error();
             return { status: "SAVED" };
-        } catch { return { status: this.#available() ? "FAILED" : "UNAVAILABLE" }; }
+        } catch { return { status: this.#available(restore) ? "FAILED" : "UNAVAILABLE" }; }
         finally { this.#busy = false; }
     }
 }

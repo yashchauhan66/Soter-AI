@@ -1,0 +1,47 @@
+{
+    "schemaVersion":  1,
+    "feature":  "F32",
+    "status":  "PURE_LATE_OBSERVER_CONTROLS_FAIL_NOT_NATIVE",
+    "library":  {
+                    "path":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261103-f32-lifecycle-2e95d6a4\\installed-broker-custody-proposed-01.ps1",
+                    "sha256":  "dfd814c20865f464ff197cab4eeb897163b20c5ff5d8b5c68500e99f2f27bee5",
+                    "bytes":  23698
+                },
+    "controls":  [
+                     {
+                         "id":  "late-valid-observer",
+                         "pass":  false,
+                         "actualError":  "F32 public observer must be within the admitted exact-profile Code tree.",
+                         "events":  [
+
+                                    ]
+                     },
+                     {
+                         "id":  "observer-never-present",
+                         "pass":  true,
+                         "actualError":  "F32 public observer must be within the admitted exact-profile Code tree.",
+                         "events":  [
+
+                                    ]
+                     },
+                     {
+                         "id":  "wrong-root",
+                         "pass":  true,
+                         "actualError":  "F32 public observer must be within the admitted exact-profile Code tree.",
+                         "events":  [
+
+                                    ]
+                     },
+                     {
+                         "id":  "syntax-errors-zero",
+                         "pass":  true
+                     },
+                     {
+                         "id":  "no-live-query",
+                         "pass":  true
+                     }
+                 ],
+    "failed":  1,
+    "forbiddenLiveCalls":  0,
+    "scope":  "Pure receipt/tree readiness model with real Read-F32BrokerBinding and watcher orchestration. Broker process/listener/absence calls replaced by controlled functions; no native coverage."
+}

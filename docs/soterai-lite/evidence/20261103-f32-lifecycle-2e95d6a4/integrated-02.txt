@@ -1,0 +1,26 @@
+﻿{"phase":"compiler-owned-02","observedAt":"2026-11-03T08:49:52.291Z","pid":5412,"actualClose":true,"exitCode":0,"signal":null,"stdoutEOF":true,"stderrEOF":true,"overflow":false,"streamError":false,"deadlineExceeded":false,"signalsRequested":0,"streams":[{"name":"stdout","bytes":0,"observedBytes":0,"sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},{"name":"stderr","bytes":0,"observedBytes":0,"sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}]}
+{"phase":"unit-shard-01-02","observedAt":"2026-11-03T08:52:39.923Z","pid":20108,"actualClose":true,"exitCode":0,"signal":null,"stdoutEOF":true,"stderrEOF":true,"overflow":false,"streamError":false,"deadlineExceeded":false,"signalsRequested":0,"streams":[{"name":"stdout","bytes":168274,"observedBytes":168274,"sha256":"250c4cb0bc10fb7ee42b386333b97fba1a149b8f415c82a91b5d973cdefef44f"},{"name":"stderr","bytes":0,"observedBytes":0,"sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}]}
+{"phase":"unit-shard-02-02","observedAt":"2026-11-03T08:53:39.079Z","pid":12012,"actualClose":true,"exitCode":0,"signal":null,"stdoutEOF":true,"stderrEOF":true,"overflow":false,"streamError":false,"deadlineExceeded":false,"signalsRequested":0,"streams":[{"name":"stdout","bytes":79102,"observedBytes":79102,"sha256":"dc16880e4eecc36686680295ac4ccce6d5fcd31a54f1f950ea556272301a284d"},{"name":"stderr","bytes":0,"observedBytes":0,"sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}]}
+{"phase":"unit-shard-03-02","observedAt":"2026-11-03T08:56:05.531Z","pid":4804,"actualClose":true,"exitCode":1,"signal":null,"stdoutEOF":true,"stderrEOF":true,"overflow":false,"streamError":false,"deadlineExceeded":false,"signalsRequested":0,"streams":[{"name":"stdout","bytes":149081,"observedBytes":149081,"sha256":"2548e153e9c03862e82378769339565879f719f3e8970b8d6aa07f9884b41352"},{"name":"stderr","bytes":0,"observedBytes":0,"sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}]}
+node.exe : AssertionError [ERR_ASSERTION]: unit-shard-03-02
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (AssertionError ...nit-shard-03-02:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+1 !== 0
+
+    at run (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261103-f32-lifecycle-2e
+95d6a4\run-integrated-02.cjs:34:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261103-f32-lifecycle-2
+e95d6a4\run-integrated-02.cjs:46:5 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 1,
+  expected: 0,
+  operator: 'strictEqual'
+}

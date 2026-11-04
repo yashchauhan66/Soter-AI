@@ -1,0 +1,30 @@
+{
+    "schemaVersion":  1,
+    "feature":  "F32",
+    "status":  "STATIC_VENDOR_AND_PUBLIC_API_REVIEW_ONLY",
+    "observedAt":  "2026-11-03T14:09:38.7427513Z",
+    "facts":  [
+                  {
+                      "path":  "C:/Users/USER/AppData/Local/Programs/Microsoft VS Code/261c84cb1e/resources/app/out/vs/workbench/workbench.desktop.main.js",
+                      "bytes":  21744205,
+                      "sha256":  "2b9b74b72a64429d9165babad937fc5c4dcb3f04b7aa77f08328964bf412e93d"
+                  },
+                  {
+                      "path":  "C:/Users/USER/AppData/Local/Programs/Microsoft VS Code/261c84cb1e/resources/app/out/vscode-dts/vscode.d.ts",
+                      "bytes":  763741,
+                      "sha256":  "a52f4e85ffb366a60528a739b0d2079e2fa4bd746e50870e29ca38eb05d5da03"
+                  }
+              ],
+    "publicApi":  {
+                      "line":  11283,
+                      "text":  "A thenable that resolves to the selected item or undefined when being dismissed."
+                  },
+    "vendorNonmodalSource":  {
+                                 "offset":  5214973,
+                                 "source":  "_showMessage(o,e,t,i){return new Promise(n=\u003e{let r=t.map(p=\u003edA(zt({id:`_extension_message_handle_${p.handle}`,label:p.title,enabled:!0,run:()=\u003e(n(p.handle),Promise.resolve())}),{extensionButtonIndex:p.handle})),a,c=!1;i.source\u0026\u0026(a={label:i.source.label,id:i.source.identifier.value},c=vRe.URGENT_NOTIFICATION_SOURCES.includes(a.id)),a||(a=d(9077,null));let l=[];i.source\u0026\u0026l.push(dA(zt({id:i.source.identifier.value,label:d(9078,null),run:()=\u003ethis._commandService.executeCommand(\"_extensions.manage\",i.source.identifier.value)}),\"manageExtension\"));let u=this._notificationService.notify({telemetry:Dli(i.source?.identifier.value,\"message\"),severity:o,message:e,legacyExtensionLinkParsing:sDt,actions:{primary:r,secondary:l},source:a,priority:c?3:0,sticky:c});K.once(u.onDidClose)(()=\u003e{n(void 0)})})}"
+                             },
+    "finding":  "Awaiting the nonmodal showInformationMessage blocks report resolution until action or dismissal. With no actions only close resolves it.",
+    "fixtureBoundary":  "R21 leaves notice pending while requiring report; renderer must not dismiss it to hide the product bug",
+    "noNativeOrComponentExecution":  true,
+    "signalsRequested":  0
+}
