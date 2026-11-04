@@ -1,0 +1,24 @@
+'use strict';
+// Records the actual owner reply; no native/profile/listener/consumption action.
+const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto'),assert=require('node:assert/strict');
+const own=n=>path.join(__dirname,n),sha=b=>crypto.createHash('sha256').update(b).digest('hex');
+const read=p=>JSON.parse(fs.readFileSync(p,'utf8').replace(/^\uFEFF/,''));
+const fact=p=>{const b=fs.readFileSync(p);return{path:path.resolve(p),bytes:b.length,sha256:sha(b)}};
+const pre=read(own('extra05-preapproval-01.json')),candidatePath=own('installed-extra05-candidate-admission-01.json.txt');
+assert.deepEqual(fact(candidatePath),pre.candidate);
+assert.equal(fact(pre.proposal.path).sha256,'638be8e15e37c44386bddbf378dc13f14814dc9b63ef9fab968eee667b3ea801');
+assert.deepEqual(fact(pre.runner.path),pre.runner);const candidate=read(candidatePath);
+for(const name of ['installed-extra05-user-approval.json','installed-extra05-admission.json','installed-extra05-consumed.json'])assert(!fs.existsSync(own(name)));
+const proof=read(own('f32-source-checkpoint-01-byte-proof.json'));
+assert.equal(proof.status,'PASS_SCOPED_LOCAL_RAW_BYTE_CHECKPOINT_F32_INCOMPLETE');
+assert.equal(proof.commit,'f9fd722f108ea46ad379e768c48a3fe4242a5eda');assert.equal(proof.paths,985);assert.equal(proof.mismatches,0);
+const approval={feature:'F32',status:'USER_APPROVED_ONE_BOUNDED_EXTRA05_VISIBLE_GUI_DIAGNOSTIC',extraAttempt:'PROPOSAL05',approved:true,maxAttempts:1,observedAt:new Date().toISOString(),signalsRequested:0,syntheticOnly:true,runRoot:candidate.runRoot,proposal:pre.proposal,runner:candidate.fixtures.runner,sourceProof:candidate.sourceProof,currentVsix:candidate.currentVsix,userAnswer:'Ek extra bounded F32 Proposal05 run allow karo',questionCall:'call_e96afee0b9294e83bc79c3fe08f45e20',checkpoint:fact(own('f32-source-checkpoint-01-byte-proof.json'))};
+const approvalPath=own('installed-extra05-user-approval.json');fs.writeFileSync(approvalPath,JSON.stringify(approval,null,2)+'\n',{flag:'wx'});
+const admission={...candidate,extraApproval:fact(approvalPath)},made=require('./prepare-installed-extra05-admission-proposed-01.cjs').makeAdmission({...pre.options,extraApproval:fact(approvalPath)});
+assert.deepEqual(admission,made,'Only the actual approval fact may differ from reviewed candidate');
+const target=own('installed-extra05-admission.json');fs.writeFileSync(target,JSON.stringify(admission,null,2)+'\n',{flag:'wx'});
+const runner=require(pre.runner.path);runner.verifyExtraApproval(admission);
+runner.reviewedAdmission(target,fact(target).sha256);
+assert(!fs.existsSync(own('installed-extra05-consumed.json')));assert(!fs.existsSync(candidate.runRoot));
+const report={feature:'F32',status:'PASS_EXPLICIT_EXTRA05_APPROVAL_AND_EXACT_ADMISSION_NATIVE_NOT_RUN',observedAt:new Date().toISOString(),approval:fact(approvalPath),admission:fact(target),candidate:pre.candidate,normalRoundsConsumed:3,extraApproved:1,extraConsumed:0,signalsRequested:0,runRoot:candidate.runRoot,launchAfter:'Current affected-chain actual close, both EOF and fresh marked-owner absence required.'};
+fs.writeFileSync(own('extra05-approval-materialization-01.json'),JSON.stringify(report,null,2)+'\n',{flag:'wx'});console.log(JSON.stringify(report));

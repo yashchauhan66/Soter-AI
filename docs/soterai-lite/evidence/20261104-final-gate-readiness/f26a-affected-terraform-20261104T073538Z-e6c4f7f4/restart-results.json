@@ -1,0 +1,126 @@
+{
+  "schemaVersion": 1,
+  "phase": "restart",
+  "syntheticOnly": true,
+  "hostVersion": "1.144.1",
+  "extensionBundleSha256": "b611dee998d11824d523b3d561704f4a5dc15e27274e6e1d85c7154b9d42cfa0",
+  "currentDeveloperBundleSha256": "b611dee998d11824d523b3d561704f4a5dc15e27274e6e1d85c7154b9d42cfa0",
+  "hostProbeSha256": "56baeb6b5c28e25691bca0ea9213c186edc2dce83fa815ac3bed323778ce72b5",
+  "observations": [
+    {
+      "id": "F22C-N01",
+      "scope": "Restart reuses keys/ledger and keeps exact masked source without startup read",
+      "status": "PASS"
+    },
+    {
+      "id": "F22C-N02",
+      "scope": "No stale family finding authority survives restart",
+      "status": "PASS"
+    },
+    {
+      "id": "F22C-N03",
+      "scope": "Actual canonical encrypted backup command recovers Terraform after restart disclosure",
+      "status": "PASS"
+    },
+    {
+      "id": "F22C-N04",
+      "scope": "Fresh native review reestablishes two metadata findings after explicit recovery",
+      "status": "PASS"
+    }
+  ],
+  "passed": 4,
+  "failed": 0,
+  "notRun": 0,
+  "sourceDocumentCalls": 0,
+  "sourceDocumentEvents": 0,
+  "secretStorageStores": 0,
+  "reviews": [
+    {
+      "action": "Restore raw values",
+      "safe": true
+    },
+    {
+      "action": "Analyze saved project files",
+      "safe": true
+    }
+  ],
+  "metadataDocuments": 2,
+  "trace": [
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 573.5194000000001
+    },
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 582.7003999999997
+    },
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 844.5041000000001
+    },
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 1692.0065
+    },
+    {
+      "event": "other-configuration-event",
+      "milliseconds": 1899.9295000000002
+    },
+    {
+      "event": "command-start-terraformSecretScannerStatus",
+      "milliseconds": 2111.2739
+    },
+    {
+      "event": "command-end-terraformSecretScannerStatus",
+      "milliseconds": 2114.3941999999997,
+      "status": "OWNER_REVIEW_REQUIRED"
+    },
+    {
+      "event": "command-start-reviewTerraformSecretVault",
+      "milliseconds": 2124.901
+    },
+    {
+      "event": "command-end-reviewTerraformSecretVault",
+      "milliseconds": 2127.1209,
+      "status": "REVIEW_FILES_FIRST"
+    },
+    {
+      "event": "command-start-restoreFileFromBackup",
+      "milliseconds": 2127.4519
+    },
+    {
+      "event": "command-end-restoreFileFromBackup",
+      "milliseconds": 2991.2397,
+      "status": "VOID"
+    },
+    {
+      "event": "command-start-reviewTerraformSecrets",
+      "milliseconds": 3036.3993
+    },
+    {
+      "event": "command-end-reviewTerraformSecrets",
+      "milliseconds": 3880.0393999999997,
+      "status": "ANALYZED",
+      "files": 1,
+      "findings": 2
+    },
+    {
+      "event": "command-start-openHygieneExposureLedger",
+      "milliseconds": 3880.0964999999997
+    },
+    {
+      "event": "command-end-openHygieneExposureLedger",
+      "milliseconds": 4257.1435,
+      "status": "METADATA"
+    }
+  ],
+  "independence": "LOW",
+  "ownerPresence": "SCRIPTED_NATIVE_API_DECISIONS_NOT_HUMAN_REVIEW",
+  "notTested": [
+    "Terraform execution/provider/schema validation",
+    "Dynamic templates/functions and unsupported static grammar",
+    "Human usability/accessibility",
+    "Live credentials or provider rotation",
+    "OS custody/unmanaged native reads/uploads"
+  ]
+}

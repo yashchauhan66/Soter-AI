@@ -1,0 +1,35 @@
+﻿TAP version 13
+# Subtest: real current compiled Ledger build input must be included as its exact JavaScript bytes
+not ok 1 - real current compiled Ledger build input must be included as its exact JavaScript bytes
+  ---
+  duration_ms: 40.0422
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261104-final-gate-readiness\\neutral-compiled-input-controls-proposed-03.test.cjs:6:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert(!/(?:^|\/)(?:\.git|node_modules|builds|dist|artifacts|evidence)(?:\/|$)/i.test(p))
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    Object.allowed (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261104-final-gate-readiness\build-neutral-review-kit-base-03.cjs:51:3)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261104-final-gate-readiness\neutral-compiled-input-controls-proposed-03.test.cjs:7:107)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 343.0697

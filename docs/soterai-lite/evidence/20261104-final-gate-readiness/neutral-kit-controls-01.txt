@@ -1,0 +1,82 @@
+﻿TAP version 13
+# Subtest: admit exact artifact/catalog/license/product bytes without writing files
+ok 1 - admit exact artifact/catalog/license/product bytes without writing files
+  ---
+  duration_ms: 36.813
+  type: 'test'
+  ...
+# Subtest: reject a runtime identity forged under the correct archive identity
+ok 2 - reject a runtime identity forged under the correct archive identity
+  ---
+  duration_ms: 17.453
+  type: 'test'
+  ...
+# Subtest: reject a different archive hash
+ok 3 - reject a different archive hash
+  ---
+  duration_ms: 22.4929
+  type: 'test'
+  ...
+# Subtest: reject a different catalog hash
+ok 4 - reject a different catalog hash
+  ---
+  duration_ms: 22.0919
+  type: 'test'
+  ...
+# Subtest: reject contextual documents even with a forged source role
+ok 5 - reject contextual documents even with a forged source role
+  ---
+  duration_ms: 46.9249
+  type: 'test'
+  ...
+# Subtest: reject outside or traversal destination
+ok 6 - reject outside or traversal destination
+  ---
+  duration_ms: 46.3987
+  type: 'test'
+  ...
+# Subtest: reject case-alias duplicated inputs
+ok 7 - reject case-alias duplicated inputs
+  ---
+  duration_ms: 27.2016
+  type: 'test'
+  ...
+# Subtest: reject a missing license
+ok 8 - reject a missing license
+  ---
+  duration_ms: 31.0515
+  type: 'test'
+  ...
+# Subtest: reject input drift in a selected source
+ok 9 - reject input drift in a selected source
+  ---
+  duration_ms: 22.0792
+  type: 'test'
+  ...
+# Subtest: reject unknown request keys
+ok 10 - reject unknown request keys
+  ---
+  duration_ms: 14.5713
+  type: 'test'
+  ...
+# Subtest: generated verifier and synthetic seed parse as actual JavaScript
+ok 11 - generated verifier and synthetic seed parse as actual JavaScript
+  ---
+  duration_ms: 28.805
+  type: 'test'
+  ...
+# Subtest: reject malformed source relative paths
+ok 12 - reject malformed source relative paths
+  ---
+  duration_ms: 3.6103
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 515.7644

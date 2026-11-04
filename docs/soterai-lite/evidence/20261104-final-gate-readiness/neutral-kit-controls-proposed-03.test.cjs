@@ -1,0 +1,17 @@
+'use strict';
+const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto'),vm=require('node:vm');
+const helper=require('./build-neutral-review-kit-proposed-03.cjs'),repo=path.resolve(__dirname,'../../../..');
+const fact=p=>{const b=fs.readFileSync(path.join(repo,p));return{path:p,bytes:b.length,sha256:crypto.createHash('sha256').update(b).digest('hex')};};
+const baseline=()=>({schemaVersion:1,destination:'docs/soterai-lite/independent-review-kit-20261104-73e2aa09',artifact:fact('packages/soterai-lite/soterai-lite-0.7.0-f32-20261103-attempt01.vsix'),catalog:fact('docs/soterai-lite/LITE-CATALOG.json'),runtimeIdentity:structuredClone(helper.expectedRuntimes),files:[{...fact('packages/vscode-extension/src/lifecycle/RemovalCoordinator.ts'),role:'PRODUCT_SOURCE'},{...fact('packages/soterai-lite/LICENSE.md'),role:'LICENSE'}]});
+test('admit exact artifact/catalog/license/product bytes without writing files',()=>{const r=baseline(),p=helper.prepare(r);assert.equal(p.items.length,8);assert.equal(p.search.hits.length,0);assert(!fs.existsSync(p.destination));});
+test('reject a runtime identity forged under the correct archive identity',()=>{const r=baseline();r.runtimeIdentity[0].sha256='0'.repeat(64);assert.throws(()=>helper.prepare(r));});
+test('reject a different archive hash',()=>{const r=baseline();r.artifact.sha256='0'.repeat(64);assert.throws(()=>helper.prepare(r));});
+test('reject a different catalog hash',()=>{const r=baseline();r.catalog.sha256='0'.repeat(64);assert.throws(()=>helper.prepare(r));});
+test('reject contextual documents even with a forged source role',()=>{const r=baseline();r.files.push({...fact('docs/soterai-lite/ledger.md'),role:'PRODUCT_SOURCE'});assert.throws(()=>helper.prepare(r));});
+test('reject outside or traversal destination',()=>{for(const destination of ['../review-kit','C:/review-kit','docs/soterai-lite/../review-kit','docs/soterai-lite/independent-review-kit-20261104-73e2aa09/child']){const r=baseline();r.destination=destination;assert.throws(()=>helper.prepare(r));}});
+test('reject case-alias duplicated inputs',()=>{const r=baseline();r.files.push({...r.files[0]});assert.throws(()=>helper.prepare(r));});
+test('reject a missing license',()=>{const r=baseline();r.files=r.files.slice(0,1);assert.throws(()=>helper.prepare(r));});
+test('reject input drift in a selected source',()=>{const r=baseline();r.files[0].bytes++;assert.throws(()=>helper.prepare(r));});
+test('reject unknown request keys',()=>{const r=baseline();r.copyAllDocs=true;assert.throws(()=>helper.prepare(r));});
+test('generated verifier and synthetic seed parse as actual JavaScript',()=>{const p=helper.prepare(baseline());for(const name of ['verify-kit.cjs','seed-synthetic-project.cjs']){const item=p.items.find(i=>i.rel===name);assert(item);new vm.Script(item.raw.toString('utf8'),{filename:name});}});
+test('reject malformed source relative paths',()=>{for(const p of ['../package.json','/package.json','C:/package.json','packages//core/x.ts','packages/./core/x.ts','packages\\core\\x.ts'])assert.throws(()=>helper.relative(p));});

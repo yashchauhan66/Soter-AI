@@ -1,0 +1,18 @@
+﻿{"phase":"f05-current-native-03","observedAt":"2026-11-04T14:04:37.312Z","pid":1344,"actualClose":true,"exitCode":1,"signal":null,"stdoutEOF":true,"stderrEOF":true,"overflow":false,"streamError":false,"deadlineExceeded":false,"signalsRequested":0,"streams":[{"name":"stdout","bytes":0,"observedBytes":0,"sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},{"name":"stderr","bytes":545,"observedBytes":545,"sha256":"c00fc1a4b0ab587bddb432d6c34c3d26fb1fef26c73f7d7ef5b323b8c649795a"}]}
+node.exe : AssertionError [ERR_ASSERTION]: F05 root helper failed/incomplete; no automatic retry
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (AssertionError ...automatic retry:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+    at main (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261104-final-gate-read
+iness\run-f05-current-proposed-03.cjs:35:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '=='
+}

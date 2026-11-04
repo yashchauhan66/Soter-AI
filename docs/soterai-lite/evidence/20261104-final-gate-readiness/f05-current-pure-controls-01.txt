@@ -1,0 +1,70 @@
+﻿TAP version 13
+# Subtest: F05-C01 current rebuilt driver is byte-identical to accepted original driver
+ok 1 - F05-C01 current rebuilt driver is byte-identical to accepted original driver
+  ---
+  duration_ms: 3.8358
+  type: 'test'
+  ...
+# Subtest: F05-C02 actual source graph contains only host assertions and bundles no product modules
+ok 2 - F05-C02 actual source graph contains only host assertions and bundles no product modules
+  ---
+  duration_ms: 0.3412
+  type: 'test'
+  ...
+# Subtest: F05-C03 all ten original H IDs remain in the unchanged source
+ok 3 - F05-C03 all ten original H IDs remain in the unchanged source
+  ---
+  duration_ms: 0.6822
+  type: 'test'
+  ...
+# Subtest: F05-C04 current final four runtimes and final source/backend qualification remain bound
+ok 4 - F05-C04 current final four runtimes and final source/backend qualification remain bound
+  ---
+  duration_ms: 0.6675
+  type: 'test'
+  ...
+# Subtest: F05-C05 changed driver byte count or SHA refuses actual-file admission
+ok 5 - F05-C05 changed driver byte count or SHA refuses actual-file admission
+  ---
+  duration_ms: 5.423
+  type: 'test'
+  ...
+# Subtest: F05-C06 exact current Code app JSON root and executable are pinned
+ok 6 - F05-C06 exact current Code app JSON root and executable are pinned
+  ---
+  duration_ms: 3.5355
+  type: 'test'
+  ...
+# Subtest: F05-C07 wrapper retains both EOF before result validation and phase progression
+ok 7 - F05-C07 wrapper retains both EOF before result validation and phase progression
+  ---
+  duration_ms: 0.6685
+  type: 'test'
+  ...
+# Subtest: F05-C08 launch remains explicit one-shot with original save7/reload3 and owned helper
+ok 8 - F05-C08 launch remains explicit one-shot with original save7/reload3 and owned helper
+  ---
+  duration_ms: 0.4298
+  type: 'test'
+  ...
+# Subtest: F05-C09 no signal or external network action appears in new launch source
+ok 9 - F05-C09 no signal or external network action appears in new launch source
+  ---
+  duration_ms: 1.6919
+  type: 'test'
+  ...
+# Subtest: F05-C10 runner and compiled driver parse without product activation
+ok 10 - F05-C10 runner and compiled driver parse without product activation
+  ---
+  duration_ms: 4.4002
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 80.8589

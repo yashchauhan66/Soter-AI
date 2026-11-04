@@ -1,0 +1,2023 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS_CURRENT_F32_AFFECTED20_509_37_FUNCTIONAL10_SECURITY17_BASELINE",
+  "observedAt": "2026-11-04T07:50:50.710Z",
+  "binding": {
+    "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/prepared-affected-binding-01.json",
+    "bytes": 80880,
+    "sha256": "7bb10a7d74f4bd69e09a33493a0fc13acd3f30d7ec2fc3aa6e597924843f4f54"
+  },
+  "sourceProof": {
+    "path": "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/full-inputs-04.json",
+    "bytes": 227195,
+    "sha256": "21a9721cade24be9cb76a03350273dbc79f1f8e0e913bc92d7a1c5385db8b764"
+  },
+  "vsix": {
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-f32-20261103-attempt01.vsix",
+    "bytes": 1742100,
+    "sha256": "e2ce3dc44d45b5e160ab0f95d713a9434a9ea7d610ce7abd2bf2500abe89d649"
+  },
+  "frontendSha256": "b611dee998d11824d523b3d561704f4a5dc15e27274e6e1d85c7154b9d42cfa0",
+  "families": [
+    {
+      "id": "logs",
+      "checks": 25,
+      "run": "f26a-logs-native-20261104T071123Z-5fac652b",
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 21,
+          "driverSha256": "4f014043b9ff4a46dadb4f29403e7f801a3e6cc429adb8ea2d99fb12bd48c251",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-logs-native-20261104T071123Z-5fac652b/primary-results.json",
+            "bytes": 16783,
+            "sha256": "7e92db5941579a85cf255f8ef60c5d59143c659e49ea3dedd98d7f0834903c75"
+          }
+        },
+        {
+          "phase": "restart",
+          "checks": 4,
+          "driverSha256": "4f014043b9ff4a46dadb4f29403e7f801a3e6cc429adb8ea2d99fb12bd48c251",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-logs-native-20261104T071123Z-5fac652b/restart-results.json",
+            "bytes": 4291,
+            "sha256": "abfee6ea5d48cac9517f7d7bf084ac09dcabae01f61ccdedf8bcdc0261e13c2c"
+          }
+        }
+      ]
+    },
+    {
+      "id": "owned-output",
+      "checks": 19,
+      "run": "f26a-owned-output-native-20261104T071433Z-9bc9e395",
+      "phases": [
+        {
+          "phase": "single",
+          "checks": 19,
+          "driverSha256": "d6bf835ca26e390eeb4b5af5006bca1ae710d6156a045eaa791ccea2713512b8",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-owned-output-native-20261104T071433Z-9bc9e395/single-results.json",
+            "bytes": 18419,
+            "sha256": "fc9b288d55460c5e17415e424bcf1553810fbf74c0e624707f92be1a62a5e082"
+          }
+        }
+      ]
+    },
+    {
+      "id": "artifact",
+      "checks": 25,
+      "run": "f26a-artifact-native-20261104T071607Z-1e53d3ce",
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 21,
+          "driverSha256": "6540e23b5c1b7898fec45ede212502d971460bb0cfac2a55bc160873eb6e9a12",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-artifact-native-20261104T071607Z-1e53d3ce/primary-results.json",
+            "bytes": 14668,
+            "sha256": "9e55f2e05e356d26a4d2394031d06d9d91c9d87a84012448c58c60b93b415570"
+          }
+        },
+        {
+          "phase": "restart",
+          "checks": 4,
+          "driverSha256": "6540e23b5c1b7898fec45ede212502d971460bb0cfac2a55bc160873eb6e9a12",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-artifact-native-20261104T071607Z-1e53d3ce/restart-results.json",
+            "bytes": 3885,
+            "sha256": "a7f51e29d9a01d23f1df49dd34eeb97778775494d89fe31f35e09ae482ff7473"
+          }
+        }
+      ]
+    },
+    {
+      "id": "streaming-output",
+      "checks": 13,
+      "run": "f26a-streaming-output-native-20261104T071745Z-9a0a3217",
+      "phases": [
+        {
+          "phase": "single",
+          "checks": 13,
+          "driverSha256": "25f981d467639de9e910e9765e71ca9e13f630cd9062cfd08c96d8ad4d1e9f9d",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-streaming-output-native-20261104T071745Z-9a0a3217/single-results.json",
+            "bytes": 5557,
+            "sha256": "7d81bf3da40003e30d3636bf30f22df0b94faf367bdc39015bc6a379398de3ff"
+          }
+        }
+      ]
+    },
+    {
+      "id": "vault-runtime",
+      "checks": 12,
+      "run": "f26a-vault-runtime-native-20261104T071837Z-ed8e0445",
+      "phases": [
+        {
+          "phase": "single",
+          "checks": 12,
+          "driverSha256": "79eadfbe075cfee1f4e2afd46ef9b60fdbb9c59c68b5ade4e2558fb8d46ac661",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-vault-runtime-native-20261104T071837Z-ed8e0445/single-results.json",
+            "bytes": 5641,
+            "sha256": "c7e8b19228734f9add668fd8e3ff6e799013da26ce9a5098a44dee655194de83"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ps51",
+      "checks": 19,
+      "run": "f26a-ps51-native-20261104T071941Z-8fc518b2",
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 16,
+          "driverSha256": "4ace212abaa62e358203f62a959751484f70f2ff596c3fd7601a3d3f35054a78",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-ps51-native-20261104T071941Z-8fc518b2/primary-results.json",
+            "bytes": 6511,
+            "sha256": "d56b4cdba56198802b1222a3155c2b80dc41483cfbc61928be5499020564b762"
+          }
+        },
+        {
+          "phase": "restart",
+          "checks": 3,
+          "driverSha256": "4ace212abaa62e358203f62a959751484f70f2ff596c3fd7601a3d3f35054a78",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-ps51-native-20261104T071941Z-8fc518b2/restart-results.json",
+            "bytes": 2082,
+            "sha256": "696a9dc7721a017e618c1d59111741b8e66709988b272b08c7c11fd453d7c4b3"
+          }
+        }
+      ]
+    },
+    {
+      "id": "cmd",
+      "checks": 19,
+      "run": "f26a-cmd-native-20261104T072137Z-1212ec66",
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 16,
+          "driverSha256": "1fa4a1f7530492704242083f7c71fe159b50856bde4525808b55ff324809cb86",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-cmd-native-20261104T072137Z-1212ec66/primary-results.json",
+            "bytes": 6108,
+            "sha256": "81fefdb862d54e027a4a5eed7b005ad50bee7465b7c9612f359704b95da4a065"
+          }
+        },
+        {
+          "phase": "restart",
+          "checks": 3,
+          "driverSha256": "1fa4a1f7530492704242083f7c71fe159b50856bde4525808b55ff324809cb86",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-cmd-native-20261104T072137Z-1212ec66/restart-results.json",
+            "bytes": 2079,
+            "sha256": "bbe39d57fed72032fef8c7cf948dea9b5d3d84b495b70e37d15c4081c57af717"
+          }
+        }
+      ]
+    },
+    {
+      "id": "gitbash",
+      "checks": 19,
+      "run": "f26a-gitbash-native-20261104T072312Z-9cfd2058",
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 16,
+          "driverSha256": "525d6efc1523dde42f3c98cf39c63f15e49692611d51777a53af795eca9d65d1",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-gitbash-native-20261104T072312Z-9cfd2058/primary-results.json",
+            "bytes": 6835,
+            "sha256": "903114b815a95b508c566cb02b39cc95afe478117043ff74238ceffd67223f4c"
+          }
+        },
+        {
+          "phase": "restart",
+          "checks": 3,
+          "driverSha256": "525d6efc1523dde42f3c98cf39c63f15e49692611d51777a53af795eca9d65d1",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-gitbash-native-20261104T072312Z-9cfd2058/restart-results.json",
+            "bytes": 2093,
+            "sha256": "a594be0e78b5d1f3da03806c404a0b509740c47064c662ea8c82f27b6c4e9796"
+          }
+        }
+      ]
+    },
+    {
+      "id": "history",
+      "checks": 25,
+      "run": "f26a-history-native-20261104T072443Z-36818439",
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 21,
+          "driverSha256": "a10fcf723b1edeb480572c1339cecbcd2ef2baa34c0892cb43ed3b057735efd5",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-history-native-20261104T072443Z-36818439/primary-results.json",
+            "bytes": 37269,
+            "sha256": "3f5ced823ae1c046ba1f51c23cac95fac73f8efa32b7bb660f98aa9da8e0b382"
+          }
+        },
+        {
+          "phase": "restart",
+          "checks": 4,
+          "driverSha256": "a10fcf723b1edeb480572c1339cecbcd2ef2baa34c0892cb43ed3b057735efd5",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-history-native-20261104T072443Z-36818439/restart-results.json",
+            "bytes": 7144,
+            "sha256": "028a1c79f22ddebbbddd2e49d2fbc4c32593dbd4b99b99bb83398aa255c9f6d6"
+          }
+        }
+      ]
+    },
+    {
+      "id": "mcp",
+      "checks": 25,
+      "run": "f26a-mcp-native-20261104T072651Z-08a684de",
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 21,
+          "driverSha256": "829d01302e7b859ac77bfbc1f40cb866fd40be95981ace5924c63e407cfcbc65",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-mcp-native-20261104T072651Z-08a684de/primary-results.json",
+            "bytes": 16542,
+            "sha256": "ca75f27591e867c287bdc2e88d97fde918cce7c54e7afab8cd3d5379a8e17f52"
+          }
+        },
+        {
+          "phase": "restart",
+          "checks": 4,
+          "driverSha256": "829d01302e7b859ac77bfbc1f40cb866fd40be95981ace5924c63e407cfcbc65",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-mcp-native-20261104T072651Z-08a684de/restart-results.json",
+            "bytes": 3380,
+            "sha256": "e54e45afcc2d80758b05a2c8769232f963cad053ec3f56bdfb6a3e5f697477b0"
+          }
+        }
+      ]
+    },
+    {
+      "id": "editor",
+      "checks": 25,
+      "run": "f26a-affected-editor-20261104T072900Z-b766cfad",
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 21,
+          "driverSha256": "e3cbb70a89ffee3e2611c4d98e378a9824b19210c3bc0e7e8dbb48ae845a0510",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-editor-20261104T072900Z-b766cfad/primary-results.json",
+            "bytes": 17031,
+            "sha256": "e1f84187af486407e3394d70fb47431e79da62f7f37f5ac9434b68f8cf956124"
+          }
+        },
+        {
+          "phase": "restart",
+          "checks": 4,
+          "driverSha256": "e3cbb70a89ffee3e2611c4d98e378a9824b19210c3bc0e7e8dbb48ae845a0510",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-editor-20261104T072900Z-b766cfad/restart-results.json",
+            "bytes": 3219,
+            "sha256": "347d6fb5fd0ce3200f6993a7498ae2cae9e2e615bdc9dc547ae9f0f6e28b3f74"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ci",
+      "checks": 25,
+      "run": "f26a-affected-ci-20261104T073041Z-fb9395bb",
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 21,
+          "driverSha256": "9391d251d03b06476dcdb21c0169c0ccad29b827dcc7ceef2eb25804a7c30b51",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-ci-20261104T073041Z-fb9395bb/primary-results.json",
+            "bytes": 15961,
+            "sha256": "2143e34fba3f076bd29130d1f1c3f83a65c082def9d03ba22526c407672ed529"
+          }
+        },
+        {
+          "phase": "restart",
+          "checks": 4,
+          "driverSha256": "9391d251d03b06476dcdb21c0169c0ccad29b827dcc7ceef2eb25804a7c30b51",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-ci-20261104T073041Z-fb9395bb/restart-results.json",
+            "bytes": 3156,
+            "sha256": "3ee0b04e165a90e9430289ae5d55536836c38b9925ba1027924cfe260901d86b"
+          }
+        }
+      ]
+    },
+    {
+      "id": "service-account",
+      "checks": 25,
+      "run": "f26a-affected-service-account-20261104T073219Z-fdd6e2a3",
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 21,
+          "driverSha256": "c7348717fdfead8fd7d9583d953a470a8da50aad63a3bb99f60211e6f2682f0b",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-service-account-20261104T073219Z-fdd6e2a3/primary-results.json",
+            "bytes": 16737,
+            "sha256": "a0760734de699f32c7553671c26629b2e3c57dc04bd43f6f42720f4f1232d74e"
+          }
+        },
+        {
+          "phase": "restart",
+          "checks": 4,
+          "driverSha256": "c7348717fdfead8fd7d9583d953a470a8da50aad63a3bb99f60211e6f2682f0b",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-service-account-20261104T073219Z-fdd6e2a3/restart-results.json",
+            "bytes": 3494,
+            "sha256": "89e811a04743e56c2906d084c60d02b334ed24a6d00a9a8e3670978f90f8df33"
+          }
+        }
+      ]
+    },
+    {
+      "id": "registry",
+      "checks": 25,
+      "run": "f26a-affected-registry-20261104T073355Z-5f21c374",
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 21,
+          "driverSha256": "8798c3a07df2770e3f06460105238ff0b65c225fd58ee6013a0fe9d9745c6633",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-registry-20261104T073355Z-5f21c374/primary-results.json",
+            "bytes": 15900,
+            "sha256": "3d81bf9929b020423203e1997d71f1135fb5cf7df1e27a0daafce2cb8a97af04"
+          }
+        },
+        {
+          "phase": "restart",
+          "checks": 4,
+          "driverSha256": "8798c3a07df2770e3f06460105238ff0b65c225fd58ee6013a0fe9d9745c6633",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-registry-20261104T073355Z-5f21c374/restart-results.json",
+            "bytes": 2985,
+            "sha256": "289eb554ab4da410f419fd3b884cb7ddef35f96eb72d5c9ab6a4a675d40cc772"
+          }
+        }
+      ]
+    },
+    {
+      "id": "terraform",
+      "checks": 25,
+      "run": "f26a-affected-terraform-20261104T073538Z-e6c4f7f4",
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 21,
+          "driverSha256": "56baeb6b5c28e25691bca0ea9213c186edc2dce83fa815ac3bed323778ce72b5",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-terraform-20261104T073538Z-e6c4f7f4/primary-results.json",
+            "bytes": 15889,
+            "sha256": "362e3eaed3855240c7b43336e6f9564f3b43f4fa5af2a0112c741cb35f744c75"
+          }
+        },
+        {
+          "phase": "restart",
+          "checks": 4,
+          "driverSha256": "56baeb6b5c28e25691bca0ea9213c186edc2dce83fa815ac3bed323778ce72b5",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-terraform-20261104T073538Z-e6c4f7f4/restart-results.json",
+            "bytes": 3440,
+            "sha256": "265906658f1f40cf05f0b69c4f26b8a7fd487be9d8a6b768bb6fda585629806c"
+          }
+        }
+      ]
+    },
+    {
+      "id": "container",
+      "checks": 25,
+      "run": "f26a-affected-container-20261104T073730Z-f0a2df29",
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 21,
+          "driverSha256": "c7b475a18a921ffeebc0a2f315b14cdee92b9a06264c79ec23229b794794415d",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-container-20261104T073730Z-f0a2df29/primary-results.json",
+            "bytes": 15190,
+            "sha256": "2087e1945963242e9aaf12f08bcbbf10354cb84054cd58b45f0a3856e7aaecea"
+          }
+        },
+        {
+          "phase": "restart",
+          "checks": 4,
+          "driverSha256": "c7b475a18a921ffeebc0a2f315b14cdee92b9a06264c79ec23229b794794415d",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-container-20261104T073730Z-f0a2df29/restart-results.json",
+            "bytes": 3210,
+            "sha256": "1105e5df7515cf13fd98cc0fdb6f7c9150cf77d05c53b7d04993860e7b225d1d"
+          }
+        }
+      ]
+    },
+    {
+      "id": "source",
+      "checks": 21,
+      "run": "f26a-affected-source-20261104T073932Z-a73ff442",
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 18,
+          "driverSha256": "05f022d000f2842765e7791a6ce72ea055c11c4324a90d4d8336bd2b0db3972b",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-source-20261104T073932Z-a73ff442/primary-results.json",
+            "bytes": 10443,
+            "sha256": "d2776a51e3117e5ecaa2504217563f0c57f748b901770a3c33961131f17d0d82"
+          }
+        },
+        {
+          "phase": "restart",
+          "checks": 3,
+          "driverSha256": "05f022d000f2842765e7791a6ce72ea055c11c4324a90d4d8336bd2b0db3972b",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-source-20261104T073932Z-a73ff442/restart-results.json",
+            "bytes": 2370,
+            "sha256": "50f03a3ff9b61c58fa9739d695e043d2aa3c2097cda9a329685bf35056553339"
+          }
+        }
+      ]
+    },
+    {
+      "id": "hygiene",
+      "checks": 21,
+      "run": "f26a-affected-hygiene-20261104T074046Z-db4c8929",
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 18,
+          "driverSha256": "ce2e25225165ad53f524f4a02048560014a3ac79190b87a58c541249e6a2f16a",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-hygiene-20261104T074046Z-db4c8929/primary-results.json",
+            "bytes": 8855,
+            "sha256": "2e85e8b7f13c548074484cc2959f7eaecd115557d50f91bb853bb34b5a1bcc4b"
+          }
+        },
+        {
+          "phase": "restart",
+          "checks": 3,
+          "driverSha256": "ce2e25225165ad53f524f4a02048560014a3ac79190b87a58c541249e6a2f16a",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-hygiene-20261104T074046Z-db4c8929/restart-results.json",
+            "bytes": 2015,
+            "sha256": "0dff8711da3cbe2e8e9e01161952090b1d269c13160b7ad1dd8366b73cec08c1"
+          }
+        }
+      ]
+    },
+    {
+      "id": "vault",
+      "checks": 10,
+      "run": "f26a-affected-vault-20261104T074206Z-f07067df",
+      "phases": [
+        {
+          "phase": "save",
+          "checks": 6,
+          "driverSha256": "2b98b5e9943812e100d1dbcd160dffa8a015cbce06405e1397f3bc071062dcd4",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-vault-20261104T074206Z-f07067df/save-results.json",
+            "bytes": 5892,
+            "sha256": "6f4212915f4985edd2d32f9303755722830890271f7b6aadbcd1b404cd3cfa94"
+          }
+        },
+        {
+          "phase": "reload",
+          "checks": 4,
+          "driverSha256": "2b98b5e9943812e100d1dbcd160dffa8a015cbce06405e1397f3bc071062dcd4",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-vault-20261104T074206Z-f07067df/reload-results.json",
+            "bytes": 5903,
+            "sha256": "2f1ab9f72fee2e1d490345e373ab258ca4934c425aec7b3a89cd346aff25a5e3"
+          }
+        }
+      ]
+    },
+    {
+      "id": "retained",
+      "checks": 106,
+      "run": "f26a-retained-native-20261104T074327Z-d024602a",
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 103,
+          "driverSha256": "3a2277b1a567c8fed5b699cc96c04146ef29fb27cfed6963bf8406f7f764d504",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-retained-native-20261104T074327Z-d024602a/primary-results.json",
+            "bytes": 15895,
+            "sha256": "4ec38f7951ef19fd3f668e7312a52356e30558f31a6ff9483c7cc5cbbf52c204"
+          }
+        },
+        {
+          "phase": "restart",
+          "checks": 3,
+          "driverSha256": "3a2277b1a567c8fed5b699cc96c04146ef29fb27cfed6963bf8406f7f764d504",
+          "result": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-retained-native-20261104T074327Z-d024602a/restart-results.json",
+            "bytes": 1239,
+            "sha256": "2019c5fb5f1a52c43bd8b39845848337150ccf20d8089cbb91f2900e763639f0"
+          }
+        }
+      ]
+    }
+  ],
+  "familyCount": 20,
+  "nativeChecks": 509,
+  "phases": 37,
+  "functionalChecks": 10,
+  "securityBaselineCases": 17,
+  "securityChanged": 0,
+  "residuals": {
+    "BLOCKED_SCOPED": 8,
+    "LEAK_CONFIRMED": 9
+  },
+  "postOwnerAbsence": {
+    "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-post-owner-absence-01.json",
+    "bytes": 1019,
+    "sha256": "e71bdcbcb01d6363a8ccf0fa498720bf9a7172d1270b4452c682b2325df29904"
+  },
+  "closureScope": "Actual declared Code/helper/outer natural close and stdout/stderr EOF; unobserved nested vendor EOF and historical gaps are not inferred.",
+  "executionMode": "EXISTING_DEVELOPER_BOOTSTRAP_FIXTURES_NOT_F32_INSTALLED_ONLY_OR_AUTHENTICATED_TOOL_PROOF",
+  "f26a": "USER_SKIPPED_NO_MORE_ORIGINAL34_OR_NATIVE_RUNS",
+  "configuredPush": "NO_REMAINING_AUTHORITY_NOT_RUN",
+  "signalsRequested": 0,
+  "releaseReady": false,
+  "independence": "LOW",
+  "remaining": "F32 installed-only lifecycle, actual vendor/tool loopback routes, catalog mutation/benchmarks and original human/independent gates remain distinct.",
+  "evidence": [
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-logs-round01-stdout.bin",
+      "bytes": 1915,
+      "sha256": "4730c7fad410050a2afea9dcf4fc092af858b0e6b0b823805366af10b1265e30"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-logs-round01-stderr.bin",
+      "bytes": 616,
+      "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-logs-round01-result.json",
+      "bytes": 613,
+      "sha256": "bf49c097a80f78e283917157dafef6a006519b05e09a6feef6559cf9d5a8c849"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-logs-round01-owned-close.json",
+      "bytes": 619,
+      "sha256": "31974c0930e50437b3c0c1aaa879850299de906132024fbd1537446e46d8ff66"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-logs-round01.txt",
+      "bytes": 189,
+      "sha256": "dfd6e2d19a14cc6462529ec36fc55b2f6a9d9ee8aacaea11fd214ab98e85e9a8"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-logs-round01.txt.result.json",
+      "bytes": 1918,
+      "sha256": "8ef49596bb33e44dbec9972cd00bf9e68111fac4338cdd514cfd9e760a97d976"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-logs-native-20261104T071123Z-5fac652b/primary-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-logs-native-20261104T071123Z-5fac652b/primary-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "cf4682a16650673d76f0495608ac72e09802b777cc52bc01863ef642025484f9"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-logs-native-20261104T071123Z-5fac652b/primary-results.json",
+      "bytes": 16783,
+      "sha256": "7e92db5941579a85cf255f8ef60c5d59143c659e49ea3dedd98d7f0834903c75"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-logs-native-20261104T071123Z-5fac652b/restart-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-logs-native-20261104T071123Z-5fac652b/restart-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "3590304bf09b7fc281a38bd9bc62959721aa8188ca7e0f2802f4dc905f45e4a1"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-logs-native-20261104T071123Z-5fac652b/restart-results.json",
+      "bytes": 4291,
+      "sha256": "abfee6ea5d48cac9517f7d7bf084ac09dcabae01f61ccdedf8bcdc0261e13c2c"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-logs-native-20261104T071123Z-5fac652b/summary.json",
+      "bytes": 1118,
+      "sha256": "03d49c380efbbea4a744baf940dfebfd14e4228707f49df71df8868974a23c37"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-logs-native-20261104T071123Z-5fac652b/freeze.json",
+      "bytes": 4715,
+      "sha256": "3893e0c240988592e6d3665c556e66a469350e600ef80f417c377a75f72d123f"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-owned-output-round01-stdout.bin",
+      "bytes": 1942,
+      "sha256": "3820bd9c939143a2bd51393f1630b9bf335b82a1ea5d18031fd388089069217a"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-owned-output-round01-stderr.bin",
+      "bytes": 616,
+      "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-owned-output-round01-result.json",
+      "bytes": 637,
+      "sha256": "554f08abbed6b92541fdfd1cf964b7a7fefad4d055691ace9215f22c673a36e9"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-owned-output-round01-owned-close.json",
+      "bytes": 619,
+      "sha256": "2830dba042afaf921d3eded79d9a1adb4adb23ad167c3e3e0e99fa254f43471f"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-owned-output-round01.txt",
+      "bytes": 197,
+      "sha256": "e8b4579a3aae268b7fff0dc851ee7dd3294aac4dab86cc0b1af399d7a89b0ee3"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-owned-output-round01.txt.result.json",
+      "bytes": 1945,
+      "sha256": "31d2798acf79fe8ee6e9aec3d688a3faebf89edbec902b37accb92c6eda0cf96"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-owned-output-native-20261104T071433Z-9bc9e395/single-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-owned-output-native-20261104T071433Z-9bc9e395/single-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "87ef15491efc5f5e6f195604ad80aebcc69e9c24a9d2bb056c1a5177485099d2"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-owned-output-native-20261104T071433Z-9bc9e395/single-results.json",
+      "bytes": 18419,
+      "sha256": "fc9b288d55460c5e17415e424bcf1553810fbf74c0e624707f92be1a62a5e082"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-owned-output-native-20261104T071433Z-9bc9e395/summary.json",
+      "bytes": 759,
+      "sha256": "eccafbab541a12fb3a9673ab440c79f784cb7adb3235098b3fa3512949038352"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-owned-output-native-20261104T071433Z-9bc9e395/freeze.json",
+      "bytes": 4747,
+      "sha256": "256926d0c53fd7ad029e2ed8ad0d1ed98d67f43947aeabaffa31c4f13b209498"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-artifact-round01-stdout.bin",
+      "bytes": 1927,
+      "sha256": "c5f32e920a353452b3c0560fbc9e0a1ae6536d1bf5fe9fb8d10879fed0f1acc8"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-artifact-round01-stderr.bin",
+      "bytes": 616,
+      "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-artifact-round01-result.json",
+      "bytes": 625,
+      "sha256": "b996ff3dba705cc7b76181283cde34483f5f0204bc467b0f067f84aadb2e22c4"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-artifact-round01-owned-close.json",
+      "bytes": 619,
+      "sha256": "c207843431aa28bd40948e16151f038c66db551fab9512a7227a55fbb07f0945"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-artifact-round01.txt",
+      "bytes": 193,
+      "sha256": "bd137e7f5a346c85b176431064a65e976b1081101e759d0e8c0c726522c3e9b7"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-artifact-round01.txt.result.json",
+      "bytes": 1930,
+      "sha256": "b7f05d1c418134202c5f215d92b8cfad4110b1dd9a9fab609d8b2c0146c29ddf"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-artifact-native-20261104T071607Z-1e53d3ce/primary-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-artifact-native-20261104T071607Z-1e53d3ce/primary-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "9f562cb2760293b0df45f025519db248178036fbd161f092944b39bb618d9ea1"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-artifact-native-20261104T071607Z-1e53d3ce/primary-results.json",
+      "bytes": 14668,
+      "sha256": "9e55f2e05e356d26a4d2394031d06d9d91c9d87a84012448c58c60b93b415570"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-artifact-native-20261104T071607Z-1e53d3ce/restart-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-artifact-native-20261104T071607Z-1e53d3ce/restart-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "c27e9ad0c56e2a179376a948879195d1302f857fcfa00497e19912739c16e3f1"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-artifact-native-20261104T071607Z-1e53d3ce/restart-results.json",
+      "bytes": 3885,
+      "sha256": "a7f51e29d9a01d23f1df49dd34eeb97778775494d89fe31f35e09ae482ff7473"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-artifact-native-20261104T071607Z-1e53d3ce/summary.json",
+      "bytes": 1126,
+      "sha256": "d02bf05a2d9987eb33923d2a18992e57b863e98e21fb51d71ce7460a52538dac"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-artifact-native-20261104T071607Z-1e53d3ce/freeze.json",
+      "bytes": 4747,
+      "sha256": "1408700e072b638b2ea2b10ef92926951d39a759d2336ad02600243eb85f171c"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-streaming-output-round01-stdout.bin",
+      "bytes": 1951,
+      "sha256": "bd1c99d4bda97cfccc0832a5fdeebc594b9c8c26f03348118693e4ca5677117c"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-streaming-output-round01-stderr.bin",
+      "bytes": 616,
+      "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-streaming-output-round01-result.json",
+      "bytes": 649,
+      "sha256": "263842eb468df7d76df39f583bf9ea95ffb8e9f5a0304f5c7b0bec2fcb8bc711"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-streaming-output-round01-owned-close.json",
+      "bytes": 619,
+      "sha256": "319f2a2e5e1b2587a87400ad3ee7e7e10f3aacd7b3fef3132fa78e946fe9131a"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-streaming-output-round01.txt",
+      "bytes": 201,
+      "sha256": "fe41592d3cdd385ba2d95b7d2e8c54d9e0eaef9452ce5c3e240b7ba43fd7cfc3"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-streaming-output-round01.txt.result.json",
+      "bytes": 1954,
+      "sha256": "c16cbcdb5ed65d73c249eac3c457d983013ba5915d48b841c99cf16ef977fb5f"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-streaming-output-native-20261104T071745Z-9a0a3217/single-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-streaming-output-native-20261104T071745Z-9a0a3217/single-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "c23ed83df6318307cdbe7cfcfe4d170dcc22a32a8f966814ea62121d3187efdf"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-streaming-output-native-20261104T071745Z-9a0a3217/single-results.json",
+      "bytes": 5557,
+      "sha256": "7d81bf3da40003e30d3636bf30f22df0b94faf367bdc39015bc6a379398de3ff"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-streaming-output-native-20261104T071745Z-9a0a3217/summary.json",
+      "bytes": 763,
+      "sha256": "2d3626919162a987cc8b17c3e403502c694d98ff997bab85edd69680c31ae628"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-streaming-output-native-20261104T071745Z-9a0a3217/freeze.json",
+      "bytes": 4779,
+      "sha256": "22dd8e5ad1343a98fd7103f2d5b96a2ef24de42aa13832e114b83d614fc7d96c"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-vault-runtime-round01-stdout.bin",
+      "bytes": 1942,
+      "sha256": "7e63d69feea210b99c43823967c7dbf12b3f5d46356b6cc7e7d0bf115aec3a4b"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-vault-runtime-round01-stderr.bin",
+      "bytes": 616,
+      "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-vault-runtime-round01-result.json",
+      "bytes": 640,
+      "sha256": "8df0b2acf835d63c3de15375d985b540363cbbe2c04f79fdcbb0a202f584726b"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-vault-runtime-round01-owned-close.json",
+      "bytes": 618,
+      "sha256": "e10442a7aa8066eabe380b93d5b0645aae25dcb57e7649f227818d6f92f01305"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-vault-runtime-round01.txt",
+      "bytes": 198,
+      "sha256": "e92bac72de16ee89525193a6511d727f74098552a0aa8a5d589b438588e3f045"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-vault-runtime-round01.txt.result.json",
+      "bytes": 1945,
+      "sha256": "f3cb9a8edbaa35c0c8a03ab606806356d6418d5d588ddc31c4fddb854a613541"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-vault-runtime-native-20261104T071837Z-ed8e0445/single-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-vault-runtime-native-20261104T071837Z-ed8e0445/single-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "da0d303be83f1109bf14bc6c853609419c87d3cca19507a9e8027db27a2605e0"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-vault-runtime-native-20261104T071837Z-ed8e0445/single-results.json",
+      "bytes": 5641,
+      "sha256": "c7e8b19228734f9add668fd8e3ff6e799013da26ce9a5098a44dee655194de83"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-vault-runtime-native-20261104T071837Z-ed8e0445/summary.json",
+      "bytes": 760,
+      "sha256": "ecb247cdd0ef542080a71e9456c7a3bf12ab00f44c9992a52100463bfa1c2fc6"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-vault-runtime-native-20261104T071837Z-ed8e0445/freeze.json",
+      "bytes": 4755,
+      "sha256": "e7c160355517b8b0aaf1d897debf4dc9fc4e9f680ea99bffb258bd903dc77c71"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-ps51-round01-stdout.bin",
+      "bytes": 1915,
+      "sha256": "7dbbede7d0123d1d0fb05d45d1217f68ace7b63a95cce361bf15bbb4868338f4"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-ps51-round01-stderr.bin",
+      "bytes": 616,
+      "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-ps51-round01-result.json",
+      "bytes": 613,
+      "sha256": "4a147ca96707d3c02c643531bc139a78d9fb4ebb6371b8e4d7f3c271696dc1e5"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-ps51-round01-owned-close.json",
+      "bytes": 619,
+      "sha256": "e32e6acbab2d55e37170ffe29527c4f1f7192b108b31278e76d6c41cc4042978"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-ps51-round01.txt",
+      "bytes": 189,
+      "sha256": "7430bc16d6e0467c497ad90296ff3c4443b8658a65b959529ec8c7132fa678e4"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-ps51-round01.txt.result.json",
+      "bytes": 1918,
+      "sha256": "bb5801fd8429254ec937f27ecbac1ef05fc28df5c41a25c8fa697f7ab840be52"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-ps51-native-20261104T071941Z-8fc518b2/primary-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-ps51-native-20261104T071941Z-8fc518b2/primary-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "17a8b4e52c15f6bb79d35e2879fcac0544f98b007518c8289e1160ffc64df17c"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-ps51-native-20261104T071941Z-8fc518b2/primary-results.json",
+      "bytes": 6511,
+      "sha256": "d56b4cdba56198802b1222a3155c2b80dc41483cfbc61928be5499020564b762"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-ps51-native-20261104T071941Z-8fc518b2/restart-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-ps51-native-20261104T071941Z-8fc518b2/restart-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "4ebe41905cb970a360bd0817e5a83ff365a73178654939e32cd5c15f446d3e6b"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-ps51-native-20261104T071941Z-8fc518b2/restart-results.json",
+      "bytes": 2082,
+      "sha256": "696a9dc7721a017e618c1d59111741b8e66709988b272b08c7c11fd453d7c4b3"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-ps51-native-20261104T071941Z-8fc518b2/summary.json",
+      "bytes": 1118,
+      "sha256": "1330620321a21fad74e49ebd161446be717847d8d73765ca272c7aaca585c61e"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-ps51-native-20261104T071941Z-8fc518b2/freeze.json",
+      "bytes": 4715,
+      "sha256": "bd9541af3e825674bafc8d19b801e3b5e4b56be3c73bc061351b87680401abe0"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-cmd-round01-stdout.bin",
+      "bytes": 1912,
+      "sha256": "cfac587603af91f80639ff463414140bbb5d4a26f8b3869d20e295de43be5e33"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-cmd-round01-stderr.bin",
+      "bytes": 616,
+      "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-cmd-round01-result.json",
+      "bytes": 610,
+      "sha256": "f8482ac69ef46dd6063a8058496c7c6368ceb42bb90ff7891f207dea5628b8a8"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-cmd-round01-owned-close.json",
+      "bytes": 618,
+      "sha256": "0cee359f99ba090ee467310d41ee32846f20a42c96eeb78635da277dd6b2d6e5"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-cmd-round01.txt",
+      "bytes": 188,
+      "sha256": "c5929d842f2eb319e5ab4f7d1d3ecac5c67f70754e1d421705c67dd1d005e66e"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-cmd-round01.txt.result.json",
+      "bytes": 1915,
+      "sha256": "d6d307b45000218a82331dfd75a361f3f56dcd08cdba3b9dcd93f7531a8d5b51"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-cmd-native-20261104T072137Z-1212ec66/primary-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-cmd-native-20261104T072137Z-1212ec66/primary-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "10e5ad5bb9ef62909f7cd806b95546cadef88edfb623c3a8efbabd95d867beca"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-cmd-native-20261104T072137Z-1212ec66/primary-results.json",
+      "bytes": 6108,
+      "sha256": "81fefdb862d54e027a4a5eed7b005ad50bee7465b7c9612f359704b95da4a065"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-cmd-native-20261104T072137Z-1212ec66/restart-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-cmd-native-20261104T072137Z-1212ec66/restart-helper-pipe-ownership.json",
+      "bytes": 530,
+      "sha256": "ecc3dcaeba18086425a49fabf0315e8702f1bbddf378bb52e0dbbf8fc6733113"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-cmd-native-20261104T072137Z-1212ec66/restart-results.json",
+      "bytes": 2079,
+      "sha256": "bbe39d57fed72032fef8c7cf948dea9b5d3d84b495b70e37d15c4081c57af717"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-cmd-native-20261104T072137Z-1212ec66/summary.json",
+      "bytes": 1116,
+      "sha256": "c0acc7091bdf24b3c3bc583feff8e748abf7792374d5f027ce4f50b1ccd66614"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-cmd-native-20261104T072137Z-1212ec66/freeze.json",
+      "bytes": 4707,
+      "sha256": "6979f759fb05fb32846619280de61a68dc8fada2d7ba7b53a629b3ec1a0be1d1"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-gitbash-round01-stdout.bin",
+      "bytes": 1924,
+      "sha256": "7beea6cb391d210dbcdb97ac0e62763edd25e0b785d446fdfe3959bb2b50993f"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-gitbash-round01-stderr.bin",
+      "bytes": 616,
+      "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-gitbash-round01-result.json",
+      "bytes": 622,
+      "sha256": "143152b2e2ced8bf151342ff7ead8ed589f3c23d44c0485352181d0fcc823f72"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-gitbash-round01-owned-close.json",
+      "bytes": 619,
+      "sha256": "9bc9626cc41345caa8560ac50e9845d6c98bac2d6a50249ae09f89fc0dacf61e"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-gitbash-round01.txt",
+      "bytes": 192,
+      "sha256": "9e585d613e8bba536e48b09087b5cfca4d84089635579800ff84e33cfc6fbe57"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-gitbash-round01.txt.result.json",
+      "bytes": 1927,
+      "sha256": "093ddbadafa6ca3c1e312ced4678939fef95d74c805f5516569e2491c2537f77"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-gitbash-native-20261104T072312Z-9cfd2058/primary-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-gitbash-native-20261104T072312Z-9cfd2058/primary-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "498f81c23c3bc8cbf5a7ce41a546146b8d33aedbb7953ec5eb4a65d06980e2c6"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-gitbash-native-20261104T072312Z-9cfd2058/primary-results.json",
+      "bytes": 6835,
+      "sha256": "903114b815a95b508c566cb02b39cc95afe478117043ff74238ceffd67223f4c"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-gitbash-native-20261104T072312Z-9cfd2058/restart-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-gitbash-native-20261104T072312Z-9cfd2058/restart-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "d7a73825f86e0997d0fc9448a7855663ca8402c72c923380eadaef3ef53f22e4"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-gitbash-native-20261104T072312Z-9cfd2058/restart-results.json",
+      "bytes": 2093,
+      "sha256": "a594be0e78b5d1f3da03806c404a0b509740c47064c662ea8c82f27b6c4e9796"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-gitbash-native-20261104T072312Z-9cfd2058/summary.json",
+      "bytes": 1124,
+      "sha256": "8d0a7b509d3745703e6b2a99fd88f4ea3daedce82da550959983175137a49726"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-gitbash-native-20261104T072312Z-9cfd2058/freeze.json",
+      "bytes": 4739,
+      "sha256": "bb75162b122072d5ff29f9047346bae3a129d9118ea5723ea2a2b48a02243860"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-history-round01-stdout.bin",
+      "bytes": 1924,
+      "sha256": "f565727eb2c2efd72badb8bc6f57709389e1e34c1ab89aa37a52b78c2e817943"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-history-round01-stderr.bin",
+      "bytes": 616,
+      "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-history-round01-result.json",
+      "bytes": 622,
+      "sha256": "46e108367795633ecbf2a9b40780ffa487dcb261335fc5bf75a78c0929bba385"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-history-round01-owned-close.json",
+      "bytes": 619,
+      "sha256": "9299c9a15825b8a781d11560abfba60bb7964c8393426aa976cc6161879249ca"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-history-round01.txt",
+      "bytes": 192,
+      "sha256": "31972c424d2f027c2dc6b9d89c12b6c8b3690dcc88e780e6800e53217bf67cba"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-history-round01.txt.result.json",
+      "bytes": 1927,
+      "sha256": "b6948c5d3cb80e2adf5ea963716e514c988524a6d707f92ed5ae84cef266a217"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-history-native-20261104T072443Z-36818439/primary-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-history-native-20261104T072443Z-36818439/primary-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "ba89d4aeb5929bd5519dc10bc6713a6ab4c7f40675169de029760aa0763a6bf8"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-history-native-20261104T072443Z-36818439/primary-results.json",
+      "bytes": 37269,
+      "sha256": "3f5ced823ae1c046ba1f51c23cac95fac73f8efa32b7bb660f98aa9da8e0b382"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-history-native-20261104T072443Z-36818439/restart-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-history-native-20261104T072443Z-36818439/restart-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "ea93db6ab3b443afce4add90c7d51abc9e850cf0e3eef4e7e7dca8f9f14abe5c"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-history-native-20261104T072443Z-36818439/restart-results.json",
+      "bytes": 7144,
+      "sha256": "028a1c79f22ddebbbddd2e49d2fbc4c32593dbd4b99b99bb83398aa255c9f6d6"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-history-native-20261104T072443Z-36818439/summary.json",
+      "bytes": 1124,
+      "sha256": "e6fdf76af5aa0afd431c407a4be2cbfcd8d63be8e1e3f7a0b1bf7b75b0ee1d7c"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-history-native-20261104T072443Z-36818439/freeze.json",
+      "bytes": 4739,
+      "sha256": "3835f8fd80b179e43051f67b394406c38cef71a7fcce7a45e029cc60b6755a41"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-mcp-round01-stdout.bin",
+      "bytes": 1912,
+      "sha256": "d5c4c9b7508d62f547bb99424678acc9ad961711d05ddfe9bb64deec07a808e6"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-mcp-round01-stderr.bin",
+      "bytes": 616,
+      "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-mcp-round01-result.json",
+      "bytes": 610,
+      "sha256": "73febaaa15cc72aa6aa142947d3bc34ed763972483c6de8ab56ca7731b28205c"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-mcp-round01-owned-close.json",
+      "bytes": 619,
+      "sha256": "c6019801a2d9329830f9ce3dcb3de65b2bafdd8596b9aecd3674d551b60ae3d3"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-mcp-round01.txt",
+      "bytes": 188,
+      "sha256": "01bc0e525928295fd22df7b12196df04a1570828536c5fa403425d48a21c3e16"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-mcp-round01.txt.result.json",
+      "bytes": 1915,
+      "sha256": "55bdff7f4b8ff66131ffe26b2a375b396fe2e3ec7f048ceeca20e445520d02c4"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-mcp-native-20261104T072651Z-08a684de/primary-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-mcp-native-20261104T072651Z-08a684de/primary-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "9073299bdad707171606bb04fdbef21638316c9acc602fc22bb2a2825414861b"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-mcp-native-20261104T072651Z-08a684de/primary-results.json",
+      "bytes": 16542,
+      "sha256": "ca75f27591e867c287bdc2e88d97fde918cce7c54e7afab8cd3d5379a8e17f52"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-mcp-native-20261104T072651Z-08a684de/restart-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-mcp-native-20261104T072651Z-08a684de/restart-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "bc3aac5170def74228df3100d8d02f640e439ba7bc7bbdcd16a27c9e69e46fef"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-mcp-native-20261104T072651Z-08a684de/restart-results.json",
+      "bytes": 3380,
+      "sha256": "e54e45afcc2d80758b05a2c8769232f963cad053ec3f56bdfb6a3e5f697477b0"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-mcp-native-20261104T072651Z-08a684de/summary.json",
+      "bytes": 1116,
+      "sha256": "0d775c3964b3649295d2e0ecaf83b18de03aa1c1902ccd8ae6d0c1cf8e35ebba"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-mcp-native-20261104T072651Z-08a684de/freeze.json",
+      "bytes": 4707,
+      "sha256": "66fe128551b532460c7dfbbfaf7f9cb626030af0117aee59a3cc0ac9e077e289"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-editor-round01-stdout.bin",
+      "bytes": 1921,
+      "sha256": "aa5f68279f1d0195df027ca36722ef4a52a394feebc87e1b7bf9b5d7c24b7306"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-editor-round01-stderr.bin",
+      "bytes": 616,
+      "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-editor-round01-result.json",
+      "bytes": 621,
+      "sha256": "7b5752b95d6e2f20b55a82491a0ce2991da4fcf907f79ad31173c0f57fa973b4"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-editor-round01-owned-close.json",
+      "bytes": 619,
+      "sha256": "0ccd023113b5d305f7b80c120560efe52a7c4908ab2155571238407cc7706577"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-editor-round01.txt",
+      "bytes": 193,
+      "sha256": "a761112147fe1baee190ee2183c8978b508bee4a9064419b22de1bf115ca76b7"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-editor-round01.txt.result.json",
+      "bytes": 1924,
+      "sha256": "ddcad52c3b18db6c137b90b8d73120a6fefd64568dc4969f949a8fe90954de57"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-editor-20261104T072900Z-b766cfad/primary-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-editor-20261104T072900Z-b766cfad/primary-helper-pipe-ownership.json",
+      "bytes": 530,
+      "sha256": "45b15d62f4773495db2a2d79bad9ba4fdefa6fa6e641a5b57dfa1146ad855555"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-editor-20261104T072900Z-b766cfad/primary-results.json",
+      "bytes": 17031,
+      "sha256": "e1f84187af486407e3394d70fb47431e79da62f7f37f5ac9434b68f8cf956124"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-editor-20261104T072900Z-b766cfad/restart-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-editor-20261104T072900Z-b766cfad/restart-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "84dcf20ebde9325719cf6f06e2659a0a83f3bdd86dd1e3da975a80d630c3e61e"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-editor-20261104T072900Z-b766cfad/restart-results.json",
+      "bytes": 3219,
+      "sha256": "347d6fb5fd0ce3200f6993a7498ae2cae9e2e615bdc9dc547ae9f0f6e28b3f74"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-editor-20261104T072900Z-b766cfad/summary.json",
+      "bytes": 1126,
+      "sha256": "94f2cfa04d34dd1785512a06c73dd2970f4be207b621a94d71f3bbf015d2dd5b"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-editor-20261104T072900Z-b766cfad/freeze.json",
+      "bytes": 4747,
+      "sha256": "66b6c56f0cad4608e203fd838b1f1a08f9227c1840a72ff6598b21b0f8640048"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-ci-round01-stdout.bin",
+      "bytes": 1909,
+      "sha256": "26a60fe12469db478cd77dca36b5cce66bbebf706dbf80a128c46f6632a35fd4"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-ci-round01-stderr.bin",
+      "bytes": 616,
+      "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-ci-round01-result.json",
+      "bytes": 609,
+      "sha256": "670784865293ac2dd0d30eef3182cce303ba15f208e8888d2f7aa7db4d0602e4"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-ci-round01-owned-close.json",
+      "bytes": 618,
+      "sha256": "d20778bb7445274cde2c0034d9502370918c55fc745a593568302ef37bce8be2"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-ci-round01.txt",
+      "bytes": 185,
+      "sha256": "832e9029f5e838afb4009417a3ac7d867c987750f1964b805b4bc0dbc1ba8306"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-ci-round01.txt.result.json",
+      "bytes": 1912,
+      "sha256": "e7bb759c07d91af06cfd09dba4894b90dddddb7f56bc9e5b76d1648c524f131c"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-ci-20261104T073041Z-fb9395bb/primary-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-ci-20261104T073041Z-fb9395bb/primary-helper-pipe-ownership.json",
+      "bytes": 530,
+      "sha256": "d5844ddd1b8bd68418324b36e28ce3d1b6aa8749d91c20248696ca9e153bc06f"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-ci-20261104T073041Z-fb9395bb/primary-results.json",
+      "bytes": 15961,
+      "sha256": "2143e34fba3f076bd29130d1f1c3f83a65c082def9d03ba22526c407672ed529"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-ci-20261104T073041Z-fb9395bb/restart-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-ci-20261104T073041Z-fb9395bb/restart-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "751b8fcfc76b9136a851e0be0571de49c8752a0dad1d4e3fc5da098a273ec9f3"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-ci-20261104T073041Z-fb9395bb/restart-results.json",
+      "bytes": 3156,
+      "sha256": "3ee0b04e165a90e9430289ae5d55536836c38b9925ba1027924cfe260901d86b"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-ci-20261104T073041Z-fb9395bb/summary.json",
+      "bytes": 1118,
+      "sha256": "64335e2eda1e70124a6982e64941fa3b0f3fd46ab59387744cc5e448b962ced1"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-ci-20261104T073041Z-fb9395bb/freeze.json",
+      "bytes": 4711,
+      "sha256": "cd1e0b9318c73ad235048ce4547fddb45710d0b3a17f008a7aeb59795c62f3af"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-service-account-round01-stdout.bin",
+      "bytes": 1948,
+      "sha256": "783ffee86be73d5974327b9ce2490e010bae91a80f0de12c078cc4d96cfe1e24"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-service-account-round01-stderr.bin",
+      "bytes": 616,
+      "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-service-account-round01-result.json",
+      "bytes": 648,
+      "sha256": "85c5847f3c7f98b358b22bc5053eed47ba9765c7e5ae157707fea60e92a5ab8a"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-service-account-round01-owned-close.json",
+      "bytes": 618,
+      "sha256": "c6b0be95e66f2831bff31090dbcab84ed6f1055feb208821cdca788cb4d9ca4c"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-service-account-round01.txt",
+      "bytes": 211,
+      "sha256": "036e2153b59032032b20fbc5a8ea26a859271e1baa152f1a7a266ab78de374ce"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-service-account-round01.txt.result.json",
+      "bytes": 1951,
+      "sha256": "023cd60eaa3fa42ac0141c49efcd2a5d4a02bfc6bd33838bdd3a97975c881614"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-service-account-20261104T073219Z-fdd6e2a3/primary-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-service-account-20261104T073219Z-fdd6e2a3/primary-helper-pipe-ownership.json",
+      "bytes": 530,
+      "sha256": "285992b99fff4f484251e21f9fca22709df33bd55303ff7076d1608bbb82d46f"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-service-account-20261104T073219Z-fdd6e2a3/primary-results.json",
+      "bytes": 16737,
+      "sha256": "a0760734de699f32c7553671c26629b2e3c57dc04bd43f6f42720f4f1232d74e"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-service-account-20261104T073219Z-fdd6e2a3/restart-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-service-account-20261104T073219Z-fdd6e2a3/restart-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "0f9caa7a90218582f1159462013cc0485b9069233baf902e26f0d32ec83761c7"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-service-account-20261104T073219Z-fdd6e2a3/restart-results.json",
+      "bytes": 3494,
+      "sha256": "89e811a04743e56c2906d084c60d02b334ed24a6d00a9a8e3670978f90f8df33"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-service-account-20261104T073219Z-fdd6e2a3/summary.json",
+      "bytes": 1144,
+      "sha256": "a6a0cb0cd386c1fe061e0b098089cac65240b92cdaff30dd5077642e296bf244"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-service-account-20261104T073219Z-fdd6e2a3/freeze.json",
+      "bytes": 4828,
+      "sha256": "eb3b2d49eb036e9ee7053d93e2d0e447b5cc7659a2af777296ee3b66e43dafbc"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-registry-round01-stdout.bin",
+      "bytes": 1927,
+      "sha256": "a5c0597d9bba155489dce05eac6edb687c3063f5e0ba271a16fef540c3b68235"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-registry-round01-stderr.bin",
+      "bytes": 616,
+      "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-registry-round01-result.json",
+      "bytes": 627,
+      "sha256": "8700cf96a2b44f197ec41d807fb8d986a3a4f3d9be7d818c81b2184c02e78724"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-registry-round01-owned-close.json",
+      "bytes": 618,
+      "sha256": "9a7a9f8f038e41aed40b4bcacd63f3a07876d116048e206eddac176024dd6791"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-registry-round01.txt",
+      "bytes": 197,
+      "sha256": "8b1763b06aa423a1bd6679f679ae01d66ecd185f60022516517f1c05377a7b9f"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-registry-round01.txt.result.json",
+      "bytes": 1930,
+      "sha256": "5855c8dc8b7fc3b7430dda39870f001f2d5bbd3b600230289da3c91b416e9976"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-registry-20261104T073355Z-5f21c374/primary-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-registry-20261104T073355Z-5f21c374/primary-helper-pipe-ownership.json",
+      "bytes": 530,
+      "sha256": "129cba39a3af051f7f7602e9c8ffdca3a51a4419db6ad77fa8da2c631cb6696a"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-registry-20261104T073355Z-5f21c374/primary-results.json",
+      "bytes": 15900,
+      "sha256": "3d81bf9929b020423203e1997d71f1135fb5cf7df1e27a0daafce2cb8a97af04"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-registry-20261104T073355Z-5f21c374/restart-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-registry-20261104T073355Z-5f21c374/restart-helper-pipe-ownership.json",
+      "bytes": 530,
+      "sha256": "70cef0b0ebfdfdc5b62359ced424f5542e370353d56bc4c95a1304c9a0d04b11"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-registry-20261104T073355Z-5f21c374/restart-results.json",
+      "bytes": 2985,
+      "sha256": "289eb554ab4da410f419fd3b884cb7ddef35f96eb72d5c9ab6a4a675d40cc772"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-registry-20261104T073355Z-5f21c374/summary.json",
+      "bytes": 1130,
+      "sha256": "27b223a9a36411f13c3e2241adceac772bb976c80735bb90e3c981843bdb6df5"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-registry-20261104T073355Z-5f21c374/freeze.json",
+      "bytes": 4765,
+      "sha256": "9a1734b669b5f1047b04a6798e1933003beed9dcb28c0c3d82f31d050923b838"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-terraform-round01-stdout.bin",
+      "bytes": 1930,
+      "sha256": "1a11aed10a5249028ca0733369b42d63928823f3ab4f88bc074e19a21451c735"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-terraform-round01-stderr.bin",
+      "bytes": 616,
+      "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-terraform-round01-result.json",
+      "bytes": 630,
+      "sha256": "b32822b960eedc209981adb5c92127b68f8e3b902a4cb1c28bddecfb3454cf03"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-terraform-round01-owned-close.json",
+      "bytes": 619,
+      "sha256": "b37aa2441ad47d5cc2eb82d5c0b1989bd049b6409937f6d5d01019b0906f0d86"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-terraform-round01.txt",
+      "bytes": 199,
+      "sha256": "2ed3b9090e0fbf6b43b97430707d4fd69bb8b6d5b39daab01e23b9a3387c7e9f"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-terraform-round01.txt.result.json",
+      "bytes": 1933,
+      "sha256": "068c8f92d9cde8273822a7b71ca0a3e09755bd2df0c9fe791ace90937b99effe"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-terraform-20261104T073538Z-e6c4f7f4/primary-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-terraform-20261104T073538Z-e6c4f7f4/primary-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "31208332060bd99361cbd13e741a89a8b14c88a74875c60ba6a945a60d428917"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-terraform-20261104T073538Z-e6c4f7f4/primary-results.json",
+      "bytes": 15889,
+      "sha256": "362e3eaed3855240c7b43336e6f9564f3b43f4fa5af2a0112c741cb35f744c75"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-terraform-20261104T073538Z-e6c4f7f4/restart-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-terraform-20261104T073538Z-e6c4f7f4/restart-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "0c22525bbf586385c57d588813610dfffdd836c2b911382cdc00aaa0661c1968"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-terraform-20261104T073538Z-e6c4f7f4/restart-results.json",
+      "bytes": 3440,
+      "sha256": "265906658f1f40cf05f0b69c4f26b8a7fd487be9d8a6b768bb6fda585629806c"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-terraform-20261104T073538Z-e6c4f7f4/summary.json",
+      "bytes": 1132,
+      "sha256": "cc812fb82c65f288a46d5748f66d32498a7775bcda1f2d664e471e2cddca5b08"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-terraform-20261104T073538Z-e6c4f7f4/freeze.json",
+      "bytes": 4774,
+      "sha256": "8a067edfa4c17bb761fb21570e00fea863661237794f299243a432f881d6187b"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-container-round01-stdout.bin",
+      "bytes": 1930,
+      "sha256": "23eaa90c225a656be7a8c261aca77904e31d5b932efdac8fac9d0dd9381ba5b9"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-container-round01-stderr.bin",
+      "bytes": 616,
+      "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-container-round01-result.json",
+      "bytes": 630,
+      "sha256": "257d4ef9c15675a273b87c30448583f8b61a0d3590c5dd3d49d1b569739f6f32"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-container-round01-owned-close.json",
+      "bytes": 619,
+      "sha256": "3fcf361d3c02fa20bc8e51b995bce0178cc8ae2a285a564820be3ea3ec78f136"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-container-round01.txt",
+      "bytes": 199,
+      "sha256": "c8bd4c35f1b252610002a8a2e7df1524a1a5b09cecf3918b37ecac86108b74fc"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-container-round01.txt.result.json",
+      "bytes": 1933,
+      "sha256": "3840abf2ec32d35a7bbc29ed4c01a1663889488bda7a4172515ad33a0dea1dc7"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-container-20261104T073730Z-f0a2df29/primary-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-container-20261104T073730Z-f0a2df29/primary-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "52515a8f3817c2c7d93b37acf0a051f4e8be1fcbcd69f82d4c34a92482fe01f3"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-container-20261104T073730Z-f0a2df29/primary-results.json",
+      "bytes": 15190,
+      "sha256": "2087e1945963242e9aaf12f08bcbbf10354cb84054cd58b45f0a3856e7aaecea"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-container-20261104T073730Z-f0a2df29/restart-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-container-20261104T073730Z-f0a2df29/restart-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "0c98596c4b66f9ce831d862417af5fab9c11d65e8cb6a44ed9ed23c0b20d4196"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-container-20261104T073730Z-f0a2df29/restart-results.json",
+      "bytes": 3210,
+      "sha256": "1105e5df7515cf13fd98cc0fdb6f7c9150cf77d05c53b7d04993860e7b225d1d"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-container-20261104T073730Z-f0a2df29/summary.json",
+      "bytes": 1132,
+      "sha256": "cb27a44d8a5ce9cf090a887bd33ff5868e62b80cfefb5c2bdf1955d63f339ad5"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-container-20261104T073730Z-f0a2df29/freeze.json",
+      "bytes": 4774,
+      "sha256": "bb744bd923952b004a12d7a5989c2333fea1b8891865fe2c56c68285ee4e65a5"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-source-round01-stdout.bin",
+      "bytes": 1921,
+      "sha256": "0bd0948801a96af5d0a702f27f6094207b13a6b3434583be47c913cc2a10b1d8"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-source-round01-stderr.bin",
+      "bytes": 616,
+      "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-source-round01-result.json",
+      "bytes": 621,
+      "sha256": "764221c5453c1fab5f8279486b1ef9da8a09743fff6676fe47ab0b03ecae337b"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-source-round01-owned-close.json",
+      "bytes": 619,
+      "sha256": "1bc5b1d96ee191a1b405b6d80a8a9b38bb8c7af1d3e7f7c93811b510c0efa365"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-source-round01.txt",
+      "bytes": 203,
+      "sha256": "0dea518111d424a6a5468347a3779d9ef33bd33ab71607eb826343c04d8315f4"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-source-round01.txt.result.json",
+      "bytes": 1924,
+      "sha256": "6b970433c0ea837e6c6cd07c10ada7c5ec04d010987289e611b0a5ad3c756d49"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-source-20261104T073932Z-a73ff442/primary-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-source-20261104T073932Z-a73ff442/primary-helper-pipe-ownership.json",
+      "bytes": 530,
+      "sha256": "5a0046603e83c17943a8e9e00aead112ee58a30f73176651f81ac84da60e12d9"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-source-20261104T073932Z-a73ff442/primary-results.json",
+      "bytes": 10443,
+      "sha256": "d2776a51e3117e5ecaa2504217563f0c57f748b901770a3c33961131f17d0d82"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-source-20261104T073932Z-a73ff442/restart-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-source-20261104T073932Z-a73ff442/restart-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "e8542dac72eeb5e1e314f848f26b3060054b3f83fc6809c749aaf02c5d1eaad6"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-source-20261104T073932Z-a73ff442/restart-results.json",
+      "bytes": 2370,
+      "sha256": "50f03a3ff9b61c58fa9739d695e043d2aa3c2097cda9a329685bf35056553339"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-source-20261104T073932Z-a73ff442/summary.json",
+      "bytes": 1126,
+      "sha256": "459bd53bb24f2e3d12e8f046abdf1f1b4f660868cee5694d1733439bf175a80e"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-source-20261104T073932Z-a73ff442/freeze.json",
+      "bytes": 4748,
+      "sha256": "840b21e90399733039101f96f8e41557d6102ca3cabf0d3a97d64bda1e289921"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-hygiene-round01-stdout.bin",
+      "bytes": 1924,
+      "sha256": "8d6c9f07c6e890c3bf2ee90e7d9ed3d29d7c6e67e9da6e53e64234234cf77557"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-hygiene-round01-stderr.bin",
+      "bytes": 616,
+      "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-hygiene-round01-result.json",
+      "bytes": 624,
+      "sha256": "d761dc16bd2e950fad264f61692dac8070bd44eab95e5f2638cd36bfbfca12a6"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-hygiene-round01-owned-close.json",
+      "bytes": 618,
+      "sha256": "21b4b2a7d4cb39d6282c5ea8511f376abaeb1cd818ac840fe5e70398da6a60e8"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-hygiene-round01.txt",
+      "bytes": 204,
+      "sha256": "514f387e2bf9e4d713299f423f2327b994e49dd29ad3dab1f976d93f28a3c81f"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-hygiene-round01.txt.result.json",
+      "bytes": 1927,
+      "sha256": "38686a93f8463839a801501c700c71434344a3eaa41bf3b52b89c4607fcd1317"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-hygiene-20261104T074046Z-db4c8929/primary-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-hygiene-20261104T074046Z-db4c8929/primary-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "14c48ffd60262b7081912a961239c9c59c95f88dcda8d7e6a528189faf09476d"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-hygiene-20261104T074046Z-db4c8929/primary-results.json",
+      "bytes": 8855,
+      "sha256": "2e85e8b7f13c548074484cc2959f7eaecd115557d50f91bb853bb34b5a1bcc4b"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-hygiene-20261104T074046Z-db4c8929/restart-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-hygiene-20261104T074046Z-db4c8929/restart-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "9c6aaaf11a412e15f1c1d79cb463b68372aa10c0020218c99e9bd7da0d2b926e"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-hygiene-20261104T074046Z-db4c8929/restart-results.json",
+      "bytes": 2015,
+      "sha256": "0dff8711da3cbe2e8e9e01161952090b1d269c13160b7ad1dd8366b73cec08c1"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-hygiene-20261104T074046Z-db4c8929/summary.json",
+      "bytes": 1128,
+      "sha256": "ad576bd663bff1d4776d43ba24008f0fdc87cf16973b38479ec0384d091e471e"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-hygiene-20261104T074046Z-db4c8929/freeze.json",
+      "bytes": 4756,
+      "sha256": "d2fb80e9daede2cf1cac12114f2727e7035a55debd9b3b6d17bf8a20a9b02376"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-vault-round01-stdout.bin",
+      "bytes": 1918,
+      "sha256": "1deaa7a8a3c27a7db80b01f85e71f1f4201398144aeda3b14085f95134ba8135"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-vault-round01-stderr.bin",
+      "bytes": 616,
+      "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-vault-round01-result.json",
+      "bytes": 680,
+      "sha256": "4e98e3bf7aa73199f16ede1589d6ca28e2cbad3a4bf6555bcae737fa40e959c6"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-vault-round01-owned-close.json",
+      "bytes": 619,
+      "sha256": "456192559903de3ad02425bfa81390984d40d19909d2f334da50cfcc6853a77a"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-vault-round01.txt",
+      "bytes": 202,
+      "sha256": "7d74069799c9af033e240ef2262568621ac93d4435473c8c4e178fcdc38c0a24"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-vault-round01.txt.result.json",
+      "bytes": 1921,
+      "sha256": "e6a24a7fbe10c5a462f9564d9c7556bc6551ce6122ce4f3a69eda9bdcffbf971"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-vault-20261104T074206Z-f07067df/save-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-vault-20261104T074206Z-f07067df/save-helper-pipe-ownership.json",
+      "bytes": 530,
+      "sha256": "d535c63b4b263d85a3f1148859ed0dde3cef2d4de9233c1ac9f78def715784ee"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-vault-20261104T074206Z-f07067df/save-results.json",
+      "bytes": 5892,
+      "sha256": "6f4212915f4985edd2d32f9303755722830890271f7b6aadbcd1b404cd3cfa94"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-vault-20261104T074206Z-f07067df/reload-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-vault-20261104T074206Z-f07067df/reload-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "a8db61926a708a546d16ebf33ba9b25b9f6029bd837d4539872f338acd3f0a16"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-vault-20261104T074206Z-f07067df/reload-results.json",
+      "bytes": 5903,
+      "sha256": "2f1ab9f72fee2e1d490345e373ab258ca4934c425aec7b3a89cd346aff25a5e3"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-vault-20261104T074206Z-f07067df/summary.json",
+      "bytes": 1115,
+      "sha256": "91e859abf9f6fff20e8a6e2a49b1b6628b8af75d263626e017115b810f0474bf"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-vault-20261104T074206Z-f07067df/freeze.json",
+      "bytes": 4774,
+      "sha256": "acd26d50cc978df9a9fd5acf4e1389a4d35e8adf9363692bd85315d336218832"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-retained-round01-stdout.bin",
+      "bytes": 1925,
+      "sha256": "d799402d2ff56e7b6a734aa77335e1cc2a0c794f24a56bc888403fa10b200ad0"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-retained-round01-stderr.bin",
+      "bytes": 616,
+      "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-retained-round01-result.json",
+      "bytes": 625,
+      "sha256": "15e786159251f632a9101ec286982529d6b0e0139146d940a6ba9f8a0907dd69"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-retained-round01-owned-close.json",
+      "bytes": 619,
+      "sha256": "d8d6e35fceea5ea91547dba5406ef93e1577b73ed8ecb08620a32b6dae4fb20e"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-retained-round01.txt",
+      "bytes": 203,
+      "sha256": "12f8229142c5ab3e525ae13de9edbc427a85917d345814cf5dd5d8ed775fa1dd"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-retained-round01.txt.result.json",
+      "bytes": 1928,
+      "sha256": "68ab49deec689983371f323d78f96aa7297cac23f268a3e5e10480c069ea6b6e"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-retained-native-20261104T074327Z-d024602a/primary-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-retained-native-20261104T074327Z-d024602a/primary-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "b385c7ef47bb6384f6a38ab6de12ca09dc19e1656c33da323fcc6738a25c78aa"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-retained-native-20261104T074327Z-d024602a/primary-results.json",
+      "bytes": 15895,
+      "sha256": "4ec38f7951ef19fd3f668e7312a52356e30558f31a6ff9483c7cc5cbbf52c204"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-retained-native-20261104T074327Z-d024602a/restart-owned-editor-close.json",
+      "bytes": 191,
+      "sha256": "9f5cd22b8b5672181941f00eb970b2acf8770107edf327c7c8ce23a146055594"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-retained-native-20261104T074327Z-d024602a/restart-helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "24543c856a7e91cfac5ea56ce46b01d25a96f84d2caf8358caff306cc8b39ed7"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-retained-native-20261104T074327Z-d024602a/restart-results.json",
+      "bytes": 1239,
+      "sha256": "2019c5fb5f1a52c43bd8b39845848337150ccf20d8089cbb91f2900e763639f0"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-retained-native-20261104T074327Z-d024602a/summary.json",
+      "bytes": 1128,
+      "sha256": "83035f8523b9f76778d2347ba1c0f8aa7357a3b35b8aa05fdf255389ff35472c"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-retained-native-20261104T074327Z-d024602a/freeze.json",
+      "bytes": 4785,
+      "sha256": "5257d7c3c9d0dcd5c8afe856c2c78f0cf9e74b45dd827c5b85be05c924de9e03"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-functional-security-round01-stdout.bin",
+      "bytes": 1553,
+      "sha256": "06faab4bbf1238b7b84b561c9ddc029fc9ee910311f0a58f016eeb9dfb2428e7"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-functional-security-round01-stderr.bin",
+      "bytes": 616,
+      "sha256": "2ce70d6c8c9ad6726c794690c8b14a2b83673648cac88edf4ff1acc50ec46348"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-functional-security-round01-result.json",
+      "bytes": 713,
+      "sha256": "6c6d65f5bc6aaf9c0346266d28ed8bf2141631304515dfeac5c2cee35b7b1432"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-functional-security-round01-owned-close.json",
+      "bytes": 619,
+      "sha256": "1c10c3c476b9c26d43ff6f2544392df6ff677bce137160616452388a24999e70"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-functional-security-round01.txt",
+      "bytes": 4422,
+      "sha256": "ec995fe9778a0d0e61dc3c0a71bbd0032f7efcb9b14fd470c5c030ed0411801b"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-functional-security-round01.txt.result.json",
+      "bytes": 1556,
+      "sha256": "2d44b9cec38cfaa9f7700a57a28dadcec9cc2975d4b85d29c92500d34a37f3e4"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-20261104T074559Z-ed6c711789de4c63b84403ea50a68a0b/functional/privacy-20261104T074627Z-04e34639/functional-results.json",
+      "bytes": 2168,
+      "sha256": "db2db405018faeef070daccfb9e78d689184d7f29e96b5d5e20fd60cba378f0f"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-20261104T074559Z-ed6c711789de4c63b84403ea50a68a0b/security/host-20261104T074748Z-f7e82302ddbc495ea169b2bcfc0c471b/live-host.json",
+      "bytes": 4878,
+      "sha256": "48bc35723d7cc5f04072454d5c009dccdc69be178b90be3c5acd7a42c5603f85"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-20261104T074559Z-ed6c711789de4c63b84403ea50a68a0b/affected-summary-01.json",
+      "bytes": 1185,
+      "sha256": "da14a0fb00b61a627119b4546f563566c88602f8c88a33900871e8b61477b2f0"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-20261104T074559Z-ed6c711789de4c63b84403ea50a68a0b/security-comparison-01.json",
+      "bytes": 4057,
+      "sha256": "0272828ec79ce91d0bf88c740de16c8f46d77ea7448c69f8eaeb0d2297f66675"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-20261104T074559Z-ed6c711789de4c63b84403ea50a68a0b/functional/privacy-20261104T074627Z-04e34639/owned-editor-close.json",
+      "bytes": 205,
+      "sha256": "e4cceda0ce6ab3d43c59873d23e1ab14957fd7c4e7f3987013ecd69e7c6e5872"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-20261104T074559Z-ed6c711789de4c63b84403ea50a68a0b/security/host-20261104T074748Z-f7e82302ddbc495ea169b2bcfc0c471b/owned-editor-close.json",
+      "bytes": 204,
+      "sha256": "3c34a67db5de4a74ba4e1333a2d1ae8380951ba9c347cfdf1e2c7a731ddd31fa"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-20261104T074559Z-ed6c711789de4c63b84403ea50a68a0b/functional/privacy-20261104T074627Z-04e34639/helper-pipe-ownership.json",
+      "bytes": 531,
+      "sha256": "233f2314abdcdd451cdbc40b65624944685d081d78e6e8e864d02b38f36a3ded"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-20261104T074559Z-ed6c711789de4c63b84403ea50a68a0b/security/host-20261104T074748Z-f7e82302ddbc495ea169b2bcfc0c471b/helper-pipe-ownership.json",
+      "bytes": 530,
+      "sha256": "e8a42ff760acc52d8dfd59d2a18205d96ca3ffbd388fb719f025e36ae54c86d5"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-20261104T074559Z-ed6c711789de4c63b84403ea50a68a0b/functional-launch-01.txt.result.json",
+      "bytes": 2097,
+      "sha256": "46e68c4a146ae5d5a1f4ceaa33c94c5c4b075d03f50ebf463ac435b70f15a9c1"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-20261104T074559Z-ed6c711789de4c63b84403ea50a68a0b/functional-launch-01.txt",
+      "bytes": 3351,
+      "sha256": "036bae63110921136585547311418e6d1f99917256ea0a8f5c736462866b920b"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-20261104T074559Z-ed6c711789de4c63b84403ea50a68a0b/security-launch-01.txt.result.json",
+      "bytes": 2128,
+      "sha256": "d50b438fe8069990a2dc9714ea98c1e49e9e15442422576d6c0c77df4de6ea17"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-20261104T074559Z-ed6c711789de4c63b84403ea50a68a0b/security-launch-01.txt",
+      "bytes": 3313,
+      "sha256": "cf5b2d7c02f139187f96644ef2cdcc53b08d46b26f921b742720ee552f9c4abc"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-post-owner-absence-01.json",
+      "bytes": 1019,
+      "sha256": "e71bdcbcb01d6363a8ccf0fa498720bf9a7172d1270b4452c682b2325df29904"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-chain-result-01.json",
+      "bytes": 15530,
+      "sha256": "d96219137a9ecba5c1bcea0675082ff4e0bf20d3bdbcc24399891455e00bf465"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-round01-consumption-01.json",
+      "bytes": 797,
+      "sha256": "f173bcad715c0aa0b62ddd25386b4a9c2d11203882fad21e49ca47d9a67344ba"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/prepared-affected-binding-01.json",
+      "bytes": 80880,
+      "sha256": "7bb10a7d74f4bd69e09a33493a0fc13acd3f30d7ec2fc3aa6e597924843f4f54"
+    }
+  ]
+}

@@ -1,0 +1,178 @@
+﻿TAP version 13
+# Subtest: NC01 every exact current compiled firstparty JavaScript build input is admitted in its original form
+ok 1 - NC01 every exact current compiled firstparty JavaScript build input is admitted in its original form
+  ---
+  duration_ms: 141.7412
+  type: 'test'
+  ...
+# Subtest: NC02 full sourceproof authority is stated separately from eleven exact build-inventory inputs
+ok 2 - NC02 full sourceproof authority is stated separately from eleven exact build-inventory inputs
+  ---
+  duration_ms: 0.3982
+  type: 'test'
+  ...
+# Subtest: NC03 a compiled allowlist path with changed bytes or hash is refused
+ok 3 - NC03 a compiled allowlist path with changed bytes or hash is refused
+  ---
+  duration_ms: 31.8161
+  type: 'test'
+  ...
+# Subtest: NC04 compiled exceptions cannot be claimed under another role
+ok 4 - NC04 compiled exceptions cannot be claimed under another role
+  ---
+  duration_ms: 1.966
+  type: 'test'
+  ...
+# Subtest: NC05 arbitrary package dist, generated declaration/map and contextual entries stay excluded
+ok 5 - NC05 arbitrary package dist, generated declaration/map and contextual entries stay excluded
+  ---
+  duration_ms: 4.8224
+  type: 'test'
+  ...
+# Subtest: NC06 exact compiled Ledger.js is product source while builder ledger remains excluded
+ok 6 - NC06 exact compiled Ledger.js is product source while builder ledger remains excluded
+  ---
+  duration_ms: 6.6717
+  type: 'test'
+  ...
+# Subtest: NC07 literal runtime identities are identical to earlier exact wrapper
+ok 7 - NC07 literal runtime identities are identical to earlier exact wrapper
+  ---
+  duration_ms: 11.7227
+  type: 'test'
+  ...
+# Subtest: admit exact artifact/catalog/license/product bytes without writing files
+ok 8 - admit exact artifact/catalog/license/product bytes without writing files
+  ---
+  duration_ms: 46.5825
+  type: 'test'
+  ...
+# Subtest: reject a runtime identity forged under the correct archive identity
+ok 9 - reject a runtime identity forged under the correct archive identity
+  ---
+  duration_ms: 25.1802
+  type: 'test'
+  ...
+# Subtest: reject a different archive hash
+ok 10 - reject a different archive hash
+  ---
+  duration_ms: 29.3223
+  type: 'test'
+  ...
+# Subtest: reject a different catalog hash
+ok 11 - reject a different catalog hash
+  ---
+  duration_ms: 34.7153
+  type: 'test'
+  ...
+# Subtest: reject contextual documents even with a forged source role
+ok 12 - reject contextual documents even with a forged source role
+  ---
+  duration_ms: 69.8964
+  type: 'test'
+  ...
+# Subtest: reject outside or traversal destination
+ok 13 - reject outside or traversal destination
+  ---
+  duration_ms: 69.0296
+  type: 'test'
+  ...
+# Subtest: reject case-alias duplicated inputs
+ok 14 - reject case-alias duplicated inputs
+  ---
+  duration_ms: 29.8771
+  type: 'test'
+  ...
+# Subtest: reject a missing license
+ok 15 - reject a missing license
+  ---
+  duration_ms: 30.5182
+  type: 'test'
+  ...
+# Subtest: reject input drift in a selected source
+ok 16 - reject input drift in a selected source
+  ---
+  duration_ms: 30.0773
+  type: 'test'
+  ...
+# Subtest: reject unknown request keys
+ok 17 - reject unknown request keys
+  ---
+  duration_ms: 14.8818
+  type: 'test'
+  ...
+# Subtest: generated verifier and synthetic seed parse as actual JavaScript
+ok 18 - generated verifier and synthetic seed parse as actual JavaScript
+  ---
+  duration_ms: 35.9533
+  type: 'test'
+  ...
+# Subtest: reject malformed source relative paths
+ok 19 - reject malformed source relative paths
+  ---
+  duration_ms: 6.4844
+  type: 'test'
+  ...
+# Subtest: actual runtime ledger source is present in neutral source allowlist: packages/vscode-extension/src/advanced/auditLedger.ts
+ok 20 - actual runtime ledger source is present in neutral source allowlist: packages/vscode-extension/src/advanced/auditLedger.ts
+  ---
+  duration_ms: 11.9284
+  type: 'test'
+  ...
+# Subtest: actual runtime ledger source is present in neutral source allowlist: packages/vscode-extension/src/hygiene/HygieneExposureLedger.ts
+ok 21 - actual runtime ledger source is present in neutral source allowlist: packages/vscode-extension/src/hygiene/HygieneExposureLedger.ts
+  ---
+  duration_ms: 6.0833
+  type: 'test'
+  ...
+# Subtest: actual runtime ledger source is present in neutral source allowlist: packages/guard-core/src/Ledger.ts
+ok 22 - actual runtime ledger source is present in neutral source allowlist: packages/guard-core/src/Ledger.ts
+  ---
+  duration_ms: 4.1432
+  type: 'test'
+  ...
+# Subtest: actual runtime ledger source is present in neutral source allowlist: packages/vscode-extension/src/firewall/LedgerStore.ts
+ok 23 - actual runtime ledger source is present in neutral source allowlist: packages/vscode-extension/src/firewall/LedgerStore.ts
+  ---
+  duration_ms: 4.4709
+  type: 'test'
+  ...
+# Subtest: actual runtime ledger source is present in neutral source allowlist: packages/vscode-extension/src/firewall/ledger-commands.ts
+ok 24 - actual runtime ledger source is present in neutral source allowlist: packages/vscode-extension/src/firewall/ledger-commands.ts
+  ---
+  duration_ms: 4.5775
+  type: 'test'
+  ...
+# Subtest: role confusion does not permit runtime ledger names to become builder context or fixtures
+ok 25 - role confusion does not permit runtime ledger names to become builder context or fixtures
+  ---
+  duration_ms: 38.4011
+  type: 'test'
+  ...
+# Subtest: actual builder ledger, scorecard and evidence docs remain excluded under source or instruction roles
+ok 26 - actual builder ledger, scorecard and evidence docs remain excluded under source or instruction roles
+  ---
+  duration_ms: 18.3746
+  type: 'test'
+  ...
+# Subtest: src ledger exception does not waive exact file bytes or selected source role
+ok 27 - src ledger exception does not waive exact file bytes or selected source role
+  ---
+  duration_ms: 8.9545
+  type: 'test'
+  ...
+# Subtest: other builder-context basenames and arbitrary src ledger paths are not newly admitted
+ok 28 - other builder-context basenames and arbitrary src ledger paths are not newly admitted
+  ---
+  duration_ms: 6.2486
+  type: 'test'
+  ...
+1..28
+# tests 28
+# suites 0
+# pass 28
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 703.2331

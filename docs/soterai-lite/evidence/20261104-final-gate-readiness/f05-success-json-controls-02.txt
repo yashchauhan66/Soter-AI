@@ -1,0 +1,70 @@
+﻿TAP version 13
+# Subtest: F05 original JSON success omits undefined driverFailure; old exact predicate rejects before native launch
+ok 1 - F05 original JSON success omits undefined driverFailure; old exact predicate rejects before native launch
+  ---
+  duration_ms: 4.7058
+  type: 'test'
+  ...
+# Subtest: F05 successor accepts exact original save7 success serialization
+ok 2 - F05 successor accepts exact original save7 success serialization
+  ---
+  duration_ms: 2.4657
+  type: 'test'
+  ...
+# Subtest: F05 successor accepts exact original reload3 IDs and scopes
+ok 3 - F05 successor accepts exact original reload3 IDs and scopes
+  ---
+  duration_ms: 0.9562
+  type: 'test'
+  ...
+# Subtest: F05 successor rejects actual driver failure
+ok 4 - F05 successor rejects actual driver failure
+  ---
+  duration_ms: 0.6408
+  type: 'test'
+  ...
+# Subtest: F05 successor rejects altered ID despite passing counts
+ok 5 - F05 successor rejects altered ID despite passing counts
+  ---
+  duration_ms: 4.9085
+  type: 'test'
+  ...
+# Subtest: F05 successor rejects weakened scope despite passing counts
+ok 6 - F05 successor rejects weakened scope despite passing counts
+  ---
+  duration_ms: 1.2629
+  type: 'test'
+  ...
+# Subtest: F05 successor rejects stale loaded runtime and host
+ok 7 - F05 successor rejects stale loaded runtime and host
+  ---
+  duration_ms: 1.1328
+  type: 'test'
+  ...
+# Subtest: F05 successor rejects omitted or failed native observations
+ok 8 - F05 successor rejects omitted or failed native observations
+  ---
+  duration_ms: 15.9585
+  type: 'test'
+  ...
+# Subtest: F05 successor rejects incorrect phase and non-synthetic result
+ok 9 - F05 successor rejects incorrect phase and non-synthetic result
+  ---
+  duration_ms: 1.1499
+  type: 'test'
+  ...
+# Subtest: F05 prelaunch correction did not consume either invocation
+ok 10 - F05 prelaunch correction did not consume either invocation
+  ---
+  duration_ms: 1.7782
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 203.0501

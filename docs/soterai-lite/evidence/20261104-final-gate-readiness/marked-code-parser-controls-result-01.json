@@ -1,0 +1,53 @@
+{
+    "schemaVersion":  1,
+    "feature":  "V01",
+    "status":  "MARKED_CODE_PARSER_PURE_9_PASS_NOT_LIVE_ABSENCE",
+    "observedAt":  "2026-11-04T02:06:56.5478107Z",
+    "source":  {
+                   "path":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261104-final-gate-readiness\\observe-marked-synthetic-code-proposed-01.ps1",
+                   "sha256":  "efe8d939d53fbd21dd26f89242d3a57e79c61acd963418721ba78395095e1eca",
+                   "bytes":  6965
+               },
+    "controls":  [
+                     {
+                         "id":  "MP01-quoted-separated-exact-profile",
+                         "pass":  true
+                     },
+                     {
+                         "id":  "MP02-equals-exact-profile",
+                         "pass":  true
+                     },
+                     {
+                         "id":  "MP03-normal-profile-not-counted",
+                         "pass":  true
+                     },
+                     {
+                         "id":  "MP04-sibling-prefix-not-counted",
+                         "pass":  true
+                     },
+                     {
+                         "id":  "MP05-traversal-refused",
+                         "pass":  true
+                     },
+                     {
+                         "id":  "MP06-duplicate-profile-refused",
+                         "pass":  true
+                     },
+                     {
+                         "id":  "MP07-unmatched-quote-refused",
+                         "pass":  true
+                     },
+                     {
+                         "id":  "MP08-optional-exact-profile-filter",
+                         "pass":  true
+                     },
+                     {
+                         "id":  "MP09-no-live-query",
+                         "pass":  true
+                     }
+                 ],
+    "liveCimOrListenerCalls":  0,
+    "codeLaunches":  0,
+    "signalsRequested":  0,
+    "scope":  "Extracted actual parser function bodies only; helper query and receipt body not invoked. No native absence coverage."
+}

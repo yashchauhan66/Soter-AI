@@ -1,0 +1,95 @@
+﻿TAP version 13
+# Subtest: NR01 actual firstparty runtime closure admits every original path and exact build bytes
+not ok 1 - NR01 actual firstparty runtime closure admits every original path and exact build bytes
+  ---
+  duration_ms: 601.52
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261104-final-gate-readiness\\neutral-actual-closure-controls-proposed-05.test.cjs:12:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + [
+    +   {
+    +     error: 'The expression evaluated to a falsy value:\n' +
+    +       '\n' +
+    +       '  assert(!/(?:^|\\/)(?:\\.git|node_modules|builds|artifacts|evidence)(?:\\/|$)/i.test(p))\n',
+    +     path: 'packages/vscode-extension/src/artifacts/ArtifactContent.ts'
+    +   },
+    +   {
+    +     error: 'The expression evaluated to a falsy value:\n' +
+    +       '\n' +
+    +       '  assert(!/(?:^|\\/)(?:\\.git|node_modules|builds|artifacts|evidence)(?:\\/|$)/i.test(p))\n',
+    +     path: 'packages/vscode-extension/src/artifacts/ArtifactController.ts'
+    +   },
+    +   {
+    +     error: 'The expression evaluated to a falsy value:\n' +
+    +       '\n' +
+    +       '  assert(!/(?:^|\\/)(?:\\.git|node_modules|builds|artifacts|evidence)(?:\\/|$)/i.test(p))\n',
+    +     path: 'packages/vscode-extension/src/artifacts/ArtifactFlags.ts'
+    +   },
+    +   {
+    +     error: 'The expression evaluated to a falsy value:\n' +
+    +       '\n' +
+    +       '  assert(!/(?:^|\\/)(?:\\.git|node_modules|builds|artifacts|evidence)(?:\\/|$)/i.test(p))\n',
+    +     path: 'packages/vscode-extension/src/artifacts/commands.ts'
+    +   }
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0:
+      path: 'packages/vscode-extension/src/artifacts/ArtifactContent.ts'
+      error: |-
+        The expression evaluated to a falsy value:
+        
+          assert(!/(?:^|\/)(?:\.git|node_modules|builds|artifacts|evidence)(?:\/|$)/i.test(p))
+        
+    1:
+      path: 'packages/vscode-extension/src/artifacts/ArtifactController.ts'
+      error: |-
+        The expression evaluated to a falsy value:
+        
+          assert(!/(?:^|\/)(?:\.git|node_modules|builds|artifacts|evidence)(?:\/|$)/i.test(p))
+        
+    2:
+      path: 'packages/vscode-extension/src/artifacts/ArtifactFlags.ts'
+      error: |-
+        The expression evaluated to a falsy value:
+        
+          assert(!/(?:^|\/)(?:\.git|node_modules|builds|artifacts|evidence)(?:\/|$)/i.test(p))
+        
+    3:
+      path: 'packages/vscode-extension/src/artifacts/commands.ts'
+      error: |-
+        The expression evaluated to a falsy value:
+        
+          assert(!/(?:^|\/)(?:\.git|node_modules|builds|artifacts|evidence)(?:\/|$)/i.test(p))
+        
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261104-final-gate-readiness\neutral-actual-closure-controls-proposed-05.test.cjs:15:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: NR02 metadata recipes admit original role without forbidden context
+ok 2 - NR02 metadata recipes admit original role without forbidden context
+  ---
+  duration_ms: 24.8507
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 1
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 649.8562

@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "phase": "restart",
+  "syntheticOnly": true,
+  "scope": "F28_SCRIPTED_ACTUAL_PACKAGED_COMMANDS_AND_DETERMINISTIC_REAL_FS_SCHEDULING_NOT_NATURAL_ADVERSARY",
+  "hostVersion": "1.145.0",
+  "extensionBundleSha256": "b611dee998d11824d523b3d561704f4a5dc15e27274e6e1d85c7154b9d42cfa0",
+  "runtimeBindings": [
+    {
+      "name": "extension.js",
+      "bytes": 1957320,
+      "sha256": "b611dee998d11824d523b3d561704f4a5dc15e27274e6e1d85c7154b9d42cfa0"
+    },
+    {
+      "name": "local-ai-broker.js",
+      "bytes": 326860,
+      "sha256": "24c633aff86713f35133e6c103299a24bc2a4df0a6726c90462283ce9030b744"
+    },
+    {
+      "name": "soterai-mcp-server.js",
+      "bytes": 230255,
+      "sha256": "bac10b399ee9e28c069c72eae3254f2e84da155b2bcb2dc48467487d74845138"
+    },
+    {
+      "name": "pre-commit-client.js",
+      "bytes": 24512,
+      "sha256": "36e04d01bb9b38f8e402020318cc1d8d1a6d66176ec2be8c1630fbe6d012cacb"
+    }
+  ],
+  "hostProbeSha256": "9a84eadfdd178e7c9518c632ee99e09c93ce86c62591dba331c1cf02457b5c07",
+  "sourceProofSha256": "21a9721cade24be9cb76a03350273dbc79f1f8e0e913bc92d7a1c5385db8b764",
+  "observations": [
+    {
+      "id": "F28-HR01",
+      "scope": "Actual same-profile restart preserves exact runtime and disabled shared reader",
+      "status": "PASS"
+    },
+    {
+      "id": "F28-HR02",
+      "scope": "Re-enable after restart requires fresh exact native public consent",
+      "status": "PASS"
+    },
+    {
+      "id": "F28-HR03",
+      "scope": "Sensitive saved values remain masked after restart",
+      "status": "PASS"
+    },
+    {
+      "id": "F28-HR04",
+      "scope": "Pending approval is revoked by disabling the guard without returning originals",
+      "status": "PASS"
+    },
+    {
+      "id": "F28-HR05",
+      "scope": "Reviewed fixture withdrawal restores the original owner setting and observes zero active reads",
+      "status": "PASS"
+    }
+  ],
+  "expectedChecks": 5,
+  "passed": 5,
+  "failed": 0,
+  "notRun": 0,
+  "driverFailure": null,
+  "readyForInterphase": false,
+  "safeWithdrawal": "ORIGINAL_FLAG_RESTORED_NO_PENDING_READS",
+  "measurements": [],
+  "sourceHandleOpens": 0,
+  "sourceHandleCloses": 0,
+  "unfinishedFixtureHandles": 0,
+  "originalEnvironmentDocumentEvents": 0,
+  "peerChildren": [],
+  "prompts": 3,
+  "readStatus": {
+    "status": "READY",
+    "activeReads": 0,
+    "startupMilliseconds": 144.0700999999999,
+    "limits": {
+      "readBytes": 1048576,
+      "readMilliseconds": 5000,
+      "concurrentReads": 8,
+      "pathComponents": 64,
+      "startupMilliseconds": 1500
+    },
+    "scope": "Checked shared managed file reads only. Cooperative routes; portable path APIs cannot eliminate every filesystem race.",
+    "message": "Managed reader checks are available."
+  },
+  "optionalPrivilegedSymlink": "NOT_TESTED_COMPONENT_CAPABILITY_SKIPS_RETAINED",
+  "nestedVendorChildren": "NO_INFERRED_ALL_DESCENDANT_EOF",
+  "configuredGitPush": "NOT_AUTHORIZED_NOT_RUN",
+  "signalsRequested": 0,
+  "independence": "LOW_SCRIPTED_NATIVE"
+}

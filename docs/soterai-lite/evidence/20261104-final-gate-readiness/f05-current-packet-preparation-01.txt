@@ -1,0 +1,25 @@
+﻿node.exe : Error: spawn EPERM
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Error: spawn EPERM:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+    at ChildProcess.spawn (node:internal/child_process:420:11)
+    at Object.spawn (node:child_process:753:9)
+    at ensureServiceIsRunning 
+(C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\node_modules\esbuild\lib\main.js:2268:29)
+    at Object.build (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\node_modules\esbuild\lib\main.js:2166:26)
+    at C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261104-final-gate-readiness\
+prepare-f05-current-packet-01.cjs:11:40
+    at Object.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261104-f
+inal-gate-readiness\prepare-f05-current-packet-01.cjs:23:3)
+    at Module._compile (node:internal/modules/cjs/loader:1730:14)
+    at Object..js (node:internal/modules/cjs/loader:1895:10)
+    at Module.load (node:internal/modules/cjs/loader:1465:32)
+    at Function._load (node:internal/modules/cjs/loader:1282:12) {
+  errno: -4048,
+  code: 'EPERM',
+  syscall: 'spawn'
+}

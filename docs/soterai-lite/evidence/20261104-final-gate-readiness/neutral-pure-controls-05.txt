@@ -1,0 +1,214 @@
+﻿TAP version 13
+# Subtest: admit exact artifact/catalog/license/product bytes without writing files
+ok 1 - admit exact artifact/catalog/license/product bytes without writing files
+  ---
+  duration_ms: 39.7612
+  type: 'test'
+  ...
+# Subtest: reject a runtime identity forged under the correct archive identity
+ok 2 - reject a runtime identity forged under the correct archive identity
+  ---
+  duration_ms: 18.0501
+  type: 'test'
+  ...
+# Subtest: reject a different archive hash
+ok 3 - reject a different archive hash
+  ---
+  duration_ms: 28.6134
+  type: 'test'
+  ...
+# Subtest: reject a different catalog hash
+ok 4 - reject a different catalog hash
+  ---
+  duration_ms: 29.3273
+  type: 'test'
+  ...
+# Subtest: reject contextual documents even with a forged source role
+ok 5 - reject contextual documents even with a forged source role
+  ---
+  duration_ms: 50.1914
+  type: 'test'
+  ...
+# Subtest: reject outside or traversal destination
+ok 6 - reject outside or traversal destination
+  ---
+  duration_ms: 53.8928
+  type: 'test'
+  ...
+# Subtest: reject case-alias duplicated inputs
+ok 7 - reject case-alias duplicated inputs
+  ---
+  duration_ms: 28.4
+  type: 'test'
+  ...
+# Subtest: reject a missing license
+ok 8 - reject a missing license
+  ---
+  duration_ms: 32.2093
+  type: 'test'
+  ...
+# Subtest: reject input drift in a selected source
+ok 9 - reject input drift in a selected source
+  ---
+  duration_ms: 26.3431
+  type: 'test'
+  ...
+# Subtest: reject unknown request keys
+ok 10 - reject unknown request keys
+  ---
+  duration_ms: 16.0805
+  type: 'test'
+  ...
+# Subtest: generated verifier and synthetic seed parse as actual JavaScript
+ok 11 - generated verifier and synthetic seed parse as actual JavaScript
+  ---
+  duration_ms: 29.5612
+  type: 'test'
+  ...
+# Subtest: reject malformed source relative paths
+ok 12 - reject malformed source relative paths
+  ---
+  duration_ms: 5.641
+  type: 'test'
+  ...
+# Subtest: actual runtime ledger source is present in neutral source allowlist: packages/vscode-extension/src/advanced/auditLedger.ts
+ok 13 - actual runtime ledger source is present in neutral source allowlist: packages/vscode-extension/src/advanced/auditLedger.ts
+  ---
+  duration_ms: 3.8885
+  type: 'test'
+  ...
+# Subtest: actual runtime ledger source is present in neutral source allowlist: packages/vscode-extension/src/hygiene/HygieneExposureLedger.ts
+ok 14 - actual runtime ledger source is present in neutral source allowlist: packages/vscode-extension/src/hygiene/HygieneExposureLedger.ts
+  ---
+  duration_ms: 3.4529
+  type: 'test'
+  ...
+# Subtest: actual runtime ledger source is present in neutral source allowlist: packages/guard-core/src/Ledger.ts
+ok 15 - actual runtime ledger source is present in neutral source allowlist: packages/guard-core/src/Ledger.ts
+  ---
+  duration_ms: 3.8578
+  type: 'test'
+  ...
+# Subtest: actual runtime ledger source is present in neutral source allowlist: packages/vscode-extension/src/firewall/LedgerStore.ts
+ok 16 - actual runtime ledger source is present in neutral source allowlist: packages/vscode-extension/src/firewall/LedgerStore.ts
+  ---
+  duration_ms: 3.4214
+  type: 'test'
+  ...
+# Subtest: actual runtime ledger source is present in neutral source allowlist: packages/vscode-extension/src/firewall/ledger-commands.ts
+ok 17 - actual runtime ledger source is present in neutral source allowlist: packages/vscode-extension/src/firewall/ledger-commands.ts
+  ---
+  duration_ms: 3.1946
+  type: 'test'
+  ...
+# Subtest: role confusion does not permit runtime ledger names to become builder context or fixtures
+ok 18 - role confusion does not permit runtime ledger names to become builder context or fixtures
+  ---
+  duration_ms: 8.9927
+  type: 'test'
+  ...
+# Subtest: actual builder ledger, scorecard and evidence docs remain excluded under source or instruction roles
+ok 19 - actual builder ledger, scorecard and evidence docs remain excluded under source or instruction roles
+  ---
+  duration_ms: 10.2966
+  type: 'test'
+  ...
+# Subtest: src ledger exception does not waive exact file bytes or selected source role
+ok 20 - src ledger exception does not waive exact file bytes or selected source role
+  ---
+  duration_ms: 5.6004
+  type: 'test'
+  ...
+# Subtest: other builder-context basenames and arbitrary src ledger paths are not newly admitted
+ok 21 - other builder-context basenames and arbitrary src ledger paths are not newly admitted
+  ---
+  duration_ms: 2.9198
+  type: 'test'
+  ...
+# Subtest: NC01 every exact current compiled firstparty JavaScript build input is admitted in its original form
+ok 22 - NC01 every exact current compiled firstparty JavaScript build input is admitted in its original form
+  ---
+  duration_ms: 112.3607
+  type: 'test'
+  ...
+# Subtest: NC02 full sourceproof authority is stated separately from eleven exact build-inventory inputs
+ok 23 - NC02 full sourceproof authority is stated separately from eleven exact build-inventory inputs
+  ---
+  duration_ms: 0.3316
+  type: 'test'
+  ...
+# Subtest: NC03 a compiled allowlist path with changed bytes or hash is refused
+ok 24 - NC03 a compiled allowlist path with changed bytes or hash is refused
+  ---
+  duration_ms: 1.6979
+  type: 'test'
+  ...
+# Subtest: NC04 compiled exceptions cannot be claimed under another role
+ok 25 - NC04 compiled exceptions cannot be claimed under another role
+  ---
+  duration_ms: 1.1905
+  type: 'test'
+  ...
+# Subtest: NC05 arbitrary package dist, generated declaration/map and contextual entries stay excluded
+ok 26 - NC05 arbitrary package dist, generated declaration/map and contextual entries stay excluded
+  ---
+  duration_ms: 3.402
+  type: 'test'
+  ...
+# Subtest: NC06 exact compiled Ledger.js is product source while builder ledger remains excluded
+ok 27 - NC06 exact compiled Ledger.js is product source while builder ledger remains excluded
+  ---
+  duration_ms: 3.4323
+  type: 'test'
+  ...
+# Subtest: NC07 literal runtime identities are identical to earlier exact wrapper
+ok 28 - NC07 literal runtime identities are identical to earlier exact wrapper
+  ---
+  duration_ms: 7.2049
+  type: 'test'
+  ...
+# Subtest: NR01 actual firstparty runtime closure admits every original path and exact build bytes
+ok 29 - NR01 actual firstparty runtime closure admits every original path and exact build bytes
+  ---
+  duration_ms: 614.8878
+  type: 'test'
+  ...
+# Subtest: NR02 metadata recipes admit original role without forbidden context
+ok 30 - NR02 metadata recipes admit original role without forbidden context
+  ---
+  duration_ms: 16.8285
+  type: 'test'
+  ...
+# Subtest: NR03 four exact current runtime artifacts paths refuse every non-source role
+ok 31 - NR03 four exact current runtime artifacts paths refuse every non-source role
+  ---
+  duration_ms: 34.5131
+  type: 'test'
+  ...
+# Subtest: NR04 runtime directory exception refuses size/hash drift
+ok 32 - NR04 runtime directory exception refuses size/hash drift
+  ---
+  duration_ms: 7.9892
+  type: 'test'
+  ...
+# Subtest: NR05 arbitrary artifact/evidence roots and copied context remain refused
+ok 33 - NR05 arbitrary artifact/evidence roots and copied context remain refused
+  ---
+  duration_ms: 5.8865
+  type: 'test'
+  ...
+# Subtest: NR06 full actual request closure preserves four runtime/archive/catalog and contextual-reference checks
+ok 34 - NR06 full actual request closure preserves four runtime/archive/catalog and contextual-reference checks
+  ---
+  duration_ms: 809.4054
+  type: 'test'
+  ...
+1..34
+# tests 34
+# suites 0
+# pass 34
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2219.561

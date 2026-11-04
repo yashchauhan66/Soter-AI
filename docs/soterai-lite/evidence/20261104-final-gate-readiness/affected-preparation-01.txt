@@ -1,0 +1,22 @@
+﻿node.exe : AssertionError [ERR_ASSERTION]: C:\Program Files\Git\cmd\git.exe: links
+At C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261013-l0-resume-88fb9432\run-ch
+eck.ps1:10 char:21
++     $taskCheckRaw = & $FilePath @ArgumentList 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (AssertionError ...\git.exe: links:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+2 !== 1
+
+    at pin (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261104-final-gate-readi
+ness\affected-current-admission-proposed-01.cjs:9:151)
+    at Array.forEach (<anonymous>)
+    at C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\soterai-lite\evidence\20261104-final-gate-readiness\
+prepare-affected-proposed-01.cjs:35:165 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 2,
+  expected: 1,
+  operator: 'strictEqual'
+}

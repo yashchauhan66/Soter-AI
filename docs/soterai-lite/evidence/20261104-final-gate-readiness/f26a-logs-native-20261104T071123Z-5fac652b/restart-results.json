@@ -1,0 +1,160 @@
+{
+  "schemaVersion": 1,
+  "phase": "restart",
+  "syntheticOnly": true,
+  "hostVersion": "1.144.1",
+  "extensionBundleSha256": "b611dee998d11824d523b3d561704f4a5dc15e27274e6e1d85c7154b9d42cfa0",
+  "currentDeveloperBundleSha256": "b611dee998d11824d523b3d561704f4a5dc15e27274e6e1d85c7154b9d42cfa0",
+  "hostProbeSha256": "4f014043b9ff4a46dadb4f29403e7f801a3e6cc429adb8ea2d99fb12bd48c251",
+  "observations": [
+    {
+      "id": "F25-N01",
+      "scope": "Restart reuses persisted keyed metadata without startup discovery, content, documents or key stores",
+      "status": "PASS"
+    },
+    {
+      "id": "F25-N02",
+      "scope": "Restart caller approvals cannot replace a fresh native owner decision",
+      "status": "PASS"
+    },
+    {
+      "id": "F25-N03",
+      "scope": "Fresh restart review preserves exact saved-log finding IDs and independently keyed ledger row IDs",
+      "status": "PASS"
+    },
+    {
+      "id": "F25-N04",
+      "scope": "Restart owner disable still withdraws the native route and fresh reenable preserves originals and public controls",
+      "status": "PASS"
+    }
+  ],
+  "passed": 4,
+  "failed": 0,
+  "notRun": 0,
+  "expectedChecks": 4,
+  "sourceDocumentCalls": 0,
+  "sourceDocumentEvents": 0,
+  "logContentReads": 24,
+  "referencedContentReads": 0,
+  "observedFileCalls": 121,
+  "caseVariantContentMatches": 24,
+  "discoveries": [
+    {
+      "maximum": 129,
+      "isolatedSyntheticDirectory": false
+    },
+    {
+      "maximum": 129,
+      "isolatedSyntheticDirectory": false
+    }
+  ],
+  "limits": {
+    "files": 128,
+    "fileBytes": 65536,
+    "totalBytes": 1048576,
+    "milliseconds": 60000,
+    "parts": 32,
+    "depth": 32,
+    "valueContainerNodes": 10000,
+    "records": 128
+  },
+  "secretStorageStores": 0,
+  "vaultKeyStores": 0,
+  "reviews": [
+    {
+      "action": "Analyze saved logs",
+      "modal": true
+    },
+    {
+      "action": "Analyze saved logs",
+      "modal": true
+    },
+    {
+      "action": "Analyze saved logs",
+      "modal": true
+    }
+  ],
+  "metadataDocuments": 3,
+  "trace": [
+    {
+      "event": "command-start-logProtectionStatus",
+      "milliseconds": 1950.2803999999996
+    },
+    {
+      "event": "command-end-logProtectionStatus",
+      "milliseconds": 1952.5238,
+      "status": "OWNER_REVIEW_REQUIRED"
+    },
+    {
+      "event": "command-start-reviewLogs",
+      "milliseconds": 1969.2462999999998
+    },
+    {
+      "event": "command-end-reviewLogs",
+      "milliseconds": 1994.4588999999996,
+      "status": "CANCELLED"
+    },
+    {
+      "event": "command-start-reviewLogs",
+      "milliseconds": 2008.2195999999994
+    },
+    {
+      "event": "command-end-reviewLogs",
+      "milliseconds": 3749.0759,
+      "status": "ANALYZED",
+      "files": 6,
+      "findings": 4
+    },
+    {
+      "event": "command-start-openHygieneExposureLedger",
+      "milliseconds": 3755.2923
+    },
+    {
+      "event": "command-end-openHygieneExposureLedger",
+      "milliseconds": 4145.8699,
+      "status": "METADATA"
+    },
+    {
+      "event": "soterai-configuration-event",
+      "milliseconds": 5050.8447
+    },
+    {
+      "event": "command-start-reviewLogs",
+      "milliseconds": 5162.6098
+    },
+    {
+      "event": "command-end-reviewLogs",
+      "milliseconds": 5169.9976,
+      "status": "UNAVAILABLE"
+    },
+    {
+      "event": "soterai-configuration-event",
+      "milliseconds": 5790.9217
+    },
+    {
+      "event": "command-start-reviewLogs",
+      "milliseconds": 6157.6684
+    },
+    {
+      "event": "command-end-reviewLogs",
+      "milliseconds": 7539.8298,
+      "status": "ANALYZED",
+      "files": 6,
+      "findings": 4
+    },
+    {
+      "event": "soterai-configuration-event",
+      "milliseconds": 7743.6557
+    }
+  ],
+  "independence": "LOW",
+  "ownerPresence": "SCRIPTED_NATIVE_API_DECISIONS_NOT_HUMAN_REVIEW",
+  "boundaryDiscovery": "NATIVE_DISCOVERY_RESTRICTED_TO_RETAINED_SYNTHETIC_DIRECTORY_WITH_DETERMINISTIC_ADMISSION_ORDER",
+  "notTested": [
+    "Human usability/accessibility",
+    "Other extensions, normal debug consoles, arbitrary processes and transformed/prose/binary credentials",
+    "Credential validity, provider rotation, AI access or prior disclosures",
+    "Same-user unmanaged reads, process memory and independent uploads",
+    "Other platforms and remote workspaces"
+  ]
+}

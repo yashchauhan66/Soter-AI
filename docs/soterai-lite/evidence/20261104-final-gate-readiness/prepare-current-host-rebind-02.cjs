@@ -1,0 +1,12 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),old=require('./affected-current-admission-proposed-01.cjs');
+const{own,repo,read,fact,pin}=old,F=path.resolve(__dirname,'../20261103-f32-lifecycle-2e95d6a4');
+const b=structuredClone(read(own('prepared-affected-binding-01.json'))),before=read(path.join(F,'public-vendor-observation-02.json')),now=read(path.join(F,'public-vendor-observation-03.json'));
+assert.equal(now.currentHost.version,'1.145.0');assert.equal(now.vendorFacts.length,180);assert.equal(now.twoStableObservations,true);now.vendorFacts.forEach(pin);
+const oldPublic=new Set(before.vendorFacts.map(r=>r.path.toLowerCase()));const extras=b.vendorFacts.filter(r=>!oldPublic.has(r.path.toLowerCase()));assert.equal(extras.length,6);extras.forEach(pin);
+b.status='F32_CURRENT_FINAL_HOST_REBIND_PREPARED_NATIVE_NOT_RUN';b.observedAt=new Date().toISOString();b.hostReview=fact(path.join(F,'public-vendor-observation-03.json'));b.signatureReceipt=fact(path.join(F,'current-signature-observation-02.json'));b.vendorFacts=[...now.vendorFacts,...extras];
+b.priorAffectedAcceptance=fact(own('affected-acceptance-current-01.json'));b.currentHostRebind={oldHost:'1.144.1',newHost:'1.145.0',cause:'EXTERNAL_INSTALLED_UPDATE_OBSERVED_NO_AGENT_UPDATE',oldNativeResults:'RETAINED_ONLY_FOR_RECORDED_1_144_1_SCOPE',oldFamilyWrappers:'NOT_AUTHORIZED_BY_THIS_REBIND_REVIEW_SEPARATE_SUCCESSORS',nativeLaunches:0};
+fs.writeFileSync(own('prepared-final-host-binding-02.json'),JSON.stringify(b,null,2)+'\n',{flag:'wx'});
+const current=require('./affected-current-admission-proposed-02.cjs');current.binding();
+const report={status:'PASS_CURRENT_11450_PUBLIC_HOST_REBIND_STATIC_ONLY',observedAt:new Date().toISOString(),binding:fact(own('prepared-final-host-binding-02.json')),gate:fact(own('affected-current-admission-proposed-02.cjs')),vendor:b.hostReview,signature:b.signatureReceipt,publicVendorFacts:186,sourceInputs:1110,vsix:b.vsix,oldAcceptance:b.priorAffectedAcceptance,nativeLaunches:0,signalsRequested:0};
+fs.writeFileSync(own('current-host-rebind-02.json'),JSON.stringify(report,null,2)+'\n',{flag:'wx'});console.log(JSON.stringify(report));

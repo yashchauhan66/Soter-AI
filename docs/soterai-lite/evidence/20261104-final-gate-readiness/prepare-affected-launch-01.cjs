@@ -1,0 +1,6 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),C=require('./affected-current-admission-proposed-01.cjs');
+const b=C.binding(),binding=C.fact(C.own('prepared-affected-binding-01.json'));assert.equal(binding.sha256,'7bb10a7d74f4bd69e09a33493a0fc13acd3f30d7ec2fc3aa6e597924843f4f54');
+const priorAbsence=C.fact(C.own('affected-prior-owner-absence-01.json')),absence=C.read(C.own('affected-prior-owner-absence-01.json'));assert.equal(absence.status,'MARKED_SYNTHETIC_CODE_ABSENT_TWICE_NO_SIGNALS');assert.equal(absence.signalsRequested,0);assert(absence.observations.length===2&&absence.observations.every(r=>r.markedCount===0));assert(Date.now()-Date.parse(absence.observedAt)<180000);
+const runner=C.fact(C.own('run-affected-proposed-01.cjs'));assert.equal(runner.sha256,'7078c1be3b6aeb80ce2f4cdd85526c0487e7fa9ab1564e3d201844065a549220');
+const file=C.own('affected-launch-round01.json');fs.writeFileSync(file,JSON.stringify({status:'ROOT_REVIEWED_ONE_F32_AFFECTED_ROUND01',normalImprovementRound:1,allowedAttempts:1,syntheticOnly:true,signalsRequested:0,binding,priorAbsence},null,2)+'\n',{flag:'wx'});console.log(JSON.stringify({status:'PASS_ROOT_AFFECTED_LAUNCH_PREPARED_NOT_RUN',launch:C.fact(file),runner,assertions:b.families.reduce((s,x)=>s+x.assertions,0)}));

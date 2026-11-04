@@ -1,0 +1,122 @@
+{
+  "status": "TEST_ONLY_SINGLE_HOST_SOURCE_NO_PRODUCT_CODE_BUNDLED",
+  "source": {
+    "path": "packages/vscode-extension/src/__tests__/host/liteSecureEditor.host.ts",
+    "bytes": 40297,
+    "sha256": "30bf1bf8ecced3be2eaa8db9228d61316ffcedf5b0f55848da0178a78591e861"
+  },
+  "inputs": [
+    {
+      "path": "packages/vscode-extension/src/__tests__/host/liteSecureEditor.host.ts",
+      "bytes": 40297,
+      "sha256": "30bf1bf8ecced3be2eaa8db9228d61316ffcedf5b0f55848da0178a78591e861"
+    }
+  ],
+  "auxiliary": [
+    {
+      "path": "packages/vscode-extension/scripts/parserBundleOptions.cjs",
+      "bytes": 853,
+      "sha256": "6bf56da97f671b023ed7d0750351498bf4421dbdc3a059f5e87e06fcc6961222"
+    },
+    {
+      "path": "packages/vscode-extension/tsconfig.json",
+      "bytes": 1242,
+      "sha256": "6ee68e0eddee72ac15a0fbb101ce0afb7ca669b52e63fee79c20518e51803a8a"
+    },
+    {
+      "path": "node_modules/esbuild/package.json",
+      "bytes": 3980,
+      "sha256": "d55d1d19fcc5b6079e4a71dd4111340c79c682bc36835ac7058a0c364c7db58a"
+    }
+  ],
+  "originalDriver": {
+    "path": "docs/soterai-lite/evidence/20261014-f05-secure-editor-597d8a24/prebuilt-host-05/lite-secure-editor-host.js",
+    "bytes": 39560,
+    "sha256": "cce828cb11c296786db7bde5c6440eb687eeb0bfdbfc2f073a3dde6bf60d7715"
+  },
+  "originalBundledModules": [
+    "packages/vscode-extension/src/__tests__/host/liteSecureEditor.host.ts"
+  ],
+  "newDriver": {
+    "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/prebuilt-f05-current-02/lite-secure-editor-host.js",
+    "bytes": 39560,
+    "sha256": "cce828cb11c296786db7bde5c6440eb687eeb0bfdbfc2f073a3dde6bf60d7715"
+  },
+  "metafile": {
+    "inputs": {
+      "packages/vscode-extension/src/__tests__/host/liteSecureEditor.host.ts": {
+        "bytes": 40297,
+        "imports": [
+          {
+            "path": "vscode",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "node:assert/strict",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "node:crypto",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "node:fs/promises",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "node:path",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      }
+    },
+    "outputs": {
+      "docs/soterai-lite/evidence/20261104-final-gate-readiness/prebuilt-f05-current-02/lite-secure-editor-host.js": {
+        "imports": [
+          {
+            "path": "vscode",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "node:assert/strict",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "node:crypto",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "node:fs/promises",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "node:path",
+            "kind": "require-call",
+            "external": true
+          }
+        ],
+        "exports": [],
+        "entryPoint": "packages/vscode-extension/src/__tests__/host/liteSecureEditor.host.ts",
+        "inputs": {
+          "packages/vscode-extension/src/__tests__/host/liteSecureEditor.host.ts": {
+            "bytesInOutput": 37975
+          }
+        },
+        "bytes": 39560
+      }
+    }
+  },
+  "sourceAssertions": "ORIGINAL_H01_H10_UNCHANGED_SAVE7_RELOAD3",
+  "productBuilds": 0,
+  "nativeLaunches": 0
+}
