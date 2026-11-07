@@ -1,0 +1,15 @@
+{
+  "status": "ORIGINAL_PREPARATION_BYTES_RESTORED_CORRECTED_MATERIALIZER_RETAINED_NOT_EXECUTED",
+  "observedAt": "2026-10-26T13:00:20.893Z",
+  "original": {
+    "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/prepare-affected-current-04.cjs",
+    "bytes": 7646,
+    "sha256": "4f59bbf2b3fc187ea94a19caa402fc0efd846ec420a1b217e6c72806b66c0551"
+  },
+  "successor": {
+    "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/prepare-affected-current-04b.cjs",
+    "bytes": 7693,
+    "sha256": "3b6c56b7cde788c9077f74e0dc724bb6a374a508254fac61ef52fca9cc2abfa1"
+  },
+  "reason": "Review caught generic Node-only gate predicate on future PowerShell content receipt. Preparation had already emitted25 templates; preserve its exact generator pin and use separate04b for future materialization. The invalid materialization branch was never executed; no behavior/test/result was regraded."
+}

@@ -1,0 +1,3 @@
+# F32 early attach successor
+
+The established fix is earlier owned renderer observation, not a claim about the unknown trust trigger. A prewarmed owned helper locks and hashes executables before launch, verifies the actual root PID/creation/executable/exact args/numeric loopback listener before attach, then completes the original full-tree custody. Success waits for that helper's exit0/both EOF acknowledgment. The original44 unique/59 observations/eight phases and real trust keyboard assertions remain required. Failed extra08 facts are pinned unchanged. Standing user approval covers local isolated checks; preparation launches nothing.

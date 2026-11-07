@@ -1,0 +1,92 @@
+#!/usr/bin/env node
+import path from "node:path";
+import os from "node:os";
+import { BrokerServer, DEFAULT_BROKER_PORT } from "./BrokerServer";
+import { createBrokerCredentialLoader } from "./auth";
+import { createGatewayParentGuard } from "./GatewayParentGuard";
+
+async function main(): Promise<void> {
+    const schemaFlag = process.env.SOTERAI_CLINE_TOOL_SCHEMAS;
+    if (schemaFlag !== undefined && !["0", "1"].includes(schemaFlag)) throw new Error("Gateway tool-schema profile unavailable");
+    const claudeSchemaFlag = process.env.SOTERAI_CLAUDE_TOOL_SCHEMAS;
+    if (claudeSchemaFlag !== undefined && !["0", "1"].includes(claudeSchemaFlag)) throw new Error("Gateway tool-schema profile unavailable");
+    const codexFlag = process.env.SOTERAI_CODEX_RESPONSES;
+    if (codexFlag !== undefined && !["0", "1"].includes(codexFlag)) throw new Error("Gateway Responses profile unavailable");
+    const geminiFlag = process.env.SOTERAI_GEMINI_GENERATE_CONTENT;
+    if (geminiFlag !== undefined && !["0", "1"].includes(geminiFlag)) throw new Error("Gateway Gemini profile unavailable");
+    const ownerSession = process.env.SOTERAI_BROKER_SESSION;
+    if (ownerSession !== undefined && (!/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/.test(ownerSession)
+        || !process.send || !process.connected || process.env.SOTERAI_BROKER_PORT !== "0"
+        || !process.env.SOTERAI_BROKER_TOKEN || !process.env.SOTERAI_BROKER_CONTROL_TOKEN)) throw new Error("Owned startup unavailable");
+    let requestedStop = false, stopOwned: (() => void) | undefined;
+    if (ownerSession) {
+        process.on("message", (value: unknown) => {
+            if (!value || typeof value !== "object" || Array.isArray(value)) return;
+            const row = value as Record<string, unknown>;
+            if (Object.keys(row).sort().join(",") === "session,type,version" && row.type === "SOTERAI_BROKER_STOP" && row.version === 1 && row.session === ownerSession) { requestedStop = true; stopOwned?.(); }
+        });
+        process.once("disconnect", () => { requestedStop = true; stopOwned?.(); });
+    }
+    const storageDir = process.env.SOTERAI_BROKER_STORAGE ?? path.join(os.homedir(), ".soterai", "broker");
+    const { token, controlToken } = await createBrokerCredentialLoader(undefined, process.env.SOTERAI_HARDEN_CREDENTIAL_STARTUP !== "0")(
+        storageDir, { token: process.env.SOTERAI_BROKER_TOKEN, controlToken: process.env.SOTERAI_BROKER_CONTROL_TOKEN });
+    const port = ownerSession ? 0 : parsePort(process.env.SOTERAI_BROKER_PORT);
+    if (requestedStop || ownerSession && !process.connected) { if (process.connected) process.disconnect(); return; }
+    const broker = new BrokerServer({
+        token,
+        controlToken,
+        port,
+        ownerSession,
+        gatewayPolicy: process.env.SOTERAI_GATEWAY_POLICY !== "0",
+        clineToolSchemas: schemaFlag === "1",
+        claudeToolSchemas: claudeSchemaFlag === "1",
+        codexResponses: codexFlag === "1",
+        codexResponsesProviderUrl: process.env.SOTERAI_CODEX_RESPONSES_PROVIDER_URL,
+        geminiGenerateContent: geminiFlag === "1",
+        geminiProviderUrl: process.env.SOTERAI_GEMINI_PROVIDER_URL,
+        requireGatewaySync: process.env.SOTERAI_REQUIRE_GATEWAY_SYNC === "1",
+        gatewayGuard: ownerSession ? createGatewayParentGuard(ownerSession) : undefined,
+        jsonBodies: process.env.SOTERAI_GATEWAY_JSON_BODIES !== "0",
+        gzipBodies: process.env.SOTERAI_GATEWAY_GZIP_BODIES !== "0",
+        brotliBodies: process.env.SOTERAI_GATEWAY_BROTLI_BODIES !== "0",
+        deflateBodies: process.env.SOTERAI_GATEWAY_DEFLATE_BODIES !== "0",
+        chunkedBodies: process.env.SOTERAI_GATEWAY_CHUNKED_BODIES !== "0",
+        framedBodies: process.env.SOTERAI_GATEWAY_FRAMED_BODIES !== "0",
+        multipartBodies: process.env.SOTERAI_GATEWAY_MULTIPART_BODIES !== "0",
+        base64Bodies: process.env.SOTERAI_GATEWAY_BASE64_BODIES !== "0",
+        requireCanarySync: process.env.SOTERAI_REQUIRE_CANARY_SYNC === "1",
+        openAIProviderUrl: process.env.SOTERAI_OPENAI_PROVIDER_URL,
+        anthropicProviderUrl: process.env.SOTERAI_ANTHROPIC_PROVIDER_URL,
+        providerApiKey: process.env.SOTERAI_PROVIDER_API_KEY,
+        selfHygiene: process.env.SOTERAI_SELF_HYGIENE === "1",
+        logger: (message, metadata) => console.log(JSON.stringify({ timestamp: new Date().toISOString(), message, ...metadata })),
+    });
+    let shutdownPromise: Promise<void> | undefined;
+    const shutdown = (): Promise<void> => {
+        requestedStop = true;
+        return shutdownPromise ??= broker.stop().then(() => { if (process.connected) process.disconnect(); });
+    };
+    stopOwned = () => { void shutdown(); };
+    process.on("SIGINT", () => void shutdown());
+    process.on("SIGTERM", () => void shutdown());
+    const address = await broker.start();
+    if (requestedStop) { await broker.stop(); if (process.connected) process.disconnect(); return; }
+    if (ownerSession) {
+        try { process.send!({ type: "SOTERAI_BROKER_READY", version: 1, session: ownerSession, port: address.port }, (error: Error | null) => { if (error) void shutdown(); }); }
+        catch { await shutdown(); }
+    }
+    else console.log(JSON.stringify({ status: "ready", url: address.url, localOnly: true, auth: "required" }));
+}
+
+function parsePort(value: string | undefined): number {
+    if (!value) return DEFAULT_BROKER_PORT;
+    const port = Number(value);
+    if (!Number.isInteger(port) || port < 1 || port > 65535) throw new Error("SOTERAI_BROKER_PORT must be between 1 and 65535");
+    return port;
+}
+
+void main().catch(() => {
+    console.error(JSON.stringify({ status: "failed", message: "Broker startup unavailable; check private storage, credentials, port and provider configuration." }));
+    process.exitCode = 1;
+    if (process.connected) process.disconnect();
+});

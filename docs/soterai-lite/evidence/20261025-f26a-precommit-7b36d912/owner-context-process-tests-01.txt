@@ -1,0 +1,190 @@
+﻿TAP version 13
+# Subtest: F26a owner context internally acquires genuine exact-root metadata and a frozen capability
+ok 1 - F26a owner context internally acquires genuine exact-root metadata and a frozen capability
+  ---
+  duration_ms: 411.6343
+  type: 'test'
+  ...
+# Subtest: F26a owner context environment is exact owner projection rather than isolated scanner environment
+ok 2 - F26a owner context environment is exact owner projection rather than isolated scanner environment
+  ---
+  duration_ms: 70.5049
+  type: 'test'
+  ...
+# Subtest: F26a owner context creates fresh metadata separately for each exact root
+ok 3 - F26a owner context creates fresh metadata separately for each exact root
+  ---
+  duration_ms: 264.4876
+  type: 'test'
+  ...
+# Subtest: F26a owner context rejects lookalikes unrelated metadata accessors and proxies without traps
+ok 4 - F26a owner context rejects lookalikes unrelated metadata accessors and proxies without traps
+  ---
+  duration_ms: 94.3192
+  type: 'test'
+  ...
+# Subtest: F26a owner context disabled or throwing authority refuses before local config reads
+ok 5 - F26a owner context disabled or throwing authority refuses before local config reads
+  ---
+  duration_ms: 16.3575
+  type: 'test'
+  ...
+# Subtest: F26a owner context refuses ambient selectors and invalid roots instead of borrowing authority
+ok 6 - F26a owner context refuses ambient selectors and invalid roots instead of borrowing authority
+  ---
+  duration_ms: 14.8833
+  type: 'test'
+  ...
+# Subtest: F26a owner context disable then reenable cannot revive its prepared capability
+ok 7 - F26a owner context disable then reenable cannot revive its prepared capability
+  ---
+  duration_ms: 57.6623
+  type: 'test'
+  ...
+# Subtest: F26a owner context throwing authority remains sticky after the callback recovers
+ok 8 - F26a owner context throwing authority remains sticky after the callback recovers
+  ---
+  duration_ms: 58.3061
+  type: 'test'
+  ...
+# Subtest: F26a owner context local config drift stays withdrawn after exact bytes are restored
+ok 9 - F26a owner context local config drift stays withdrawn after exact bytes are restored
+  ---
+  duration_ms: 74.2527
+  type: 'test'
+  ...
+# Subtest: F26a owner context also requires unchanged private metadata job authority
+ok 10 - F26a owner context also requires unchanged private metadata job authority
+  ---
+  duration_ms: 68.4825
+  type: 'test'
+  ...
+# Subtest: F26a owner context rejects a replaced git ancestor junction without restoring availability
+ok 11 - F26a owner context rejects a replaced git ancestor junction without restoring availability
+  ---
+  duration_ms: 69.7783
+  type: 'test'
+  ...
+# Subtest: F26a owner context withdraws on observed pinned Git identity drift without altering the executable
+ok 12 - F26a owner context withdraws on observed pinned Git identity drift without altering the executable
+  ---
+  duration_ms: 110.8628
+  type: 'test'
+  ...
+# Subtest: F26a owner transport version uses pinned executable exact args owner env and private-job cwd
+ok 13 - F26a owner transport version uses pinned executable exact args owner env and private-job cwd
+  ---
+  duration_ms: 333.392
+  type: 'test'
+  ...
+# Subtest: F26a owner transport config preserves exact selected projection args without empty-hook override
+ok 14 - F26a owner transport config preserves exact selected projection args without empty-hook override
+  ---
+  duration_ms: 97.6442
+  type: 'test'
+  ...
+# Subtest: F26a owner transport permits config exit1 only for empty stdout and stderr
+ok 15 - F26a owner transport permits config exit1 only for empty stdout and stderr
+  ---
+  duration_ms: 123.1874
+  type: 'test'
+  ...
+# Subtest: F26a owner transport requires close and both actual EOFs regardless of observation order
+ok 16 - F26a owner transport requires close and both actual EOFs regardless of observation order
+  ---
+  duration_ms: 132.4114
+  type: 'test'
+  ...
+# Subtest: F26a owner transport rejects nonzero missing-exit and signalled closures
+ok 17 - F26a owner transport rejects nonzero missing-exit and signalled closures
+  ---
+  duration_ms: 130.9189
+  type: 'test'
+  ...
+# Subtest: F26a owner transport any stderr withholds and overflow retains ownership without signals
+ok 18 - F26a owner transport any stderr withholds and overflow retains ownership without signals
+  ---
+  duration_ms: 114.5201
+  type: 'test'
+  ...
+# Subtest: F26a owner transport exact4096 and65536 stdout caps pass while one extra byte withdraws
+ok 19 - F26a owner transport exact4096 and65536 stdout caps pass while one extra byte withdraws
+  ---
+  duration_ms: 154.735
+  type: 'test'
+  ...
+# Subtest: F26a owner transport privately copies chunks before caller buffers can change
+ok 20 - F26a owner transport privately copies chunks before caller buffers can change
+  ---
+  duration_ms: 217.5257
+  type: 'test'
+  ...
+# Subtest: F26a owner transport only exact operation strings are accepted without coercion
+ok 21 - F26a owner transport only exact operation strings are accepted without coercion
+  ---
+  duration_ms: 88.2503
+  type: 'test'
+  ...
+# Subtest: F26a owner transport refuses forged contexts without invoking available accessors
+ok 22 - F26a owner transport refuses forged contexts without invoking available accessors
+  ---
+  duration_ms: 92.1498
+  type: 'test'
+  ...
+# Subtest: F26a owner transport is one shot and pre-start withdrawal never schedules a child
+ok 23 - F26a owner transport is one shot and pre-start withdrawal never schedules a child
+  ---
+  duration_ms: 229.072
+  type: 'test'
+  ...
+# Subtest: F26a owner transport active withdrawal retains busy until close plus both EOFs
+ok 24 - F26a owner transport active withdrawal retains busy until close plus both EOFs
+  ---
+  duration_ms: 102.2237
+  type: 'test'
+  ...
+# Subtest: F26a owner transport refuses expired nonfinite deadlines and disabled guards before spawn
+ok 25 - F26a owner transport refuses expired nonfinite deadlines and disabled guards before spawn
+  ---
+  duration_ms: 64.5856
+  type: 'test'
+  ...
+# Subtest: F26a owner transport elapsed bad and reversed clocks cannot renew its60second bound
+ok 26 - F26a owner transport elapsed bad and reversed clocks cannot renew its60second bound
+  ---
+  duration_ms: 254.7249
+  type: 'test'
+  ...
+# Subtest: F26a owner transport final guard callback expiry or reentrant withdrawal cannot release bytes
+ok 27 - F26a owner transport final guard callback expiry or reentrant withdrawal cannot release bytes
+  ---
+  duration_ms: 235.0078
+  type: 'test'
+  ...
+# Subtest: F26a owner transport context drift blocks admission or withholds a held completion
+ok 28 - F26a owner transport context drift blocks admission or withholds a held completion
+  ---
+  duration_ms: 162.5478
+  type: 'test'
+  ...
+# Subtest: F26a owner transport thrown spawn and no-PID error do not invent live ownership
+ok 29 - F26a owner transport thrown spawn and no-PID error do not invent live ownership
+  ---
+  duration_ms: 114.1721
+  type: 'test'
+  ...
+# Subtest: F26a owner transport errors after PID ownership wait for natural close and both EOFs
+ok 30 - F26a owner transport errors after PID ownership wait for natural close and both EOFs
+  ---
+  duration_ms: 128.9776
+  type: 'test'
+  ...
+1..30
+# tests 30
+# suites 0
+# pass 30
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5929.3886

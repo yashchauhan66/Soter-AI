@@ -1,0 +1,174 @@
+{
+  "status": "F26A_432_COMPONENTS_COMPILER05_6_REAL_LOOPBACK_INTEGRATION_PASS_INSTALLER_PENDING",
+  "feature": "F26a",
+  "parent": "1969c368d439237126a360af452c254a5826be88",
+  "time": "2026-10-25T12:16:33.392Z",
+  "gates": {
+    "owner-lifecycle-baseline-01": {
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/owner-lifecycle-baseline-01.txt",
+        "bytes": 3168,
+        "sha256": "69bb316afb303a9b3d2dcb3760897432072707a4c01bc9c5c0ed512ca390435f"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/owner-lifecycle-baseline-01.txt.result.json",
+        "bytes": 649,
+        "sha256": "e6226a9fa685dd9dbcb4801079912f2ec2e4257affd5f18498c97164abf90ef4"
+      },
+      "exitCode": 1,
+      "counts": {
+        "tests": 3,
+        "pass": 0,
+        "fail": 3,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    "compiler-04": {
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/compiler-04.txt",
+        "bytes": 253,
+        "sha256": "86e00a95544aa7bda3d353465143eaf917045cd95d3e1f361c3eab2dee851c1a"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/compiler-04.txt.result.json",
+        "bytes": 577,
+        "sha256": "8c443af1af576675859c6f75763da421e679364d13565100183bc7096e3f5e6c"
+      },
+      "exitCode": 2,
+      "counts": {}
+    },
+    "compiler-05": {
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/compiler-05.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/compiler-05.txt.result.json",
+        "bytes": 577,
+        "sha256": "6990bbae3fee36a768ddec6af22e192025fb8b6f8b845ca097fc8ec4ba442ca9"
+      },
+      "exitCode": 0,
+      "counts": {}
+    },
+    "components-combined-05": {
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/components-combined-05.txt",
+        "bytes": 108013,
+        "sha256": "bcb9062af2e8473416e2d354ca931a0022b5c388abf905202090e5bcb81a9803"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/components-combined-05.txt.result.json",
+        "bytes": 2548,
+        "sha256": "a44062fb56feff30fa769457653d5432087e4ee4457b39e9cec96181d4dd5159"
+      },
+      "exitCode": 0,
+      "counts": {
+        "tests": 432,
+        "pass": 432,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    "owner-client-integration-01": {
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/owner-client-integration-01.txt",
+        "bytes": 1645,
+        "sha256": "e676d438c6b60179b4b27f4c183a35ef12c2453338d409b73d393355edb1d05b"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/owner-client-integration-01.txt.result.json",
+        "bytes": 651,
+        "sha256": "2a0dfed4c1bc7ca1489101c7af2d6d0e01a4da42474b060bb632fd895ca2093b"
+      },
+      "exitCode": 0,
+      "counts": {
+        "tests": 6,
+        "pass": 6,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    "owner-config-framing-run-01": {
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/owner-config-framing-run-01.txt",
+        "bytes": 2406,
+        "sha256": "f53d2df5eb00dab1f74d9baa8071b054ef761e14bc257b5c8a478004a6ed063d"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/owner-config-framing-run-01.txt.result.json",
+        "bytes": 527,
+        "sha256": "3eb5d1563baab7c2a20592df049c2aec1a6b38da1cb4c578fffa9d384b07c76b"
+      },
+      "exitCode": 0,
+      "counts": {}
+    }
+  },
+  "files": [
+    {
+      "path": "packages/vscode-extension/src/history-hooks/CheckedHookIndex.ts",
+      "bytes": 7971,
+      "sha256": "9e63a7e21062611d4862bad4156117f42bca4c4855ddbed554b64a18d57a35ca"
+    },
+    {
+      "path": "packages/vscode-extension/src/history-hooks/PreCommitClient.ts",
+      "bytes": 9195,
+      "sha256": "98f81308701784dc1b37ccdc23838775cb491eb74cb60aae40698994464d2f24"
+    },
+    {
+      "path": "packages/vscode-extension/src/history-hooks/preCommitClientMain.ts",
+      "bytes": 724,
+      "sha256": "5ce696867ae9c7ddd3bc3da6074a7f33a00396ee40e379943d8c2bb5cc44fa73"
+    },
+    {
+      "path": "packages/vscode-extension/src/history-hooks/PreCommitGitProcess.ts",
+      "bytes": 9461,
+      "sha256": "95c2b9256094c91c0ad07a8ed15306e4f54f001c4661d90021aff7b723cbbf2c"
+    },
+    {
+      "path": "packages/vscode-extension/src/history-hooks/PreCommitHookText.ts",
+      "bytes": 4738,
+      "sha256": "aa40e1a96205a5e4d7ab362df014705ad0ceaae23ae08b4fc39ec7031359a767"
+    },
+    {
+      "path": "packages/vscode-extension/src/history-hooks/PreCommitOwnerService.ts",
+      "bytes": 13515,
+      "sha256": "5f68381f3ed4d4ab56af18db9deed98092fa6f4435fa594def0c5814ea58e536"
+    },
+    {
+      "path": "packages/vscode-extension/src/history-hooks/PreCommitProtocol.ts",
+      "bytes": 5279,
+      "sha256": "a3289d0ec4ec4c52e30371cc87685881fdce06867a7d492656994c8ada26df81"
+    },
+    {
+      "path": "packages/vscode-extension/src/history-hooks/PreCommitScan.ts",
+      "bytes": 8527,
+      "sha256": "922e2e7032421f3c14d58e6c17bba6bbd29ca52b4a72a4151ba19a4c2c468d8e"
+    },
+    {
+      "path": "packages/vscode-extension/src/history-hooks/PreCommitWire.ts",
+      "bytes": 8056,
+      "sha256": "68e0c31cc76440d0162abf7f2b5e9ba05d6b89986374645150008cd4d8b76e67"
+    },
+    {
+      "path": "packages/vscode-extension/src/history-hooks/StagedContent.ts",
+      "bytes": 5616,
+      "sha256": "c635c1126b816c8c343f1f227887eeb7a4e360a186db84e56154e074fcb94b0e"
+    }
+  ],
+  "witness": {
+    "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/owner-config-framing-witness-01.json",
+    "bytes": 4019,
+    "sha256": "8ed1d74a4b07b3711738f47047d961225ccd69a081febb9eaa432468efa4ab27"
+  },
+  "corrections": [
+    "Owner first lifecycle3 allFAIL retained; one product correction waits exact pending bind, drains revoked never-started scanner, and refuses new key work after cancellation/noncompleted outcome. All original28+review3 pass in fresh432.",
+    "Compiler04 FAIL Node typings reject createServer headersTimeout constructor field; same three timeout values moved to server properties before listen. Beforebytes retained; compiler05PASS. Combined04 NOT_RUN.",
+    "Default HTTP six real numeric-loopback tests PASS with synthetic runtime bytes and fake scanner, no actual Git/hook/Code. Separate client absolute deadline socket ownership concern is STATIC pending dedicated before-regression; do not claim covered."
+  ],
+  "ownerProjection": "Pinned Git2.53.0.windows.1 actual synthetic profiles only: no-match exit1 empty streams; local/include/global scopes use scopeNULoriginNULkeyLFvalueNUL, local origin file:.git/config, explicit global origin Windows backslashes. Every phase actual close0/1 plus bothEOF and zero signals; no commit/hooks/real user config. Owner resolver still absent; fixtures authoring before production.",
+  "pending": "Strict optional machine flag, controller review/lifecycle/registration, actual owner config resolver, encrypted original-hook recovery/PREPARED/APPLIED/guarded write/coexistence/undo, fourth packaged runtime/build/content/VSIX, final current full/backend/affected actual native+owner hook/withdrawal/local scoped source+transition commits and exhaustive bytes. F26a only partial. F26b-c/F27-F32/V01-V05 pending; no push/rating; originalL6HUMAN-ACTIONSSTOP; LOW independence."
+}

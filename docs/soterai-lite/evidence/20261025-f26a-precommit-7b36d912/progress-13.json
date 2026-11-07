@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "feature": "F26a",
+  "status": "ACTIVE_CURRENT_ENVIRONMENT_FIX_FULL03_RUNNING",
+  "observedAt": "2026-10-26T12:51:38.653Z",
+  "head": "1969c368d439237126a360af452c254a5826be88",
+  "native05": {
+    "status": "FAIL_3PASS_1FAIL_26NOTRUN_RESTART_NOTRUN",
+    "receipt": {
+      "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/precommit-native-run-05.txt.result.json",
+      "bytes": 1738,
+      "sha256": "cde59ad8f2a6142b12d5a24c73eff8b66d48209235b0f1d003aedd43ca5d29e8"
+    },
+    "raw": {
+      "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/precommit-native-run-05.txt",
+      "bytes": 988,
+      "sha256": "a43d932fc68a8a44aaaf35c7a78ce864a2211a2a7c7b52287f8267d6acf9510e"
+    },
+    "results": {
+      "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/f26a-precommit-native-20261026T071934Z-80085688/primary-results.json",
+      "bytes": 12425,
+      "sha256": "b24a924720f055fa9b50cee11e480d0fbcaf7f8f757a70c15440b40b747c1f9c"
+    },
+    "failedId": "F26A-HP04",
+    "codePid": 15000,
+    "close": {
+      "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/f26a-precommit-native-20261026T071934Z-80085688/primary-owned-editor-close.json",
+      "bytes": 391,
+      "sha256": "0559cd8d51b4f6a896dfb8bace846e12d2e73adc07d08390d6fd347ddfd739ca"
+    },
+    "absence": {
+      "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/f26a-precommit-native-20261026T071934Z-80085688/primary-failed-owned-editor-absence-01.json",
+      "bytes": 1279,
+      "sha256": "17e5b804a55f6749ef2874498701442aeee5ae0f4be40aa22b7eb494983b5f2a"
+    },
+    "approvalConsumed": true,
+    "noRegrade": true
+  },
+  "rootCause": {
+    "status": "REPRODUCED_BEFORE_FIX_IN_NODE22_AND_CODE_NODE24",
+    "before": {
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/native-environment-before-01.txt.result.json",
+        "bytes": 653,
+        "sha256": "d90f3b8f6b946061c395c2a1a8fca12c635d2a5e5aecc09616aaf8750b9891f7"
+      },
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/native-environment-before-01.txt",
+        "bytes": 2268,
+        "sha256": "ea353c9702fe620d7a8664a14ab9ee3c8f6249e0fd819684ab40c913def26237"
+      }
+    },
+    "retainedSource": {
+      "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/OwnerHookProtocol.before-native-environment-01.ts",
+      "bytes": 4490,
+      "sha256": "8778d5ebcbf3562db84b94c18a81e056cfca01802a5de0dbbdccda3759ffa1dc"
+    },
+    "explanation": "Genuine process.env has a runtime-specific prototype. The previous ordinary/null-only predicate refused owner discovery before review. The exact import-time native object is now admitted with the same field, selector, proxy, cap and path checks; forged copied prototypes still refuse.",
+    "source": {
+      "path": "packages/vscode-extension/src/history-hooks/OwnerHookProtocol.ts",
+      "bytes": 4733,
+      "sha256": "84b45676a1857109f76a147d3ad5eb30f3bee15548bfdfc5e7392725d9a758b0"
+    },
+    "regression": {
+      "path": "packages/vscode-extension/src/__tests__/ownerHookNativeEnvironment.review.test.ts",
+      "bytes": 6008,
+      "sha256": "5b8e4860cd97842be6d099cebf7e52b7f3c9a3f43fd794918854e08ffb9f37d4"
+    },
+    "currentFocused": {
+      "tests": 70,
+      "pass": 70,
+      "fail": 0,
+      "skipped": 0,
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/native-environment-after-01.txt.result.json",
+        "bytes": 1094,
+        "sha256": "65cc4778d077a58b768e63f113247d8f37e0d999746a9247ff7bd397a4bb770b"
+      },
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/native-environment-after-01.txt",
+        "bytes": 17635,
+        "sha256": "0f77e0655fffcd789877b75633fe7feee6a9f5bacc56f3b28253d29d16944e97"
+      }
+    },
+    "review": "Same-lineage LOW static review found no blocking defect; not independent or native IDE evidence."
+  },
+  "sourceProof": {
+    "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/full-inputs-04.json",
+    "bytes": 194634,
+    "sha256": "49df8a06db5b5ae8f452b3608d5fd28fbf1d46132cddf00762b5f93a5504aeab"
+  },
+  "fileCount": 990,
+  "deltaFromNative03": {
+    "unchanged": 988,
+    "changed": [
+      "packages/vscode-extension/src/history-hooks/OwnerHookProtocol.ts"
+    ],
+    "added": [
+      "packages/vscode-extension/src/__tests__/ownerHookNativeEnvironment.review.test.ts"
+    ]
+  },
+  "compiler15": {
+    "receipt": {
+      "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/compiler-15.txt.result.json",
+      "bytes": 577,
+      "sha256": "9c1bbbc6c3f721c5bf3b3f945219b746a6db95c0fe8b3e8fbdea50df31e725b1"
+    },
+    "raw": {
+      "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/compiler-15.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "full03": {
+    "status": "STARTED_NOT_COMPLETED_AT_THIS_RECEIPT",
+    "start": {
+      "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/full-tests-start-03.json",
+      "bytes": 313,
+      "sha256": "469395b6791aef53813a5967a76ec99f751c3e2c6e6e664e2665abcd15720573"
+    }
+  },
+  "next": [
+    "Fresh full03 result",
+    "Fresh backend/build21/new unique attempt02 VSIX/content inspection/current host and fixture binding",
+    "Concrete extra native06 proposal then explicit additional-round approval",
+    "Actual owner-hook34/offline interphase/all20 affected families/functional10/security17/withdrawal/acceptance/scoped source and transition commits/exhaustive bytes"
+  ],
+  "restrictions": {
+    "noNewNative06Authorization": true,
+    "noHistoricNativePassTransfer": true,
+    "syntheticOnly": true,
+    "signalsRequested": 0,
+    "noPush": true,
+    "diskWaiverPersists": true,
+    "unrelatedChangesPreserved": true,
+    "originalL6": "HUMAN-ACTIONS and STOP",
+    "rating": "PENDING_NO_INTERIM_RATING"
+  }
+}

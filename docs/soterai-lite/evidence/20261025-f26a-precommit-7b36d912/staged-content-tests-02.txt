@@ -1,0 +1,328 @@
+﻿TAP version 13
+# Subtest: F26a staged generic public text, Markdown, logs and extensionless notes have useful clean outcomes
+ok 1 - F26a staged generic public text, Markdown, logs and extensionless notes have useful clean outcomes
+  ---
+  duration_ms: 391.8677
+  type: 'test'
+  ...
+# Subtest: F26a staged empty generic blobs and normal Unicode remain clean
+ok 2 - F26a staged empty generic blobs and normal Unicode remain clean
+  ---
+  duration_ms: 4.1511
+  type: 'test'
+  ...
+# Subtest: F26a staged recognized provider fixtures use the canonical matcher with an empty registration set
+ok 3 - F26a staged recognized provider fixtures use the canonical matcher with an empty registration set
+  ---
+  duration_ms: 7.7354
+  type: 'test'
+  ...
+# Subtest: F26a staged empty-registration recognition covers canonical credential-context entropy
+ok 4 - F26a staged empty-registration recognition covers canonical credential-context entropy
+  ---
+  duration_ms: 5.2665
+  type: 'test'
+  ...
+# Subtest: F26a staged low-entropy opaque text is an explicit unregistered negative control
+ok 5 - F26a staged low-entropy opaque text is an explicit unregistered negative control
+  ---
+  duration_ms: 1.6254
+  type: 'test'
+  ...
+# Subtest: F26a staged canonical single-layer base64 provider recognition has a public control
+ok 6 - F26a staged canonical single-layer base64 provider recognition has a public control
+  ---
+  duration_ms: 2.2702
+  type: 'test'
+  ...
+# Subtest: F26a staged canonical single-layer base64url provider recognition has a public control
+ok 7 - F26a staged canonical single-layer base64url provider recognition has a public control
+  ---
+  duration_ms: 1.9696
+  type: 'test'
+  ...
+# Subtest: F26a staged canonical single-layer hex provider recognition has a public control
+ok 8 - F26a staged canonical single-layer hex provider recognition has a public control
+  ---
+  duration_ms: 2.0677
+  type: 'test'
+  ...
+# Subtest: F26a staged canonical single-layer URL provider recognition has a public control
+ok 9 - F26a staged canonical single-layer URL provider recognition has a public control
+  ---
+  duration_ms: 5.081
+  type: 'test'
+  ...
+# Subtest: F26a staged canonical single-layer JSON Unicode string provider recognition has a public control
+ok 10 - F26a staged canonical single-layer JSON Unicode string provider recognition has a public control
+  ---
+  duration_ms: 8.0785
+  type: 'test'
+  ...
+# Subtest: F26a staged dotenv static credential names supply canonical context without a vault registration
+ok 11 - F26a staged dotenv static credential names supply canonical context without a vault registration
+  ---
+  duration_ms: 9.6021
+  type: 'test'
+  ...
+# Subtest: F26a staged dotenv public values, exact templates and existing protected markers remain clean
+ok 12 - F26a staged dotenv public values, exact templates and existing protected markers remain clean
+  ---
+  duration_ms: 2.4616
+  type: 'test'
+  ...
+# Subtest: F26a staged src/owner.js uses the declared canonical source grammar and credential context
+ok 13 - F26a staged src/owner.js uses the declared canonical source grammar and credential context
+  ---
+  duration_ms: 9.5417
+  type: 'test'
+  ...
+# Subtest: F26a staged src/owner.ts uses the declared canonical source grammar and credential context
+ok 14 - F26a staged src/owner.ts uses the declared canonical source grammar and credential context
+  ---
+  duration_ms: 8.8984
+  type: 'test'
+  ...
+# Subtest: F26a staged src/view.jsx uses the declared canonical source grammar and credential context
+ok 15 - F26a staged src/view.jsx uses the declared canonical source grammar and credential context
+  ---
+  duration_ms: 4.8441
+  type: 'test'
+  ...
+# Subtest: F26a staged src/view.tsx uses the declared canonical source grammar and credential context
+ok 16 - F26a staged src/view.tsx uses the declared canonical source grammar and credential context
+  ---
+  duration_ms: 3.2112
+  type: 'test'
+  ...
+# Subtest: F26a staged src/owner.mjs uses the declared canonical source grammar and credential context
+ok 17 - F26a staged src/owner.mjs uses the declared canonical source grammar and credential context
+  ---
+  duration_ms: 4.2471
+  type: 'test'
+  ...
+# Subtest: F26a staged src/owner.cjs uses the declared canonical source grammar and credential context
+ok 18 - F26a staged src/owner.cjs uses the declared canonical source grammar and credential context
+  ---
+  duration_ms: 2.7012
+  type: 'test'
+  ...
+# Subtest: F26a staged public source and direct environment references remain parse-only clean controls
+ok 19 - F26a staged public source and direct environment references remain parse-only clean controls
+  ---
+  duration_ms: 3.9741
+  type: 'test'
+  ...
+# Subtest: F26a staged escaped source password literals are classified after fixed-parser decoding
+ok 20 - F26a staged escaped source password literals are classified after fixed-parser decoding
+  ---
+  duration_ms: 2.6628
+  type: 'test'
+  ...
+# Subtest: F26a staged recognized config.json reuses canonical family credential context
+ok 21 - F26a staged recognized config.json reuses canonical family credential context
+  ---
+  duration_ms: 3.808
+  type: 'test'
+  ...
+# Subtest: F26a staged recognized credentials/service-account.json reuses canonical family credential context
+ok 22 - F26a staged recognized credentials/service-account.json reuses canonical family credential context
+  ---
+  duration_ms: 2.1321
+  type: 'test'
+  ...
+# Subtest: F26a staged recognized compose.yml reuses canonical family credential context
+ok 23 - F26a staged recognized compose.yml reuses canonical family credential context
+  ---
+  duration_ms: 13.5058
+  type: 'test'
+  ...
+# Subtest: F26a staged recognized Dockerfile reuses canonical family credential context
+ok 24 - F26a staged recognized Dockerfile reuses canonical family credential context
+  ---
+  duration_ms: 3.3062
+  type: 'test'
+  ...
+# Subtest: F26a staged recognized infra/production.tfvars reuses canonical family credential context
+ok 25 - F26a staged recognized infra/production.tfvars reuses canonical family credential context
+  ---
+  duration_ms: 3.6788
+  type: 'test'
+  ...
+# Subtest: F26a staged recognized infra/production.tfvars.json reuses canonical family credential context
+ok 26 - F26a staged recognized infra/production.tfvars.json reuses canonical family credential context
+  ---
+  duration_ms: 1.6495
+  type: 'test'
+  ...
+# Subtest: F26a staged recognized .npmrc reuses canonical family credential context
+ok 27 - F26a staged recognized .npmrc reuses canonical family credential context
+  ---
+  duration_ms: 8.8992
+  type: 'test'
+  ...
+# Subtest: F26a staged recognized .pypirc reuses canonical family credential context
+ok 28 - F26a staged recognized .pypirc reuses canonical family credential context
+  ---
+  duration_ms: 2.5657
+  type: 'test'
+  ...
+# Subtest: F26a staged recognized .github/workflows/build.yml reuses canonical family credential context
+ok 29 - F26a staged recognized .github/workflows/build.yml reuses canonical family credential context
+  ---
+  duration_ms: 5.8443
+  type: 'test'
+  ...
+# Subtest: F26a staged recognized .vscode/tasks.json reuses canonical family credential context
+ok 30 - F26a staged recognized .vscode/tasks.json reuses canonical family credential context
+  ---
+  duration_ms: 6.1429
+  type: 'test'
+  ...
+# Subtest: F26a staged recognized mcp.json reuses canonical family credential context
+ok 31 - F26a staged recognized mcp.json reuses canonical family credential context
+  ---
+  duration_ms: 2.5984
+  type: 'test'
+  ...
+# Subtest: F26a staged recognized mcp.toml reuses canonical family credential context
+ok 32 - F26a staged recognized mcp.toml reuses canonical family credential context
+  ---
+  duration_ms: 4.6178
+  type: 'test'
+  ...
+# Subtest: F26a staged JSON Unicode-escaped credential names and values are semantic private inputs
+ok 33 - F26a staged JSON Unicode-escaped credential names and values are semantic private inputs
+  ---
+  duration_ms: 3.2804
+  type: 'test'
+  ...
+# Subtest: F26a staged public JSON identifiers, public keys and exact placeholders remain clean
+ok 34 - F26a staged public JSON identifiers, public keys and exact placeholders remain clean
+  ---
+  duration_ms: 2.8546
+  type: 'test'
+  ...
+# Subtest: F26a staged declared malformed JSON and late source syntax errors withhold earlier matching prefixes
+ok 35 - F26a staged declared malformed JSON and late source syntax errors withhold earlier matching prefixes
+  ---
+  duration_ms: 4.3689
+  type: 'test'
+  ...
+# Subtest: F26a staged duplicate decoded JSON fields and nonfinite numbers are unavailable atomically
+ok 36 - F26a staged duplicate decoded JSON fields and nonfinite numbers are unavailable atomically
+  ---
+  duration_ms: 2.2733
+  type: 'test'
+  ...
+# Subtest: F26a staged unsupported source credential computations do not fall back to raw-prefix classification
+ok 37 - F26a staged unsupported source credential computations do not fall back to raw-prefix classification
+  ---
+  duration_ms: 4.7655
+  type: 'test'
+  ...
+# Subtest: F26a staged unsupported source formats and foreign YAML remain unavailable
+ok 38 - F26a staged unsupported source formats and foreign YAML remain unavailable
+  ---
+  duration_ms: 2.9257
+  type: 'test'
+  ...
+# Subtest: F26a staged known config family parse failures are unavailable despite an earlier provider canary
+ok 39 - F26a staged known config family parse failures are unavailable despite an earlier provider canary
+  ---
+  duration_ms: 5.9455
+  type: 'test'
+  ...
+# Subtest: F26a staged raw-byte size admission is inclusive at64KiB for ASCII and multibyte public text
+ok 40 - F26a staged raw-byte size admission is inclusive at64KiB for ASCII and multibyte public text
+  ---
+  duration_ms: 15.7578
+  type: 'test'
+  ...
+# Subtest: F26a staged oversize and invalid late bytes withhold whole matching prefixes without truncation
+ok 41 - F26a staged oversize and invalid late bytes withhold whole matching prefixes without truncation
+  ---
+  duration_ms: 2.0917
+  type: 'test'
+  ...
+# Subtest: F26a staged canonical matcher work exhaustion becomes unavailable rather than a partial clean result
+ok 42 - F26a staged canonical matcher work exhaustion becomes unavailable rather than a partial clean result
+  ---
+  duration_ms: 16.3244
+  type: 'test'
+  ...
+# Subtest: F26a staged fatal UTF8 admission rejects overlong truncated surrogate and out-of-range encodings
+ok 43 - F26a staged fatal UTF8 admission rejects overlong truncated surrogate and out-of-range encodings
+  ---
+  duration_ms: 2.5447
+  type: 'test'
+  ...
+# Subtest: F26a staged unsupported controls and bidi characters are unavailable on otherwise clean and matching input
+ok 44 - F26a staged unsupported controls and bidi characters are unavailable on otherwise clean and matching input
+  ---
+  duration_ms: 1.7456
+  type: 'test'
+  ...
+# Subtest: F26a staged decoded JSON unsafe controls and lone surrogates cannot become clean or partial candidates
+ok 45 - F26a staged decoded JSON unsafe controls and lone surrogates cannot become clean or partial candidates
+  ---
+  duration_ms: 1.4307
+  type: 'test'
+  ...
+# Subtest: F26a staged unsafe source paths never grant format or content admission
+ok 46 - F26a staged unsafe source paths never grant format or content admission
+  ---
+  duration_ms: 1.7845
+  type: 'test'
+  ...
+# Subtest: F26a staged source identity and blob runtime types reject coercion without invoking caller hooks
+ok 47 - F26a staged source identity and blob runtime types reject coercion without invoking caller hooks
+  ---
+  duration_ms: 1.3287
+  type: 'test'
+  ...
+# Subtest: F26a staged request-local decisions retain no earlier candidate and no caller Buffer ownership
+ok 48 - F26a staged request-local decisions retain no earlier candidate and no caller Buffer ownership
+  ---
+  duration_ms: 1.8176
+  type: 'test'
+  ...
+# Subtest: F26a staged parsing does not evaluate source or follow config references and never reads files or starts children
+ok 49 - F26a staged parsing does not evaluate source or follow config references and never reads files or starts children
+  ---
+  duration_ms: 9.9193
+  type: 'test'
+  ...
+# Subtest: F26a parsed public Stripe field keeps its canonical public decision
+ok 50 - F26a parsed public Stripe field keeps its canonical public decision
+  ---
+  duration_ms: 366.1359
+  type: 'test'
+  ...
+# Subtest: F26a public field context cannot suppress a provider in its retained comment
+ok 51 - F26a public field context cannot suppress a provider in its retained comment
+  ---
+  duration_ms: 7.115
+  type: 'test'
+  ...
+# Subtest: F26a public field does not exempt private Stripe material or a private sibling
+ok 52 - F26a public field does not exempt private Stripe material or a private sibling
+  ---
+  duration_ms: 7.8184
+  type: 'test'
+  ...
+# Subtest: F26a an ordinary noncredential field retains canonical encoded provider matching
+ok 53 - F26a an ordinary noncredential field retains canonical encoded provider matching
+  ---
+  duration_ms: 4.4433
+  type: 'test'
+  ...
+1..53
+# tests 53
+# suites 0
+# pass 53
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1708.3383

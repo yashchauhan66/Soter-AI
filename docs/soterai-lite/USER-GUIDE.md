@@ -1,6 +1,6 @@
 # SoterAI Lite user guide
 
-Prepared 4 November 2026. **INCOMPLETE; release and rating pending.** This document prepares V03 deliverables without advancing F32 or V01–V05. Candidate: [soterai-lite-0.7.0-f32-20261103-attempt01.vsix](../../packages/soterai-lite/soterai-lite-0.7.0-f32-20261103-attempt01.vsix), 1742100 bytes, SHA256 `e2ce3dc44d45b5e160ab0f95d713a9434a9ea7d610ce7abd2bf2500abe89d649`. Windows 10.0.26300, Code1.144.1; exact configuration and runtime facts remain in the linked receipts. Same-lineage scripted evidence has LOW independence.
+Updated 6 November 2026. **Release NOT_READY; rating PENDING.** Candidate: [soterai-lite-0.7.0-resumed-20261106-attempt02.vsix](../../packages/soterai-lite/soterai-lite-0.7.0-resumed-20261106-attempt02.vsix), 1,742,104 bytes, SHA-256 `011f96d19d42dbefc2e56eb5399bf5c7f16a09d6b71b8bae5be9d66b2f3769ec`. Available native host: Windows 10.0.26300, Code 1.145.1. Current native acceptance must have its own exact-object receipt. Earlier Code 1.144.1/1.145.0 results remain historical.
 
 ## Start locally
 
@@ -17,7 +17,7 @@ Open the SoterAI Protection Center, read Covers / Does not cover, review protect
 - Review pinned vendor controls and managed routes separately for each tool/version/profile. Configure only destinations you intend to use. Provider credentials and actual account logins are owner actions. A working generic MCP or gateway component does not certify an entire AI tool.
 - Use source/config/history/artifact/log scanners for bounded local findings and reviewed fixes. They do not establish credential validity, erase past exposure or rewrite history. Rotate potentially exposed credentials with the provider using the owner's own account.
 
-**Pre-commit installation/resume is unsupported** after the owner's final F26a skip. Existing owned-hook status and reviewed restore remain available. Pre-push and PSReadLine workflows are separate opt-ins with their recorded limits.
+**Pre-commit is a default-off opt-in candidate.** Owner-reviewed installation/resume is available; current native verification is required before calling it verified protection. Existing owned-hook status and reviewed restore remain available. Pre-push and PSReadLine workflows are separate opt-ins with their recorded limits.
 
 ## Remove or disable safely
 
@@ -30,3 +30,5 @@ Cline, Claude and earlier plaintext-capable configuration backups require separa
 Read the shipped [privacy statement](../../packages/soterai-lite/PRIVACY.md). Local scanning can start automatically; configured provider traffic is separate from default-off cloud/telemetry preferences. Local filename/activity metadata and encrypted recovery have distinct retention. Never include values, tokens or account data in support reports.
 
 Lite targets accidental exposure by cooperative tools on verified managed routes. Same-user native reads, other original buffers, independent uploads, unmanaged Git/history and unknown encodings remain outside its boundary. The retained17-case unmanaged comparison includes9 confirmed leaks. Linux/macOS/remote/virtual workspaces and real screen-reader/human usability are not accepted here.
+
+Current status and the ordered human checklist: [HUMAN-ACTIONS](HUMAN-ACTIONS.md) and [dated claims supplement](evidence/20261106-remaining-queue/final/CURRENT-CLAIMS.md). Original frozen inputs and historical receipts remain unchanged.

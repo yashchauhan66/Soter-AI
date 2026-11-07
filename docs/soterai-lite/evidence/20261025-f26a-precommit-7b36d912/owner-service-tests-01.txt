@@ -1,0 +1,178 @@
+﻿TAP version 13
+# Subtest: F26a owner binds signed ephemeral IPv4 descriptor exactly once
+ok 1 - F26a owner binds signed ephemeral IPv4 descriptor exactly once
+  ---
+  duration_ms: 540.5767
+  type: 'test'
+  ...
+# Subtest: F26a owner close before start permanently refuses startup without loading a key
+ok 2 - F26a owner close before start permanently refuses startup without loading a key
+  ---
+  duration_ms: 54.0666
+  type: 'test'
+  ...
+# Subtest: F26a owner disabled startup and later disabled requests refuse before sensitive admission
+ok 3 - F26a owner disabled startup and later disabled requests refuse before sensitive admission
+  ---
+  duration_ms: 142.0547
+  type: 'test'
+  ...
+# Subtest: F26a owner missing or unsuitable startup signing keys never create a descriptor
+ok 4 - F26a owner missing or unsuitable startup signing keys never create a descriptor
+  ---
+  duration_ms: 159.6715
+  type: 'test'
+  ...
+# Subtest: F26a owner signs a completed public ALLOW with exact captured index digests and request binding
+ok 5 - F26a owner signs a completed public ALLOW with exact captured index digests and request binding
+  ---
+  duration_ms: 103.9974
+  type: 'test'
+  ...
+# Subtest: F26a owner BLOCK returns fixed signed metadata without candidate content or raw failures
+ok 6 - F26a owner BLOCK returns fixed signed metadata without candidate content or raw failures
+  ---
+  duration_ms: 91.6243
+  type: 'test'
+  ...
+# Subtest: F26a owner unavailable and unconfirmed scanner outcomes cannot become ALLOW
+ok 7 - F26a owner unavailable and unconfirmed scanner outcomes cannot become ALLOW
+  ---
+  duration_ms: 212.7916
+  type: 'test'
+  ...
+# Subtest: F26a owner rejects wrong version installation session nonce and extra request authority before preparation
+ok 8 - F26a owner rejects wrong version installation session nonce and extra request authority before preparation
+  ---
+  duration_ms: 67.7551
+  type: 'test'
+  ...
+# Subtest: F26a owner rejects malformed noncanonical duplicate and invalid UTF8 request bodies before preparation
+ok 9 - F26a owner rejects malformed noncanonical duplicate and invalid UTF8 request bodies before preparation
+  ---
+  duration_ms: 61.2905
+  type: 'test'
+  ...
+# Subtest: F26a owner refuses foreign methods paths queries and route ambiguity without preparing
+ok 10 - F26a owner refuses foreign methods paths queries and route ambiguity without preparing
+  ---
+  duration_ms: 63.0102
+  type: 'test'
+  ...
+# Subtest: F26a owner requires exact numeric loopback Host and no Origin header
+ok 11 - F26a owner requires exact numeric loopback Host and no Origin header
+  ---
+  duration_ms: 68.8937
+  type: 'test'
+  ...
+# Subtest: F26a owner refuses missing and unsupported content types before body admission
+ok 12 - F26a owner refuses missing and unsupported content types before body admission
+  ---
+  duration_ms: 82.0796
+  type: 'test'
+  ...
+# Subtest: F26a owner refuses duplicate Host content headers and transfer encoding without admitting work
+ok 13 - F26a owner refuses duplicate Host content headers and transfer encoding without admitting work
+  ---
+  duration_ms: 70.8938
+  type: 'test'
+  ...
+# Subtest: F26a owner refuses bodies beyond4096 bytes and excessive headers without scanning a prefix
+ok 14 - F26a owner refuses bodies beyond4096 bytes and excessive headers without scanning a prefix
+  ---
+  duration_ms: 57.4987
+  type: 'test'
+  ...
+# Subtest: F26a owner one-active noqueue response binds BUSY nonce and starts no second preparation or scanner
+ok 15 - F26a owner one-active noqueue response binds BUSY nonce and starts no second preparation or scanner
+  ---
+  duration_ms: 106.9803
+  type: 'test'
+  ...
+# Subtest: F26a owner passes only captured root and literal effective-index data into preparation
+ok 16 - F26a owner passes only captured root and literal effective-index data into preparation
+  ---
+  duration_ms: 100.0378
+  type: 'test'
+  ...
+# Subtest: F26a owner rejects borrowed foreign-root and structural-clone index capabilities before scanner creation
+ok 17 - F26a owner rejects borrowed foreign-root and structural-clone index capabilities before scanner creation
+  ---
+  duration_ms: 162.9177
+  type: 'test'
+  ...
+# Subtest: F26a owner unavailable effective index cannot become an empty successful tree
+ok 18 - F26a owner unavailable effective index cannot become an empty successful tree
+  ---
+  duration_ms: 64.5786
+  type: 'test'
+  ...
+# Subtest: F26a owner changed final signing key cannot authorize a decision under either installation pin
+ok 19 - F26a owner changed final signing key cannot authorize a decision under either installation pin
+  ---
+  duration_ms: 89.805
+  type: 'test'
+  ...
+# Subtest: F26a owner missing final key and thrown key retrieval refuse without echoing raw failures
+ok 20 - F26a owner missing final key and thrown key retrieval refuse without echoing raw failures
+  ---
+  duration_ms: 147.7967
+  type: 'test'
+  ...
+# Subtest: F26a owner held final key await cannot revive after observed disable and reenable
+ok 21 - F26a owner held final key await cannot revive after observed disable and reenable
+  ---
+  duration_ms: 69.9766
+  type: 'test'
+  ...
+# Subtest: F26a owner rechecks exact index identity and bytes after asynchronous final key loading
+ok 22 - F26a owner rechecks exact index identity and bytes after asynchronous final key loading
+  ---
+  duration_ms: 80.1862
+  type: 'test'
+  ...
+# Subtest: F26a owner asks exact completed result release again after final key await
+ok 23 - F26a owner asks exact completed result release again after final key await
+  ---
+  duration_ms: 86.8595
+  type: 'test'
+  ...
+# Subtest: F26a owner premature scanner ALLOW cannot release while actual scanner ownership remains open
+ok 24 - F26a owner premature scanner ALLOW cannot release while actual scanner ownership remains open
+  ---
+  duration_ms: 95.9803
+  type: 'test'
+  ...
+# Subtest: F26a owner aborted transport withdraws scan and remains busy until actual closure
+ok 25 - F26a owner aborted transport withdraws scan and remains busy until actual closure
+  ---
+  duration_ms: 89.1955
+  type: 'test'
+  ...
+# Subtest: F26a owner close withdraws active scan and waits for actual natural closure
+ok 26 - F26a owner close withdraws active scan and waits for actual natural closure
+  ---
+  duration_ms: 74.202
+  type: 'test'
+  ...
+# Subtest: F26a owner explicit close while final key is pending cannot sign a revived ALLOW
+ok 27 - F26a owner explicit close while final key is pending cannot sign a revived ALLOW
+  ---
+  duration_ms: 71.8696
+  type: 'test'
+  ...
+# Subtest: F26a owner preparation and scanner factory exceptions remain fixed refusals without raw diagnostics
+ok 28 - F26a owner preparation and scanner factory exceptions remain fixed refusals without raw diagnostics
+  ---
+  duration_ms: 144.1898
+  type: 'test'
+  ...
+1..28
+# tests 28
+# suites 0
+# pass 28
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3545.6401

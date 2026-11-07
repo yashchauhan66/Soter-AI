@@ -3,9 +3,9 @@
   "status": "PREPARED_CURRENT_CANDIDATE_EVIDENCE_INDEX_NOT_RELEASE_ACCEPTANCE",
   "observedAt": "2026-11-04T07:53:58.614Z",
   "artifact": {
-    "path": "packages/soterai-lite/soterai-lite-0.7.0-f32-20261103-attempt01.vsix",
-    "bytes": 1742100,
-    "sha256": "e2ce3dc44d45b5e160ab0f95d713a9434a9ea7d610ce7abd2bf2500abe89d649"
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-resumed-20261106-attempt02.vsix",
+    "bytes": 1742104,
+    "sha256": "011f96d19d42dbefc2e56eb5399bf5c7f16a09d6b71b8bae5be9d66b2f3769ec"
   },
   "catalog": {
     "path": "docs/soterai-lite/LITE-CATALOG.json",
@@ -13,6 +13,107 @@
     "sha256": "1ce46192e9f315b5f2142c9f61542f1d513143dc2e19d4def6d95cea38c73ed4"
   },
   "facts": [
+    {
+      "path": "docs/soterai-lite/evidence/20261106-remaining-queue/candidate-01/current-package-qualification-01.json",
+      "bytes": 8739,
+      "sha256": "650ec4dd35938dbbce995c858063ffe773850f941f611a3925425fd2b2aefe1d"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-remaining-queue/candidate-01/full-inputs-02.json",
+      "bytes": 223848,
+      "sha256": "23fd63bb04122bf055f656a77424085b75ff3e3c813121c15034cd209fd1c8f6"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-remaining-queue/candidate-01/full-suite-acceptance-02.json",
+      "bytes": 32648,
+      "sha256": "95da08741866668bcaba10ffdb395b838875c078b58c7a0cb96caec4ade6c777"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-remaining-queue/candidate-01/current-content-inspection-01.json",
+      "bytes": 119647,
+      "sha256": "cb020ebff89543bb7e34857220b172fe2318c23727e0e6d6460467260235f43e"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-remaining-queue/candidate-01/backend-byte-qualification-01.json",
+      "bytes": 1222,
+      "sha256": "1f4d4857cf5da7680802dee8210a8340eff3a7cdadabaafb0a8b8df3315c68a3"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-remaining-queue/final/scripted-run-20261106T133903152Z-32d76123/RESULT.json",
+      "bytes": 45981,
+      "sha256": "d7e678bd43c45eb62b7604f29d4270765cd83d1ade28a8e790d2eb680cf05399"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-remaining-queue/final/v02-evaluation-20261106T134005836Z/RESULT.json",
+      "bytes": 171784,
+      "sha256": "5b8c63b3c9c5f6ee9981bff39b29c724bc69a211c29e0dbc57080d6108bcfe09"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-remaining-queue/final/neutral-current-011f96d1.json",
+      "bytes": 1333,
+      "sha256": "0264d2c3c9724253e5b875d67e9b809bca80385956ae683c2b49bfaa4f0cb06f"
+    }
+  ],
+  "documents": [
+    {
+      "path": "docs/soterai-lite/USER-GUIDE.md",
+      "bytes": 5313,
+      "sha256": "be0c8485483f88cf4578cbe470ec6ba274f41fac5fac76515b48cb24fcb02f45"
+    },
+    {
+      "path": "docs/soterai-lite/coverage-map.md",
+      "bytes": 2988,
+      "sha256": "e63b2256b7e2c4fbe188f607362f3a96e6b25564e8a0ddf33651908465d52945"
+    },
+    {
+      "path": "docs/soterai-lite/release-checklist.md",
+      "bytes": 2637,
+      "sha256": "a2da4c4bca2211b6868657201f5cc5fb14647b2aa7457d5e91097f9b9fc7e3a5"
+    },
+    {
+      "path": "docs/soterai-lite/FINAL-REPORT.md",
+      "bytes": 3702,
+      "sha256": "3123c485bd3803d65cf3c00a712ab1967fe1f51c23b21de9bf004b524dc50aeb"
+    },
+    {
+      "path": "docs/soterai-lite/SCORECARD.md",
+      "bytes": 2405,
+      "sha256": "6c4a53b8d7be6b13c9b060c94a99a458f7910963d1a58ed598ea6c3da6512f67"
+    },
+    {
+      "path": "docs/soterai-lite/catalog-results.json",
+      "bytes": 284068,
+      "sha256": "0e27ad6bf3773e59c689a383b81adfc9a96c31d3e92475babc54b10a7b6107b8"
+    },
+    {
+      "path": "docs/soterai-lite/HUMAN-ACTIONS.md",
+      "bytes": 6301,
+      "sha256": "6df0d807e56ede46566ce562c32b332453801feed2d00ca1125f78e94a276bf1"
+    }
+  ],
+  "featureComplete": false,
+  "releaseReady": false,
+  "independence": "LOW",
+  "humanReport": "NOT_PROVIDED",
+  "limitations": [
+    "Full suite explicitly reused after description-only metadata synchronization",
+    "Backend execution retained by exact input bytes",
+    "Current installed lifecycle and actual vendor route acceptance require their own receipts",
+    "F26a default-off candidate, native acceptance pending",
+    "264 UNVERIFIED tool-pairs",
+    "Nine historical unmanaged leaks",
+    "42 retained builder findings; no risk acceptance",
+    "Four privileged-symlink skips",
+    "Human and independent evidence absent"
+  ],
+  "updatedAt": "2026-11-06T13:41:38.670Z",
+  "currentHost": "1.145.1_AVAILABLE_NO_NATIVE_ACCEPTANCE_INFERRED",
+  "sourceProof": {
+    "path": "docs/soterai-lite/evidence/20261106-remaining-queue/candidate-01/full-inputs-02.json",
+    "bytes": 223848,
+    "sha256": "23fd63bb04122bf055f656a77424085b75ff3e3c813121c15034cd209fd1c8f6"
+  },
+  "historicalFacts": [
     {
       "path": "docs/soterai-lite/LITE-CATALOG.json",
       "bytes": 160265,
@@ -72,52 +173,21 @@
       "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/advisory-detail-result-review-01.json",
       "bytes": 269561,
       "sha256": "2d0a41c4986c149ec10cdc194de93d266f005af20ce101c40c43255a219ec6d2"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f05-current-acceptance-04.json",
+      "bytes": 2208,
+      "sha256": "38be2bd0b959a4ebc02c29ce9880179a58a6965cb2675deb6ecef9b4208e1448"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f28-current-01/native-acceptance-current-02.json",
+      "bytes": 2365,
+      "sha256": "4dbccb3fdf5bf409d570442d4c0211c12fb3420ac8f2f9304960b891a1b526b0"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-remaining-queue/f32-preparation.json",
+      "bytes": 732,
+      "sha256": "732076b826c67ef30a6bcbd16878f75e176f6ec0af2da2486f9bdc78d4d97ffc"
     }
-  ],
-  "documents": [
-    {
-      "path": "docs/soterai-lite/USER-GUIDE.md",
-      "bytes": 5029,
-      "sha256": "55027d2a1378894ff92d509c2112f40307a54643fc4c0d7a5f5b8027de760d70"
-    },
-    {
-      "path": "docs/soterai-lite/coverage-map.md",
-      "bytes": 3539,
-      "sha256": "0e49da08d6739c45481195f26e1e8d3d760e2ab039729e20110f77b4894784b0"
-    },
-    {
-      "path": "docs/soterai-lite/release-checklist.md",
-      "bytes": 3247,
-      "sha256": "07e20ac4bc656743ab78cda111bb7e626150427c197bd9aac3d1782745457c3c"
-    },
-    {
-      "path": "docs/soterai-lite/FINAL-REPORT.md",
-      "bytes": 3698,
-      "sha256": "88e4d5344484be890a666053f0f7bab3f600fbe13c00fa7e1d415e4ab33ae272"
-    },
-    {
-      "path": "docs/soterai-lite/SCORECARD.md",
-      "bytes": 2214,
-      "sha256": "96978ae7189101aaa8076917978c1235854e820b6adb0455d90505c087643577"
-    },
-    {
-      "path": "docs/soterai-lite/catalog-results.json",
-      "bytes": 282334,
-      "sha256": "49dbcb75793adef5b25bfcdefdd54dc6edb73da093811d6f2c72470768ae7c03"
-    }
-  ],
-  "featureComplete": false,
-  "releaseReady": false,
-  "independence": "LOW",
-  "humanReport": "NOT_PROVIDED",
-  "limitations": [
-    "Backend execution reused by exact bytes",
-    "F32 installed acceptance incomplete",
-    "Final actual vendor routes pending",
-    "F26a skipped unsupported",
-    "9 unmanaged leaks",
-    "42 known build findings",
-    "4 privileged-symlink skips",
-    "Historical/nested closure gaps retained"
   ]
 }

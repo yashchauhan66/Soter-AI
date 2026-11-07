@@ -1,0 +1,135 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6",
+  "version": 1,
+  "metadata": {
+    "component": {
+      "type": "application",
+      "bom-ref": "application:soterai.soterai-ide-guard@0.7.0",
+      "name": "soterai.soterai-ide-guard",
+      "version": "0.7.0",
+      "properties": [
+        {
+          "name": "soterai:build-receipt-sha256",
+          "value": "f99aed9efbf76f9847671f400c8a1ff1ed3e4ba6cb8ae68540bd91918930caf6"
+        },
+        {
+          "name": "soterai:runtime-source-inventory-sha256",
+          "value": "a0ae94659c068bad7b90287c75e19df95ce11275f8b591da84f3a2e73225dd00"
+        },
+        {
+          "name": "soterai:runtime-inventory",
+          "value": "[{\"name\":\"extension.js\",\"bytes\":1957320,\"sha256\":\"b611dee998d11824d523b3d561704f4a5dc15e27274e6e1d85c7154b9d42cfa0\",\"inputCount\":430},{\"name\":\"local-ai-broker.js\",\"bytes\":326860,\"sha256\":\"24c633aff86713f35133e6c103299a24bc2a4df0a6726c90462283ce9030b744\",\"inputCount\":80},{\"name\":\"pre-commit-client.js\",\"bytes\":24512,\"sha256\":\"36e04d01bb9b38f8e402020318cc1d8d1a6d66176ec2be8c1630fbe6d012cacb\",\"inputCount\":10},{\"name\":\"soterai-mcp-server.js\",\"bytes\":230255,\"sha256\":\"bac10b399ee9e28c069c72eae3254f2e84da155b2bcb2dc48467487d74845138\",\"inputCount\":62}]"
+        }
+      ]
+    }
+  },
+  "components": [
+    {
+      "type": "library",
+      "bom-ref": "npm:node_modules/@babel/parser@7.29.7",
+      "name": "@babel/parser",
+      "version": "7.29.7",
+      "purl": "pkg:npm/%40babel/parser@7.29.7",
+      "licenses": [
+        {
+          "license": {
+            "name": "MIT"
+          }
+        }
+      ],
+      "properties": [
+        {
+          "name": "soterai:package-root",
+          "value": "node_modules/@babel/parser"
+        },
+        {
+          "name": "soterai:package-metadata-sha256",
+          "value": "808c30900ff9e55aafff6361e55c21a39556bdcd2d349e0474fde1e985d855af"
+        },
+        {
+          "name": "soterai:bundled-input-count",
+          "value": "1"
+        },
+        {
+          "name": "soterai:bundled-runtimes",
+          "value": "[\"extension.js\"]"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "npm:node_modules/jsonc-parser@3.3.1",
+      "name": "jsonc-parser",
+      "version": "3.3.1",
+      "purl": "pkg:npm/jsonc-parser@3.3.1",
+      "licenses": [
+        {
+          "license": {
+            "name": "MIT"
+          }
+        }
+      ],
+      "properties": [
+        {
+          "name": "soterai:package-root",
+          "value": "node_modules/jsonc-parser"
+        },
+        {
+          "name": "soterai:package-metadata-sha256",
+          "value": "a7a9192caaac00d9330592f4fd572908bee037518128a0fc3db96d2cd652e2b5"
+        },
+        {
+          "name": "soterai:bundled-input-count",
+          "value": "6"
+        },
+        {
+          "name": "soterai:bundled-runtimes",
+          "value": "[\"extension.js\"]"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "npm:node_modules/yaml@2.9.0",
+      "name": "yaml",
+      "version": "2.9.0",
+      "purl": "pkg:npm/yaml@2.9.0",
+      "licenses": [
+        {
+          "license": {
+            "name": "ISC"
+          }
+        }
+      ],
+      "properties": [
+        {
+          "name": "soterai:package-root",
+          "value": "node_modules/yaml"
+        },
+        {
+          "name": "soterai:package-metadata-sha256",
+          "value": "20b8b197cbd10dad245d45e463dfe58e4c8c25a47e24bc4256ad9ab58bf35683"
+        },
+        {
+          "name": "soterai:bundled-input-count",
+          "value": "72"
+        },
+        {
+          "name": "soterai:bundled-runtimes",
+          "value": "[\"extension.js\"]"
+        }
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "application:soterai.soterai-ide-guard@0.7.0",
+      "dependsOn": [
+        "npm:node_modules/@babel/parser@7.29.7",
+        "npm:node_modules/jsonc-parser@3.3.1",
+        "npm:node_modules/yaml@2.9.0"
+      ]
+    }
+  ]
+}

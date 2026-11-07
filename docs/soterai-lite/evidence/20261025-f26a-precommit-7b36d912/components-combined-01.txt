@@ -1,0 +1,886 @@
+﻿TAP version 13
+# Subtest: F26a checked index internally prepares genuine root-bound metadata and an immutable default descriptor
+ok 1 - F26a checked index internally prepares genuine root-bound metadata and an immutable default descriptor
+  ---
+  duration_ms: 118.7322
+  type: 'test'
+  ...
+# Subtest: F26a checked index admits v2 v3 and an explicit empty-tree index
+ok 2 - F26a checked index admits v2 v3 and an explicit empty-tree index
+  ---
+  duration_ms: 133.5048
+  type: 'test'
+  ...
+# Subtest: F26a checked index selects the exact absolute alternative rather than a public default
+ok 3 - F26a checked index selects the exact absolute alternative rather than a public default
+  ---
+  duration_ms: 61.14
+  type: 'test'
+  ...
+# Subtest: F26a checked index admits an exact root-relative index.lock containing executable entries
+ok 4 - F26a checked index admits an exact root-relative index.lock containing executable entries
+  ---
+  duration_ms: 44.194
+  type: 'test'
+  ...
+# Subtest: F26a checked index preserves Unicode spaces leading dashes and repeated OID contexts
+ok 5 - F26a checked index preserves Unicode spaces leading dashes and repeated OID contexts
+  ---
+  duration_ms: 45.1186
+  type: 'test'
+  ...
+# Subtest: F26a checked index environment is exactly real metadata environment plus its validated absolute index
+ok 6 - F26a checked index environment is exactly real metadata environment plus its validated absolute index
+  ---
+  duration_ms: 42.4249
+  type: 'test'
+  ...
+# Subtest: F26a checked index does not mistake an inert bounded hooksPath for unsupported metadata
+ok 7 - F26a checked index does not mistake an inert bounded hooksPath for unsupported metadata
+  ---
+  duration_ms: 63.4967
+  type: 'test'
+  ...
+# Subtest: F26a checked index capability rejects structural clones accessors proxies and unrelated genuine metadata
+ok 8 - F26a checked index capability rejects structural clones accessors proxies and unrelated genuine metadata
+  ---
+  duration_ms: 46.1108
+  type: 'test'
+  ...
+# Subtest: F26a checked index returns unavailable before every index read when disabled
+ok 9 - F26a checked index returns unavailable before every index read when disabled
+  ---
+  duration_ms: 10.205
+  type: 'test'
+  ...
+# Subtest: F26a checked index rejects missing default and missing explicit alternative without inventing an empty tree
+ok 10 - F26a checked index rejects missing default and missing explicit alternative without inventing an empty tree
+  ---
+  duration_ms: 19.5481
+  type: 'test'
+  ...
+# Subtest: F26a checked index rejects outside and worktree paths before reading them or falling back
+ok 11 - F26a checked index rejects outside and worktree paths before reading them or falling back
+  ---
+  duration_ms: 15.4227
+  type: 'test'
+  ...
+# Subtest: F26a checked index refuses unsafe absolute relative ADS control and short-alias selectors
+ok 12 - F26a checked index refuses unsafe absolute relative ADS control and short-alias selectors
+  ---
+  duration_ms: 12.7147
+  type: 'test'
+  ...
+# Subtest: F26a checked index rejects nonstring selectors without invoking coercion or accessors
+ok 13 - F26a checked index rejects nonstring selectors without invoking coercion or accessors
+  ---
+  duration_ms: 8.0403
+  type: 'test'
+  ...
+# Subtest: F26a checked index refuses nonabsolute root and invalid real metadata
+ok 14 - F26a checked index refuses nonabsolute root and invalid real metadata
+  ---
+  duration_ms: 12.9488
+  type: 'test'
+  ...
+# Subtest: F26a checked index supports128 entries and withholds129 rather than returning a prefix
+ok 15 - F26a checked index supports128 entries and withholds129 rather than returning a prefix
+  ---
+  duration_ms: 61.969
+  type: 'test'
+  ...
+# Subtest: F26a checked index preserves the canonical256KiB derived-listing boundary
+ok 16 - F26a checked index preserves the canonical256KiB derived-listing boundary
+  ---
+  duration_ms: 78.9811
+  type: 'test'
+  ...
+# Subtest: F26a checked index bounds raw index bytes independently of entry and listing counts
+ok 17 - F26a checked index bounds raw index bytes independently of entry and listing counts
+  ---
+  duration_ms: 116.2551
+  type: 'test'
+  ...
+# Subtest: F26a checked index verifies signature version count and checksum instead of trusting a public default
+ok 18 - F26a checked index verifies signature version count and checksum instead of trusting a public default
+  ---
+  duration_ms: 99.1828
+  type: 'test'
+  ...
+# Subtest: F26a checked index refuses nonzero stages extended entries symlinks submodules and nonregular modes
+ok 19 - F26a checked index refuses nonzero stages extended entries symlinks submodules and nonregular modes
+  ---
+  duration_ms: 117.9136
+  type: 'test'
+  ...
+# Subtest: F26a checked index requires exact path-length flags zero padding and complete entry bodies
+ok 20 - F26a checked index requires exact path-length flags zero padding and complete entry bodies
+  ---
+  duration_ms: 48.5694
+  type: 'test'
+  ...
+# Subtest: F26a checked index admits only framed unique TREE and REUC extension records
+ok 21 - F26a checked index admits only framed unique TREE and REUC extension records
+  ---
+  duration_ms: 105.9753
+  type: 'test'
+  ...
+# Subtest: F26a checked index derives safe paths through the canonical parser instead of accepting native index aliases
+ok 22 - F26a checked index derives safe paths through the canonical parser instead of accepting native index aliases
+  ---
+  duration_ms: 150.7465
+  type: 'test'
+  ...
+# Subtest: F26a checked index fatally rejects invalid UTF8 and embedded NUL rather than truncating a private name
+ok 23 - F26a checked index fatally rejects invalid UTF8 and embedded NUL rather than truncating a private name
+  ---
+  duration_ms: 33.1178
+  type: 'test'
+  ...
+# Subtest: F26a checked index never reads worktree bodies while preparing or recapturing entries
+ok 24 - F26a checked index never reads worktree bodies while preparing or recapturing entries
+  ---
+  duration_ms: 59.318
+  type: 'test'
+  ...
+# Subtest: F26a checked index rejects a hardlinked selected file and retains both synthetic links
+ok 25 - F26a checked index rejects a hardlinked selected file and retains both synthetic links
+  ---
+  duration_ms: 12.0425
+  type: 'test'
+  ...
+# Subtest: F26a checked index refuses a junction selector without reading its outside target
+ok 26 - F26a checked index refuses a junction selector without reading its outside target
+  ---
+  duration_ms: 12.5707
+  type: 'test'
+  ...
+# Subtest: F26a checked index flag withdrawal and later reenable cannot revive a prepared capability
+ok 27 - F26a checked index flag withdrawal and later reenable cannot revive a prepared capability
+  ---
+  duration_ms: 57.9678
+  type: 'test'
+  ...
+# Subtest: F26a checked index throwing authority is unavailable and remains withdrawn
+ok 28 - F26a checked index throwing authority is unavailable and remains withdrawn
+  ---
+  duration_ms: 42.7817
+  type: 'test'
+  ...
+# Subtest: F26a checked index exact alternative byte drift withdraws even if the old default stays public
+ok 29 - F26a checked index exact alternative byte drift withdraws even if the old default stays public
+  ---
+  duration_ms: 62.684
+  type: 'test'
+  ...
+# Subtest: F26a checked index identity replacement withdraws even for byte-identical replacement
+ok 30 - F26a checked index identity replacement withdraws even for byte-identical replacement
+  ---
+  duration_ms: 83.1961
+  type: 'test'
+  ...
+# Subtest: F26a checked index missing selected file never falls back during recapture
+ok 31 - F26a checked index missing selected file never falls back during recapture
+  ---
+  duration_ms: 71.5151
+  type: 'test'
+  ...
+# Subtest: F26a checked index metadata config drift withdraws the aggregate without editing shared metadata code
+ok 32 - F26a checked index metadata config drift withdraws the aggregate without editing shared metadata code
+  ---
+  duration_ms: 58.0292
+  type: 'test'
+  ...
+# Subtest: F26a checked index parent replacement by a retained junction withdraws canonical authority
+ok 33 - F26a checked index parent replacement by a retained junction withdraws canonical authority
+  ---
+  duration_ms: 76.6905
+  type: 'test'
+  ...
+# Subtest: F21 analysis has only keyed references/fixed labels and bounded locations, no names/path/value/fragments
+ok 34 - F21 analysis has only keyed references/fixed labels and bounded locations, no names/path/value/fragments
+  ---
+  duration_ms: 293.6114
+  type: 'test'
+  ...
+# Subtest: F21 separate HMAC domains and profile keys prevent plain-value/file hashes and cross-profile correlation
+ok 35 - F21 separate HMAC domains and profile keys prevent plain-value/file hashes and cross-profile correlation
+  ---
+  duration_ms: 5.8477
+  type: 'test'
+  ...
+# Subtest: F21 public near-matches, empty fields, protected placeholders and explicit templates are not reported as live credentials
+ok 36 - F21 public near-matches, empty fields, protected placeholders and explicit templates are not reported as live credentials
+  ---
+  duration_ms: 2.5693
+  type: 'test'
+  ...
+# Subtest: F21 pinned supported dotenv provider hints stay heuristic and unknown provider stays unknown
+ok 37 - F21 pinned supported dotenv provider hints stay heuristic and unknown provider stays unknown
+  ---
+  duration_ms: 6.3476
+  type: 'test'
+  ...
+# Subtest: F21 multiline quoted dotenv and supported JSON candidates reuse canonical vault parsing
+ok 38 - F21 multiline quoted dotenv and supported JSON candidates reuse canonical vault parsing
+  ---
+  duration_ms: 5.9709
+  type: 'test'
+  ...
+# Subtest: F21 repeat values get one value reference while separate file/occurrence identities remain distinct
+ok 39 - F21 repeat values get one value reference while separate file/occurrence identities remain distinct
+  ---
+  duration_ms: 2.3044
+  type: 'test'
+  ...
+# Subtest: F21 malformed paths, binary/invalid UTF8, oversize work and short/malformed hash keys refuse without value-bearing exceptions
+ok 40 - F21 malformed paths, binary/invalid UTF8, oversize work and short/malformed hash keys refuse without value-bearing exceptions
+  ---
+  duration_ms: 59.22
+  type: 'test'
+  ...
+# Subtest: F21 static metadata/value collision withholds instead of returning an original in a label
+ok 41 - F21 static metadata/value collision withholds instead of returning an original in a label
+  ---
+  duration_ms: 1.9592
+  type: 'test'
+  ...
+# Subtest: F21 synthetic bounded corpus never serializes its candidate values
+ok 42 - F21 synthetic bounded corpus never serializes its candidate values
+  ---
+  duration_ms: 36.9598
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol admits an empty proposed tree
+ok 43 - F26a staged protocol admits an empty proposed tree
+  ---
+  duration_ms: 18.3802
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol preserves exact rows and regular executable modes
+ok 44 - F26a staged protocol preserves exact rows and regular executable modes
+  ---
+  duration_ms: 2.3494
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol keeps spaces Unicode and leading-dash names literal
+ok 45 - F26a staged protocol keeps spaces Unicode and leading-dash names literal
+  ---
+  duration_ms: 1.7252
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol permits repeated blob OIDs under separate path contexts
+ok 46 - F26a staged protocol permits repeated blob OIDs under separate path contexts
+  ---
+  duration_ms: 1.7079
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol accepts exactly128 entries
+ok 47 - F26a staged protocol accepts exactly128 entries
+  ---
+  duration_ms: 2.2552
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol withholds the entire129-entry sentinel listing
+ok 48 - F26a staged protocol withholds the entire129-entry sentinel listing
+  ---
+  duration_ms: 1.457
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol accepts a valid listing of exactly256KiB
+ok 49 - F26a staged protocol accepts a valid listing of exactly256KiB
+  ---
+  duration_ms: 9.5766
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol rejects an otherwise valid listing one byte over256KiB
+ok 50 - F26a staged protocol rejects an otherwise valid listing one byte over256KiB
+  ---
+  duration_ms: 2.4216
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol requires each final NUL and exact final EOF
+ok 51 - F26a staged protocol requires each final NUL and exact final EOF
+  ---
+  duration_ms: 2.1758
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol requires exact ASCII header separators
+ok 52 - F26a staged protocol requires exact ASCII header separators
+  ---
+  duration_ms: 1.3992
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol rejects nonzero and noncanonical stages
+ok 53 - F26a staged protocol rejects nonzero and noncanonical stages
+  ---
+  duration_ms: 0.8084
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol rejects symlinks submodules and other nonregular modes
+ok 54 - F26a staged protocol rejects symlinks submodules and other nonregular modes
+  ---
+  duration_ms: 0.8019
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol requires exactly40 lowercase hexadecimal object characters
+ok 55 - F26a staged protocol requires exactly40 lowercase hexadecimal object characters
+  ---
+  duration_ms: 0.7862
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol rejects empty absolute drive UNC and backslash paths
+ok 56 - F26a staged protocol rejects empty absolute drive UNC and backslash paths
+  ---
+  duration_ms: 1.0229
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol rejects dot parent empty and trailing slash components
+ok 57 - F26a staged protocol rejects dot parent empty and trailing slash components
+  ---
+  duration_ms: 1.0902
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol rejects ADS and Windows-invalid punctuation
+ok 58 - F26a staged protocol rejects ADS and Windows-invalid punctuation
+  ---
+  duration_ms: 0.985
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol rejects control format and line-separator characters in names
+ok 59 - F26a staged protocol rejects control format and line-separator characters in names
+  ---
+  duration_ms: 0.9314
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol rejects trailing dots or spaces in every component
+ok 60 - F26a staged protocol rejects trailing dots or spaces in every component
+  ---
+  duration_ms: 1.8079
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol rejects Windows device names including extensions and superscript aliases
+ok 61 - F26a staged protocol rejects Windows device names including extensions and superscript aliases
+  ---
+  duration_ms: 1.1644
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol rejects short-name aliases instead of resolving them
+ok 62 - F26a staged protocol rejects short-name aliases instead of resolving them
+  ---
+  duration_ms: 0.9994
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol rejects reserved Git metadata components at every depth
+ok 63 - F26a staged protocol rejects reserved Git metadata components at every depth
+  ---
+  duration_ms: 1.4055
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol rejects exact and Windows-case-insensitive duplicate paths
+ok 64 - F26a staged protocol rejects exact and Windows-case-insensitive duplicate paths
+  ---
+  duration_ms: 1.5004
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol refuses Unicode-normalization path aliases without rewriting spelling
+ok 65 - F26a staged protocol refuses Unicode-normalization path aliases without rewriting spelling
+  ---
+  duration_ms: 1.6494
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol rejects a file path that is also another entry's directory ancestor
+ok 66 - F26a staged protocol rejects a file path that is also another entry's directory ancestor
+  ---
+  duration_ms: 1.4293
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol enforces2048 UTF8 path bytes and255 UTF16 component units
+ok 67 - F26a staged protocol enforces2048 UTF8 path bytes and255 UTF16 component units
+  ---
+  duration_ms: 1.2271
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol decodes UTF8 fatally and does not strip a path BOM
+ok 68 - F26a staged protocol decodes UTF8 fatally and does not strip a path BOM
+  ---
+  duration_ms: 1.2076
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol withholds a valid prefix when a late record is malformed
+ok 69 - F26a staged protocol withholds a valid prefix when a late record is malformed
+  ---
+  duration_ms: 1.2475
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol does not mutate caller buffer bytes on success or refusal
+ok 70 - F26a staged protocol does not mutate caller buffer bytes on success or refusal
+  ---
+  duration_ms: 0.9697
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol accepts Buffer views without reading unrelated backing-array bytes
+ok 71 - F26a staged protocol accepts Buffer views without reading unrelated backing-array bytes
+  ---
+  duration_ms: 1.0453
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol rejects non-Buffers without invoking accessors or coercion
+ok 72 - F26a staged protocol rejects non-Buffers without invoking accessors or coercion
+  ---
+  duration_ms: 0.9539
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol rejects forged Buffer prototypes and proxies without property traps
+ok 73 - F26a staged protocol rejects forged Buffer prototypes and proxies without property traps
+  ---
+  duration_ms: 1.556
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol writes no raw input diagnostics to console or output streams
+ok 74 - F26a staged protocol writes no raw input diagnostics to console or output streams
+  ---
+  duration_ms: 1.7021
+  type: 'test'
+  ...
+# Subtest: F26a wire signs and verifies an exact owner descriptor
+ok 75 - F26a wire signs and verifies an exact owner descriptor
+  ---
+  duration_ms: 17.8727
+  type: 'test'
+  ...
+# Subtest: F26a wire descriptor signature requires the reviewed public key
+ok 76 - F26a wire descriptor signature requires the reviewed public key
+  ---
+  duration_ms: 2.9239
+  type: 'test'
+  ...
+# Subtest: F26a wire refuses changed descriptor fields without a fresh signature
+ok 77 - F26a wire refuses changed descriptor fields without a fresh signature
+  ---
+  duration_ms: 1.8402
+  type: 'test'
+  ...
+# Subtest: F26a wire descriptor cannot select root installation worker or runtime
+ok 78 - F26a wire descriptor cannot select root installation worker or runtime
+  ---
+  duration_ms: 4.0987
+  type: 'test'
+  ...
+# Subtest: F26a wire descriptors admit only exact loopback fixed-route URLs
+ok 79 - F26a wire descriptors admit only exact loopback fixed-route URLs
+  ---
+  duration_ms: 1.7362
+  type: 'test'
+  ...
+# Subtest: F26a wire refuses malformed non-Ed25519 and noncanonical public keys
+ok 80 - F26a wire refuses malformed non-Ed25519 and noncanonical public keys
+  ---
+  duration_ms: 12.8199
+  type: 'test'
+  ...
+# Subtest: F26a wire descriptor and decision signatures have different domains
+ok 81 - F26a wire descriptor and decision signatures have different domains
+  ---
+  duration_ms: 1.7861
+  type: 'test'
+  ...
+# Subtest: F26a wire signs and verifies each fixed decision status
+ok 82 - F26a wire signs and verifies each fixed decision status
+  ---
+  duration_ms: 5.4059
+  type: 'test'
+  ...
+# Subtest: F26a wire requires exact fresh nonce session root and generation
+ok 83 - F26a wire requires exact fresh nonce session root and generation
+  ---
+  duration_ms: 4.4172
+  type: 'test'
+  ...
+# Subtest: F26a wire changed decision or index metadata cannot preserve a valid signature
+ok 84 - F26a wire changed decision or index metadata cannot preserve a valid signature
+  ---
+  duration_ms: 4.0884
+  type: 'test'
+  ...
+# Subtest: F26a wire signed envelope is finite canonical JSON with no duplicate fields
+ok 85 - F26a wire signed envelope is finite canonical JSON with no duplicate fields
+  ---
+  duration_ms: 2.0956
+  type: 'test'
+  ...
+# Subtest: F26a wire unknown envelope payload and binding fields refuse
+ok 86 - F26a wire unknown envelope payload and binding fields refuse
+  ---
+  duration_ms: 1.178
+  type: 'test'
+  ...
+# Subtest: F26a wire invalid schema versions status UUIDs and digests refuse
+ok 87 - F26a wire invalid schema versions status UUIDs and digests refuse
+  ---
+  duration_ms: 0.998
+  type: 'test'
+  ...
+# Subtest: F26a wire refuses accessor and coercion payloads without reading their values
+ok 88 - F26a wire refuses accessor and coercion payloads without reading their values
+  ---
+  duration_ms: 1.4021
+  type: 'test'
+  ...
+# Subtest: F26a wire non-buffer and forged-buffer frames refuse without input traps
+ok 89 - F26a wire non-buffer and forged-buffer frames refuse without input traps
+  ---
+  duration_ms: 1.4302
+  type: 'test'
+  ...
+# Subtest: F26a wire parses exact fixed request and preserves index as untrusted literal data
+ok 90 - F26a wire parses exact fixed request and preserves index as untrusted literal data
+  ---
+  duration_ms: 1.1667
+  type: 'test'
+  ...
+# Subtest: F26a wire request cannot choose owner session generation or extra root
+ok 91 - F26a wire request cannot choose owner session generation or extra root
+  ---
+  duration_ms: 1.5919
+  type: 'test'
+  ...
+# Subtest: F26a wire request distinguishes explicit empty invalid and omitted index paths
+ok 92 - F26a wire request distinguishes explicit empty invalid and omitted index paths
+  ---
+  duration_ms: 1.4908
+  type: 'test'
+  ...
+# Subtest: F26a wire request refuses duplicates noncanonical framing and over4096 bytes
+ok 93 - F26a wire request refuses duplicates noncanonical framing and over4096 bytes
+  ---
+  duration_ms: 1.1992
+  type: 'test'
+  ...
+# Subtest: F26a staged generic public text, Markdown, logs and extensionless notes have useful clean outcomes
+ok 94 - F26a staged generic public text, Markdown, logs and extensionless notes have useful clean outcomes
+  ---
+  duration_ms: 329.3455
+  type: 'test'
+  ...
+# Subtest: F26a staged empty generic blobs and normal Unicode remain clean
+ok 95 - F26a staged empty generic blobs and normal Unicode remain clean
+  ---
+  duration_ms: 3.3435
+  type: 'test'
+  ...
+# Subtest: F26a staged recognized provider fixtures use the canonical matcher with an empty registration set
+ok 96 - F26a staged recognized provider fixtures use the canonical matcher with an empty registration set
+  ---
+  duration_ms: 5.5712
+  type: 'test'
+  ...
+# Subtest: F26a staged empty-registration recognition covers canonical credential-context entropy
+ok 97 - F26a staged empty-registration recognition covers canonical credential-context entropy
+  ---
+  duration_ms: 4.5858
+  type: 'test'
+  ...
+# Subtest: F26a staged low-entropy opaque text is an explicit unregistered negative control
+ok 98 - F26a staged low-entropy opaque text is an explicit unregistered negative control
+  ---
+  duration_ms: 1.7911
+  type: 'test'
+  ...
+# Subtest: F26a staged canonical single-layer base64 provider recognition has a public control
+ok 99 - F26a staged canonical single-layer base64 provider recognition has a public control
+  ---
+  duration_ms: 1.9703
+  type: 'test'
+  ...
+# Subtest: F26a staged canonical single-layer base64url provider recognition has a public control
+ok 100 - F26a staged canonical single-layer base64url provider recognition has a public control
+  ---
+  duration_ms: 1.7854
+  type: 'test'
+  ...
+# Subtest: F26a staged canonical single-layer hex provider recognition has a public control
+ok 101 - F26a staged canonical single-layer hex provider recognition has a public control
+  ---
+  duration_ms: 1.6092
+  type: 'test'
+  ...
+# Subtest: F26a staged canonical single-layer URL provider recognition has a public control
+ok 102 - F26a staged canonical single-layer URL provider recognition has a public control
+  ---
+  duration_ms: 4.5451
+  type: 'test'
+  ...
+# Subtest: F26a staged canonical single-layer JSON Unicode string provider recognition has a public control
+ok 103 - F26a staged canonical single-layer JSON Unicode string provider recognition has a public control
+  ---
+  duration_ms: 5.8792
+  type: 'test'
+  ...
+# Subtest: F26a staged dotenv static credential names supply canonical context without a vault registration
+ok 104 - F26a staged dotenv static credential names supply canonical context without a vault registration
+  ---
+  duration_ms: 11.7366
+  type: 'test'
+  ...
+# Subtest: F26a staged dotenv public values, exact templates and existing protected markers remain clean
+ok 105 - F26a staged dotenv public values, exact templates and existing protected markers remain clean
+  ---
+  duration_ms: 4.9836
+  type: 'test'
+  ...
+# Subtest: F26a staged src/owner.js uses the declared canonical source grammar and credential context
+ok 106 - F26a staged src/owner.js uses the declared canonical source grammar and credential context
+  ---
+  duration_ms: 7.9526
+  type: 'test'
+  ...
+# Subtest: F26a staged src/owner.ts uses the declared canonical source grammar and credential context
+ok 107 - F26a staged src/owner.ts uses the declared canonical source grammar and credential context
+  ---
+  duration_ms: 7.1051
+  type: 'test'
+  ...
+# Subtest: F26a staged src/view.jsx uses the declared canonical source grammar and credential context
+ok 108 - F26a staged src/view.jsx uses the declared canonical source grammar and credential context
+  ---
+  duration_ms: 4.266
+  type: 'test'
+  ...
+# Subtest: F26a staged src/view.tsx uses the declared canonical source grammar and credential context
+ok 109 - F26a staged src/view.tsx uses the declared canonical source grammar and credential context
+  ---
+  duration_ms: 3.1225
+  type: 'test'
+  ...
+# Subtest: F26a staged src/owner.mjs uses the declared canonical source grammar and credential context
+ok 110 - F26a staged src/owner.mjs uses the declared canonical source grammar and credential context
+  ---
+  duration_ms: 3.5056
+  type: 'test'
+  ...
+# Subtest: F26a staged src/owner.cjs uses the declared canonical source grammar and credential context
+ok 111 - F26a staged src/owner.cjs uses the declared canonical source grammar and credential context
+  ---
+  duration_ms: 2.7681
+  type: 'test'
+  ...
+# Subtest: F26a staged public source and direct environment references remain parse-only clean controls
+ok 112 - F26a staged public source and direct environment references remain parse-only clean controls
+  ---
+  duration_ms: 3.6268
+  type: 'test'
+  ...
+# Subtest: F26a staged escaped source password literals are classified after fixed-parser decoding
+ok 113 - F26a staged escaped source password literals are classified after fixed-parser decoding
+  ---
+  duration_ms: 2.6848
+  type: 'test'
+  ...
+# Subtest: F26a staged recognized config.json reuses canonical family credential context
+ok 114 - F26a staged recognized config.json reuses canonical family credential context
+  ---
+  duration_ms: 4.3859
+  type: 'test'
+  ...
+# Subtest: F26a staged recognized credentials/service-account.json reuses canonical family credential context
+ok 115 - F26a staged recognized credentials/service-account.json reuses canonical family credential context
+  ---
+  duration_ms: 1.8811
+  type: 'test'
+  ...
+# Subtest: F26a staged recognized compose.yml reuses canonical family credential context
+ok 116 - F26a staged recognized compose.yml reuses canonical family credential context
+  ---
+  duration_ms: 12.0715
+  type: 'test'
+  ...
+# Subtest: F26a staged recognized Dockerfile reuses canonical family credential context
+ok 117 - F26a staged recognized Dockerfile reuses canonical family credential context
+  ---
+  duration_ms: 2.6436
+  type: 'test'
+  ...
+# Subtest: F26a staged recognized infra/production.tfvars reuses canonical family credential context
+ok 118 - F26a staged recognized infra/production.tfvars reuses canonical family credential context
+  ---
+  duration_ms: 3.9297
+  type: 'test'
+  ...
+# Subtest: F26a staged recognized infra/production.tfvars.json reuses canonical family credential context
+ok 119 - F26a staged recognized infra/production.tfvars.json reuses canonical family credential context
+  ---
+  duration_ms: 1.9934
+  type: 'test'
+  ...
+# Subtest: F26a staged recognized .npmrc reuses canonical family credential context
+ok 120 - F26a staged recognized .npmrc reuses canonical family credential context
+  ---
+  duration_ms: 3.8049
+  type: 'test'
+  ...
+# Subtest: F26a staged recognized .pypirc reuses canonical family credential context
+ok 121 - F26a staged recognized .pypirc reuses canonical family credential context
+  ---
+  duration_ms: 1.9807
+  type: 'test'
+  ...
+# Subtest: F26a staged recognized .github/workflows/build.yml reuses canonical family credential context
+ok 122 - F26a staged recognized .github/workflows/build.yml reuses canonical family credential context
+  ---
+  duration_ms: 8.0774
+  type: 'test'
+  ...
+# Subtest: F26a staged recognized .vscode/tasks.json reuses canonical family credential context
+ok 123 - F26a staged recognized .vscode/tasks.json reuses canonical family credential context
+  ---
+  duration_ms: 6.9572
+  type: 'test'
+  ...
+# Subtest: F26a staged recognized mcp.json reuses canonical family credential context
+ok 124 - F26a staged recognized mcp.json reuses canonical family credential context
+  ---
+  duration_ms: 2.5643
+  type: 'test'
+  ...
+# Subtest: F26a staged recognized mcp.toml reuses canonical family credential context
+ok 125 - F26a staged recognized mcp.toml reuses canonical family credential context
+  ---
+  duration_ms: 5.1118
+  type: 'test'
+  ...
+# Subtest: F26a staged JSON Unicode-escaped credential names and values are semantic private inputs
+ok 126 - F26a staged JSON Unicode-escaped credential names and values are semantic private inputs
+  ---
+  duration_ms: 2.2828
+  type: 'test'
+  ...
+# Subtest: F26a staged public JSON identifiers, public keys and exact placeholders remain clean
+ok 127 - F26a staged public JSON identifiers, public keys and exact placeholders remain clean
+  ---
+  duration_ms: 2.0845
+  type: 'test'
+  ...
+# Subtest: F26a staged declared malformed JSON and late source syntax errors withhold earlier matching prefixes
+ok 128 - F26a staged declared malformed JSON and late source syntax errors withhold earlier matching prefixes
+  ---
+  duration_ms: 4.1681
+  type: 'test'
+  ...
+# Subtest: F26a staged duplicate decoded JSON fields and nonfinite numbers are unavailable atomically
+ok 129 - F26a staged duplicate decoded JSON fields and nonfinite numbers are unavailable atomically
+  ---
+  duration_ms: 1.5963
+  type: 'test'
+  ...
+# Subtest: F26a staged unsupported source credential computations do not fall back to raw-prefix classification
+ok 130 - F26a staged unsupported source credential computations do not fall back to raw-prefix classification
+  ---
+  duration_ms: 3.0673
+  type: 'test'
+  ...
+# Subtest: F26a staged unsupported source formats and foreign YAML remain unavailable
+ok 131 - F26a staged unsupported source formats and foreign YAML remain unavailable
+  ---
+  duration_ms: 4.5665
+  type: 'test'
+  ...
+# Subtest: F26a staged known config family parse failures are unavailable despite an earlier provider canary
+ok 132 - F26a staged known config family parse failures are unavailable despite an earlier provider canary
+  ---
+  duration_ms: 6.981
+  type: 'test'
+  ...
+# Subtest: F26a staged raw-byte size admission is inclusive at64KiB for ASCII and multibyte public text
+ok 133 - F26a staged raw-byte size admission is inclusive at64KiB for ASCII and multibyte public text
+  ---
+  duration_ms: 15.7895
+  type: 'test'
+  ...
+# Subtest: F26a staged oversize and invalid late bytes withhold whole matching prefixes without truncation
+ok 134 - F26a staged oversize and invalid late bytes withhold whole matching prefixes without truncation
+  ---
+  duration_ms: 1.635
+  type: 'test'
+  ...
+# Subtest: F26a staged canonical matcher work exhaustion becomes unavailable rather than a partial clean result
+ok 135 - F26a staged canonical matcher work exhaustion becomes unavailable rather than a partial clean result
+  ---
+  duration_ms: 17.1473
+  type: 'test'
+  ...
+# Subtest: F26a staged fatal UTF8 admission rejects overlong truncated surrogate and out-of-range encodings
+ok 136 - F26a staged fatal UTF8 admission rejects overlong truncated surrogate and out-of-range encodings
+  ---
+  duration_ms: 2.6469
+  type: 'test'
+  ...
+# Subtest: F26a staged unsupported controls and bidi characters are unavailable on otherwise clean and matching input
+ok 137 - F26a staged unsupported controls and bidi characters are unavailable on otherwise clean and matching input
+  ---
+  duration_ms: 1.6991
+  type: 'test'
+  ...
+# Subtest: F26a staged decoded JSON unsafe controls and lone surrogates cannot become clean or partial candidates
+ok 138 - F26a staged decoded JSON unsafe controls and lone surrogates cannot become clean or partial candidates
+  ---
+  duration_ms: 1.6382
+  type: 'test'
+  ...
+# Subtest: F26a staged unsafe source paths never grant format or content admission
+ok 139 - F26a staged unsafe source paths never grant format or content admission
+  ---
+  duration_ms: 2.1389
+  type: 'test'
+  ...
+# Subtest: F26a staged source identity and blob runtime types reject coercion without invoking caller hooks
+ok 140 - F26a staged source identity and blob runtime types reject coercion without invoking caller hooks
+  ---
+  duration_ms: 1.4999
+  type: 'test'
+  ...
+# Subtest: F26a staged request-local decisions retain no earlier candidate and no caller Buffer ownership
+ok 141 - F26a staged request-local decisions retain no earlier candidate and no caller Buffer ownership
+  ---
+  duration_ms: 1.5759
+  type: 'test'
+  ...
+# Subtest: F26a staged parsing does not evaluate source or follow config references and never reads files or starts children
+ok 142 - F26a staged parsing does not evaluate source or follow config references and never reads files or starts children
+  ---
+  duration_ms: 4.7245
+  type: 'test'
+  ...
+# Subtest: F26a parsed public Stripe field keeps its canonical public decision
+ok 143 - F26a parsed public Stripe field keeps its canonical public decision
+  ---
+  duration_ms: 317.0188
+  type: 'test'
+  ...
+# Subtest: F26a public field context cannot suppress a provider in its retained comment
+ok 144 - F26a public field context cannot suppress a provider in its retained comment
+  ---
+  duration_ms: 5.1269
+  type: 'test'
+  ...
+# Subtest: F26a public field does not exempt private Stripe material or a private sibling
+ok 145 - F26a public field does not exempt private Stripe material or a private sibling
+  ---
+  duration_ms: 8.5134
+  type: 'test'
+  ...
+# Subtest: F26a an ordinary noncredential field retains canonical encoded provider matching
+ok 146 - F26a an ordinary noncredential field retains canonical encoded provider matching
+  ---
+  duration_ms: 3.7588
+  type: 'test'
+  ...
+1..146
+# tests 146
+# suites 0
+# pass 146
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5448.5021

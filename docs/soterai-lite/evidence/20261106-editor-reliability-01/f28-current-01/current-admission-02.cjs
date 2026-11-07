@@ -1,0 +1,15 @@
+'use strict';
+// Exact current packet gate. Read-only; no native/process/listener/network action.
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),crypto=require('node:crypto');
+const repo=path.resolve(__dirname,'../../../../..'),own=n=>path.join(__dirname,n),sha=b=>crypto.createHash('sha256').update(b).digest('hex'),read=p=>JSON.parse(fs.readFileSync(p,'utf8').replace(/^\uFEFF/,''));
+const gatePath=path.resolve(__dirname,'../native-common-admission.cjs');assert.equal(sha(fs.readFileSync(gatePath)),'60d7ad1dbdca4e6f713256c3f97d6c2cf5fc263055edc1b59d6e295994e8595c');const gate=require(gatePath);
+function binding(expected){
+ assert(/^[a-f0-9]{64}$/.test(expected));const raw=fs.readFileSync(own('native-binding-current-02.json'));assert.equal(sha(raw),expected);const b=JSON.parse(raw),base=gate.binding();assert.equal(b.status,'F28_NATIVE30_PACKET_PREPARED_NOT_RUN');assert.equal(b.allowedAttempts,1);assert.equal(b.configuredPushAuthorized,false);assert.equal(b.f26aNative09,'SEPARATE_F26A_NATIVE_PROGRAM_NOT_RUN_BY_THIS_F28_FIXTURE');
+ for(const key of ['sourceProof','qualification','content','vsix','frontendSha256','extractedRoot','hostReview','runtimes'])assert.deepEqual(b[key],base[key],key);
+ for(const r of [b.guard,b.admission,b.candidate,b.driver,b.driverSource,b.driverProvenance,b.caseFreeze,b.physicalRuntime,b.ownedHelper,...b.fixtureInputs,...b.jsonBuiltinFacts])gate.pin(r);
+ assert.equal(path.resolve(repo,b.guard.path),__filename);assert.equal(b.ownedHelper.sha256,'c3ca6d3b159ecbd825a0e917a40e5c24cb9aa3aeaa76d67a3fa0fc18113dea4f');assert.equal(b.driver.sha256,'9a84eadfdd178e7c9518c632ee99e09c93ce86c62591dba331c1cf02457b5c07');assert.equal(b.driverSource.sha256,'cdaf0492be7f286071a9d02663d29008c04677229e9ac57d93f3b9f141ce0024');
+ const freeze=read(gate.location(b.caseFreeze));assert.equal(freeze.cases.length,30);assert.equal(freeze.cases.filter(r=>r.phase==='primary').length,25);assert.equal(freeze.cases.filter(r=>r.phase==='restart').length,5);assert.equal(freeze.source.sha256,b.driverSource.sha256);
+ const vendor=read(gate.location(b.hostReview));assert.equal(vendor.currentHost.version,'1.145.1');assert.equal(b.jsonBuiltinAppRoot,vendor.currentHost.appRoot);assert.equal(b.jsonBuiltinAppRoot,'C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\6bab64e2d1\\resources\\app');assert.equal(b.jsonBuiltinFacts.length,4);assert.deepEqual(b.physicalRuntime,vendor.node);assert.equal(b.physicalRuntime.path,'C:\\Program Files\\nodejs\\node.exe');assert.equal(sha(fs.readFileSync(own('native-binding-current-02.json'))),expected);return b;
+}
+module.exports={repo,own,sha,read,binding,fact:gate.fact,pin:gate.pin,location:gate.location};
+if(require.main===module)try{const b=binding(process.argv[2]);console.log(JSON.stringify(process.argv.includes('--emit-binding')?b:{status:'PASS_CURRENT_F28_PACKET_ADMISSION_NO_LAUNCH',nativeChecks:30,peer:1,nativeLaunches:0,signalsRequested:0}));}catch(e){console.error(e);process.exitCode=1;}

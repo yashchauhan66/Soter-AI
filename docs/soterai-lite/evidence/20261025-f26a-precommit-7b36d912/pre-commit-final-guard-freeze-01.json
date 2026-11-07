@@ -1,0 +1,37 @@
+{
+    "status":  "FROZEN_ADDITIVE_REVIEW_TESTS_BEFORE_CORRECTION_NOT_EXECUTED",
+    "feature":  "F26a",
+    "component":  "FinalScannerAndTransportGuard",
+    "tests":  8,
+    "facts":  [
+                  {
+                      "path":  "packages/vscode-extension/src/__tests__/preCommitFinalGuard.review.test.ts",
+                      "bytes":  12160,
+                      "sha256":  "6ce9681e4596573cb49943ef82f760cf6835cff35cba61e6cc60c2281bea5291"
+                  },
+                  {
+                      "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/preCommitFinalGuard.pre-correction-01.test.ts",
+                      "bytes":  12160,
+                      "sha256":  "6ce9681e4596573cb49943ef82f760cf6835cff35cba61e6cc60c2281bea5291"
+                  },
+                  {
+                      "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/pre-commit-final-guard-review-01.md",
+                      "bytes":  3545,
+                      "sha256":  "e5025e83a745f7d8a2ee16d10123378dd9deab73112b67a0da991871c4d1be0e"
+                  }
+              ],
+    "observedBeforeProduction":  [
+                                     {
+                                         "path":  "packages/vscode-extension/src/history-hooks/PreCommitScan.ts",
+                                         "bytes":  8186,
+                                         "sha256":  "6f34455f2a469bd7cd62594e045f730badea5ae2c26719e18e2008d12910b79e"
+                                     },
+                                     {
+                                         "path":  "packages/vscode-extension/src/history-hooks/PreCommitGitProcess.ts",
+                                         "bytes":  9304,
+                                         "sha256":  "ad0e8f06b481b0bab17da705cac640640a58d8bdde3e452fadfdc906ab94e382"
+                                     }
+                                 ],
+    "scope":  "Read-only production review and additive tests only. Static hypotheses, no passing or reproduced claim. Root must capture actual before-regression and correction evidence; original18/28 tests untouched.",
+    "time":  "2026-10-25T10:04:23.4739495Z"
+}

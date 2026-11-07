@@ -128,3 +128,14 @@ artifacts/ml-v2/train-index-*.json
 # way the .env templates are re-admitted.
 !soterai-train-bundle.zip
 soter-edge-test-out/
+.antigravity/marketing_engine/.env.marketing
+.antigravity/marketing_engine/sessions/
+
+# Large ML weights and training artifacts (>100MB / non-runtime)
+*.pt
+artifacts/ml-v2/train-index-*.json
+artifacts/ml/*colab-bundle.zip
+artifacts/ml/v-final/
+scratch/
+models/ml-classifier-v17/model.onnx
+models/ml-classifier-v18-candidate/model.onnx

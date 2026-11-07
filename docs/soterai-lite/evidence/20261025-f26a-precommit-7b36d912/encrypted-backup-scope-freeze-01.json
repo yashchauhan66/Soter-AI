@@ -1,0 +1,36 @@
+{
+    "status":  "FROZEN_INHERITED_SCOPE_TESTS_REVIEWED_BEFORE_PRODUCTION_NOT_EXECUTED",
+    "feature":  "F26a",
+    "component":  "EncryptedBackupSinkOptionalScope",
+    "tests":  12,
+    "facts":  [
+                  {
+                      "path":  "packages/vscode-extension/src/__tests__/encryptedBackupScope.review.test.ts",
+                      "bytes":  16841,
+                      "sha256":  "5894660bf5e2d23b09d0f65244d113bef8f09577c7667452aec6f010b91522ca"
+                  },
+                  {
+                      "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/encryptedBackupScope.pre-production-01.test.ts",
+                      "bytes":  16841,
+                      "sha256":  "5894660bf5e2d23b09d0f65244d113bef8f09577c7667452aec6f010b91522ca"
+                  },
+                  {
+                      "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/encrypted-backup-scope-contract-01.md",
+                      "bytes":  4301,
+                      "sha256":  "14d05001558898ab2333106cb93afa5b6bed20f18fead4ac98b31628b76316d0"
+                  },
+                  {
+                      "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/encryptedBackupScope.inherited-draft-01.test.ts",
+                      "bytes":  16700,
+                      "sha256":  "242a36af339ebff305f7d2ed7c9aabe8a24fe1e04b062a80d1b46b74912deef5"
+                  },
+                  {
+                      "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/EncryptedBackupSink.before-scope-01.ts",
+                      "bytes":  4014,
+                      "sha256":  "d3b23942ccc75684bd38260fd5aa31be5edcd67b98b17ebb83ee47f81055a5bd"
+                  }
+              ],
+    "handover":  "Prior author errored usagequota without completion claim. Inherited12-test draft preserved byteexact; reviewed against actual AES-GCM and shim; only explicit missing ciphertext-file refusal added to existing read-failure case. Root baseline required; no assumed pass/fail count.",
+    "scope":  "Test-only in-memory SecretStorage/vscodefs maps and actual core AES-GCM when root later runs. No production/original sink API changes, filesystem/provider/child/Git/network/test execution or native/PASS/rating claim.",
+    "time":  "2026-10-25T13:05:01.2565544Z"
+}

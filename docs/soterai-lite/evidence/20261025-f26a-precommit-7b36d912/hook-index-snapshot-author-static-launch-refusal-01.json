@@ -1,0 +1,13 @@
+{
+  "status": "NONPASS_AUTHOR_STATIC_LAUNCH_QUOTING_REFUSAL_NOT_TEST_BASELINE",
+  "file": "packages/vscode-extension/src/__tests__/hookIndexSnapshot.test.ts",
+  "attempt": "PowerShell node -e inline static parse launcher",
+  "observedExitCode": 1,
+  "error": "SyntaxError: missing ) after argument list",
+  "observedEvaluatedPrefix": "const fs=require(node:fs),ts=require(typescript);",
+  "cause": "PowerShell-to-native inline argument quoting stripped JavaScript string quotes; parser code rejected before source-file parsing.",
+  "testCodeEvaluated": false,
+  "productionCodeEvaluated": false,
+  "disposition": "RETAINED_NONPASS_AUTHOR_TOOL_LAUNCH_ONLY_NO_TEST_OR_BEHAVIOR_RESULT",
+  "nextAttempt": "New file-based hook-index-snapshot-author-static-01.cjs syntax-only parser; original test unchanged."
+}

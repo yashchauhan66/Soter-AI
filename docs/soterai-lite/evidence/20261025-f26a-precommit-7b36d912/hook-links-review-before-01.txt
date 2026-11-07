@@ -1,0 +1,28 @@
+﻿TAP version 13
+# Subtest: F26a hook file dangling junction is unavailable rather than an absent writable leaf or parent
+not ok 1 - F26a hook file dangling junction is unavailable rather than an absent writable leaf or parent
+  ---
+  duration_ms: 33.8559
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedHookFileLinks.review.test.ts:2:1085'
+  failureType: 'testCodeFailure'
+  error: 'A known dangling reparse point must not produce an absence snapshot or write authority.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedHookFileLinks.review.test.ts:16:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1136.1608

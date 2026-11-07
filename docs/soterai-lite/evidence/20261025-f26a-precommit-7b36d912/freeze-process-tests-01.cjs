@@ -1,0 +1,7 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),crypto=require('node:crypto'),ts=require('typescript');
+const repo=path.resolve(__dirname,'../../../..'),file='packages/vscode-extension/src/__tests__/preCommitGitProcess.test.ts',bytes=fs.readFileSync(path.join(repo,file)),text=bytes.toString('utf8');
+assert(!fs.existsSync(path.join(repo,'packages/vscode-extension/src/history-hooks/PreCommitGitProcess.ts')));assert(!bytes.includes(0));
+const parsed=ts.transpileModule(text,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.CommonJS},fileName:file,reportDiagnostics:true});assert.equal((parsed.diagnostics||[]).filter(d=>d.category===ts.DiagnosticCategory.Error).length,0);
+const record={status:'ROOT_REVIEWED_AUTHOR_INTERRUPTION_RECOVERED_SYNTAX_ONLY_FROZEN_NOT_EXECUTED',tests:[...text.matchAll(/^test\(/gm)].length,fixture:{path:file,bytes:bytes.length,sha256:crypto.createHash('sha256').update(bytes).digest('hex')},scope:'Author service reported usage limit after writing draft. Root inspected complete file/contract and static syntax; no inferred author completion or test PASS. Missing-module baseline remains required before production.',time:new Date().toISOString()};
+fs.writeFileSync(path.join(__dirname,'preCommitGitProcess.pre-production-01.test.ts'),bytes,{flag:'wx'});fs.writeFileSync(path.join(__dirname,'process-test-freeze-01.json'),JSON.stringify(record,null,2)+'\n',{flag:'wx'});console.log(JSON.stringify(record));

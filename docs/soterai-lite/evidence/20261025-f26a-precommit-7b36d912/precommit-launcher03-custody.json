@@ -1,0 +1,83 @@
+{
+  "status": "MATERIALIZED_CURRENT_NATIVE_FIXTURE_ONLY_NOT_EXECUTED",
+  "time": "2026-10-26T06:38:02.292Z",
+  "binding": {
+    "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/native-current-binding-03.json",
+    "bytes": 2075,
+    "sha256": "df37214d1c6af39677175f4cd8245d6cfa314488aed520110e73fa2f582bb612"
+  },
+  "helpers": [
+    {
+      "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-precommit-native-03.ps1",
+      "bytes": 33256,
+      "sha256": "755f80ee00b023f4b24da4d5a0079a2202d038698aa8fc923fbbca420520a0de"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/precommit-offline-owner-03.cjs",
+      "bytes": 14721,
+      "sha256": "3455e56138c1f0856b9374391686dfeae4d08c11fec143eeccff39907dece915"
+    }
+  ],
+  "ancestors": [
+    {
+      "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-precommit-native-02.ps1",
+      "bytes": 32435,
+      "sha256": "26377540c6a67ff5aec278781fa7fc0e36ac7448b068029087a9382e063196d9"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/precommit-offline-owner-01.cjs",
+      "bytes": 14721,
+      "sha256": "8ce7204791b8c0f58db406910b3b856b42853afcee4116ebf2d65dd294fffcfb"
+    }
+  ],
+  "snapshots": [
+    {
+      "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/precommit-launcher03-inherited-run02.txt",
+      "bytes": 32435,
+      "sha256": "26377540c6a67ff5aec278781fa7fc0e36ac7448b068029087a9382e063196d9"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/precommit-launcher03-inherited-offline01.txt",
+      "bytes": 14721,
+      "sha256": "8ce7204791b8c0f58db406910b3b856b42853afcee4116ebf2d65dd294fffcfb"
+    }
+  ],
+  "semanticFreeze": {
+    "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/native-host-freeze-02.json",
+    "bytes": 6238,
+    "sha256": "96c822673ea43cd246bb116b8232cefd86d9ab5448f0793d11e16455552dca6a"
+  },
+  "driver": {
+    "path": "prebuilt-native-hosts-03/lite-precommit-guard-host.js",
+    "bytes": 69664,
+    "sha256": "899f01c8e699e613ac5d3fc2f8066e8997938e79ecc665dfe34af3e5c4e9090b"
+  },
+  "unchangedAffectedDrivers": 20,
+  "sourceProof": {
+    "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/native-source-inputs-03.json",
+    "bytes": 193291,
+    "sha256": "f94d6ca5ea2ff2499dbf76ea5f82239160806a7dc35bad5d42b79a7d5edb6aab"
+  },
+  "fullSourceProof": {
+    "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/full-inputs-02.json",
+    "bytes": 192917,
+    "sha256": "5b381391b7161f21af4dc30c3d6594373bb307f8903ab74d739d4d3a688ad322"
+  },
+  "compiler": {
+    "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/compiler-14.txt.result.json",
+    "bytes": 577,
+    "sha256": "4f78702568234099b8b827d30b929208c4c58b2464482f6ce22cfbb0bf5d8ddd"
+  },
+  "full": {
+    "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/full-tests-02.txt.result.json",
+    "bytes": 609,
+    "sha256": "2cfdcf7e1cf975b01dd73a0e2093452e0513d18e836b15ca2af91cb0822ad859"
+  },
+  "vsix": {
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-f26a-20261026-attempt01.vsix",
+    "bytes": 1705050,
+    "sha256": "bf23137b018e9c6f479ce537ba58898a4077fcdea8a0a785261a3446ac4cbd91"
+  },
+  "independence": "LOW",
+  "limitations": "Generator only writes exact reviewed successor evidence. No native/build/compiler/test/Git/source execution. Root must syntax-check and custody-snapshot generated helpers before actual new native. Old failed observations remain immutable and unregraded."
+}

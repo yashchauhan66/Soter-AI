@@ -1,0 +1,17 @@
+{
+  "status": "TEST_FIXTURE_CORRECTION_ONLY_REVERIFICATION_PENDING",
+  "before": {
+    "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/preCommitGitProcess.before-default-operation-01.test.ts",
+    "bytes": 24090,
+    "sha256": "3c799f6918d207db0f6eaf9a772ac5e6530756184a1647d0d4a55ad61fe3618e"
+  },
+  "after": {
+    "path": "packages/vscode-extension/src/__tests__/preCommitGitProcess.test.ts",
+    "bytes": 24101,
+    "sha256": "554507384aa77a6b3b0bbfd8d35f3e7174f71e7c061d8e8789d7a61afb9f73fa"
+  },
+  "old": "const f = await fixture(operation, {}, index); unavailable(await f.start(), \"UNAVAILABLE\");",
+  "replacement": "const f = await fixture(operation, { operation }, index); unavailable(await f.start(), \"UNAVAILABLE\");",
+  "reason": "First invalid-selector case is undefined. JavaScript default argument in fixture(operation={kind:version}) replaced it with a valid version request; actual transport correctly admitted that version and eventually returned STOP_UNCONFIRMED. Explicit options override passes the originally intended undefined. All28cases, assertions, grammar, deadlines and production bytes unchanged; original27PASS1FAIL retained.",
+  "time": "2026-10-25T09:09:00.161Z"
+}

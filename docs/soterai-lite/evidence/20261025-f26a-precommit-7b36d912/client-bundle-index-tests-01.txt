@@ -1,0 +1,496 @@
+﻿TAP version 13
+# Subtest: F26a checked index internally prepares genuine root-bound metadata and an immutable default descriptor
+ok 1 - F26a checked index internally prepares genuine root-bound metadata and an immutable default descriptor
+  ---
+  duration_ms: 572.7993
+  type: 'test'
+  ...
+# Subtest: F26a checked index admits v2 v3 and an explicit empty-tree index
+ok 2 - F26a checked index admits v2 v3 and an explicit empty-tree index
+  ---
+  duration_ms: 504.2076
+  type: 'test'
+  ...
+# Subtest: F26a checked index selects the exact absolute alternative rather than a public default
+ok 3 - F26a checked index selects the exact absolute alternative rather than a public default
+  ---
+  duration_ms: 197.1402
+  type: 'test'
+  ...
+# Subtest: F26a checked index admits an exact root-relative index.lock containing executable entries
+ok 4 - F26a checked index admits an exact root-relative index.lock containing executable entries
+  ---
+  duration_ms: 50.1736
+  type: 'test'
+  ...
+# Subtest: F26a checked index preserves Unicode spaces leading dashes and repeated OID contexts
+ok 5 - F26a checked index preserves Unicode spaces leading dashes and repeated OID contexts
+  ---
+  duration_ms: 56.5737
+  type: 'test'
+  ...
+# Subtest: F26a checked index environment is exactly real metadata environment plus its validated absolute index
+ok 6 - F26a checked index environment is exactly real metadata environment plus its validated absolute index
+  ---
+  duration_ms: 57.9385
+  type: 'test'
+  ...
+# Subtest: F26a checked index does not mistake an inert bounded hooksPath for unsupported metadata
+ok 7 - F26a checked index does not mistake an inert bounded hooksPath for unsupported metadata
+  ---
+  duration_ms: 82.5522
+  type: 'test'
+  ...
+# Subtest: F26a checked index capability rejects structural clones accessors proxies and unrelated genuine metadata
+ok 8 - F26a checked index capability rejects structural clones accessors proxies and unrelated genuine metadata
+  ---
+  duration_ms: 48.6861
+  type: 'test'
+  ...
+# Subtest: F26a checked index returns unavailable before every index read when disabled
+ok 9 - F26a checked index returns unavailable before every index read when disabled
+  ---
+  duration_ms: 13.9309
+  type: 'test'
+  ...
+# Subtest: F26a checked index rejects missing default and missing explicit alternative without inventing an empty tree
+ok 10 - F26a checked index rejects missing default and missing explicit alternative without inventing an empty tree
+  ---
+  duration_ms: 24.4947
+  type: 'test'
+  ...
+# Subtest: F26a checked index rejects outside and worktree paths before reading them or falling back
+ok 11 - F26a checked index rejects outside and worktree paths before reading them or falling back
+  ---
+  duration_ms: 18.1398
+  type: 'test'
+  ...
+# Subtest: F26a checked index refuses unsafe absolute relative ADS control and short-alias selectors
+ok 12 - F26a checked index refuses unsafe absolute relative ADS control and short-alias selectors
+  ---
+  duration_ms: 13.8301
+  type: 'test'
+  ...
+# Subtest: F26a checked index rejects nonstring selectors without invoking coercion or accessors
+ok 13 - F26a checked index rejects nonstring selectors without invoking coercion or accessors
+  ---
+  duration_ms: 12.1494
+  type: 'test'
+  ...
+# Subtest: F26a checked index refuses nonabsolute root and invalid real metadata
+ok 14 - F26a checked index refuses nonabsolute root and invalid real metadata
+  ---
+  duration_ms: 23.7777
+  type: 'test'
+  ...
+# Subtest: F26a checked index supports128 entries and withholds129 rather than returning a prefix
+ok 15 - F26a checked index supports128 entries and withholds129 rather than returning a prefix
+  ---
+  duration_ms: 77.8465
+  type: 'test'
+  ...
+# Subtest: F26a checked index preserves the canonical256KiB derived-listing boundary
+ok 16 - F26a checked index preserves the canonical256KiB derived-listing boundary
+  ---
+  duration_ms: 121.4808
+  type: 'test'
+  ...
+# Subtest: F26a checked index bounds raw index bytes independently of entry and listing counts
+ok 17 - F26a checked index bounds raw index bytes independently of entry and listing counts
+  ---
+  duration_ms: 194.7852
+  type: 'test'
+  ...
+# Subtest: F26a checked index verifies signature version count and checksum instead of trusting a public default
+ok 18 - F26a checked index verifies signature version count and checksum instead of trusting a public default
+  ---
+  duration_ms: 135.9705
+  type: 'test'
+  ...
+# Subtest: F26a checked index refuses nonzero stages extended entries symlinks submodules and nonregular modes
+ok 19 - F26a checked index refuses nonzero stages extended entries symlinks submodules and nonregular modes
+  ---
+  duration_ms: 164.5748
+  type: 'test'
+  ...
+# Subtest: F26a checked index requires exact path-length flags zero padding and complete entry bodies
+ok 20 - F26a checked index requires exact path-length flags zero padding and complete entry bodies
+  ---
+  duration_ms: 48.4725
+  type: 'test'
+  ...
+# Subtest: F26a checked index admits only framed unique TREE and REUC extension records
+ok 21 - F26a checked index admits only framed unique TREE and REUC extension records
+  ---
+  duration_ms: 108.0557
+  type: 'test'
+  ...
+# Subtest: F26a checked index derives safe paths through the canonical parser instead of accepting native index aliases
+ok 22 - F26a checked index derives safe paths through the canonical parser instead of accepting native index aliases
+  ---
+  duration_ms: 153.7463
+  type: 'test'
+  ...
+# Subtest: F26a checked index fatally rejects invalid UTF8 and embedded NUL rather than truncating a private name
+ok 23 - F26a checked index fatally rejects invalid UTF8 and embedded NUL rather than truncating a private name
+  ---
+  duration_ms: 44.7477
+  type: 'test'
+  ...
+# Subtest: F26a checked index never reads worktree bodies while preparing or recapturing entries
+ok 24 - F26a checked index never reads worktree bodies while preparing or recapturing entries
+  ---
+  duration_ms: 112.807
+  type: 'test'
+  ...
+# Subtest: F26a checked index rejects a hardlinked selected file and retains both synthetic links
+ok 25 - F26a checked index rejects a hardlinked selected file and retains both synthetic links
+  ---
+  duration_ms: 15.3034
+  type: 'test'
+  ...
+# Subtest: F26a checked index refuses a junction selector without reading its outside target
+ok 26 - F26a checked index refuses a junction selector without reading its outside target
+  ---
+  duration_ms: 17.5613
+  type: 'test'
+  ...
+# Subtest: F26a checked index flag withdrawal and later reenable cannot revive a prepared capability
+ok 27 - F26a checked index flag withdrawal and later reenable cannot revive a prepared capability
+  ---
+  duration_ms: 81.0248
+  type: 'test'
+  ...
+# Subtest: F26a checked index throwing authority is unavailable and remains withdrawn
+ok 28 - F26a checked index throwing authority is unavailable and remains withdrawn
+  ---
+  duration_ms: 93.1761
+  type: 'test'
+  ...
+# Subtest: F26a checked index exact alternative byte drift withdraws even if the old default stays public
+ok 29 - F26a checked index exact alternative byte drift withdraws even if the old default stays public
+  ---
+  duration_ms: 145.0926
+  type: 'test'
+  ...
+# Subtest: F26a checked index identity replacement withdraws even for byte-identical replacement
+ok 30 - F26a checked index identity replacement withdraws even for byte-identical replacement
+  ---
+  duration_ms: 89.4392
+  type: 'test'
+  ...
+# Subtest: F26a checked index missing selected file never falls back during recapture
+ok 31 - F26a checked index missing selected file never falls back during recapture
+  ---
+  duration_ms: 71.0273
+  type: 'test'
+  ...
+# Subtest: F26a checked index metadata config drift withdraws the aggregate without editing shared metadata code
+ok 32 - F26a checked index metadata config drift withdraws the aggregate without editing shared metadata code
+  ---
+  duration_ms: 69.8601
+  type: 'test'
+  ...
+# Subtest: F26a checked index parent replacement by a retained junction withdraws canonical authority
+ok 33 - F26a checked index parent replacement by a retained junction withdraws canonical authority
+  ---
+  duration_ms: 55.5022
+  type: 'test'
+  ...
+# Subtest: F26a snapshot captures exact index SHA256 and deeply frozen staged entries without granting capability
+ok 34 - F26a snapshot captures exact index SHA256 and deeply frozen staged entries without granting capability
+  ---
+  duration_ms: 64.2436
+  type: 'test'
+  ...
+# Subtest: F26a snapshot has stable identity and digest across unchanged recaptures
+ok 35 - F26a snapshot has stable identity and digest across unchanged recaptures
+  ---
+  duration_ms: 23.0177
+  type: 'test'
+  ...
+# Subtest: F26a snapshot accepts supported v2 v3 and empty indexes with their own exact byte hashes
+ok 36 - F26a snapshot accepts supported v2 v3 and empty indexes with their own exact byte hashes
+  ---
+  duration_ms: 32.7538
+  type: 'test'
+  ...
+# Subtest: F26a snapshot binds absolute and canonical root-relative selectors to the actual alternative
+ok 37 - F26a snapshot binds absolute and canonical root-relative selectors to the actual alternative
+  ---
+  duration_ms: 26.0414
+  type: 'test'
+  ...
+# Subtest: F26a snapshot byte drift changes digest and identity while old frozen observations stay unchanged
+ok 38 - F26a snapshot byte drift changes digest and identity while old frozen observations stay unchanged
+  ---
+  duration_ms: 20.2316
+  type: 'test'
+  ...
+# Subtest: F26a snapshot distinguishes byte-identical atomic index replacement from unchanged identity
+ok 39 - F26a snapshot distinguishes byte-identical atomic index replacement from unchanged identity
+  ---
+  duration_ms: 26.4834
+  type: 'test'
+  ...
+# Subtest: F26a snapshot identity covers parent git replacement even when the same index file survives
+ok 40 - F26a snapshot identity covers parent git replacement even when the same index file survives
+  ---
+  duration_ms: 26.2417
+  type: 'test'
+  ...
+# Subtest: F26a snapshot refuses a junction symlink replacing git without reading its index target
+ok 41 - F26a snapshot refuses a junction symlink replacing git without reading its index target
+  ---
+  duration_ms: 15.9305
+  type: 'test'
+  ...
+# Subtest: F26a snapshot refuses a symlink junction root instead of canonicalizing it to another authority
+ok 42 - F26a snapshot refuses a symlink junction root instead of canonicalizing it to another authority
+  ---
+  duration_ms: 11.7475
+  type: 'test'
+  ...
+# Subtest: F26a snapshot refuses a hardlinked alternative without falling back to the valid default
+ok 43 - F26a snapshot refuses a hardlinked alternative without falling back to the valid default
+  ---
+  duration_ms: 18.7748
+  type: 'test'
+  ...
+# Subtest: F26a snapshot missing default or explicit alternative never invents an empty or fallback index
+ok 44 - F26a snapshot missing default or explicit alternative never invents an empty or fallback index
+  ---
+  duration_ms: 18.8955
+  type: 'test'
+  ...
+# Subtest: F26a snapshot rejects invalid selectors without caller coercion getters or default fallback
+ok 45 - F26a snapshot rejects invalid selectors without caller coercion getters or default fallback
+  ---
+  duration_ms: 14.4984
+  type: 'test'
+  ...
+# Subtest: F26a snapshot refuses outside worktree noncanonical ADS and short-alias index paths before content reads
+ok 46 - F26a snapshot refuses outside worktree noncanonical ADS and short-alias index paths before content reads
+  ---
+  duration_ms: 15.2221
+  type: 'test'
+  ...
+# Subtest: F26a snapshot refuses corrupt or unsupported DIRC bytes rather than hashing them into authority
+ok 47 - F26a snapshot refuses corrupt or unsupported DIRC bytes rather than hashing them into authority
+  ---
+  duration_ms: 94.1416
+  type: 'test'
+  ...
+# Subtest: F26a snapshot preserves strict staged path and complete entry-count refusal
+ok 48 - F26a snapshot preserves strict staged path and complete entry-count refusal
+  ---
+  duration_ms: 57.0274
+  type: 'test'
+  ...
+# Subtest: F26a snapshot captures independently of metadata factory or child launch authority
+ok 49 - F26a snapshot captures independently of metadata factory or child launch authority
+  ---
+  duration_ms: 692.9547
+  type: 'test'
+  ...
+# Subtest: F26a snapshot never reads staged worktree bodies or includes their bytes in its result
+ok 50 - F26a snapshot never reads staged worktree bodies or includes their bytes in its result
+  ---
+  duration_ms: 26.0334
+  type: 'test'
+  ...
+# Subtest: F26a genuine index descriptor exposes the exact same frozen digest identity and entries as capture
+ok 51 - F26a genuine index descriptor exposes the exact same frozen digest identity and entries as capture
+  ---
+  duration_ms: 86.6561
+  type: 'test'
+  ...
+# Subtest: F26a genuine descriptor retains its old snapshot and sticky withdrawal after byte drift is restored
+ok 52 - F26a genuine descriptor retains its old snapshot and sticky withdrawal after byte drift is restored
+  ---
+  duration_ms: 83.0205
+  type: 'test'
+  ...
+# Subtest: F26a genuine descriptor binds file identity even when replacement has identical digest and entries
+ok 53 - F26a genuine descriptor binds file identity even when replacement has identical digest and entries
+  ---
+  duration_ms: 73.4144
+  type: 'test'
+  ...
+# Subtest: F26a client allows only reviewed artifacts signed current owner and exact genuine index metadata
+ok 54 - F26a client allows only reviewed artifacts signed current owner and exact genuine index metadata
+  ---
+  duration_ms: 522.5112
+  type: 'test'
+  ...
+# Subtest: F26a client creates a fresh nonce for each invocation and never sends body findings or environment
+ok 55 - F26a client creates a fresh nonce for each invocation and never sends body findings or environment
+  ---
+  duration_ms: 124.8757
+  type: 'test'
+  ...
+# Subtest: F26a client honors an exact selected alternative index instead of a public default fallback
+ok 56 - F26a client honors an exact selected alternative index instead of a public default fallback
+  ---
+  duration_ms: 113.6417
+  type: 'test'
+  ...
+# Subtest: F26a client explicit empty invalid missing and outside index selectors refuse without a request
+ok 57 - F26a client explicit empty invalid missing and outside index selectors refuse without a request
+  ---
+  duration_ms: 127.3549
+  type: 'test'
+  ...
+# Subtest: F26a client malformed noncanonical duplicate and oversized pins refuse before any request
+ok 58 - F26a client malformed noncanonical duplicate and oversized pins refuse before any request
+  ---
+  duration_ms: 101.2836
+  type: 'test'
+  ...
+# Subtest: F26a client invalid pin versions paths hashes and signing key cannot borrow real files
+ok 59 - F26a client invalid pin versions paths hashes and signing key cannot borrow real files
+  ---
+  duration_ms: 98.6823
+  type: 'test'
+  ...
+# Subtest: F26a client exact runtime and worker invocation paths cannot be replaced by same-byte siblings
+ok 60 - F26a client exact runtime and worker invocation paths cannot be replaced by same-byte siblings
+  ---
+  duration_ms: 79.5022
+  type: 'test'
+  ...
+# Subtest: F26a client missing or changed initial artifacts refuse before owner request
+ok 61 - F26a client missing or changed initial artifacts refuse before owner request
+  ---
+  duration_ms: 282.9488
+  type: 'test'
+  ...
+# Subtest: F26a client descriptor key root installation and artifact bindings must all verify before request
+ok 62 - F26a client descriptor key root installation and artifact bindings must all verify before request
+  ---
+  duration_ms: 422.2879
+  type: 'test'
+  ...
+# Subtest: F26a client descriptor framing and8192 byte cap withhold malformed endpoint metadata
+ok 63 - F26a client descriptor framing and8192 byte cap withhold malformed endpoint metadata
+  ---
+  duration_ms: 209.7667
+  type: 'test'
+  ...
+# Subtest: F26a client verified current BLOCK remains useful while BUSY unavailable empty and thrown transport refuse
+ok 64 - F26a client verified current BLOCK remains useful while BUSY unavailable empty and thrown transport refuse
+  ---
+  duration_ms: 157.2101
+  type: 'test'
+  ...
+# Subtest: F26a client rejects wrong signed decision nonce session root and installation generation
+ok 65 - F26a client rejects wrong signed decision nonce session root and installation generation
+  ---
+  duration_ms: 118.7875
+  type: 'test'
+  ...
+# Subtest: F26a client rejects signed decisions with different index digest or identity including BLOCK
+ok 66 - F26a client rejects signed decisions with different index digest or identity including BLOCK
+  ---
+  duration_ms: 122.352
+  type: 'test'
+  ...
+# Subtest: F26a client foreign forged malformed and oversized decision signatures cannot authorize
+ok 67 - F26a client foreign forged malformed and oversized decision signatures cannot authorize
+  ---
+  duration_ms: 243.251
+  type: 'test'
+  ...
+# Subtest: F26a client signed prior nonce replay cannot authorize a later invocation
+ok 68 - F26a client signed prior nonce replay cannot authorize a later invocation
+  ---
+  duration_ms: 140.3114
+  type: 'test'
+  ...
+# Subtest: F26a client final synchronous index recapture rejects changed bytes and same-byte replacement
+ok 69 - F26a client final synchronous index recapture rejects changed bytes and same-byte replacement
+  ---
+  duration_ms: 365.2206
+  type: 'test'
+  ...
+# Subtest: F26a client descriptor restart byte drift and same-byte identity replacement revoke held decisions
+ok 70 - F26a client descriptor restart byte drift and same-byte identity replacement revoke held decisions
+  ---
+  duration_ms: 414.1947
+  type: 'test'
+  ...
+# Subtest: F26a client final runtime and worker hashes and identities reject await-time artifact replacement
+ok 71 - F26a client final runtime and worker hashes and identities reject await-time artifact replacement
+  ---
+  duration_ms: 395.6004
+  type: 'test'
+  ...
+# Subtest: F26a client monotonic whole-operation deadline rejects expiry reversal and nonfinite clocks
+ok 72 - F26a client monotonic whole-operation deadline rejects expiry reversal and nonfinite clocks
+  ---
+  duration_ms: 418.0661
+  type: 'test'
+  ...
+# Subtest: F26a client worker2MiB cap is inclusive and refuses larger actual pinned files before request
+ok 73 - F26a client worker2MiB cap is inclusive and refuses larger actual pinned files before request
+  ---
+  duration_ms: 210.5023
+  type: 'test'
+  ...
+# Subtest: F26a minimal pre-commit client bundles the canonical index parser without owner Git or editor authority
+ok 74 - F26a minimal pre-commit client bundles the canonical index parser without owner Git or editor authority
+  ---
+  duration_ms: 53.3213
+  type: 'test'
+  ...
+# Subtest: F26a absolute client deadline settles unavailable and closes its exact active streaming HTTP ownership
+ok 75 - F26a absolute client deadline settles unavailable and closes its exact active streaming HTTP ownership
+  ---
+  duration_ms: 159.4262
+  type: 'test'
+  ...
+# Subtest: F26a real owner and default client HTTP adapter allow a complete public synthetic index
+ok 76 - F26a real owner and default client HTTP adapter allow a complete public synthetic index
+  ---
+  duration_ms: 374.8352
+  type: 'test'
+  ...
+# Subtest: F26a real owner signed BLOCK crosses the default HTTP adapter without raw content
+ok 77 - F26a real owner signed BLOCK crosses the default HTTP adapter without raw content
+  ---
+  duration_ms: 239.9219
+  type: 'test'
+  ...
+# Subtest: F26a current descriptor with an absent owner refuses through the default HTTP adapter
+ok 78 - F26a current descriptor with an absent owner refuses through the default HTTP adapter
+  ---
+  duration_ms: 156.7015
+  type: 'test'
+  ...
+# Subtest: F26a descriptor published before machine disable cannot admit a real HTTP scan
+ok 79 - F26a descriptor published before machine disable cannot admit a real HTTP scan
+  ---
+  duration_ms: 142.0504
+  type: 'test'
+  ...
+# Subtest: F26a default HTTP adapter refuses302 without following external Location or making a second request
+ok 80 - F26a default HTTP adapter refuses302 without following external Location or making a second request
+  ---
+  duration_ms: 109.7538
+  type: 'test'
+  ...
+# Subtest: F26a default HTTP adapter refuses oversized malformed unsupported and truncated response framing
+ok 81 - F26a default HTTP adapter refuses oversized malformed unsupported and truncated response framing
+  ---
+  duration_ms: 578.1172
+  type: 'test'
+  ...
+1..81
+# tests 81
+# suites 0
+# pass 81
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 14698.9976

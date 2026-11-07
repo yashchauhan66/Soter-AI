@@ -1,0 +1,24 @@
+  // Successful normal close also waits for full descendant custody and the
+  // helper's actual exit 0 / both EOF. An early-root receipt never accepts a phase.
+  const fullPath = path.join(b.gate, b.phase + '-full-custody-accepted.json');
+  const fullAck = await until(() => {
+    if (!fs.existsSync(fullPath)) return undefined;
+    const stat = fs.lstatSync(fullPath);
+    assert(stat.isFile() && !stat.isSymbolicLink() && stat.nlink === 1 && stat.size <= 2 * 1024 * 1024);
+    try { return read(fullPath); } catch (error) { if (error instanceof SyntaxError) return undefined; throw error; }
+  }, timeout, 'Full descendant custody acknowledgment missing');
+  assert.equal(fullAck.status, 'FULL_DESCENDANT_CUSTODY_AND_HELPER_NATURAL_EOF_ACCEPTED');
+  assert.equal(fullAck.feature, 'F32'); assert.equal(fullAck.phase, b.phase); assert.equal(fullAck.profile, b.profile);
+  assert.equal(fullAck.signalsRequested, 0); assert.deepEqual(fullAck.vendorReceipt, b.vendorReceipt);
+  for (const row of [fullAck.fullCustody, fullAck.earlyCustody, fullAck.helperClose]) {
+    assert(inside(b.gate, row.path)); pin(row);
+  }
+  const full = read(fullAck.fullCustody.path), early = read(fullAck.earlyCustody.path), helper = read(fullAck.helperClose.path);
+  assert.equal(full.status, 'CURRENT_OWNED_EXACT_PROFILE_LOOPBACK_LISTENER');
+  assert.equal(early.status, 'CURRENT_OWNED_EXACT_ROOT_LOOPBACK_LISTENER');
+  assert.equal(full.rootCodePid, fullAck.rootCodePid); assert.equal(early.rootCodePid, full.rootCodePid);
+  assert.equal(full.rootCreationUtc, early.rootCreationUtc); assert.equal(full.profile, b.profile);
+  assert.equal(full.signals, 0); assert.equal(early.signals, 0);
+  assert.equal(helper.actualClose, true); assert.equal(helper.exitCode, 0); assert.equal(helper.signal, null);
+  assert.equal(helper.stdoutEOF, true); assert.equal(helper.stderrEOF, true); assert.equal(helper.signalsRequested, 0);
+  assert.equal(helper.overflow, false); assert.equal(helper.streamError, false); assert.equal(helper.deadlineExceeded, false);

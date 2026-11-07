@@ -1,0 +1,199 @@
+﻿TAP version 13
+# Subtest: F26a process pins version executable safe prefix environment and metadata-job cwd
+ok 1 - F26a process pins version executable safe prefix environment and metadata-job cwd
+  ---
+  duration_ms: 343.7939
+  type: 'test'
+  ...
+# Subtest: F26a entries process uses the actual checked root and literal stage-NUL suffix
+ok 2 - F26a entries process uses the actual checked root and literal stage-NUL suffix
+  ---
+  duration_ms: 132.6472
+  type: 'test'
+  ...
+# Subtest: F26a sizes process puts validated IDs only in private stdin with a fixed batch-check suffix
+ok 3 - F26a sizes process puts validated IDs only in private stdin with a fixed batch-check suffix
+  ---
+  duration_ms: 111.0454
+  type: 'test'
+  ...
+# Subtest: F26a batch process sends no sizes paths or content through argv or environment
+ok 4 - F26a batch process sends no sizes paths or content through argv or environment
+  ---
+  duration_ms: 110.6457
+  type: 'test'
+  ...
+# Subtest: F26a process waits for real close after both EOFs
+ok 5 - F26a process waits for real close after both EOFs
+  ---
+  duration_ms: 125.7422
+  type: 'test'
+  ...
+# Subtest: F26a process waits for each EOF after a close0 observation
+ok 6 - F26a process waits for each EOF after a close0 observation
+  ---
+  duration_ms: 207.4775
+  type: 'test'
+  ...
+# Subtest: F26a process copies held private chunks instead of retaining caller-mutable buffers
+ok 7 - F26a process copies held private chunks instead of retaining caller-mutable buffers
+  ---
+  duration_ms: 147.2665
+  type: 'test'
+  ...
+# Subtest: F26a process rejects nonzero missing-exit and signalled fake closures
+ok 8 - F26a process rejects nonzero missing-exit and signalled fake closures
+  ---
+  duration_ms: 236.9967
+  type: 'test'
+  ...
+# Subtest: F26a process consumes bounded private stderr without returning a raw diagnostic
+ok 9 - F26a process consumes bounded private stderr without returning a raw diagnostic
+  ---
+  duration_ms: 147.9778
+  type: 'test'
+  ...
+# Subtest: F26a process withholds stderr over8192 while preserving actual child ownership
+ok 10 - F26a process withholds stderr over8192 while preserving actual child ownership
+  ---
+  duration_ms: 88.8345
+  type: 'test'
+  ...
+# Subtest: F26a process enforces each exact stdout cap independently
+ok 11 - F26a process enforces each exact stdout cap independently
+  ---
+  duration_ms: 461.3564
+  type: 'test'
+  ...
+# Subtest: F26a process admits128 unique size IDs and the exact1MiB declared batch budget
+ok 12 - F26a process admits128 unique size IDs and the exact1MiB declared batch budget
+  ---
+  duration_ms: 167.7042
+  type: 'test'
+  ...
+# Subtest: F26a process rejects unknown operations extra keys and route argv environment injection
+not ok 13 - F26a process rejects unknown operations extra keys and route argv environment injection
+  ---
+  duration_ms: 60103.6643
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\preCommitGitProcess.test.ts:2:14327'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'STOP_UNCONFIRMED'
+    - 'UNAVAILABLE'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'UNAVAILABLE'
+  actual: 'STOP_UNCONFIRMED'
+  operator: 'strictEqual'
+  stack: |-
+    unavailable (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\preCommitGitProcess.test.ts:84:67)
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\preCommitGitProcess.test.ts:193:56)
+    runNextTicks (node:internal/process/task_queues:65:5)
+    process.processTimers (node:internal/timers:520:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F26a process rejects malformed duplicate empty oversized and option-looking OID arrays
+ok 14 - F26a process rejects malformed duplicate empty oversized and option-looking OID arrays
+  ---
+  duration_ms: 665.136
+  type: 'test'
+  ...
+# Subtest: F26a process rejects malformed batch size object and aggregate budgets before spawn
+ok 15 - F26a process rejects malformed batch size object and aggregate budgets before spawn
+  ---
+  duration_ms: 1229.7346
+  type: 'test'
+  ...
+# Subtest: F26a process never evaluates accessor operation array or object fields
+ok 16 - F26a process never evaluates accessor operation array or object fields
+  ---
+  duration_ms: 553.1812
+  type: 'test'
+  ...
+# Subtest: F26a process refuses checked-index lookalikes without invoking their available accessor
+ok 17 - F26a process refuses checked-index lookalikes without invoking their available accessor
+  ---
+  duration_ms: 275.0333
+  type: 'test'
+  ...
+# Subtest: F26a process pre-start withdrawal is sticky and starts no child
+ok 18 - F26a process pre-start withdrawal is sticky and starts no child
+  ---
+  duration_ms: 215.8698
+  type: 'test'
+  ...
+# Subtest: F26a active withdrawal clears private data and stays busy until close plus both EOFs
+ok 19 - F26a active withdrawal clears private data and stays busy until close plus both EOFs
+  ---
+  duration_ms: 401.1395
+  type: 'test'
+  ...
+# Subtest: F26a process rejects expired nonfinite deadlines and unavailable guards before spawn
+ok 20 - F26a process rejects expired nonfinite deadlines and unavailable guards before spawn
+  ---
+  duration_ms: 613.179
+  type: 'test'
+  ...
+# Subtest: F26a elapsed deadline withdraws after fake admission with a held deterministic clock
+ok 21 - F26a elapsed deadline withdraws after fake admission with a held deterministic clock
+  ---
+  duration_ms: 849.8221
+  type: 'test'
+  ...
+# Subtest: F26a process never extends its60second bound to a later caller deadline
+ok 22 - F26a process never extends its60second bound to a later caller deadline
+  ---
+  duration_ms: 458.9735
+  type: 'test'
+  ...
+# Subtest: F26a clock reversal or nonfinite values withhold apparently successful completion
+ok 23 - F26a clock reversal or nonfinite values withhold apparently successful completion
+  ---
+  duration_ms: 995.3583
+  type: 'test'
+  ...
+# Subtest: F26a valid guard withdrawal and later reenable cannot release buffered bytes
+ok 24 - F26a valid guard withdrawal and later reenable cannot release buffered bytes
+  ---
+  duration_ms: 661.7971
+  type: 'test'
+  ...
+# Subtest: F26a checked-index drift blocks admission and late drift withholds completion
+ok 25 - F26a checked-index drift blocks admission and late drift withholds completion
+  ---
+  duration_ms: 1234.9233
+  type: 'test'
+  ...
+# Subtest: F26a stdout stderr and stdin errors withhold without destroying owned pipes
+ok 26 - F26a stdout stderr and stdin errors withhold without destroying owned pipes
+  ---
+  duration_ms: 511.3331
+  type: 'test'
+  ...
+# Subtest: F26a spawn throws and a no-PID spawn error return unavailable without fabricated child closure
+ok 27 - F26a spawn throws and a no-PID spawn error return unavailable without fabricated child closure
+  ---
+  duration_ms: 435.6588
+  type: 'test'
+  ...
+# Subtest: F26a an error after PID ownership retains busy until actual close and EOFs
+ok 28 - F26a an error after PID ownership retains busy until actual close and EOFs
+  ---
+  duration_ms: 207.8955
+  type: 'test'
+  ...
+1..28
+# tests 28
+# suites 0
+# pass 27
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 72153.1198

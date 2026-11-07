@@ -1,0 +1,127 @@
+{
+  "status": "PASS_OFFLINE_HANDOFF_INTEGRITY_NOT_PRODUCT_OR_HUMAN_ACCEPTANCE",
+  "observedAt": "2026-11-06T09:12:55.653Z",
+  "handoffSha256": "6fabe9a4ce58656ba3d80462b1f0b167edc80d4afdfc744f5f9b0a5addbe23bb",
+  "verifierSha256": "272a261ec4b7a4660c08919b98f2b024a1e779b3183edc13a7280a79f13cf680",
+  "artifact": {
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-f32-20261103-attempt01.vsix",
+    "bytes": 1742100,
+    "sha256": "e2ce3dc44d45b5e160ab0f95d713a9434a9ea7d610ce7abd2bf2500abe89d649"
+  },
+  "frozenSources": 1110,
+  "frozenSourceDrift": 0,
+  "package": {
+    "entries": 18,
+    "runtimes": 4,
+    "embeddedSbomSha256": "6b303ad746cd82a4e2de0162f7721a01b6e7eff26b75f69341c6e8f01e0a6bbd",
+    "status": "PASS_FINAL_OFFLINE_PACKAGE_NOT_RELEASE_READY"
+  },
+  "neutralKit": {
+    "manifestEntries": 393,
+    "totalFiles": 394,
+    "exclusionSearchFiles": 391,
+    "forbiddenHits": 0,
+    "verdict": "NOT_PROVIDED"
+  },
+  "catalog": {
+    "checks": 44,
+    "tools": 6,
+    "pairs": 264,
+    "statuses": {
+      "UNVERIFIED": 264
+    },
+    "rating": null
+  },
+  "retainedAudit": {
+    "affectedBuildAssociations": 42,
+    "high": 17,
+    "moderate": 19,
+    "low": 6,
+    "remediation": "OPEN",
+    "riskAcceptance": "NOT_GRANTED",
+    "freshNetworkAudit": false
+  },
+  "retainedBenchmarks": {
+    "scriptedCases": 4,
+    "realModelCalls": 0,
+    "actualExpressIntegration": "NOT_RUN"
+  },
+  "retainedNative": [
+    {
+      "receipt": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f05-current-acceptance-04.json",
+      "status": "PASS_CURRENT_F05_CUSTOMDOCUMENT10_DEVELOPER_BOOTSTRAP_NOT_CLEAN_INSTALL",
+      "codeVersion": "1.145.0",
+      "checks": 10,
+      "measurements": [],
+      "interpretation": "Rehashed historical raw results; developer-bootstrap scope on its recorded host, not fresh execution or current-host transfer."
+    },
+    {
+      "receipt": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f28-current-01/native-acceptance-current-02.json",
+      "status": "PASS_CURRENT_F28_RELIABILITY30_DEVELOPER_BOOTSTRAP_NOT_FEATURE_COMPLETION",
+      "codeVersion": "1.145.0",
+      "checks": 30,
+      "measurements": [
+        {
+          "kind": "ACTIVATION_BODY_EXCLUDES_MODULE_LOADING",
+          "milliseconds": 176.08489999999983
+        },
+        {
+          "kind": "WITHDRAWN_OPEN_SLOT_RETAINED",
+          "activeReads": 1
+        },
+        {
+          "kind": "OWNED_FIVE_SECOND_TIMER_WITHHELD_IO_STILL_OWNED",
+          "milliseconds": 5005.784300000001
+        },
+        {
+          "kind": "ACTUAL_PACKAGED_COMMAND_SELECTED128_OF4096",
+          "selected": 128,
+          "bulkSyntheticFiles": 4096,
+          "milliseconds": 8369.6694,
+          "budgetMilliseconds": 60000
+        }
+      ],
+      "interpretation": "Rehashed historical raw results; developer-bootstrap scope on its recorded host, not fresh execution or current-host transfer."
+    }
+  ],
+  "documentsVerified": 15,
+  "retainedEvidenceFilesVerified": 15,
+  "childProcesses": 0,
+  "nativeLaunches": 0,
+  "networkRequests": 0,
+  "releaseReady": false,
+  "featureComplete": false,
+  "humanResults": "NOT_PROVIDED",
+  "finalRating": null,
+  "gates": {
+    "F31": {
+      "status": "SCOPED_PACKAGE_PREPARATION_RETAINED_GLOBAL_READINESS_INCOMPLETE",
+      "remaining": "F26a/F32/final gates and owner release decisions"
+    },
+    "V01": {
+      "status": "INCOMPLETE",
+      "remaining": "Installed F32/current-host acceptance and actual supported tool routes; preserve qualified native scope and unmanaged baseline"
+    },
+    "V02": {
+      "status": "INCOMPLETE",
+      "remaining": "44-by-6 applicability/control/mutation mapping, exact startup/scan/stream/stress budgets, Express integration and human model trials"
+    },
+    "V03": {
+      "status": "DELIVERABLES_PREPARED_PREREQUISITES_INCOMPLETE",
+      "remaining": "Refresh claim/artifact bindings after accepted remaining work; no final rating"
+    },
+    "V04": {
+      "status": "NEUTRAL_PACKET_PREPARED_NOT_INDEPENDENT_REVIEW",
+      "remaining": "External exact-object static/dynamic verdict; current status supplied by neutral addendum"
+    },
+    "V05": {
+      "status": "HUMAN_CHECKLIST_PREPARED_NOT_ENTERED",
+      "handoff": {
+        "path": "docs/soterai-lite/HUMAN-ACTIONS.md",
+        "bytes": 6326,
+        "sha256": "9995379f45b7fbe7231767e1e56aa70cd84d089846294b9f5d2031f2a61add06"
+      },
+      "remaining": "Original L6 prerequisites, then human actions and STOP"
+    }
+  }
+}

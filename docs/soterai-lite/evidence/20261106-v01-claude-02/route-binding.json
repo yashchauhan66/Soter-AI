@@ -1,0 +1,705 @@
+{
+  "status": "CURRENT_ROUTE_PREPARED_NOT_RUN",
+  "id": "claude",
+  "count": 22,
+  "expectedIds": [
+    "F19-N01",
+    "F19-N02",
+    "F19-N03",
+    "F19-N04",
+    "F19-N05",
+    "F19-N06",
+    "F19-N07",
+    "F19-N08",
+    "F19-N09",
+    "F19-N10",
+    "F19-N11",
+    "F19-N12",
+    "F19-N13",
+    "F19-N14",
+    "F19-N15",
+    "F19-N16",
+    "F19-N17",
+    "F19-N18",
+    "F19-N19",
+    "F19-N20",
+    "F19-N21",
+    "F19-N22"
+  ],
+  "expectedStatus": "PASS_SCOPED_PRODUCT_CLI_MATRIX",
+  "affectedAdmission": {
+    "path": "docs/soterai-lite/evidence/20261106-v01-current-01/v01-admission.cjs",
+    "bytes": 2750,
+    "sha256": "45d85d8fdaefa9d5cec58706d660730a0f386b60911e43868ccad344924838af"
+  },
+  "affectedBinding": {
+    "path": "docs/soterai-lite/evidence/20261106-v01-current-01/binding.json",
+    "bytes": 31244,
+    "sha256": "7d35e79884a683ae33167ec33fcf8c8762729d700d1108ba9b2fdfaded9c6b2f"
+  },
+  "sourceProof": {
+    "path": "docs/soterai-lite/evidence/20261106-remaining-queue/candidate-01/full-inputs-02.json",
+    "bytes": 223848,
+    "sha256": "23fd63bb04122bf055f656a77424085b75ff3e3c813121c15034cd209fd1c8f6"
+  },
+  "vsix": {
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-resumed-20261106-attempt02.vsix",
+    "bytes": 1742104,
+    "sha256": "011f96d19d42dbefc2e56eb5399bf5c7f16a09d6b71b8bae5be9d66b2f3769ec"
+  },
+  "frontendSha256": "b611dee998d11824d523b3d561704f4a5dc15e27274e6e1d85c7154b9d42cfa0",
+  "code": {
+    "path": "../../../AppData/Local/Programs/Microsoft VS Code/Code.exe",
+    "bytes": 238751552,
+    "sha256": "2361449e044667cd5030a1396db3ac6785424ff7bf3047c691bc79e9011ae91d"
+  },
+  "hostVersion": "1.145.1",
+  "originalPin": {
+    "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/installed-public-inputs-01.json",
+    "bytes": 19206,
+    "sha256": "69dd0d711b2408ed28e9c43577b3671e366f592ee1f7b950caa75e4b2429d9a7"
+  },
+  "vendorUse": {
+    "observedAt": "2026-11-06T13:55:36.377Z",
+    "originalPin": {
+      "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/installed-public-inputs-01.json",
+      "bytes": 19206,
+      "sha256": "69dd0d711b2408ed28e9c43577b3671e366f592ee1f7b950caa75e4b2429d9a7"
+    },
+    "relocations": [
+      {
+        "originalRoot": "C:/Users/USER/.vscode/extensions/anthropic.claude-code-2.1.301-win32-x64",
+        "selectedRoot": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64",
+        "status": "RETAINED_EXACT_PUBLIC_BYTES_NOT_CURRENT_INSTALLATION",
+        "bytesUnchanged": true
+      }
+    ],
+    "selectedVersion": "2.1.301",
+    "status": "CURRENT_BYTE_CHECK_OF_PINNED_PUBLIC_INPUTS_NO_NATIVE_RESULT",
+    "currentInstalledPublicPackages": [
+      {
+        "version": "2.1.318",
+        "manifest": {
+          "path": "../../../.vscode/extensions/anthropic.claude-code-2.1.318-win32-x64/package.json",
+          "bytes": 21557,
+          "sha256": "f6b8569ed4a5dcc59664cfbb66a496ede3a3b037d2baa970781a832b40f91dfd"
+        }
+      }
+    ],
+    "currentInstalledVersionCovered": false
+  },
+  "selectedInputs": [
+    {
+      "path": "D:\\SoterAI-Lite-test-profiles\\f19-product-20261019T105923Z-cf56eaaa\\extensions\\anthropic.claude-code-2.1.301-win32-x64\\package.json",
+      "relative": "package.json",
+      "bytes": 21557,
+      "sha256": "0159028b1582350192613d452f92250c98320526cd189773d6637d7bb321a92d"
+    },
+    {
+      "path": "D:\\SoterAI-Lite-test-profiles\\f19-product-20261019T105923Z-cf56eaaa\\extensions\\anthropic.claude-code-2.1.301-win32-x64\\extension.js",
+      "relative": "extension.js",
+      "bytes": 3581665,
+      "sha256": "65d43f4637c6a519d2b9b6b06be3b1f40532a437303684da87f349b7d1e2cd61"
+    },
+    {
+      "path": "D:\\SoterAI-Lite-test-profiles\\f19-product-20261019T105923Z-cf56eaaa\\extensions\\anthropic.claude-code-2.1.301-win32-x64\\resources\\native-binary\\claude.exe",
+      "relative": "resources/native-binary/claude.exe",
+      "bytes": 271840416,
+      "sha256": "84d61feeb1a07e5a5b3354d68432591cac18a5d38a419a30d86d0f3ad8cba397"
+    },
+    {
+      "path": "D:\\SoterAI-Lite-test-profiles\\f19-product-20261019T105923Z-cf56eaaa\\extensions\\anthropic.claude-code-2.1.301-win32-x64\\claude-code-settings.schema.json",
+      "relative": "claude-code-settings.schema.json",
+      "bytes": 272841,
+      "sha256": "a7597e5fd4ad8a8f0e0c28ceaa0356d4e8d8fbff2cbd21bd62e41b1828dc56e6"
+    },
+    {
+      "path": "D:\\SoterAI-Lite-test-profiles\\f19-product-20261019T105923Z-cf56eaaa\\extensions\\anthropic.claude-code-2.1.301-win32-x64\\README.md",
+      "relative": "README.md",
+      "bytes": 1463,
+      "sha256": "4e25991b954166afe0edddf49c00f3a054614b41ad72d5c16b6a43b4fb56e10b"
+    }
+  ],
+  "publicInputs": [
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/.vsixmanifest",
+      "bytes": 2146,
+      "sha256": "4b1b99ce538c78caf7a6e59dc5a49187a89a2dc16be0a0c02a85f6607480c4df"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/claude-code-settings.schema.json",
+      "bytes": 272841,
+      "sha256": "a7597e5fd4ad8a8f0e0c28ceaa0356d4e8d8fbff2cbd21bd62e41b1828dc56e6"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/extension.js",
+      "bytes": 3581665,
+      "sha256": "65d43f4637c6a519d2b9b6b06be3b1f40532a437303684da87f349b7d1e2cd61"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/package.json",
+      "bytes": 21557,
+      "sha256": "0159028b1582350192613d452f92250c98320526cd189773d6637d7bb321a92d"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/README.md",
+      "bytes": 1463,
+      "sha256": "4e25991b954166afe0edddf49c00f3a054614b41ad72d5c16b6a43b4fb56e10b"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/resources/AcceptMode.jpg",
+      "bytes": 136014,
+      "sha256": "a0743d51d1aeddb88d7173b78123acb1f69f68e3ba9ee37ad804b960e1edeba1"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/resources/audio-capture/x64-win32/audio-capture.node",
+      "bytes": 509440,
+      "sha256": "3fe6ef86ba63897e448708847fa126c08580584f6fb16f576420eaccb16a942e"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/resources/claude-logo-done.svg",
+      "bytes": 1907,
+      "sha256": "8a236c36a7cde9b369527b9b0cef4fefa643ad76fcf04d38d2bc939f2e49116d"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/resources/claude-logo-pending.svg",
+      "bytes": 1910,
+      "sha256": "fb6480fed07b8a327bf4b014cd5ece350dbc6b929bced6e68106cd4ee0ccebe6"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/resources/claude-logo.png",
+      "bytes": 10358,
+      "sha256": "7241633e5a39b44a947c7b9a821637f30d6e86716e7a8c847136d91f9c3f6ba1"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/resources/claude-logo.svg",
+      "bytes": 1696,
+      "sha256": "a3101f3047a119aa11825ad9369510f0c472428c8c52d420e31bc62db44a8364"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/resources/clawd.svg",
+      "bytes": 1751,
+      "sha256": "9ca6ebb33e268ff95ded9b927ceb53f22deecf4f1de9988f088437621c85154c"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/resources/ClawdWithGradCap.png",
+      "bytes": 905,
+      "sha256": "c2abd495a4dad9f2fe8a5ad2a4e048fd9b7e0d7a223e33a350b4497c40735107"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/resources/HighlightText.jpg",
+      "bytes": 218828,
+      "sha256": "ff2d8dcad131cc48bc13e448f76b80c812598489096d00b80a0ded3b2842f5fc"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/resources/native-binary/claude.exe",
+      "bytes": 271840416,
+      "sha256": "84d61feeb1a07e5a5b3354d68432591cac18a5d38a419a30d86d0f3ad8cba397"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/resources/PlanMode.jpg",
+      "bytes": 128933,
+      "sha256": "6c03b792c19858c75565f9944d48defac44ea4d4a81acf07bfe4af7ecb9fc8bb"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/resources/walkthrough/chat.png",
+      "bytes": 127137,
+      "sha256": "2e3f26e7ce4680e52d16466ee1cc3f973d7fc45ee4d09037b9da3f9188c60be1"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/resources/walkthrough/click.png",
+      "bytes": 132059,
+      "sha256": "1cf064e8ecfe03632387689189a9fcb836973401127b7bfa051c6fe361f899f7"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/resources/walkthrough/past.png",
+      "bytes": 84524,
+      "sha256": "175b7e1210bfb1758bea25ec19670e4735f8a071d5c7e5bc8fcfd4879c07194d"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/resources/walkthrough/step1.md",
+      "bytes": 433,
+      "sha256": "2acbfb2f5fe1397d33eedf6ce1bd2a200b06786f5d0ebad7d91467eb8982c852"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/resources/walkthrough/step2.md",
+      "bytes": 239,
+      "sha256": "0813de1e16f016d3211655159b72769b441fedc4eb09822ac7153b01395ba7fe"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/resources/walkthrough/step3.md",
+      "bytes": 439,
+      "sha256": "957df666039b8cc2c90572a01fa1ddc04cd8dce308f793ecea30ee000c3a39ad"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/resources/walkthrough/step4.md",
+      "bytes": 445,
+      "sha256": "3aa9cca7b16bdab63795afac37341b976448e6151a236ee464f095fefffb49c6"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/resources/walkthrough/welcome.png",
+      "bytes": 112125,
+      "sha256": "9f46167b114df8621d13e5fc310c790dfce333d350bb83727d750339bfb32d3c"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/resources/welcome-art-dark.svg",
+      "bytes": 228426,
+      "sha256": "9d8924739e3a7395a868789319e80e7304a6766a30e6958218cca9390cedd930"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/resources/welcome-art-light.svg",
+      "bytes": 214192,
+      "sha256": "5d148dc07670e92ea2cec55cf6a1b39215140fddca4c7fc4b35c74dcf2379f61"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/webview/fonts/KaTeX_AMS-Regular.woff2",
+      "bytes": 28076,
+      "sha256": "0cdd387c9590a1a9f9794560022dbb59654a7d86f187aa0c81495ad42d3a7308"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/webview/fonts/KaTeX_Caligraphic-Bold.woff2",
+      "bytes": 6912,
+      "sha256": "de7701e42cf1f4cf0b766c03fb27977207eee2f4fd5d76fa82188406da43ea4c"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/webview/fonts/KaTeX_Caligraphic-Regular.woff2",
+      "bytes": 6908,
+      "sha256": "5d53e70ad607c2352162dec9e0923fb54ecdafaccbf604cd8dcf7d00facb989b"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/webview/fonts/KaTeX_Fraktur-Bold.woff2",
+      "bytes": 11348,
+      "sha256": "74444efd593c005e3f4573b44524704c0af0a937fe911cca9e94068d0d140d3f"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/webview/fonts/KaTeX_Fraktur-Regular.woff2",
+      "bytes": 11316,
+      "sha256": "51814d270d06ff0255dba0799994fa4d8c84d11f09951d47595f4abb1f3602dc"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/webview/fonts/KaTeX_Main-Bold.woff2",
+      "bytes": 25324,
+      "sha256": "0f60d1b897938ec918c8ce073092411baf9438f6739465693ff18b0f9d20b021"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/webview/fonts/KaTeX_Main-BoldItalic.woff2",
+      "bytes": 16780,
+      "sha256": "99cd42a3c072d918f2f44984a807cf7aa16e13545fd0875fc07c6c65f99e715b"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/webview/fonts/KaTeX_Main-Italic.woff2",
+      "bytes": 16988,
+      "sha256": "97479ca6cce906abc961ecac96faa5f9ca2e61b8e7670d475826bcdee9a7c267"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/webview/fonts/KaTeX_Main-Regular.woff2",
+      "bytes": 26272,
+      "sha256": "c2342cd8b869e01752a9321dc17213fc40d4d04c79688c1d43f2cf316abd7866"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/webview/fonts/KaTeX_Math-BoldItalic.woff2",
+      "bytes": 16400,
+      "sha256": "dc47344dbb6cb5b655c8460d561f4df5f501b90c804ad3c6cec65fe322351ab1"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/webview/fonts/KaTeX_Math-Italic.woff2",
+      "bytes": 16440,
+      "sha256": "7af58c5ec8f132a2ddde9027c6d7814decce4d3b822a11192a42a20e2e973264"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/webview/fonts/KaTeX_SansSerif-Bold.woff2",
+      "bytes": 12216,
+      "sha256": "e99ae51144bf1232efcc1bfe5add36262c6866b0faab24fa75740e1b98577a62"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/webview/fonts/KaTeX_SansSerif-Italic.woff2",
+      "bytes": 12028,
+      "sha256": "00b26ac825e2095056396e0553b8ac26d3f8ad158c3826e28b4c45b385c4714a"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/webview/fonts/KaTeX_SansSerif-Regular.woff2",
+      "bytes": 10344,
+      "sha256": "68e8c73ef42afd3ccec58bf0fba302cce448938e7fc020a5e31f8a952eee1342"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/webview/fonts/KaTeX_Script-Regular.woff2",
+      "bytes": 9644,
+      "sha256": "036d4e95149b69ff9bcc0cd55771efeb25ffa3947293e69acd78d5ac328c684b"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/webview/fonts/KaTeX_Size1-Regular.woff2",
+      "bytes": 5468,
+      "sha256": "6b47c40166b6dbe21a5dfca7718413f2147fd2399be1ba605d8ad39cedf25dfe"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/webview/fonts/KaTeX_Size2-Regular.woff2",
+      "bytes": 5208,
+      "sha256": "d04c54219f9eaec6d4d4fd42dfb28785975a4794d6b2fc71e566b9cd6db842dd"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/webview/fonts/KaTeX_Size3-Regular.woff2",
+      "bytes": 3624,
+      "sha256": "73d591271b1604960cb10bb90fee021670af7297017e0e98480b332d11f51995"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/webview/fonts/KaTeX_Size4-Regular.woff2",
+      "bytes": 4928,
+      "sha256": "a4af7d414440a1c1790825cfb700cf9cf43b0f2c4b04f0ebc523011ad9853ec0"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/webview/fonts/KaTeX_Typewriter-Regular.woff2",
+      "bytes": 13568,
+      "sha256": "71d517d67827787cfabdf186914cc3358eda539e37931941f2b2fd4a21f68c0b"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/webview/index.css",
+      "bytes": 470040,
+      "sha256": "a96b403c82fb032268a8ac8da23a7715d77b3e8f2b3aa2afd298b225c717d7fb"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/webview/index.js",
+      "bytes": 6000965,
+      "sha256": "6603f2115a3d7b8a5286b527cb9d5c30749c98b97c7147f3da771ac04319e610"
+    }
+  ],
+  "sourcePublicInputs": [
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/.vsixmanifest",
+      "bytes": 2146,
+      "sha256": "4b1b99ce538c78caf7a6e59dc5a49187a89a2dc16be0a0c02a85f6607480c4df"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/claude-code-settings.schema.json",
+      "bytes": 272841,
+      "sha256": "a7597e5fd4ad8a8f0e0c28ceaa0356d4e8d8fbff2cbd21bd62e41b1828dc56e6"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/extension.js",
+      "bytes": 3581665,
+      "sha256": "65d43f4637c6a519d2b9b6b06be3b1f40532a437303684da87f349b7d1e2cd61"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/package.json",
+      "bytes": 21557,
+      "sha256": "0159028b1582350192613d452f92250c98320526cd189773d6637d7bb321a92d"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/README.md",
+      "bytes": 1463,
+      "sha256": "4e25991b954166afe0edddf49c00f3a054614b41ad72d5c16b6a43b4fb56e10b"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/resources/AcceptMode.jpg",
+      "bytes": 136014,
+      "sha256": "a0743d51d1aeddb88d7173b78123acb1f69f68e3ba9ee37ad804b960e1edeba1"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/resources/audio-capture/x64-win32/audio-capture.node",
+      "bytes": 509440,
+      "sha256": "3fe6ef86ba63897e448708847fa126c08580584f6fb16f576420eaccb16a942e"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/resources/claude-logo-done.svg",
+      "bytes": 1907,
+      "sha256": "8a236c36a7cde9b369527b9b0cef4fefa643ad76fcf04d38d2bc939f2e49116d"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/resources/claude-logo-pending.svg",
+      "bytes": 1910,
+      "sha256": "fb6480fed07b8a327bf4b014cd5ece350dbc6b929bced6e68106cd4ee0ccebe6"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/resources/claude-logo.png",
+      "bytes": 10358,
+      "sha256": "7241633e5a39b44a947c7b9a821637f30d6e86716e7a8c847136d91f9c3f6ba1"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/resources/claude-logo.svg",
+      "bytes": 1696,
+      "sha256": "a3101f3047a119aa11825ad9369510f0c472428c8c52d420e31bc62db44a8364"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/resources/clawd.svg",
+      "bytes": 1751,
+      "sha256": "9ca6ebb33e268ff95ded9b927ceb53f22deecf4f1de9988f088437621c85154c"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/resources/ClawdWithGradCap.png",
+      "bytes": 905,
+      "sha256": "c2abd495a4dad9f2fe8a5ad2a4e048fd9b7e0d7a223e33a350b4497c40735107"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/resources/HighlightText.jpg",
+      "bytes": 218828,
+      "sha256": "ff2d8dcad131cc48bc13e448f76b80c812598489096d00b80a0ded3b2842f5fc"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/resources/native-binary/claude.exe",
+      "bytes": 271840416,
+      "sha256": "84d61feeb1a07e5a5b3354d68432591cac18a5d38a419a30d86d0f3ad8cba397"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/resources/PlanMode.jpg",
+      "bytes": 128933,
+      "sha256": "6c03b792c19858c75565f9944d48defac44ea4d4a81acf07bfe4af7ecb9fc8bb"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/resources/walkthrough/chat.png",
+      "bytes": 127137,
+      "sha256": "2e3f26e7ce4680e52d16466ee1cc3f973d7fc45ee4d09037b9da3f9188c60be1"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/resources/walkthrough/click.png",
+      "bytes": 132059,
+      "sha256": "1cf064e8ecfe03632387689189a9fcb836973401127b7bfa051c6fe361f899f7"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/resources/walkthrough/past.png",
+      "bytes": 84524,
+      "sha256": "175b7e1210bfb1758bea25ec19670e4735f8a071d5c7e5bc8fcfd4879c07194d"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/resources/walkthrough/step1.md",
+      "bytes": 433,
+      "sha256": "2acbfb2f5fe1397d33eedf6ce1bd2a200b06786f5d0ebad7d91467eb8982c852"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/resources/walkthrough/step2.md",
+      "bytes": 239,
+      "sha256": "0813de1e16f016d3211655159b72769b441fedc4eb09822ac7153b01395ba7fe"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/resources/walkthrough/step3.md",
+      "bytes": 439,
+      "sha256": "957df666039b8cc2c90572a01fa1ddc04cd8dce308f793ecea30ee000c3a39ad"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/resources/walkthrough/step4.md",
+      "bytes": 445,
+      "sha256": "3aa9cca7b16bdab63795afac37341b976448e6151a236ee464f095fefffb49c6"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/resources/walkthrough/welcome.png",
+      "bytes": 112125,
+      "sha256": "9f46167b114df8621d13e5fc310c790dfce333d350bb83727d750339bfb32d3c"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/resources/welcome-art-dark.svg",
+      "bytes": 228426,
+      "sha256": "9d8924739e3a7395a868789319e80e7304a6766a30e6958218cca9390cedd930"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/resources/welcome-art-light.svg",
+      "bytes": 214192,
+      "sha256": "5d148dc07670e92ea2cec55cf6a1b39215140fddca4c7fc4b35c74dcf2379f61"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/webview/fonts/KaTeX_AMS-Regular.woff2",
+      "bytes": 28076,
+      "sha256": "0cdd387c9590a1a9f9794560022dbb59654a7d86f187aa0c81495ad42d3a7308"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/webview/fonts/KaTeX_Caligraphic-Bold.woff2",
+      "bytes": 6912,
+      "sha256": "de7701e42cf1f4cf0b766c03fb27977207eee2f4fd5d76fa82188406da43ea4c"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/webview/fonts/KaTeX_Caligraphic-Regular.woff2",
+      "bytes": 6908,
+      "sha256": "5d53e70ad607c2352162dec9e0923fb54ecdafaccbf604cd8dcf7d00facb989b"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/webview/fonts/KaTeX_Fraktur-Bold.woff2",
+      "bytes": 11348,
+      "sha256": "74444efd593c005e3f4573b44524704c0af0a937fe911cca9e94068d0d140d3f"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/webview/fonts/KaTeX_Fraktur-Regular.woff2",
+      "bytes": 11316,
+      "sha256": "51814d270d06ff0255dba0799994fa4d8c84d11f09951d47595f4abb1f3602dc"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/webview/fonts/KaTeX_Main-Bold.woff2",
+      "bytes": 25324,
+      "sha256": "0f60d1b897938ec918c8ce073092411baf9438f6739465693ff18b0f9d20b021"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/webview/fonts/KaTeX_Main-BoldItalic.woff2",
+      "bytes": 16780,
+      "sha256": "99cd42a3c072d918f2f44984a807cf7aa16e13545fd0875fc07c6c65f99e715b"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/webview/fonts/KaTeX_Main-Italic.woff2",
+      "bytes": 16988,
+      "sha256": "97479ca6cce906abc961ecac96faa5f9ca2e61b8e7670d475826bcdee9a7c267"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/webview/fonts/KaTeX_Main-Regular.woff2",
+      "bytes": 26272,
+      "sha256": "c2342cd8b869e01752a9321dc17213fc40d4d04c79688c1d43f2cf316abd7866"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/webview/fonts/KaTeX_Math-BoldItalic.woff2",
+      "bytes": 16400,
+      "sha256": "dc47344dbb6cb5b655c8460d561f4df5f501b90c804ad3c6cec65fe322351ab1"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/webview/fonts/KaTeX_Math-Italic.woff2",
+      "bytes": 16440,
+      "sha256": "7af58c5ec8f132a2ddde9027c6d7814decce4d3b822a11192a42a20e2e973264"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/webview/fonts/KaTeX_SansSerif-Bold.woff2",
+      "bytes": 12216,
+      "sha256": "e99ae51144bf1232efcc1bfe5add36262c6866b0faab24fa75740e1b98577a62"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/webview/fonts/KaTeX_SansSerif-Italic.woff2",
+      "bytes": 12028,
+      "sha256": "00b26ac825e2095056396e0553b8ac26d3f8ad158c3826e28b4c45b385c4714a"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/webview/fonts/KaTeX_SansSerif-Regular.woff2",
+      "bytes": 10344,
+      "sha256": "68e8c73ef42afd3ccec58bf0fba302cce448938e7fc020a5e31f8a952eee1342"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/webview/fonts/KaTeX_Script-Regular.woff2",
+      "bytes": 9644,
+      "sha256": "036d4e95149b69ff9bcc0cd55771efeb25ffa3947293e69acd78d5ac328c684b"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/webview/fonts/KaTeX_Size1-Regular.woff2",
+      "bytes": 5468,
+      "sha256": "6b47c40166b6dbe21a5dfca7718413f2147fd2399be1ba605d8ad39cedf25dfe"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/webview/fonts/KaTeX_Size2-Regular.woff2",
+      "bytes": 5208,
+      "sha256": "d04c54219f9eaec6d4d4fd42dfb28785975a4794d6b2fc71e566b9cd6db842dd"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/webview/fonts/KaTeX_Size3-Regular.woff2",
+      "bytes": 3624,
+      "sha256": "73d591271b1604960cb10bb90fee021670af7297017e0e98480b332d11f51995"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/webview/fonts/KaTeX_Size4-Regular.woff2",
+      "bytes": 4928,
+      "sha256": "a4af7d414440a1c1790825cfb700cf9cf43b0f2c4b04f0ebc523011ad9853ec0"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/webview/fonts/KaTeX_Typewriter-Regular.woff2",
+      "bytes": 13568,
+      "sha256": "71d517d67827787cfabdf186914cc3358eda539e37931941f2b2fd4a21f68c0b"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/webview/index.css",
+      "bytes": 470040,
+      "sha256": "a96b403c82fb032268a8ac8da23a7715d77b3e8f2b3aa2afd298b225c717d7fb"
+    },
+    {
+      "path": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64/webview/index.js",
+      "bytes": 6000965,
+      "sha256": "6603f2115a3d7b8a5286b527cb9d5c30749c98b97c7147f3da771ac04319e610"
+    }
+  ],
+  "originalWrapper": {
+    "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/run-product-matrix-05.ps1",
+    "bytes": 12116,
+    "sha256": "aa614e20c97d14cf826c0eea0863254cce540c3bfba6f7f7a9ec99285477d2f4"
+  },
+  "wrapper": {
+    "path": "docs/soterai-lite/evidence/20261106-v01-claude-02/run-current-route.ps1",
+    "bytes": 13791,
+    "sha256": "d4e70483a7b1d4cd3dc593404e3f862b8fa9b588f58318dc9dc00ad06e82fae8"
+  },
+  "driver": {
+    "path": "docs/soterai-lite/evidence/20261106-v01-claude-02/product-matrix-03.cjs",
+    "bytes": 21353,
+    "sha256": "2bb3082414f7fd4ef7cda63980ac35a78bd18fe380a53e1074a4e117a2b991b9"
+  },
+  "guard": {
+    "path": "docs/soterai-lite/evidence/20261106-v01-claude-02/matrix-guards-01.cjs",
+    "bytes": 11936,
+    "sha256": "7ed820cee1bfda9c6b73738337390d4bb840ace0515aa0ee60c9336406bb95a1"
+  },
+  "copied": [
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/product-matrix-03.cjs",
+        "bytes": 21353,
+        "sha256": "2bb3082414f7fd4ef7cda63980ac35a78bd18fe380a53e1074a4e117a2b991b9"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261106-v01-claude-02/product-matrix-03.cjs",
+        "bytes": 21353,
+        "sha256": "2bb3082414f7fd4ef7cda63980ac35a78bd18fe380a53e1074a4e117a2b991b9"
+      },
+      "byteExact": true
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/matrix-guards-01.cjs",
+        "bytes": 11936,
+        "sha256": "7ed820cee1bfda9c6b73738337390d4bb840ace0515aa0ee60c9336406bb95a1"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261106-v01-claude-02/matrix-guards-01.cjs",
+        "bytes": 11936,
+        "sha256": "7ed820cee1bfda9c6b73738337390d4bb840ace0515aa0ee60c9336406bb95a1"
+      },
+      "byteExact": true
+    }
+  ],
+  "ownedHelper": {
+    "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/native-owned-phase-01.cjs",
+    "bytes": 3105,
+    "sha256": "c3ca6d3b159ecbd825a0e917a40e5c24cb9aa3aeaa76d67a3fa0fc18113dea4f"
+  },
+  "fixtureInputs": [
+    {
+      "path": "docs/soterai-lite/evidence/20261106-v01-claude-02/product-matrix-03.cjs",
+      "bytes": 21353,
+      "sha256": "2bb3082414f7fd4ef7cda63980ac35a78bd18fe380a53e1074a4e117a2b991b9"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-v01-claude-02/matrix-guards-01.cjs",
+      "bytes": 11936,
+      "sha256": "7ed820cee1bfda9c6b73738337390d4bb840ace0515aa0ee60c9336406bb95a1"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-v01-claude-02/route-admission.cjs",
+      "bytes": 1980,
+      "sha256": "f0037087823fbe82b2b94099f1650c67a933fce2801247899f149ff56e04fab6"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-v01-claude-02/run-v01-route.cjs",
+      "bytes": 7345,
+      "sha256": "b6aad29b650f5fb2e4555a7d3426da461e56cac069f3c559b8589e0c3e746248"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-v01-claude-02/pipe-ownership.ps1",
+      "bytes": 4180,
+      "sha256": "246b0ccdb2457fd80f560770b129a1fde67d5d4212e8eae200f965dffd69698c"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-v01-claude-02/run-current-route.ps1",
+      "bytes": 13791,
+      "sha256": "d4e70483a7b1d4cd3dc593404e3f862b8fa9b588f58318dc9dc00ad06e82fae8"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-v01-claude-02/route-inspection.json",
+      "bytes": 4016,
+      "sha256": "e5a4105737c3bdf760a92462bdb1dcd308dc50694a314044c1730ee936bc5a7d"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-v01-claude-02/installed-public-inputs-01.json",
+      "bytes": 20327,
+      "sha256": "b7f96667271df30c3458227b3ed5aa91efda30fb15ffbdac8ec4ffcb73b81cb9"
+    }
+  ],
+  "assertions": "Original matrix/guard bytes unchanged. Exact package schema, four-runtime inventory, selected byte-identical public vendor paths and actual Code closure custody added to wrapper. No old PASS transferred.",
+  "owner": "User requested remaining work and explicitly approved local tests and isolated VS Code checks on 6 November 2026.",
+  "releaseReady": false
+}

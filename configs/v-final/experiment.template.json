@@ -1,0 +1,17 @@
+{
+ "data_dir": "DATA_DIRECTORY_REQUIRED",
+ "data_identity": "EXACT_MANIFEST_SHA256_REQUIRED",
+ "base_dir": "LOCAL_PINNED_MINILM_CLASSIFIER_OR_BASE_DIRECTORY_REQUIRED",
+ "base_identity": "EXACT_BUNDLE_IDENTITY_REQUIRED",
+ "teacher_dir": null,
+ "teacher_identity": null,
+ "max_length": 512,
+ "max_fpr": 0.02,
+ "gradient_checkpointing": true,
+ "training": {
+  "epochs": 3, "batch_size": 8, "accumulation": 4, "seed": 42,
+  "lr": 0.00002, "weight_decay": 0.01,
+  "alpha": 0.0, "temperature": 2.0, "class_balance": true,
+  "checkpoint_every": 100, "mixed_precision": true, "unit_only": false
+ }
+}

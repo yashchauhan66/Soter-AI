@@ -81,3 +81,7 @@ Read progress11/acceptance01/safe-withdrawal01 and canonicalacceptance-verificat
 ## Source byte barrier
 
 F29 source `1603dd5f32e92e62e49824e2f5370217279d5b35` actual1322 exactpaths/zero mismatch/unexpected/indexempty. ProofSHA `0b664de4540d685121b046bf2dc560516d529ea0ac5e986124ed12b9b1a5672c`. QueueF29scopedDONE/F30ACTIVE preparedconditionalon actual f29-transition-byte-proof01 PASS; read that proof for finalHEAD. NoF30productionbeforetransition. Unrelatedguardcore/userfiles and linkedfixtures remainpreservedunstaged; current1024dependencyfreeze is not a claimallinputbytesarecommittedHEAD. Allscope/manual/human/F26a06limits persist.
+
+## Actual transition barrier and next task
+
+F29 scopedDONE after source1603dd5f32e92e62e49824e2f5370217279d5b35/1322 andtransition6b2ffbbd10a5f50c07b1a495e703669f5236259c/13 exactpaths, zero mismatch/unexpected/indexempty. CurrentHEAD 6b2ffbbd10a5f50c07b1a495e703669f5236259c. ProofSHA d8795193292574ae62b4cede33eec3531f3ba94e2b7bfe4286194e86ce9c51bc. F30 selected at evidence/20261028-f30-setup-verification-847d2f09/start-checkpoint01/work-card01;1024priorproduction inputs unchanged, noF30production yet. Read ledger FIRST aftercompaction thenF30latestprogress. H29posttransition proof+outerprepare/commit receipts untracked/preserved fornextscope. Syntheticlinkedcomponentfixtures intentionallyremainunstaged. Otherunrelateduserchangespreserved. F26a/native06 stillUSER_DEFERRED; remainingorder/humanL6STOP unchanged.

@@ -1,0 +1,29 @@
+﻿TAP version 13
+# Subtest: F26a minimal pre-commit client bundles the canonical index parser without owner Git or editor authority
+not ok 1 - F26a minimal pre-commit client bundles the canonical index parser without owner Git or editor authority
+  ---
+  duration_ms: 45.2207
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\preCommitClientBundle.review.test.ts:2:1044'
+  failureType: 'testCodeFailure'
+  error: 'The minimal client bundle must not import vscode or child_process authority.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\preCommitClientBundle.review.test.ts:40:5)
+    process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 480.8136

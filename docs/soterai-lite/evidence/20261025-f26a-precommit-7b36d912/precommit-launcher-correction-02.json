@@ -1,0 +1,21 @@
+{
+  "status": "PREPARED_SUCCESSOR_NOT_EXECUTED",
+  "time": "2026-10-26T05:23:10.799Z",
+  "before": {
+    "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-precommit-native-01.ps1",
+    "bytes": 32221,
+    "sha256": "fa35f56f8f60d9bff8b9fe80156b4412798b75172a64c0c20b280889a0e6bc7e"
+  },
+  "after": {
+    "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-precommit-native-02.ps1",
+    "bytes": 32435,
+    "sha256": "26377540c6a67ff5aec278781fa7fc0e36ac7448b068029087a9382e063196d9"
+  },
+  "failure": {
+    "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/precommit-native-run-01.txt",
+    "bytes": 941,
+    "sha256": "54ed4e0beba0343915d682804d533a4f469060555430a7fd8d608e8c3aa5e913"
+  },
+  "reason": "First attempt refused before any D profile or Code launch. All inputs and explicit repo root have ordinary metadata; the extra traversal outside the user-named workspace encountered OneDrive/Desktop and OneDrive reparse attributes. Existing artifact-binding guard stops at the explicit repo. Successor includes repo itself and every in-repo input ancestor while refusing any input outside repo; only out-of-workspace ancestor traversal changes. No change to product, native34 observations, payloads, assertions, pins, timeouts or closure handling.",
+  "native01": "REFUSED_BEFORE_CODE_LAUNCH_NOT_A_BEHAVIOR_RESULT"
+}

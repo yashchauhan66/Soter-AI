@@ -1,0 +1,130 @@
+﻿TAP version 13
+# Subtest: F26a client allows only reviewed artifacts signed current owner and exact genuine index metadata
+ok 1 - F26a client allows only reviewed artifacts signed current owner and exact genuine index metadata
+  ---
+  duration_ms: 830.5648
+  type: 'test'
+  ...
+# Subtest: F26a client creates a fresh nonce for each invocation and never sends body findings or environment
+ok 2 - F26a client creates a fresh nonce for each invocation and never sends body findings or environment
+  ---
+  duration_ms: 250.6186
+  type: 'test'
+  ...
+# Subtest: F26a client honors an exact selected alternative index instead of a public default fallback
+ok 3 - F26a client honors an exact selected alternative index instead of a public default fallback
+  ---
+  duration_ms: 198.2052
+  type: 'test'
+  ...
+# Subtest: F26a client explicit empty invalid missing and outside index selectors refuse without a request
+ok 4 - F26a client explicit empty invalid missing and outside index selectors refuse without a request
+  ---
+  duration_ms: 210.7532
+  type: 'test'
+  ...
+# Subtest: F26a client malformed noncanonical duplicate and oversized pins refuse before any request
+ok 5 - F26a client malformed noncanonical duplicate and oversized pins refuse before any request
+  ---
+  duration_ms: 157.6508
+  type: 'test'
+  ...
+# Subtest: F26a client invalid pin versions paths hashes and signing key cannot borrow real files
+ok 6 - F26a client invalid pin versions paths hashes and signing key cannot borrow real files
+  ---
+  duration_ms: 212.7637
+  type: 'test'
+  ...
+# Subtest: F26a client exact runtime and worker invocation paths cannot be replaced by same-byte siblings
+ok 7 - F26a client exact runtime and worker invocation paths cannot be replaced by same-byte siblings
+  ---
+  duration_ms: 128.8343
+  type: 'test'
+  ...
+# Subtest: F26a client missing or changed initial artifacts refuse before owner request
+ok 8 - F26a client missing or changed initial artifacts refuse before owner request
+  ---
+  duration_ms: 374.9834
+  type: 'test'
+  ...
+# Subtest: F26a client descriptor key root installation and artifact bindings must all verify before request
+ok 9 - F26a client descriptor key root installation and artifact bindings must all verify before request
+  ---
+  duration_ms: 546.8948
+  type: 'test'
+  ...
+# Subtest: F26a client descriptor framing and8192 byte cap withhold malformed endpoint metadata
+ok 10 - F26a client descriptor framing and8192 byte cap withhold malformed endpoint metadata
+  ---
+  duration_ms: 290.1163
+  type: 'test'
+  ...
+# Subtest: F26a client verified current BLOCK remains useful while BUSY unavailable empty and thrown transport refuse
+ok 11 - F26a client verified current BLOCK remains useful while BUSY unavailable empty and thrown transport refuse
+  ---
+  duration_ms: 185.2822
+  type: 'test'
+  ...
+# Subtest: F26a client rejects wrong signed decision nonce session root and installation generation
+ok 12 - F26a client rejects wrong signed decision nonce session root and installation generation
+  ---
+  duration_ms: 197.6415
+  type: 'test'
+  ...
+# Subtest: F26a client rejects signed decisions with different index digest or identity including BLOCK
+ok 13 - F26a client rejects signed decisions with different index digest or identity including BLOCK
+  ---
+  duration_ms: 141.8048
+  type: 'test'
+  ...
+# Subtest: F26a client foreign forged malformed and oversized decision signatures cannot authorize
+ok 14 - F26a client foreign forged malformed and oversized decision signatures cannot authorize
+  ---
+  duration_ms: 148.2645
+  type: 'test'
+  ...
+# Subtest: F26a client signed prior nonce replay cannot authorize a later invocation
+ok 15 - F26a client signed prior nonce replay cannot authorize a later invocation
+  ---
+  duration_ms: 119.4219
+  type: 'test'
+  ...
+# Subtest: F26a client final synchronous index recapture rejects changed bytes and same-byte replacement
+ok 16 - F26a client final synchronous index recapture rejects changed bytes and same-byte replacement
+  ---
+  duration_ms: 423.668
+  type: 'test'
+  ...
+# Subtest: F26a client descriptor restart byte drift and same-byte identity replacement revoke held decisions
+ok 17 - F26a client descriptor restart byte drift and same-byte identity replacement revoke held decisions
+  ---
+  duration_ms: 365.3048
+  type: 'test'
+  ...
+# Subtest: F26a client final runtime and worker hashes and identities reject await-time artifact replacement
+ok 18 - F26a client final runtime and worker hashes and identities reject await-time artifact replacement
+  ---
+  duration_ms: 588.823
+  type: 'test'
+  ...
+# Subtest: F26a client monotonic whole-operation deadline rejects expiry reversal and nonfinite clocks
+ok 19 - F26a client monotonic whole-operation deadline rejects expiry reversal and nonfinite clocks
+  ---
+  duration_ms: 639.0732
+  type: 'test'
+  ...
+# Subtest: F26a client worker2MiB cap is inclusive and refuses larger actual pinned files before request
+ok 20 - F26a client worker2MiB cap is inclusive and refuses larger actual pinned files before request
+  ---
+  duration_ms: 344.5008
+  type: 'test'
+  ...
+1..20
+# tests 20
+# suites 0
+# pass 20
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 7374.7032

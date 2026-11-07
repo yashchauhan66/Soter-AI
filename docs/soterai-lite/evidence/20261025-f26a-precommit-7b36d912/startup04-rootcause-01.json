@@ -1,0 +1,83 @@
+{
+  "status": "PUBLIC_SETUP_PARENT_ENVIRONMENT_ASSERTION_CAUSE_CONFIRMED_PRODUCT_NOT_ACTIVATED",
+  "time": "2026-10-26T07:07:16.164Z",
+  "failureSummary": {
+    "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/f26a-precommit-native-20261026T065901Z-205e2a16/primary-results.json.setup-observer-summary.json",
+    "absolutePath": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261025-f26a-precommit-7b36d912\\f26a-precommit-native-20261026T065901Z-205e2a16\\primary-results.json.setup-observer-summary.json",
+    "bytes": 3520,
+    "sha256": "eb083f3e2bbe3a514f22b1b8b6f552f374007145396330b4490c7273c58c3f8a"
+  },
+  "failureError": {
+    "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/f26a-precommit-native-20261026T065901Z-205e2a16/primary.driver-error.json",
+    "absolutePath": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261025-f26a-precommit-7b36d912\\f26a-precommit-native-20261026T065901Z-205e2a16\\primary.driver-error.json",
+    "bytes": 2046,
+    "sha256": "fc9aad8faa8dca5b273c60d4195e5c3856dd3a2f34ce96c6f769b2ad18c96c72"
+  },
+  "publicGitVersion": {
+    "exitCode": 0,
+    "closed": true,
+    "stdoutEOF": true,
+    "stderrEOF": true,
+    "signalsRequested": 0,
+    "stdout": {
+      "path": "D:/SoterAI-Lite-test-profiles/f26a-precommit-native-20261026T065901Z-205e2a16/primary-results.json.setup-child-01-stdout.bin",
+      "absolutePath": "D:\\SoterAI-Lite-test-profiles\\f26a-precommit-native-20261026T065901Z-205e2a16\\primary-results.json.setup-child-01-stdout.bin",
+      "bytes": 29,
+      "sha256": "2bfdb478bf1093a587b8e6306b25f57e6b8aed47bffe7e885f7b279768af4c42"
+    },
+    "stderr": {
+      "path": "D:/SoterAI-Lite-test-profiles/f26a-precommit-native-20261026T065901Z-205e2a16/primary-results.json.setup-child-01-stderr.bin",
+      "absolutePath": "D:\\SoterAI-Lite-test-profiles\\f26a-precommit-native-20261026T065901Z-205e2a16\\primary-results.json.setup-child-01-stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "changedGlobalEnvironmentKeyNames": [
+    "VSCODE_L10N_BUNDLE_LOCATION"
+  ],
+  "environmentValuesRecorded": false,
+  "assertion": "Frozen compiled driver closed(row) line166 requires argumentsValid && environmentValid && parentEnvironmentUnchanged && !invalidInput. Setup invokes observe with defaulttrue argv/env witnesses and no stdin; recorded baseline SHA equals publicjob before SHA, after SHA differs by the sole recorded key. Actual Gitversion succeeded. Failure precedes actual extension activation and every34behavior observation.",
+  "installedJsonFeature": {
+    "manifest": {
+      "path": "../../../AppData/Local/Programs/Microsoft VS Code/e646868227/resources/app/extensions/json-language-features/package.json",
+      "absolutePath": "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\e646868227\\resources\\app\\extensions\\json-language-features\\package.json",
+      "bytes": 3934,
+      "sha256": "9cd153a0d6bd8f8058b5f57c3f11c203228b102ec95e7a025d0e2a5448d662d3"
+    },
+    "client": {
+      "path": "../../../AppData/Local/Programs/Microsoft VS Code/e646868227/resources/app/extensions/json-language-features/client/dist/node/jsonClientMain.js",
+      "absolutePath": "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\e646868227\\resources\\app\\extensions\\json-language-features\\client\\dist\\node\\jsonClientMain.js",
+      "bytes": 653282,
+      "sha256": "6471beebe24498a7d7c7d1803b08c475b0cf88115cf9999905a7890d3a9d75ca"
+    },
+    "setterOffset": 650579,
+    "setterWitness": "process.env.VSCODE_L10N_BUNDLE_LOCATION=",
+    "activationEvents": [
+      "onLanguage:json",
+      "onLanguage:jsonc",
+      "onLanguage:snippets",
+      "onCommand:json.validate"
+    ],
+    "schemaDownloadSetting": {
+      "type": "boolean",
+      "default": true,
+      "description": "%json.enableSchemaDownload.desc%",
+      "tags": [
+        "usesOnlineServices"
+      ]
+    }
+  },
+  "actorAttribution": "INFERENCE_FROM_SAME_EXTHOST_ACTIVATION_TRACE_AND_EXACT_INSTALLED_JSON_SETTER;the globalenvironment mutation and failingpreactivation assertion are directly observed.",
+  "trace": {
+    "file": {
+      "path": "D:/SoterAI-Lite-test-profiles/f26a-precommit-native-20261026T065901Z-205e2a16/profile/logs/20261026T122918/window1/exthost/exthost.log",
+      "absolutePath": "D:/SoterAI-Lite-test-profiles/f26a-precommit-native-20261026T065901Z-205e2a16/profile/logs/20261026T122918/window1/exthost/exthost.log",
+      "bytes": 2487,
+      "sha256": "1c004a6fc780454a96e36e1b7291663fbe318f08bdc5d4f69f8fb5e49e3d7ea4"
+    },
+    "activationLines": [
+      "2026-10-26 12:29:27.259 [info] ExtensionService#_doActivateExtension vscode.json-language-features, startup: false, activationEvent: 'onLanguage:jsonc'"
+    ]
+  },
+  "proposedNext": "Extra bounded05 fixture only: await native JSONlanguage extension activation promise before capturing the frozen driver baseline, set json.schemaDownload.enable=false in the isolated profile, preserve every34assertion/source/VSIX/timeouts/no-signals. No manual environment edits, arbitrary delay or ignored fields. Requires explicit extra-round approval; no05execution authorized by this receipt."
+}

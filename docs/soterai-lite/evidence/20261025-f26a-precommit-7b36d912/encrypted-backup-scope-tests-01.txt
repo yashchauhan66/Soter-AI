@@ -1,0 +1,106 @@
+﻿TAP version 13
+# Subtest: F14-R01 soterai.secureAllAI refuses stale owner during approval before config write
+ok 1 - F14-R01 soterai.secureAllAI refuses stale owner during approval before config write
+  ---
+  duration_ms: 56.7682
+  type: 'test'
+  ...
+# Subtest: F14-R01 soterai.secureAllAI refuses stale owner during backup before config write
+ok 2 - F14-R01 soterai.secureAllAI refuses stale owner during backup before config write
+  ---
+  duration_ms: 24.4535
+  type: 'test'
+  ...
+# Subtest: F14-R01 soterai.setupBrokerIntegration refuses stale owner during approval before config write
+ok 3 - F14-R01 soterai.setupBrokerIntegration refuses stale owner during approval before config write
+  ---
+  duration_ms: 18.8377
+  type: 'test'
+  ...
+# Subtest: F14-R01 soterai.setupBrokerIntegration refuses stale owner during backup before config write
+ok 4 - F14-R01 soterai.setupBrokerIntegration refuses stale owner during backup before config write
+  ---
+  duration_ms: 31.0923
+  type: 'test'
+  ...
+# Subtest: F26a scoped backup uses exact scoped SecretStorage key and keeps path content inside ciphertext
+ok 5 - F26a scoped backup uses exact scoped SecretStorage key and keeps path content inside ciphertext
+  ---
+  duration_ms: 23.268
+  type: 'test'
+  ...
+# Subtest: F26a independent backup scopes generate and load separate keys within one extension context
+ok 6 - F26a independent backup scopes generate and load separate keys within one extension context
+  ---
+  duration_ms: 3.0681
+  type: 'test'
+  ...
+# Subtest: F26a crossscope identical first backups have distinct handles no overwrite and no crossscope restore
+ok 7 - F26a crossscope identical first backups have distinct handles no overwrite and no crossscope restore
+  ---
+  duration_ms: 4.8906
+  type: 'test'
+  ...
+# Subtest: F26a reconstructed scoped sink loads its existing key and exact retained backup without key creation
+ok 8 - F26a reconstructed scoped sink loads its existing key and exact retained backup without key creation
+  ---
+  duration_ms: 2.5323
+  type: 'test'
+  ...
+# Subtest: F26a backup preserves opaque absence hook bytes and mode encoded payload without adding a mode API
+ok 9 - F26a backup preserves opaque absence hook bytes and mode encoded payload without adding a mode API
+  ---
+  duration_ms: 3.634
+  type: 'test'
+  ...
+# Subtest: F26a missing scoped recovery key never creates a replacement or falls back to legacy authority
+ok 10 - F26a missing scoped recovery key never creates a replacement or falls back to legacy authority
+  ---
+  duration_ms: 2.6423
+  type: 'test'
+  ...
+# Subtest: F26a corrupt scoped keys and authenticated ciphertext refuse without key or backup writes
+ok 11 - F26a corrupt scoped keys and authenticated ciphertext refuse without key or backup writes
+  ---
+  duration_ms: 11.0465
+  type: 'test'
+  ...
+# Subtest: F26a recovery missing file filesystem and SecretStorage read failures return null without mutation
+ok 12 - F26a recovery missing file filesystem and SecretStorage read failures return null without mutation
+  ---
+  duration_ms: 5.8733
+  type: 'test'
+  ...
+# Subtest: F26a default and explicitundefined sink retain legacy key namespace and existing encrypted backup readability
+ok 13 - F26a default and explicitundefined sink retain legacy key namespace and existing encrypted backup readability
+  ---
+  duration_ms: 5.8298
+  type: 'test'
+  ...
+# Subtest: F26a missing legacy recovery key returns null without creating a new SecretStorage key
+ok 14 - F26a missing legacy recovery key returns null without creating a new SecretStorage key
+  ---
+  duration_ms: 2.9636
+  type: 'test'
+  ...
+# Subtest: F26a invalid explicit scope options proxies and accessors stay inert without coercion or key file I/O
+ok 15 - F26a invalid explicit scope options proxies and accessors stay inert without coercion or key file I/O
+  ---
+  duration_ms: 6.5998
+  type: 'test'
+  ...
+# Subtest: F26a scoped and legacy invalid handle strings refuse before key or filesystem access
+ok 16 - F26a scoped and legacy invalid handle strings refuse before key or filesystem access
+  ---
+  duration_ms: 1.3264
+  type: 'test'
+  ...
+1..16
+# tests 16
+# suites 0
+# pass 16
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1911.3887

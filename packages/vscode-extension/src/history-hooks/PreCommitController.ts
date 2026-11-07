@@ -183,7 +183,13 @@ export class PreCommitController implements vscode.Disposable {
     }
     #descriptor(pin: HookClientPin, bytes: Buffer, valid: () => boolean): void {
         const storage = this.context.globalStorageUri;
-        if (storage.scheme !== "file" || storage.authority || storage.query || storage.fragment) throw Error();
+        // Desktop profile storage uses the local vscode-userdata mapping.
+        // Keep native descriptor access limited to an ordinary local drive
+        // with an exact URI/path round trip; physical ancestry checks follow.
+        if (!["file", "vscode-userdata"].includes(storage.scheme) || vscode.env.remoteName
+            || storage.authority || storage.query || storage.fragment || !path.isAbsolute(storage.fsPath)
+            || !/^[a-z]:[\\/]/i.test(storage.fsPath)
+            || vscode.Uri.file(storage.fsPath).path.toLowerCase() !== storage.path.toLowerCase()) throw Error();
         const relative = path.relative(pin.root, storage.fsPath);
         if (!relative || relative !== ".." && !relative.startsWith(".." + path.sep) && !path.isAbsolute(relative)) throw Error();
         const directory = path.join(storage.fsPath, "pre-commit");

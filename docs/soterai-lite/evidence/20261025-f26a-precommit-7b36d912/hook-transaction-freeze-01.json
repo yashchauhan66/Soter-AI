@@ -1,0 +1,18 @@
+{
+  "status": "TEST_FIRST_FROZEN_NOT_EXECUTED",
+  "time": "2026-10-25T13:37:56.320Z",
+  "fixture": {
+    "path": "packages/vscode-extension/src/__tests__/preCommitHookTransaction.test.ts",
+    "bytes": 26981,
+    "sha256": "46e532eaf5d9d9cec06a4a7e9f5bb0043d5a76d653e1b2d85d774b66238e5b58",
+    "archive": "preCommitHookTransaction.test.ts.frozen-01.txt"
+  },
+  "tests": 18,
+  "recovery": "Author interrupted by selected-model-capacity error. Root reviewed all 18 complete draft cases, syntax-parsed unchanged bytes, and adopted this fixture before production/baseline. Same-lineage LOW only.",
+  "before": {
+    "path": "packages/vscode-extension/src/history-hooks/PreCommitHookText.ts",
+    "bytes": 4738,
+    "sha256": "aa40e1a96205a5e4d7ab362df014705ad0ceaae23ae08b4fc39ec7031359a767"
+  },
+  "contract": "Private one-shot transaction. Review before preparation/keys/backup; exact encrypted backup readback; durable PREPARED before guarded write; projection/current checks; synchronous final read/current/return. Non-APPLIED prepared lease withdrawn once. Exact owned-after rollback only; owner edits retained INCOMPLETE. Existing body and actual mode retained. No actual filesystem/SecretStorage/native evidence."
+}

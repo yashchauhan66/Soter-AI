@@ -1,0 +1,37 @@
+{
+  "name": "Soter-AI 24/7 Autonomous Marketing & Lead Engine",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "soter-ai-growth-dispatch",
+        "responseMode": "onReceived"
+      },
+      "name": "Antigravity Agent Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$json[\"tier\"]}}",
+              "value2": "TIER_3_FOUNDER_APPROVAL"
+            }
+          ]
+        }
+      },
+      "name": "Autonomy Tier Router",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [500, 300]
+    }
+  ],
+  "connections": {
+    "Antigravity Agent Webhook": {
+      "main": [[{"node": "Autonomy Tier Router", "type": "main", "index": 0}]]
+    }
+  }
+}

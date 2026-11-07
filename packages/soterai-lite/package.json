@@ -8,9 +8,7 @@
   "soteraiLiteRelease": {
     "schemaVersion": 1,
     "channel": "pre-release",
-    "unsupportedFeatures": [
-      "preCommit"
-    ]
+    "unsupportedFeatures": []
   },
   "pricing": "Free",
   "icon": "media/logo_circle_whiter.png",
@@ -2493,7 +2491,7 @@
           "type": "boolean",
           "default": false,
           "scope": "machine",
-          "description": "Compatibility setting for the cooperative staged-tree pre-commit guard. New install/resume is unavailable in this Lite release after incomplete verification, regardless of this flag. Existing owned-hook status and reviewed encrypted recovery/restore remain available while disabled. Deliberate bypass and final commit races remain; no complete detection or registered-value guarantee."
+          "description": "Opt in to the owner-reviewed cooperative staged-tree pre-commit candidate. Native verification remains pending; enabling this machine setting does not prove protection. Existing owned-hook status and reviewed encrypted recovery/restore remain available while disabled. Deliberate bypass and final commit races remain; no complete detection or registered-value guarantee."
         },
         "soterai.lite.historyHooks.psReadLine": {
           "type": "boolean",

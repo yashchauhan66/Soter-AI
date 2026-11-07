@@ -1,0 +1,114 @@
+﻿TAP version 13
+# Subtest: E01 launch contract 04 adds only window.dialogStyle custom to the reviewed contract 03
+ok 1 - E01 launch contract 04 adds only window.dialogStyle custom to the reviewed contract 03
+  ---
+  duration_ms: 8.3426
+  type: 'test'
+  ...
+# Subtest: E02 renderer 05 keeps the frozen dialog allow-list and adds only typed non-secret modal diagnostics
+ok 2 - E02 renderer 05 keeps the frozen dialog allow-list and adds only typed non-secret modal diagnostics
+  ---
+  duration_ms: 6.2842
+  type: 'test'
+  ...
+# Subtest: E03 exact 1.145.0 GUI contract selects explicit visible Code only without launching
+ok 3 - E03 exact 1.145.0 GUI contract selects explicit visible Code only without launching
+  ---
+  duration_ms: 10.8522
+  type: 'test'
+  ...
+# Subtest: E04 stale extra05 authority, the old 1.144.1 Code hash, Node and CLI arguments refuse GUI visibility
+ok 4 - E04 stale extra05 authority, the old 1.144.1 Code hash, Node and CLI arguments refuse GUI visibility
+  ---
+  duration_ms: 102.4294
+  type: 'test'
+  ...
+# Subtest: E05 GUI helper 06 differs from reviewed helper 05 only by the five reviewed pins and keeps the original pipe logic
+ok 5 - E05 GUI helper 06 differs from reviewed helper 05 only by the five reviewed pins and keeps the original pipe logic
+  ---
+  duration_ms: 8.22
+  type: 'test'
+  ...
+# Subtest: E06 custody 05 equals reviewed custody 04 except the exact vendor version literal
+ok 6 - E06 custody 05 equals reviewed custody 04 except the exact vendor version literal
+  ---
+  duration_ms: 7.0235
+  type: 'test'
+  ...
+# Subtest: E07 runner 06 differs from reviewed runner 05 only by the extra06 names, 1.145.0 vendor pins and the extra05 retention check
+ok 7 - E07 runner 06 differs from reviewed runner 05 only by the extra06 names, 1.145.0 vendor pins and the extra05 retention check
+  ---
+  duration_ms: 8.0609
+  type: 'test'
+  ...
+# Subtest: E08 no 1.144.1 vendor pin survives in the extra06 runner, custody or GUI helper and 1.145.0 is pinned exactly
+ok 8 - E08 no 1.144.1 vendor pin survives in the extra06 runner, custody or GUI helper and 1.145.0 is pinned exactly
+  ---
+  duration_ms: 9.4058
+  type: 'test'
+  ...
+# Subtest: E09 the consumed failed extra05 and all three normal rounds stay retained and forged evidence is refused
+ok 9 - E09 the consumed failed extra05 and all three normal rounds stay retained and forged evidence is refused
+  ---
+  duration_ms: 666.7749
+  type: 'test'
+  ...
+# Subtest: E10 no approval file means no run authority and strict root/port admission refuses reuse
+ok 10 - E10 no approval file means no run authority and strict root/port admission refuses reuse
+  ---
+  duration_ms: 47.3074
+  type: 'test'
+  ...
+# Subtest: E11 assertion inventory, window count and observation totals are unchanged from the reviewed runner
+ok 11 - E11 assertion inventory, window count and observation totals are unchanged from the reviewed runner
+  ---
+  duration_ms: 7.5116
+  type: 'test'
+  ...
+# Subtest: E12 every 1.145.0 evidence file is bound to the exact current vendor receipt
+ok 12 - E12 every 1.145.0 evidence file is bound to the exact current vendor receipt
+  ---
+  duration_ms: 10.9751
+  type: 'test'
+  ...
+# node:fs:442
+#     return binding.readFileUtf8(path, stringToFlags(options.flag));
+#                    ^
+# Error: ENOENT: no such file or directory, open 'C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\261c84cb1e\\resources\\app\\out\\vs\\workbench\\workbench.desktop.main.js'
+#     at Object.readFileSync (node:fs:442:20)
+#     at Object.<anonymous> (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261103-f32-lifecycle-2e95d6a4\\installed-trust-static-controls-corrected-07.test.cjs:6:19)
+#     at Module._compile (node:internal/modules/cjs/loader:1730:14)
+#     at Object..js (node:internal/modules/cjs/loader:1895:10)
+#     at Module.load (node:internal/modules/cjs/loader:1465:32)
+#     at Function._load (node:internal/modules/cjs/loader:1282:12)
+#     at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+#     at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+#     at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+#     at node:internal/main/run_main_module:36:49 {
+#   errno: -4058,
+#   code: 'ENOENT',
+#   syscall: 'open',
+#   path: 'C:\\\\Users\\\\USER\\\\AppData\\\\Local\\\\Programs\\\\Microsoft VS Code\\\\261c84cb1e\\\\resources\\\\app\\\\out\\\\vs\\\\workbench\\\\workbench.desktop.main.js'
+# }
+# Node.js v22.16.0
+# Subtest: docs\\soterai-lite\\evidence\\20261103-f32-lifecycle-2e95d6a4\\installed-trust-static-controls-corrected-07.test.cjs
+not ok 2 - docs\\soterai-lite\\evidence\\20261103-f32-lifecycle-2e95d6a4\\installed-trust-static-controls-corrected-07.test.cjs
+  ---
+  duration_ms: 232.5576
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261103-f32-lifecycle-2e95d6a4\\installed-trust-static-controls-corrected-07.test.cjs:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 12
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1307.0195

@@ -1,0 +1,32 @@
+  async function waitEvidence(file, pending, timeout = 120000) {
+    const deadline = Date.now() + timeout; let closed;
+    pending.then(value => { closed = value; }, error => { closed = { error }; });
+    while (Date.now() < deadline) {
+      if (fs.existsSync(file)) {
+        try { const row = fact(file, 2 * 1024 * 1024); return { fact: row, value: pinnedJson(row) }; }
+        catch (error) { if (!(error instanceof SyntaxError)) throw error; }
+      }
+      assert(!closed, 'Owned custody helper closed before required receipt; no attach or retry');
+      await wait(40);
+    }
+    throw Error('Bounded custody receipt did not arrive; retain already-owned processes');
+  }
+  async function prewarmListener(b) {
+    b.earlyReadyPath = path.join(b.gate, b.phase + '-listener-prewarmed.json');
+    b.earlyListenerPath = path.join(b.gate, b.phase + '-early-listener-custody.json');
+    b.listenerPhaseBindingPath = path.join(b.gate, b.phase + '-listener-phase-binding.json');
+    const name = b.phase + '-listener-custody', bindingFile = path.join(b.gate, name + '-prewarm-binding.json');
+    const bindingFact = write(bindingFile, b), output = path.join(b.gate, b.phase + '-listener-custody.json');
+    const script = path.join(b.gate, name + '-prewarmed-readonly.ps1');
+    fs.writeFileSync(script, "$ErrorActionPreference='Stop'\r\n. " + psLiteral(custody.path) + '\r\n' +
+      'Watch-F32EarlyListenerAndFullCustody -BindingPath ' + psLiteral(bindingFile) + ' -OutputPath ' + psLiteral(output) + ' | ConvertTo-Json -Depth 6\r\n', { flag: 'wx' });
+    stable();
+    const promise = own(name, vendor.systemPowerShell.path,
+      ['-NoLogo', '-NoProfile', '-NonInteractive', '-ExecutionPolicy', 'Bypass', '-File', script], b, 240000, true);
+    const ready = await waitEvidence(b.earlyReadyPath, promise);
+    assert.equal(ready.value.status, 'PINNED_LOCKED_AND_TCP_PREWARMED_BEFORE_CODE');
+    assert.equal(ready.value.phase, b.phase); assert.equal(ready.value.profile, b.profile);
+    assert.equal(ready.value.endpoint, b.endpoint); assert.equal(ready.value.signalsRequested, 0);
+    assert.deepEqual(ready.value.binding, bindingFact); assert.deepEqual(ready.value.vendorReceipt, b.vendorReceipt);
+    return { name, promise, ready: ready.fact, output };
+  }

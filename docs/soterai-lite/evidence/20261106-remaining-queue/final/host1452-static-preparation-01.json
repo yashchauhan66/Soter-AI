@@ -1,0 +1,104 @@
+{
+  "status": "PASS_INERT_HOST1452_OBSERVER_SIGNATURE_CLI_SCRIPTS_PREPARED_NOT_EXECUTED",
+  "observedAt": "2026-11-06T16:30:22.377Z",
+  "outputs": [
+    {
+      "path": "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/observe-public-vendor-05.cjs",
+      "bytes": 10156,
+      "sha256": "d749e016086e3d6fe1e0d9086500f19e36798492a47bb09c1a273b9ea7586cfb"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/observe-current-signatures-05.ps1",
+      "bytes": 2156,
+      "sha256": "3d361316f50d9c618fd42a1eacf3e4fca0e352aae6281db73d616fb0ceef1575"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/qualify-vendor-installed-size-05.cjs",
+      "bytes": 10824,
+      "sha256": "48fc7a77c1bfe7b960ec37fe04138b96f7fcea7f1ef4cd386b617704ad320071"
+    }
+  ],
+  "changes": [
+    {
+      "file": "observer05",
+      "before": "1.145.1",
+      "after": "1.145.2",
+      "count": 2
+    },
+    {
+      "file": "observer05",
+      "before": "6bab64e2d12b04d04c0d99c27ff166023efd1dda",
+      "after": "c4453f8ea430795f941c1b2ff6c9321135a74a02",
+      "count": 1
+    },
+    {
+      "file": "observer05",
+      "before": "6bab64e2d1",
+      "after": "c4453f8ea4",
+      "count": 2
+    },
+    {
+      "file": "observer05",
+      "before": "public-vendor-observation-04.json",
+      "after": "public-vendor-observation-05.json",
+      "count": 1
+    },
+    {
+      "file": "signatures05",
+      "before": "1.145.1",
+      "after": "1.145.2",
+      "count": 1
+    },
+    {
+      "file": "signatures05",
+      "before": "current-signature-observation-04.json",
+      "after": "current-signature-observation-05.json",
+      "count": 1
+    },
+    {
+      "file": "signatures05",
+      "before": "public-vendor-observation-04.json",
+      "after": "public-vendor-observation-05.json",
+      "count": 1
+    },
+    {
+      "file": "cli05",
+      "before": "1.145.1",
+      "after": "1.145.2",
+      "count": 2
+    },
+    {
+      "file": "cli05",
+      "before": "6bab64e2d1",
+      "after": "c4453f8ea4",
+      "count": 1
+    },
+    {
+      "file": "cli05",
+      "before": "public-vendor-observation-04.json",
+      "after": "public-vendor-observation-05.json",
+      "count": 2
+    },
+    {
+      "file": "cli05",
+      "before": "vendor-installed-size-qualification-04.json",
+      "after": "vendor-installed-size-qualification-05.json",
+      "count": 2
+    },
+    {
+      "file": "cli05",
+      "before": "  const prior = read(own('vendor-installed-size-qualification-03.json'));\n  const currentVsix = prior.current.vsix, oldVsix = prior.old.vsix;",
+      "after": "  assert.equal(process.argv.length,4);assert.equal(process.argv[2],'--run');\n  assert.equal(process.argv[3],fact(own('public-vendor-observation-05.json')).sha256,'Exact new vendor receipt required');\n  const signature=read(own('current-signature-observation-05.json'));\n  assert.equal(signature.vendorReceiptSha256,process.argv[3]);assert.equal(signature.rows.length,3);\n  for(const row of signature.rows){assert.equal(row.status,'Valid');assert.equal(fact(row.path).sha256,row.sha256);}\n  const prior=read(own('installed-extra09-admission.json'));\n  const config=read(path.join(__dirname,'../20261106-remaining-queue/candidate-01/f32-candidate-config.json'));\n  const currentVsix=config.currentVsix,oldVsix=prior.oldVsix;\n  assert.equal(currentVsix.sha256,'011f96d19d42dbefc2e56eb5399bf5c7f16a09d6b71b8bae5be9d66b2f3769ec');\n  assert.equal(oldVsix.sha256,'dcbcd9738cb480616cf4d3aa66d1a1ac2287e1754aa7307dea7ac23fee7c3677');\n  verifyFact(currentVsix);verifyFact(oldVsix);\n  fs.writeFileSync(own('vendor-installed-size-consumption-05.json'),JSON.stringify({status:'ONE_EXPLICIT_CURRENT_HOST_CLI_QUALIFICATION_CONSUMED',observedAt:new Date().toISOString(),vendorReceiptSha256:process.argv[3],currentVsix,oldVsix},null,2)+'\\n',{flag:'wx'});",
+      "count": 1
+    },
+    {
+      "file": "cli05",
+      "before": "  const source = fs.readFileSync(vendor.currentHost.cliProcessMain.path, 'utf8');",
+      "after": "  for(const row of [vendor.currentHost.executable,vendor.currentHost.codeCli,vendor.currentHost.cliProcessMain])verifyFact(row);\n  const source = fs.readFileSync(vendor.currentHost.cliProcessMain.path, 'utf8');",
+      "count": 1
+    }
+  ],
+  "hostObservations": 0,
+  "nativeLaunches": 0,
+  "productWrites": 0
+}

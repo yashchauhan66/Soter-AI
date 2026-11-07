@@ -1,0 +1,32 @@
+{
+  "time": "2026-10-26T03:51:23.243Z",
+  "status": "CORRECTION_AFTER_ACTUAL_FULL5FAIL",
+  "inputs": [
+    {
+      "path": "packages/vscode-extension/src/history-hooks/commands.ts",
+      "bytes": 1844,
+      "sha256": "ff7ce8eacf681a81a61c35fdbd15e139d40a42eada56e01fb85fd8036463539e"
+    },
+    {
+      "path": "packages/vscode-extension/package.json",
+      "bytes": 129485,
+      "sha256": "b8d441c180c2346e326c56a728d77e79a507c8ff315ab35e0ed09699ee47d0d0"
+    },
+    {
+      "path": "packages/soterai-lite/package.json",
+      "bytes": 129103,
+      "sha256": "24eaa8ab5e0b91b749164fd53b4e6ebbf32c608e1fea8c5ed528c505dd402a6c"
+    },
+    {
+      "path": "packages/vscode-extension/README.md",
+      "bytes": 66140,
+      "sha256": "32f867980c55919323f73956d169e1316650b64be574cdcc38fcabe0bc46490b"
+    },
+    {
+      "path": "docs/vscode-extension-readiness.md",
+      "bytes": 3954,
+      "sha256": "e504a09a6eba13a4ba04e306e83801329111dd6b9ad79e89d3dba61b5d63eaea"
+    }
+  ],
+  "changes": "Keep modern contributed-command activation implicit; hide two callable legacy aliases in favour of canonical palette rows; update stale README table. Root separately changes the registration helper to the existing reg(full command id,...) convention so original parity assertions stay unchanged. No tests/limits/approvals weakened; fresh full required."
+}

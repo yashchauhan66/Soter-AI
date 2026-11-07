@@ -1,0 +1,82 @@
+﻿TAP version 13
+# Subtest: F26a discovery rejects disabled and forged contexts before properties or any worker
+ok 1 - F26a discovery rejects disabled and forged contexts before properties or any worker
+  ---
+  duration_ms: 416.1451
+  type: 'test'
+  ...
+# Subtest: F26a discovery admits useful public default and supported local custom selections
+ok 2 - F26a discovery admits useful public default and supported local custom selections
+  ---
+  duration_ms: 834.0148
+  type: 'test'
+  ...
+# Subtest: F26a discovery withholds complete projections containing unsupported scopes includes duplicates or malformed data
+ok 3 - F26a discovery withholds complete projections containing unsupported scopes includes duplicates or malformed data
+  ---
+  duration_ms: 394.775
+  type: 'test'
+  ...
+# Subtest: F26a discovery verifies exact pinned version before creating a config query
+ok 4 - F26a discovery verifies exact pinned version before creating a config query
+  ---
+  duration_ms: 181.4004
+  type: 'test'
+  ...
+# Subtest: F26a discovery delegates only sequential version and config with the same context deadline and clock
+ok 5 - F26a discovery delegates only sequential version and config with the same context deadline and clock
+  ---
+  duration_ms: 154.3666
+  type: 'test'
+  ...
+# Subtest: F26a discovery fingerprint is stable for exact root projection and changes for path raw origin or root
+ok 6 - F26a discovery fingerprint is stable for exact root projection and changes for path raw origin or root
+  ---
+  duration_ms: 499.215
+  type: 'test'
+  ...
+# Subtest: F26a discovery premature worker COMPLETE cannot advance or release before owned closure
+ok 7 - F26a discovery premature worker COMPLETE cannot advance or release before owned closure
+  ---
+  duration_ms: 299.7826
+  type: 'test'
+  ...
+# Subtest: F26a discovery active withdrawal returns STOP and retains busy until the held worker naturally closes
+ok 8 - F26a discovery active withdrawal returns STOP and retains busy until the held worker naturally closes
+  ---
+  duration_ms: 110.2252
+  type: 'test'
+  ...
+# Subtest: F26a discovery is one shot and pre-start withdrawal creates no worker
+ok 9 - F26a discovery is one shot and pre-start withdrawal creates no worker
+  ---
+  duration_ms: 183.2004
+  type: 'test'
+  ...
+# Subtest: F26a discovery final release requires exact result identity and sticky live nonreentrant authority
+ok 10 - F26a discovery final release requires exact result identity and sticky live nonreentrant authority
+  ---
+  duration_ms: 597.466
+  type: 'test'
+  ...
+# Subtest: F26a discovery enforces one aggregate deadline bad-clock refusal and independent phase caps
+ok 11 - F26a discovery enforces one aggregate deadline bad-clock refusal and independent phase caps
+  ---
+  duration_ms: 343.0315
+  type: 'test'
+  ...
+# Subtest: F26a discovery propagates closed transport refusal without accepting a partial projection
+ok 12 - F26a discovery propagates closed transport refusal without accepting a partial projection
+  ---
+  duration_ms: 305.6963
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4818.0558

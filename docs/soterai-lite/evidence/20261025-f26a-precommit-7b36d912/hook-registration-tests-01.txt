@@ -1,0 +1,281 @@
+﻿TAP version 13
+# Subtest: buildScreenShareWarnings (\#6)
+    # Subtest: flags secret files at any depth, not only at the workspace root
+    ok 1 - flags secret files at any depth, not only at the workspace root
+      ---
+      duration_ms: 3.0201
+      type: 'test'
+      ...
+    # Subtest: flags key material and named secrets
+    ok 2 - flags key material and named secrets
+      ---
+      duration_ms: 0.4123
+      type: 'test'
+      ...
+    # Subtest: does not flag ordinary source files
+    ok 3 - does not flag ordinary source files
+      ---
+      duration_ms: 0.1461
+      type: 'test'
+      ...
+    1..3
+ok 1 - buildScreenShareWarnings (\#6)
+  ---
+  duration_ms: 4.4396
+  type: 'suite'
+  ...
+# Subtest: evaluateOsvNudge (\#7)
+    # Subtest: never claims risky packages were found when no scan ran
+    ok 1 - never claims risky packages were found when no scan ran
+      ---
+      duration_ms: 0.9815
+      type: 'test'
+      ...
+    # Subtest: reports the real count when a scan did run
+    ok 2 - reports the real count when a scan did run
+      ---
+      duration_ms: 0.2799
+      type: 'test'
+      ...
+    # Subtest: stays quiet after a clean scan, and whenever OSV is already always-on
+    ok 3 - stays quiet after a clean scan, and whenever OSV is already always-on
+      ---
+      duration_ms: 0.2267
+      type: 'test'
+      ...
+    1..3
+ok 2 - evaluateOsvNudge (\#7)
+  ---
+  duration_ms: 1.9095
+  type: 'suite'
+  ...
+# Subtest: parseGitHooksPath (\#5)
+    # Subtest: detects a husky-style core.hooksPath so a dead hook is never installed
+    ok 1 - detects a husky-style core.hooksPath so a dead hook is never installed
+      ---
+      duration_ms: 0.5313
+      type: 'test'
+      ...
+    # Subtest: ignores hooksPath declared under another section
+    ok 2 - ignores hooksPath declared under another section
+      ---
+      duration_ms: 0.1482
+      type: 'test'
+      ...
+    # Subtest: returns null for a normal repo config
+    ok 3 - returns null for a normal repo config
+      ---
+      duration_ms: 0.3876
+      type: 'test'
+      ...
+    # Subtest: strips quotes around the value
+    ok 4 - strips quotes around the value
+      ---
+      duration_ms: 0.1797
+      type: 'test'
+      ...
+    1..4
+ok 3 - parseGitHooksPath (\#5)
+  ---
+  duration_ms: 1.6436
+  type: 'suite'
+  ...
+# Subtest: buildPreCommitHook (\#5)
+    # Subtest: is a POSIX script that blocks on a match and exits 0 otherwise
+    ok 1 - is a POSIX script that blocks on a match and exits 0 otherwise
+      ---
+      duration_ms: 0.2174
+      type: 'test'
+      ...
+    1..1
+ok 4 - buildPreCommitHook (\#5)
+  ---
+  duration_ms: 0.326
+  type: 'suite'
+  ...
+# Subtest: resolveLocalModelLogFiles (\#8)
+    # Subtest: expands the LM Studio log DIRECTORY into the files inside it
+    ok 1 - expands the LM Studio log DIRECTORY into the files inside it
+      ---
+      duration_ms: 0.7225
+      type: 'test'
+      ...
+    # Subtest: passes plain log files straight through
+    ok 2 - passes plain log files straight through
+      ---
+      duration_ms: 0.2486
+      type: 'test'
+      ...
+    # Subtest: returns nothing when no local model is installed
+    ok 3 - returns nothing when no local model is installed
+      ---
+      duration_ms: 0.3761
+      type: 'test'
+      ...
+    # Subtest: bounds how many files it pulls out of one directory
+    ok 4 - bounds how many files it pulls out of one directory
+      ---
+      duration_ms: 0.6564
+      type: 'test'
+      ...
+    1..4
+ok 5 - resolveLocalModelLogFiles (\#8)
+  ---
+  duration_ms: 2.2224
+  type: 'suite'
+  ...
+# Subtest: scanAICodeForVulns (\#3)
+    # Subtest: matches injection-prone AI-generated patterns
+    ok 1 - matches injection-prone AI-generated patterns
+      ---
+      duration_ms: 0.9193
+      type: 'test'
+      ...
+    # Subtest: is stateless across calls despite global regexes
+    ok 2 - is stateless across calls despite global regexes
+      ---
+      duration_ms: 0.121
+      type: 'test'
+      ...
+    # Subtest: stays quiet on clean code
+    ok 3 - stays quiet on clean code
+      ---
+      duration_ms: 0.1651
+      type: 'test'
+      ...
+    1..3
+ok 6 - scanAICodeForVulns (\#3)
+  ---
+  duration_ms: 1.4007
+  type: 'suite'
+  ...
+# Subtest: RAG egress detection (\#4) is reachable from this module
+    # Subtest: re-exports a live implementation rather than a dead local copy
+    ok 1 - re-exports a live implementation rather than a dead local copy
+      ---
+      duration_ms: 0.2651
+      type: 'test'
+      ...
+    1..1
+ok 7 - RAG egress detection (\#4) is reachable from this module
+  ---
+  duration_ms: 0.3481
+  type: 'suite'
+  ...
+# Subtest: F26a registration and status are default-off frozen metadata without filesystem keys children or listeners
+ok 8 - F26a registration and status are default-off frozen metadata without filesystem keys children or listeners
+  ---
+  duration_ms: 309.56
+  type: 'test'
+  ...
+# Subtest: F26a install resume restore and legacy install ignore every public argument and validate completed result identity
+ok 9 - F26a install resume restore and legacy install ignore every public argument and validate completed result identity
+  ---
+  duration_ms: 4.9447
+  type: 'test'
+  ...
+# Subtest: F26a legacy copy gives fixed owning-editor guidance without clipboard access or executable hook text
+ok 10 - F26a legacy copy gives fixed owning-editor guidance without clipboard access or executable hook text
+  ---
+  duration_ms: 5.18
+  type: 'test'
+  ...
+# Subtest: F26a completed-looking APPLIED RESUMED RESTORED results are unavailable when current rejects them
+ok 11 - F26a completed-looking APPLIED RESUMED RESTORED results are unavailable when current rejects them
+  ---
+  duration_ms: 5.0421
+  type: 'test'
+  ...
+# Subtest: F26a all mutation commands share one pending lock while status remains side effect free
+ok 12 - F26a all mutation commands share one pending lock while status remains side effect free
+  ---
+  duration_ms: 6.9
+  type: 'test'
+  ...
+# Subtest: F26a private controller and publication errors produce fixed unavailable results and release the pending lock
+ok 13 - F26a private controller and publication errors produce fixed unavailable results and release the pending lock
+  ---
+  duration_ms: 5.731
+  type: 'test'
+  ...
+# Subtest: F26a flag-off install and resume refuse caller overrides while explicit reviewed restore remains callable
+ok 14 - F26a flag-off install and resume refuse caller overrides while explicit reviewed restore remains callable
+  ---
+  duration_ms: 4.4421
+  type: 'test'
+  ...
+# Subtest: F26a disposed registrations suppress late success unregister every command and refuse retained handlers
+ok 15 - F26a disposed registrations suppress late success unregister every command and refuse retained handlers
+  ---
+  duration_ms: 3.9601
+  type: 'test'
+  ...
+# Subtest: F26a initial withdrawn or disposed controller cannot authenticate forged copied or cancelled lifecycle results
+ok 16 - F26a initial withdrawn or disposed controller cannot authenticate forged copied or cancelled lifecycle results
+  ---
+  duration_ms: 4.0252
+  type: 'test'
+  ...
+# Subtest: F26a actual configuration and workspace listeners withdraw controller authority without resource I/O
+ok 17 - F26a actual configuration and workspace listeners withdraw controller authority without resource I/O
+  ---
+  duration_ms: 4.3334
+  type: 'test'
+  ...
+# Subtest: F26a initial status withholds absent multiple or nonlocal roots without filesystem key child or listener access
+ok 18 - F26a initial status withholds absent multiple or nonlocal roots without filesystem key child or listener access
+  ---
+  duration_ms: 3.3788
+  type: 'test'
+  ...
+# Subtest: F26a strict owner flag accepts only global boolean true and an explicit false defeats the default
+ok 19 - F26a strict owner flag accepts only global boolean true and an explicit false defeats the default
+  ---
+  duration_ms: 3.4297
+  type: 'test'
+  ...
+# Subtest: F26a missing inspect and nonboolean defaults fail closed without using merged get values
+ok 20 - F26a missing inspect and nonboolean defaults fail closed without using merged get values
+  ---
+  duration_ms: 3.4352
+  type: 'test'
+  ...
+# Subtest: F26a workspace and folder values cannot grant or revoke the strict machine owner or boolean default
+ok 21 - F26a workspace and folder values cannot grant or revoke the strict machine owner or boolean default
+  ---
+  duration_ms: 2.8637
+  type: 'test'
+  ...
+# Subtest: F26a untrusted and remote environments cannot enable a globally approved owner hook
+ok 22 - F26a untrusted and remote environments cannot enable a globally approved owner hook
+  ---
+  duration_ms: 3.6422
+  type: 'test'
+  ...
+# Subtest: F26a configuration access and inspect errors fail closed without exposing raw diagnostics
+ok 23 - F26a configuration access and inspect errors fail closed without exposing raw diagnostics
+  ---
+  duration_ms: 3.2236
+  type: 'test'
+  ...
+# Subtest: F26a full activation ordering retains reviewed legacy install routing
+ok 24 - F26a full activation ordering retains reviewed legacy install routing
+  ---
+  duration_ms: 4.0674
+  type: 'test'
+  ...
+# Subtest: F26a full activation ordering retains reviewed legacy copy guidance
+ok 25 - F26a full activation ordering retains reviewed legacy copy guidance
+  ---
+  duration_ms: 1.0062
+  type: 'test'
+  ...
+1..25
+# tests 37
+# suites 7
+# pass 37
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2753.9651

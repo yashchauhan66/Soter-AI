@@ -1,0 +1,64 @@
+{
+  "status": "MATERIALIZED_PUBLIC_SETUP_DIAGNOSTIC_NOT_EXECUTED",
+  "time": "2026-10-26T06:58:25.910Z",
+  "launcher": {
+    "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-precommit-native-04.ps1",
+    "bytes": 45232,
+    "sha256": "97161c38e178a02f7222fc1d68d21a90c18dd61908d7c54d70fede09659c3483"
+  },
+  "bootstrapSource": {
+    "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/precommit-startup-bootstrap-04.cjs",
+    "bytes": 13073,
+    "sha256": "5706c920648e5658807feaef34b912988310706626dc7d45ecf9f265393063f4"
+  },
+  "ancestor": {
+    "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-precommit-native-03.ps1",
+    "bytes": 33256,
+    "sha256": "755f80ee00b023f4b24da4d5a0079a2202d038698aa8fc923fbbca420520a0de"
+  },
+  "ancestorSnapshot": {
+    "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/precommit-launcher04-inherited-run03.txt",
+    "bytes": 33256,
+    "sha256": "755f80ee00b023f4b24da4d5a0079a2202d038698aa8fc923fbbca420520a0de"
+  },
+  "binding": {
+    "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/native-current-binding-03.json",
+    "bytes": 2075,
+    "sha256": "df37214d1c6af39677175f4cd8245d6cfa314488aed520110e73fa2f582bb612"
+  },
+  "semanticFreeze": {
+    "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/native-host-freeze-02.json",
+    "bytes": 6238,
+    "sha256": "96c822673ea43cd246bb116b8232cefd86d9ab5448f0793d11e16455552dca6a"
+  },
+  "unchanged": {
+    "assertions": "30 primary +4 restart, same frozen driver03/source989/VSIX",
+    "driverSha256": "899f01c8e699e613ac5d3fc2f8066e8997938e79ecc665dfe34af3e5c4e9090b",
+    "vsixSha256": "bf23137b018e9c6f479ce537ba58898a4077fcdea8a0a785261a3446ac4cbd91",
+    "editorTimeoutSeconds": 300,
+    "sourceOrProductChanges": 0
+  },
+  "diagnostic": {
+    "installedBeforeDriverRequire": true,
+    "delegate": "Exact real spawn receiver/arguments/env and returned child unchanged",
+    "publicAllowlist": [
+      "version",
+      "init",
+      "config --local user.name",
+      "config --local user.email",
+      "config --local core.autocrlf"
+    ],
+    "maximumSetupJobs": 5,
+    "rawBytesPerJob": {
+      "stdout": 4096,
+      "stderr": 8192
+    },
+    "captureAfterBeforeActivate": false,
+    "closeRequires": "All observed children actualclose+bothEOF and bounded raw/row flush, no signals/cancel/pipe abort",
+    "environment": "Baseline/per-job before/after SHA plus at most256 changed key NAMES; never environment values",
+    "failureStack": "Only public beforeActivate failure: error name and at most32 stack frames/8192characters, no assertion values; ordinary case errors remain name-only"
+  },
+  "validation": "Embedded bootstrap parsed by vm.Script only. Root must PowerShell-parse the resulting launcher before execution. No helper/native/test/build/compiler/Git/source execution.",
+  "cause": "Native03 public setup AssertionError remains unestablished; diagnostic instrumentation does not guess a product fix or regrade prior failure.",
+  "independence": "LOW"
+}

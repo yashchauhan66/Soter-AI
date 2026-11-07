@@ -1,0 +1,7 @@
+# F26a: optional pre-commit hook
+
+Existing IMPLEMENTATION-PLAN F26a / MASTER U7-U8 / frozen LS-27, not a replacement plan. F25 source1000/transition10 actual-byte proofs PASS; parent1969c368d439237126a360af452c254a5826be88. F26a only production card; F26b-c/F27-F32/Vgates pending.
+
+First component: root-adopted exact32test staged-entry protocol with128entries/256KiB/2048UTF8path/255UTF16component bounds, strict stage0 regular SHA1 framing, safe literal paths and conservative case/NFC/ancestor collision refusal. Parser grants no hook/index/object/ALLOW authority. Missing-module baseline required before source; owner/effective-index/canonical content/finite child/strict optional machine flag/review/encrypted backup+coexistence+undo/native packaged actual owner hook/public commit remain separate required gates. Existing continuousGuards has an unsafe legacy hook route that must be replaced/gated before acceptance. No registered-value coverage without live private lease.
+
+Use original plan/queue order and prepared readonly protocol as advice. Flag authority and fourth-runtime packaging must be resolved before their production route; do not infer native coverage. All fixture data synthetic and retained; local/loopback only, no real secrets/history/normal profile/signals/downloads/logins/OS changes/push/publish/tag. Disk threshold waived. Native actual tool, exactnewVSIX, affected native/withdrawal/source+transition all-byte gates required before F26b. LOW/no rating; original L6 HUMAN-ACTIONS and STOP remains.

@@ -173,7 +173,7 @@ export default function BenchmarksPage() {
             recall at a fixed false-positive rate — not a &ldquo;100%&rdquo; score. Reproduce it with{" "}
             <code className="text-cyan">npm run benchmark:honest</code>.
           </p>
-          <div className="mt-4 text-sm text-slate-300">Run date: {formatDate(st.generatedAtIso)}</div>
+          <div className="mt-4 text-sm text-slate-300" suppressHydrationWarning>Run date: {formatDate(st.generatedAtIso)}</div>
         </div>
 
         {/* "How to read this" */}
@@ -378,7 +378,7 @@ export default function BenchmarksPage() {
             <div className="card p-6 text-center">
               <div className="text-4xl font-black text-emerald">0</div>
               <p className="mt-2 text-sm text-slate-200">Failing scenarios</p>
-              <p className="text-xs text-slate-300">Run {formatDate(BATTERY.date)}</p>
+              <p className="text-xs text-slate-300" suppressHydrationWarning>Run {formatDate(BATTERY.date)}</p>
             </div>
           </div>
           <p className="mt-4 text-xs text-slate-300">

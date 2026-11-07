@@ -14,6 +14,15 @@ export function browserName(): ExtensionHeartbeat["browser"] {
 
 export async function sendHeartbeat(domain?: string) {
   const state = await getState();
+
+  // Guard: Never send heartbeats over the wire if not enrolled or missing credentials
+  if (state.enrollmentStatus && state.enrollmentStatus !== "enrolled") {
+    return;
+  }
+  if (!state.config.organizationId || !state.config.deviceToken) {
+    return;
+  }
+
   const integrity = await computeIntegrityReport(state);
   const heartbeat: ExtensionHeartbeat = {
     organizationId: state.config.organizationId,
@@ -31,7 +40,12 @@ export async function sendHeartbeat(domain?: string) {
     await setState({ lastHeartbeatAt: heartbeat.lastActiveAt });
     if (response.shortPollingSeconds) configurePolicySyncAlarm(response.shortPollingSeconds);
     if (response.lockdownChanged) await syncPolicy();
-  } catch {
-    await setState({ policySyncStatus: "offline" });
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err);
+    if (msg.includes("401")) {
+      await setState({ enrollmentStatus: "expired", policySyncStatus: "offline" });
+    } else {
+      await setState({ policySyncStatus: "offline" });
+    }
   }
 }

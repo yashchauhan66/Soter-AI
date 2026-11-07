@@ -1,0 +1,76 @@
+{
+  "status": "STARTED_NOT_COMPLETED",
+  "time": "2026-10-26T13:30:03.367Z",
+  "pid": 29664,
+  "signalsRequested": 0,
+  "inputs": {
+    "binding": {
+      "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/post-full04-binding.json",
+      "bytes": 1114,
+      "sha256": "863608d4e9b80bbbefc754a7dc216d4ff2e5dc114f50cb231b98a3d70477917d"
+    },
+    "inputProof": {
+      "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/full-inputs-04.json",
+      "bytes": 194634,
+      "sha256": "49df8a06db5b5ae8f452b3608d5fd28fbf1d46132cddf00762b5f93a5504aeab",
+      "fileCount": 990
+    },
+    "compiler": {
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/compiler-15.txt.result.json",
+        "bytes": 577,
+        "sha256": "9c1bbbc6c3f721c5bf3b3f945219b746a6db95c0fe8b3e8fbdea50df31e725b1"
+      },
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/compiler-15.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "full": {
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/full-tests-03.txt.result.json",
+        "bytes": 609,
+        "sha256": "8b668079b5d52a6acb166fc010483dd2fad82d86829147c84e0b8f9c622ef9b7"
+      },
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/full-tests-03.txt",
+        "bytes": 1018409,
+        "sha256": "8940bea5855f499f351b67a7e71cb582980e488c143364b503119c97b6093f89"
+      },
+      "summary": {
+        "tests": 4223,
+        "pass": 4219,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 4
+      }
+    },
+    "semanticFreeze": {
+      "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/native-host-freeze-02.json",
+      "bytes": 6238,
+      "sha256": "96c822673ea43cd246bb116b8232cefd86d9ab5448f0793d11e16455552dca6a"
+    },
+    "deltaFromNative03": {
+      "changed": [
+        "packages/vscode-extension/src/history-hooks/OwnerHookProtocol.ts"
+      ],
+      "added": [
+        "packages/vscode-extension/src/__tests__/ownerHookNativeEnvironment.review.test.ts"
+      ],
+      "removed": [],
+      "unchanged": 988
+    },
+    "outputVsix": "packages/soterai-lite/soterai-lite-0.7.0-f26a-20261026-attempt02.vsix"
+  },
+  "runner": {
+    "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-post-full-04.cjs",
+    "bytes": 2381,
+    "sha256": "ae29398eb903312a51fd8b927559d56389774beaa26ef04bbfae5af0aba974aa"
+  },
+  "entry": {
+    "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/post-full-check-entry-04.ps1",
+    "bytes": 1767,
+    "sha256": "1b7599a73817094b046ac609d1d5d9fc52d96a2367c0594d0b30ec3464246011"
+  }
+}

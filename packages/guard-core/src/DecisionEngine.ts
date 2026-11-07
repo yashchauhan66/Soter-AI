@@ -1,4 +1,5 @@
 import type {
+    DetectorMatch,
     DetectorResult,
     Finding,
     GuardDecision,
@@ -190,6 +191,12 @@ export class DecisionEngine {
             () => detectJailbreak(text),
             "jailbreakDetection=false for this context",
         );
+        run(
+            "UnicodeSmugglingDetector",
+            pipeline.promptInjectionDetection,
+            () => detectUnicodeSmuggling(text),
+            "promptInjectionDetection=false for this context",
+        );
 
         // File / workspace / selection structural detectors
         const fileish = ctx === "file" || ctx === "workspace" || ctx === "selection";
@@ -250,4 +257,43 @@ export class DecisionEngine {
 
     getCache(): HashCache { return this.hashCache; }
     getPolicyEvaluator(): PolicyEvaluator { return this.policyEvaluator; }
+}
+
+function detectUnicodeSmuggling(str: string): DetectorResult {
+    const matches: DetectorMatch[] = [];
+    const zw = /[A-Za-z0-9][\u200B-\u200F\uFEFF\u2060\u00AD]+[A-Za-z0-9]/g;
+    const m = zw.exec(str);
+    if (m) {
+        matches.push({
+            type: "prompt_injection",
+            label: "Zero-width character smuggling",
+            severity: "high",
+            score: 35,
+            start: m.index,
+            end: m.index + m[0].length,
+            match: m[0],
+            message: "Zero-width character embedded inside token to evade filters.",
+            confidence: 0.95,
+        });
+    }
+    const cyrillicMixed = /(?:[a-z]+[\u0430\u0410\u0441\u0421\u0435\u0415\u0456\u0406\u0458\u0408\u043E\u041E\u0440\u0420\u0455\u0405\u0443\u0423\u0445\u0425]+|[\u0430\u0410\u0441\u0421\u0435\u0415\u0456\u0406\u0458\u0408\u043E\u041E\u0440\u0420\u0455\u0405\u0443\u0423\u0445\u0425]+[a-z]+)[a-z\u0400-\u04FF]*/i;
+    const cm = cyrillicMixed.exec(str);
+    if (cm) {
+        matches.push({
+            type: "prompt_injection",
+            label: "Cyrillic homoglyph substitution",
+            severity: "high",
+            score: 35,
+            start: cm.index,
+            end: cm.index + cm[0].length,
+            match: cm[0],
+            message: "Cyrillic homoglyph character mixed with Latin script to evade detection.",
+            confidence: 0.95,
+        });
+    }
+    return {
+        detectorName: "UnicodeSmugglingDetector",
+        detectorVersion: "1.0.0",
+        matches,
+    };
 }

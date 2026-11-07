@@ -1,0 +1,38 @@
+﻿VBoxManage.exe : 0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...100%
+At line:13 char:3
++   & 'C:\Program Files\Oracle\VirtualBox\VBoxManage.exe' @runtimeFixed ...
++   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (0%...10%...20%....0%...90%...100%:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+Interpreting C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\.tmp\full-mode\images\ubuntu-noble-20260926\ubuntu-
+24.04-server-cloudimg-amd64-verified.ova...
+OK.
+Disks:
+  vmdisk1	10737418240	0	http://www.vmware.com/interfaces/specifications/vmdk.html#streamOptimized	ubuntu-noble-24.04-cloudimg.vmdk	594777600	-1	
+
+Virtual system 0:
+ 0: Suggested OS type: "Ubuntu_64"
+    (change with "--vsys 0 --ostype <type>"; use "list ostypes" to list all possible values)
+ 1: VM name specified with --vmname: "SoterAI-Gateway-20261012"
+ 2: Suggested VM group "/"
+    (change with "--vsys 0 --group <group>")
+ 3: VM settings file name specified with --settingsfile: "D:\SoterAI-FullMode\machines\SoterAI-Gateway-20261012\SoterAI-Gateway-20261012.vbox"
+ 4: VM base folder specified with --basefolder: "D:\SoterAI-FullMode\machines"
+ 5: Product (ignored): Ubuntu 24.04 Server (20260926)
+ 6: No. of CPUs specified with --cpus: 1
+ 7: Guest memory specified with --memory: 768 MB
+ 8: Network adapter: orig VM Network, config 3, extra type=Bridged
+ 9: Floppy -- disabled
+10: CD-ROM -- disabled
+11: SCSI controller, type LsiLogic
+    (change with "--vsys 0 --unit 11 --scsitype {BusLogic|LsiLogic}";
+    disable with "--vsys 0 --unit 11 --ignore")
+12: IDE controller, type PIIX4 -- disabled
+13: IDE controller, type PIIX4 -- disabled
+14: Hard disk image: source image=ubuntu-noble-24.04-cloudimg.vmdk, target path=ubuntu-noble-24.04-cloudimg.vdi, controller=11;port=0
+    (change target path with "--vsys 0 --unit 14 --disk path";
+    change controller with "--vsys 0 --unit 14 --controller <index>";
+    change controller port with "--vsys 0 --unit 14 --port <n>";
+    disable with "--vsys 0 --unit 14 --ignore")
+

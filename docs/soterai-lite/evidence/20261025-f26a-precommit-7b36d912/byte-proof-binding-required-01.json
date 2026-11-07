@@ -1,0 +1,86 @@
+{
+  "status": "PREPARED_NOT_BOUND_SCHEMA_ONLY_NO_SCOPE_OR_ACCEPTANCE_FINALIZED",
+  "futureBindingFile": "byte-proof-binding-current-01.json",
+  "materializedFiles": [
+    "scoped-git-lib-02.cjs",
+    "current-acceptance-guard-01.cjs",
+    "prepare-source-commit-01.cjs",
+    "commit-source-01.cjs",
+    "prepare-transition-01.cjs",
+    "commit-transition-01.cjs"
+  ],
+  "replacementsAfterRootReviewOnly": {
+    "__F26A_BYTE_PROOF_BOUND__": "F26A_CURRENT_BYTE_PROOF_FACTS_BOUND",
+    "__F26A_BYTE_BINDING_SHA256__": "REQUIRED_ACTUAL_SHA256_OF_COMPLETE_FUTURE_BINDING_JSON"
+  },
+  "bindingShape": {
+    "status": "F26A_CURRENT_ACCEPTANCE_AND_EXPLICIT_SCOPE_BOUND",
+    "feature": "F26a",
+    "parent": "1969c368d439237126a360af452c254a5826be88",
+    "artifactPath": "packages/soterai-lite/soterai-lite-0.7.0-f26a-20261026-attempt01.vsix",
+    "acceptanceSha256": "REQUIRED_REVIEWED_F26A_ACCEPTANCE01_SHA256",
+    "sourcePathsReviewedAgainstCurrentGitDiff": true,
+    "sourcePaths": [],
+    "sourceQueueSha256": "REQUIRED_ROOT_REVIEWED_VERIFYING_QUEUE_SHA256",
+    "sourceLedgerSha256": "REQUIRED_ROOT_REVIEWED_SOURCE_LEDGER_SHA256",
+    "plannedSourceScope": {
+      "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/planned-source-scope-current-01.json",
+      "bytes": null,
+      "sha256": "REQUIRED_AFTER_ACCEPTANCE_AND_EXACT_READONLY_GIT_SCOPE_REVIEW"
+    },
+    "fullInputBinding": {
+      "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/full-inputs-02.json",
+      "bytes": 192917,
+      "sha256": "5b381391b7161f21af4dc30c3d6594373bb307f8903ab74d739d4d3a688ad322"
+    },
+    "inputBinding": {
+      "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/native-source-inputs-03.json",
+      "bytes": 193291,
+      "sha256": "f94d6ca5ea2ff2499dbf76ea5f82239160806a7dc35bad5d42b79a7d5edb6aab"
+    },
+    "nativeCurrentBinding": {
+      "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/native-current-binding-03.json",
+      "bytes": 2075,
+      "sha256": "df37214d1c6af39677175f4cd8245d6cfa314488aed520110e73fa2f582bb612"
+    },
+    "nativeFixtureEquivalence": {
+      "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/native-fixture-equivalence-03.json",
+      "bytes": 14131,
+      "sha256": "837236c08710d3583eca0349dff7c93078ee3e2c1990b8233e06ea166dc0a20d"
+    },
+    "requiredExecutedFixtures": [],
+    "knownNonPassEvidence": [],
+    "requiredGatePaths": [
+      {"role": "compiler", "rawPath": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/compiler-14.txt"},
+      {"role": "focused", "rawPath": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/components-combined-10.txt"},
+      {"role": "integration", "rawPath": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/full-integration-tests-01.txt"},
+      {"role": "full", "rawPath": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/full-tests-02.txt"},
+      {"role": "backendCompiler", "rawPath": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/backend-typecheck-01.txt"},
+      {"role": "backendTests", "rawPath": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/backend-tests-01.txt"},
+      {"role": "nativeBuild", "rawPath": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/native-build-03.txt"},
+      {"role": "package", "rawPath": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/package-01.txt"},
+      {"role": "content", "rawPath": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/content-inspection-01.txt"},
+      {"role": "nativeAggregate", "rawPath": "REQUIRED_ACTUAL_ALL_NATIVE_AGGREGATE_H26_RAW"},
+      {"role": "precommitNative", "rawPath": "REQUIRED_ACTUAL_SUCCESSFUL_PRECOMMIT34_H26_RAW"},
+      {"role": "affectedNative", "rawPath": "REQUIRED_ACTUAL_SUCCESSFUL_AFFECTED509_H26_RAW"},
+      {"role": "functional", "rawPath": "REQUIRED_ACTUAL_FRESH_FUNCTIONAL10_H26_RAW"},
+      {"role": "security", "rawPath": "REQUIRED_ACTUAL_FRESH_SECURITY17_H26_RAW"}
+    ]
+  },
+  "plannedSourceScopeShape": {
+    "status": "FROZEN_REVIEWED_F26A_DELTA_FROM_PARENT_AFTER_ACCEPTANCE",
+    "parent": "1969c368d439237126a360af452c254a5826be88",
+    "acceptanceSha256": "SAME_REVIEWED_FUTURE_ACCEPTANCE_SHA256",
+    "records": [],
+    "parentRecords": [],
+    "trackedDelta": [],
+    "unrelatedPreserved": []
+  },
+  "presentMembershipShape": {"path": "EXPLICIT_CANONICAL_REPOSITORY_RELATIVE_PATH", "bytes": null, "sha256": "ACTUAL_FROZEN_WORKING_SHA256"},
+  "parentPresentShape": {"path": "SAME_LOGICAL_PATH", "bytes": null, "sha256": "ACTUAL_PARENT_GIT_BLOB_SHA256", "oid": "ACTUAL_40HEX_GIT_BLOB_OID", "mode": "100644_OR_100755"},
+  "parentAbsentShape": {"path": "SAME_LOGICAL_PATH", "absent": true},
+  "deletedMembershipShape": {"path": "EXPLICIT_DELETED_PATH", "deleted": true, "before": {"path": "SAME_LOGICAL_PATH", "bytes": null, "sha256": "ACTUAL_PARENT_GIT_BLOB_SHA256", "oid": "ACTUAL_40HEX_GIT_BLOB_OID", "mode": "100644_OR_100755"}},
+  "knownNonPassShape": {"path": "EXACT_RETAINED_H26_FILE", "bytes": null, "sha256": "ACTUAL_RETAINED_SHA256", "disposition": "RETAINED_NONPASS_NOT_EXECUTABLE_NOT_CURRENT_GATE"},
+  "scopeFinalized": false,
+  "execution": "NONE_AUTHORING_ONLY"
+}

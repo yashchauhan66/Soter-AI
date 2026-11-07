@@ -1,0 +1,78 @@
+{
+    "status":  "PREPARED_STATIC_SYNTAX_ONLY_NOT_EXECUTED",
+    "observedAt":  "2026-10-26T05:18:39.0008485Z",
+    "helpers":  [
+                    {
+                        "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-precommit-native-01.ps1",
+                        "bytes":  32221,
+                        "sha256":  "fa35f56f8f60d9bff8b9fe80156b4412798b75172a64c0c20b280889a0e6bc7e"
+                    },
+                    {
+                        "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/precommit-offline-owner-01.cjs",
+                        "bytes":  14721,
+                        "sha256":  "8ce7204791b8c0f58db406910b3b856b42853afcee4116ebf2d65dd294fffcfb"
+                    }
+                ],
+    "basis":  [
+                  {
+                      "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/native-host-freeze-01.json",
+                      "bytes":  5638,
+                      "sha256":  "090ee2ae998f18b44456dbd63727be2e9f4d8e4dc04ca5bc1c96767a0ad03e6e"
+                  },
+                  {
+                      "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/native-driver-provenance-02.json",
+                      "bytes":  223586,
+                      "sha256":  "fc7d56817bec6fe869cf2819ed833c77ac70695d6aff043e40a6245bafcbc2f6"
+                  },
+                  {
+                      "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/prebuilt-native-hosts-02/lite-precommit-guard-host.js",
+                      "bytes":  69660,
+                      "sha256":  "d126f808fd018fa34b62570cc94be6c322eecbf824426b7c8266648082450cdd"
+                  },
+                  {
+                      "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/host-current-binding-01.ps1",
+                      "bytes":  4637,
+                      "sha256":  "d4be65fff1dbc581f3b7e2435efcc0417e51fef9f821b479a6cc1817362c0246"
+                  },
+                  {
+                      "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/artifact-binding-01.ps1",
+                      "bytes":  3867,
+                      "sha256":  "dbe88373afe22dc27a99470537849ec026c8cb203ef053887e284a0a78aa804d"
+                  },
+                  {
+                      "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-precommit-native-01.before-timeout-ownership-01.txt",
+                      "bytes":  30275,
+                      "sha256":  "383b7318f93bfa6b0b1b86af1c8ac5f09fe121d71a8f827d2de9b7bfc6c6b54e"
+                  }
+              ],
+    "ancestor":  {
+                     "path":  "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/run-logs-native-01.ps1",
+                     "bytes":  18191,
+                     "sha256":  "bf98ccd0bb0f7eac1518caef00a9d4deab619391e646ac567d61d4b473b69dda",
+                     "mutated":  false
+                 },
+    "syntax":  {
+                   "powershellParseErrors":  0,
+                   "powershellTokens":  4659,
+                   "nodeCheckExitCode":  0,
+                   "helperBodiesExecuted":  false
+               },
+    "requiredRuntimeCount":  4,
+    "expectedChecks":  {
+                           "primary":  30,
+                           "restart":  4,
+                           "total":  34
+                       },
+    "exactVsix":  "packages/soterai-lite/soterai-lite-0.7.0-f26a-20261026-attempt01.vsix",
+    "vsixSha256":  "bf23137b018e9c6f479ce537ba58898a4077fcdea8a0a785261a3446ac4cbd91",
+    "frontendSha256":  "f1611d1d7931288560e1dc9342cfcd4541d6f1ee5a3b8642c6303f1883b58184",
+    "workerSha256":  "67b2ef79c9d132db6ed70e8cdd9bed85e5e920359beb71532c85dceb0db20449",
+    "limits":  [
+                   "Authoring-only evidence; no Code, Git, native driver, full suite, build, product source, queue, ledger or Git operation executed.",
+                   "Bootstrap main and scripted native owner responses are explicit LOW-independence test seams; runtime bundle bytes remain exact.",
+                   "No signal requests or pipe destruction; timeout/undrained-stream ownership retained until actual natural close+bothEOF, then fail without later phases.",
+                   "Nested hook client closure is not inferred from owner Git; driver has separate direct packaged-client controls.",
+                   "Offline helper uses exact frozen owner args/environment, numeric loopback descriptor, actual Git nonzero+close+bothEOF and retained source/index/hooks/HEAD facts/streams."
+               ],
+    "authoringCorrection":  "Inherited timeout Dispose behavior was caught before execution. Exact before bytes retained; corrected only new launcher ownership retention, no executed failure or test regrade."
+}

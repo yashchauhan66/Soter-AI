@@ -1,0 +1,5 @@
+# Current F32 installed lifecycle verification
+
+6 November 2026. The owner explicitly requested completion of F32, F26a, F31 and final gates and repeated the instruction to continue. This successor uses the already-installed VS Code 1.145.1. It retains the extra06 startup failure: Electron reported inaccessible installation ACLs on the previous 1.145.0 build. The subsequent installed build has a recorded successful isolated GUI preflight. No ACL or OS changes are proposed.
+
+Only vendor version/hash bindings, successor receipt names and assertion diagnostics change. The custom-dialog fixture remains enabled. All original 44 assertions, 59 observations, eight lifecycle phases, exact 0.7.0 package and genuine 0.6.3 upgrade remain mandatory. One fresh isolated synthetic run is prepared; prior attempts cannot be reused. Native launch remains subject to the environment approval boundary. No normal profile, download, login, publication, raw-secret restoration or process termination is included.

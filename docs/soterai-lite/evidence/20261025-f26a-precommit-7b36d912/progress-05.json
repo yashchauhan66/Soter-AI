@@ -1,0 +1,153 @@
+{
+  "status": "F26A_CLIENT_DEADLINE27_OWNER_PROJECTION26_PASS_GENUINE_OWNER_CONTEXT_NEXT",
+  "feature": "F26a",
+  "parent": "1969c368d439237126a360af452c254a5826be88",
+  "time": "2026-10-25T12:28:08.308Z",
+  "prior": {
+    "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/progress-04.json",
+    "bytes": 7837,
+    "sha256": "97048daab8e3b4cb0b18e6e5c931bd5a78c3a920a32a895cf446de84e74f72fb"
+  },
+  "gates": {
+    "client-deadline-baseline-01": {
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/client-deadline-baseline-01.txt",
+        "bytes": 1275,
+        "sha256": "0df899d1ac5d6d5d38d92cf82ca76ea7969439bef23d0920e081220c3b862713"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/client-deadline-baseline-01.txt.result.json",
+        "bytes": 649,
+        "sha256": "6d2fbdd5c18f8040142433e2f3c04927cb28f81aff4971aca3b3da83cd7fe61a"
+      },
+      "exitCode": 1,
+      "counts": {
+        "tests": 1,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    "client-withdrawal-tests-01": {
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/client-withdrawal-tests-01.txt",
+        "bytes": 7128,
+        "sha256": "4989a25eab4d079145e4b75ba98f2b7f8b5b3631c826e3f828cae3c9216a7188"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/client-withdrawal-tests-01.txt.result.json",
+        "bytes": 833,
+        "sha256": "bb4fe9939001a50e68a3c434506a080646827695d67672386945efd04f004c24"
+      },
+      "exitCode": 0,
+      "counts": {
+        "tests": 27,
+        "pass": 27,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    "owner-hook-protocol-baseline-01": {
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/owner-hook-protocol-baseline-01.txt",
+        "bytes": 43119,
+        "sha256": "c0686f3785d5e8cc32a081b2184235d3e9d3d900d49d6344f08a74d39f4fd2ae"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/owner-hook-protocol-baseline-01.txt.result.json",
+        "bytes": 729,
+        "sha256": "bbcb3882002eb22946f1bc2deea9d76dc9b40d494fd810ca9ee6e3c200aeb384"
+      },
+      "exitCode": 1,
+      "counts": {
+        "tests": 26,
+        "pass": 0,
+        "fail": 26,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    "owner-hook-protocol-tests-01": {
+      "raw": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/owner-hook-protocol-tests-01.txt",
+        "bytes": 6590,
+        "sha256": "c2dba93ddf78402ce58394364aecd337d8f0038d57a376fb13b296ab8fc1196f"
+      },
+      "receipt": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/owner-hook-protocol-tests-01.txt.result.json",
+        "bytes": 726,
+        "sha256": "11ed4eea0772e2eb5e08075b2d7b751f877401813cf071337742e5af0a5ba545"
+      },
+      "exitCode": 0,
+      "counts": {
+        "tests": 26,
+        "pass": 26,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    }
+  },
+  "files": [
+    {
+      "path": "packages/vscode-extension/src/history-hooks/CheckedHookIndex.ts",
+      "bytes": 7971,
+      "sha256": "9e63a7e21062611d4862bad4156117f42bca4c4855ddbed554b64a18d57a35ca"
+    },
+    {
+      "path": "packages/vscode-extension/src/history-hooks/OwnerHookProtocol.ts",
+      "bytes": 4490,
+      "sha256": "8778d5ebcbf3562db84b94c18a81e056cfca01802a5de0dbbdccda3759ffa1dc"
+    },
+    {
+      "path": "packages/vscode-extension/src/history-hooks/PreCommitClient.ts",
+      "bytes": 9575,
+      "sha256": "674124f6a61b7eb50814fd8e9d22deda67787cdfca7455caca4ecb9de1b9f9a3"
+    },
+    {
+      "path": "packages/vscode-extension/src/history-hooks/preCommitClientMain.ts",
+      "bytes": 724,
+      "sha256": "5ce696867ae9c7ddd3bc3da6074a7f33a00396ee40e379943d8c2bb5cc44fa73"
+    },
+    {
+      "path": "packages/vscode-extension/src/history-hooks/PreCommitGitProcess.ts",
+      "bytes": 9461,
+      "sha256": "95c2b9256094c91c0ad07a8ed15306e4f54f001c4661d90021aff7b723cbbf2c"
+    },
+    {
+      "path": "packages/vscode-extension/src/history-hooks/PreCommitHookText.ts",
+      "bytes": 4738,
+      "sha256": "aa40e1a96205a5e4d7ab362df014705ad0ceaae23ae08b4fc39ec7031359a767"
+    },
+    {
+      "path": "packages/vscode-extension/src/history-hooks/PreCommitOwnerService.ts",
+      "bytes": 13515,
+      "sha256": "5f68381f3ed4d4ab56af18db9deed98092fa6f4435fa594def0c5814ea58e536"
+    },
+    {
+      "path": "packages/vscode-extension/src/history-hooks/PreCommitProtocol.ts",
+      "bytes": 5279,
+      "sha256": "a3289d0ec4ec4c52e30371cc87685881fdce06867a7d492656994c8ada26df81"
+    },
+    {
+      "path": "packages/vscode-extension/src/history-hooks/PreCommitScan.ts",
+      "bytes": 8527,
+      "sha256": "922e2e7032421f3c14d58e6c17bba6bbd29ca52b4a72a4151ba19a4c2c468d8e"
+    },
+    {
+      "path": "packages/vscode-extension/src/history-hooks/PreCommitWire.ts",
+      "bytes": 8056,
+      "sha256": "68e0c31cc76440d0162abf7f2b5e9ba05d6b89986374645150008cd4d8b76e67"
+    },
+    {
+      "path": "packages/vscode-extension/src/history-hooks/StagedContent.ts",
+      "bytes": 5616,
+      "sha256": "c635c1126b816c8c343f1f227887eeb7a4e360a186db84e56154e074fcb94b0e"
+    }
+  ],
+  "correction": "Actual default HTTP deadline before1FAIL: UNAVAILABLE settled while streaming peer socket remained open. One minimal correction gives outer deadline/finally a private cancel handle for this exact HTTP request; no child/process signals. Fresh27 tests (client20/defaultHTTP6/deadline1)PASS, both exact socket close events before peer cleanup. Beforebytes and original assertion unchanged.",
+  "projection": "Pure owner config framing14/environment12=26PASS after missingmodule26FAIL; framing matches actual pinned synthetic Git witness. Scope/origin/path/duplicates/includes/global/ambient selectors refuse; preserve exact allowed owner-discovery context only. No owner query process/context/installation authority yet.",
+  "pending": "Compiler05/combined432 predate client HTTP fix and new OwnerHookProtocol; new current combined/typecheck pending. CheckedOwnerHookContext + OwnerHookGitProcess30 tests authoring before production; scoped canonical EncryptedBackupSink tests authoring before production. All flag/controller/review/installer/backup/undo/fourthruntime/full/VSIX/native/withdrawal/commit-byte gates still pending. F26aACTIVE, no nextfeature/rating/push; LOW, originalL6HUMAN-ACTIONSSTOP."
+}

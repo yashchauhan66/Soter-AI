@@ -1,0 +1,873 @@
+TAP version 13
+# Subtest: Command registration parity (\#4)
+    # Subtest: every declared command is registered
+    ok 1 - every declared command is registered
+      ---
+      duration_ms: 2.0286
+      type: 'test'
+      ...
+    # Subtest: every registered command is declared (no orphan handlers)
+    ok 2 - every registered command is declared (no orphan handlers)
+      ---
+      duration_ms: 0.5498
+      type: 'test'
+      ...
+    # Subtest: the three previously-missing commands are still registered
+    ok 3 - the three previously-missing commands are still registered
+      ---
+      duration_ms: 0.294
+      type: 'test'
+      ...
+    1..3
+ok 1 - Command registration parity (\#4)
+  ---
+  duration_ms: 4.3962
+  type: 'suite'
+  ...
+# Subtest: AI Context Firewall commands (Phases 1–7)
+    # Subtest: all firewall commands are declared AND registered
+    ok 1 - all firewall commands are declared AND registered
+      ---
+      duration_ms: 0.3985
+      type: 'test'
+      ...
+    1..1
+ok 2 - AI Context Firewall commands (Phases 1–7)
+  ---
+  duration_ms: 0.5809
+  type: 'suite'
+  ...
+# Subtest: Workspace Trust (\#5)
+    # Subtest: declares limited untrusted-workspace support
+    ok 1 - declares limited untrusted-workspace support
+      ---
+      duration_ms: 0.2701
+      type: 'test'
+      ...
+    # Subtest: gates cloud connection behind workspace trust
+    ok 2 - gates cloud connection behind workspace trust
+      ---
+      duration_ms: 0.4727
+      type: 'test'
+      ...
+    # Subtest: gates the secret vault behind workspace trust
+    ok 3 - gates the secret vault behind workspace trust
+      ---
+      duration_ms: 3.9978
+      type: 'test'
+      ...
+    1..3
+ok 3 - Workspace Trust (\#5)
+  ---
+  duration_ms: 5.2226
+  type: 'suite'
+  ...
+# Subtest: Workspace filesystem containment
+    # Subtest: canonicalizes targets and rejects symlink or junction escapes before vault writes
+    ok 1 - canonicalizes targets and rejects symlink or junction escapes before vault writes
+      ---
+      duration_ms: 0.5783
+      type: 'test'
+      ...
+    1..1
+ok 4 - Workspace filesystem containment
+  ---
+  duration_ms: 0.8625
+  type: 'suite'
+  ...
+# Subtest: Vault safety — dry-run preview + backup + confirm
+    # Subtest: migration backup is encrypted and OUTSIDE the workspace (no plaintext .bak)
+    ok 1 - migration backup is encrypted and OUTSIDE the workspace (no plaintext .bak)
+      ---
+      duration_ms: 0.5633
+      type: 'test'
+      ...
+    # Subtest: migration requires an explicit modal confirmation after previewing
+    ok 2 - migration requires an explicit modal confirmation after previewing
+      ---
+      duration_ms: 0.7367
+      type: 'test'
+      ...
+    # Subtest: vault status/preview surface metadata only — rawValue stays inside the encrypted store
+    ok 3 - vault status/preview surface metadata only — rawValue stays inside the encrypted store
+      ---
+      duration_ms: 0.5476
+      type: 'test'
+      ...
+    1..3
+ok 5 - Vault safety — dry-run preview + backup + confirm
+  ---
+  duration_ms: 2.3402
+  type: 'suite'
+  ...
+# Subtest: Ledger privacy — no raw secrets persisted (\#6)
+    # Subtest: every ledger write goes through sanitizeLedgerEntry / buildLedgerEntry
+    ok 1 - every ledger write goes through sanitizeLedgerEntry / buildLedgerEntry
+      ---
+      duration_ms: 0.3653
+      type: 'test'
+      ...
+    # Subtest: ledger store never references raw content fields
+    ok 2 - ledger store never references raw content fields
+      ---
+      duration_ms: 0.2912
+      type: 'test'
+      ...
+    1..2
+ok 6 - Ledger privacy — no raw secrets persisted (\#6)
+  ---
+  duration_ms: 0.8554
+  type: 'suite'
+  ...
+# Subtest: Telemetry contains no raw content (\#6)
+    # Subtest: telemetry never references redactedText or raw content fields
+    ok 1 - telemetry never references redactedText or raw content fields
+      ---
+      duration_ms: 0.5827
+      type: 'test'
+      ...
+    # Subtest: event payload excludes caller evidence previews and arbitrary detector metadata
+    ok 2 - event payload excludes caller evidence previews and arbitrary detector metadata
+      ---
+      duration_ms: 0.6669
+      type: 'test'
+      ...
+    1..2
+ok 7 - Telemetry contains no raw content (\#6)
+  ---
+  duration_ms: 4.0515
+  type: 'suite'
+  ...
+# Subtest: SecretStorage token hygiene (\#6)
+    # Subtest: token is stored via context.secrets, never logged
+    ok 1 - token is stored via context.secrets, never logged
+      ---
+      duration_ms: 0.5288
+      type: 'test'
+      ...
+    # Subtest: vault key and canary tokens live in SecretStorage, not globalState/logs
+    ok 2 - vault key and canary tokens live in SecretStorage, not globalState/logs
+      ---
+      duration_ms: 0.2133
+      type: 'test'
+      ...
+    1..2
+ok 8 - SecretStorage token hygiene (\#6)
+  ---
+  duration_ms: 0.9027
+  type: 'suite'
+  ...
+# Subtest: Launch readiness command surface
+    # Subtest: declares and registers launch-critical command names
+    ok 1 - declares and registers launch-critical command names
+      ---
+      duration_ms: 0.2476
+      type: 'test'
+      ...
+    # Subtest: keeps friendly launch aliases mapped to implemented scanners
+    ok 2 - keeps friendly launch aliases mapped to implemented scanners
+      ---
+      duration_ms: 0.2066
+      type: 'test'
+      ...
+    # Subtest: has build and lint scripts required by release automation
+    ok 3 - has build and lint scripts required by release automation
+      ---
+      duration_ms: 0.1289
+      type: 'test'
+      ...
+    1..3
+ok 9 - Launch readiness command surface
+  ---
+  duration_ms: 0.7488
+  type: 'suite'
+  ...
+# Subtest: Marketplace README media hygiene
+    # Subtest: preserves historical screenshot sources without presenting them as current evidence
+    ok 1 - preserves historical screenshot sources without presenting them as current evidence
+      ---
+      duration_ms: 1.5121
+      type: 'test'
+      ...
+    # Subtest: preserves the historical demo GIF while withdrawing its release reference
+    ok 2 - preserves the historical demo GIF while withdrawing its release reference
+      ---
+      duration_ms: 0.6295
+      type: 'test'
+      ...
+    1..2
+ok 10 - Marketplace README media hygiene
+  ---
+  duration_ms: 2.3323
+  type: 'suite'
+  ...
+# Subtest: Local-first privacy mode
+    # Subtest: declares soterai.privacyMode with local default
+    ok 1 - declares soterai.privacyMode with local default
+      ---
+      duration_ms: 0.4027
+      type: 'test'
+      ...
+    # Subtest: prevents telemetry flush in local mode and untrusted workspaces
+    ok 2 - prevents telemetry flush in local mode and untrusted workspaces
+      ---
+      duration_ms: 0.5542
+      type: 'test'
+      ...
+    # Subtest: health reports never include raw secrets or prompt text
+    ok 3 - health reports never include raw secrets or prompt text
+      ---
+      duration_ms: 0.3275
+      type: 'test'
+      ...
+    # Subtest: privacy report scopes local handling and preserves same-user and unmarked-data limits
+    ok 4 - privacy report scopes local handling and preserves same-user and unmarked-data limits
+      ---
+      duration_ms: 0.4584
+      type: 'test'
+      ...
+    # Subtest: README separates local scanning from provider egress and incomplete custody
+    ok 5 - README separates local scanning from provider egress and incomplete custody
+      ---
+      duration_ms: 0.8329
+      type: 'test'
+      ...
+    # Subtest: trust checklist and product matrix lock the reviewer-facing privacy contract
+    ok 6 - trust checklist and product matrix lock the reviewer-facing privacy contract
+      ---
+      duration_ms: 0.3122
+      type: 'test'
+      ...
+    1..6
+ok 11 - Local-first privacy mode
+  ---
+  duration_ms: 3.3608
+  type: 'suite'
+  ...
+# Subtest: Clipboard safety for firewall handlers (\#1)
+    # Subtest: all firewall clipboard writes go through redactForSharing or a canary token by design
+    ok 1 - all firewall clipboard writes go through redactForSharing or a canary token by design
+      ---
+      duration_ms: 0.5178
+      type: 'test'
+      ...
+    1..1
+ok 12 - Clipboard safety for firewall handlers (\#1)
+  ---
+  duration_ms: 0.6824
+  type: 'suite'
+  ...
+# Subtest: Webview hardening (\#7)
+    # Subtest: all webviews declare a Content-Security-Policy
+    ok 1 - all webviews declare a Content-Security-Policy
+      ---
+      duration_ms: 0.7165
+      type: 'test'
+      ...
+    # Subtest: webviews escape finding fields before HTML interpolation
+    ok 2 - webviews escape finding fields before HTML interpolation
+      ---
+      duration_ms: 0.2706
+      type: 'test'
+      ...
+    # Subtest: firewall info webviews disable scripts
+    ok 3 - firewall info webviews disable scripts
+      ---
+      duration_ms: 0.5975
+      type: 'test'
+      ...
+    # Subtest: dashboard message handler keeps a strict command allowlist including new actions
+    ok 4 - dashboard message handler keeps a strict command allowlist including new actions
+      ---
+      duration_ms: 0.8731
+      type: 'test'
+      ...
+    # Subtest: dashboard surfaces the 9+ trust center without overstating enforcement
+    ok 5 - dashboard surfaces the 9+ trust center without overstating enforcement
+      ---
+      duration_ms: 0.4154
+      type: 'test'
+      ...
+    1..5
+ok 13 - Webview hardening (\#7)
+  ---
+  duration_ms: 3.3162
+  type: 'suite'
+  ...
+# Subtest: Enterprise policy export
+    # Subtest: exports a buyer-ready enterprise policy bundle with honest enforcement scope
+    ok 1 - exports a buyer-ready enterprise policy bundle with honest enforcement scope
+      ---
+      duration_ms: 0.5574
+      type: 'test'
+      ...
+    1..1
+ok 14 - Enterprise policy export
+  ---
+  duration_ms: 0.6738
+  type: 'suite'
+  ...
+# Subtest: Broker auto-start wiring (activation actually turns protection on)
+    # Subtest: activate() starts the broker, not just constructs one
+    ok 1 - activate() starts the broker, not just constructs one
+      ---
+      duration_ms: 0.3814
+      type: 'test'
+      ...
+    # Subtest: does not await the start, so a slow broker cannot hang activation
+    ok 2 - does not await the start, so a slow broker cannot hang activation
+      ---
+      duration_ms: 0.1508
+      type: 'test'
+      ...
+    # Subtest: exposes an opt-out that is declared, machine-scoped, and restricted
+    ok 3 - exposes an opt-out that is declared, machine-scoped, and restricted
+      ---
+      duration_ms: 0.2064
+      type: 'test'
+      ...
+    # Subtest: never fails silently — every non-started outcome notifies the user
+    ok 4 - never fails silently — every non-started outcome notifies the user
+      ---
+      duration_ms: 0.1586
+      type: 'test'
+      ...
+    # Subtest: withholds the provider key in a restricted workspace
+    ok 5 - withholds the provider key in a restricted workspace
+      ---
+      duration_ms: 0.1839
+      type: 'test'
+      ...
+    1..5
+ok 15 - Broker auto-start wiring (activation actually turns protection on)
+  ---
+  duration_ms: 1.3535
+  type: 'suite'
+  ...
+# Subtest: Local AI Broker, Safe Mode, and Memory Inspector
+    # Subtest: declares and registers every new command
+    ok 1 - declares and registers every new command
+      ---
+      duration_ms: 0.3819
+      type: 'test'
+      ...
+    # Subtest: stores broker/provider tokens in SecretStorage and fixes the host to loopback
+    ok 2 - stores broker/provider tokens in SecretStorage and fixes the host to loopback
+      ---
+      duration_ms: 0.3307
+      type: 'test'
+      ...
+    # Subtest: never injects a token or provider key into a webview
+    ok 3 - never injects a token or provider key into a webview
+      ---
+      duration_ms: 0.4311
+      type: 'test'
+      ...
+    # Subtest: redacts Memory Inspector exports and trust-gates provider configuration
+    ok 4 - redacts Memory Inspector exports and trust-gates provider configuration
+      ---
+      duration_ms: 0.2253
+      type: 'test'
+      ...
+    # Subtest: warns on raw terminals and routes users to controlled broker execution
+    ok 5 - warns on raw terminals and routes users to controlled broker execution
+      ---
+      duration_ms: 0.2265
+      type: 'test'
+      ...
+    # Subtest: surfaces extension isolation through the authenticated broker preflight
+    ok 6 - surfaces extension isolation through the authenticated broker preflight
+      ---
+      duration_ms: 0.1485
+      type: 'test'
+      ...
+    1..6
+ok 16 - Local AI Broker, Safe Mode, and Memory Inspector
+  ---
+  duration_ms: 1.9986
+  type: 'suite'
+  ...
+# Subtest: Command-palette hygiene (clutter control)
+    # Subtest: core commands are always palette-visible (not gated)
+    ok 1 - core commands are always palette-visible (not gated)
+      ---
+      duration_ms: 0.2174
+      type: 'test'
+      ...
+    # Subtest: keeps the default palette to a small set of clear, reversible newcomer workflows
+    ok 2 - keeps the default palette to a small set of clear, reversible newcomer workflows
+      ---
+      duration_ms: 0.1437
+      type: 'test'
+      ...
+    # Subtest: every non-core declared command is gated behind soterai.advancedCommands (or fully hidden)
+    ok 3 - every non-core declared command is gated behind soterai.advancedCommands (or fully hidden)
+      ---
+      duration_ms: 0.2551
+      type: 'test'
+      ...
+    # Subtest: the context key is driven by stable and experimental command visibility settings
+    ok 4 - the context key is driven by stable and experimental command visibility settings
+      ---
+      duration_ms: 0.2626
+      type: 'test'
+      ...
+    1..4
+ok 17 - Command-palette hygiene (clutter control)
+  ---
+  duration_ms: 1.0708
+  type: 'suite'
+  ...
+# Subtest: Onboarding walkthrough (UX)
+    # Subtest: contributes a Getting Started walkthrough with 3 value-first steps
+    ok 1 - contributes a Getting Started walkthrough with 3 value-first steps
+      ---
+      duration_ms: 0.2449
+      type: 'test'
+      ...
+    # Subtest: every walkthrough step points to an existing markdown media file
+    ok 2 - every walkthrough step points to an existing markdown media file
+      ---
+      duration_ms: 0.6998
+      type: 'test'
+      ...
+    # Subtest: every walkthrough command button targets a declared or built-in command
+    ok 3 - every walkthrough command button targets a declared or built-in command
+      ---
+      duration_ms: 0.3536
+      type: 'test'
+      ...
+    # Subtest: declares onWalkthrough activation and a registered openWalkthrough command
+    ok 4 - declares onWalkthrough activation and a registered openWalkthrough command
+      ---
+      duration_ms: 0.2891
+      type: 'test'
+      ...
+    # Subtest: opens the walkthrough only once via a globalState onboarding flag
+    ok 5 - opens the walkthrough only once via a globalState onboarding flag
+      ---
+      duration_ms: 0.4505
+      type: 'test'
+      ...
+    1..5
+ok 18 - Onboarding walkthrough (UX)
+  ---
+  duration_ms: 2.4113
+  type: 'suite'
+  ...
+# Subtest: Live inline scanning + Quick Fixes (UX)
+    # Subtest: does not pass a ThemeIcon id as a decoration file URI
+    ok 1 - does not pass a ThemeIcon id as a decoration file URI
+      ---
+      duration_ms: 0.629
+      type: 'test'
+      ...
+    # Subtest: declares soterai.liveScan.enabled defaulting to on and registers the scanner
+    ok 2 - declares soterai.liveScan.enabled defaulting to on and registers the scanner
+      ---
+      duration_ms: 0.4089
+      type: 'test'
+      ...
+    # Subtest: uses a debounced, local-only scan mapped to a DiagnosticCollection
+    ok 3 - uses a debounced, local-only scan mapped to a DiagnosticCollection
+      ---
+      duration_ms: 0.2558
+      type: 'test'
+      ...
+    # Subtest: skips non-file schemes, oversized files, and excluded globs
+    ok 4 - skips non-file schemes, oversized files, and excluded globs
+      ---
+      duration_ms: 0.1506
+      type: 'test'
+      ...
+    # Subtest: offers redact + copy-safe Quick Fixes and gates the internal fix command
+    ok 5 - offers redact + copy-safe Quick Fixes and gates the internal fix command
+      ---
+      duration_ms: 0.539
+      type: 'test'
+      ...
+    # Subtest: redaction never writes raw secrets and disposes its timers
+    ok 6 - redaction never writes raw secrets and disposes its timers
+      ---
+      duration_ms: 0.3619
+      type: 'test'
+      ...
+    1..6
+ok 19 - Live inline scanning + Quick Fixes (UX)
+  ---
+  duration_ms: 2.741
+  type: 'suite'
+  ...
+# Subtest: Clipboard / paste guard (UX)
+    # Subtest: registers scanClipboard (core) and safePaste (advanced) commands
+    ok 1 - registers scanClipboard (core) and safePaste (advanced) commands
+      ---
+      duration_ms: 0.4468
+      type: 'test'
+      ...
+    # Subtest: scans clipboard locally and offers a redacted safe version
+    ok 2 - scans clipboard locally and offers a redacted safe version
+      ---
+      duration_ms: 0.2324
+      type: 'test'
+      ...
+    # Subtest: safe paste can insert a redacted version instead of the raw clipboard
+    ok 3 - safe paste can insert a redacted version instead of the raw clipboard
+      ---
+      duration_ms: 0.1512
+      type: 'test'
+      ...
+    # Subtest: never logs the raw clipboard value
+    ok 4 - never logs the raw clipboard value
+      ---
+      duration_ms: 0.1266
+      type: 'test'
+      ...
+    1..4
+ok 20 - Clipboard / paste guard (UX)
+  ---
+  duration_ms: 1.2688
+  type: 'suite'
+  ...
+# Subtest: Security search guardrails
+    # Subtest: does not use console.log in extension source
+    ok 1 - does not use console.log in extension source
+      ---
+      duration_ms: 2.1386
+      type: 'test'
+      ...
+    # Subtest: documents every child process boundary as non-shell fixed argv usage
+    ok 2 - documents every child process boundary as non-shell fixed argv usage
+      ---
+      duration_ms: 1.0167
+      type: 'test'
+      ...
+    1..2
+ok 21 - Security search guardrails
+  ---
+  duration_ms: 3.3105
+  type: 'suite'
+  ...
+# Subtest: Control Panel (consolidated sidebar toggles)
+    # Subtest: declares the control panel as a webview view in the SoterAI sidebar
+    ok 1 - declares the control panel as a webview view in the SoterAI sidebar
+      ---
+      duration_ms: 0.2826
+      type: 'test'
+      ...
+    # Subtest: registers the webview view provider with the matching viewType
+    ok 2 - registers the webview view provider with the matching viewType
+      ---
+      duration_ms: 0.3836
+      type: 'test'
+      ...
+    # Subtest: every toggle delegates to a command or setting that actually exists
+    ok 3 - every toggle delegates to a command or setting that actually exists
+      ---
+      duration_ms: 0.2765
+      type: 'test'
+      ...
+    # Subtest: Phase 11: five primary workflows are allowlisted and wired to real commands
+    ok 4 - Phase 11: five primary workflows are allowlisted and wired to real commands
+      ---
+      duration_ms: 0.276
+      type: 'test'
+      ...
+    # Subtest: uses the central protection state instead of an any-toggle ENFORCED roll-up
+    ok 5 - uses the central protection state instead of an any-toggle ENFORCED roll-up
+      ---
+      duration_ms: 0.4775
+      type: 'test'
+      ...
+    # Subtest: exposes one primary Full Protection action and persistent lockdown recovery
+    ok 6 - exposes one primary Full Protection action and persistent lockdown recovery
+      ---
+      duration_ms: 1.4735
+      type: 'test'
+      ...
+    # Subtest: resolves live-scan and MCP badges from CAPABILITY_REGISTRY (no stronger claim than registry)
+    ok 7 - resolves live-scan and MCP badges from CAPABILITY_REGISTRY (no stronger claim than registry)
+      ---
+      duration_ms: 0.7451
+      type: 'test'
+      ...
+    # Subtest: rejects webview messages outside the allowlist
+    ok 8 - rejects webview messages outside the allowlist
+      ---
+      duration_ms: 0.2121
+      type: 'test'
+      ...
+    # Subtest: never sends secrets or raw content to the webview
+    ok 9 - never sends secrets or raw content to the webview
+      ---
+      duration_ms: 0.2453
+      type: 'test'
+      ...
+    1..9
+ok 22 - Control Panel (consolidated sidebar toggles)
+  ---
+  duration_ms: 4.7783
+  type: 'suite'
+  ...
+# Subtest: F32 vscode-extension exposes reviewed removal and a restricted machine recovery flag
+ok 23 - F32 vscode-extension exposes reviewed removal and a restricted machine recovery flag
+  ---
+  duration_ms: 5.0271
+  type: 'test'
+  ...
+# Subtest: F32 soterai-lite exposes reviewed removal and a restricted machine recovery flag
+ok 24 - F32 soterai-lite exposes reviewed removal and a restricted machine recovery flag
+  ---
+  duration_ms: 2.6185
+  type: 'test'
+  ...
+# Subtest: manifest assets
+    # Subtest: declares at least the icons and walkthrough pages
+    ok 1 - declares at least the icons and walkthrough pages
+      ---
+      duration_ms: 2.3575
+      type: 'test'
+      ...
+    # Subtest: every declared asset exists on disk
+    ok 2 - every declared asset exists on disk
+      ---
+      duration_ms: 6.8233
+      type: 'test'
+      ...
+    # Subtest: no declared asset is excluded from the VSIX by .vscodeignore
+    ok 3 - no declared asset is excluded from the VSIX by .vscodeignore
+      ---
+      duration_ms: 6.163
+      type: 'test'
+      ...
+    # Subtest: the activity-bar icon is maskable, not a raster or a filled glyph
+    ok 4 - the activity-bar icon is maskable, not a raster or a filled glyph
+      ---
+      duration_ms: 2.5153
+      type: 'test'
+      ...
+    1..4
+ok 25 - manifest assets
+  ---
+  duration_ms: 20.6126
+  type: 'suite'
+  ...
+# Subtest: marketplace icon
+    # Subtest: points at the one approved brand mark
+    ok 1 - points at the one approved brand mark
+      ---
+      duration_ms: 0.3499
+      type: 'test'
+      ...
+    # Subtest: is collected by the asset walker, so the existence and .vscodeignore checks cover it
+    ok 2 - is collected by the asset walker, so the existence and .vscodeignore checks cover it
+      ---
+      duration_ms: 0.1816
+      type: 'test'
+      ...
+    # Subtest: is a real PNG with transparency, square, and big enough for the gallery
+    ok 3 - is a real PNG with transparency, square, and big enough for the gallery
+      ---
+      duration_ms: 5.3897
+      type: 'test'
+      ...
+    # Subtest: has not drifted from the website's copy of the same logo
+    ok 4 - has not drifted from the website's copy of the same logo
+      ---
+      duration_ms: 7.2317
+      type: 'test'
+      ...
+    1..4
+ok 26 - marketplace icon
+  ---
+  duration_ms: 13.832
+  type: 'suite'
+  ...
+# Subtest: walkthrough media
+    # Subtest: ships no page the manifest does not reference
+    ok 1 - ships no page the manifest does not reference
+      ---
+      duration_ms: 0.7802
+      type: 'test'
+      ...
+    # Subtest: has one page per contributed step
+    ok 2 - has one page per contributed step
+      ---
+      duration_ms: 0.4691
+      type: 'test'
+      ...
+    1..2
+ok 27 - walkthrough media
+  ---
+  duration_ms: 1.5045
+  type: 'suite'
+  ...
+# Subtest: gallery banner
+    # Subtest: is the saffron brand colour on a light banner
+    ok 1 - is the saffron brand colour on a light banner
+      ---
+      duration_ms: 0.2087
+      type: 'test'
+      ...
+    1..1
+ok 28 - gallery banner
+  ---
+  duration_ms: 0.3295
+  type: 'suite'
+  ...
+# Subtest: F26b canonical contribution exposes four distinct native advanced push commands
+ok 29 - F26b canonical contribution exposes four distinct native advanced push commands
+  ---
+  duration_ms: 8.0952
+  type: 'test'
+  ...
+# Subtest: F26b history hook flag is independently default false restricted machine configuration
+ok 30 - F26b history hook flag is independently default false restricted machine configuration
+  ---
+  duration_ms: 2.8578
+  type: 'test'
+  ...
+# Subtest: F26b canonical activation registers push commands next to existing commit registration
+ok 31 - F26b canonical activation registers push commands next to existing commit registration
+  ---
+  duration_ms: 1.4237
+  type: 'test'
+  ...
+# Subtest: F29 vscode-extension contributes native center behind a restricted machine flag
+ok 32 - F29 vscode-extension contributes native center behind a restricted machine flag
+  ---
+  duration_ms: 4.8771
+  type: 'test'
+  ...
+# Subtest: F29 soterai-lite contributes native center behind a restricted machine flag
+ok 33 - F29 soterai-lite contributes native center behind a restricted machine flag
+  ---
+  duration_ms: 2.2284
+  type: 'test'
+  ...
+# Subtest: F29 all fixed apply/restore targets exist in the canonical contributed command set
+ok 34 - F29 all fixed apply/restore targets exist in the canonical contributed command set
+  ---
+  duration_ms: 2.3739
+  type: 'test'
+  ...
+# Subtest: the canonical readiness doc is generated, not maintained
+    # Subtest: exists
+    ok 1 - exists
+      ---
+      duration_ms: 1.4026
+      type: 'test'
+      ...
+    # Subtest: matches what the generator produces from source right now
+    ok 2 - matches what the generator produces from source right now
+      ---
+      duration_ms: 116.9248
+      type: 'test'
+      ...
+    # Subtest: says out loud that it is generated
+    ok 3 - says out loud that it is generated
+      ---
+      duration_ms: 1.4973
+      type: 'test'
+      ...
+    1..3
+ok 35 - the canonical readiness doc is generated, not maintained
+  ---
+  duration_ms: 121.504
+  type: 'suite'
+  ...
+# Subtest: the readiness doc states the real, current numbers
+    # Subtest: names the version being published
+    ok 1 - names the version being published
+      ---
+      duration_ms: 0.5152
+      type: 'test'
+      ...
+    # Subtest: names the license that actually ships
+    ok 2 - names the license that actually ships
+      ---
+      duration_ms: 0.316
+      type: 'test'
+      ...
+    # Subtest: states the command count the manifest actually declares
+    ok 3 - states the command count the manifest actually declares
+      ---
+      duration_ms: 0.2706
+      type: 'test'
+      ...
+    # Subtest: states the setting and policy counts the manifest actually declares
+    ok 4 - states the setting and policy counts the manifest actually declares
+      ---
+      duration_ms: 0.4033
+      type: 'test'
+      ...
+    # Subtest: claims no ML in the packaged extension
+    ok 5 - claims no ML in the packaged extension
+      ---
+      duration_ms: 0.4515
+      type: 'test'
+      ...
+    # Subtest: keeps the permanent limitations in the document, not just in the code
+    ok 6 - keeps the permanent limitations in the document, not just in the code
+      ---
+      duration_ms: 0.4228
+      type: 'test'
+      ...
+    1..6
+ok 36 - the readiness doc states the real, current numbers
+  ---
+  duration_ms: 3.347
+  type: 'suite'
+  ...
+# Subtest: stale documents do not contradict the shipped product
+    # Subtest: vscode-extension-marketplace-readiness.md no longer states a contradicted number
+    ok 1 - vscode-extension-marketplace-readiness.md no longer states a contradicted number
+      ---
+      duration_ms: 0.4196
+      type: 'test'
+      ...
+    # Subtest: no extension-facing document advertises a detection-rule count the source does not back
+    ok 2 - no extension-facing document advertises a detection-rule count the source does not back
+      ---
+      duration_ms: 7.2677
+      type: 'test'
+      ...
+    1..2
+ok 37 - stale documents do not contradict the shipped product
+  ---
+  duration_ms: 7.9392
+  type: 'suite'
+  ...
+# Subtest: F30 vscode-extension registers one fixed command and restricted-machine flag
+ok 38 - F30 vscode-extension registers one fixed command and restricted-machine flag
+  ---
+  duration_ms: 3.4626
+  type: 'test'
+  ...
+# Subtest: F30 soterai-lite registers one fixed command and restricted-machine flag
+ok 39 - F30 soterai-lite registers one fixed command and restricted-machine flag
+  ---
+  duration_ms: 1.6703
+  type: 'test'
+  ...
+# Subtest: F30 native Center action uses its fixed verify command without paths
+ok 40 - F30 native Center action uses its fixed verify command without paths
+  ---
+  duration_ms: 0.215
+  type: 'test'
+  ...
+# Subtest: F30 coverage offers its real owner action while results are still missing
+ok 41 - F30 coverage offers its real owner action while results are still missing
+  ---
+  duration_ms: 1.3291
+  type: 'test'
+  ...
+1..41
+# tests 110
+# suites 29
+# pass 110
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2623.9404

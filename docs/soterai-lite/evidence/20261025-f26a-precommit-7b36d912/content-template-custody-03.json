@@ -1,0 +1,32 @@
+{
+  "status": "PREPARED_NOT_BOUND_NOT_EXECUTED_SYNTAX_PENDING",
+  "time": "2026-10-26T03:43:31.801Z",
+  "inputs": [
+    {
+      "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/inspect-vsix-02.template.ps1",
+      "sha256": "0ebf1aba3fdd3cbb75d05c309bc3d6b5ebe5b5b20c00e8dcdc7c5aded9f7c473"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/artifact-binding-01.template.ps1",
+      "sha256": "c2895f9fb0de535f710f67113b5f4ec64ba4e9460d174a892d53affe5bb476ed"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/inspect-vsix-03.template.ps1",
+      "bytes": 30095,
+      "sha256": "0ebf1aba3fdd3cbb75d05c309bc3d6b5ebe5b5b20c00e8dcdc7c5aded9f7c473"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/artifact-binding-03.template.ps1",
+      "bytes": 3841,
+      "sha256": "46e7d3e498e46b62d490fb9c792d928e620f50dc4b3c6fa7190fdfd86f3147fc"
+    }
+  ],
+  "correction": "Helper02 broadly retargeted the inherited artifact source01 to nonexistent02, after producing literal-correct inspector02. Original failed/partial files retained. Syntax02 shell lacked Stop semantics and printed success despite missing artifact; that aggregate is INVALID and not accepted as PASS. This successor names the existing input explicitly; strict syntax03 requires both actual files before parsing.",
+  "requiredBindings": [
+    "__F26A_TEMPLATE_BOUND__ -> F26A_CURRENT_FACTS_BOUND only in a new bound copy after current source/full/backend/build/artifact gates.",
+    "__F26A_VSIX_BASENAME__ -> exact unique actual new F26a VSIX basename; actual VSIX+extension SHA passed explicitly."
+  ],
+  "claim": "Exact15-entry/four-runtime/82machine/defaultfalse hookflag templates only; no artifact or native result. H25 inputs unchanged."
+}

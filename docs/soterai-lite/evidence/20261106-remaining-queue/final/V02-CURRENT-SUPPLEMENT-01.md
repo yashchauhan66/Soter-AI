@@ -1,0 +1,14 @@
+# V02 current evidence supplement - 6 November 2026
+
+Exact artifact SHA-256: `011f96d19d42dbefc2e56eb5399bf5c7f16a09d6b71b8bae5be9d66b2f3769ec`. This supplement preserves the immutable HANDOFF-current-01 snapshot. It completes additional local automated evidence work; V02 and release acceptance remain incomplete.
+
+- Four deterministic ON/OFF Node/Express and Next.js cases pass, using actual Express 5.2.1 routing over bounded in-memory Node HTTP and actual NextRequest/NextResponse. Zero model calls, network requests or listening servers.
+- Six stream boundary measurements pass: exact 131,072 bytes, byte overflow, exact 4,096 chunks, chunk overflow, all 35 split positions of that synthetic canary and fail-closed withdrawal. These are component timings, not installed transport latency.
+- Additional mutation execution uses the exact frozen sources plus one in-memory test-only matcher decision mutant. Six representations kill the mutant; useful public output survives both versions. All 32 split positions of a separate canary and ANSI normalization show oracle sensitivity; byte overflow still withholds in both. Real feature withdrawal is AVAILABILITY_ONLY. The mutant was never written to product sources and does not satisfy per-tool flag-mutation requirements.
+- All 44 catalog definitions and 264 applicability records are mapped without altering their requirements. Current raw TAP is joined to 3,887 literal AST test titles; 41 rows have lexical component candidates. There are 23 rows with candidates among 509 rehashed historical native assertions. Candidate discovery is not semantic acceptance; a missing lexical candidate does not prove missing tests. All 264 pairs remain UNVERIFIED.
+- LS-13, LS-14 and LS-17 now have concrete component-subclaim oracle witnesses. Full row scenarios, actual route controls, supported versions, applicability and prevention-sensitive feature dependencies remain separate. Retained vendor copies differ from frozen Cline/Claude catalog versions; no version or route equivalence is assumed.
+- Current full-suite reuse after one description-only manifest synchronization remains explicit. Historical native results retain their earlier artifact/host and supply no current acceptance.
+
+Receipts: [scripted benchmark](scripted-run-20261106T133903152Z-32d76123/RESULT.json), [mutation witness](component-mutation-witness-01.json), [all-row mapping](catalog-controls-current-02.json), [immutable handoff](HANDOFF-current-01.json), [offline verification](offline-verification-current-01.json).
+
+Still required: actual current tool routes and per-pair controls; full native startup/scan/stream/multi-window requirements; two real-agent project trials; five-user usability; real screen reader; exact-object independent review and owner platform/release decisions. Rating PENDING; release NOT_READY; no publication.

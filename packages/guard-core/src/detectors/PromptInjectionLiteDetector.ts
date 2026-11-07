@@ -69,7 +69,7 @@ const INJECTION_PATTERNS: InjectionPattern[] = [
     { id: "pi.encoded_exfil", pattern: /\b(?:base64|encode|btoa|encrypt)\b[^\n]{0,40}(?:\.env\b|\/etc\/passwd|\b(?:secret|token|key|password|credential|id_rsa)\b)/gi, label: "Encoded exfiltration", score: 38, confidence: 0.82, message: "Encoding a secret file for exfiltration." },
 
     // ── Hindi/Hinglish prompt injection ───────────────────────────────────
-    { id: "pi.hindi_override", pattern: /\b(?:pichle|purane|pehle)\s+(?:nirdesh|instructions?|rules?)\s+(?:bhool|ignore|chod)\b/gi, label: "Hindi instruction override", score: 30, confidence: 0.85, message: "Hindi/Hinglish instruction override detected." },
+    { id: "pi.hindi_override", pattern: /\b(?:pichle|purane|pehle)\s+(?:(?:saare|sab|sabhi|tamam)\s+)?(?:nirdesh|instructions?|rules?)\s+(?:bhool|ignore|chod|mat\s+man)\b/gi, label: "Hindi instruction override", score: 35, confidence: 0.9, message: "Hindi/Hinglish instruction override detected." },
     { id: "pi.hindi_role", pattern: /\b(?:ab se|aaj se)\s+(?:tum|aap)\s+(?:ek|mera)\b/gi, label: "Hindi role impersonation", score: 25, confidence: 0.75, message: "Hindi/Hinglish role impersonation detected." },
     { id: "pi.hindi_safety", pattern: /\b(?:safety|suraksha)\s+(?:hata|band|off|disable)\s+(?:karo|kar|kijiye)\b/gi, label: "Hindi safety bypass", score: 30, confidence: 0.85, message: "Hindi/Hinglish safety bypass attempt." },
     { id: "pi.hindi_devanagari_override", pattern: /(?:पिछल(?:े|ा|ी)?|पुरान(?:े|ा|ी)?|सभी|सारे)\s+(?:निर्देश(?:ों)?|नियम(?:ों)?|आदेश(?:ों)?)[^\n]{0,60}(?:अनदेखा|नज़रअंदाज़|भूल|मत\s+मान)/gu, label: "Hindi instruction override", score: 35, confidence: 0.9, message: "Devanagari Hindi instruction override detected." },

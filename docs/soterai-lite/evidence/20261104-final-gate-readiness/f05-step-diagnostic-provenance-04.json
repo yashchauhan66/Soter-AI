@@ -1,0 +1,162 @@
+{
+  "status": "TEST_ONLY_SINGLE_HOST_SOURCE_NO_PRODUCT_CODE_BUNDLED",
+  "originalSource": {
+    "path": "packages/vscode-extension/src/__tests__/host/liteSecureEditor.host.ts",
+    "bytes": 40297,
+    "sha256": "30bf1bf8ecced3be2eaa8db9228d61316ffcedf5b0f55848da0178a78591e861"
+  },
+  "source": {
+    "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f05-step-diagnostic-04.host.ts",
+    "bytes": 40923,
+    "sha256": "e769a57d612a3eba7a8eb87145853cc4f22cc4fa29e85ce3957e987625e32456"
+  },
+  "inputs": [
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f05-step-diagnostic-04.host.ts",
+      "bytes": 40923,
+      "sha256": "e769a57d612a3eba7a8eb87145853cc4f22cc4fa29e85ce3957e987625e32456"
+    }
+  ],
+  "auxiliary": [
+    {
+      "path": "packages/vscode-extension/scripts/parserBundleOptions.cjs",
+      "bytes": 853,
+      "sha256": "6bf56da97f671b023ed7d0750351498bf4421dbdc3a059f5e87e06fcc6961222"
+    },
+    {
+      "path": "packages/vscode-extension/tsconfig.json",
+      "bytes": 1242,
+      "sha256": "6ee68e0eddee72ac15a0fbb101ce0afb7ca669b52e63fee79c20518e51803a8a"
+    },
+    {
+      "path": "node_modules/esbuild/package.json",
+      "bytes": 3980,
+      "sha256": "d55d1d19fcc5b6079e4a71dd4111340c79c682bc36835ac7058a0c364c7db58a"
+    }
+  ],
+  "originalDriver": {
+    "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/prebuilt-f05-current-02/lite-secure-editor-host.js",
+    "bytes": 39560,
+    "sha256": "cce828cb11c296786db7bde5c6440eb687eeb0bfdbfc2f073a3dde6bf60d7715"
+  },
+  "originalBundledModules": [
+    "packages/vscode-extension/src/__tests__/host/liteSecureEditor.host.ts"
+  ],
+  "newDriver": {
+    "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f05-step-diagnostic-04.host.js",
+    "bytes": 40298,
+    "sha256": "09581c0b1866e93860a12660dfaa5449dcde5585377e1265d69277dc85b5c02c"
+  },
+  "metafile": {
+    "inputs": {
+      "docs/soterai-lite/evidence/20261104-final-gate-readiness/f05-step-diagnostic-04.host.ts": {
+        "bytes": 40923,
+        "imports": [
+          {
+            "path": "vscode",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "node:assert/strict",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "node:crypto",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "node:fs/promises",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "node:path",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      }
+    },
+    "outputs": {
+      "docs/soterai-lite/evidence/20261104-final-gate-readiness/f05-step-diagnostic-04.host.js": {
+        "imports": [
+          {
+            "path": "vscode",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "node:assert/strict",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "node:crypto",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "node:fs/promises",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "node:path",
+            "kind": "require-call",
+            "external": true
+          }
+        ],
+        "exports": [],
+        "entryPoint": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f05-step-diagnostic-04.host.ts",
+        "inputs": {
+          "docs/soterai-lite/evidence/20261104-final-gate-readiness/f05-step-diagnostic-04.host.ts": {
+            "bytesInOutput": 38695
+          }
+        },
+        "bytes": 40298
+      }
+    }
+  },
+  "sourceAssertions": "ORIGINAL_H01_H10_UNCHANGED_SAVE7_RELOAD3",
+  "sourceMutationMap": [
+    {
+      "before": "assert.ok(primary); input = NEW_URL;",
+      "after": "evidence.withdrawalStep = \"EDIT\"; assert.ok(primary); input = NEW_URL;"
+    },
+    {
+      "before": "await reveal(primary, NEW_URL); const before",
+      "after": "evidence.withdrawalStep = \"REVEAL\"; await reveal(primary, NEW_URL); const before"
+    },
+    {
+      "before": "await config!.update(FLAG, false, vscode.ConfigurationTarget.Global); await wait(100);",
+      "after": "evidence.withdrawalStep = \"DISABLE\"; await config!.update(FLAG, false, vscode.ConfigurationTarget.Global); await wait(100); evidence.withdrawalEffectiveFalse = config!.inspect<boolean>(FLAG)?.globalValue === false; evidence.withdrawalStep = \"MASK_AND_REFUSED_MESSAGES\";"
+    },
+    {
+      "before": "assert.deepEqual(await vscode.commands.executeCommand(\"soterai.openSecureEditor\", sourceUri()), { status: \"UNAVAILABLE\" });",
+      "after": "evidence.withdrawalStep = \"OPEN_UNAVAILABLE\"; assert.deepEqual(await vscode.commands.executeCommand(\"soterai.openSecureEditor\", sourceUri()), { status: \"UNAVAILABLE\" });"
+    },
+    {
+      "before": "const failed = saveFailures;",
+      "after": "evidence.withdrawalStep = \"DISABLED_SAVE\"; const failed = saveFailures;"
+    },
+    {
+      "before": "assert.ok(tabs().some(tab => tab.isDirty)); await readSafely(); noSourceDocuments();",
+      "after": "evidence.withdrawalStep = \"SAFE_READER_AFTER_DISABLED_SAVE\"; assert.ok(tabs().some(tab => tab.isDirty)); await readSafely(); noSourceDocuments();"
+    },
+    {
+      "before": "await config!.update(FLAG, true, vscode.ConfigurationTarget.Global); await nativeSave();",
+      "after": "evidence.withdrawalStep = \"REENABLE\"; await config!.update(FLAG, true, vscode.ConfigurationTarget.Global); evidence.withdrawalEffectiveTrue = config!.inspect<boolean>(FLAG)?.globalValue === true; evidence.withdrawalStep = \"REENABLED_SAVE\"; await nativeSave();"
+    },
+    {
+      "before": "assert.equal(sha(await readFile(sourceUri().fsPath)), sha(SAVED));",
+      "after": "evidence.withdrawalStep = \"REENABLED_SAVED_DIGEST\"; assert.equal(sha(await readFile(sourceUri().fsPath)), sha(SAVED));"
+    }
+  ],
+  "roundTrip": "EXACT_ORIGINAL_SOURCE_AFTER_FIXED_METADATA_REMOVAL",
+  "productBuilds": 0,
+  "nativeLaunches": 0
+}

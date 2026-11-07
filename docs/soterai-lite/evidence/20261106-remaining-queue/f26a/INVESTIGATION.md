@@ -1,0 +1,32 @@
+# F26a resumed verification, 6 November 2026
+
+The owner's current request resumes F26a. Earlier skipped and consumed-attempt records remain historical. Native support remains unverified until all original 34 checks pass against the final artifact.
+
+Native11 completed all 30 primary checks and the launcher observed a real blocked commit with the owning editor closed. Restart failed at `F26A-HR02`. The retained restart state has a lowercase `d:` root; the offline receipt records uppercase `D:`. The original assertion compares the exact strings. Native12 already corrected the launcher to use the retained root, while checking that only the initial drive-letter case differs. The successor preserves that correction and the assertion.
+
+Native12 completed activation at `2026-11-02T14:54:56.870Z` and began the driver at `14:54:58.396Z`. The isolated extension-host log records a renderer-requested termination, exit code 0, at `14:56:26.128Z`, followed by a new extension host. Reactivation encountered `EEXIST` when writing the already-created `primary-results.json.setup-observer-summary.json`. There is no native result. The retained evidence does not establish what triggered the renderer reload. It does not show an activation timeout or an extension-host crash. The predecessor and its failed evidence are preserved.
+
+Native13 uses the existing original supplementary driver unchanged (SHA-256 `8f7d11faa7ba03683fdbec85f95a0d2284bb126cd45c1dfc1cb02b2e3b090ced`). It keeps the original 30 primary and four restart assertions, actual offline Git invocation, natural close/EOF requirements and two PID-absence observations. The successor changes current host/vendor and artifact bindings and adds a five-second metadata-only progress journal. It does not claim to fix the unidentified reload trigger.
+
+The current F32 source inventory already includes the local `vscode-userdata` storage fix (`PreCommitController.ts`, SHA-256 `f4c58c2e161acbf0317b85df076d5a32ef9226972e90c20f47cb0e4727efb769`) and its original regression test. The qualified `e2ce3dc44d45b5e160ab0f95d713a9434a9ea7d610ce7abd2bf2500abe89d649` VSIX was extracted into this evidence directory without executing it.
+
+Root review found a separate admission blocker before any native13 launch: the e2ce package explicitly contains `soteraiLiteRelease.unsupportedFeatures: ["preCommit"]`. The actual product command guard reads this through the real `context.extension.packageJSON` and refuses new install/resume grants. The unchanged native driver invokes the actual commands and cannot pass `F26A-HP04`, which expects a cancelled native review after the machine flag is enabled. The bootstrap does not override that context or exclusion. A new candidate package with legitimate release metadata and package-audit updates is required before native acceptance; bypassing the guard in a test would not supply acceptance. The e2ce native13 preparation remains inert, retained and NOT_RUN.
+
+`prepare-native13.cjs` creates inert pinned successors. `validate-native13.cjs` compares the entire acceptance and phase bodies with native12, parses the embedded JavaScript, reproduces the native11 case mismatch from retained receipt bytes and rechecks exact source/runtime/vendor identities. It is read-only by default; `--receipt <new-filename.json>` optionally retains a new immutable result. These structural checks do not override the candidate's release exclusion. PowerShell parser validation does not execute the launcher.
+
+Read evidence:
+
+- `../../20261102-f26a-native09-preparation/f26a-precommit-native-20261102T140059Z-3bd8bf22/`: primary results, retained restart state, offline receipt and restart failure.
+- `../../20261102-f26a-native09-preparation/f26a-precommit-native-20261102T145327Z-b87f72c7/`: native12 startup timeline and actual Code closure.
+- `D:/SoterAI-Lite-test-profiles/f26a-precommit-native-20261102T145327Z-b87f72c7/profile/logs/20261102T202446/window1/exthost/exthost.log`: clean renderer-requested termination and subsequent `EEXIST`.
+- `D:/SoterAI-Lite-test-profiles/f26a-precommit-native-20261102T145327Z-b87f72c7/profile/logs/20261102T202446/window1/renderer.log`: transient unresponsiveness recovered before the later restart.
+
+The isolated current native run is still required. Component tests do not replace that run, and scripted owner decisions do not supply a human usability verdict.
+
+## Native14 current-candidate result
+
+The required isolated run completed on 6 November 2026 against final candidate VSIX `011f96d19d42dbefc2e56eb5399bf5c7f16a09d6b71b8bae5be9d66b2f3769ec`, after the package legitimately admitted the opt-in pre-commit route. Its immutable source proof is `../candidate-01/full-inputs-02.json` (`23fd63bb04122bf055f656a77424085b75ff3e3c813121c15034cd209fd1c8f6`). `native14-static-validation-01.json` records eight static checks; these preceded the actual run and are not substituted for it.
+
+`f26a-precommit-native-20261106T134427Z-39d7828b/summary.json` records `PASS_SCOPED`: all 30 original primary assertions and all four original restart assertions passed, with zero failures or unexecuted assertions. Both phase results report zero busy or timed-out children, unchanged parent environment and no metadata leak. The real interphase Git receipt is `ACTUAL_OWNER_ABSENT_BLOCKED`; its editor was closed before the commit attempt. Both editor close receipts record exit 0 and stdout/stderr EOF; their later absence receipts establish stable streams and two PID-absence observations. `native14-owned-run/close.json` records the actual outer PowerShell closure with exit 0, both EOFs, no signal, no stream errors and 513161 milliseconds elapsed. The independent `native14-acceptance.json` rehashes the actual D: results and retained copies, all current source/runtime/artifact bindings and all closure streams, and compares the original 34 assertion IDs and scopes without launching another native process.
+
+The original driver and semantic fixtures remain unchanged. Scope remains scripted native API decisions with LOW independence; this does not establish a human usability verdict or infer nested Git-client closure from the owner Git process. The existing separate direct-client controls retain their original scope. The first subagent launch request was rejected before execution by an unavailable automatic approval-review service (HTTP 503); the coordinating root subsequently executed the same reviewed command once with the user's existing approval. No automatic native retry, process signal or termination was used.

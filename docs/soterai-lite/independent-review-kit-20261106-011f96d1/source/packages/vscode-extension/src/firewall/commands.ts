@@ -1,0 +1,48 @@
+import * as vscode from "vscode";
+import { VaultManager } from "./VaultManager";
+import { CanaryManager } from "./CanaryManager";
+import { registerPolicyCommands } from "./policy-commands";
+import { registerVaultCommands } from "./vault-commands";
+import { registerContextCommands } from "./context-commands";
+import { registerLedgerCommands } from "./ledger-commands";
+import { registerOutputCommands } from "./output-commands";
+import { registerCanaryCommands } from "./canary-commands";
+import { registerVaultRuntimeCommands } from "../vault-runtime/commands";
+import { registerCheckedPowerShell } from "../terminal/commands";
+import { registerCheckedCmd } from "../terminal/cmdCommands";
+import { registerCheckedGitBash } from "../terminal/gitBashCommands";
+import type { ManagedReaderBridge } from "../terminal/CheckedPowerShellSession";
+import { LedgerStore } from "./LedgerStore";
+
+// Re-export readContextApproval so extension.ts can still import from this module.
+export { readContextApproval } from "./shared";
+
+/** Register every AI Context Firewall command. */
+export function registerFirewallCommands(context: vscode.ExtensionContext, refreshViews: () => void, reader?: ManagedReaderBridge): void {
+    LedgerStore.initialize(context);
+    const vault = new VaultManager(context);
+    const canary = new CanaryManager(context);
+
+    const requireTrust = (feature: string): boolean => {
+        if (!vscode.workspace.isTrusted) {
+            vscode.window.showWarningMessage(
+                `${feature} is disabled in restricted (untrusted) workspaces. Trust this workspace to use it.`,
+            );
+            return false;
+        }
+        return true;
+    };
+
+    const deps = { context, refreshViews, vault, canary, requireTrust };
+
+    registerPolicyCommands(deps);
+    registerVaultCommands(deps);
+    registerContextCommands(deps);
+    registerLedgerCommands(deps);
+    registerOutputCommands(deps);
+    registerCanaryCommands(deps);
+    registerVaultRuntimeCommands(deps);
+    registerCheckedPowerShell(context, vault, reader);
+    registerCheckedCmd(context, vault, reader);
+    registerCheckedGitBash(context, vault, reader);
+}

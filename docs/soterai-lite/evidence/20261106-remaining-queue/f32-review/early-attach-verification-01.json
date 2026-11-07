@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "feature": "F32",
+  "status": "PASS_EXACT_EXTRA09_STATIC_VERIFICATION_NATIVE_NOT_RUN",
+  "observedAt": "2026-11-06 15:09:37 UTC",
+  "admission": {
+    "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261103-f32-lifecycle-2e95d6a4\\installed-extra09-admission.json",
+    "bytes": 21001,
+    "sha256": "863d776a117967d76754a4d2823e3903511d6053f8f1e460bd956e2dd28de5a1"
+  },
+  "controls": {
+    "passed": 30,
+    "failed": 0,
+    "observerAcknowledgments": {
+      "status": "PASS_EARLY_ATTACH_AND_FULL_CUSTODY_ACK_CONTROLS",
+      "passed": 15,
+      "failed": 0,
+      "nativeLaunches": 0,
+      "signalsRequested": 0,
+      "materialized": true
+    },
+    "rootListener": {
+      "listenerQueries": 0,
+      "controls": [
+        {
+          "name": "Exact captured root listener accepted",
+          "status": "PASS"
+        },
+        {
+          "name": "Wrong PID",
+          "status": "PASS"
+        },
+        {
+          "name": "Wrong port",
+          "status": "PASS"
+        },
+        {
+          "name": "Wrong executable",
+          "status": "PASS"
+        },
+        {
+          "name": "Changed creation timestamp",
+          "status": "PASS"
+        },
+        {
+          "name": "Old PID before owned spawn",
+          "status": "PASS"
+        },
+        {
+          "name": "Receipt PID differs",
+          "status": "PASS"
+        },
+        {
+          "name": "Wrong profile",
+          "status": "PASS"
+        },
+        {
+          "name": "Wrong debug argument",
+          "status": "PASS"
+        },
+        {
+          "name": "Loopback address missing",
+          "status": "PASS"
+        },
+        {
+          "name": "Unrecorded extra argument",
+          "status": "PASS"
+        },
+        {
+          "name": "Descendant listener cannot become early root authority",
+          "status": "PASS"
+        },
+        {
+          "name": "Non-loopback listener",
+          "status": "PASS"
+        },
+        {
+          "name": "No listener",
+          "status": "PASS"
+        },
+        {
+          "name": "Ambiguous listeners",
+          "status": "PASS"
+        }
+      ],
+      "processQueries": 0,
+      "status": "PASS_PURE_EARLY_ROOT_CUSTODY_CONTROLS",
+      "nativeLaunches": 0,
+      "passed": 15,
+      "signalsRequested": 0,
+      "failed": 0
+    }
+  },
+  "admissionCheck": {
+    "status": "PASS_EXACT_GENERATED_EXTRA09_ADMISSION",
+    "admission": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261103-f32-lifecycle-2e95d6a4\\installed-extra09-admission.json",
+    "sha256": "863d776a117967d76754a4d2823e3903511d6053f8f1e460bd956e2dd28de5a1",
+    "rootAbsent": true,
+    "consumedAbsent": true,
+    "nativeLaunches": 0
+  },
+  "powershellSyntax": "PASS exact generated PowerShell syntax",
+  "toolResults": [
+    {
+      "checkIndex": 0,
+      "exitCode": 0,
+      "chunkId": "804fea",
+      "wallTimeSeconds": 0.7358093
+    },
+    {
+      "checkIndex": 1,
+      "exitCode": 0,
+      "chunkId": "255b7f",
+      "wallTimeSeconds": 1.6415463
+    },
+    {
+      "checkIndex": 2,
+      "exitCode": 0,
+      "chunkId": "ae4e2a",
+      "wallTimeSeconds": 5.323914
+    },
+    {
+      "checkIndex": 3,
+      "exitCode": 0,
+      "chunkId": "cfde6e",
+      "wallTimeSeconds": 0.8441078
+    }
+  ],
+  "nativeLaunches": 0,
+  "signalsRequested": 0,
+  "limits": [
+    "This verifies the new harness and immutable admission only. Eight native windows/44 unique assertions/59 observations remain pending.",
+    "Earlier attachment addresses the established observation delay; the cause of extra08's unwitnessed trust transition is not claimed fixed."
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "status": "EIGHT_CASES_SYNTAX_FROZEN_NOT_EXECUTED",
+  "time": "2026-10-25T14:37:49.758Z",
+  "fixture": {
+    "path": "packages/vscode-extension/src/__tests__/preCommitControllerBackend.review.test.ts",
+    "bytes": 24573,
+    "sha256": "64f1fb22b97fb988636805f4409fa452cf391847f048a99794cc388a6f459a9d",
+    "archive": "preCommitControllerBackend.review.test.ts.frozen-journal-01.txt"
+  },
+  "tests": 8,
+  "extensionCases": 2,
+  "preservedPrefix": {
+    "bytes": 18222,
+    "sha256": "7ebca5eefac45a04f61a47545a55be43291d75d4be168cc0defaf0c9811a88b1",
+    "exact": true,
+    "originalCases": 6
+  },
+  "controller": {
+    "path": "packages/vscode-extension/src/history-hooks/PreCommitController.ts",
+    "bytes": 26267,
+    "sha256": "0952a7a6a490c0f4d33b58b11888a7b06b2e819b1c5d2d881b3cd0ba6e08fef4",
+    "unchangedSinceBeforeSnapshot": true,
+    "archive": "PreCommitController.ts.before-journal-extension-01.txt"
+  },
+  "coverage": [
+    "Useful real private #save restoration: ROLLED_BACK root record equals exact new immutable private revision, previous journal/index retained and public index only opaque IDs",
+    "Awaited journal store swaps root record to a foreign valid generation: retain the owned revision and newer root raw, zero stale root stores, INCOMPLETE with no journal retry"
+  ],
+  "limits": "Same six-case unchanged-controller wrapper and explicit dependency seams. Additive actual synthetic AES-GCM backup artifact plus in-memory scoped key checks retention only; FakeBackups still supplies decrypted retrieval. No real SecretStorage provider, native editor, owner listener/Git/child, VSIX or independent evidence.",
+  "validation": "TypeScript createSourceFile parse diagnostics empty and exact original prefix check only; no fixture, compiler, tests, builds, Git or production execution."
+}

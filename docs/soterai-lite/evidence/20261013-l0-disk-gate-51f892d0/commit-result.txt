@@ -1,0 +1,38 @@
+﻿COMMAND: git -c core.autocrlf=false add -- docs/soterai-lite
+EXIT: 0
+COMMAND: git diff --cached --name-only
+docs/soterai-lite/PREFLIGHT-STOP.md
+docs/soterai-lite/evidence-index-20261013-l0-stop.json
+docs/soterai-lite/evidence-index.json
+docs/soterai-lite/evidence/20261013-l0-disk-gate-51f892d0/branch-result.txt
+docs/soterai-lite/evidence/20261013-l0-disk-gate-51f892d0/commit-evidence.ps1
+docs/soterai-lite/evidence/20261013-l0-disk-gate-51f892d0/disk-measurement.json
+docs/soterai-lite/evidence/20261013-l0-disk-gate-51f892d0/execution-result.json
+docs/soterai-lite/evidence/20261013-l0-disk-gate-51f892d0/git-branch-before.txt
+docs/soterai-lite/evidence/20261013-l0-disk-gate-51f892d0/git-head-before.txt
+docs/soterai-lite/evidence/20261013-l0-disk-gate-51f892d0/git-status-before.txt
+docs/soterai-lite/evidence/20261013-l0-disk-gate-51f892d0/initial-observations.txt
+docs/soterai-lite/evidence/20261013-l0-disk-gate-51f892d0/offline-hooks/.keep
+docs/soterai-lite/evidence/20261013-l0-disk-gate-51f892d0/preflight.ps1
+docs/soterai-lite/evidence/20261013-l0-disk-gate-51f892d0/request-identity.json
+docs/soterai-lite/ledger.md
+EXIT: 0
+COMMAND: git -c core.hooksPath=docs/soterai-lite/evidence/20261013-l0-disk-gate-51f892d0/offline-hooks commit -m "docs(soterai-lite): record failed L0 disk gate and stop"
+[soterai-lite 3ce43885] docs(soterai-lite): record failed L0 disk gate and stop
+ 15 files changed, 414 insertions(+)
+ create mode 100644 docs/soterai-lite/PREFLIGHT-STOP.md
+ create mode 100644 docs/soterai-lite/evidence-index-20261013-l0-stop.json
+ create mode 100644 docs/soterai-lite/evidence-index.json
+ create mode 100644 docs/soterai-lite/evidence/20261013-l0-disk-gate-51f892d0/branch-result.txt
+ create mode 100644 docs/soterai-lite/evidence/20261013-l0-disk-gate-51f892d0/commit-evidence.ps1
+ create mode 100644 docs/soterai-lite/evidence/20261013-l0-disk-gate-51f892d0/disk-measurement.json
+ create mode 100644 docs/soterai-lite/evidence/20261013-l0-disk-gate-51f892d0/execution-result.json
+ create mode 100644 docs/soterai-lite/evidence/20261013-l0-disk-gate-51f892d0/git-branch-before.txt
+ create mode 100644 docs/soterai-lite/evidence/20261013-l0-disk-gate-51f892d0/git-head-before.txt
+ create mode 100644 docs/soterai-lite/evidence/20261013-l0-disk-gate-51f892d0/git-status-before.txt
+ create mode 100644 docs/soterai-lite/evidence/20261013-l0-disk-gate-51f892d0/initial-observations.txt
+ create mode 100644 docs/soterai-lite/evidence/20261013-l0-disk-gate-51f892d0/offline-hooks/.keep
+ create mode 100644 docs/soterai-lite/evidence/20261013-l0-disk-gate-51f892d0/preflight.ps1
+ create mode 100644 docs/soterai-lite/evidence/20261013-l0-disk-gate-51f892d0/request-identity.json
+ create mode 100644 docs/soterai-lite/ledger.md
+EXIT: 0

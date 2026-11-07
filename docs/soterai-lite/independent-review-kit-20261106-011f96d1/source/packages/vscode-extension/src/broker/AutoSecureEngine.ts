@@ -1,0 +1,366 @@
+/**
+ * "Secure My AI" — ONE-CLICK auto-discovery & protection engine.
+ *
+ * Finds known config candidates, reviews supported endpoint rewrites and
+ * backs them up before applying. Broker smoke tests verify route reachability;
+ * they do not prove that a third-party tool uses the rewritten config or that
+ * all of its traffic is filtered. Direct reads and independent network paths
+ * remain outside this engine.
+ *
+ * Honest design notes:
+ *   - We never silent-write. One button = one approval, then batch-apply.
+ *   - Start the broker first; refuse to "secure" tools while broker is down.
+ *   - Tools that CANNOT be auto-routed (hard-coded endpoint, e.g. raw Copilot
+ *     ext) are reported as "monitor-only" so the UI never lies about coverage.
+ */
+
+import {
+    detectIntegrationConfigs,
+    proposeBrokerRewrite,
+    applyProposedChange,
+    streamSmokeTest,
+    type BackupSink,
+    type DetectedConfig,
+    type ProposedChange,
+    type ApplyResult,
+    type FileIO,
+    type HttpIO,
+} from "./IntegrationAdapter";
+
+/* ------------------------------------------------------------------ */
+/* 1. TOOL KNOWLEDGE BASE — where every known AI tool keeps its config */
+/* ------------------------------------------------------------------ */
+
+export interface AiToolSpec {
+    id: string;
+    /** Human name shown in the UI */
+    name: string;
+    /** True if we can fully re-route its traffic to the broker */
+    canAutoSecure: boolean;
+    /** Candidate config locations (workspace-relative AND home-relative) */
+    configCandidates: string[];
+    /**
+     * "route"  -> we rewrite its base URL to the local broker (FULL blocking)
+     * "env"    -> we write base-URL env vars to a shell/profile or .env
+     * "monitor"-> cannot intercept; only warn user (honest coverage)
+     */
+    mode: "route" | "env" | "monitor";
+    /** Short explanation shown in UI */
+    coverageNote: string;
+}
+
+/**
+ * WORLD-WIDE coverage list. Order = UI display order.
+ * ${HOME} is replaced at runtime with the user's home dir.
+ */
+export const KNOWN_AI_TOOLS: AiToolSpec[] = [
+    {
+        id: "cline",
+        name: "Cline (VS Code)",
+        canAutoSecure: true,
+        mode: "env",
+        configCandidates: [
+            "${HOME}/.config/cline/config.json",
+            "${HOME}/AppData/Roaming/Code/User/globalStorage/saoudrizwan.claude-dev/settings/cline_mcp_settings.json",
+            ".cline/config.json",
+        ],
+        coverageNote: "Requires the separately verified pinned Cline adapter; generic environment rewriting does not establish routing.",
+    },
+    {
+        id: "claude-code",
+        name: "Claude Code (terminal / VS Code)",
+        canAutoSecure: true,
+        mode: "env",
+        configCandidates: [
+            "${HOME}/.claude/settings.json",
+            "${HOME}/.config/claude-code/config.json",
+            ".claude/settings.json",
+        ],
+        coverageNote: "Requires the separately verified pinned Claude Code adapter; generic environment rewriting does not establish routing.",
+    },
+    {
+        id: "continue",
+        name: "Continue.dev",
+        canAutoSecure: true,
+        mode: "route",
+        configCandidates: [
+            "${HOME}/.continue/config.json",
+            "${HOME}/.continue/config.yaml",
+        ],
+        coverageNote: "config.json base URL rewritten to broker. ✅",
+    },
+    {
+        id: "aider",
+        name: "Aider",
+        canAutoSecure: true,
+        mode: "env",
+        configCandidates: [
+            "${HOME}/.aider.conf.yml",
+            ".aider.conf.yml",
+        ],
+        coverageNote: "OPENAI/ANTHROPIC base URLs pointed at broker. ✅",
+    },
+    {
+        id: "opencode",
+        name: "OpenCode",
+        canAutoSecure: true,
+        mode: "route",
+        configCandidates: [
+            "${HOME}/.config/opencode/config.json",
+            "opencode.json",
+        ],
+        coverageNote: "Provider endpoint set to local broker. ✅",
+    },
+    {
+        id: "generic-env",
+        name: "Shell / .env providers (NVIDIA, OpenRouter, Groq, DeepSeek, Mistral, xAI, Ollama...)",
+        canAutoSecure: true,
+        mode: "env",
+        configCandidates: [
+            ".env",
+            ".env.local",
+            "${HOME}/.zshrc",
+            "${HOME}/.bashrc",
+        ],
+        coverageNote: "Any *-compatible base URL env var re-pointed to broker. ✅",
+    },
+    {
+        id: "copilot-ext",
+        name: "GitHub Copilot (built-in extension)",
+        canAutoSecure: false,
+        mode: "monitor",
+        configCandidates: [],
+        coverageNote: "Copilot cannot be re-routed by this integration. Its submitted content and direct network traffic are not observed. Separate editor and selected-clipboard scans are advisory; they do not establish Copilot coverage. ⚠️ monitor-only.",
+    },
+];
+
+/* ------------------------------------------------------------------ */
+/* 2. DISCOVERY — expand ${HOME}, probe filesystem, respect honesty     */
+/* ------------------------------------------------------------------ */
+
+export interface DiscoveredTool {
+    spec: AiToolSpec;
+    configs: DetectedConfig[];   // existing config files we can act on
+    status: "found" | "monitor-only" | "not-installed";
+}
+
+/**
+ * Expand a candidate to an absolute path.
+ *
+ * `${HOME}` candidates resolve against the home dir. Workspace-relative
+ * candidates (".env", ".claude/settings.json") MUST resolve against the open
+ * workspace — leaving them relative makes the extension host resolve them
+ * against its own cwd, which is the VS Code install dir, not the user's
+ * project. That both missed real configs and risked writing into an
+ * unrelated directory.
+ */
+function expandCandidate(candidate: string, homeDir: string, workspaceRoot?: string): string | null {
+    if (candidate.includes("${HOME}")) return candidate.replace("${HOME}", homeDir);
+    if (!workspaceRoot) return null; // no workspace open → skip relative candidates
+    const sep = workspaceRoot.includes("\\") && !workspaceRoot.includes("/") ? "\\" : "/";
+    return `${workspaceRoot.replace(/[\\/]+$/, "")}${sep}${candidate}`;
+}
+
+export async function discoverAllAiTools(io: FileIO, homeDir: string, workspaceRoot?: string): Promise<DiscoveredTool[]> {
+    const results: DiscoveredTool[] = [];
+    for (const spec of KNOWN_AI_TOOLS) {
+        if (spec.mode === "monitor") {
+            results.push({ spec, configs: [], status: "monitor-only" });
+            continue;
+        }
+        const candidates = spec.configCandidates
+            .map((c) => expandCandidate(c, homeDir, workspaceRoot))
+            .filter((c): c is string => c !== null);
+        let configs: DetectedConfig[] = [];
+        try {
+            configs = await detectIntegrationConfigs(candidates, io);
+        } catch {
+            configs = [];
+        }
+        results.push({
+            spec,
+            configs,
+            status: configs.length > 0 ? "found" : "not-installed",
+        });
+    }
+    return results;
+}
+
+/* ------------------------------------------------------------------ */
+/* 3. PLAN — build every change BEFORE touching disk                    */
+/* ------------------------------------------------------------------ */
+
+export interface SecurePlan {
+    proposed: ProposedChange[];
+    monitorOnly: string[];        // tool ids we can't route
+    /** Configs we found but deliberately refused to rewrite (would corrupt them). */
+    unsupported: Array<{ toolId: string; path: string; reason: string }>;
+    brokerNeeded: boolean;
+    summaryLines: string[];
+}
+
+export function buildSecurePlan(discovered: DiscoveredTool[], ioFiles: Record<string, string>, brokerPort: number): SecurePlan {
+    const proposed: ProposedChange[] = [];
+    const monitorOnly: string[] = [];
+    const unsupported: Array<{ toolId: string; path: string; reason: string }> = [];
+    const summaryLines: string[] = [];
+
+    for (const d of discovered) {
+        if (d.spec.id === "claude-code" && d.status === "found") {
+            for (const cfg of d.configs) unsupported.push({ toolId: d.spec.id, path: cfg.path, reason: "Use the pinned Claude Code adapter. This generic writer has no verified version or live route." });
+            summaryLines.push("Claude Code: generic routing unavailable; review the pinned adapter.");
+            continue;
+        }
+        if (d.spec.id === "cline" && d.status === "found") {
+            for (const cfg of d.configs) unsupported.push({ toolId: d.spec.id, path: cfg.path, reason: "Use the pinned Cline adapter. This generic writer has no verified version or live route." });
+            summaryLines.push("Cline: generic routing unavailable; review the pinned adapter.");
+            continue;
+        }
+        if (d.status === "monitor-only") {
+            monitorOnly.push(d.spec.id);
+            summaryLines.push(`⚠️  ${d.spec.name}: monitor-only (cannot auto-route)`);
+            continue;
+        }
+        if (d.status === "not-installed") continue;
+
+        for (const cfg of d.configs) {
+            const currentText = ioFiles[cfg.path];
+            if (currentText === undefined) continue;
+            // Use the kind the file itself reports. Coercing every env-mode
+            // tool to "anthropic-compatible" pointed OpenAI-backed tools at
+            // the Anthropic broker route.
+            const change = proposeBrokerRewrite(cfg.path, currentText, cfg.kind, brokerPort);
+            if (change.unsupportedReason) {
+                unsupported.push({ toolId: d.spec.id, path: cfg.path, reason: change.unsupportedReason });
+                summaryLines.push(`⚠️  ${d.spec.name}: ${cfg.path} left unchanged (not safely rewritable)`);
+            } else if (change.after !== change.before) {
+                proposed.push(change);
+                summaryLines.push(`✅ ${d.spec.name}: will route via ${change.brokerBaseUrl}`);
+            } else {
+                summaryLines.push(`ℹ️  ${d.spec.name}: config already points at the broker (no diff needed)`);
+            }
+        }
+    }
+    return { proposed, monitorOnly, unsupported, brokerNeeded: proposed.length > 0, summaryLines };
+}
+
+/* ------------------------------------------------------------------ */
+/* 4. EXECUTE — single approval → batch apply → health check all        */
+/* ------------------------------------------------------------------ */
+
+export interface SecureOutcome {
+    applied: ApplyResult[];
+    verified: Array<{ toolId: string; ok: boolean; detail: string }>;
+    monitorOnly: string[];
+    /** Carried through from the plan so the UI never implies these are covered. */
+    unsupported: Array<{ toolId: string; path: string; reason: string }>;
+    brokerOnline: boolean;
+    headline: string;
+}
+
+export async function executeSecurePlan(
+    plan: SecurePlan,
+    discovered: DiscoveredTool[],
+    io: FileIO,
+    http: HttpIO,
+    approved: boolean,
+    brokerHealthUrl: string,
+    backups: BackupSink,
+    brokerAuthToken: string,
+): Promise<SecureOutcome> {
+    // 1) REFUSE if broker is down — never "secure" into a dead proxy.
+    let brokerOnline = false;
+    try {
+        const h = await http.get(brokerHealthUrl);
+        brokerOnline = h.status === 200;
+    } catch {
+        brokerOnline = false;
+    }
+    if (!brokerOnline && plan.brokerNeeded) {
+        return {
+            applied: [],
+            verified: [],
+            monitorOnly: plan.monitorOnly,
+            unsupported: plan.unsupported,
+            brokerOnline: false,
+            headline: "❌ Broker offline — start SoterAI Local AI Broker first, then click Secure again.",
+        };
+    }
+
+    // 2) Batch-apply every rewrite (each backed up to the encrypted sink first).
+    const applied: ApplyResult[] = [];
+    for (const change of plan.proposed) {
+        applied.push(await applyProposedChange(change, io, approved, backups));
+    }
+
+    // 3) Verify: run the real authenticated stream smoke against the broker's
+    //    OpenAI-compatible route. The previous implementation POSTed to
+    //    `/v1/ai/openai-compatible/smoke`, a route the bundled broker does not
+    //    serve, and without the bearer token — so verification could only ever
+    //    fail and the success headline was unreachable. `streamSmokeTest` is
+    //    the checked path that actually exists.
+    const verified: Array<{ toolId: string; ok: boolean; detail: string }> = [];
+    const brokerPort = Number(new URL(brokerHealthUrl).port || 47321);
+    for (const d of discovered) {
+        if (d.status !== "found") continue;
+        const routed = d.configs.some((c) => plan.proposed.some((p) => p.path === c.path));
+        if (!routed) continue;
+        const appliedOk = applied.some(
+            (a) => a.applied && d.configs.some((c) => c.path === a.path),
+        );
+        if (!appliedOk) {
+            // Nothing was rewritten for this tool, so there is no routing to
+            // verify. Claiming a pass here would assert protection we never applied.
+            verified.push({ toolId: d.spec.id, ok: false, detail: "config was not rewritten" });
+            continue;
+        }
+        try {
+            const smoke = await streamSmokeTest(brokerPort, brokerAuthToken, http);
+            verified.push({ toolId: d.spec.id, ok: smoke.ok, detail: smoke.detail });
+        } catch (e) {
+            verified.push({ toolId: d.spec.id, ok: false, detail: String(e) });
+        }
+    }
+
+    const okCount = applied.filter((a) => a.applied).length;
+    const failedVerify = verified.filter((v) => !v.ok).length;
+    const skipped = plan.unsupported.length;
+    const tail = skipped > 0 ? ` ${skipped} config(s) left unchanged — see details.` : "";
+
+    let headline: string;
+    if (okCount === 0) {
+        headline = skipped > 0
+            ? `No config was safely rewritable.${tail}`
+            : "No config was changed. Review coverage to check which tools use the broker.";
+    } else if (failedVerify > 0) {
+        // Never claim redaction we did not observe end-to-end.
+        headline =
+            `⚠️ Rewrote ${okCount} config(s) but ${failedVerify} did not pass the broker smoke test — ` +
+            `redaction is NOT confirmed. Run "SoterAI: Restore AI Configs" if your tools misbehave.${tail}`;
+    } else {
+        headline = `Rewrote ${okCount} tool config(s). Broker route smoke checks passed; third-party tool traffic and redaction are not verified by this check.${tail}`;
+    }
+    return { applied, verified, monitorOnly: plan.monitorOnly, unsupported: plan.unsupported, brokerOnline, headline };
+}
+
+/* ------------------------------------------------------------------ */
+/* 5. RESTORE — one click puts every original config back               */
+/* ------------------------------------------------------------------ */
+
+export async function restoreAll(
+    applied: ApplyResult[],
+    io: FileIO,
+    backups: BackupSink,
+): Promise<{ restored: number; failed: string[] }> {
+    let restored = 0;
+    const failed: string[] = [];
+    for (const a of applied) {
+        if (!a.applied || !a.backupPath) continue;
+        // backupPath is an opaque sink handle, not a filesystem path.
+        const backup = await backups.retrieve(a.backupPath);
+        if (backup === null) { failed.push(a.path); continue; }
+        await io.writeText(a.path, backup);
+        restored++;
+    }
+    return { restored, failed };
+}

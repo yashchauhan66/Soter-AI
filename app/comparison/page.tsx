@@ -495,6 +495,8 @@ export default function ComparisonPage() {
               ["SoterAI vs NVIDIA NeMo Guardrails", "/comparison/nemo-guardrails"],
               ["SoterAI vs AWS Bedrock Guardrails", "/comparison/bedrock-guardrails"],
               ["SoterAI vs LLM Guard", "/comparison/llm-guard"],
+              ["SoterAI vs Prompt Armor", "/comparison/prompt-armor"],
+              ["SoterAI vs Meta Llama Guard", "/comparison/llama-guard"],
             ].map(([label, href]) => (
               <Link
                 key={href}

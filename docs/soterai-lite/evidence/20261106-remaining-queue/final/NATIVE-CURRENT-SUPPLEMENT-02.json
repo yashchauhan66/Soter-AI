@@ -1,0 +1,113 @@
+{
+  "status": "PASS_F05_CURRENT_NATIVE10_F28_NATIVE_PARTIAL_FAILURE_RETAINED",
+  "observedAt": "2026-11-06T15:19:40.153Z",
+  "artifact": {
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-resumed-20261106-attempt02.vsix",
+    "bytes": 1742104,
+    "sha256": "011f96d19d42dbefc2e56eb5399bf5c7f16a09d6b71b8bae5be9d66b2f3769ec"
+  },
+  "sourceProof": {
+    "path": "docs/soterai-lite/evidence/20261106-remaining-queue/candidate-01/full-inputs-02.json",
+    "bytes": 223848,
+    "sha256": "23fd63bb04122bf055f656a77424085b75ff3e3c813121c15034cd209fd1c8f6"
+  },
+  "handoffSnapshot": {
+    "path": "docs/soterai-lite/evidence/20261106-remaining-queue/final/HANDOFF-current-01.json",
+    "bytes": 19169,
+    "sha256": "e6d5272720e565adcbbb5050e509250da4fda59d0fbcdfe401236f01bef17dca"
+  },
+  "previousNativeSupplement": {
+    "path": "docs/soterai-lite/evidence/20261106-remaining-queue/final/NATIVE-CURRENT-SUPPLEMENT-01.json",
+    "bytes": 4659,
+    "sha256": "e3805bb72ea5476edf63b8e4729b5bca9227261bafedf8b71b274d9603b1e1a8"
+  },
+  "f05": {
+    "acceptance": {
+      "path": "docs/soterai-lite/evidence/20261106-editor-reliability-01/f05-current-acceptance-04.json",
+      "bytes": 2222,
+      "sha256": "5ddd5ad150784a9fb42198363f7441e311a9473c6dc3974585798d86eca5b446"
+    },
+    "outerClose": {
+      "path": "docs/soterai-lite/evidence/20261106-editor-reliability-01/f05-current-native-04-owned-close.json",
+      "bytes": 613,
+      "sha256": "1487d47ff5326d7d0e4285d4136bd9cd250f3bd0287b9b267d880beede7d1d69"
+    },
+    "checks": 10,
+    "save": 7,
+    "reload": 3,
+    "codeVersion": "1.145.1",
+    "scope": "EXACT_PACKAGED_RUNTIMES_DEVELOPER_BOOTSTRAP_NOT_CLEAN_INSTALL",
+    "originalAssertionIdsAndScopes": "VERIFIED",
+    "allDescendantEOF": "NOT_INFERRED"
+  },
+  "f28": {
+    "status": "INCOMPLETE_EXTERNAL_PEER_HOST_STARTUP_FAILURE",
+    "failure": {
+      "originalBinding": {
+        "path": "docs/soterai-lite/evidence/20261106-editor-reliability-01/f28-current-01/native-binding-current-02.json",
+        "bytes": 7124,
+        "sha256": "ac572f96faa4ebe7a8a00c27fe80fba80a421ce8e4bb3e34c2dc21a7f62d32b0"
+      },
+      "outer": {
+        "path": "docs/soterai-lite/evidence/20261106-editor-reliability-01/f28-current-01/native-current-01-owned-close.json",
+        "bytes": 613,
+        "sha256": "1ab37209df6d594a2b54124d2b6836a6ef0d123b84a4cede4f10eefbaa736e61"
+      },
+      "actualPrimary": {
+        "path": "docs/soterai-lite/evidence/20261106-editor-reliability-01/f28-current-01/f28-reliability-native-20261106T145753Z-20410e2b/primary-results.json",
+        "bytes": 7672,
+        "sha256": "82be99386cfbc1a553666d3b5affdcc0a694262ec311d51b8607e605214214f3"
+      },
+      "primaryCodeClose": {
+        "path": "docs/soterai-lite/evidence/20261106-editor-reliability-01/f28-current-01/f28-reliability-native-20261106T145753Z-20410e2b/primary-owned-editor-close.json",
+        "bytes": 391,
+        "sha256": "08f314fef7bc303057c58019950924eccf570f7a905a3bf1dc27641d2f06eea9"
+      },
+      "peerStderr": {
+        "path": "docs/soterai-lite/evidence/20261106-editor-reliability-01/f28-updater-successor-02/retained-failed-peer-stderr.bin",
+        "bytes": 653,
+        "sha256": "af95b3c8824745fed738928442da9dc44ac350bef6520ad10650178225c7e2da"
+      },
+      "counts": {
+        "passed": 20,
+        "failed": 1,
+        "primaryNotRun": 4,
+        "restartNotEntered": 5
+      },
+      "failedId": "F28-HP21",
+      "cause": "Installed Code refused concurrent peer while external vscode-updating mutex held",
+      "notAProductFix": true
+    },
+    "updaterObservation": {
+      "path": "docs/soterai-lite/evidence/20261106-editor-reliability-01/f28-current-01/updater-observation-01.json",
+      "bytes": 3805,
+      "sha256": "96d552ddf87d80952d1d4522d4cefc0170da5cebb9c6083d927044ab61dd5228"
+    },
+    "preflight": {
+      "path": "docs/soterai-lite/evidence/20261106-editor-reliability-01/f28-updater-successor-02/syntax-preflight-verification-01.json",
+      "bytes": 395,
+      "sha256": "c14762e5c7fdc048508cb0f15f5b1badc013135ff471cce93a5cf358c08191ed"
+    },
+    "newRunnerPreparation": {
+      "path": "docs/soterai-lite/evidence/20261106-editor-reliability-01/f28-updater-successor-02/preparation.json",
+      "bytes": 4707,
+      "sha256": "f36e64279bf98f2d1441fe2a68f99d8154443d0ac5e915f6c4be022d9b8314cb"
+    },
+    "first20Checks": "OBSERVED_PASS_NOT_FULL_NATIVE30_ACCEPTANCE",
+    "readHandleClosure": "TWO_OPEN_TWO_CLOSED_NO_UNFINISHED_FIXTURE_HANDLES",
+    "remaining": "Fresh original30 primary25/restart5+peer execution after updater idle and complete current-host identity admission",
+    "automaticUpdateAttribution": "Synthetic profiles already update.mode=none and --disable-updates; main.log confirms updater disabled. External updater origin not attributed."
+  },
+  "sourceFilesChanged": 0,
+  "nativeLaunchesBySupplement": 0,
+  "catalogPairsPromoted": 0,
+  "releaseReady": false,
+  "finalRating": null,
+  "humanResults": "NOT_PROVIDED",
+  "independentVerdict": "NOT_PROVIDED",
+  "document": {
+    "path": "docs/soterai-lite/evidence/20261106-remaining-queue/final/NATIVE-CURRENT-SUPPLEMENT-02.md",
+    "bytes": 1883,
+    "sha256": "a616bde1813afd7f11d58c925435b98f6346319d9c2e35036016975d155378ec"
+  }
+}

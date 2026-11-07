@@ -1,0 +1,99 @@
+{
+    "status":  "TEST_ONLY_AUTHORED_FROZEN_UNEXECUTED_PREPRODUCTION",
+    "feature":  "F26a",
+    "test":  {
+                 "path":  "packages/vscode-extension/src/__tests__/ownerHookDiscovery.test.ts",
+                 "bytes":  18749,
+                 "sha256":  "642355c1a94faffdd33f78c55c46da2fe3169836374045399b99d480e4c2461e"
+             },
+    "declaredTests":  12,
+    "platform":  "WINDOWS_ONLY",
+    "productionAbsent":  "packages/vscode-extension/src/history-hooks/OwnerHookDiscovery.ts",
+    "contract":  {
+                     "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/owner-hook-discovery-test-contract-01.md",
+                     "bytes":  5227,
+                     "sha256":  "3e8816e5b93d666ee633ca1c53ad3ecd5d5705df313f3026a5668ac1c08317d4"
+                 },
+    "snapshots":  [
+                      {
+                          "source":  {
+                                         "path":  "packages/vscode-extension/src/history-hooks/CheckedOwnerHookContext.ts",
+                                         "bytes":  2062,
+                                         "sha256":  "6282777de9d4898a6af45b78272c201a334ae7960e18b987a2d3725e1a4a94dc"
+                                     },
+                          "snapshot":  {
+                                           "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/owner-hook-discovery-preproduction-01/CheckedOwnerHookContext.before.ts",
+                                           "bytes":  2062,
+                                           "sha256":  "6282777de9d4898a6af45b78272c201a334ae7960e18b987a2d3725e1a4a94dc"
+                                       },
+                          "byteExact":  true
+                      },
+                      {
+                          "source":  {
+                                         "path":  "packages/vscode-extension/src/history-hooks/OwnerHookGitProcess.ts",
+                                         "bytes":  6690,
+                                         "sha256":  "dcbed0c573b791f3da3e8210762c0b1480d79afb7891d064eb250b19997a1151"
+                                     },
+                          "snapshot":  {
+                                           "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/owner-hook-discovery-preproduction-01/OwnerHookGitProcess.before.ts",
+                                           "bytes":  6690,
+                                           "sha256":  "dcbed0c573b791f3da3e8210762c0b1480d79afb7891d064eb250b19997a1151"
+                                       },
+                          "byteExact":  true
+                      },
+                      {
+                          "source":  {
+                                         "path":  "packages/vscode-extension/src/history-hooks/OwnerHookProtocol.ts",
+                                         "bytes":  4490,
+                                         "sha256":  "8778d5ebcbf3562db84b94c18a81e056cfca01802a5de0dbbdccda3759ffa1dc"
+                                     },
+                          "snapshot":  {
+                                           "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/owner-hook-discovery-preproduction-01/OwnerHookProtocol.before.ts",
+                                           "bytes":  4490,
+                                           "sha256":  "8778d5ebcbf3562db84b94c18a81e056cfca01802a5de0dbbdccda3759ffa1dc"
+                                       },
+                          "byteExact":  true
+                      },
+                      {
+                          "source":  {
+                                         "path":  "packages/vscode-extension/src/terminal/CheckedGitMetadata.ts",
+                                         "bytes":  11622,
+                                         "sha256":  "4327a101f667bee54c679bd5df4a45eb0c76dd536c67f3682d8a9a31290c3f95"
+                                     },
+                          "snapshot":  {
+                                           "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/owner-hook-discovery-preproduction-01/CheckedGitMetadata.before.ts",
+                                           "bytes":  11622,
+                                           "sha256":  "4327a101f667bee54c679bd5df4a45eb0c76dd536c67f3682d8a9a31290c3f95"
+                                       },
+                          "byteExact":  true
+                      },
+                      {
+                          "source":  {
+                                         "path":  "packages/vscode-extension/src/__tests__/ownerHookDiscovery.test.ts",
+                                         "bytes":  18749,
+                                         "sha256":  "642355c1a94faffdd33f78c55c46da2fe3169836374045399b99d480e4c2461e"
+                                     },
+                          "snapshot":  {
+                                           "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/owner-hook-discovery-preproduction-01/ownerHookDiscovery.authored.test.ts",
+                                           "bytes":  18749,
+                                           "sha256":  "642355c1a94faffdd33f78c55c46da2fe3169836374045399b99d480e4c2461e"
+                                       },
+                          "byteExact":  true
+                      }
+                  ],
+    "framingWitness":  {
+                           "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/owner-config-framing-witness-01.json",
+                           "bytes":  4019,
+                           "sha256":  "8ed1d74a4b07b3711738f47047d961225ccd69a081febb9eaa432468efa4ab27"
+                       },
+    "api":  "OwnerHookDiscovery({context,valid,deadline,now?,createProcess?});start/closed/busy/withdraw/canRelease(exactCompletedResult)",
+    "outcome":  "Frozen metadata-only COMPLETE hooksRelative/fingerprint64hex or value-free UNAVAILABLE/STOP_UNCONFIRMED",
+    "coverage":  "12specified grouped cases: genuineguard/defaultcustom/projectionrefusal/versionpin/phasecontract/fingerprint/realclosed/pendingwithdraw/oneshot/finalidentitystickyreentrancy/aggregateclockcaps/closedtransportrefusal",
+    "authorityLimit":  "Caller must requery before/after mutation; captured context does not automatically prove current external config or future commit env/bypass",
+    "testExecution":  "NOT_RUN_BY_AUTHOR_ROOT_BASELINE_REQUIRED_BEFORE_PRODUCTION",
+    "compilerBuildGitHookNative":  "NOT_RUN_BY_AUTHOR",
+    "syntaxCompilation":  "NOT_RUN_BY_AUTHOR",
+    "productionQueueLedgerChanges":  "NONE_BY_AUTHOR",
+    "scope":  "Retained manual synthetic metadata, fake workers and deterministic clocks only. Default real factory not executed. Source hashes/case count/custody only; no behavior or static compiler PASS claim.",
+    "time":  "2026-10-25T13:10:47.0472770Z"
+}

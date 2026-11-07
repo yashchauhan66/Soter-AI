@@ -1,0 +1,13 @@
+// Evidence-only successor: scope the input ancestry guard to the explicit workspace.
+const fs = require('node:fs'), path = require('node:path'), crypto = require('node:crypto');
+const home = __dirname, repo = path.resolve(home, '../../../..'), sha = raw => crypto.createHash('sha256').update(raw).digest('hex');
+const fact = file => { const raw = fs.readFileSync(file); return { path: path.relative(repo, file).replace(/\\/g, '/'), bytes: raw.length, sha256: sha(raw) }; };
+const oldFile = path.join(home, 'run-precommit-native-01.ps1'), raw = fs.readFileSync(oldFile);
+if (sha(raw) !== 'fa35f56f8f60d9bff8b9fe80156b4412798b75172a64c0c20b280889a0e6bc7e') throw Error('Frozen first launcher differs.');
+const before = 'while($taskCursor.Length -gt 3){if((Get-Item -LiteralPath $taskCursor -Force).Attributes -band [IO.FileAttributes]::ReparsePoint){throw \'Linked fixture input refused.\'};$taskCursor=Split-Path -Parent $taskCursor}';
+const after = 'if($taskCursor -ine $taskRepo -and -not $taskCursor.StartsWith($taskRepo+[IO.Path]::DirectorySeparatorChar,[StringComparison]::OrdinalIgnoreCase)){throw \'Fixture ancestry guard escaped workspace.\'}\n while($taskCursor.Length -ge $taskRepo.Length){if((Get-Item -LiteralPath $taskCursor -Force).Attributes -band [IO.FileAttributes]::ReparsePoint){throw \'Linked fixture input refused.\'};$taskCursor=Split-Path -Parent $taskCursor}';
+const source = raw.toString('utf8'); if (source.split(before).length !== 2) throw Error('Exact ancestry guard changed.');
+const result = source.replace(before, () => after);
+const output = path.join(home, 'run-precommit-native-02.ps1'); fs.writeFileSync(output, result, { flag: 'wx' });
+fs.writeFileSync(path.join(home, 'precommit-launcher-correction-02.json'), JSON.stringify({ status: 'PREPARED_SUCCESSOR_NOT_EXECUTED', time: new Date().toISOString(), before: fact(oldFile), after: fact(output), failure: fact(path.join(home, 'precommit-native-run-01.txt')), reason: 'First attempt refused before any D profile or Code launch. All inputs and explicit repo root have ordinary metadata; the extra traversal outside the user-named workspace encountered OneDrive/Desktop and OneDrive reparse attributes. Existing artifact-binding guard stops at the explicit repo. Successor includes repo itself and every in-repo input ancestor while refusing any input outside repo; only out-of-workspace ancestor traversal changes. No change to product, native34 observations, payloads, assertions, pins, timeouts or closure handling.', native01: 'REFUSED_BEFORE_CODE_LAUNCH_NOT_A_BEHAVIOR_RESULT' }, null, 2) + '\n', { flag: 'wx' });
+console.log('Prepared separate launcher02; first refusal retained. No native launch.');

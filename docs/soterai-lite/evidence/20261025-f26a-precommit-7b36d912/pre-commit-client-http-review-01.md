@@ -1,0 +1,9 @@
+# F26a client HTTP read-only review
+
+STATIC FINDING, NOT EXECUTED by the author. Current source bytes are bound separately by `pre-commit-owner-client-integration-freeze-01.json`. Same-lineage LOW evidence; no independent review or feature-completion claim.
+
+`runPreCommitClient` races the default `requestOwner` promise against an absolute deadline timer. If the timer wins, it returns UNAVAILABLE and clears the outer timer, but the default request is not cancelled or destroyed through that branch. The HTTP helper itself uses `req.setTimeout`, which is an inactivity timeout. A local peer delivering bounded-body bytes slowly enough to keep the socket active could therefore keep the HTTP request/socket alive after the outer result has been returned. A native Node/Electron-Node process may then remain alive while that socket is active. The client does not send a process signal, and this is not an observed ALLOW bypass; the concern is finite request/process lifecycle ownership.
+
+The six authored default-adapter integration cases cover useful ALLOW/BLOCK, absent/disabled owner, redirect refusal and malformed framing. They do not dynamically establish the streaming deadline condition. Capture a separate bounded timer-controlled regression before changing cleanup, then verify actual socket closure/zero retry/no signals. Avoid a long real60-second wait or a claim that result settlement alone proves transport closure.
+
+Other reviewed code paths synchronously recapture exact index digest/identity, descriptor digest/identity and worker/runtime digest/identity after the request await, including for BLOCK. The helper refuses redirects, nonnumeric/nonloopback endpoint data, duplicate response headers, non200 status, unsupported content type, transfer encoding and invalid/oversize Content-Length. These are source observations, not substitutes for actual test/native receipts.

@@ -39,6 +39,12 @@ const rules: PatternRule[] = [
 
   // ── Malicious server / mcp-remote RCE style command smuggling ──────────
   { pattern: /(?:mcp[- ]?remote|mcp server (?:config|manifest)|server description)[\s\S]{0,200}(?:\$\((?:curl|wget|bash|sh)|;\s*(?:curl|wget|bash|sh|rm|nc|python)\b|\|\s*(?:bash|sh)\b|`(?:curl|wget|bash|sh)|<script>|child_process|exec(?:Sync)?\s*\(|eval\s*\()/i, label: "MCP server command injection", message: "MCP server metadata smuggles a shell/command payload (mcp-remote RCE class).", severity: "CRITICAL", score: 60 },
+
+  // ── Tool execution result & observation envelope injection (2026 Agent Attack Class) ──
+  { pattern: /(?:<tool_(?:response|output|result)>|\[(?:TOOL_RESULT|OBSERVATION|FUNCTION_RESULT)\]|(?:\{\s*["']role["']\s*:\s*["']tool["'])|<function_results?>)[\s\S]{0,240}(?:ignore (?:all )?(?:previous|prior)|system[ _]override|user (?:already )?(?:confirmed|authorized|approved)|do not (?:ask|prompt|confirm)|skip (?:confirmation|verification)|bypass (?:safety|guardrails?|filters?)|exfiltrat|send (?:all|the) (?:data|context|tokens?|keys?))/i, label: "Tool result envelope spoofing", message: "Untrusted content disguises itself as a completed tool execution or observation to hijack agent workflow.", severity: "HIGH", score: 50 },
+
+  // ── Fake system directive embedded in tool/API return ─────────────────
+  { pattern: /(?:\[(?:SYSTEM|ADMIN|DIRECTIVE)[ _]?(?:INSTRUCTION|OVERRIDE|ALERT)?\]|<(?:system_directive|admin_directive|system_override|trusted_agent)>)[\s\S]{0,260}(?:grant|elevat|bypass|skip|disable|exfiltrat|override|execute|execute_command|without (?:user )?confirmation)/i, label: "Disguised system directive in tool payload", message: "Smuggles fake system or admin directive tags inside tool or API response payloads.", severity: "HIGH", score: 50 },
 ];
 
 export function mcpToolPoisoningDetector(text: string) {

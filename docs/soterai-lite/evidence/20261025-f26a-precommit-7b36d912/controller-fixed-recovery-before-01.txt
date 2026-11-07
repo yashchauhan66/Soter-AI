@@ -1,0 +1,92 @@
+﻿TAP version 13
+# Subtest: F26a real controller reviewed resume replaces a valid signed prior descriptor with a new signed session
+ok 1 - F26a real controller reviewed resume replaces a valid signed prior descriptor with a new signed session
+  ---
+  duration_ms: 4539.9626
+  type: 'test'
+  ...
+# Subtest: F26a real controller preserves a tampered prior descriptor and refuses resume rather than overwriting it
+ok 2 - F26a real controller preserves a tampered prior descriptor and refuses resume rather than overwriting it
+  ---
+  duration_ms: 335.4388
+  type: 'test'
+  ...
+# Subtest: F26a real controller stale restore review preserves a newer generation record and edited hook
+ok 3 - F26a real controller stale restore review preserves a newer generation record and edited hook
+  ---
+  duration_ms: 216.342
+  type: 'test'
+  ...
+# Subtest: F26a real controller stale record after backup retrieval cannot be overwritten by rollback bookkeeping
+ok 4 - F26a real controller stale record after backup retrieval cannot be overwritten by rollback bookkeeping
+  ---
+  duration_ms: 132.8274
+  type: 'test'
+  ...
+# Subtest: F26a real controller withdraws live status and result authority when its exact service becomes unavailable
+ok 5 - F26a real controller withdraws live status and result authority when its exact service becomes unavailable
+  ---
+  duration_ms: 174.1183
+  type: 'test'
+  ...
+# Subtest: F26a real controller cannot replace a missing signing key while resuming retained ownership
+ok 6 - F26a real controller cannot replace a missing signing key while resuming retained ownership
+  ---
+  duration_ms: 174.6604
+  type: 'test'
+  ...
+# Subtest: F26a real controller useful restore durably retains exact private journal and opaque public discoverability
+not ok 7 - F26a real controller useful restore durably retains exact private journal and opaque public discoverability
+  ---
+  duration_ms: 275.4974
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\preCommitControllerBackend.review.test.ts:2:20093'
+  failureType: 'testCodeFailure'
+  error: |-
+    A fixed generation/state record keeps recovery discoverable if an opaque cross-window index update races.
+    + actual - expected
+    
+    + undefined
+    - '{"version":1,"pin":"eyJ2ZXJzaW9uIjoxLCJyb290IjoiQzpcXFVzZXJzXFxVU0VSXFxBcHBEYXRhXFxMb2NhbFxcVGVtcFxcc290ZXItZjI2YS1jb250cm9sbGVyLWJhY2tlbmQtT2dEazAyXFxyZXBvIiwiZ2VuZXJhdGlvbiI6ImYzNTE1MmY2LTA2MTQtNGFjYi1hNTg3LTY0MmI2NGFhNDg2MSIsInB1YmxpY0tleSI6Ik1Db3dCUVlESzJWd0F5RUFMRlFCRjg2YWdNYmZmWFhTVkQ5cFVVWUg0TkxqSkpKRFNsblVKazhldFhRPSIsIndvcmtlciI6IkM6XFxVc2Vyc1xcVVNFUlxcQXBwRGF0YVxcTG9jYWxcXFRlbXBcXHNvdGVyLWYyNmEtY29udHJvbGxlci1iYWNrZW5kLU9nRGswMlxccHJvZmlsZVxcZGlzdFxccHJlLWNvbW1pdC1jbGllbnQuanMiLCJ3b3JrZXJTaGEyNTYiOiJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiIiwicnVudGltZSI6IkM6XFxQcm9ncmFtIEZpbGVzXFxub2RlanNcXG5vZGUuZXhlIiwicnVudGltZVNoYTI1NiI6ImNjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2MiLCJkZXNjcmlwdG9yIjoiQzpcXFVzZXJzXFxVU0VSXFxBcHBEYXRhXFxMb2NhbFxcVGVtcFxcc290ZXItZjI2YS1jb250cm9sbGVyLWJhY2tlbmQtT2dEazAyXFxwcm9maWxlXFxnbG9iYWxTdG9yYWdlXFxwcmUtY29tbWl0XFxmMzUxNTJmNi0wNjE0LTRhY2ItYTU4Ny02NDJiNjRhYTQ4NjEuanNvbiIsInN5c3RlbVJvb3QiOiJDOlxcV2luZG93cyJ9","projectionFingerprint":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","receipt":{"version":1,"generation":"f35152f6-0614-4acb-a587-642b64aa4861","root":"C:\\\\Users\\\\USER\\\\AppData\\\\Local\\\\Temp\\\\soter-f26a-controller-backend-OgDk02\\\\repo","hooksRelative":".git/hooks","backup":"dddddddddddddddddddddddddddddddd","beforeDigest":"d7ca025d9d1adc4ac0e9e0d9775e4d01ad70602f3a5a52380acc7894cd758dda","afterDigest":"73c03eeda39203a0e4465af001110c4c30dc909bec46b6424e5d858e041b0421","originalPresent":true,"originalMode":438,"mode":438},"state":"ROLLED_BACK"}'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '{"version":1,"pin":"eyJ2ZXJzaW9uIjoxLCJyb290IjoiQzpcXFVzZXJzXFxVU0VSXFxBcHBEYXRhXFxMb2NhbFxcVGVtcFxcc290ZXItZjI2YS1jb250cm9sbGVyLWJhY2tlbmQtT2dEazAyXFxyZXBvIiwiZ2VuZXJhdGlvbiI6ImYzNTE1MmY2LTA2MTQtNGFjYi1hNTg3LTY0MmI2NGFhNDg2MSIsInB1YmxpY0tleSI6Ik1Db3dCUVlESzJWd0F5RUFMRlFCRjg2YWdNYmZmWFhTVkQ5cFVVWUg0TkxqSkpKRFNsblVKazhldFhRPSIsIndvcmtlciI6IkM6XFxVc2Vyc1xcVVNFUlxcQXBwRGF0YVxcTG9jYWxcXFRlbXBcXHNvdGVyLWYyNmEtY29udHJvbGxlci1iYWNrZW5kLU9nRGswMlxccHJvZmlsZVxcZGlzdFxccHJlLWNvbW1pdC1jbGllbnQuanMiLCJ3b3JrZXJTaGEyNTYiOiJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiIiwicnVudGltZSI6IkM6XFxQcm9ncmFtIEZpbGVzXFxub2RlanNcXG5vZGUuZXhlIiwicnVudGltZVNoYTI1NiI6ImNjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2MiLCJkZXNjcmlwdG9yIjoiQzpcXFVzZXJzXFxVU0VSXFxBcHBEYXRhXFxMb2NhbFxcVGVtcFxcc290ZXItZjI2YS1jb250cm9sbGVyLWJhY2tlbmQtT2dEazAyXFxwcm9maWxlXFxnbG9iYWxTdG9yYWdlXFxwcmUtY29tbWl0XFxmMzUxNTJmNi0wNjE0LTRhY2ItYTU4Ny02NDJiNjRhYTQ4NjEuanNvbiIsInN5c3RlbVJvb3QiOiJDOlxcV2luZG93cyJ9","projectionFingerprint":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","receipt":{"version":1,"generation":"f35152f6-0614-4acb-a587-642b64aa4861","root":"C:\\\\Users\\\\USER\\\\AppData\\\\Local\\\\Temp\\\\soter-f26a-controller-backend-OgDk02\\\\repo","hooksRelative":".git/hooks","backup":"dddddddddddddddddddddddddddddddd","beforeDigest":"d7ca025d9d1adc4ac0e9e0d9775e4d01ad70602f3a5a52380acc7894cd758dda","afterDigest":"73c03eeda39203a0e4465af001110c4c30dc909bec46b6424e5d858e041b0421","originalPresent":true,"originalMode":438,"mode":438},"state":"ROLLED_BACK"}'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\preCommitControllerBackend.review.test.ts:249:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F26a real controller journal-store race retains its private revision without overwriting a foreign root record
+not ok 8 - F26a real controller journal-store race retains its private revision without overwriting a foreign root record
+  ---
+  duration_ms: 168.1031
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\preCommitControllerBackend.review.test.ts:2:21992'
+  failureType: 'testCodeFailure'
+  error: |-
+    The fixed original-generation recovery state survives a foreign active-pointer race.
+    + actual - expected
+    
+    + undefined
+    - '{"version":1,"pin":"eyJ2ZXJzaW9uIjoxLCJyb290IjoiQzpcXFVzZXJzXFxVU0VSXFxBcHBEYXRhXFxMb2NhbFxcVGVtcFxcc290ZXItZjI2YS1jb250cm9sbGVyLWJhY2tlbmQtU2lZZjdoXFxyZXBvIiwiZ2VuZXJhdGlvbiI6ImJiYTE5NjVmLTE4YTQtNDgyMy04Y2I0LTMwMGJjNjZlOTE0ZSIsInB1YmxpY0tleSI6Ik1Db3dCUVlESzJWd0F5RUFieDRlYnMveUhyTEQyYlJZVGQycEVQb0R6ZlUyOWRabTFQOC9vdFFFWXRFPSIsIndvcmtlciI6IkM6XFxVc2Vyc1xcVVNFUlxcQXBwRGF0YVxcTG9jYWxcXFRlbXBcXHNvdGVyLWYyNmEtY29udHJvbGxlci1iYWNrZW5kLVNpWWY3aFxccHJvZmlsZVxcZGlzdFxccHJlLWNvbW1pdC1jbGllbnQuanMiLCJ3b3JrZXJTaGEyNTYiOiJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiIiwicnVudGltZSI6IkM6XFxQcm9ncmFtIEZpbGVzXFxub2RlanNcXG5vZGUuZXhlIiwicnVudGltZVNoYTI1NiI6ImNjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2MiLCJkZXNjcmlwdG9yIjoiQzpcXFVzZXJzXFxVU0VSXFxBcHBEYXRhXFxMb2NhbFxcVGVtcFxcc290ZXItZjI2YS1jb250cm9sbGVyLWJhY2tlbmQtU2lZZjdoXFxwcm9maWxlXFxnbG9iYWxTdG9yYWdlXFxwcmUtY29tbWl0XFxiYmExOTY1Zi0xOGE0LTQ4MjMtOGNiNC0zMDBiYzY2ZTkxNGUuanNvbiIsInN5c3RlbVJvb3QiOiJDOlxcV2luZG93cyJ9","projectionFingerprint":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","receipt":{"version":1,"generation":"bba1965f-18a4-4823-8cb4-300bc66e914e","root":"C:\\\\Users\\\\USER\\\\AppData\\\\Local\\\\Temp\\\\soter-f26a-controller-backend-SiYf7h\\\\repo","hooksRelative":".git/hooks","backup":"dddddddddddddddddddddddddddddddd","beforeDigest":"d7ca025d9d1adc4ac0e9e0d9775e4d01ad70602f3a5a52380acc7894cd758dda","afterDigest":"cd10562e811cae889b3db539861af6f0001eea8527832c802c44395454080916","originalPresent":true,"originalMode":438,"mode":438},"state":"ROLLED_BACK"}'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '{"version":1,"pin":"eyJ2ZXJzaW9uIjoxLCJyb290IjoiQzpcXFVzZXJzXFxVU0VSXFxBcHBEYXRhXFxMb2NhbFxcVGVtcFxcc290ZXItZjI2YS1jb250cm9sbGVyLWJhY2tlbmQtU2lZZjdoXFxyZXBvIiwiZ2VuZXJhdGlvbiI6ImJiYTE5NjVmLTE4YTQtNDgyMy04Y2I0LTMwMGJjNjZlOTE0ZSIsInB1YmxpY0tleSI6Ik1Db3dCUVlESzJWd0F5RUFieDRlYnMveUhyTEQyYlJZVGQycEVQb0R6ZlUyOWRabTFQOC9vdFFFWXRFPSIsIndvcmtlciI6IkM6XFxVc2Vyc1xcVVNFUlxcQXBwRGF0YVxcTG9jYWxcXFRlbXBcXHNvdGVyLWYyNmEtY29udHJvbGxlci1iYWNrZW5kLVNpWWY3aFxccHJvZmlsZVxcZGlzdFxccHJlLWNvbW1pdC1jbGllbnQuanMiLCJ3b3JrZXJTaGEyNTYiOiJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiIiwicnVudGltZSI6IkM6XFxQcm9ncmFtIEZpbGVzXFxub2RlanNcXG5vZGUuZXhlIiwicnVudGltZVNoYTI1NiI6ImNjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2MiLCJkZXNjcmlwdG9yIjoiQzpcXFVzZXJzXFxVU0VSXFxBcHBEYXRhXFxMb2NhbFxcVGVtcFxcc290ZXItZjI2YS1jb250cm9sbGVyLWJhY2tlbmQtU2lZZjdoXFxwcm9maWxlXFxnbG9iYWxTdG9yYWdlXFxwcmUtY29tbWl0XFxiYmExOTY1Zi0xOGE0LTQ4MjMtOGNiNC0zMDBiYzY2ZTkxNGUuanNvbiIsInN5c3RlbVJvb3QiOiJDOlxcV2luZG93cyJ9","projectionFingerprint":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","receipt":{"version":1,"generation":"bba1965f-18a4-4823-8cb4-300bc66e914e","root":"C:\\\\Users\\\\USER\\\\AppData\\\\Local\\\\Temp\\\\soter-f26a-controller-backend-SiYf7h\\\\repo","hooksRelative":".git/hooks","backup":"dddddddddddddddddddddddddddddddd","beforeDigest":"d7ca025d9d1adc4ac0e9e0d9775e4d01ad70602f3a5a52380acc7894cd758dda","afterDigest":"cd10562e811cae889b3db539861af6f0001eea8527832c802c44395454080916","originalPresent":true,"originalMode":438,"mode":438},"state":"ROLLED_BACK"}'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\preCommitControllerBackend.review.test.ts:274:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 6
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 8529.8673

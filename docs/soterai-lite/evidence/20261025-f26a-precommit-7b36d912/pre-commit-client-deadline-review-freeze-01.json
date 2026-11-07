@@ -1,0 +1,51 @@
+{
+  "status": "ADDITIVE_BEFORE_CORRECTION_TEST_FROZEN_NOT_EXECUTED",
+  "feature": "F26a",
+  "component": "ClientDefaultHTTPAbsoluteDeadlineOwnership",
+  "tests": 1,
+  "facts": [
+    {
+      "path": "packages/vscode-extension/src/__tests__/preCommitClientDeadline.review.test.ts",
+      "bytes": 10151,
+      "sha256": "2a84526cdb9d3b760bd6d2d78779bb0083a65b7571e45dc8711ebb916310e79e"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/preCommitClientDeadline.review.before-execution-01.test.ts",
+      "bytes": 10151,
+      "sha256": "2a84526cdb9d3b760bd6d2d78779bb0083a65b7571e45dc8711ebb916310e79e"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/pre-commit-client-deadline-review-contract-01.md",
+      "bytes": 3203,
+      "sha256": "0634d4b6b84b2f13092067094dafaca44ddb4cd5277091f7cd7f425aeca6084d"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/pre-commit-client-deadline-review-author-static-01.json",
+      "bytes": 585,
+      "sha256": "3495a843f39cbe6e3bb945fd6a281c39c92f16dbbbcc4c761ad772bfa746a673"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/pre-commit-client-deadline-review-author-static-01.cjs",
+      "bytes": 3596,
+      "sha256": "7b0cfe56fa7ae7384ace6dad1e4eacd65f2cbff713ad5212235fee04b0c23a7c"
+    }
+  ],
+  "production": {
+    "source": {
+      "path": "packages/vscode-extension/src/history-hooks/PreCommitClient.ts",
+      "bytes": 9195,
+      "sha256": "98f81308701784dc1b37ccdc23838775cb491eb74cb60aae40698994464d2f24"
+    },
+    "snapshot": {
+      "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/PreCommitClient.before-deadline-review-01.ts",
+      "bytes": 9195,
+      "sha256": "98f81308701784dc1b37ccdc23838775cb491eb74cb60aae40698994464d2f24"
+    },
+    "byteExact": true
+  },
+  "snapshotByteExact": true,
+  "firstExecution": "ROOT_BASELINE_REQUIRED_BEFORE_CORRESPONDING_PRODUCTION_FIX",
+  "scope": "Author-only actual default HTTP ownership regression; controlled actual outer JS deadline and positive live-socket/streamed-byte witnesses. All network numeric captured loopback only; cleanup graceful after assertion. No behavior execution or production/queue/ledger edits.",
+  "staticStatus": "PASS_STATIC_TYPESCRIPT_PARSE_ONLY",
+  "time": "2026-10-25T12:16:52.549Z"
+}

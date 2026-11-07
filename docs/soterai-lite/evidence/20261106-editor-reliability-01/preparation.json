@@ -1,0 +1,259 @@
+{
+  "status": "PASS_F05_F28_CURRENT_NATIVE_SUCCESSOR_PREPARATION_NOT_EXECUTED",
+  "observedAt": "2026-11-06T14:08:17.140Z",
+  "artifact": {
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-resumed-20261106-attempt02.vsix",
+    "bytes": 1742104,
+    "sha256": "011f96d19d42dbefc2e56eb5399bf5c7f16a09d6b71b8bae5be9d66b2f3769ec"
+  },
+  "sourceProof": {
+    "path": "docs/soterai-lite/evidence/20261106-remaining-queue/candidate-01/full-inputs-02.json",
+    "bytes": 223848,
+    "sha256": "23fd63bb04122bf055f656a77424085b75ff3e3c813121c15034cd209fd1c8f6"
+  },
+  "code": {
+    "path": "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe",
+    "bytes": 238751552,
+    "sha256": "2361449e044667cd5030a1396db3ac6785424ff7bf3047c691bc79e9011ae91d",
+    "fileLinkCount": 1
+  },
+  "codeVersion": "1.145.1",
+  "commonGate": {
+    "path": "docs/soterai-lite/evidence/20261106-v01-current-01/v01-admission.cjs",
+    "bytes": 2750,
+    "sha256": "45d85d8fdaefa9d5cec58706d660730a0f386b60911e43868ccad344924838af"
+  },
+  "commonBinding": {
+    "path": "docs/soterai-lite/evidence/20261106-v01-current-01/binding.json",
+    "bytes": 31244,
+    "sha256": "7d35e79884a683ae33167ec33fcf8c8762729d700d1108ba9b2fdfaded9c6b2f"
+  },
+  "f05": {
+    "binding": {
+      "path": "docs/soterai-lite/evidence/20261106-editor-reliability-01/f05-current-binding-04.json",
+      "bytes": 6509,
+      "sha256": "999f780bc1ef88469c959d17427caeda19b34aa9ae98ac89a8ac2ec9dc6b2c31"
+    },
+    "runner": {
+      "path": "docs/soterai-lite/evidence/20261106-editor-reliability-01/run-f05-current-proposed-04.cjs",
+      "bytes": 7627,
+      "sha256": "1ad3021919813aa8459026dc08dfb6bd29268fa283f56ba964aad21e6c605b61"
+    },
+    "checks": 10,
+    "phases": [
+      7,
+      3
+    ],
+    "driverUnchanged": true
+  },
+  "f28": {
+    "binding": {
+      "path": "docs/soterai-lite/evidence/20261106-editor-reliability-01/f28-current-01/native-binding-current-02.json",
+      "bytes": 7124,
+      "sha256": "ac572f96faa4ebe7a8a00c27fe80fba80a421ce8e4bb3e34c2dc21a7f62d32b0"
+    },
+    "runner": {
+      "path": "docs/soterai-lite/evidence/20261106-editor-reliability-01/f28-current-01/run-native-current-02.cjs",
+      "bytes": 4757,
+      "sha256": "b2ed3e7049c479060fd6bed6090f768078a87807e68b9cff0333c68e6d684288"
+    },
+    "checks": 30,
+    "phases": [
+      25,
+      5
+    ],
+    "peer": 1,
+    "driverUnchanged": true
+  },
+  "deltas": [
+    {
+      "file": "f05-runner",
+      "before": "affected-current-admission-proposed-02.cjs",
+      "after": "native-common-admission.cjs",
+      "count": 1
+    },
+    {
+      "file": "f05-runner",
+      "before": "4ed2dcecd94855806b4cf4dee239b8e51b9d1fb6d190229ae08b76f8174153dc",
+      "after": "60d7ad1dbdca4e6f713256c3f97d6c2cf5fc263055edc1b59d6e295994e8595c",
+      "count": 1
+    },
+    {
+      "file": "f05-runner",
+      "before": "1.145.0",
+      "after": "1.145.1",
+      "count": 1
+    },
+    {
+      "file": "f05-runner",
+      "before": "a717861c07",
+      "after": "6bab64e2d1",
+      "count": 1
+    },
+    {
+      "file": "f05-launcher",
+      "before": "1.145.0",
+      "after": "1.145.1",
+      "count": 3
+    },
+    {
+      "file": "current-admission-02.cjs",
+      "before": "affected-current-admission-proposed-02.cjs",
+      "after": "native-common-admission.cjs",
+      "count": 1
+    },
+    {
+      "file": "current-admission-02.cjs",
+      "before": "4ed2dcecd94855806b4cf4dee239b8e51b9d1fb6d190229ae08b76f8174153dc",
+      "after": "60d7ad1dbdca4e6f713256c3f97d6c2cf5fc263055edc1b59d6e295994e8595c",
+      "count": 1
+    },
+    {
+      "file": "current-admission-02.cjs",
+      "before": "1.145.0",
+      "after": "1.145.1",
+      "count": 1
+    },
+    {
+      "file": "current-admission-02.cjs",
+      "before": "a717861c07",
+      "after": "6bab64e2d1",
+      "count": 1
+    },
+    {
+      "file": "current-admission-02.cjs",
+      "before": "USER_SKIPPED_NO_MORE_NATIVE_RUNS",
+      "after": "SEPARATE_F26A_NATIVE_PROGRAM_NOT_RUN_BY_THIS_F28_FIXTURE",
+      "count": 1
+    },
+    {
+      "file": "native-launch-current-02.ps1",
+      "before": "1.145.0",
+      "after": "1.145.1",
+      "count": 2
+    },
+    {
+      "file": "native-launch-current-02.ps1",
+      "before": "a717861c07",
+      "after": "6bab64e2d1",
+      "count": 1
+    },
+    {
+      "file": "native-launch-current-02.ps1",
+      "before": "f1e1d79be5f50a238681738f813c4b353aad69f4b05f068899ec98a2d1b74c32",
+      "after": "2361449e044667cd5030a1396db3ac6785424ff7bf3047c691bc79e9011ae91d",
+      "count": 1
+    },
+    {
+      "file": "native-launch-current-02.ps1",
+      "before": "238751544",
+      "after": "238751552",
+      "count": 2
+    },
+    {
+      "file": "native-launch-current-02.ps1",
+      "before": "USER_SKIPPED_NO_MORE_NATIVE_RUNS",
+      "after": "SEPARATE_F26A_NATIVE_PROGRAM_NOT_RUN_BY_THIS_F28_FIXTURE",
+      "count": 4
+    },
+    {
+      "file": "native-launch-current-02.ps1",
+      "before": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f28-current-01/",
+      "after": "docs/soterai-lite/evidence/20261106-editor-reliability-01/f28-current-01/",
+      "count": 1
+    },
+    {
+      "file": "native-launch-current-02.ps1",
+      "before": "const jsonBuiltinPins = [\n  {\n    \"relative\": \"package.json\",\n    \"bytes\": 3934,\n    \"sha256\": \"9cd153a0d6bd8f8058b5f57c3f11c203228b102ec95e7a025d0e2a5448d662d3\"\n  },\n  {\n    \"relative\": \"client/dist/node/jsonClientMain.js\",\n    \"bytes\": 653282,\n    \"sha256\": \"6471beebe24498a7d7c7d1803b08c475b0cf88115cf9999905a7890d3a9d75ca\"\n  },\n  {\n    \"relative\": \"server/package.json\",\n    \"bytes\": 1154,\n    \"sha256\": \"9f89ec8214ef426f93002d427f1669027f41bece3a2f7f23787df45d58e237c4\"\n  },\n  {\n    \"relative\": \"server/dist/node/jsonServerMain.js\",\n    \"bytes\": 357534,\n    \"sha256\": \"b5425799cbb01710aa2f1ca48fd215d16e9c0d0d6f86447e2faeeaf5582d61e6\"\n  }\n];",
+      "after": "const jsonBuiltinPins = [\n  {\n    \"relative\": \"package.json\",\n    \"bytes\": 3934,\n    \"sha256\": \"9cd153a0d6bd8f8058b5f57c3f11c203228b102ec95e7a025d0e2a5448d662d3\"\n  },\n  {\n    \"relative\": \"client/dist/node/jsonClientMain.js\",\n    \"bytes\": 653282,\n    \"sha256\": \"6471beebe24498a7d7c7d1803b08c475b0cf88115cf9999905a7890d3a9d75ca\"\n  },\n  {\n    \"relative\": \"server/package.json\",\n    \"bytes\": 1154,\n    \"sha256\": \"9f89ec8214ef426f93002d427f1669027f41bece3a2f7f23787df45d58e237c4\"\n  },\n  {\n    \"relative\": \"server/dist/node/jsonServerMain.js\",\n    \"bytes\": 357534,\n    \"sha256\": \"b5425799cbb01710aa2f1ca48fd215d16e9c0d0d6f86447e2faeeaf5582d61e6\"\n  }\n];",
+      "count": 1
+    },
+    {
+      "file": "run-native-current-02.cjs",
+      "before": "1.145.0",
+      "after": "1.145.1",
+      "count": 2
+    },
+    {
+      "file": "run-native-current-02.cjs",
+      "before": "USER_SKIPPED_NO_MORE_NATIVE_RUNS",
+      "after": "SEPARATE_F26A_NATIVE_PROGRAM_NOT_RUN_BY_THIS_F28_FIXTURE",
+      "count": 1
+    }
+  ],
+  "files": [
+    {
+      "path": "docs/soterai-lite/evidence/20261106-editor-reliability-01/native-common-admission.cjs",
+      "bytes": 796,
+      "sha256": "60d7ad1dbdca4e6f713256c3f97d6c2cf5fc263055edc1b59d6e295994e8595c"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-editor-reliability-01/run-f05-current-proposed-04.cjs",
+      "bytes": 7627,
+      "sha256": "1ad3021919813aa8459026dc08dfb6bd29268fa283f56ba964aad21e6c605b61"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-editor-reliability-01/f05-current-proposed-04.ps1",
+      "bytes": 12482,
+      "sha256": "4264d1f34330d8460d3436b3dcac0ae3f478cd86e18933c39240044d7efe245a"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-editor-reliability-01/affected-preparation-pipe-ownership-01.ps1",
+      "bytes": 4180,
+      "sha256": "246b0ccdb2457fd80f560770b129a1fde67d5d4212e8eae200f965dffd69698c"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-editor-reliability-01/f05-current-binding-04.json",
+      "bytes": 6509,
+      "sha256": "999f780bc1ef88469c959d17427caeda19b34aa9ae98ac89a8ac2ec9dc6b2c31"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-editor-reliability-01/f28-current-01/lite-reliability-host.js",
+      "bytes": 37612,
+      "sha256": "9a84eadfdd178e7c9518c632ee99e09c93ce86c62591dba331c1cf02457b5c07"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-editor-reliability-01/f28-current-01/native-reliability-04.host.ts.txt",
+      "bytes": 28779,
+      "sha256": "cdaf0492be7f286071a9d02663d29008c04677229e9ac57d93f3b9f141ce0024"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-editor-reliability-01/f28-current-01/native-case-freeze-04.json",
+      "bytes": 5628,
+      "sha256": "d3f161d577766a208073678c26c7f4de62ae6a7028cb7c9e26ea202a37dc6fdc"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-editor-reliability-01/f28-current-01/current-admission-02.cjs",
+      "bytes": 3018,
+      "sha256": "77ff337186acc1e2a2ae6ef507ac03d958c05d6b104beb70970dfca0e147252a"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-editor-reliability-01/f28-current-01/native-admission-current-02.ps1",
+      "bytes": 2622,
+      "sha256": "873adf692a7705fa58310ded51bd4b00a87d490d530e4eefa388685d130564f1"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-editor-reliability-01/f28-current-01/native-launch-current-02.ps1",
+      "bytes": 32191,
+      "sha256": "742e41af483d10284b3ee09f3e3923999ba143a7b48bfa7168a646796e1479fc"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-editor-reliability-01/f28-current-01/run-native-current-02.cjs",
+      "bytes": 4757,
+      "sha256": "b2ed3e7049c479060fd6bed6090f768078a87807e68b9cff0333c68e6d684288"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-editor-reliability-01/f28-current-01/driver-provenance-current-02.json",
+      "bytes": 4182,
+      "sha256": "9fa9d387682c69e35f16390f6acac64978b3cc2ad690de2bb9b2ee7d08861b67"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-editor-reliability-01/f28-current-01/native-binding-current-02.json",
+      "bytes": 7124,
+      "sha256": "ac572f96faa4ebe7a8a00c27fe80fba80a421ce8e4bb3e34c2dc21a7f62d32b0"
+    }
+  ],
+  "nativeLaunches": 0,
+  "productWrites": 0,
+  "independentReview": "LOW_BUILDER_PREPARATION_ONLY"
+}

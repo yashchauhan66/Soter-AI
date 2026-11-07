@@ -1,0 +1,48 @@
+﻿TAP version 13
+# Subtest: F26a hook stage foreign equal-byte inode survives replacement adoption refusal
+not ok 1 - F26a hook stage foreign equal-byte inode survives replacement adoption refusal
+  ---
+  duration_ms: 71.72
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedHookFileStage.review.test.ts:2:1367'
+  failureType: 'testCodeFailure'
+  error: |-
+    An equal-byte foreign inode cannot become the owned replacement.
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedHookFileStage.review.test.ts:37:16)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F26a hook stage foreign equal-byte inode survives failed target CAS cleanup
+not ok 2 - F26a hook stage foreign equal-byte inode survives failed target CAS cleanup
+  ---
+  duration_ms: 51.3363
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\checkedHookFileStage.review.test.ts:2:1367'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open 'C:\\Users\\USER\\AppData\\Local\\Temp\\soter-f26a-hook-stage-Ow5id5\\repo\\.git\\hooks\\.soterai-pre-commit-cddde68b-a619-4485-964a-a360af30995a.tmp'"
+  code: 'ENOENT'
+  stack: |-
+    async open (node:internal/fs/promises:633:25)
+    async readFile (node:internal/fs/promises:1237:14)
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\checkedHookFileStage.review.test.ts:40:16)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 0
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 755.1061

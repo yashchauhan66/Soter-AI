@@ -1,0 +1,2676 @@
+{
+  "status": "UNCHANGED_DRIVER_ASSERTION_IDENTITIES_ONLY_NO_HISTORICAL_RESULT_REUSE",
+  "originalFamilies": 20,
+  "originalAssertions": 509,
+  "originalPhases": 37,
+  "baseline": {
+    "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-acceptance-current-01.json",
+    "bytes": 96125,
+    "sha256": "64e2564fb9859ca6c2ad83689b96733a9761eac08cefe943b7c03142d6a2596e"
+  },
+  "families": [
+    {
+      "id": "logs",
+      "assertions": 25,
+      "driver": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/prebuilt-native-hosts-05/lite-logs-host.js",
+        "bytes": 43848,
+        "sha256": "4f014043b9ff4a46dadb4f29403e7f801a3e6cc429adb8ea2d99fb12bd48c251"
+      },
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 21,
+          "originalResult": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-logs-native-20261104T071123Z-5fac652b/primary-results.json",
+            "bytes": 16783,
+            "sha256": "7e92db5941579a85cf255f8ef60c5d59143c659e49ea3dedd98d7f0834903c75"
+          },
+          "observations": [
+            {
+              "id": "F25-N01",
+              "scope": "Exact packaged commands have no startup discovery, content, key or original document"
+            },
+            {
+              "id": "F25-N02",
+              "scope": "Native owner cancellation ignores caller authority before discovery, key and content"
+            },
+            {
+              "id": "F25-N03",
+              "scope": "One pending owner modal stays busy and refuses a second command without discovery"
+            },
+            {
+              "id": "F25-N04",
+              "scope": "Actual saved log, TAP, nested sensitive JSON property and decoded JSONL each produce one finding"
+            },
+            {
+              "id": "F25-N05",
+              "scope": "logs-v1 exact value references and canonical ledger rows are metadata only with distinct finding IDs"
+            },
+            {
+              "id": "F25-N06",
+              "scope": "Caller paths and approvals cannot redirect repeated scans or change keyed ledger identity"
+            },
+            {
+              "id": "F25-N07",
+              "scope": "Public TAP, Windows stack and credential templates remain useful without vault mode or a vault key"
+            },
+            {
+              "id": "F25-N08",
+              "scope": "Malformed late JSONL, duplicate keys, strict syntax, decoded controls and invalid UTF8 withhold atomically"
+            },
+            {
+              "id": "F25-N09",
+              "scope": "Exactly32 semantic strings are admitted and a33rd withholds the complete structured file"
+            },
+            {
+              "id": "F25-N10",
+              "scope": "Exact depth32,10000 value-container nodes and128 JSONL records remain useful; each next unit withholds"
+            },
+            {
+              "id": "F25-N11",
+              "scope": "Inclusive64KiB saved-file admission preserves a public log and skips the next byte before reading"
+            },
+            {
+              "id": "F25-N12",
+              "scope": "Seventeen64KiB public files admit at most1MiB unique raw content and report the rest partial"
+            },
+            {
+              "id": "F25-N13",
+              "scope": "Failed UTF8 decoding consumes the1MiB raw admission budget and prevents a later valid read"
+            },
+            {
+              "id": "F25-N14",
+              "scope": "Native discovery uses129 as the sentinel and scans no more than128 regular files"
+            },
+            {
+              "id": "F25-N15",
+              "scope": "Owner disable blocks discovery and a repository enable is rejected by native machine scope"
+            },
+            {
+              "id": "F25-N16",
+              "scope": "Disable and reenable while owner approval waits irreversibly withdraws before discovery"
+            },
+            {
+              "id": "F25-N17",
+              "scope": "Key change and restoration while metadata creation waits cannot revive stale display or command output"
+            },
+            {
+              "id": "F25-N18",
+              "scope": "Canonical source replacement while a metadata document waits suppresses stale display and preserves restored originals"
+            },
+            {
+              "id": "F25-N19",
+              "scope": "Owned flag withdrawal after analysis and before display suppresses the completed saved-log result"
+            },
+            {
+              "id": "F25-N20",
+              "scope": "The real60-second native approval deadline withdraws output while busy remains until the late modal closes"
+            },
+            {
+              "id": "F25-N21",
+              "scope": "Outside hardlinks are withheld without reference reads; findings grant no vault authority and form the restart basis"
+            }
+          ]
+        },
+        {
+          "phase": "restart",
+          "checks": 4,
+          "originalResult": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-logs-native-20261104T071123Z-5fac652b/restart-results.json",
+            "bytes": 4291,
+            "sha256": "abfee6ea5d48cac9517f7d7bf084ac09dcabae01f61ccdedf8bcdc0261e13c2c"
+          },
+          "observations": [
+            {
+              "id": "F25-N01",
+              "scope": "Restart reuses persisted keyed metadata without startup discovery, content, documents or key stores"
+            },
+            {
+              "id": "F25-N02",
+              "scope": "Restart caller approvals cannot replace a fresh native owner decision"
+            },
+            {
+              "id": "F25-N03",
+              "scope": "Fresh restart review preserves exact saved-log finding IDs and independently keyed ledger row IDs"
+            },
+            {
+              "id": "F25-N04",
+              "scope": "Restart owner disable still withdraws the native route and fresh reenable preserves originals and public controls"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "owned-output",
+      "assertions": 19,
+      "driver": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/owned-output-driver-01/lite-log-vault-runtime-host.js",
+        "bytes": 48785,
+        "sha256": "d6bf835ca26e390eeb4b5af5006bca1ae710d6156a045eaa791ccea2713512b8"
+      },
+      "phases": [
+        {
+          "phase": "single",
+          "checks": 19,
+          "originalResult": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-owned-output-native-20261104T071433Z-9bc9e395/single-results.json",
+            "bytes": 18419,
+            "sha256": "fc9b288d55460c5e17415e424bcf1553810fbf74c0e624707f92be1a62a5e082"
+          },
+          "observations": [
+            {
+              "id": "F25-OH01",
+              "scope": "Actual packaged activation registers the native vault task provider and strict machine log protection; setup cancellation creates no app."
+            },
+            {
+              "id": "F25-OH02",
+              "scope": "Real native migration creates selected-value ciphertext, placeholders and a SecretStorage key without source TextDocuments."
+            },
+            {
+              "id": "F25-OH03",
+              "scope": "Native descriptor and provider task carry only DATABASE_URL selection, literal public phase arguments and opaque descriptor identity."
+            },
+            {
+              "id": "F25-OH04",
+              "scope": "Before opaque registration the actual selected-only task preserves identical plain opaque output, establishing the heuristic-negative native control."
+            },
+            {
+              "id": "F25-OH05",
+              "scope": "A separate current-window source is actually migrated into the encrypted vault as an unselected opaque API_KEY registration."
+            },
+            {
+              "id": "F25-OH06",
+              "scope": "Actual native task masks raw unselected opaque output while real START injection remains selected-only and child closes naturally with both EOFs."
+            },
+            {
+              "id": "F25-OH07",
+              "scope": "Actual lifecycle DAP masks raw unselected opaque output and provides no environment evaluation capability."
+            },
+            {
+              "id": "F25-OH08",
+              "scope": "Actual native task masks an unselected opaque registration reconstructed from separate decoded JSON leaves."
+            },
+            {
+              "id": "F25-OH09",
+              "scope": "Actual lifecycle DAP masks an unselected opaque registration reconstructed from separate decoded JSON leaves."
+            },
+            {
+              "id": "F25-OH10",
+              "scope": "Actual native task observes stdout/stderr/stdout Unicode-escape arrival ending in newline and masks both channels."
+            },
+            {
+              "id": "F25-OH11",
+              "scope": "Actual lifecycle DAP observes stdout/stderr/stdout Unicode-escape arrival ending in newline and masks both channels."
+            },
+            {
+              "id": "F25-OH12",
+              "scope": "Actual native task preserves useful ANSI-normalized public structured Unicode failure text, Windows stack location and natural nonzero exit23."
+            },
+            {
+              "id": "F25-OH13",
+              "scope": "Actual lifecycle DAP preserves useful ANSI-normalized public structured Unicode failure text and natural nonzero exit23."
+            },
+            {
+              "id": "F25-OH14",
+              "scope": "Actual native task admits valid ANSI/CRLF provider JSON before heuristic replacement, masks it and preserves natural nonzero exit31."
+            },
+            {
+              "id": "F25-OH15",
+              "scope": "Actual lifecycle DAP admits valid ANSI/CRLF provider JSON before heuristic replacement, masks it and preserves natural nonzero exit31."
+            },
+            {
+              "id": "F25-OH16",
+              "scope": "Machine log withdrawal while a finite task and DAP app run withholds pending candidates and waits for natural owned close plus both EOFs."
+            },
+            {
+              "id": "F25-OH17",
+              "scope": "While log protection is disabled the next actual task and DAP attempts refuse before child creation without output or selected-only fallback."
+            },
+            {
+              "id": "F25-OH18",
+              "scope": "Ciphertext, placeholders, saved sensitive restrictions and masked safe reads survive log withdrawal; original source TextDocuments remain unopened."
+            },
+            {
+              "id": "F25-OH19",
+              "scope": "Every actual owned child has selected-only IPC, minimal spawn environment, exact wire-form evidence, natural completion, both EOFs and zero signals."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "artifact",
+      "assertions": 25,
+      "driver": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/prebuilt-native-hosts-05/lite-artifact-host.js",
+        "bytes": 38301,
+        "sha256": "6540e23b5c1b7898fec45ede212502d971460bb0cfac2a55bc160873eb6e9a12"
+      },
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 21,
+          "originalResult": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-artifact-native-20261104T071607Z-1e53d3ce/primary-results.json",
+            "bytes": 14668,
+            "sha256": "9e55f2e05e356d26a4d2394031d06d9d91c9d87a84012448c58c60b93b415570"
+          },
+          "observations": [
+            {
+              "id": "F24-N01",
+              "scope": "Exact runtime and two native artifact commands have no startup content, key or original document"
+            },
+            {
+              "id": "F24-N02",
+              "scope": "Owner cancellation ignores caller authority before content or analyzer key"
+            },
+            {
+              "id": "F24-N03",
+              "scope": "One pending native owner modal stays busy and refuses a second review without reading"
+            },
+            {
+              "id": "F24-N04",
+              "scope": "Saved maps decode escaped embedded source, JS and renamed copies while public generated assets remain useful"
+            },
+            {
+              "id": "F24-N05",
+              "scope": "Artifact report and canonical exposure ledger contain only keyed metadata, no values or filenames"
+            },
+            {
+              "id": "F24-N06",
+              "scope": "Caller path, ref, content and approvals cannot redirect a fresh artifact review"
+            },
+            {
+              "id": "F24-N07",
+              "scope": "Repeated artifact review preserves keyed ledger identity and increments observations"
+            },
+            {
+              "id": "F24-N08",
+              "scope": "Indexed source map remains visibly partial without following references or discarding supported findings"
+            },
+            {
+              "id": "F24-N09",
+              "scope": "Native ledger export cancellation writes nothing; approved export contains only keyed artifact rows"
+            },
+            {
+              "id": "F24-N10",
+              "scope": "A key change and restoration during pending report creation cannot revive stale display or command output"
+            },
+            {
+              "id": "F24-N11",
+              "scope": "Disable and reenable during the native owner modal irreversibly withdraws pending review"
+            },
+            {
+              "id": "F24-N12",
+              "scope": "Owner disable blocks review and native machine scope rejects a repository override"
+            },
+            {
+              "id": "F24-N13",
+              "scope": "Withdrawal while a native metadata document awaits prevents stale display and return"
+            },
+            {
+              "id": "F24-N14",
+              "scope": "Actual reviewed public snapshot preserves public JS and releases only redacted generated JS with matching manifest hashes"
+            },
+            {
+              "id": "F24-N15",
+              "scope": "Source-map release is withheld before any public output folder is created"
+            },
+            {
+              "id": "F24-N16",
+              "scope": "SourceMappingURL-bearing generated JS remains withheld from publication"
+            },
+            {
+              "id": "F24-N17",
+              "scope": "The artifact machine flag withdraws publication at admission without a new public output"
+            },
+            {
+              "id": "F24-N18",
+              "scope": "Artifact disable and reenable during actual publication approval revokes the one-shot public plan"
+            },
+            {
+              "id": "F24-N19",
+              "scope": "Cancelling actual publication leaves every output and saved original unchanged"
+            },
+            {
+              "id": "F24-N20",
+              "scope": "Artifact findings confer no current-file vault authority or automatic original cleanup"
+            },
+            {
+              "id": "F24-N21",
+              "scope": "An outside hardlink is withheld and retained, and exact original hashes plus keyed rows form the restart basis"
+            }
+          ]
+        },
+        {
+          "phase": "restart",
+          "checks": 4,
+          "originalResult": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-artifact-native-20261104T071607Z-1e53d3ce/restart-results.json",
+            "bytes": 3885,
+            "sha256": "a7f51e29d9a01d23f1df49dd34eeb97778775494d89fe31f35e09ae482ff7473"
+          },
+          "observations": [
+            {
+              "id": "F24-N01",
+              "scope": "Restart reuses persisted key and keyed ledger without startup content, documents or new key stores"
+            },
+            {
+              "id": "F24-N02",
+              "scope": "Restart cancellation still requires native owner consent before artifact content or fresh authority"
+            },
+            {
+              "id": "F24-N03",
+              "scope": "Fresh restart review reestablishes stable keyed artifact findings and preserves unsupported-map partial scope"
+            },
+            {
+              "id": "F24-N04",
+              "scope": "Restart publication requires a fresh owner decision and still produces verified canary-free output"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "streaming-output",
+      "assertions": 13,
+      "driver": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/prebuilt-native-hosts-05/lite-streaming-output-host.js",
+        "bytes": 12789,
+        "sha256": "25f981d467639de9e910e9765e71ca9e13f630cd9062cfd08c96d8ad4d1e9f9d"
+      },
+      "phases": [
+        {
+          "phase": "single",
+          "checks": 13,
+          "originalResult": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-streaming-output-native-20261104T071745Z-9a0a3217/single-results.json",
+            "bytes": 5557,
+            "sha256": "7d81bf3da40003e30d3636bf30f22df0b94faf367bdc39015bc6a379398de3ff"
+          },
+          "observations": [
+            {
+              "id": "F08-H00",
+              "scope": "Actual packaged runtime activates and registers the production test command."
+            },
+            {
+              "id": "F08-S01",
+              "scope": "Public stdout and stderr remain usable after completed stream filtering."
+            },
+            {
+              "id": "F08-S02",
+              "scope": "A raw registered value split over chunks is redacted."
+            },
+            {
+              "id": "F08-S03",
+              "scope": "A registered encoded value split over chunks is redacted."
+            },
+            {
+              "id": "F08-S04",
+              "scope": "UTF-8 scalar bytes split across chunks remain recognized."
+            },
+            {
+              "id": "F08-S05",
+              "scope": "ANSI SGR insertion and split sequences are removed before matching."
+            },
+            {
+              "id": "F08-S06",
+              "scope": "OSC payloads never reach the released plain-text output."
+            },
+            {
+              "id": "F08-S07",
+              "scope": "Nonzero process exit retains sanitized public output and status."
+            },
+            {
+              "id": "F08-S08",
+              "scope": "Incomplete final UTF-8 withholds all output; incomplete controls have separate unit coverage."
+            },
+            {
+              "id": "F08-S09",
+              "scope": "Oversized combined output is withheld without a raw fallback."
+            },
+            {
+              "id": "F08-S10",
+              "scope": "Fresh sequential operations retain separate private states; interleaved instances have separate unit coverage."
+            },
+            {
+              "id": "F08-H11",
+              "scope": "Machine flag withdrawal makes the production seam WITHHELD with pass=false and safe metadata only."
+            },
+            {
+              "id": "F08-H12",
+              "scope": "Re-enabling the machine flag restores all ten real singleton cases in a fresh invocation."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vault-runtime",
+      "assertions": 12,
+      "driver": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/prebuilt-native-hosts-05/lite-vault-runtime-host.js",
+        "bytes": 27544,
+        "sha256": "79eadfbe075cfee1f4e2afd46ef9b60fdbb9c59c68b5ade4e2558fb8d46ac661"
+      },
+      "phases": [
+        {
+          "phase": "single",
+          "checks": 12,
+          "originalResult": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-vault-runtime-native-20261104T071837Z-ed8e0445/single-results.json",
+            "bytes": 5641,
+            "sha256": "c7e8b19228734f9add668fd8e3ff6e799013da26ce9a5098a44dee655194de83"
+          },
+          "observations": [
+            {
+              "id": "F09-H01",
+              "scope": "Actual packaged native activation, registered commands and task provider are present in the owned isolated profile."
+            },
+            {
+              "id": "F09-H02",
+              "scope": "Native owner configuration cancellation stores no descriptor and starts no application."
+            },
+            {
+              "id": "F09-H03",
+              "scope": "Existing F06 native migration creates real SecretStorage-backed ciphertext and on-disk placeholders without source TextDocuments."
+            },
+            {
+              "id": "F09-H04",
+              "scope": "Native setup stores strict public descriptor metadata selecting only DATABASE_URL with literal public arguments."
+            },
+            {
+              "id": "F09-H05",
+              "scope": "VS Code fetchTasks invokes the actual provider and returns ID-only CustomExecution tasks without process/env options."
+            },
+            {
+              "id": "F09-H06",
+              "scope": "Fresh owner run cancellation completes the actual task without spawning an owned job."
+            },
+            {
+              "id": "F09-H07",
+              "scope": "Actual registered task injects a fake selected value, excludes unselected/ambient values and releases only finalized masked output."
+            },
+            {
+              "id": "F09-H08",
+              "scope": "An actual provider task preserves natural nonzero exit through native task completion."
+            },
+            {
+              "id": "F09-H09",
+              "scope": "An actual inline debug session injects the selected value, masks output and rejects source evaluation capabilities."
+            },
+            {
+              "id": "F09-H10",
+              "scope": "Native terminate acknowledges cooperative stop while the finite app still lives and emits termination only after actual close."
+            },
+            {
+              "id": "F09-H11",
+              "scope": "Machine withdrawal stops an owned finite task, withholds pending output, blocks setup and preserves ciphertext and saved restrictions."
+            },
+            {
+              "id": "F09-H12",
+              "scope": "Managed safe read and status retain masking and value-free metadata after native task/debug lifecycles; no original source document opens."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ps51",
+      "assertions": 19,
+      "driver": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/prebuilt-native-hosts-05/lite-ps51-host.js",
+        "bytes": 41881,
+        "sha256": "4ace212abaa62e358203f62a959751484f70f2ff596c3fd7601a3d3f35054a78"
+      },
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 16,
+          "originalResult": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-ps51-native-20261104T071941Z-8fc518b2/primary-results.json",
+            "bytes": 6511,
+            "sha256": "d56b4cdba56198802b1222a3155c2b80dc41483cfbc61928be5499020564b762"
+          },
+          "observations": [
+            {
+              "id": "F10-H01",
+              "scope": "Packaged native activation contributes the checked profile, machine flag and five registered commands."
+            },
+            {
+              "id": "F10-H02",
+              "scope": "Native private profile diff cancellation changes no setting or receipt."
+            },
+            {
+              "id": "F10-H03",
+              "scope": "Native configure persists reviewed project-only profile, preserving unrelated workspace settings."
+            },
+            {
+              "id": "F10-H04",
+              "scope": "The captured actual registered profile callback returns ExtensionTerminalOptions used by a real native terminal."
+            },
+            {
+              "id": "F10-H05",
+              "scope": "Actual installed finite PS5.1 returns version, location, date and public directory names through the native PTY and completed registered output filter."
+            },
+            {
+              "id": "F10-H06",
+              "scope": "Unsupported whole input and hidden native command arguments are refused without raw echo or caller command execution."
+            },
+            {
+              "id": "F10-H07",
+              "scope": "Ordinary file consent denial withholds; fresh native one-time approval returns only the ordinary safe text."
+            },
+            {
+              "id": "F10-H08",
+              "scope": "Actual vault migration plus checked file/env routes expose variable names and masks without original TextDocuments."
+            },
+            {
+              "id": "F10-H09",
+              "scope": "Actual PS worker output containing both synthetic registered values is masked before native terminal publication."
+            },
+            {
+              "id": "F10-H10",
+              "scope": "Approved head/tail/literal-search and reviewed exclusive copy use the actual safe reader and public results."
+            },
+            {
+              "id": "F10-H11",
+              "scope": "Pending native safe-read approval revoked by Ctrl+C remains withheld after the scripted owner eventually approves."
+            },
+            {
+              "id": "F10-H12",
+              "scope": "Cancellation of actual finite PS sleep retains live ownership until natural completion and withholds output."
+            },
+            {
+              "id": "F10-H13",
+              "scope": "Machine withdrawal during actual finite PS sleep withholds, blocks admission and preserves ciphertext and source."
+            },
+            {
+              "id": "F10-H14",
+              "scope": "Actual affected F09 native CustomExecution task still injects only selected fake value and masks completed output."
+            },
+            {
+              "id": "F10-H15",
+              "scope": "Native profile restore removes its receipt, preserves unrelated settings and leaves managed safe reads/no-original-doc behavior intact."
+            },
+            {
+              "id": "F10-H16",
+              "scope": "Actual pinned Git through the checked PS worker reports staged-only unborn-index metadata and excludes unstaged content/untracked filenames."
+            }
+          ]
+        },
+        {
+          "phase": "restart",
+          "checks": 3,
+          "originalResult": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-ps51-native-20261104T071941Z-8fc518b2/restart-results.json",
+            "bytes": 2082,
+            "sha256": "696a9dc7721a017e618c1d59111741b8e66709988b272b08c7c11fd453d7c4b3"
+          },
+          "observations": [
+            {
+              "id": "F10-H17",
+              "scope": "Restart in the same isolated profile reports prior durable rows UNVERIFIED with no currently owned workers."
+            },
+            {
+              "id": "F10-H18",
+              "scope": "Restart retains ciphertext/source bytes and completed profile restoration without original source documents."
+            },
+            {
+              "id": "F10-H19",
+              "scope": "A deliberate fresh native terminal command owns a new worker id, distinct from recovered rows, and completes actual PS5.1."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cmd",
+      "assertions": 19,
+      "driver": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/prebuilt-native-hosts-05/lite-cmd-host.js",
+        "bytes": 36788,
+        "sha256": "1fa4a1f7530492704242083f7c71fe159b50856bde4525808b55ff324809cb86"
+      },
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 16,
+          "originalResult": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-cmd-native-20261104T072137Z-1212ec66/primary-results.json",
+            "bytes": 6108,
+            "sha256": "81fefdb862d54e027a4a5eed7b005ad50bee7465b7c9612f359704b95da4a065"
+          },
+          "observations": [
+            {
+              "id": "F12-H01",
+              "scope": "Packaged native activation contributes the checked profile, machine flag and five registered commands."
+            },
+            {
+              "id": "F12-H02",
+              "scope": "Native private profile diff cancellation changes no setting or receipt."
+            },
+            {
+              "id": "F12-H03",
+              "scope": "Native configure persists reviewed project-only profile, preserving unrelated workspace settings."
+            },
+            {
+              "id": "F12-H04",
+              "scope": "The captured actual registered profile callback returns ExtensionTerminalOptions used by a real native terminal."
+            },
+            {
+              "id": "F12-H05",
+              "scope": "Actual installed finite cmd returns Windows version, location and public directory names through the native PTY and completed registered output filter."
+            },
+            {
+              "id": "F12-H06",
+              "scope": "Unsupported whole input and hidden native command arguments are refused without raw echo or caller command execution."
+            },
+            {
+              "id": "F12-H07",
+              "scope": "Ordinary file consent denial withholds; fresh native one-time approval returns only the ordinary safe text."
+            },
+            {
+              "id": "F12-H08",
+              "scope": "Actual vault migration plus checked file/env routes expose variable names and masks without original TextDocuments."
+            },
+            {
+              "id": "F12-H09",
+              "scope": "Actual cmd worker output containing both synthetic registered values is masked before native terminal publication."
+            },
+            {
+              "id": "F12-H10",
+              "scope": "Approved literal find and reviewed exclusive copy use the actual safe reader and public results."
+            },
+            {
+              "id": "F12-H11",
+              "scope": "Pending native safe-read approval revoked by Ctrl+C remains withheld after the scripted owner eventually approves."
+            },
+            {
+              "id": "F12-H12",
+              "scope": "Cancellation of actual finite cmd wait retains live ownership until natural completion and withholds output."
+            },
+            {
+              "id": "F12-H13",
+              "scope": "Machine withdrawal during actual finite cmd wait withholds, blocks admission and preserves ciphertext and source."
+            },
+            {
+              "id": "F12-H14",
+              "scope": "Actual affected F09 native CustomExecution task still injects only selected fake value and masks completed output."
+            },
+            {
+              "id": "F12-H15",
+              "scope": "Native profile restore removes its receipt, preserves unrelated settings and leaves managed safe reads/no-original-doc behavior intact."
+            },
+            {
+              "id": "F12-H16",
+              "scope": "Git/interpreters/expansions are unsupported whole input and never admit an unchecked worker."
+            }
+          ]
+        },
+        {
+          "phase": "restart",
+          "checks": 3,
+          "originalResult": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-cmd-native-20261104T072137Z-1212ec66/restart-results.json",
+            "bytes": 2079,
+            "sha256": "bbe39d57fed72032fef8c7cf948dea9b5d3d84b495b70e37d15c4081c57af717"
+          },
+          "observations": [
+            {
+              "id": "F12-H17",
+              "scope": "Restart in the same isolated profile reports prior durable rows UNVERIFIED with no currently owned workers."
+            },
+            {
+              "id": "F12-H18",
+              "scope": "Restart retains ciphertext/source bytes and completed profile restoration without original source documents."
+            },
+            {
+              "id": "F12-H19",
+              "scope": "A deliberate fresh native terminal command owns a new worker id, distinct from recovered rows, and completes actual cmd."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gitbash",
+      "assertions": 19,
+      "driver": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/prebuilt-native-hosts-05/lite-gitbash-host.js",
+        "bytes": 42493,
+        "sha256": "525d6efc1523dde42f3c98cf39c63f15e49692611d51777a53af795eca9d65d1"
+      },
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 16,
+          "originalResult": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-gitbash-native-20261104T072312Z-9cfd2058/primary-results.json",
+            "bytes": 6835,
+            "sha256": "903114b815a95b508c566cb02b39cc95afe478117043ff74238ceffd67223f4c"
+          },
+          "observations": [
+            {
+              "id": "F13-H01",
+              "scope": "Packaged native activation contributes the checked profile, machine flag and five registered commands."
+            },
+            {
+              "id": "F13-H02",
+              "scope": "Native private profile diff cancellation changes no setting or receipt."
+            },
+            {
+              "id": "F13-H03",
+              "scope": "Native configure persists reviewed project-only profile, preserving unrelated workspace settings."
+            },
+            {
+              "id": "F13-H04",
+              "scope": "The captured actual registered profile callback returns ExtensionTerminalOptions used by a real native terminal."
+            },
+            {
+              "id": "F13-H05",
+              "scope": "Actual installed finite Git Bash returns reviewed version, Windows location and public directory names through the native PTY and completed registered output filter."
+            },
+            {
+              "id": "F13-H06",
+              "scope": "Unsupported whole input and hidden native command arguments are refused without raw echo or caller command execution."
+            },
+            {
+              "id": "F13-H07",
+              "scope": "Ordinary file consent denial withholds; fresh native one-time approval returns only the ordinary safe text."
+            },
+            {
+              "id": "F13-H08",
+              "scope": "Actual vault migration plus checked file/env routes expose variable names and masks without original TextDocuments."
+            },
+            {
+              "id": "F13-H09",
+              "scope": "Actual Bash stdin output containing three registered values and encoded forms is masked before native terminal publication."
+            },
+            {
+              "id": "F13-H10",
+              "scope": "Approved head/tail/literal-search and reviewed exclusive copy use the actual safe reader and public results."
+            },
+            {
+              "id": "F13-H11",
+              "scope": "Pending native safe-read approval revoked by Ctrl+C remains withheld after the scripted owner eventually approves."
+            },
+            {
+              "id": "F13-H12",
+              "scope": "Cancellation of actual finite PS sleep retains live ownership until natural completion and withholds output."
+            },
+            {
+              "id": "F13-H13",
+              "scope": "Machine withdrawal during actual finite PS sleep withholds, blocks admission and preserves ciphertext and source."
+            },
+            {
+              "id": "F13-H14",
+              "scope": "Actual affected F09 native CustomExecution task still injects only selected fake value and masks completed output."
+            },
+            {
+              "id": "F13-H15",
+              "scope": "Native profile restore removes its receipt, preserves unrelated settings and leaves managed safe reads/no-original-doc behavior intact."
+            },
+            {
+              "id": "F13-H16",
+              "scope": "Actual pinned Git through the shared checked Git backend reports staged-only unborn-index metadata and excludes unstaged content/untracked filenames."
+            }
+          ]
+        },
+        {
+          "phase": "restart",
+          "checks": 3,
+          "originalResult": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-gitbash-native-20261104T072312Z-9cfd2058/restart-results.json",
+            "bytes": 2093,
+            "sha256": "a594be0e78b5d1f3da03806c404a0b509740c47064c662ea8c82f27b6c4e9796"
+          },
+          "observations": [
+            {
+              "id": "F13-H17",
+              "scope": "Restart in the same isolated profile reports prior durable rows UNVERIFIED with no currently owned workers."
+            },
+            {
+              "id": "F13-H18",
+              "scope": "Restart retains ciphertext/source bytes and completed profile restoration without original source documents."
+            },
+            {
+              "id": "F13-H19",
+              "scope": "A deliberate fresh native terminal command owns a new worker id, distinct from recovered rows, and completes actual Git Bash."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "history",
+      "assertions": 25,
+      "driver": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/prebuilt-native-hosts-05/lite-history-host.js",
+        "bytes": 40585,
+        "sha256": "a10fcf723b1edeb480572c1339cecbcd2ef2baa34c0892cb43ed3b057735efd5"
+      },
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 21,
+          "originalResult": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-history-native-20261104T072443Z-36818439/primary-results.json",
+            "bytes": 37269,
+            "sha256": "3f5ced823ae1c046ba1f51c23cac95fac73f8efa32b7bb660f98aa9da8e0b382"
+          },
+          "observations": [
+            {
+              "id": "F23-N01",
+              "scope": "Exact runtime, two native commands and no startup history body, child, document or analyzer key"
+            },
+            {
+              "id": "F23-N02",
+              "scope": "Native history cancellation rejects caller approval, root and ref before key or children"
+            },
+            {
+              "id": "F23-N03",
+              "scope": "One pending real owner modal exposes busy status and refuses a second review without a child"
+            },
+            {
+              "id": "F23-N04",
+              "scope": "Actual pinned Git unborn control is a bounded zero-commit analysis with closed native children"
+            },
+            {
+              "id": "F23-N05",
+              "scope": "Actual one-commit public control reports no findings and preserves every repository byte"
+            },
+            {
+              "id": "F23-N06",
+              "scope": "Synthetic secret is committed, renamed and deleted while the public tip remains clean"
+            },
+            {
+              "id": "F23-N07",
+              "scope": "Actual reachable history detects deleted and renamed credentials once through blob deduplication"
+            },
+            {
+              "id": "F23-N08",
+              "scope": "Current native report is JSON metadata without originals, author, commit message, paths or values"
+            },
+            {
+              "id": "F23-N09",
+              "scope": "Canonical possible-exposure ledger records exactly one keyed historical finding"
+            },
+            {
+              "id": "F23-N10",
+              "scope": "A fresh actual history review keeps stable keyed identity while incrementing canonical observations"
+            },
+            {
+              "id": "F23-N11",
+              "scope": "Public path, revision, text and approval arguments cannot redirect actual repository review"
+            },
+            {
+              "id": "F23-N12",
+              "scope": "Historical findings grant no canonical current-file vault mutation authority"
+            },
+            {
+              "id": "F23-N13",
+              "scope": "Metadata export cancellation leaves no export file"
+            },
+            {
+              "id": "F23-N14",
+              "scope": "Reviewed actual export contains one keyed row and no original history or credentials"
+            },
+            {
+              "id": "F23-N15",
+              "scope": "Native historical guidance offers only manual rotation and owner-coordinated removal"
+            },
+            {
+              "id": "F23-N16",
+              "scope": "Native finite grammar, isolated environment and actual close plus both EOFs hold for every history child"
+            },
+            {
+              "id": "F23-N17",
+              "scope": "Disable then reenable during an owner modal irreversibly withdraws that pending history approval"
+            },
+            {
+              "id": "F23-N18",
+              "scope": "Owner disable prevents history children, analyzer-key writes, ledger changes and documents"
+            },
+            {
+              "id": "F23-N19",
+              "scope": "Native machine scope rejects a repository override while owner disable remains effective"
+            },
+            {
+              "id": "F23-N20",
+              "scope": "Disable then reenable after native metadata document creation suppresses stale display"
+            },
+            {
+              "id": "F23-N21",
+              "scope": "Reenabled status preserves exact keyed restart metadata without history or vault mutation"
+            }
+          ]
+        },
+        {
+          "phase": "restart",
+          "checks": 4,
+          "originalResult": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-history-native-20261104T072443Z-36818439/restart-results.json",
+            "bytes": 7144,
+            "sha256": "028a1c79f22ddebbbddd2e49d2fbc4c32593dbd4b99b99bb83398aa255c9f6d6"
+          },
+          "observations": [
+            {
+              "id": "F23-N01",
+              "scope": "Restart preserves keyed metadata and existing key without startup history, child, document or key writes"
+            },
+            {
+              "id": "F23-N02",
+              "scope": "Restart cancellation still requires native owner consent before fresh history authority"
+            },
+            {
+              "id": "F23-N03",
+              "scope": "Restart carries no stale current-file vault authority from historical findings"
+            },
+            {
+              "id": "F23-N04",
+              "scope": "Fresh actual native restart review reestablishes one keyed historical finding without rewriting history or replacing its key"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mcp",
+      "assertions": 25,
+      "driver": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/prebuilt-native-hosts-05/lite-mcp-host.js",
+        "bytes": 419525,
+        "sha256": "829d01302e7b859ac77bfbc1f40cb866fd40be95981ace5924c63e407cfcbc65"
+      },
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 21,
+          "originalResult": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-mcp-native-20261104T072651Z-08a684de/primary-results.json",
+            "bytes": 16542,
+            "sha256": "ca75f27591e867c287bdc2e88d97fde918cce7c54e7afab8cd3d5379a8e17f52"
+          },
+          "observations": [
+            {
+              "id": "F22H-N01",
+              "scope": "Exact runtime, family registration and no startup source read/key"
+            },
+            {
+              "id": "F22H-N02",
+              "scope": "File picker cancellation ignores caller approval and path"
+            },
+            {
+              "id": "F22H-N03",
+              "scope": "Content-review cancellation precedes private capture/key"
+            },
+            {
+              "id": "F22H-N04",
+              "scope": "Selected Mcp static and multiline findings are metadata-only"
+            },
+            {
+              "id": "F22H-N05",
+              "scope": "Actual family discovery admits JSONC key/URL, TOML adjacent argument, password-input default and uppercase/public reference controls"
+            },
+            {
+              "id": "F22H-N06",
+              "scope": "Possible-exposure ledger contains four keyed rows without originals"
+            },
+            {
+              "id": "F22H-N07",
+              "scope": "Unsupported selected format is explicit and grants no scan"
+            },
+            {
+              "id": "F22H-N08",
+              "scope": "Malformed Mcp withholds without partial records then rebinds fresh source"
+            },
+            {
+              "id": "F22H-N09",
+              "scope": "Migration cancellation leaves exact original unchanged"
+            },
+            {
+              "id": "F22H-N10",
+              "scope": "Reviewed canonical Mcp migration is valid with no env-file output"
+            },
+            {
+              "id": "F22H-N11",
+              "scope": "Actual generic per-entry command refuses checkpoint-only Mcp"
+            },
+            {
+              "id": "F22H-N12",
+              "scope": "Disclosure cancellation keeps Mcp masked"
+            },
+            {
+              "id": "F22H-N13",
+              "scope": "Checkpoint disclosure restores exact multiline syntax and saved deny"
+            },
+            {
+              "id": "F22H-N14",
+              "scope": "Source drift invalidates pending native content consent"
+            },
+            {
+              "id": "F22H-N15",
+              "scope": "Metadata export cancellation creates no file"
+            },
+            {
+              "id": "F22H-N16",
+              "scope": "Reviewed exposure export has keyed metadata and no source names"
+            },
+            {
+              "id": "F22H-N17",
+              "scope": "Actual TOML adjacent secret argument migration preserves public args and checkpoint-only exact disclosure"
+            },
+            {
+              "id": "F22H-N18",
+              "scope": "Actual password-input default migration preserves its reference and never applies copied policy weakening"
+            },
+            {
+              "id": "F22H-N19",
+              "scope": "Family flag withdrawal invalidates pending native content review"
+            },
+            {
+              "id": "F22H-N20",
+              "scope": "Late disclosure guard withdrawal retains masked Mcp and checkpoint"
+            },
+            {
+              "id": "F22H-N21",
+              "scope": "Reenable preserves masked restart recovery without stale authority"
+            }
+          ]
+        },
+        {
+          "phase": "restart",
+          "checks": 4,
+          "originalResult": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-mcp-native-20261104T072651Z-08a684de/restart-results.json",
+            "bytes": 3380,
+            "sha256": "e54e45afcc2d80758b05a2c8769232f963cad053ec3f56bdfb6a3e5f697477b0"
+          },
+          "observations": [
+            {
+              "id": "F22H-N01",
+              "scope": "Restart reuses keys/ledger and keeps exact masked source without startup read"
+            },
+            {
+              "id": "F22H-N02",
+              "scope": "No stale family finding authority survives restart"
+            },
+            {
+              "id": "F22H-N03",
+              "scope": "Actual canonical encrypted backup command recovers Mcp after restart disclosure"
+            },
+            {
+              "id": "F22H-N04",
+              "scope": "Fresh native review reestablishes two metadata findings after explicit recovery"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "editor",
+      "assertions": 25,
+      "driver": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/prebuilt-native-hosts-05/lite-editor-host.js",
+        "bytes": 408042,
+        "sha256": "e3cbb70a89ffee3e2611c4d98e378a9824b19210c3bc0e7e8dbb48ae845a0510"
+      },
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 21,
+          "originalResult": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-editor-20261104T072900Z-b766cfad/primary-results.json",
+            "bytes": 17031,
+            "sha256": "e1f84187af486407e3394d70fb47431e79da62f7f37f5ac9434b68f8cf956124"
+          },
+          "observations": [
+            {
+              "id": "F22G-N01",
+              "scope": "Exact runtime, family registration and no startup source read/key"
+            },
+            {
+              "id": "F22G-N02",
+              "scope": "File picker cancellation ignores caller approval and path"
+            },
+            {
+              "id": "F22G-N03",
+              "scope": "Content-review cancellation precedes private capture/key"
+            },
+            {
+              "id": "F22G-N04",
+              "scope": "Selected Editor static and multiline findings are metadata-only"
+            },
+            {
+              "id": "F22G-N05",
+              "scope": "Actual family discovery admits multiline launch key/URL/comment, task argument, settings URL/Authorization and uppercase/public color-map controls"
+            },
+            {
+              "id": "F22G-N06",
+              "scope": "Possible-exposure ledger contains four keyed rows without originals"
+            },
+            {
+              "id": "F22G-N07",
+              "scope": "Unsupported selected format is explicit and grants no scan"
+            },
+            {
+              "id": "F22G-N08",
+              "scope": "Malformed Editor withholds without partial records then rebinds fresh source"
+            },
+            {
+              "id": "F22G-N09",
+              "scope": "Migration cancellation leaves exact original unchanged"
+            },
+            {
+              "id": "F22G-N10",
+              "scope": "Reviewed canonical Editor migration is valid with no env-file output"
+            },
+            {
+              "id": "F22G-N11",
+              "scope": "Actual generic per-entry command refuses checkpoint-only Editor"
+            },
+            {
+              "id": "F22G-N12",
+              "scope": "Disclosure cancellation keeps Editor masked"
+            },
+            {
+              "id": "F22G-N13",
+              "scope": "Checkpoint disclosure restores exact multiline syntax and saved deny"
+            },
+            {
+              "id": "F22G-N14",
+              "scope": "Source drift invalidates pending native content consent"
+            },
+            {
+              "id": "F22G-N15",
+              "scope": "Metadata export cancellation creates no file"
+            },
+            {
+              "id": "F22G-N16",
+              "scope": "Reviewed exposure export has keyed metadata and no source names"
+            },
+            {
+              "id": "F22G-N17",
+              "scope": "Actual task adjacent secret argument migration preserves public args and checkpoint-only exact disclosure"
+            },
+            {
+              "id": "F22G-N18",
+              "scope": "Actual saved settings URL migration never applies attempted repository policy weakening"
+            },
+            {
+              "id": "F22G-N19",
+              "scope": "Family flag withdrawal invalidates pending native content review"
+            },
+            {
+              "id": "F22G-N20",
+              "scope": "Late disclosure guard withdrawal retains masked Editor and checkpoint"
+            },
+            {
+              "id": "F22G-N21",
+              "scope": "Reenable preserves masked restart recovery without stale authority"
+            }
+          ]
+        },
+        {
+          "phase": "restart",
+          "checks": 4,
+          "originalResult": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-editor-20261104T072900Z-b766cfad/restart-results.json",
+            "bytes": 3219,
+            "sha256": "347d6fb5fd0ce3200f6993a7498ae2cae9e2e615bdc9dc547ae9f0f6e28b3f74"
+          },
+          "observations": [
+            {
+              "id": "F22G-N01",
+              "scope": "Restart reuses keys/ledger and keeps exact masked source without startup read"
+            },
+            {
+              "id": "F22G-N02",
+              "scope": "No stale family finding authority survives restart"
+            },
+            {
+              "id": "F22G-N03",
+              "scope": "Actual canonical encrypted backup command recovers Editor after restart disclosure"
+            },
+            {
+              "id": "F22G-N04",
+              "scope": "Fresh native review reestablishes two metadata findings after explicit recovery"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ci",
+      "assertions": 25,
+      "driver": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/prebuilt-native-hosts-05/lite-ci-host.js",
+        "bytes": 638428,
+        "sha256": "9391d251d03b06476dcdb21c0169c0ccad29b827dcc7ceef2eb25804a7c30b51"
+      },
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 21,
+          "originalResult": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-ci-20261104T073041Z-fb9395bb/primary-results.json",
+            "bytes": 15961,
+            "sha256": "2143e34fba3f076bd29130d1f1c3f83a65c082def9d03ba22526c407672ed529"
+          },
+          "observations": [
+            {
+              "id": "F22F-N01",
+              "scope": "Exact runtime, family registration and no startup source read/key"
+            },
+            {
+              "id": "F22F-N02",
+              "scope": "File picker cancellation ignores caller approval and path"
+            },
+            {
+              "id": "F22F-N03",
+              "scope": "Content-review cancellation precedes private capture/key"
+            },
+            {
+              "id": "F22F-N04",
+              "scope": "Selected Ci static and multiline findings are metadata-only"
+            },
+            {
+              "id": "F22F-N05",
+              "scope": "Actual family discovery admits multiline GitHub key/URL, GitLab variables/command credentials and uppercase public CI controls"
+            },
+            {
+              "id": "F22F-N06",
+              "scope": "Possible-exposure ledger contains four keyed rows without originals"
+            },
+            {
+              "id": "F22F-N07",
+              "scope": "Unsupported selected format is explicit and grants no scan"
+            },
+            {
+              "id": "F22F-N08",
+              "scope": "Malformed Ci withholds without partial records then rebinds fresh source"
+            },
+            {
+              "id": "F22F-N09",
+              "scope": "Migration cancellation leaves exact original unchanged"
+            },
+            {
+              "id": "F22F-N10",
+              "scope": "Reviewed canonical Ci migration is valid with no env-file output"
+            },
+            {
+              "id": "F22F-N11",
+              "scope": "Actual generic per-entry command refuses checkpoint-only Ci"
+            },
+            {
+              "id": "F22F-N12",
+              "scope": "Disclosure cancellation keeps Ci masked"
+            },
+            {
+              "id": "F22F-N13",
+              "scope": "Checkpoint disclosure restores exact multiline syntax and saved deny"
+            },
+            {
+              "id": "F22F-N14",
+              "scope": "Source drift invalidates pending native content consent"
+            },
+            {
+              "id": "F22F-N15",
+              "scope": "Metadata export cancellation creates no file"
+            },
+            {
+              "id": "F22F-N16",
+              "scope": "Reviewed exposure export has keyed metadata and no source names"
+            },
+            {
+              "id": "F22F-N17",
+              "scope": "Actual GitLab variables migration keeps public job data and checkpoint-only exact disclosure"
+            },
+            {
+              "id": "F22F-N18",
+              "scope": "Actual CI command credential is masked as one scalar with exact checkpoint disclosure"
+            },
+            {
+              "id": "F22F-N19",
+              "scope": "Family flag withdrawal invalidates pending native content review"
+            },
+            {
+              "id": "F22F-N20",
+              "scope": "Late disclosure guard withdrawal retains masked Ci and checkpoint"
+            },
+            {
+              "id": "F22F-N21",
+              "scope": "Reenable preserves masked restart recovery without stale authority"
+            }
+          ]
+        },
+        {
+          "phase": "restart",
+          "checks": 4,
+          "originalResult": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-ci-20261104T073041Z-fb9395bb/restart-results.json",
+            "bytes": 3156,
+            "sha256": "3ee0b04e165a90e9430289ae5d55536836c38b9925ba1027924cfe260901d86b"
+          },
+          "observations": [
+            {
+              "id": "F22F-N01",
+              "scope": "Restart reuses keys/ledger and keeps exact masked source without startup read"
+            },
+            {
+              "id": "F22F-N02",
+              "scope": "No stale family finding authority survives restart"
+            },
+            {
+              "id": "F22F-N03",
+              "scope": "Actual canonical encrypted backup command recovers Ci after restart disclosure"
+            },
+            {
+              "id": "F22F-N04",
+              "scope": "Fresh native review reestablishes two metadata findings after explicit recovery"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "service-account",
+      "assertions": 25,
+      "driver": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/prebuilt-native-hosts-05/lite-service-account-host.js",
+        "bytes": 374878,
+        "sha256": "c7348717fdfead8fd7d9583d953a470a8da50aad63a3bb99f60211e6f2682f0b"
+      },
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 21,
+          "originalResult": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-service-account-20261104T073219Z-fdd6e2a3/primary-results.json",
+            "bytes": 16737,
+            "sha256": "a0760734de699f32c7553671c26629b2e3c57dc04bd43f6f42720f4f1232d74e"
+          },
+          "observations": [
+            {
+              "id": "F22E-N01",
+              "scope": "Exact runtime, family registration and no startup source read/key"
+            },
+            {
+              "id": "F22E-N02",
+              "scope": "File picker cancellation ignores caller approval and path"
+            },
+            {
+              "id": "F22E-N03",
+              "scope": "Content-review cancellation precedes private capture/key"
+            },
+            {
+              "id": "F22E-N04",
+              "scope": "Selected ServiceAccount static and multiline findings are metadata-only"
+            },
+            {
+              "id": "F22E-N05",
+              "scope": "Actual family discovery admits multiline key/credential URL, authorized-user/nested secrets and uppercase public JSON controls"
+            },
+            {
+              "id": "F22E-N06",
+              "scope": "Possible-exposure ledger contains four keyed rows without originals"
+            },
+            {
+              "id": "F22E-N07",
+              "scope": "Unsupported selected format is explicit and grants no scan"
+            },
+            {
+              "id": "F22E-N08",
+              "scope": "Malformed ServiceAccount withholds without partial records then rebinds fresh source"
+            },
+            {
+              "id": "F22E-N09",
+              "scope": "Migration cancellation leaves exact original unchanged"
+            },
+            {
+              "id": "F22E-N10",
+              "scope": "Reviewed canonical ServiceAccount migration is valid with no env-file output"
+            },
+            {
+              "id": "F22E-N11",
+              "scope": "Actual generic per-entry command refuses checkpoint-only ServiceAccount"
+            },
+            {
+              "id": "F22E-N12",
+              "scope": "Disclosure cancellation keeps ServiceAccount masked"
+            },
+            {
+              "id": "F22E-N13",
+              "scope": "Checkpoint disclosure restores exact multiline syntax and saved deny"
+            },
+            {
+              "id": "F22E-N14",
+              "scope": "Source drift invalidates pending native content consent"
+            },
+            {
+              "id": "F22E-N15",
+              "scope": "Metadata export cancellation creates no file"
+            },
+            {
+              "id": "F22E-N16",
+              "scope": "Reviewed exposure export has keyed metadata and no source names"
+            },
+            {
+              "id": "F22E-N17",
+              "scope": "Actual authorized-user refresh token migration uses checkpoint-only exact disclosure"
+            },
+            {
+              "id": "F22E-N18",
+              "scope": "Actual nested JSON password migration preserves public structure and exact checkpoint disclosure"
+            },
+            {
+              "id": "F22E-N19",
+              "scope": "Family flag withdrawal invalidates pending native content review"
+            },
+            {
+              "id": "F22E-N20",
+              "scope": "Late disclosure guard withdrawal retains masked ServiceAccount and checkpoint"
+            },
+            {
+              "id": "F22E-N21",
+              "scope": "Reenable preserves masked restart recovery without stale authority"
+            }
+          ]
+        },
+        {
+          "phase": "restart",
+          "checks": 4,
+          "originalResult": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-service-account-20261104T073219Z-fdd6e2a3/restart-results.json",
+            "bytes": 3494,
+            "sha256": "89e811a04743e56c2906d084c60d02b334ed24a6d00a9a8e3670978f90f8df33"
+          },
+          "observations": [
+            {
+              "id": "F22E-N01",
+              "scope": "Restart reuses keys/ledger and keeps exact masked source without startup read"
+            },
+            {
+              "id": "F22E-N02",
+              "scope": "No stale family finding authority survives restart"
+            },
+            {
+              "id": "F22E-N03",
+              "scope": "Actual canonical encrypted backup command recovers ServiceAccount after restart disclosure"
+            },
+            {
+              "id": "F22E-N04",
+              "scope": "Fresh native review reestablishes two metadata findings after explicit recovery"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "registry",
+      "assertions": 25,
+      "driver": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/prebuilt-native-hosts-05/lite-registry-host.js",
+        "bytes": 378804,
+        "sha256": "8798c3a07df2770e3f06460105238ff0b65c225fd58ee6013a0fe9d9745c6633"
+      },
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 21,
+          "originalResult": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-registry-20261104T073355Z-5f21c374/primary-results.json",
+            "bytes": 15900,
+            "sha256": "3d81bf9929b020423203e1997d71f1135fb5cf7df1e27a0daafce2cb8a97af04"
+          },
+          "observations": [
+            {
+              "id": "F22D-N01",
+              "scope": "Exact runtime, family registration and no startup source read/key"
+            },
+            {
+              "id": "F22D-N02",
+              "scope": "File picker cancellation ignores caller approval and path"
+            },
+            {
+              "id": "F22D-N03",
+              "scope": "Content-review cancellation precedes private capture/key"
+            },
+            {
+              "id": "F22D-N04",
+              "scope": "Selected Registry static and multiline findings are metadata-only"
+            },
+            {
+              "id": "F22D-N05",
+              "scope": "Actual family discovery admits npm tokens/URLs, pypirc, encoded password and nested uppercase public controls"
+            },
+            {
+              "id": "F22D-N06",
+              "scope": "Possible-exposure ledger contains four keyed rows without originals"
+            },
+            {
+              "id": "F22D-N07",
+              "scope": "Unsupported selected format is explicit and grants no scan"
+            },
+            {
+              "id": "F22D-N08",
+              "scope": "Malformed Registry withholds without partial records then rebinds fresh source"
+            },
+            {
+              "id": "F22D-N09",
+              "scope": "Migration cancellation leaves exact original unchanged"
+            },
+            {
+              "id": "F22D-N10",
+              "scope": "Reviewed canonical Registry migration is valid with no env-file output"
+            },
+            {
+              "id": "F22D-N11",
+              "scope": "Actual generic per-entry command refuses checkpoint-only Registry"
+            },
+            {
+              "id": "F22D-N12",
+              "scope": "Disclosure cancellation keeps Registry masked"
+            },
+            {
+              "id": "F22D-N13",
+              "scope": "Checkpoint disclosure restores exact multiline syntax and saved deny"
+            },
+            {
+              "id": "F22D-N14",
+              "scope": "Source drift invalidates pending native content consent"
+            },
+            {
+              "id": "F22D-N15",
+              "scope": "Metadata export cancellation creates no file"
+            },
+            {
+              "id": "F22D-N16",
+              "scope": "Reviewed exposure export has keyed metadata and no source names"
+            },
+            {
+              "id": "F22D-N17",
+              "scope": "Actual encoded npm password migration keeps canonical markers and checkpoint disclosure"
+            },
+            {
+              "id": "F22D-N18",
+              "scope": "Actual pypirc multiline migration preserves public schema and exact checkpoint disclosure"
+            },
+            {
+              "id": "F22D-N19",
+              "scope": "Family flag withdrawal invalidates pending native content review"
+            },
+            {
+              "id": "F22D-N20",
+              "scope": "Late disclosure guard withdrawal retains masked Registry and checkpoint"
+            },
+            {
+              "id": "F22D-N21",
+              "scope": "Reenable preserves masked restart recovery without stale authority"
+            }
+          ]
+        },
+        {
+          "phase": "restart",
+          "checks": 4,
+          "originalResult": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-registry-20261104T073355Z-5f21c374/restart-results.json",
+            "bytes": 2985,
+            "sha256": "289eb554ab4da410f419fd3b884cb7ddef35f96eb72d5c9ab6a4a675d40cc772"
+          },
+          "observations": [
+            {
+              "id": "F22D-N01",
+              "scope": "Restart reuses keys/ledger and keeps exact masked source without startup read"
+            },
+            {
+              "id": "F22D-N02",
+              "scope": "No stale family finding authority survives restart"
+            },
+            {
+              "id": "F22D-N03",
+              "scope": "Actual canonical encrypted backup command recovers Registry after restart disclosure"
+            },
+            {
+              "id": "F22D-N04",
+              "scope": "Fresh native review reestablishes two metadata findings after explicit recovery"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "terraform",
+      "assertions": 25,
+      "driver": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/prebuilt-native-hosts-05/lite-terraform-host.js",
+        "bytes": 379837,
+        "sha256": "56baeb6b5c28e25691bca0ea9213c186edc2dce83fa815ac3bed323778ce72b5"
+      },
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 21,
+          "originalResult": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-terraform-20261104T073538Z-e6c4f7f4/primary-results.json",
+            "bytes": 15889,
+            "sha256": "362e3eaed3855240c7b43336e6f9564f3b43f4fa5af2a0112c741cb35f744c75"
+          },
+          "observations": [
+            {
+              "id": "F22C-N01",
+              "scope": "Exact runtime, family registration and no startup source read/key"
+            },
+            {
+              "id": "F22C-N02",
+              "scope": "File picker cancellation ignores caller approval and path"
+            },
+            {
+              "id": "F22C-N03",
+              "scope": "Content-review cancellation precedes private capture/key"
+            },
+            {
+              "id": "F22C-N04",
+              "scope": "Selected Terraform static and multiline findings are metadata-only"
+            },
+            {
+              "id": "F22C-N05",
+              "scope": "Actual family discovery admits native HCL, JSON, uppercase extension and nested public control"
+            },
+            {
+              "id": "F22C-N06",
+              "scope": "Possible-exposure ledger contains four keyed rows without originals"
+            },
+            {
+              "id": "F22C-N07",
+              "scope": "Unsupported selected format is explicit and grants no scan"
+            },
+            {
+              "id": "F22C-N08",
+              "scope": "Malformed Terraform withholds without partial records then rebinds fresh source"
+            },
+            {
+              "id": "F22C-N09",
+              "scope": "Migration cancellation leaves exact original unchanged"
+            },
+            {
+              "id": "F22C-N10",
+              "scope": "Reviewed canonical Terraform migration is valid with no env-file output"
+            },
+            {
+              "id": "F22C-N11",
+              "scope": "Actual generic per-entry command refuses checkpoint-only Terraform"
+            },
+            {
+              "id": "F22C-N12",
+              "scope": "Disclosure cancellation keeps Terraform masked"
+            },
+            {
+              "id": "F22C-N13",
+              "scope": "Checkpoint disclosure restores exact multiline syntax and saved deny"
+            },
+            {
+              "id": "F22C-N14",
+              "scope": "Source drift invalidates pending native content consent"
+            },
+            {
+              "id": "F22C-N15",
+              "scope": "Metadata export cancellation creates no file"
+            },
+            {
+              "id": "F22C-N16",
+              "scope": "Reviewed exposure export has keyed metadata and no source names"
+            },
+            {
+              "id": "F22C-N17",
+              "scope": "Actual tfvars JSON migration keeps valid markers and exact checkpoint disclosure"
+            },
+            {
+              "id": "F22C-N18",
+              "scope": "Actual provider HCL migration requires checkpoint disclosure and restores exact bytes"
+            },
+            {
+              "id": "F22C-N19",
+              "scope": "Family flag withdrawal invalidates pending native content review"
+            },
+            {
+              "id": "F22C-N20",
+              "scope": "Late disclosure guard withdrawal retains masked Terraform and checkpoint"
+            },
+            {
+              "id": "F22C-N21",
+              "scope": "Reenable preserves masked restart recovery without stale authority"
+            }
+          ]
+        },
+        {
+          "phase": "restart",
+          "checks": 4,
+          "originalResult": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-terraform-20261104T073538Z-e6c4f7f4/restart-results.json",
+            "bytes": 3440,
+            "sha256": "265906658f1f40cf05f0b69c4f26b8a7fd487be9d8a6b768bb6fda585629806c"
+          },
+          "observations": [
+            {
+              "id": "F22C-N01",
+              "scope": "Restart reuses keys/ledger and keeps exact masked source without startup read"
+            },
+            {
+              "id": "F22C-N02",
+              "scope": "No stale family finding authority survives restart"
+            },
+            {
+              "id": "F22C-N03",
+              "scope": "Actual canonical encrypted backup command recovers Terraform after restart disclosure"
+            },
+            {
+              "id": "F22C-N04",
+              "scope": "Fresh native review reestablishes two metadata findings after explicit recovery"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "container",
+      "assertions": 25,
+      "driver": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/prebuilt-native-hosts-05/lite-container-host.js",
+        "bytes": 288133,
+        "sha256": "c7b475a18a921ffeebc0a2f315b14cdee92b9a06264c79ec23229b794794415d"
+      },
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 21,
+          "originalResult": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-container-20261104T073730Z-f0a2df29/primary-results.json",
+            "bytes": 15190,
+            "sha256": "2087e1945963242e9aaf12f08bcbbf10354cb84054cd58b45f0a3856e7aaecea"
+          },
+          "observations": [
+            {
+              "id": "F22B-N01",
+              "scope": "Exact runtime, family registration and no startup source read/key"
+            },
+            {
+              "id": "F22B-N02",
+              "scope": "File picker cancellation ignores caller approval and path"
+            },
+            {
+              "id": "F22B-N03",
+              "scope": "Content-review cancellation precedes private capture/key"
+            },
+            {
+              "id": "F22B-N04",
+              "scope": "Selected Compose static and multiline findings are metadata-only"
+            },
+            {
+              "id": "F22B-N05",
+              "scope": "Actual family discovery admits Docker, Secret, uppercase YAML and nested k8s public control"
+            },
+            {
+              "id": "F22B-N06",
+              "scope": "Possible-exposure ledger contains four keyed rows without originals"
+            },
+            {
+              "id": "F22B-N07",
+              "scope": "Unsupported selected format is explicit and grants no scan"
+            },
+            {
+              "id": "F22B-N08",
+              "scope": "Malformed YAML withholds without partial records then rebinds fresh source"
+            },
+            {
+              "id": "F22B-N09",
+              "scope": "Migration cancellation leaves exact original unchanged"
+            },
+            {
+              "id": "F22B-N10",
+              "scope": "Reviewed canonical YAML migration is valid with no env-file output"
+            },
+            {
+              "id": "F22B-N11",
+              "scope": "Actual generic per-entry command refuses checkpoint-only YAML"
+            },
+            {
+              "id": "F22B-N12",
+              "scope": "Disclosure cancellation keeps YAML masked"
+            },
+            {
+              "id": "F22B-N13",
+              "scope": "Checkpoint disclosure restores exact multiline syntax and saved deny"
+            },
+            {
+              "id": "F22B-N14",
+              "scope": "Source drift invalidates pending native content consent"
+            },
+            {
+              "id": "F22B-N15",
+              "scope": "Metadata export cancellation creates no file"
+            },
+            {
+              "id": "F22B-N16",
+              "scope": "Reviewed exposure export has keyed metadata and no source names"
+            },
+            {
+              "id": "F22B-N17",
+              "scope": "Actual Secret data migration keeps valid base64 markers and restores exact bytes"
+            },
+            {
+              "id": "F22B-N18",
+              "scope": "Actual Docker ENV migration retains exact per-entry disclosure restore"
+            },
+            {
+              "id": "F22B-N19",
+              "scope": "Family flag withdrawal invalidates pending native content review"
+            },
+            {
+              "id": "F22B-N20",
+              "scope": "Late disclosure guard withdrawal retains masked YAML and checkpoint"
+            },
+            {
+              "id": "F22B-N21",
+              "scope": "Reenable preserves masked restart recovery without stale authority"
+            }
+          ]
+        },
+        {
+          "phase": "restart",
+          "checks": 4,
+          "originalResult": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-container-20261104T073730Z-f0a2df29/restart-results.json",
+            "bytes": 3210,
+            "sha256": "1105e5df7515cf13fd98cc0fdb6f7c9150cf77d05c53b7d04993860e7b225d1d"
+          },
+          "observations": [
+            {
+              "id": "F22B-N01",
+              "scope": "Restart reuses keys/ledger and keeps exact masked source without startup read"
+            },
+            {
+              "id": "F22B-N02",
+              "scope": "No stale family finding authority survives restart"
+            },
+            {
+              "id": "F22B-N03",
+              "scope": "Actual canonical encrypted backup command recovers YAML after restart disclosure"
+            },
+            {
+              "id": "F22B-N04",
+              "scope": "Fresh native review reestablishes two metadata findings after explicit recovery"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "source",
+      "assertions": 21,
+      "driver": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/prebuilt-native-hosts-05/lite-source-host.js",
+        "bytes": 21099,
+        "sha256": "05f022d000f2842765e7791a6ce72ea055c11c4324a90d4d8336bd2b0db3972b"
+      },
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 18,
+          "originalResult": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-source-20261104T073932Z-a73ff442/primary-results.json",
+            "bytes": 10443,
+            "sha256": "d2776a51e3117e5ecaa2504217563f0c57f748b901770a3c33961131f17d0d82"
+          },
+          "observations": [
+            {
+              "id": "F22A-N01",
+              "scope": "Exact runtime, source registration and no startup read/key"
+            },
+            {
+              "id": "F22A-N02",
+              "scope": "File picker cancellation ignores caller file and approval"
+            },
+            {
+              "id": "F22A-N03",
+              "scope": "Native content-review cancellation precedes key and originals"
+            },
+            {
+              "id": "F22A-N04",
+              "scope": "Selected escaped TypeScript source and metadata-only report"
+            },
+            {
+              "id": "F22A-N05",
+              "scope": "Source-specific workspace discovery with public JSX control"
+            },
+            {
+              "id": "F22A-N06",
+              "scope": "Shared possible-exposure ledger has keyed references only"
+            },
+            {
+              "id": "F22A-N07",
+              "scope": "Unsupported language remains explicitly unsupported"
+            },
+            {
+              "id": "F22A-N08",
+              "scope": "Malformed source withholds rather than reporting a clean scan"
+            },
+            {
+              "id": "F22A-N09",
+              "scope": "Native vault cancellation preserves exact original source"
+            },
+            {
+              "id": "F22A-N10",
+              "scope": "Reviewed canonical vault replaces literals with no env-file output"
+            },
+            {
+              "id": "F22A-N11",
+              "scope": "Vault action records only possible-exposure metadata"
+            },
+            {
+              "id": "F22A-N12",
+              "scope": "Disclosure cancellation keeps source masked"
+            },
+            {
+              "id": "F22A-N13",
+              "scope": "Explicit disclosure restores exact escapes and retains saved deny"
+            },
+            {
+              "id": "F22A-N14",
+              "scope": "Source drift invalidates pending native consent"
+            },
+            {
+              "id": "F22A-N15",
+              "scope": "Metadata export cancellation creates no file"
+            },
+            {
+              "id": "F22A-N16",
+              "scope": "Reviewed source exposure export contains no values or source names"
+            },
+            {
+              "id": "F22A-N17",
+              "scope": "Source flag withdrawal invalidates pending content review"
+            },
+            {
+              "id": "F22A-N18",
+              "scope": "Disabled source route preserves records; reenable and retain restart basis"
+            }
+          ]
+        },
+        {
+          "phase": "restart",
+          "checks": 3,
+          "originalResult": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-source-20261104T073932Z-a73ff442/restart-results.json",
+            "bytes": 2370,
+            "sha256": "50f03a3ff9b61c58fa9739d695e043d2aa3c2097cda9a329685bf35056553339"
+          },
+          "observations": [
+            {
+              "id": "F22A-N01",
+              "scope": "Restart reuses profile key/ledger with no startup source read"
+            },
+            {
+              "id": "F22A-N02",
+              "scope": "Restart source ledger and exact saved original match prior receipt"
+            },
+            {
+              "id": "F22A-N03",
+              "scope": "Stale source finding authority never survives restart"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hygiene",
+      "assertions": 21,
+      "driver": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/prebuilt-native-hosts-05/lite-hygiene-host.js",
+        "bytes": 20170,
+        "sha256": "ce2e25225165ad53f524f4a02048560014a3ac79190b87a58c541249e6a2f16a"
+      },
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 18,
+          "originalResult": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-hygiene-20261104T074046Z-db4c8929/primary-results.json",
+            "bytes": 8855,
+            "sha256": "2e85e8b7f13c548074484cc2959f7eaecd115557d50f91bb853bb34b5a1bcc4b"
+          },
+          "observations": [
+            {
+              "id": "F21-N01",
+              "scope": "Exact runtime, registration and no startup scan/key"
+            },
+            {
+              "id": "F21-N02",
+              "scope": "File picker cancellation before originals/key"
+            },
+            {
+              "id": "F21-N03",
+              "scope": "Actual selected saved file, safe metadata and real profile key"
+            },
+            {
+              "id": "F21-N04",
+              "scope": "Workspace public control and bounded metadata report"
+            },
+            {
+              "id": "F21-N05",
+              "scope": "Possible-exposure ledger has keyed refs without source/value/name"
+            },
+            {
+              "id": "F21-N06",
+              "scope": "Canonical empty example keeps original source"
+            },
+            {
+              "id": "F21-N07",
+              "scope": "Vault cancellation preserves source"
+            },
+            {
+              "id": "F21-N08",
+              "scope": "Approved canonical migration, placeholders and real SecretStorage"
+            },
+            {
+              "id": "F21-N09",
+              "scope": "Vault action remains possible-exposure metadata"
+            },
+            {
+              "id": "F21-N10",
+              "scope": "Disclosure cancellation withholds originals"
+            },
+            {
+              "id": "F21-N11",
+              "scope": "Explicit disclosure restores source and retains saved deny"
+            },
+            {
+              "id": "F21-N12",
+              "scope": "Source drift during approval withholds current report"
+            },
+            {
+              "id": "F21-N13",
+              "scope": "Export cancellation creates no metadata file"
+            },
+            {
+              "id": "F21-N14",
+              "scope": "Reviewed exclusive metadata export is value/path free"
+            },
+            {
+              "id": "F21-N15",
+              "scope": "Native manual checklist ignores caller credentials and performs no rotation"
+            },
+            {
+              "id": "F21-N16",
+              "scope": "Flag withdrawal invalidates a pending actual content review"
+            },
+            {
+              "id": "F21-N17",
+              "scope": "Disabled route preserves source, ledger and saved denies"
+            },
+            {
+              "id": "F21-N18",
+              "scope": "Reenable and preserve restart binding; all original documents absent"
+            }
+          ]
+        },
+        {
+          "phase": "restart",
+          "checks": 3,
+          "originalResult": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-hygiene-20261104T074046Z-db4c8929/restart-results.json",
+            "bytes": 2015,
+            "sha256": "0dff8711da3cbe2e8e9e01161952090b1d269c13160b7ad1dd8366b73cec08c1"
+          },
+          "observations": [
+            {
+              "id": "F21-N01",
+              "scope": "Restart reads existing ledger/key without startup original documents"
+            },
+            {
+              "id": "F21-N02",
+              "scope": "Restart ledger export view matches accepted metadata"
+            },
+            {
+              "id": "F21-N03",
+              "scope": "No stale finding authority survives restart"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vault",
+      "assertions": 10,
+      "driver": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/prebuilt-native-hosts-05/lite-vault-host.js",
+        "bytes": 29928,
+        "sha256": "2b98b5e9943812e100d1dbcd160dffa8a015cbce06405e1397f3bc071062dcd4"
+      },
+      "phases": [
+        {
+          "phase": "save",
+          "checks": 6,
+          "originalResult": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-vault-20261104T074206Z-f07067df/save-results.json",
+            "bytes": 5892,
+            "sha256": "6f4212915f4985edd2d32f9303755722830890271f7b6aadbcd1b404cd3cfa94"
+          },
+          "observations": [
+            {
+              "id": "F06-H01",
+              "scope": "Native manager-owned cancellation creates no vault data, key or changed source file."
+            },
+            {
+              "id": "F06-H02",
+              "scope": "Actual registered migration replaces quoted database, API and multiline values on disk after native metadata review."
+            },
+            {
+              "id": "F06-H03",
+              "scope": "Safe example has blank unique names; actual native encrypted vault and issued generation remain outside the project."
+            },
+            {
+              "id": "F06-H04",
+              "scope": "Managed safe-reader output remains names-only and masked after optional migration."
+            },
+            {
+              "id": "F06-H05",
+              "scope": "Raw-restore cancellation retains source placeholders and ciphertext with no disclosure."
+            },
+            {
+              "id": "F06-H06",
+              "scope": "A real native source-write fault leaves an issued encrypted pending checkpoint and original source intact for native restart."
+            }
+          ]
+        },
+        {
+          "phase": "reload",
+          "checks": 4,
+          "originalResult": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-affected-vault-20261104T074206Z-f07067df/reload-results.json",
+            "bytes": 5903,
+            "sha256": "2f1ab9f72fee2e1d490345e373ab258ca4934c425aec7b3a89cd346aff25a5e3"
+          },
+          "observations": [
+            {
+              "id": "F06-H07",
+              "scope": "Native restart retains genuine pending checkpoint and verified SecretStorage key; registered recovery completes the masked crash file."
+            },
+            {
+              "id": "F06-H08",
+              "scope": "Fresh explicit raw-disclosure approval restores the bound original backup and quoted multiline placeholder content byte for byte."
+            },
+            {
+              "id": "F06-H09",
+              "scope": "Machine withdrawal withholds every registered vault mutation and preserves source bytes and existing ciphertext."
+            },
+            {
+              "id": "F06-H10",
+              "scope": "Persistent sensitive restrictions survive restart and raw restoration; managed safe reads still mask every value without original TextDocuments."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "retained",
+      "assertions": 106,
+      "driver": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/prebuilt-native-hosts-05/lite-broker-host.js",
+        "bytes": 457904,
+        "sha256": "3a2277b1a567c8fed5b699cc96c04146ef29fb27cfed6963bf8406f7f764d504"
+      },
+      "phases": [
+        {
+          "phase": "primary",
+          "checks": 103,
+          "originalResult": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-retained-native-20261104T074327Z-d024602a/primary-results.json",
+            "bytes": 15895,
+            "sha256": "4ec38f7951ef19fd3f668e7312a52356e30558f31a6ff9483c7cc5cbbf52c204"
+          },
+          "observations": [
+            {
+              "id": "F14-H01",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F14-H02",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F14-H03",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F14-H04",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F14-H05",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F14-H06",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F14-H07",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F14-H08",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F14-H09",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F14-H10",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F14-H11",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F14-H12",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F14-H13",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F14-H14",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F14-H15",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F14-H16",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15a-J01",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15a-J02",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15a-J03",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15a-J04",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15a-J05",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15a-J06",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15a-J07",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15a-J08",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15b-G01",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15b-G02",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15b-G03",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15b-G04",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15b-G05",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15b-G06",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15b-G07",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15b-G08",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15c-B01",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15c-B02",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15c-B03",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15c-B04",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15c-B05",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15c-B06",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15c-B07",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15c-B08",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15d-D01",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15d-D02",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15d-D03",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15d-D04",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15d-D05",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15d-D06",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15d-D07",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15d-D08",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15e-C01",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15e-C02",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15e-C03",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15e-C04",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15e-C05",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15e-C06",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15e-C07",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15e-C08",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15f-F01",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15f-F02",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15f-F03",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15f-F04",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15f-F05",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15f-F06",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15f-F07",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15f-F08",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15g-P01",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15g-P02",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15g-P03",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15g-P04",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15g-P05",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15g-P06",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15g-P07",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15g-P08",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15h-B01",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15h-B02",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15h-B03",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15h-B04",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15h-B05",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15h-B06",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15h-B07",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F15h-B08",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F16-G01",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F16-G02",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F16-G03",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F16-G04",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F16-G05",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F16-G06",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F16-G07",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F16-G08",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F16-G09",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F16-G10",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F16-G11",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F17-M01",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F17-M02",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F17-M03",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F17-M04",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F17-M05",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F17-M06",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F17-M07",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F17-M08",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F17-M09",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F17-M10",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F17-M11",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F17-M12",
+              "scope": "Actual owned broker lifecycle"
+            }
+          ]
+        },
+        {
+          "phase": "restart",
+          "checks": 3,
+          "originalResult": {
+            "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f26a-retained-native-20261104T074327Z-d024602a/restart-results.json",
+            "bytes": 1239,
+            "sha256": "2019c5fb5f1a52c43bd8b39845848337150ccf20d8089cbb91f2900e763639f0"
+          },
+          "observations": [
+            {
+              "id": "F14-H17",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F14-H18",
+              "scope": "Actual owned broker lifecycle"
+            },
+            {
+              "id": "F14-H19",
+              "scope": "Actual owned broker lifecycle"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

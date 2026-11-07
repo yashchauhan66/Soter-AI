@@ -1,0 +1,16 @@
+﻿[
+    {
+        "operation":  "Inline existing-parser invocation",
+        "exactMessage":  "SyntaxError: Unexpected identifier \u0027node\u0027",
+        "reason":  "Windows PowerShell removed double quotes when passing JavaScript via node -e; no backend action executed",
+        "resolution":  "Pass JavaScript via stdin instead",
+        "safetyFilter":  false
+    },
+    {
+        "operation":  "Read-only showmediuminfo",
+        "exactMessage":  "VBoxManage.exe: error: unknown option: --machinereadable",
+        "reason":  "This installed showmediuminfo subcommand does not accept that flag",
+        "resolution":  "Use the installed documented plain-text output; no disk change",
+        "safetyFilter":  false
+    }
+]

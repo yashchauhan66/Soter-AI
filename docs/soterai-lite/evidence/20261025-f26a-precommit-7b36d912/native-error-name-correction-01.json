@@ -1,0 +1,45 @@
+{
+  "status": "NATIVE_FIXTURE_ONLY_CORRECTION_NOT_BEHAVIOR_PASS",
+  "time": "2026-10-26T05:29:03.406Z",
+  "before": {
+    "path": "packages/vscode-extension/src/__tests__/host/litePreCommitGuard.host.ts",
+    "bytes": 66252,
+    "sha256": "91f6823b50b6c36aa5c8d277386978d3f92e15251c9f7ab2194d31ecc35b636d"
+  },
+  "beforeSnapshot": {
+    "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/litePreCommitGuard.host.ts.before-CodeExpectedError-01.txt",
+    "bytes": 66252,
+    "sha256": "91f6823b50b6c36aa5c8d277386978d3f92e15251c9f7ab2194d31ecc35b636d"
+  },
+  "after": {
+    "path": "packages/vscode-extension/src/__tests__/host/litePreCommitGuard.host.ts",
+    "bytes": 66256,
+    "sha256": "d773858448cd4969d47d258915098519acb856f1afa28f6ca6cab2c0a8e33741"
+  },
+  "nativeFreeze": {
+    "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/native-host-freeze-02.json",
+    "bytes": 6238,
+    "sha256": "96c822673ea43cd246bb116b8232cefd86d9ab5448f0793d11e16455552dca6a"
+  },
+  "currentInputs": {
+    "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/native-source-inputs-03.json",
+    "bytes": 193291,
+    "sha256": "f94d6ca5ea2ff2499dbf76ea5f82239160806a7dc35bad5d42b79a7d5edb6aab"
+  },
+  "installedHost": {
+    "path": "../../../AppData/Local/Programs/Microsoft VS Code/e646868227/resources/app/out/vs/workbench/api/node/extensionHostProcess.js",
+    "bytes": 2318558,
+    "sha256": "f9a596e45a96b53518966ebec2411a29f88a12943c1ae1f2a60af23dc2206796",
+    "witness": "this.name=\"CodeExpectedError\"",
+    "offset": 3322
+  },
+  "previousFailure": {
+    "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/f26a-precommit-native-20261026T052530Z-69297ca7/primary-results.json",
+    "bytes": 12428,
+    "sha256": "69bf369685de1e4e4160ffe8f6c478d6b7037a7f5349013219daf2f869887909"
+  },
+  "unchangedOtherInputs": 988,
+  "correctionRound": 1,
+  "productChange": false,
+  "evidence": "Actualnative02 first2PASS/HP03AssertionError/27NOTRUN/restartNOTRUN. Existing three native fixtures expect CodeExpectedError; installed exact application constructor uses that name. Only the incorrect literal changed. Earlier preflight-only01refusal and every raw result retained; no PASS regrade."
+}

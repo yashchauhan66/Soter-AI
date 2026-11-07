@@ -1,0 +1,4979 @@
+{
+  "status": "PASS_CURRENT_COMPONENT_LINKAGE_AND_RETAINED_AUDIT_INTEGRITY_NOT_FINAL_GATE_ACCEPTANCE",
+  "observedAt": "2026-11-06T13:39:03.373Z",
+  "qualification": {
+    "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\current-package-qualification-01.json",
+    "bytes": 8739,
+    "sha256": "650ec4dd35938dbbce995c858063ffe773850f941f611a3925425fd2b2aefe1d"
+  },
+  "sourceProof": {
+    "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\full-inputs-02.json",
+    "bytes": 223848,
+    "sha256": "23fd63bb04122bf055f656a77424085b75ff3e3c813121c15034cd209fd1c8f6"
+  },
+  "artifact": {
+    "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\soterai-lite\\soterai-lite-0.7.0-resumed-20261106-attempt02.vsix",
+    "bytes": 1742104,
+    "sha256": "011f96d19d42dbefc2e56eb5399bf5c7f16a09d6b71b8bae5be9d66b2f3769ec"
+  },
+  "catalog": {
+    "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\LITE-CATALOG.json",
+    "bytes": 160265,
+    "sha256": "1ce46192e9f315b5f2142c9f61542f1d513143dc2e19d4def6d95cea38c73ed4"
+  },
+  "full": {
+    "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\full-suite-acceptance-02.json",
+    "bytes": 32648,
+    "sha256": "95da08741866668bcaba10ffdb395b838875c078b58c7a0cb96caec4ade6c777"
+  },
+  "fullCounts": {
+    "tests": 4892,
+    "pass": 4888,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 4,
+    "todo": 0
+  },
+  "fullSuiteExecution": "EXECUTED_ON_PREVIOUS_PROOF_REUSED_AFTER_METADATA_ONLY_CHANGE",
+  "originalFullAcceptance": {
+    "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\full-suite-acceptance-01.json",
+    "bytes": 30807,
+    "sha256": "7cf016b5c844b867b56637bbee9f579a7ea752a91ad1b584cf12976e24f25dd6"
+  },
+  "descriptionOnlySourceDelta": {
+    "file": "packages/vscode-extension/package.json",
+    "jsonPointer": "/contributes/configuration/properties/soterai.lite.historyHooks.preCommit/description",
+    "priorDescription": "Compatibility setting for the cooperative staged-tree pre-commit guard. New install/resume is unavailable in this Lite release after incomplete verification, regardless of this flag. Existing owned-hook status and reviewed encrypted recovery/restore remain available while disabled. Deliberate bypass and final commit races remain; no complete detection or registered-value guarantee.",
+    "currentDescription": "Opt in to the owner-reviewed cooperative staged-tree pre-commit candidate. Native verification remains pending; enabling this machine setting does not prove protection. Existing owned-hook status and reviewed encrypted recovery/restore remain available while disabled. Deliberate bypass and final commit races remain; no complete detection or registered-value guarantee.",
+    "runtimeSourceChanged": false
+  },
+  "rows": [
+    {
+      "id": "LS-01",
+      "automatedTestId": "F01-U01",
+      "matched": [
+        {
+          "id": "F01-U01",
+          "passedSubtests": [
+            {
+              "name": "F01-U01 ordinary restriction returns SAVED only for persisted deny",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-U02",
+          "passedSubtests": [
+            {
+              "name": "F01-U02 failed ordinary save cannot become REQUEST_HANDLED or success",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-U03",
+          "passedSubtests": [
+            {
+              "name": "F01-U03 direct manual command reports storage failure to its caller",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-U04",
+          "passedSubtests": [
+            {
+              "name": "F01-U04 failed addition preserves ordinary folder glob region and sensitive denies",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-U08",
+          "passedSubtests": [
+            {
+              "name": "F01-U08 save result notification and change event wait for storage completion",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-U09",
+          "passedSubtests": [
+            {
+              "name": "F01-U09 manual save revokes pending reads before failure and holds new reads while pending",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-U10",
+          "passedSubtests": [
+            {
+              "name": "F01-U10 failed queued save does not poison later successful roots",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-U11",
+          "passedSubtests": [
+            {
+              "name": "F01-U11 repeated ordinary marking cannot duplicate or weaken sensitive deny",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-U13",
+          "passedSubtests": [
+            {
+              "name": "F01-U13 saved restrictions survive component reload and repository deny removal",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-U14",
+          "passedSubtests": [
+            {
+              "name": "F01-U14 flag off withdraws only new restrictions and retains masked existing reads",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-U15",
+          "passedSubtests": [
+            {
+              "name": "F01-U15 actual panel controller shows real saved failed and cancelled command outcomes",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-U16",
+          "passedSubtests": [
+            {
+              "name": "F01-U16 post-commit rejection is reported conservatively without undoing stronger deny",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-H01",
+          "passedSubtests": [],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\host\\liteRestrictionSave.host.ts",
+              "bytes": 14860,
+              "sha256": "793557da8772a37f06a9ea312f710f49eff895b2144ebc03d1912485c26b71d9"
+            }
+          ]
+        },
+        {
+          "id": "F01-H02",
+          "passedSubtests": [],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\host\\liteRestrictionSave.host.ts",
+              "bytes": 14860,
+              "sha256": "793557da8772a37f06a9ea312f710f49eff895b2144ebc03d1912485c26b71d9"
+            }
+          ]
+        },
+        {
+          "id": "F01-H04",
+          "passedSubtests": [],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\host\\liteRestrictionSave.host.ts",
+              "bytes": 14860,
+              "sha256": "793557da8772a37f06a9ea312f710f49eff895b2144ebc03d1912485c26b71d9"
+            }
+          ]
+        },
+        {
+          "id": "F01-H05",
+          "passedSubtests": [],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\host\\liteRestrictionSave.host.ts",
+              "bytes": 14860,
+              "sha256": "793557da8772a37f06a9ea312f710f49eff895b2144ebc03d1912485c26b71d9"
+            }
+          ]
+        }
+      ],
+      "missingTitleIds": [
+        "F01-H01",
+        "F01-H02",
+        "F01-H04",
+        "F01-H05"
+      ],
+      "mutation": {
+        "status": "UNCLASSIFIED_NO_PREVENTION_SENSITIVE_PROMOTION",
+        "withdrawalCandidates": [
+          {
+            "name": "F01-U14 flag off withdraws only new restrictions and retains masked existing reads",
+            "raw": {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+              "bytes": 182056,
+              "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+            }
+          }
+        ],
+        "explanation": "Test names locate evidence only. Availability withdrawal is not prevention-sensitive confidentiality mutation."
+      },
+      "toolPairs": [
+        {
+          "toolId": "clineIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "geminiCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        }
+      ],
+      "conclusion": "COMPONENT_EVIDENCE_LINKAGE_ONLY_NOT_CATALOG_ROW_ACCEPTANCE"
+    },
+    {
+      "id": "LS-02",
+      "automatedTestId": "F01-U05",
+      "matched": [
+        {
+          "id": "F01-U05",
+          "passedSubtests": [
+            {
+              "name": "F01-U05 file folder glob and region paths share explicit awaited save outcomes",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-U04",
+          "passedSubtests": [
+            {
+              "name": "F01-U04 failed addition preserves ordinary folder glob region and sensitive denies",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-U06",
+          "passedSubtests": [
+            {
+              "name": "F01-U06 picker glob folder and empty-selection cancellation make no writes",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-U07",
+          "passedSubtests": [
+            {
+              "name": "F01-U07 invalid paths syntax and corrupt storage fail without successful mutation",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-U10",
+          "passedSubtests": [
+            {
+              "name": "F01-U10 failed queued save does not poison later successful roots",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-U13",
+          "passedSubtests": [
+            {
+              "name": "F01-U13 saved restrictions survive component reload and repository deny removal",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-H03",
+          "passedSubtests": [],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\host\\liteRestrictionSave.host.ts",
+              "bytes": 14860,
+              "sha256": "793557da8772a37f06a9ea312f710f49eff895b2144ebc03d1912485c26b71d9"
+            }
+          ]
+        }
+      ],
+      "missingTitleIds": [
+        "F01-H03"
+      ],
+      "mutation": {
+        "status": "UNCLASSIFIED_NO_PREVENTION_SENSITIVE_PROMOTION",
+        "withdrawalCandidates": [
+          {
+            "name": "F01-U07 invalid paths syntax and corrupt storage fail without successful mutation",
+            "raw": {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+              "bytes": 182056,
+              "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+            }
+          }
+        ],
+        "explanation": "Test names locate evidence only. Availability withdrawal is not prevention-sensitive confidentiality mutation."
+      },
+      "toolPairs": [
+        {
+          "toolId": "clineIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "geminiCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        }
+      ],
+      "conclusion": "COMPONENT_EVIDENCE_LINKAGE_ONLY_NOT_CATALOG_ROW_ACCEPTANCE"
+    },
+    {
+      "id": "LS-03",
+      "automatedTestId": "LS-03-ACCEPTANCE",
+      "matched": [
+        {
+          "id": "LS-03-ACCEPTANCE",
+          "passedSubtests": [],
+          "sourceCandidates": []
+        },
+        {
+          "id": "F01-U04",
+          "passedSubtests": [
+            {
+              "name": "F01-U04 failed addition preserves ordinary folder glob region and sensitive denies",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-U05",
+          "passedSubtests": [
+            {
+              "name": "F01-U05 file folder glob and region paths share explicit awaited save outcomes",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-U11",
+          "passedSubtests": [
+            {
+              "name": "F01-U11 repeated ordinary marking cannot duplicate or weaken sensitive deny",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-U12",
+          "passedSubtests": [
+            {
+              "name": "F01-U12 full policy upgrades strongest treatment but rejects overflowing new deny",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-U13",
+          "passedSubtests": [
+            {
+              "name": "F01-U13 saved restrictions survive component reload and repository deny removal",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-U14",
+          "passedSubtests": [
+            {
+              "name": "F01-U14 flag off withdraws only new restrictions and retains masked existing reads",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-H05",
+          "passedSubtests": [],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\host\\liteRestrictionSave.host.ts",
+              "bytes": 14860,
+              "sha256": "793557da8772a37f06a9ea312f710f49eff895b2144ebc03d1912485c26b71d9"
+            }
+          ]
+        }
+      ],
+      "missingTitleIds": [
+        "LS-03-ACCEPTANCE",
+        "F01-H05"
+      ],
+      "mutation": {
+        "status": "UNCLASSIFIED_NO_PREVENTION_SENSITIVE_PROMOTION",
+        "withdrawalCandidates": [
+          {
+            "name": "F01-U14 flag off withdraws only new restrictions and retains masked existing reads",
+            "raw": {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+              "bytes": 182056,
+              "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+            }
+          }
+        ],
+        "explanation": "Test names locate evidence only. Availability withdrawal is not prevention-sensitive confidentiality mutation."
+      },
+      "toolPairs": [
+        {
+          "toolId": "clineIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "geminiCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        }
+      ],
+      "conclusion": "COMPONENT_EVIDENCE_LINKAGE_ONLY_NOT_CATALOG_ROW_ACCEPTANCE"
+    },
+    {
+      "id": "LS-04",
+      "automatedTestId": "LS-04-ACCEPTANCE",
+      "matched": [
+        {
+          "id": "LS-04-ACCEPTANCE",
+          "passedSubtests": [],
+          "sourceCandidates": []
+        },
+        {
+          "id": "F01-U06",
+          "passedSubtests": [
+            {
+              "name": "F01-U06 picker glob folder and empty-selection cancellation make no writes",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-U08",
+          "passedSubtests": [
+            {
+              "name": "F01-U08 save result notification and change event wait for storage completion",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-U09",
+          "passedSubtests": [
+            {
+              "name": "F01-U09 manual save revokes pending reads before failure and holds new reads while pending",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-U14",
+          "passedSubtests": [
+            {
+              "name": "F01-U14 flag off withdraws only new restrictions and retains masked existing reads",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        }
+      ],
+      "missingTitleIds": [
+        "LS-04-ACCEPTANCE"
+      ],
+      "mutation": {
+        "status": "UNCLASSIFIED_NO_PREVENTION_SENSITIVE_PROMOTION",
+        "withdrawalCandidates": [
+          {
+            "name": "F01-U14 flag off withdraws only new restrictions and retains masked existing reads",
+            "raw": {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+              "bytes": 182056,
+              "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+            }
+          }
+        ],
+        "explanation": "Test names locate evidence only. Availability withdrawal is not prevention-sensitive confidentiality mutation."
+      },
+      "toolPairs": [
+        {
+          "toolId": "clineIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "geminiCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        }
+      ],
+      "conclusion": "COMPONENT_EVIDENCE_LINKAGE_ONLY_NOT_CATALOG_ROW_ACCEPTANCE"
+    },
+    {
+      "id": "LS-05",
+      "automatedTestId": "LS-05-ACCEPTANCE",
+      "matched": [
+        {
+          "id": "LS-05-ACCEPTANCE",
+          "passedSubtests": [],
+          "sourceCandidates": []
+        }
+      ],
+      "missingTitleIds": [
+        "LS-05-ACCEPTANCE"
+      ],
+      "mutation": {
+        "status": "UNCLASSIFIED_NO_PREVENTION_SENSITIVE_PROMOTION",
+        "withdrawalCandidates": [],
+        "explanation": "Test names locate evidence only. Availability withdrawal is not prevention-sensitive confidentiality mutation."
+      },
+      "toolPairs": [
+        {
+          "toolId": "clineIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "geminiCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        }
+      ],
+      "conclusion": "COMPONENT_EVIDENCE_LINKAGE_ONLY_NOT_CATALOG_ROW_ACCEPTANCE"
+    },
+    {
+      "id": "LS-06",
+      "automatedTestId": "LS-06-ACCEPTANCE",
+      "matched": [
+        {
+          "id": "LS-06-ACCEPTANCE",
+          "passedSubtests": [],
+          "sourceCandidates": []
+        },
+        {
+          "id": "F01-U04",
+          "passedSubtests": [
+            {
+              "name": "F01-U04 failed addition preserves ordinary folder glob region and sensitive denies",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-U05",
+          "passedSubtests": [
+            {
+              "name": "F01-U05 file folder glob and region paths share explicit awaited save outcomes",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-U08",
+          "passedSubtests": [
+            {
+              "name": "F01-U08 save result notification and change event wait for storage completion",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-U13",
+          "passedSubtests": [
+            {
+              "name": "F01-U13 saved restrictions survive component reload and repository deny removal",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-H03",
+          "passedSubtests": [],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\host\\liteRestrictionSave.host.ts",
+              "bytes": 14860,
+              "sha256": "793557da8772a37f06a9ea312f710f49eff895b2144ebc03d1912485c26b71d9"
+            }
+          ]
+        }
+      ],
+      "missingTitleIds": [
+        "LS-06-ACCEPTANCE",
+        "F01-H03"
+      ],
+      "mutation": {
+        "status": "UNCLASSIFIED_NO_PREVENTION_SENSITIVE_PROMOTION",
+        "withdrawalCandidates": [],
+        "explanation": "Test names locate evidence only. Availability withdrawal is not prevention-sensitive confidentiality mutation."
+      },
+      "toolPairs": [
+        {
+          "toolId": "clineIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "geminiCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        }
+      ],
+      "conclusion": "COMPONENT_EVIDENCE_LINKAGE_ONLY_NOT_CATALOG_ROW_ACCEPTANCE"
+    },
+    {
+      "id": "LS-07",
+      "automatedTestId": "LS-07-ACCEPTANCE",
+      "matched": [
+        {
+          "id": "LS-07-ACCEPTANCE",
+          "passedSubtests": [],
+          "sourceCandidates": []
+        },
+        {
+          "id": "F01-U07",
+          "passedSubtests": [
+            {
+              "name": "F01-U07 invalid paths syntax and corrupt storage fail without successful mutation",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-U10",
+          "passedSubtests": [
+            {
+              "name": "F01-U10 failed queued save does not poison later successful roots",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-U13",
+          "passedSubtests": [
+            {
+              "name": "F01-U13 saved restrictions survive component reload and repository deny removal",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        }
+      ],
+      "missingTitleIds": [
+        "LS-07-ACCEPTANCE"
+      ],
+      "mutation": {
+        "status": "UNCLASSIFIED_NO_PREVENTION_SENSITIVE_PROMOTION",
+        "withdrawalCandidates": [
+          {
+            "name": "F01-U07 invalid paths syntax and corrupt storage fail without successful mutation",
+            "raw": {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+              "bytes": 182056,
+              "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+            }
+          }
+        ],
+        "explanation": "Test names locate evidence only. Availability withdrawal is not prevention-sensitive confidentiality mutation."
+      },
+      "toolPairs": [
+        {
+          "toolId": "clineIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "geminiCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        }
+      ],
+      "conclusion": "COMPONENT_EVIDENCE_LINKAGE_ONLY_NOT_CATALOG_ROW_ACCEPTANCE"
+    },
+    {
+      "id": "LS-08",
+      "automatedTestId": "LS-08-ACCEPTANCE",
+      "matched": [
+        {
+          "id": "LS-08-ACCEPTANCE",
+          "passedSubtests": [],
+          "sourceCandidates": []
+        }
+      ],
+      "missingTitleIds": [
+        "LS-08-ACCEPTANCE"
+      ],
+      "mutation": {
+        "status": "UNCLASSIFIED_NO_PREVENTION_SENSITIVE_PROMOTION",
+        "withdrawalCandidates": [],
+        "explanation": "Test names locate evidence only. Availability withdrawal is not prevention-sensitive confidentiality mutation."
+      },
+      "toolPairs": [
+        {
+          "toolId": "clineIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "geminiCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        }
+      ],
+      "conclusion": "COMPONENT_EVIDENCE_LINKAGE_ONLY_NOT_CATALOG_ROW_ACCEPTANCE"
+    },
+    {
+      "id": "LS-09",
+      "automatedTestId": "LS-09-ACCEPTANCE",
+      "matched": [
+        {
+          "id": "LS-09-ACCEPTANCE",
+          "passedSubtests": [],
+          "sourceCandidates": []
+        }
+      ],
+      "missingTitleIds": [
+        "LS-09-ACCEPTANCE"
+      ],
+      "mutation": {
+        "status": "UNCLASSIFIED_NO_PREVENTION_SENSITIVE_PROMOTION",
+        "withdrawalCandidates": [],
+        "explanation": "Test names locate evidence only. Availability withdrawal is not prevention-sensitive confidentiality mutation."
+      },
+      "toolPairs": [
+        {
+          "toolId": "clineIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "geminiCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        }
+      ],
+      "conclusion": "COMPONENT_EVIDENCE_LINKAGE_ONLY_NOT_CATALOG_ROW_ACCEPTANCE"
+    },
+    {
+      "id": "LS-10",
+      "automatedTestId": "LS-10-ACCEPTANCE",
+      "matched": [
+        {
+          "id": "LS-10-ACCEPTANCE",
+          "passedSubtests": [],
+          "sourceCandidates": []
+        }
+      ],
+      "missingTitleIds": [
+        "LS-10-ACCEPTANCE"
+      ],
+      "mutation": {
+        "status": "UNCLASSIFIED_NO_PREVENTION_SENSITIVE_PROMOTION",
+        "withdrawalCandidates": [],
+        "explanation": "Test names locate evidence only. Availability withdrawal is not prevention-sensitive confidentiality mutation."
+      },
+      "toolPairs": [
+        {
+          "toolId": "clineIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "geminiCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        }
+      ],
+      "conclusion": "COMPONENT_EVIDENCE_LINKAGE_ONLY_NOT_CATALOG_ROW_ACCEPTANCE"
+    },
+    {
+      "id": "LS-11",
+      "automatedTestId": "LS-11-ACCEPTANCE",
+      "matched": [
+        {
+          "id": "LS-11-ACCEPTANCE",
+          "passedSubtests": [],
+          "sourceCandidates": []
+        }
+      ],
+      "missingTitleIds": [
+        "LS-11-ACCEPTANCE"
+      ],
+      "mutation": {
+        "status": "UNCLASSIFIED_NO_PREVENTION_SENSITIVE_PROMOTION",
+        "withdrawalCandidates": [],
+        "explanation": "Test names locate evidence only. Availability withdrawal is not prevention-sensitive confidentiality mutation."
+      },
+      "toolPairs": [
+        {
+          "toolId": "clineIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "geminiCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        }
+      ],
+      "conclusion": "COMPONENT_EVIDENCE_LINKAGE_ONLY_NOT_CATALOG_ROW_ACCEPTANCE"
+    },
+    {
+      "id": "LS-12",
+      "automatedTestId": "LS-12-ACCEPTANCE",
+      "matched": [
+        {
+          "id": "LS-12-ACCEPTANCE",
+          "passedSubtests": [],
+          "sourceCandidates": []
+        }
+      ],
+      "missingTitleIds": [
+        "LS-12-ACCEPTANCE"
+      ],
+      "mutation": {
+        "status": "UNCLASSIFIED_NO_PREVENTION_SENSITIVE_PROMOTION",
+        "withdrawalCandidates": [],
+        "explanation": "Test names locate evidence only. Availability withdrawal is not prevention-sensitive confidentiality mutation."
+      },
+      "toolPairs": [
+        {
+          "toolId": "clineIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "geminiCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        }
+      ],
+      "conclusion": "COMPONENT_EVIDENCE_LINKAGE_ONLY_NOT_CATALOG_ROW_ACCEPTANCE"
+    },
+    {
+      "id": "LS-13",
+      "automatedTestId": "LS-13-ACCEPTANCE",
+      "matched": [
+        {
+          "id": "LS-13-ACCEPTANCE",
+          "passedSubtests": [],
+          "sourceCandidates": []
+        }
+      ],
+      "missingTitleIds": [
+        "LS-13-ACCEPTANCE"
+      ],
+      "mutation": {
+        "status": "UNCLASSIFIED_NO_PREVENTION_SENSITIVE_PROMOTION",
+        "withdrawalCandidates": [],
+        "explanation": "Test names locate evidence only. Availability withdrawal is not prevention-sensitive confidentiality mutation."
+      },
+      "toolPairs": [
+        {
+          "toolId": "clineIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "geminiCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        }
+      ],
+      "conclusion": "COMPONENT_EVIDENCE_LINKAGE_ONLY_NOT_CATALOG_ROW_ACCEPTANCE"
+    },
+    {
+      "id": "LS-14",
+      "automatedTestId": "LS-14-ACCEPTANCE",
+      "matched": [
+        {
+          "id": "LS-14-ACCEPTANCE",
+          "passedSubtests": [],
+          "sourceCandidates": []
+        }
+      ],
+      "missingTitleIds": [
+        "LS-14-ACCEPTANCE"
+      ],
+      "mutation": {
+        "status": "UNCLASSIFIED_NO_PREVENTION_SENSITIVE_PROMOTION",
+        "withdrawalCandidates": [],
+        "explanation": "Test names locate evidence only. Availability withdrawal is not prevention-sensitive confidentiality mutation."
+      },
+      "toolPairs": [
+        {
+          "toolId": "clineIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "geminiCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        }
+      ],
+      "conclusion": "COMPONENT_EVIDENCE_LINKAGE_ONLY_NOT_CATALOG_ROW_ACCEPTANCE"
+    },
+    {
+      "id": "LS-15",
+      "automatedTestId": "LS-15-ACCEPTANCE",
+      "matched": [
+        {
+          "id": "LS-15-ACCEPTANCE",
+          "passedSubtests": [],
+          "sourceCandidates": []
+        }
+      ],
+      "missingTitleIds": [
+        "LS-15-ACCEPTANCE"
+      ],
+      "mutation": {
+        "status": "UNCLASSIFIED_NO_PREVENTION_SENSITIVE_PROMOTION",
+        "withdrawalCandidates": [],
+        "explanation": "Test names locate evidence only. Availability withdrawal is not prevention-sensitive confidentiality mutation."
+      },
+      "toolPairs": [
+        {
+          "toolId": "clineIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "geminiCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        }
+      ],
+      "conclusion": "COMPONENT_EVIDENCE_LINKAGE_ONLY_NOT_CATALOG_ROW_ACCEPTANCE"
+    },
+    {
+      "id": "LS-16",
+      "automatedTestId": "LS-16-ACCEPTANCE",
+      "matched": [
+        {
+          "id": "LS-16-ACCEPTANCE",
+          "passedSubtests": [],
+          "sourceCandidates": []
+        }
+      ],
+      "missingTitleIds": [
+        "LS-16-ACCEPTANCE"
+      ],
+      "mutation": {
+        "status": "UNCLASSIFIED_NO_PREVENTION_SENSITIVE_PROMOTION",
+        "withdrawalCandidates": [],
+        "explanation": "Test names locate evidence only. Availability withdrawal is not prevention-sensitive confidentiality mutation."
+      },
+      "toolPairs": [
+        {
+          "toolId": "clineIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "geminiCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        }
+      ],
+      "conclusion": "COMPONENT_EVIDENCE_LINKAGE_ONLY_NOT_CATALOG_ROW_ACCEPTANCE"
+    },
+    {
+      "id": "LS-17",
+      "automatedTestId": "LS-17-ACCEPTANCE",
+      "matched": [
+        {
+          "id": "LS-17-ACCEPTANCE",
+          "passedSubtests": [],
+          "sourceCandidates": []
+        }
+      ],
+      "missingTitleIds": [
+        "LS-17-ACCEPTANCE"
+      ],
+      "mutation": {
+        "status": "UNCLASSIFIED_NO_PREVENTION_SENSITIVE_PROMOTION",
+        "withdrawalCandidates": [],
+        "explanation": "Test names locate evidence only. Availability withdrawal is not prevention-sensitive confidentiality mutation."
+      },
+      "toolPairs": [
+        {
+          "toolId": "clineIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "geminiCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        }
+      ],
+      "conclusion": "COMPONENT_EVIDENCE_LINKAGE_ONLY_NOT_CATALOG_ROW_ACCEPTANCE"
+    },
+    {
+      "id": "LS-18",
+      "automatedTestId": "LS-18-ACCEPTANCE",
+      "matched": [
+        {
+          "id": "LS-18-ACCEPTANCE",
+          "passedSubtests": [],
+          "sourceCandidates": []
+        }
+      ],
+      "missingTitleIds": [
+        "LS-18-ACCEPTANCE"
+      ],
+      "mutation": {
+        "status": "UNCLASSIFIED_NO_PREVENTION_SENSITIVE_PROMOTION",
+        "withdrawalCandidates": [],
+        "explanation": "Test names locate evidence only. Availability withdrawal is not prevention-sensitive confidentiality mutation."
+      },
+      "toolPairs": [
+        {
+          "toolId": "clineIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "geminiCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        }
+      ],
+      "conclusion": "COMPONENT_EVIDENCE_LINKAGE_ONLY_NOT_CATALOG_ROW_ACCEPTANCE"
+    },
+    {
+      "id": "LS-19",
+      "automatedTestId": "LS-19-ACCEPTANCE",
+      "matched": [
+        {
+          "id": "LS-19-ACCEPTANCE",
+          "passedSubtests": [],
+          "sourceCandidates": []
+        }
+      ],
+      "missingTitleIds": [
+        "LS-19-ACCEPTANCE"
+      ],
+      "mutation": {
+        "status": "UNCLASSIFIED_NO_PREVENTION_SENSITIVE_PROMOTION",
+        "withdrawalCandidates": [],
+        "explanation": "Test names locate evidence only. Availability withdrawal is not prevention-sensitive confidentiality mutation."
+      },
+      "toolPairs": [
+        {
+          "toolId": "clineIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "geminiCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        }
+      ],
+      "conclusion": "COMPONENT_EVIDENCE_LINKAGE_ONLY_NOT_CATALOG_ROW_ACCEPTANCE"
+    },
+    {
+      "id": "LS-20",
+      "automatedTestId": "LS-20-ACCEPTANCE",
+      "matched": [
+        {
+          "id": "LS-20-ACCEPTANCE",
+          "passedSubtests": [],
+          "sourceCandidates": []
+        }
+      ],
+      "missingTitleIds": [
+        "LS-20-ACCEPTANCE"
+      ],
+      "mutation": {
+        "status": "UNCLASSIFIED_NO_PREVENTION_SENSITIVE_PROMOTION",
+        "withdrawalCandidates": [],
+        "explanation": "Test names locate evidence only. Availability withdrawal is not prevention-sensitive confidentiality mutation."
+      },
+      "toolPairs": [
+        {
+          "toolId": "clineIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "geminiCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        }
+      ],
+      "conclusion": "COMPONENT_EVIDENCE_LINKAGE_ONLY_NOT_CATALOG_ROW_ACCEPTANCE"
+    },
+    {
+      "id": "LS-21",
+      "automatedTestId": "LS-21-ACCEPTANCE",
+      "matched": [
+        {
+          "id": "LS-21-ACCEPTANCE",
+          "passedSubtests": [],
+          "sourceCandidates": []
+        }
+      ],
+      "missingTitleIds": [
+        "LS-21-ACCEPTANCE"
+      ],
+      "mutation": {
+        "status": "UNCLASSIFIED_NO_PREVENTION_SENSITIVE_PROMOTION",
+        "withdrawalCandidates": [],
+        "explanation": "Test names locate evidence only. Availability withdrawal is not prevention-sensitive confidentiality mutation."
+      },
+      "toolPairs": [
+        {
+          "toolId": "clineIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "geminiCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        }
+      ],
+      "conclusion": "COMPONENT_EVIDENCE_LINKAGE_ONLY_NOT_CATALOG_ROW_ACCEPTANCE"
+    },
+    {
+      "id": "LS-22",
+      "automatedTestId": "LS-22-ACCEPTANCE",
+      "matched": [
+        {
+          "id": "LS-22-ACCEPTANCE",
+          "passedSubtests": [],
+          "sourceCandidates": []
+        }
+      ],
+      "missingTitleIds": [
+        "LS-22-ACCEPTANCE"
+      ],
+      "mutation": {
+        "status": "UNCLASSIFIED_NO_PREVENTION_SENSITIVE_PROMOTION",
+        "withdrawalCandidates": [],
+        "explanation": "Test names locate evidence only. Availability withdrawal is not prevention-sensitive confidentiality mutation."
+      },
+      "toolPairs": [
+        {
+          "toolId": "clineIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "geminiCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        }
+      ],
+      "conclusion": "COMPONENT_EVIDENCE_LINKAGE_ONLY_NOT_CATALOG_ROW_ACCEPTANCE"
+    },
+    {
+      "id": "LS-23",
+      "automatedTestId": "LS-23-ACCEPTANCE",
+      "matched": [
+        {
+          "id": "LS-23-ACCEPTANCE",
+          "passedSubtests": [],
+          "sourceCandidates": []
+        }
+      ],
+      "missingTitleIds": [
+        "LS-23-ACCEPTANCE"
+      ],
+      "mutation": {
+        "status": "UNCLASSIFIED_NO_PREVENTION_SENSITIVE_PROMOTION",
+        "withdrawalCandidates": [],
+        "explanation": "Test names locate evidence only. Availability withdrawal is not prevention-sensitive confidentiality mutation."
+      },
+      "toolPairs": [
+        {
+          "toolId": "clineIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "geminiCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        }
+      ],
+      "conclusion": "COMPONENT_EVIDENCE_LINKAGE_ONLY_NOT_CATALOG_ROW_ACCEPTANCE"
+    },
+    {
+      "id": "LS-24",
+      "automatedTestId": "LS-24-ACCEPTANCE",
+      "matched": [
+        {
+          "id": "LS-24-ACCEPTANCE",
+          "passedSubtests": [],
+          "sourceCandidates": []
+        }
+      ],
+      "missingTitleIds": [
+        "LS-24-ACCEPTANCE"
+      ],
+      "mutation": {
+        "status": "UNCLASSIFIED_NO_PREVENTION_SENSITIVE_PROMOTION",
+        "withdrawalCandidates": [],
+        "explanation": "Test names locate evidence only. Availability withdrawal is not prevention-sensitive confidentiality mutation."
+      },
+      "toolPairs": [
+        {
+          "toolId": "clineIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "geminiCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        }
+      ],
+      "conclusion": "COMPONENT_EVIDENCE_LINKAGE_ONLY_NOT_CATALOG_ROW_ACCEPTANCE"
+    },
+    {
+      "id": "LS-25",
+      "automatedTestId": "LS-25-ACCEPTANCE",
+      "matched": [
+        {
+          "id": "LS-25-ACCEPTANCE",
+          "passedSubtests": [],
+          "sourceCandidates": []
+        }
+      ],
+      "missingTitleIds": [
+        "LS-25-ACCEPTANCE"
+      ],
+      "mutation": {
+        "status": "UNCLASSIFIED_NO_PREVENTION_SENSITIVE_PROMOTION",
+        "withdrawalCandidates": [],
+        "explanation": "Test names locate evidence only. Availability withdrawal is not prevention-sensitive confidentiality mutation."
+      },
+      "toolPairs": [
+        {
+          "toolId": "clineIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "geminiCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        }
+      ],
+      "conclusion": "COMPONENT_EVIDENCE_LINKAGE_ONLY_NOT_CATALOG_ROW_ACCEPTANCE"
+    },
+    {
+      "id": "LS-26",
+      "automatedTestId": "LS-26-ACCEPTANCE",
+      "matched": [
+        {
+          "id": "LS-26-ACCEPTANCE",
+          "passedSubtests": [],
+          "sourceCandidates": []
+        }
+      ],
+      "missingTitleIds": [
+        "LS-26-ACCEPTANCE"
+      ],
+      "mutation": {
+        "status": "UNCLASSIFIED_NO_PREVENTION_SENSITIVE_PROMOTION",
+        "withdrawalCandidates": [],
+        "explanation": "Test names locate evidence only. Availability withdrawal is not prevention-sensitive confidentiality mutation."
+      },
+      "toolPairs": [
+        {
+          "toolId": "clineIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "geminiCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        }
+      ],
+      "conclusion": "COMPONENT_EVIDENCE_LINKAGE_ONLY_NOT_CATALOG_ROW_ACCEPTANCE"
+    },
+    {
+      "id": "LS-27",
+      "automatedTestId": "LS-27-ACCEPTANCE",
+      "matched": [
+        {
+          "id": "LS-27-ACCEPTANCE",
+          "passedSubtests": [],
+          "sourceCandidates": []
+        }
+      ],
+      "missingTitleIds": [
+        "LS-27-ACCEPTANCE"
+      ],
+      "mutation": {
+        "status": "UNCLASSIFIED_NO_PREVENTION_SENSITIVE_PROMOTION",
+        "withdrawalCandidates": [],
+        "explanation": "Test names locate evidence only. Availability withdrawal is not prevention-sensitive confidentiality mutation."
+      },
+      "toolPairs": [
+        {
+          "toolId": "clineIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "geminiCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        }
+      ],
+      "conclusion": "COMPONENT_EVIDENCE_LINKAGE_ONLY_NOT_CATALOG_ROW_ACCEPTANCE"
+    },
+    {
+      "id": "LS-28",
+      "automatedTestId": "LS-28-ACCEPTANCE",
+      "matched": [
+        {
+          "id": "LS-28-ACCEPTANCE",
+          "passedSubtests": [],
+          "sourceCandidates": []
+        }
+      ],
+      "missingTitleIds": [
+        "LS-28-ACCEPTANCE"
+      ],
+      "mutation": {
+        "status": "UNCLASSIFIED_NO_PREVENTION_SENSITIVE_PROMOTION",
+        "withdrawalCandidates": [],
+        "explanation": "Test names locate evidence only. Availability withdrawal is not prevention-sensitive confidentiality mutation."
+      },
+      "toolPairs": [
+        {
+          "toolId": "clineIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "geminiCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        }
+      ],
+      "conclusion": "COMPONENT_EVIDENCE_LINKAGE_ONLY_NOT_CATALOG_ROW_ACCEPTANCE"
+    },
+    {
+      "id": "LS-29",
+      "automatedTestId": "LS-29-ACCEPTANCE",
+      "matched": [
+        {
+          "id": "LS-29-ACCEPTANCE",
+          "passedSubtests": [],
+          "sourceCandidates": []
+        }
+      ],
+      "missingTitleIds": [
+        "LS-29-ACCEPTANCE"
+      ],
+      "mutation": {
+        "status": "UNCLASSIFIED_NO_PREVENTION_SENSITIVE_PROMOTION",
+        "withdrawalCandidates": [],
+        "explanation": "Test names locate evidence only. Availability withdrawal is not prevention-sensitive confidentiality mutation."
+      },
+      "toolPairs": [
+        {
+          "toolId": "clineIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "geminiCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        }
+      ],
+      "conclusion": "COMPONENT_EVIDENCE_LINKAGE_ONLY_NOT_CATALOG_ROW_ACCEPTANCE"
+    },
+    {
+      "id": "LS-30",
+      "automatedTestId": "LS-30-ACCEPTANCE",
+      "matched": [
+        {
+          "id": "LS-30-ACCEPTANCE",
+          "passedSubtests": [],
+          "sourceCandidates": []
+        }
+      ],
+      "missingTitleIds": [
+        "LS-30-ACCEPTANCE"
+      ],
+      "mutation": {
+        "status": "UNCLASSIFIED_NO_PREVENTION_SENSITIVE_PROMOTION",
+        "withdrawalCandidates": [],
+        "explanation": "Test names locate evidence only. Availability withdrawal is not prevention-sensitive confidentiality mutation."
+      },
+      "toolPairs": [
+        {
+          "toolId": "clineIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "geminiCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        }
+      ],
+      "conclusion": "COMPONENT_EVIDENCE_LINKAGE_ONLY_NOT_CATALOG_ROW_ACCEPTANCE"
+    },
+    {
+      "id": "LS-31",
+      "automatedTestId": "LS-31-ACCEPTANCE",
+      "matched": [
+        {
+          "id": "LS-31-ACCEPTANCE",
+          "passedSubtests": [],
+          "sourceCandidates": []
+        },
+        {
+          "id": "F01-U05",
+          "passedSubtests": [
+            {
+              "name": "F01-U05 file folder glob and region paths share explicit awaited save outcomes",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-U13",
+          "passedSubtests": [
+            {
+              "name": "F01-U13 saved restrictions survive component reload and repository deny removal",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-H03",
+          "passedSubtests": [],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\host\\liteRestrictionSave.host.ts",
+              "bytes": 14860,
+              "sha256": "793557da8772a37f06a9ea312f710f49eff895b2144ebc03d1912485c26b71d9"
+            }
+          ]
+        }
+      ],
+      "missingTitleIds": [
+        "LS-31-ACCEPTANCE",
+        "F01-H03"
+      ],
+      "mutation": {
+        "status": "UNCLASSIFIED_NO_PREVENTION_SENSITIVE_PROMOTION",
+        "withdrawalCandidates": [],
+        "explanation": "Test names locate evidence only. Availability withdrawal is not prevention-sensitive confidentiality mutation."
+      },
+      "toolPairs": [
+        {
+          "toolId": "clineIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "geminiCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        }
+      ],
+      "conclusion": "COMPONENT_EVIDENCE_LINKAGE_ONLY_NOT_CATALOG_ROW_ACCEPTANCE"
+    },
+    {
+      "id": "LS-32",
+      "automatedTestId": "LS-32-ACCEPTANCE",
+      "matched": [
+        {
+          "id": "LS-32-ACCEPTANCE",
+          "passedSubtests": [],
+          "sourceCandidates": []
+        },
+        {
+          "id": "F01-U01",
+          "passedSubtests": [
+            {
+              "name": "F01-U01 ordinary restriction returns SAVED only for persisted deny",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-U02",
+          "passedSubtests": [
+            {
+              "name": "F01-U02 failed ordinary save cannot become REQUEST_HANDLED or success",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-U06",
+          "passedSubtests": [
+            {
+              "name": "F01-U06 picker glob folder and empty-selection cancellation make no writes",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-U15",
+          "passedSubtests": [
+            {
+              "name": "F01-U15 actual panel controller shows real saved failed and cancelled command outcomes",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-H01",
+          "passedSubtests": [],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\host\\liteRestrictionSave.host.ts",
+              "bytes": 14860,
+              "sha256": "793557da8772a37f06a9ea312f710f49eff895b2144ebc03d1912485c26b71d9"
+            }
+          ]
+        },
+        {
+          "id": "F01-H02",
+          "passedSubtests": [],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\host\\liteRestrictionSave.host.ts",
+              "bytes": 14860,
+              "sha256": "793557da8772a37f06a9ea312f710f49eff895b2144ebc03d1912485c26b71d9"
+            }
+          ]
+        },
+        {
+          "id": "F01-H05",
+          "passedSubtests": [],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\host\\liteRestrictionSave.host.ts",
+              "bytes": 14860,
+              "sha256": "793557da8772a37f06a9ea312f710f49eff895b2144ebc03d1912485c26b71d9"
+            }
+          ]
+        }
+      ],
+      "missingTitleIds": [
+        "LS-32-ACCEPTANCE",
+        "F01-H01",
+        "F01-H02",
+        "F01-H05"
+      ],
+      "mutation": {
+        "status": "UNCLASSIFIED_NO_PREVENTION_SENSITIVE_PROMOTION",
+        "withdrawalCandidates": [],
+        "explanation": "Test names locate evidence only. Availability withdrawal is not prevention-sensitive confidentiality mutation."
+      },
+      "toolPairs": [
+        {
+          "toolId": "clineIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "geminiCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        }
+      ],
+      "conclusion": "COMPONENT_EVIDENCE_LINKAGE_ONLY_NOT_CATALOG_ROW_ACCEPTANCE"
+    },
+    {
+      "id": "LS-33",
+      "automatedTestId": "LS-33-ACCEPTANCE",
+      "matched": [
+        {
+          "id": "LS-33-ACCEPTANCE",
+          "passedSubtests": [],
+          "sourceCandidates": []
+        }
+      ],
+      "missingTitleIds": [
+        "LS-33-ACCEPTANCE"
+      ],
+      "mutation": {
+        "status": "UNCLASSIFIED_NO_PREVENTION_SENSITIVE_PROMOTION",
+        "withdrawalCandidates": [],
+        "explanation": "Test names locate evidence only. Availability withdrawal is not prevention-sensitive confidentiality mutation."
+      },
+      "toolPairs": [
+        {
+          "toolId": "clineIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "geminiCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        }
+      ],
+      "conclusion": "COMPONENT_EVIDENCE_LINKAGE_ONLY_NOT_CATALOG_ROW_ACCEPTANCE"
+    },
+    {
+      "id": "LS-34",
+      "automatedTestId": "LS-34-ACCEPTANCE",
+      "matched": [
+        {
+          "id": "LS-34-ACCEPTANCE",
+          "passedSubtests": [],
+          "sourceCandidates": []
+        }
+      ],
+      "missingTitleIds": [
+        "LS-34-ACCEPTANCE"
+      ],
+      "mutation": {
+        "status": "UNCLASSIFIED_NO_PREVENTION_SENSITIVE_PROMOTION",
+        "withdrawalCandidates": [],
+        "explanation": "Test names locate evidence only. Availability withdrawal is not prevention-sensitive confidentiality mutation."
+      },
+      "toolPairs": [
+        {
+          "toolId": "clineIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "geminiCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        }
+      ],
+      "conclusion": "COMPONENT_EVIDENCE_LINKAGE_ONLY_NOT_CATALOG_ROW_ACCEPTANCE"
+    },
+    {
+      "id": "LS-35",
+      "automatedTestId": "LS-35-ACCEPTANCE",
+      "matched": [
+        {
+          "id": "LS-35-ACCEPTANCE",
+          "passedSubtests": [],
+          "sourceCandidates": []
+        }
+      ],
+      "missingTitleIds": [
+        "LS-35-ACCEPTANCE"
+      ],
+      "mutation": {
+        "status": "UNCLASSIFIED_NO_PREVENTION_SENSITIVE_PROMOTION",
+        "withdrawalCandidates": [],
+        "explanation": "Test names locate evidence only. Availability withdrawal is not prevention-sensitive confidentiality mutation."
+      },
+      "toolPairs": [
+        {
+          "toolId": "clineIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "geminiCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        }
+      ],
+      "conclusion": "COMPONENT_EVIDENCE_LINKAGE_ONLY_NOT_CATALOG_ROW_ACCEPTANCE"
+    },
+    {
+      "id": "LS-36",
+      "automatedTestId": "LS-36-ACCEPTANCE",
+      "matched": [
+        {
+          "id": "LS-36-ACCEPTANCE",
+          "passedSubtests": [],
+          "sourceCandidates": []
+        }
+      ],
+      "missingTitleIds": [
+        "LS-36-ACCEPTANCE"
+      ],
+      "mutation": {
+        "status": "UNCLASSIFIED_NO_PREVENTION_SENSITIVE_PROMOTION",
+        "withdrawalCandidates": [],
+        "explanation": "Test names locate evidence only. Availability withdrawal is not prevention-sensitive confidentiality mutation."
+      },
+      "toolPairs": [
+        {
+          "toolId": "clineIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "geminiCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        }
+      ],
+      "conclusion": "COMPONENT_EVIDENCE_LINKAGE_ONLY_NOT_CATALOG_ROW_ACCEPTANCE"
+    },
+    {
+      "id": "LS-37",
+      "automatedTestId": "LS-37-ACCEPTANCE",
+      "matched": [
+        {
+          "id": "LS-37-ACCEPTANCE",
+          "passedSubtests": [],
+          "sourceCandidates": []
+        },
+        {
+          "id": "F01-U04",
+          "passedSubtests": [
+            {
+              "name": "F01-U04 failed addition preserves ordinary folder glob region and sensitive denies",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-U05",
+          "passedSubtests": [
+            {
+              "name": "F01-U05 file folder glob and region paths share explicit awaited save outcomes",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-U11",
+          "passedSubtests": [
+            {
+              "name": "F01-U11 repeated ordinary marking cannot duplicate or weaken sensitive deny",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-U12",
+          "passedSubtests": [
+            {
+              "name": "F01-U12 full policy upgrades strongest treatment but rejects overflowing new deny",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-U13",
+          "passedSubtests": [
+            {
+              "name": "F01-U13 saved restrictions survive component reload and repository deny removal",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        }
+      ],
+      "missingTitleIds": [
+        "LS-37-ACCEPTANCE"
+      ],
+      "mutation": {
+        "status": "UNCLASSIFIED_NO_PREVENTION_SENSITIVE_PROMOTION",
+        "withdrawalCandidates": [],
+        "explanation": "Test names locate evidence only. Availability withdrawal is not prevention-sensitive confidentiality mutation."
+      },
+      "toolPairs": [
+        {
+          "toolId": "clineIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "geminiCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        }
+      ],
+      "conclusion": "COMPONENT_EVIDENCE_LINKAGE_ONLY_NOT_CATALOG_ROW_ACCEPTANCE"
+    },
+    {
+      "id": "LS-38",
+      "automatedTestId": "LS-38-ACCEPTANCE",
+      "matched": [
+        {
+          "id": "LS-38-ACCEPTANCE",
+          "passedSubtests": [],
+          "sourceCandidates": []
+        }
+      ],
+      "missingTitleIds": [
+        "LS-38-ACCEPTANCE"
+      ],
+      "mutation": {
+        "status": "UNCLASSIFIED_NO_PREVENTION_SENSITIVE_PROMOTION",
+        "withdrawalCandidates": [],
+        "explanation": "Test names locate evidence only. Availability withdrawal is not prevention-sensitive confidentiality mutation."
+      },
+      "toolPairs": [
+        {
+          "toolId": "clineIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "geminiCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        }
+      ],
+      "conclusion": "COMPONENT_EVIDENCE_LINKAGE_ONLY_NOT_CATALOG_ROW_ACCEPTANCE"
+    },
+    {
+      "id": "LS-39",
+      "automatedTestId": "LS-39-ACCEPTANCE",
+      "matched": [
+        {
+          "id": "LS-39-ACCEPTANCE",
+          "passedSubtests": [],
+          "sourceCandidates": []
+        }
+      ],
+      "missingTitleIds": [
+        "LS-39-ACCEPTANCE"
+      ],
+      "mutation": {
+        "status": "UNCLASSIFIED_NO_PREVENTION_SENSITIVE_PROMOTION",
+        "withdrawalCandidates": [],
+        "explanation": "Test names locate evidence only. Availability withdrawal is not prevention-sensitive confidentiality mutation."
+      },
+      "toolPairs": [
+        {
+          "toolId": "clineIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "geminiCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        }
+      ],
+      "conclusion": "COMPONENT_EVIDENCE_LINKAGE_ONLY_NOT_CATALOG_ROW_ACCEPTANCE"
+    },
+    {
+      "id": "LS-40",
+      "automatedTestId": "LS-40-ACCEPTANCE",
+      "matched": [
+        {
+          "id": "LS-40-ACCEPTANCE",
+          "passedSubtests": [],
+          "sourceCandidates": []
+        },
+        {
+          "id": "F01-U04",
+          "passedSubtests": [
+            {
+              "name": "F01-U04 failed addition preserves ordinary folder glob region and sensitive denies",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-U07",
+          "passedSubtests": [
+            {
+              "name": "F01-U07 invalid paths syntax and corrupt storage fail without successful mutation",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-U10",
+          "passedSubtests": [
+            {
+              "name": "F01-U10 failed queued save does not poison later successful roots",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-U11",
+          "passedSubtests": [
+            {
+              "name": "F01-U11 repeated ordinary marking cannot duplicate or weaken sensitive deny",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-U12",
+          "passedSubtests": [
+            {
+              "name": "F01-U12 full policy upgrades strongest treatment but rejects overflowing new deny",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-U13",
+          "passedSubtests": [
+            {
+              "name": "F01-U13 saved restrictions survive component reload and repository deny removal",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        },
+        {
+          "id": "F01-U14",
+          "passedSubtests": [
+            {
+              "name": "F01-U14 flag off withdraws only new restrictions and retains masked existing reads",
+              "raw": {
+                "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+                "bytes": 182056,
+                "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+              }
+            }
+          ],
+          "sourceCandidates": [
+            {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\lite-restriction-save.test.ts",
+              "bytes": 33567,
+              "sha256": "155ad6e9d1272a3669d9520094fefbc82278c2d3627eb3a97c3d7ca97d90f227"
+            }
+          ]
+        }
+      ],
+      "missingTitleIds": [
+        "LS-40-ACCEPTANCE"
+      ],
+      "mutation": {
+        "status": "UNCLASSIFIED_NO_PREVENTION_SENSITIVE_PROMOTION",
+        "withdrawalCandidates": [
+          {
+            "name": "F01-U07 invalid paths syntax and corrupt storage fail without successful mutation",
+            "raw": {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+              "bytes": 182056,
+              "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+            }
+          },
+          {
+            "name": "F01-U14 flag off withdraws only new restrictions and retains masked existing reads",
+            "raw": {
+              "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+              "bytes": 182056,
+              "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+            }
+          }
+        ],
+        "explanation": "Test names locate evidence only. Availability withdrawal is not prevention-sensitive confidentiality mutation."
+      },
+      "toolPairs": [
+        {
+          "toolId": "clineIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "geminiCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        }
+      ],
+      "conclusion": "COMPONENT_EVIDENCE_LINKAGE_ONLY_NOT_CATALOG_ROW_ACCEPTANCE"
+    },
+    {
+      "id": "LS-41",
+      "automatedTestId": "LS-41-ACCEPTANCE",
+      "matched": [
+        {
+          "id": "LS-41-ACCEPTANCE",
+          "passedSubtests": [],
+          "sourceCandidates": []
+        }
+      ],
+      "missingTitleIds": [
+        "LS-41-ACCEPTANCE"
+      ],
+      "mutation": {
+        "status": "UNCLASSIFIED_NO_PREVENTION_SENSITIVE_PROMOTION",
+        "withdrawalCandidates": [],
+        "explanation": "Test names locate evidence only. Availability withdrawal is not prevention-sensitive confidentiality mutation."
+      },
+      "toolPairs": [
+        {
+          "toolId": "clineIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "geminiCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        }
+      ],
+      "conclusion": "COMPONENT_EVIDENCE_LINKAGE_ONLY_NOT_CATALOG_ROW_ACCEPTANCE"
+    },
+    {
+      "id": "LS-42",
+      "automatedTestId": "LS-42-ACCEPTANCE",
+      "matched": [
+        {
+          "id": "LS-42-ACCEPTANCE",
+          "passedSubtests": [],
+          "sourceCandidates": []
+        }
+      ],
+      "missingTitleIds": [
+        "LS-42-ACCEPTANCE"
+      ],
+      "mutation": {
+        "status": "UNCLASSIFIED_NO_PREVENTION_SENSITIVE_PROMOTION",
+        "withdrawalCandidates": [],
+        "explanation": "Test names locate evidence only. Availability withdrawal is not prevention-sensitive confidentiality mutation."
+      },
+      "toolPairs": [
+        {
+          "toolId": "clineIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "geminiCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        }
+      ],
+      "conclusion": "COMPONENT_EVIDENCE_LINKAGE_ONLY_NOT_CATALOG_ROW_ACCEPTANCE"
+    },
+    {
+      "id": "LS-43",
+      "automatedTestId": "LS-43-ACCEPTANCE",
+      "matched": [
+        {
+          "id": "LS-43-ACCEPTANCE",
+          "passedSubtests": [],
+          "sourceCandidates": []
+        }
+      ],
+      "missingTitleIds": [
+        "LS-43-ACCEPTANCE"
+      ],
+      "mutation": {
+        "status": "UNCLASSIFIED_NO_PREVENTION_SENSITIVE_PROMOTION",
+        "withdrawalCandidates": [],
+        "explanation": "Test names locate evidence only. Availability withdrawal is not prevention-sensitive confidentiality mutation."
+      },
+      "toolPairs": [
+        {
+          "toolId": "clineIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "geminiCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        }
+      ],
+      "conclusion": "COMPONENT_EVIDENCE_LINKAGE_ONLY_NOT_CATALOG_ROW_ACCEPTANCE"
+    },
+    {
+      "id": "LS-44",
+      "automatedTestId": "LS-44-ACCEPTANCE",
+      "matched": [
+        {
+          "id": "LS-44-ACCEPTANCE",
+          "passedSubtests": [],
+          "sourceCandidates": []
+        }
+      ],
+      "missingTitleIds": [
+        "LS-44-ACCEPTANCE"
+      ],
+      "mutation": {
+        "status": "UNCLASSIFIED_NO_PREVENTION_SENSITIVE_PROMOTION",
+        "withdrawalCandidates": [],
+        "explanation": "Test names locate evidence only. Availability withdrawal is not prevention-sensitive confidentiality mutation."
+      },
+      "toolPairs": [
+        {
+          "toolId": "clineIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "claudeCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexIde",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "codexCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        },
+        {
+          "toolId": "geminiCli",
+          "status": "UNVERIFIED",
+          "actualToolRoute": null,
+          "applicability": "UNVERIFIED",
+          "positive": null,
+          "negative": null,
+          "leakOracle": null
+        }
+      ],
+      "conclusion": "COMPONENT_EVIDENCE_LINKAGE_ONLY_NOT_CATALOG_ROW_ACCEPTANCE"
+    }
+  ],
+  "catalogCounts": {
+    "rows": 44,
+    "tools": 6,
+    "pairs": 264,
+    "allPairStatus": "UNVERIFIED",
+    "rowsWithPassedComponentTitle": 10,
+    "rowsWithMissingTitleIds": 44
+  },
+  "measuredStress": [
+    {
+      "scope": "COMPONENT_SELECTED128_OF_SYNTHETIC4096_NOT_NATIVE_DISCOVERY",
+      "files": 4096,
+      "selectedReads": 128,
+      "secondRootPublic": true,
+      "crossRootWithheld": true,
+      "bytes": 3474,
+      "elapsedMilliseconds": 3548.7181,
+      "raw": {
+        "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-07-01-stdout.bin",
+        "bytes": 128431,
+        "sha256": "832c5795b27a1f3e35968834bbfcc73fcb80efd00e2815bbdc4424bfa6018848"
+      }
+    }
+  ],
+  "rawFiles": [
+    {
+      "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-01-01-stdout.bin",
+      "bytes": 168177,
+      "sha256": "57474318352f9dabd2e4fef024f7d82caf6c91958284ba8b4a762311c996da20"
+    },
+    {
+      "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-02-01-stdout.bin",
+      "bytes": 79081,
+      "sha256": "096c0bf43e21ee63cad4717513e0611399d77780667276ebc1fa8575a273c260"
+    },
+    {
+      "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-03-01-stdout.bin",
+      "bytes": 147668,
+      "sha256": "d1c808ef934210551eb5b583f5fc5ef0211a3b278cdf6bb0c7e042ed396981c2"
+    },
+    {
+      "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-04-01-stdout.bin",
+      "bytes": 182056,
+      "sha256": "ed8f36334a8700233157f652b8f8cd2fc1144ff14528fe063a9bba7104751e2f"
+    },
+    {
+      "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-05-01-stdout.bin",
+      "bytes": 189222,
+      "sha256": "3913fe1055592ef5333998c24b97cdd2e8f708b5a56bc09d5ae421a90fb15cd9"
+    },
+    {
+      "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-06-01-stdout.bin",
+      "bytes": 184523,
+      "sha256": "cbcaae574353bdeb1bfba28715c79ac0969548c1d1b074ec7154690b9088ede0"
+    },
+    {
+      "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-07-01-stdout.bin",
+      "bytes": 128431,
+      "sha256": "832c5795b27a1f3e35968834bbfcc73fcb80efd00e2815bbdc4424bfa6018848"
+    },
+    {
+      "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\unit-shard-08-01-stdout.bin",
+      "bytes": 79551,
+      "sha256": "25ba8ae77bd6a5dae52bdbe1ba8964b10c526c108f5f0b760e23fab983377135"
+    }
+  ],
+  "budgets": {
+    "componentStartup": "ReadReliability startup-budget unit controls; actual full installed startup remains F32",
+    "nativeMultiWindow": "Requires current native receipt",
+    "stream": "Inclusive byte/chunk and split corpus covered in current full source suite; no all-tool transport latency claim",
+    "performanceRating": null
+  },
+  "dependencyReview": {
+    "retainedReview": {
+      "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261102-f31b-final-package-7be1c304\\advisory-detail-result-review-01.json",
+      "bytes": 269561,
+      "sha256": "2d0a41c4986c149ec10cdc194de93d266f005af20ce101c40c43255a219ec6d2"
+    },
+    "rawResponsesRehashed": 42,
+    "bundled": [
+      {
+        "name": "@babel/parser",
+        "version": "7.29.7",
+        "metadata": {
+          "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\@babel\\parser\\package.json",
+          "bytes": 1382,
+          "sha256": "808c30900ff9e55aafff6361e55c21a39556bdcd2d349e0474fde1e985d855af"
+        }
+      },
+      {
+        "name": "jsonc-parser",
+        "version": "3.3.1",
+        "metadata": {
+          "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\jsonc-parser\\package.json",
+          "bytes": 1180,
+          "sha256": "a7a9192caaac00d9330592f4fd572908bee037518128a0fc3db96d2cd652e2b5"
+        }
+      },
+      {
+        "name": "yaml",
+        "version": "2.9.0",
+        "metadata": {
+          "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\yaml\\package.json",
+          "bytes": 3254,
+          "sha256": "20b8b197cbd10dad245d45e463dfe58e4c8c25a47e24bc4256ad9ab58bf35683"
+        }
+      }
+    ],
+    "affectedBuilderPackages": [
+      {
+        "name": "@azure/msal-node",
+        "retainedAffectedVersion": "5.3.1",
+        "findingCount": 1,
+        "currentLocations": [
+          {
+            "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\@azure\\msal-node\\package.json",
+            "bytes": 2599,
+            "sha256": "7cdd896acda4fd08c2aafd3f55901d1680e8f16199c2371f86e12fca225af865",
+            "version": "5.3.1"
+          }
+        ],
+        "priorStaticUse": {
+          "classification": "PUBLISH_AUTH_BRANCH_NOT_INVOKED",
+          "anchor": "node_modules/@vscode/vsce/out/publish.js:267",
+          "assessment": "MSAL is behind @azure/identity credential acquisition. Producer uses createVSIX/packageCommand, not publish/getAzureCredentialAccessToken; no authorization-code flow exercised.",
+          "evidenceType": "READ_ONLY_STATIC_PATH_INSPECTION_NO_NEW_DYNAMIC_TRACE"
+        },
+        "retainedFixedThreshold": "7.1.0",
+        "compatibility": "NOT_VERIFIED_NO_DEPENDENCY_CHANGE"
+      },
+      {
+        "name": "brace-expansion",
+        "retainedAffectedVersion": "5.0.9",
+        "findingCount": 3,
+        "currentLocations": [
+          {
+            "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\@typescript-eslint\\typescript-estree\\node_modules\\brace-expansion\\package.json",
+            "bytes": 1551,
+            "sha256": "f8a0e0d0a6cbb58106ce6832205e0939a00b9583637011bf8ef4167f4a52fbda",
+            "version": "5.0.9"
+          },
+          {
+            "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\@vscode\\vsce\\node_modules\\brace-expansion\\package.json",
+            "bytes": 1551,
+            "sha256": "f8a0e0d0a6cbb58106ce6832205e0939a00b9583637011bf8ef4167f4a52fbda",
+            "version": "5.0.9"
+          },
+          {
+            "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\glob\\node_modules\\brace-expansion\\package.json",
+            "bytes": 1551,
+            "sha256": "f8a0e0d0a6cbb58106ce6832205e0939a00b9583637011bf8ef4167f4a52fbda",
+            "version": "5.0.9"
+          }
+        ],
+        "priorStaticUse": {
+          "classification": "DIRECT_TRANSITIVE_PACKAGING_PATTERNS",
+          "anchor": "node_modules/@vscode/vsce/node_modules/minimatch/dist/commonjs/index.js:149",
+          "assessment": "minimatch calls brace expansion on admitted finite patterns. No pathological nested brace input established; active version finding remains.",
+          "evidenceType": "READ_ONLY_STATIC_PATH_INSPECTION_NO_NEW_DYNAMIC_TRACE"
+        },
+        "retainedFixedThreshold": "5.0.12",
+        "compatibility": "NOT_VERIFIED_NO_DEPENDENCY_CHANGE"
+      },
+      {
+        "name": "fast-uri",
+        "retainedAffectedVersion": "3.1.5",
+        "findingCount": 10,
+        "currentLocations": [
+          {
+            "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\fast-uri\\package.json",
+            "bytes": 1983,
+            "sha256": "3b01e17f5de289a0905ad894187235c8a8bb284a1fd285b40227b1d862f86b4d",
+            "version": "3.1.5"
+          }
+        ],
+        "priorStaticUse": {
+          "classification": "SCHEMA_URI_HELPER",
+          "anchor": "node_modules/@secretlint/config-loader/node_modules/ajv/dist/runtime/uri.js:3",
+          "assessment": "AJV URI resolver is in Secretlint config/schema graph; vsce supplies fixed configFileJSON/rules. No malicious external schema/URI or SSRF execution established, not a universal unreachability proof.",
+          "evidenceType": "READ_ONLY_STATIC_PATH_INSPECTION_NO_NEW_DYNAMIC_TRACE"
+        },
+        "retainedFixedThreshold": "3.1.9",
+        "compatibility": "NOT_VERIFIED_NO_DEPENDENCY_CHANGE"
+      },
+      {
+        "name": "glob",
+        "retainedAffectedVersion": "13.0.6",
+        "findingCount": 1,
+        "currentLocations": [
+          {
+            "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\glob\\package.json",
+            "bytes": 2649,
+            "sha256": "5a28ef9a1f5252feb47ffe288a6350fe99b18311462e6a9cdacbdd0bb4be6be9",
+            "version": "13.0.6"
+          }
+        ],
+        "priorStaticUse": {
+          "classification": "DIRECT_PACKAGING_ENUMERATION",
+          "anchor": "node_modules/@vscode/vsce/out/package.js:1253",
+          "assessment": "Constant ** enumerates explicit staging with node_modules exclusion. No AbortSignal is supplied at this call, so the documented cancellation trigger is not established here; affected range remains recorded.",
+          "evidenceType": "READ_ONLY_STATIC_PATH_INSPECTION_NO_NEW_DYNAMIC_TRACE"
+        },
+        "retainedFixedThreshold": "14.0.2",
+        "compatibility": "NOT_VERIFIED_NO_DEPENDENCY_CHANGE"
+      },
+      {
+        "name": "js-yaml",
+        "retainedAffectedVersion": "4.3.1",
+        "findingCount": 1,
+        "currentLocations": [
+          {
+            "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\js-yaml\\package.json",
+            "bytes": 2281,
+            "sha256": "82b932c87c5da7901c6a8f984698c57912570146fffd3156dcdc96a6c210d847",
+            "version": "4.3.1"
+          }
+        ],
+        "priorStaticUse": {
+          "classification": "CONFIG_FILE_BRANCH_NOT_SELECTED",
+          "anchor": "node_modules/@secretlint/node/module/index.js:105",
+          "assessment": "vsce Secretlint uses configFileJSON and loadPackagesFromConfigDescriptor instead of loadConfig/file loading. js-yaml belongs to rc-config-loader YAML file branch, with no malicious YAML document established on this path.",
+          "evidenceType": "READ_ONLY_STATIC_PATH_INSPECTION_NO_NEW_DYNAMIC_TRACE"
+        },
+        "retainedFixedThreshold": "4.3.2",
+        "compatibility": "NOT_VERIFIED_NO_DEPENDENCY_CHANGE"
+      },
+      {
+        "name": "markdown-it",
+        "retainedAffectedVersion": "14.3.0",
+        "findingCount": 4,
+        "currentLocations": [
+          {
+            "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\markdown-it\\package.json",
+            "bytes": 3050,
+            "sha256": "72b062f601d5c5a584937372745462b3f35b4d7813f3bf62b3671ab89560423d",
+            "version": "14.3.0"
+          }
+        ],
+        "priorStaticUse": {
+          "classification": "DIRECT_PACKAGING_PARSER",
+          "anchor": "node_modules/@vscode/vsce/out/package.js:630",
+          "assessment": "README/CHANGELOG render with html:true on frozen reviewed local assets. Direct reachable builder parser; trusted input context is not proof patched or harmless.",
+          "evidenceType": "READ_ONLY_STATIC_PATH_INSPECTION_NO_NEW_DYNAMIC_TRACE"
+        },
+        "retainedFixedThreshold": "14.3.3",
+        "compatibility": "NOT_VERIFIED_NO_DEPENDENCY_CHANGE"
+      },
+      {
+        "name": "minimatch",
+        "retainedAffectedVersion": "10.2.5",
+        "findingCount": 1,
+        "currentLocations": [
+          {
+            "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\@typescript-eslint\\typescript-estree\\node_modules\\minimatch\\package.json",
+            "bytes": 1810,
+            "sha256": "4b3a08a7ad20dead8bbe4b4fe97a2746bded7c51d218ef3034eb4e330ad31f08",
+            "version": "10.2.5"
+          },
+          {
+            "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\@vscode\\vsce\\node_modules\\minimatch\\package.json",
+            "bytes": 1810,
+            "sha256": "4b3a08a7ad20dead8bbe4b4fe97a2746bded7c51d218ef3034eb4e330ad31f08",
+            "version": "10.2.5"
+          },
+          {
+            "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\glob\\node_modules\\minimatch\\package.json",
+            "bytes": 1810,
+            "sha256": "4b3a08a7ad20dead8bbe4b4fe97a2746bded7c51d218ef3034eb4e330ad31f08",
+            "version": "10.2.5"
+          }
+        ],
+        "priorStaticUse": {
+          "classification": "DIRECT_PACKAGING_PATTERNS",
+          "anchor": "node_modules/@vscode/vsce/out/package.js:1303",
+          "assessment": "Stage filenames are filtered against finite pinned manifest/default patterns. Arbitrary attacker-selected amplification patterns were not established.",
+          "evidenceType": "READ_ONLY_STATIC_PATH_INSPECTION_NO_NEW_DYNAMIC_TRACE"
+        },
+        "retainedFixedThreshold": "11.0.1",
+        "compatibility": "NOT_VERIFIED_NO_DEPENDENCY_CHANGE"
+      },
+      {
+        "name": "qs",
+        "retainedAffectedVersion": "6.15.3",
+        "findingCount": 3,
+        "currentLocations": [
+          {
+            "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\qs\\package.json",
+            "bytes": 3192,
+            "sha256": "47477ed1243939a78ab502c3d1d10a3d0571c06f9c2dfa128d7c047dbb010bf4",
+            "version": "6.15.3"
+          }
+        ],
+        "priorStaticUse": {
+          "classification": "REST_QUERY_BRANCH_NOT_INVOKED",
+          "anchor": "node_modules/typed-rest-client/Util.js:59",
+          "assessment": "qs.stringify constructs REST queries. Inspected local package path does not invoke Gallery REST/auth calls or supply attacker query objects; no dynamic absence proof claimed.",
+          "evidenceType": "READ_ONLY_STATIC_PATH_INSPECTION_NO_NEW_DYNAMIC_TRACE"
+        },
+        "retainedFixedThreshold": "6.16.1",
+        "compatibility": "NOT_VERIFIED_NO_DEPENDENCY_CHANGE"
+      },
+      {
+        "name": "undici",
+        "retainedAffectedVersion": "7.29.0",
+        "findingCount": 18,
+        "currentLocations": [
+          {
+            "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\undici\\package.json",
+            "bytes": 6333,
+            "sha256": "d2fb5736b5adad6a74c3fba9345d756258e1e953a3a2a13c03fca1bd6c9f6c52",
+            "version": "7.29.0"
+          }
+        ],
+        "priorStaticUse": {
+          "classification": "LOADED_NETWORK_CAPABILITY_NOT_CALLED_HERE",
+          "anchor": "node_modules/cheerio/dist/commonjs/index.js:210",
+          "assessment": "Cheerio imports undici for fromURL while vsce uses cheerio.load on local HTML. No fromURL/cache/WebSocket/EventSource/RetryHandler execution established on package path; known HIGH TLS/cache findings stay named.",
+          "evidenceType": "READ_ONLY_STATIC_PATH_INSPECTION_NO_NEW_DYNAMIC_TRACE"
+        },
+        "retainedFixedThreshold": "7.30.1",
+        "compatibility": "NOT_VERIFIED_NO_DEPENDENCY_CHANGE"
+      }
+    ],
+    "retainedAssociations": 42,
+    "bundledAffectedAssociationsInRetainedLookup": 0,
+    "freshNetworkQueries": 0,
+    "remediation": "OPEN",
+    "ownerRiskAcceptance": "NOT_GRANTED",
+    "interpretation": "The 42 retained findings are builder dependencies, not 42 shipped-runtime findings. No vulnerability-free guarantee or dynamic unreachability proof."
+  },
+  "remaining": [
+    "Actual current tool routes and per-pair applicability/control/oracle linkage",
+    "Prevention-sensitive mutation evidence per applicable catalog item",
+    "Current native startup/scan/stream/multi-window acceptance",
+    "Two real-agent project trials and required human/independent evidence"
+  ],
+  "score": null,
+  "finalRating": null,
+  "releaseReady": false,
+  "nativeRuns": 0,
+  "networkRequests": 0
+}

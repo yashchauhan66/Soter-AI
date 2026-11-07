@@ -1,0 +1,46 @@
+﻿TAP version 13
+# Subtest: F26a real owner and default client HTTP adapter allow a complete public synthetic index
+ok 1 - F26a real owner and default client HTTP adapter allow a complete public synthetic index
+  ---
+  duration_ms: 404.4552
+  type: 'test'
+  ...
+# Subtest: F26a real owner signed BLOCK crosses the default HTTP adapter without raw content
+ok 2 - F26a real owner signed BLOCK crosses the default HTTP adapter without raw content
+  ---
+  duration_ms: 253.8553
+  type: 'test'
+  ...
+# Subtest: F26a current descriptor with an absent owner refuses through the default HTTP adapter
+ok 3 - F26a current descriptor with an absent owner refuses through the default HTTP adapter
+  ---
+  duration_ms: 140.7917
+  type: 'test'
+  ...
+# Subtest: F26a descriptor published before machine disable cannot admit a real HTTP scan
+ok 4 - F26a descriptor published before machine disable cannot admit a real HTTP scan
+  ---
+  duration_ms: 109.5336
+  type: 'test'
+  ...
+# Subtest: F26a default HTTP adapter refuses302 without following external Location or making a second request
+ok 5 - F26a default HTTP adapter refuses302 without following external Location or making a second request
+  ---
+  duration_ms: 132.7937
+  type: 'test'
+  ...
+# Subtest: F26a default HTTP adapter refuses oversized malformed unsupported and truncated response framing
+ok 6 - F26a default HTTP adapter refuses oversized malformed unsupported and truncated response framing
+  ---
+  duration_ms: 532.6823
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3603.9648

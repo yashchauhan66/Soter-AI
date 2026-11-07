@@ -7,12 +7,12 @@
     "executionDependencies": "Record any availability-based change to the proposed linear queue before freeze; no unsupported card counted complete"
   },
   "planVersion": 1,
-  "clientDate": "2026-10-13",
+  "clientDate": "2026-11-06",
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
   "scope": "Supported earlier scoped features and F31a DONE. F31b scoped packaging/audit-work DONE only after transition bytes;42 build findings remediationOPEN, no risk acceptance/clean audit/release readiness. F26a owner-skipped INCOMPLETE/unsupported/no further native runs; parentF26 and globalF31 readiness remain INCOMPLETE. F32 ACTIVE only after transition bytes, V01-V05 unchanged/pending, originalL6 HUMAN-ACTIONS STOP/no rating/publication.",
   "implementationConcurrency": 1,
-  "activeFeature": "F32",
-  "activeSubcard": null,
+  "activeFeature": "F26",
+  "activeSubcard": "F26a",
   "priorityAmendment": {
     "date": "2026-10-26",
     "authority": "User requested shorter independent features first and time-consuming work later",
@@ -857,7 +857,7 @@
     {
       "id": "F26",
       "title": "Optional Git/history hooks.",
-      "status": "PLANNED",
+      "status": "VERIFYING",
       "result": "INCOMPLETE",
       "requires": [
         "F25"
@@ -866,13 +866,13 @@
         {
           "id": "F26a",
           "title": "pre-commit",
-          "status": "PLANNED",
+          "status": "VERIFYING",
           "result": "INCOMPLETE",
           "requires": [
             "parent prerequisites"
           ],
-          "progressEvidence": "docs/soterai-lite/evidence/20261102-f26a-native09-preparation/native12-final-reconciliation-01.json",
-          "executionDecision": "Final native12 consumed once and failed with missing primary result; Code0/wrapper1/bothEOF/no deadline. User call_3d1ca86cdb034f82a9ea32aa1bc401ab explicitly permits skip/delete if incomplete: reversible SKIP selected, source/evidence retained, no further F26a native runs, no DONE/supported claim.",
+          "progressEvidence": "docs/soterai-lite/evidence/20261106-remaining-queue/current-progress-01.json",
+          "executionDecision": "Owner explicitly resumed completion on 6 November and approved local tests and isolated Code checks. A new default-off opt-in candidate is being verified; prior failed attempts remain retained. Native34, affected checks and feature completion are still required.",
           "native12PendingDecision": {
             "status": "NATIVE12_ONE_EXTRA_DECISION_ASKED_NOT_AUTHORIZED_NOT_RUN",
             "checkpoint": "5901a05b6b040334ad9c3e83c9ba474df35be3a6",
@@ -901,10 +901,38 @@
               "bytes": 5257,
               "sha256": "5286c28ea8fc56ac01e0479c329ee454263dfe56952aebbebd5a5055f0b6b7db"
             },
-            "furtherAttemptsAllowed": 0
+            "furtherAttemptsAllowed": 0,
+            "historical": true,
+            "supersededForCurrentWorkBy": "docs/soterai-lite/evidence/20261106-remaining-queue/owner-resumption-01.json"
           },
-          "executionState": "USER_SKIPPED_FINAL_ATTEMPT_EXHAUSTED",
-          "supported": false
+          "executionState": "NATIVE34_PASS_ORIGINAL_AFFECTED509_AND_COMMIT_PENDING",
+          "supported": false,
+          "historicalExecutionDecision": "Final native12 consumed once and failed with missing primary result; Code0/wrapper1/bothEOF/no deadline. User call_3d1ca86cdb034f82a9ea32aa1bc401ab explicitly permits skip/delete if incomplete: reversible SKIP selected, source/evidence retained, no further F26a native runs, no DONE/supported claim.",
+          "currentAuthorization": {
+            "path": "docs/soterai-lite/evidence/20261106-remaining-queue/owner-resumption-01.json",
+            "bytes": 1121,
+            "sha256": "dd21779251529dc61814c451b9089767ff7e7af218f17784cb7269344544ffa0"
+          },
+          "currentNativeAcceptance": {
+            "path": "docs/soterai-lite/evidence/20261106-remaining-queue/f26a/native14-acceptance.json",
+            "bytes": 14633,
+            "sha256": "e2914c7271cab9503d3f325d1ecd6276b861543b1f1915ebcf5aa5cb8ec9fe42"
+          },
+          "currentAffectedAcceptance": {
+            "path": "docs/soterai-lite/evidence/20261106-v01-current-01/affected-acceptance.json",
+            "bytes": 25731,
+            "sha256": "413ae4dac58f5969bbac5a8ec2e83f8acc1964c96efbdc3aa3bb418fb77ba165"
+          },
+          "remaining": [
+            "Original remaining334 affected assertions; current175 already accepted",
+            "Scoped source/evidence commit, ledger and transition byte proofs"
+          ],
+          "candidateAvailability": {
+            "preCommitDefault": false,
+            "ownerReviewedOptIn": true,
+            "native34": "PASS_SCOPED",
+            "featureComplete": false
+          }
         },
         {
           "id": "F26b",
@@ -945,7 +973,7 @@
       ],
       "completionRule": "All required subcards pass individually before parent DONE",
       "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
-      "executionState": "SUPPORTED_SUBCARDS_F26B_F26C_DONE_F26A_USER_SKIPPED"
+      "executionState": "F26A_OWNER_RESUMED_CURRENT_NATIVE_ACCEPTANCE_PENDING"
     },
     {
       "id": "F27",
@@ -1134,13 +1162,18 @@
       "completionRule": "Both F31a and F31b pass their declared scope; all required earlier runtime features pass before parent DONE",
       "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
       "packagingSubcardsCompleteWithinSupportedScope": true,
-      "remaining": "Original earlier F26a inventory remains unmet/owner-skipped; known builder remediation and F32/final/human/publication readiness are not accepted."
+      "remaining": "Current packaging controls pass55, content18/four runtimes verified; parent completion still requires original F26a/F32 and final evidence. Known42 builder findings remain disclosed.",
+      "currentPackageQualification": {
+        "path": "docs/soterai-lite/evidence/20261106-remaining-queue/candidate-01/current-package-qualification-01.json",
+        "bytes": 8739,
+        "sha256": "650ec4dd35938dbbce995c858063ffe773850f941f611a3925425fd2b2aefe1d"
+      }
     },
     {
       "id": "F32",
       "title": "Install, upgrade and removal lifecycle.",
-      "status": "ACTIVE",
-      "result": "NOT-RUN",
+      "status": "VERIFYING",
+      "result": "INCOMPLETE",
       "requires": [
         "F31"
       ],
@@ -1152,51 +1185,244 @@
         "F31a",
         "F31b"
       ],
-      "ownerException": "Owner final-attempt F26a skip and explicit repeated F31b→F32→final requests permit supported-scope progression without calling parentF26/F31 global readiness complete. Original requires remain recorded.",
-      "startCondition": "No F32 production before actual f31b-transition-byte-proof-01.json PASS; actual installed-only lifecycle and its own feature flags/tests/newVSIX/affected checks/source bytes remain mandatory."
+      "ownerException": "Current owner request authorizes completing F26a/F31/F32 and final gates; historical skipped-feature scheduling remains historical. No required acceptance is inferred.",
+      "startCondition": "No F32 production before actual f31b-transition-byte-proof-01.json PASS; actual installed-only lifecycle and its own feature flags/tests/newVSIX/affected checks/source bytes remain mandatory.",
+      "implementationState": {
+        "recordedAt": "2026-11-06",
+        "status": "SOURCE_FULL_PACKAGE_PASS_INSTALLED_ACCEPTANCE_PENDING",
+        "sourceProof": {
+          "path": "docs/soterai-lite/evidence/20261106-remaining-queue/candidate-01/full-inputs-02.json",
+          "bytes": 223848,
+          "sha256": "23fd63bb04122bf055f656a77424085b75ff3e3c813121c15034cd209fd1c8f6"
+        },
+        "vsix": {
+          "path": "packages/soterai-lite/soterai-lite-0.7.0-resumed-20261106-attempt02.vsix",
+          "bytes": 1742104,
+          "sha256": "011f96d19d42dbefc2e56eb5399bf5c7f16a09d6b71b8bae5be9d66b2f3769ec"
+        },
+        "fullSuite": {
+          "tests": 4892,
+          "pass": 4888,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 4,
+          "todo": 0,
+          "evidence": {
+            "path": "docs/soterai-lite/evidence/20261106-remaining-queue/candidate-01/full-suite-acceptance-02.json",
+            "bytes": 32648,
+            "sha256": "95da08741866668bcaba10ffdb395b838875c078b58c7a0cb96caec4ade6c777"
+          },
+          "execution": "EXECUTED_ON_PREVIOUS_PROOF_REUSED_AFTER_METADATA_ONLY_CHANGE"
+        },
+        "metadataTests": {
+          "tests": 110,
+          "pass": 110,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "packageTests": {
+          "tests": 55,
+          "pass": 55,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        }
+      },
+      "installedLifecycle": {
+        "result": "INCOMPLETE",
+        "assertionsAccepted": 0,
+        "assertionsDeclared": 44,
+        "phaseObservationsDeclared": 59,
+        "normalRounds": {
+          "max": 3,
+          "consumed": 3,
+          "result": "ALL_FAIL_OR_INCOMPLETE",
+          "perRound": {
+            "1": "AssertionError in the runner at the first phase (primary-before-cli-absence); no later phase ran and no Code window launched; failure receipt lists no completed phases.",
+            "2": "Primary-phase observer AssertionError during the primary Code window; failing stage not recorded.",
+            "3": "Primary-phase observer failed at NATIVE_TRUST_HANDSHAKE (no native trust keyboard receipt)."
+          },
+          "note": "No attempt, including extra05, ran any phase beyond primary. Failures retained, not regraded."
+        },
+        "extra05": {
+          "authorized": true,
+          "maxAttempts": 1,
+          "consumed": true,
+          "result": "FAIL_OR_INCOMPLETE_NO_RETRY",
+          "stage": "I06",
+          "consumedReceipt": "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/installed-extra05-consumed.json",
+          "consumedReceiptSha256": "31c056ea8f50096952512203655999f137a73dc52df05cedaa910d3e8c217f44",
+          "failureReceipt": "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/retained-native-extra05-01/installed-extra05-failure.json",
+          "failureReceiptSha256": "f89e0779a7f5b32988173cd25812ec7a882c77dfa1e519175fa2d2142fd25847",
+          "checkpoint": "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/native-extra05-checkpoint-01.json",
+          "checkpointSha256": "d815cb292d90f60be13a8274f74529f1941a65fb70396516a2b0184388db69d1",
+          "observed": "Real native trust grant and minimal onboarding (33031 ms, 9 keyboard actions) completed. Failed at the I06 migration-modal handshake: renderer timed out 15.2 s after the request while the product's vault migration had completed on disk. Declared close and both EOF were recorded."
+        },
+        "phasesNeverReachedNatively": [
+          "restart",
+          "upgrade-current from genuine 0.6.3",
+          "upgrade-restart",
+          "untrusted",
+          "disabled",
+          "uninstalled"
+        ],
+        "diagnosis": {
+          "status": "INERT_PROPOSAL_ONLY_NOT_RUN",
+          "proposal": "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/I06-DIAGNOSTIC-PROPOSAL06.md",
+          "proposalSha256": "211cad36c13d5f0113616104fee5beb07591b93a76c44a90246762d18141eff5",
+          "fixture": "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/installed-renderer-proposed-05.cjs",
+          "fixtureSha256": "75f2c76f9a35796cd86bde0ebcff259fe3f1bf93c87b33f75e2e4913ee50b205",
+          "cause": "UNCONFIRMED. Retained receipts cannot tell the 15 s dialog-text wait from the 8 s dialog-close wait. Manual interaction with the visible owned window is an open candidate; startup auto-scan is ruled out by timing.",
+          "admissionWiredToFixture": false,
+          "rootCauseUpdate": {
+            "recordedAt": "2026-11-06",
+            "status": "PROBABLE_NOT_NATIVELY_CONFIRMED",
+            "cause": "Launch contracts 01-03 never set window.dialogStyle; Windows default 'native' renders extension modal messages as OS boxes outside the workbench DOM, while workspace trust always uses the custom dialog. Renderer .monaco-dialog-box wait therefore expired at WAIT_DIALOG_TEXT while the visible OS box was answered outside the fixture.",
+            "proposal": "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/I06-ROOT-CAUSE-PROPOSAL07.md",
+            "fixtureFix": "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/installed-launch-contract-proposed-04.cjs",
+            "fixtureFixHashed": false,
+            "fixtureFixSyntaxCheck": "node --check exit 0 (2026-11-06)",
+            "ownerIntent": "Owner granted blanket permission on 2026-11-06; extra06 still needs runner06/admission/control tests/hash-bound approval before launch.",
+            "blockers": [
+              "Kiro OS command sandbox denies D:\\ to shell processes (Test-Path/Get-ChildItem Access is denied); runner requires a fresh D:\\SoterAI-Lite-test-profiles root, so no native round can launch from the sandboxed agent shell.",
+              "Installed VS Code self-updated to 1.145.0 (a717861c07586a53d83b80d742cd3f59b20a6273); admission/runner05/custody pins 1.144.1 (261c84cb1e...), whose appRoot no longer exists. Vendor receipt, signature/vendor/CDP review, final package qualification and runner constants must be re-qualified for 1.145.0 before extra06."
+            ]
+          }
+        },
+        "furtherNativeRounds": "NOT_AUTHORIZED. A new bounded extra06 needs a fresh explicit owner approval bound to its admission, runner, source and VSIX hashes. Before any launch a successor admission and the updated control tests must exist and pass.",
+        "f26a": "Owner-skipped, unsupported, no further runs.",
+        "currentAttemptState": {
+          "acceptedAssertions": 0,
+          "requiredAssertions": 44,
+          "requiredObservations": 59,
+          "requiredPhases": 8,
+          "status": "EARLY_RENDERER_ATTACH_SUCCESSOR_READY_NOT_RUN",
+          "failure": "Previous installed run observed trust changing before renderer attachment; initiating trigger remains unknown. Failed runs retained."
+        },
+        "preparedSuccessor": {
+          "path": "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/installed-extra09-admission.json",
+          "bytes": 21001,
+          "sha256": "863d776a117967d76754a4d2823e3903511d6053f8f1e460bd956e2dd28de5a1"
+        },
+        "currentNativeBlocker": "External VS Code updater holds vscode-updating; installed1.145.1 hash unchanged at last observation. No updater termination or normal-profile changes authorized or performed."
+      },
+      "remainingToDone": [
+        "Owner approval for one bounded extra06 round and a successor admission for the I06 diagnostic fixture",
+        "Actual installed-only run passing all 44 assertions and 59 observations across the eight phases, including the genuine 0.6.3 upgrade",
+        "Fresh public vendor review and affected checks for the exact object",
+        "Source and transition byte proofs and a scoped local commit"
+      ],
+      "releaseReady": false,
+      "currentResumedWork": {
+        "path": "docs/soterai-lite/evidence/20261106-remaining-queue/owner-resumption-01.json",
+        "bytes": 1121,
+        "sha256": "dd21779251529dc61814c451b9089767ff7e7af218f17784cb7269344544ffa0"
+      },
+      "historicalImplementationState": {
+        "recordedAt": "2026-11-05",
+        "status": "SOURCE_IMPLEMENTED_FULL_SUITE_PASS_INSTALLED_LIFECYCLE_NOT_ACCEPTED",
+        "scope": "Source, unit and component results only. Not an installed-only lifecycle acceptance, not release readiness.",
+        "scopedSourceFiles": 29,
+        "sourceProof": "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/full-inputs-04.json",
+        "sourceProofSha256": "21a9721cade24be9cb76a03350273dbc79f1f8e0e913bc92d7a1c5385db8b764",
+        "sourceCheckpointByteProof": "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/f32-source-checkpoint-01-byte-proof.json",
+        "sourceCheckpointByteProofSha256": "fb1ee6a45005736f19052ee365b500723281d58edcc5a44ca105c69eeff546dc",
+        "sourceRecheck": "All 29 scoped files and the VSIX re-hashed on 2026-11-05 against the proof: 29/29 match, 0 differ.",
+        "vsix": {
+          "path": "packages/soterai-lite/soterai-lite-0.7.0-f32-20261103-attempt01.vsix",
+          "bytes": 1742100,
+          "sha256": "e2ce3dc44d45b5e160ab0f95d713a9434a9ea7d610ce7abd2bf2500abe89d649"
+        },
+        "fullSuite": {
+          "tests": 4891,
+          "pass": 4887,
+          "fail": 0,
+          "skipped": 4,
+          "evidence": "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/current-full-progress-02.json",
+          "evidenceSha256": "84c57d55a9d6a768127affa38f758f7131369b795da5c24ace26d4b609c42ac4"
+        }
+      }
     }
   ],
   "finalGates": [
     {
       "id": "V01",
-      "status": "PLANNED",
-      "result": "NOT-RUN",
+      "status": "VERIFYING",
+      "result": "INCOMPLETE",
       "requires": [
         "F32"
-      ]
+      ],
+      "preparationState": "FULL_PACKAGE_AFFECTED175_F05_PASS_REMAINING_NATIVE_PENDING",
+      "currentWork": "docs/soterai-lite/evidence/20261106-remaining-queue/owner-resumption-01.json",
+      "currentProgress": {
+        "path": "docs/soterai-lite/evidence/20261106-remaining-queue/current-progress-01.json",
+        "bytes": 4508,
+        "sha256": "774cdb791df294e638f6c1d7009ebc76266de25843899830168db03b01b8ec68"
+      }
     },
     {
       "id": "V02",
-      "status": "PLANNED",
-      "result": "NOT-RUN",
+      "status": "VERIFYING",
+      "result": "INCOMPLETE",
       "requires": [
         "V01"
-      ]
+      ],
+      "preparationState": "SCRIPTED4_STREAM6_COMPONENT_MUTATION_AND_CATALOG_MAPPING_COMPLETE_FULL_APPLICABILITY_PENDING",
+      "currentWork": "docs/soterai-lite/evidence/20261106-remaining-queue/owner-resumption-01.json",
+      "currentProgress": {
+        "path": "docs/soterai-lite/evidence/20261106-remaining-queue/current-progress-01.json",
+        "bytes": 4508,
+        "sha256": "774cdb791df294e638f6c1d7009ebc76266de25843899830168db03b01b8ec68"
+      }
     },
     {
       "id": "V03",
-      "status": "PLANNED",
-      "result": "NOT-RUN",
+      "status": "VERIFYING",
+      "result": "INCOMPLETE",
       "requires": [
         "V02"
-      ]
+      ],
+      "preparationState": "CURRENT_DELIVERABLES_PREPARED_PREREQUISITES_INCOMPLETE",
+      "currentWork": "docs/soterai-lite/evidence/20261106-remaining-queue/owner-resumption-01.json",
+      "currentProgress": {
+        "path": "docs/soterai-lite/evidence/20261106-remaining-queue/current-progress-01.json",
+        "bytes": 4508,
+        "sha256": "774cdb791df294e638f6c1d7009ebc76266de25843899830168db03b01b8ec68"
+      }
     },
     {
       "id": "V04",
-      "status": "PLANNED",
-      "result": "NOT-RUN",
+      "status": "VERIFYING",
+      "result": "INCOMPLETE",
       "requires": [
         "V03"
-      ]
+      ],
+      "preparationState": "CURRENT_NEUTRAL_KIT393_VERIFIED_PREREQUISITES_INCOMPLETE",
+      "currentWork": "docs/soterai-lite/evidence/20261106-remaining-queue/owner-resumption-01.json",
+      "currentProgress": {
+        "path": "docs/soterai-lite/evidence/20261106-remaining-queue/current-progress-01.json",
+        "bytes": 4508,
+        "sha256": "774cdb791df294e638f6c1d7009ebc76266de25843899830168db03b01b8ec68"
+      }
     },
     {
       "id": "V05",
-      "status": "PLANNED",
-      "result": "NOT-RUN",
+      "status": "VERIFYING",
+      "result": "INCOMPLETE",
       "requires": [
         "V04"
       ],
-      "action": "L6 HUMAN-ACTIONS and STOP; L7 resumes from supplied exact-object evidence"
+      "action": "L6 HUMAN-ACTIONS and STOP; L7 resumes from supplied exact-object evidence",
+      "preparationState": "HUMAN_CHECKLIST_PREPARED_NOT_ENTERED",
+      "currentWork": "docs/soterai-lite/evidence/20261106-remaining-queue/owner-resumption-01.json",
+      "currentProgress": {
+        "path": "docs/soterai-lite/evidence/20261106-remaining-queue/current-progress-01.json",
+        "bytes": 4508,
+        "sha256": "774cdb791df294e638f6c1d7009ebc76266de25843899830168db03b01b8ec68"
+      }
     }
   ],
   "runtimeFeatureFlags": "Proposed only in plan; no settings or runtime implementation changed",
@@ -1221,7 +1447,10 @@
       "evidence": "docs/soterai-lite/evidence/20261102-f26a-native09-preparation/native12-final-reconciliation-01.json",
       "retainedOriginalRequirement": true,
       "countsAsDone": false,
-      "advertisedSupport": false
+      "advertisedSupport": false,
+      "historical": true,
+      "activeForCurrentWork": false,
+      "supersededForCurrentWorkBy": "docs/soterai-lite/evidence/20261106-remaining-queue/owner-resumption-01.json"
     }
   },
   "f26cLatestCheckpoint": {
@@ -1630,5 +1859,29 @@
     "transitionByteProofRequired": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/f31b-transition-byte-proof-01.json",
     "next": "F32_AFTER_TRANSITION_BYTES",
     "releaseReady": false
+  },
+  "currentResumedWork": {
+    "path": "docs/soterai-lite/evidence/20261106-remaining-queue/owner-resumption-01.json",
+    "bytes": 1121,
+    "sha256": "dd21779251529dc61814c451b9089767ff7e7af218f17784cb7269344544ffa0",
+    "status": "CURRENT_CODE_PACKAGE_NATIVE34_AFFECTED175_VERIFIED_REMAINING_NATIVE_BLOCKED_BY_UPDATER",
+    "featureComplete": false,
+    "releaseReady": false,
+    "latestProgress": {
+      "path": "docs/soterai-lite/evidence/20261106-remaining-queue/current-progress-01.json",
+      "bytes": 4508,
+      "sha256": "774cdb791df294e638f6c1d7009ebc76266de25843899830168db03b01b8ec68"
+    },
+    "artifact": {
+      "path": "packages/soterai-lite/soterai-lite-0.7.0-resumed-20261106-attempt02.vsix",
+      "bytes": 1742104,
+      "sha256": "011f96d19d42dbefc2e56eb5399bf5c7f16a09d6b71b8bae5be9d66b2f3769ec"
+    },
+    "sourceProof": {
+      "path": "docs/soterai-lite/evidence/20261106-remaining-queue/candidate-01/full-inputs-02.json",
+      "bytes": 223848,
+      "sha256": "23fd63bb04122bf055f656a77424085b75ff3e3c813121c15034cd209fd1c8f6"
+    },
+    "nativeBlocker": "External VS Code updater holds vscode-updating; installed1.145.1 hash unchanged at last observation. No updater termination or normal-profile changes authorized or performed."
   }
 }

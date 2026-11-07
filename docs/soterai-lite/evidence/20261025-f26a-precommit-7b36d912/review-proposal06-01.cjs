@@ -1,0 +1,23 @@
+// Root/same-lineage static custody review, not independent or native evidence.
+const fs=require('node:fs'),assert=require('node:assert/strict');
+const {check,fact,json,own,sha}=require('./post-full04-contract.cjs');
+const checked=check();delete checked.sourceFiles;
+const custody=json(own('precommit-launcher06-authoring-custody.json'));
+for(const field of ['generator','proposalLauncher','bootstrap','offlineHelper','proposal','currentBinding','parentLauncher','parentBootstrap']){const x=custody[field];assert.deepEqual(fact(require('node:path').join(require('./post-full04-contract.cjs').repo,x.path)),x);}
+const syntax=json(own('precommit-launcher06-syntax-01.json'));assert.equal(syntax.errorCount,0);assert.equal(syntax.candidate.sha256,custody.proposalLauncher.sha256);
+const current=json(own('native-current-binding-04.json')),previous=fs.readFileSync(own('run-precommit-native-05.ps1'),'utf8'),proposed=fs.readFileSync(own('precommit-launcher06-proposed.ps1.txt'),'utf8');
+const pattern=name=>new RegExp('function Assert-F26ANative'+name+'Binding \\{\\r?\\n[\\s\\S]*?\\r?\\n}\\r?\\n');
+const oldGuard=pattern('03').exec(previous),newGuard=pattern('04').exec(proposed);assert(oldGuard&&newGuard);
+let restored=proposed.replace(pattern('04'),()=>oldGuard[0]).split('Assert-F26ANative04Binding').join('Assert-F26ANative03Binding');
+const frontend=current.runtimeBindings.find(x=>x.path==='extension/dist/extension.js'),worker=current.runtimeBindings.find(x=>x.path==='extension/dist/pre-commit-client.js');assert(frontend&&worker);
+const replacements=[['032e88e332df9a9470dcfc83ddcdfd60b722991fdae0be4a61d701604ef46629','bf23137b018e9c6f479ce537ba58898a4077fcdea8a0a785261a3446ac4cbd91'],[frontend.sha256,'f1611d1d7931288560e1dc9342cfcd4541d6f1ee5a3b8642c6303f1883b58184'],[worker.sha256,'67b2ef79c9d132db6ed70e8cdd9bed85e5e920359beb71532c85dceb0db20449'],[current.driver.sha256,'899f01c8e699e613ac5d3fc2f8066e8997938e79ecc665dfe34af3e5c4e9090b'],['soterai-lite-0.7.0-f26a-20261026-attempt02.vsix','soterai-lite-0.7.0-f26a-20261026-attempt01.vsix'],['F26a attempt02 path','F26a attempt01 path'],['vsix-extracted-02/extension','vsix-extracted-01/extension'],['prebuilt-native-hosts-04/','prebuilt-native-hosts-03/'],['native-driver-provenance-04.json','native-driver-provenance-03.json'],[fact(own('native-driver-provenance-04.json')).sha256,'a0889724025f85fdd8fc9705f9c19c55ccbb4b36bdde44510500e41212c3c33c'],['host-current-binding-03.ps1','host-current-binding-02.ps1'],['artifact-binding-02.ps1','artifact-binding-01.ps1'],['precommit-offline-owner-04.cjs','precommit-offline-owner-03.cjs']];
+for(const[from,to]of replacements)restored=restored.split(from).join(to);
+restored=restored.split('$taskDriverExpected '+current.driver.bytes).join('$taskDriverExpected 69664');
+assert.equal(restored,previous,'Only named fresh proof/guard/pin rebinding permitted.');
+assert.deepEqual(fs.readFileSync(own('precommit-startup-bootstrap-06.cjs')),fs.readFileSync(own('precommit-startup-bootstrap-05.cjs')));
+assert.equal(worker.sha256,'67b2ef79c9d132db6ed70e8cdd9bed85e5e920359beb71532c85dceb0db20449');
+assert.equal(current.driver.sha256,'899f01c8e699e613ac5d3fc2f8066e8997938e79ecc665dfe34af3e5c4e9090b');
+assert.deepEqual(fs.readFileSync(own('precommit-offline-owner-04.cjs')),fs.readFileSync(own('precommit-offline-owner-03.cjs')));
+assert(!fs.existsSync(own('run-precommit-native-06.ps1')));assert(!fs.existsSync(own('proposal06-user-approval-01.json')));
+const review={status:'ROOT_SAME_LINEAGE_STATIC_PROPOSAL06_REVIEW_PASS_NO_NATIVE_AUTHORIZATION',observedAt:new Date().toISOString(),author:fact(__filename),custody:fact(own('precommit-launcher06-authoring-custody.json')),syntax:fact(own('precommit-launcher06-syntax-01.json')),inputs:checked,restoration:{originalLauncher:fact(own('run-precommit-native-05.ps1')),normalizedRebindingRestoresExactParent:true,restoredBytes:Buffer.byteLength(restored),restoredSha256:sha(Buffer.from(restored)),bootstrapUnchanged:true,offlineHelperUnchanged:true,driverUnchanged:true,workerUnchanged:true},scope:['Original34 native checks/source/assertions and deadlines unchanged','New current990/full03/compiler15/backend/build04/attempt02/content and host facts only','No signals, pipe cancellation, normal profile, download/login/push or oracle change','Materialization refuses without separate exact retained user approval and syntax receipt'],native06:'PROPOSED_NOT_AUTHORIZED_NOT_EXECUTED',independence:'LOW_ROOT_SAME_LINEAGE_STATIC_ONLY'};
+fs.writeFileSync(own('precommit-launcher06-root-review-01.json'),JSON.stringify(review,null,2)+'\n',{flag:'wx'});console.log(JSON.stringify({status:review.status,candidate:custody.proposalLauncher,restoredExactParent:true,checks:34,native06:review.native06}));

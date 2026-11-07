@@ -1,0 +1,11 @@
+const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
+const repo=path.resolve(__dirname,'../../../..'),src=path.join(repo,'packages/vscode-extension/src');
+const old=fs.readFileSync(path.join(__dirname,'run-current-components-05.ps1'),'utf8'),needle='$taskCases=@(';
+if(old.split(needle).length!==2)throw Error('Ambiguous case list');
+const additions=['preCommitOwnerClient.integration','preCommitClientDeadline.review','ownerHookProtocol','ownerHookEnvironment','checkedOwnerHookContext','ownerHookGitProcess','ownerHookDiscovery','encryptedBackupScope.review','brokerRoutingOwnership'];
+const script=old.replaceAll('compiler-05.txt','compiler-06.txt').replaceAll('components-combined-05.txt','components-combined-06.txt').replace(needle,needle+additions.map(name=>"'"+name+"',").join(''));
+fs.writeFileSync(path.join(__dirname,'run-current-components-06.ps1'),script,{flag:'wx'});
+const names=[...script.matchAll(/\$taskCases=@\((.*?)\)/g)][0][1].split(',').map(name=>name.replaceAll("'",''));
+const files=[...fs.readdirSync(path.join(src,'history-hooks')).filter(name=>name.endsWith('.ts')).map(name=>path.join(src,'history-hooks',name)),...names.map(name=>path.join(src,'__tests__',name+'.test.ts')),path.join(src,'broker/EncryptedBackupSink.ts'),path.join(src,'hygiene/HygieneCandidatePolicy.ts')].map(file=>{const bytes=fs.readFileSync(file);return{path:path.relative(repo,file).split(path.sep).join('/'),bytes:bytes.length,sha256:crypto.createHash('sha256').update(bytes).digest('hex')}});
+fs.writeFileSync(path.join(__dirname,'component-inputs-06.json'),JSON.stringify({status:'CURRENT_COMPONENT_GATE_INPUTS_ONLY_NOT_FULL_OR_NATIVE',time:new Date().toISOString(),expectedTests:523,testFiles:names.length,files},null,2)+'\n',{flag:'wx'});
+console.log(JSON.stringify({testFiles:names.length,files:files.length,expectedTests:523}));

@@ -1,0 +1,418 @@
+{
+  "status": "PREPARED_UNBOUND_FRESH990_FULL03_ATTEMPT02_REQUIRED",
+  "observedAt": "2026-10-26T12:55:42.823Z",
+  "generator": {
+    "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/prepare-affected-current-04.cjs",
+    "bytes": 7646,
+    "sha256": "4f59bbf2b3fc187ea94a19caa402fc0efd846ec420a1b217e6c72806b66c0551"
+  },
+  "priorMaterialization": {
+    "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/affected-native-materialization-03.json",
+    "bytes": 10087,
+    "sha256": "05ff5cb3b95539bee8cd4542784624aa6e768d8c07a6025fdf4a6eea683a139b"
+  },
+  "pipeOwnershipHelper": {
+    "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/native-pipe-ownership-02.ps1",
+    "bytes": 4180,
+    "sha256": "246b0ccdb2457fd80f560770b129a1fde67d5d4212e8eae200f965dffd69698c"
+  },
+  "guard": {
+    "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/affected-native-binding-04.template.ps1",
+    "bytes": 14661,
+    "sha256": "4196ef20f4714595bc7a2c42f9577b0fd2fffa8d67d61261b42c4d669501f5a3"
+  },
+  "records": [
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-logs-native-03.ps1",
+        "bytes": 18519,
+        "sha256": "74b3a4b4c5680756b4adf197fdc8efda60f698bd851b311fe8ab71f562b47c7e"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-logs-native-04.template.ps1",
+        "bytes": 18520,
+        "sha256": "40171d163b0544067cd564f78f81a73d1203bfac6d85b2701672603201c5422c"
+      },
+      "timeouts": [
+        "WaitForExit(1000",
+        "TotalSeconds -lt 240"
+      ]
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-owned-output-native-03.ps1",
+        "bytes": 18387,
+        "sha256": "2f3b070d5b5aeca8a3759a9f6afb0ff5797449e6cbe793eaa683983631de2873"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-owned-output-native-04.template.ps1",
+        "bytes": 18388,
+        "sha256": "148d309c344c78b6510318942bcee1eaa5bd9e06c196ee80963859b43533e49d"
+      },
+      "timeouts": [
+        "WaitForExit(1000",
+        "TotalSeconds -lt 180"
+      ]
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-artifact-native-03.ps1",
+        "bytes": 18513,
+        "sha256": "d886400e2f944eb4820efce1aba2024792d1cdcbe344a2b75c648353624f8a09"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-artifact-native-04.template.ps1",
+        "bytes": 18514,
+        "sha256": "287c4d9a1812daf86ebd463be30e2803e8dd2c6e61e9d8649b65d80b0b0882b5"
+      },
+      "timeouts": [
+        "WaitForExit(1000",
+        "TotalSeconds -lt 180"
+      ]
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-affected-streaming-output-03.ps1",
+        "bytes": 18451,
+        "sha256": "4acfbafb23b1b04a1aa1e1c48bfcf45c6a99bc889d0902e665b292c759c09d55"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-affected-streaming-output-04.template.ps1",
+        "bytes": 18452,
+        "sha256": "338648cd5048c8c28a66741dd0d8599cf760c991f427c323b563131b7258877e"
+      },
+      "timeouts": [
+        "WaitForExit(1000",
+        "TotalSeconds -lt 180"
+      ]
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-affected-vault-runtime-03.ps1",
+        "bytes": 18448,
+        "sha256": "60a22900bf4416cb66a9249ea86a2b143cec9cea44bf5856b74e39d25f0e474d"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-affected-vault-runtime-04.template.ps1",
+        "bytes": 18449,
+        "sha256": "8e0138abd6f4d5a035e4ee68d00ed0dbf04fa4ec049b139b54ccd126865d2d8b"
+      },
+      "timeouts": [
+        "WaitForExit(1000",
+        "TotalSeconds -lt 180"
+      ]
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-affected-ps51-03.ps1",
+        "bytes": 18528,
+        "sha256": "200bb4eb8c5478f36c12313ff850c2a1dd1e878ac14549a2ad73351fff84dadd"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-affected-ps51-04.template.ps1",
+        "bytes": 18529,
+        "sha256": "0cf5d120c47edf883ec5050b37f29cddaf7beb41d8de4210f718fca972fdfbbc"
+      },
+      "timeouts": [
+        "WaitForExit(1000",
+        "TotalSeconds -lt 180"
+      ]
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-affected-cmd-03.ps1",
+        "bytes": 18527,
+        "sha256": "7567464a2e22f6e20663fdfc4ad10848e5a9508fac82cf44444d3d81625df7dd"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-affected-cmd-04.template.ps1",
+        "bytes": 18528,
+        "sha256": "cf04648baeb9b7fa1b93161a2823c3af7ad2281c54bf89970c46ba6089a099fc"
+      },
+      "timeouts": [
+        "WaitForExit(1000",
+        "TotalSeconds -lt 180"
+      ]
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-affected-gitbash-03.ps1",
+        "bytes": 18531,
+        "sha256": "f27e36d5b4defaf6e4c6203cbc40e46f075ef68e0a4da5369fe93b60f1720a07"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-affected-gitbash-04.template.ps1",
+        "bytes": 18532,
+        "sha256": "dde7a143100fab488e8a0b1d13431d7dedf0902969c16159147dc5879fab9f31"
+      },
+      "timeouts": [
+        "WaitForExit(1000",
+        "TotalSeconds -lt 180"
+      ]
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-affected-history-03.ps1",
+        "bytes": 18531,
+        "sha256": "194de6954d6e36ca11b64be14df3d589d5b0b13c01bb0e36d153f9ac14f9a788"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-affected-history-04.template.ps1",
+        "bytes": 18532,
+        "sha256": "7a26f022e1262712710e83bc5c07807aeab89d587af31b9c0e2ce6f4167630c4"
+      },
+      "timeouts": [
+        "WaitForExit(1000",
+        "TotalSeconds -lt 180"
+      ]
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-mcp-native-03.ps1",
+        "bytes": 18527,
+        "sha256": "c99398e87206b74890f4e5e8ff9440d3ece4c1a9009940f87cc6951d99110e73"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-mcp-native-04.template.ps1",
+        "bytes": 18528,
+        "sha256": "231983c8ad21f2cf658fd953859cd2d69e95f135231e3c4677b29f5bda3ee58e"
+      },
+      "timeouts": [
+        "WaitForExit(1000",
+        "TotalSeconds -lt 180"
+      ]
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-affected-editor-03.ps1",
+        "bytes": 18532,
+        "sha256": "98f83b836a8e21434d8b188738b98ac8a9b7e9c3c47cb6415e371215f77dafc7"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-affected-editor-04.template.ps1",
+        "bytes": 18533,
+        "sha256": "c129b2f69c4aeb33b468b6385d07bdd0a000e16955dd979b3c850ec27ee6a4c9"
+      },
+      "timeouts": [
+        "WaitForExit(1000",
+        "TotalSeconds -lt 180"
+      ]
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-affected-ci-03.ps1",
+        "bytes": 18520,
+        "sha256": "aa7947a2723ac0572fd82c4f310b742385de0c698ab1a9b45688ed6d2ef9ea80"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-affected-ci-04.template.ps1",
+        "bytes": 18521,
+        "sha256": "079d06cda270e65660293266b307b906953613e54797f3aff1dcbfb42721b01a"
+      },
+      "timeouts": [
+        "WaitForExit(1000",
+        "TotalSeconds -lt 180"
+      ]
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-affected-service-account-03.ps1",
+        "bytes": 18559,
+        "sha256": "76005d124737916c8431297e1d2e3219122249be0fa7ea20ce0d623fabdd0aeb"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-affected-service-account-04.template.ps1",
+        "bytes": 18560,
+        "sha256": "ce9f208c6dd782b1b643171d39dda1d889e11c2c7c996f4d028193b3971b374c"
+      },
+      "timeouts": [
+        "WaitForExit(1000",
+        "TotalSeconds -lt 180"
+      ]
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-affected-registry-03.ps1",
+        "bytes": 18538,
+        "sha256": "126e610806a4ed422feb97b1e5d6b7c1d4230a402ac4f8ebd9940aba53adf9fa"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-affected-registry-04.template.ps1",
+        "bytes": 18539,
+        "sha256": "a76e560515f4a1e7ad4bb9a86e8f4a193540ceb3c12554b1ddd53c3a407bc8f0"
+      },
+      "timeouts": [
+        "WaitForExit(1000",
+        "TotalSeconds -lt 180"
+      ]
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-affected-terraform-03.ps1",
+        "bytes": 18541,
+        "sha256": "861d7da592f11b07a0e7a056b773d7cb34b85250523ffaf2775fd71559bce792"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-affected-terraform-04.template.ps1",
+        "bytes": 18542,
+        "sha256": "c11ec4ac4b67f4e137dd535efd083af857bfb322f3f5329acb78bf7212956b80"
+      },
+      "timeouts": [
+        "WaitForExit(1000",
+        "TotalSeconds -lt 180"
+      ]
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-affected-container-03.ps1",
+        "bytes": 18541,
+        "sha256": "23a7ee019b755b3defaeaecfdd65f6cb7cd69e621aaf7a0bcfac68e2c9864c71"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-affected-container-04.template.ps1",
+        "bytes": 18542,
+        "sha256": "c68fe490688dd1197849d646537c24696f0f311fb44e3bc51a4c63f43fa1960c"
+      },
+      "timeouts": [
+        "WaitForExit(1000",
+        "TotalSeconds -lt 180"
+      ]
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-affected-source-03.ps1",
+        "bytes": 18543,
+        "sha256": "4aef0c33874b993eeabca90d357d074547158382575ccf613488f20d6dc8f5b1"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-affected-source-04.template.ps1",
+        "bytes": 18544,
+        "sha256": "2893800663d2d92fd3119aa5deb59ab1b565c112764c22bed8aeabca88084fb8"
+      },
+      "timeouts": [
+        "WaitForExit(1000",
+        "TotalSeconds -lt 180"
+      ]
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-affected-hygiene-03.ps1",
+        "bytes": 18544,
+        "sha256": "f7fdc86f16d383f3f3816118264402ea9181eafbd07165f013a9cc66ed770435"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-affected-hygiene-04.template.ps1",
+        "bytes": 18545,
+        "sha256": "99ecd7cb1f8a309d5bbc45143cb8a5b32d5fb5cf9cec4da0796d618717fb887d"
+      },
+      "timeouts": [
+        "WaitForExit(1000",
+        "TotalSeconds -lt 180"
+      ]
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-affected-vault-03.ps1",
+        "bytes": 18568,
+        "sha256": "b1f94c45c2b2463b404fb8ba192819f8e1a28263c03a7d403c2604f7d9deba8a"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-affected-vault-04.template.ps1",
+        "bytes": 18569,
+        "sha256": "7ff1eb9eda0f7f575b3d5e41b2fa95609f631602f5667af77f75bbc9cc7a5fa7"
+      },
+      "timeouts": [
+        "WaitForExit(1000",
+        "TotalSeconds -lt 180"
+      ]
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-retained-native-03.ps1",
+        "bytes": 18582,
+        "sha256": "6d68cbb9724f0edb33e5648b8b71882e407980ed4de81b766c85988c38a212f8"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-retained-native-04.template.ps1",
+        "bytes": 18583,
+        "sha256": "fb254fd2a242fd7aab6f5f1ee71867a627248fc6f9157c394be81bb99ebda1a0"
+      },
+      "timeouts": [
+        "WaitForExit(1000",
+        "TotalSeconds -lt 180"
+      ]
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-current-affected-suite-03.ps1",
+        "bytes": 5233,
+        "sha256": "24eea65b52c7c9c7816d94e25fcb15242977f62e7216f40cca20927dd3467bbc"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-current-affected-suite-04.template.ps1",
+        "bytes": 5234,
+        "sha256": "5acc894279b8deb082164c84e7b67e8cad3e06588287a46ae18c69b282d868ea"
+      },
+      "timeouts": []
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-affected-hosts-03.ps1",
+        "bytes": 9596,
+        "sha256": "8d0d41eaa2e154a818a7b3afbeafe05316fc9f9304d212051142ddb91b5a46b0"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-affected-hosts-04.template.ps1",
+        "bytes": 9597,
+        "sha256": "d7d4f656093c5a6b1ffbbc3f9a18d57cf001f3b49aa6b224dda6d2cdb9446100"
+      },
+      "timeouts": []
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-functional-03.ps1",
+        "bytes": 10276,
+        "sha256": "174c832b2ea137f286f34f07cee82d5db488f62e3c92626f773c90649e80db5e"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-functional-04.template.ps1",
+        "bytes": 10277,
+        "sha256": "1f541696a0dbb7d16b8cbd559edcdffd876e6d84c1ba2b4be5120620c4e3eb67"
+      },
+      "timeouts": [
+        "WaitForExit(1000",
+        "TotalSeconds -lt 120"
+      ]
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-security-03.ps1",
+        "bytes": 11272,
+        "sha256": "24b6602fb42b83e9256bae872d3cf9aba893e95d05460d48221cfc4dfc32bff5"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-security-04.template.ps1",
+        "bytes": 11273,
+        "sha256": "d3cc8f6889505a2e64e176496cf2202e50ace57c590782de71deb212b9130ce1"
+      },
+      "timeouts": [
+        "WaitForExit(60000",
+        "WaitForExit(5000"
+      ]
+    },
+    {
+      "source": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-native-gates-03.ps1",
+        "bytes": 3739,
+        "sha256": "df3d8ca1198bfc3aab8eef493ee1e07ef4e58f2dbce31f90ab0a6cd7a7cd67f2"
+      },
+      "target": {
+        "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/run-native-gates-04.template.ps1",
+        "bytes": 3740,
+        "sha256": "ff29907056ca73850b38e2e3c7a3268faaefe281b521e22c767cb196c3941941"
+      },
+      "timeouts": []
+    }
+  ],
+  "limits": "Same25 pipe-safe controls with exact new full/compiler/build/artifact/host bindings. No driver equality assumption or historical PASS transfer; no native execution."
+}

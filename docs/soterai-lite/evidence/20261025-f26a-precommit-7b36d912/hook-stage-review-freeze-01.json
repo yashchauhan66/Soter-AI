@@ -1,0 +1,15 @@
+{
+  "status": "TWO_ACTUAL_STAGE_OWNERSHIP_FAILURES_BEFORE_CORRECTION",
+  "time": "2026-10-25T13:58:42.330Z",
+  "source": {
+    "path": "packages/vscode-extension/src/history-hooks/CheckedHookFile.ts",
+    "sha256": "9d173867e33feaff2ec8cd30135ea84f3e900a532b02786fd0e128f8a79014d1"
+  },
+  "fixture": {
+    "path": "packages/vscode-extension/src/__tests__/checkedHookFileStage.review.test.ts",
+    "bytes": 3357,
+    "sha256": "4820cc99634b6ac41d4120eb26e93ef08e8833d943d28eaec393ee9e35d717d1"
+  },
+  "baselineSha256": "eca76920b5bc562a96106aad409f4d185f25c4d729293e85aa1c0e9902713268",
+  "finding": "The private FD creation identity was not compared with subsequent stage-path identity; foreign equal-byte/mode replacement was adopted or deleted. Root regression confirms both paths. One bounded filesystem correction will also reject already-observed dangling links. Original14 and all new assertions remain unchanged."
+}

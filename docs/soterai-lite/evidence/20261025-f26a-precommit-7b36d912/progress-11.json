@@ -1,0 +1,94 @@
+{
+  "status": "DRIVER03_20_BYTE_EQ_PASS_NATIVE03_STARTUP_ASSERTION_CAUSE_UNESTABLISHED",
+  "time": "2026-10-26T06:50:24.041Z",
+  "feature": "F26a",
+  "prior": {
+    "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/progress-10.json",
+    "bytes": 6778,
+    "sha256": "13257367000fdf9904aeb5d489b748210b98c01edc38d4bbfdc627c659749832"
+  },
+  "binding": {
+    "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/native-current-binding-03.json",
+    "bytes": 2075,
+    "sha256": "df37214d1c6af39677175f4cd8245d6cfa314488aed520110e73fa2f582bb612"
+  },
+  "compiler": {
+    "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/compiler-14.txt.result.json",
+    "bytes": 577,
+    "sha256": "4f78702568234099b8b827d30b929208c4c58b2464482f6ce22cfbb0bf5d8ddd"
+  },
+  "build": {
+    "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/native-build-03.txt.result.json",
+    "bytes": 505,
+    "sha256": "429c653e011a157c0424ef07814d5d1104e0adfc93e6896f6be76eb9102b3ff0"
+  },
+  "currentInputs": {
+    "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/native-source-inputs-03.json",
+    "bytes": 193291,
+    "sha256": "f94d6ca5ea2ff2499dbf76ea5f82239160806a7dc35bad5d42b79a7d5edb6aab"
+  },
+  "unchangedOtherInputs": 988,
+  "unchangedAffectedDrivers": 20,
+  "vsix": {
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-f26a-20261026-attempt01.vsix",
+    "bytes": 1705050,
+    "sha256": "bf23137b018e9c6f479ce537ba58898a4077fcdea8a0a785261a3446ac4cbd91"
+  },
+  "native03": {
+    "status": "INCOMPLETE_ACTIVATION_SETUP_ASSERTION",
+    "behaviorChecks": "NOT_RUN",
+    "restart": "NOT_RUN",
+    "result": "NO_RESULT_FILE",
+    "raw": {
+      "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/precommit-native-run-03.txt",
+      "bytes": 1048,
+      "sha256": "e96d22d89fdd2aac3b9583f329bdd75510302809613c03520cff95a362f8ed3d"
+    },
+    "receipt": {
+      "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/precommit-native-run-03.txt.result.json",
+      "bytes": 1738,
+      "sha256": "972fcb458c19cc35abf3170ad91bf9e870daa333fa3e02794b17cc445e8855f6"
+    },
+    "driverError": {
+      "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/f26a-precommit-native-20261026T064238Z-a1367f97/primary.driver-error.json",
+      "bytes": 372,
+      "sha256": "4effcf4e546ff5757038979d9606ba40cdf9b77b024f332af5f3d416f43c92d7"
+    },
+    "startup": {
+      "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/f26a-precommit-native-20261026T064238Z-a1367f97/primary.startup.jsonl",
+      "bytes": 779,
+      "sha256": "9020ef8049e9c6b07ce80abb341e730a1d118a553955f021497a4016b2efb624"
+    },
+    "actualCodeClose": {
+      "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/f26a-precommit-native-20261026T064238Z-a1367f97/primary-owned-editor-close.json",
+      "bytes": 391,
+      "sha256": "aa1697da566a4aa98295323346c4b8cef54986fd3e0f6d5cd1c88896a67d2d7a"
+    },
+    "absence": {
+      "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/f26a-precommit-native-20261026T064238Z-a1367f97/primary-failed-owned-editor-absence-01.json",
+      "bytes": 1477,
+      "sha256": "33f0e581b418e22de67eba933210f3c069e5c2bdc17cc3fda841f904a6d76f99"
+    },
+    "knownPid": 17388,
+    "cause": "UNESTABLISHED_NO_PRODUCT_FIX_ASSUMED"
+  },
+  "preparedAffected": {
+    "status": "MATERIALIZED_SYNTAX26_PASS_NOT_EXECUTED",
+    "receipt": {
+      "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/affected-native-materialization-03.json",
+      "bytes": 10087,
+      "sha256": "05ff5cb3b95539bee8cd4542784624aa6e768d8c07a6025fdf4a6eea683a139b"
+    },
+    "pipeOwnership": {
+      "path": "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/native-pipe-ownership-02.ps1",
+      "bytes": 4180,
+      "sha256": "246b0ccdb2457fd80f560770b129a1fde67d5d4212e8eae200f965dffd69698c"
+    }
+  },
+  "notes": [
+    "Current compiler14 and21driver03 actualPASS. Root independently verified988unchanged full inputs,20affected-driver byteequality,every packaged source input and exact unchanged newVSIX. Historicalfull02 stays attributed to originalfull02freeze, no currentnativePASS transferred.",
+    "Native03 failed in public synthetic Git setup before real extension activation and before all34behavior observations. Setup directory/emptyhooks present; .git absent. Assertion details were not retained by original bootstrap; cause UNESTABLISHED. ActualCode0,bothEOF,zero signals,known17388absenttwice/stablestreams; no restart/offline/affectedlaunch.",
+    "Next bounded diagnostic changes ONLY new developer bootstrap evidence: delegate fixed public setupGit commands unchanged, retain bounded startup stdout/stderr/actualclose+EOF and safe pre-activation error details. No scan/private output/env values captured. Product/frozen34native assertions/worker/VSIX remain unchanged. Old failures immutable."
+  ],
+  "pending": "Review/syntax/custody diagnostic04 and actualnewnative; diagnose actualcause before anyfix. Completeactualownerhook34/offlineinterphase/all20affected/functional10/security17/withdrawal/acceptance/scopedcommits+exhaustivebytes+transition before F26b. F26b-c/F27-F32/Vgatespending/LOW/no rating/nopush/originalL6HUMAN-ACTIONSSTOP/diskwaiver/unrelatedwork persist."
+}

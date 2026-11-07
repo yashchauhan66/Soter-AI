@@ -1,0 +1,106 @@
+{
+  "generatedAt": "2026-10-15T13:09:40.854072+00:00",
+  "battery": "artifacts\\ml\\v18-balanced-comparison-rows.jsonl",
+  "rows": 4000,
+  "soteraiDeployedOperatingPoint": {
+    "fprPct": 22.8,
+    "recallPct": 94.8,
+    "note": "real two-tier path (rules OR ML), the product as shipped"
+  },
+  "scopeNote": "FULL = every attack label in the battery, including classes the competitors never claimed (PII/SECRET/RAG/content-harm) \u2014 unfair to them, but it is the product-level question. IN-SCOPE = PROMPT_INJECTION/JAILBREAK/SYSTEM_PROMPT_LEAK_ATTEMPT attacks plus all benign rows \u2014 the fair head-to-head.",
+  "arms": [
+    {
+      "name": "SoterAI v17-multilingual (ML score)",
+      "status": "MEASURED",
+      "notes": "raw P(attack) from the production ONNX backend",
+      "truncatedRows": 0,
+      "full": {
+        "auc": 0.9522,
+        "recallAtSoterFprPct": 97.5,
+        "isoFprPct": 22.8,
+        "recallAt1PctFpr": 50.85,
+        "attacks": 2000,
+        "benign": 2000
+      },
+      "inScope": {
+        "auc": 0.9423,
+        "recallAtSoterFprPct": 96.83,
+        "isoFprPct": 22.8,
+        "recallAt1PctFpr": 40.44,
+        "attacks": 1103,
+        "benign": 2000
+      },
+      "inScopeUntruncated": {
+        "auc": 0.948,
+        "recallAtSoterFprPct": 97.36,
+        "isoFprPct": 22.8,
+        "recallAt1PctFpr": 42.58,
+        "attacks": 1024,
+        "benign": 1917
+      },
+      "inScopeUntruncatedNote": "common subset across all measured arms; 186 rows excluded"
+    },
+    {
+      "name": "ProtectAI deberta-v3-base-prompt-injection-v2",
+      "status": "MEASURED",
+      "notes": "id2label={0: 'SAFE', 1: 'INJECTION'}, injection index 1, max_len 512",
+      "truncatedRows": 186,
+      "full": {
+        "auc": 0.8895,
+        "recallAtSoterFprPct": 82.9,
+        "isoFprPct": 22.8,
+        "recallAt1PctFpr": 33.05,
+        "attacks": 2000,
+        "benign": 2000
+      },
+      "inScope": {
+        "auc": 0.9388,
+        "recallAtSoterFprPct": 91.93,
+        "isoFprPct": 22.8,
+        "recallAt1PctFpr": 54.49,
+        "attacks": 1103,
+        "benign": 2000
+      },
+      "inScopeUntruncated": {
+        "auc": 0.9414,
+        "recallAtSoterFprPct": 92.68,
+        "isoFprPct": 22.8,
+        "recallAt1PctFpr": 58.5,
+        "attacks": 1024,
+        "benign": 1917
+      },
+      "inScopeUntruncatedNote": "common subset across all measured arms; 186 rows excluded"
+    },
+    {
+      "name": "Meta PromptGuard 2 (86M)",
+      "status": "UNMEASURABLE",
+      "unblock": "HF repo is gated=manual: accept the licence at huggingface.co/meta-llama/Llama-Prompt-Guard-2-86M, then set HF_TOKEN"
+    },
+    {
+      "name": "Lakera Guard",
+      "status": "UNMEASURABLE",
+      "unblock": "set LAKERA_API_KEY (commercial API)"
+    },
+    {
+      "name": "Azure AI Prompt Shields",
+      "status": "UNMEASURABLE",
+      "unblock": "set AZURE_CONTENT_SAFETY_ENDPOINT and AZURE_CONTENT_SAFETY_KEY"
+    },
+    {
+      "name": "NVIDIA NeMo Guardrails",
+      "status": "UNMEASURABLE",
+      "unblock": "pip install nemoguardrails and supply a rails config"
+    }
+  ],
+  "measuredArms": 2,
+  "unmeasurableArms": 4,
+  "ac2Verdict": "INCOMPLETE \u2014 4 of 4 named competitors unscored (Meta PromptGuard 2 (86M), Lakera Guard, Azure AI Prompt Shields, NVIDIA NeMo Guardrails). UNMEASURABLE is not a pass.",
+  "namedCompetitorsUnscored": [
+    "Meta PromptGuard 2 (86M)",
+    "Lakera Guard",
+    "Azure AI Prompt Shields",
+    "NVIDIA NeMo Guardrails"
+  ],
+  "beatenBy": [],
+  "beatenByUnnamedArms": []
+}

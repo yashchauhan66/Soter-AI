@@ -89,7 +89,7 @@ function setup() {
   const proxiedCustomEvent = function (this: unknown, type: string, init?: { detail?: unknown }) {
     return new (customEvent.current as any)(type, init);
   } as unknown as typeof FakeCustomEvent;
-  // eslint-disable-next-line @typescript-eslint/no-implied-eval
+   
   new Function("window", "WebSocket", "CustomEvent", hookJs)(fakeWindow, FakeWebSocket, proxiedCustomEvent);
 
   /** Frames the isolated-world observer actually receives, once it is listening. */

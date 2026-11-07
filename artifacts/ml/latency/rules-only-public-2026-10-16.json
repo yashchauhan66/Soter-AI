@@ -1,0 +1,41 @@
+{
+  "generated_at": "2026-10-16T15:33:43.537Z",
+  "path": "analyzeText (rules only)",
+  "model_dir": null,
+  "model_sha256": null,
+  "corpus": "public",
+  "rows": 3200,
+  "warmup": 100,
+  "positive_control_ms": 766.655,
+  "env": {
+    "node": "v22.16.0",
+    "onnxruntime_node": "1.21.1",
+    "cpu_model": "Intel(R) Core(TM) i5-8350U CPU @ 1.70GHz",
+    "logical_cpus": 8,
+    "platform": "Windows_NT 10.0.26300 x64",
+    "ML_ONNX_MAX_LENGTH": null
+  },
+  "results": {
+    "concurrency_1": {
+      "total_ms": {
+        "n": 3200,
+        "mean": 2.239,
+        "p50": 2.03,
+        "p95": 3.436,
+        "p99": 5.37,
+        "max": 48.534
+      },
+      "rules_ms": {
+        "n": 3200,
+        "mean": 2.239,
+        "p50": 2.03,
+        "p95": 3.435,
+        "p99": 5.369,
+        "max": 48.532
+      },
+      "ml_ms": null,
+      "throughput_rps": 445.26,
+      "wall_s": 7.19
+    }
+  }
+}

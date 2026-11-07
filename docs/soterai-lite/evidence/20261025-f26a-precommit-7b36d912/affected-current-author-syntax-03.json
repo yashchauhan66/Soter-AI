@@ -1,0 +1,143 @@
+{
+    "status":  "PREPARED_NOT_BOUND_SYNTAX_AND_CUSTODY_ONLY",
+    "time":  "2026-10-26T06:44:30.2651409Z",
+    "authorFiles":  [
+                        {
+                            "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/prepare-affected-current-03.cjs",
+                            "bytes":  15720,
+                            "sha256":  "c72cc0ec86aeeefff9bfda618cfa516d1f8a2898ed5b1e98c66e54e109a7deb8"
+                        },
+                        {
+                            "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/affected-native-binding-03.template.ps1",
+                            "bytes":  15518,
+                            "sha256":  "18a31bfa238eb806c91cba1104e21a2003ae19cc28b98b0c4352e78927d411b9"
+                        },
+                        {
+                            "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/affected-current-author-contract-03.md",
+                            "bytes":  3548,
+                            "sha256":  "73745d6351ab4286e61b07e4c24b148e4396c97f0efb4a3f3d4b01aa9e9e8f84"
+                        }
+                    ],
+    "snapshots":  [
+                      {
+                          "saved":  {
+                                        "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/affected-current-author-snapshots-03/prepare-affected-current-03.cjs",
+                                        "bytes":  15720,
+                                        "sha256":  "c72cc0ec86aeeefff9bfda618cfa516d1f8a2898ed5b1e98c66e54e109a7deb8"
+                                    },
+                          "source":  {
+                                         "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/prepare-affected-current-03.cjs",
+                                         "bytes":  15720,
+                                         "sha256":  "c72cc0ec86aeeefff9bfda618cfa516d1f8a2898ed5b1e98c66e54e109a7deb8"
+                                     }
+                      },
+                      {
+                          "saved":  {
+                                        "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/affected-current-author-snapshots-03/affected-native-binding-03.template.ps1",
+                                        "bytes":  15518,
+                                        "sha256":  "18a31bfa238eb806c91cba1104e21a2003ae19cc28b98b0c4352e78927d411b9"
+                                    },
+                          "source":  {
+                                         "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/affected-native-binding-03.template.ps1",
+                                         "bytes":  15518,
+                                         "sha256":  "18a31bfa238eb806c91cba1104e21a2003ae19cc28b98b0c4352e78927d411b9"
+                                     }
+                      },
+                      {
+                          "saved":  {
+                                        "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/affected-current-author-snapshots-03/affected-current-author-contract-03.md",
+                                        "bytes":  3548,
+                                        "sha256":  "73745d6351ab4286e61b07e4c24b148e4396c97f0efb4a3f3d4b01aa9e9e8f84"
+                                    },
+                          "source":  {
+                                         "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/affected-current-author-contract-03.md",
+                                         "bytes":  3548,
+                                         "sha256":  "73745d6351ab4286e61b07e4c24b148e4396c97f0efb4a3f3d4b01aa9e9e8f84"
+                                     }
+                      }
+                  ],
+    "syntax":  {
+                   "powershell":  {
+                                      "command":  "Parser.ParseFile affected-native-binding-03.template.ps1",
+                                      "parseErrors":  0,
+                                      "result":  {
+                                                     "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/affected-current-author-powershell-parse-03.json",
+                                                     "bytes":  216,
+                                                     "sha256":  "640f100be7471582c1695241e1f6ffa423d5c155573714622a18d85ad90818ac"
+                                                 }
+                                  },
+                   "node":  {
+                                "exitCode":  0,
+                                "command":  "node --check prepare-affected-current-03.cjs",
+                                "raw":  {
+                                            "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/affected-current-author-node-check-03.txt",
+                                            "bytes":  0,
+                                            "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                                        }
+                            }
+               },
+    "previousCorrection":  {
+                               "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/affected-pipe-ownership-correction-02.json",
+                               "bytes":  24025,
+                               "sha256":  "eca02522e7c155e7ae5312f55aa868657231d6ad40f94593f5f10e78a76b48fb"
+                           },
+    "original01FilesRechecked":  25,
+    "originalBeforeSnapshotsRechecked":  25,
+    "pipeSafe02FilesRechecked":  25,
+    "pipeOwnershipHelper":  {
+                                "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/native-pipe-ownership-02.ps1",
+                                "bytes":  4180,
+                                "sha256":  "246b0ccdb2457fd80f560770b129a1fde67d5d4212e8eae200f965dffd69698c"
+                            },
+    "currentBinding":  {
+                           "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/native-current-binding-03.json",
+                           "bytes":  2075,
+                           "sha256":  "df37214d1c6af39677175f4cd8245d6cfa314488aed520110e73fa2f582bb612"
+                       },
+    "inspectedCurrentFacts":  [
+                                  {
+                                      "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/native-source-inputs-03.json",
+                                      "bytes":  193291,
+                                      "sha256":  "f94d6ca5ea2ff2499dbf76ea5f82239160806a7dc35bad5d42b79a7d5edb6aab"
+                                  },
+                                  {
+                                      "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/full-inputs-02.json",
+                                      "bytes":  192917,
+                                      "sha256":  "5b381391b7161f21af4dc30c3d6594373bb307f8903ab74d739d4d3a688ad322"
+                                  },
+                                  {
+                                      "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/full-tests-02.txt.result.json",
+                                      "bytes":  609,
+                                      "sha256":  "2cfdcf7e1cf975b01dd73a0e2093452e0513d18e836b15ca2af91cb0822ad859"
+                                  },
+                                  {
+                                      "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/compiler-14.txt.result.json",
+                                      "bytes":  577,
+                                      "sha256":  "4f78702568234099b8b827d30b929208c4c58b2464482f6ce22cfbb0bf5d8ddd"
+                                  },
+                                  {
+                                      "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/native-driver-provenance-03.json",
+                                      "bytes":  235415,
+                                      "sha256":  "a0889724025f85fdd8fc9705f9c19c55ccbb4b36bdde44510500e41212c3c33c"
+                                  },
+                                  {
+                                      "path":  "packages/soterai-lite/soterai-lite-0.7.0-f26a-20261026-attempt01.vsix",
+                                      "bytes":  1705050,
+                                      "sha256":  "bf23137b018e9c6f479ce537ba58898a4077fcdea8a0a785261a3446ac4cbd91"
+                                  },
+                                  {
+                                      "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/native-fixture-equivalence-03.json",
+                                      "bytes":  14131,
+                                      "sha256":  "837236c08710d3583eca0349dff7c93078ee3e2c1990b8233e06ea166dc0a20d"
+                                  },
+                                  {
+                                      "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/host-current-binding-02.ps1",
+                                      "bytes":  5034,
+                                      "sha256":  "8468eff27ee910978aa7d6a9fba10dc4c387631fd39ffa84580a6d1119390fc2"
+                                  }
+                              ],
+    "generatorModes":  "NOT_EXECUTED",
+    "generatedSuccessors":  "NOT_MATERIALIZED_BY_AUTHOR",
+    "nativeExecution":  "NOT_RUN_BY_AUTHOR",
+    "scope":  "New docs-side author inputs, exact copies, syntax and custody only; all existing01/02/current source and proof bytes retained. No behavior PASS, acceptance, Git, compiler, build, queue or ledger mutation."
+}

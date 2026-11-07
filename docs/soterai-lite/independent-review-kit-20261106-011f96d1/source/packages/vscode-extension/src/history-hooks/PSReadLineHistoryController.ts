@@ -1,0 +1,120 @@
+import * as vscode from "vscode";
+import * as path from "node:path";
+import { homedir } from "node:os";
+import { randomUUID } from "node:crypto";
+import { EncryptedBackupSink } from "../broker/EncryptedBackupSink";
+import { CheckedHistoryProfileFile } from "./CheckedHistoryProfileFile";
+import { supportedHistoryProfile } from "./PowerShellHistoryText";
+import { installHistoryProfile, restoreHistoryProfile, parseHistoryProfileReceipt, type HistoryProfileResult, type HistoryProfileTransactionIO } from "./HistoryProfileTransaction";
+import { psReadLineHistoryEnabled } from "./PSReadLineHistoryFlags";
+import { HistoryProfileJournal } from "./HistoryProfileJournal";
+
+export const HISTORY_PROFILE_STATE = "soterai.lite.psReadLineHistory.receipt.v1";
+type Result = HistoryProfileResult | { readonly status: "CANCELLED" };
+const equal = (a: unknown, b: unknown) => JSON.stringify(a) === JSON.stringify(b);
+const unavailable = (): Result => Object.freeze({ status: "UNAVAILABLE" });
+
+/** Explicit owner action only. No profile/history discovery, read or key-store
+ * access occurs in construction/status/withdrawal. Status reads only the fixed
+ * private metadata journal. Native previews are metadata
+ * documents and never contain existing comments, raw profile text or home paths. */
+export class PSReadLineHistoryController implements vscode.Disposable {
+    #disposed = false;
+    #busy = false;
+    #epoch = 0;
+    #scheme = "soterai-history-review-" + randomUUID();
+    #views = new Map<string, string>();
+    #journal: HistoryProfileJournal;
+    constructor(private readonly context: vscode.ExtensionContext) {
+        this.#journal = new HistoryProfileJournal(context.globalStorageUri.fsPath);
+        context.subscriptions.push(vscode.workspace.registerTextDocumentContentProvider(this.#scheme, {
+            provideTextDocumentContent: uri => this.#views.get(uri.toString()) ?? "History-profile review expired.",
+        }));
+    }
+    withdraw(): void { this.#epoch++; this.#views.clear(); }
+    dispose(): void { this.#disposed = true; this.withdraw(); }
+    #available(restore: boolean): boolean {
+        try { return !this.#disposed && process.platform === "win32" && vscode.env.remoteName === undefined && vscode.workspace.isTrusted === true
+            && (restore || psReadLineHistoryEnabled()) && vscode.workspace.workspaceFolders?.length === 1
+            && vscode.workspace.workspaceFolders[0].uri.scheme === "file"; } catch { return false; }
+    }
+    status(): { status: string; badge: "Uncovered"; scope: string } {
+        let status = "NOT_CONFIGURED";
+        try {
+            const raw = this.#journal.read(), row = parseHistoryProfileReceipt(raw);
+            status = raw === undefined ? "NOT_CONFIGURED" : !row ? "UNAVAILABLE" : row.phase === "APPLIED" ? "INSTALLED_CONSOLE_LOAD_UNVERIFIED" : "RECOVERY_REVIEW_REQUIRED";
+        } catch { status = "UNAVAILABLE"; }
+        if (this.#disposed) status = "UNAVAILABLE";
+        return Object.freeze({ status, badge: "Uncovered", scope: "Selected Windows PowerShell 5.1 / PSReadLine 2.0.0 ConsoleHost profile only. A new console must load this profile; current-console routing is unverified. Existing history, unknown values/encodings and later handler replacements remain outside this check." });
+    }
+    install(): Promise<Result> { return this.#change(false); }
+    restore(): Promise<Result> { return this.#change(true); }
+    #view(data: object): vscode.Uri {
+        const uri = vscode.Uri.parse(this.#scheme + ":/" + randomUUID() + "/history-profile.json");
+        this.#views.set(uri.toString(), JSON.stringify(data, null, 2)); return uri;
+    }
+    async #change(restore: boolean): Promise<Result> {
+        if (this.#busy || !this.#available(restore)) return unavailable();
+        this.#busy = true;
+        try {
+            const ownerHome = homedir(), epoch = this.#epoch, workspace = vscode.workspace.workspaceFolders![0].uri.toString();
+            const lease = () => this.#available(restore) && this.#epoch === epoch && homedir() === ownerHome
+                && vscode.workspace.workspaceFolders?.[0]?.uri.toString() === workspace;
+            const raw = this.#journal.read(), receipt = parseHistoryProfileReceipt(raw);
+            if (raw !== undefined && !receipt || restore && !receipt) return unavailable();
+            const picked = await vscode.window.showSaveDialog({
+                title: restore ? "Select the owned PowerShell ConsoleHost profile to restore" : "Select your PowerShell 5.1 ConsoleHost profile",
+                saveLabel: "Review profile change",
+                defaultUri: vscode.Uri.file(path.join(ownerHome, "Documents", "WindowsPowerShell", "Microsoft.PowerShell_profile.ps1")),
+                filters: { "PowerShell ConsoleHost profile": ["ps1"] },
+            });
+            if (!lease()) return unavailable();
+            if (!picked) return Object.freeze({ status: "CANCELLED" });
+            if (picked.scheme !== "file") return unavailable();
+            const file = new CheckedHistoryProfileFile(ownerHome, picked.fsPath, lease), before = await file.snapshot();
+            if (!lease() || !equal(this.#journal.read(), raw)) return unavailable();
+            if (receipt && receipt.identity !== before.identity || !receipt && !supportedHistoryProfile(before.content)) return unavailable();
+            const fresh = async () => {
+                if (!lease() || !equal(this.#journal.read(), raw)) return false;
+                const now = await file.snapshot();
+                return lease() && equal(this.#journal.read(), raw) && now.identity === before.identity
+                    && (now.content === undefined) === (before.content === undefined) && (now.content === undefined || now.content.equals(before.content!));
+            };
+            this.#views.clear();
+            const from = this.#view({ profile: "Windows PowerShell ConsoleHost", existingFile: before.content !== undefined,
+                ownedChange: receipt?.phase ?? "NONE", originalContent: "Private comments and profile text are not displayed." });
+            const to = this.#view({ profile: "Windows PowerShell ConsoleHost", requestedChange: restore ? "Restore exact prior profile bytes/existence" : "Add conservative credential-command history exclusion",
+                publicHistory: "Preserved subject to the prior handler", existingHistory: "Not read or rewritten", backup: restore ? "Verify owned encrypted backup" : "Encrypted backup required for an existing file",
+                instanceCoverage: "Uncovered until a supported new console loads and verifies this selected profile" });
+            await vscode.commands.executeCommand("vscode.diff", from, to, restore ? "Review history-profile restore" : "Review history-profile exclusion");
+            if (!await fresh()) return unavailable();
+            const action = restore ? "Restore previous profile" : "Install history exclusion";
+            const selected = await vscode.window.showWarningMessage(restore ? "Restore the previous owned PowerShell profile?" : "Apply this history exclusion to the selected PowerShell profile?", {
+                modal: true,
+                detail: restore
+                    ? "This removes only the exact owned change after verifying its encrypted backup. Existing consoles may retain the stronger handler until they exit. No existing history is edited."
+                    : "Windows PowerShell 5.1 with PSReadLine 2.0.0 only. The parent directory must exist. Public history and prior handler denies are preserved; credential-shaped public examples may also be excluded. This affects consoles that load the selected profile, wherever they run. Existing history, unknown values/encodings and later handler overrides remain outside this check. Disabling the setting stops new installs; explicit reviewed restore removes the owned change.",
+            }, action);
+            if (!await fresh()) return unavailable();
+            if (selected !== action) return Object.freeze({ status: "CANCELLED" });
+            const generation = receipt?.generation ?? randomUUID();
+            let transactionStarted = false;
+            const io: HistoryProfileTransactionIO = {
+                authorized: lease, snapshot: async () => {
+                    const now = await file.snapshot();
+                    if (!transactionStarted) {
+                        if (!lease() || !equal(this.#journal.read(), raw) || now.identity !== before.identity
+                            || (now.content === undefined) !== (before.content === undefined) || now.content !== undefined && !now.content.equals(before.content!)) throw Error("History-profile review expired.");
+                        transactionStarted = true;
+                    }
+                    return now;
+                }, replace: (old, next) => file.replace(old, next),
+                readReceipt: () => this.#journal.read(), writeReceipt: value => this.#journal.write(value, lease),
+                backup: new EncryptedBackupSink(this.context),
+            };
+            const result = restore ? await restoreHistoryProfile(io, generation) : await installHistoryProfile(io, generation);
+            return lease() ? result : unavailable();
+        } catch { return unavailable(); }
+        finally { this.#busy = false; this.#views.clear(); }
+    }
+}

@@ -1,0 +1,54 @@
+{
+  "generatedAt": "2026-10-12T10:15:08.226Z",
+  "scope": "Supplied synthetic public context compatibility only; no protected-file denial, IDE routing or mandatory network boundary tested.",
+  "targets": [
+    {
+      "id": "claude-code",
+      "version": "2.1.292",
+      "status": "INCOMPLETE",
+      "message": "Not logged in · Please run /login",
+      "apiInputTokens": 0,
+      "apiOutputTokens": 0
+    },
+    {
+      "id": "codex",
+      "version": "0.160.1",
+      "status": "PASS",
+      "scope": "Actual authenticated ChatGPT response; no tool events; initial PowerShell argument failure retained."
+    },
+    {
+      "id": "gemini",
+      "version": "0.55.1",
+      "status": "PASS",
+      "scope": "Actual authenticated response after retained 503 errors and CLI automatic fallback; zero tool calls and zero file changes."
+    },
+    {
+      "id": "ollama",
+      "status": "INCOMPLETE",
+      "message": "Error: timed out waiting for server to start; access-denied log writes. No model installed/started."
+    },
+    {
+      "id": "claude-code-ide",
+      "version": "2.1.296",
+      "status": "NOT_TESTED",
+      "scope": "Installed extension inventory only; actual IDE authenticated request/routing not verified."
+    },
+    {
+      "id": "cline",
+      "version": "4.1.23",
+      "status": "NOT_TESTED",
+      "scope": "Installed registry only; no authenticated executable test path verified."
+    },
+    {
+      "id": "cursor-ide",
+      "status": "NOT_TESTED",
+      "scope": "IDE launcher present; no authenticated agent CLI/test adapter available."
+    },
+    {
+      "id": "gemini-selected-public-files",
+      "version": "0.55.1",
+      "status": "PASS",
+      "scope": "Two successful read_file calls in the synthetic selected-file export; one update_topic metadata call; no file changes; no original-file denial/isolation test."
+    }
+  ]
+}

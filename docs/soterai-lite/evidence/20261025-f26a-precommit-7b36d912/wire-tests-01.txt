@@ -1,0 +1,124 @@
+﻿TAP version 13
+# Subtest: F26a wire signs and verifies an exact owner descriptor
+ok 1 - F26a wire signs and verifies an exact owner descriptor
+  ---
+  duration_ms: 132.089
+  type: 'test'
+  ...
+# Subtest: F26a wire descriptor signature requires the reviewed public key
+ok 2 - F26a wire descriptor signature requires the reviewed public key
+  ---
+  duration_ms: 2.8021
+  type: 'test'
+  ...
+# Subtest: F26a wire refuses changed descriptor fields without a fresh signature
+ok 3 - F26a wire refuses changed descriptor fields without a fresh signature
+  ---
+  duration_ms: 2.0993
+  type: 'test'
+  ...
+# Subtest: F26a wire descriptor cannot select root installation worker or runtime
+ok 4 - F26a wire descriptor cannot select root installation worker or runtime
+  ---
+  duration_ms: 5.1281
+  type: 'test'
+  ...
+# Subtest: F26a wire descriptors admit only exact loopback fixed-route URLs
+ok 5 - F26a wire descriptors admit only exact loopback fixed-route URLs
+  ---
+  duration_ms: 1.4904
+  type: 'test'
+  ...
+# Subtest: F26a wire refuses malformed non-Ed25519 and noncanonical public keys
+ok 6 - F26a wire refuses malformed non-Ed25519 and noncanonical public keys
+  ---
+  duration_ms: 18.061
+  type: 'test'
+  ...
+# Subtest: F26a wire descriptor and decision signatures have different domains
+ok 7 - F26a wire descriptor and decision signatures have different domains
+  ---
+  duration_ms: 2.445
+  type: 'test'
+  ...
+# Subtest: F26a wire signs and verifies each fixed decision status
+ok 8 - F26a wire signs and verifies each fixed decision status
+  ---
+  duration_ms: 5.0656
+  type: 'test'
+  ...
+# Subtest: F26a wire requires exact fresh nonce session root and generation
+ok 9 - F26a wire requires exact fresh nonce session root and generation
+  ---
+  duration_ms: 4.624
+  type: 'test'
+  ...
+# Subtest: F26a wire changed decision or index metadata cannot preserve a valid signature
+ok 10 - F26a wire changed decision or index metadata cannot preserve a valid signature
+  ---
+  duration_ms: 3.4428
+  type: 'test'
+  ...
+# Subtest: F26a wire signed envelope is finite canonical JSON with no duplicate fields
+ok 11 - F26a wire signed envelope is finite canonical JSON with no duplicate fields
+  ---
+  duration_ms: 2.2127
+  type: 'test'
+  ...
+# Subtest: F26a wire unknown envelope payload and binding fields refuse
+ok 12 - F26a wire unknown envelope payload and binding fields refuse
+  ---
+  duration_ms: 1.256
+  type: 'test'
+  ...
+# Subtest: F26a wire invalid schema versions status UUIDs and digests refuse
+ok 13 - F26a wire invalid schema versions status UUIDs and digests refuse
+  ---
+  duration_ms: 1.0061
+  type: 'test'
+  ...
+# Subtest: F26a wire refuses accessor and coercion payloads without reading their values
+ok 14 - F26a wire refuses accessor and coercion payloads without reading their values
+  ---
+  duration_ms: 0.9959
+  type: 'test'
+  ...
+# Subtest: F26a wire non-buffer and forged-buffer frames refuse without input traps
+ok 15 - F26a wire non-buffer and forged-buffer frames refuse without input traps
+  ---
+  duration_ms: 1.281
+  type: 'test'
+  ...
+# Subtest: F26a wire parses exact fixed request and preserves index as untrusted literal data
+ok 16 - F26a wire parses exact fixed request and preserves index as untrusted literal data
+  ---
+  duration_ms: 1.2827
+  type: 'test'
+  ...
+# Subtest: F26a wire request cannot choose owner session generation or extra root
+ok 17 - F26a wire request cannot choose owner session generation or extra root
+  ---
+  duration_ms: 1.0255
+  type: 'test'
+  ...
+# Subtest: F26a wire request distinguishes explicit empty invalid and omitted index paths
+ok 18 - F26a wire request distinguishes explicit empty invalid and omitted index paths
+  ---
+  duration_ms: 1.4046
+  type: 'test'
+  ...
+# Subtest: F26a wire request refuses duplicates noncanonical framing and over4096 bytes
+ok 19 - F26a wire request refuses duplicates noncanonical framing and over4096 bytes
+  ---
+  duration_ms: 1.2015
+  type: 'test'
+  ...
+1..19
+# tests 19
+# suites 0
+# pass 19
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 517.3804

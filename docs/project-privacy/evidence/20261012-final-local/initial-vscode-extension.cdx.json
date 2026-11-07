@@ -1,0 +1,400 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6",
+  "version": 1,
+  "metadata": {
+    "tools": {
+      "components": [
+        {
+          "type": "application",
+          "name": "soterai-vsix-verifier",
+          "version": "1"
+        }
+      ]
+    },
+    "component": {
+      "type": "application",
+      "bom-ref": "pkg:vscode/soterai/soterai-ide-guard@0.6.3",
+      "group": "soterai",
+      "name": "soterai-ide-guard",
+      "version": "0.6.3",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "0715c84c0572d7d07dd8a42f99df421353bf4f119d7d9daab4d5fc11962968aa"
+        }
+      ],
+      "properties": [
+        {
+          "name": "soterai:artifact-kind",
+          "value": "vsix"
+        },
+        {
+          "name": "soterai:runtime-dependency-model",
+          "value": "bundled-no-node_modules"
+        }
+      ]
+    }
+  },
+  "components": [
+    {
+      "type": "file",
+      "bom-ref": "urn:soterai:vsix-file:%5BContent_Types%5D.xml",
+      "name": "[Content_Types].xml",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "4b28fc7269f876b0aa8f66a487ecb9c5be76a04b9202850375870bdc1ca85f4d"
+        }
+      ],
+      "properties": [
+        {
+          "name": "soterai:uncompressed-bytes",
+          "value": "465"
+        }
+      ]
+    },
+    {
+      "type": "file",
+      "bom-ref": "urn:soterai:vsix-file:extension.vsixmanifest",
+      "name": "extension.vsixmanifest",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "4d7b83bbc1b85f0893102dd3a865e9e5479fdc23e269d4bde649868fabc57f36"
+        }
+      ],
+      "properties": [
+        {
+          "name": "soterai:uncompressed-bytes",
+          "value": "3508"
+        }
+      ]
+    },
+    {
+      "type": "file",
+      "bom-ref": "urn:soterai:vsix-file:extension%2Fchangelog.md",
+      "name": "extension/changelog.md",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "a82cc33e5d69ab2e37889513afd2de13f45624f88d2f3ceab0b74d02329dbffe"
+        }
+      ],
+      "properties": [
+        {
+          "name": "soterai:uncompressed-bytes",
+          "value": "53840"
+        }
+      ]
+    },
+    {
+      "type": "file",
+      "bom-ref": "urn:soterai:vsix-file:extension%2Fdist%2Fextension.js",
+      "name": "extension/dist/extension.js",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "b78f4201278c86aea6585cd86a5214727c9934ba5847ed2e7c76e374b072ca56"
+        }
+      ],
+      "properties": [
+        {
+          "name": "soterai:uncompressed-bytes",
+          "value": "700480"
+        }
+      ]
+    },
+    {
+      "type": "file",
+      "bom-ref": "urn:soterai:vsix-file:extension%2Fdist%2Flocal-ai-broker.js",
+      "name": "extension/dist/local-ai-broker.js",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "6c07093d81243f0063bfd8d51b3d23a162cd3b4375c312c75b59e95f8239a397"
+        }
+      ],
+      "properties": [
+        {
+          "name": "soterai:uncompressed-bytes",
+          "value": "243478"
+        }
+      ]
+    },
+    {
+      "type": "file",
+      "bom-ref": "urn:soterai:vsix-file:extension%2Fdist%2Fsoterai-mcp-server.js",
+      "name": "extension/dist/soterai-mcp-server.js",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "6d5e1199d509139387e542e91faad02b790e692415416bd7eb5510a6e6ecc486"
+        }
+      ],
+      "properties": [
+        {
+          "name": "soterai:uncompressed-bytes",
+          "value": "202258"
+        }
+      ]
+    },
+    {
+      "type": "file",
+      "bom-ref": "urn:soterai:vsix-file:extension%2FLICENSE",
+      "name": "extension/LICENSE",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "e470831363fcf71131635e3e925df336b6b4220f2cabe8a1e40c4564746dde57"
+        }
+      ],
+      "properties": [
+        {
+          "name": "soterai:uncompressed-bytes",
+          "value": "892"
+        }
+      ]
+    },
+    {
+      "type": "file",
+      "bom-ref": "urn:soterai:vsix-file:extension%2FLICENSE.md",
+      "name": "extension/LICENSE.md",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "0623a9b3209ec07efc13de23e6fe2fe04163aaaec4ce38e09313e55a855cf5a1"
+        }
+      ],
+      "properties": [
+        {
+          "name": "soterai:uncompressed-bytes",
+          "value": "912"
+        }
+      ]
+    },
+    {
+      "type": "file",
+      "bom-ref": "urn:soterai:vsix-file:extension%2Fmedia%2Ficon.svg",
+      "name": "extension/media/icon.svg",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "25cffa9a3674c2d6e69d3a9c76bbcbc5767b1bba39cc1e198e00937876cd1729"
+        }
+      ],
+      "properties": [
+        {
+          "name": "soterai:uncompressed-bytes",
+          "value": "1473"
+        }
+      ]
+    },
+    {
+      "type": "file",
+      "bom-ref": "urn:soterai:vsix-file:extension%2Fmedia%2Flogo_circle_whiter.png",
+      "name": "extension/media/logo_circle_whiter.png",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "49ba85f42522528544b3d18a234559942935642d6f7fc48e775aaba5042e2173"
+        }
+      ],
+      "properties": [
+        {
+          "name": "soterai:uncompressed-bytes",
+          "value": "951992"
+        }
+      ]
+    },
+    {
+      "type": "file",
+      "bom-ref": "urn:soterai:vsix-file:extension%2Fmedia%2Fwalkthrough%2Fdemo.md",
+      "name": "extension/media/walkthrough/demo.md",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "228de710a499a67a09c7b3e9f40d22b3d37060a8cf8a744d723df532634135b3"
+        }
+      ],
+      "properties": [
+        {
+          "name": "soterai:uncompressed-bytes",
+          "value": "514"
+        }
+      ]
+    },
+    {
+      "type": "file",
+      "bom-ref": "urn:soterai:vsix-file:extension%2Fmedia%2Fwalkthrough%2Fintegrate.md",
+      "name": "extension/media/walkthrough/integrate.md",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "b49b5d56ca6c1dd46fb03b3130439e0fb59206dc0bee6645d0a7d518a6436c0a"
+        }
+      ],
+      "properties": [
+        {
+          "name": "soterai:uncompressed-bytes",
+          "value": "446"
+        }
+      ]
+    },
+    {
+      "type": "file",
+      "bom-ref": "urn:soterai:vsix-file:extension%2Fmedia%2Fwalkthrough%2Fvault.md",
+      "name": "extension/media/walkthrough/vault.md",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "ac664bf6d49833902efadb07b442941c379de6beb4b6fbc402fc739f64fabac9"
+        }
+      ],
+      "properties": [
+        {
+          "name": "soterai:uncompressed-bytes",
+          "value": "450"
+        }
+      ]
+    },
+    {
+      "type": "file",
+      "bom-ref": "urn:soterai:vsix-file:extension%2Fpackage.json",
+      "name": "extension/package.json",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "f8b913569b1aa0b61a7367138d94495b69560b255a1a8eba1cf8163cc65efa60"
+        }
+      ],
+      "properties": [
+        {
+          "name": "soterai:uncompressed-bytes",
+          "value": "96329"
+        }
+      ]
+    },
+    {
+      "type": "file",
+      "bom-ref": "urn:soterai:vsix-file:extension%2Freadme.md",
+      "name": "extension/readme.md",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "dc0560814c9d83d228b6485153d3d7cec48edbbc653baa0897c76b7fb63cd375"
+        }
+      ],
+      "properties": [
+        {
+          "name": "soterai:uncompressed-bytes",
+          "value": "27504"
+        }
+      ]
+    },
+    {
+      "type": "file",
+      "bom-ref": "urn:soterai:vsix-file:extension%2Fverification%2Fproject-privacy-verification.json",
+      "name": "extension/verification/project-privacy-verification.json",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "a6c3edba8783bad5caf2d848401e9af8e38682981f6dcfd2d34873fd960b8fb7"
+        }
+      ],
+      "properties": [
+        {
+          "name": "soterai:uncompressed-bytes",
+          "value": "3741"
+        }
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "pkg:vscode/soterai/soterai-ide-guard@0.6.3",
+      "dependsOn": [
+        "urn:soterai:vsix-file:%5BContent_Types%5D.xml",
+        "urn:soterai:vsix-file:extension.vsixmanifest",
+        "urn:soterai:vsix-file:extension%2Fchangelog.md",
+        "urn:soterai:vsix-file:extension%2Fdist%2Fextension.js",
+        "urn:soterai:vsix-file:extension%2Fdist%2Flocal-ai-broker.js",
+        "urn:soterai:vsix-file:extension%2Fdist%2Fsoterai-mcp-server.js",
+        "urn:soterai:vsix-file:extension%2FLICENSE",
+        "urn:soterai:vsix-file:extension%2FLICENSE.md",
+        "urn:soterai:vsix-file:extension%2Fmedia%2Ficon.svg",
+        "urn:soterai:vsix-file:extension%2Fmedia%2Flogo_circle_whiter.png",
+        "urn:soterai:vsix-file:extension%2Fmedia%2Fwalkthrough%2Fdemo.md",
+        "urn:soterai:vsix-file:extension%2Fmedia%2Fwalkthrough%2Fintegrate.md",
+        "urn:soterai:vsix-file:extension%2Fmedia%2Fwalkthrough%2Fvault.md",
+        "urn:soterai:vsix-file:extension%2Fpackage.json",
+        "urn:soterai:vsix-file:extension%2Freadme.md",
+        "urn:soterai:vsix-file:extension%2Fverification%2Fproject-privacy-verification.json"
+      ]
+    },
+    {
+      "ref": "urn:soterai:vsix-file:%5BContent_Types%5D.xml",
+      "dependsOn": []
+    },
+    {
+      "ref": "urn:soterai:vsix-file:extension.vsixmanifest",
+      "dependsOn": []
+    },
+    {
+      "ref": "urn:soterai:vsix-file:extension%2Fchangelog.md",
+      "dependsOn": []
+    },
+    {
+      "ref": "urn:soterai:vsix-file:extension%2Fdist%2Fextension.js",
+      "dependsOn": []
+    },
+    {
+      "ref": "urn:soterai:vsix-file:extension%2Fdist%2Flocal-ai-broker.js",
+      "dependsOn": []
+    },
+    {
+      "ref": "urn:soterai:vsix-file:extension%2Fdist%2Fsoterai-mcp-server.js",
+      "dependsOn": []
+    },
+    {
+      "ref": "urn:soterai:vsix-file:extension%2FLICENSE",
+      "dependsOn": []
+    },
+    {
+      "ref": "urn:soterai:vsix-file:extension%2FLICENSE.md",
+      "dependsOn": []
+    },
+    {
+      "ref": "urn:soterai:vsix-file:extension%2Fmedia%2Ficon.svg",
+      "dependsOn": []
+    },
+    {
+      "ref": "urn:soterai:vsix-file:extension%2Fmedia%2Flogo_circle_whiter.png",
+      "dependsOn": []
+    },
+    {
+      "ref": "urn:soterai:vsix-file:extension%2Fmedia%2Fwalkthrough%2Fdemo.md",
+      "dependsOn": []
+    },
+    {
+      "ref": "urn:soterai:vsix-file:extension%2Fmedia%2Fwalkthrough%2Fintegrate.md",
+      "dependsOn": []
+    },
+    {
+      "ref": "urn:soterai:vsix-file:extension%2Fmedia%2Fwalkthrough%2Fvault.md",
+      "dependsOn": []
+    },
+    {
+      "ref": "urn:soterai:vsix-file:extension%2Fpackage.json",
+      "dependsOn": []
+    },
+    {
+      "ref": "urn:soterai:vsix-file:extension%2Freadme.md",
+      "dependsOn": []
+    },
+    {
+      "ref": "urn:soterai:vsix-file:extension%2Fverification%2Fproject-privacy-verification.json",
+      "dependsOn": []
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "product": "SoterLLM",
+  "version": "v18-student-candidate",
+  "datasets": [
+    "/content/soterai-v18/datasets/ml-v18-clean-corpus.jsonl"
+  ],
+  "rows_per_file": {
+    "/content/soterai-v18/datasets/ml-v18-clean-corpus.jsonl": 110516
+  },
+  "rows_total": 110516,
+  "groups_total": 110413,
+  "sampled": false,
+  "sample_size": null,
+  "split": {
+    "seed": 42,
+    "method": "group_aware_three_way_sorted_groups",
+    "rows_total": 110516,
+    "groups_total": 110413,
+    "augmented_rows_appended_to_train": 20236,
+    "counts": {
+      "train": 77823,
+      "calibration": 8316,
+      "validation": 14139,
+      "test": 10238
+    },
+    "sha256": "67c7aedaaa02e639da49f07a873792462e317c200489150d0b2ed6e189def43c",
+    "prepared_source": {
+      "path": "/content/soterai-v18/artifacts/ml/v18-split-indices.json",
+      "dataset_sha256": "4e530142fffd3d0edf5d00d50a85b82ff358826335db53ab0ea769660a6a002d",
+      "manifest_sha256": "a0fd8351a9f5ac7322b3a130ca0a3a93d381ea6349e041f39f2ea4f10d3d1ba8",
+      "method": "declared_lineage_and_normalized_text_connected_components_sha256_assignment"
+    },
+    "note": "Indices address the corpus as loaded by load_jsonl over `datasets` in dataset_manifest.json, in file order. Augmented rows are appended AFTER index len(rows_total) and belong to train only."
+  },
+  "augmentation": {
+    "enabled": true,
+    "attack_rate": 0.35,
+    "benign_rate": 0.12,
+    "seed": 20260823,
+    "max_stack": 2,
+    "generated": 20236,
+    "skipped_label": 568,
+    "skipped_noop": 811,
+    "by_transform": {
+      "invisible": 3281,
+      "whitespace": 3276,
+      "spaced": 2725,
+      "homoglyph": 3289,
+      "case": 2640,
+      "leet": 3196,
+      "typo": 3326,
+      "punct": 3214,
+      "combining": 3206
+    },
+    "by_label": {
+      "PROMPT_INJECTION": 4032,
+      "DATA_EXFILTRATION_ATTEMPT": 1996,
+      "RAG_POISONING": 1079,
+      "JAILBREAK": 1504,
+      "SAFE": 3074,
+      "UNSAFE_OUTPUT": 2112,
+      "SYSTEM_PROMPT_LEAK_ATTEMPT": 1795,
+      "PII": 2089,
+      "SECRET": 1503,
+      "MULTI_TURN_ESCALATION": 277,
+      "TOXICITY_HARASSMENT": 252,
+      "MODEL_EXTRACTION": 206,
+      "TOOL_CALL_ABUSE": 317
+    },
+    "parent_groups_verified": 20236
+  }
+}

@@ -1,0 +1,1103 @@
+{
+  "schemaVersion": 1,
+  "phase": "restart",
+  "syntheticOnly": true,
+  "fixtureStatus": "PREPARED_NATIVE_FIXTURE_ACTUAL_RESULTS_ONLY",
+  "hostVersion": "1.145.1",
+  "extensionBundleSha256": "b611dee998d11824d523b3d561704f4a5dc15e27274e6e1d85c7154b9d42cfa0",
+  "workerSha256": "36e04d01bb9b38f8e402020318cc1d8d1a6d66176ec2be8c1630fbe6d012cacb",
+  "runtimeBindings": [
+    {
+      "file": "extension.js",
+      "bytes": 1957320,
+      "sha256": "b611dee998d11824d523b3d561704f4a5dc15e27274e6e1d85c7154b9d42cfa0"
+    },
+    {
+      "file": "local-ai-broker.js",
+      "bytes": 326860,
+      "sha256": "24c633aff86713f35133e6c103299a24bc2a4df0a6726c90462283ce9030b744"
+    },
+    {
+      "file": "soterai-mcp-server.js",
+      "bytes": 230255,
+      "sha256": "bac10b399ee9e28c069c72eae3254f2e84da155b2bcb2dc48467487d74845138"
+    },
+    {
+      "file": "pre-commit-client.js",
+      "bytes": 24512,
+      "sha256": "36e04d01bb9b38f8e402020318cc1d8d1a6d66176ec2be8c1630fbe6d012cacb"
+    }
+  ],
+  "currentRuntimeBindings": [
+    {
+      "file": "extension.js",
+      "bytes": 1957320,
+      "sha256": "b611dee998d11824d523b3d561704f4a5dc15e27274e6e1d85c7154b9d42cfa0"
+    },
+    {
+      "file": "local-ai-broker.js",
+      "bytes": 326860,
+      "sha256": "24c633aff86713f35133e6c103299a24bc2a4df0a6726c90462283ce9030b744"
+    },
+    {
+      "file": "soterai-mcp-server.js",
+      "bytes": 230255,
+      "sha256": "bac10b399ee9e28c069c72eae3254f2e84da155b2bcb2dc48467487d74845138"
+    },
+    {
+      "file": "pre-commit-client.js",
+      "bytes": 24512,
+      "sha256": "36e04d01bb9b38f8e402020318cc1d8d1a6d66176ec2be8c1630fbe6d012cacb"
+    }
+  ],
+  "executionManifest": {
+    "present": true,
+    "bytes": 349234,
+    "sha256": "c9b792676839f743f516c0e68e36b3be64ab952eca1e28cb7e9ded570ea82d0f",
+    "mode": 438
+  },
+  "currentExecutionManifest": {
+    "present": true,
+    "bytes": 349234,
+    "sha256": "c9b792676839f743f516c0e68e36b3be64ab952eca1e28cb7e9ded570ea82d0f",
+    "mode": 438
+  },
+  "hostProbeSha256": "8f7d11faa7ba03683fdbec85f95a0d2284bb126cd45c1dfc1cb02b2e3b090ced",
+  "codeSha256": "2361449e044667cd5030a1396db3ac6785424ff7bf3047c691bc79e9011ae91d",
+  "observations": [
+    {
+      "id": "F26A-HR01",
+      "scope": "Restart does not auto-resume query create key or mutate exact retained installation bytes",
+      "status": "PASS"
+    },
+    {
+      "id": "F26A-HR02",
+      "scope": "Launcher actual closed-editor and offline owner commit receipt proves unavailable owner without stale ALLOW",
+      "status": "PASS"
+    },
+    {
+      "id": "F26A-HR03",
+      "scope": "Cancelled explicit resume leaves the retained key backup hook and old signed endpoint unchanged",
+      "status": "PASS"
+    },
+    {
+      "id": "F26A-HR04",
+      "scope": "Reviewed resume signs a fresh session and commits public staged data; unknown hook owner edit is preserved INCOMPLETE",
+      "status": "PASS"
+    }
+  ],
+  "expectedChecks": 4,
+  "passed": 4,
+  "failed": 0,
+  "notRun": 0,
+  "children": [
+    {
+      "caseId": "F26A-HR02",
+      "kind": "setup",
+      "operation": "before-owner-listing",
+      "closed": true,
+      "code": 0,
+      "signal": null,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 72,
+      "stderrBytes": 0,
+      "stdoutSha256": "7f9ffbf60f237f9f360e4820e2acf70e6c77556918bf9b0a80af46d952f35675",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "signalsRequested": 0,
+      "spawnFailed": false,
+      "streamError": false,
+      "overflow": false,
+      "timedOut": false,
+      "busy": false,
+      "argumentsValid": true,
+      "environmentValid": true,
+      "parentEnvironmentUnchanged": true,
+      "stdinObjects": 0,
+      "invalidInput": false
+    },
+    {
+      "caseId": "F26A-HR02",
+      "kind": "owner",
+      "operation": "before explicit restart resume",
+      "closed": true,
+      "code": 1,
+      "signal": null,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 0,
+      "stderrBytes": 78,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "272033995c6c1344301c7d445cccdf4a09d9accad88b78c4fe68156292fa9a3b",
+      "signalsRequested": 0,
+      "spawnFailed": false,
+      "streamError": false,
+      "overflow": false,
+      "timedOut": false,
+      "busy": false,
+      "argumentsValid": true,
+      "environmentValid": true,
+      "parentEnvironmentUnchanged": true,
+      "stdinObjects": 0,
+      "invalidInput": false
+    },
+    {
+      "caseId": "F26A-HR02",
+      "kind": "setup",
+      "operation": "after-owner-listing",
+      "closed": true,
+      "code": 0,
+      "signal": null,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 72,
+      "stderrBytes": 0,
+      "stdoutSha256": "7f9ffbf60f237f9f360e4820e2acf70e6c77556918bf9b0a80af46d952f35675",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "signalsRequested": 0,
+      "spawnFailed": false,
+      "streamError": false,
+      "overflow": false,
+      "timedOut": false,
+      "busy": false,
+      "argumentsValid": true,
+      "environmentValid": true,
+      "parentEnvironmentUnchanged": true,
+      "stdinObjects": 0,
+      "invalidInput": false
+    },
+    {
+      "caseId": "F26A-HR03",
+      "kind": "projection",
+      "operation": "version",
+      "closed": true,
+      "code": 0,
+      "signal": null,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 29,
+      "stderrBytes": 0,
+      "stdoutSha256": "2bfdb478bf1093a587b8e6306b25f57e6b8aed47bffe7e885f7b279768af4c42",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "signalsRequested": 0,
+      "spawnFailed": false,
+      "streamError": false,
+      "overflow": false,
+      "timedOut": false,
+      "busy": false,
+      "argumentsValid": true,
+      "environmentValid": true,
+      "parentEnvironmentUnchanged": true,
+      "stdinObjects": 0,
+      "invalidInput": false
+    },
+    {
+      "caseId": "F26A-HR03",
+      "kind": "projection",
+      "operation": "config",
+      "closed": true,
+      "code": 1,
+      "signal": null,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 0,
+      "stderrBytes": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "signalsRequested": 0,
+      "spawnFailed": false,
+      "streamError": false,
+      "overflow": false,
+      "timedOut": false,
+      "busy": false,
+      "argumentsValid": true,
+      "environmentValid": true,
+      "parentEnvironmentUnchanged": true,
+      "stdinObjects": 0,
+      "invalidInput": false
+    },
+    {
+      "caseId": "F26A-HR04",
+      "kind": "projection",
+      "operation": "version",
+      "closed": true,
+      "code": 0,
+      "signal": null,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 29,
+      "stderrBytes": 0,
+      "stdoutSha256": "2bfdb478bf1093a587b8e6306b25f57e6b8aed47bffe7e885f7b279768af4c42",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "signalsRequested": 0,
+      "spawnFailed": false,
+      "streamError": false,
+      "overflow": false,
+      "timedOut": false,
+      "busy": false,
+      "argumentsValid": true,
+      "environmentValid": true,
+      "parentEnvironmentUnchanged": true,
+      "stdinObjects": 0,
+      "invalidInput": false
+    },
+    {
+      "caseId": "F26A-HR04",
+      "kind": "projection",
+      "operation": "config",
+      "closed": true,
+      "code": 1,
+      "signal": null,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 0,
+      "stderrBytes": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "signalsRequested": 0,
+      "spawnFailed": false,
+      "streamError": false,
+      "overflow": false,
+      "timedOut": false,
+      "busy": false,
+      "argumentsValid": true,
+      "environmentValid": true,
+      "parentEnvironmentUnchanged": true,
+      "stdinObjects": 0,
+      "invalidInput": false
+    },
+    {
+      "caseId": "F26A-HR04",
+      "kind": "projection",
+      "operation": "version",
+      "closed": true,
+      "code": 0,
+      "signal": null,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 29,
+      "stderrBytes": 0,
+      "stdoutSha256": "2bfdb478bf1093a587b8e6306b25f57e6b8aed47bffe7e885f7b279768af4c42",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "signalsRequested": 0,
+      "spawnFailed": false,
+      "streamError": false,
+      "overflow": false,
+      "timedOut": false,
+      "busy": false,
+      "argumentsValid": true,
+      "environmentValid": true,
+      "parentEnvironmentUnchanged": true,
+      "stdinObjects": 0,
+      "invalidInput": false
+    },
+    {
+      "caseId": "F26A-HR04",
+      "kind": "projection",
+      "operation": "config",
+      "closed": true,
+      "code": 1,
+      "signal": null,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 0,
+      "stderrBytes": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "signalsRequested": 0,
+      "spawnFailed": false,
+      "streamError": false,
+      "overflow": false,
+      "timedOut": false,
+      "busy": false,
+      "argumentsValid": true,
+      "environmentValid": true,
+      "parentEnvironmentUnchanged": true,
+      "stdinObjects": 0,
+      "invalidInput": false
+    },
+    {
+      "caseId": "F26A-HR04",
+      "kind": "setup",
+      "operation": "before-owner-listing",
+      "closed": true,
+      "code": 0,
+      "signal": null,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 72,
+      "stderrBytes": 0,
+      "stdoutSha256": "7f9ffbf60f237f9f360e4820e2acf70e6c77556918bf9b0a80af46d952f35675",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "signalsRequested": 0,
+      "spawnFailed": false,
+      "streamError": false,
+      "overflow": false,
+      "timedOut": false,
+      "busy": false,
+      "argumentsValid": true,
+      "environmentValid": true,
+      "parentEnvironmentUnchanged": true,
+      "stdinObjects": 0,
+      "invalidInput": false
+    },
+    {
+      "caseId": "F26A-HR04",
+      "kind": "owner",
+      "operation": "reviewed restart public",
+      "closed": true,
+      "code": 0,
+      "signal": null,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 0,
+      "stderrBytes": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "signalsRequested": 0,
+      "spawnFailed": false,
+      "streamError": false,
+      "overflow": false,
+      "timedOut": false,
+      "busy": false,
+      "argumentsValid": true,
+      "environmentValid": true,
+      "parentEnvironmentUnchanged": true,
+      "stdinObjects": 0,
+      "invalidInput": false
+    },
+    {
+      "caseId": "F26A-HR04",
+      "kind": "scan",
+      "operation": "version",
+      "closed": true,
+      "code": 0,
+      "signal": null,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 29,
+      "stderrBytes": 0,
+      "stdoutSha256": "2bfdb478bf1093a587b8e6306b25f57e6b8aed47bffe7e885f7b279768af4c42",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "signalsRequested": 0,
+      "spawnFailed": false,
+      "streamError": false,
+      "overflow": false,
+      "timedOut": false,
+      "busy": false,
+      "argumentsValid": true,
+      "environmentValid": true,
+      "parentEnvironmentUnchanged": true,
+      "stdinObjects": 0,
+      "invalidInput": false
+    },
+    {
+      "caseId": "F26A-HR04",
+      "kind": "scan",
+      "operation": "entries",
+      "closed": true,
+      "code": 0,
+      "signal": null,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 72,
+      "stderrBytes": 0,
+      "stdoutSha256": "7f9ffbf60f237f9f360e4820e2acf70e6c77556918bf9b0a80af46d952f35675",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "signalsRequested": 0,
+      "spawnFailed": false,
+      "streamError": false,
+      "overflow": false,
+      "timedOut": false,
+      "busy": false,
+      "argumentsValid": true,
+      "environmentValid": true,
+      "parentEnvironmentUnchanged": true,
+      "stdinObjects": 0,
+      "invalidInput": false
+    },
+    {
+      "caseId": "F26A-HR04",
+      "kind": "scan",
+      "operation": "sizes",
+      "closed": true,
+      "code": 0,
+      "signal": null,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 49,
+      "stderrBytes": 0,
+      "stdoutSha256": "2bbe4a8f5ae8daeaee7cd992d9f7e8314915781d8bc47ed2d8ce1a87f7c179ad",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "signalsRequested": 0,
+      "spawnFailed": false,
+      "streamError": false,
+      "overflow": false,
+      "timedOut": false,
+      "busy": false,
+      "argumentsValid": true,
+      "environmentValid": true,
+      "parentEnvironmentUnchanged": true,
+      "stdinObjects": 1,
+      "invalidInput": false
+    },
+    {
+      "caseId": "F26A-HR04",
+      "kind": "scan",
+      "operation": "batch",
+      "closed": true,
+      "code": 0,
+      "signal": null,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 109,
+      "stderrBytes": 0,
+      "stdoutSha256": "34b289eb2d8f3f2b94bb5a23732d5463d81f9cf410ca227d388f9dda12e0c836",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "signalsRequested": 0,
+      "spawnFailed": false,
+      "streamError": false,
+      "overflow": false,
+      "timedOut": false,
+      "busy": false,
+      "argumentsValid": true,
+      "environmentValid": true,
+      "parentEnvironmentUnchanged": true,
+      "stdinObjects": 1,
+      "invalidInput": false
+    },
+    {
+      "caseId": "F26A-HR04",
+      "kind": "setup",
+      "operation": "after-owner-listing",
+      "closed": true,
+      "code": 0,
+      "signal": null,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "stdoutBytes": 72,
+      "stderrBytes": 0,
+      "stdoutSha256": "7f9ffbf60f237f9f360e4820e2acf70e6c77556918bf9b0a80af46d952f35675",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "signalsRequested": 0,
+      "spawnFailed": false,
+      "streamError": false,
+      "overflow": false,
+      "timedOut": false,
+      "busy": false,
+      "argumentsValid": true,
+      "environmentValid": true,
+      "parentEnvironmentUnchanged": true,
+      "stdinObjects": 0,
+      "invalidInput": false
+    }
+  ],
+  "requests": [
+    {
+      "caseId": "F26A-HR04",
+      "requestEnded": true,
+      "requestClosed": true,
+      "responseFinished": true,
+      "responseClosed": true,
+      "requestValid": true,
+      "signatureValid": true,
+      "indexMatched": true,
+      "overflow": false,
+      "indexSha256": "f1270a743e19c4b547c2676bfb01e8ae3b3a55c9163042b0bfd00e7d8d65900d",
+      "generation": "cf6b316b-b974-464f-8894-6dc0281a36b1",
+      "session": "d59ebb81-0bae-4d60-a7c4-1265c7dedf3e",
+      "nonce": "5526508c-8c66-4b32-b854-b259e8a5f955",
+      "selected": "default",
+      "indexIdentity": "291d3f3a34e6f401645dfd6520ed652608c01c8c248e1acba127c79b1785d470",
+      "status": "ALLOW"
+    }
+  ],
+  "commitProofs": [
+    {
+      "caseId": "F26A-HR02",
+      "expected": "block",
+      "observedExitCode": 1,
+      "headAdvanced": false,
+      "selectedIndexBefore": {
+        "present": true,
+        "bytes": 153,
+        "sha256": "f1270a743e19c4b547c2676bfb01e8ae3b3a55c9163042b0bfd00e7d8d65900d",
+        "mode": 438
+      },
+      "selectedIndexAfter": {
+        "present": true,
+        "bytes": 153,
+        "sha256": "f1270a743e19c4b547c2676bfb01e8ae3b3a55c9163042b0bfd00e7d8d65900d",
+        "mode": 438
+      },
+      "worktreeUnchanged": true,
+      "stagedListingUnchanged": true,
+      "scan": "none",
+      "ownerArgumentsHaveNoHooksOverride": true,
+      "requestCount": 0
+    },
+    {
+      "caseId": "F26A-HR04",
+      "expected": "allow",
+      "observedExitCode": 0,
+      "headAdvanced": true,
+      "selectedIndexBefore": {
+        "present": true,
+        "bytes": 153,
+        "sha256": "f1270a743e19c4b547c2676bfb01e8ae3b3a55c9163042b0bfd00e7d8d65900d",
+        "mode": 438
+      },
+      "selectedIndexAfter": {
+        "present": true,
+        "bytes": 153,
+        "sha256": "f1270a743e19c4b547c2676bfb01e8ae3b3a55c9163042b0bfd00e7d8d65900d",
+        "mode": 438
+      },
+      "worktreeUnchanged": true,
+      "stagedListingUnchanged": true,
+      "scan": "ALLOW",
+      "ownerArgumentsHaveNoHooksOverride": true,
+      "requestCount": 1
+    }
+  ],
+  "reviews": [
+    {
+      "caseId": "F26A-HR03",
+      "action": "Resume reviewed owner",
+      "modal": true,
+      "approved": false
+    },
+    {
+      "caseId": "F26A-HR04",
+      "action": "Resume reviewed owner",
+      "modal": true,
+      "approved": true
+    }
+  ],
+  "secretStores": {
+    "signing": 0,
+    "backupKey": 0,
+    "record": 1,
+    "unrelated": 2
+  },
+  "ownerServers": 1,
+  "diagnostics07": {
+    "scope": "BOUNDED_ENUMERATED_METADATA_ONLY_NO_VALUES_OR_PATHS",
+    "rows": [
+      {
+        "event": "storage-uri",
+        "fileScheme": false,
+        "authority": false,
+        "query": false,
+        "fragment": false,
+        "withinWorkspace": false
+      },
+      {
+        "event": "command-start",
+        "command": "preCommitGuardStatus"
+      },
+      {
+        "event": "command-return",
+        "command": "preCommitGuardStatus",
+        "status": "OWNER_REVIEW_REQUIRED"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "command-start",
+        "command": "preCommitGuardStatus"
+      },
+      {
+        "event": "command-return",
+        "command": "preCommitGuardStatus",
+        "status": "OWNER_REVIEW_REQUIRED"
+      },
+      {
+        "event": "command-start",
+        "command": "resumePreCommitGuard"
+      },
+      {
+        "event": "command-return",
+        "command": "resumePreCommitGuard",
+        "status": "CANCELLED"
+      },
+      {
+        "event": "command-start",
+        "command": "preCommitGuardStatus"
+      },
+      {
+        "event": "command-return",
+        "command": "preCommitGuardStatus",
+        "status": "OWNER_REVIEW_REQUIRED"
+      },
+      {
+        "event": "command-start",
+        "command": "resumePreCommitGuard"
+      },
+      {
+        "event": "listener-created"
+      },
+      {
+        "event": "listener-listening",
+        "loopback": true
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage-parent"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage-parent"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage-parent"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage-parent"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "openSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage-parent"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "openSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage-parent"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage-parent"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage-parent"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "openSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage-parent"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage-parent"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "command-return",
+        "command": "resumePreCommitGuard",
+        "status": "RESUMED"
+      },
+      {
+        "event": "command-start",
+        "command": "preCommitGuardStatus"
+      },
+      {
+        "event": "command-return",
+        "command": "preCommitGuardStatus",
+        "status": "LIVE"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "listener-close"
+      },
+      {
+        "event": "command-start",
+        "command": "restorePreCommitGuard"
+      },
+      {
+        "event": "command-return",
+        "command": "restorePreCommitGuard",
+        "status": "INCOMPLETE"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "filesystem",
+        "operation": "lstatSync",
+        "outcome": "RETURNED",
+        "target": "storage"
+      },
+      {
+        "event": "command-start",
+        "command": "preCommitGuardStatus"
+      },
+      {
+        "event": "command-return",
+        "command": "preCommitGuardStatus",
+        "status": "OWNER_REVIEW_REQUIRED"
+      },
+      {
+        "event": "configuration-event"
+      },
+      {
+        "event": "command-start",
+        "command": "preCommitGuardStatus"
+      },
+      {
+        "event": "command-return",
+        "command": "preCommitGuardStatus",
+        "status": "UNAVAILABLE"
+      }
+    ],
+    "dropped": 0
+  },
+  "sourceDocuments": 0,
+  "sourceDocumentEvents": 0,
+  "directWorktreeReads": 0,
+  "directObjectReads": 0,
+  "metadataLeak": false,
+  "parentEnvironmentUnchanged": true,
+  "busyChildren": 0,
+  "timedOutChildren": 0,
+  "readyForInterphase": false,
+  "interphaseEvidence": "ACTUAL_LAUNCHER_RECEIPT_VALIDATED",
+  "nestedClientClosure": "NOT_INFERRED_FROM_OWNER_GIT;ADDITIONAL_DIRECT_PACKAGED_CLIENT_CLOSE_EOF_CONTROLS",
+  "limits": {
+    "stagedEntries": 128,
+    "blobBytes": 65536,
+    "admittedBytes": 1048576,
+    "operationMilliseconds": 60000,
+    "fixtureChildMilliseconds": 90000
+  },
+  "independence": "LOW",
+  "ownerPresence": "SCRIPTED_NATIVE_API_DECISIONS_NOT_HUMAN_REVIEW",
+  "notTested": [
+    "Same-user bypass or atomic OS confinement",
+    "Human review accessibility/usability",
+    "Registered-value guarantee or credential validity",
+    "Other platforms/remote workspaces",
+    "Held-result withdrawal is UNIT_ONLY unless separately witnessed in actual native receipt"
+  ]
+}

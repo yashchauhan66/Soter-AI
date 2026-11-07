@@ -1,0 +1,70 @@
+{
+    "status":  "AUTHORED_UNBOUND_SYNTAX_ONLY_PASS_NO_EXECUTION",
+    "time":  "2026-10-26T10:17:48.9643168Z",
+    "checks":  [
+                   {
+                       "exitCode":  0,
+                       "sha256":  "3d16b8437f9ca72cc3affc6368097c676321e0682aede8a61c3addcedf3bc857",
+                       "name":  "post-full04-contract.cjs",
+                       "bytes":  6161,
+                       "check":  "node --check"
+                   },
+                   {
+                       "exitCode":  0,
+                       "sha256":  "8a0ae034d73305c82f612500da5a16db31d61b6be90ca98c497d290b6087d501",
+                       "name":  "build-native-hosts-04.cjs",
+                       "bytes":  5130,
+                       "check":  "node --check"
+                   },
+                   {
+                       "exitCode":  0,
+                       "sha256":  "ae29398eb903312a51fd8b927559d56389774beaa26ef04bbfae5af0aba974aa",
+                       "name":  "run-post-full-04.cjs",
+                       "bytes":  2381,
+                       "check":  "node --check"
+                   },
+                   {
+                       "exitCode":  0,
+                       "sha256":  "de8ea075d0cd746e9d50221daf41b2f2d231b1237183dbfd7bf64e4e4d156ff4",
+                       "name":  "prepare-content-successors-04.cjs",
+                       "bytes":  6705,
+                       "check":  "node --check"
+                   },
+                   {
+                       "name":  "post-full-check-entry-04.ps1",
+                       "check":  "PowerShell Parser.ParseFile",
+                       "sha256":  "1b7599a73817094b046ac609d1d5d9fc52d96a2367c0594d0b30ec3464246011",
+                       "errors":  [
+
+                                  ],
+                       "bytes":  1767,
+                       "errorCount":  0
+                   },
+                   {
+                       "name":  "inspect-vsix-04.template.ps1",
+                       "check":  "PowerShell Parser.ParseFile",
+                       "sha256":  "3e7bfd390ab92dd56e7a1ae24b4e79ff2db43692494a5a3b93256b9f142021c7",
+                       "errors":  [
+
+                                  ],
+                       "bytes":  32033,
+                       "errorCount":  0
+                   },
+                   {
+                       "name":  "artifact-binding-04.template.ps1",
+                       "check":  "PowerShell Parser.ParseFile",
+                       "sha256":  "7f00441b400c03db457e06fdb8dcf3f8547259d23049f9bad24eed91ac38b11b",
+                       "errors":  [
+
+                                  ],
+                       "bytes":  4135,
+                       "errorCount":  0
+                   }
+               ],
+    "futureBinding":  "post-full04-binding.json with actual compiler15/full03/full-inputs04 facts required",
+    "output":  "Unique soterai-lite-0.7.0-f26a-20261026-attempt02.vsix",
+    "ancestrySnapshot":  "post-full04-authoring-ancestors",
+    "native06":  "Not materialized; requires new extra-round approval after concrete tested artifact",
+    "nativeTestsBuildCompilerGitExecuted":  false,
+    "limits":  "Syntax validation and evidence-helper authoring only. All historical failures and previous helper/artifact bytes retained."
+}

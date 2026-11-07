@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "artifact": {
+    "path": "product/SoterAI-Lite.vsix",
+    "bytes": 1742104,
+    "sha256": "011f96d19d42dbefc2e56eb5399bf5c7f16a09d6b71b8bae5be9d66b2f3769ec"
+  },
+  "catalog": {
+    "path": "catalog/LITE-CATALOG.json",
+    "bytes": 160265,
+    "sha256": "1ce46192e9f315b5f2142c9f61542f1d513143dc2e19d4def6d95cea38c73ed4"
+  },
+  "runtimeIdentity": [
+    {
+      "name": "extension.js",
+      "bytes": 1957320,
+      "sha256": "b611dee998d11824d523b3d561704f4a5dc15e27274e6e1d85c7154b9d42cfa0"
+    },
+    {
+      "name": "local-ai-broker.js",
+      "bytes": 326860,
+      "sha256": "24c633aff86713f35133e6c103299a24bc2a4df0a6726c90462283ce9030b744"
+    },
+    {
+      "name": "pre-commit-client.js",
+      "bytes": 24512,
+      "sha256": "36e04d01bb9b38f8e402020318cc1d8d1a6d66176ec2be8c1630fbe6d012cacb"
+    },
+    {
+      "name": "soterai-mcp-server.js",
+      "bytes": 230255,
+      "sha256": "bac10b399ee9e28c069c72eae3254f2e84da155b2bcb2dc48467487d74845138"
+    }
+  ],
+  "threatModel": "COOPERATIVE_AI",
+  "independentReview": "NOT_PROVIDED",
+  "finalRating": "PENDING_REQUIRED_HUMAN_EVIDENCE",
+  "preCommit": "OWNER_REVIEWED_DEFAULT_OFF_CANDIDATE_VERIFY_ACTUAL_BEHAVIOR",
+  "buildAdvisoryReview": "KNOWN_FINDINGS_REMEDIATION_OPEN_NO_RISK_ACCEPTANCE",
+  "dynamicExecution": "NOT_RUN_BY_PACKET_GENERATOR",
+  "availableHost": {
+    "codeVersion": "1.145.1",
+    "platform": "win32-x64",
+    "status": "REVIEWER_MUST_RECORD_ACTUAL_TEST_CONFIGURATION"
+  }
+}

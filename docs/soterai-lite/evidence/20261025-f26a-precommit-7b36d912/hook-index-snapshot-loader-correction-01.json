@@ -1,0 +1,56 @@
+{
+    "status":  "TEST_ONLY_LOADER_CORRECTION_PREPARED_UNEXECUTED",
+    "feature":  "F26a",
+    "before":  {
+                   "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/hook-index-snapshot-loader-correction-01/hookIndexSnapshot.before.test.ts",
+                   "bytes":  19501,
+                   "sha256":  "5f6c156e5d54ea3644d1aa08eedfeac9d4230bf760e6a92eb6ca23df5bc80867"
+               },
+    "after":  {
+                  "path":  "packages/vscode-extension/src/__tests__/hookIndexSnapshot.test.ts",
+                  "bytes":  20451,
+                  "sha256":  "2dd4e5c08a156239b08829d332bfdfa937b2384ce8d81689dd7046a44d033caa"
+              },
+    "originalSha256":  "5f6c156e5d54ea3644d1aa08eedfeac9d4230bf760e6a92eb6ca23df5bc80867",
+    "newSha256":  "2dd4e5c08a156239b08829d332bfdfa937b2384ce8d81689dd7046a44d033caa",
+    "failureRaw":  {
+                       "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/index-launcher-guards-01.txt",
+                       "bytes":  44022,
+                       "sha256":  "20e793b19974339a69bb002d5b374dd0ffc87b2f677526930d50bdc9836e6583"
+                   },
+    "failureReceipt":  {
+                           "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/index-launcher-guards-01.txt.result.json",
+                           "bytes":  1238,
+                           "sha256":  "34bda23e79bd61a9273ef9e23226fc538c981bc1f131d1274711d70d3b5b4a5b"
+                       },
+    "observedOriginalResult":  {
+                                   "tests":  179,
+                                   "pass":  178,
+                                   "fail":  1,
+                                   "skipped":  0,
+                                   "error":  "Cannot set property prepareCheckedGitMetadata of #\u003cObject\u003e which has only a getter",
+                                   "where":  "Test instrumentation assignment before capture"
+                               },
+    "reason":  "tsx module namespace exposes getter-only prepareCheckedGitMetadata; mutating the original export fails before testing capture. Replace only that instrumentation with unchanged source transpiled by TypeScript transpileModule into an isolated CommonJS wrapper, relative dependencies resolved with createRequire, intercepting only ../terminal/CheckedGitMetadata and node:child_process.",
+    "scopeChecks":  {
+                        "originalCaseNamesAndOrderUnchanged":  20,
+                        "onlyTwoImportLinesAndOneTargetBodyChanged":  true,
+                        "metadataPreparationZeroAssertionPreserved":  true,
+                        "spawnZeroAssertionPreserved":  true,
+                        "separateNoWorktreeBodyReadCaseUnchanged":  true,
+                        "targetCaseAddsNoWorktreeBodyReadAssertion":  true,
+                        "realModuleExportsNotAssigned":  true
+                    },
+    "productionUnchanged":  {
+                                "path":  "packages/vscode-extension/src/history-hooks/CheckedHookIndex.ts",
+                                "bytes":  7971,
+                                "sha256":  "9e63a7e21062611d4862bad4156117f42bca4c4855ddbed554b64a18d57a35ca"
+                            },
+    "testExecution":  "NOT_RUN_BY_AUTHOR",
+    "wrapperExecution":  "NOT_RUN_BY_AUTHOR",
+    "compilerBuildGitNative":  "NOT_RUN_BY_AUTHOR",
+    "staticBehaviorClaim":  "NONE",
+    "priorFailures":  "Baseline/original author freeze and index-launcher-guards01 remain unchanged and unregraded",
+    "rootNext":  "Run corrected targeted/combined gate and compiler against frozen corrected bytes; record actual outcomes separately",
+    "time":  "2026-10-25T10:24:42.6044107Z"
+}

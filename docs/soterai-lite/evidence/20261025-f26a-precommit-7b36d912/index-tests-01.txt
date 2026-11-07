@@ -1,0 +1,208 @@
+﻿TAP version 13
+# Subtest: F26a checked index internally prepares genuine root-bound metadata and an immutable default descriptor
+ok 1 - F26a checked index internally prepares genuine root-bound metadata and an immutable default descriptor
+  ---
+  duration_ms: 197.4281
+  type: 'test'
+  ...
+# Subtest: F26a checked index admits v2 v3 and an explicit empty-tree index
+ok 2 - F26a checked index admits v2 v3 and an explicit empty-tree index
+  ---
+  duration_ms: 125.5603
+  type: 'test'
+  ...
+# Subtest: F26a checked index selects the exact absolute alternative rather than a public default
+ok 3 - F26a checked index selects the exact absolute alternative rather than a public default
+  ---
+  duration_ms: 61.5751
+  type: 'test'
+  ...
+# Subtest: F26a checked index admits an exact root-relative index.lock containing executable entries
+ok 4 - F26a checked index admits an exact root-relative index.lock containing executable entries
+  ---
+  duration_ms: 48.632
+  type: 'test'
+  ...
+# Subtest: F26a checked index preserves Unicode spaces leading dashes and repeated OID contexts
+ok 5 - F26a checked index preserves Unicode spaces leading dashes and repeated OID contexts
+  ---
+  duration_ms: 47.2277
+  type: 'test'
+  ...
+# Subtest: F26a checked index environment is exactly real metadata environment plus its validated absolute index
+ok 6 - F26a checked index environment is exactly real metadata environment plus its validated absolute index
+  ---
+  duration_ms: 43.7123
+  type: 'test'
+  ...
+# Subtest: F26a checked index does not mistake an inert bounded hooksPath for unsupported metadata
+ok 7 - F26a checked index does not mistake an inert bounded hooksPath for unsupported metadata
+  ---
+  duration_ms: 54.6755
+  type: 'test'
+  ...
+# Subtest: F26a checked index capability rejects structural clones accessors proxies and unrelated genuine metadata
+ok 8 - F26a checked index capability rejects structural clones accessors proxies and unrelated genuine metadata
+  ---
+  duration_ms: 42.9551
+  type: 'test'
+  ...
+# Subtest: F26a checked index returns unavailable before every index read when disabled
+ok 9 - F26a checked index returns unavailable before every index read when disabled
+  ---
+  duration_ms: 10.9113
+  type: 'test'
+  ...
+# Subtest: F26a checked index rejects missing default and missing explicit alternative without inventing an empty tree
+ok 10 - F26a checked index rejects missing default and missing explicit alternative without inventing an empty tree
+  ---
+  duration_ms: 19.1945
+  type: 'test'
+  ...
+# Subtest: F26a checked index rejects outside and worktree paths before reading them or falling back
+ok 11 - F26a checked index rejects outside and worktree paths before reading them or falling back
+  ---
+  duration_ms: 12.1859
+  type: 'test'
+  ...
+# Subtest: F26a checked index refuses unsafe absolute relative ADS control and short-alias selectors
+ok 12 - F26a checked index refuses unsafe absolute relative ADS control and short-alias selectors
+  ---
+  duration_ms: 9.1848
+  type: 'test'
+  ...
+# Subtest: F26a checked index rejects nonstring selectors without invoking coercion or accessors
+ok 13 - F26a checked index rejects nonstring selectors without invoking coercion or accessors
+  ---
+  duration_ms: 8.4599
+  type: 'test'
+  ...
+# Subtest: F26a checked index refuses nonabsolute root and invalid real metadata
+ok 14 - F26a checked index refuses nonabsolute root and invalid real metadata
+  ---
+  duration_ms: 17.4077
+  type: 'test'
+  ...
+# Subtest: F26a checked index supports128 entries and withholds129 rather than returning a prefix
+ok 15 - F26a checked index supports128 entries and withholds129 rather than returning a prefix
+  ---
+  duration_ms: 58.4325
+  type: 'test'
+  ...
+# Subtest: F26a checked index preserves the canonical256KiB derived-listing boundary
+ok 16 - F26a checked index preserves the canonical256KiB derived-listing boundary
+  ---
+  duration_ms: 75.3558
+  type: 'test'
+  ...
+# Subtest: F26a checked index bounds raw index bytes independently of entry and listing counts
+ok 17 - F26a checked index bounds raw index bytes independently of entry and listing counts
+  ---
+  duration_ms: 119.0525
+  type: 'test'
+  ...
+# Subtest: F26a checked index verifies signature version count and checksum instead of trusting a public default
+ok 18 - F26a checked index verifies signature version count and checksum instead of trusting a public default
+  ---
+  duration_ms: 94.7808
+  type: 'test'
+  ...
+# Subtest: F26a checked index refuses nonzero stages extended entries symlinks submodules and nonregular modes
+ok 19 - F26a checked index refuses nonzero stages extended entries symlinks submodules and nonregular modes
+  ---
+  duration_ms: 149.3922
+  type: 'test'
+  ...
+# Subtest: F26a checked index requires exact path-length flags zero padding and complete entry bodies
+ok 20 - F26a checked index requires exact path-length flags zero padding and complete entry bodies
+  ---
+  duration_ms: 51.1836
+  type: 'test'
+  ...
+# Subtest: F26a checked index admits only framed unique TREE and REUC extension records
+ok 21 - F26a checked index admits only framed unique TREE and REUC extension records
+  ---
+  duration_ms: 112.4177
+  type: 'test'
+  ...
+# Subtest: F26a checked index derives safe paths through the canonical parser instead of accepting native index aliases
+ok 22 - F26a checked index derives safe paths through the canonical parser instead of accepting native index aliases
+  ---
+  duration_ms: 151.2705
+  type: 'test'
+  ...
+# Subtest: F26a checked index fatally rejects invalid UTF8 and embedded NUL rather than truncating a private name
+ok 23 - F26a checked index fatally rejects invalid UTF8 and embedded NUL rather than truncating a private name
+  ---
+  duration_ms: 32.0357
+  type: 'test'
+  ...
+# Subtest: F26a checked index never reads worktree bodies while preparing or recapturing entries
+ok 24 - F26a checked index never reads worktree bodies while preparing or recapturing entries
+  ---
+  duration_ms: 58.3593
+  type: 'test'
+  ...
+# Subtest: F26a checked index rejects a hardlinked selected file and retains both synthetic links
+ok 25 - F26a checked index rejects a hardlinked selected file and retains both synthetic links
+  ---
+  duration_ms: 10.4435
+  type: 'test'
+  ...
+# Subtest: F26a checked index refuses a junction selector without reading its outside target
+ok 26 - F26a checked index refuses a junction selector without reading its outside target
+  ---
+  duration_ms: 14.5931
+  type: 'test'
+  ...
+# Subtest: F26a checked index flag withdrawal and later reenable cannot revive a prepared capability
+ok 27 - F26a checked index flag withdrawal and later reenable cannot revive a prepared capability
+  ---
+  duration_ms: 69.1866
+  type: 'test'
+  ...
+# Subtest: F26a checked index throwing authority is unavailable and remains withdrawn
+ok 28 - F26a checked index throwing authority is unavailable and remains withdrawn
+  ---
+  duration_ms: 49.939
+  type: 'test'
+  ...
+# Subtest: F26a checked index exact alternative byte drift withdraws even if the old default stays public
+ok 29 - F26a checked index exact alternative byte drift withdraws even if the old default stays public
+  ---
+  duration_ms: 63.5949
+  type: 'test'
+  ...
+# Subtest: F26a checked index identity replacement withdraws even for byte-identical replacement
+ok 30 - F26a checked index identity replacement withdraws even for byte-identical replacement
+  ---
+  duration_ms: 61.9207
+  type: 'test'
+  ...
+# Subtest: F26a checked index missing selected file never falls back during recapture
+ok 31 - F26a checked index missing selected file never falls back during recapture
+  ---
+  duration_ms: 64.8198
+  type: 'test'
+  ...
+# Subtest: F26a checked index metadata config drift withdraws the aggregate without editing shared metadata code
+ok 32 - F26a checked index metadata config drift withdraws the aggregate without editing shared metadata code
+  ---
+  duration_ms: 61.1916
+  type: 'test'
+  ...
+# Subtest: F26a checked index parent replacement by a retained junction withdraws canonical authority
+ok 33 - F26a checked index parent replacement by a retained junction withdraws canonical authority
+  ---
+  duration_ms: 46.1983
+  type: 'test'
+  ...
+1..33
+# tests 33
+# suites 0
+# pass 33
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2384.2987

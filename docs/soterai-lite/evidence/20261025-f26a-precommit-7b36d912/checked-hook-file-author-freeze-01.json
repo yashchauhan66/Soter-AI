@@ -1,0 +1,73 @@
+{
+    "status":  "TEST_ONLY_AUTHORED_FROZEN_UNEXECUTED_PREPRODUCTION",
+    "feature":  "F26a",
+    "test":  {
+                 "path":  "packages/vscode-extension/src/__tests__/checkedHookFile.test.ts",
+                 "bytes":  20777,
+                 "sha256":  "d78d028351115b369ca12b43173c8b81c1dd7ea4fe3b31ae6e59cc14f61ce68b"
+             },
+    "declaredTests":  14,
+    "platform":  "WINDOWS_ONLY",
+    "productionAbsent":  "packages/vscode-extension/src/history-hooks/CheckedHookFile.ts",
+    "contract":  {
+                     "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/checked-hook-file-test-contract-01.md",
+                     "bytes":  6587,
+                     "sha256":  "0d8987acc04fdddc0aea66aed58fb21b80d4e6c1364bc38851b71daf1a1037c5"
+                 },
+    "snapshots":  [
+                      {
+                          "source":  {
+                                         "path":  "packages/vscode-extension/src/history-hooks/OwnerHookProtocol.ts",
+                                         "bytes":  4490,
+                                         "sha256":  "8778d5ebcbf3562db84b94c18a81e056cfca01802a5de0dbbdccda3759ffa1dc"
+                                     },
+                          "snapshot":  {
+                                           "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/checked-hook-file-preproduction-01/OwnerHookProtocol.before.ts",
+                                           "bytes":  4490,
+                                           "sha256":  "8778d5ebcbf3562db84b94c18a81e056cfca01802a5de0dbbdccda3759ffa1dc"
+                                       },
+                          "byteExact":  true
+                      },
+                      {
+                          "source":  {
+                                         "path":  "packages/vscode-extension/src/history-hooks/PreCommitHookText.ts",
+                                         "bytes":  4738,
+                                         "sha256":  "aa40e1a96205a5e4d7ab362df014705ad0ceaae23ae08b4fc39ec7031359a767"
+                                     },
+                          "snapshot":  {
+                                           "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/checked-hook-file-preproduction-01/PreCommitHookText.before.ts",
+                                           "bytes":  4738,
+                                           "sha256":  "aa40e1a96205a5e4d7ab362df014705ad0ceaae23ae08b4fc39ec7031359a767"
+                                       },
+                          "byteExact":  true
+                      },
+                      {
+                          "source":  {
+                                         "path":  "packages/vscode-extension/src/__tests__/checkedHookFile.test.ts",
+                                         "bytes":  20777,
+                                         "sha256":  "d78d028351115b369ca12b43173c8b81c1dd7ea4fe3b31ae6e59cc14f61ce68b"
+                                     },
+                          "snapshot":  {
+                                           "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/checked-hook-file-preproduction-01/checkedHookFile.authored.test.ts",
+                                           "bytes":  20777,
+                                           "sha256":  "d78d028351115b369ca12b43173c8b81c1dd7ea4fe3b31ae6e59cc14f61ce68b"
+                                       },
+                          "byteExact":  true
+                      }
+                  ],
+    "api":  "prepareCheckedHookFile(root,hooksRelative,enabled) synchronous; genuine frozen cap root/file/read/write CAS;isCheckedHookFile",
+    "limits":  {
+                   "hookBytes":  98304,
+                   "presentMode":  "integer0..0777",
+                   "modeObservation":  "actualstat.mode\u00260777;no POSIX/ACL guarantee"
+               },
+    "coverage":  "14grouped cases:missingparents/privatebinaryread/brand/create-replace-undo/originalmode/zeroIOforgery/staledrift/oneCAS/stickyguard/root.gitdrift/aliases-links/caps-invalidstates/selectors/stageCASunknownedit-and-latewithdraw",
+    "operationalBoundary":  "Synthetic retained containers only; exactrename endpoints checked; explicitmatching selectedleaf undo only; no recursive cleanup. Utility failure cleanup mayunlink solelyknownownedgeneratedstage.",
+    "clarifications":  "Root confirmed unsafeleaf timing either prepareundefined or readundefined, actual Windows mode comparisons, generatedwxstage race observer, and late false mayalreadyhavemutated; no flagbypass inutility.",
+    "testExecution":  "NOT_RUN_BY_AUTHOR_ROOT_BASELINE_REQUIRED_BEFORE_PRODUCTION",
+    "compilerBuildGitHookNative":  "NOT_RUN_BY_AUTHOR",
+    "syntaxCompilation":  "NOT_RUN_BY_AUTHOR",
+    "productionQueueLedgerChanges":  "NONE_BY_AUTHOR",
+    "scope":  "Authoring/case-count/hash custody only. No behavior or static compiler PASS, no realconfig/history/OS/ACL changes. No production helper or test code evaluated.",
+    "time":  "2026-10-25T13:38:36.7292211Z"
+}

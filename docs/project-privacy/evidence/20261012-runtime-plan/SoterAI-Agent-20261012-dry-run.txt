@@ -1,0 +1,51 @@
+﻿VBoxManage.exe : 0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...100%
+At line:16 char:3
++   & 'C:\Program Files\Oracle\VirtualBox\VBoxManage.exe' @runtimeRevie ...
++   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (0%...10%...20%....0%...90%...100%:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+Interpreting C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\.tmp\full-mode\images\ubuntu-noble-20260926\ubuntu-
+24.04-server-cloudimg-amd64-verified.ova...
+OK.
+Oracle VirtualBox Command Line Management Interface Version 7.2.20
+Copyright (C) 2005-2026 Oracle and/or its affiliates
+
+VBoxManage.exe: error: Option --ImportToVDI can not be used together with a manually set target path.
+
+Usage - Import a virtual appliance in OVF format or from a cloud service and create virtual machines:
+
+  VBoxManage import <ovfname | ovaname> [--dry-run] [--options= keepallmacs |
+      keepnatmacs | importtovdi | keepextradata] [--vsys=n] [--ostype=ostype]
+      [--vmname=name] [--settingsfile=filename] [--basefolder=folder]
+      [--group=group] [--memory=MB] [--cpus=n] [--description=text] [--eula=
+      show | accept] [--unit=n] [--ignore] [--scsitype= BusLogic | LsiLogic]
+      [--disk=path] [--controller=index] [--port=n]
+
+  VBoxManage import OCI:// --cloud [--ostype=ostype] [--vmname=name]
+      [--basefolder=folder] [--memory=MB] [--cpus=n] [--description=text]
+      <--cloudprofile=profile> <--cloudinstanceid=id> [--cloudbucket=bucket]
+Disks:
+  vmdisk1	10737418240	0	http://www.vmware.com/interfaces/specifications/vmdk.html#streamOptimized	ubuntu-noble-24.04-cloudimg.vmdk	594777600	-1	
+
+Virtual system 0:
+ 0: Suggested OS type: "Ubuntu_64"
+    (change with "--vsys 0 --ostype <type>"; use "list ostypes" to list all possible values)
+ 1: VM name specified with --vmname: "SoterAI-Agent-20261012"
+ 2: Suggested VM group "/"
+    (change with "--vsys 0 --group <group>")
+ 3: Suggested VM settings file name "C:\Users\USER\VirtualBox VMs\ubuntu-noble-24.04-cloudimg-20260926\ubuntu-noble-24.04-cloudimg-20260926.vbox"
+    (change with "--vsys 0 --settingsfile <filename>")
+ 4: VM base folder specified with --basefolder: "D:\SoterAI-FullMode\machines"
+ 5: Product (ignored): Ubuntu 24.04 Server (20260926)
+ 6: No. of CPUs specified with --cpus: 2
+ 7: Guest memory specified with --memory: 4096 MB
+ 8: Network adapter: orig VM Network, config 3, extra type=Bridged
+ 9: Floppy -- disabled
+10: CD-ROM -- disabled
+11: SCSI controller, type LsiLogic
+    (change with "--vsys 0 --unit 11 --scsitype {BusLogic|LsiLogic}";
+    disable with "--vsys 0 --unit 11 --ignore")
+12: IDE controller, type PIIX4 -- disabled
+13: IDE controller, type PIIX4 -- disabled
+

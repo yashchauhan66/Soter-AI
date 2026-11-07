@@ -1,0 +1,191 @@
+{
+    "status":  "TEST_ONLY_AUTHORED_FROZEN_UNEXECUTED_PREPRODUCTION",
+    "feature":  "F26a",
+    "tests":  [
+                  {
+                      "file":  {
+                                   "path":  "packages/vscode-extension/src/__tests__/ownerHookProtocol.test.ts",
+                                   "bytes":  7971,
+                                   "sha256":  "d810105aba6946c0bef898f02a6b0b8b9ee1324d97e436e889c7bd8efacab0c0"
+                               },
+                      "declaredTests":  14
+                  },
+                  {
+                      "file":  {
+                                   "path":  "packages/vscode-extension/src/__tests__/ownerHookEnvironment.test.ts",
+                                   "bytes":  7771,
+                                   "sha256":  "4a7eb2874f2d563608c9c7337eb33144b66938ccd8f501636ac69258fed60572"
+                               },
+                      "declaredTests":  12
+                  }
+              ],
+    "declaredTests":  26,
+    "productionAbsent":  "packages/vscode-extension/src/history-hooks/OwnerHookProtocol.ts",
+    "contract":  {
+                     "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/owner-hook-protocol-test-contract-01.md",
+                     "bytes":  4958,
+                     "sha256":  "71d826483036e576abccd99b82396eb472a6a9694e71d3df69b8c4c2197dfce3"
+                 },
+    "snapshots":  [
+                      {
+                          "source":  {
+                                         "path":  "packages/vscode-extension/src/history-hooks/PreCommitHookText.ts",
+                                         "bytes":  4738,
+                                         "sha256":  "aa40e1a96205a5e4d7ab362df014705ad0ceaae23ae08b4fc39ec7031359a767"
+                                     },
+                          "snapshot":  {
+                                           "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/owner-hook-protocol-preproduction-01/PreCommitHookText.before.ts",
+                                           "bytes":  4738,
+                                           "sha256":  "aa40e1a96205a5e4d7ab362df014705ad0ceaae23ae08b4fc39ec7031359a767"
+                                       },
+                          "byteExact":  true
+                      },
+                      {
+                          "source":  {
+                                         "path":  "packages/vscode-extension/src/security/SafeGit.ts",
+                                         "bytes":  3938,
+                                         "sha256":  "7605156c5b48522d9da8819f0d0c6950e533cc34779c0072aff8538546d9e219"
+                                     },
+                          "snapshot":  {
+                                           "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/owner-hook-protocol-preproduction-01/SafeGit.before.ts",
+                                           "bytes":  3938,
+                                           "sha256":  "7605156c5b48522d9da8819f0d0c6950e533cc34779c0072aff8538546d9e219"
+                                       },
+                          "byteExact":  true
+                      },
+                      {
+                          "source":  {
+                                         "path":  "packages/vscode-extension/src/terminal/CheckedGitMetadata.ts",
+                                         "bytes":  11622,
+                                         "sha256":  "4327a101f667bee54c679bd5df4a45eb0c76dd536c67f3682d8a9a31290c3f95"
+                                     },
+                          "snapshot":  {
+                                           "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/owner-hook-protocol-preproduction-01/CheckedGitMetadata.before.ts",
+                                           "bytes":  11622,
+                                           "sha256":  "4327a101f667bee54c679bd5df4a45eb0c76dd536c67f3682d8a9a31290c3f95"
+                                       },
+                          "byteExact":  true
+                      },
+                      {
+                          "source":  {
+                                         "path":  "packages/vscode-extension/src/__tests__/ownerHookProtocol.test.ts",
+                                         "bytes":  7971,
+                                         "sha256":  "d810105aba6946c0bef898f02a6b0b8b9ee1324d97e436e889c7bd8efacab0c0"
+                                     },
+                          "snapshot":  {
+                                           "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/owner-hook-protocol-preproduction-01/ownerHookProtocol.authored.test.ts",
+                                           "bytes":  7971,
+                                           "sha256":  "d810105aba6946c0bef898f02a6b0b8b9ee1324d97e436e889c7bd8efacab0c0"
+                                       },
+                          "byteExact":  true
+                      },
+                      {
+                          "source":  {
+                                         "path":  "packages/vscode-extension/src/__tests__/ownerHookEnvironment.test.ts",
+                                         "bytes":  7771,
+                                         "sha256":  "4a7eb2874f2d563608c9c7337eb33144b66938ccd8f501636ac69258fed60572"
+                                     },
+                          "snapshot":  {
+                                           "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/owner-hook-protocol-preproduction-01/ownerHookEnvironment.authored.test.ts",
+                                           "bytes":  7771,
+                                           "sha256":  "4a7eb2874f2d563608c9c7337eb33144b66938ccd8f501636ac69258fed60572"
+                                       },
+                          "byteExact":  true
+                      }
+                  ],
+    "framingEvidence":  [
+                            {
+                                "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/owner-config-framing-witness-01.json",
+                                "bytes":  4019,
+                                "sha256":  "8ed1d74a4b07b3711738f47047d961225ccd69a081febb9eaa432468efa4ab27"
+                            },
+                            {
+                                "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/owner-config-framing-run-01.txt",
+                                "bytes":  2406,
+                                "sha256":  "f53d2df5eb00dab1f74d9baa8071b054ef761e14bc257b5c8a478004a6ed063d"
+                            },
+                            {
+                                "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/owner-config-framing-run-01.txt.result.json",
+                                "bytes":  527,
+                                "sha256":  "3eb5d1563baab7c2a20592df049c2aec1a6b38da1cb4c578fffa9d384b07c76b"
+                            },
+                            {
+                                "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/witness-owner-config-framing-01.cjs",
+                                "bytes":  4951,
+                                "sha256":  "c1d6b6f3ee3e3ddf905b258a744ec90da2723bbfca63b3bbe4f32b8a23829c0e"
+                            }
+                        ],
+    "framingStreams":  [
+                           {
+                               "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/owner-config-version-01.bin",
+                               "bytes":  29,
+                               "sha256":  "2bfdb478bf1093a587b8e6306b25f57e6b8aed47bffe7e885f7b279768af4c42"
+                           },
+                           {
+                               "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/owner-config-version-01.stderr.bin",
+                               "bytes":  0,
+                               "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                           },
+                           {
+                               "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/owner-config-none-01.bin",
+                               "bytes":  0,
+                               "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                           },
+                           {
+                               "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/owner-config-none-01.stderr.bin",
+                               "bytes":  0,
+                               "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                           },
+                           {
+                               "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/owner-config-local-01.bin",
+                               "bytes":  55,
+                               "sha256":  "f3a75c61b6651cff15baa9f892a054c2a147f0063d84a431fa13f823c6abfff9"
+                           },
+                           {
+                               "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/owner-config-local-01.stderr.bin",
+                               "bytes":  0,
+                               "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                           },
+                           {
+                               "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/owner-config-include-01.bin",
+                               "bytes":  62,
+                               "sha256":  "c6478b5e246d584e8a101ce36b7d1d298c2ccde5d991a9d99e6457a6c1f3b942"
+                           },
+                           {
+                               "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/owner-config-include-01.stderr.bin",
+                               "bytes":  0,
+                               "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                           },
+                           {
+                               "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/owner-config-global-01.bin",
+                               "bytes":  145,
+                               "sha256":  "d009b1d7797f091c3a32f12441e609be6f500cbdb534996b72798311452d1447"
+                           },
+                           {
+                               "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/owner-config-global-01.stderr.bin",
+                               "bytes":  0,
+                               "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                           }
+                       ],
+    "framingReview":  {
+                          "installedDocsAmbiguityAskedBeforeFreeze":  true,
+                          "rootActualSyntheticWitnessConfirmed":  true,
+                          "exactLocalBytesCompared":  true,
+                          "localBytes":  55,
+                          "format":  "scope NUL origin NUL key LF value NUL",
+                          "absoluteWindowsOrigin":  "Backslash form preserved in root synthetic global witness",
+                          "rootNoMatch":  "Actual exit1 with zero stdout/stderr",
+                          "reviewOnly":  "Author read/hashed existing root evidence, did not execute Git or parser"
+                      },
+    "bounds":  {
+                   "rawBytes":  65536,
+                   "maximumRecords":  16,
+                   "supportedSelectionRecords":  1
+               },
+    "testExecution":  "NOT_RUN_BY_AUTHOR_ROOT_BASELINE_REQUIRED_BEFORE_PRODUCTION",
+    "compilerBuildGitHookNative":  "NOT_RUN_BY_AUTHOR",
+    "syntaxCompilation":  "NOT_RUN_BY_AUTHOR",
+    "productionQueueLedgerChanges":  "NONE_BY_AUTHOR",
+    "scope":  "Existing F26a only. Pure synthetic parser and owner-discovery environment cases. No user config/history/process environment read, no output authority or behavior PASS inferred from authoring/byte custody.",
+    "time":  "2026-10-25T12:17:26.2455805Z"
+}

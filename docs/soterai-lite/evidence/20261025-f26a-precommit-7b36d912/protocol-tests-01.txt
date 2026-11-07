@@ -1,0 +1,202 @@
+﻿TAP version 13
+# Subtest: F26a staged protocol admits an empty proposed tree
+ok 1 - F26a staged protocol admits an empty proposed tree
+  ---
+  duration_ms: 262.1585
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol preserves exact rows and regular executable modes
+ok 2 - F26a staged protocol preserves exact rows and regular executable modes
+  ---
+  duration_ms: 15.2841
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol keeps spaces Unicode and leading-dash names literal
+ok 3 - F26a staged protocol keeps spaces Unicode and leading-dash names literal
+  ---
+  duration_ms: 12.7256
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol permits repeated blob OIDs under separate path contexts
+ok 4 - F26a staged protocol permits repeated blob OIDs under separate path contexts
+  ---
+  duration_ms: 11.308
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol accepts exactly128 entries
+ok 5 - F26a staged protocol accepts exactly128 entries
+  ---
+  duration_ms: 12.2532
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol withholds the entire129-entry sentinel listing
+ok 6 - F26a staged protocol withholds the entire129-entry sentinel listing
+  ---
+  duration_ms: 13.3717
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol accepts a valid listing of exactly256KiB
+ok 7 - F26a staged protocol accepts a valid listing of exactly256KiB
+  ---
+  duration_ms: 33.0528
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol rejects an otherwise valid listing one byte over256KiB
+ok 8 - F26a staged protocol rejects an otherwise valid listing one byte over256KiB
+  ---
+  duration_ms: 10.7945
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol requires each final NUL and exact final EOF
+ok 9 - F26a staged protocol requires each final NUL and exact final EOF
+  ---
+  duration_ms: 4.6973
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol requires exact ASCII header separators
+ok 10 - F26a staged protocol requires exact ASCII header separators
+  ---
+  duration_ms: 4.6752
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol rejects nonzero and noncanonical stages
+ok 11 - F26a staged protocol rejects nonzero and noncanonical stages
+  ---
+  duration_ms: 4.0548
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol rejects symlinks submodules and other nonregular modes
+ok 12 - F26a staged protocol rejects symlinks submodules and other nonregular modes
+  ---
+  duration_ms: 6.4233
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol requires exactly40 lowercase hexadecimal object characters
+ok 13 - F26a staged protocol requires exactly40 lowercase hexadecimal object characters
+  ---
+  duration_ms: 7.7418
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol rejects empty absolute drive UNC and backslash paths
+ok 14 - F26a staged protocol rejects empty absolute drive UNC and backslash paths
+  ---
+  duration_ms: 6.1879
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol rejects dot parent empty and trailing slash components
+ok 15 - F26a staged protocol rejects dot parent empty and trailing slash components
+  ---
+  duration_ms: 6.2943
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol rejects ADS and Windows-invalid punctuation
+ok 16 - F26a staged protocol rejects ADS and Windows-invalid punctuation
+  ---
+  duration_ms: 6.6359
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol rejects control format and line-separator characters in names
+ok 17 - F26a staged protocol rejects control format and line-separator characters in names
+  ---
+  duration_ms: 3.6984
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol rejects trailing dots or spaces in every component
+ok 18 - F26a staged protocol rejects trailing dots or spaces in every component
+  ---
+  duration_ms: 5.3671
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol rejects Windows device names including extensions and superscript aliases
+ok 19 - F26a staged protocol rejects Windows device names including extensions and superscript aliases
+  ---
+  duration_ms: 12.6535
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol rejects short-name aliases instead of resolving them
+ok 20 - F26a staged protocol rejects short-name aliases instead of resolving them
+  ---
+  duration_ms: 22.631
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol rejects reserved Git metadata components at every depth
+ok 21 - F26a staged protocol rejects reserved Git metadata components at every depth
+  ---
+  duration_ms: 16.8924
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol rejects exact and Windows-case-insensitive duplicate paths
+ok 22 - F26a staged protocol rejects exact and Windows-case-insensitive duplicate paths
+  ---
+  duration_ms: 5.295
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol refuses Unicode-normalization path aliases without rewriting spelling
+ok 23 - F26a staged protocol refuses Unicode-normalization path aliases without rewriting spelling
+  ---
+  duration_ms: 5.5305
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol rejects a file path that is also another entry's directory ancestor
+ok 24 - F26a staged protocol rejects a file path that is also another entry's directory ancestor
+  ---
+  duration_ms: 2.3632
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol enforces2048 UTF8 path bytes and255 UTF16 component units
+ok 25 - F26a staged protocol enforces2048 UTF8 path bytes and255 UTF16 component units
+  ---
+  duration_ms: 2.0515
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol decodes UTF8 fatally and does not strip a path BOM
+ok 26 - F26a staged protocol decodes UTF8 fatally and does not strip a path BOM
+  ---
+  duration_ms: 2.6157
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol withholds a valid prefix when a late record is malformed
+ok 27 - F26a staged protocol withholds a valid prefix when a late record is malformed
+  ---
+  duration_ms: 2.3091
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol does not mutate caller buffer bytes on success or refusal
+ok 28 - F26a staged protocol does not mutate caller buffer bytes on success or refusal
+  ---
+  duration_ms: 5.5541
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol accepts Buffer views without reading unrelated backing-array bytes
+ok 29 - F26a staged protocol accepts Buffer views without reading unrelated backing-array bytes
+  ---
+  duration_ms: 2.948
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol rejects non-Buffers without invoking accessors or coercion
+ok 30 - F26a staged protocol rejects non-Buffers without invoking accessors or coercion
+  ---
+  duration_ms: 6.2308
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol rejects forged Buffer prototypes and proxies without property traps
+ok 31 - F26a staged protocol rejects forged Buffer prototypes and proxies without property traps
+  ---
+  duration_ms: 2.0895
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol writes no raw input diagnostics to console or output streams
+ok 32 - F26a staged protocol writes no raw input diagnostics to console or output streams
+  ---
+  duration_ms: 4.3046
+  type: 'test'
+  ...
+1..32
+# tests 32
+# suites 0
+# pass 32
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1058.5787

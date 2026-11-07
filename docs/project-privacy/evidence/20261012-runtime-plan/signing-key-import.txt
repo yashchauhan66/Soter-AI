@@ -1,0 +1,19 @@
+﻿gpg.exe : gpg: keybox '/c/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/.tmp/full-mode/images/ubuntu-noble-202609
+26/verification-keyring/pubring.kbx' created
+At line:13 char:25
++ ... rtOutput = (& $vmImageGpg --batch --no-options --homedir $vmImageKeyr ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (gpg: keybox '/c...ng.kbx' created:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+gpg: key 1A5D6C4C7DB87C81: 2 signatures not checked due to missing keys
+gpg: /c/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/.tmp/full-mode/images/ubuntu-noble-20260926/verification-ke
+yring/trustdb.gpg: trustdb created
+gpg: key 1A5D6C4C7DB87C81: public key "UEC Image Automatic Signing Key <cdimage@ubuntu.com>" imported
+gpg: error running '/usr/bin/gpg-agent': exit status 2
+gpg: failed to start gpg-agent '/usr/bin/gpg-agent': General error
+gpg: can't connect to the gpg-agent: General error
+gpg: Total number processed: 1
+gpg:               imported: 1
+gpg: no ultimately trusted keys found
+

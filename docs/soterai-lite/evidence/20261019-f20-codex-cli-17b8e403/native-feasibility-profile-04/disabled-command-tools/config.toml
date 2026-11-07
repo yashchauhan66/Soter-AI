@@ -1,0 +1,37 @@
+model = "f20-fixture"
+model_provider = "soterai_fixture"
+approval_policy = "never"
+sandbox_mode = "read-only"
+web_search = "disabled"
+project_doc_max_bytes = 0
+check_for_update_on_startup = false
+[model_providers.soterai_fixture]
+name = "SoterAI loopback synthetic fixture"
+base_url = "http://127.0.0.1:65361/v1"
+wire_api = "responses"
+requires_openai_auth = false
+request_max_retries = 0
+stream_max_retries = 0
+stream_idle_timeout_ms = 5000
+supports_websockets = false
+[analytics]
+enabled = false
+[feedback]
+enabled = false
+[otel]
+exporter = "none"
+[features]
+shell_snapshot = false
+shell_tool = false
+unified_exec = false
+apply_patch_freeform = false
+multi_agent = false
+apps = false
+plugins = false
+js_repl = false
+image_generation = false
+
+view_image = false
+[mcp_servers.soterai_safe_read]
+url = "http://127.0.0.1:65361/mcp"
+http_headers = { Authorization = "Bearer TEST_ONLY_F20_MCP" }

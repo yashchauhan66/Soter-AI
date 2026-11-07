@@ -1,21 +1,20 @@
 # Exact-object release checklist
 
-Prepared 4 November 2026. **INCOMPLETE; release and rating pending.** This document prepares V03 deliverables without advancing F32 or V01–V05. Candidate: [soterai-lite-0.7.0-f32-20261103-attempt01.vsix](../../packages/soterai-lite/soterai-lite-0.7.0-f32-20261103-attempt01.vsix), 1742100 bytes, SHA256 `e2ce3dc44d45b5e160ab0f95d713a9434a9ea7d610ce7abd2bf2500abe89d649`. Windows 10.0.26300, Code1.144.1; exact configuration and runtime facts remain in the linked receipts. Same-lineage scripted evidence has LOW independence.
+Updated 6 November 2026. **Release NOT_READY; rating PENDING.** Candidate: [soterai-lite-0.7.0-resumed-20261106-attempt02.vsix](../../packages/soterai-lite/soterai-lite-0.7.0-resumed-20261106-attempt02.vsix), 1,742,104 bytes, SHA-256 `011f96d19d42dbefc2e56eb5399bf5c7f16a09d6b71b8bae5be9d66b2f3769ec`. Available native host: Windows 10.0.26300, Code 1.145.1. Current native acceptance must have its own exact-object receipt. Earlier Code 1.144.1/1.145.0 results remain historical.
 
-| Gate | State / evidence |
+| Gate | State and evidence |
 | --- | --- |
-| Full current suites/compiler/build | PASS:4891=4887PASS/0FAIL/4 privileged-symlink SKIP; [full](evidence/20261103-f32-lifecycle-2e95d6a4/full-suite-acceptance-04.json). |
-| Exact final-format package | PASS offline qualification:18entries/fourruntimes/89flags/win32-x64/pre-release/BUSL/privacy/SBOM/notices; [package](evidence/20261103-f32-lifecycle-2e95d6a4/current-package-qualification-01.json). This is not release-ready acceptance. |
-| Affected20families509/37 +functional10 | PASS on this exact VSIX; [acceptance](evidence/20261104-final-gate-readiness/affected-acceptance-current-01.json); declared Code/helper/wrapper close+bothEOF and two marked-owner absences checked. Nested/historical EOF is not inferred. |
-|17-case unmanaged baseline | Unchanged8BLOCKED_SCOPED/9LEAK_CONFIRMED; limitations remain disclosed. |
-| F32 installed-only lifecycle | INCOMPLETE; three failures retained. One explicitly approved Proposal05 diagnostic is separately bound; actual results required. |
-| Final CustomDocument/reliability/vendor routes | INCOMPLETE; fresh packets being prepared. Older native results do not transfer to the new archive/host. |
-| Final44-row/tool matrix, mutation, budgets | INCOMPLETE. No rating. Scripted Node-handler/Next on-off fourcase benchmark PASS; actual Express integration unavailable and real-model trials pending. |
-| Audit and notices | Audit reviewed42 build associations:17HIGH/19MODERATE/6LOW. Remediation OPEN, owner risk acceptance NOT_GRANTED. No clean/vulnerability-free claim;745 unrelated lock records outside query scope. |
-| Scope exceptions | F26a owner-skipped INCOMPLETE/unsupported. ParentF26/globalF31 readiness stays incomplete. PS7/Linux/macOS/remote/virtual untested. |
-| Neutral independent-review kit | Prepared393-file byte-verified [kit](independent-review-kit-20261104-18a12a73/reviewer-prompt.md); no independent verdict provided. |
-| Human/independent gates | Pending tool smoke, two real-agent benchmarks, five-user usability, screen reader, platform decisions and exact-object different-vendor/human review. OriginalL6 requires HUMAN-ACTIONS then STOP. |
-| Publisher/access/version/channel | Owner decision pending. Existing local ID is not marketplace ownership. |
-| Publish/push/tag/login/download | Not performed or authorized by this checklist. [Owner runbook](PUBLISHING-RUNBOOK.md). |
+| Source/full/compiler | 1,111 inputs; 4,888 PASS / 0 FAIL / 4 SKIP. [Full](evidence/20261106-remaining-queue/candidate-01/full-suite-acceptance-02.json) explicitly records metadata-only reuse; compiler and 110 metadata checks freshly pass. |
+| Build/package | [Exact qualification](evidence/20261106-remaining-queue/candidate-01/current-package-qualification-01.json): 55 package tests pass; 18 entries/four runtimes/SBOM/privacy/notices. Offline scope only. |
+| F26a | Owner-reviewed default-off install/resume candidate; native receipt required. |
+| F32 and current native routes | Current exact-object acceptance required; older native families, editor10 and reliability30 are historical. |
+| V02 scripted/performance | Four actual Express/Next cases and six stream boundaries pass in component scope. Selected128-of4096 component scan 3548.7181 ms <60,000 ms. Installed/native budgets remain separate. |
+| Catalog | 44 rows/six tools/264 UNVERIFIED pairs; applicability/controls/oracles/prevention-sensitive mutation incomplete. |
+| Audit | 42 retained builder findings: 17 HIGH/19 MODERATE/6 LOW; raw responses rehashed. Remediation OPEN; risk acceptance NOT_GRANTED. |
+| Neutral review | [393-entry kit](independent-review-kit-20261106-011f96d1/reviewer-prompt.md) verified; external verdict NOT_PROVIDED. |
+| Human gates | Smoke, two real-agent trials, five users, screen reader, symlink/platform and release decisions pending. |
+| Publishing | Not performed. Original L6 requires HUMAN-ACTIONS then STOP; later owner evidence is required. |
 
-Before any owner publication, rehash this exact archive and match the accepted report/kit/configuration. A rebuild or changed input needs fresh affected verification and exact-object review. Do not publish a different object under earlier evidence. Preserve failures, skips and receipts.
+Preserve the four privileged-symlink skips and nine confirmed unmanaged leaks. Linux/macOS/remote/virtual/PowerShell 7 remain untested unless separately qualified. Rebuilt or modified objects require affected verification and fresh exact-object independent review.
+
+[Evidence index](RELEASE-EVIDENCE.json), [human actions](HUMAN-ACTIONS.md) and [current claims](evidence/20261106-remaining-queue/final/CURRENT-CLAIMS.md). Frozen packaged documents remain historical build inputs; this dated supplement records later evidence.

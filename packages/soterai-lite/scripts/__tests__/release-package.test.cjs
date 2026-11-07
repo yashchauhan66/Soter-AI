@@ -6,10 +6,10 @@ const repoActual=path.resolve(__dirname,'../../../..');
 const api=()=>require('../audit-release.cjs');
 async function write(file,raw){await fs.mkdir(path.dirname(file),{recursive:true});await fs.writeFile(file,raw,{flag:'wx'});}
 async function zip(entries){const z=new ZipFile(),chunks=[];z.outputStream.on('data',b=>chunks.push(b));const done=new Promise((resolve,reject)=>{z.outputStream.on('end',resolve);z.outputStream.on('error',reject);});for(const[n,b]of entries)z.addBuffer(b,n);z.end();await done;return Buffer.concat(chunks);}
-async function fixture(change=()=>{},buildOnly=false){
+async function fixture(change=()=>{},buildOnly=false,release={schemaVersion:1,channel:'pre-release',unsupportedFeatures:['preCommit']}){
  const repo=await fs.mkdtemp(path.join(os.tmpdir(),'soterai-f31b-synthetic-')),root=path.join(repo,'packages/soterai-lite'),attempt=path.join(root,'builds/synthetic');
  const input=Buffer.from('module.exports=1;'),inputPath='node_modules/fixture-library/index.js';await write(path.join(repo,inputPath),input);await write(path.join(repo,'node_modules/fixture-library/package.json'),JSON.stringify({name:'fixture-library',version:'1.2.3',license:'MIT'}));await write(path.join(repo,'node_modules/fixture-library/LICENSE'),'Full synthetic public MIT notice.\n');
- const manifest={name:'soterai-ide-guard',displayName:'SoterAI Lite synthetic',publisher:'soterai',version:'0.7.0',main:'./dist/extension.js',engines:{vscode:'^1.85.0'},license:'SEE LICENSE IN LICENSE.md',description:'Synthetic local package fixture',repository:{type:'git',url:'https://example.invalid/fixture.git'},soteraiLiteRelease:{schemaVersion:1,channel:'pre-release',unsupportedFeatures:['preCommit']},capabilities:{untrustedWorkspaces:{supported:'limited',description:'Local checks only; reviewed operations require a trusted local workspace.'},virtualWorkspaces:{supported:false}}};
+ const manifest={name:'soterai-ide-guard',displayName:'SoterAI Lite synthetic',publisher:'soterai',version:'0.7.0',main:'./dist/extension.js',engines:{vscode:'^1.85.0'},license:'SEE LICENSE IN LICENSE.md',description:'Synthetic local package fixture',repository:{type:'git',url:'https://example.invalid/fixture.git'},soteraiLiteRelease:release,capabilities:{untrustedWorkspaces:{supported:'limited',description:'Local checks only; reviewed operations require a trusted local workspace.'},virtualWorkspaces:{supported:false}}};
  manifest.activationEvents=['onStartupFinished'];
  const manifestRaw=Buffer.from(JSON.stringify(manifest,null,2)+'\n');await write(path.join(attempt,'package.json'),manifestRaw);
  const inventory=[];for(const[name,i]of runtimes.map((n,i)=>[n,i])){const raw=Buffer.from('module.exports='+i+';');await write(path.join(attempt,'dist',name),raw);inventory.push({name,bytes:raw.length,sha256:sha(raw),inputs:[{path:inputPath,bytes:input.length,sha256:sha(input)}]});}
@@ -32,7 +32,31 @@ test('B09 well-formed but changed SBOM refuses independently of archive SHA',asy
 test('B10 preview without actual pre-release XML property refuses',async()=>{const f=await fixture(x=>x.entries.set('extension.vsixmanifest',Buffer.from('<Identity Id="soterai-ide-guard" Version="0.7.0" Publisher="soterai" TargetPlatform="win32-x64"/>')));await assert.rejects(api().auditFinalRelease(f.options),/pre.release/i);});
 test('B10 duplicate XML values and comment-only pre-release properties cannot pass',async()=>{for(const change of [s=>s.replace('Value="true"','Value="true" Value="false"'),s=>s.replace('<Property Id="Microsoft.VisualStudio.Code.PreRelease" Value="true"/>','<!-- <Property Id="Microsoft.VisualStudio.Code.PreRelease" Value="true"/> -->')]){const f=await fixture(x=>x.entries.set('extension.vsixmanifest',Buffer.from(change(x.entries.get('extension.vsixmanifest').toString()))));await assert.rejects(api().auditFinalRelease(f.options),/XML|pre.release/i);}});
 test('B11 unsupported virtual-workspace declaration must survive packaging',async()=>{const f=await fixture(x=>{x.manifest.capabilities.virtualWorkspaces.supported=true;x.entries.set('extension/package.json',Buffer.from(JSON.stringify(x.manifest)));});await assert.rejects(api().auditFinalRelease(f.options),/manifest|virtual|asset/i);});
-test('B12 pre-commit exclusion cannot be removed from final package metadata',async()=>{const f=await fixture(x=>{x.manifest.soteraiLiteRelease.unsupportedFeatures=[];x.entries.set('extension/package.json',Buffer.from(JSON.stringify(x.manifest)));});await assert.rejects(api().auditFinalRelease(f.options),/manifest|pre.commit|capability/i);});
+test('B12 release capability cannot change independently of immutable build metadata',async()=>{const f=await fixture(x=>{x.manifest.soteraiLiteRelease.unsupportedFeatures=[];x.entries.set('extension/package.json',Buffer.from(JSON.stringify(x.manifest)));});await assert.rejects(api().auditFinalRelease(f.options),/manifest|pre.commit|capability/i);});
+test('B12 explicit enabled pre-commit candidate audits its exact capability without claiming native acceptance',async()=>{
+ const f=await fixture(()=>{},false,{schemaVersion:1,channel:'pre-release',unsupportedFeatures:[]});
+ const result=await api().auditFinalRelease(f.options);
+ assert.deepEqual(result.report.unsupportedFeatures,[]);assert.equal(result.report.releaseReady,false);
+ assert.match(result.report.limitations,/pre-commit.*opt-in/i);assert.match(result.report.limitations,/native.*pending/i);
+ assert(!/owner-skipped|grants are withdrawn/i.test(result.report.limitations));
+});
+test('B12 excluded pre-commit candidate retains its exclusion in the audited report',async()=>{
+ const f=await fixture(),result=await api().auditFinalRelease(f.options);
+ assert.deepEqual(result.report.unsupportedFeatures,['preCommit']);assert.match(result.report.limitations,/grants are withdrawn/i);assert.equal(result.report.releaseReady,false);
+});
+for(const [label,release]of [
+ ['missing capability',{schemaVersion:1,channel:'pre-release'}],
+ ['malformed capability',{schemaVersion:1,channel:'pre-release',unsupportedFeatures:null}],
+ ['unknown capability',{schemaVersion:1,channel:'pre-release',unsupportedFeatures:['unknown']}],
+ ['duplicate capability',{schemaVersion:1,channel:'pre-release',unsupportedFeatures:['preCommit','preCommit']}],
+ ['unknown schema',{schemaVersion:2,channel:'pre-release',unsupportedFeatures:[]}],
+ ['unknown channel',{schemaVersion:1,channel:'stable',unsupportedFeatures:[]}]
+])test('B12 final release refuses '+label,async()=>{const f=await fixture(()=>{},false,release);await assert.rejects(api().auditFinalRelease(f.options),/release|capability/i);});
+test('B12 current Lite manifest explicitly reopens owner-reviewed opt-in pre-commit for verification',async()=>{
+ const actual=JSON.parse(await fs.readFile(path.join(repoActual,'packages/soterai-lite/package.json'),'utf8'));
+ assert.deepEqual(actual.soteraiLiteRelease,{schemaVersion:1,channel:'pre-release',unsupportedFeatures:[]});
+ const flag=actual.contributes.configuration.properties['soterai.lite.historyHooks.preCommit'];assert.equal(flag.default,false);assert.equal(flag.scope,'machine');assert(actual.capabilities.untrustedWorkspaces.restrictedConfigurations.includes('soterai.lite.historyHooks.preCommit'));
+});
 test('B14 complete selected BUSL terms are required byte-for-byte',async()=>{const f=await fixture(x=>x.entries.set('extension/LICENSE.md',Buffer.from('Short license summary')));await assert.rejects(api().auditFinalRelease(f.options),/license|asset/i);});
 test('B18 post-package asset source drift refuses',async()=>{const f=await fixture();await fs.writeFile(path.join(f.root,'README.md'),'Changed public asset');await assert.rejects(api().auditFinalRelease(f.options),/asset|changed/i);});
 test('B09 changed bundled source cannot be hidden by internally coherent embedded metadata',async()=>{const f=await fixture();await fs.writeFile(path.join(f.repo,'node_modules/fixture-library/index.js'),'module.exports=2;');await assert.rejects(api().auditFinalRelease(f.options),/input|provenance/i);});

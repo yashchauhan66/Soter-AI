@@ -8,21 +8,27 @@
     "sha256": "1ce46192e9f315b5f2142c9f61542f1d513143dc2e19d4def6d95cea38c73ed4"
   },
   "artifact": {
-    "path": "packages/soterai-lite/soterai-lite-0.7.0-f32-20261103-attempt01.vsix",
-    "bytes": 1742100,
-    "sha256": "e2ce3dc44d45b5e160ab0f95d713a9434a9ea7d610ce7abd2bf2500abe89d649"
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-resumed-20261106-attempt02.vsix",
+    "bytes": 1742104,
+    "sha256": "011f96d19d42dbefc2e56eb5399bf5c7f16a09d6b71b8bae5be9d66b2f3769ec"
   },
   "sourceProof": {
-    "path": "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/full-inputs-04.json",
-    "bytes": 227195,
-    "sha256": "21a9721cade24be9cb76a03350273dbc79f1f8e0e913bc92d7a1c5385db8b764"
+    "path": "docs/soterai-lite/evidence/20261106-remaining-queue/candidate-01/full-inputs-02.json",
+    "bytes": 223848,
+    "sha256": "23fd63bb04122bf055f656a77424085b75ff3e3c813121c15034cd209fd1c8f6"
   },
   "configuration": {
     "platform": "win32-x64",
     "osRelease": "10.0.26300",
-    "codeVersion": "1.144.1",
+    "codeVersion": "1.145.1",
     "execution": "SCOPED_SCRIPTED_NATIVE_AND_COMPONENTS",
-    "independence": "LOW"
+    "independence": "LOW",
+    "availableHostOnly": true,
+    "historicalNativeHosts": [
+      "1.144.1",
+      "1.145.0"
+    ],
+    "currentHostAcceptance": "PENDING_EXACT_NATIVE_EVIDENCE"
   },
   "toolCount": 6,
   "checkCount": 44,
@@ -32,8 +38,9 @@
   "scopeExceptions": [
     {
       "feature": "F26a",
-      "status": "OWNER_SKIPPED_INCOMPLETE_UNSUPPORTED",
-      "furtherAttempts": false
+      "status": "OWNER_REVIEWED_DEFAULT_OFF_CANDIDATE_NATIVE_ACCEPTANCE_PENDING",
+      "furtherAttempts": "AUTHORIZED_WITHIN_CURRENT_LOCAL_TEST_SCOPE",
+      "historicalSkipRetained": true
     }
   ],
   "tools": [
@@ -6501,5 +6508,36 @@
     }
   ],
   "originalCatalogChanged": false,
-  "remaining": "V01/V02/human exact-object gates; no numerical rating or support promotion."
+  "remaining": "V01/V02/human exact-object gates; no numerical rating or support promotion.",
+  "updatedAt": "2026-11-06T13:41:38.661Z",
+  "laterScopedEvidence": [
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f05-current-acceptance-04.json",
+      "bytes": 2208,
+      "sha256": "38be2bd0b959a4ebc02c29ce9880179a58a6965cb2675deb6ecef9b4208e1448"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f28-current-01/native-acceptance-current-02.json",
+      "bytes": 2365,
+      "sha256": "4dbccb3fdf5bf409d570442d4c0211c12fb3420ac8f2f9304960b891a1b526b0"
+    }
+  ],
+  "laterScopedEvidenceMeaning": "Historical earlier-artifact developer-bootstrap observations on Code 1.145.0; neither current-artifact nor current-host acceptance.",
+  "currentComponentEvidence": [
+    {
+      "path": "docs/soterai-lite/evidence/20261106-remaining-queue/candidate-01/full-suite-acceptance-02.json",
+      "bytes": 32648,
+      "sha256": "95da08741866668bcaba10ffdb395b838875c078b58c7a0cb96caec4ade6c777"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-remaining-queue/final/scripted-run-20261106T133903152Z-32d76123/RESULT.json",
+      "bytes": 45981,
+      "sha256": "d7e678bd43c45eb62b7604f29d4270765cd83d1ade28a8e790d2eb680cf05399"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-remaining-queue/final/v02-evaluation-20261106T134005836Z/RESULT.json",
+      "bytes": 171784,
+      "sha256": "5b8c63b3c9c5f6ee9981bff39b29c724bc69a211c29e0dbc57080d6108bcfe09"
+    }
+  ]
 }

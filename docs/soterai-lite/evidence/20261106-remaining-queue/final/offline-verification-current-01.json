@@ -1,0 +1,139 @@
+{
+  "status": "PASS_OFFLINE_HANDOFF_INTEGRITY_NOT_PRODUCT_OR_HUMAN_ACCEPTANCE",
+  "observedAt": "2026-11-06T13:45:12.261Z",
+  "handoffSha256": "e6d5272720e565adcbbb5050e509250da4fda59d0fbcdfe401236f01bef17dca",
+  "verifierSha256": "b2d63e18bca6e56a4278bbd854ea9d44585be2423c1e00bfb406d1a20b11b1ed",
+  "artifact": {
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-resumed-20261106-attempt02.vsix",
+    "bytes": 1742104,
+    "sha256": "011f96d19d42dbefc2e56eb5399bf5c7f16a09d6b71b8bae5be9d66b2f3769ec"
+  },
+  "frozenSources": 1111,
+  "frozenSourceDrift": 0,
+  "package": {
+    "entries": 18,
+    "runtimes": 4,
+    "embeddedSbomSha256": "964eb9b39f156f6b4ade0ba35250db883b03a25cc01ad07667e5377bbf66a905",
+    "status": "PASS_FINAL_OFFLINE_PACKAGE_NOT_RELEASE_READY"
+  },
+  "neutralKit": {
+    "manifestEntries": 393,
+    "totalFiles": 394,
+    "exclusionSearchFiles": 391,
+    "forbiddenHits": 0,
+    "verdict": "NOT_PROVIDED"
+  },
+  "catalog": {
+    "checks": 44,
+    "tools": 6,
+    "pairs": 264,
+    "statuses": {
+      "UNVERIFIED": 264
+    },
+    "rating": null
+  },
+  "retainedAudit": {
+    "affectedBuildAssociations": 42,
+    "high": 17,
+    "moderate": 19,
+    "low": 6,
+    "remediation": "OPEN",
+    "riskAcceptance": "NOT_GRANTED",
+    "freshNetworkAudit": false
+  },
+  "currentBenchmarks": {
+    "scriptedCases": 4,
+    "realModelCalls": 0,
+    "actualExpressIntegration": "PASS_ACTUAL_MEMORY_TRANSPORT",
+    "streamMeasurements": 6
+  },
+  "fullCounts": {
+    "tests": 4892,
+    "pass": 4888,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 4,
+    "todo": 0
+  },
+  "fullSuiteExecution": "EXECUTED_ON_PREVIOUS_PROOF_REUSED_AFTER_METADATA_ONLY_CHANGE",
+  "retainedNative": [
+    {
+      "receipt": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f05-current-acceptance-04.json",
+      "status": "PASS_CURRENT_F05_CUSTOMDOCUMENT10_DEVELOPER_BOOTSTRAP_NOT_CLEAN_INSTALL",
+      "artifactSha256": "e2ce3dc44d45b5e160ab0f95d713a9434a9ea7d610ce7abd2bf2500abe89d649",
+      "codeVersion": "1.145.0",
+      "checks": 10,
+      "measurements": [],
+      "interpretation": "Rehashed earlier-artifact historical raw results; no current-artifact or host transfer."
+    },
+    {
+      "receipt": "docs/soterai-lite/evidence/20261104-final-gate-readiness/f28-current-01/native-acceptance-current-02.json",
+      "status": "PASS_CURRENT_F28_RELIABILITY30_DEVELOPER_BOOTSTRAP_NOT_FEATURE_COMPLETION",
+      "artifactSha256": "e2ce3dc44d45b5e160ab0f95d713a9434a9ea7d610ce7abd2bf2500abe89d649",
+      "codeVersion": "1.145.0",
+      "checks": 30,
+      "measurements": [
+        {
+          "kind": "ACTIVATION_BODY_EXCLUDES_MODULE_LOADING",
+          "milliseconds": 176.08489999999983
+        },
+        {
+          "kind": "WITHDRAWN_OPEN_SLOT_RETAINED",
+          "activeReads": 1
+        },
+        {
+          "kind": "OWNED_FIVE_SECOND_TIMER_WITHHELD_IO_STILL_OWNED",
+          "milliseconds": 5005.784300000001
+        },
+        {
+          "kind": "ACTUAL_PACKAGED_COMMAND_SELECTED128_OF4096",
+          "selected": 128,
+          "bulkSyntheticFiles": 4096,
+          "milliseconds": 8369.6694,
+          "budgetMilliseconds": 60000
+        }
+      ],
+      "interpretation": "Rehashed earlier-artifact historical raw results; no current-artifact or host transfer."
+    }
+  ],
+  "documentsVerified": 10,
+  "retainedEvidenceFilesVerified": 8,
+  "childProcesses": 0,
+  "nativeLaunches": 0,
+  "networkRequests": 0,
+  "releaseReady": false,
+  "featureComplete": false,
+  "humanResults": "NOT_PROVIDED",
+  "finalRating": null,
+  "gates": {
+    "F31": {
+      "status": "SCOPED_PACKAGE_PREPARATION_RETAINED_GLOBAL_READINESS_INCOMPLETE",
+      "remaining": "F26a/F32/final gates and owner release decisions"
+    },
+    "V01": {
+      "status": "INCOMPLETE",
+      "remaining": "Installed F32/current-host acceptance and actual supported tool routes; preserve qualified native scope and unmanaged baseline"
+    },
+    "V02": {
+      "status": "INCOMPLETE",
+      "remaining": "44-by-6 applicability/control/oracle/prevention-sensitive mutation mapping; installed/native budgets; two real-agent project trials. Current actual Express scripted integration and six stream-boundary component checks now pass."
+    },
+    "V03": {
+      "status": "CURRENT_DELIVERABLES_REFRESHED_PREREQUISITES_INCOMPLETE",
+      "remaining": "Required current native/per-tool/human/independent acceptance; no final rating"
+    },
+    "V04": {
+      "status": "CURRENT_NEUTRAL_PACKET_VERIFIED_NOT_INDEPENDENT_REVIEW",
+      "remaining": "External exact-object static/dynamic verdict"
+    },
+    "V05": {
+      "status": "HUMAN_CHECKLIST_PREPARED_NOT_ENTERED",
+      "handoff": {
+        "path": "docs/soterai-lite/HUMAN-ACTIONS.md",
+        "bytes": 6301,
+        "sha256": "6df0d807e56ede46566ce562c32b332453801feed2d00ca1125f78e94a276bf1"
+      },
+      "remaining": "Original L6 prerequisites, then human actions and STOP"
+    }
+  }
+}

@@ -1,0 +1,87 @@
+{
+    "status":  "TEST_ONLY_AUTHORED_FROZEN_UNEXECUTED_PRECORRECTION",
+    "feature":  "F26a",
+    "test":  {
+                 "path":  "packages/vscode-extension/src/__tests__/preCommitClientBundle.review.test.ts",
+                 "bytes":  3021,
+                 "sha256":  "1025157c05bbfb4e045b9c7a4a2115df4dce1e75b5815c51ab4a6da458422e75"
+             },
+    "declaredTests":  1,
+    "contract":  {
+                     "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/pre-commit-client-bundle-review-test-contract-01.md",
+                     "bytes":  2208,
+                     "sha256":  "9fc2ff795d4786b4d70b7376349ff676bad0f2da966b3b40e981549fb2802e5f"
+                 },
+    "retainedStaticProbe":  {
+                                "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/client-bundle-probe-01.json",
+                                "bytes":  2409,
+                                "sha256":  "6f196d792762778bb631423dd7517387aefb5edf2b62465e53c41e9a9952168d"
+                            },
+    "snapshots":  [
+                      {
+                          "source":  {
+                                         "path":  "packages/vscode-extension/src/__tests__/preCommitClientBundle.review.test.ts",
+                                         "bytes":  3021,
+                                         "sha256":  "1025157c05bbfb4e045b9c7a4a2115df4dce1e75b5815c51ab4a6da458422e75"
+                                     },
+                          "snapshot":  {
+                                           "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/pre-commit-client-bundle-review-precorrection-01/preCommitClientBundle.review.authored.test.ts",
+                                           "bytes":  3021,
+                                           "sha256":  "1025157c05bbfb4e045b9c7a4a2115df4dce1e75b5815c51ab4a6da458422e75"
+                                       },
+                          "byteExact":  true,
+                          "sourceStableAcrossCopy":  true
+                      },
+                      {
+                          "source":  {
+                                         "path":  "packages/vscode-extension/src/history-hooks/CheckedHookIndex.ts",
+                                         "bytes":  7971,
+                                         "sha256":  "9e63a7e21062611d4862bad4156117f42bca4c4855ddbed554b64a18d57a35ca"
+                                     },
+                          "snapshot":  {
+                                           "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/pre-commit-client-bundle-review-precorrection-01/CheckedHookIndex.before.ts",
+                                           "bytes":  7971,
+                                           "sha256":  "9e63a7e21062611d4862bad4156117f42bca4c4855ddbed554b64a18d57a35ca"
+                                       },
+                          "byteExact":  true,
+                          "sourceStableAcrossCopy":  true
+                      },
+                      {
+                          "source":  {
+                                         "path":  "packages/vscode-extension/src/history-hooks/PreCommitClient.ts",
+                                         "bytes":  9575,
+                                         "sha256":  "674124f6a61b7eb50814fd8e9d22deda67787cdfca7455caca4ecb9de1b9f9a3"
+                                     },
+                          "snapshot":  {
+                                           "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/pre-commit-client-bundle-review-precorrection-01/PreCommitClient.before.ts",
+                                           "bytes":  9575,
+                                           "sha256":  "674124f6a61b7eb50814fd8e9d22deda67787cdfca7455caca4ecb9de1b9f9a3"
+                                       },
+                          "byteExact":  true,
+                          "sourceStableAcrossCopy":  true
+                      },
+                      {
+                          "source":  {
+                                         "path":  "packages/vscode-extension/src/history-hooks/preCommitClientMain.ts",
+                                         "bytes":  724,
+                                         "sha256":  "5ce696867ae9c7ddd3bc3da6074a7f33a00396ee40e379943d8c2bb5cc44fa73"
+                                     },
+                          "snapshot":  {
+                                           "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/pre-commit-client-bundle-review-precorrection-01/preCommitClientMain.before.ts",
+                                           "bytes":  724,
+                                           "sha256":  "5ce696867ae9c7ddd3bc3da6074a7f33a00396ee40e379943d8c2bb5cc44fa73"
+                                       },
+                          "byteExact":  true,
+                          "sourceStableAcrossCopy":  true
+                      }
+                  ],
+    "boundary":  "Actual exact preCommitClientMain in-memory bundle excludes vscode/child_process imports and SafeGit/CheckedGitMetadata inputs; actual entry+PreCommitProtocol must contribute bytes",
+    "buildOptions":  "write:false,bundle:true,platform:node,format:cjs,target:node18,minify:true,metafile:true,sourcemap:false,logLevel:silent; absolute __dirname-derived repo/entry/tsconfig; vscode explicit external for negative assertion",
+    "fixtureOutput":  "No raw bundled data printed, evaluated, imported, written or deleted",
+    "testExecution":  "NOT_RUN_BY_AUTHOR_ROOT_ACTUAL_FAILING_BASELINE_REQUIRED",
+    "esbuildCompilerBuildGitChildNative":  "NOT_RUN_BY_AUTHOR",
+    "syntaxCompilation":  "NOT_RUN_BY_AUTHOR",
+    "productionOtherFixturesQueueLedgerChanges":  "NONE_BY_AUTHOR",
+    "scope":  "Authored one regression and count/hash/exact-copy custody only; no behavioral/compiler/bundle-boundary PASS claim",
+    "time":  "2026-10-25T14:11:34.9416634Z"
+}

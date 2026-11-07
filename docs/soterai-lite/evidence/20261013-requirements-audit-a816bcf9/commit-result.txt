@@ -1,0 +1,18 @@
+﻿COMMAND: git -c core.autocrlf=false add -- docs/soterai-lite/ledger.md docs/soterai-lite/REQUIREMENTS-AUDIT-20261013.md docs/soterai-lite/evidence/20261013-requirements-audit-a816bcf9/audit-evidence.ps1 docs/soterai-lite/evidence/20261013-requirements-audit-a816bcf9/audit-raw-metadata.json docs/soterai-lite/evidence/20261013-requirements-audit-a816bcf9/commit-review.ps1 docs/soterai-lite/evidence-index-20261013-requirements-review.json
+EXIT: 0
+COMMAND: git diff --cached --name-only
+docs/soterai-lite/REQUIREMENTS-AUDIT-20261013.md
+docs/soterai-lite/evidence-index-20261013-requirements-review.json
+docs/soterai-lite/evidence/20261013-requirements-audit-a816bcf9/audit-evidence.ps1
+docs/soterai-lite/evidence/20261013-requirements-audit-a816bcf9/audit-raw-metadata.json
+docs/soterai-lite/evidence/20261013-requirements-audit-a816bcf9/commit-review.ps1
+docs/soterai-lite/ledger.md
+COMMAND: git -c core.hooksPath=docs/soterai-lite/evidence/20261013-l0-disk-gate-51f892d0/offline-hooks commit -m "docs(soterai-lite): audit five user requirements and install gaps"
+[soterai-lite b0f31737] docs(soterai-lite): audit five user requirements and install gaps
+ 6 files changed, 534 insertions(+)
+ create mode 100644 docs/soterai-lite/REQUIREMENTS-AUDIT-20261013.md
+ create mode 100644 docs/soterai-lite/evidence-index-20261013-requirements-review.json
+ create mode 100644 docs/soterai-lite/evidence/20261013-requirements-audit-a816bcf9/audit-evidence.ps1
+ create mode 100644 docs/soterai-lite/evidence/20261013-requirements-audit-a816bcf9/audit-raw-metadata.json
+ create mode 100644 docs/soterai-lite/evidence/20261013-requirements-audit-a816bcf9/commit-review.ps1
+EXIT: 0

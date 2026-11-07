@@ -1,0 +1,30 @@
+﻿TAP version 13
+# Subtest: F26a absolute client deadline settles unavailable and closes its exact active streaming HTTP ownership
+not ok 1 - F26a absolute client deadline settles unavailable and closes its exact active streaming HTTP ownership
+  ---
+  duration_ms: 2192.0878
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\preCommitClientDeadline.review.test.ts:2:4229'
+  failureType: 'testCodeFailure'
+  error: 'Deadline result settlement must also close the exact accepted HTTP ownership before fake-peer cleanup.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\preCommitClientDeadline.review.test.ts:119:5)
+    runNextTicks (node:internal/process/task_queues:65:5)
+    process.processTimers (node:internal/timers:520:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2718.9249

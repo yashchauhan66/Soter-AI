@@ -1,0 +1,49 @@
+﻿{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261025-f26a-precommit-7b36d912\\backend-typecheck-01.txt",
+    "observedAt":  "2026-10-26T05:01:51.7863127Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "node_modules/typescript/bin/tsc",
+                      "--noEmit",
+                      "-p",
+                      "apps/local-ai-broker/tsconfig.json"
+                  ],
+    "sha256":  "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+    "file":  "node"
+}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261025-f26a-precommit-7b36d912\\backend-tests-01.txt",
+    "observedAt":  "2026-10-26T05:02:11.2845654Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "--import",
+                      "tsx",
+                      "--test",
+                      "--test-concurrency=1",
+                      "apps/local-ai-broker/src/__tests__/*.test.ts"
+                  ],
+    "sha256":  "3B3A0EA7F233A9A3E232ED33FD872AD4F5B5F23BC3ED8C04FC66291B9951BAEF",
+    "file":  "node"
+}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261025-f26a-precommit-7b36d912\\native-build-01.txt",
+    "observedAt":  "2026-10-26T05:02:14.4755110Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/build-native-hosts-02.cjs"
+                  ],
+    "sha256":  "371A8D481D139741A5903A92DD801E9B65DDC1EA0B0E90C3E617BB21ED7AB452",
+    "file":  "node"
+}
+{
+    "output":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261025-f26a-precommit-7b36d912\\package-01.txt",
+    "observedAt":  "2026-10-26T05:03:07.1643139Z",
+    "exitCode":  0,
+    "arguments":  [
+                      "packages/soterai-lite/scripts/package.cjs",
+                      "soterai-lite-0.7.0-f26a-20261026-attempt01.vsix"
+                  ],
+    "sha256":  "B5CDFBAC1C9FAE0581340AEFEC0D25B6FCC43C52F00FDDC46778829440644D0F",
+    "file":  "node"
+}
+Current sequential backend,21driver and four-runtime package gates completed; content/native pending.

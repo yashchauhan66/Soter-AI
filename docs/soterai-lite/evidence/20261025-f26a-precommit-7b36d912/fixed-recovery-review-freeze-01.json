@@ -1,0 +1,21 @@
+{
+  "time": "2026-10-26T02:41:25.329Z",
+  "status": "PRE_CORRECTION_FIXED_GENERATION_STATE_ASSERTIONS",
+  "tests": 8,
+  "originalSixByteExact": true,
+  "inputs": [
+    {
+      "path": "packages/vscode-extension/src/history-hooks/PreCommitController.ts",
+      "bytes": 26267,
+      "sha256": "0952a7a6a490c0f4d33b58b11888a7b06b2e819b1c5d2d881b3cd0ba6e08fef4",
+      "archive": "PreCommitController.ts.fixed-state-before-01.txt"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/preCommitControllerBackend.review.test.ts",
+      "bytes": 25068,
+      "sha256": "bea20fc72b2383794f06d1517f34995cc368fd96f4de8d38f9f01c8771e96651",
+      "archive": "preCommitControllerBackend.review.test.ts.fixed-state-before-01.txt"
+    }
+  ],
+  "rationale": "Unique journals and the active pointer use non-atomic storage. Keep first exact private state at a generation/state-derived key so recovery discovery never depends only on an opaque index update. Two additive existing-case assertions; no weakened assertions or new native claims."
+}

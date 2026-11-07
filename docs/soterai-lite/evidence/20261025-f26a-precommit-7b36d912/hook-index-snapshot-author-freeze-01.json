@@ -1,0 +1,88 @@
+{
+    "status":  "TEST_ONLY_AUTHORED_FROZEN_UNEXECUTED_PREPRODUCTION",
+    "feature":  "F26a",
+    "test":  {
+                 "path":  "packages/vscode-extension/src/__tests__/hookIndexSnapshot.test.ts",
+                 "bytes":  19501,
+                 "sha256":  "5f6c156e5d54ea3644d1aa08eedfeac9d4230bf760e6a92eb6ca23df5bc80867"
+             },
+    "declaredTests":  20,
+    "platform":  "WINDOWS_ONLY",
+    "additiveAPI":  "captureHookIndex(root:string,indexPath:unknown):Readonly\u003c{indexFile:string,indexSha256:string,indexIdentity:string,entries:readonly StagedEntry[]}\u003e|undefined",
+    "descriptorAdditions":  [
+                                "readonly indexSha256:string",
+                                "readonly indexIdentity:string"
+                            ],
+    "before":  [
+                   {
+                       "source":  {
+                                      "path":  "packages/vscode-extension/src/history-hooks/CheckedHookIndex.ts",
+                                      "bytes":  7182,
+                                      "sha256":  "405b3886883830b1a6981dd05a7556ef32e2bc92d16021ec2ae8a2d5e7cb6a7b"
+                                  },
+                       "snapshot":  {
+                                        "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/hook-index-snapshot-preproduction-01/CheckedHookIndex.before.ts",
+                                        "bytes":  7182,
+                                        "sha256":  "405b3886883830b1a6981dd05a7556ef32e2bc92d16021ec2ae8a2d5e7cb6a7b"
+                                    },
+                       "byteExact":  true
+                   },
+                   {
+                       "source":  {
+                                      "path":  "packages/vscode-extension/src/__tests__/checkedHookIndex.test.ts",
+                                      "bytes":  24959,
+                                      "sha256":  "7bc22b4770bdce950da4f804a4632009e70518b642c97cf49b10d525c4b3c14d"
+                                  },
+                       "snapshot":  {
+                                        "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/hook-index-snapshot-preproduction-01/checkedHookIndex.before.test.ts",
+                                        "bytes":  24959,
+                                        "sha256":  "7bc22b4770bdce950da4f804a4632009e70518b642c97cf49b10d525c4b3c14d"
+                                    },
+                       "byteExact":  true
+                   },
+                   {
+                       "source":  {
+                                      "path":  "packages/vscode-extension/src/history-hooks/PreCommitProtocol.ts",
+                                      "bytes":  5279,
+                                      "sha256":  "a3289d0ec4ec4c52e30371cc87685881fdce06867a7d492656994c8ada26df81"
+                                  },
+                       "snapshot":  {
+                                        "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/hook-index-snapshot-preproduction-01/PreCommitProtocol.before.ts",
+                                        "bytes":  5279,
+                                        "sha256":  "a3289d0ec4ec4c52e30371cc87685881fdce06867a7d492656994c8ada26df81"
+                                    },
+                       "byteExact":  true
+                   }
+               ],
+    "records":  [
+                    {
+                        "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/hook-index-snapshot-test-contract-01.md",
+                        "bytes":  3552,
+                        "sha256":  "07e6d3befbf03bd2c37bb8d6e3bdcf94e78b075459b8f5c6e6098327046b7830"
+                    },
+                    {
+                        "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/hook-index-snapshot-author-static-01.cjs",
+                        "bytes":  1349,
+                        "sha256":  "c9cdd44d1a829f69d75068294b544d4ddb8a6b47f6a46adbbb4fe88f99195fbd"
+                    },
+                    {
+                        "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/hook-index-snapshot-author-static-01.json",
+                        "bytes":  575,
+                        "sha256":  "ed43bc2172d749d6bb3f1ecdc217f3b23c9704ffd0136188bf5a35c3abe87803"
+                    },
+                    {
+                        "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/hook-index-snapshot-author-static-launch-refusal-01.json",
+                        "bytes":  806,
+                        "sha256":  "c0ec8fa5a2f5e33eec109e241b366b4b51647a022e1c98b3d1e7b119835a635e"
+                    }
+                ],
+    "staticStatus":  "PASS_STATIC_TYPESCRIPT_PARSE_ONLY",
+    "testExecution":  "NOT_RUN_BY_AUTHOR_ROOT_BASELINE_REQUIRED_BEFORE_PRODUCTION",
+    "compilerBuildGitNative":  "NOT_RUN_BY_AUTHOR",
+    "fixtures":  "RETAINED_MANUAL_SYNTHETIC_DIRC_ONLY",
+    "productionChanges":  "NONE_BY_AUTHOR",
+    "queueLedgerChanges":  "NONE_BY_AUTHOR",
+    "priorLauncher":  "Inline static launcher quoting refusal retained separately; no test baseline or tested-code evaluation",
+    "scope":  "Existing F26a plan only. Dynamic additive API assertion;20 meaningful snapshot/identity/selector/guard cases. Fresh static syntax text parse and SHA256 only, no behavior PASS claim.",
+    "time":  "2026-10-25T10:03:48.4273114Z"
+}

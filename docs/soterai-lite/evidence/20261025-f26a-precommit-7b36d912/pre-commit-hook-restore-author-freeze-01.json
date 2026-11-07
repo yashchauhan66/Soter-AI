@@ -1,0 +1,99 @@
+{
+    "status":  "TEST_ONLY_AUTHORED_FROZEN_UNEXECUTED_PREPRODUCTION",
+    "feature":  "F26a",
+    "test":  {
+                 "path":  "packages/vscode-extension/src/__tests__/preCommitHookRestore.test.ts",
+                 "bytes":  24754,
+                 "sha256":  "d24eea7c51ee62cadabae25847da23ef46f1440fe6c42f8c7fed6eba0c87dbfe"
+             },
+    "declaredTests":  12,
+    "contract":  {
+                     "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/pre-commit-hook-restore-test-contract-01.md",
+                     "bytes":  6257,
+                     "sha256":  "78f73456f41e76ad12cf00c602c5aa82da9bc37f769caa39321a3dd95c96c715"
+                 },
+    "productionAbsent":  "packages/vscode-extension/src/history-hooks/PreCommitHookRestore.ts",
+    "productionAbsentObservedAtFreeze":  true,
+    "snapshots":  [
+                      {
+                          "source":  {
+                                         "path":  "packages/vscode-extension/src/__tests__/preCommitHookRestore.test.ts",
+                                         "bytes":  24754,
+                                         "sha256":  "d24eea7c51ee62cadabae25847da23ef46f1440fe6c42f8c7fed6eba0c87dbfe"
+                                     },
+                          "snapshot":  {
+                                           "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/pre-commit-hook-restore-preproduction-01/preCommitHookRestore.authored.test.ts",
+                                           "bytes":  24754,
+                                           "sha256":  "d24eea7c51ee62cadabae25847da23ef46f1440fe6c42f8c7fed6eba0c87dbfe"
+                                       },
+                          "byteExact":  true,
+                          "sourceStableAcrossCopy":  true
+                      },
+                      {
+                          "source":  {
+                                         "path":  "packages/vscode-extension/src/history-hooks/PreCommitHookTransaction.ts",
+                                         "bytes":  10241,
+                                         "sha256":  "753b4645fb6d0866ee60be2fd0bd147394ca668dc5151c23b092ce13db9ee4e4"
+                                     },
+                          "snapshot":  {
+                                           "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/pre-commit-hook-restore-preproduction-01/PreCommitHookTransaction.before.ts",
+                                           "bytes":  10241,
+                                           "sha256":  "753b4645fb6d0866ee60be2fd0bd147394ca668dc5151c23b092ce13db9ee4e4"
+                                       },
+                          "byteExact":  true,
+                          "sourceStableAcrossCopy":  true
+                      },
+                      {
+                          "source":  {
+                                         "path":  "packages/vscode-extension/src/history-hooks/PreCommitHookText.ts",
+                                         "bytes":  5060,
+                                         "sha256":  "d9cc9e3fccb755792bed834c9d0bb9c4347bd2cf4874ac6ab5c1564d30d1ea67"
+                                     },
+                          "snapshot":  {
+                                           "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/pre-commit-hook-restore-preproduction-01/PreCommitHookText.before.ts",
+                                           "bytes":  5060,
+                                           "sha256":  "d9cc9e3fccb755792bed834c9d0bb9c4347bd2cf4874ac6ab5c1564d30d1ea67"
+                                       },
+                          "byteExact":  true,
+                          "sourceStableAcrossCopy":  true
+                      },
+                      {
+                          "source":  {
+                                         "path":  "packages/vscode-extension/src/history-hooks/OwnerHookProtocol.ts",
+                                         "bytes":  4490,
+                                         "sha256":  "8778d5ebcbf3562db84b94c18a81e056cfca01802a5de0dbbdccda3759ffa1dc"
+                                     },
+                          "snapshot":  {
+                                           "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/pre-commit-hook-restore-preproduction-01/OwnerHookProtocol.before.ts",
+                                           "bytes":  4490,
+                                           "sha256":  "8778d5ebcbf3562db84b94c18a81e056cfca01802a5de0dbbdccda3759ffa1dc"
+                                       },
+                          "byteExact":  true,
+                          "sourceStableAcrossCopy":  true
+                      },
+                      {
+                          "source":  {
+                                         "path":  "packages/vscode-extension/src/history-hooks/CheckedHookFile.ts",
+                                         "bytes":  11273,
+                                         "sha256":  "f8522678f4ccff861ff3998a97cae98772e8fe66bc7bd318bac8f7d1dd55e554"
+                                     },
+                          "snapshot":  {
+                                           "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/pre-commit-hook-restore-preproduction-01/CheckedHookFile.before.ts",
+                                           "bytes":  11273,
+                                           "sha256":  "f8522678f4ccff861ff3998a97cae98772e8fe66bc7bd318bac8f7d1dd55e554"
+                                       },
+                          "byteExact":  true,
+                          "sourceStableAcrossCopy":  true
+                      }
+                  ],
+    "api":  "PreCommitHookRestore(receipt).run(deps), one-shot frozen RESTORED/CANCELLED/UNAVAILABLE/INCOMPLETE",
+    "dependencies":  "current;confirm;sync read;backups.retrieve ONLY;withdraw;save ROLLED_BACK/INCOMPLETE;sync guarded write",
+    "confirmedStatusOracles":  "Malformed inert UNAVAILABLE; authority loss before withdraw UNAVAILABLE; owner drift INCOMPLETE; any uncertainty after withdraw INCOMPLETE; canonical backup exact JSON stringify version,present,mode,bytes order",
+    "coverage":  "12 grouped cases: useful present/custom and absent/default/flag-off authority; inert schema; premodal ownership; review/cancel; canonical backup; awaited withdraw order; async authority/identity drift; postwithdraw uncertainty; uncertain writes/readback/CAS; durable save; final sync paired withdrawal; one-shot and exceptions",
+    "testExecution":  "NOT_RUN_BY_AUTHOR_ROOT_MISSING_MODULE_BASELINE_REQUIRED",
+    "syntaxCompilation":  "NOT_RUN_BY_AUTHOR",
+    "compilerBuildGitChildProviderNative":  "NOT_RUN_BY_AUTHOR",
+    "productionOtherFixturesQueueLedgerChanges":  "NONE_BY_AUTHOR",
+    "scope":  "Static authored-case count and byte/hash custody only. No test, compiler, encrypted provider, key, filesystem restoration or native behavior result.",
+    "time":  "2026-10-25T14:06:31.5369539Z"
+}

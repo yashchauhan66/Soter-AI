@@ -1,0 +1,174 @@
+﻿TAP version 13
+# Subtest: F26a scoped backup uses exact scoped SecretStorage key and keeps path content inside ciphertext
+not ok 1 - F26a scoped backup uses exact scoped SecretStorage key and keeps path content inside ciphertext
+  ---
+  duration_ms: 34.4268
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\encryptedBackupScope.review.test.ts:2:5673'
+  failureType: 'testCodeFailure'
+  error: 'Scoped storage cannot create or borrow the legacy key namespace.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\encryptedBackupScope.review.test.ts:69:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F26a independent backup scopes generate and load separate keys within one extension context
+not ok 2 - F26a independent backup scopes generate and load separate keys within one extension context
+  ---
+  duration_ms: 4.5841
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\encryptedBackupScope.review.test.ts:2:6850'
+  failureType: 'testCodeFailure'
+  error: 'Each installation scope must have its own key record.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\encryptedBackupScope.review.test.ts:79:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F26a crossscope identical first backups have distinct handles no overwrite and no crossscope restore
+not ok 3 - F26a crossscope identical first backups have distinct handles no overwrite and no crossscope restore
+  ---
+  duration_ms: 4.4289
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\encryptedBackupScope.review.test.ts:2:7607'
+  failureType: 'testCodeFailure'
+  error: 'Independent scopes with identical source/content and first use must not overwrite another encrypted backup.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\encryptedBackupScope.review.test.ts:86:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F26a reconstructed scoped sink loads its existing key and exact retained backup without key creation
+not ok 4 - F26a reconstructed scoped sink loads its existing key and exact retained backup without key creation
+  ---
+  duration_ms: 4.9349
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\encryptedBackupScope.review.test.ts:2:8686'
+  failureType: 'testCodeFailure'
+  error: 'Recovery must load only its existing scoped key.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\encryptedBackupScope.review.test.ts:95:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F26a backup preserves opaque absence hook bytes and mode encoded payload without adding a mode API
+ok 5 - F26a backup preserves opaque absence hook bytes and mode encoded payload without adding a mode API
+  ---
+  duration_ms: 6.0923
+  type: 'test'
+  ...
+# Subtest: F26a missing scoped recovery key never creates a replacement or falls back to legacy authority
+not ok 6 - F26a missing scoped recovery key never creates a replacement or falls back to legacy authority
+  ---
+  duration_ms: 2.421
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\encryptedBackupScope.review.test.ts:2:10479'
+  failureType: 'testCodeFailure'
+  error: 'Positive scoped key must exist before the missing-key control.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\encryptedBackupScope.review.test.ts:110:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F26a corrupt scoped keys and authenticated ciphertext refuse without key or backup writes
+not ok 7 - F26a corrupt scoped keys and authenticated ciphertext refuse without key or backup writes
+  ---
+  duration_ms: 2.9084
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\encryptedBackupScope.review.test.ts:2:11331'
+  failureType: 'testCodeFailure'
+  error: 'Corrupt key/authenticated payload must not produce plaintext or create replacement state.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\encryptedBackupScope.review.test.ts:124:20)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F26a recovery missing file filesystem and SecretStorage read failures return null without mutation
+ok 8 - F26a recovery missing file filesystem and SecretStorage read failures return null without mutation
+  ---
+  duration_ms: 15.0851
+  type: 'test'
+  ...
+# Subtest: F26a default and explicitundefined sink retain legacy key namespace and existing encrypted backup readability
+ok 9 - F26a default and explicitundefined sink retain legacy key namespace and existing encrypted backup readability
+  ---
+  duration_ms: 4.0893
+  type: 'test'
+  ...
+# Subtest: F26a missing legacy recovery key returns null without creating a new SecretStorage key
+not ok 10 - F26a missing legacy recovery key returns null without creating a new SecretStorage key
+  ---
+  duration_ms: 2.9804
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\encryptedBackupScope.review.test.ts:2:13683'
+  failureType: 'testCodeFailure'
+  error: 'Missing legacy key must remain absent during failed retrieval.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\encryptedBackupScope.review.test.ts:145:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F26a invalid explicit scope options proxies and accessors stay inert without coercion or key file I/O
+not ok 11 - F26a invalid explicit scope options proxies and accessors stay inert without coercion or key file I/O
+  ---
+  duration_ms: 3.9163
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\encryptedBackupScope.review.test.ts:2:14073'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection: Every invalid scope must reject store with the same fixed sanitized error.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    async TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\encryptedBackupScope.review.test.ts:159:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F26a scoped and legacy invalid handle strings refuse before key or filesystem access
+ok 12 - F26a scoped and legacy invalid handle strings refuse before key or filesystem access
+  ---
+  duration_ms: 1.6577
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 4
+# fail 8
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 877.8983

@@ -1,0 +1,10 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),crypto=require('node:crypto');
+const repo=path.resolve(__dirname,'../../../..'),base=path.relative(repo,__dirname).replaceAll('\\','/'),file='packages/vscode-extension/src/__tests__/preCommitGitProcess.test.ts',before=fs.readFileSync(path.join(repo,file)),sha=b=>crypto.createHash('sha256').update(b).digest('hex');
+assert.equal(sha(before),'3c799f6918d207db0f6eaf9a772ac5e6530756184a1647d0d4a55ad61fe3618e');
+const old='const f = await fixture(operation, {}, index); unavailable(await f.start(), "UNAVAILABLE");',replacement='const f = await fixture(operation, { operation }, index); unavailable(await f.start(), "UNAVAILABLE");';
+assert.equal(before.toString('utf8').split(old).length,2);
+fs.writeFileSync(path.join(__dirname,'preCommitGitProcess.before-default-operation-01.test.ts'),before,{flag:'wx'});
+const after=Buffer.from(before.toString('utf8').replace(old,replacement));fs.writeFileSync(path.join(repo,file),after);
+const record={status:'TEST_FIXTURE_CORRECTION_ONLY_REVERIFICATION_PENDING',before:{path:base+'/preCommitGitProcess.before-default-operation-01.test.ts',bytes:before.length,sha256:sha(before)},after:{path:file,bytes:after.length,sha256:sha(after)},old,replacement,reason:'First invalid-selector case is undefined. JavaScript default argument in fixture(operation={kind:version}) replaced it with a valid version request; actual transport correctly admitted that version and eventually returned STOP_UNCONFIRMED. Explicit options override passes the originally intended undefined. All28cases, assertions, grammar, deadlines and production bytes unchanged; original27PASS1FAIL retained.',time:new Date().toISOString()};
+fs.writeFileSync(path.join(__dirname,'process-fixture-correction-01.json'),JSON.stringify(record,null,2)+'\n',{flag:'wx'});console.log(JSON.stringify(record));

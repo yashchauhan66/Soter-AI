@@ -1,0 +1,19 @@
+{
+  "time": "2026-10-25T13:47:12.206Z",
+  "status": "STATIC_GAP_REGRESSION_BEFORE_CORRECTION",
+  "inputs": [
+    {
+      "path": "packages/vscode-extension/src/history-hooks/CheckedHookFile.ts",
+      "bytes": 10925,
+      "sha256": "9d173867e33feaff2ec8cd30135ea84f3e900a532b02786fd0e128f8a79014d1",
+      "archive": "CheckedHookFile.ts.before-dangling-review-01.txt"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/checkedHookFileLinks.review.test.ts",
+      "bytes": 1200,
+      "sha256": "1ecc15cf61e8e5a16cc04e2ca191fffa9c8415dc41faad1d052e97c4a81e516e",
+      "archive": "checkedHookFileLinks.review.test.ts.frozen-01.txt"
+    }
+  ],
+  "hypothesis": "ordinary() resolves realpath before lstat; ENOENT for dangling junction may be admitted as absence. One retained synthetic regression covers selected leaf and custom parent. No original 14 assertions changed."
+}

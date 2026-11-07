@@ -1,0 +1,346 @@
+{
+  "product_name": "SoterLLM",
+  "product_version": "v18-student-candidate",
+  "base_model": "distilbert-base-multilingual-cased",
+  "encoder_key": "mdistilbert",
+  "method": "compact_student_knowledge_distillation",
+  "num_labels": 14,
+  "labels": [
+    "SAFE",
+    "PROMPT_INJECTION",
+    "JAILBREAK",
+    "SYSTEM_PROMPT_LEAK_ATTEMPT",
+    "PII",
+    "SECRET",
+    "UNSAFE_OUTPUT",
+    "RAG_POISONING",
+    "DATA_EXFILTRATION_ATTEMPT",
+    "TOOL_CALL_ABUSE",
+    "ENCODING_OBFUSCATION",
+    "MULTI_TURN_ESCALATION",
+    "MODEL_EXTRACTION",
+    "TOXICITY_HARASSMENT"
+  ],
+  "distillation": {
+    "teacher_dir": "/content/soterai-v18/models/ml-classifier-v17",
+    "teacher_base_model": "distilbert-base-multilingual-cased",
+    "teacher_weights_sha256": "e1962eca94964b0522fdcdae7fb7a7dde286d40f423fcf5104874cd3203a5091",
+    "alpha": 0.5,
+    "temperature": 2.0,
+    "objective": "(1-alpha)*supervised_focal_ce + alpha*T^2*KL(teacher||student) + auxiliary_binary_bce",
+    "teacher_parameters": 135364367,
+    "teacher_frozen": true,
+    "teacher_scored_partitions": [
+      "train"
+    ],
+    "note": "Teacher initialization and KD transfer inherited training knowledge. New tests must also exclude teacher training data.",
+    "initialization": {
+      "method": "teacher_even_channel_slice",
+      "teacher_layer_indices": [
+        1,
+        3,
+        5
+      ],
+      "teacher_hidden_size": 768,
+      "student_hidden_size": 384,
+      "vocabulary_preserved": true,
+      "tensors_transferred": 68,
+      "limitation": "Heuristic initialization; attention heads are recomposed. Retraining and external evaluation required."
+    },
+    "student_parameters": 51810575
+  },
+  "architecture": {
+    "hidden_size": 384,
+    "head_layers": [
+      384,
+      512,
+      256,
+      14
+    ],
+    "dropout": 0.15,
+    "max_length": 256,
+    "aux_attack_head": true
+  },
+  "optimization": {
+    "n_encoder_layers": 3,
+    "layer_decay": 0.9,
+    "encoder_lr": 4e-05,
+    "head_lr": 0.0003,
+    "param_groups": 10,
+    "trainable_params": 51810575,
+    "lr_by_block": {
+      "embeddings": 2.6244e-05,
+      "layer.0": 3.24e-05,
+      "layer.1": 3.6e-05,
+      "layer.2": 4e-05,
+      "encoder.other": 4e-05,
+      "head": 0.0003
+    },
+    "epochs": 5,
+    "batch_size": 16,
+    "grad_accum": 4,
+    "effective_batch": 64,
+    "warmup_frac": 0.06,
+    "max_grad_norm": 1.0,
+    "amp": "bf16",
+    "grad_checkpoint": false,
+    "length_grouped": true,
+    "length_mega_factor": 50,
+    "attack_loss_weight": 0.3,
+    "label_smoothing": 0.05,
+    "focal_gamma": 1.5
+  },
+  "epoch_selection": {
+    "rule": "max_f1_under_fpr_ceiling<=0.0300",
+    "fpr_ceiling": 0.03,
+    "selected_epoch": 5
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.8584585967027702,
+      "batches": 6129,
+      "f1_macro": 0.9068459154304164,
+      "accuracy": 0.954452224344013,
+      "attack_recall": 0.9849172147879338,
+      "attack_precision": 0.9933661214686035,
+      "benign_fpr": 0.010900206728058635,
+      "exact_label_accuracy": 0.933545021546836,
+      "seconds": 319.5
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.21241311126124665,
+      "batches": 6129,
+      "f1_macro": 0.9408533155692504,
+      "accuracy": 0.9716387297545795,
+      "attack_recall": 0.9959174415967339,
+      "attack_precision": 0.9918680822227242,
+      "benign_fpr": 0.01353129111069348,
+      "exact_label_accuracy": 0.962689952370152,
+      "seconds": 323.7
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.12724868819752103,
+      "batches": 6129,
+      "f1_macro": 0.9534599432381381,
+      "accuracy": 0.9781455548482919,
+      "attack_recall": 0.9936493535949195,
+      "attack_precision": 0.9954555782776642,
+      "benign_fpr": 0.007517383950385266,
+      "exact_label_accuracy": 0.9694942163755954,
+      "seconds": 330.6
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.09090681084389009,
+      "batches": 6129,
+      "f1_macro": 0.9575679084546326,
+      "accuracy": 0.98026734563972,
+      "attack_recall": 0.9938761623951009,
+      "attack_precision": 0.9957959322804226,
+      "benign_fpr": 0.006953580154106371,
+      "exact_label_accuracy": 0.972556135178045,
+      "seconds": 337.0
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.07713411558756195,
+      "batches": 6129,
+      "f1_macro": 0.9590449343406776,
+      "accuracy": 0.9806917037980055,
+      "attack_recall": 0.9933091403946473,
+      "attack_precision": 0.9960200136456675,
+      "benign_fpr": 0.006577710956587108,
+      "exact_label_accuracy": 0.9730097527784078,
+      "seconds": 333.5
+    }
+  ],
+  "augmentation": {
+    "enabled": true,
+    "attack_rate": 0.35,
+    "benign_rate": 0.12,
+    "seed": 20260823,
+    "max_stack": 2,
+    "generated": 20236,
+    "skipped_label": 568,
+    "skipped_noop": 811,
+    "by_transform": {
+      "invisible": 3281,
+      "whitespace": 3276,
+      "spaced": 2725,
+      "homoglyph": 3289,
+      "case": 2640,
+      "leet": 3196,
+      "typo": 3326,
+      "punct": 3214,
+      "combining": 3206
+    },
+    "by_label": {
+      "PROMPT_INJECTION": 4032,
+      "DATA_EXFILTRATION_ATTEMPT": 1996,
+      "RAG_POISONING": 1079,
+      "JAILBREAK": 1504,
+      "SAFE": 3074,
+      "UNSAFE_OUTPUT": 2112,
+      "SYSTEM_PROMPT_LEAK_ATTEMPT": 1795,
+      "PII": 2089,
+      "SECRET": 1503,
+      "MULTI_TURN_ESCALATION": 277,
+      "TOXICITY_HARASSMENT": 252,
+      "MODEL_EXTRACTION": 206,
+      "TOOL_CALL_ABUSE": 317
+    },
+    "parent_groups_verified": 20236
+  },
+  "tokenizer": {
+    "vocab_size": 119547,
+    "subword_tokens": 43606,
+    "contiguous_ids": true,
+    "specials_present": [
+      "[CLS]",
+      "[SEP]",
+      "[PAD]",
+      "[UNK]",
+      "[MASK]"
+    ],
+    "do_lower_case": false,
+    "strip_accents": null,
+    "tokenize_chinese_chars": true,
+    "tokenizer_class": "BertTokenizer",
+    "vocab_txt_tokens": 119547
+  },
+  "onnx_parity": {
+    "verified": true,
+    "tolerance": 0.001,
+    "worst_max_abs_logit_diff": 1.9073486328125e-06,
+    "cases": [
+      {
+        "case": "batch1_padded",
+        "shape": [
+          1,
+          14
+        ],
+        "seq_len": 256,
+        "max_abs_logit_diff": 1.9073486328125e-06
+      },
+      {
+        "case": "batch3_padded",
+        "shape": [
+          3,
+          14
+        ],
+        "seq_len": 256,
+        "max_abs_logit_diff": 1.6689300537109375e-06
+      },
+      {
+        "case": "batch2_dynamic_len",
+        "shape": [
+          2,
+          14
+        ],
+        "seq_len": 13,
+        "max_abs_logit_diff": 1.9073486328125e-06
+      }
+    ],
+    "passed": true
+  },
+  "final_metrics": {
+    "accuracy": 0.9806917037980055,
+    "f1_macro": 0.9590449343406776,
+    "f1_weighted": 0.9806126044331475,
+    "attack_recall": 0.9933091403946473,
+    "attack_precision": 0.9960200136456675,
+    "benign_fpr": 0.006577710956587108,
+    "exact_label_accuracy": 0.9730097527784078
+  },
+  "per_label_metrics": {
+    "SAFE": {
+      "precision": 0.9889616463985033,
+      "recall": 0.9934222890434129,
+      "f1-score": 0.991186949184324,
+      "support": 5321.0
+    },
+    "PROMPT_INJECTION": {
+      "precision": 0.9742718446601941,
+      "recall": 0.965832531280077,
+      "f1-score": 0.9700338327694539,
+      "support": 2078.0
+    },
+    "JAILBREAK": {
+      "precision": 0.9806451612903225,
+      "recall": 0.9681528662420382,
+      "f1-score": 0.9743589743589743,
+      "support": 785.0
+    },
+    "SYSTEM_PROMPT_LEAK_ATTEMPT": {
+      "precision": 0.963302752293578,
+      "recall": 0.9733487833140209,
+      "f1-score": 0.968299711815562,
+      "support": 863.0
+    },
+    "PII": {
+      "precision": 0.9900299102691924,
+      "recall": 0.9900299102691924,
+      "f1-score": 0.9900299102691924,
+      "support": 1003.0
+    },
+    "SECRET": {
+      "precision": 0.9879081015719468,
+      "recall": 0.9951278928136419,
+      "f1-score": 0.991504854368932,
+      "support": 821.0
+    },
+    "UNSAFE_OUTPUT": {
+      "precision": 0.9913875598086125,
+      "recall": 0.9932885906040269,
+      "f1-score": 0.9923371647509579,
+      "support": 1043.0
+    },
+    "RAG_POISONING": {
+      "precision": 0.9872029250457038,
+      "recall": 0.9712230215827338,
+      "f1-score": 0.9791477787851315,
+      "support": 556.0
+    },
+    "DATA_EXFILTRATION_ATTEMPT": {
+      "precision": 0.9779559118236473,
+      "recall": 0.9838709677419355,
+      "f1-score": 0.9809045226130654,
+      "support": 992.0
+    },
+    "TOOL_CALL_ABUSE": {
+      "precision": 0.9197860962566845,
+      "recall": 0.9398907103825137,
+      "f1-score": 0.9297297297297298,
+      "support": 183.0
+    },
+    "ENCODING_OBFUSCATION": {
+      "precision": 0.9887640449438202,
+      "recall": 0.9777777777777777,
+      "f1-score": 0.9832402234636871,
+      "support": 90.0
+    },
+    "MULTI_TURN_ESCALATION": {
+      "precision": 0.8152866242038217,
+      "recall": 0.7757575757575758,
+      "f1-score": 0.7950310559006211,
+      "support": 165.0
+    },
+    "MODEL_EXTRACTION": {
+      "precision": 0.9090909090909091,
+      "recall": 0.8695652173913043,
+      "f1-score": 0.8888888888888888,
+      "support": 115.0
+    },
+    "TOXICITY_HARASSMENT": {
+      "precision": 0.9919354838709677,
+      "recall": 0.9919354838709677,
+      "f1-score": 0.9919354838709677,
+      "support": 124.0
+    }
+  },
+  "wall_clock_seconds": 1746.4,
+  "device": "cuda"
+}

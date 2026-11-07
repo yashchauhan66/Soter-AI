@@ -1,0 +1,61 @@
+{
+  "format": "soterai-publication-v1",
+  "id": "eeaf4789-f8c7-47b1-bdb8-1c34679e2be3",
+  "sourceNamespaceSha256": "ca366369e3a23485d25d97ad0d2cd6fbc88ae5cb424f26b03d912dde3e112843",
+  "isolation": "NO ISOLATION",
+  "expiresAt": 310991.2007,
+  "entries": [
+    {
+      "path": "public.ts",
+      "bytes": 47,
+      "sha256": "625f948b73b27c83e28b989fe75be68d620c08384c3eb9b57a6d9a496812609e",
+      "treatment": "recognized-secret-redaction"
+    },
+    {
+      "path": ".env.example",
+      "bytes": 158,
+      "sha256": "17e01c854681ee3ded8479d1b5adf807c32dca32a3b4449c8e51c7a1e387830d",
+      "treatment": "synthetic-generated"
+    },
+    {
+      "path": "soterai-development-contract.json",
+      "bytes": 580,
+      "sha256": "a62e757fe65308a07cc49ecec33548c025a8baf01284e2c060e377bcd3d145ad",
+      "treatment": "synthetic-generated"
+    },
+    {
+      "path": "soterai-fixtures.json",
+      "bytes": 173,
+      "sha256": "a473254700d971000a23d6ade77b075cd20e7aaba2bf4f093df3724a34b443a4",
+      "treatment": "synthetic-generated"
+    }
+  ],
+  "contract": {
+    "format": "soterai-development-contract-v1",
+    "syntheticOnly": true,
+    "automaticExecution": false,
+    "fields": [
+      {
+        "name": "DATABASE_URL",
+        "preset": "loopback-database"
+      },
+      {
+        "name": "PORT",
+        "preset": "integer"
+      }
+    ],
+    "limitations": [
+      "Examples only: no application, database, container, secret injection or network connection is started.",
+      "Loopback services are not created. An application-specific adapter and synthetic runtime are still needed.",
+      "No filesystem, process, IDE or network isolation is provided."
+    ]
+  },
+  "limitations": [
+    "Explicit saved-file snapshot only. No automatic publication, synchronization or patch import.",
+    "Recognized-secret redaction cannot detect all private text. Review selected public content.",
+    "Same-user agents and extensions can still reach the original workspace, buffers and network.",
+    "Revocation prevents future publication only; released copies cannot be recalled.",
+    "Synthetic examples are not a provisioned or automatically runnable application environment."
+  ],
+  "manifestSha256": "d330a55ad14662b12ac03975e2b01a00a35e6980a130337c4ba7290185422f29"
+}

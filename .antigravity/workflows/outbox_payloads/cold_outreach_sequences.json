@@ -1,0 +1,37 @@
+{
+  "campaign_id": "GTM-005-SDR",
+  "channel": "outbound_email",
+  "icp": "AI Startup Founders, CTOs, VPs of Engineering",
+  "sequence_name": "Agent Latency & Local Security Cold Outbound",
+  "steps": [
+    {
+      "step": 1,
+      "delay_days": 0,
+      "subject": "quick question on {{companyName}}'s agent latency & prompt injection",
+      "template": "Hi {{firstName}},\n\nNoticed {{companyName}} is shipping autonomous tool-calling features on top of Claude/GPT-4.\n\nMost teams we speak with run into an architectural bottleneck: cloud guardrail APIs (like Lakera or Bedrock) add 250ms–350ms to every single turn. For multi-step agents doing 10+ tool calls, that’s 3+ seconds of pure security lag.\n\nEven worse, standard cloud filters miss local execution risks—like an injected prompt tricking an agent into running `iwr | iex` or `Remove-Item -Recurse -Force` on a developer's machine.\n\nWe built Soter-AI: a local-first guardrail engine running directly in your Node/Python process. It neutralizes prompt injections, masks secrets, and intercepts destructive terminal commands in <5ms on CPU with zero data exfiltration.\n\nWould it be helpful if I sent over our 45-second latency benchmark video comparing local vs cloud guardrails?\n\nBest,\nYash Chauhan\nFounder, Soter-AI\nhttps://soterai.in",
+      "call_to_action": "Reply for benchmark video"
+    },
+    {
+      "step": 2,
+      "delay_days": 2,
+      "subject": "Re: quick question on {{companyName}}'s agent latency",
+      "template": "Hi {{firstName}},\n\nFollowing up with the 45-second benchmark video I mentioned:\n\n🎥 Watch: How Soter-AI catches token-smuggled prompt injections & PowerShell wipers in 0.4ms:\n🔗 https://soterai.in/comparison/prompt-armor?utm_source=outbound_email&utm_medium=cold_email&utm_campaign=sprint01_sdr\n\nYou can also run our CLI scanner against {{companyName}}'s prompt templates locally:\n`npx soterai scan`\n\nOpen to a brief 10-minute technical exchange next Tuesday?\n\nBest,\nYash",
+      "call_to_action": "Book 10-min meeting"
+    },
+    {
+      "step": 3,
+      "delay_days": 4,
+      "subject": "How AI agents meet SOC2 & ISO without cloud data leakage",
+      "template": "Hi {{firstName}},\n\nWhen enterprise buyers audit AI startups, their first objection is always:\n'Do our prompts or proprietary RAG data get sent to third-party security vendors?'\n\nWith Soter-AI, the answer is an unambiguous No.\n- Evaluates 100% locally in your VPC.\n- Emits HMAC-signed JSONL audit logs formatted for Splunk, Datadog, or DynamoDB.\n- Full support for global PII + India specific data (Aadhaar, PAN, GSTIN).\n\nAre you free for 10 minutes this Thursday at 2 PM to see how we drop in with 3 lines of code?\n\nBest,\nYash",
+      "call_to_action": "Confirm Thursday meeting"
+    },
+    {
+      "step": 4,
+      "delay_days": 5,
+      "subject": "closing the loop on {{companyName}}",
+      "template": "Hi {{firstName}},\n\nAssuming guardrail latency and local agent security aren’t top priorities for {{companyName}} right now.\n\nI'll stop following up so I don't clutter your inbox. If you ever need to inspect agent tool calls in <5ms or achieve zero-data-egress compliance, you can always bookmark our documentation:\n\n🔗 https://soterai.in/docs?utm_source=outbound_email&utm_medium=cold_email&utm_campaign=sprint01_sdr\n\nWishing you and the {{companyName}} team continued growth!\n\nBest,\nYash",
+      "call_to_action": "Opt-out / archive"
+    }
+  ]
+}
+

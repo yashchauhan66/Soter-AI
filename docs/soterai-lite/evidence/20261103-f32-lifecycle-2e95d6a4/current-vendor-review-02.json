@@ -1,0 +1,85 @@
+{
+  "feature": "F32",
+  "status": "CURRENT_VENDOR_SIGNATURE_CLI_METADATA_AND_ATTACH_TRANSPORT_REVIEWED",
+  "observedAt": "2026-11-06T05:07:13.206Z",
+  "vendorReceiptSha256": "f810b833e19b7459bad9b37351f36545d04d728eb67a2db27465d0b01969872a",
+  "vendor": {
+    "version": "1.145.0",
+    "commit": "a717861c07586a53d83b80d742cd3f59b20a6273",
+    "appRoot": "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\a717861c07\\resources\\app"
+  },
+  "signatures": {
+    "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261103-f32-lifecycle-2e95d6a4\\current-signature-observation-03.json",
+    "bytes": 2417,
+    "sha256": "401ca162559a1a3fe692dc3ca5c07ed1958cc2e10b81d277bbdb9b1f3f05cb43"
+  },
+  "installerContract": {
+    "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261103-f32-lifecycle-2e95d6a4\\vendor-installed-size-qualification-03.json",
+    "bytes": 7834,
+    "sha256": "d0dd963117f569e6ef355b42a2ae0a9df6a09317e143bd37e272d4de369940e5"
+  },
+  "transport": {
+    "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261103-f32-lifecycle-2e95d6a4\\local-cdp-transport-review-02.json",
+    "bytes": 16348,
+    "sha256": "4cfa7ceb78347e286b64d4afb15f61e9f5be56cba7ff29acb57b902eafaf3eb6"
+  },
+  "launcher": {
+    "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261103-f32-lifecycle-2e95d6a4\\installed-launch-contract-proposed-04.cjs",
+    "bytes": 6727,
+    "sha256": "ea4b837bb5cbcec23d8ad1f21772a0d3bfe51b8346b42b7cabbc812e36dce5f9"
+  },
+  "vendorDelta": {
+    "unchangedRows": 170,
+    "changedRows": 10,
+    "changedPaths": [
+      "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe",
+      "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\bin\\code.cmd",
+      "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\a717861c07\\resources\\app\\package.json",
+      "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\a717861c07\\resources\\app\\product.json",
+      "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\a717861c07\\resources\\app\\out\\cli.js",
+      "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\a717861c07\\resources\\app\\out\\main.js",
+      "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\a717861c07\\resources\\app\\out\\mainImpl.js",
+      "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\a717861c07\\resources\\app\\out\\vs\\code\\node\\cliProcessMain.js",
+      "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\a717861c07\\resources\\app\\out\\vs\\workbench\\api\\node\\extensionHostProcess.js",
+      "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\a717861c07\\resources\\app\\out\\vs\\workbench\\workbench.desktop.main.js"
+    ],
+    "playwrightGraphFilesUnchanged": 168,
+    "nodeAndSystemPowerShellUnchanged": true
+  },
+  "dialogStyleWitness": {
+    "file": {
+      "path": "C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\a717861c07\\resources\\app\\out\\vs\\workbench\\workbench.desktop.main.js",
+      "bytes": 21976974,
+      "sha256": "c27a666f2bd68ee3c417c4f33684278adecf5e28d5354c3d31bf4ac63714631e",
+      "fileLinkCount": 1
+    },
+    "setting": "window.dialogStyle",
+    "enum": [
+      "native",
+      "custom"
+    ],
+    "default": "native",
+    "settingOffset": 20599214,
+    "useCustomDialogOffset": 20608536,
+    "meaning": "Windows default renders extension modal messages as OS dialogs outside the workbench DOM; launch contract 04 sets custom so the unmodified product modal renders as .monaco-dialog-box."
+  },
+  "checks": {
+    "currentCodeSigner": "PASS_STATIC_REVIEW",
+    "localCliNoDownload": "PASS_STATIC_REVIEW",
+    "exactInstallerMetadataSerialization": "PASS_STATIC_REVIEW",
+    "playwrightAttachDisconnectOnly": "PASS_STATIC_REVIEW",
+    "completePlaywrightGraph": "PASS_STATIC_REVIEW"
+  },
+  "basis": {
+    "currentCodeSigner": "Authenticode Valid, Microsoft Corporation, Code.exe hash equals receipt (three observations: 4 Nov twice, 6 Nov)",
+    "localCliNoDownload": "Real pinned CLI installed both exact local VSIX files with --do-not-sync and no extension dependency; no network authority was granted; one stderr line per install is retained",
+    "exactInstallerMetadataSerialization": "Real CLI output of both VSIX files admitted by the exact-serialization function (size = payload + extension.vsixmanifest)",
+    "playwrightAttachDisconnectOnly": "Playwright 1.61.1 package files byte-identical to the receipt reviewed in local-cdp-transport-review-02.json",
+    "completePlaywrightGraph": "Complete installed graph equals receipt membership; every file unchanged since the reviewed receipt"
+  },
+  "scope": "Read-only exact current vendor, local CLI behavior for two exact VSIX files and static package review; no universal network fence or native GUI coverage inference",
+  "independence": "LOW_SAME_LINEAGE_SOURCE_REVIEW",
+  "nativeLaunches": 0,
+  "guiWindows": 0,
+  "signalsRequested": 0
+}

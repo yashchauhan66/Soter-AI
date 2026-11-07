@@ -1,0 +1,20 @@
+{
+  "format": "soterai-development-contract-v1",
+  "syntheticOnly": true,
+  "automaticExecution": false,
+  "fields": [
+    {
+      "name": "DATABASE_URL",
+      "preset": "loopback-database"
+    },
+    {
+      "name": "PORT",
+      "preset": "integer"
+    }
+  ],
+  "limitations": [
+    "Examples only: no application, database, container, secret injection or network connection is started.",
+    "Loopback services are not created. An application-specific adapter and synthetic runtime are still needed.",
+    "No filesystem, process, IDE or network isolation is provided."
+  ]
+}

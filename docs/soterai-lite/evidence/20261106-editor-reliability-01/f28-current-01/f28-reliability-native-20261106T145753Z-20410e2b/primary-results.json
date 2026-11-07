@@ -1,0 +1,241 @@
+{
+  "schemaVersion": 1,
+  "phase": "primary",
+  "syntheticOnly": true,
+  "scope": "F28_SCRIPTED_ACTUAL_PACKAGED_COMMANDS_AND_DETERMINISTIC_REAL_FS_SCHEDULING_NOT_NATURAL_ADVERSARY",
+  "hostVersion": "1.145.1",
+  "extensionBundleSha256": "b611dee998d11824d523b3d561704f4a5dc15e27274e6e1d85c7154b9d42cfa0",
+  "runtimeBindings": [
+    {
+      "name": "extension.js",
+      "bytes": 1957320,
+      "sha256": "b611dee998d11824d523b3d561704f4a5dc15e27274e6e1d85c7154b9d42cfa0"
+    },
+    {
+      "name": "local-ai-broker.js",
+      "bytes": 326860,
+      "sha256": "24c633aff86713f35133e6c103299a24bc2a4df0a6726c90462283ce9030b744"
+    },
+    {
+      "name": "soterai-mcp-server.js",
+      "bytes": 230255,
+      "sha256": "bac10b399ee9e28c069c72eae3254f2e84da155b2bcb2dc48467487d74845138"
+    },
+    {
+      "name": "pre-commit-client.js",
+      "bytes": 24512,
+      "sha256": "36e04d01bb9b38f8e402020318cc1d8d1a6d66176ec2be8c1630fbe6d012cacb"
+    }
+  ],
+  "hostProbeSha256": "9a84eadfdd178e7c9518c632ee99e09c93ce86c62591dba331c1cf02457b5c07",
+  "sourceProofSha256": "23fd63bb04122bf055f656a77424085b75ff3e3c813121c15034cd209fd1c8f6",
+  "observations": [
+    {
+      "id": "F28-HP01",
+      "scope": "Exact four packaged runtimes, driver, default-true restricted machine setting and native command",
+      "status": "PASS"
+    },
+    {
+      "id": "F28-HP02",
+      "scope": "Actual activation-body measurement is within the fixed startup bound and reader is ready",
+      "status": "PASS"
+    },
+    {
+      "id": "F28-HP03",
+      "scope": "Actual packaged public read has exact native consent and useful output",
+      "status": "PASS"
+    },
+    {
+      "id": "F28-HP04",
+      "scope": "Sensitive saved environment returns names with every value masked and no original document",
+      "status": "PASS"
+    },
+    {
+      "id": "F28-HP05",
+      "scope": "Cancelled actual native consent releases no text",
+      "status": "PASS"
+    },
+    {
+      "id": "F28-HP06",
+      "scope": "Oversized default input reaches no consent and releases no prefix",
+      "status": "PASS"
+    },
+    {
+      "id": "F28-HP07",
+      "scope": "Binary and malformed UTF8 saved inputs release no partial result",
+      "status": "PASS"
+    },
+    {
+      "id": "F28-HP08",
+      "scope": "Actual multiple-hardlink input is withheld",
+      "status": "PASS"
+    },
+    {
+      "id": "F28-HP09",
+      "scope": "Actual internal Windows directory junction is withheld",
+      "status": "PASS"
+    },
+    {
+      "id": "F28-HP10",
+      "scope": "Actual workspace-root junction alias is withheld",
+      "status": "PASS"
+    },
+    {
+      "id": "F28-HP11",
+      "scope": "Deterministically scheduled actual file replacement before open is withheld before consent",
+      "status": "PASS"
+    },
+    {
+      "id": "F28-HP12",
+      "scope": "Deterministically scheduled actual parent replacement before open is withheld before consent",
+      "status": "PASS"
+    },
+    {
+      "id": "F28-HP13",
+      "scope": "Deterministically scheduled actual same-length content drift is withheld before consent",
+      "status": "PASS"
+    },
+    {
+      "id": "F28-HP14",
+      "scope": "Actual second workspace root preserves independent policy and public control",
+      "status": "PASS"
+    },
+    {
+      "id": "F28-HP15",
+      "scope": "Actual workspace-folder change revokes a pending native approval",
+      "status": "PASS"
+    },
+    {
+      "id": "F28-HP16",
+      "scope": "Flag withdrawal with unfinished real open withholds and retains its slot until observed close",
+      "status": "PASS"
+    },
+    {
+      "id": "F28-HP17",
+      "scope": "Disabled shared reader withholds new original reads",
+      "status": "PASS"
+    },
+    {
+      "id": "F28-HP18",
+      "scope": "Re-enable requires a fresh native consent and exact public control",
+      "status": "PASS"
+    },
+    {
+      "id": "F28-HP19",
+      "scope": "Actual five-second owned read expiry withholds while unfinished IO keeps its slot until real close",
+      "status": "PASS"
+    },
+    {
+      "id": "F28-HP20",
+      "scope": "Actual packaged selected128 reads in a4096-file repo remain under the whole-scan measurement bound",
+      "status": "PASS"
+    },
+    {
+      "id": "F28-HP21",
+      "scope": "Two concurrent isolated native windows preserve machine-flag/read isolation and close the peer naturally",
+      "status": "FAIL",
+      "errorName": "Error",
+      "lastReadStatus": "ALLOWED_ONCE"
+    },
+    {
+      "id": "F28-HP22",
+      "scope": "Actual filesystem outage is a generic withheld result without raw diagnostic reflection",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "F28-HP23",
+      "scope": "No original synthetic environment value enters native TextDocuments or public result metadata",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "F28-HP24",
+      "scope": "Runtime bytes stay exact and all delayed source handles are observed closed",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "F28-HP25",
+      "scope": "Primary withdrawal persists disabled state and an exact restart basis with no active reads",
+      "status": "NOT_RUN"
+    }
+  ],
+  "expectedChecks": 25,
+  "passed": 20,
+  "failed": 1,
+  "notRun": 4,
+  "driverFailure": "Error",
+  "readyForInterphase": false,
+  "safeWithdrawal": "NOT_COMPLETED",
+  "measurements": [
+    {
+      "kind": "ACTIVATION_BODY_EXCLUDES_MODULE_LOADING",
+      "milliseconds": 203.14770000000135
+    },
+    {
+      "kind": "WITHDRAWN_OPEN_SLOT_RETAINED",
+      "activeReads": 1
+    },
+    {
+      "kind": "OWNED_FIVE_SECOND_TIMER_WITHHELD_IO_STILL_OWNED",
+      "milliseconds": 5004.3487000000005
+    },
+    {
+      "kind": "ACTUAL_PACKAGED_COMMAND_SELECTED128_OF4096",
+      "selected": 128,
+      "bulkSyntheticFiles": 4096,
+      "milliseconds": 9440.1643,
+      "budgetMilliseconds": 60000
+    }
+  ],
+  "sourceHandleOpens": 2,
+  "sourceHandleCloses": 2,
+  "unfinishedFixtureHandles": 0,
+  "originalEnvironmentDocumentEvents": 0,
+  "peerChildren": [
+    {
+      "pid": 9260,
+      "closed": true,
+      "code": 1,
+      "signal": null,
+      "stdoutEOF": true,
+      "stderrEOF": true,
+      "overflow": false,
+      "streamError": false,
+      "profile": "d:\\SoterAI-Lite-test-profiles\\f28-reliability-native-20261106T145753Z-20410e2b\\peer-profile",
+      "streams": [
+        {
+          "channel": "stdout",
+          "bytes": 121,
+          "sha256": "20046ddfc148355c131cf4165c87cd6c1b93b0a22052938ebc7f4545476878a5",
+          "file": "d:\\SoterAI-Lite-test-profiles\\f28-reliability-native-20261106T145753Z-20410e2b\\peer-stdout.bin"
+        },
+        {
+          "channel": "stderr",
+          "bytes": 653,
+          "sha256": "af95b3c8824745fed738928442da9dc44ac350bef6520ad10650178225c7e2da",
+          "file": "d:\\SoterAI-Lite-test-profiles\\f28-reliability-native-20261106T145753Z-20410e2b\\peer-stderr.bin"
+        }
+      ],
+      "signalsRequested": 0
+    }
+  ],
+  "prompts": 135,
+  "readStatus": {
+    "status": "READY",
+    "activeReads": 0,
+    "startupMilliseconds": 203.14770000000135,
+    "limits": {
+      "readBytes": 1048576,
+      "readMilliseconds": 5000,
+      "concurrentReads": 8,
+      "pathComponents": 64,
+      "startupMilliseconds": 1500
+    },
+    "scope": "Checked shared managed file reads only. Cooperative routes; portable path APIs cannot eliminate every filesystem race.",
+    "message": "Managed reader checks are available."
+  },
+  "optionalPrivilegedSymlink": "NOT_TESTED_COMPONENT_CAPABILITY_SKIPS_RETAINED",
+  "nestedVendorChildren": "NO_INFERRED_ALL_DESCENDANT_EOF",
+  "configuredGitPush": "NOT_AUTHORIZED_NOT_RUN",
+  "signalsRequested": 0,
+  "independence": "LOW_SCRIPTED_NATIVE"
+}

@@ -1,0 +1,37 @@
+    const early = await waitEvidence(b.earlyListenerPath, prewarmed.promise, 90000);
+    const earlyValue = early.value;
+    assert.equal(earlyValue.status, 'CURRENT_OWNED_EXACT_ROOT_LOOPBACK_LISTENER');
+    assert.equal(earlyValue.rootCodePid, b.codePid); assert.equal(earlyValue.owningProcess, b.codePid);
+    assert.deepEqual(earlyValue.codeProcessTreePids, [b.codePid]);
+    assert.equal(earlyValue.profile, b.profile); assert.equal(earlyValue.signals, 0);
+    assert.equal(earlyValue.exactCapturedArgumentsVerified, true); assert.equal(earlyValue.executableHashesHeldReadOnly, true);
+    assert.equal(earlyValue.localAddress, '127.0.0.1'); assert.equal(earlyValue.localPort, Number(new URL(b.endpoint).port));
+    assert.deepEqual(earlyValue.ownerReceipt, b.ownerReceipt); assert.deepEqual(earlyValue.vendorReceipt, b.vendorReceipt);
+    assert.deepEqual(earlyValue.binding, phaseBinding);
+    const earlyWallMs = Date.parse(earlyValue.observedAt);
+    assert(Number.isFinite(earlyWallMs) && earlyWallMs >= b.launchWallMs && Date.now() - earlyWallMs >= 0 && Date.now() - earlyWallMs <= 30000);
+    b.listenerCustody = early.fact;
+    b.bindingFile = path.join(b.gate, b.phase + '-renderer-binding.json'); write(b.bindingFile, b);
+    const rendererName = b.phase + '-renderer';
+    // No whole-source/vendor hashing between verified early custody and attach.
+    // The same owned helper continues the unchanged full-tree custody below.
+    const rendererPromise = own(rendererName, vendor.node.path, [renderer.path, b.bindingFile], b, 600000, true);
+    const fullCustodyPromise = (async () => {
+      const accepted = await accept(prewarmed.promise, prewarmed.name, b);
+      const output = fact(prewarmed.output, 2 * 1024 * 1024), full = pinnedJson(output);
+      assert.equal(full.status, 'CURRENT_OWNED_EXACT_PROFILE_LOOPBACK_LISTENER');
+      assert.equal(full.rootCodePid, b.codePid); assert.equal(full.rootCreationUtc, earlyValue.rootCreationUtc);
+      assert.equal(full.localAddress, '127.0.0.1'); assert.equal(full.localPort, Number(new URL(b.endpoint).port));
+      assert.equal(full.profile, b.profile); assert.equal(full.signals, 0);
+      assert(full.codeProcessTreePids.includes(b.codePid));
+      assert(full.codeProcessTreePids.includes(full.owningProcess));
+      assert.deepEqual(full.ownerReceipt, b.ownerReceipt); assert.deepEqual(full.vendorReceipt, b.vendorReceipt);
+      assert.deepEqual(full.binding, phaseBinding);
+      assert(Date.parse(full.observedAt) >= earlyWallMs);
+      const acknowledgment = write(path.join(b.gate, b.phase + '-full-custody-accepted.json'), {
+        schemaVersion: 1, feature: 'F32', status: 'FULL_DESCENDANT_CUSTODY_AND_HELPER_NATURAL_EOF_ACCEPTED',
+        phase: b.phase, profile: b.profile, rootCodePid: b.codePid, fullCustody: output,
+        earlyCustody: early.fact, helperClose: accepted.close, vendorReceipt: b.vendorReceipt, signalsRequested: 0,
+      });
+      return { output, close: accepted.close, acknowledgment };
+    })();

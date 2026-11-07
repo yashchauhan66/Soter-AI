@@ -1,0 +1,32 @@
+{
+    "status":  "FROZEN_ADDITIVE_OWNER_LIFECYCLE_TESTS_BEFORE_CORRECTION_NOT_EXECUTED",
+    "feature":  "F26a",
+    "component":  "PreCommitOwnerServiceLifecycle",
+    "tests":  3,
+    "facts":  [
+                  {
+                      "path":  "packages/vscode-extension/src/__tests__/preCommitOwnerLifecycle.review.test.ts",
+                      "bytes":  12506,
+                      "sha256":  "7d61e68c8856a42ff782e1769e34af25141815ecc3ae812e70ebb917d5b3bca5"
+                  },
+                  {
+                      "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/preCommitOwnerLifecycle.pre-correction-01.test.ts",
+                      "bytes":  12506,
+                      "sha256":  "7d61e68c8856a42ff782e1769e34af25141815ecc3ae812e70ebb917d5b3bca5"
+                  },
+                  {
+                      "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/pre-commit-owner-lifecycle-contract-01.md",
+                      "bytes":  3501,
+                      "sha256":  "1d86bef2db111d1cb73fae7e6b9664835dcccdb946338b716f63b6e9addbdf15"
+                  }
+              ],
+    "observedBeforeProduction":  [
+                                     {
+                                         "path":  "packages/vscode-extension/src/history-hooks/PreCommitOwnerService.ts",
+                                         "bytes":  12727,
+                                         "sha256":  "341040505b3568c621ab29fd767d7237f29417e8cff574bfca65766d6d014fb4"
+                                     }
+                                 ],
+    "scope":  "Test-only lifecycle regressions. Actual numeric IPv4 loopback only when root later runs, genuine manual DIRC index, fake scanners. Exact captured listener cleanup occurs after production assertion. No production/original28 edits or execution/PASS/native/Git/process-signals claim.",
+    "time":  "2026-10-25T12:03:49.8648776Z"
+}

@@ -1,0 +1,1084 @@
+﻿TAP version 13
+# Subtest: F26a checked index internally prepares genuine root-bound metadata and an immutable default descriptor
+ok 1 - F26a checked index internally prepares genuine root-bound metadata and an immutable default descriptor
+  ---
+  duration_ms: 175.7005
+  type: 'test'
+  ...
+# Subtest: F26a checked index admits v2 v3 and an explicit empty-tree index
+ok 2 - F26a checked index admits v2 v3 and an explicit empty-tree index
+  ---
+  duration_ms: 203.4483
+  type: 'test'
+  ...
+# Subtest: F26a checked index selects the exact absolute alternative rather than a public default
+ok 3 - F26a checked index selects the exact absolute alternative rather than a public default
+  ---
+  duration_ms: 119.4589
+  type: 'test'
+  ...
+# Subtest: F26a checked index admits an exact root-relative index.lock containing executable entries
+ok 4 - F26a checked index admits an exact root-relative index.lock containing executable entries
+  ---
+  duration_ms: 91.537
+  type: 'test'
+  ...
+# Subtest: F26a checked index preserves Unicode spaces leading dashes and repeated OID contexts
+ok 5 - F26a checked index preserves Unicode spaces leading dashes and repeated OID contexts
+  ---
+  duration_ms: 89.6889
+  type: 'test'
+  ...
+# Subtest: F26a checked index environment is exactly real metadata environment plus its validated absolute index
+ok 6 - F26a checked index environment is exactly real metadata environment plus its validated absolute index
+  ---
+  duration_ms: 71.1655
+  type: 'test'
+  ...
+# Subtest: F26a checked index does not mistake an inert bounded hooksPath for unsupported metadata
+ok 7 - F26a checked index does not mistake an inert bounded hooksPath for unsupported metadata
+  ---
+  duration_ms: 93.6343
+  type: 'test'
+  ...
+# Subtest: F26a checked index capability rejects structural clones accessors proxies and unrelated genuine metadata
+ok 8 - F26a checked index capability rejects structural clones accessors proxies and unrelated genuine metadata
+  ---
+  duration_ms: 66.7717
+  type: 'test'
+  ...
+# Subtest: F26a checked index returns unavailable before every index read when disabled
+ok 9 - F26a checked index returns unavailable before every index read when disabled
+  ---
+  duration_ms: 12.3758
+  type: 'test'
+  ...
+# Subtest: F26a checked index rejects missing default and missing explicit alternative without inventing an empty tree
+ok 10 - F26a checked index rejects missing default and missing explicit alternative without inventing an empty tree
+  ---
+  duration_ms: 28.0997
+  type: 'test'
+  ...
+# Subtest: F26a checked index rejects outside and worktree paths before reading them or falling back
+ok 11 - F26a checked index rejects outside and worktree paths before reading them or falling back
+  ---
+  duration_ms: 20.0683
+  type: 'test'
+  ...
+# Subtest: F26a checked index refuses unsafe absolute relative ADS control and short-alias selectors
+ok 12 - F26a checked index refuses unsafe absolute relative ADS control and short-alias selectors
+  ---
+  duration_ms: 16.9883
+  type: 'test'
+  ...
+# Subtest: F26a checked index rejects nonstring selectors without invoking coercion or accessors
+ok 13 - F26a checked index rejects nonstring selectors without invoking coercion or accessors
+  ---
+  duration_ms: 14.7768
+  type: 'test'
+  ...
+# Subtest: F26a checked index refuses nonabsolute root and invalid real metadata
+ok 14 - F26a checked index refuses nonabsolute root and invalid real metadata
+  ---
+  duration_ms: 20.2592
+  type: 'test'
+  ...
+# Subtest: F26a checked index supports128 entries and withholds129 rather than returning a prefix
+ok 15 - F26a checked index supports128 entries and withholds129 rather than returning a prefix
+  ---
+  duration_ms: 101.8397
+  type: 'test'
+  ...
+# Subtest: F26a checked index preserves the canonical256KiB derived-listing boundary
+ok 16 - F26a checked index preserves the canonical256KiB derived-listing boundary
+  ---
+  duration_ms: 111.0195
+  type: 'test'
+  ...
+# Subtest: F26a checked index bounds raw index bytes independently of entry and listing counts
+ok 17 - F26a checked index bounds raw index bytes independently of entry and listing counts
+  ---
+  duration_ms: 226.6644
+  type: 'test'
+  ...
+# Subtest: F26a checked index verifies signature version count and checksum instead of trusting a public default
+ok 18 - F26a checked index verifies signature version count and checksum instead of trusting a public default
+  ---
+  duration_ms: 162.616
+  type: 'test'
+  ...
+# Subtest: F26a checked index refuses nonzero stages extended entries symlinks submodules and nonregular modes
+ok 19 - F26a checked index refuses nonzero stages extended entries symlinks submodules and nonregular modes
+  ---
+  duration_ms: 150.0384
+  type: 'test'
+  ...
+# Subtest: F26a checked index requires exact path-length flags zero padding and complete entry bodies
+ok 20 - F26a checked index requires exact path-length flags zero padding and complete entry bodies
+  ---
+  duration_ms: 60.0846
+  type: 'test'
+  ...
+# Subtest: F26a checked index admits only framed unique TREE and REUC extension records
+ok 21 - F26a checked index admits only framed unique TREE and REUC extension records
+  ---
+  duration_ms: 169.5576
+  type: 'test'
+  ...
+# Subtest: F26a checked index derives safe paths through the canonical parser instead of accepting native index aliases
+ok 22 - F26a checked index derives safe paths through the canonical parser instead of accepting native index aliases
+  ---
+  duration_ms: 272.4501
+  type: 'test'
+  ...
+# Subtest: F26a checked index fatally rejects invalid UTF8 and embedded NUL rather than truncating a private name
+ok 23 - F26a checked index fatally rejects invalid UTF8 and embedded NUL rather than truncating a private name
+  ---
+  duration_ms: 57.5357
+  type: 'test'
+  ...
+# Subtest: F26a checked index never reads worktree bodies while preparing or recapturing entries
+ok 24 - F26a checked index never reads worktree bodies while preparing or recapturing entries
+  ---
+  duration_ms: 104.2037
+  type: 'test'
+  ...
+# Subtest: F26a checked index rejects a hardlinked selected file and retains both synthetic links
+ok 25 - F26a checked index rejects a hardlinked selected file and retains both synthetic links
+  ---
+  duration_ms: 19.6152
+  type: 'test'
+  ...
+# Subtest: F26a checked index refuses a junction selector without reading its outside target
+ok 26 - F26a checked index refuses a junction selector without reading its outside target
+  ---
+  duration_ms: 18.9864
+  type: 'test'
+  ...
+# Subtest: F26a checked index flag withdrawal and later reenable cannot revive a prepared capability
+ok 27 - F26a checked index flag withdrawal and later reenable cannot revive a prepared capability
+  ---
+  duration_ms: 115.2482
+  type: 'test'
+  ...
+# Subtest: F26a checked index throwing authority is unavailable and remains withdrawn
+ok 28 - F26a checked index throwing authority is unavailable and remains withdrawn
+  ---
+  duration_ms: 89.2153
+  type: 'test'
+  ...
+# Subtest: F26a checked index exact alternative byte drift withdraws even if the old default stays public
+ok 29 - F26a checked index exact alternative byte drift withdraws even if the old default stays public
+  ---
+  duration_ms: 98.1094
+  type: 'test'
+  ...
+# Subtest: F26a checked index identity replacement withdraws even for byte-identical replacement
+ok 30 - F26a checked index identity replacement withdraws even for byte-identical replacement
+  ---
+  duration_ms: 95.4267
+  type: 'test'
+  ...
+# Subtest: F26a checked index missing selected file never falls back during recapture
+ok 31 - F26a checked index missing selected file never falls back during recapture
+  ---
+  duration_ms: 111.8477
+  type: 'test'
+  ...
+# Subtest: F26a checked index metadata config drift withdraws the aggregate without editing shared metadata code
+ok 32 - F26a checked index metadata config drift withdraws the aggregate without editing shared metadata code
+  ---
+  duration_ms: 75.7423
+  type: 'test'
+  ...
+# Subtest: F26a checked index parent replacement by a retained junction withdraws canonical authority
+ok 33 - F26a checked index parent replacement by a retained junction withdraws canonical authority
+  ---
+  duration_ms: 62.1694
+  type: 'test'
+  ...
+# Subtest: F26a snapshot captures exact index SHA256 and deeply frozen staged entries without granting capability
+ok 34 - F26a snapshot captures exact index SHA256 and deeply frozen staged entries without granting capability
+  ---
+  duration_ms: 66.2388
+  type: 'test'
+  ...
+# Subtest: F26a snapshot has stable identity and digest across unchanged recaptures
+ok 35 - F26a snapshot has stable identity and digest across unchanged recaptures
+  ---
+  duration_ms: 24.8736
+  type: 'test'
+  ...
+# Subtest: F26a snapshot accepts supported v2 v3 and empty indexes with their own exact byte hashes
+ok 36 - F26a snapshot accepts supported v2 v3 and empty indexes with their own exact byte hashes
+  ---
+  duration_ms: 35.1742
+  type: 'test'
+  ...
+# Subtest: F26a snapshot binds absolute and canonical root-relative selectors to the actual alternative
+ok 37 - F26a snapshot binds absolute and canonical root-relative selectors to the actual alternative
+  ---
+  duration_ms: 33.8229
+  type: 'test'
+  ...
+# Subtest: F26a snapshot byte drift changes digest and identity while old frozen observations stay unchanged
+ok 38 - F26a snapshot byte drift changes digest and identity while old frozen observations stay unchanged
+  ---
+  duration_ms: 26.712
+  type: 'test'
+  ...
+# Subtest: F26a snapshot distinguishes byte-identical atomic index replacement from unchanged identity
+ok 39 - F26a snapshot distinguishes byte-identical atomic index replacement from unchanged identity
+  ---
+  duration_ms: 29.3724
+  type: 'test'
+  ...
+# Subtest: F26a snapshot identity covers parent git replacement even when the same index file survives
+ok 40 - F26a snapshot identity covers parent git replacement even when the same index file survives
+  ---
+  duration_ms: 28.0914
+  type: 'test'
+  ...
+# Subtest: F26a snapshot refuses a junction symlink replacing git without reading its index target
+ok 41 - F26a snapshot refuses a junction symlink replacing git without reading its index target
+  ---
+  duration_ms: 16.5758
+  type: 'test'
+  ...
+# Subtest: F26a snapshot refuses a symlink junction root instead of canonicalizing it to another authority
+ok 42 - F26a snapshot refuses a symlink junction root instead of canonicalizing it to another authority
+  ---
+  duration_ms: 15.3696
+  type: 'test'
+  ...
+# Subtest: F26a snapshot refuses a hardlinked alternative without falling back to the valid default
+ok 43 - F26a snapshot refuses a hardlinked alternative without falling back to the valid default
+  ---
+  duration_ms: 22.6359
+  type: 'test'
+  ...
+# Subtest: F26a snapshot missing default or explicit alternative never invents an empty or fallback index
+ok 44 - F26a snapshot missing default or explicit alternative never invents an empty or fallback index
+  ---
+  duration_ms: 25.6873
+  type: 'test'
+  ...
+# Subtest: F26a snapshot rejects invalid selectors without caller coercion getters or default fallback
+ok 45 - F26a snapshot rejects invalid selectors without caller coercion getters or default fallback
+  ---
+  duration_ms: 25.2245
+  type: 'test'
+  ...
+# Subtest: F26a snapshot refuses outside worktree noncanonical ADS and short-alias index paths before content reads
+ok 46 - F26a snapshot refuses outside worktree noncanonical ADS and short-alias index paths before content reads
+  ---
+  duration_ms: 22.1078
+  type: 'test'
+  ...
+# Subtest: F26a snapshot refuses corrupt or unsupported DIRC bytes rather than hashing them into authority
+ok 47 - F26a snapshot refuses corrupt or unsupported DIRC bytes rather than hashing them into authority
+  ---
+  duration_ms: 116.1223
+  type: 'test'
+  ...
+# Subtest: F26a snapshot preserves strict staged path and complete entry-count refusal
+ok 48 - F26a snapshot preserves strict staged path and complete entry-count refusal
+  ---
+  duration_ms: 92.5678
+  type: 'test'
+  ...
+# Subtest: F26a snapshot captures independently of metadata factory or child launch authority
+ok 49 - F26a snapshot captures independently of metadata factory or child launch authority
+  ---
+  duration_ms: 1200.551
+  type: 'test'
+  ...
+# Subtest: F26a snapshot never reads staged worktree bodies or includes their bytes in its result
+ok 50 - F26a snapshot never reads staged worktree bodies or includes their bytes in its result
+  ---
+  duration_ms: 30.9525
+  type: 'test'
+  ...
+# Subtest: F26a genuine index descriptor exposes the exact same frozen digest identity and entries as capture
+ok 51 - F26a genuine index descriptor exposes the exact same frozen digest identity and entries as capture
+  ---
+  duration_ms: 303.616
+  type: 'test'
+  ...
+# Subtest: F26a genuine descriptor retains its old snapshot and sticky withdrawal after byte drift is restored
+ok 52 - F26a genuine descriptor retains its old snapshot and sticky withdrawal after byte drift is restored
+  ---
+  duration_ms: 132.1255
+  type: 'test'
+  ...
+# Subtest: F26a genuine descriptor binds file identity even when replacement has identical digest and entries
+ok 53 - F26a genuine descriptor binds file identity even when replacement has identical digest and entries
+  ---
+  duration_ms: 129.0805
+  type: 'test'
+  ...
+# Subtest: F26a final scan release observes withdrawal invoked inside an otherwise true owner callback
+ok 54 - F26a final scan release observes withdrawal invoked inside an otherwise true owner callback
+  ---
+  duration_ms: 977.8679
+  type: 'test'
+  ...
+# Subtest: F26a final scan release observes withdrawal invoked inside an otherwise valid clock callback
+ok 55 - F26a final scan release observes withdrawal invoked inside an otherwise valid clock callback
+  ---
+  duration_ms: 307.3681
+  type: 'test'
+  ...
+# Subtest: F26a final scan release charges time elapsed inside the owner validity callback
+ok 56 - F26a final scan release charges time elapsed inside the owner validity callback
+  ---
+  duration_ms: 321.9096
+  type: 'test'
+  ...
+# Subtest: F26a final scan release charges time spent recapturing genuine effective-index metadata
+ok 57 - F26a final scan release charges time spent recapturing genuine effective-index metadata
+  ---
+  duration_ms: 276.3197
+  type: 'test'
+  ...
+# Subtest: F26a process close join observes withdrawal invoked inside its otherwise true owner callback
+ok 58 - F26a process close join observes withdrawal invoked inside its otherwise true owner callback
+  ---
+  duration_ms: 134.6538
+  type: 'test'
+  ...
+# Subtest: F26a process close join observes withdrawal invoked inside its otherwise valid clock callback
+ok 59 - F26a process close join observes withdrawal invoked inside its otherwise valid clock callback
+  ---
+  duration_ms: 117.4723
+  type: 'test'
+  ...
+# Subtest: F26a process close join charges elapsed time inside its owner validity callback
+ok 60 - F26a process close join charges elapsed time inside its owner validity callback
+  ---
+  duration_ms: 118.6057
+  type: 'test'
+  ...
+# Subtest: F26a process close join charges elapsed time inside genuine effective-index recapture
+ok 61 - F26a process close join charges elapsed time inside genuine effective-index recapture
+  ---
+  duration_ms: 123.0821
+  type: 'test'
+  ...
+# Subtest: F26a process pins version executable safe prefix environment and metadata-job cwd
+ok 62 - F26a process pins version executable safe prefix environment and metadata-job cwd
+  ---
+  duration_ms: 199.2904
+  type: 'test'
+  ...
+# Subtest: F26a entries process uses the actual checked root and literal stage-NUL suffix
+ok 63 - F26a entries process uses the actual checked root and literal stage-NUL suffix
+  ---
+  duration_ms: 97.0294
+  type: 'test'
+  ...
+# Subtest: F26a sizes process puts validated IDs only in private stdin with a fixed batch-check suffix
+ok 64 - F26a sizes process puts validated IDs only in private stdin with a fixed batch-check suffix
+  ---
+  duration_ms: 98.4886
+  type: 'test'
+  ...
+# Subtest: F26a batch process sends no sizes paths or content through argv or environment
+ok 65 - F26a batch process sends no sizes paths or content through argv or environment
+  ---
+  duration_ms: 104.0715
+  type: 'test'
+  ...
+# Subtest: F26a process waits for real close after both EOFs
+ok 66 - F26a process waits for real close after both EOFs
+  ---
+  duration_ms: 106.7897
+  type: 'test'
+  ...
+# Subtest: F26a process waits for each EOF after a close0 observation
+ok 67 - F26a process waits for each EOF after a close0 observation
+  ---
+  duration_ms: 236.6155
+  type: 'test'
+  ...
+# Subtest: F26a process copies held private chunks instead of retaining caller-mutable buffers
+ok 68 - F26a process copies held private chunks instead of retaining caller-mutable buffers
+  ---
+  duration_ms: 160.3781
+  type: 'test'
+  ...
+# Subtest: F26a process rejects nonzero missing-exit and signalled fake closures
+ok 69 - F26a process rejects nonzero missing-exit and signalled fake closures
+  ---
+  duration_ms: 240.0593
+  type: 'test'
+  ...
+# Subtest: F26a process consumes bounded private stderr without returning a raw diagnostic
+ok 70 - F26a process consumes bounded private stderr without returning a raw diagnostic
+  ---
+  duration_ms: 128.3612
+  type: 'test'
+  ...
+# Subtest: F26a process withholds stderr over8192 while preserving actual child ownership
+ok 71 - F26a process withholds stderr over8192 while preserving actual child ownership
+  ---
+  duration_ms: 86.4238
+  type: 'test'
+  ...
+# Subtest: F26a process enforces each exact stdout cap independently
+ok 72 - F26a process enforces each exact stdout cap independently
+  ---
+  duration_ms: 374.2354
+  type: 'test'
+  ...
+# Subtest: F26a process admits128 unique size IDs and the exact1MiB declared batch budget
+ok 73 - F26a process admits128 unique size IDs and the exact1MiB declared batch budget
+  ---
+  duration_ms: 134.5853
+  type: 'test'
+  ...
+# Subtest: F26a process rejects unknown operations extra keys and route argv environment injection
+ok 74 - F26a process rejects unknown operations extra keys and route argv environment injection
+  ---
+  duration_ms: 196.9856
+  type: 'test'
+  ...
+# Subtest: F26a process rejects malformed duplicate empty oversized and option-looking OID arrays
+ok 75 - F26a process rejects malformed duplicate empty oversized and option-looking OID arrays
+  ---
+  duration_ms: 209.3678
+  type: 'test'
+  ...
+# Subtest: F26a process rejects malformed batch size object and aggregate budgets before spawn
+ok 76 - F26a process rejects malformed batch size object and aggregate budgets before spawn
+  ---
+  duration_ms: 204.1388
+  type: 'test'
+  ...
+# Subtest: F26a process never evaluates accessor operation array or object fields
+ok 77 - F26a process never evaluates accessor operation array or object fields
+  ---
+  duration_ms: 86.7375
+  type: 'test'
+  ...
+# Subtest: F26a process refuses checked-index lookalikes without invoking their available accessor
+ok 78 - F26a process refuses checked-index lookalikes without invoking their available accessor
+  ---
+  duration_ms: 50.2159
+  type: 'test'
+  ...
+# Subtest: F26a process pre-start withdrawal is sticky and starts no child
+ok 79 - F26a process pre-start withdrawal is sticky and starts no child
+  ---
+  duration_ms: 44.3974
+  type: 'test'
+  ...
+# Subtest: F26a active withdrawal clears private data and stays busy until close plus both EOFs
+ok 80 - F26a active withdrawal clears private data and stays busy until close plus both EOFs
+  ---
+  duration_ms: 121.5183
+  type: 'test'
+  ...
+# Subtest: F26a process rejects expired nonfinite deadlines and unavailable guards before spawn
+ok 81 - F26a process rejects expired nonfinite deadlines and unavailable guards before spawn
+  ---
+  duration_ms: 93.0693
+  type: 'test'
+  ...
+# Subtest: F26a elapsed deadline withdraws after fake admission with a held deterministic clock
+ok 82 - F26a elapsed deadline withdraws after fake admission with a held deterministic clock
+  ---
+  duration_ms: 91.5776
+  type: 'test'
+  ...
+# Subtest: F26a process never extends its60second bound to a later caller deadline
+ok 83 - F26a process never extends its60second bound to a later caller deadline
+  ---
+  duration_ms: 85.3433
+  type: 'test'
+  ...
+# Subtest: F26a clock reversal or nonfinite values withhold apparently successful completion
+ok 84 - F26a clock reversal or nonfinite values withhold apparently successful completion
+  ---
+  duration_ms: 169.5586
+  type: 'test'
+  ...
+# Subtest: F26a valid guard withdrawal and later reenable cannot release buffered bytes
+ok 85 - F26a valid guard withdrawal and later reenable cannot release buffered bytes
+  ---
+  duration_ms: 88.5615
+  type: 'test'
+  ...
+# Subtest: F26a checked-index drift blocks admission and late drift withholds completion
+ok 86 - F26a checked-index drift blocks admission and late drift withholds completion
+  ---
+  duration_ms: 179.8282
+  type: 'test'
+  ...
+# Subtest: F26a stdout stderr and stdin errors withhold without destroying owned pipes
+ok 87 - F26a stdout stderr and stdin errors withhold without destroying owned pipes
+  ---
+  duration_ms: 149.9489
+  type: 'test'
+  ...
+# Subtest: F26a spawn throws and a no-PID spawn error return unavailable without fabricated child closure
+ok 88 - F26a spawn throws and a no-PID spawn error return unavailable without fabricated child closure
+  ---
+  duration_ms: 169.4825
+  type: 'test'
+  ...
+# Subtest: F26a an error after PID ownership retains busy until actual close and EOFs
+ok 89 - F26a an error after PID ownership retains busy until actual close and EOFs
+  ---
+  duration_ms: 78.2944
+  type: 'test'
+  ...
+# Subtest: F26a launcher pin is canonical frozen public metadata without filesystem authority
+ok 90 - F26a launcher pin is canonical frozen public metadata without filesystem authority
+  ---
+  duration_ms: 18.9239
+  type: 'test'
+  ...
+# Subtest: F26a launcher creates fixed scrubbed absolute child invocation for an absent hook
+ok 91 - F26a launcher creates fixed scrubbed absolute child invocation for an absent hook
+  ---
+  duration_ms: 3.1627
+  type: 'test'
+  ...
+# Subtest: F26a launcher preserves supported original bytes after its unchanged shebang
+ok 92 - F26a launcher preserves supported original bytes after its unchanged shebang
+  ---
+  duration_ms: 2.0491
+  type: 'test'
+  ...
+# Subtest: F26a launcher safely quotes literal shell metacharacters in fixed reviewed paths
+ok 93 - F26a launcher safely quotes literal shell metacharacters in fixed reviewed paths
+  ---
+  duration_ms: 1.9318
+  type: 'test'
+  ...
+# Subtest: F26a launcher refuses unsupported interpreters CRLF BOM empty and binary originals
+ok 94 - F26a launcher refuses unsupported interpreters CRLF BOM empty and binary originals
+  ---
+  duration_ms: 5.6812
+  type: 'test'
+  ...
+# Subtest: F26a launcher refuses oversize and duplicate owned hook bodies rather than chaining itself
+ok 95 - F26a launcher refuses oversize and duplicate owned hook bodies rather than chaining itself
+  ---
+  duration_ms: 2.8044
+  type: 'test'
+  ...
+# Subtest: F26a launcher pins root generation and both artifact hashes with exact schemas
+ok 96 - F26a launcher pins root generation and both artifact hashes with exact schemas
+  ---
+  duration_ms: 1.3914
+  type: 'test'
+  ...
+# Subtest: F26a launcher refuses noncanonical JSON duplicates and malformed UTF8
+ok 97 - F26a launcher refuses noncanonical JSON duplicates and malformed UTF8
+  ---
+  duration_ms: 1.2635
+  type: 'test'
+  ...
+# Subtest: F26a launcher accepts only a canonical Ed25519 public key
+ok 98 - F26a launcher accepts only a canonical Ed25519 public key
+  ---
+  duration_ms: 20.7255
+  type: 'test'
+  ...
+# Subtest: F26a launcher refuses unsafe or noncanonical runtime worker descriptor and Windows paths
+ok 99 - F26a launcher refuses unsafe or noncanonical runtime worker descriptor and Windows paths
+  ---
+  duration_ms: 3.2073
+  type: 'test'
+  ...
+# Subtest: F26a launcher preserves caller buffers and does not invoke proxy or coercion inputs
+ok 100 - F26a launcher preserves caller buffers and does not invoke proxy or coercion inputs
+  ---
+  duration_ms: 2.7022
+  type: 'test'
+  ...
+# Subtest: F26a launcher rejects malformed pin without returning an original or partial prefix
+ok 101 - F26a launcher rejects malformed pin without returning an original or partial prefix
+  ---
+  duration_ms: 1.1438
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol admits an empty proposed tree
+ok 102 - F26a staged protocol admits an empty proposed tree
+  ---
+  duration_ms: 16.563
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol preserves exact rows and regular executable modes
+ok 103 - F26a staged protocol preserves exact rows and regular executable modes
+  ---
+  duration_ms: 2.5508
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol keeps spaces Unicode and leading-dash names literal
+ok 104 - F26a staged protocol keeps spaces Unicode and leading-dash names literal
+  ---
+  duration_ms: 1.8479
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol permits repeated blob OIDs under separate path contexts
+ok 105 - F26a staged protocol permits repeated blob OIDs under separate path contexts
+  ---
+  duration_ms: 1.8938
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol accepts exactly128 entries
+ok 106 - F26a staged protocol accepts exactly128 entries
+  ---
+  duration_ms: 3.814
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol withholds the entire129-entry sentinel listing
+ok 107 - F26a staged protocol withholds the entire129-entry sentinel listing
+  ---
+  duration_ms: 1.8769
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol accepts a valid listing of exactly256KiB
+ok 108 - F26a staged protocol accepts a valid listing of exactly256KiB
+  ---
+  duration_ms: 11.4039
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol rejects an otherwise valid listing one byte over256KiB
+ok 109 - F26a staged protocol rejects an otherwise valid listing one byte over256KiB
+  ---
+  duration_ms: 5.4531
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol requires each final NUL and exact final EOF
+ok 110 - F26a staged protocol requires each final NUL and exact final EOF
+  ---
+  duration_ms: 2.4367
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol requires exact ASCII header separators
+ok 111 - F26a staged protocol requires exact ASCII header separators
+  ---
+  duration_ms: 1.709
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol rejects nonzero and noncanonical stages
+ok 112 - F26a staged protocol rejects nonzero and noncanonical stages
+  ---
+  duration_ms: 1.0908
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol rejects symlinks submodules and other nonregular modes
+ok 113 - F26a staged protocol rejects symlinks submodules and other nonregular modes
+  ---
+  duration_ms: 0.9831
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol requires exactly40 lowercase hexadecimal object characters
+ok 114 - F26a staged protocol requires exactly40 lowercase hexadecimal object characters
+  ---
+  duration_ms: 1.0946
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol rejects empty absolute drive UNC and backslash paths
+ok 115 - F26a staged protocol rejects empty absolute drive UNC and backslash paths
+  ---
+  duration_ms: 1.728
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol rejects dot parent empty and trailing slash components
+ok 116 - F26a staged protocol rejects dot parent empty and trailing slash components
+  ---
+  duration_ms: 1.6524
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol rejects ADS and Windows-invalid punctuation
+ok 117 - F26a staged protocol rejects ADS and Windows-invalid punctuation
+  ---
+  duration_ms: 1.2012
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol rejects control format and line-separator characters in names
+ok 118 - F26a staged protocol rejects control format and line-separator characters in names
+  ---
+  duration_ms: 1.7764
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol rejects trailing dots or spaces in every component
+ok 119 - F26a staged protocol rejects trailing dots or spaces in every component
+  ---
+  duration_ms: 1.1309
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol rejects Windows device names including extensions and superscript aliases
+ok 120 - F26a staged protocol rejects Windows device names including extensions and superscript aliases
+  ---
+  duration_ms: 1.2677
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol rejects short-name aliases instead of resolving them
+ok 121 - F26a staged protocol rejects short-name aliases instead of resolving them
+  ---
+  duration_ms: 1.3787
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol rejects reserved Git metadata components at every depth
+ok 122 - F26a staged protocol rejects reserved Git metadata components at every depth
+  ---
+  duration_ms: 1.9808
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol rejects exact and Windows-case-insensitive duplicate paths
+ok 123 - F26a staged protocol rejects exact and Windows-case-insensitive duplicate paths
+  ---
+  duration_ms: 1.2193
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol refuses Unicode-normalization path aliases without rewriting spelling
+ok 124 - F26a staged protocol refuses Unicode-normalization path aliases without rewriting spelling
+  ---
+  duration_ms: 1.9276
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol rejects a file path that is also another entry's directory ancestor
+ok 125 - F26a staged protocol rejects a file path that is also another entry's directory ancestor
+  ---
+  duration_ms: 1.1217
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol enforces2048 UTF8 path bytes and255 UTF16 component units
+ok 126 - F26a staged protocol enforces2048 UTF8 path bytes and255 UTF16 component units
+  ---
+  duration_ms: 1.9973
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol decodes UTF8 fatally and does not strip a path BOM
+ok 127 - F26a staged protocol decodes UTF8 fatally and does not strip a path BOM
+  ---
+  duration_ms: 1.3899
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol withholds a valid prefix when a late record is malformed
+ok 128 - F26a staged protocol withholds a valid prefix when a late record is malformed
+  ---
+  duration_ms: 1.2057
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol does not mutate caller buffer bytes on success or refusal
+ok 129 - F26a staged protocol does not mutate caller buffer bytes on success or refusal
+  ---
+  duration_ms: 2.4376
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol accepts Buffer views without reading unrelated backing-array bytes
+ok 130 - F26a staged protocol accepts Buffer views without reading unrelated backing-array bytes
+  ---
+  duration_ms: 2.2783
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol rejects non-Buffers without invoking accessors or coercion
+ok 131 - F26a staged protocol rejects non-Buffers without invoking accessors or coercion
+  ---
+  duration_ms: 1.1843
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol rejects forged Buffer prototypes and proxies without property traps
+ok 132 - F26a staged protocol rejects forged Buffer prototypes and proxies without property traps
+  ---
+  duration_ms: 1.9045
+  type: 'test'
+  ...
+# Subtest: F26a staged protocol writes no raw input diagnostics to console or output streams
+ok 133 - F26a staged protocol writes no raw input diagnostics to console or output streams
+  ---
+  duration_ms: 1.4886
+  type: 'test'
+  ...
+# Subtest: F26a scan admits a complete public staged tree only through four exact private process phases
+ok 134 - F26a scan admits a complete public staged tree only through four exact private process phases
+  ---
+  duration_ms: 791.3635
+  type: 'test'
+  ...
+# Subtest: F26a scan verifies version and exact empty listing but skips sizes and batch for an empty tree
+ok 135 - F26a scan verifies version and exact empty listing but skips sizes and batch for an empty tree
+  ---
+  duration_ms: 157.1976
+  type: 'test'
+  ...
+# Subtest: F26a scan blocks canonical staged provider candidates without releasing content or finding metadata
+ok 136 - F26a scan blocks canonical staged provider candidates without releasing content or finding metadata
+  ---
+  duration_ms: 263.9965
+  type: 'test'
+  ...
+# Subtest: F26a scan blocks staged secret when the worktree is sanitized and never reads its body
+ok 137 - F26a scan blocks staged secret when the worktree is sanitized and never reads its body
+  ---
+  duration_ms: 193.2732
+  type: 'test'
+  ...
+# Subtest: F26a scan allows public staged bytes despite an unstaged secret and never reads its body
+ok 138 - F26a scan allows public staged bytes despite an unstaged secret and never reads its body
+  ---
+  duration_ms: 204.1267
+  type: 'test'
+  ...
+# Subtest: F26a scan preserves every path context when repeated object IDs have different canonical formats
+ok 139 - F26a scan preserves every path context when repeated object IDs have different canonical formats
+  ---
+  duration_ms: 413.9075
+  type: 'test'
+  ...
+# Subtest: F26a scan keeps128 public staged entries useful and fetches repeated objects only once
+ok 140 - F26a scan keeps128 public staged entries useful and fetches repeated objects only once
+  ---
+  duration_ms: 2645.183
+  type: 'test'
+  ...
+# Subtest: F26a scan charges raw budget per path before object dedup with inclusive1MiB admission
+ok 141 - F26a scan charges raw budget per path before object dedup with inclusive1MiB admission
+  ---
+  duration_ms: 700.9533
+  type: 'test'
+  ...
+# Subtest: F26a scan refuses an oversize object size before requesting batch bodies
+ok 142 - F26a scan refuses an oversize object size before requesting batch bodies
+  ---
+  duration_ms: 141.0656
+  type: 'test'
+  ...
+# Subtest: F26a scan rejects path OID mode count and order listing drift against its exact captured index
+ok 143 - F26a scan rejects path OID mode count and order listing drift against its exact captured index
+  ---
+  duration_ms: 502.0416
+  type: 'test'
+  ...
+# Subtest: F26a scan requires the exact pinned Git version before staged entry listing
+ok 144 - F26a scan requires the exact pinned Git version before staged entry listing
+  ---
+  duration_ms: 164.585
+  type: 'test'
+  ...
+# Subtest: F26a scan cannot skip malformed or missing size rows before object batch
+ok 145 - F26a scan cannot skip malformed or missing size rows before object batch
+  ---
+  duration_ms: 321.364
+  type: 'test'
+  ...
+# Subtest: F26a scan checks complete object framing and SHA1 before reporting an earlier candidate
+ok 146 - F26a scan checks complete object framing and SHA1 before reporting an earlier candidate
+  ---
+  duration_ms: 279.6835
+  type: 'test'
+  ...
+# Subtest: F26a scan rejects trailing batch records and bytes without a valid-prefix result
+ok 147 - F26a scan rejects trailing batch records and bytes without a valid-prefix result
+  ---
+  duration_ms: 164.2475
+  type: 'test'
+  ...
+# Subtest: F26a scan visits later known syntax failures even after an earlier staged candidate
+ok 148 - F26a scan visits later known syntax failures even after an earlier staged candidate
+  ---
+  duration_ms: 439.3189
+  type: 'test'
+  ...
+# Subtest: F26a scan treats late binary or invalid UTF8 blob admission as whole-tree unavailable
+ok 149 - F26a scan treats late binary or invalid UTF8 blob admission as whole-tree unavailable
+  ---
+  duration_ms: 716.9184
+  type: 'test'
+  ...
+# Subtest: F26a scan preserves canonical content work withholding after earlier candidate blobs
+ok 150 - F26a scan preserves canonical content work withholding after earlier candidate blobs
+  ---
+  duration_ms: 215.9689
+  type: 'test'
+  ...
+# Subtest: F26a scan rejects forged index capabilities before process creation
+ok 151 - F26a scan rejects forged index capabilities before process creation
+  ---
+  duration_ms: 57.2993
+  type: 'test'
+  ...
+# Subtest: F26a scan disabled and throwing owner validity create no private process
+ok 152 - F26a scan disabled and throwing owner validity create no private process
+  ---
+  duration_ms: 65.7175
+  type: 'test'
+  ...
+# Subtest: F26a scan invalid initial clocks and deadlines refuse before every process
+ok 153 - F26a scan invalid initial clocks and deadlines refuse before every process
+  ---
+  duration_ms: 71.6394
+  type: 'test'
+  ...
+# Subtest: F26a scan uses one60second budget across all phases instead of renewing it per child
+ok 154 - F26a scan uses one60second budget across all phases instead of renewing it per child
+  ---
+  duration_ms: 149.2538
+  type: 'test'
+  ...
+# Subtest: F26a scan clock reversal between private phases is unavailable without a renewed budget
+ok 155 - F26a scan clock reversal between private phases is unavailable without a renewed budget
+  ---
+  duration_ms: 78.6705
+  type: 'test'
+  ...
+# Subtest: F26a scan cannot complete from a process result before that process actually closes
+ok 156 - F26a scan cannot complete from a process result before that process actually closes
+  ---
+  duration_ms: 190.6329
+  type: 'test'
+  ...
+# Subtest: F26a scan active withdrawal returns STOP_UNCONFIRMED and stays busy until natural fake close
+ok 157 - F26a scan active withdrawal returns STOP_UNCONFIRMED and stays busy until natural fake close
+  ---
+  duration_ms: 77.7149
+  type: 'test'
+  ...
+# Subtest: F26a scan exact held ALLOW is revoked by owner withdrawal and cannot be cloned or revived
+ok 158 - F26a scan exact held ALLOW is revoked by owner withdrawal and cannot be cloned or revived
+  ---
+  duration_ms: 217.5938
+  type: 'test'
+  ...
+# Subtest: F26a scan final effective-index drift revokes completed ALLOW and byte restoration cannot revive it
+ok 159 - F26a scan final effective-index drift revokes completed ALLOW and byte restoration cannot revive it
+  ---
+  duration_ms: 216.2289
+  type: 'test'
+  ...
+# Subtest: F26a scan duplicate starts and withdrawal before start never start another private process
+ok 160 - F26a scan duplicate starts and withdrawal before start never start another private process
+  ---
+  duration_ms: 240.9774
+  type: 'test'
+  ...
+# Subtest: F26a scan a closed unavailable process stops the tree without partial ALLOW or later phases
+ok 161 - F26a scan a closed unavailable process stops the tree without partial ALLOW or later phases
+  ---
+  duration_ms: 137.7673
+  type: 'test'
+  ...
+# Subtest: F26a size parser accepts canonical zero and inclusive64KiB sizes
+ok 162 - F26a size parser accepts canonical zero and inclusive64KiB sizes
+  ---
+  duration_ms: 15.606
+  type: 'test'
+  ...
+# Subtest: F26a size parser preserves128 unique requested object identities in exact caller order
+ok 163 - F26a size parser preserves128 unique requested object identities in exact caller order
+  ---
+  duration_ms: 3.8699
+  type: 'test'
+  ...
+# Subtest: F26a size parser returns immutable request-local records without retaining caller buffers
+ok 164 - F26a size parser returns immutable request-local records without retaining caller buffers
+  ---
+  duration_ms: 1.2535
+  type: 'test'
+  ...
+# Subtest: F26a size parser rejects empty and129-object requests without a partial prefix
+ok 165 - F26a size parser rejects empty and129-object requests without a partial prefix
+  ---
+  duration_ms: 1.3805
+  type: 'test'
+  ...
+# Subtest: F26a size parser rejects missing objects and an incomplete final row
+ok 166 - F26a size parser rejects missing objects and an incomplete final row
+  ---
+  duration_ms: 1.5838
+  type: 'test'
+  ...
+# Subtest: F26a size parser rejects trailing objects blank lines and extra bytes
+ok 167 - F26a size parser rejects trailing objects blank lines and extra bytes
+  ---
+  duration_ms: 1.3121
+  type: 'test'
+  ...
+# Subtest: F26a size parser rejects reordered complete responses
+ok 168 - F26a size parser rejects reordered complete responses
+  ---
+  duration_ms: 1.0781
+  type: 'test'
+  ...
+# Subtest: F26a size parser rejects duplicate expected and duplicate returned identities
+ok 169 - F26a size parser rejects duplicate expected and duplicate returned identities
+  ---
+  duration_ms: 1.1862
+  type: 'test'
+  ...
+# Subtest: F26a size parser rejects unknown truncated uppercase and nonhex identities
+ok 170 - F26a size parser rejects unknown truncated uppercase and nonhex identities
+  ---
+  duration_ms: 1.3928
+  type: 'test'
+  ...
+# Subtest: F26a size parser rejects nonblob missing and ambiguous object type responses
+ok 171 - F26a size parser rejects nonblob missing and ambiguous object type responses
+  ---
+  duration_ms: 2.2777
+  type: 'test'
+  ...
+# Subtest: F26a size parser rejects noncanonical negative fractional exponential and unsafe decimal sizes
+ok 172 - F26a size parser rejects noncanonical negative fractional exponential and unsafe decimal sizes
+  ---
+  duration_ms: 1.8241
+  type: 'test'
+  ...
+# Subtest: F26a size parser rejects any blob larger than64KiB even after an admitted zero row
+ok 173 - F26a size parser rejects any blob larger than64KiB even after an admitted zero row
+  ---
+  duration_ms: 0.9782
+  type: 'test'
+  ...
+# Subtest: F26a size parser admits exactly1MiB unique raw sizes and refuses the next unique blob
+ok 174 - F26a size parser admits exactly1MiB unique raw sizes and refuses the next unique blob
+  ---
+  duration_ms: 1.1642
+  type: 'test'
+  ...
+# Subtest: F26a size parser rejects response bytes beyond12288 independently of object count
+ok 175 - F26a size parser rejects response bytes beyond12288 independently of object count
+  ---
+  duration_ms: 0.9303
+  type: 'test'
+  ...
+# Subtest: F26a size parser rejects CRLF tabs double spaces BOM NUL and prefixed framing
+ok 176 - F26a size parser rejects CRLF tabs double spaces BOM NUL and prefixed framing
+  ---
+  duration_ms: 1.2472
+  type: 'test'
+  ...
+# Subtest: F26a size parser fatally rejects late malformed UTF8 rather than returning earlier size rows
+ok 177 - F26a size parser fatally rejects late malformed UTF8 rather than returning earlier size rows
+  ---
+  duration_ms: 1.1033
+  type: 'test'
+  ...
+# Subtest: F26a size parser rejects invalid runtime raw inputs without coercion or proxy access
+ok 178 - F26a size parser rejects invalid runtime raw inputs without coercion or proxy access
+  ---
+  duration_ms: 1.0535
+  type: 'test'
+  ...
+# Subtest: F26a size parser rejects invalid expected arrays sparse fields accessors and caller coercion
+ok 179 - F26a size parser rejects invalid expected arrays sparse fields accessors and caller coercion
+  ---
+  duration_ms: 1.1823
+  type: 'test'
+  ...
+1..179
+# tests 179
+# suites 0
+# pass 179
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 26068.7525

@@ -1,0 +1,109 @@
+{
+    "status":  "TEST_ONLY_AUTHORED_FROZEN_UNEXECUTED_PREPRODUCTION",
+    "feature":  "F26a",
+    "tests":  [
+                  {
+                      "file":  {
+                                   "path":  "packages/vscode-extension/src/__tests__/checkedOwnerHookContext.test.ts",
+                                   "bytes":  10879,
+                                   "sha256":  "21fd049a1290733faee563be82683d3c7ba82dba904946d8df250a30f427f159"
+                               },
+                      "declaredTests":  12
+                  },
+                  {
+                      "file":  {
+                                   "path":  "packages/vscode-extension/src/__tests__/ownerHookGitProcess.test.ts",
+                                   "bytes":  18229,
+                                   "sha256":  "00a5bc864e45cf2f2447a8f5ec8676e0ddd474d5a8117cdc0bbddcc45bd1efd3"
+                               },
+                      "declaredTests":  18
+                  }
+              ],
+    "declaredTests":  30,
+    "platform":  "WINDOWS_ONLY",
+    "productionAbsent":  [
+                             "packages/vscode-extension/src/history-hooks/CheckedOwnerHookContext.ts",
+                             "packages/vscode-extension/src/history-hooks/OwnerHookGitProcess.ts"
+                         ],
+    "contract":  {
+                     "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/owner-hook-context-process-test-contract-01.md",
+                     "bytes":  5584,
+                     "sha256":  "ae183b4806c2debf87466ce5abddccd8f66aa8ddcaf09511d4452feb8aed9912"
+                 },
+    "snapshots":  [
+                      {
+                          "source":  {
+                                         "path":  "packages/vscode-extension/src/history-hooks/OwnerHookProtocol.ts",
+                                         "bytes":  4490,
+                                         "sha256":  "8778d5ebcbf3562db84b94c18a81e056cfca01802a5de0dbbdccda3759ffa1dc"
+                                     },
+                          "snapshot":  {
+                                           "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/owner-hook-context-process-preproduction-01/OwnerHookProtocol.before.ts",
+                                           "bytes":  4490,
+                                           "sha256":  "8778d5ebcbf3562db84b94c18a81e056cfca01802a5de0dbbdccda3759ffa1dc"
+                                       },
+                          "byteExact":  true
+                      },
+                      {
+                          "source":  {
+                                         "path":  "packages/vscode-extension/src/terminal/CheckedGitMetadata.ts",
+                                         "bytes":  11622,
+                                         "sha256":  "4327a101f667bee54c679bd5df4a45eb0c76dd536c67f3682d8a9a31290c3f95"
+                                     },
+                          "snapshot":  {
+                                           "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/owner-hook-context-process-preproduction-01/CheckedGitMetadata.before.ts",
+                                           "bytes":  11622,
+                                           "sha256":  "4327a101f667bee54c679bd5df4a45eb0c76dd536c67f3682d8a9a31290c3f95"
+                                       },
+                          "byteExact":  true
+                      },
+                      {
+                          "source":  {
+                                         "path":  "packages/vscode-extension/src/history-hooks/PreCommitGitProcess.ts",
+                                         "bytes":  9461,
+                                         "sha256":  "95c2b9256094c91c0ad07a8ed15306e4f54f001c4661d90021aff7b723cbbf2c"
+                                     },
+                          "snapshot":  {
+                                           "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/owner-hook-context-process-preproduction-01/PreCommitGitProcess.before.ts",
+                                           "bytes":  9461,
+                                           "sha256":  "95c2b9256094c91c0ad07a8ed15306e4f54f001c4661d90021aff7b723cbbf2c"
+                                       },
+                          "byteExact":  true
+                      },
+                      {
+                          "source":  {
+                                         "path":  "packages/vscode-extension/src/__tests__/checkedOwnerHookContext.test.ts",
+                                         "bytes":  10879,
+                                         "sha256":  "21fd049a1290733faee563be82683d3c7ba82dba904946d8df250a30f427f159"
+                                     },
+                          "snapshot":  {
+                                           "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/owner-hook-context-process-preproduction-01/checkedOwnerHookContext.authored.test.ts",
+                                           "bytes":  10879,
+                                           "sha256":  "21fd049a1290733faee563be82683d3c7ba82dba904946d8df250a30f427f159"
+                                       },
+                          "byteExact":  true
+                      },
+                      {
+                          "source":  {
+                                         "path":  "packages/vscode-extension/src/__tests__/ownerHookGitProcess.test.ts",
+                                         "bytes":  18229,
+                                         "sha256":  "00a5bc864e45cf2f2447a8f5ec8676e0ddd474d5a8117cdc0bbddcc45bd1efd3"
+                                     },
+                          "snapshot":  {
+                                           "path":  "docs/soterai-lite/evidence/20261025-f26a-precommit-7b36d912/owner-hook-context-process-preproduction-01/ownerHookGitProcess.authored.test.ts",
+                                           "bytes":  18229,
+                                           "sha256":  "00a5bc864e45cf2f2447a8f5ec8676e0ddd474d5a8117cdc0bbddcc45bd1efd3"
+                                       },
+                          "byteExact":  true
+                      }
+                  ],
+    "contextContract":  "Fresh genuine exact-root metadata; exact frozen owner-discovery environment distinct from scanner metadata.environment; sticky local/job/pinned executable/guard identity. Context does not witness current global projection or future commit environment.",
+    "processContract":  "Exact version/config operation strings, pinned executable/fixed argv/stdinignore/exact owner environment,4096/65536 stdout caps,8192 stderr cap with any stderr refusing,config1onlyempty,hard60sec/livepostcallbackguards/one-shot/actualclose+bothEOF/no signals",
+    "versionBoundary":  "Root confirmed transport-only COMPLETE within cap; exact supportsCheckedGitVersion validation remains caller responsibility",
+    "testExecution":  "NOT_RUN_BY_AUTHOR_ROOT_BASELINE_REQUIRED_BEFORE_PRODUCTION",
+    "compilerBuildGitHookNative":  "NOT_RUN_BY_AUTHOR",
+    "syntaxCompilation":  "NOT_RUN_BY_AUTHOR",
+    "productionQueueLedgerChanges":  "NONE_BY_AUTHOR",
+    "scope":  "Manual retained synthetic metadata and fake children only. Pinned executable drift is a restored stat observation, not a vendor-file change. Author performed byte custody/case counting only, no behavior or static compiler PASS claim.",
+    "time":  "2026-10-25T12:29:36.2726481Z"
+}

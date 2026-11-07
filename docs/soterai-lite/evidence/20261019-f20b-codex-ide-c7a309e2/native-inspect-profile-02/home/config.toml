@@ -1,0 +1,35 @@
+model_provider = "soterai_probe"
+approval_policy = "never"
+sandbox_mode = "read-only"
+web_search = "disabled"
+project_doc_max_bytes = 0
+check_for_update_on_startup = false
+[model_providers.soterai_probe]
+name = "Synthetic offline probe"
+base_url = "http://127.0.0.1:9/v1"
+wire_api = "responses"
+requires_openai_auth = false
+supports_websockets = false
+request_max_retries = 0
+stream_max_retries = 0
+[analytics]
+enabled = false
+[feedback]
+enabled = false
+[otel]
+exporter = "none"
+[features]
+shell_tool = false
+shell_snapshot = false
+unified_exec = false
+view_image = false
+image_generation = false
+apps = false
+plugins = false
+multi_agent = false
+js_repl = false
+hooks = false
+browser_use = false
+computer_use = false
+goals = false
+skip_host_skill_discovery = true

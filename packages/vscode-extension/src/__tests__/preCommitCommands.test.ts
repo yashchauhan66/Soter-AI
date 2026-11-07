@@ -49,6 +49,22 @@ test("F31b unreadable release capability refuses new pre-commit grants without l
     t.mock.method(f.PreCommitController.prototype, "current", () => true);
     fixed(await f.call("installPreCommitGuard"), "UNAVAILABLE"); assert.equal(grants, 0); f.noIO(); safe(stub.capturedText());
 });
+test("F26a explicitly enabled release delegates opt-in install and resume while recovery remains available", async t => {
+    const f = await fixture(t); let installs = 0, resumes = 0, restores = 0;
+    Object.defineProperty(f.context, "extension", { configurable: true, value: { packageJSON: { soteraiLiteRelease: { schemaVersion: 1, channel: "pre-release", unsupportedFeatures: [] } } } });
+    t.mock.method(f.PreCommitController.prototype, "install", async (...args: unknown[]) => { assert.deepEqual(args, []); installs++; return success("APPLIED") as any; });
+    t.mock.method(f.PreCommitController.prototype, "resume", async (...args: unknown[]) => { assert.deepEqual(args, []); resumes++; return success("RESUMED") as any; });
+    t.mock.method(f.PreCommitController.prototype, "restore", async (...args: unknown[]) => { assert.deepEqual(args, []); restores++; return success("RESTORED") as any; });
+    t.mock.method(f.PreCommitController.prototype, "current", () => true);
+    fixed(await f.call("installPreCommitGuard", { approved: true }), "UNAVAILABLE");
+    f.flag(true);
+    fixed(await f.call("installPreCommitGuard", { approved: true, root: PRIVATE }), "APPLIED");
+    fixed(await f.call("resumePreCommitGuard", { approved: true, root: PRIVATE }), "RESUMED");
+    f.flag(false);
+    fixed(await f.call("resumePreCommitGuard", { approved: true }), "UNAVAILABLE");
+    fixed(await f.call("restorePreCommitGuard", { approved: true, root: PRIVATE }), "RESTORED");
+    assert.deepEqual({ installs, resumes, restores }, { installs: 1, resumes: 1, restores: 1 }); f.noIO();
+});
 async function bounded<T>(promise: PromiseLike<T>): Promise<T> {
     let timer: ReturnType<typeof setTimeout> | undefined;
     try { return await Promise.race([Promise.resolve(promise), new Promise<never>((_, reject) => {

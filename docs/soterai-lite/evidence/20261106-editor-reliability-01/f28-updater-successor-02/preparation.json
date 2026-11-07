@@ -1,0 +1,99 @@
+{
+  "status": "PASS_FRESH_F28_ORIGINAL30_RETRY_PREPARATION_UPDATER_IDLE_REQUIRED_NOT_RUN",
+  "observedAt": "2026-11-06T15:15:56.988Z",
+  "vsix": {
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-resumed-20261106-attempt02.vsix",
+    "bytes": 1742104,
+    "sha256": "011f96d19d42dbefc2e56eb5399bf5c7f16a09d6b71b8bae5be9d66b2f3769ec"
+  },
+  "sourceProof": {
+    "path": "docs/soterai-lite/evidence/20261106-remaining-queue/candidate-01/full-inputs-02.json",
+    "bytes": 223848,
+    "sha256": "23fd63bb04122bf055f656a77424085b75ff3e3c813121c15034cd209fd1c8f6"
+  },
+  "codeVersion": "1.145.1",
+  "binding": {
+    "path": "docs/soterai-lite/evidence/20261106-editor-reliability-01/f28-updater-successor-02/native-binding-current-02.json",
+    "bytes": 7902,
+    "sha256": "173df84da5de00c1dd9c76c328da61d29c6523ec23c1707900731efc0cd57879"
+  },
+  "runner": {
+    "path": "docs/soterai-lite/evidence/20261106-editor-reliability-01/f28-updater-successor-02/run-native-current-02.cjs",
+    "bytes": 4757,
+    "sha256": "b2ed3e7049c479060fd6bed6090f768078a87807e68b9cff0333c68e6d684288"
+  },
+  "preflight": {
+    "path": "docs/soterai-lite/evidence/20261106-editor-reliability-01/f28-updater-successor-02/updater-preflight.ps1",
+    "bytes": 689,
+    "sha256": "1db5d64ea259c164ff4426e8a975abdae2217a3ba1cb159232725e1c40802ef2"
+  },
+  "failure": {
+    "originalBinding": {
+      "path": "docs/soterai-lite/evidence/20261106-editor-reliability-01/f28-current-01/native-binding-current-02.json",
+      "bytes": 7124,
+      "sha256": "ac572f96faa4ebe7a8a00c27fe80fba80a421ce8e4bb3e34c2dc21a7f62d32b0"
+    },
+    "outer": {
+      "path": "docs/soterai-lite/evidence/20261106-editor-reliability-01/f28-current-01/native-current-01-owned-close.json",
+      "bytes": 613,
+      "sha256": "1ab37209df6d594a2b54124d2b6836a6ef0d123b84a4cede4f10eefbaa736e61"
+    },
+    "actualPrimary": {
+      "path": "docs/soterai-lite/evidence/20261106-editor-reliability-01/f28-current-01/f28-reliability-native-20261106T145753Z-20410e2b/primary-results.json",
+      "bytes": 7672,
+      "sha256": "82be99386cfbc1a553666d3b5affdcc0a694262ec311d51b8607e605214214f3"
+    },
+    "primaryCodeClose": {
+      "path": "docs/soterai-lite/evidence/20261106-editor-reliability-01/f28-current-01/f28-reliability-native-20261106T145753Z-20410e2b/primary-owned-editor-close.json",
+      "bytes": 391,
+      "sha256": "08f314fef7bc303057c58019950924eccf570f7a905a3bf1dc27641d2f06eea9"
+    },
+    "peerStderr": {
+      "path": "docs/soterai-lite/evidence/20261106-editor-reliability-01/f28-updater-successor-02/retained-failed-peer-stderr.bin",
+      "bytes": 653,
+      "sha256": "af95b3c8824745fed738928442da9dc44ac350bef6520ad10650178225c7e2da"
+    },
+    "counts": {
+      "passed": 20,
+      "failed": 1,
+      "primaryNotRun": 4,
+      "restartNotEntered": 5
+    },
+    "failedId": "F28-HP21",
+    "cause": "Installed Code refused concurrent peer while external vscode-updating mutex held",
+    "notAProductFix": true
+  },
+  "diagnostics": {
+    "updater": {
+      "path": "docs/soterai-lite/evidence/20261106-editor-reliability-01/f28-current-01/updater-observation-01.json",
+      "bytes": 3805,
+      "sha256": "96d552ddf87d80952d1d4522d4cefc0170da5cebb9c6083d927044ab61dd5228"
+    },
+    "primarySettings": {
+      "path": "D:/SoterAI-Lite-test-profiles/f28-reliability-native-20261106T145753Z-20410e2b/profile/User/settings.json",
+      "bytes": 1090,
+      "sha256": "23a01fb5ff266d727c010ff9615d9f4fcb4e3ffa5bf79de301337e0574f59624"
+    },
+    "peerSettings": {
+      "path": "D:/SoterAI-Lite-test-profiles/f28-reliability-native-20261106T145753Z-20410e2b/peer-profile/User/settings.json",
+      "bytes": 1090,
+      "sha256": "23a01fb5ff266d727c010ff9615d9f4fcb4e3ffa5bf79de301337e0574f59624"
+    },
+    "actualPrimaryMainLog": {
+      "path": "D:/SoterAI-Lite-test-profiles/f28-reliability-native-20261106T145753Z-20410e2b/profile/logs/20261106T202800/main.log",
+      "bytes": 1540,
+      "sha256": "70ba6dee3fb61fefd03178656115f213dbde97229d6958371e4d0b8ff2c22f4d"
+    },
+    "updates": "Both profiles update.mode=none and launch args --disable-updates; main.log confirms updater disabled by environment. External updater origin not attributed without parent-process proof."
+  },
+  "assertionPreservation": {
+    "driverSha256": "9a84eadfdd178e7c9518c632ee99e09c93ce86c62591dba331c1cf02457b5c07",
+    "originalThirtyCasesSha256": "d3f161d577766a208073678c26c7f4de62ae6a7028cb7c9e26ea202a37dc6fdc",
+    "unchanged": true
+  },
+  "newNativeLaunches": 0,
+  "productWrites": 0,
+  "normalProfilesChanged": false,
+  "signalsRequested": 0,
+  "readiness": "BLOCKED_BY_OBSERVED_EXTERNAL_UPDATER_UNTIL_NEW_IDLE_AND_EXACT_HOST_OBSERVATION"
+}

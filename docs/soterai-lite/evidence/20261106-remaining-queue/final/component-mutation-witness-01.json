@@ -1,0 +1,313 @@
+{
+  "status": "PASS_COMPONENT_MUTANT_ORACLE_AND_FAIL_CLOSED_WITHDRAWAL_NOT_CATALOG_ACCEPTANCE",
+  "observedAt": "2026-11-06T13:47:32.841Z",
+  "qualification": {
+    "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\current-package-qualification-01.json",
+    "bytes": 8739,
+    "sha256": "650ec4dd35938dbbce995c858063ffe773850f941f611a3925425fd2b2aefe1d"
+  },
+  "sourceProof": {
+    "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261106-remaining-queue\\candidate-01\\full-inputs-02.json",
+    "bytes": 223848,
+    "sha256": "23fd63bb04122bf055f656a77424085b75ff3e3c813121c15034cd209fd1c8f6"
+  },
+  "artifact": {
+    "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\soterai-lite\\soterai-lite-0.7.0-resumed-20261106-attempt02.vsix",
+    "bytes": 1742104,
+    "sha256": "011f96d19d42dbefc2e56eb5399bf5c7f16a09d6b71b8bae5be9d66b2f3769ec"
+  },
+  "execution": "TYPESCRIPT_TRANSPILE_IN_MEMORY_NO_PRODUCT_FILE_CHANGE",
+  "tool": {
+    "path": "docs/soterai-lite/evidence/20261106-remaining-queue/final/run-component-mutation-witness.cjs",
+    "bytes": 8371,
+    "sha256": "e4f8c45f1ed93c61ca20f05ff2265dcd0a9176022aa56955cc8fb4af201ce280"
+  },
+  "compiler": {
+    "version": "5.9.3",
+    "entry": {
+      "path": "node_modules/typescript/lib/typescript.js",
+      "bytes": 9112572,
+      "sha256": "3ae902c92cc44dace175c0e69e13a4b0899f6983c6121d76b9ab8dd5795e7675"
+    },
+    "package": {
+      "path": "node_modules/typescript/package.json",
+      "bytes": 3620,
+      "sha256": "822ef7ca6452205657b6288b066481ecf508bfbf43455d715cf7d3ec457561e6"
+    }
+  },
+  "frozenSources": [
+    {
+      "path": "packages/core/src/RegisteredSecretMatcher.ts",
+      "bytes": 17818,
+      "sha256": "686ff58c8c7b0e5d76cf2c2e004e402baf8b632c3a884a1739415ab04319df1a"
+    },
+    {
+      "path": "packages/core/src/StreamingOutputRedactor.ts",
+      "bytes": 5260,
+      "sha256": "7b49dee5b3e240a88d65aad3f053d24bec8fd28e0304ad8d535ea1eef5c5a307"
+    },
+    {
+      "path": "packages/core/src/StreamingOutputNormalizer.ts",
+      "bytes": 5396,
+      "sha256": "f5674488b72460998f7f8100fb9d20dd838641618d58fafb1c13b403f98c35b5"
+    },
+    {
+      "path": "packages/guard-core/src/detectors/SecretDetector.ts",
+      "bytes": 32912,
+      "sha256": "06411943d58192700fa6565e016beb94a79f15210fc0f1f1ac0522734c7975e0"
+    },
+    {
+      "path": "packages/guard-core/src/detectors/utils.ts",
+      "bytes": 3666,
+      "sha256": "b0a660d0bb8e38b448caadbd1b44a52f542c4669368870211e86472871d7a2c8"
+    }
+  ],
+  "mutant": {
+    "file": "packages/core/src/RegisteredSecretMatcher.ts",
+    "originalSha256": "686ff58c8c7b0e5d76cf2c2e004e402baf8b632c3a884a1739415ab04319df1a",
+    "mutatedInMemorySha256": "a4710fa53bad699c767577dc4f0919e0f3b921c90e2d87b3d5c2eacd9c2611e2",
+    "matchCount": 1,
+    "replace": "return decision(matches.length ? \"MATCHED\" : \"CLEAN\", matches);",
+    "with": "return decision(\"CLEAN\", []);",
+    "actualProductFlag": false
+  },
+  "controls": {
+    "originalAndMutantPublicUseful": true,
+    "resourceOverflowWithheldInBoth": true,
+    "splitPositions": 32,
+    "ansiNormalizationConfidentialityWitness": true
+  },
+  "rows": [
+    {
+      "id": "V02-MUTANT-RAW",
+      "representation": "raw",
+      "catalogScope": [
+        "LS-13",
+        "LS-14",
+        "LS-17"
+      ],
+      "publicUsefulInOriginalAndMutant": true,
+      "sourceOriginal": {
+        "requestStatus": "MATCHED",
+        "output": {
+          "status": "COMPLETE",
+          "stdout": "[REDACTED_SECRET_OUTPUT]",
+          "stderr": "",
+          "redacted": true,
+          "exitCode": 0
+        },
+        "canaryPresent": false
+      },
+      "testOnlyMutant": {
+        "requestStatus": "CLEAN",
+        "output": {
+          "status": "COMPLETE",
+          "stdout": "value=SOTERAI_SYNTHETIC_ONLY_q7/é?z2\n",
+          "stderr": "",
+          "redacted": false,
+          "exitCode": 0
+        },
+        "syntheticCanaryDetected": true
+      },
+      "testOutcome": "DECISION_MUTANT_KILLED_BY_CONFIDENTIALITY_ORACLE",
+      "featureFlagMutation": false,
+      "claim": "COMPONENT_SUBCLAIM_ONLY_NOT_FULL_ROW_OR_TOOL_ACCEPTANCE"
+    },
+    {
+      "id": "V02-MUTANT-BASE64",
+      "representation": "base64",
+      "catalogScope": [
+        "LS-13",
+        "LS-14",
+        "LS-17"
+      ],
+      "publicUsefulInOriginalAndMutant": true,
+      "sourceOriginal": {
+        "requestStatus": "MATCHED",
+        "output": {
+          "status": "COMPLETE",
+          "stdout": "[REDACTED_SECRET_OUTPUT]",
+          "stderr": "",
+          "redacted": true,
+          "exitCode": 0
+        },
+        "canaryPresent": false
+      },
+      "testOnlyMutant": {
+        "requestStatus": "CLEAN",
+        "output": {
+          "status": "COMPLETE",
+          "stdout": "value=U09URVJBSV9TWU5USEVUSUNfT05MWV9xNy/DqT96Mg==\n",
+          "stderr": "",
+          "redacted": false,
+          "exitCode": 0
+        },
+        "syntheticCanaryDetected": true
+      },
+      "testOutcome": "DECISION_MUTANT_KILLED_BY_CONFIDENTIALITY_ORACLE",
+      "featureFlagMutation": false,
+      "claim": "COMPONENT_SUBCLAIM_ONLY_NOT_FULL_ROW_OR_TOOL_ACCEPTANCE"
+    },
+    {
+      "id": "V02-MUTANT-BASE64URL",
+      "representation": "base64url",
+      "catalogScope": [
+        "LS-13",
+        "LS-14",
+        "LS-17"
+      ],
+      "publicUsefulInOriginalAndMutant": true,
+      "sourceOriginal": {
+        "requestStatus": "MATCHED",
+        "output": {
+          "status": "COMPLETE",
+          "stdout": "[REDACTED_SECRET_OUTPUT]",
+          "stderr": "",
+          "redacted": true,
+          "exitCode": 0
+        },
+        "canaryPresent": false
+      },
+      "testOnlyMutant": {
+        "requestStatus": "CLEAN",
+        "output": {
+          "status": "COMPLETE",
+          "stdout": "value=U09URVJBSV9TWU5USEVUSUNfT05MWV9xNy_DqT96Mg\n",
+          "stderr": "",
+          "redacted": false,
+          "exitCode": 0
+        },
+        "syntheticCanaryDetected": true
+      },
+      "testOutcome": "DECISION_MUTANT_KILLED_BY_CONFIDENTIALITY_ORACLE",
+      "featureFlagMutation": false,
+      "claim": "COMPONENT_SUBCLAIM_ONLY_NOT_FULL_ROW_OR_TOOL_ACCEPTANCE"
+    },
+    {
+      "id": "V02-MUTANT-HEX",
+      "representation": "hex",
+      "catalogScope": [
+        "LS-13",
+        "LS-14",
+        "LS-17"
+      ],
+      "publicUsefulInOriginalAndMutant": true,
+      "sourceOriginal": {
+        "requestStatus": "MATCHED",
+        "output": {
+          "status": "COMPLETE",
+          "stdout": "[REDACTED_SECRET_OUTPUT]",
+          "stderr": "",
+          "redacted": true,
+          "exitCode": 0
+        },
+        "canaryPresent": false
+      },
+      "testOnlyMutant": {
+        "requestStatus": "CLEAN",
+        "output": {
+          "status": "COMPLETE",
+          "stdout": "value=534f54455241495f53594e5448455449435f4f4e4c595f71372fc3a93f7a32\n",
+          "stderr": "",
+          "redacted": false,
+          "exitCode": 0
+        },
+        "syntheticCanaryDetected": true
+      },
+      "testOutcome": "DECISION_MUTANT_KILLED_BY_CONFIDENTIALITY_ORACLE",
+      "featureFlagMutation": false,
+      "claim": "COMPONENT_SUBCLAIM_ONLY_NOT_FULL_ROW_OR_TOOL_ACCEPTANCE"
+    },
+    {
+      "id": "V02-MUTANT-URL",
+      "representation": "url",
+      "catalogScope": [
+        "LS-13",
+        "LS-14",
+        "LS-17"
+      ],
+      "publicUsefulInOriginalAndMutant": true,
+      "sourceOriginal": {
+        "requestStatus": "MATCHED",
+        "output": {
+          "status": "COMPLETE",
+          "stdout": "[REDACTED_SECRET_OUTPUT]",
+          "stderr": "",
+          "redacted": true,
+          "exitCode": 0
+        },
+        "canaryPresent": false
+      },
+      "testOnlyMutant": {
+        "requestStatus": "CLEAN",
+        "output": {
+          "status": "COMPLETE",
+          "stdout": "value=SOTERAI_SYNTHETIC_ONLY_q7%2F%C3%A9%3Fz2\n",
+          "stderr": "",
+          "redacted": false,
+          "exitCode": 0
+        },
+        "syntheticCanaryDetected": true
+      },
+      "testOutcome": "DECISION_MUTANT_KILLED_BY_CONFIDENTIALITY_ORACLE",
+      "featureFlagMutation": false,
+      "claim": "COMPONENT_SUBCLAIM_ONLY_NOT_FULL_ROW_OR_TOOL_ACCEPTANCE"
+    },
+    {
+      "id": "V02-MUTANT-JSON",
+      "representation": "json",
+      "catalogScope": [
+        "LS-13",
+        "LS-14",
+        "LS-17"
+      ],
+      "publicUsefulInOriginalAndMutant": true,
+      "sourceOriginal": {
+        "requestStatus": "MATCHED",
+        "output": {
+          "status": "COMPLETE",
+          "stdout": "[REDACTED_SECRET_OUTPUT]",
+          "stderr": "",
+          "redacted": true,
+          "exitCode": 0
+        },
+        "canaryPresent": false
+      },
+      "testOnlyMutant": {
+        "requestStatus": "CLEAN",
+        "output": {
+          "status": "COMPLETE",
+          "stdout": "value=\"SOTERAI_SYNTHETIC_ONLY_q7/é?z2\"\n",
+          "stderr": "",
+          "redacted": false,
+          "exitCode": 0
+        },
+        "syntheticCanaryDetected": true
+      },
+      "testOutcome": "DECISION_MUTANT_KILLED_BY_CONFIDENTIALITY_ORACLE",
+      "featureFlagMutation": false,
+      "claim": "COMPONENT_SUBCLAIM_ONLY_NOT_FULL_ROW_OR_TOOL_ACCEPTANCE"
+    }
+  ],
+  "realFeatureWithdrawal": {
+    "status": "WITHHELD",
+    "canaryAbsent": true,
+    "classification": "AVAILABILITY_ONLY"
+  },
+  "testOnlyPreventionMutation": {
+    "killed": 6,
+    "survived": 0,
+    "qualification": "An in-memory decision-branch mutant demonstrates oracle sensitivity for these component subclaims. It is not the prescribed per-tool feature-flag mutation and cannot promote any catalog pair."
+  },
+  "remaining": [
+    "Actual tool routing/configuration and positive/negative controls",
+    "Full per-row scenario coverage",
+    "Feature-flag dependency versus prevention sensitivity",
+    "Native and human gates"
+  ],
+  "catalogPairsPromoted": 0,
+  "productWrites": 0,
+  "modelCalls": 0,
+  "nativeLaunches": 0,
+  "networkRequests": 0
+}

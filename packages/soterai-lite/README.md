@@ -13,7 +13,7 @@ Local managed secret protection for cooperative AI tools. Lite offers reviewed m
 - The managed gateway inspects supported bounded request bodies and supported encodings before forwarding, including request-local split-value recognition. Provider routing requires explicit configuration. Independent clients, unmanaged uploads and unsupported protocols are outside it.
 - Owner-reviewed adapters use pinned vendor controls and managed safe-read routes. The Coverage view distinguishes Gateway-routed, Vendor-controls-only and Uncovered routes after actual local verification.
 - Local source, history, config, Docker/Kubernetes, build-artifact and log reviews report possible exposures without executing project configuration or rewriting Git history. Findings are heuristic; unsupported input is withheld or reported unverified.
-- Reviewed pre-push and PSReadLine exclusion workflows are optional. **Pre-commit (F26a) is skipped and unsupported in this release:** final native verification was incomplete. New pre-commit install/resume is unavailable; existing owned-hook status and reviewed restore remain accessible.
+- Reviewed pre-push and PSReadLine exclusion workflows are optional. **Pre-commit (F26a) is an opt-in candidate pending native verification.** The owner can enable its machine setting and review install/resume; the setting remains off by default. Existing owned-hook status and reviewed restore remain accessible. Availability does not establish completed protection or release acceptance.
 - The Protection Center shows protected items, activity and scoped setup verification. Feature withdrawal preserves saved protection and recovery. A passing local self-check is limited to its tested surface.
 
 ## Tool and platform scope

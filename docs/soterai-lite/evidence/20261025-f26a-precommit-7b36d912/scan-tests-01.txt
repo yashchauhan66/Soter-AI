@@ -1,0 +1,286 @@
+﻿TAP version 13
+# Subtest: F26a scan admits a complete public staged tree only through four exact private process phases
+ok 1 - F26a scan admits a complete public staged tree only through four exact private process phases
+  ---
+  duration_ms: 853.5835
+  type: 'test'
+  ...
+# Subtest: F26a scan verifies version and exact empty listing but skips sizes and batch for an empty tree
+ok 2 - F26a scan verifies version and exact empty listing but skips sizes and batch for an empty tree
+  ---
+  duration_ms: 112.583
+  type: 'test'
+  ...
+# Subtest: F26a scan blocks canonical staged provider candidates without releasing content or finding metadata
+ok 3 - F26a scan blocks canonical staged provider candidates without releasing content or finding metadata
+  ---
+  duration_ms: 182.0467
+  type: 'test'
+  ...
+# Subtest: F26a scan blocks staged secret when the worktree is sanitized and never reads its body
+ok 4 - F26a scan blocks staged secret when the worktree is sanitized and never reads its body
+  ---
+  duration_ms: 175.3993
+  type: 'test'
+  ...
+# Subtest: F26a scan allows public staged bytes despite an unstaged secret and never reads its body
+ok 5 - F26a scan allows public staged bytes despite an unstaged secret and never reads its body
+  ---
+  duration_ms: 167.4518
+  type: 'test'
+  ...
+# Subtest: F26a scan preserves every path context when repeated object IDs have different canonical formats
+ok 6 - F26a scan preserves every path context when repeated object IDs have different canonical formats
+  ---
+  duration_ms: 410.8667
+  type: 'test'
+  ...
+# Subtest: F26a scan keeps128 public staged entries useful and fetches repeated objects only once
+ok 7 - F26a scan keeps128 public staged entries useful and fetches repeated objects only once
+  ---
+  duration_ms: 1661.7836
+  type: 'test'
+  ...
+# Subtest: F26a scan charges raw budget per path before object dedup with inclusive1MiB admission
+ok 8 - F26a scan charges raw budget per path before object dedup with inclusive1MiB admission
+  ---
+  duration_ms: 575.8289
+  type: 'test'
+  ...
+# Subtest: F26a scan refuses an oversize object size before requesting batch bodies
+ok 9 - F26a scan refuses an oversize object size before requesting batch bodies
+  ---
+  duration_ms: 130.5217
+  type: 'test'
+  ...
+# Subtest: F26a scan rejects path OID mode count and order listing drift against its exact captured index
+ok 10 - F26a scan rejects path OID mode count and order listing drift against its exact captured index
+  ---
+  duration_ms: 405.7097
+  type: 'test'
+  ...
+# Subtest: F26a scan requires the exact pinned Git version before staged entry listing
+ok 11 - F26a scan requires the exact pinned Git version before staged entry listing
+  ---
+  duration_ms: 151.1133
+  type: 'test'
+  ...
+# Subtest: F26a scan cannot skip malformed or missing size rows before object batch
+ok 12 - F26a scan cannot skip malformed or missing size rows before object batch
+  ---
+  duration_ms: 294.178
+  type: 'test'
+  ...
+# Subtest: F26a scan checks complete object framing and SHA1 before reporting an earlier candidate
+ok 13 - F26a scan checks complete object framing and SHA1 before reporting an earlier candidate
+  ---
+  duration_ms: 257.0091
+  type: 'test'
+  ...
+# Subtest: F26a scan rejects trailing batch records and bytes without a valid-prefix result
+ok 14 - F26a scan rejects trailing batch records and bytes without a valid-prefix result
+  ---
+  duration_ms: 151.5353
+  type: 'test'
+  ...
+# Subtest: F26a scan visits later known syntax failures even after an earlier staged candidate
+ok 15 - F26a scan visits later known syntax failures even after an earlier staged candidate
+  ---
+  duration_ms: 179.4776
+  type: 'test'
+  ...
+# Subtest: F26a scan treats late binary or invalid UTF8 blob admission as whole-tree unavailable
+ok 16 - F26a scan treats late binary or invalid UTF8 blob admission as whole-tree unavailable
+  ---
+  duration_ms: 520.79
+  type: 'test'
+  ...
+# Subtest: F26a scan preserves canonical content work withholding after earlier candidate blobs
+ok 17 - F26a scan preserves canonical content work withholding after earlier candidate blobs
+  ---
+  duration_ms: 194.7928
+  type: 'test'
+  ...
+# Subtest: F26a scan rejects forged index capabilities before process creation
+ok 18 - F26a scan rejects forged index capabilities before process creation
+  ---
+  duration_ms: 43.3252
+  type: 'test'
+  ...
+# Subtest: F26a scan disabled and throwing owner validity create no private process
+ok 19 - F26a scan disabled and throwing owner validity create no private process
+  ---
+  duration_ms: 43.9802
+  type: 'test'
+  ...
+# Subtest: F26a scan invalid initial clocks and deadlines refuse before every process
+ok 20 - F26a scan invalid initial clocks and deadlines refuse before every process
+  ---
+  duration_ms: 44.5906
+  type: 'test'
+  ...
+# Subtest: F26a scan uses one60second budget across all phases instead of renewing it per child
+ok 21 - F26a scan uses one60second budget across all phases instead of renewing it per child
+  ---
+  duration_ms: 111.0303
+  type: 'test'
+  ...
+# Subtest: F26a scan clock reversal between private phases is unavailable without a renewed budget
+ok 22 - F26a scan clock reversal between private phases is unavailable without a renewed budget
+  ---
+  duration_ms: 71.08
+  type: 'test'
+  ...
+# Subtest: F26a scan cannot complete from a process result before that process actually closes
+ok 23 - F26a scan cannot complete from a process result before that process actually closes
+  ---
+  duration_ms: 175.9431
+  type: 'test'
+  ...
+# Subtest: F26a scan active withdrawal returns STOP_UNCONFIRMED and stays busy until natural fake close
+ok 24 - F26a scan active withdrawal returns STOP_UNCONFIRMED and stays busy until natural fake close
+  ---
+  duration_ms: 71.1027
+  type: 'test'
+  ...
+# Subtest: F26a scan exact held ALLOW is revoked by owner withdrawal and cannot be cloned or revived
+ok 25 - F26a scan exact held ALLOW is revoked by owner withdrawal and cannot be cloned or revived
+  ---
+  duration_ms: 279.556
+  type: 'test'
+  ...
+# Subtest: F26a scan final effective-index drift revokes completed ALLOW and byte restoration cannot revive it
+ok 26 - F26a scan final effective-index drift revokes completed ALLOW and byte restoration cannot revive it
+  ---
+  duration_ms: 193.0176
+  type: 'test'
+  ...
+# Subtest: F26a scan duplicate starts and withdrawal before start never start another private process
+ok 27 - F26a scan duplicate starts and withdrawal before start never start another private process
+  ---
+  duration_ms: 220.6938
+  type: 'test'
+  ...
+# Subtest: F26a scan a closed unavailable process stops the tree without partial ALLOW or later phases
+ok 28 - F26a scan a closed unavailable process stops the tree without partial ALLOW or later phases
+  ---
+  duration_ms: 147.2806
+  type: 'test'
+  ...
+# Subtest: F26a size parser accepts canonical zero and inclusive64KiB sizes
+ok 29 - F26a size parser accepts canonical zero and inclusive64KiB sizes
+  ---
+  duration_ms: 17.2028
+  type: 'test'
+  ...
+# Subtest: F26a size parser preserves128 unique requested object identities in exact caller order
+ok 30 - F26a size parser preserves128 unique requested object identities in exact caller order
+  ---
+  duration_ms: 3.6126
+  type: 'test'
+  ...
+# Subtest: F26a size parser returns immutable request-local records without retaining caller buffers
+ok 31 - F26a size parser returns immutable request-local records without retaining caller buffers
+  ---
+  duration_ms: 1.5696
+  type: 'test'
+  ...
+# Subtest: F26a size parser rejects empty and129-object requests without a partial prefix
+ok 32 - F26a size parser rejects empty and129-object requests without a partial prefix
+  ---
+  duration_ms: 2.8056
+  type: 'test'
+  ...
+# Subtest: F26a size parser rejects missing objects and an incomplete final row
+ok 33 - F26a size parser rejects missing objects and an incomplete final row
+  ---
+  duration_ms: 2.3097
+  type: 'test'
+  ...
+# Subtest: F26a size parser rejects trailing objects blank lines and extra bytes
+ok 34 - F26a size parser rejects trailing objects blank lines and extra bytes
+  ---
+  duration_ms: 2.2292
+  type: 'test'
+  ...
+# Subtest: F26a size parser rejects reordered complete responses
+ok 35 - F26a size parser rejects reordered complete responses
+  ---
+  duration_ms: 2.1199
+  type: 'test'
+  ...
+# Subtest: F26a size parser rejects duplicate expected and duplicate returned identities
+ok 36 - F26a size parser rejects duplicate expected and duplicate returned identities
+  ---
+  duration_ms: 1.8744
+  type: 'test'
+  ...
+# Subtest: F26a size parser rejects unknown truncated uppercase and nonhex identities
+ok 37 - F26a size parser rejects unknown truncated uppercase and nonhex identities
+  ---
+  duration_ms: 1.9758
+  type: 'test'
+  ...
+# Subtest: F26a size parser rejects nonblob missing and ambiguous object type responses
+ok 38 - F26a size parser rejects nonblob missing and ambiguous object type responses
+  ---
+  duration_ms: 2.5383
+  type: 'test'
+  ...
+# Subtest: F26a size parser rejects noncanonical negative fractional exponential and unsafe decimal sizes
+ok 39 - F26a size parser rejects noncanonical negative fractional exponential and unsafe decimal sizes
+  ---
+  duration_ms: 1.6937
+  type: 'test'
+  ...
+# Subtest: F26a size parser rejects any blob larger than64KiB even after an admitted zero row
+ok 40 - F26a size parser rejects any blob larger than64KiB even after an admitted zero row
+  ---
+  duration_ms: 1.1761
+  type: 'test'
+  ...
+# Subtest: F26a size parser admits exactly1MiB unique raw sizes and refuses the next unique blob
+ok 41 - F26a size parser admits exactly1MiB unique raw sizes and refuses the next unique blob
+  ---
+  duration_ms: 2.0021
+  type: 'test'
+  ...
+# Subtest: F26a size parser rejects response bytes beyond12288 independently of object count
+ok 42 - F26a size parser rejects response bytes beyond12288 independently of object count
+  ---
+  duration_ms: 1.6314
+  type: 'test'
+  ...
+# Subtest: F26a size parser rejects CRLF tabs double spaces BOM NUL and prefixed framing
+ok 43 - F26a size parser rejects CRLF tabs double spaces BOM NUL and prefixed framing
+  ---
+  duration_ms: 1.8895
+  type: 'test'
+  ...
+# Subtest: F26a size parser fatally rejects late malformed UTF8 rather than returning earlier size rows
+ok 44 - F26a size parser fatally rejects late malformed UTF8 rather than returning earlier size rows
+  ---
+  duration_ms: 1.9599
+  type: 'test'
+  ...
+# Subtest: F26a size parser rejects invalid runtime raw inputs without coercion or proxy access
+ok 45 - F26a size parser rejects invalid runtime raw inputs without coercion or proxy access
+  ---
+  duration_ms: 1.725
+  type: 'test'
+  ...
+# Subtest: F26a size parser rejects invalid expected arrays sparse fields accessors and caller coercion
+ok 46 - F26a size parser rejects invalid expected arrays sparse fields accessors and caller coercion
+  ---
+  duration_ms: 1.7116
+  type: 'test'
+  ...
+1..46
+# tests 46
+# suites 0
+# pass 46
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 8604.4411

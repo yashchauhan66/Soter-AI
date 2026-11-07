@@ -1,0 +1,72 @@
+{
+  "status": "TEST_FIRST_SYNTAX_FROZEN_NOT_EXECUTED",
+  "time": "2026-10-25T14:29:48.436Z",
+  "fixture": {
+    "path": "packages/vscode-extension/src/__tests__/preCommitControllerBackend.review.test.ts",
+    "bytes": 18222,
+    "sha256": "7ebca5eefac45a04f61a47545a55be43291d75d4be168cc0defaf0c9811a88b1",
+    "archive": "preCommitControllerBackend.review.test.ts.frozen-01.txt"
+  },
+  "tests": 6,
+  "context": [
+    {
+      "path": "packages/vscode-extension/src/history-hooks/PreCommitController.ts",
+      "bytes": 23846,
+      "sha256": "83894324bcfc5ab11ac4f65845b3138b890c236be4fb51e76e86da90d01ad202",
+      "archive": "PreCommitController.ts.before-controller-backend-review-01.txt"
+    },
+    {
+      "path": "packages/vscode-extension/src/history-hooks/PreCommitOwnerService.ts",
+      "bytes": 13515,
+      "sha256": "5f68381f3ed4d4ab56af18db9deed98092fa6f4435fa594def0c5814ea58e536",
+      "archive": "PreCommitOwnerService.ts.before-controller-backend-review-01.txt"
+    },
+    {
+      "path": "packages/vscode-extension/src/history-hooks/PreCommitClient.ts",
+      "bytes": 9710,
+      "sha256": "d8dc5884538cec2b180d5da35c1547cc44560d9f8fbbb1f8681aab6ada8519c1",
+      "archive": "PreCommitClient.ts.before-controller-backend-review-01.txt"
+    },
+    {
+      "path": "packages/vscode-extension/src/history-hooks/PreCommitWire.ts",
+      "bytes": 8056,
+      "sha256": "68e0c31cc76440d0162abf7f2b5e9ba05d6b89986374645150008cd4d8b76e67",
+      "archive": "PreCommitWire.ts.before-controller-backend-review-01.txt"
+    },
+    {
+      "path": "packages/vscode-extension/src/history-hooks/PreCommitHookRestore.ts",
+      "bytes": 7994,
+      "sha256": "177ba0b956ed4d9ace6ad643473d8e4fdf1f48f5243f0d3f7b85a6e3a78824ca",
+      "archive": "PreCommitHookRestore.ts.before-controller-backend-review-01.txt"
+    },
+    {
+      "path": "packages/vscode-extension/src/history-hooks/PreCommitHookTransaction.ts",
+      "bytes": 10241,
+      "sha256": "753b4645fb6d0866ee60be2fd0bd147394ca668dc5151c23b092ce13db9ee4e4",
+      "archive": "PreCommitHookTransaction.ts.before-controller-backend-review-01.txt"
+    }
+  ],
+  "real": [
+    "Unchanged controller source executing its actual private descriptor and save methods in an isolated CJS wrapper",
+    "Canonical Ed25519 key serialization, hook text, wire verification, recovery receipt/digest and restore implementation",
+    "Descriptor filesystem only inside retained synthetic profile; canonical artifact observer and directory identity for descriptors"
+  ],
+  "doubles": [
+    "Phase2 editor/context and in-memory SecretStorage",
+    "Stable root/policy and boundary state",
+    "Complete owner discovery and synthetic checked hook CAS",
+    "Synthetic worker/runtime observations without reading installed runtime",
+    "Service lifecycle witness and signed startup descriptor without listener/Git/child",
+    "Decrypted backup retrieval boundary"
+  ],
+  "cases": [
+    "Valid signed prior descriptor resumes to a new signed session",
+    "Tampered prior descriptor preserved/refused",
+    "Foreign generation record and hook swap during restore review preserved",
+    "Foreign generation record swap during backup retrieval preserved through later save",
+    "Service unavailability revokes LIVE and held result authority independent of existing-descriptor issue",
+    "Missing signing key is not replaced"
+  ],
+  "validation": "Only TypeScript createSourceFile parse diagnostics checked. Fixture, production modules, tests, compiler, build, Git and native processes were not executed.",
+  "limits": "Six Windows-only cases, explicit synthetic dependency seams. No actual installer, Git, owner service listener, SecretStorage provider, runtime hashes, native editor, VSIX or independent evidence."
+}

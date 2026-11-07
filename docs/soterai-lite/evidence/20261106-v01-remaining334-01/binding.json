@@ -1,0 +1,1261 @@
+{
+  "status": "CURRENT_ORIGINAL_REMAINING16_334_PREPARED_NOT_RUN",
+  "sourceParent": "ff1558a0931437c3be71c2c0860cce708a055eb6",
+  "sourceProof": {
+    "path": "docs/soterai-lite/evidence/20261106-remaining-queue/candidate-01/full-inputs-02.json",
+    "bytes": 223848,
+    "sha256": "23fd63bb04122bf055f656a77424085b75ff3e3c813121c15034cd209fd1c8f6"
+  },
+  "fullAcceptance": {
+    "path": "docs/soterai-lite/evidence/20261106-remaining-queue/candidate-01/full-suite-acceptance-02.json",
+    "bytes": 32648,
+    "sha256": "95da08741866668bcaba10ffdb395b838875c078b58c7a0cb96caec4ade6c777"
+  },
+  "qualification": {
+    "path": "docs/soterai-lite/evidence/20261106-remaining-queue/candidate-01/current-package-qualification-01.json",
+    "bytes": 8739,
+    "sha256": "650ec4dd35938dbbce995c858063ffe773850f941f611a3925425fd2b2aefe1d"
+  },
+  "vsix": {
+    "path": "packages/soterai-lite/soterai-lite-0.7.0-resumed-20261106-attempt02.vsix",
+    "bytes": 1742104,
+    "sha256": "011f96d19d42dbefc2e56eb5399bf5c7f16a09d6b71b8bae5be9d66b2f3769ec"
+  },
+  "inspection": {
+    "path": "docs/soterai-lite/evidence/20261106-v01-current-01/content-inspection.json",
+    "bytes": 119647,
+    "sha256": "cb020ebff89543bb7e34857220b172fe2318c23727e0e6d6460467260235f43e"
+  },
+  "hostReview": {
+    "path": "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/public-vendor-observation-04.json",
+    "bytes": 119575,
+    "sha256": "f85de9ce11b45508dbd8a0f6ba6f267d1f826178d868330dd55fa676bde6f5b3"
+  },
+  "hostVersion": "1.145.1",
+  "code": {
+    "path": "../../../AppData/Local/Programs/Microsoft VS Code/Code.exe",
+    "bytes": 238751552,
+    "sha256": "2361449e044667cd5030a1396db3ac6785424ff7bf3047c691bc79e9011ae91d"
+  },
+  "extractedRoot": "docs/soterai-lite/evidence/20261106-v01-current-01/vsix-extracted-01/extension",
+  "frontendSha256": "b611dee998d11824d523b3d561704f4a5dc15e27274e6e1d85c7154b9d42cfa0",
+  "runtimes": [
+    {
+      "path": "docs/soterai-lite/evidence/20261106-v01-current-01/vsix-extracted-01/extension/dist/extension.js",
+      "bytes": 1957320,
+      "sha256": "b611dee998d11824d523b3d561704f4a5dc15e27274e6e1d85c7154b9d42cfa0"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-v01-current-01/vsix-extracted-01/extension/dist/local-ai-broker.js",
+      "bytes": 326860,
+      "sha256": "24c633aff86713f35133e6c103299a24bc2a4df0a6726c90462283ce9030b744"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-v01-current-01/vsix-extracted-01/extension/dist/pre-commit-client.js",
+      "bytes": 24512,
+      "sha256": "36e04d01bb9b38f8e402020318cc1d8d1a6d66176ec2be8c1630fbe6d012cacb"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-v01-current-01/vsix-extracted-01/extension/dist/soterai-mcp-server.js",
+      "bytes": 230255,
+      "sha256": "bac10b399ee9e28c069c72eae3254f2e84da155b2bcb2dc48467487d74845138"
+    }
+  ],
+  "families": [
+    {
+      "id": "logs",
+      "assertions": 25,
+      "phases": 2,
+      "helper": {
+        "path": "docs/soterai-lite/evidence/20261106-v01-remaining334-01/remaining-logs-01.ps1",
+        "bytes": 18574,
+        "sha256": "ebf600d48d67b8b31ecb8020d7adcfeeb4092678f4e6d9b5d80c0316629956da"
+      },
+      "driver": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/prebuilt-native-hosts-05/lite-logs-host.js",
+        "bytes": 43848,
+        "sha256": "4f014043b9ff4a46dadb4f29403e7f801a3e6cc429adb8ea2d99fb12bd48c251"
+      },
+      "sourceHelper": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-logs-01.ps1",
+        "bytes": 18572,
+        "sha256": "971e99af173d14396e5101751fa83ea5f8a224b8a20d10f662ca97c5bac83080"
+      },
+      "onlyDelta": "Current admission reference only; all original native driver/assertion/bootstrap/settings/phase bounds are unchanged.",
+      "originalHelper": {
+        "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-logs-01.ps1",
+        "bytes": 18588,
+        "sha256": "60e5e66e83040040a83f0a9aa8b8eccdd3fcb52b7b198acdf2508629a287b043"
+      }
+    },
+    {
+      "id": "owned-output",
+      "assertions": 19,
+      "phases": 1,
+      "helper": {
+        "path": "docs/soterai-lite/evidence/20261106-v01-remaining334-01/remaining-owned-output-01.ps1",
+        "bytes": 18442,
+        "sha256": "7529c665942b4fd8e128b24b10dd53c48f279b0a5c0f9c5c54abd83c14223888"
+      },
+      "driver": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/owned-output-driver-01/lite-log-vault-runtime-host.js",
+        "bytes": 48785,
+        "sha256": "d6bf835ca26e390eeb4b5af5006bca1ae710d6156a045eaa791ccea2713512b8"
+      },
+      "sourceHelper": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-owned-output-02.ps1",
+        "bytes": 18440,
+        "sha256": "339b6004d289234fd0dc2b1fd4bdcfba77aa78bedd06fcf7b9808a6d5ce212d7"
+      },
+      "onlyDelta": "Current admission reference only; all original native driver/assertion/bootstrap/settings/phase bounds are unchanged.",
+      "originalHelper": {
+        "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-owned-output-01.ps1",
+        "bytes": 18456,
+        "sha256": "c1c384fc56abc1f7b24ff7b318186e544e9c525a998a6e9117bfa51384b26b73"
+      }
+    },
+    {
+      "id": "artifact",
+      "assertions": 25,
+      "phases": 2,
+      "helper": {
+        "path": "docs/soterai-lite/evidence/20261106-v01-remaining334-01/remaining-artifact-01.ps1",
+        "bytes": 18568,
+        "sha256": "51d884cfbeeaada3b6b1da21443d755aa7950abae1b141a00473ee962b74cd36"
+      },
+      "driver": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/prebuilt-native-hosts-05/lite-artifact-host.js",
+        "bytes": 38301,
+        "sha256": "6540e23b5c1b7898fec45ede212502d971460bb0cfac2a55bc160873eb6e9a12"
+      },
+      "sourceHelper": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-artifact-01.ps1",
+        "bytes": 18566,
+        "sha256": "51589bf5c557cae18e448b98c1599592675df9080d86709a96dbf881921cf20e"
+      },
+      "onlyDelta": "Current admission reference only; all original native driver/assertion/bootstrap/settings/phase bounds are unchanged.",
+      "originalHelper": {
+        "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-artifact-01.ps1",
+        "bytes": 18582,
+        "sha256": "5991a5e107d502eae62ded38cb68e42e93dcf1bc745af6db4651dbde01d1632f"
+      }
+    },
+    {
+      "id": "streaming-output",
+      "assertions": 13,
+      "phases": 1,
+      "helper": {
+        "path": "docs/soterai-lite/evidence/20261106-v01-remaining334-01/remaining-streaming-output-01.ps1",
+        "bytes": 18506,
+        "sha256": "16f476d2c559587f75ee87077df4eb61ed9a3acb470f1a79d93652332ee552db"
+      },
+      "driver": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/prebuilt-native-hosts-05/lite-streaming-output-host.js",
+        "bytes": 12789,
+        "sha256": "25f981d467639de9e910e9765e71ca9e13f630cd9062cfd08c96d8ad4d1e9f9d"
+      },
+      "sourceHelper": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-streaming-output-01.ps1",
+        "bytes": 18504,
+        "sha256": "6cb11879c6f1949c6f31487b848ae0a41861094e31242fec11360ff525111464"
+      },
+      "onlyDelta": "Current admission reference only; all original native driver/assertion/bootstrap/settings/phase bounds are unchanged.",
+      "originalHelper": {
+        "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-streaming-output-01.ps1",
+        "bytes": 18520,
+        "sha256": "f607f52e55d236058fcb41cfc70c1c0fa77a9b2e6178f7f96773ff86da40cc7a"
+      }
+    },
+    {
+      "id": "vault-runtime",
+      "assertions": 12,
+      "phases": 1,
+      "helper": {
+        "path": "docs/soterai-lite/evidence/20261106-v01-remaining334-01/remaining-vault-runtime-01.ps1",
+        "bytes": 18503,
+        "sha256": "eed24cc74677a0ae39c37749d12e4493b04a3062221d44e3aede63c46ef0e025"
+      },
+      "driver": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/prebuilt-native-hosts-05/lite-vault-runtime-host.js",
+        "bytes": 27544,
+        "sha256": "79eadfbe075cfee1f4e2afd46ef9b60fdbb9c59c68b5ade4e2558fb8d46ac661"
+      },
+      "sourceHelper": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-vault-runtime-01.ps1",
+        "bytes": 18501,
+        "sha256": "9c776dfc059057fd0302a1ddd9cde318ac0cc049277bd8d1928c6f1276917351"
+      },
+      "onlyDelta": "Current admission reference only; all original native driver/assertion/bootstrap/settings/phase bounds are unchanged.",
+      "originalHelper": {
+        "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-vault-runtime-01.ps1",
+        "bytes": 18517,
+        "sha256": "205adf7bdc28cda4cb1af6c93b240511f2c21e6405746c554e7787507dbcfa9c"
+      }
+    },
+    {
+      "id": "cmd",
+      "assertions": 19,
+      "phases": 2,
+      "helper": {
+        "path": "docs/soterai-lite/evidence/20261106-v01-remaining334-01/remaining-cmd-01.ps1",
+        "bytes": 18582,
+        "sha256": "ffa3dd9e64fb49be4d716b8c61a1b9bf6efd82b74e126d09b22bd951e1b69ea4"
+      },
+      "driver": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/prebuilt-native-hosts-05/lite-cmd-host.js",
+        "bytes": 36788,
+        "sha256": "1fa4a1f7530492704242083f7c71fe159b50856bde4525808b55ff324809cb86"
+      },
+      "sourceHelper": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-cmd-01.ps1",
+        "bytes": 18580,
+        "sha256": "12f66261180bd3f81ebf0d70b40fc42481901cbfdd81fd37bc06acda6225dcd8"
+      },
+      "onlyDelta": "Current admission reference only; all original native driver/assertion/bootstrap/settings/phase bounds are unchanged.",
+      "originalHelper": {
+        "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-cmd-01.ps1",
+        "bytes": 18596,
+        "sha256": "b2a5445d9e2def861c1dfddc4e684d0a247c5a6ee1947e962223ad211d49928e"
+      }
+    },
+    {
+      "id": "gitbash",
+      "assertions": 19,
+      "phases": 2,
+      "helper": {
+        "path": "docs/soterai-lite/evidence/20261106-v01-remaining334-01/remaining-gitbash-01.ps1",
+        "bytes": 18586,
+        "sha256": "305fa66ff3aa67550559306fd2f57e95ffa594670b507c47daddd6e9a4a416d2"
+      },
+      "driver": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/prebuilt-native-hosts-05/lite-gitbash-host.js",
+        "bytes": 42493,
+        "sha256": "525d6efc1523dde42f3c98cf39c63f15e49692611d51777a53af795eca9d65d1"
+      },
+      "sourceHelper": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-gitbash-01.ps1",
+        "bytes": 18584,
+        "sha256": "37b2f6ff6b15994f15cfff94e2b7ea6d66b37f95ea6f67a72d5f90a479c5fc90"
+      },
+      "onlyDelta": "Current admission reference only; all original native driver/assertion/bootstrap/settings/phase bounds are unchanged.",
+      "originalHelper": {
+        "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-gitbash-01.ps1",
+        "bytes": 18600,
+        "sha256": "2573b479b4ddf44b5fe4dbb2e3b61e670b2063de83421d9db5c14f3b2fef4d0c"
+      }
+    },
+    {
+      "id": "history",
+      "assertions": 25,
+      "phases": 2,
+      "helper": {
+        "path": "docs/soterai-lite/evidence/20261106-v01-remaining334-01/remaining-history-01.ps1",
+        "bytes": 18586,
+        "sha256": "43cb4b8aefd9c9cc5c19830d458ae10786e91b37de25906c56b1b1a7f5a8a9c9"
+      },
+      "driver": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/prebuilt-native-hosts-05/lite-history-host.js",
+        "bytes": 40585,
+        "sha256": "a10fcf723b1edeb480572c1339cecbcd2ef2baa34c0892cb43ed3b057735efd5"
+      },
+      "sourceHelper": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-history-01.ps1",
+        "bytes": 18584,
+        "sha256": "f98304c6bd073b725f7fe8836f98630d001d33411932248bd990db691592c4d4"
+      },
+      "onlyDelta": "Current admission reference only; all original native driver/assertion/bootstrap/settings/phase bounds are unchanged.",
+      "originalHelper": {
+        "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-history-01.ps1",
+        "bytes": 18600,
+        "sha256": "2ebba4f9203412b955e7a302871c82568a9b1d05532369428f58dace0233b8ca"
+      }
+    },
+    {
+      "id": "ci",
+      "assertions": 25,
+      "phases": 2,
+      "helper": {
+        "path": "docs/soterai-lite/evidence/20261106-v01-remaining334-01/remaining-ci-01.ps1",
+        "bytes": 18575,
+        "sha256": "39986b5347da68e623e70faf4bbf6a4d7cc5b086c0faa5798fca3389721a88ee"
+      },
+      "driver": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/prebuilt-native-hosts-05/lite-ci-host.js",
+        "bytes": 638428,
+        "sha256": "9391d251d03b06476dcdb21c0169c0ccad29b827dcc7ceef2eb25804a7c30b51"
+      },
+      "sourceHelper": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-ci-01.ps1",
+        "bytes": 18573,
+        "sha256": "c5d3927f3fe583915f203057ae17c25036c7c96a0125907db02e7819c75ab5ba"
+      },
+      "onlyDelta": "Current admission reference only; all original native driver/assertion/bootstrap/settings/phase bounds are unchanged.",
+      "originalHelper": {
+        "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-ci-01.ps1",
+        "bytes": 18589,
+        "sha256": "b296d6ad6647905d97d160c3d0a50b76d3b02e38b3cbeda2cb8ece38316ff7d9"
+      }
+    },
+    {
+      "id": "service-account",
+      "assertions": 25,
+      "phases": 2,
+      "helper": {
+        "path": "docs/soterai-lite/evidence/20261106-v01-remaining334-01/remaining-service-account-01.ps1",
+        "bytes": 18614,
+        "sha256": "feba4e6401fad8cc6ae6bb20e1868d5d4422f93bad01ab3a687b56c851b0c8b0"
+      },
+      "driver": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/prebuilt-native-hosts-05/lite-service-account-host.js",
+        "bytes": 374878,
+        "sha256": "c7348717fdfead8fd7d9583d953a470a8da50aad63a3bb99f60211e6f2682f0b"
+      },
+      "sourceHelper": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-service-account-01.ps1",
+        "bytes": 18612,
+        "sha256": "76a556413975b071f2e6421f78f365b21150381051bf4222fd519cf503460c78"
+      },
+      "onlyDelta": "Current admission reference only; all original native driver/assertion/bootstrap/settings/phase bounds are unchanged.",
+      "originalHelper": {
+        "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-service-account-01.ps1",
+        "bytes": 18628,
+        "sha256": "1e42d014161f463a29d0b4bea642e6c2bf16cd096dfcc6747e3bfa124a598835"
+      }
+    },
+    {
+      "id": "registry",
+      "assertions": 25,
+      "phases": 2,
+      "helper": {
+        "path": "docs/soterai-lite/evidence/20261106-v01-remaining334-01/remaining-registry-01.ps1",
+        "bytes": 18593,
+        "sha256": "c3b4b3d8700e562bb2340f531d478b6eaa462471bf3f9ee91338301c71a3f77a"
+      },
+      "driver": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/prebuilt-native-hosts-05/lite-registry-host.js",
+        "bytes": 378804,
+        "sha256": "8798c3a07df2770e3f06460105238ff0b65c225fd58ee6013a0fe9d9745c6633"
+      },
+      "sourceHelper": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-registry-01.ps1",
+        "bytes": 18591,
+        "sha256": "dc811ff28bf59a54526bfc9e6ab0d75e2d8b333ad2a41842fbbdc63842f3dd65"
+      },
+      "onlyDelta": "Current admission reference only; all original native driver/assertion/bootstrap/settings/phase bounds are unchanged.",
+      "originalHelper": {
+        "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-registry-01.ps1",
+        "bytes": 18607,
+        "sha256": "1b4e07177a3fb37a017d10f3dac176211276466e38dbf725b30ecf42f0812b07"
+      }
+    },
+    {
+      "id": "terraform",
+      "assertions": 25,
+      "phases": 2,
+      "helper": {
+        "path": "docs/soterai-lite/evidence/20261106-v01-remaining334-01/remaining-terraform-01.ps1",
+        "bytes": 18596,
+        "sha256": "f500708a77a7c77843b6e051f4ec06b4f500cd452123431c06c94c32a3a4e78d"
+      },
+      "driver": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/prebuilt-native-hosts-05/lite-terraform-host.js",
+        "bytes": 379837,
+        "sha256": "56baeb6b5c28e25691bca0ea9213c186edc2dce83fa815ac3bed323778ce72b5"
+      },
+      "sourceHelper": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-terraform-01.ps1",
+        "bytes": 18594,
+        "sha256": "16fdf188aabc74ca1013fb2c8fc90e5dc19dc08d881a08d592d67e51fb435033"
+      },
+      "onlyDelta": "Current admission reference only; all original native driver/assertion/bootstrap/settings/phase bounds are unchanged.",
+      "originalHelper": {
+        "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-terraform-01.ps1",
+        "bytes": 18610,
+        "sha256": "83d543c76e569ffe822637ea5c239761b56064fbe56f3ea4a9df4244ea7bb2f0"
+      }
+    },
+    {
+      "id": "container",
+      "assertions": 25,
+      "phases": 2,
+      "helper": {
+        "path": "docs/soterai-lite/evidence/20261106-v01-remaining334-01/remaining-container-01.ps1",
+        "bytes": 18596,
+        "sha256": "66480be1b0ef7a627ecd07afd619ca93ea80f2120b86b95874299f899d02c967"
+      },
+      "driver": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/prebuilt-native-hosts-05/lite-container-host.js",
+        "bytes": 288133,
+        "sha256": "c7b475a18a921ffeebc0a2f315b14cdee92b9a06264c79ec23229b794794415d"
+      },
+      "sourceHelper": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-container-01.ps1",
+        "bytes": 18594,
+        "sha256": "271991eae42975429c34c0da38b5781fdcfb1d162a6b450a4b71a6c76269b3da"
+      },
+      "onlyDelta": "Current admission reference only; all original native driver/assertion/bootstrap/settings/phase bounds are unchanged.",
+      "originalHelper": {
+        "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-container-01.ps1",
+        "bytes": 18610,
+        "sha256": "4325a1129f9ea3b879063a1ee31e0da2999932168202e139a7f8cc8b1a47c406"
+      }
+    },
+    {
+      "id": "source",
+      "assertions": 21,
+      "phases": 2,
+      "helper": {
+        "path": "docs/soterai-lite/evidence/20261106-v01-remaining334-01/remaining-source-01.ps1",
+        "bytes": 18598,
+        "sha256": "1bb0b7b17e392b7b02bf25936ec4e146afe6fe9c0170a4189836cd55e54fe1d6"
+      },
+      "driver": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/prebuilt-native-hosts-05/lite-source-host.js",
+        "bytes": 21099,
+        "sha256": "05f022d000f2842765e7791a6ce72ea055c11c4324a90d4d8336bd2b0db3972b"
+      },
+      "sourceHelper": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-source-01.ps1",
+        "bytes": 18596,
+        "sha256": "62b857147085e3f88fe340f1dfa3db2515d1b8a7d64dbd8cb98438bc1692d793"
+      },
+      "onlyDelta": "Current admission reference only; all original native driver/assertion/bootstrap/settings/phase bounds are unchanged.",
+      "originalHelper": {
+        "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-source-01.ps1",
+        "bytes": 18612,
+        "sha256": "1b28877dea8dbdc7d11b2575ac2910704c81f22c2485caa59872b4418f05b8ac"
+      }
+    },
+    {
+      "id": "hygiene",
+      "assertions": 21,
+      "phases": 2,
+      "helper": {
+        "path": "docs/soterai-lite/evidence/20261106-v01-remaining334-01/remaining-hygiene-01.ps1",
+        "bytes": 18599,
+        "sha256": "dd914ba18ada20a0600dcfdb13157a602922c3132db5f7795810d2d6c49f1bca"
+      },
+      "driver": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/prebuilt-native-hosts-05/lite-hygiene-host.js",
+        "bytes": 20170,
+        "sha256": "ce2e25225165ad53f524f4a02048560014a3ac79190b87a58c541249e6a2f16a"
+      },
+      "sourceHelper": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-hygiene-01.ps1",
+        "bytes": 18597,
+        "sha256": "ca076262caee4a0d3c8398eca3d1f99d83ca456a7f89c00f74a56151228fb093"
+      },
+      "onlyDelta": "Current admission reference only; all original native driver/assertion/bootstrap/settings/phase bounds are unchanged.",
+      "originalHelper": {
+        "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-hygiene-01.ps1",
+        "bytes": 18613,
+        "sha256": "8473fa579df748a16f61956ebd851fd5f5e4086d79866568f71998f45c4440ac"
+      }
+    },
+    {
+      "id": "vault",
+      "assertions": 10,
+      "phases": 2,
+      "helper": {
+        "path": "docs/soterai-lite/evidence/20261106-v01-remaining334-01/remaining-vault-01.ps1",
+        "bytes": 18623,
+        "sha256": "5269c3577b64e70ed2048982de433bcedfed4bac1d788999c455c6f37afa516d"
+      },
+      "driver": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/prebuilt-native-hosts-05/lite-vault-host.js",
+        "bytes": 29928,
+        "sha256": "2b98b5e9943812e100d1dbcd160dffa8a015cbce06405e1397f3bc071062dcd4"
+      },
+      "sourceHelper": {
+        "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/affected-vault-01.ps1",
+        "bytes": 18621,
+        "sha256": "866586428d779c91d8ed32f987862576181aa58923eccb5d32a936a63b736ecb"
+      },
+      "onlyDelta": "Current admission reference only; all original native driver/assertion/bootstrap/settings/phase bounds are unchanged.",
+      "originalHelper": {
+        "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-current-vault-01.ps1",
+        "bytes": 18637,
+        "sha256": "c0021d08b6de897484e2821c6cd7a446e5f40c47ebf69c03d66621a4dec674d6"
+      }
+    }
+  ],
+  "baseline": {
+    "path": "docs/soterai-lite/evidence/20261014-f06-vault-9c361a42/security-comparison-01.json",
+    "bytes": 2571,
+    "sha256": "c1cde060f5f062280b2e0961b49262569151ab716cf425b553363cb6f8646718"
+  },
+  "residualRows": [
+    {
+      "attack": ".env redacted preview",
+      "status": "BLOCKED_SCOPED"
+    },
+    {
+      "attack": ".env direct filesystem read",
+      "status": "LEAK_CONFIRMED"
+    },
+    {
+      "attack": "nested/private.txt redacted preview",
+      "status": "BLOCKED_SCOPED"
+    },
+    {
+      "attack": "nested/private.txt direct filesystem read",
+      "status": "LEAK_CONFIRMED"
+    },
+    {
+      "attack": "private.pem redacted preview",
+      "status": "BLOCKED_SCOPED"
+    },
+    {
+      "attack": "private.pem direct filesystem read",
+      "status": "LEAK_CONFIRMED"
+    },
+    {
+      "attack": "selected.txt redacted preview",
+      "status": "BLOCKED_SCOPED"
+    },
+    {
+      "attack": "selected.txt direct filesystem read",
+      "status": "LEAK_CONFIRMED"
+    },
+    {
+      "attack": "hardlink direct read",
+      "status": "LEAK_CONFIRMED"
+    },
+    {
+      "attack": "hardlink redacted preview",
+      "status": "BLOCKED_SCOPED"
+    },
+    {
+      "attack": "junction direct read",
+      "status": "LEAK_CONFIRMED"
+    },
+    {
+      "attack": "junction redacted preview",
+      "status": "BLOCKED_SCOPED"
+    },
+    {
+      "attack": "repository deny rule",
+      "status": "BLOCKED_SCOPED"
+    },
+    {
+      "attack": "agent edits repository deny policy",
+      "status": "BLOCKED_SCOPED"
+    },
+    {
+      "attack": "runtime environment and command output",
+      "status": "LEAK_CONFIRMED"
+    },
+    {
+      "attack": "Git object after working-tree replacement",
+      "status": "LEAK_CONFIRMED"
+    },
+    {
+      "attack": "encoded chunked exfiltration",
+      "status": "LEAK_CONFIRMED"
+    }
+  ],
+  "driverProvenance": {
+    "path": "docs/soterai-lite/evidence/20261104-final-gate-readiness/affected-driver-provenance-current-01.json",
+    "bytes": 38536,
+    "sha256": "8505f71d4f4d08b986614a09fd6e4bdb6ffbc79778cb8319cc45e194dcd9a5d9"
+  },
+  "sourceInputs": [
+    {
+      "path": "apps/local-ai-broker/src/BoundedJson.ts",
+      "bytes": 5200,
+      "sha256": "69715861b1a544e4af17b7898fa2d8a92475cef1e0ad28af642aa6fc124f7c31"
+    },
+    {
+      "path": "node_modules/jsonc-parser/lib/esm/impl/edit.js",
+      "bytes": 8613,
+      "sha256": "7e7bf98e740f560026df079056d3b0f5f34628124a8d34e2765fb101dde12911"
+    },
+    {
+      "path": "node_modules/jsonc-parser/lib/esm/impl/format.js",
+      "bytes": 11098,
+      "sha256": "e57dee56700a844b18dea11548f9ba42b17bc857bde5bcd39554af06ca95bb1f"
+    },
+    {
+      "path": "node_modules/jsonc-parser/lib/esm/impl/parser.js",
+      "bytes": 25765,
+      "sha256": "74fae1bbebf290a04e46c5457ac5d97988146a5503ea35d9f0c4c3768acd5a26"
+    },
+    {
+      "path": "node_modules/jsonc-parser/lib/esm/impl/scanner.js",
+      "bytes": 19188,
+      "sha256": "e737e1774f87ca88d85d73e3bafff688b78cac06b81c53b96c54da8b3ca86cd9"
+    },
+    {
+      "path": "node_modules/jsonc-parser/lib/esm/impl/string-intern.js",
+      "bytes": 1034,
+      "sha256": "3a0aad3f56c3e0728812c7584568c0ff200bce1ca58cf40e946f01fdb54c5752"
+    },
+    {
+      "path": "node_modules/jsonc-parser/lib/esm/main.js",
+      "bytes": 9363,
+      "sha256": "72ff182105e158a1505ca3ecbf3f30359abb138a3980edaef1db7f4010ffb7dc"
+    },
+    {
+      "path": "packages/core/src/OwnedSinkMetadata.ts",
+      "bytes": 3949,
+      "sha256": "91c8fcf28e3efa3b69651ef0e685fd08d3844f6d06b1e20d00b7c26a3138eee2"
+    },
+    {
+      "path": "packages/guard-core/dist/ApprovalToken.js",
+      "bytes": 6779,
+      "sha256": "b041cd14995f6b5158553107531576852ba760ba3b5f8f60525c399c1d20fead"
+    },
+    {
+      "path": "packages/guard-core/dist/BrokerScanner.js",
+      "bytes": 6274,
+      "sha256": "6b4dfc94d52e657bb586e2e632d7c1facce024b9d1b8fb3ddefcbd072ab8cd38"
+    },
+    {
+      "path": "packages/guard-core/dist/Canary.js",
+      "bytes": 4691,
+      "sha256": "b5131fd65e8affe0abb69a273d97a9068b3229b97861d4ecd08e0be5489fc57e"
+    },
+    {
+      "path": "packages/guard-core/dist/CapabilityRegistry.js",
+      "bytes": 34683,
+      "sha256": "e8f00efe304242d57cf28c4bce9a5e4e8ce81178d13abad64fd18e528452d44a"
+    },
+    {
+      "path": "packages/guard-core/dist/CheckpointRollback.js",
+      "bytes": 10691,
+      "sha256": "c8e81273794a1710a3e9890d7517c8d60d874baef6f521005c9830ce30044ae6"
+    },
+    {
+      "path": "packages/guard-core/dist/ContextRedactor.js",
+      "bytes": 3052,
+      "sha256": "9fc8cbc0fcabea2a84e563cf442b82e297e80ba1dd20c963cd6936ba836a4f39"
+    },
+    {
+      "path": "packages/guard-core/dist/ControlledTerminal.js",
+      "bytes": 5402,
+      "sha256": "9e0b79f1567c48bb38bc56db8a6146a37d228eb410d5c922bc9d40ce9b410535"
+    },
+    {
+      "path": "packages/guard-core/dist/CoverageMatrix.js",
+      "bytes": 4668,
+      "sha256": "947804c40f3ea5da93cd25a281c3109fa8c342ecd40b9fbb0085b509660f6199"
+    },
+    {
+      "path": "packages/guard-core/dist/DecisionEngine.js",
+      "bytes": 12229,
+      "sha256": "c2a6ebdaaee4ecedd7e6fc16173abb6930a312922d0ff7de680cfce95452cfd2"
+    },
+    {
+      "path": "packages/guard-core/dist/EvidenceMinimizer.js",
+      "bytes": 1473,
+      "sha256": "45eb0653f7ce5934710b249075264e2d85d8766fe761a796e5dac5bbad392e95"
+    },
+    {
+      "path": "packages/guard-core/dist/ExtensionIsolationPolicy.js",
+      "bytes": 4472,
+      "sha256": "388c2e2a80c00bfa964656ec39e6e60bddd305c2e4676e127d5baca958ccbe56"
+    },
+    {
+      "path": "packages/guard-core/dist/ExtensionRiskScanner.js",
+      "bytes": 6546,
+      "sha256": "d009d2476d91fc8f501ffb6f194493a65de60dfa60578f4d7f6482c075bf3589"
+    },
+    {
+      "path": "packages/guard-core/dist/FileOperationFirewall.js",
+      "bytes": 5709,
+      "sha256": "84fa3c50f7b01c9c5d4f8339295613e8cac8380bae6d060888dba445d643820f"
+    },
+    {
+      "path": "packages/guard-core/dist/GovernancePolicy.js",
+      "bytes": 3033,
+      "sha256": "73403668e77a44fd5cb9279ab0177b6184e5bce4e34eec80dfcbddc05b859561"
+    },
+    {
+      "path": "packages/guard-core/dist/HashCache.js",
+      "bytes": 7809,
+      "sha256": "ffa5487a66c52ef1bcb05a3a6bcc5196ba8abae6e4c67073ee85fcd3b3f00d0f"
+    },
+    {
+      "path": "packages/guard-core/dist/Ledger.js",
+      "bytes": 8790,
+      "sha256": "65ba22a2968655c9be12fb939bf806006b889d2a8cd38bb09176b2e80dfb78db"
+    },
+    {
+      "path": "packages/guard-core/dist/LitePolicyCatalog.js",
+      "bytes": 10382,
+      "sha256": "4abfd336bd4a9d26453460653fc3f75856b7320527cb6da159043724d581abce"
+    },
+    {
+      "path": "packages/guard-core/dist/MCPCredentialBoundary.js",
+      "bytes": 3665,
+      "sha256": "3a4ce5afa1d3c9ddc21e4f924de546b81ec8a1b2138c9be0ba0c78220c3fc897"
+    },
+    {
+      "path": "packages/guard-core/dist/MCPGateway.js",
+      "bytes": 4908,
+      "sha256": "1f93d209a74ea977167344d69b911569db9eb7590a160a54d6f68201759ebc37"
+    },
+    {
+      "path": "packages/guard-core/dist/MCPPolicyAnalyzer.js",
+      "bytes": 10043,
+      "sha256": "257eb4f978f07d44064f4b76a3a640f5f972693232222d1b775eb403ca4622b1"
+    },
+    {
+      "path": "packages/guard-core/dist/MemorySession.js",
+      "bytes": 4817,
+      "sha256": "c2cda00fe3577a736df57ad1a1b82e89b1e8d87caa5ee262e97d105c8d52bb2f"
+    },
+    {
+      "path": "packages/guard-core/dist/NetworkEgressPolicy.js",
+      "bytes": 7031,
+      "sha256": "b9ae06b8a734a8204a95bdddec7b501ac978d601902ca54e023d09a22f5f53a1"
+    },
+    {
+      "path": "packages/guard-core/dist/OutputLeakScanner.js",
+      "bytes": 3287,
+      "sha256": "00e10b9699a1784faab1d243d6db42fa7e0730a45738686a9cc0c1c2f5b256eb"
+    },
+    {
+      "path": "packages/guard-core/dist/PolicyEvaluator.js",
+      "bytes": 3720,
+      "sha256": "33eb29ba48cfb47e6637b695d034e3a8b6f87c1548a73d102221a517cad5db30"
+    },
+    {
+      "path": "packages/guard-core/dist/ProcessSandboxPolicy.js",
+      "bytes": 5662,
+      "sha256": "49e10546300fd2d2595fbb39a86196846b278235c1f1aedd00e30f122cf5c440"
+    },
+    {
+      "path": "packages/guard-core/dist/ProjectPolicy.js",
+      "bytes": 7843,
+      "sha256": "3dbab85be929e9866ce59d4627d14d5e2dd9a4eb8063cb344347a4c57660ef36"
+    },
+    {
+      "path": "packages/guard-core/dist/Redactor.js",
+      "bytes": 15935,
+      "sha256": "cfaf0c082c38effc48150940506edd1295ef1c85fb002795623b0b8f30c4c20f"
+    },
+    {
+      "path": "packages/guard-core/dist/RuntimeDiscovery.js",
+      "bytes": 5072,
+      "sha256": "561bc9f2f85fb67a9ba3c5055540c60c1954ffb7b7d9e299131dca9bca76eff3"
+    },
+    {
+      "path": "packages/guard-core/dist/RuntimePolicyEngine.js",
+      "bytes": 8640,
+      "sha256": "75697fc8e9bd553dfdd937d0b2ae3753dbd665bf915b9a99994aea4208338d34"
+    },
+    {
+      "path": "packages/guard-core/dist/SafeContextBuilder.js",
+      "bytes": 9620,
+      "sha256": "0c011b4a595ac09360d9ca815f198713a706364b54e8e3e3482cbe59aa5dd88b"
+    },
+    {
+      "path": "packages/guard-core/dist/SafeMode.js",
+      "bytes": 8126,
+      "sha256": "f858c4f9c28ac4afe16b75b90ef4b45c37304ec3f79d35ec9f15130edf884333"
+    },
+    {
+      "path": "packages/guard-core/dist/TaintEngine.js",
+      "bytes": 2761,
+      "sha256": "826eb8f46c2261b2e2ced42dfba8c1bde76e827710ca236c56c7db618290ca86"
+    },
+    {
+      "path": "packages/guard-core/dist/Vault.js",
+      "bytes": 9393,
+      "sha256": "cd9e52c0fc14d134a574689a157e154d36c477d44bfea92bf9dd92afade5b1b9"
+    },
+    {
+      "path": "packages/guard-core/dist/VaultCrypto.js",
+      "bytes": 3334,
+      "sha256": "a76fc4ccd13c3c98aad821fa0cda8d1e7724630fb7d3d09dd565586495cd80c8"
+    },
+    {
+      "path": "packages/guard-core/dist/detectors/AIGeneratedCodeRiskDetector.js",
+      "bytes": 4872,
+      "sha256": "e7ee298fa854ac851c4e52e5671a204b540c39e8536ee8d51ef31acc111fc44b"
+    },
+    {
+      "path": "packages/guard-core/dist/detectors/EncodedSecretDetector.js",
+      "bytes": 6588,
+      "sha256": "28e21e18c744600f0663a2d1dced50e2bbbdf513b61ee480e4df328bd21f0478"
+    },
+    {
+      "path": "packages/guard-core/dist/detectors/EnvFileDetector.js",
+      "bytes": 1831,
+      "sha256": "19b135030df2e1f5f1e89331376bdba9e7a0dcb0e075102ffffda418e388db06"
+    },
+    {
+      "path": "packages/guard-core/dist/detectors/FileContextRiskDetector.js",
+      "bytes": 4248,
+      "sha256": "e3ec4a61595168ab8ff8efe1072abc3b4f910b98d486e6d99f05d240ed8ea9cf"
+    },
+    {
+      "path": "packages/guard-core/dist/detectors/IndiaPIIDetector.js",
+      "bytes": 3177,
+      "sha256": "43f31bf358abbef1633bedc954e30de4ae913cb84f50025cb618a2c72b4c3a4e"
+    },
+    {
+      "path": "packages/guard-core/dist/detectors/JailbreakLiteDetector.js",
+      "bytes": 10741,
+      "sha256": "05744da522c21ea71b6c78d1812aa5deac394d6c6afc6d707e4537d48f4058fe"
+    },
+    {
+      "path": "packages/guard-core/dist/detectors/MCPConfigRiskDetector.js",
+      "bytes": 2807,
+      "sha256": "44c6036f27a2f2b6fadfdae0ddd07134063e505bcbbcf322af24f1f680e6303d"
+    },
+    {
+      "path": "packages/guard-core/dist/detectors/OutputExfiltrationDetector.js",
+      "bytes": 4020,
+      "sha256": "72439e44b89479c926aca1e43eeb2554528017e7348a9c097033dc47187e03bb"
+    },
+    {
+      "path": "packages/guard-core/dist/detectors/PIIDetector.js",
+      "bytes": 3004,
+      "sha256": "09eb678a36d3a4229aac48753645801428799748e3c347b2623e04be4bbf0a3c"
+    },
+    {
+      "path": "packages/guard-core/dist/detectors/PromptInjectionLiteDetector.js",
+      "bytes": 17071,
+      "sha256": "47245977ed5e455c77750b9289fe6cd62250d6553cc330183b9cdf9cd5f42a32"
+    },
+    {
+      "path": "packages/guard-core/dist/detectors/RepoInstructionPoisoningDetector.js",
+      "bytes": 4295,
+      "sha256": "3b2b766ba552581f3563d520d63798d0bc5789904d39fa39320d064f9120bb50"
+    },
+    {
+      "path": "packages/guard-core/dist/detectors/SecretDetector.js",
+      "bytes": 32181,
+      "sha256": "564476c85ca12385137a9b37e50ef4abdf3c15725c5f52bc4b3cdedebc1432b4"
+    },
+    {
+      "path": "packages/guard-core/dist/detectors/TerminalCommandRiskDetector.js",
+      "bytes": 7059,
+      "sha256": "f64e3ddf6f8e1b95d332d1f677327d1914c3940985c554d0ad918a556fa33e1a"
+    },
+    {
+      "path": "packages/guard-core/dist/detectors/index.js",
+      "bytes": 6993,
+      "sha256": "6609d1fec2c87e2ae1d42c6452338e09bd6f98b5dd73531627f2fe17daf3be6a"
+    },
+    {
+      "path": "packages/guard-core/dist/detectors/utils.js",
+      "bytes": 3561,
+      "sha256": "873e7266377cc36fe42e22c640ac345a4b8862896bbfc7d4e1b6cec21110f1bd"
+    },
+    {
+      "path": "packages/guard-core/dist/index.js",
+      "bytes": 2896,
+      "sha256": "deff36cace0cded0f52e9cf0b56d2550f60cb0ecdf20d31c310ed82e0fefec5a"
+    },
+    {
+      "path": "packages/guard-core/dist/sensitiveFiles.js",
+      "bytes": 8275,
+      "sha256": "e9ff335cb9428f6725e15c18b91b3f68a82e348e2a3f7f2b22b4376884dac0ee"
+    },
+    {
+      "path": "packages/guard-core/dist/types.js",
+      "bytes": 298,
+      "sha256": "3d7d9f9a8a51ec9c98ed93cb98034f0e26454120835b63715fb8d73ae508752a"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/host/agentTools.host.ts",
+      "bytes": 11698,
+      "sha256": "071a5de52d443117892f6935bf87888555d95f996d982e4004baefccc3f5f644"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/host/commandSweep.host.ts",
+      "bytes": 24631,
+      "sha256": "ba3c2e9007a971594969c620b2757d9fee41e002248c964a8404703ccc203464"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/host/controlPanel.host.ts",
+      "bytes": 26395,
+      "sha256": "ab0330d35eafc45a55519bfcd6c4d0327c287efc7c22fca106719c472e74c574"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/host/discoverability.host.ts",
+      "bytes": 17302,
+      "sha256": "9e1d54806c956563d76b89a8189c9b584c75e127fcc97c302c55a05b9bd7794f"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/host/index.ts",
+      "bytes": 2279,
+      "sha256": "512afcb183dfb9b0de833e68c32cd50b747c6fb48e3816a8a1f6ea2f709562c3"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/host/liteEditorScanner.host.ts",
+      "bytes": 22928,
+      "sha256": "39f15c8adada3dc7b6621bbc90e7287ddfc2587a535e5dd57b1402801c2bfbc0"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/host/liteGatewayPolicyChecks.host.ts",
+      "bytes": 10029,
+      "sha256": "796185a6126df50927fb8905e97b1a8bdc3fb4659044a64d41f19e8076efd034"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/host/liteMcpScanner.host.ts",
+      "bytes": 22647,
+      "sha256": "86a92a5ba2c460d8644075754d71f245ea3bf4380a2b5d79b870ff449d434341"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/host/litePowerShell51.host.ts",
+      "bytes": 38186,
+      "sha256": "e82b361cc31286c7d3bb1229ece1d718569697f3f5f402c89253fb2fc24058f7"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/host/liteSafeReadMcp.host.ts",
+      "bytes": 70181,
+      "sha256": "00c79cd31b985a9fd1a5cf18480bcb0130d33ae77f1dbbaeb7b0a709b5f9dde4"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/host/liteSafeReadMcpChecks.host.ts",
+      "bytes": 13609,
+      "sha256": "8aedc552739ab2d234afe6d3ab95a60fbe9e1f6986ac082a35607d046d4ac555"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/host/projectPrivacy.host.ts",
+      "bytes": 13350,
+      "sha256": "170825ead049deabcb391d8ae40edbfb51e1ce27b06cc34301c761a4774b674b"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/host/realUser.host.ts",
+      "bytes": 40835,
+      "sha256": "ce41ffdaafae3838e43fc6a999de2ce2159125c73c9c9dbb96ed2abe348932ad"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/host/securityReview.host.ts",
+      "bytes": 10374,
+      "sha256": "6ba33b393e5a14cec6e9bd59757898985fa7e37b45552e1a8ee800c2d4b7be81"
+    },
+    {
+      "path": "packages/vscode-extension/src/adapters/ClineHookProtocol.ts",
+      "bytes": 10326,
+      "sha256": "fd9ba283b79863b048e6d977eacaca5c18ee61248ba587005111e723cadfb21c"
+    },
+    {
+      "path": "packages/vscode-extension/src/advanced/egressFirewall.ts",
+      "bytes": 9715,
+      "sha256": "83831ed186e480c0773f606c8de296ca0d9e0ed72ec5e791f89fc77259e13b82"
+    },
+    {
+      "path": "packages/vscode-extension/src/advanced/unicodeFolding.ts",
+      "bytes": 6480,
+      "sha256": "6528bcb394f302b0acfee6f0bb225289dd03725c920aefde80422b687aa1f54f"
+    },
+    {
+      "path": "packages/vscode-extension/src/agent/SafeReadProtocol.ts",
+      "bytes": 5826,
+      "sha256": "541bffe84d6385c2a5afa44d2c09c0eaa90e6e706ae65b90bef21c81f462f35d"
+    },
+    {
+      "path": "packages/vscode-extension/src/agent/SealedBridgeTicket.ts",
+      "bytes": 6306,
+      "sha256": "58fe62545d4a41997490b1059f7625cd5729578ee3045ef1e220c241a59f117a"
+    },
+    {
+      "path": "packages/vscode-extension/src/agent/mcpServer.ts",
+      "bytes": 15672,
+      "sha256": "78c84daa2371e89c490421d931dd5f0ffb7a2d854b57e88f6e2e16c15b2ccf7b"
+    },
+    {
+      "path": "packages/vscode-extension/src/agent/toolLogic.ts",
+      "bytes": 11880,
+      "sha256": "4593bc5c37d16b3a8a2528703caf77536180a0236e7fd6f0c3ac643ca5f03fb8"
+    },
+    {
+      "path": "packages/vscode-extension/src/config-scanners/EditorSecretPlan.ts",
+      "bytes": 1154,
+      "sha256": "c3be23346c7f164bf12fd1cd8a10984aa1eb518b548219860bd71d6411645f8f"
+    },
+    {
+      "path": "packages/vscode-extension/src/config-scanners/JsoncSecretPlan.ts",
+      "bytes": 11230,
+      "sha256": "e5432237e9d864cfa81ab9b111263839418f232f5fe3626a9d86f554b675d55b"
+    },
+    {
+      "path": "packages/vscode-extension/src/config-scanners/McpSecretPlan.ts",
+      "bytes": 1968,
+      "sha256": "bd29f7c9dcd798a5a57535623b7e5c9415e69749b7d05908efc9c261466900c0"
+    },
+    {
+      "path": "packages/vscode-extension/src/config-scanners/McpTomlSyntax.ts",
+      "bytes": 12360,
+      "sha256": "636dadc04acaef416b77ff3748f7e2b5d02f5c6a0de0450177d7037b4f100fea"
+    },
+    {
+      "path": "packages/vscode-extension/src/dep-guard/DepGuardCore.ts",
+      "bytes": 12149,
+      "sha256": "931a670612d2a3e715f1edeec85a097d368b8af4d2330ae745605418cd23946c"
+    },
+    {
+      "path": "packages/vscode-extension/src/enterprise/managedSettings.ts",
+      "bytes": 4007,
+      "sha256": "f7379b815b1f09bd2bfde55483cb47471713ae6b54fcdc186cc97eafd4cd684a"
+    },
+    {
+      "path": "packages/vscode-extension/src/enterprise/managedSettingsProbe.ts",
+      "bytes": 2729,
+      "sha256": "433835aef8252883dfbbc3c53c13d7dff7ee384c577619982cfeaa90703a16c4"
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/PolicyStore.ts",
+      "bytes": 6687,
+      "sha256": "c1d14fb50419ac86b1bf480a0a3a1b867fccf0e3a5b702245748aba885d988fc"
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/util.ts",
+      "bytes": 3289,
+      "sha256": "c32fb842a56836edcd29f20becfb50c95f221e9933f99fe0caeebd8449ef4610"
+    },
+    {
+      "path": "packages/vscode-extension/src/hygiene/HygieneCandidatePolicy.ts",
+      "bytes": 1464,
+      "sha256": "11380756e440b57668764322b637c363bedfb9756ace86243dbd935d6fc838e1"
+    },
+    {
+      "path": "packages/vscode-extension/src/project-privacy/SecureEditorModel.ts",
+      "bytes": 5184,
+      "sha256": "a6979bea28ddabc711de4d20fe27b5e89cbbbded5d2228c4052c4a6545668a75"
+    },
+    {
+      "path": "packages/vscode-extension/src/protection/AiToolRegistry.ts",
+      "bytes": 12503,
+      "sha256": "c0d88bf8730a2019ef02fd618b7032935f318d5f74140fffc5bfbe829784f7f7"
+    },
+    {
+      "path": "packages/vscode-extension/src/protection/AutomaticIDEProtection.ts",
+      "bytes": 6628,
+      "sha256": "5c75d2dd9873594439f543591beba21b526e809fe1a96684656ac264cc2fb877"
+    },
+    {
+      "path": "packages/vscode-extension/src/protection/LockdownState.ts",
+      "bytes": 164,
+      "sha256": "c32b410f4123216ad6f9387d17eb441a3cb0eaf07ecf926f4246ecd6839551c2"
+    },
+    {
+      "path": "packages/vscode-extension/src/protection/ProtectionLevel.ts",
+      "bytes": 5653,
+      "sha256": "8b5c3fb49b6800a4548f993a04094aa8d41ae51187b31d36f5adb3e91336a1c8"
+    },
+    {
+      "path": "packages/vscode-extension/src/protection/ProtectionState.ts",
+      "bytes": 14611,
+      "sha256": "f28d6ce5b00f97f54bb6d2dcdd33e413bc898e5ebd61725e3d4f89901c4f6c83"
+    },
+    {
+      "path": "packages/vscode-extension/src/protection/ProtectionStateService.ts",
+      "bytes": 5586,
+      "sha256": "74a41444f74ccc8d42a461b166e43eae35cb0c325862ebac03d01a9f6876f2dd"
+    },
+    {
+      "path": "packages/vscode-extension/src/security/CoverageDisclosure.ts",
+      "bytes": 1509,
+      "sha256": "84c0cd7c50cf9256f4b8b20b2a22817fe9bc0274d7d78abf444c2491f6236a84"
+    },
+    {
+      "path": "packages/vscode-extension/src/security/ReviewEvidence.ts",
+      "bytes": 1186,
+      "sha256": "dde349605e554f0a8cbb96e461e53be17c99c7bd7880d0de4dd762434edf9a86"
+    },
+    {
+      "path": "packages/vscode-extension/src/webview/ControlPanelViewProvider.ts",
+      "bytes": 43346,
+      "sha256": "9cefae04c36fbf5e4247a6e9aa730ef039e84c02fae9136f8a8e9f9321df320d"
+    },
+    {
+      "path": "packages/vscode-extension/src/webview/controlPanelStyles.ts",
+      "bytes": 16567,
+      "sha256": "202060d52dc600621bfc5743aa36257823e001d34a64ee2772ac8b1fc935caeb"
+    },
+    {
+      "path": "packages/vscode-extension/src/webview/panelContent.ts",
+      "bytes": 18249,
+      "sha256": "3bdba2021a4086e2e5d2245b8a9dc6f137bccbf979e77325c688b11326c92d4f"
+    }
+  ],
+  "fixtureInputs": [
+    {
+      "path": "docs/soterai-lite/evidence/20261106-v01-remaining334-01/remaining-logs-01.ps1",
+      "bytes": 18574,
+      "sha256": "ebf600d48d67b8b31ecb8020d7adcfeeb4092678f4e6d9b5d80c0316629956da"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-v01-remaining334-01/remaining-owned-output-01.ps1",
+      "bytes": 18442,
+      "sha256": "7529c665942b4fd8e128b24b10dd53c48f279b0a5c0f9c5c54abd83c14223888"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-v01-remaining334-01/remaining-artifact-01.ps1",
+      "bytes": 18568,
+      "sha256": "51d884cfbeeaada3b6b1da21443d755aa7950abae1b141a00473ee962b74cd36"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-v01-remaining334-01/remaining-streaming-output-01.ps1",
+      "bytes": 18506,
+      "sha256": "16f476d2c559587f75ee87077df4eb61ed9a3acb470f1a79d93652332ee552db"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-v01-remaining334-01/remaining-vault-runtime-01.ps1",
+      "bytes": 18503,
+      "sha256": "eed24cc74677a0ae39c37749d12e4493b04a3062221d44e3aede63c46ef0e025"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-v01-remaining334-01/remaining-cmd-01.ps1",
+      "bytes": 18582,
+      "sha256": "ffa3dd9e64fb49be4d716b8c61a1b9bf6efd82b74e126d09b22bd951e1b69ea4"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-v01-remaining334-01/remaining-gitbash-01.ps1",
+      "bytes": 18586,
+      "sha256": "305fa66ff3aa67550559306fd2f57e95ffa594670b507c47daddd6e9a4a416d2"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-v01-remaining334-01/remaining-history-01.ps1",
+      "bytes": 18586,
+      "sha256": "43cb4b8aefd9c9cc5c19830d458ae10786e91b37de25906c56b1b1a7f5a8a9c9"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-v01-remaining334-01/remaining-ci-01.ps1",
+      "bytes": 18575,
+      "sha256": "39986b5347da68e623e70faf4bbf6a4d7cc5b086c0faa5798fca3389721a88ee"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-v01-remaining334-01/remaining-service-account-01.ps1",
+      "bytes": 18614,
+      "sha256": "feba4e6401fad8cc6ae6bb20e1868d5d4422f93bad01ab3a687b56c851b0c8b0"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-v01-remaining334-01/remaining-registry-01.ps1",
+      "bytes": 18593,
+      "sha256": "c3b4b3d8700e562bb2340f531d478b6eaa462471bf3f9ee91338301c71a3f77a"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-v01-remaining334-01/remaining-terraform-01.ps1",
+      "bytes": 18596,
+      "sha256": "f500708a77a7c77843b6e051f4ec06b4f500cd452123431c06c94c32a3a4e78d"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-v01-remaining334-01/remaining-container-01.ps1",
+      "bytes": 18596,
+      "sha256": "66480be1b0ef7a627ecd07afd619ca93ea80f2120b86b95874299f899d02c967"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-v01-remaining334-01/remaining-source-01.ps1",
+      "bytes": 18598,
+      "sha256": "1bb0b7b17e392b7b02bf25936ec4e146afe6fe9c0170a4189836cd55e54fe1d6"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-v01-remaining334-01/remaining-hygiene-01.ps1",
+      "bytes": 18599,
+      "sha256": "dd914ba18ada20a0600dcfdb13157a602922c3132db5f7795810d2d6c49f1bca"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-v01-remaining334-01/remaining-vault-01.ps1",
+      "bytes": 18623,
+      "sha256": "5269c3577b64e70ed2048982de433bcedfed4bac1d788999c455c6f37afa516d"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-v01-remaining334-01/remaining-native-binding-01.ps1",
+      "bytes": 4944,
+      "sha256": "2e621584ed91fe4c6746b6750b843a134bb87b7380a8b384b1cd792c00be24f8"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-v01-remaining334-01/remaining-admission.cjs",
+      "bytes": 4539,
+      "sha256": "fdf2919ebb0913c6b0f8d765c7050acc116e56012b5123adea16c807b6e05603"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-v01-remaining334-01/affected-preparation-pipe-ownership-01.ps1",
+      "bytes": 4180,
+      "sha256": "246b0ccdb2457fd80f560770b129a1fde67d5d4212e8eae200f965dffd69698c"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-v01-remaining334-01/content-inspection.json",
+      "bytes": 119647,
+      "sha256": "cb020ebff89543bb7e34857220b172fe2318c23727e0e6d6460467260235f43e"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-v01-remaining334-01/assertion-contracts.json",
+      "bytes": 103543,
+      "sha256": "2c8441a6d0c959b696824faf15f2c6833d739f290fffdd27bb3c8c8db22aafd7"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-v01-remaining334-01/run-remaining334.cjs",
+      "bytes": 2892,
+      "sha256": "f92c3d26a6e2ccb74389f7f52ce0cd7b4d670178575fee6cde386f4104e5a5e9"
+    },
+    {
+      "path": "docs/soterai-lite/evidence/20261106-v01-remaining334-01/verify-remaining334.cjs",
+      "bytes": 5498,
+      "sha256": "5a73754c760c54f9a4c210bd03951aeeab039528298f7d5bd68b1ae606beb0ce"
+    }
+  ],
+  "owner": "User requested remaining work and explicitly approved local tests and isolated VS Code checks on 6 November 2026.",
+  "f26a": "Separately verified by native14; these four families do not replace its 34 assertions.",
+  "limits": "Original LOW scripted native API controls. Same-candidate175 accepted; only remaining16 families execute. No authenticated provider/human/all-descendant/OS guarantee.",
+  "common": {
+    "path": "docs/soterai-lite/evidence/20261106-v01-current-01/v01-admission.cjs",
+    "bytes": 2750,
+    "sha256": "45d85d8fdaefa9d5cec58706d660730a0f386b60911e43868ccad344924838af"
+  },
+  "commonBinding": {
+    "path": "docs/soterai-lite/evidence/20261106-v01-current-01/binding.json",
+    "bytes": 31244,
+    "sha256": "7d35e79884a683ae33167ec33fcf8c8762729d700d1108ba9b2fdfaded9c6b2f"
+  },
+  "vendorInputs": [
+    {
+      "path": "C:\\Program Files\\WindowsPowerShell\\Modules\\PSReadLine\\2.0.0\\PSReadLine.psd1",
+      "bytes": 778,
+      "sha256": "ee8d23cf89dc67ba7147aa51910219f66b656d9ceb2630deb62a8e847ebbbc4f"
+    },
+    {
+      "path": "C:\\Program Files\\WindowsPowerShell\\Modules\\PSReadLine\\2.0.0\\PSReadLine.psm1",
+      "bytes": 180,
+      "sha256": "96d892d15384a3ce6f5baf8418e8f83762fd83dcab4263ad24fdde0ad5e8b9fa"
+    },
+    {
+      "path": "C:\\Program Files\\WindowsPowerShell\\Modules\\PSReadLine\\2.0.0\\Microsoft.PowerShell.PSReadLine.dll",
+      "bytes": 471552,
+      "sha256": "2bb1add6c2393a6e0ef5c5a30668d9e8f3072f0a049a81e28b9025d810ec6b70"
+    },
+    {
+      "path": "C:\\Program Files\\WindowsPowerShell\\Modules\\PSReadLine\\2.0.0\\PSReadLine.format.ps1xml",
+      "bytes": 8963,
+      "sha256": "da79d15c91edd0559d70dbcda76f9b41ef1b17a141d137a485027971a08df1bb"
+    },
+    {
+      "path": "C:\\Program Files\\Git\\cmd\\git.exe",
+      "bytes": 46480,
+      "sha256": "da240fe9bc24895b3e04150a4990b8a6ff329ecabcd8f19684c2cc310da5ef3f",
+      "fileLinkCount": 2
+    },
+    {
+      "path": "C:\\Program Files\\Git\\usr\\bin\\sh.exe",
+      "bytes": 2553064,
+      "sha256": "fc362aae1f217d34d02237d99527839dd6cf85b37c7a0277109400bfa0faa594"
+    }
+  ],
+  "contract": {
+    "path": "docs/soterai-lite/evidence/20261106-v01-remaining334-01/assertion-contracts.json",
+    "bytes": 103543,
+    "sha256": "2c8441a6d0c959b696824faf15f2c6833d739f290fffdd27bb3c8c8db22aafd7"
+  },
+  "accepted175": {
+    "path": "docs/soterai-lite/evidence/20261106-v01-current-01/affected-acceptance.json",
+    "bytes": 25731,
+    "sha256": "413ae4dac58f5969bbac5a8ec2e83f8acc1964c96efbdc3aa3bb418fb77ba165"
+  },
+  "preparationSource": {
+    "path": "docs/soterai-lite/evidence/20261106-remaining-queue/f26a/prepare-remaining334.cjs",
+    "bytes": 6127,
+    "sha256": "e4285a17d18f7d53e6c8b0954de71c731e47d93a8fd942aa4cb5427f9366a457"
+  },
+  "oldHostResultsReused": 0,
+  "alreadyExecutedCurrentCandidateAssertions": 175,
+  "remainingNativeAssertions": 334,
+  "remainingNativePhases": 29
+}
