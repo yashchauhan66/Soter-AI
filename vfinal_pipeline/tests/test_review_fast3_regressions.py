@@ -319,3 +319,97 @@ class NativeAdmission(unittest.TestCase):
                     else:
                         with self.assertRaisesRegex(ValueError, 'head.*label'):
                             api.run(config, root/'run')
+
+
+def gate_fixture(extra_language=False):
+    """Synthetic caller declarations to reach numerical gates, NOT serving evidence."""
+    from eval_harness.core import Case, REQUIRED_SLICES, cases_fingerprint
+    from vfinal_pipeline.release_gate import default_contract
+    rows = [row('gate'+str(i), 'UNIT-ONLY gate '+str(i), 'SAFE' if i < 200 else 'PII')
+            for i in range(400)]
+    if extra_language:
+        rows.extend([{**row('hi-safe', 'UNIT-ONLY hindi benign'), 'language': 'hi'},
+                     {**row('hi-risk', 'UNIT-ONLY hindi risk', 'PII'), 'language': 'hi'}])
+    for record in rows:
+        record['slices'] = list(REQUIRED_SLICES)
+    contract = default_contract()
+    contract.update(languages=['en'], bootstrap_samples=100)
+    context = {'dataset_sha256': cases_fingerprint([Case.from_dict(r) for r in rows]),
+               'hardware_id': 'UNIT-ONLY', 'preprocessing': 'exact', 'batch_size': 1,
+               'runtime': 'unit', 'sequence_policy': 'unit', 'serving_path': 'cpu_service_local'}
+    evidence: dict = {key: True for key in ('untouched_holdout', 'complete_exposure_audit',
+                'semantic_duplicate_review', 'privacy_review', 'production_policy_regressions_fixed')}
+    evidence['seed_runs'] = [{'seed': seed, 'genuine': True} for seed in (1, 2, 3)]
+    for key in ('ablations', 'paths', 'latency_contexts'):
+        evidence[key] = {name: {'passed': True} for name in contract['required_'+key]}
+    evidence['end_to_end_p95_ms'] = 1.0
+    arms = [{'name': name, 'model_identity': 'UNIT-ONLY-'+name, 'context': dict(context),
+             'threshold': .5, 'case_ids': [r['id'] for r in rows],
+             'scores': [.01 if r['label'] == 'SAFE' else .99 for r in rows],
+             'latencies_ms': [1.0]*1000, 'evidence_class': 'genuine_real_serving',
+             'memory_bytes': 1, 'size_bytes': 1, 'cold_load_ms': 1.0, 'evidence': evidence}
+            for name in contract['required_models']]
+    return rows, arms, contract
+
+
+class LanguageCoverage(unittest.TestCase):
+    def test_undeclared_language_blocks_criteria_without_rewriting_contract(self):
+        from vfinal_pipeline.release_gate import evaluate
+        rows, arms, contract = gate_fixture(extra_language=True)
+        before = canonical(contract)
+        result = evaluate(rows, arms, contract)
+        self.assertFalse(result['criteria_pass'])
+        self.assertFalse(result['release_ready'])
+        self.assertEqual(canonical(contract), before)
+        self.assertTrue(any('coverage' in failure or 'language' in failure for failure in result['failures']))
+        for entry in result['master_table']:
+            self.assertFalse(entry['metrics']['coverage_complete'])
+            self.assertEqual(entry['metrics']['undeclared_language_ids'], ['hi-safe', 'hi-risk'])
+
+    def test_declared_support_controls_and_complete_unit_fixture(self):
+        from vfinal_pipeline.release_gate import evaluate
+        rows, arms, contract = gate_fixture()
+        complete = evaluate(rows, arms, contract)
+        self.assertTrue(complete['criteria_pass'], complete['failures'])
+        self.assertFalse(complete['release_ready'])
+        for observed in (False, True):
+            with self.subTest(under_supported_language_observed=observed):
+                rows, arms, contract = gate_fixture(extra_language=observed)
+                contract['languages'] = ['en', 'hi']
+                before = canonical(contract)
+                result = evaluate(rows, arms, contract)
+                self.assertFalse(result['criteria_pass'])
+                self.assertIn('language:hi: insufficient_support', result['failures'])
+                self.assertEqual(canonical(contract), before)
+
+
+class IndependentFprBaseline(unittest.TestCase):
+    def test_requested_fpr_baseline_is_compared_outside_recall_list(self):
+        from vfinal_pipeline.release_gate import evaluate
+        for recall in (['v17-multilingual'], []):
+            with self.subTest(recall_baselines=recall):
+                rows, arms, contract = gate_fixture()
+                contract['recall_baselines'] = recall
+                before = canonical(contract)
+                result = evaluate(rows, arms, contract)
+                self.assertTrue(result['criteria_pass'], result['failures'])
+                for comparison in result['comparisons'].values():
+                    self.assertEqual(set(comparison['paired']),
+                                     {'v14:fpr'} | {name+':recall' for name in recall})
+                    self.assertEqual(comparison['paired']['v14:fpr']['point_delta'], 0.0)
+                self.assertEqual(canonical(contract), before)
+                self.assertFalse(result['release_ready'])
+
+    def test_separate_fpr_baseline_regression_blocks_criteria(self):
+        from vfinal_pipeline.release_gate import evaluate
+        rows, arms, contract = gate_fixture()
+        contract['recall_baselines'] = ['v17-multilingual']
+        candidate = next(arm for arm in arms if arm['name'] == contract['candidate'])
+        candidate['scores'][0] = .9  # One synthetic false positive; global FPR still below its limit.
+        result = evaluate(rows, arms, contract)
+        self.assertFalse(result['criteria_pass'])
+        self.assertIn('overall: v14 fpr regression', result['failures'])
+        self.assertGreater(result['comparisons']['overall']['paired']['v14:fpr']['point_delta'], 0)
+        self.assertNotIn('overall: benign FPR gate failed', result['failures'])
+        self.assertFalse(result['release_ready'])
+

@@ -72,6 +72,10 @@ def evaluate(rows, arms, contract):
         report = aggregate_metrics(cases, score, target='risk', threshold=arm['threshold'],
                                   declared_languages=contract['languages'], expected_model_identity=arm['model_identity'])
         reports[arm['name']] = report
+        if not report['coverage_complete']:
+            failures.append(arm['name'] + ': incomplete metric coverage')
+        if report['undeclared_language_ids']:
+            failures.append(arm['name'] + ': undeclared languages: ' + ', '.join(report['additional_languages']))
         timing = arm['latencies_ms']
         if not timing or any(type(t) not in (int,float) or not math.isfinite(t) or t < 0 for t in timing):
             raise ValueError('finite nonnegative latency observations required')
@@ -110,16 +114,17 @@ def evaluate(rows, arms, contract):
             failures.append(name + ': ECE gate failed')
         if name == 'overall' and metric['fpr'] > contract['global_max_fpr']:
             failures.append('overall: benign FPR gate failed')
-        for baseline_name in contract['recall_baselines']:
+        requested = [(baseline_name, 'recall') for baseline_name in contract['recall_baselines']]
+        requested.append((contract['fpr_baseline'], 'fpr'))
+        for baseline_name, stat in requested:
             baseline = by_name[baseline_name]
-            for stat in (['recall','fpr'] if baseline_name == contract['fpr_baseline'] else ['recall']):
-                ci = paired_interval(y,p,[baseline['scores'][i] for i in ix],candidate['threshold'],baseline['threshold'],
-                                     stat,[groups[cases[i].id] for i in ix],contract['bootstrap_samples'],contract['seed'])
-                comparisons[name]['paired'][baseline_name+':'+stat] = ci
-                passed = (ci['point_delta'] >= 0 and ci['lower95'] >= contract['recall_noninferiority']) if stat == 'recall' else (
-                    ci['point_delta'] <= 0 and ci['upper95'] <= contract['fpr_upper_delta'])
-                if not passed:
-                    failures.append(name+': '+baseline_name+' '+stat+' regression')
+            ci = paired_interval(y,p,[baseline['scores'][i] for i in ix],candidate['threshold'],baseline['threshold'],
+                                 stat,[groups[cases[i].id] for i in ix],contract['bootstrap_samples'],contract['seed'])
+            comparisons[name]['paired'][baseline_name+':'+stat] = ci
+            passed = (ci['point_delta'] >= 0 and ci['lower95'] >= contract['recall_noninferiority']) if stat == 'recall' else (
+                ci['point_delta'] <= 0 and ci['upper95'] <= contract['fpr_upper_delta'])
+            if not passed:
+                failures.append(name+': '+baseline_name+' '+stat+' regression')
     latency = next(r['latency_ms'] for r in table if r['name'] == contract['candidate'])
     baseline_latency = next(r['latency_ms'] for r in table if r['name'] == contract['fpr_baseline'])
     if context['batch_size'] != 1 or context['serving_path'] != 'cpu_service_local':
