@@ -133,6 +133,6 @@ test('page uses direct editor protocol links with verified registry fallbacks', 
   assert.match(source, /href=\{editor\.deepLink\}/);
   assert.match(source, /Open in \{editor\.name\}/);
   assert.match(source, /\{editor\.listingLabel\} fallback/);
-  assert.match(source, /cannot transparently intercept/);
+  assert.match(source, /Other prompts, direct network traffic and same-user processes reading files can bypass these checks/);
   assert.match(source, /Download VSIX/);
 });

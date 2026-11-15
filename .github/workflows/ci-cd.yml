@@ -162,6 +162,20 @@ jobs:
       - name: Build workspace packages
         run: npm run build:guard-core
 
+      # Browser and Python snippet regressions run as part of npm test.
+      - name: Setup Python for documentation tests
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: tests/requirements-docs.txt
+
+      - name: Install documentation test dependencies
+        run: python -m pip install -r tests/requirements-docs.txt
+
+      - name: Install browser test dependencies
+        run: npx playwright install --with-deps chromium
+
       - name: Run tests
         run: npm test
 

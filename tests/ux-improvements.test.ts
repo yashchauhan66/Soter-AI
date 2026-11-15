@@ -219,10 +219,15 @@ describe("UX — Docs & Help Link", () => {
 describe("UX — Pricing Comparison Table", () => {
   it("Pricing page has comparison table", () => {
     const src = file("app/pricing/page.tsx");
-    assert.ok(src.includes("Feature"), "should have Feature column");
-    assert.ok(src.includes("Starter"), "should have Starter plan");
-    assert.ok(src.includes("Pro"), "should have Pro plan");
-    assert.ok(src.includes("Enterprise"), "should have Enterprise plan");
+    assert.match(src, /<PricingComparison plans=\{PLANS\}\s*\/>/);
+    const comparison = file("components/sa/PricingPlans.tsx");
+    assert.match(comparison, /key: 'feature', header: 'Compare'/);
+    assert.match(comparison, /header: plan\.name/);
+    assert.match(comparison, /Published benefits/);
+    const plans = file("lib/sa/pricing.ts");
+    for (const name of ["Starter", "Pro", "Enterprise"]) {
+      assert.ok(plans.includes(name), `should have ${name} plan`);
+    }
   });
 });
 

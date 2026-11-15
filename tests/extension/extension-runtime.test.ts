@@ -46,16 +46,39 @@ test("audit preview redacts secrets before logs", () => {
   assert.equal(preview.includes("ABCDE1234F"), false);
 });
 
-test("heartbeat sends browser and policy metadata", async () => {
-  const calls: unknown[] = [];
+test("heartbeat sends browser and policy metadata only after enrollment", async () => {
+  const calls: Array<{ browser: string; domain: string; policyVersion: string }> = [];
+  const originalFetch = globalThis.fetch;
+  const originalState = await getState();
   (globalThis as unknown as { fetch: unknown }).fetch = async (_url: string, init: RequestInit) => {
     calls.push(JSON.parse(String(init.body)));
     return { ok: true, json: async () => ({ ok: true }) };
   };
-  assert.equal(browserName(), "edge");
-  await sendHeartbeat("chatgpt.com");
-  assert.equal((calls[0] as { browser: string }).browser, "edge");
-  assert.equal((calls[0] as { domain: string }).domain, "chatgpt.com");
+  const config = {
+    ...originalState.config,
+    organizationId: "heartbeat-fixture-org",
+    deviceToken: "heartbeat-fixture-token-not-real",
+  };
+  try {
+    assert.equal(browserName(), "edge");
+    await setState({ enrollmentStatus: "unenrolled", config });
+    await sendHeartbeat("chatgpt.com");
+    assert.equal(calls.length, 0, "unenrolled devices do not send heartbeats");
+
+    await setState({ enrollmentStatus: "enrolled", config: { ...config, deviceToken: "" } });
+    await sendHeartbeat("chatgpt.com");
+    assert.equal(calls.length, 0, "missing credentials prevent network heartbeats");
+
+    await setState({ enrollmentStatus: "enrolled", config });
+    await sendHeartbeat("chatgpt.com");
+    assert.equal(calls.length, 1);
+    assert.equal(calls[0].browser, "edge");
+    assert.equal(calls[0].domain, "chatgpt.com");
+    assert.equal(calls[0].policyVersion, originalState.policy?.version ?? "unknown");
+  } finally {
+    globalThis.fetch = originalFetch;
+    await setState(originalState);
+  }
 });
 
 test("scanner redacts and blocks a ChatGPT secret prompt", async () => {

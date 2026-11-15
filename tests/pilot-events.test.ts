@@ -30,7 +30,7 @@ test("pilot telemetry uses prefixed product events", () => {
 test("positioning exposes required hero copy and honest status labels", () => {
   assert.match(heroCopy.headline, /Stop sensitive company data/);
   assert.match(heroCopy.headline, /before they become incidents/);
-  assert.match(heroCopy.primaryCta, /No Signup/);
+  assert.equal(heroCopy.primaryCta, "Try it live");
   assert.ok(productStatus.some((product) => product.name === "API Guard" && product.status === "Stable"));
   assert.ok(productStatus.some((product) => product.status === "Beta"));
   assert.ok(productStatus.some((product) => product.status === "Labs"));
